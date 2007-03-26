@@ -6,11 +6,11 @@ import pooler
 
 class res_partner(osv.osv):
 	_name = "res.partner"
-        _description = "Sale agent sale info"
-        _inherit="res.partner"
+	_description = "Sale agent sale info"
+	_inherit="res.partner"
 	_columns = {
-                'agent': fields.many2one('sale.agent','salesagent',size=25, required=True),
-               	}
+		'agent': fields.many2one('sale.agent','Salesagent'),
+	}
 res_partner()
 
 #

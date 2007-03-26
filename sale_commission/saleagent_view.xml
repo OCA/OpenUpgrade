@@ -13,11 +13,9 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Saleagent">
-
-                                <field name="name"/>  
-       			        <field name="partner_id"/>
-			        <field name="comprice_id"/>					                                
-			
+				<field name="name"/>  
+				<field name="partner_id"/>
+				<field name="comprice_id"/>
 			</tree>
 		</field>
 	</record>
@@ -29,22 +27,10 @@
 			<form string="Saleagent">
 			<notebook>
 				<page string="Basic Info">
-                                        <separator string="General Information" colspan="4"/>
-                                          
-        				    <field name="name" select="1"/>
-        				    <field name="partner_id"/>
-        				    <field name="comprice_id"/>					
-					<!--field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
-						<form string="Student Contacts">
-							<field name="addone" select="1"/>
-							<field name="addtwo" />
-							<field name="zip"/>
-							<field name="mob"select="1">							
-						</form>
-					</field>
-
-					<field name="compname" colspan="4" select="1" /-->
-		
+					<separator string="General Information" colspan="4"/>
+					<field name="name" select="1"/>
+					<field name="partner_id"/>
+					<field name="comprice_id"/>
 				</page>
 			</notebook>
 			</form>
@@ -58,7 +44,6 @@
 		<field name="res_model">sale.agent</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_saleagent_form"/>	
-		
 	</record>
 	<menuitem name="Sales Management/Commissions" groups="admin" sequence="1"/>
 	<menuitem name="Sales Management/Commissions/Sales agent"  id="saleagent_id_new" action="action_saleagent_form"/>
