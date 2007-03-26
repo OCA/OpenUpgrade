@@ -28,4 +28,21 @@ Steps to Install package in Openoffice
 	  if you use different host then localhost then chang it accordingly
 
 	- Now in openoffice writer u will find one new menu named "Tiny Report"
+
+Steps to execute scripts 
+
+	- You can directly us scripts for perticular operation.
+
+	- If you want to execute script then u have to use terminal.
+
+	- Now you have start tiny server
+
+	- then in unother terminal u have to write command 
+
+		ooffice "-accept=socket,host=localhost,port=2002;urp;"
+
+	- Go to the perticular directory of scripts and then use below command
 		
+		python scriptname.py
+
+	- you will get execute yor script
