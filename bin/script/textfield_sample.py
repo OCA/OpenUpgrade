@@ -20,20 +20,10 @@ model = desktop.getCurrentComponent()
 #xUserField = model.createInstance("com.sun.star.text.textField.User")
 #print xUserField
 xUserField = model.createInstance("com.sun.star.text.TextField.User")
-print xUserField
-
 xMasterPropSet = model.createInstance("com.sun.star.text.FieldMaster.User")
-print xMasterPropSet
-
-print dir(xMasterPropSet)
-print xMasterPropSet.Types
 xMasterPropSet.setPropertyValue("Name", "UserEmperor")
 xMasterPropSet.setPropertyValue("Content", "Fabien Pinckaers")
 #xMasterPropSet.setPropertyValue("Content", uno.ByteSequence("UserEmperor"))
-
-print xMasterPropSet.Name, xMasterPropSet.Value
-print  xMasterPropSet.Content
-
 
 print xUserField, xMasterPropSet
 
