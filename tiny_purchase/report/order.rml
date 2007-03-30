@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(612.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="498" height="678"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <section>
+      <blockTable colWidths="125.0,125.0,125.0,125.0" style="Table1">
+        <tr>
+          <td>
+            <para style="Table Contents">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="Table Contents">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="Table Contents">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="Table Contents">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="Standard">[[ repeatIn(objects, 'o') ]]</para>
+      <blockTable colWidths="125.0,125.0,125.0,125.0" style="Table2">
+        <tr>
+          <td>
+            <para style="Table Contents">[[ repeatIn(o.line_id, 'l') ]]</para>
+          </td>
+          <td>
+            <para style="Table Contents">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="Table Contents">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="Table Contents">
+              <font color="white"> </font>
+            </para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="Standard">
+        <font color="white"> </font>
+      </para>
+    </section>
+    <para style="Standard">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+
