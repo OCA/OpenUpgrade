@@ -3,6 +3,7 @@ import string
 import unohelper
 from com.sun.star.task import XJobExecutor
 from lib.gui import *
+import xmlrpclib
     #-----------------------------------------------------
     #  Implementaion of DBModalDialog Class
     #-----------------------------------------------------
