@@ -165,8 +165,17 @@ class Repeatln:
                             #End If
                         #End while Loop
                         sObjName=sObjName.__getslice__(10,sObjName.find("')"))
-                        print sObjName
-                        text.insertString(cursor,"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" , 0 )
+
+                        if cursor.TextTable==None:
+                            text.insertString(cursor,"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" , 0 )
+                        else:
+                            oTable = cursor.TextTable
+                            oCurCell = cursor.Cell
+                            tableText = oTable.getCellByName( oCurCell.CellName )
+                            cursor = tableText.createTextCursor()
+                            cursor.gotoEndOfParagraph(True)
+                            tableText.setString( "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" )
+
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
