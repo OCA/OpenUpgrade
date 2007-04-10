@@ -4,11 +4,14 @@ import unohelper
 from com.sun.star.task import XJobExecutor
 from lib.gui import *
 import xmlrpclib
+
     #-----------------------------------------------------
     #  Implementaion of DBModalDialog Class
     #-----------------------------------------------------
+
 class Repeatln:
     def __init__(self):
+
         self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
 
         self.win.addFixedText("lblVariable", 18, 12, 30, 15, "Variable :")
@@ -49,28 +52,42 @@ class Repeatln:
 
         if not docinfo.getUserFieldValue(3) == "":
             self.count=0
+
             vOpenSearch = doc.createSearchDescriptor()
+
             vCloseSearch = doc.createSearchDescriptor()
+
             # Set the text for which to search and other
             vOpenSearch.SearchString = "repeatIn"
+
             vCloseSearch.SearchString = "')"
+
             # Find the first open delimiter
             vOpenFound = doc.findFirst(vOpenSearch)
+
             while not vOpenFound==None:
+
                 #Search for the closing delimiter starting from the open delimiter
                 vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
+
                 if vCloseFound==None:
                     print "Found an opening bracket but no closing bracket!"
+
                     break
+
                 else:
+
                     vOpenFound.gotoRange(vCloseFound, True)
+
                     self.count += 1
+
                     vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
                 #End If
             #End while Loop
-            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
-            self.win.doModalDialog()
 
+            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+
+            self.win.doModalDialog()
 
         else:
 
@@ -93,8 +110,8 @@ class Repeatln:
 
         return desktop
 
-
     def cmbVariable_selected(self,oItemEvent):
+
         if self.count > 0 :
 
             sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
@@ -131,7 +148,9 @@ class Repeatln:
 
 
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" :
+
                     sObjName=""
+
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
 
                         text.insertString(cursor,"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]" , 0 )
@@ -146,7 +165,9 @@ class Repeatln:
                         vOpenSearch.SearchString = "(objects,'"
 
                         vCloseSearch.SearchString = "')"
+
                         print "abc"
+
                         # Find the first open delimiter
                         vOpenFound = doc.findFirst(vOpenSearch)
 
@@ -156,30 +177,42 @@ class Repeatln:
                             vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
 
                             if vCloseFound==None:
+
                                 print "Found an opening bracket but no closing bracket!"
+
                                 break
                             else:
                                 vOpenFound.gotoRange(vCloseFound, True)
+
                                 sObjName=vOpenFound.getString()
+
                                 vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
                             #End If
                         #End while Loop
+
                         sObjName=sObjName.__getslice__(10,sObjName.find("')"))
 
                         if cursor.TextTable==None:
+
                             text.insertString(cursor,"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" , 0 )
                         else:
-                            oTable = cursor.TextTable
-                            oCurCell = cursor.Cell
-                            tableText = oTable.getCellByName( oCurCell.CellName )
-                            cursor = tableText.createTextCursor()
-                            cursor.gotoEndOfParagraph(True)
-                            tableText.setString( "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" )
 
+                            oTable = cursor.TextTable
+
+                            oCurCell = cursor.Cell
+
+                            tableText = oTable.getCellByName( oCurCell.CellName )
+
+                            cursor = tableText.createTextCursor()
+
+                            cursor.gotoEndOfParagraph(True)
+
+                            tableText.setString( "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" )
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
             self.win.endExecute()
+
     # this method will featch data from the database and place it in the combobox
     def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root=''):
 
@@ -223,6 +256,5 @@ class Repeatln:
             self.insVariable.addItem(res[nIndex]['model'],0)
 
             nIndex += 1
-
 
 Repeatln()

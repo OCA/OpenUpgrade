@@ -4,29 +4,28 @@ import unohelper
 from com.sun.star.task import XJobExecutor
 from lib.gui import *
 import xmlrpclib
-    #-----------------------------------------------------
-    #  Implementaion of DBModalDialog Class
-    #-----------------------------------------------------
-
+	#-----------------------------------------------------
+	#  Implementaion of DBModalDialog Class
+	#-----------------------------------------------------
 class Fields:
     def __init__(self):
 
-        self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
+    	self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
 
-        self.win.addFixedText("lblName", 10, 12, 20, 15, "Name :")
+        self.win.addFixedText("lblVariable", 18, 12, 30, 15, "Variable :")
 
-        self.win.addEdit("txtName", 35, 10, 100, 15,)
-
-        self.win.addFixedText("lblVariable", 5, 32, 25, 15, "Variable :")
-
-        self.win.addComboBox("cmbVariable", 35, 30, 100, 15,True,
+        self.win.addComboBox("cmbVariable", 45, 10, 90, 15,True,
                              itemListenerProc=self.cmbVariable_selected)
+
+        self.win.addFixedText("lblName", 5, 32, 40, 15, "Object Name :")
+
+        self.win.addEdit("txtName", 45, 30, 90, 15,)
 
         self.insVariable = self.win.getControl( "cmbVariable" )
 
-        self.win.addFixedText("lblFields", 11, 52, 25, 15, "Fields :")
+        self.win.addFixedText("lblFields", 25, 52, 25, 15, "Fields :")
 
-        self.win.addComboListBox("lstFields", 35, 50, 100, 150, False)
+        self.win.addComboListBox("lstFields", 45, 50, 90, 150, False)
 
         self.insField = self.win.getControl( "lstFields" )
 
@@ -50,18 +49,50 @@ class Fields:
         docinfo=doc.getDocumentInfo()
 
         if not docinfo.getUserFieldValue(3) == "":
+            self.count=0
 
-            self.insVariable.addItem("Objects",0)
+            vOpenSearch = doc.createSearchDescriptor()
 
-            self.insVariable.addItem(docinfo.getUserFieldValue(3),1)
+            vCloseSearch = doc.createSearchDescriptor()
 
+            # Set the text for which to search and other
+            vOpenSearch.SearchString = "repeatIn"
+
+            vCloseSearch.SearchString = "')"
+
+            # Find the first open delimiter
+            vOpenFound = doc.findFirst(vOpenSearch)
+
+            while not vOpenFound==None:
+
+                #Search for the closing delimiter starting from the open delimiter
+                vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
+
+                if vCloseFound==None:
+                    print "Found an opening bracket but no closing bracket!"
+
+                    break
+
+                else:
+
+                    vOpenFound.gotoRange(vCloseFound, True)
+
+                    self.count += 1
+
+                    vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
+                #End If
+            #End while Loop
+
+            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
 
             self.win.doModalDialog()
+
         else:
 
-            print "Inset Valuein Field 4"
+            print "Insert Field-4"
 
             self.win.endExecute()
+
 
     def getDesktop(self):
 
