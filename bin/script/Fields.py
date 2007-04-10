@@ -17,15 +17,15 @@ class Fields:
         self.win.addComboBox("cmbVariable", 45, 10, 90, 15,True,
                              itemListenerProc=self.cmbVariable_selected)
 
-        self.win.addFixedText("lblName", 5, 32, 40, 15, "Object Name :")
+        #self.win.addFixedText("lblName", 5, 32, 40, 15, "Object Name :")
 
-        self.win.addEdit("txtName", 45, 30, 90, 15,)
+        #self.win.addEdit("txtName", 45, 30, 90, 15,)
 
         self.insVariable = self.win.getControl( "cmbVariable" )
 
-        self.win.addFixedText("lblFields", 25, 52, 25, 15, "Fields :")
+        self.win.addFixedText("lblFields", 25, 32, 25, 15, "Fields :")
 
-        self.win.addComboListBox("lstFields", 45, 50, 90, 150, False)
+        self.win.addComboListBox("lstFields", 45, 30, 90, 150, False)
 
         self.insField = self.win.getControl( "lstFields" )
 
