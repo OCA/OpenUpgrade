@@ -47,7 +47,6 @@ class Fields:
         doc =desktop.getCurrentComponent()
 
         docinfo=doc.getDocumentInfo()
-
         if not docinfo.getUserFieldValue(3) == "":
             self.count=0
 
@@ -76,6 +75,19 @@ class Fields:
                 else:
 
                     vOpenFound.gotoRange(vCloseFound, True)
+                    sObjName=vOpenFound.getString()
+                    if sObjName.__getslice__(sObjName.find("(")+1,sObjName.find(",")) == "objects":
+                    	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+
+                    sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+                    res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
+                    key = res.keys()
+                    key.sort()
+
+                    for k in key:
+                    	#print k +":"+ sObjName.__getslice__(sObjName.find("."),sObjName.find(","))
+                     	if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
+                     		self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
 
                     self.count += 1
 
@@ -83,7 +95,7 @@ class Fields:
                 #End If
             #End while Loop
 
-            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+            #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
 
             self.win.doModalDialog()
 
@@ -110,19 +122,15 @@ class Fields:
         return desktop
 
     def cmbVariable_selected(self,oItemEvent):
-        if not self.win.getComboBoxSelectedText("cmbVariable") == "Objects":
+    	self.sObj= self.win.getComboBoxSelectedText("cmbVariable")
+    	print self.sObj
+        if not self.win.getComboBoxSelectedText("cmbVariable") == "":
 
             sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
 
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
 
-            self.genTree(self.win.getComboBoxSelectedText("cmbVariable"),1, ending_excl=['many2one'], recur=['many2one'])
-
-        elif self.win.getComboBoxSelectedText("cmbVariable") == "Objects":
-
-            self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
-
-            self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
+            self.genTree( self.sObj.__getslice__(self.sObj.find("(")+1,self.sObj.find(")")),1, ending_excl=['many2one'], recur=['many2one'])
 
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
@@ -130,29 +138,29 @@ class Fields:
 
         if oActionEvent.Source.getModel().Name == "btnOK":
 
-            self.bOkay = True
 
             desktop=getDesktop()
 
-            model = desktop.getCurrentComponent()
+            doc = desktop.getCurrentComponent()
 
-            text = model.Text
+            text = doc.Text
 
-            cursor = text.createTextCursor()
-
+            cursor = doc.getCurrentController().getViewCursor()
 
             if self.win.getListBoxSelectedItem("lstFields") != "":
-                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
-                        #cursor=cursor.getEnd()
-                        #text.insertControlCharacter(cursor,5, False )
+              	#sObjName= self.win.getComboBoxSelectedText("cmbVariable").__getslice__(0,sValue.find("("))
 
-                        text.insertString(cursor,"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'o') ]]" , 0 )
+                print
 
-                    else:
-                        cursor=cursor.getEnd()
-                        #text.insertControlCharacter(cursor,5, False )
-
-                        text.insertString(cursor,"[[ " + "o" + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" , 0 )
+                if cursor.TextTable==None:
+                 	text.insertString(cursor,"[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" , 0 )
+                else:
+                  	oTable = cursor.TextTable
+                 	oCurCell = cursor.Cell
+                 	tableText = oTable.getCellByName( oCurCell.CellName )
+                 	cursor = tableText.createTextCursor()
+                 	cursor.gotoEndOfParagraph(True)
+                 	tableText.setString( "[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" )
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
@@ -174,9 +182,13 @@ class Fields:
 
                 self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
 
+
             if (res[k]['type'] in recur) and (level>0):
 
+            	self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
+
                 self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur, root+'/'+k)
+
 
     def getModule(self,oSocket):
 
