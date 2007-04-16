@@ -822,7 +822,7 @@ class Fields( unohelper.Base, XJobExecutor ):
 
                     for k in key:
                         #print k +":"+ sObjName.__getslice__(sObjName.find("."),sObjName.find(","))
-                         if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
+                         if k == sObjName.__getslice__(sObjName.rfind(".")+1,sObjName.find(",")):
                              self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
 
                     self.count += 1
@@ -1119,7 +1119,7 @@ class Repeatln( unohelper.Base, XJobExecutor ):
 
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
 
-            self.genTree(docinfo.getUserFieldValue(3),0,ending=['one2many','many2many'], recur=['many2one'])
+            self.genTree(docinfo.getUserFieldValue(3),1,ending=['one2many','many2many'], recur=['many2one'])
         else:
 
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
@@ -1160,8 +1160,6 @@ class Repeatln( unohelper.Base, XJobExecutor ):
                         vOpenSearch.SearchString = "(objects,'"
 
                         vCloseSearch.SearchString = "')"
-
-                        print "abc"
 
                         # Find the first open delimiter
                         vOpenFound = doc.findFirst(vOpenSearch)
@@ -1225,11 +1223,8 @@ class Repeatln( unohelper.Base, XJobExecutor ):
 
                 self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
 
-            if (res[k]['type'] in recur):
-                self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
-
             if (res[k]['type'] in recur) and (level>0):
-
+                self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
                 self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur, root+'/'+k)
 
     def getModule(self,oSocket):
