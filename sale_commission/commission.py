@@ -6,14 +6,14 @@ class report_commission_month(osv.osv):
     _auto = False
     _columns = {
         'name': fields.char('Salesagent Name',size=64, readonly=True),
-        'sono':fields.integer('sales Order No', readonly=True),
-        'invno':fields.integer('INVOICE NUMBER', readonly=True),
-        'inv_total':fields.integer('INVOICE TOTAL', readonly=True),
+        'sono':fields.integer('Sales Order No', readonly=True),
+        'invno':fields.integer('Invice Number', readonly=True),
+        'inv_total':fields.integer('Invioce Total', readonly=True),
         'in_date': fields.date('Date of Invoice', readonly=True),
         'comrate': fields.float('CommmissionRate(%)', readonly=True),
-        'commission': fields.float('commission of sales agent', readonly=True),
-        'state': fields.char('Invoice state', size=64,readonly=True),
-        'pdate': fields.date('Invoice paid date', readonly=True),
+        'commission': fields.float('Commission of sales agent', readonly=True),
+        'state': fields.char('Invoice State', size=64,readonly=True),
+        'pdate': fields.date('Invoice Paid Date', readonly=True),
 
     }
     _order = 'name,sono,state'
