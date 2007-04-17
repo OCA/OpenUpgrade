@@ -36,8 +36,7 @@ sale_order S,
 product_pricelist PP
 where  R.price_version_id=PV.id AND A.comprice_id = PV.pricelist_id AND I.origin=S.name
 AND SL.order_id=s.id AND R.price_discount > 0 AND
- S.partner_id = P.id AND P.id=A.partner_id AND  P.agent_id=A.id AND
-I.partner_id=P.id AND I.id=L.invoice_id  group by R.price_discount,I.state,I.id,A.name,P.name,I.state,I.date_invoice,
-               S.name,I.number,A.id,AM.date_created ) """)
+S.partner_id = P.id  AND A.id = P.agent_id AND I.partner_id=P.id AND I.id=L.invoice_id  group by R.price_discount,I.state,I.id,A.name,P.name,I.date_invoice,P.id,P.agent_id,
+     S.name,I.number,A.id,AM.date_created  ) """)
 report_commission_month()
 
