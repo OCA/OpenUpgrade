@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+	<record model="ir.ui.view" id="view_report_timesheet_user_user_form">
+		<field name="name">view.report.timesheet.user.user.form</field>
+		<field name="model">report.timesheet.user.user</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Timesheet Report">
+				<field name="name" select="1"/>
+				<field name="company_id" select="1"/>
+				<field name="user_company_id" select="1"/>
+				<field name="total_hours"/>
+				<field name="total_cost"/>
+				<field name="user_id" select="1" />
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_report_timesheet_user_user_tree">
+		<field name="name">view.report.timesheet.user.user.tree</field>
+		<field name="model">report.timesheet.user.user</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Timesheet Report">
+				<field name="name" select="1"/>
+				<field name="user_id" select="1" />
+				<field name="company_id" select="1"/>
+				<field name="user_company_id" select="1"/>
+				<field name="total_hours" select="1"/>
+				<field name="total_cost" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_timesheet_user_user_thismonth">
+		<field name="name">action.timesheet.user.user.tree</field>
+		<field name="res_model">report.timesheet.user.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+	</record>
+	<menuitem name="Project/Reporting/This Month/Timesheets by user and company" action="action_timesheet_user_user_thismonth" id="menu_timesheet_user_user_tree2"/>
+
+	<record model="ir.actions.act_window" id="action_timesheet_user_user_thismonth_mytask">
+		<field name="name">action.timesheet.user.user.tree</field>
+		<field name="res_model">report.timesheet.user.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+		<field name="domain">[('name','=',time.strftime('%Y-%m-01')),('user_id','=','uid')]</field>
+	</record>
+	<menuitem 
+		name="Project/Reporting/This Month/Timesheets by user and company/My Timesheets by company"
+		action="action_timesheet_user_user_thismonth_mytask"
+		id="menu_timesheet_user_user_tree1"/>
+
+	<record model="ir.actions.act_window" id="action_timesheet_user_user_allmonth">
+		<field name="name">action.timesheet.user.user.tree</field>
+		<field name="res_model">report.timesheet.user.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Project/Reporting/All Months/Timesheets by user and company" 
+		action="action_timesheet_user_user_allmonth"
+		id="menu_timesheet_user_user_tree3"/>
+
+	<record model="ir.actions.act_window" id="action_timesheet_user_user_allmonth_mytask">
+		<field name="name">action.timesheet.user.user.tree</field>
+		<field name="res_model">report.timesheet.user.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('user_id','=','uid')]</field>
+	</record>
+	<menuitem 
+		name="Project/Reporting/All Months/Timesheets by user and company/My task by company" 
+		action="action_timesheet_user_user_allmonth_mytask" 
+		id="menu_timesheet_user_user_tree4"/>
+
+
+	#
+	# Timesheets by projects and users
+	#
+
+	<record model="ir.ui.view" id="view_report_timesheet_user_form">
+		<field name="name">view.report.timesheet.user.form</field>
+		<field name="model">report.timesheet.user</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Timesheet Report">
+				<field name="name" select="1"/>
+				<field name="company_id" select="1"/>
+				<field name="user_company_id" select="1"/>
+				<field name="total_hours" select="1"/>
+				<field name="total_cost" select="1"/>
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_report_timesheet_user_tree">
+		<field name="name">view.report.timesheet.user.tree</field>
+		<field name="model">report.timesheet.user</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Timesheet Report">
+				<field name="name" select="1"/>
+				<field name="company_id" select="1"/>
+				<field name="user_company_id" select="1"/>
+				<field name="total_hours" select="1"/>
+				<field name="total_cost" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_timesheet_user_thismonth">
+		<field name="name">action.timesheet.user.tree</field>
+		<field name="res_model">report.timesheet.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+	</record>
+	<menuitem name="Project/Reporting/This Month/Timesheets by company" 
+		action="action_timesheet_user_thismonth" id="menu_timesheet_user_tree2"/>
+
+	<record model="ir.actions.act_window" id="action_timesheet_user_allmonth">
+		<field name="name">action.timesheet.user.tree</field>
+		<field name="res_model">report.timesheet.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Project/Reporting/All Months/Timesheets by company" 
+		action="action_timesheet_user_allmonth" 
+		id="menu_timesheet_user_tree3"/>
+
+</data>
+</terp>
