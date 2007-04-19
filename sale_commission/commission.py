@@ -25,9 +25,10 @@ class report_commission_month(osv.osv):
         cr.execute(""" create or replace view report_commission_month as (select min(A.id) as id,A.name as name,S.name as sono,I.number as invno
               ,L.quantity as product_quantity,L.name as productname,(L.quantity * L.price_unit) as inv_total,substring(I.date_invoice for 10) as in_date,
               ((1-R.price_discount)*100) as comrate,((L.quantity * L.price_unit)*(1-R.price_discount))
-              as commission,I.state from
+              as commission,I.state,AMR.name as pdate from
 
 sale_agent A,
+account_move_reconcile AMR,
 res_partner P,
 account_invoice I,
 product_pricelist_item R,
@@ -38,6 +39,6 @@ sale_order S,
 product_pricelist PP where
 R.price_version_id=PV.id AND A.comprice_id = PV.pricelist_id AND I.origin=S.name AND SL.order_id=s.id AND R.price_discount > 0 AND S.partner_id = P.id AND P.agent_id=A.id AND I.partner_id=P.id AND I.id=L.invoice_id
 group by L.quantity, L.price_unit,R.price_discount,I.state,I.id,A.name,P.name,I.state,I.date_invoice,L.name,
-S.name,I.number,A.id) """)
+S.name,I.number,A.id,AMR.name) """)
 report_commission_month()
 
