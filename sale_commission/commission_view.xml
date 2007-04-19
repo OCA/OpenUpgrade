@@ -2,9 +2,7 @@
 <terp>
 <data>
 
-	#
-	# Tasks by projects and users
-	#
+
 
 	<record model="ir.ui.view" id="view_commission_month_form">
 		<field name="name">commission.month.form</field>
@@ -14,14 +12,15 @@
 			<form string="sales agent commission">
 				<field name="name" select="1"/>
 				<field name="sono" select="1"/>
-				<field name="invno" select="1"/>
+				<field name="productname" select="1"/>
 				<field name="product_quantity" select="1"/>
-				<field name="productname" />
-				<field name="inv_total" select="1"/>
+				<field name="invno" select="1"/>
 				<field name="in_date"/>
+				<field name="inv_total" select="1"/>
+				<field name="state"/>
 				<field name="comrate" select="1"/>
 				<field name="commission" select="1"/>
-				<field name="state"/>
+
 			<!--f ield name="pdate"/-->
 			</form>
 		</field>
@@ -34,16 +33,17 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="sales agent commission">
-			<field name="name" select="1"/>
+
+				<field name="name" select="1"/>
 				<field name="sono" select="1"/>
-				<field name="invno" select="1"/>
+				<field name="productname" select="1"/>
 				<field name="product_quantity" select="1"/>
-				<field name="productname" />
-				<field name="inv_total" select="1"/>
+				<field name="invno" select="1"/>
 				<field name="in_date"/>
+				<field name="inv_total" select="1"/>
+				<field name="state"/>
 				<field name="comrate" select="1"/>
 				<field name="commission" select="1"/>
-				<field name="state"/>
 				<!--field name="pdate"/-->
 				</tree>
 		</field>
@@ -53,14 +53,11 @@
 		<field name="res_model">report.commission.month</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
-		<field name="domain">[('in_date','ilike',time.strftime('%Y-%m'))]</field>
-
+		<field name="domain">[('productname','ilike','PC1')]</field>
 	</record>
-<menuitem name="Sales Management/Commissions/Reporting/This Month/Commissions of This Month " action="action_sales agent commission_tree_month" id="menu_commission_tree_month"/>
+	<menuitem name="Sales Management/Commissions/Reporting/This Month/Commissions of This Month " action="action_sales agent commission_tree_month" id="menu_commission_tree_month"/>
 
-
-
-<record model="ir.ui.view" id="view_commission_all_form">
+	<record model="ir.ui.view" id="view_commission_all_form">
 		<field name="name">commission.all.form</field>
 		<field name="model">report.commission.month</field>
 		<field name="type">form</field>
@@ -68,15 +65,15 @@
 			<form string="sales agent all commission">
 				<field name="name" select="1"/>
 				<field name="sono" select="1"/>
-				<field name="invno" select="1"/>
+				<field name="productname" select="1"/>
 				<field name="product_quantity" select="1"/>
-				<field name="productname" />
-				<field name="inv_total" select="1"/>
+				<field name="invno" select="1"/>
 				<field name="in_date"/>
+				<field name="inv_total" select="1"/>
+				<field name="state"/>
 				<field name="comrate" select="1"/>
 				<field name="commission" select="1"/>
-				<field name="state"/>
-								<!--field name="pdate"/-->
+			<!--field name="pdate"/-->
 			</form>
 		</field>
 	</record>
@@ -88,16 +85,17 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="sales agent all commission">
-			<field name="name" select="1"/>
+
+				<field name="name" select="1"/>
 				<field name="sono" select="1"/>
-				<field name="invno" select="1"/>
+				<field name="productname" select="1"/>
 				<field name="product_quantity" select="1"/>
-				<field name="productname" />
-				<field name="inv_total" select="1"/>
+				<field name="invno" select="1"/>
 				<field name="in_date"/>
+				<field name="inv_total" select="1"/>
+				<field name="state"/>
 				<field name="comrate" select="1"/>
 				<field name="commission" select="1"/>
-				<field name="state"/>
 								<!--field name="pdate"/-->
 				</tree>
 		</field>

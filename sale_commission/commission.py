@@ -5,15 +5,15 @@ class report_commission_month(osv.osv):
     _description = "Commission of month"
     _auto = False
     _columns = {
-        'name': fields.char('Salesagent Name',size=64, readonly=True),
+        'name': fields.char('Sales Agent Name',size=64, readonly=True),
         'sono':fields.integer('Sales Order No', readonly=True),
-        'invno':fields.integer('Invice Number', readonly=True),
-        'product_quantity':fields.integer('product quantity', readonly=True),
-        'productname':fields.char('product Name',size=256, readonly=True),
-        'inv_total':fields.float('Invioce Total', readonly=True),
-        'in_date': fields.date('Date of Invoice', readonly=True),
-        'comrate': fields.float('CommmissionRate(%)', readonly=True),
-        'commission': fields.float('Commission of sales agent', readonly=True),
+        'invno':fields.integer('Invoice Number', readonly=True),
+        'product_quantity':fields.integer('Product Quantity', readonly=True),
+        'productname':fields.char('Product Name',size=256, readonly=True),
+        'inv_total':fields.float('Invoice Amount', readonly=True),
+        'in_date': fields.date('Invoice Date', readonly=True),
+        'comrate': fields.float('Commission Rate (%)', readonly=True),
+        'commission': fields.float('Commissions Amount', readonly=True),
         'state': fields.char('Invoice State', size=64,readonly=True),
         'pdate': fields.date('Invoice Paid Date', readonly=True),
 
