@@ -4,13 +4,13 @@ import unohelper
 from com.sun.star.task import XJobExecutor
 from lib.gui import *
 import xmlrpclib
-	#-----------------------------------------------------
-	#  Implementaion of DBModalDialog Class
-	#-----------------------------------------------------
+    #-----------------------------------------------------
+    #  Implementaion of DBModalDialog Class
+    #-----------------------------------------------------
 class Fields:
     def __init__(self):
 
-    	self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
+        self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
 
         self.win.addFixedText("lblVariable", 18, 12, 30, 15, "Variable :")
 
@@ -47,64 +47,59 @@ class Fields:
         doc =desktop.getCurrentComponent()
 
         docinfo=doc.getDocumentInfo()
+
         if not docinfo.getUserFieldValue(3) == "":
+
             self.count=0
 
-            vOpenSearch = doc.createSearchDescriptor()
+            oParEnum = doc.getTextFields().createEnumeration()
 
-            vCloseSearch = doc.createSearchDescriptor()
+            while oParEnum.hasMoreElements():
 
-            # Set the text for which to search and other
-            vOpenSearch.SearchString = "repeatIn"
+            	oPar = oParEnum.nextElement()
 
-            vCloseSearch.SearchString = "')"
+            	oVCurs = doc.getCurrentController().getViewCursor()
 
-            # Find the first open delimiter
-            vOpenFound = doc.findFirst(vOpenSearch)
+            	if oPar.supportsService("com.sun.star.text.TextField.HiddenText"):
 
-            while not vOpenFound==None:
+            		sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+            		res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
+            		key = res.keys()
+            		key.sort()
+            		for k in key:
+            			if oVCurs.TextTable==None:
+	            			if k == oPar.Content.__getslice__(oPar.Content.find(".")+1,oPar.Content.find(",")):
+	            				self.insVariable.addItem(oPar.Content.__getslice__(oPar.Content.find(",'")+2,oPar.Content.find("')")) + "(" + res[k]['relation'] + ")" ,1)
+	            			#oText.insertTextContent(oTxtCursor, objField, False)
+	            		else:
+					    	oTable = oVCurs.TextTable
 
-                #Search for the closing delimiter starting from the open delimiter
-                vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
+					    	#print oTable.Name
 
-                if vCloseFound==None:
-                    print "Found an opening bracket but no closing bracket!"
+					    	if oTable.Name == oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__()):
+                                #print oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__())
+					    		print "table"
+					    		#if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
+					    		#	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
+					    	elif "root" == oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__()):
+                                #print oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__())
+					    		print "root"
+					    		#if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
+					    		#	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
+					    	elif "child" == oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__()):
+                                #print oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__())
+					    		print "child"
+					    		#if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
+					    		#	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
+                        self.count += 1
 
-                    break
 
-                else:
-
-                    vOpenFound.gotoRange(vCloseFound, True)
-                    sObjName=vOpenFound.getString()
-                    if sObjName.__getslice__(sObjName.find("(")+1,sObjName.find(",")) == "objects":
-                    	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
-
-                    sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
-                    res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
-                    key = res.keys()
-                    key.sort()
-
-                    for k in key:
-                    	#print k +":"+ sObjName.__getslice__(sObjName.find("."),sObjName.find(","))
-                     	if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
-                     		self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
-
-                    self.count += 1
-
-                    vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
-                #End If
-            #End while Loop
-
-            #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
-
-            self.win.doModalDialog()
-
-        else:
-
-            print "Insert Field-4"
+			    	#print oPar.Content
+		else:
+			print "Insert Field-4"
 
             self.win.endExecute()
-
+        self.win.doModalDialog()
 
     def getDesktop(self):
 
@@ -122,8 +117,8 @@ class Fields:
         return desktop
 
     def cmbVariable_selected(self,oItemEvent):
-    	self.sObj= self.win.getComboBoxSelectedText("cmbVariable")
-    	print self.sObj
+        self.sObj= self.win.getComboBoxSelectedText("cmbVariable")
+        print self.sObj
         if not self.win.getComboBoxSelectedText("cmbVariable") == "":
 
             sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
@@ -148,19 +143,19 @@ class Fields:
             cursor = doc.getCurrentController().getViewCursor()
 
             if self.win.getListBoxSelectedItem("lstFields") != "":
-              	#sObjName= self.win.getComboBoxSelectedText("cmbVariable").__getslice__(0,sValue.find("("))
+                  #sObjName= self.win.getComboBoxSelectedText("cmbVariable").__getslice__(0,sValue.find("("))
 
                 print
 
                 if cursor.TextTable==None:
-                 	text.insertString(cursor,"[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" , 0 )
+                     text.insertString(cursor,"[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" , 0 )
                 else:
-                  	oTable = cursor.TextTable
-                 	oCurCell = cursor.Cell
-                 	tableText = oTable.getCellByName( oCurCell.CellName )
-                 	cursor = tableText.createTextCursor()
-                 	cursor.gotoEndOfParagraph(True)
-                 	tableText.setString( "[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" )
+                     oTable = cursor.TextTable
+                     oCurCell = cursor.Cell
+                     tableText = oTable.getCellByName( oCurCell.CellName )
+                     cursor = tableText.createTextCursor()
+                     cursor.gotoEndOfParagraph(True)
+                     tableText.setString( "[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" )
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
@@ -185,7 +180,7 @@ class Fields:
 
             if (res[k]['type'] in recur) and (level>0):
 
-            	self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
+                self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
 
                 self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur, root+'/'+k)
 
@@ -211,3 +206,51 @@ class Fields:
             nIndex += 1
 
 Fields()
+
+
+
+"""            vOpenSearch = doc.createSearchDescriptor()
+
+            vCloseSearch = doc.createSearchDescriptor()
+
+            # Set the text for which to search and other
+            vOpenSearch.SearchString = "repeatIn"
+
+            vCloseSearch.SearchString = "')"
+
+            # Find the first open delimiter
+            vOpenFound = doc.findFirst(vOpenSearch)
+
+            while not vOpenFound==None:
+                #Search for the closing delimiter starting from the open delimiter
+                vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
+
+                if vCloseFound==None:
+                    print "Found an opening bracket but no closing bracket!"
+                    break
+
+                else:
+                    vOpenFound.gotoRange(vCloseFound, True)
+                    sObjName=vOpenFound.getString()
+                    if sObjName.__getslice__(sObjName.find("(")+1,sObjName.find(",")) == "objects":
+                        self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+                    sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+                    res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
+                    key = res.keys()
+                    key.sort()
+                    for k in key:
+                        #print k +":"+ sObjName.__getslice__(sObjName.find("."),sObjName.find(","))
+                         if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
+                             self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
+
+                    self.count += 1
+
+                    vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
+                #End If
+            #End while Loop
+
+            #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+"""
+
+
+

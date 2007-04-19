@@ -52,7 +52,13 @@ class Repeatln:
 
         if not docinfo.getUserFieldValue(3) == "":
             self.count=0
+            oParEnum = doc.getTextFields().createEnumeration()
+            while oParEnum.hasMoreElements():
+                oPar = oParEnum.nextElement()
+                if oPar.supportsService("com.sun.star.text.TextField.HiddenText"):
+                    self.count += 1
 
+            """
             vOpenSearch = doc.createSearchDescriptor()
 
             vCloseSearch = doc.createSearchDescriptor()
@@ -84,7 +90,7 @@ class Repeatln:
                     vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
                 #End If
             #End while Loop
-
+            """
             self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
 
             self.win.doModalDialog()
@@ -124,7 +130,7 @@ class Repeatln:
 
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
 
-            self.genTree(docinfo.getUserFieldValue(3),0,ending=['one2many','many2many'], recur=['many2one'])
+            self.genTree(docinfo.getUserFieldValue(3),1,ending=['one2many','many2many'], recur=['many2one'])
         else:
 
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
@@ -150,10 +156,18 @@ class Repeatln:
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" :
 
                     sObjName=""
+                    objField = doc.createInstance("com.sun.star.text.TextField.HiddenText")
+                    oInputField = doc.createInstance("com.sun.star.text.TextField.Input")
 
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
 
-                        text.insertString(cursor,"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]" , 0 )
+                        oInputField.Content =  "[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+
+                        #text.insertString(cursor,"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]" , 0 )
+
+                        objField.Content = "[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]" + "root"
+                        text.insertTextContent(cursor,oInputField,False)
+                        text.insertTextContent(cursor,objField,False)
 
                     else:
 
@@ -192,9 +206,16 @@ class Repeatln:
 
                         sObjName=sObjName.__getslice__(10,sObjName.find("')"))
 
+
                         if cursor.TextTable==None:
 
-                            text.insertString(cursor,"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" , 0 )
+                            objField.Content =  "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" + "child"
+                            oInputField.Content =  "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+
+                            #text.insertString(cursor,"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" , 0 )
+
+                            text.insertTextContent(cursor,oInputField,False)
+                            text.insertTextContent(cursor,objField,False)
                         else:
 
                             oTable = cursor.TextTable
@@ -207,7 +228,14 @@ class Repeatln:
 
                             cursor.gotoEndOfParagraph(True)
 
-                            tableText.setString( "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" )
+                            objField.Content =  oTable.Name
+
+                            oInputField.Content =  "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+
+                            #tableText.setString( "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" )
+
+                            tableText.insertTextContent(cursor,oInputField,False)
+                            tableText.insertTextContent(cursor,objField,False)
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
