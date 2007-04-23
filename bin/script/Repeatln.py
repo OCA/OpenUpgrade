@@ -211,10 +211,19 @@ class Repeatln:
                                 key.sort()
                                 sRelation=""
                                 for k in key:
-                                    print sItem.__getslice__(0,sItem.rfind("."))
-                                    if k == sItem.__getslice__(0,sItem.rfind(".")):
+                                    print sItem.__getslice__(sItem.find(".")+1,sItem.rfind(","))
+                                    sItemPart = sItem.__getslice__(sItem.find(".")+1,sItem.rfind(","))
+                                    if k == sItemPart.__getslice__(0,sItemPart.rfind(".")):
                                         sRelation=res[k]['relation']
-                                    print sRelation
+                                if sRelation == "":
+                                    print ""
+                                else:
+                                    ires = sock.execute('terp', 3, 'admin', sRelation , 'fields_get')
+                                    ikey = ires.keys()
+                                    for ik in ikey:
+                                        if ik == sItemPart.__getslice__(sItemPart.rfind(".")+1,sItemPart.__len__()):
+                                            print sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + ires[ik]['relation'] + ")"
+                                            self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + ires[ik]['relation'] + ")",1)
                             else:
                                 key.sort()
                                 for k in key:
@@ -248,13 +257,7 @@ Repeatln()
 
 
 """
-            kismat me hi tha tumse milna
-            pyar bana pyara bahana
-            mohobat nigaho me pal ne lagi
-            tuje jindgi kehjke bulane lagi
-            meri piya meri piya meri piya
-            hum tum mile u pyar me
-            mitne lagi tanhaiya
+            
             vOpenSearch = doc.createSearchDescriptor()
 
             vCloseSearch = doc.createSearchDescriptor()
