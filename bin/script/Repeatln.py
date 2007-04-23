@@ -202,7 +202,8 @@ class Repeatln:
                     if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                         sItem=oPar.Items.__getitem__(1)
                         if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
-                            self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+                            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+                            #self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
                         else:
                             sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
                             res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
@@ -211,7 +212,6 @@ class Repeatln:
                                 key.sort()
                                 sRelation=""
                                 for k in key:
-                                    print sItem.__getslice__(sItem.find(".")+1,sItem.rfind(","))
                                     sItemPart = sItem.__getslice__(sItem.find(".")+1,sItem.rfind(","))
                                     if k == sItemPart.__getslice__(0,sItemPart.rfind(".")):
                                         sRelation=res[k]['relation']
@@ -222,7 +222,6 @@ class Repeatln:
                                     ikey = ires.keys()
                                     for ik in ikey:
                                         if ik == sItemPart.__getslice__(sItemPart.rfind(".")+1,sItemPart.__len__()):
-                                            print sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + ires[ik]['relation'] + ")"
                                             self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + ires[ik]['relation'] + ")",1)
                             else:
                                 key.sort()
@@ -257,7 +256,7 @@ Repeatln()
 
 
 """
-            
+
             vOpenSearch = doc.createSearchDescriptor()
 
             vCloseSearch = doc.createSearchDescriptor()
