@@ -152,15 +152,14 @@ class Repeatln:
                             cursor = tableText.createTextCursor()
 
                             cursor.gotoEndOfParagraph(True)
-
-                            objField.Content =  oTable.Name
-
-                            oInputField.Content =  "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-
-                            #tableText.setString( "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" )
-
-                            tableText.insertTextContent(cursor,oInputField,False)
-                            tableText.insertTextContent(cursor,objField,False)
+                            print "table1"
+                            sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+                            sKey=u""+sKey.__getslice__(1,sKey.__len__())
+                            sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                            oInputList.Items = (sKey,sValue)
+                            print "table2"
+                            tableText.insertTextContent(cursor,oInputList,False)
+                            print "table3"
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
