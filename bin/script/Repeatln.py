@@ -49,49 +49,15 @@ class Repeatln:
         doc =desktop.getCurrentComponent()
 
         docinfo=doc.getDocumentInfo()
-
+        # find out how many objects are created in document
         if not docinfo.getUserFieldValue(3) == "":
             self.count=0
             oParEnum = doc.getTextFields().createEnumeration()
             while oParEnum.hasMoreElements():
                 oPar = oParEnum.nextElement()
-                if oPar.supportsService("com.sun.star.text.TextField.HiddenText"):
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     self.count += 1
-
-            """
-            vOpenSearch = doc.createSearchDescriptor()
-
-            vCloseSearch = doc.createSearchDescriptor()
-
-            # Set the text for which to search and other
-            vOpenSearch.SearchString = "repeatIn"
-
-            vCloseSearch.SearchString = "')"
-
-            # Find the first open delimiter
-            vOpenFound = doc.findFirst(vOpenSearch)
-
-            while not vOpenFound==None:
-
-                #Search for the closing delimiter starting from the open delimiter
-                vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
-
-                if vCloseFound==None:
-                    print "Found an opening bracket but no closing bracket!"
-
-                    break
-
-                else:
-
-                    vOpenFound.gotoRange(vCloseFound, True)
-
-                    self.count += 1
-
-                    vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
-                #End If
-            #End while Loop
-            """
-            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+            self.getList()
 
             self.win.doModalDialog()
 
@@ -129,8 +95,8 @@ class Repeatln:
             docinfo=doc.getDocumentInfo()
 
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
-
-            self.genTree(docinfo.getUserFieldValue(3),1,ending=['one2many','many2many'], recur=['many2one'])
+            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),1,ending=['one2many','many2many'], recur=['many2one'])
         else:
 
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
@@ -156,66 +122,25 @@ class Repeatln:
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" :
 
                     sObjName=""
-                    objField = doc.createInstance("com.sun.star.text.TextField.HiddenText")
-                    oInputField = doc.createInstance("com.sun.star.text.TextField.Input")
+                    #objField = doc.createInstance("com.sun.star.text.TextField.HiddenText")
+                    oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
 
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
-
-                        oInputField.Content =  "[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
-
-                        #text.insertString(cursor,"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]" , 0 )
-
-                        objField.Content = "[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]" + "root"
-                        text.insertTextContent(cursor,oInputField,False)
-                        text.insertTextContent(cursor,objField,False)
+                        sKey=u""+self.win.getListBoxSelectedItem("lstFields")
+                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+                        oInputList.Items = (sKey,sValue)
+                        text.insertTextContent(cursor,oInputList,False)
 
                     else:
-
-                        vOpenSearch = doc.createSearchDescriptor()
-
-                        vCloseSearch = doc.createSearchDescriptor()
-
-                        # Set the text for which to search and other
-                        vOpenSearch.SearchString = "(objects,'"
-
-                        vCloseSearch.SearchString = "')"
-
-                        print "abc"
-
-                        # Find the first open delimiter
-                        vOpenFound = doc.findFirst(vOpenSearch)
-
-                        while not vOpenFound==None:
-                            #Search for the closing delimiter starting from the open delimiter
-
-                            vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
-
-                            if vCloseFound==None:
-
-                                print "Found an opening bracket but no closing bracket!"
-
-                                break
-                            else:
-                                vOpenFound.gotoRange(vCloseFound, True)
-
-                                sObjName=vOpenFound.getString()
-
-                                vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
-                            #End If
-                        #End while Loop
-
-                        sObjName=sObjName.__getslice__(10,sObjName.find("')"))
-
+                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=sObjName.__getslice__(0,sObjName.find("("))
 
                         if cursor.TextTable==None:
-
-                            objField.Content =  "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" + "child"
-                            oInputField.Content =  "[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-
-                            #text.insertString(cursor,"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]" , 0 )
-
-                            text.insertTextContent(cursor,oInputField,False)
-                            text.insertTextContent(cursor,objField,False)
+                            sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+                            sKey=u""+sKey.__getslice__(1,sKey.__len__())
+                            sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                            oInputList.Items = (sKey,sValue)
+                            text.insertTextContent(cursor,oInputList,False)
                         else:
 
                             oTable = cursor.TextTable
@@ -264,6 +189,40 @@ class Repeatln:
             if (res[k]['type'] in recur) and (level>0):
 
                 self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur, root+'/'+k)
+    def getList(self):
+        #Perform checking that which object is to show in listbox
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        if not self.count == 0:
+            if self.count >= 1:
+                oParEnum = doc.getTextFields().createEnumeration()
+                while oParEnum.hasMoreElements():
+                    oPar = oParEnum.nextElement()
+                    if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                        sItem=oPar.Items.__getitem__(1)
+                        if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
+                            self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+                        else:
+                            sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+                            res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
+                            key = res.keys()
+                            if not sItem.__getslice__(sItem.find(".")+1,sItem.rfind(",")).find(".") == -1:
+                                key.sort()
+                                sRelation=""
+                                for k in key:
+                                    print sItem.__getslice__(0,sItem.rfind("."))
+                                    if k == sItem.__getslice__(0,sItem.rfind(".")):
+                                        sRelation=res[k]['relation']
+                                    print sRelation
+                            else:
+                                key.sort()
+                                for k in key:
+                                    if k == sItem.__getslice__(sItem.rfind(".")+1,sItem.rfind(",")):
+                                        self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + res[k]['relation'] + ")",1)
+        else:
+            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+
 
     def getModule(self,oSocket):
 
@@ -286,3 +245,45 @@ class Repeatln:
             nIndex += 1
 
 Repeatln()
+
+
+"""
+            kismat me hi tha tumse milna
+            pyar bana pyara bahana
+            mohobat nigaho me pal ne lagi
+            tuje jindgi kehjke bulane lagi
+            meri piya meri piya meri piya
+            hum tum mile u pyar me
+            mitne lagi tanhaiya
+            vOpenSearch = doc.createSearchDescriptor()
+
+            vCloseSearch = doc.createSearchDescriptor()
+
+            # Set the text for which to search and other
+            vOpenSearch.SearchString = "repeatIn"
+
+            vCloseSearch.SearchString = "')"
+
+            # Find the first open delimiter
+            vOpenFound = doc.findFirst(vOpenSearch)
+
+            while not vOpenFound==None:
+
+                #Search for the closing delimiter starting from the open delimiter
+                vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
+
+                if vCloseFound==None:
+                    print "Found an opening bracket but no closing bracket!"
+
+                    break
+
+                else:
+
+                    vOpenFound.gotoRange(vCloseFound, True)
+
+                    self.count += 1
+
+                    vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
+                #End If
+            #End while Loop
+            """
