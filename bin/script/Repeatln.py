@@ -202,7 +202,7 @@ class Repeatln:
                         sItem=oPar.Items.__getitem__(1)
                         if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
                             self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
-                            #self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+                            self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
                         else:
                             sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
                             res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
