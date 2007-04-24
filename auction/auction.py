@@ -49,7 +49,6 @@ auction_artists()
 #----------------------------------------------------------
 class auction_dates(osv.osv):
 	_name = "auction.dates"
-	_inherits = {'res.project': 'project_id'}
 
 	def _adjudication_get(self, cr, uid, ids, prop, unknow_none,unknow_dict):
 		tmp={}
@@ -62,6 +61,7 @@ class auction_dates(osv.osv):
 		return tmp
 
 	_columns = {
+		'name': fields.char('Auction date', size=64, required=True),
 		'expo1': fields.date('First Exposition Day', required=True),
 		'expo2': fields.date('Last Exposition Day', required=True),
 		'auction1': fields.date('First Auction Day', required=True),
