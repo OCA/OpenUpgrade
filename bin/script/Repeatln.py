@@ -105,7 +105,7 @@ class Repeatln:
 
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
 
-            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),1,ending=['one2many','many2many'], recur=['many2one'])
+            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),1,ending=['one2many','many2many'], recur=['one2many','many2many'])
         else:
 
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
@@ -203,8 +203,8 @@ class Repeatln:
 
                 self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
 
-            if (res[k]['type'] in recur):
-                self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
+            #if (res[k]['type'] in recur):
+                #self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
 
             if (res[k]['type'] in recur) and (level>0):
 
