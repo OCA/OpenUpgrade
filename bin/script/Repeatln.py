@@ -51,12 +51,19 @@ class Repeatln:
         docinfo=doc.getDocumentInfo()
         # find out how many objects are created in document
         if not docinfo.getUserFieldValue(3) == "":
+
             self.count=0
+
             oParEnum = doc.getTextFields().createEnumeration()
+
             while oParEnum.hasMoreElements():
+
                 oPar = oParEnum.nextElement()
+
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+
                     self.count += 1
+
             self.getList()
 
             self.win.doModalDialog()
@@ -95,7 +102,9 @@ class Repeatln:
             docinfo=doc.getDocumentInfo()
 
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
+
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
+
             self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),1,ending=['one2many','many2many'], recur=['many2one'])
         else:
 
@@ -126,20 +135,30 @@ class Repeatln:
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
 
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
+
                         sKey=u""+self.win.getListBoxSelectedItem("lstFields")
+
                         sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+
                         oInputList.Items = (sKey,sValue)
+
                         text.insertTextContent(cursor,oInputList,False)
 
                     else:
                         sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+
                         sObjName=sObjName.__getslice__(0,sObjName.find("("))
 
                         if cursor.TextTable==None:
+
                             sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+
                             sKey=u""+sKey.__getslice__(1,sKey.__len__())
+
                             sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+
                             oInputList.Items = (sKey,sValue)
+
                             text.insertTextContent(cursor,oInputList,False)
                         else:
 
@@ -152,14 +171,16 @@ class Repeatln:
                             cursor = tableText.createTextCursor()
 
                             cursor.gotoEndOfParagraph(True)
-                            print "table1"
+
                             sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+
                             sKey=u""+sKey.__getslice__(1,sKey.__len__())
+
                             sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+
                             oInputList.Items = (sKey,sValue)
-                            print "table2"
+
                             tableText.insertTextContent(cursor,oInputList,False)
-                            print "table3"
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
@@ -188,48 +209,118 @@ class Repeatln:
             if (res[k]['type'] in recur) and (level>0):
 
                 self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur, root+'/'+k)
+
     def getList(self):
         #Perform checking that which object is to show in listbox
         desktop=getDesktop()
+
         doc =desktop.getCurrentComponent()
+
         docinfo=doc.getDocumentInfo()
+
+        sMain=""
+
         if not self.count == 0:
+
             if self.count >= 1:
+
                 oParEnum = doc.getTextFields().createEnumeration()
+
                 while oParEnum.hasMoreElements():
+
                     oPar = oParEnum.nextElement()
+
                     if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+
                         sItem=oPar.Items.__getitem__(1)
+
                         if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
+
+                            sMain = sItem.__getslice__(sItem.find(",'")+2,sItem.find("')"))
+
+                oParEnum = doc.getTextFields().createEnumeration()
+
+                while oParEnum.hasMoreElements():
+
+                    oPar = oParEnum.nextElement()
+
+                    if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+
+                        sItem=oPar.Items.__getitem__(1)
+
+                        if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
+                         #   print oMain
                             self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+
                             self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+
                         else:
-                            sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
-                            res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
-                            key = res.keys()
-                            if not sItem.__getslice__(sItem.find(".")+1,sItem.rfind(",")).find(".") == -1:
-                                key.sort()
-                                sRelation=""
-                                for k in key:
-                                    sItemPart = sItem.__getslice__(sItem.find(".")+1,sItem.rfind(","))
-                                    if k == sItemPart.__getslice__(0,sItemPart.rfind(".")):
-                                        sRelation=res[k]['relation']
-                                if sRelation == "":
-                                    print ""
-                                else:
-                                    ires = sock.execute('terp', 3, 'admin', sRelation , 'fields_get')
-                                    ikey = ires.keys()
-                                    for ik in ikey:
-                                        if ik == sItemPart.__getslice__(sItemPart.rfind(".")+1,sItemPart.__len__()):
-                                            self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + ires[ik]['relation'] + ")",1)
+
+                            sTemp=sItem.__getslice__(sItem.find("(")+1,sItem.find(","))
+
+                            if sMain == sTemp.__getslice__(0,sTemp.find(".")):
+
+                                self.getRelation(docinfo.getUserFieldValue(3), sItem.__getslice__(sItem.find(".")+1,sItem.find(",")), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
+
                             else:
-                                key.sort()
-                                for k in key:
-                                    if k == sItem.__getslice__(sItem.rfind(".")+1,sItem.rfind(",")):
-                                        self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + res[k]['relation'] + ")",1)
+
+                                sPath=self.getPath(sItem.__getslice__(sItem.find("(")+1,sItem.find(",")), sMain)
+
+                                self.getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
+
         else:
+
             self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
 
+    def getPath(self,sPath,sMain):
+
+        desktop=getDesktop()
+
+        doc =desktop.getCurrentComponent()
+
+        oParEnum = doc.getTextFields().createEnumeration()
+
+        while oParEnum.hasMoreElements():
+
+            oPar = oParEnum.nextElement()
+
+            if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+
+                sItem=oPar.Items.__getitem__(1)
+
+                if sPath.__getslice__(0,sPath.find(".")) == sMain:
+
+                    return sPath
+
+                else:
+
+                    if sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")) == sPath.__getslice__(0,sPath.find(".")):
+
+                        sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
+
+                        self.getPath(sPath, sMain)
+
+    def getRelation(self, sRelName, sItem, sObjName ):
+
+        sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+
+        res = sock.execute('terp', 3, 'admin', sRelName , 'fields_get')
+
+        key = res.keys()
+
+        for k in key:
+
+            if sItem.find(".") == -1:
+
+                if k == sItem:
+
+                    self.insVariable.addItem(sObjName + "(" + res[k]['relation'] + ")",1)
+
+                    return 0
+
+            if k == sItem.__getslice__(0,sItem.find(".")):
+
+                self.getRelation(res[k]['relation'], sItem.__getslice__(sItem.find(".")+1,sItem.__len__()), sObjName)
 
     def getModule(self,oSocket):
 
