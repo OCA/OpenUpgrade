@@ -14,9 +14,8 @@ class report_commission_month(osv.osv):
         'in_date': fields.date('Invoice Date', readonly=True),
         'comrate': fields.float('Commission Rate (%)', readonly=True),
         'commission': fields.float('Commissions Amount', readonly=True),
-        'state': fields.char('Invoice State', size=64,readonly=True),
         'pdate': fields.date('Invoice Paid Date', readonly=True),
-
+        'state': fields.char('State',size=64, readonly=True),
     }
     _order = 'name,sono,state'
 
