@@ -74,14 +74,15 @@ class auction_dates(osv.osv):
 		'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
-		'project_id': fields.many2one('res.project', 'Project', required=True),
+		'project_id': fields.many2one('project.project', 'Project', required=True),
 		'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 	}
 	_defaults = {
-		'state': lambda uid, page, ref: 'draft'
+		#'state': lambda uid, page, ref: 'draft'
+		'state': lambda *a: 'draft',
 	}
 	_order = "auction1 desc"
-	
+
 	def close(self, cr, uid, ids, *args):
 		"""
 		Close an auction date.
@@ -140,9 +141,9 @@ class auction_deposit(osv.osv):
 		'total_neg': fields.boolean('Allow Negative Amount'),
 	}
 	_defaults = {
-		'date_dep': lambda x,y,z: time.strftime('%Y-%m-%d'),
-		'method': lambda x,y,z: 'keep',
-		'total_neg': lambda x,y,z: False
+		'date_dep': lambda *a: time.strftime('%Y-%m-%d'),
+		'method': lambda *a: 'keep',
+		'total_neg': lambda *a: False
 	}
 	_constraints = [
 	#	(_inv_uniq, 'Twice the same inventory number !', ['name'])
@@ -220,12 +221,12 @@ class auction_lot_category(osv.osv):
 			'Aie Category'),
 	}
 	_defaults = {
-		'active' : lambda x,y,z: 1,
-		'aie_categ' : lambda obj, cr, uid: 41,
+		'active' : lambda *a: 1,
+		'aie_categ' : lambda *a:1,
 	}
 auction_lot_category()
 
-def _type_get(self, cr, uid):
+def _type_get(self, cr, uid,ids):
 	cr.execute('select name, name from auction_lot_category order by name')
 	return cr.fetchall()
 
@@ -276,7 +277,9 @@ class auction_lots(osv.osv):
 		'vnd_lim_net': fields.boolean('Net ?'),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True)
 	}
-	_defaults = {'state':lambda uid,page, ref: 'draft'}
+	_defaults = {
+				'state':lambda *a: 'draft'
+				}
 	_constraints = [
 #		(_inv_constraint, 'Twice the same inventory number !', ['lot_num','bord_vnd_id'])
 	]
@@ -298,7 +301,7 @@ class auction_lots(osv.osv):
 	def _sum_taxes_by_type_and_id(self, taxes):
 		"""
 		PARAMS: taxes: a list of dictionaries of the form {'id':id, 'amount':amount, ...}
-		RETURNS	: a list of dictionaries of the form {'id':id, 'amount':amount, ...}; one dictionary per unique id. 
+		RETURNS	: a list of dictionaries of the form {'id':id, 'amount':amount, ...}; one dictionary per unique id.
 			The others fields in the dictionaries (other than id and amount) are those of the first tax with a particular id.
 		"""
 		taxes_summed = {}
@@ -308,9 +311,9 @@ class auction_lots(osv.osv):
 				taxes_summed[key]['amount'] += tax['amount']
 			else:
 				taxes_summed[key] = tax
-	
+
 		return taxes_summed.values()
-	
+
 	def compute_buyer_costs(self, cr, uid, ids):
 		lots = self.browse(cr, uid, ids)
 #CHECKME: est-ce que ca vaudrait la peine de faire des groupes de lots qui ont les memes couts pour passer des listes de lots a compute?
@@ -326,32 +329,32 @@ class auction_lots(osv.osv):
 
 	def _compute_lot_seller_costs(self, cr, uid, lot, manual_only=False):
 		costs = []
-		
+
 		tax_cost_ids = [i.id for i in lot.auction_id.seller_costs]
-			
+
 		# if there is a specific deposit cost for this depositer, add it
 		border_id = lot.bord_vnd_id
 		if border_id:
 			if border_id.tax_id:
 				tax_cost_ids.append(border_id.tax_id.id)
 		tax_costs = self.pool.get('account.tax').compute(cr, uid, tax_cost_ids, lot.obj_price, 1)
-		
+
 		# delete useless keys from the costs computed by the tax object... this is useless but cleaner...
 		for cost in tax_costs:
 			del cost['account_paid_id']
 			del cost['account_collected_id']
-			
+
 		if not manual_only:
 			costs.extend(tax_costs)
 			for c in costs:
 				c.update({'type': 0})
-		
+
 		if lot.vnd_lim_net and lot.obj_price>0:
 #FIXME: la string 'remise lot' devrait passer par le systeme de traductions
 			obj_price_wh_costs = reduce(lambda x, y: x + y['amount'], tax_costs, lot.obj_price)
 			if obj_price_wh_costs < lot.vnd_lim:
 				costs.append({	'type': 1,
-								'id': lot.obj_num, 
+								'id': lot.obj_num,
 								'name': 'Remise lot '+ str(lot.obj_num),
 								'amount': lot.vnd_lim - obj_price_wh_costs,
 								'account_id': lot.auction_id.acc_refund.id }
@@ -377,7 +380,7 @@ class auction_lots(osv.osv):
 			total_cost = 0
 			for lot in lots:
 				total_adj += lot.obj_price or 0.0
-				lot_costs = self._compute_lot_seller_costs(cr, uid, lot, manual_only) 
+				lot_costs = self._compute_lot_seller_costs(cr, uid, lot, manual_only)
 				for c in lot_costs:
 					total_cost += c['amount']
 				costs.extend(lot_costs)
@@ -394,7 +397,7 @@ class auction_lots(osv.osv):
 				c = {'type':3, 'id':new_id, 'amount':-total_cost-total_adj, 'name':'Ristourne', 'account_id':lots[0].auction_id.acc_refund.id}
 				costs.append(c)
 		return self._sum_taxes_by_type_and_id(costs)
-	
+
 	# sum remise limite net and ristourne
 	def compute_seller_costs_summed(self, cr, uid, ids):
 		taxes = self.compute_seller_costs(cr, uid, ids)
@@ -402,12 +405,12 @@ class auction_lots(osv.osv):
 		for tax in taxes:
 			if tax['type'] == 1:
 				tax['id'] = 0
-#FIXME: translate tax names 
+#FIXME: translate tax names
 				tax['name'] = 'Remise limite nette'
 			elif tax['type'] == 2:
 				tax['id'] = 0
 				tax['name'] = 'Frais divers'
-			elif tax['type'] == 3: 
+			elif tax['type'] == 3:
 				tax['id'] = 0
 				tax['name'] = 'Rist.'
 			key = (tax['type'], tax['id'])
@@ -416,16 +419,16 @@ class auction_lots(osv.osv):
 			else:
 				taxes_summed[key] = tax
 		return taxes_summed.values()
-	
+
 	# creates the transactions between the auction company and the seller
-	# this is done by creating a new in_invoice for each 
+	# this is done by creating a new in_invoice for each
 	def seller_trans_create(self, cr, uid, ids):
 		"""
 			Create a seller invoice for each bord_vnd_id, for selected ids.
 		"""
 		lots = self.browse(cr, uid, ids)
 
-		# group objects (lots) by (deposit id, auction id) 
+		# group objects (lots) by (deposit id, auction id)
 		# ie create a dictionary containing lists of objects
 		bord_lots = {}
 		for lot in lots:
@@ -457,7 +460,7 @@ class auction_lots(osv.osv):
 						lot_name = lot_name[:37].encode('utf8') + '...'
 					else:
 						lot_name = lot_name.encode('utf8')
-					
+
 #CHECKME: c'est normal que tax_id_list soit calcule pr ts les objets et non	par objet????
 					lines.append({
 						'name': lot_name,
@@ -466,7 +469,7 @@ class auction_lots(osv.osv):
 						'quantity': 1,
 						'invoice_line_tax_id': tax_id_list})
 
-			
+
 			# create manual tax lines (if some objects have a net limit or some extra taxes have been entered)
 #CHECKME: these 4 lines are untested !!!!!!!!!!!!!!!!!!!!!
 			lot_ids = [l.id for l in lots]
@@ -487,9 +490,9 @@ class auction_lots(osv.osv):
 					'address_invoice_id': addresses['invoice'],
 					'account_id': acc_payable,
 					'invoice_line': map(lambda x:(0,0,x), lines),
-					'tax_line': map(lambda x: (0,0,x), manual_tax_lines) 
+					'tax_line': map(lambda x: (0,0,x), manual_tax_lines)
 				})
-				
+
 				wf_service = netsvc.LocalService("workflow")
 #Ged> proforma???? c'est normal ca?
 				wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
@@ -497,7 +500,7 @@ class auction_lots(osv.osv):
 
 	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
 		lots = self.read(cr, uid, ids, ['ach_inv_id'])
-		
+
 		num_invoiced = 0
 		inv_ids = {}
 		for lot in lots:
@@ -512,14 +515,14 @@ class auction_lots(osv.osv):
 				raise orm.except_orm('UserError', ('%d object(s) are already invoiced !' % (num_invoiced,), 'init'))
 			else:
 				wf_service = netsvc.LocalService("workflow")
-				# if the user gave an invoice number, cancel the old invoices containing 
+				# if the user gave an invoice number, cancel the old invoices containing
 				# the selected objects
-				for id in inv_ids: 
+				for id in inv_ids:
 					wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_cancel', cr)
 
 		# create a new invoice for the selected objects
 		return self.lots_invoice(cr, uid, ids, invoice_number, buyer_id, action)
-		
+
 	def lots_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
 		"""
 			Create an invoice for selected lots (IDS) to BUYER_ID.
@@ -543,14 +546,14 @@ class auction_lots(osv.osv):
 		auction_ref = auction.auction1
 		account_id = auction.acc_income
 
-#TODO: passer par le systeme de traduction		
+#TODO: passer par le systeme de traduction
 		auction_name = u'Veiling van ' + auction_ref + u', Kopersnr: '+(partner_ref or '')+ u', %d lot(en)' %(len(lots),)
 		account_receive_id=ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (buyer_id or []) and [('id',str(buyer_id))] )[0][2]
 
 		lines = []
 		for lot in lots:
 			price = lot.obj_price or 0.0
-			
+
 			lot_name = str(lot.obj_num) + '. ' + lot.name.decode('utf8')
 			if len(lot_name)>40:
 				lot_name = lot_name[:37].encode('utf8') + '...'
@@ -561,7 +564,7 @@ class auction_lots(osv.osv):
 			costs_ids = [c.id for c in auction.buyer_costs]
 			if lot.author_right:
 				costs_ids.append(lot.author_right.id)
-				
+
 			lines.append((0,False, {'name': lot_name, 'quantity':1, 'account_id':account_id, 'price_unit':price, 'invoice_line_tax_id': costs_ids}))
 
 		if buyer_id:
@@ -587,7 +590,7 @@ class auction_lots(osv.osv):
 
 		if invoice_number:
 			new_invoice['number'] = invoice_number
-			
+
 		inv_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
 
 		if action:
@@ -600,16 +603,16 @@ class auction_lots(osv.osv):
 		lots = self.browse(cr, uid, ids)
 		if not len(lots):
 			return True
-			
+
 		partner_ref = lots[0].ach_login
 		auction = lots[0].auction_id
 		project_id = auction.project_id.id
 		auction_ref = auction.auction1
 		account_src_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (buyer_id or []) and [('id',str(buyer_id))] )[0][2]
-		
-#TODO: passer par le systeme de traduction		
+
+#TODO: passer par le systeme de traduction
 		auction_name = u'Auction ' + auction_ref + u', Part.: '+(partner_ref or '')+ u', %d lot(s)' %(len(lots),)
-		
+
 		transfer = {
 			'name': auction_name[:60],
 			'project_id': project_id,
@@ -629,7 +632,7 @@ class auction_lots(osv.osv):
 	def lots_cancel_payment(self, cr, uid, ids):
 		cr.execute('select id,ach_pay_id,ach_inv_id,state from auction_lots where ach_pay_id is not null and id in ('+','.join(map(str, ids))+')')
 		results = cr.dictfetchall()
-		
+
 		pay_ids = []			# list of payment ids
 		lot_invoiced_ids = []	# list of lot ids whose state is 'paid' and inv_id is not null
 		lot_paid_ids = []		# list of lot ids whose state is 'paid' and inv_id is null
@@ -662,7 +665,7 @@ class auction_lots(osv.osv):
 		if len(not_paid_ids):
 			self.write(cr,uid,not_paid_ids, {'ach_pay_id':False})
 		return True
-		
+
 	def numerotate(self, cr, uid, ids):
 		cr.execute('select auction_id from auction_lots where id=%d', (ids[0],))
 		auc_id = cr.fetchone()[0]
