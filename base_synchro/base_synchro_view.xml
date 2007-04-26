@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+		<record model="ir.ui.view" id="view_transfer_form">
+			<field name="name">base.synchro.obj.form</field>
+			<field name="model">base.synchro.obj</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Transfer Details">
+					<field name="local_id" select="1" />
+					<field name="remote_id" select="1" />
+					<field name="user_id" select="1" />
+					<field name="write_date" select="1" />
+					<field name="model_id" select="1" />
+					<field name="server_url" select="1" />
+					<field name="db_name" select="1" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_regclass_tree">
+			<field name="name">base.synchro.obj.tree</field>
+			<field name="model">base.synchro.obj</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Class">
+					<field name="local_id"/>
+					<field name="remote_id"/>
+					<field name="user_id"/>
+					<field name="write_date"/>
+					<field name="model_id"/>
+					<field name="server_url"/>
+					<field name="db_name" select="1" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_transfer_tree">
+			<field name="name">action.transfer.form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">base.synchro.obj</field>
+			<field name="view_type">form</field>
+		</record>
+
+<!--		<record model="ir.actions.act_window" id="action_transfer_form">
+			<field name="name">action.transfer.form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">base.synchro.obj</field>
+			<field name="view_type">form</field>
+		</record>-->
+		<menuitem name="Financial Management/Configuration/Analytic Accounts/Form Transfer" action="action_transfer_tree" id="transfer_menu_id" />
+
+	</data>
+</terp>
