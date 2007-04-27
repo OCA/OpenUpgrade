@@ -74,7 +74,6 @@ class auction_dates(osv.osv):
 		'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
-		'project_id': fields.many2one('project.project', 'Project', required=True),
 		'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 	}
 	_defaults = {
@@ -484,7 +483,6 @@ class auction_lots(osv.osv):
 					'state': 'draft',
 					'reference': 'Auction',	#CHECKME: c'est pas un peu court?
 					'partner_ref': lot.bord_vnd_id.name, #CHECKME: c'est juste ca?
-					'project_id': lot.auction_id.project_id.id,
 					'partner_id': partner_id,
 					'address_contact_id': addresses['contact'],
 					'address_invoice_id': addresses['invoice'],
@@ -542,7 +540,6 @@ class auction_lots(osv.osv):
 
 		partner_ref = lots[0].ach_login
 		auction = lots[0].auction_id
-		proj_id = auction.project_id.id
 		auction_ref = auction.auction1
 		account_id = auction.acc_income
 
@@ -575,7 +572,6 @@ class auction_lots(osv.osv):
 		new_invoice = {
 			'name': auction_name[:60],
 			'reference': auction_ref,
-			'project_id': proj_id,
 			'state': 'draft',
 			'partner_id': buyer_id,
 			'address_contact_id': adrs['contact'],
@@ -606,7 +602,6 @@ class auction_lots(osv.osv):
 
 		partner_ref = lots[0].ach_login
 		auction = lots[0].auction_id
-		project_id = auction.project_id.id
 		auction_ref = auction.auction1
 		account_src_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (buyer_id or []) and [('id',str(buyer_id))] )[0][2]
 
@@ -615,7 +610,6 @@ class auction_lots(osv.osv):
 
 		transfer = {
 			'name': auction_name[:60],
-			'project_id': project_id,
 			'partner_id': buyer_id,
 			'reference': auction_ref,
 			'account_src_id': account_src_id,
