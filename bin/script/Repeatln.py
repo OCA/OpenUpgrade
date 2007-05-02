@@ -36,7 +36,8 @@ class Repeatln:
         #self.getModule(sock)
 
         self.sObj=None
-
+        self.aItemList=[]
+        self.aComponentAdd=[]
         self.win.addButton('btnOK',-5 ,-25,45,15,'Ok'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
@@ -341,6 +342,69 @@ class Repeatln:
             self.insVariable.addItem(res[nIndex]['model'],0)
 
             nIndex += 1
+
+
+    def getChildTable(oPar,sTableName=""):
+        sNames = oPar.getCellNames()
+        for val in sNames:
+            oCell = oPar.getCellByName(val)
+            oTCurs = oCell.createTextCursor()
+            oCurEnum = oTCurs.createEnumeration()
+            while oCurEnum.hasMoreElements():
+                oCur = oCurEnum.nextElement()
+                if oCur.supportsService("com.sun.star.text.TextTable"):
+                    print oCur.Name
+                    print oCell.CellName
+                    if sTableName=="":
+                        getChildTable(oCur,oPar.Name)
+                    else:
+                        getChildTable(oCur,sTableName+"."+oPar.Name)
+                else:
+                    oSecEnum = oCur.createEnumeration()
+                    while oSecEnum.hasMoreElements():
+                        oSubSection = oSecEnum.nextElement()
+                        if oSubSection.supportsService("com.sun.star.text.TextField"):
+                            if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
+                                self.aItemList.append(oSubSection.TextField.Items)
+                            if sTableName=="":
+                                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+                                    self.aComponentAdd.append(oPar.Name)
+                            else:
+                                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+                                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
+        return 0
+    def EnumerateParagraphs():
+        localContext = uno.getComponentContext()
+
+        resolver = localContext.ServiceManager.createInstanceWithContext(
+                        "com.sun.star.bridge.UnoUrlResolver", localContext )
+        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
+        remoteContext = smgr.getPropertyValue( "DefaultContext" )
+        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
+        Doc =desktop.getCurrentComponent()
+        oVC = Doc.CurrentController.getViewCursor()
+        oParEnum = Doc.getText().createEnumeration()
+        while oParEnum.hasMoreElements():
+            oPar = oParEnum.nextElement()
+            #if oPar.supportsService("com.sun.star.text.Paragraph"):
+                #print oPar.getAnchor().getAvailableServiceNames()#createContentEnumeration("com.sun.star.text.TextContent")
+            if oPar.supportsService("com.sun.star.text.TextTable"):
+                getChildTable(oPar)
+            if oPar.supportsService("com.sun.star.text.Paragraph"):
+                if oPar.supportsService("com.sun.star.text.TextContent"):
+                    oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
+                    if oPar.getAnchor().TextField:
+                        aItemList.append( oPar.getAnchor().TextField.Items )
+                        aComponentAdd.append("Document")
+        #i=0
+        #print aItemList.__len__()
+        #print aComponentAdd.__len__()
+
+        #for i in range(aItemList.__len__()):
+            #print aItemList[i]
+        #for i in range(aComponentAdd.__len__()):
+            #print self.aComponentAdd[i]
+
 
 Repeatln()
 
