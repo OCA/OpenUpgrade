@@ -5,10 +5,6 @@ from com.sun.star.task import XJobExecutor
 from lib.gui import *
 import xmlrpclib
 
-    #-----------------------------------------------------
-    #  Implementaion of DBModalDialog Class
-    #-----------------------------------------------------
-
 class Repeatln:
     def __init__(self):
 
@@ -35,19 +31,32 @@ class Repeatln:
 
         #self.getModule(sock)
 
-        self.sObj=None
-        self.aItemList=[]
-        self.aComponentAdd=[]
         self.win.addButton('btnOK',-5 ,-25,45,15,'Ok'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
         self.win.addButton('btnCancel',-5 - 45 - 5 ,-25,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        # Get the object of current document
+        self.sObj=None
+
+        self.aItemList=[]
+
+        self.aComponentAdd=[]
+
+        self.aObjectList=[]
+
+        self.EnumDocument()
+
         desktop=getDesktop()
 
         doc =desktop.getCurrentComponent()
+
+        #oParEnum = doc.getTextFields().createEnumeration()
+
+        #for i in range(self.aComponentAdd.__len__()):
+        #    print self.aComponentAdd[i]
+        # Get the object of current document
+
 
         docinfo=doc.getDocumentInfo()
         # find out how many objects are created in document
@@ -66,6 +75,31 @@ class Repeatln:
                     self.count += 1
 
             self.getList()
+            cursor = doc.getCurrentController().getViewCursor()
+            #for i in range(self.aObjectList.__len__()):
+            text=cursor.getText()
+            tcur=text.createTextCursorByRange(cursor)
+            for j in range(self.aObjectList.__len__()):
+                if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == "Objects":
+                    self.insVariable.addItem(self.aObjectList[j],1)
+
+            if not tcur.TextTable:
+                for i in range(self.aItemList.__len__()):
+                    print self.aComponentAdd[i]
+                    if self.aComponentAdd[i]=="Document":
+
+                        sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+                        print sLVal + "--" + self.aItemList[i].__getitem__(1)
+                        for j in range(self.aObjectList.__len__()):
+                            print self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("("))
+                            if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+
+                                self.insVariable.addItem(self.aObjectList[j],1)
+
+            else:
+                print "Still Under Construction"
+
+
 
             self.win.doModalDialog()
 
@@ -240,6 +274,8 @@ class Repeatln:
                             sMain = sItem.__getslice__(sItem.find(",'")+2,sItem.find("')"))
 
                 oParEnum = doc.getTextFields().createEnumeration()
+                self.aObjectList.append("Objects(" + docinfo.getUserFieldValue(3) + ")")
+                #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
 
                 while oParEnum.hasMoreElements():
 
@@ -250,10 +286,9 @@ class Repeatln:
                         sItem=oPar.Items.__getitem__(1)
 
                         if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
-                         #   print oMain
-                            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
-
-                            self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+                        #   print oMain
+                            self.aObjectList.append(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")")
+                            #self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
 
                         else:
 
@@ -270,8 +305,8 @@ class Repeatln:
                                 self.getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
 
         else:
-
-            self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+            self.aObjectList.append("Objects(" + docinfo.getUserFieldValue(3) + ")")
+            #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
 
     def getPath(self,sPath,sMain):
 
@@ -315,7 +350,8 @@ class Repeatln:
 
                 if k == sItem:
 
-                    self.insVariable.addItem(sObjName + "(" + res[k]['relation'] + ")",1)
+                    self.aObjectList.append(sObjName + "(" + res[k]['relation'] + ")")
+                    #self.insVariable.addItem(sObjName + "(" + res[k]['relation'] + ")",1)
 
                     return 0
 
@@ -344,58 +380,89 @@ class Repeatln:
             nIndex += 1
 
 
-    def getChildTable(oPar,sTableName=""):
+    def getChildTable(self,oPar,sTableName=""):
         sNames = oPar.getCellNames()
-        for val in sNames:
-            oCell = oPar.getCellByName(val)
-            oTCurs = oCell.createTextCursor()
-            oCurEnum = oTCurs.createEnumeration()
-            while oCurEnum.hasMoreElements():
-                oCur = oCurEnum.nextElement()
-                if oCur.supportsService("com.sun.star.text.TextTable"):
-                    print oCur.Name
-                    print oCell.CellName
-                    if sTableName=="":
-                        getChildTable(oCur,oPar.Name)
-                    else:
-                        getChildTable(oCur,sTableName+"."+oPar.Name)
-                else:
-                    oSecEnum = oCur.createEnumeration()
-                    while oSecEnum.hasMoreElements():
-                        oSubSection = oSecEnum.nextElement()
-                        if oSubSection.supportsService("com.sun.star.text.TextField"):
-                            if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
-                                self.aItemList.append(oSubSection.TextField.Items)
-                            if sTableName=="":
-                                if  self.aComponentAdd.__contains__(oPar.Name)==False:
-                                    self.aComponentAdd.append(oPar.Name)
-                            else:
-                                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
-                                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
-        return 0
-    def EnumerateParagraphs():
-        localContext = uno.getComponentContext()
 
-        resolver = localContext.ServiceManager.createInstanceWithContext(
-                        "com.sun.star.bridge.UnoUrlResolver", localContext )
-        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
-        remoteContext = smgr.getPropertyValue( "DefaultContext" )
-        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
+        for val in sNames:
+
+            oCell = oPar.getCellByName(val)
+
+            oTCurs = oCell.createTextCursor()
+
+            oCurEnum = oTCurs.createEnumeration()
+
+            while oCurEnum.hasMoreElements():
+
+                oCur = oCurEnum.nextElement()
+
+                if oCur.supportsService("com.sun.star.text.TextTable"):
+
+                    if sTableName=="":
+
+                        self.getChildTable(oCur,oPar.Name)
+
+                    else:
+
+                        self.getChildTable(oCur,sTableName+"."+oPar.Name)
+
+                else:
+
+                    oSecEnum = oCur.createEnumeration()
+
+                    while oSecEnum.hasMoreElements():
+
+                        oSubSection = oSecEnum.nextElement()
+
+                        if oSubSection.supportsService("com.sun.star.text.TextField"):
+
+                            if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
+
+                                self.aItemList.append(oSubSection.TextField.Items)
+
+                            if sTableName=="":
+
+                                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+
+                                    self.aComponentAdd.append(oPar.Name)
+
+                            else:
+
+                                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+
+                                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
+
+        return 0
+
+    def EnumDocument(self):
+
+        desktop = self.getDesktop()
+
         Doc =desktop.getCurrentComponent()
+
         oVC = Doc.CurrentController.getViewCursor()
+
         oParEnum = Doc.getText().createEnumeration()
+
         while oParEnum.hasMoreElements():
+
             oPar = oParEnum.nextElement()
-            #if oPar.supportsService("com.sun.star.text.Paragraph"):
-                #print oPar.getAnchor().getAvailableServiceNames()#createContentEnumeration("com.sun.star.text.TextContent")
+
             if oPar.supportsService("com.sun.star.text.TextTable"):
-                getChildTable(oPar)
+
+                self.getChildTable(oPar)
+
             if oPar.supportsService("com.sun.star.text.Paragraph"):
+
                 if oPar.supportsService("com.sun.star.text.TextContent"):
+
                     oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
+
                     if oPar.getAnchor().TextField:
-                        aItemList.append( oPar.getAnchor().TextField.Items )
-                        aComponentAdd.append("Document")
+
+                        self.aItemList.append( oPar.getAnchor().TextField.Items )
+
+                        self.aComponentAdd.append("Document")
+
         #i=0
         #print aItemList.__len__()
         #print aComponentAdd.__len__()
