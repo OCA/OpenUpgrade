@@ -80,8 +80,8 @@ class Repeatln:
             self.getList()
 
             cursor = doc.getCurrentController().getViewCursor()
-            #for i in range(self.aObjectList.__len__()):
-
+            for i in range(self.aComponentAdd.__len__()):
+                print self.aComponentAdd[i] +"--"+ self.aItemList[i].__getitem__(1)
             text=cursor.getText()
 
             tcur=text.createTextCursorByRange(cursor)
@@ -104,7 +104,8 @@ class Repeatln:
                             self.insVariable.addItem(self.aObjectList[j],1)
 
                 if tcur.TextTable:
-                    print self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())+"-"+ tcur.TextTable.Name
+                    #print self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())+"-"+ tcur.TextTable.Name
+
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
 
                         self.VariableScope(tcur,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
@@ -390,7 +391,10 @@ class Repeatln:
 
 
     def getChildTable(self,oPar,sTableName=""):
+
         sNames = oPar.getCellNames()
+
+        bEmptyTableFlag=True
 
         for val in sNames:
 
@@ -424,6 +428,8 @@ class Repeatln:
 
                         if oSubSection.supportsService("com.sun.star.text.TextField"):
 
+                            bEmptyTableFlag=False
+
                             if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
 
                                 self.aItemList.append(oSubSection.TextField.Items)
@@ -439,6 +445,21 @@ class Repeatln:
                                 if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
 
                                     self.aComponentAdd.append(sTableName+"."+oPar.Name)
+
+        if bEmptyTableFlag==True:
+            self.aItemList.append((u'',u''))
+
+            if sTableName=="":
+
+                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+
+                    self.aComponentAdd.append(oPar.Name)
+
+            else:
+
+                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+
+                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
 
         return 0
 
