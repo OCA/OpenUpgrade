@@ -1,5 +1,3 @@
-# Strength
-
 
 
 import uno
@@ -308,9 +306,11 @@ class Repeatln:
 
                                     self.getRelation(docinfo.getUserFieldValue(3), sItem.__getslice__(sItem.find(".")+1,sItem.find(",")), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
 
-                                else:
 
+                                else:
+                                    #print sItem.__getslice__(sItem.find("(")+1,sItem.find(","))+"--"+sMain
                                     sPath=self.getPath(sItem.__getslice__(sItem.find("(")+1,sItem.find(",")), sMain)
+                                    print '--------------------',sPath
 
                                     self.getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
 
@@ -319,7 +319,7 @@ class Repeatln:
             #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
 
     def getPath(self,sPath,sMain):
-
+        #print sPath
         desktop=getDesktop()
 
         doc =desktop.getCurrentComponent()
@@ -335,8 +335,8 @@ class Repeatln:
                 sItem=oPar.Items.__getitem__(1)
 
                 if sPath.__getslice__(0,sPath.find(".")) == sMain:
+                    break;
 
-                    return sPath
 
                 else:
 
@@ -345,7 +345,7 @@ class Repeatln:
                         sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
 
                         self.getPath(sPath, sMain)
-
+        return sPath
     def getRelation(self, sRelName, sItem, sObjName ):
 
         sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
