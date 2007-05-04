@@ -1,3 +1,7 @@
+# Strength
+
+
+
 import uno
 import string
 import unohelper
@@ -57,7 +61,6 @@ class Repeatln:
         #    print self.aComponentAdd[i]
         # Get the object of current document
 
-
         docinfo=doc.getDocumentInfo()
         # find out how many objects are created in document
         if not docinfo.getUserFieldValue(3) == "":
@@ -75,31 +78,36 @@ class Repeatln:
                     self.count += 1
 
             self.getList()
+
             cursor = doc.getCurrentController().getViewCursor()
             #for i in range(self.aObjectList.__len__()):
+
             text=cursor.getText()
+
             tcur=text.createTextCursorByRange(cursor)
+
             for j in range(self.aObjectList.__len__()):
+
                 if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == "Objects":
+
                     self.insVariable.addItem(self.aObjectList[j],1)
+            for i in range(self.aItemList.__len__()):
 
-            if not tcur.TextTable:
-                for i in range(self.aItemList.__len__()):
-                    print self.aComponentAdd[i]
-                    if self.aComponentAdd[i]=="Document":
+                if self.aComponentAdd[i]=="Document":
 
-                        sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
-                        print sLVal + "--" + self.aItemList[i].__getitem__(1)
-                        for j in range(self.aObjectList.__len__()):
-                            print self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("("))
-                            if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
 
-                                self.insVariable.addItem(self.aObjectList[j],1)
+                    for j in range(self.aObjectList.__len__()):
 
-            else:
-                print "Still Under Construction"
+                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
 
+                            self.insVariable.addItem(self.aObjectList[j],1)
 
+                if tcur.TextTable:
+                    print self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())+"-"+ tcur.TextTable.Name
+                    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
+
+                        self.VariableScope(tcur,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
 
             self.win.doModalDialog()
 
@@ -284,25 +292,26 @@ class Repeatln:
                     if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
 
                         sItem=oPar.Items.__getitem__(1)
+                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
-                        if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
-                        #   print oMain
-                            self.aObjectList.append(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")")
-                            #self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
-
-                        else:
-
-                            sTemp=sItem.__getslice__(sItem.find("(")+1,sItem.find(","))
-
-                            if sMain == sTemp.__getslice__(0,sTemp.find(".")):
-
-                                self.getRelation(docinfo.getUserFieldValue(3), sItem.__getslice__(sItem.find(".")+1,sItem.find(",")), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
+                            if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
+                            #   print oMain
+                                self.aObjectList.append(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")")
+                                #self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
 
                             else:
 
-                                sPath=self.getPath(sItem.__getslice__(sItem.find("(")+1,sItem.find(",")), sMain)
+                                sTemp=sItem.__getslice__(sItem.find("(")+1,sItem.find(","))
 
-                                self.getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
+                                if sMain == sTemp.__getslice__(0,sTemp.find(".")):
+
+                                    self.getRelation(docinfo.getUserFieldValue(3), sItem.__getslice__(sItem.find(".")+1,sItem.find(",")), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
+
+                                else:
+
+                                    sPath=self.getPath(sItem.__getslice__(sItem.find("(")+1,sItem.find(",")), sMain)
+
+                                    self.getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
 
         else:
             self.aObjectList.append("Objects(" + docinfo.getUserFieldValue(3) + ")")
@@ -463,15 +472,45 @@ class Repeatln:
 
                         self.aComponentAdd.append("Document")
 
-        #i=0
-        #print aItemList.__len__()
-        #print aComponentAdd.__len__()
+    def VariableScope(self,oTcur,sTableName=""):
 
-        #for i in range(aItemList.__len__()):
-            #print aItemList[i]
-        #for i in range(aComponentAdd.__len__()):
-            #print self.aComponentAdd[i]
+        if sTableName.find(".") != -1:
 
+            print "int 1"
+
+            for i in range(self.aItemList.__len__()):
+
+                if self.aComponentAdd[i]==sTableName:
+
+                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
+                    for j in range(self.aObjectList.__len__()):
+
+                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+
+                            self.insVariable.addItem(self.aObjectList[j],1)
+
+            self.VariableScope(oTcur, sTableName.__getslice__(0,sTableName.rfind(".")))
+
+        else:
+
+            for i in range(self.aItemList.__len__()):
+
+                if self.aComponentAdd[i]==sTableName:
+
+                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
+                    for j in range(self.aObjectList.__len__()):
+                        #print self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) + "-"+ sLVal
+                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+
+                            self.insVariable.addItem(self.aObjectList[j],1)
+
+                #if oTcur.TextTable.Name
+
+                #if self.aObjectList[i] .__getslice__(self.aObjectList[i]) == oTcur.TextTable.Name :
+
+                    #sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
 
 Repeatln()
 
