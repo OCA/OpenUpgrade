@@ -41,13 +41,26 @@ class Fields:
         self.win.addButton('btnCancel',-5 - 45 - 5 ,-25,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        # Get the object of current document
+        self.aItemList=[]
+
+        self.aComponentAdd=[]
+
+        self.aObjectList=[]
+
+        self.EnumDocument()
+
         desktop=getDesktop()
 
         doc =desktop.getCurrentComponent()
 
-        docinfo=doc.getDocumentInfo()
+        #oParEnum = doc.getTextFields().createEnumeration()
 
+        #for i in range(self.aComponentAdd.__len__()):
+        #    print self.aComponentAdd[i]
+        # Get the object of current document
+
+        docinfo=doc.getDocumentInfo()
+        # find out how many objects are created in document
         if not docinfo.getUserFieldValue(3) == "":
 
             self.count=0
@@ -56,51 +69,52 @@ class Fields:
 
             while oParEnum.hasMoreElements():
 
-            	oPar = oParEnum.nextElement()
+                oPar = oParEnum.nextElement()
 
-            	oVCurs = doc.getCurrentController().getViewCursor()
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
 
-            	if oPar.supportsService("com.sun.star.text.TextField.HiddenText"):
+                    self.count += 1
 
-            		sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
-            		res = sock.execute('terp', 3, 'admin', docinfo.getUserFieldValue(3) , 'fields_get')
-            		key = res.keys()
-            		key.sort()
-            		for k in key:
-            			if oVCurs.TextTable==None:
-	            			if k == oPar.Content.__getslice__(oPar.Content.find(".")+1,oPar.Content.find(",")):
-	            				self.insVariable.addItem(oPar.Content.__getslice__(oPar.Content.find(",'")+2,oPar.Content.find("')")) + "(" + res[k]['relation'] + ")" ,1)
-	            			#oText.insertTextContent(oTxtCursor, objField, False)
-	            		else:
-					    	oTable = oVCurs.TextTable
+            self.getList()
 
-					    	#print oTable.Name
+            cursor = doc.getCurrentController().getViewCursor()
+            for i in range(self.aComponentAdd.__len__()):
+                print self.aComponentAdd[i] +"--"+ self.aItemList[i].__getitem__(1)
+            text=cursor.getText()
 
-					    	if oTable.Name == oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__()):
-                                #print oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__())
-					    		print "table"
-					    		#if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
-					    		#	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
-					    	elif "root" == oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__()):
-                                #print oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__())
-					    		print "root"
-					    		#if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
-					    		#	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
-					    	elif "child" == oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__()):
-                                #print oPar.Content.__getslice__(oPar.Content.find("]]")+1,oPar.Content.__len__())
-					    		print "child"
-					    		#if k == sObjName.__getslice__(sObjName.find(".")+1,sObjName.find(",")):
-					    		#	self.insVariable.addItem(sObjName.__getslice__(sObjName.find(",'")+2,sObjName.find("')")) + "(" + res[k]['relation'] + ")" ,1)
-                        self.count += 1
+            tcur=text.createTextCursorByRange(cursor)
 
+            for j in range(self.aObjectList.__len__()):
 
-			    	#print oPar.Content
-		else:
-			print "Insert Field-4"
+                if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == "Objects":
+
+                    self.insVariable.addItem(self.aObjectList[j],1)
+            for i in range(self.aItemList.__len__()):
+
+                if self.aComponentAdd[i]=="Document":
+
+                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
+                    for j in range(self.aObjectList.__len__()):
+
+                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+
+                            self.insVariable.addItem(self.aObjectList[j],1)
+
+                if tcur.TextTable:
+                    #print self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())+"-"+ tcur.TextTable.Name
+
+                    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
+
+                        self.VariableScope(tcur,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
+
+            self.win.doModalDialog()
+
+        else:
+
+            print "Insert Field-4"
 
             self.win.endExecute()
-        self.win.doModalDialog()
-
     def getDesktop(self):
 
         localContext = uno.getComponentContext()
@@ -117,22 +131,29 @@ class Fields:
         return desktop
 
     def cmbVariable_selected(self,oItemEvent):
-        self.sObj= self.win.getComboBoxSelectedText("cmbVariable")
-        print self.sObj
-        if not self.win.getComboBoxSelectedText("cmbVariable") == "":
+
+        if self.count > 0 :
 
             sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
 
+            desktop=getDesktop()
+
+            doc =desktop.getCurrentComponent()
+
+            docinfo=doc.getDocumentInfo()
+
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
 
-            self.genTree( self.sObj.__getslice__(self.sObj.find("(")+1,self.sObj.find(")")),1, ending_excl=['many2one'], recur=['many2one'])
+            sItem=self.win.getComboBoxSelectedText("cmbVariable")
 
+            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),1,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
 
         if oActionEvent.Source.getModel().Name == "btnOK":
 
+            self.bOkay = True
 
             desktop=getDesktop()
 
@@ -142,20 +163,60 @@ class Fields:
 
             cursor = doc.getCurrentController().getViewCursor()
 
+
             if self.win.getListBoxSelectedItem("lstFields") != "":
-                  #sObjName= self.win.getComboBoxSelectedText("cmbVariable").__getslice__(0,sValue.find("("))
 
-                print
+                    sObjName=""
+                    #objField = doc.createInstance("com.sun.star.text.TextField.HiddenText")
+                    oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
 
-                if cursor.TextTable==None:
-                     text.insertString(cursor,"[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" , 0 )
-                else:
-                     oTable = cursor.TextTable
-                     oCurCell = cursor.Cell
-                     tableText = oTable.getCellByName( oCurCell.CellName )
-                     cursor = tableText.createTextCursor()
-                     cursor.gotoEndOfParagraph(True)
-                     tableText.setString( "[[ " + self.sObj.__getslice__(0,self.sObj.find("(")) + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]" )
+#                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
+#
+#                        sKey=u""+self.win.getListBoxSelectedItem("lstFields")
+#
+#                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+#
+#                        oInputList.Items = (sKey,sValue)
+#
+#                        text.insertTextContent(cursor,oInputList,False)
+
+#                    else:
+                    sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+
+                    sObjName=sObjName.__getslice__(0,sObjName.find("("))
+
+                    if cursor.TextTable==None:
+
+                        sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+
+                        sKey=u""+sKey.__getslice__(1,sKey.__len__())
+
+                        sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
+
+                        oInputList.Items = (sKey,sValue)
+
+                        text.insertTextContent(cursor,oInputList,False)
+                    else:
+
+                        oTable = cursor.TextTable
+
+                        oCurCell = cursor.Cell
+
+                        tableText = oTable.getCellByName( oCurCell.CellName )
+
+                        cursor = tableText.createTextCursor()
+
+                        cursor.gotoEndOfParagraph(True)
+
+                        sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+
+                        sKey=u""+sKey.__getslice__(1,sKey.__len__())
+
+                        sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
+
+                        oInputList.Items = (sKey,sValue)
+
+                        tableText.insertTextContent(cursor,oInputList,False)
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
@@ -204,6 +265,268 @@ class Fields:
             self.insVariable.addItem(res[nIndex]['model'],0)
 
             nIndex += 1
+
+    def getList(self):
+        #Perform checking that which object is to show in listbox
+        desktop=getDesktop()
+
+        doc =desktop.getCurrentComponent()
+
+        docinfo=doc.getDocumentInfo()
+
+        sMain=""
+
+        if not self.count == 0:
+
+            if self.count >= 1:
+
+                oParEnum = doc.getTextFields().createEnumeration()
+
+                while oParEnum.hasMoreElements():
+
+                    oPar = oParEnum.nextElement()
+
+                    if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+
+                        sItem=oPar.Items.__getitem__(1)
+
+                        if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
+
+                            sMain = sItem.__getslice__(sItem.find(",'")+2,sItem.find("')"))
+
+                oParEnum = doc.getTextFields().createEnumeration()
+                #self.aObjectList.append("Objects(" + docinfo.getUserFieldValue(3) + ")")
+                #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+
+                while oParEnum.hasMoreElements():
+
+                    oPar = oParEnum.nextElement()
+
+                    if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+
+                        sItem=oPar.Items.__getitem__(1)
+                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+
+                            if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
+                            #   print oMain
+                                self.aObjectList.append(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")")
+                                #self.insVariable.addItem(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")",1)
+
+                            else:
+
+                                sTemp=sItem.__getslice__(sItem.find("(")+1,sItem.find(","))
+
+                                if sMain == sTemp.__getslice__(0,sTemp.find(".")):
+
+                                    self.getRelation(docinfo.getUserFieldValue(3), sItem.__getslice__(sItem.find(".")+1,sItem.find(",")), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
+
+
+                                else:
+                                    #print sItem.__getslice__(sItem.find("(")+1,sItem.find(","))+"--"+sMain
+                                    sPath=self.getPath(sItem.__getslice__(sItem.find("(")+1,sItem.find(",")), sMain)
+                                    print '--------------------',sPath
+
+                                    self.getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
+
+        else:
+            self.aObjectList.append("Objects(" + docinfo.getUserFieldValue(3) + ")")
+            #self.insVariable.addItem("Objects(" + docinfo.getUserFieldValue(3) + ")",1)
+
+    def getPath(self,sPath,sMain):
+        #print sPath
+        desktop=getDesktop()
+
+        doc =desktop.getCurrentComponent()
+
+        oParEnum = doc.getTextFields().createEnumeration()
+
+        while oParEnum.hasMoreElements():
+
+            oPar = oParEnum.nextElement()
+
+            if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+
+                sItem=oPar.Items.__getitem__(1)
+
+                if sPath.__getslice__(0,sPath.find(".")) == sMain:
+                    break;
+
+
+                else:
+
+                    if sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")) == sPath.__getslice__(0,sPath.find(".")):
+
+                        sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
+
+                        self.getPath(sPath, sMain)
+        return sPath
+    def getRelation(self, sRelName, sItem, sObjName ):
+
+        sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+
+        res = sock.execute('terp', 3, 'admin', sRelName , 'fields_get')
+
+        key = res.keys()
+
+        for k in key:
+
+            if sItem.find(".") == -1:
+
+                if k == sItem:
+
+                    self.aObjectList.append(sObjName + "(" + res[k]['relation'] + ")")
+                    #self.insVariable.addItem(sObjName + "(" + res[k]['relation'] + ")",1)
+
+                    return 0
+
+            if k == sItem.__getslice__(0,sItem.find(".")):
+
+                self.getRelation(res[k]['relation'], sItem.__getslice__(sItem.find(".")+1,sItem.__len__()), sObjName)
+
+
+    def getChildTable(self,oPar,sTableName=""):
+
+        sNames = oPar.getCellNames()
+
+        bEmptyTableFlag=True
+
+        for val in sNames:
+
+            oCell = oPar.getCellByName(val)
+
+            oTCurs = oCell.createTextCursor()
+
+            oCurEnum = oTCurs.createEnumeration()
+
+            while oCurEnum.hasMoreElements():
+
+                oCur = oCurEnum.nextElement()
+
+                if oCur.supportsService("com.sun.star.text.TextTable"):
+
+                    if sTableName=="":
+
+                        self.getChildTable(oCur,oPar.Name)
+
+                    else:
+
+                        self.getChildTable(oCur,sTableName+"."+oPar.Name)
+
+                else:
+
+                    oSecEnum = oCur.createEnumeration()
+
+                    while oSecEnum.hasMoreElements():
+
+                        oSubSection = oSecEnum.nextElement()
+
+                        if oSubSection.supportsService("com.sun.star.text.TextField"):
+
+                            bEmptyTableFlag=False
+
+                            if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
+
+                                self.aItemList.append(oSubSection.TextField.Items)
+
+                            if sTableName=="":
+
+                                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+
+                                    self.aComponentAdd.append(oPar.Name)
+
+                            else:
+
+                                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+
+                                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
+
+        if bEmptyTableFlag==True:
+            self.aItemList.append((u'',u''))
+
+            if sTableName=="":
+
+                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+
+                    self.aComponentAdd.append(oPar.Name)
+
+            else:
+
+                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+
+                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
+
+        return 0
+
+    def EnumDocument(self):
+
+        desktop = self.getDesktop()
+
+        Doc =desktop.getCurrentComponent()
+
+        oVC = Doc.CurrentController.getViewCursor()
+
+        oParEnum = Doc.getText().createEnumeration()
+
+        while oParEnum.hasMoreElements():
+
+            oPar = oParEnum.nextElement()
+
+            if oPar.supportsService("com.sun.star.text.TextTable"):
+
+                self.getChildTable(oPar)
+
+            if oPar.supportsService("com.sun.star.text.Paragraph"):
+
+                if oPar.supportsService("com.sun.star.text.TextContent"):
+
+                    oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
+
+                    if oPar.getAnchor().TextField:
+
+                        self.aItemList.append( oPar.getAnchor().TextField.Items )
+
+                        self.aComponentAdd.append("Document")
+
+    def VariableScope(self,oTcur,sTableName=""):
+
+        if sTableName.find(".") != -1:
+
+            print "int 1"
+
+            for i in range(self.aItemList.__len__()):
+
+                if self.aComponentAdd[i]==sTableName:
+
+                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
+                    for j in range(self.aObjectList.__len__()):
+
+                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+
+                            self.insVariable.addItem(self.aObjectList[j],1)
+
+            self.VariableScope(oTcur, sTableName.__getslice__(0,sTableName.rfind(".")))
+
+        else:
+
+            for i in range(self.aItemList.__len__()):
+
+                if self.aComponentAdd[i]==sTableName:
+
+                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
+                    for j in range(self.aObjectList.__len__()):
+                        #print self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) + "-"+ sLVal
+                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+
+                            self.insVariable.addItem(self.aObjectList[j],1)
+
+                #if oTcur.TextTable.Name
+
+                #if self.aObjectList[i] .__getslice__(self.aObjectList[i]) == oTcur.TextTable.Name :
+
+                    #sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
 
 Fields()
 
