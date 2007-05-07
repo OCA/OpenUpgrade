@@ -423,22 +423,26 @@ class Fields:
                         if oSubSection.supportsService("com.sun.star.text.TextField"):
 
                             bEmptyTableFlag=False
+                            sItem=oSubSection.TextField.Items.__getitem__(1)
 
-                            if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
+                            if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
-                                self.aItemList.append(oSubSection.TextField.Items)
 
-                            if sTableName=="":
+                                if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
 
-                                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+                                    self.aItemList.append(oSubSection.TextField.Items)
 
-                                    self.aComponentAdd.append(oPar.Name)
+                                if sTableName=="":
 
-                            else:
+                                    if  self.aComponentAdd.__contains__(oPar.Name)==False:
 
-                                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+                                        self.aComponentAdd.append(oPar.Name)
 
-                                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
+                                else:
+
+                                    if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+
+                                        self.aComponentAdd.append(sTableName+"."+oPar.Name)
 
         if bEmptyTableFlag==True:
             self.aItemList.append((u'',u''))
@@ -482,10 +486,13 @@ class Fields:
                     oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
 
                     if oPar.getAnchor().TextField:
+                        sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
 
-                        self.aItemList.append( oPar.getAnchor().TextField.Items )
+                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
-                        self.aComponentAdd.append("Document")
+                            self.aItemList.append( oPar.getAnchor().TextField.Items )
+
+                            self.aComponentAdd.append("Document")
 
     def VariableScope(self,oTcur,sTableName=""):
 

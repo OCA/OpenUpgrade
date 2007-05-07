@@ -1272,10 +1272,6 @@ g_ImplementationHelper.addImplementation( \
         "org.openoffice.tiny.report.fields",
         ("com.sun.star.task.Job",),)
 
-
-
-
-
 class Expression( unohelper.Base, XJobExecutor ):
     def __init__( self, ctx ):
         self.ctx     = ctx
@@ -1312,14 +1308,10 @@ class Expression( unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-
-
-
 g_ImplementationHelper.addImplementation( \
         Expression,
         "org.openoffice.tiny.report.expression",
         ("com.sun.star.task.Job",),)
-
 
 class Repeatln( unohelper.Base, XJobExecutor ):
     def __init__( self, ctx ):
