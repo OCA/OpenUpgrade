@@ -87,7 +87,6 @@ class wizard_cost_account_synchro(wizard.interface):
                        }
         insert_local_id = pooler.get_pool(cr.dbname).get('base.synchro.obj').create(cr,uid,transfer_data);
         line_ids_list=[]
-#        print "insert local id::::::::::",insert_local_id
         for model_data in model_data_read:
             search_list=[];
             for k,v in model_data.items():
@@ -109,10 +108,7 @@ class wizard_cost_account_synchro(wizard.interface):
                                    }
                 insert_local_id_line = pooler.get_pool(cr.dbname).get('base.synchro.obj.line').create(cr,uid,acc_sync_obj_line);
                 line_ids_list.append(int(insert_local_id_line))
-#                print "DATA WRITTEN  :::::::::::::::: ",a;
             else:
-#                data = local_pool.read(cr,uid,model_data['id'])[0]
-#                fields = local_pool.fields_get(cr, uid)
                 default = {}
                 if not default:
                     default = {}
@@ -146,8 +142,6 @@ class wizard_cost_account_synchro(wizard.interface):
                 del data['id']
                 for v in local_pool._inherits:
                     del data[local_pool._inherits[v]]
-
-#                print "Data before wrte::",data
                 new_id = sock.execute(db_name,user_id,password,model_local['model'],'create',data)
                 acc_sync_obj_line={
                     'obj_id':insert_local_id,
@@ -159,8 +153,6 @@ class wizard_cost_account_synchro(wizard.interface):
                 line_ids_list.append(int(insert_local_id_line))
 #                new_id = sock.execute(db_name,user_id,password,model_local['model'],'create',data)
 #            end if analytic_account_remote:\
-
-#        print "line ids list",line_ids_list
         insert_local_id_map = pooler.get_pool(cr.dbname).get('base.synchro.obj')
         cr.commit()
 #        insert_local_id_map.write(cr,uid,[insert_local_id],{'fields_id':[1,2,3]});
@@ -188,14 +180,10 @@ class wizard_cost_account_synchro(wizard.interface):
         return 'finish'
 
     def _create_structure_local(self,cr,uid,db_name,user_id,password,model_id,sock,parent_id_local=False,parent_id_remote=False):
-        print "model_id ::::",model_id
         search_model=[('id','=',model_id)];
-        print"search model :::::",search_model
         model_remote_ids = sock.execute(db_name,user_id,password,'ir.model','search',search_model);
         model_remote = sock.execute(db_name,user_id,password,'ir.model','read',model_remote_ids[0]);
-        print "model_remote:::::",model_remote
         model_remote_fields = sock.execute(db_name,user_id,password,model_remote['model'],'fields_get',uid)
-        print "model_remote_fields:::::",model_remote_fields
         local_pool = pooler.get_pool(cr.dbname).get(model_remote['model'])
 #        fields_list=[];
 #        for k,v in model_local_fields.items():
@@ -203,8 +191,6 @@ class wizard_cost_account_synchro(wizard.interface):
 #                continue
 #            else:
 #                fields_list.append(k);
-#
-#        print "Fields selected ::::",fields_list
 
         model_data_ids=sock.execute(db_name,user_id,password,model_remote['model'],'search',[]);
         model_data_read=sock.execute(db_name,user_id,password,model_remote['model'],'read',model_data_ids)
@@ -232,12 +218,8 @@ class wizard_cost_account_synchro(wizard.interface):
 
             model_local = local_pool.search(cr,uid,search_list)
             if len(model_local):
-#                del model_data['id']
                 a=local_pool.write(cr,uid,model_local,model_data)
-#                print "DATA WRITTEN  :::::::::::::::: ",a;
             else:
-#                data = local_pool.read(cr,uid,model_data['id'])[0]
-#                fields = local_pool.fields_get(cr, uid)
                 default = {}
                 if not default:
                     default = {}
@@ -273,8 +255,6 @@ class wizard_cost_account_synchro(wizard.interface):
                 del data['id']
                 for v in local_pool._inherits:
                     del data[local_pool._inherits[v]]
-
-                print "Data before wrte::",data
                 new_id = local_pool.create(cr,uid,data)
 #                new_id = sock.execute(db_name,user_id,password,model_local['model'],'create',data)
             #end if analytic_account_remote:\
@@ -308,7 +288,6 @@ class wizard_cost_account_synchro(wizard.interface):
 
     def _assign_server_upload(self, cr, uid, data, context):
         self.server_url = 'http://%s:%s/xmlrpc/'%(data['form']['server_url'],data['form']['port']);
-        print "in upload :::::",self.server_url
         return {'user_name':'admin','password':'admin'}
 
     def _assign_server_download(self, cr, uid, data, context):
