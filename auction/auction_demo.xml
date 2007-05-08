@@ -30,9 +30,6 @@
 		<field name="auction1" eval="time.strftime('%Y')+'-02-01'" />
 		<field name="auction2" eval="time.strftime('%Y')+'-03-01'" />
 
-		<field name="buyer_costs" model="auction_buyer_taxes_rel">1</field>
-		<field name="seller_costs" model="aauction_buyer_taxes_rel">1</field>
-
 <!--		<field name="auction_id" ref="auction_deposit_1" />-->
 		<field name="buyer_costs" model="account.tax" search="[('name','=','VAT 5.5%')]" />
 		<field name="seller_costs" model="account.tax" search="[('name','=','VAT 19.6%')]" />
