@@ -2,19 +2,34 @@
 <terp>
 	<data>
 
+		<record model="ir.ui.view" id="view_transfer_line_tree">
+			<field name="name">base.synchro.obj.line.tree</field>
+			<field name="model">base.synchro.obj.line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Transfered Ids Details">
+					<field name="obj_id" select="1" />
+					<field name="local_id" select="1" />
+					<field name="remote_id" select="1" />
+					<field name="method" select="1" />
+				</tree>
+			</field>
+		</record>
+
+
 		<record model="ir.ui.view" id="view_transfer_form">
 			<field name="name">base.synchro.obj.form</field>
 			<field name="model">base.synchro.obj</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Transfer Details">
-					<field name="local_id" select="1" />
-					<field name="remote_id" select="1" />
 					<field name="user_id" select="1" />
 					<field name="write_date" select="1" />
 					<field name="model_id" select="1" />
 					<field name="server_url" select="1" />
 					<field name="db_name" select="1" />
+					<field name="action" select="1" />
+					<field name="fields_id"/>
 				</form>
 			</field>
 		</record>
@@ -24,13 +39,12 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Class">
-					<field name="local_id"/>
-					<field name="remote_id"/>
 					<field name="user_id"/>
 					<field name="write_date"/>
 					<field name="model_id"/>
 					<field name="server_url"/>
 					<field name="db_name" select="1" />
+					<field name="action" select="1" />
 				</tree>
 			</field>
 		</record>

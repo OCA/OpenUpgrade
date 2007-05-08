@@ -7,14 +7,32 @@ class base_synchro_obj(osv.osv):
     '''Class to store the operations done by wizart'''
     _name = "base.synchro.obj";
     _description = "Register Class";
+    _rec_name='user_id'
     _columns = {
-                'local_id': fields.char('Local Id',size=50,readonly=True),
-                'remote_id':fields.char('Remote Id',size=50,readonly=True),
                 'user_id':fields.char('User Id',size=50,readonly=True),
                 'write_date':fields.date('Write Date',size=50,readonly=True),
                 'model_id':fields.char('Model ID',size=50,readonly=True),
                 'server_url': fields.char('Server URL', size=50, readonly=True),
                 'db_name':fields.char('Database Name', size=50,readonly=True),
+                'action':fields.selection((('d','Download'),('u','Upload')),'Action', required=True,readonly=True),
+                'fields_id':fields.one2many('base.synchro.obj.line','obj_id','Ids Affected')
+
                }
 #End class base_synchro_obj
 base_synchro_obj();
+
+
+class base_synchro_obj_line(osv.osv):
+    '''Class to store the operations done by wizart'''
+    _name = "base.synchro.obj.line";
+    _description = "Register Class";
+    _rec_name='local_id'
+
+    _columns = {
+                'obj_id': fields.many2one('base.synchro.obj', 'Ids Affected', required=True, ondelete='cascade', select=True),
+                'local_id': fields.char('Local Id',size=50,readonly=True),
+                'remote_id':fields.char('Remote Id',size=50,readonly=True),
+                'method':fields.selection((('c','Create'),('w','Write')),'Action', required=True,readonly=True),
+               }
+#class base_synchro_obj_line(osv.osv):
+base_synchro_obj_line();
