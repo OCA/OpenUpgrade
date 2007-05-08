@@ -142,7 +142,8 @@ class auction_deposit(osv.osv):
 	_defaults = {
 		'date_dep': lambda *a: time.strftime('%Y-%m-%d'),
 		'method': lambda *a: 'keep',
-		'total_neg': lambda *a: False
+		'total_neg': lambda *a: False,
+		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'auction.deposit'),
 	}
 	_constraints = [
 	#	(_inv_uniq, 'Twice the same inventory number !', ['name'])

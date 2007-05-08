@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-	<menuitem name="Auction Management" id="menu_auction_root" icon="terp-auction"/>
-	<menuitem name="uction Management/Auction" groups="admin"/>
+	<menuitem name="Auction Management" id="menu_root" icon="auction"/>
+	<menuitem name="Auction Management/Configuration" groups="admin"/>
 
 
 	=======================================================
-	Auction Artists
+	Auction Management/Configuration/artist
 	=======================================================
 	<record model="ir.ui.view" id="v">
 		<field name="name">auction.artists.tree</field>
@@ -41,7 +41,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v1"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Artists/Artists form" action="a"/>
+	<menuitem name="Auction Management/Configuration/Artists" action="a"/>
 
 <record model="ir.actions.act_window" id="at1">
 		<field name="name">auction.artists</field>
@@ -50,75 +50,8 @@
 		<field name="view_id" ref="v"/>
 	</record>
 	<!--<menuitem name="Operations/Auction/Artists tree view" action="at1"/>-->
-
-	=======================================================
-	Auction Dates
-	=======================================================
-	<record model="ir.ui.view" id="v_dates_tree">
-		<field name="name">auction.dates.tree</field>
-		<field name="model">auction.dates</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Auction Dates">
-				<field name="auction1" string="Auction 1"/>
-				<field name="auction2" string="Auction 2"/>
-				<field name="name" string="Names"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v_dates_form">
-		<field name="name">auction.dates.form</field>
-		<field name="model">auction.dates</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auctions"><menuitem name="Operations/Auction/Artists tree view" action="at1"/>
-				<field name="name" colspan="3" select="1"/>
-				<separator string="Dates" colspan="3"/>
-				<field name="expo1"/>
-				<field name="expo2"/>
-				<field name="auction1" select="1"/>
-				<field name="auction2" select="1"/>
-				<separator string="Commissions" colspan="3"/>
-				<field name="buyer_costs" domain="[('domain','=','auction')]"/>
-				<field name="seller_costs" domain="[('domain','=','auction')]"/>
-				<separator string="Accounting" colspan="3"/>
-				<field name="acc_income"/>
-				<field name="acc_expense"/>
-				<field name="acc_refund"/>
-				<separator string="State" colspan="3"/>
-				<field name="state"/>
-				<button name="close" states="draft" string="Close + Create all invoices" type="object" colspan="2"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="a1">
-		<field name="name">auction.dates</field>
-		<field name="res_model">auction.dates</field>
-		<field name="view_type">tree</field>
-		<field name="domain">[('state','=','draft')]</field>
-		<field name="view_id" ref="v_dates_tree"/>
-	</record>
-	<menuitem name="Auction Management/Auction/Auction Dates/Next Auction Dates" action="a1"/>
-
-	<record model="ir.actions.act_window" id="a2">
-		<field name="name">auction.dates</field>
-		<field name="res_model">auction.dates</field>
-		<field name="view_type">tree</field>
-		<field name="domain">[('state','=','close')]</field>
-		<field name="view_id" ref="v_dates_tree"/>
-	</record>
-	<menuitem name="Auction Management/Auction/Auction Dates/Old Auction Dates" action="a2"/>
-
-	<record model="ir.actions.act_window" id="a3">
-		<field name="name">auction.dates</field>
-		<field name="res_model">auction.dates</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v_dates_form"/>
-	</record>
-	<menuitem name="Auction Management/Auction/Auction Dates/New Auction Dates" action="a3"/>
-
-	=======================================================
-	Lots Categories
+=======================================================
+Auction Management/Configuration/objectcategories
 	=======================================================
 	<record model="ir.ui.view" id="v2">
 		<field name="name">auction.lot.category.tree</field>
@@ -150,10 +83,80 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v3"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Objects/Object Categories" action="a4"/>
+	<menuitem name="Auction Management/Configuration/Object Categories" action="a4"/>
+
+
+	=======================================================
+Auction Management/Auction Dates
+	=======================================================
+	<record model="ir.ui.view" id="v_dates_tree">
+		<field name="name">auction.dates.tree</field>
+		<field name="model">auction.dates</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction Dates">
+				<field name="auction1" string="Auction 1"/>
+				<field name="auction2" string="Auction 2"/>
+				<field name="name" string="Names"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="v_dates_form">
+		<field name="name">auction.dates.form</field>
+		<field name="model">auction.dates</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auctions">
+				<field name="name" colspan="3" select="1"/>
+				<separator string="Dates" colspan="3"/>
+				<field name="expo1"/>
+				<field name="expo2"/>
+				<field name="auction1" select="1"/>
+				<field name="auction2" select="1"/>
+				<separator string="Commissions" colspan="3"/>
+				<field name="buyer_costs" domain="[('domain','=','auction')]"/>
+				<field name="seller_costs" domain="[('domain','=','auction')]"/>
+				<separator string="Accounting" colspan="3"/>
+				<field name="acc_income"/>
+				<field name="acc_expense"/>
+				<field name="acc_refund"/>
+				<separator string="State" colspan="3"/>
+				<field name="state"/>
+				<button name="close" states="draft" string="Close + Create all invoices" type="object" colspan="2"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="a1">
+		<field name="name">auction.dates</field>
+		<field name="res_model">auction.dates</field>
+		<field name="view_type">tree</field>
+		<field name="domain">[('state','=','draft')]</field>
+		<field name="view_id" ref="v_dates_tree"/>
+	</record>
+
+	<menuitem name="Auction Management/Auction Dates/Next Auction Dates" action="a1"/>
+
+	<record model="ir.actions.act_window" id="a2">
+		<field name="name">auction.dates</field>
+		<field name="res_model">auction.dates</field>
+		<field name="view_type">tree</field>
+		<field name="domain">[('state','=','close')]</field>
+		<field name="view_id" ref="v_dates_tree"/>
+	</record>
+	<menuitem name="Auction Management/Auction Dates/Old Auction Dates" action="a2"/>
+
+	<record model="ir.actions.act_window" id="a3">
+		<field name="name">auction.dates</field>
+		<field name="res_model">auction.dates</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="v_dates_form"/>
+	</record>
+	<menuitem name="Auction Management/Auction Dates" groups="admin"/>
+	<menuitem name="Auction Management/Auction Dates/New Auction Dates" action="a3"/>
+
 
 =======================================================
-	Auction Lots
+Auction Management/objects
 	=======================================================
 	<!-- tree1 form1 for NEW object in the deposit border -->
 	<record model="ir.ui.view" id="v5">
@@ -275,7 +278,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v8"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Objects/All objects" action="a6"/>
+	<menuitem name="Auction Management/Objects" groups="admin"/>
+	<menuitem name="Auction Management/Objects/All objects" action="a6"/>
 
 	<record model="ir.actions.act_window" id="a7">
 		<field name="name">auction.lots.unclassified</field>
@@ -284,7 +288,7 @@
 		<field name="domain">[('auction_id','=',False)]</field>
 		<field name="view_id" ref="v6"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Objects/Unclassified objects" action="a7"/>
+	<menuitem name="Auction Management/Objects/Unclassified objects" action="a7"/>
 
 	<record model="ir.actions.act_window" id="a8">
 		<field name="name">auction.lots.from_a_date</field>
@@ -294,11 +298,12 @@
 		<field name="domain">[('auction_id','=',active_id)]</field>
 	</record>
 	<!--<ir_set>
-		<field name="keys" eval="[('action','tree_but_open'),('res_model','auction.dates')]"/>
-		<field name="args" eval="[]"/>
-		<field name="name">Open Moves</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
-		<field name="isobject" eval="True"/>
+	   <field name="keys" eval="[('action','tree_but_open'),('res_model','auction.dates')]"/>
+	   <field name="args" eval="[]"/>
+	   <field name="name">Open Moves</field>
+	   <field name="value" eval="'ir.actions.act_window,%d'%a"/>
+	   <field name="isobject" eval="True"/>
+
 	</ir_set>-->
 
 	<!-- form3: simplified form meant for during the sale (action button in dates) -->
@@ -337,17 +342,18 @@
 		<field name="view_id" ref="v9"/>
 		<field name="domain">[('auction_id','=',active_id)]</field>
 	</record>
-	<!--<ir_set>
+<!--	<ir_set>
+
 		<field name="keys" eval="[('action','tree_but_action'),('res_model','auction.dates')]"/>
-		<field name="args" eval="[]"/>
-		<field name="name">Open Moves</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
-		<field name="isobject" eval="True"/>
+	    <field name="args" eval="[]"/>
+	    <field name="name">Open Moves</field>
+	    <field name="value" eval="'ir.actions.act_window,%d'%a"/>
+	    <field name="isobject" eval="True"/>
 	</ir_set>-->
 	=======================================================
-	Deposist Costs
+	Auction Management/seller
 	=======================================================
-	<record model="ir.ui.view" id="v10">
+	<record model="ir.ui.view" id="v24">
 		<field name="name">auction.deposit.cost.tree</field>
 		<field name="model">auction.deposit.cost</field>
 		<field name="type">tree</field>
@@ -375,12 +381,11 @@
 		<field name="name">auction.lots.depositcost</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-
 		<field name="view_id" ref="v11"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Deposist/Deposist Costs" action="d7"/>
+	<menuitem name="Auction Management/Seller/Deposist Costs" action="d7"/>
 	=======================================================
-	Auction Deposist
+		Auction Management/seller
 	=======================================================
 	<record model="ir.ui.view" id="v12">
 		<field name="name">auction.deposit.tree</field>
@@ -422,9 +427,14 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v13"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Deposist/Deposit Border" action="a10"/>
+	<menuitem name="Auction Management/Seller" groups="admin"/>
+	<menuitem name="Auction Management/Seller/Deposit Border" action="a10"/>
+
+
+
+
 =======================================================
-	Auction Bids Lines
+		"Auction Management/Buyer
 	=======================================================
 	<record model="ir.ui.view" id="v14">
 		<field name="name">auction.bid_line.tree1</field>
@@ -458,7 +468,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v15"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Bids/Bid form" action="b11"/>
+		<menuitem name="Auction Management/Buyer" groups="admin"/>
+		<menuitem name="Auction Management/Buyer/Bids Form"  action="b11"/>
 
 
 
@@ -498,7 +509,7 @@
 
 
 	=======================================================
-	Auction Bids
+	Buyer/all the bids form
 	=======================================================
 	<record model="ir.ui.view" id="v18">
 		<field name="name">auction.bid.tree</field>
@@ -538,7 +549,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v19"/>
 	</record>
-	<menuitem name="Auction Management/Auction/Bids/Auction Bids" action="a11"/>
+	<menuitem name="Auction Management/Buyer/All Bids Form" action="a11"/>
 
 
 </data>
