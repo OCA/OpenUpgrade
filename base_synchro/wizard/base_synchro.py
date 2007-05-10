@@ -109,6 +109,8 @@ class wizard_cost_account_synchro(wizard.interface):
                 insert_local_id_line = pooler.get_pool(cr.dbname).get('base.synchro.obj.line').create(cr,uid,acc_sync_obj_line);
                 line_ids_list.append(int(insert_local_id_line))
             else:
+#                data = local_pool.read(cr,uid,model_data['id'])[0]
+#                fields = local_pool.fields_get(cr, uid)
                 default = {}
                 if not default:
                     default = {}
@@ -164,41 +166,30 @@ class wizard_cost_account_synchro(wizard.interface):
         model_id = data['form']['model_id']
         user_name = data['form']['user_name'];
         password = data['form']['password'];
-        result=self._validate_server(data['form']['server_url'])
-        if not result:
-            raise wizard.except_wizard('ServerError', 'Type server name like :: terp@tinyerp.com:8069 !')
-        server_url = 'http://%s:%s/xmlrpc/common'%(result['server_name'],result['port']);
-
-        sock = xmlrpclib.ServerProxy(server_url);
-
-        user_id = sock.login(result['db_name'],user_name,password);
-
-        server_url = 'http://%s:%s/xmlrpc/object'%(result['server_name'],result['port']);
-        sock = xmlrpclib.ServerProxy(server_url);
+        result = {}
+        result['db_name'] = data['form']['db_name'];
+        result['server_name']=data['form']['server_url'];
+        result['port']=data['form']['port'];
+        self.server_url = 'http://%s:%s/xmlrpc/common'%(result['server_name'],result['port']);
+        try:
+            sock = xmlrpclib.ServerProxy(self.server_url);
+            user_id = sock.login(result['db_name'],user_name,password);
+        except Exception,e :
+            raise wizard.except_wizard('ServerError', 'Unable to connect server !')
+        self.server_url = 'http://%s:%s/xmlrpc/object'%(result['server_name'],result['port']);
+        sock = xmlrpclib.ServerProxy(self.server_url);
         self._create_structure_local(cr, uid, result['db_name'], user_id, password, model_id , sock)
-
         return 'finish'
 
     def _create_structure_local(self,cr,uid,db_name,user_id,password,model_id,sock,parent_id_local=False,parent_id_remote=False):
         search_model=[('id','=',model_id)];
         model_remote_ids = sock.execute(db_name,user_id,password,'ir.model','search',search_model);
-        model_remote = sock.execute(db_name,user_id,password,'ir.model','read',model_remote_ids[0]);
-        model_remote_fields = sock.execute(db_name,user_id,password,model_remote['model'],'fields_get',uid)
+        model_remote = sock.execute(db_name,user_id,password,'ir.model','read',model_remote_ids)[0];
+        model_remote_fields = sock.execute(db_name,user_id,password,model_remote['model'],'fields_get')
         local_pool = pooler.get_pool(cr.dbname).get(model_remote['model'])
-#        fields_list=[];
-#        for k,v in model_local_fields.items():
-#            if v['type']=='function' or v['type']=='one2many' or v['type']=='many2many' or v['type']=='many2one' :
-#                continue
-#            else:
-#                fields_list.append(k);
-
         model_data_ids=sock.execute(db_name,user_id,password,model_remote['model'],'search',[]);
         model_data_read=sock.execute(db_name,user_id,password,model_remote['model'],'read',model_data_ids)
-
-        model_id=model_remote['id']
         transfer_data={
-                       'local_id':'1',
-                       'remote_id':'1',
                        'user_id':user_id,
                        'write_date':time.strftime('%Y-%m-%d'),
                        'model_id':model_id,
@@ -207,6 +198,7 @@ class wizard_cost_account_synchro(wizard.interface):
                        'action':'d',
                        }
         insert_local_id = pooler.get_pool(cr.dbname).get('base.synchro.obj').create(cr,uid,transfer_data);
+        line_ids_list=[]
         for model_data in model_data_read:
             search_list=[];
             for k,v in model_data.items():
@@ -218,13 +210,23 @@ class wizard_cost_account_synchro(wizard.interface):
 
             model_local = local_pool.search(cr,uid,search_list)
             if len(model_local):
+#                del model_data['id']
                 a=local_pool.write(cr,uid,model_local,model_data)
+                acc_sync_obj_line={
+                                    'obj_id':insert_local_id,
+                                    'local_id':model_data['id'],
+                                    'remote_id':model_local[0],
+                                    'method':'w',
+                                   }
+                insert_local_id_line = pooler.get_pool(cr.dbname).get('base.synchro.obj.line').create(cr,uid,acc_sync_obj_line);
+                line_ids_list.append(int(insert_local_id_line))
+
             else:
                 default = {}
                 if not default:
                     default = {}
                 if 'state' not in default:
-                    if 'state' in local_pool._defaults:
+                    if 'state' in sock._defaults:
 ######                        change required
                         default['state'] = local_pool._defaults['state'](local_pool,cr,uid)
                 data = sock.execute(db_name,user_id,password,model_remote['model'],'read',[model_data['id']], context={})[0]
@@ -258,8 +260,9 @@ class wizard_cost_account_synchro(wizard.interface):
                 new_id = local_pool.create(cr,uid,data)
 #                new_id = sock.execute(db_name,user_id,password,model_local['model'],'create',data)
             #end if analytic_account_remote:\
+        insert_local_id_map = pooler.get_pool(cr.dbname).get('base.synchro.obj')
+        cr.commit()
 #      Code for download model ends from here
-
 
     def _get_dbname(self, cr, uid, context):
 
@@ -288,10 +291,13 @@ class wizard_cost_account_synchro(wizard.interface):
 
     def _assign_server_upload(self, cr, uid, data, context):
         self.server_url = 'http://%s:%s/xmlrpc/'%(data['form']['server_url'],data['form']['port']);
+        print "in upload :::::",self.server_url
         return {'user_name':'admin','password':'admin'}
 
     def _assign_server_download(self, cr, uid, data, context):
         self.server_url = 'http://%s:%s/xmlrpc/'%(data['form']['server_url'],data['form']['port']);
+        print "in download :::::",self.server_url
+        return {'user_name':'admin','password':'admin'}
         return {}
 
     states = {
