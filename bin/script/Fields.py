@@ -29,7 +29,7 @@ class Fields:
 
         self.insField = self.win.getControl( "lstFields" )
 
-        sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+        sock = xmlrpclib.ServerProxy('http://192.168.0.21:8069/xmlrpc/object')
 
         #self.getModule(sock)
 
@@ -115,6 +115,7 @@ class Fields:
             print "Insert Field-4"
 
             self.win.endExecute()
+
     def getDesktop(self):
 
         localContext = uno.getComponentContext()
@@ -134,7 +135,7 @@ class Fields:
 
         if self.count > 0 :
 
-            sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+            sock = xmlrpclib.ServerProxy('http://192.168.0.21:8069/xmlrpc/object')
 
             desktop=getDesktop()
 
@@ -179,7 +180,7 @@ class Fields:
 #                        oInputList.Items = (sKey,sValue)
 #
 #                        text.insertTextContent(cursor,oInputList,False)
-
+#
 #                    else:
                     sObjName=self.win.getComboBoxSelectedText("cmbVariable")
 
@@ -224,7 +225,7 @@ class Fields:
     # this method will featch data from the database and place it in the combobox
     def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root=''):
 
-        sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+        sock = xmlrpclib.ServerProxy('http://192.168.0.21:8069/xmlrpc/object')
 
         res = sock.execute('terp', 3, 'admin', object , 'fields_get')
 
@@ -362,7 +363,7 @@ class Fields:
         return sPath
     def getRelation(self, sRelName, sItem, sObjName ):
 
-        sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+        sock = xmlrpclib.ServerProxy('http://192.168.0.21:8069/xmlrpc/object')
 
         res = sock.execute('terp', 3, 'admin', sRelName , 'fields_get')
 

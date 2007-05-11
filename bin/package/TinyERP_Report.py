@@ -916,7 +916,7 @@ class Fields( unohelper.Base, XJobExecutor ):
 #                        oInputList.Items = (sKey,sValue)
 #
 #                        text.insertTextContent(cursor,oInputList,False)
-
+#
 #                    else:
                     sObjName=self.win.getComboBoxSelectedText("cmbVariable")
 
@@ -1160,22 +1160,26 @@ class Fields( unohelper.Base, XJobExecutor ):
                         if oSubSection.supportsService("com.sun.star.text.TextField"):
 
                             bEmptyTableFlag=False
+                            sItem=oSubSection.TextField.Items.__getitem__(1)
 
-                            if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
+                            if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
-                                self.aItemList.append(oSubSection.TextField.Items)
 
-                            if sTableName=="":
+                                if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
 
-                                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+                                    self.aItemList.append(oSubSection.TextField.Items)
 
-                                    self.aComponentAdd.append(oPar.Name)
+                                if sTableName=="":
 
-                            else:
+                                    if  self.aComponentAdd.__contains__(oPar.Name)==False:
 
-                                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+                                        self.aComponentAdd.append(oPar.Name)
 
-                                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
+                                else:
+
+                                    if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+
+                                        self.aComponentAdd.append(sTableName+"."+oPar.Name)
 
         if bEmptyTableFlag==True:
             self.aItemList.append((u'',u''))
@@ -1219,10 +1223,13 @@ class Fields( unohelper.Base, XJobExecutor ):
                     oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
 
                     if oPar.getAnchor().TextField:
+                        sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
 
-                        self.aItemList.append( oPar.getAnchor().TextField.Items )
+                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
-                        self.aComponentAdd.append("Document")
+                            self.aItemList.append( oPar.getAnchor().TextField.Items )
+
+                            self.aComponentAdd.append("Document")
 
     def VariableScope(self,oTcur,sTableName=""):
 
@@ -1388,6 +1395,10 @@ class Repeatln( unohelper.Base, XJobExecutor ):
             self.getList()
 
             cursor = doc.getCurrentController().getViewCursor()
+            print self.aComponentAdd.__len__()
+            print self.aComponentAdd
+            print self.aItemList
+            print self.aObjectList
             for i in range(self.aComponentAdd.__len__()):
                 print self.aComponentAdd[i] +"--"+ self.aItemList[i].__getitem__(1)
             text=cursor.getText()
@@ -1599,7 +1610,6 @@ class Repeatln( unohelper.Base, XJobExecutor ):
                     oPar = oParEnum.nextElement()
 
                     if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
-
                         sItem=oPar.Items.__getitem__(1)
                         if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
@@ -1699,6 +1709,40 @@ class Repeatln( unohelper.Base, XJobExecutor ):
 
             nIndex += 1
 
+    def EnumDocument(self):
+
+        desktop = self.getDesktop()
+
+        Doc =desktop.getCurrentComponent()
+
+        oVC = Doc.CurrentController.getViewCursor()
+
+        oParEnum = Doc.getText().createEnumeration()
+
+        while oParEnum.hasMoreElements():
+
+            oPar = oParEnum.nextElement()
+
+
+            if oPar.supportsService("com.sun.star.text.TextTable"):
+
+                self.getChildTable(oPar)
+
+            if oPar.supportsService("com.sun.star.text.Paragraph"):
+
+                if oPar.supportsService("com.sun.star.text.TextContent"):
+
+                    oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
+
+                    if oPar.getAnchor().TextField:
+
+                        sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
+
+                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+
+                            self.aItemList.append( oPar.getAnchor().TextField.Items )
+
+                            self.aComponentAdd.append("Document")
 
     def getChildTable(self,oPar,sTableName=""):
 
@@ -1740,21 +1784,25 @@ class Repeatln( unohelper.Base, XJobExecutor ):
 
                             bEmptyTableFlag=False
 
-                            if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
+                            sItem=oSubSection.TextField.Items.__getitem__(1)
 
-                                self.aItemList.append(oSubSection.TextField.Items)
+                            if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
-                            if sTableName=="":
+                                if self.aItemList.__contains__(oSubSection.TextField.Items)==False:
 
-                                if  self.aComponentAdd.__contains__(oPar.Name)==False:
+                                    self.aItemList.append(oSubSection.TextField.Items)
 
-                                    self.aComponentAdd.append(oPar.Name)
+                                if sTableName=="":
 
-                            else:
+                                    if  self.aComponentAdd.__contains__(oPar.Name)==False:
 
-                                if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+                                        self.aComponentAdd.append(oPar.Name)
 
-                                    self.aComponentAdd.append(sTableName+"."+oPar.Name)
+                                else:
+
+                                    if self.aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+
+                                        self.aComponentAdd.append(sTableName+"."+oPar.Name)
 
         if bEmptyTableFlag==True:
             self.aItemList.append((u'',u''))
@@ -1773,35 +1821,7 @@ class Repeatln( unohelper.Base, XJobExecutor ):
 
         return 0
 
-    def EnumDocument(self):
 
-        desktop = self.getDesktop()
-
-        Doc =desktop.getCurrentComponent()
-
-        oVC = Doc.CurrentController.getViewCursor()
-
-        oParEnum = Doc.getText().createEnumeration()
-
-        while oParEnum.hasMoreElements():
-
-            oPar = oParEnum.nextElement()
-
-            if oPar.supportsService("com.sun.star.text.TextTable"):
-
-                self.getChildTable(oPar)
-
-            if oPar.supportsService("com.sun.star.text.Paragraph"):
-
-                if oPar.supportsService("com.sun.star.text.TextContent"):
-
-                    oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
-
-                    if oPar.getAnchor().TextField:
-
-                        self.aItemList.append( oPar.getAnchor().TextField.Items )
-
-                        self.aComponentAdd.append("Document")
 
     def VariableScope(self,oTcur,sTableName=""):
 
