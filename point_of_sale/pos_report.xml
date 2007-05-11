@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<terp>
+<data>
+	<report 
+		id="pos_receipt"
+		string="Receipt"
+		model="pos.order"
+		name="pos.receipt"
+		rml="pos/report/pos_receipt.rml"
+		auto="False"/>
+
+
+	<report 
+		id="pos_invoice_report"
+		string="Invoice"
+		model="pos.order"
+		name="pos.invoice"
+		auto="False"/>
+
+</data>
+</terp>

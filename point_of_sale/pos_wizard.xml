@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+		<wizard string="Refund Order" model="pos.order" name="pos.refund_order" id="pos_refund" menu="False"/>
+		<wizard string="Pay order" model="pos.order" name="pos.payment" id="pos_payment" menu="False"/>
+		<wizard string="Create Invoice" model="pos.order" name="pos.create_invoice" id="pos_invoice" menu="False"/>
+
+<!-- 		<wizard string="Pos payment" model="sale.order" name="sale.pos_payment" id="pos_payment" /> -->
+	</data>
+</terp>
