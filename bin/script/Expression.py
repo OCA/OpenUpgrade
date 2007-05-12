@@ -31,20 +31,49 @@ class Expression:
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
-            localContext = uno.getComponentContext()
-            resolver = localContext.ServiceManager.createInstanceWithContext(
-                        "com.sun.star.bridge.UnoUrlResolver", localContext )
-            ctx = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ComponentContext" )
-            smgr = ctx.ServiceManager
-            desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",ctx)
-            model = desktop.getCurrentComponent()
-            text = model.Text
-            cursor = text.createTextCursor()
-            text.insertString( cursor, self.win.getEditText("txtName") + " : " + self.win.getEditText("txtExpression"), 0 )
-	    self.win.endExecute()
 
-        elif oActionEvent.Source.getModel().Name == "btnCancel":
+            self.bOkay = True
+
+            desktop=getDesktop()
+
+            doc = desktop.getCurrentComponent()
+
+            text = doc.Text
+
+            cursor = doc.getCurrentController().getViewCursor()
+
+            oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+
+            if self.win.getEditText("txtName")!="" and self.win.getEditText("txtExpression")!="":
+
+                sKey=u""+self.win.getEditText("txtName")
+
+                sValue=u"" + self.win.getEditText("txtExpression")
+
+                if cursor.TextTable==None:
+
+                    oInputList.Items = (sKey,sValue)
+
+                    text.insertTextContent(cursor,oInputList,False)
+                else:
+
+                    oTable = cursor.TextTable
+
+                    oCurCell = cursor.Cell
+
+                    tableText = oTable.getCellByName( oCurCell.CellName )
+
+                    cursor = tableText.createTextCursor()
+
+                    cursor.gotoEndOfParagraph(True)
+
+                    oInputList.Items = (sKey,sValue)
+
+                    tableText.insertTextContent(cursor,oInputList,False)
             self.win.endExecute()
 
+        elif oActionEvent.Source.getModel().Name == "btnCancel":
+
+            self.win.endExecute()
 
 Expression()

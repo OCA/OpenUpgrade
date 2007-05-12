@@ -218,6 +218,7 @@ class Fields:
                         oInputList.Items = (sKey,sValue)
 
                         tableText.insertTextContent(cursor,oInputList,False)
+            self.win.endExecute()
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
 
