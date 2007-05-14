@@ -10,22 +10,26 @@ import xmlrpclib
 class Repeatln:
     def __init__(self):
 
-        self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
+        self.win = DBModalDialog(60, 50, 140, 250, "RepeatIn Builder")
 
         self.win.addFixedText("lblVariable", 18, 12, 30, 15, "Variable :")
 
         self.win.addComboBox("cmbVariable", 45, 10, 90, 15,True,
                              itemListenerProc=self.cmbVariable_selected)
 
+        self.insVariable = self.win.getControl( "cmbVariable" )
+
         self.win.addFixedText("lblName", 5, 32, 40, 15, "Object Name :")
 
         self.win.addEdit("txtName", 45, 30, 90, 15,)
 
-        self.insVariable = self.win.getControl( "cmbVariable" )
+        self.win.addFixedText("lblUName", 24, 52, 40, 15, "Name :")
 
-        self.win.addFixedText("lblFields", 25, 52, 25, 15, "Fields :")
+        self.win.addEdit("txtUName", 45, 50, 90, 15,)
 
-        self.win.addComboListBox("lstFields", 45, 50, 90, 150, False)
+        self.win.addFixedText("lblFields", 25, 72, 25, 15, "Fields :")
+
+        self.win.addComboListBox("lstFields", 45, 70, 90, 150, False)
 
         self.insField = self.win.getControl( "lstFields" )
 
@@ -33,10 +37,10 @@ class Repeatln:
 
         #self.getModule(sock)
 
-        self.win.addButton('btnOK',-5 ,-25,45,15,'Ok'
+        self.win.addButton('btnOK',-5 ,-10,45,15,'Ok'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.addButton('btnCancel',-5 - 45 - 5 ,-25,45,15,'Cancel'
+        self.win.addButton('btnCancel',-5 - 45 - 5 ,-10,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
         self.sObj=None
@@ -174,7 +178,7 @@ class Repeatln:
             cursor = doc.getCurrentController().getViewCursor()
 
 
-            if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" :
+            if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" and self.win.getEditText("txtUName") != "" :
 
                     sObjName=""
                     #objField = doc.createInstance("com.sun.star.text.TextField.HiddenText")
@@ -182,7 +186,9 @@ class Repeatln:
 
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
 
-                        sKey=u""+self.win.getListBoxSelectedItem("lstFields")
+                        #sKey=u""+self.win.getListBoxSelectedItem("lstFields")
+
+                        sKey=u""+ self.win.getEditText("txtUName")
 
                         sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
 
@@ -197,9 +203,11 @@ class Repeatln:
 
                         if cursor.TextTable==None:
 
-                            sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+                            #sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
 
-                            sKey=u""+sKey.__getslice__(1,sKey.__len__())
+                            #sKey=u""+sKey.__getslice__(1,sKey.__len__())
+
+                            sKey=u""+ self.win.getEditText("txtUName")
 
                             sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
 
@@ -218,9 +226,11 @@ class Repeatln:
 
                             cursor.gotoEndOfParagraph(True)
 
-                            sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+                            #sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
 
-                            sKey=u""+sKey.__getslice__(1,sKey.__len__())
+                            #sKey=u""+sKey.__getslice__(1,sKey.__len__())
+
+                            sKey=u""+ self.win.getEditText("txtUName")
 
                             sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
 

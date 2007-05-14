@@ -12,20 +12,20 @@ class Fields:
 
         self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
 
-        self.win.addFixedText("lblVariable", 18, 12, 30, 15, "Variable :")
+        self.win.addFixedText("lblVariable", 3, 12, 30, 15, "Variable :")
 
-        self.win.addComboBox("cmbVariable", 45, 10, 90, 15,True,
+        self.win.addComboBox("cmbVariable", 30, 10, 105, 15,True,
                              itemListenerProc=self.cmbVariable_selected)
-
-        #self.win.addFixedText("lblName", 5, 32, 40, 15, "Object Name :")
-
-        #self.win.addEdit("txtName", 45, 30, 90, 15,)
 
         self.insVariable = self.win.getControl( "cmbVariable" )
 
-        self.win.addFixedText("lblFields", 25, 32, 25, 15, "Fields :")
+        self.win.addFixedText("lblUName", 8, 32, 40, 15, "Name :")
 
-        self.win.addComboListBox("lstFields", 45, 30, 90, 150, False)
+        self.win.addEdit("txtUName", 30, 30, 105, 15,)
+
+        self.win.addFixedText("lblFields", 10, 52, 25, 15, "Fields :")
+
+        self.win.addComboListBox("lstFields", 30, 50, 105, 150, False)
 
         self.insField = self.win.getControl( "lstFields" )
 
@@ -165,32 +165,22 @@ class Fields:
             cursor = doc.getCurrentController().getViewCursor()
 
 
-            if self.win.getListBoxSelectedItem("lstFields") != "":
+            if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
 
                     sObjName=""
-                    #objField = doc.createInstance("com.sun.star.text.TextField.HiddenText")
+
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
 
-#                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
-#
-#                        sKey=u""+self.win.getListBoxSelectedItem("lstFields")
-#
-#                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
-#
-#                        oInputList.Items = (sKey,sValue)
-#
-#                        text.insertTextContent(cursor,oInputList,False)
-#
-#                    else:
                     sObjName=self.win.getComboBoxSelectedText("cmbVariable")
 
                     sObjName=sObjName.__getslice__(0,sObjName.find("("))
 
                     if cursor.TextTable==None:
 
-                        sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+                        #sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
 
-                        sKey=u""+sKey.__getslice__(1,sKey.__len__())
+                        #sKey=u""+sKey.__getslice__(1,sKey.__len__())
+                        sKey=u""+ self.win.getEditText("txtUName")
 
                         sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
 
@@ -209,9 +199,11 @@ class Fields:
 
                         cursor.gotoEndOfParagraph(True)
 
-                        sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
+                        #sKey=self.win.getListBoxSelectedItem("lstFields").replace("/",".")
 
-                        sKey=u""+sKey.__getslice__(1,sKey.__len__())
+                        #sKey=u""+sKey.__getslice__(1,sKey.__len__())
+
+                        sKey=u""+ self.win.getEditText("txtUName")
 
                         sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
 
