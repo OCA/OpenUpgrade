@@ -10,7 +10,7 @@ class sale_agent(osv.osv):
 		_columns = {
 			    'name': fields.char('Saleagent Name', size=25, required=True),
 			    'partner_id': fields.many2one('res.partner','Partner',required=True,ondelete='cascade'),
-			    'customer':fields.one2many('res.partner','agent_id','Customer'),
+			    'customer':fields.one2many('res.partner','agent_id','Customer',readonly=True),
 			    'commission_rate':fields.float('Commission Rate', required=True),
 			    # 'comprice_id': fields.many2one('product.pricelist','commission price list',  required=True,ondelete='cascade'),
 			    'active': fields.boolean('Active'),
