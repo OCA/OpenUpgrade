@@ -11,7 +11,7 @@
 		<field name="arch" type="xml">
 
 		    <field name="user_id" position="before" >
-	    		<field name="agent_id"/>
+			    <field name="agent_id" select="1"/>
 		    </field>
 		 </field>
 
