@@ -1,0 +1,191 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<!-- Holidays -->
+		<record model="ir.ui.view" id="edit_holiday_inherit">
+			<field name="name">hr.holidays.form.inherit</field> 
+			<field name="model">hr.holidays</field> 
+			<field name="inherit_id" ref="hr.edit_holiday" /> 
+			<field name="type">form</field> 
+			<field name="arch" type="xml">
+				<field name="name" position="replace"/>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="edit_holiday_inherit1">
+			<field name="name">hr.holidays.form.inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.edit_holiday" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="date_from" position="replace"/>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="edit_holiday_inherit2">
+			<field name="name">hr.holidays.form.inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.edit_holiday" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="date_to" position="replace"/>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="edit_holiday_inherit3">
+			<field name="name">hr.holidays.form.inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.edit_holiday" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="holiday_status" position="replace"/>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="edit_holiday_inherit_new">
+			<field name="name">hr.holidays.form.inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.edit_holiday"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Employee holidays">
+					<field name="name"/>
+					<field name="holiday_status"/>
+					<newline />
+					<field name="date_from"/>
+					<field name="date_to"/>
+					<newline />
+					<field name="employee_id" colspan="3" select="1"/>
+					<field name="notes" col="12" colspan="4"/>
+					<group col="12" colspan="4">
+						<button string="Confirm" name="confirm" states="draft" type="workflow"/>
+						<button string="Validate" name="validate" states="confirm" type="workflow"/>
+						<button string="Refuse" name="refuse" states="confirm" type="workflow"/>
+						<button string="Cancel" name="cancel" states="validate,refuse" type="workflow"/>
+						<button string="Set to Draft" name="set_to_draft" states="cancel" type="object"/>
+					</group>
+					<field name="manager_id"/>
+					<field name="state" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_holiday">
+			<field name="name">hr.holidays.tree</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.view_holiday"/>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Employee holidays">
+				<!--	<field name="employee_id" colspan="3" select="1"/>
+					<field name="name" />
+					<field name="date_from" />
+					<field name="date_to" />
+					<field name="holiday_status" /> -->
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ask_holiday">
+			<field name="name">hr.holidays.ask_form</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.ask_holiday"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Vacations requests">
+					<field name="notes" colspan="4"/>
+					<group col="12" colspan="4">
+						<button string="Confirm" name="confirm" states="draft" type="workflow"/>
+						<button string="Validate" name="validate" states="confirm" type="workflow"/>
+						<button string="Refuse" name="refuse" states="confirm" type="workflow"/>
+						<button string="Cancel" name="cancel" states="validate,refuse" type="workflow"/>
+						<button string="Set to Draft" name="set_to_draft" states="cancel" type="object"/>
+					</group>
+					<field name="manager_id"/>
+					<field name="state" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="open_ask_holidays">
+			<field name="name">hr.holidays.ask_form</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="ask_holiday" />
+		</record>
+
+		<menuitem name="Human Resources/Holidays Request" id="menu_open_ask_holidays" action="open_ask_holidays" groups="admin"/>
+
+		<record model="ir.actions.act_window" id="action_all_holiday">
+			<field name="name">hr.holidays.all</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Human Resources/Holidays Request/All Holidays Requests" id="menu_action_all_holiday" action="action_all_holiday" />
+
+		<record model="ir.actions.act_window" id="action_my_holiday">
+			<field name="name">hr.holidays.my</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('user_id','=',uid)]</field>
+		</record>
+		<menuitem name="Human Resources/Holidays Request/My Holidays Request" id="menu_action_my_holiday" action="action_my_holiday" />
+
+		<record model="ir.actions.act_window" id="action_my_holiday_draft">
+			<field name="name">hr.holidays.my.draft</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('user_id','=',uid), ('state','=','draft')]</field>
+		</record>
+		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Draft" id="menu_action_my_holiday_draft" action="action_my_holiday_draft" />
+
+		<record model="ir.actions.act_window" id="action_my_holiday_waiting">
+			<field name="name">hr.holidays.my.waiting</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('user_id','=',uid), ('state','=','confirm')]</field>
+		</record>
+		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Waiting confirmation" id="menu_action_my_holiday_waiting" action="action_my_holiday_waiting" />
+
+		<record model="ir.actions.act_window" id="action_my_holiday_validate">
+			<field name="name">hr.holidays.my.validate</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('user_id','=',uid), ('state','=','validate')]</field>
+		</record>
+		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Validated" id="menu_action_my_holiday_validate" action="action_my_holiday_validate" />
+
+		<record model="ir.actions.act_window" id="action_my_holiday_refuse">
+			<field name="name">hr.holidays.my.refuse</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('user_id','=',uid), ('state','=','refuse')]</field>
+		</record>
+		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Refused" id="menu_action_my_holiday_refuse" action="action_my_holiday_refuse" />
+
+		<record model="ir.actions.act_window" id="action_holiday_waiting">
+			<field name="name">hr.holidays.waiting</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','=','confirm')]</field>
+		</record>
+		<menuitem name="Human Resources/Holidays Request/Request waiting validation" id="menu_action_holiday_waiting" action="action_holiday_waiting" />
+			
+	</data>
+</terp>
