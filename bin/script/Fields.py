@@ -101,6 +101,18 @@ class Fields:
 
                             self.insVariable.addItem(self.aObjectList[j],1)
 
+                if tcur.TextSection:
+
+                    if self.aComponentAdd[i]== tcur.TextSection.Name:
+
+                        sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
+                        for j in range(self.aObjectList.__len__()):
+
+                            if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+
+                                self.insVariable.addItem(self.aObjectList[j],1)
+
                 if tcur.TextTable:
                     #print self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())+"-"+ tcur.TextTable.Name
 
@@ -477,9 +489,16 @@ class Fields:
 
                 if oPar.supportsService("com.sun.star.text.TextContent"):
 
-                    oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
+                    #oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
+                    if oPar.getAnchor().TextSection:
 
-                    if oPar.getAnchor().TextField:
+                        if oPar.getAnchor().TextField:
+
+                            self.aItemList.append( oPar.getAnchor().TextField.Items )
+
+                            self.aComponentAdd.append(oPar.getAnchor().TextSection.Name)
+
+                    elif oPar.getAnchor().TextField:
                         sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
 
                         if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
