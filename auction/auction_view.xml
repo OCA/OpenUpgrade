@@ -36,7 +36,6 @@
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="a">
-		<field name="name">auction.artists</field>
 		<field name="res_model">auction.artists</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v1"/>
@@ -44,7 +43,6 @@
 	<menuitem name="Auction Management/Configuration/Artists" action="a"/>
 
 <record model="ir.actions.act_window" id="at1">
-		<field name="name">auction.artists</field>
 		<field name="res_model">auction.artists</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v"/>
@@ -78,7 +76,6 @@ Auction Management/Configuration/objectcategories
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="a4">
-		<field name="name">auction.lot.category</field>
 		<field name="res_model">auction.lot.category</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v3"/>
@@ -127,32 +124,31 @@ Auction Management/Auction Dates
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="a1">
-		<field name="name">auction.dates</field>
+		<field name="name">Draft Auctions</field>
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','draft')]</field>
 		<field name="view_id" ref="v_dates_tree"/>
 	</record>
 
-	<menuitem name="Auction Management/Auction Dates/Next Auction Dates" action="a1"/>
+	<menuitem name="Auction Management/Auction Dates/" action="a1"/>
 
 	<record model="ir.actions.act_window" id="a2">
-		<field name="name">auction.dates</field>
+		<field name="name">Closed Auctions</field>
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','close')]</field>
 		<field name="view_id" ref="v_dates_tree"/>
 	</record>
-	<menuitem name="Auction Management/Auction Dates/Old Auction Dates" action="a2"/>
+	<menuitem name="Auction Management/Auction Dates/" action="a2"/>
 
 	<record model="ir.actions.act_window" id="a3">
-		<field name="name">auction.dates</field>
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_dates_form"/>
 	</record>
 	<menuitem name="Auction Management/Auction Dates" groups="admin"/>
-	<menuitem name="Auction Management/Auction Dates/New Auction Dates" action="a3"/>
+	<menuitem name="Auction Management/Auction Dates/Auction Dates" action="a3"/>
 
 
 =======================================================
@@ -273,7 +269,6 @@ Auction Management/objects
 	</record>
 
 	<record model="ir.actions.act_window" id="a6">
-		<field name="name">auction.lots.all</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v8"/>
@@ -282,7 +277,7 @@ Auction Management/objects
 	<menuitem name="Auction Management/Objects/All objects" action="a6"/>
 
 	<record model="ir.actions.act_window" id="a7">
-		<field name="name">auction.lots.unclassified</field>
+		<field name="name">Unclassified objects</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('auction_id','=',False)]</field>
@@ -291,7 +286,6 @@ Auction Management/objects
 	<menuitem name="Auction Management/Objects/Unclassified objects" action="a7"/>
 
 	<record model="ir.actions.act_window" id="a8">
-		<field name="name">auction.lots.from_a_date</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v6"/>
@@ -336,7 +330,6 @@ Auction Management/objects
 	</record>
 
 	<record model="ir.actions.act_window" id="a9">
-		<field name="name">auction.lots.from_a_date.simplified</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v9"/>
@@ -378,7 +371,6 @@ Auction Management/objects
 	</record>
 
 	<record model="ir.actions.act_window" id="d7">
-		<field name="name">auction.lots.depositcost</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v11"/>
@@ -422,7 +414,6 @@ Auction Management/objects
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="a10">
-		<field name="name">auction.deposit</field>
 		<field name="res_model">auction.deposit</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v13"/>
@@ -463,7 +454,6 @@ Auction Management/objects
 
 
 	<record model="ir.actions.act_window" id="b11">
-		<field name="name">auction.bid.form1</field>
 		<field name="res_model">auction.bid</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v15"/>
@@ -500,7 +490,6 @@ Auction Management/objects
 
 
 		<record model="ir.actions.act_window" id="b12">
-		<field name="name">auction.bid.form2</field>
 		<field name="res_model">auction.bid</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v17"/>
@@ -544,7 +533,6 @@ Auction Management/objects
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="a11">
-		<field name="name">uction.bid.form</field>
 		<field name="res_model">auction.bid</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v19"/>

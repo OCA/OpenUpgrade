@@ -48,27 +48,27 @@
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_sales agent commission_tree_month">
-		<field name="name">commission.month.form.tree</field>
+		<field name="name">All Commissions (this month)</field>
 		<field name="res_model">report.commission.month</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 		<field name="domain">[('in_date','ilike',time.strftime('%Y-%m'))]</field>
 
 	</record>
-	<menuitem name="Sales Management/Commissions/Reporting/This Month/All Commissions " action="action_sales agent commission_tree_month" id="menu_commission_tree_month"/>
+	<menuitem name="Sales Management/Commissions/Reporting/This Month/All Commissions" action="action_sales agent commission_tree_month" id="menu_commission_tree_month"/>
 
 	<record model="ir.actions.act_window" id="action_sales agent commission_tree_open">
-		<field name="name">commission.month.form.tree</field>
+		<field name="name">Opened Commissions (this month)</field>
 		<field name="res_model">report.commission.month</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 		<field name="domain">[('state','=','open'),('in_date','ilike',time.strftime('%Y-%m'))]</field>
 
 	</record>
-	<menuitem name="Sales Management/Commissions/Reporting/This Month/Opened Commissions " action="action_sales agent commission_tree_open" id="menu_commission_tree_open"/>
+	<menuitem name="Sales Management/Commissions/Reporting/This Month/Opened Commissions" action="action_sales agent commission_tree_open" id="menu_commission_tree_open"/>
 
 	<record model="ir.actions.act_window" id="action_sales agent commission_tree_paid">
-		<field name="name">commission.month.form.tree</field>
+		<field name="name">Paid Commissions (this month)</field>
 		<field name="res_model">report.commission.month</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -123,7 +123,6 @@
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_sales agent commission_tree_all">
-		<field name="name">commission.all.form.tree</field>
 		<field name="res_model">report.commission.month</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -131,16 +130,16 @@
 <menuitem name="Sales Management/Commissions/Reporting/All Commissions/All Commissions" action="action_sales agent commission_tree_all" id="menu_commission_tree_all"/>
 
 <record model="ir.actions.act_window" id="action_sales agent commission_tree_all_open">
-		<field name="name">commission.all.form.tree</field>
+		<field name="name">Opened Commissions</field>
 		<field name="res_model">report.commission.month</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
-<menuitem name="Sales Management/Commissions/Reporting/All Commissions/Opnend Commissions" action="action_sales agent commission_tree_all_open" id="menu_commission_tree_all_open"/>
+<menuitem name="Sales Management/Commissions/Reporting/All Commissions/Opened Commissions" action="action_sales agent commission_tree_all_open" id="menu_commission_tree_all_open"/>
 
 <record model="ir.actions.act_window" id="action_sales agent commission_tree_all_paid">
-		<field name="name">commission.all.form.tree</field>
+		<field name="name">Paid Commissions</field>
 		<field name="res_model">report.commission.month</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>

@@ -110,7 +110,6 @@
 		</record>
 
 		<record model="ir.actions.act_window" id="open_ask_holidays">
-			<field name="name">hr.holidays.ask_form</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
 			<field name="view_id" ref="ask_holiday" />
@@ -119,7 +118,6 @@
 		<menuitem name="Human Resources/Holidays Request" id="menu_open_ask_holidays" action="open_ask_holidays" groups="admin"/>
 
 		<record model="ir.actions.act_window" id="action_all_holiday">
-			<field name="name">hr.holidays.all</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
@@ -128,7 +126,7 @@
 		<menuitem name="Human Resources/Holidays Request/All Holidays Requests" id="menu_action_all_holiday" action="action_all_holiday" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday">
-			<field name="name">hr.holidays.my</field>
+			<field name="name">My Holidays Request</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
@@ -138,7 +136,7 @@
 		<menuitem name="Human Resources/Holidays Request/My Holidays Request" id="menu_action_my_holiday" action="action_my_holiday" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_draft">
-			<field name="name">hr.holidays.my.draft</field>
+			<field name="name">My Holidays Request Draft</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
@@ -148,7 +146,7 @@
 		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Draft" id="menu_action_my_holiday_draft" action="action_my_holiday_draft" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_waiting">
-			<field name="name">hr.holidays.my.waiting</field>
+			<field name="name">My Holidays Request Waiting confirmation</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
@@ -158,7 +156,7 @@
 		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Waiting confirmation" id="menu_action_my_holiday_waiting" action="action_my_holiday_waiting" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_validate">
-			<field name="name">hr.holidays.my.validate</field>
+			<field name="name">My Holidays Request Validated</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
@@ -168,7 +166,7 @@
 		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Validated" id="menu_action_my_holiday_validate" action="action_my_holiday_validate" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_refuse">
-			<field name="name">hr.holidays.my.refuse</field>
+			<field name="name">My Holidays Request Refused</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
@@ -178,7 +176,7 @@
 		<menuitem name="Human Resources/Holidays Request/My Holidays Request/Refused" id="menu_action_my_holiday_refuse" action="action_my_holiday_refuse" />
 
 		<record model="ir.actions.act_window" id="action_holiday_waiting">
-			<field name="name">hr.holidays.waiting</field>
+			<field name="name">Request waiting validation</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>

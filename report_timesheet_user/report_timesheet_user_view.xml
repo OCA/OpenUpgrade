@@ -35,7 +35,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_timesheet_user_user_thismonth">
-		<field name="name">action.timesheet.user.user.tree</field>
+		<field name="name">Timesheets by user and company (this month)</field>
 		<field name="res_model">report.timesheet.user.user</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
@@ -44,11 +44,10 @@
 	<menuitem name="Project/Reporting/This Month/Timesheets by user and company" action="action_timesheet_user_user_thismonth" id="menu_timesheet_user_user_tree2"/>
 
 	<record model="ir.actions.act_window" id="action_timesheet_user_user_thismonth_mytask">
-		<field name="name">action.timesheet.user.user.tree</field>
+		<field name="name">My Timesheets by company</field>
 		<field name="res_model">report.timesheet.user.user</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
 		<field name="domain">[('name','=',time.strftime('%Y-%m-01')),('user_id','=','uid')]</field>
 	</record>
 	<menuitem 
@@ -57,7 +56,6 @@
 		id="menu_timesheet_user_user_tree1"/>
 
 	<record model="ir.actions.act_window" id="action_timesheet_user_user_allmonth">
-		<field name="name">action.timesheet.user.user.tree</field>
 		<field name="res_model">report.timesheet.user.user</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
@@ -67,7 +65,7 @@
 		id="menu_timesheet_user_user_tree3"/>
 
 	<record model="ir.actions.act_window" id="action_timesheet_user_user_allmonth_mytask">
-		<field name="name">action.timesheet.user.user.tree</field>
+		<field name="name">My task by company</field>
 		<field name="res_model">report.timesheet.user.user</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
@@ -115,7 +113,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_timesheet_user_thismonth">
-		<field name="name">action.timesheet.user.tree</field>
+		<field name="name">Timesheets by company (this month)</field>
 		<field name="res_model">report.timesheet.user</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
@@ -125,7 +123,6 @@
 		action="action_timesheet_user_thismonth" id="menu_timesheet_user_tree2"/>
 
 	<record model="ir.actions.act_window" id="action_timesheet_user_allmonth">
-		<field name="name">action.timesheet.user.tree</field>
 		<field name="res_model">report.timesheet.user</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
