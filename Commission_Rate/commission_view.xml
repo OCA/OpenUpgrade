@@ -137,7 +137,7 @@
 		<field name="view_mode">tree</field>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
-<menuitem name="Sales Management/Commissions/Reporting/All Commissions/Opnend Commissions" action="action_sales agent commission_tree_all_open" id="menu_commission_tree_all_open"/>
+<menuitem name="Sales Management/Commissions/Reporting/All Commissions/Opened Commissions" action="action_sales agent commission_tree_all_open" id="menu_commission_tree_all_open"/>
 
 <record model="ir.actions.act_window" id="action_sales agent commission_tree_all_paid">
 		<field name="name">commission.all.form.tree</field>
