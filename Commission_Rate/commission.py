@@ -6,7 +6,7 @@ class report_commission_month(osv.osv):
     _auto = False
     _columns = {
         'name': fields.char('Sales Agent Name',size=64, readonly=True, select=True),
-        'sono':fields.integer('Sales Order No', readonly=True, select=True),
+        'sono':fields.char('Sales Order No',size=64, readonly=True, select=True),
         'invno':fields.char('Invoice Number',size=64, readonly=True, select=True),
         'product_quantity':fields.integer('Product Quantity', readonly=True, select=True),
         'productname':fields.char('Product Name',size=256, readonly=True, select=True),
