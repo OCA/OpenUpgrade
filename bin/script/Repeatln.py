@@ -251,7 +251,11 @@ class Repeatln:
             oTCurs = oCell.createTextCursor()
             oCurEnum = oTCurs.createEnumeration()
             while oCurEnum.hasMoreElements():
-                oCur = oCurEnum.nextElement()
+                try:
+                    oCur = oCurEnum.nextElement()
+                except:
+                    Exception
+                    print "Problem with writing in Table"
                 if oCur.supportsService("com.sun.star.text.TextTable"):
                     if sTableName=="":
                         self.getChildTable(oCur,oPar.Name)

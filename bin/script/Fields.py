@@ -55,9 +55,9 @@ class Fields:
 
         #oParEnum = doc.getTextFields().createEnumeration()
 
-        #for i in range(self.aComponentAdd.__len__()):
-        #    print self.aComponentAdd[i]
-        # Get the object of current document
+        for i in range(self.aComponentAdd.__len__()):
+            print self.aComponentAdd[i]
+         #Get the object of current document
 
         docinfo=doc.getDocumentInfo()
         # find out how many objects are created in document
@@ -102,11 +102,11 @@ class Fields:
                             self.insVariable.addItem(self.aObjectList[j],1)
 
                 if tcur.TextSection:
-
+                    print self.aComponentAdd[i] +"<<-->>"+ tcur.TextSection.Name
                     if self.aComponentAdd[i]== tcur.TextSection.Name:
 
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
-
+                        print sLVal
                         for j in range(self.aObjectList.__len__()):
 
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
@@ -406,7 +406,11 @@ class Fields:
 
             while oCurEnum.hasMoreElements():
 
-                oCur = oCurEnum.nextElement()
+                try:
+                    oCur = oCurEnum.nextElement()
+                except:
+                    Exception
+                    print "Problem with writing in Table"
 
                 if oCur.supportsService("com.sun.star.text.TextTable"):
 
@@ -528,7 +532,9 @@ class Fields:
             self.VariableScope(oTcur, sTableName.__getslice__(0,sTableName.rfind(".")))
 
         else:
-
+            print str(self.aItemList.__len__()) + " = " + str(self.aComponentAdd.__len__())
+            print self.aItemList
+            print self.aComponentAdd
             for i in range(self.aItemList.__len__()):
 
                 if self.aComponentAdd[i]==sTableName:
