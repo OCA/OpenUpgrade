@@ -104,7 +104,7 @@ class Fields:
                 if tcur.TextSection:
                     print self.aComponentAdd[i] +"<<-->>"+ tcur.TextSection.Name
                     if self.aComponentAdd[i]== tcur.TextSection.Name:
-
+                        print self.aItemList[i]
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                         print sLVal
                         for j in range(self.aObjectList.__len__()):
@@ -477,8 +477,6 @@ class Fields:
 
         Doc =desktop.getCurrentComponent()
 
-        oVC = Doc.CurrentController.getViewCursor()
-
         oParEnum = Doc.getText().createEnumeration()
 
         while oParEnum.hasMoreElements():
@@ -491,23 +489,26 @@ class Fields:
 
             if oPar.supportsService("com.sun.star.text.Paragraph"):
 
-                if oPar.supportsService("com.sun.star.text.TextContent"):
+                #if oPar.supportsService("com.sun.star.text.TextContent"):
 
-                    #oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
-                    if oPar.getAnchor().TextSection:
+                    # oContentEnum = oPar.createContentEnumeration("com.sun.star.text.TextContent")
+                oSecEnum = oPar.createEnumeration()
+                while oSecEnum.hasMoreElements():
+                    oSubSection = oSecEnum.nextElement()
+                    #print oPar.getAnchor()
+                    if oSubSection.TextSection:
+                        if oSubSection.TextField:
 
-                        if oPar.getAnchor().TextField:
+                            self.aItemList.append( oSubSection.TextField.Items )
 
-                            self.aItemList.append( oPar.getAnchor().TextField.Items )
-
-                            self.aComponentAdd.append(oPar.getAnchor().TextSection.Name)
+                            self.aComponentAdd.append(oSubSection.TextSection.Name)
 
                     elif oPar.getAnchor().TextField:
                         sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
 
                         if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
 
-                            self.aItemList.append( oPar.getAnchor().TextField.Items )
+                            self.aItemList.append(oSubSection.TextField.Items )
 
                             self.aComponentAdd.append("Document")
 

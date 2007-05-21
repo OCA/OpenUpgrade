@@ -232,15 +232,17 @@ class Repeatln:
             if oPar.supportsService("com.sun.star.text.TextTable"):
                 self.getChildTable(oPar)
             if oPar.supportsService("com.sun.star.text.Paragraph"):
-                if oPar.supportsService("com.sun.star.text.TextContent"):
-                    if oPar.getAnchor().TextSection:
-                        if oPar.getAnchor().TextField:
-                            self.aItemList.append( oPar.getAnchor().TextField.Items )
-                            self.aComponentAdd.append(oPar.getAnchor().TextSection.Name)
+                oSecEnum = oPar.createEnumeration()
+                while oSecEnum.hasMoreElements():
+                    oSubSection = oSecEnum.nextElement()
+                    if oSubSection.TextSection:
+                        if oSubSection.TextField:
+                            self.aItemList.append( oSubSection.TextField.Items )
+                            self.aComponentAdd.append(oSubSection.TextSection.Name)
                     elif oPar.getAnchor().TextField:
                         sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
                         if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-                            self.aItemList.append( oPar.getAnchor().TextField.Items )
+                            self.aItemList.append(oSubSection.TextField.Items )
                             self.aComponentAdd.append("Document")
 
     def getChildTable(self,oPar,sTableName=""):
@@ -340,4 +342,4 @@ Repeatln()
                     vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
                 #End If
             #End while Loop
-            """
+"""
