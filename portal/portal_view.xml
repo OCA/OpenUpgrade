@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+	<menuitem name="Portal"  id="menu_portal_root"/>
+
+	<record model="ir.ui.view" id="view_factory_form">
+		<field name="name">Portal Factory</field>
+		<field name="model">portal.factory</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Sale Shop">
+				<field name="name" select="1"/>
+				<field name="model_id" select="1"/>
+				<field name="menu_name" select="1"/>
+				<field name="parentmenu_id" select="1"/>
+				<field name="template_action_id"/>
+				<field name="view_id" />
+				<newline/><separator colspan="4"/>
+				<field name="state" select="1"/>
+				<button name="enable" string="Enable" states="disabled" type="object"/>
+				<button name="disable" string="Disable" states="enabled" type="object"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_portal_factory">
+		<field name="name">Portal Factory</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">portal.factory</field>
+		<field name="view_type">form</field>
+	</record>
+
+	<menuitem name="Portal/Configuration/Factory" id="menu_portal_factory" action="action_portal_factory"/>
+
+
+
+</data>
+</terp>

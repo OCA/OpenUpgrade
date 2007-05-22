@@ -1,0 +1,19 @@
+{
+	"name" : "Portal Management",
+	"version" : "0.1",
+	"author" : "Tiny",
+	"website" : "http://tinyerp.com/",
+	"depends" : ["base"],
+	"category" : "Generic Modules/Others",
+	"description": """
+	Base module to manage portal:
+	- define new menu entry with associated actions.
+	- add/delete menu entry easily.
+	- on-the-fly rules and access control creation.
+	""",
+	"init_xml" : [],
+	"demo_xml" : [],
+	"update_xml" : ["portal_view.xml"],
+	"active": False,
+	"installable": True
+}
