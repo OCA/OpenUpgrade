@@ -27,5 +27,4 @@
 ##############################################################################
 
 import pos_receipt
-import sales_report
 import pos_invoice
