@@ -19,6 +19,6 @@ Main features :
 	"init_xml" : [],
 	"demo_xml" : [],
 	"update_xml" : ["pos_report.xml","pos_wizard.xml","pos_view.xml","pos_sequence.xml","pos_data.xml"],
-	"active": True,
+	"active": False,
 	"installable": True,
 }
