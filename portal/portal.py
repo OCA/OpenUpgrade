@@ -81,18 +81,11 @@ class portal_factory(osv.osv):
 				'name': f.template_action_id.name,
 				'res_model': f.model_id.model,
 				'domain': f.template_action_id.domain,
-				'view_type': 'form',
+				'view_type': 'form',# TODO must not be hardcoded
 				'view_mode': f.template_action_id.view_mode,
 				'view_id': f.view_id.id,
 				})
-			print {
-				'name': f.template_action_id.name,
-				'res_model': f.model_id.model,
-				'domain': f.template_action_id.domain,
-				'view_type': 'form',
-				'view_mode': f.template_action_id.view_mode,
-				'view_id': f.view_id.id,
-				}
+
 			value_id = self.pool.get('ir.values').create(cr, uid, {
 				'name': 'TEST',
 				'key2': 'tree_but_open',
@@ -101,14 +94,7 @@ class portal_factory(osv.osv):
 				'value': 'ir.actions.act_window,%d'%action_id,
 				'object': True
 				})
-			print {
-				'name': 'TEST',
-				'key2': 'tree_but_open',
-				'model': 'ir.ui.menu',
-				'res_id': menu_id,
-				'value': 'ir.actions.act_window,%d'%action_id,
-				'object': True
-				}
+
 
 			#TODO : create rules and access
 		return self.write(cr,uid,ids,{'state':'enabled',"created_menu_id": menu_id,"created_action_id": action_id,"created_value_id": value_id})
