@@ -128,7 +128,7 @@
 	</record>
 
 
-	<menuitem name="Point of sale/Point of sale" action="pos.action_pos_pos_form" sequence="1"/>
+	<menuitem name="Point of sale/Point of sale" action="point_of_sale.action_pos_pos_form" sequence="1"/>
 
 
 
@@ -149,7 +149,7 @@
 		<field name="res_model">pos.order</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="pos.view_pos_order_tree"/>
+		<field name="view_id" ref="point_of_sale.view_pos_order_tree"/>
 		<field name="domain">[('invoice_id','=',False),('date_order','=', time.strftime('%Y-%m-%d'))]</field>
 	</record>
 	<menuitem name="Point of sale/Point of sale/POS Orders of the day not invoiced" id="menu_action_pos_order_tree2" action="action_pos_order_tree2"/>
@@ -160,7 +160,7 @@
 		<field name="res_model">pos.order</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="pos.view_pos_order_tree"/>
+		<field name="view_id" ref="point_of_sale.view_pos_order_tree"/>
 		<field name="domain">[('date_order','=', time.strftime('%Y-%m-%d'))]</field>
 	</record>
 	<menuitem name="Point of sale/Point of sale/POS Orders of the day" id="menu_action_pos_order_tree3" action="action_pos_order_tree3"/>
