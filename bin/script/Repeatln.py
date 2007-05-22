@@ -72,7 +72,7 @@ class Repeatln:
                                 self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
-                        self.VariableScope(tcur,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
+                        self.VariableScope(tcur,self.aComponentAdd[i])
             self.win.doModalDialog()
         else:
             print "Insert Field-4"
@@ -88,7 +88,8 @@ class Repeatln:
 
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
-            sock = xmlrpclib.ServerProxy(self.sMyHost + ':8069/xmlrpc/object')
+            sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+            print sock
             desktop=getDesktop()
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
@@ -100,7 +101,6 @@ class Repeatln:
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
         if oActionEvent.Source.getModel().Name == "btnOK":
-            self.bOkay = True
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             text = doc.Text
@@ -136,7 +136,8 @@ class Repeatln:
             self.win.endExecute()
 
     def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root=''):
-        sock = xmlrpclib.ServerProxy(self.sMyHost+':8069/xmlrpc/object')
+        sock = xmlrpclib.ServerProxy(self.sMyHost+'/xmlrpc/object')
+        print sock
         res = sock.execute('terp', 3, 'admin', object , 'fields_get')
         key = res.keys()
         key.sort()
@@ -196,7 +197,7 @@ class Repeatln:
         return sPath
 
     def getRelation(self, sRelName, sItem, sObjName ):
-        sock = xmlrpclib.ServerProxy(self.sMyHost+':8069/xmlrpc/object')
+        sock = xmlrpclib.ServerProxy(self.sMyHost+'/xmlrpc/object')
         res = sock.execute('terp', 3, 'admin', sRelName , 'fields_get')
         key = res.keys()
         for k in key:
