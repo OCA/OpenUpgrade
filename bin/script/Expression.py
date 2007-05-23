@@ -49,7 +49,7 @@ class Expression:
             oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
             if self.win.getEditText("txtName")!="" and self.win.getEditText("txtExpression")!="":
                 sKey=u""+self.win.getEditText("txtName")
-                sValue=u"" + self.win.getEditText("txtExpression")
+                sValue=u"[[ " + self.win.getEditText("txtExpression") + " ]]"
                 if cursor.TextTable==None:
                     oInputList.Items = (sKey,sValue)
                     text.insertTextContent(cursor,oInputList,False)

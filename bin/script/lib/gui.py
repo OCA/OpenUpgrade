@@ -444,6 +444,11 @@ class DBModalDialog:
         mod = self.addControl( "com.sun.star.awt.UnoControlListBoxModel",
                          cCtrlName, nPositionX, nPositionY, nWidth, nHeight,bDropdown)
 
+    def selectListBoxItem( self, cCtrlName, cItemText, bSelect=True ):
+        """Selects/Deselects the ispecified item."""
+        oControl = self.getControl( cCtrlName )
+        return oControl.selectItem( cItemText, bSelect )
+
     def removeListBoxItems( self, cCtrlName, nPosition, nCount=1 ):
         """Remove items from a ListBox."""
         oControl = self.getControl( cCtrlName )
@@ -474,6 +479,12 @@ class DBModalDialog:
             self.addItemListenerProc( cCtrlName, itemListenerProc )
         if actionListenerProc != None:
             self.addActionListenerProc( cCtrlName, actionListenerProc )
+
+
+    def setComboBoxText( self, cCtrlName, cText ):
+        """Set the text of the ComboBox."""
+        oControl = self.getControl( cCtrlName )
+        oControl.setText( cText )
 
     def getComboBoxSelectedText( self, cCtrlName ):
         """Get the selected text of the ComboBox."""

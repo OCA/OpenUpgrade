@@ -77,6 +77,7 @@ class Repeatln:
         else:
             print "Insert Field-4"
             self.win.endExecute()
+
     def getDesktop(self):
         localContext = uno.getComponentContext()
         resolver = localContext.ServiceManager.createInstanceWithContext(

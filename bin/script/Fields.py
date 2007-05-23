@@ -97,6 +97,7 @@ class Fields:
                     sObjName=""
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                     sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+
                     sObjName=sObjName.__getslice__(0,sObjName.find("("))
                     if cursor.TextTable==None:
                         sKey=u""+ self.win.getEditText("txtUName")
