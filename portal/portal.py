@@ -123,7 +123,7 @@ class portal_factory(osv.osv):
 			self.pool.get('ir.actions.act_window').unlink(cr,uid,[f.created_action_id])
 			self.pool.get('ir.values').unlink(cr,uid,[f.created_value_id])
 			if f.group_id:
-				f.group_id.write(cr,uid,[f.goup_id.id],{'rule_ids': [(3,0,f.pmodel_id.rule_id.id)]})
+				f.group_id.write(cr,uid,[f.group_id.id],{'rule_ids': [(3,0,f.pmodel_id.rule_id.id)]})
 
 		return self.write(cr,uid,ids,{'state':'disabled',})
 		
