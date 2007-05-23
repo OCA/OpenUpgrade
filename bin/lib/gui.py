@@ -486,6 +486,11 @@ class DBModalDialog:
         oControl = self.getControl( cCtrlName )
         oControl.setText( cText )
 
+    def setComboBoxSelectedText( self, cCtrlName, cText ):
+        """set the selected text of the ComboBox."""
+        oControl = self.getControl( cCtrlName )
+        oControl.setSelectedText(cText);
+
     def getComboBoxSelectedText( self, cCtrlName ):
         """Get the selected text of the ComboBox."""
         oControl = self.getControl( cCtrlName )

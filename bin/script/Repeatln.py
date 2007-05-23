@@ -5,7 +5,7 @@ from com.sun.star.task import XJobExecutor
 from lib.gui import *
 import xmlrpclib
 
-class Repeatln:
+class RepeatIn:
     def __init__(self):
         # Interface Design
         self.win = DBModalDialog(60, 50, 140, 250, "RepeatIn Builder")
@@ -308,7 +308,7 @@ class Repeatln:
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                             self.insVariable.addItem(self.aObjectList[j],1)
 
-Repeatln()
+RepeatIn()
 
 
 """

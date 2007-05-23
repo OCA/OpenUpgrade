@@ -20,6 +20,7 @@ class modify:
         self.oVC = Doc.CurrentController.getViewCursor()
         # Variable Declaration
         self.sObj=None
+        self.count=0
         self.aItemList=[]
         self.aComponentAdd=[]
         self.aObjectList=[]
@@ -167,7 +168,7 @@ class modify:
 
                     for j in range(self.aObjectList.__len__()):
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == self.oMyObject.__getitem__(1).__getslice__(0,self.oMyObject.__getitem__(1).find(".")):
-                            #self.win.setComboBoxText( "cmbVariable", self.aObjectList[j] )
+                            #self.win.setComboBoxSelectedText( "cmbVariable", self.aObjectList[j] )
 
                             self.genTree(self.aObjectList[j].__getslice__(self.aObjectList[j].find("(")+1,self.aObjectList[j].__len__()-1),1,ending=['one2many','many2many'], recur=['one2many','many2many'])
 
@@ -222,14 +223,29 @@ class modify:
                     self.oCurObj.Items = (sKey,sValue)
                     self.oCurObj.update()
             if self.oMyObject.__getitem__(0)=="repeatIn":
-                print "abc"
+                if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" and self.win.getEditText("txtUName") != "" :
+                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
+                        sKey=u""+ self.win.getEditText("txtUName")
+                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+                        oInputList.Items = (sKey,sValue)
+                        self.oCurObj.Items = (sKey,sValue)
+                        self.oCurObj.update()
+                    else:
+                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=sObjName.__getslice__(0,sObjName.find("("))
+                        sKey=u""+ self.win.getEditText("txtUName")
+                        sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+
+                        self.oCurObj.Items = (sKey,sValue)
+                        self.oCurObj.update()
             if self.oMyObject.__getitem__(0)=="field":
                 if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
-                    sKey=u""+ self.win.getEditText("txtUName")
+
                     sObjName=self.win.getComboBoxSelectedText("cmbVariable")
                     print sObjName
                     sObjName=sObjName.__getslice__(0,sObjName.find("("))
                     print sObjName
+                    sKey=u""+ self.win.getEditText("txtUName")
                     sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
                     self.oCurObj.Items = (sKey,sValue)
                     self.oCurObj.update()
