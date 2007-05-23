@@ -1,7 +1,7 @@
 {
 	'name' : 'Sale agent Information',
-	'version': '4.1.0',
-	'author' : 'Eiffel Consultant',
+	'version': '0.1',
+	'author' : 'Tiny',
 	'depends' : ['base','product'],
 	'description': 'Sale agent Info',
 	'init_xml' : [],
