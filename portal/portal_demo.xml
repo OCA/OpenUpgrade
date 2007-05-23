@@ -1,10 +1,37 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+
+	<record model="res.groups" id="portal_group">
+		<field name="name">Portal group</field>
+	</record>
 	
+	<record model="ir.model.access" id="access_invoice">
+		<field name="name">Invoice</field>
+		<field name="model_id" model="ir.model" search="[('model','=','account.invoice')]"/>
+		<field name="perm_read" eval="True" />
+	</record>
+
+		<record model="ir.rule" id="invoice_rule">
+			<field name="name">Portal Invoice</field>
+			<field name="type">sub</field>
+			<field name="model_id" search="[('model','=','account.invoice')]" model="ir.model"/>
+			<field name="field_id" search="[('model','=','account.invoice'),('name','=','partner_id')]" model="ir.model.fields"/>
+			<field name="operator">=</field>
+			<field name="operand">user.addess_id.partner_id.id</field>
+			<field name="domain">[('partner_id', '=', user.addess_id.partner_id.id)]</field>
+		</record>
+
+	<record model="portal.model" id="model_invoice">
+				<field name="name" >Model invoice</field>
+				<field name="model_id" search="[('model','=','account.invoice')]"/>
+				<field name="view_id" ref="portal.portal_invoice_form"/>
+				<field name="rule_id" ref="portal.invoice_rule"/>
+				<field name="access_id" ref="portal.access_invoice"/>
+	</record>
 	<record model="portal.factory" id="factory_invoice">
 				<field name="name" >Portal invoice</field>
-				<field name="model_id" search="[('model','=','account.invoice')]"/>
+				<field name="pmodel_id" ref="model_invoice"/>
 				<field name="menu_name">Invoice</field>
 				<field name="parentmenu_id" ref="menu_portal_root"/>
 				<field name="template_action_id" ref="account.action_invoice_tree1"/>

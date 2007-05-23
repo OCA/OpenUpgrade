@@ -8,13 +8,14 @@
 		<field name="model">portal.factory</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Sale Shop">
+			<form string="Portal Model">
 				<field name="name" select="1"/>
-				<field name="model_id" select="1"/>
-				<field name="menu_name" select="1"/>
-				<field name="parentmenu_id" select="1"/>
+				<field name="pmodel_id" select="1"/>
+				<field name="menu_name" select="2"/>
+				<field name="parentmenu_id" select="2"/>
 				<field name="template_action_id"/>
 				<field name="view_id" />
+				<field name="group_id" />
 				<newline/><separator colspan="4"/>
 				<field name="state" select="1"/>
 				<button name="enable" string="Enable" states="disabled" type="object"/>
@@ -22,6 +23,28 @@
 			</form>
 		</field>
 	</record>
+
+
+
+	<record model="ir.ui.view" id="view_model_form">
+		<field name="name">Portal Model</field>
+		<field name="model">portal.model</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="">
+				<field name="name" select="1"/>
+				<field name="model_id" select="1"/>
+				<field name="view_id" select="2"/>
+				<field name="rule_id" select="2"/>
+				<field name="access_id"/>
+			</form>
+		</field>
+	</record>
+
+
+
+
+
 	<record model="ir.actions.act_window" id="action_portal_factory">
 		<field name="name">Portal Factory</field>
 		<field name="type">ir.actions.act_window</field>
