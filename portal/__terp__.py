@@ -13,7 +13,7 @@
 	""",
 	"init_xml" : [],
 	"update_xml" : ["portal_view.xml"],
-	"demo_xml" : ["portal_demo.xml"],
+	"demo_xml" : [],
 	"active": False,
 	"installable": True
 }

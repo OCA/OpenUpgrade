@@ -111,7 +111,7 @@ class portal_factory(osv.osv):
 				})
 
 			if f.group_id:
-				f.group_id.write(cr,uid,[f.group_id.id],{'rule_ids': [(4,0,f.pmodel_id.rule_id.id)]})
+				f.group_id.write(cr,uid,[f.group_id.id],{'rule_ids': [(4,f.pmodel_id.rule_id.id)]})
 				f.pmodel_id.access_id.write(cr,uid,[f.pmodel_id.access_id.id],{'group_id': f.group_id.id})
 
 		return self.write(cr,uid,ids,{'state':'enabled',"created_menu_id": menu_id,"created_action_id": action_id,"created_value_id": value_id})
@@ -123,8 +123,8 @@ class portal_factory(osv.osv):
 			self.pool.get('ir.actions.act_window').unlink(cr,uid,[f.created_action_id])
 			self.pool.get('ir.values').unlink(cr,uid,[f.created_value_id])
 			if f.group_id:
-				f.group_id.write(cr,uid,[f.group_id.id],{'rule_ids': [(3,0,f.pmodel_id.rule_id.id)]})
-
+				f.group_id.write(cr,uid,[f.group_id.id],{'rule_ids': [(3,f.pmodel_id.rule_id.id)]})
+				f.pmodel_id.access_id.write(cr,uid,[f.pmodel_id.access_id.id],{'group_id': False})
 		return self.write(cr,uid,ids,{'state':'disabled',})
 		
 portal_factory()
