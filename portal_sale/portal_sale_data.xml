@@ -19,8 +19,8 @@
 			<field name="model_id" search="[('model','=','sale.order')]" model="ir.model"/>
 			<field name="field_id" search="[('model','=','sale.order'),('name','=','partner_id')]" model="ir.model.fields"/>
 			<field name="operator">=</field>
-			<field name="operand">user.addess_id.partner_id.id</field>
-			<field name="domain">[('partner_id', '=', user.addess_id.partner_id.id)]</field>
+			<field name="operand">user.address_id.partner_id.id</field>
+			<field name="domain">[('partner_id', '=', user.address_id.partner_id.id)]</field>
 		</record>
 
 	<record model="portal.model" id="model_sale">
