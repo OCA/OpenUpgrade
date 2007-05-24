@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+	<record model="res.groups" id="portal_group">
+		<field name="name">Portal group</field>
+	</record>
+
+	<record model="ir.model.access" id="access_sale">
+		<field name="name">Sale</field>
+		<field name="model_id" model="ir.model" search="[('model','=','sale.order')]"/>
+		<field name="perm_create" eval="True" />
+		<field name="perm_read" eval="True" />
+	</record>
+
+		<record model="ir.rule" id="sale_rule">
+			<field name="name">Portal Sale</field>
+			<field name="type">sub</field>
+			<field name="model_id" search="[('model','=','sale.order')]" model="ir.model"/>
+			<field name="field_id" search="[('model','=','sale.order'),('name','=','partner_id')]" model="ir.model.fields"/>
+			<field name="operator">=</field>
+			<field name="operand">user.addess_id.partner_id.id</field>
+			<field name="domain">[('partner_id', '=', user.addess_id.partner_id.id)]</field>
+		</record>
+
+	<record model="portal.model" id="model_sale">
+				<field name="name" >Model Sale</field>
+				<field name="model_id" search="[('model','=','sale.order')]"/>
+				<field name="view_id" ref="portal_sale_form"/>
+				<field name="rule_id" ref="sale_rule"/>
+				<field name="access_id" ref="access_sale"/>
+	</record>
+	<record model="portal.factory" id="factory_sale">
+				<field name="name" >Portal Sale</field>
+				<field name="pmodel_id" ref="model_sale"/>
+				<field name="menu_name">Sale Order</field>
+				<field name="parentmenu_id" ref="sale.menu_sale_order"/>
+				<field name="template_action_id" ref="sale.action_order_tree"/>
+				<field name="view_id" ref="portal_sale_form"/>
+	</record>
+
+</data>
+</terp>
