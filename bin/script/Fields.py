@@ -5,6 +5,9 @@ from com.sun.star.task import XJobExecutor
 from lib.gui import *
 import xmlrpclib
 
+#from com.sun.star.beans.MethodConcept import ALL as ALLMETHS
+#from com.sun.star.beans.PropertyConcept import ALL as ALLPROPS
+
 class Fields:
     def __init__(self):
         self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
@@ -84,7 +87,7 @@ class Fields:
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
-            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),1,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -93,23 +96,37 @@ class Fields:
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
+
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
                     sObjName=""
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                     sObjName=self.win.getComboBoxSelectedText("cmbVariable")
 
                     sObjName=sObjName.__getslice__(0,sObjName.find("("))
+
                     if cursor.TextTable==None:
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
                         oInputList.Items = (sKey,sValue)
                         text.insertTextContent(cursor,oInputList,False)
                     else:
+
                         oTable = cursor.TextTable
+
                         oCurCell = cursor.Cell
+
                         tableText = oTable.getCellByName( oCurCell.CellName )
-                        cursor = tableText.createTextCursor()
-                        cursor.gotoEndOfParagraph(True)
+#                        ctx = uno.getComponentContext()
+#                        introspection = ctx.ServiceManager.createInstanceWithContext(
+#                                           "com.sun.star.beans.Introspection", ctx)
+#                        access = introspection.inspect(tableText)
+#                        meths = access.getMethods(ALLMETHS)
+#                        props = access.getProperties(ALLPROPS)
+#                        print [ x.getName() for x in meths ] + [ x.Name for x in props ]
+
+                        #cursor = tableText.createTextCursor()
+                        #cursor.gotoEndOfParagraph(True)
+
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
                         oInputList.Items = (sKey,sValue)

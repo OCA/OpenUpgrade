@@ -96,7 +96,7 @@ class RepeatIn:
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
-            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),1,ending=['one2many','many2many'], recur=['one2many','many2many'])
+            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),2,ending=['one2many','many2many'], recur=['one2many','many2many'])
         else:
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
 
@@ -126,8 +126,8 @@ class RepeatIn:
                             oTable = cursor.TextTable
                             oCurCell = cursor.Cell
                             tableText = oTable.getCellByName( oCurCell.CellName )
-                            cursor = tableText.createTextCursor()
-                            cursor.gotoEndOfParagraph(True)
+                            #cursor = tableText.createTextCursor()
+                            #cursor.gotoEndOfParagraph(True)
                             sKey=u""+ self.win.getEditText("txtUName")
                             sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
                             oInputList.Items = (sKey,sValue)
