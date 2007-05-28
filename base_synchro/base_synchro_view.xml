@@ -2,13 +2,14 @@
 <terp>
 	<data>
 
+<!--view_transfer_line starts -->
+
 		<record model="ir.ui.view" id="view_transfer_line_tree">
 			<field name="name">base.synchro.obj.line.tree</field>
 			<field name="model">base.synchro.obj.line</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Transfered Ids Details">
-					<field name="obj_id" select="1" />
 					<field name="local_id" select="1" />
 					<field name="remote_id" select="1" />
 					<field name="method" select="1" />
@@ -16,6 +17,23 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_transfer_line_form">
+			<field name="name">base.synchro.obj.line.form</field>
+			<field name="model">base.synchro.obj.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<tree string="Transfered Ids Details">
+					<field name="local_id" select="1" readonly="1"/>
+					<field name="remote_id" select="1" readonly="1" />
+					<field name="method" select="1" readonly="1"/>
+				</tree>
+			</field>
+		</record>
+
+
+<!--view_transfer_line end -->
+
+<!--view_base_synchro_obj starts-->
 
 		<record model="ir.ui.view" id="view_transfer_form">
 			<field name="name">base.synchro.obj.form</field>
@@ -23,44 +41,82 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Transfer Details">
-					<field name="user_id" select="1" />
-					<field name="write_date" select="1" />
-					<field name="model_id" select="1" />
-					<field name="server_url" select="1" />
-					<field name="db_name" select="1" />
+					<field name="model_id" select="1"/>
 					<field name="action" select="1" />
-					<field name="fields_id"/>
+					<field name="sequence" select="1"/>
+					<field name="synchronize_date"/>
+					<field name="line_id" colspan="4"/>
+
 				</form>
 			</field>
 		</record>
+
 		<record model="ir.ui.view" id="view_regclass_tree">
 			<field name="name">base.synchro.obj.tree</field>
 			<field name="model">base.synchro.obj</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Class">
-					<field name="user_id"/>
-					<field name="write_date"/>
-					<field name="model_id"/>
-					<field name="server_url"/>
-					<field name="db_name" select="1" />
+					<field name="model_id" select="1" />
 					<field name="action" select="1" />
+					<field name="sequence" select="1"/>
+					<field name="synchronize_date" select="1"/>
 				</tree>
 			</field>
 		</record>
+
 		<record model="ir.actions.act_window" id="action_transfer_tree">
+			<field name="name">action.transfer.form</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">base.synchro.obj</field>
 			<field name="view_type">form</field>
 		</record>
 
-<!--		<record model="ir.actions.act_window" id="action_transfer_form">
-			<field name="name">action.transfer.form</field>
+		<menuitem name="Financial Management/Configuration/Analytic Accounts/Synchronization/Models " action="action_transfer_tree" id="transfer_menu_id" />
+
+<!--view_base_synchro_obj starts-->
+
+<!--view_base_synchro_server starts -->
+
+		<record model="ir.ui.view" id="view_base_synchro_server_tree">
+			<field name="name">base.synchro.server.tree</field>
+			<field name="model">base.synchro.server</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Server Details">
+					<field name="name" select="1" />
+					<field name="login" select="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_base_synchro_server_form">
+			<field name="name">base.synchro.server.form</field>
+			<field name="model">base.synchro.server</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Server Details">
+					<field name="name" select="1" on_change="_validate_server(name)" colspan="4"/>
+					<field name="login" select="1" />
+					<field name="password" select="1" />
+					<field name="obj_id" select="1" colspan="4" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_base_synchro_server_tree">
+			<field name="name">action.base.synchro.server.form</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">base.synchro.obj</field>
+			<field name="res_model">base.synchro.server</field>
 			<field name="view_type">form</field>
-		</record>-->
-		<menuitem name="Financial Management/Configuration/Analytic Accounts/Form Transfer" action="action_transfer_tree" id="transfer_menu_id" />
+		</record>
+
+		<menuitem name="Financial Management/Configuration/Analytic Accounts/Synchronization/Configuration " action="action_base_synchro_server_tree" id="synchro_server_tree_menu_id" />
+
+
+
+<!--view_base_synchro_server end -->
+
 
 	</data>
 </terp>
