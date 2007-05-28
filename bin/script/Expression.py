@@ -57,8 +57,8 @@ class Expression:
                     oTable = cursor.TextTable
                     oCurCell = cursor.Cell
                     tableText = oTable.getCellByName( oCurCell.CellName )
-                    cursor = tableText.createTextCursor()
-                    cursor.gotoEndOfParagraph(True)
+                    #cursor = tableText.createTextCursor()
+                    #cursor.gotoEndOfParagraph(True)
                     oInputList.Items = (sKey,sValue)
                     tableText.insertTextContent(cursor,oInputList,False)
             self.win.endExecute()

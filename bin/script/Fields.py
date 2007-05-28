@@ -43,7 +43,9 @@ class Fields:
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
+        self.sMyHost= ""
         if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
+            self.sMyHost= docinfo.getUserFieldValue(0)
             self.count=0
             oParEnum = doc.getTextFields().createEnumeration()
             while oParEnum.hasMoreElements():
