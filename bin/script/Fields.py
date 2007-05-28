@@ -7,6 +7,17 @@ import xmlrpclib
 
 #from com.sun.star.beans.MethodConcept import ALL as ALLMETHS
 #from com.sun.star.beans.PropertyConcept import ALL as ALLPROPS
+class ErrorDialog:
+    def __init__(self,sErrorMsg, sErrorHelpMsg):
+        self.win = DBModalDialog(50, 50, 150, 70, "Error Message")
+        self.win.addFixedText("lblErrMsg", 5, 5, 190, 20, sErrorMsg)
+        self.win.addFixedText("lblErrHelpMsg", 5, 20, 190, 35, sErrorHelpMsg)
+        self.win.addButton('btnOK', 55,55,40,15,'Ok'
+                     ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.doModalDialog()
+    def btnOkOrCancel_clicked( self, oActionEvent ):
+        print "abc"
+        self.win.endExecute()
 
 class Fields:
     def __init__(self):
@@ -32,12 +43,7 @@ class Fields:
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        if not docinfo.getUserFieldValue(0)=="":
-            self.sMyHost= docinfo.getUserFieldValue(0)
-        else:
-            print "Insert Field-1"
-            self.win.endExecute()
-        if not docinfo.getUserFieldValue(3) == "":
+        if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
             self.count=0
             oParEnum = doc.getTextFields().createEnumeration()
             while oParEnum.hasMoreElements():
@@ -68,7 +74,7 @@ class Fields:
                         self.VariableScope(tcur,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
             self.win.doModalDialog()
         else:
-            print "Insert Field-4"
+            ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
 
     def getDesktop(self):
@@ -116,21 +122,13 @@ class Fields:
                         oCurCell = cursor.Cell
 
                         tableText = oTable.getCellByName( oCurCell.CellName )
-#                        ctx = uno.getComponentContext()
-#                        introspection = ctx.ServiceManager.createInstanceWithContext(
-#                                           "com.sun.star.beans.Introspection", ctx)
-#                        access = introspection.inspect(tableText)
-#                        meths = access.getMethods(ALLMETHS)
-#                        props = access.getProperties(ALLPROPS)
-#                        print [ x.getName() for x in meths ] + [ x.Name for x in props ]
-
-                        #cursor = tableText.createTextCursor()
-                        #cursor.gotoEndOfParagraph(True)
-
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
                         oInputList.Items = (sKey,sValue)
                         tableText.insertTextContent(cursor,oInputList,False)
+            else:
+                if self.win.getEditText("txtUName") != "":
+                    ErrorDialog("Please Enter Value in Name Field")
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
