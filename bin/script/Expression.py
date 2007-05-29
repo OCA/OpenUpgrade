@@ -1,19 +1,8 @@
-
-
-# OOo's libraries
 import uno
 import string
 import unohelper
 from lib.gui import *
 from com.sun.star.task import XJobExecutor
-# Danny's libraries
-#from OOo.OOoLib import createUnoService, createUnoStruct
-#from OOo.ListenerProcAdapters import *
-#from Danny.OOo.Listeners.TopWindowListener import TopWindowListener
-
-
-#--------------------------------------------------
-# Example of Dialog box built by subclassing the DBModalDialog class.
 
 class ErrorDialog:
     def __init__(self,sErrorMsg, sErrorHelpMsg=""):
@@ -25,7 +14,6 @@ class ErrorDialog:
         self.win.doModalDialog()
     def btnOkOrCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
-
 
 class Expression:
     def __init__(self):
