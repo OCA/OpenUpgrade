@@ -7,8 +7,9 @@ import xmlrpclib
 
 #from com.sun.star.beans.MethodConcept import ALL as ALLMETHS
 #from com.sun.star.beans.PropertyConcept import ALL as ALLPROPS
+
 class ErrorDialog:
-    def __init__(self,sErrorMsg, sErrorHelpMsg):
+    def __init__(self,sErrorMsg, sErrorHelpMsg=""):
         self.win = DBModalDialog(50, 50, 150, 70, "Error Message")
         self.win.addFixedText("lblErrMsg", 5, 5, 190, 20, sErrorMsg)
         self.win.addFixedText("lblErrHelpMsg", 5, 20, 190, 35, sErrorHelpMsg)
@@ -16,7 +17,6 @@ class ErrorDialog:
                      ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.doModalDialog()
     def btnOkOrCancel_clicked( self, oActionEvent ):
-        print "abc"
         self.win.endExecute()
 
 class Fields:
@@ -104,8 +104,9 @@ class Fields:
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
-
+            print "abc"
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
+                    print "abc"
                     sObjName=""
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                     sObjName=self.win.getComboBoxSelectedText("cmbVariable")
@@ -128,10 +129,11 @@ class Fields:
                         sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
                         oInputList.Items = (sKey,sValue)
                         tableText.insertTextContent(cursor,oInputList,False)
+                        self.win.endExecute()
             else:
-                if self.win.getEditText("txtUName") != "":
-                    ErrorDialog("Please Enter Value in Name Field")
-            self.win.endExecute()
+                    ErrorDialog("Please Fill appropriate data in Name field \nor select perticular value from the list of fields")
+
+
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 

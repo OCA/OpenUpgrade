@@ -5,6 +5,17 @@ from com.sun.star.task import XJobExecutor
 from lib.gui import *
 import xmlrpclib
 
+class ErrorDialog:
+    def __init__(self,sErrorMsg, sErrorHelpMsg=""):
+        self.win = DBModalDialog(50, 50, 150, 70, "Error Message")
+        self.win.addFixedText("lblErrMsg", 5, 5, 190, 20, sErrorMsg)
+        self.win.addFixedText("lblErrHelpMsg", 5, 20, 190, 35, sErrorHelpMsg)
+        self.win.addButton('btnOK', 55,55,40,15,'Ok'
+                     ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.doModalDialog()
+    def btnOkOrCancel_clicked( self, oActionEvent ):
+        self.win.endExecute()
+
 class RepeatIn:
     def __init__(self):
         # Interface Design
@@ -38,13 +49,9 @@ class RepeatIn:
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         # Check weather Field-1 is available if not then exit from application
-        if not docinfo.getUserFieldValue(0)=="":
+        self.sMyHost= ""
+        if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
             self.sMyHost= docinfo.getUserFieldValue(0)
-        else:
-            print "Insert Field-1"
-            self.win.endExecute()
-        # Check weather Field-4 is available or not otherwise exit from application
-        if not docinfo.getUserFieldValue(3) == "":
             self.count=0
             oParEnum = doc.getTextFields().createEnumeration()
             while oParEnum.hasMoreElements():
@@ -75,7 +82,7 @@ class RepeatIn:
                         self.VariableScope(tcur,self.aComponentAdd[i])
             self.win.doModalDialog()
         else:
-            print "Insert Field-4"
+            ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
 
     def getDesktop(self):
@@ -107,32 +114,34 @@ class RepeatIn:
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" and self.win.getEditText("txtUName") != "" :
-                    sObjName=""
-                    oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
+                sObjName=""
+                oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+                if self.win.getListBoxSelectedItem("lstFields") == "objects":
+                    sKey=u""+ self.win.getEditText("txtUName")
+                    sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+                    oInputList.Items = (sKey,sValue)
+                    text.insertTextContent(cursor,oInputList,False)
+                else:
+                    sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                    sObjName=sObjName.__getslice__(0,sObjName.find("("))
+                    if cursor.TextTable==None:
                         sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+                        sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
                         oInputList.Items = (sKey,sValue)
                         text.insertTextContent(cursor,oInputList,False)
                     else:
-                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
-                        sObjName=sObjName.__getslice__(0,sObjName.find("("))
-                        if cursor.TextTable==None:
-                            sKey=u""+ self.win.getEditText("txtUName")
-                            sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-                            oInputList.Items = (sKey,sValue)
-                            text.insertTextContent(cursor,oInputList,False)
-                        else:
-                            oTable = cursor.TextTable
-                            oCurCell = cursor.Cell
-                            tableText = oTable.getCellByName( oCurCell.CellName )
-                            #cursor = tableText.createTextCursor()
-                            #cursor.gotoEndOfParagraph(True)
-                            sKey=u""+ self.win.getEditText("txtUName")
-                            sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-                            oInputList.Items = (sKey,sValue)
-                            tableText.insertTextContent(cursor,oInputList,False)
-            self.win.endExecute()
+                        oTable = cursor.TextTable
+                        oCurCell = cursor.Cell
+                        tableText = oTable.getCellByName( oCurCell.CellName )
+                        #cursor = tableText.createTextCursor()
+                        #cursor.gotoEndOfParagraph(True)
+                        sKey=u""+ self.win.getEditText("txtUName")
+                        sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                        oInputList.Items = (sKey,sValue)
+                        tableText.insertTextContent(cursor,oInputList,False)
+                self.win.endExecute()
+            else:
+                ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
