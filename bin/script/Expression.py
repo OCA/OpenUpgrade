@@ -15,14 +15,25 @@ from com.sun.star.task import XJobExecutor
 #--------------------------------------------------
 # Example of Dialog box built by subclassing the DBModalDialog class.
 
+class ErrorDialog:
+    def __init__(self,sErrorMsg, sErrorHelpMsg=""):
+        self.win = DBModalDialog(50, 50, 150, 70, "Error Message")
+        self.win.addFixedText("lblErrMsg", 5, 5, 190, 20, sErrorMsg)
+        self.win.addFixedText("lblErrHelpMsg", 5, 20, 190, 35, sErrorHelpMsg)
+        self.win.addButton('btnOK', 55,55,40,15,'Ok'
+                     ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.doModalDialog()
+    def btnOkOrCancel_clicked( self, oActionEvent ):
+        self.win.endExecute()
+
 
 class Expression:
     def __init__(self):
-        self.win = DBModalDialog(60, 50, 140, 90, "Expression Builder")
-        self.win.addFixedText("lblName", 5, 10, 20, 15, "Name :")
-        self.win.addEdit("txtName", 30, 5, 100, 15)
-        self.win.addFixedText("lblExpression",5 , 30, 25, 15, "Expression :")
-        self.win.addEdit("txtExpression", 30, 25, 100, 15)
+        self.win = DBModalDialog(60, 50, 140, 80, "Expression Builder")
+        self.win.addFixedText("lblName", 17, 10, 20, 15, "Name :")
+        self.win.addEdit("txtName", 40, 5, 90, 15)
+        self.win.addFixedText("lblExpression",5 , 30, 35, 15, "Expression :")
+        self.win.addEdit("txtExpression", 40, 25, 90, 15)
         self.win.addButton( "btnOK", -10, -10, 30, 15, "OK",
                         actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton( "btnCancel", -10 - 30 -5, -10, 30, 15, "Cancel",
@@ -61,7 +72,9 @@ class Expression:
                     #cursor.gotoEndOfParagraph(True)
                     oInputList.Items = (sKey,sValue)
                     tableText.insertTextContent(cursor,oInputList,False)
-            self.win.endExecute()
+                self.win.endExecute()
+            else:
+                ErrorDialog("Please Fill appropriate data in Name field or \nExpression field")
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
