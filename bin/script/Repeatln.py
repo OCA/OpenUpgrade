@@ -19,22 +19,27 @@ class ErrorDialog:
 class RepeatIn:
     def __init__(self):
         # Interface Design
-        self.win = DBModalDialog(60, 50, 140, 250, "RepeatIn Builder")
-        self.win.addFixedText("lblVariable", 18, 12, 30, 15, "Variable :")
-        self.win.addComboBox("cmbVariable", 45, 10, 90, 15,True,
+
+        self.win = DBModalDialog(60, 50, 150, 250, "RepeatIn Builder")
+        self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
+        self.win.addComboBox("cmbVariable", 150-90-2, 10, 90, 15,True,
                             itemListenerProc=self.cmbVariable_selected)
+
+        self.win.addFixedText("lblFields", 10, 32, 60, 15, "Field to loop on :")
+        self.win.addComboListBox("lstFields", 150-90-2, 30, 90, 150, False)
+
         self.insVariable = self.win.getControl( "cmbVariable" )
-        self.win.addFixedText("lblName", 5, 32, 40, 15, "Object Name :")
-        self.win.addEdit("txtName", 45, 30, 90, 15,)
-        self.win.addFixedText("lblUName", 24, 52, 40, 15, "Name :")
-        self.win.addEdit("txtUName", 45, 50, 90, 15,)
-        self.win.addFixedText("lblFields", 25, 72, 25, 15, "Fields :")
-        self.win.addComboListBox("lstFields", 45, 70, 90, 150, False)
+        self.win.addFixedText("lblName", 12, 187, 60, 15, "Variable name :")
+        self.win.addEdit("txtName", 150-90-2, 185, 90, 15,)
+
+        self.win.addFixedText("lblUName", 8, 207, 60, 15, "Displayed name :")
+        self.win.addEdit("txtUName", 150-90-2, 205, 90, 15,)
+
         self.insField = self.win.getControl( "lstFields" )
-        self.win.addButton('btnOK',-5 ,-10,45,15,'Ok'
+        self.win.addButton('btnOK',-2 ,-10,45,15,'Ok'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.addButton('btnCancel',-5 - 45 - 5 ,-10,45,15,'Cancel'
+        self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         # Variable Declaration
         self.sObj=None
