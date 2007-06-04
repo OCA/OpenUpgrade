@@ -19,21 +19,20 @@ class ErrorDialog:
 class RepeatIn:
     def __init__(self):
         # Interface Design
-
-        self.win = DBModalDialog(60, 50, 150, 250, "RepeatIn Builder")
+        self.win = DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
-        self.win.addComboBox("cmbVariable", 150-90-2, 10, 90, 15,True,
+        self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
                             itemListenerProc=self.cmbVariable_selected)
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Field to loop on :")
-        self.win.addComboListBox("lstFields", 150-90-2, 30, 90, 150, False)
+        self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False)
 
         self.insVariable = self.win.getControl( "cmbVariable" )
         self.win.addFixedText("lblName", 12, 187, 60, 15, "Variable name :")
-        self.win.addEdit("txtName", 150-90-2, 185, 90, 15,)
+        self.win.addEdit("txtName", 180-120-2, 185, 120, 15,)
 
         self.win.addFixedText("lblUName", 8, 207, 60, 15, "Displayed name :")
-        self.win.addEdit("txtUName", 150-90-2, 205, 90, 15,)
+        self.win.addEdit("txtUName", 180-120-2, 205, 120, 15,)
 
         self.insField = self.win.getControl( "lstFields" )
         self.win.addButton('btnOK',-2 ,-10,45,15,'Ok'
@@ -46,6 +45,7 @@ class RepeatIn:
         self.aItemList=[]
         self.aComponentAdd=[]
         self.aObjectList=[]
+        self.aListRepeatIn=[]
         # Call method to perform Enumration on Report Document
         self.EnumDocument()
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
@@ -68,7 +68,7 @@ class RepeatIn:
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
             for j in range(self.aObjectList.__len__()):
-                if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == "Objects":
+                if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find(" ")) == "List":
                     self.insVariable.addItem(self.aObjectList[j],1)
             for i in range(self.aItemList.__len__()):
                 if self.aComponentAdd[i]=="Document":
@@ -102,13 +102,23 @@ class RepeatIn:
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-            print sock
             desktop=getDesktop()
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
-            self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+            print "abc" , self.aListRepeatIn.__len__()
+            i=0
+            for i in range(self.aListRepeatIn.__len__()-2):
+                print i
+                self.aListRepeatIn.__delitem__(i)
+
+
+            print "xyz"
+            if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
+                self.genTree(docinfo.getUserFieldValue(3),2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+            else:
+                self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),2,ending=['one2many','many2many'], recur=['one2many','many2many'])
         else:
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
 
@@ -123,7 +133,8 @@ class RepeatIn:
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                 if self.win.getListBoxSelectedItem("lstFields") == "objects":
                     sKey=u""+ self.win.getEditText("txtUName")
-                    sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+                    #sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+                    sValue=u"[[ repeatIn(" + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")] + ",'" + self.win.getEditText("txtName") + "') ]]"
                     oInputList.Items = (sKey,sValue)
                     text.insertTextContent(cursor,oInputList,False)
                 else:
@@ -131,17 +142,16 @@ class RepeatIn:
                     sObjName=sObjName.__getslice__(0,sObjName.find("("))
                     if cursor.TextTable==None:
                         sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                        sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
                         oInputList.Items = (sKey,sValue)
                         text.insertTextContent(cursor,oInputList,False)
                     else:
                         oTable = cursor.TextTable
                         oCurCell = cursor.Cell
                         tableText = oTable.getCellByName( oCurCell.CellName )
-                        #cursor = tableText.createTextCursor()
-                        #cursor.gotoEndOfParagraph(True)
+
                         sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ repeatIn(" + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                        sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
                         oInputList.Items = (sKey,sValue)
                         tableText.insertTextContent(cursor,oInputList,False)
                 self.win.endExecute()
@@ -150,7 +160,7 @@ class RepeatIn:
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-    def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root=''):
+    def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
         sock = xmlrpclib.ServerProxy(self.sMyHost+'/xmlrpc/object')
         print sock
         res = sock.execute('terp', 3, 'admin', object , 'fields_get')
@@ -158,9 +168,10 @@ class RepeatIn:
         key.sort()
         for k in key:
             if (not ending or res[k]['type'] in ending) and ((not ending_excl) or not (res[k]['type'] in ending_excl)):
-                self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
+                self.insField.addItem(root+'/'+res[k]["string"],self.win.getListBoxItemCount("lstFields"))
+                self.aListRepeatIn.append(actualroot+'/'+k)
             if (res[k]['type'] in recur) and (level>0):
-                self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur, root+'/'+k)
+                self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur,root+'/'+res[k]["string"],actualroot+'/'+k)
 
     def getList(self):
         desktop=getDesktop()
@@ -177,7 +188,7 @@ class RepeatIn:
                         if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
                             sMain = sItem.__getslice__(sItem.find(",'")+2,sItem.find("')"))
                 oParEnum = doc.getTextFields().createEnumeration()
-                self.aObjectList.append("Objects(" + docinfo.getUserFieldValue(3) + ")")
+                self.aObjectList.append("List of " + docinfo.getUserFieldValue(3))
                 while oParEnum.hasMoreElements():
                     oPar = oParEnum.nextElement()
                     if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
@@ -193,7 +204,7 @@ class RepeatIn:
                                     sPath=self.getPath(sItem.__getslice__(sItem.find("(")+1,sItem.find(",")), sMain)
                                     self.getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")))
         else:
-            self.aObjectList.append("Objects(" + docinfo.getUserFieldValue(3) + ")")
+            self.aObjectList.append("List of " + docinfo.getUserFieldValue(3))
 
     def getPath(self,sPath,sMain):
         desktop=getDesktop()
@@ -273,7 +284,6 @@ class RepeatIn:
                     oCur = oCurEnum.nextElement()
                 except:
                     Exception
-                    print "Problem with writing in Table"
                 if oCur.supportsService("com.sun.star.text.TextTable"):
                     if sTableName=="":
                         self.getChildTable(oCur,oPar.Name)
@@ -323,39 +333,3 @@ class RepeatIn:
                             self.insVariable.addItem(self.aObjectList[j],1)
 
 RepeatIn()
-
-
-"""
-
-            vOpenSearch = doc.createSearchDescriptor()
-
-            vCloseSearch = doc.createSearchDescriptor()
-
-            # Set the text for which to search and other
-            vOpenSearch.SearchString = "repeatIn"
-
-            vCloseSearch.SearchString = "')"
-
-            # Find the first open delimiter
-            vOpenFound = doc.findFirst(vOpenSearch)
-
-            while not vOpenFound==None:
-
-                #Search for the closing delimiter starting from the open delimiter
-                vCloseFound = doc.findNext( vOpenFound.End, vCloseSearch)
-
-                if vCloseFound==None:
-                    print "Found an opening bracket but no closing bracket!"
-
-                    break
-
-                else:
-
-                    vOpenFound.gotoRange(vCloseFound, True)
-
-                    self.count += 1
-
-                    vOpenFound = doc.findNext( vOpenFound.End, vOpenSearch)
-                #End If
-            #End while Loop
-"""

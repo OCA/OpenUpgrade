@@ -464,6 +464,11 @@ class DBModalDialog:
         oControl = self.getControl( cCtrlName )
         return oControl.getSelectedItem()
 
+    def getListBoxSelectedItemPos(self,cCtrlName):
+
+        oControl = self.getControl( cCtrlName )
+        return oControl.getSelectedItemPos()
+
     #--------------------------------------------------
     #   com.sun.star.awt.UnoControlComboBoxModel
     #--------------------------------------------------
