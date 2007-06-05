@@ -34,21 +34,21 @@ class report_artistlot(report_int):
 	def __init__(self, name):
 		report_int.__init__(self, name)
 
-	def create(self, uid, ids, datas, context):
+	def create(self,cr, uid, ids, datas, context):
 		service = netsvc.LocalService("object_proxy")
-		lots = service.execute(uid, 'auction.lots', 'read', ids, ['artist_id'])
+		lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['artist_id'])
 		artists = []
 		for lot in lots:
 			if lot['artist_id'] and lot['artist_id'] not in artists:
 				artists.append(lot['artist_id'][0])
-		
+
 		if not len(artists):
 			raise 'UserError', 'Objects '
-			
+
 		datas['ids'] = artists
 
 		self._obj_report = netsvc.LocalService('report.report.auction.artists')
-		return self._obj_report.create(uid, artists, datas, context)
+		return self._obj_report.create(cr,uid, artists, datas, context)
 
 	def result(self):
 		return self._obj_report.result()

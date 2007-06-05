@@ -41,17 +41,17 @@ def toxml(val):
 class report_custom(report_rml):
 	def __init__(self, name, table, tmpl, xsl):
 		report_rml.__init__(self, name, table, tmpl, xsl)
-		
-	def create_xml(self, uid, ids, datas, context={}):
+
+	def create_xml(self,cr, uid, ids, datas, context={}):
 		service = netsvc.LocalService("object_proxy")
-	
+
 #		start_time = time.clock()
-		
-		lots = service.execute(uid, 'auction.lots', 'read', ids, ['obj_price','ach_pay_id','ach_login','obj_comm','lot_est1','lot_est2','bord_vnd_id','ach_emp','auction_id'])
-		auction = service.execute(uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
-		
+
+		lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['obj_price','ach_pay_id','ach_login','obj_comm','lot_est1','lot_est2','bord_vnd_id','ach_emp','auction_id'])
+		auction = service.execute(cr.dbname,uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
+
 #		mid_time = time.clock()
-		
+
 		unsold = comm = emp = paid = unpaid = 0
 		est1 = est2 = adj = 0
 		paid_ids = []
@@ -63,19 +63,19 @@ class report_custom(report_rml):
 		for l in lots:
 			if l['lot_est2']:
 				est2 += l['lot_est2'] or 0.0
-				
+
 			if l['lot_est1']:
 				est1 += l['lot_est1'] or 0.0
-				
+
 			if l['obj_price']:
 				adj += l['obj_price'] or 0.0
-			
+
 			if l['obj_comm']:
 				comm += 1
-				
+
 			if l['ach_emp']:
 				emp += 1
-				
+
 			if l['ach_pay_id']:
 				paid_ids.append(l['id'])
 				paid += l['obj_price']
@@ -85,24 +85,24 @@ class report_custom(report_rml):
 
 			if l['obj_price']==0:
 				unsold+=1
-				
+
 			buyer[l['ach_login']]=1
 			seller[l['bord_vnd_id']]=1
 
 #		mid_time2 = time.clock()
-		
-		costs = service.execute(uid, 'auction.lots', 'compute_buyer_costs', paid_ids)
+
+		costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', paid_ids)
 		for cost in costs:
 			paid += cost['amount']
 
-		costs = service.execute(uid, 'auction.lots', 'compute_buyer_costs', unpaid_ids)
+		costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', unpaid_ids)
 		for cost in costs:
 			unpaid += cost['amount']
-			
+
 #		mid_time3 = time.clock()
 
 		debit = adj
-		costs = service.execute(uid, 'auction.lots', 'compute_seller_costs', ids)
+		costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_seller_costs', ids)
 		for cost in costs:
 			debit += cost['amount']
 
@@ -144,7 +144,7 @@ class report_custom(report_rml):
 #		print "seller costs:", mid_time4-mid_time3
 #		print "rest:", end_time-mid_time4
 #		print "total:", end_time-start_time
-		
+
 		return xml
 
 report_custom('report.auction.total', 'auction.lots', '', 'addons/auction/report/total.xsl')
