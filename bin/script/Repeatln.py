@@ -107,14 +107,9 @@ class RepeatIn:
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
-            print "abc" , self.aListRepeatIn.__len__()
             i=0
             for i in range(self.aListRepeatIn.__len__()-2):
-                print i
                 self.aListRepeatIn.__delitem__(i)
-
-
-            print "xyz"
             if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
                 self.genTree(docinfo.getUserFieldValue(3),2,ending=['one2many','many2many'], recur=['one2many','many2many'])
             else:
@@ -134,7 +129,7 @@ class RepeatIn:
                 if self.win.getListBoxSelectedItem("lstFields") == "objects":
                     sKey=u""+ self.win.getEditText("txtUName")
                     #sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
-                    sValue=u"[[ repeatIn(" + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")] + ",'" + self.win.getEditText("txtName") + "') ]]"
+                    sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
                     oInputList.Items = (sKey,sValue)
                     text.insertTextContent(cursor,oInputList,False)
                 else:
@@ -149,7 +144,6 @@ class RepeatIn:
                         oTable = cursor.TextTable
                         oCurCell = cursor.Cell
                         tableText = oTable.getCellByName( oCurCell.CellName )
-
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
                         oInputList.Items = (sKey,sValue)
@@ -162,7 +156,6 @@ class RepeatIn:
 
     def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
         sock = xmlrpclib.ServerProxy(self.sMyHost+'/xmlrpc/object')
-        print sock
         res = sock.execute('terp', 3, 'admin', object , 'fields_get')
         key = res.keys()
         key.sort()
@@ -329,7 +322,7 @@ class RepeatIn:
                 if self.aComponentAdd[i]==sTableName:
                     sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                     for j in range(self.aObjectList.__len__()):
-                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal and sLVal!="":
                             self.insVariable.addItem(self.aObjectList[j],1)
 
 RepeatIn()

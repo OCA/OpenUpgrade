@@ -17,14 +17,16 @@ class ErrorDialog:
 
 class Expression:
     def __init__(self):
-        self.win = DBModalDialog(60, 50, 140, 80, "Expression Builder")
-        self.win.addFixedText("lblName", 17, 10, 20, 15, "Name :")
-        self.win.addEdit("txtName", 40, 5, 90, 15)
-        self.win.addFixedText("lblExpression",5 , 30, 35, 15, "Expression :")
-        self.win.addEdit("txtExpression", 40, 25, 90, 15)
-        self.win.addButton( "btnOK", -10, -10, 30, 15, "OK",
+        self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
+        self.win.addFixedText("lblExpression",17 , 10, 35, 15, "Expression :")
+        self.win.addEdit("txtExpression", -5, 5, 123, 15)
+
+        self.win.addFixedText("lblName", 2, 30, 50, 15, "Displayed Name :")
+        self.win.addEdit("txtName", -5, 25, 123, 15)
+
+        self.win.addButton( "btnOK", -5, -5, 40, 15, "OK",
                         actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.addButton( "btnCancel", -10 - 30 -5, -10, 30, 15, "Cancel",
+        self.win.addButton( "btnCancel", -5 - 40 -5, -5, 40, 15, "Cancel",
                         actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.doModalDialog()
 
@@ -56,8 +58,6 @@ class Expression:
                     oTable = cursor.TextTable
                     oCurCell = cursor.Cell
                     tableText = oTable.getCellByName( oCurCell.CellName )
-                    #cursor = tableText.createTextCursor()
-                    #cursor.gotoEndOfParagraph(True)
                     oInputList.Items = (sKey,sValue)
                     tableText.insertTextContent(cursor,oInputList,False)
                 self.win.endExecute()

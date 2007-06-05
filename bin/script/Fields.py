@@ -21,24 +21,29 @@ class ErrorDialog:
 
 class Fields:
     def __init__(self):
-        self.win = DBModalDialog(60, 50, 140, 250, "Field Builder")
-        self.win.addFixedText("lblVariable", 3, 12, 30, 15, "Variable :")
-        self.win.addComboBox("cmbVariable", 30, 10, 105, 15,True,
+        self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
+
+        self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
+        self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
                             itemListenerProc=self.cmbVariable_selected)
         self.insVariable = self.win.getControl( "cmbVariable" )
-        self.win.addFixedText("lblUName", 8, 32, 40, 15, "Name :")
-        self.win.addEdit("txtUName", 30, 30, 105, 15,)
-        self.win.addFixedText("lblFields", 10, 52, 25, 15, "Fields :")
-        self.win.addComboListBox("lstFields", 30, 50, 105, 150, False)
+
+        self.win.addFixedText("lblFields", 10, 32, 60, 15, "Variable Fields :")
+        self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False)
         self.insField = self.win.getControl( "lstFields" )
+
+        self.win.addFixedText("lblUName", 8, 187, 60, 15, "Displayed name :")
+        self.win.addEdit("txtUName", 180-120-2, 185, 120, 15,)
+
         self.sObj=None
-        self.win.addButton('btnOK',-5 ,-25,45,15,'Ok'
+        self.win.addButton('btnOK',-5 ,-5,45,15,'Ok'
                      ,actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.addButton('btnCancel',-5 - 45 - 5 ,-25,45,15,'Cancel'
+        self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.aItemList=[]
         self.aComponentAdd=[]
         self.aObjectList=[]
+        self.aListFields=[]
         self.EnumDocument()
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
@@ -94,6 +99,11 @@ class Fields:
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
+            i=0
+            for i in range(self.aListFields.__len__()-2):
+                self.aListFields.__delitem__(i)
+
+            print "abc"
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
             self.genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
     def btnOkOrCancel_clicked( self, oActionEvent ):
@@ -104,32 +114,30 @@ class Fields:
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
-            print "abc"
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
-                    print "abc"
-                    sObjName=""
-                    oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                    sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                sObjName=""
+                oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+                sObjName=self.win.getComboBoxSelectedText("cmbVariable")
 
-                    sObjName=sObjName.__getslice__(0,sObjName.find("("))
+                sObjName=sObjName.__getslice__(0,sObjName.find("("))
 
-                    if cursor.TextTable==None:
-                        sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
-                        oInputList.Items = (sKey,sValue)
-                        text.insertTextContent(cursor,oInputList,False)
-                    else:
+                if cursor.TextTable==None:
+                    sKey=u""+ self.win.getEditText("txtUName")
+                    sValue=u"[[ " + sObjName + self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + " ]]"
+                    oInputList.Items = (sKey,sValue)
+                    text.insertTextContent(cursor,oInputList,False)
+                else:
 
-                        oTable = cursor.TextTable
+                    oTable = cursor.TextTable
 
-                        oCurCell = cursor.Cell
+                    oCurCell = cursor.Cell
 
-                        tableText = oTable.getCellByName( oCurCell.CellName )
-                        sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ " + sObjName + self.win.getListBoxSelectedItem("lstFields").replace("/",".") + " ]]"
-                        oInputList.Items = (sKey,sValue)
-                        tableText.insertTextContent(cursor,oInputList,False)
-                        self.win.endExecute()
+                    tableText = oTable.getCellByName( oCurCell.CellName )
+                    sKey=u""+ self.win.getEditText("txtUName")
+                    sValue=u"[[ " + sObjName + self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + " ]]"
+                    oInputList.Items = (sKey,sValue)
+                    tableText.insertTextContent(cursor,oInputList,False)
+                self.win.endExecute()
             else:
                     ErrorDialog("Please Fill appropriate data in Name field \nor select perticular value from the list of fields")
 
@@ -137,17 +145,18 @@ class Fields:
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-    def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root=''):
+    def genTree(self,object,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
         sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
         res = sock.execute('terp', 3, 'admin', object , 'fields_get')
         key = res.keys()
         key.sort()
         for k in key:
             if (not ending or res[k]['type'] in ending) and ((not ending_excl) or not (res[k]['type'] in ending_excl)):
-                self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
+                #self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
+                self.insField.addItem(root+'/'+res[k]["string"],self.win.getListBoxItemCount("lstFields"))
+                self.aListFields.append(actualroot+'/'+k)
             if (res[k]['type'] in recur) and (level>0):
-                self.insField.addItem(root+'/'+k,self.win.getListBoxItemCount("lstFields"))
-                self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur, root+'/'+k)
+                self.genTree(res[k]['relation'], level-1, ending, ending_excl, recur,root+'/'+res[k]["string"],actualroot+'/'+k)
 
     def getModule(self,oSocket):
         res = oSocket.execute('terp', 3, 'admin', 'ir.model', 'read',
