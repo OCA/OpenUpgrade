@@ -101,7 +101,7 @@ def getPath(sPath,sMain):
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
     Doc =desktop.getCurrentComponent()
-    oVC = Doc.CurrentController.getViewCursor()
+    #oVC = Doc.CurrentController.getViewCursor()
     oParEnum = Doc.getText().createEnumeration()
     while oParEnum.hasMoreElements():
         oPar = oParEnum.nextElement()
@@ -126,34 +126,35 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     bEmptyTableFlag=True
     for val in sNames:
         oCell = oPar.getCellByName(val)
-        oTCurs = oCell.createTextCursor()
-        oCurEnum = oTCurs.createEnumeration()
+        oCurEnum = oCell.createEnumeration()
         while oCurEnum.hasMoreElements():
             try:
                 oCur = oCurEnum.nextElement()
-            except:
-                Exception
-            if oCur.supportsService("com.sun.star.text.TextTable"):
-                if sTableName=="":
-                    getChildTable(oCur,aItemList,aComponentAdd,oPar.Name)
+
+                if oCur.supportsService("com.sun.star.text.TextTable"):
+                    if sTableName=="":
+                        getChildTable(oCur,aItemList,aComponentAdd,oPar.Name)
+                    else:
+                        getChildTable(oCur,aItemList,aComponentAdd,sTableName+"."+oPar.Name)
                 else:
-                    getChildTable(oCur,aItemList,aComponentAdd,sTableName+"."+oPar.Name)
-            else:
-                oSecEnum = oCur.createEnumeration()
-                while oSecEnum.hasMoreElements():
-                    oSubSection = oSecEnum.nextElement()
-                    if oSubSection.supportsService("com.sun.star.text.TextField"):
-                        bEmptyTableFlag=False
-                        sItem=oSubSection.TextField.Items.__getitem__(1)
-                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-                            if aItemList.__contains__(oSubSection.TextField.Items)==False:
-                                aItemList.append(oSubSection.TextField.Items)
-                            if sTableName=="":
-                                if  aComponentAdd.__contains__(oPar.Name)==False:
-                                    aComponentAdd.append(oPar.Name)
-                            else:
-                                if aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
-                                    aComponentAdd.append(sTableName+"."+oPar.Name)
+                    oSecEnum = oCur.createEnumeration()
+                    while oSecEnum.hasMoreElements():
+                        oSubSection = oSecEnum.nextElement()
+                        if oSubSection.supportsService("com.sun.star.text.TextField"):
+                            bEmptyTableFlag=False
+                            sItem=oSubSection.TextField.Items.__getitem__(1)
+                            if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+                                if aItemList.__contains__(oSubSection.TextField.Items)==False:
+                                    aItemList.append(oSubSection.TextField.Items)
+                                if sTableName=="":
+                                    if  aComponentAdd.__contains__(oPar.Name)==False:
+                                        aComponentAdd.append(oPar.Name)
+                                else:
+                                    if aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
+                                        aComponentAdd.append(sTableName+"."+oPar.Name)
+
+            except:
+                import traceback;traceback.print_exc()
     if bEmptyTableFlag==True:
         aItemList.append((u'',u''))
         if sTableName=="":
