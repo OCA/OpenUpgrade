@@ -4,6 +4,8 @@ import string
 import unohelper
 from com.sun.star.task import XJobExecutor
 from lib.gui import *
+#from lib.functions import *
+#from lib.error import *
 import xmlrpclib
 
 

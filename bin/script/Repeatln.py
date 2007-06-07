@@ -31,6 +31,7 @@ class RepeatIn:
 
         self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
+
         # Variable Declaration
         self.sObj=None
         self.aItemList=[]

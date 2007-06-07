@@ -2,17 +2,21 @@ import uno
 import xmlrpclib
 from gui import *
 
-def genTree(object,aListRepeatIn,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
-    sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
-    res = sock.execute('terp', 3, 'admin', object , 'fields_get')
-    key = res.keys()
-    key.sort()
-    for k in key:
-        if (not ending or res[k]['type'] in ending) and ((not ending_excl) or not (res[k]['type'] in ending_excl)):
-            insField.addItem(root+'/'+res[k]["string"],1)#getListBoxItemCount("lstFields"))
-            aListRepeatIn.append(actualroot+'/'+k)
-        if (res[k]['type'] in recur) and (level>0):
-            genTree(res[k]['relation'],aListRepeatIn,insField,host ,level-1, ending, ending_excl, recur,root+'/'+res[k]["string"],actualroot+'/'+k)
+def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
+    try:
+        sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
+        res = sock.execute('terp', 3, 'admin', object , 'fields_get')
+        key = res.keys()
+        key.sort()
+        for k in key:
+            if (not ending or res[k]['type'] in ending) and ((not ending_excl) or not (res[k]['type'] in ending_excl)):
+                insField.addItem(root+'/'+res[k]["string"],aList.__len__())#getListBoxItemCount("lstFields"))
+                aList.append(actualroot+'/'+k)
+                print root+'/'+res[k]["string"],"<----->",actualroot+'/'+k
+            if (res[k]['type'] in recur) and (level>0):
+                genTree(res[k]['relation'],aList,insField,host ,level-1, ending, ending_excl, recur,root+'/'+res[k]["string"],actualroot+'/'+k)
+    except:
+        import traceback;traceback.print_exc()
 
 def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableName=""):
     if sTableName.find(".") != -1:
