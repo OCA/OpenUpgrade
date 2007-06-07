@@ -287,4 +287,4 @@ class Fields:
 #                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
 #                            self.insVariable.addItem(self.aObjectList[j],1)
 
-Fields()
+#Fields()

@@ -96,6 +96,9 @@ class RepeatIn:
             else:
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
         else:
+            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))
+            self.win.setEditText("txtUName","."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
@@ -309,4 +312,4 @@ class RepeatIn:
 #                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal and sLVal!="":
 #                            self.insVariable.addItem(self.aObjectList[j],1)
 
-RepeatIn()
+#RepeatIn()

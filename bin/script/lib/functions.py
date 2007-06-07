@@ -12,7 +12,6 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
             if (not ending or res[k]['type'] in ending) and ((not ending_excl) or not (res[k]['type'] in ending_excl)):
                 insField.addItem(root+'/'+res[k]["string"],aList.__len__())#getListBoxItemCount("lstFields"))
                 aList.append(actualroot+'/'+k)
-                print root+'/'+res[k]["string"],"<----->",actualroot+'/'+k
             if (res[k]['type'] in recur) and (level>0):
                 genTree(res[k]['relation'],aList,insField,host ,level-1, ending, ending_excl, recur,root+'/'+res[k]["string"],actualroot+'/'+k)
     except:

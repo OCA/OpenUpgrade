@@ -308,8 +308,8 @@ class modify:
         bEmptyTableFlag=True
         for val in sNames:
             oCell = oPar.getCellByName(val)
-            oTCurs = oCell.createTextCursor()
-            oCurEnum = oTCurs.createEnumeration()
+            #oTCurs = oCell.createTextCursor()
+            oCurEnum = oCell.createEnumeration()
             while oCurEnum.hasMoreElements():
                 try:
                     oCur = oCurEnum.nextElement()
@@ -438,4 +438,4 @@ class modify:
             if k == sItem.__getslice__(0,sItem.find(".")):
                 self.getRelation(res[k]['relation'], sItem.__getslice__(sItem.find(".")+1,sItem.__len__()), sObjName)
 
-modify()
+#modify()
