@@ -12,7 +12,7 @@
 	- on-the-fly rules and access control creation.
 	""",
 	"init_xml" : [],
-	"update_xml" : ["portal_view.xml"],
+	"update_xml" : ["portal_wizard.xml","portal_view.xml"],
 	"demo_xml" : [],
 	"active": False,
 	"installable": True

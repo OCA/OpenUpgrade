@@ -3,27 +3,61 @@
 <data>
 	<menuitem name="Portal"  id="menu_portal_root"/>
 
-	<record model="ir.ui.view" id="view_factory_form">
-		<field name="name">Portal Factory</field>
-		<field name="model">portal.factory</field>
+	<record model="ir.ui.view" id="view_portal_form">
+		<field name="name">Portal</field>
+		<field name="model">portal.portal</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Portal Model">
+			<form string="">
 				<field name="name" select="1"/>
-				<field name="pmodel_id" select="1"/>
-				<field name="menu_name" select="2"/>
-				<field name="parentmenu_id" select="2"/>
-				<field name="template_action_id"/>
-				<field name="view_id" />
-				<field name="group_id" />
-				<newline/><separator colspan="4"/>
-				<field name="state" select="1"/>
-				<button name="enable" string="Enable" states="disabled" type="object"/>
-				<button name="disable" string="Disable" states="enabled" type="object"/>
+				<field name="group_id"/>
+				<field name="menu_id"/>
+				<field name="company_id"/>
+				<separator string="Defaults actions for the users of this portal" colspan="4"/>
+				<field name="menu_action_id"/>
+				<field name="home_action_id"/>
+
 			</form>
 		</field>
 	</record>
+	<record model="ir.ui.view" id="view_portal_tree">
+		<field name="name">Portal</field>
+		<field name="model">portal.portal</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="">
+				<field name="name"/>
+				<field name="group_id"/>
+				<field name="menu_id"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_portal_form">
+		<field name="name">Portal</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">portal.portal</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
+	<menuitem name="Portal/Configuration/portals"  id="menu_portal_portal" action="action_portal_form"/>
+
+
+
+	<record model="ir.actions.act_window" id="action_portal_model_form">
+		<field name="name">Portal Model</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">portal.model</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Portal/Configuration/Available models"  id="menu_portal_model" action="action_portal_model_form"/>
+
+	<menuitem
+		name="Portal/Configuration/Create Menu"
+		action="wizard_portal_create_menu"
+		type="wizard"
+		id="menu_wizard_create_menu"/>
 
 
 	<record model="ir.ui.view" id="view_model_form">
@@ -34,27 +68,12 @@
 			<form string="">
 				<field name="name" select="1"/>
 				<field name="model_id" select="1"/>
-				<field name="view_id" select="2"/>
-				<field name="rule_id" select="2"/>
-				<field name="access_id"/>
+				<field name="rule_group_id" select="2"/>
+				<newline/>
+				<field name="view_ids" colspan="4"/>
 			</form>
 		</field>
 	</record>
-
-
-
-
-
-	<record model="ir.actions.act_window" id="action_portal_factory">
-		<field name="name">Portal Factory</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">portal.factory</field>
-		<field name="view_type">form</field>
-	</record>
-
-	<menuitem name="Portal/Configuration/Factory" id="menu_portal_factory" action="action_portal_factory"/>
-
-
 
 </data>
 </terp>
