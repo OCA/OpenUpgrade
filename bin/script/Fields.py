@@ -8,7 +8,7 @@ from lib.error import ErrorDialog
 import xmlrpclib
 
 class Fields:
-    def __init__(self):
+    def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
         self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
 
         self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
@@ -67,6 +67,16 @@ class Fields:
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
+            self.bModify=bFromModify
+            if self.bModify==True:
+                sItem=""
+                i=0
+                for i in range(self.aObjectList.__len__()):
+                    if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sVariable:
+                        sItem= self.aObjectList[i]
+                        self.insVariable.setText(sItem)
+                genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+                self.win.setEditText("txtUName",sDisplayName)
             self.win.doModalDialog()
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
@@ -91,7 +101,17 @@ class Fields:
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
-            if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
+            if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" and self.bModify==True :
+                oCurObj=cursor.TextField
+                sObjName=self.insVariable.getText()
+                sObjName=sObjName.__getslice__(0,sObjName.find("("))
+                sKey=u""+ self.win.getEditText("txtUName")
+                sValue=u"[[ " + sObjName + self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + " ]]"
+                print sKey,sValue
+                oCurObj.Items = (sKey,sValue)
+                oCurObj.update()
+                self.win.endExecute()
+            elif self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
                 sObjName=""
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                 sObjName=self.win.getComboBoxSelectedText("cmbVariable")

@@ -8,7 +8,7 @@ from lib.functions import *
 import xmlrpclib
 
 class RepeatIn:
-    def __init__(self):
+    def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
         self.win = DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
@@ -77,6 +77,16 @@ class RepeatIn:
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
+            self.bModify=bFromModify
+            if self.bModify==True:
+                sItem=""
+                i=0
+                for i in range(self.aObjectList.__len__()):
+                    if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sVariable:
+                        sItem= self.aObjectList[i]
+                        self.insVariable.setText(sItem)
+                #genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+                self.win.setEditText("txtUName",sDisplayName)
             self.win.doModalDialog()
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
