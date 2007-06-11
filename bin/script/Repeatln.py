@@ -31,7 +31,6 @@ class RepeatIn:
 
         self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
-
         # Variable Declaration
         self.sObj=None
         self.aItemList=[]
@@ -78,15 +77,23 @@ class RepeatIn:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
             self.bModify=bFromModify
+            print sDisplayName,sFields,sObject,sVariable
             if self.bModify==True:
-                sItem=""
-                i=0
-                for i in range(self.aObjectList.__len__()):
-                    if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sVariable:
-                        sItem= self.aObjectList[i]
-                        self.insVariable.setText(sItem)
-                #genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-                self.win.setEditText("txtUName",sDisplayName)
+                if sObject=="":
+                    self.insVariable.setText("List of "+docinfo.getUserFieldValue(3))
+                    self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
+                    self.win.setEditText("txtName", sVariable)
+                    self.win.setEditText("txtUName",sDisplayName)
+                else:
+                    sItem=""
+                    i=0
+                    for i in range(self.aObjectList.__len__()):
+                        if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sObject:
+                            sItem= self.aObjectList[i]
+                            self.insVariable.setText(sItem)
+                    genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
+                    self.win.setEditText("txtName", sVariable)
+                    self.win.setEditText("txtUName",sDisplayName)
             self.win.doModalDialog()
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
@@ -108,10 +115,10 @@ class RepeatIn:
         else:
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
             self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))
-            self.win.setEditText("txtUName","."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".")
+            self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
 
-    def btnOkOrCancel_clicked( self, oActionEvent ):
+    def btnOkOrCancel_clicked(self, oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnOK":
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
@@ -119,34 +126,49 @@ class RepeatIn:
             cursor = doc.getCurrentController().getViewCursor()
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" and self.win.getEditText("txtUName") != "" :
                 sObjName=""
-                oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                if self.win.getListBoxSelectedItem("lstFields") == "objects":
-                    sKey=u""+ self.win.getEditText("txtUName")
-                    #sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
-                    sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
-                    oInputList.Items = (sKey,sValue)
-                    text.insertTextContent(cursor,oInputList,False)
-                else:
-                    sObjName=self.win.getComboBoxSelectedText("cmbVariable")
-                    sObjName=sObjName.__getslice__(0,sObjName.find("("))
-                    if cursor.TextTable==None:
+                if self.bModify==True:
+                    oCurObj=cursor.TextField
+                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
+                        sKey=u""+ self.win.getEditText("txtUName")
+                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
+                        oCurObj.Items = (sKey,sValue)
+                        oCurObj.update()
+                    else:
+                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=sObjName.__getslice__(0,sObjName.find("("))
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                        oCurObj.Items = (sKey,sValue)
+                        oCurObj.update()
+                else:
+                    oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
+                        sKey=u""+ self.win.getEditText("txtUName")
+                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
                         oInputList.Items = (sKey,sValue)
                         text.insertTextContent(cursor,oInputList,False)
                     else:
-                        oTable = cursor.TextTable
-                        oCurCell = cursor.Cell
-                        tableText = oTable.getCellByName( oCurCell.CellName )
-                        sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-                        oInputList.Items = (sKey,sValue)
-                        tableText.insertTextContent(cursor,oInputList,False)
+                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=sObjName.__getslice__(0,sObjName.find("("))
+                        if cursor.TextTable==None:
+                            sKey=u""+ self.win.getEditText("txtUName")
+                            sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                            oInputList.Items = (sKey,sValue)
+                            text.insertTextContent(cursor,oInputList,False)
+                        else:
+                            oTable = cursor.TextTable
+                            oCurCell = cursor.Cell
+                            tableText = oTable.getCellByName( oCurCell.CellName )
+                            sKey=u""+ self.win.getEditText("txtUName")
+                            sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
+                            oInputList.Items = (sKey,sValue)
+                            tableText.insertTextContent(cursor,oInputList,False)
                 self.win.endExecute()
             else:
                 ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
+
 
 #    def genTree(self,object,aListRepeatIn,insField,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
 #        print "abc"
