@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+
+	<record model="ir.ui.view" id="portal_crm_case_section_view_tree">
+		<field name="name">crm.case.section.tree</field>
+		<field name="model">crm.case.section</field>
+		<field name="type">tree</field>
+		<field name="field_parent">child_ids</field>
+		<field name="arch" type="xml">
+			<tree string="Case Section">
+				<field name="name" select="1"/>
+				<field name="code" select="1"/>
+				<field name="user_id" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="portal_crm_case_tree_view">
+		<field name="name">crm.case.tree</field>
+		<field name="model">crm.case</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Cases"  colors="red:date_deadline&lt;current_date and state=='open'">
+				<field name="id"/>
+				<field name="date"/>
+				<field name="date_deadline"/>
+				<field name="name"/>
+				<field name="partner_id"/>
+				<field name="user_id"/>
+				<field name="priority"/>
+				<field name="planned_revenue"/>
+				<field name="planned_cost"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="portal_crm_case_view">
+		<field name="name">crm.case.form</field>
+		<field name="model">crm.case</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Cases">
+				<notebook>
+				<page string="General Information">
+					<field name="name" select="1"/>
+					<field name="section_id"/>
+					<field name="date" select="1"/>
+					<field name="priority"/>
+					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)"/>
+					<field name="partner_address_id" select="2" on_change="onchange_partner_address_id(partner_address_id, email_from)"/>
+					<field name="user_id" select="1"/>
+					<separator string="Next Action" colspan="4"/>
+					<field name="description" colspan="4" select="2"/>
+					<field name="canal_id"/>
+					<field name="date_deadline" select="2"/>
+
+					<field name="state" select="1"/>
+				</page><page string="References">
+					<field name="id" select="1"/>
+					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)"/>
+					<field name="date_closed"/>
+					<field name="active" select="2"/>
+					<newline/>
+					<field name="date_action_last"/>
+					<field name="date_action_next"/>
+
+					<field name="email_cc" colspan="4"/>
+					<field name="email_last" colspan="4"/>
+				</page><page string="History">
+					<field name="history_line" nolabel="1" colspan="4" widget="one2many_list">
+						<form string="Actions">
+							<separator string="Action Information" colspan="4"/>
+							<field name="name" colspan="4"/>
+							<field name="date" select="2"/>
+							<field name="user_id" select="2"/>
+							<field name="canal_id"/>
+							<field name="description" colspan="4"/>
+						</form>
+					</field>
+				</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+</data>
+</terp>
+
