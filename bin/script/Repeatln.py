@@ -16,7 +16,7 @@ class RepeatIn:
                             itemListenerProc=self.cmbVariable_selected)
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Field to loop on :")
-        self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False)
+        self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False,itemListenerProc=self.lstbox_selected)
 
         self.insVariable = self.win.getControl( "cmbVariable" )
         self.win.addFixedText("lblName", 12, 187, 60, 15, "Variable name :")
@@ -77,7 +77,6 @@ class RepeatIn:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
             self.bModify=bFromModify
-            print sDisplayName,sFields,sObject,sVariable
             if self.bModify==True:
                 if sObject=="":
                     self.insVariable.setText("List of "+docinfo.getUserFieldValue(3))
@@ -99,6 +98,11 @@ class RepeatIn:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
 
+    def lstbox_selected(self,oItemEvent):
+        sItem=self.win.getListBoxSelectedItem("lstFields")
+        sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]
+        self.win.setEditText("txtName",sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))
+        self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind("/")+1,sItem.__len__())+".-|")
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -112,6 +116,7 @@ class RepeatIn:
                 genTree(docinfo.getUserFieldValue(3), self.aListRepeatIn, self.insField,self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
             else:
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+
         else:
             sItem=self.win.getComboBoxSelectedText("cmbVariable")
             self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))

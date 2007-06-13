@@ -443,6 +443,8 @@ class DBModalDialog:
                         actionListenerProc=None ):
         mod = self.addControl( "com.sun.star.awt.UnoControlListBoxModel",
                          cCtrlName, nPositionX, nPositionY, nWidth, nHeight,bDropdown)
+        if itemListenerProc != None:
+            self.addItemListenerProc( cCtrlName, itemListenerProc )
 
     def selectListBoxItem( self, cCtrlName, cItemText, bSelect=True ):
         """Selects/Deselects the ispecified item."""

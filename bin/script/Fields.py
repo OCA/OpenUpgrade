@@ -17,7 +17,7 @@ class Fields:
         self.insVariable = self.win.getControl( "cmbVariable" )
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Variable Fields :")
-        self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False)
+        self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False,itemListenerProc=self.lstbox_selected)
         self.insField = self.win.getControl( "lstFields" )
 
         self.win.addFixedText("lblUName", 8, 187, 60, 15, "Displayed name :")
@@ -82,6 +82,34 @@ class Fields:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
 
+    def lstbox_selected(self,oItemEvent):
+        try:
+            sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
+            sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
+            res = sock.execute('terp', 3, 'admin', sObject , 'read',[1])
+            self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
+        except:
+            #import traceback;traceback.print_exc()
+            self.win.setEditText("txtUName","Error(NULL Value)-Please Enter value")
+    def getRes(self,sock ,sObject,sVar):
+        res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
+        key = res.keys()
+        key.sort()
+        if not sVar.find("/")==-1:
+            myval=sVar.__getslice__(0,sVar.find("/"))
+        else:
+            myval=sVar
+        #print key
+        for k in key:
+            #print myval,"<=======================>",k,"------------",res[k]['type']
+            if k==myval:
+                #print sObject,"------------------>"
+                return sObject #res[myval]['relation']
+            if (res[k]['type'] in ['many2one']) and k==myval:
+                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+        #return sObject
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
