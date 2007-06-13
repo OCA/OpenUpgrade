@@ -160,10 +160,10 @@ def _photos_send(uid, uname, passwd, did, ids):
 			fname = datas[0]['datas_fname']
 
 			_photo_bin_send(uname, passwd, ref, did, fname, bin)
-			print 
+			print
 			print 'SENDING PHOTO', ref
 
-def _get_dates(self, uid, datas):
+def _get_dates(self,cr,uid, datas,context={}):
 	global send_fields
 	import httplib
 	conn = httplib.HTTPConnection('www.auction-in-europe.com')
@@ -177,7 +177,7 @@ def _get_dates(self, uid, datas):
 		raise "Connection to WWW.Auction-in-Europe.com failed !"
 	return {'objects':len(datas['ids'])}
 
-def _send(self, uid, datas):
+def _send(self,cr,uid, datas,context={}):
 	import pickle, thread, sql_db
 
 	cr=sql_db.db.cursor()

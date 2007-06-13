@@ -44,7 +44,7 @@ fields_ask = {
 
 def _get_value(self,cr,uid, datas,context={}):
 	service = netsvc.LocalService("object_proxy")
-	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'])
+	lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', datas['ids'])
 
 	ids = []
 	pay_ids = {}
@@ -65,7 +65,7 @@ def _get_value(self,cr,uid, datas,context={}):
 			price += lot['obj_price']
 
 			# add all the buyer costs
-			costs = service.execute(uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
+			costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
 			for cost in costs:
 				price += cost['amount']
 
@@ -78,7 +78,7 @@ def _get_value(self,cr,uid, datas,context={}):
 
 def _cancel(self, uid, datas):
 	service = netsvc.LocalService("object_proxy")
-	lots = service.execute(uid, 'auction.lots', 'lots_cancel_payment', datas['ids'])
+	lots = service.execute(cr.dbname,uid, 'auction.lots', 'lots_cancel_payment', datas['ids'])
 	return {}
 
 class wiz_auc_lots_cancel(wizard.interface):

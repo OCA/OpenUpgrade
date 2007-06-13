@@ -44,13 +44,13 @@ numerotate_form = '''<?xml version="1.0"?>
 <form title="%s">
 	<group col="1">
 		<separator string="%s"/>
-		<field name="lot_inv"/>
+		<field name="bord_vnd_id"/>
 		<field name="lot_num"/>
 	</group>
 </form>''' % ('Catalog Numerotation','Object Reference')
 
 numerotate_fields = {
-	'lot_inv': {'string':'Depositer Inventory', 'type':'char', 'required':True},
+	'bord_vnd_id': {'string':'Depositer Inventory', 'type':'many2one', 'required':True, 'relation':'auction.deposit'},
 	'lot_num': {'string':'Lot Number', 'type':'integer', 'required':True},
 }
 
@@ -82,31 +82,31 @@ numerotate_fields2 = {
 def _read_record(self,cr,uid,datas,context={}):
 	form = datas['form']
 	service = netsvc.LocalService("object_proxy")
-	ids = service.execute(uid, 'auction.deposit', 'search', [('name','=',form['lot_inv'])])
+	ids = service.execute(cr.dbname,uid, 'auction.deposit', 'search', [('name','=',form['bord_vnd_id'])])
 	res = []
 	for id in ids:
-		res += service.execute(uid, 'auction.lots', 'search', [('bord_vnd_id','=',id), ('lot_num','=',int(form['lot_num']))])
+		res += service.execute(cr.dbname,uid, 'auction.lots', 'search', [('bord_vnd_id','=',id), ('lot_num','=',int(form['lot_num']))])
 	found = [r for r in res if r in datas['ids']]
 	if len(found)==0:
 		raise wizard.except_wizard('UserError', 'This record does not exist !')
-	datas = service.execute(uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
+	datas = service.execute(cr.dname,uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
 	return datas[0]
 
 def _numerotate(self,cr,uid,datas,context={}):
 	form = datas['form']
 	try:
 		service = netsvc.LocalService("object_proxy")
-		ids = service.execute(uid, 'auction.deposit', 'search', [('name','=',form['lot_inv'])])
+		ids = service.execute(cr.dbname,uid,'auction.deposit', 'search', [('name','=',form['bord_vnd_id'])])
 		if not len(ids):
 			raise wizard.except_wizard('UserError', 'None object with this inventory found !')
-		res = service.execute(uid, 'auction.lots', 'search', [('bord_vnd_id','=',ids[0]), ('lot_num','=',int(form['lot_num']))])
+		res = service.execute(cr.dbname,uid,'auction.lots', 'search', [('bord_vnd_id','=',ids[0]), ('lot_num','=',int(form['lot_num']))])
 		found = [r for r in res if r in datas['ids']]
 	except:
 		raise wizard.except_wizard('ValidateError', ('Wrong values !', 'end'))
 	if len(found)==0:
 		raise wizard.except_wizard('UserError', 'None object with this inventory found !')
 	try:
-		service.execute(uid, 'auction.lots', 'write', found, {'obj_num':int(form['obj_num'])} )
+		service.execute(cr.dbname,uid,'auction.lots', 'write', found, {'obj_num':int(form['obj_num'])} )
 		return {'lot_inv':'', 'lot_num':''}
 	except:
 		raise wizard.except_wizard('ValidateError', ('Wrong values !', 'end'))
@@ -115,7 +115,7 @@ def _numerotate_cont(self,cr,uid,datas,context={}):
 	nbr = int(datas['form']['number'])
 	service = netsvc.LocalService("object_proxy")
 	for id in datas['ids']:
-		service.execute(uid, 'auction.lots', 'write', [id], {'obj_num':nbr} )
+		service.execute(cr.dbname,uid,'auction.lots', 'write', [id], {'obj_num':nbr} )
 		nbr+=1
 	return {}
 
