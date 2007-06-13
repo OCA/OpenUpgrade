@@ -42,10 +42,10 @@ fields_ask = {
 	'objects': {'string':'Nbr of objects', 'type':'integer', 'required':True, 'readonly':True},
 }
 
-def _get_value(self, uid, datas):
+def _get_value(self,cr,uid, datas,context={}):
 	service = netsvc.LocalService("object_proxy")
 	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'])
-	
+
 	ids = []
 	pay_ids = {}
 	price = 0.0
@@ -55,7 +55,7 @@ def _get_value(self, uid, datas):
 #TODO: refuse if several payments?
 	for lot in lots:
 		if lot['ach_pay_id']:
-			payment_id = lot['ach_pay_id'][0] 
+			payment_id = lot['ach_pay_id'][0]
 			if payment_id not in pay_ids:
 				pay_ids[payment_id] = True
 				price_paid += service.execute(uid, 'account.transfer', 'read', [payment_id], ['amount'])[0]['amount']
@@ -63,17 +63,17 @@ def _get_value(self, uid, datas):
 
 			# add the object price
 			price += lot['obj_price']
-			
+
 			# add all the buyer costs
 			costs = service.execute(uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
 			for cost in costs:
 				price += cost['amount']
-	
+
 #TODO: pr bien faire, faudrait leur poser la question: continue anyway?
 	if len(ids)<len(datas['ids']):
 #		print ids, datas['ids']
 		raise wizard.except_wizard('UserError', ('Some object(s) are not paid !', 'init'))
-		
+
 	return {'objects':len(ids), 'amount_total':price, 'amount_paid':price_paid}
 
 def _cancel(self, uid, datas):

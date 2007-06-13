@@ -29,9 +29,9 @@ import pooler
 import time
 from report import report_sxw
 
-class lots_list(report_sxw.rml_parse):
+class lots_list_inventory(report_sxw.rml_parse):
 	def __init__(self, cr, uid, name, context):
-		super(lots_list, self).__init__(cr, uid, name, context)
+		super(lots_list_inventory, self).__init__(cr, uid, name, context)
 		self.localcontext.update({
 			'time': time,
 			'bid_line' : self.bid_line
@@ -41,5 +41,5 @@ class lots_list(report_sxw.rml_parse):
 		print res;
 		print "=================================================="
 		return True
-report_sxw.report_sxw('report.lots.list', 'auction.lots', 'addons/auction/report/auction_result.rml', parser=lots_list)
+report_sxw.report_sxw('report.lots.list.inventory', 'auction.lots', 'addons/auction/report/lots_list_inventory.rml', parser=lots_list_inventory)
 

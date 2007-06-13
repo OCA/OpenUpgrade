@@ -79,7 +79,7 @@ numerotate_fields2 = {
 	'obj_num': {'string':'Catalog Number', 'type':'integer', 'required':True}
 }
 
-def _read_record(self, uid, datas):
+def _read_record(self,cr,uid,datas,context={}):
 	form = datas['form']
 	service = netsvc.LocalService("object_proxy")
 	ids = service.execute(uid, 'auction.deposit', 'search', [('name','=',form['lot_inv'])])
@@ -92,7 +92,7 @@ def _read_record(self, uid, datas):
 	datas = service.execute(uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
 	return datas[0]
 
-def _numerotate(self, uid, datas):
+def _numerotate(self,cr,uid,datas,context={}):
 	form = datas['form']
 	try:
 		service = netsvc.LocalService("object_proxy")
@@ -111,7 +111,7 @@ def _numerotate(self, uid, datas):
 	except:
 		raise wizard.except_wizard('ValidateError', ('Wrong values !', 'end'))
 
-def _numerotate_cont(self, uid, datas):
+def _numerotate_cont(self,cr,uid,datas,context={}):
 	nbr = int(datas['form']['number'])
 	service = netsvc.LocalService("object_proxy")
 	for id in datas['ids']:

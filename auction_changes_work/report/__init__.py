@@ -32,3 +32,5 @@ import auction_invoice
 import seller_address
 import artists_lots
 import lots_list
+import lots_list_inventory
+import auction_result

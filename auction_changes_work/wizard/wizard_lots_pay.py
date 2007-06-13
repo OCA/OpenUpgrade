@@ -65,9 +65,12 @@ pay_fields = {
 	'account_id': {'string':'Payment to Account', 'type':'many2one', 'required':True, 'relation':'account.account', 'domain':[('type','=','cash')]},
 }
 
-def _get_value(self, uid, datas):
+def _get_value(self,cr,uid,datas,context={}):
+
 	service = netsvc.LocalService("object_proxy")
+	print" IN THE GET _VALUE FUNCTION";
 	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'])
+	print "THE VALUE OF LOTS",lots;
 	auction = service.execute(uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
 	ids = []
 	price = 0.0
@@ -75,9 +78,9 @@ def _get_value(self, uid, datas):
 	for lot in lots:
 		if not lot['ach_pay_id']:
 			ids.append(lot['id'])
-			
+
 			price += lot['obj_price'] or 0.0
-			
+
 			costs = service.execute(uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
 			for cost in costs:
 				price += cost['amount']
@@ -92,31 +95,33 @@ def _get_value(self, uid, datas):
 					uid = refs[-1]
 	if len(ids)<len(datas['ids']):
 		raise wizard.except_wizard('UserError', ('%d object(s) are already paid !' % (len(datas['ids'])-len(ids),), 'init'))
+
 	return {'objects':len(ids), 'amount':price, 'ach_uid':uid}
 
-def _pay(self, uid, datas):
+def _pay(self,cr,uid,datas,context={}):
+
 	service = netsvc.LocalService("object_proxy")
 	lots = service.execute(uid, 'auction.lots', 'lots_pay', datas['ids'],  datas['form']['ach_uid'], datas['form']['account_id'], datas['form']['amount'])
 	return {}
 
-def _get_value_invoice(self, uid, datas):
+def _get_value_invoice(self,cr,uid,datas,context={}):
 	service = netsvc.LocalService("object_proxy")
 	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'])
 	auction = service.execute(uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
-	
+
 	price = 0.0
 	price_topay = 0.0
 	price_paid = 0.0
 	uid = False
 	for lot in lots:
 		price_lot = lot['obj_price'] or 0.0
-		
+
 		costs = service.execute(uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
 		for cost in costs:
 			price_lot += cost['amount']
-			
+
 		price += price_lot
-		
+
 		if lot['ach_uid']:
 			if uid and (lot['ach_uid'][0]<>uid):
 				raise wizard.except_wizard('UserError', ('Two different buyers for the same invoice !\nPlease correct this problem before invoicing', 'init'))
@@ -134,7 +139,7 @@ def _get_value_invoice(self, uid, datas):
 	invoice_number = False
 	return {'objects':len(datas['ids']), 'amount':price, 'ach_uid':uid, 'amount_topay':price_topay, 'amount_paid':price_paid, 'number':invoice_number}
 
-def _invoice(self, uid, datas):
+def _invoice(self,cr, uid, datas,context={}):
 	service = netsvc.LocalService("object_proxy")
 	service.execute(uid, 'auction.lots', 'lots_invoice_and_cancel_old_invoice', datas['ids'], datas['form']['number'], datas['form']['ach_uid'], 'invoice_open')
 	return {}

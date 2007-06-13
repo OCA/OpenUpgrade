@@ -44,14 +44,37 @@ auction_move_fields = {
 	'auction_id': {'string':'Auction Date', 'type':'many2one', 'required':True, 'relation':'auction.dates'},
 }
 
-def _auction_move_set(self, uid, datas):
+#def _auction_move_set(self, uid, datas):
+#	if datas['form']['auction_id']:
+#		cr = sql_db.db.cursor()
+#		cr.execute('update auction_lots set auction_id=%s, obj_price=NULL, ach_login=NULL, ach_uid=NULL, ach_pay_id=NULL, ach_inv_id=NULL, buy_inv_id=NULL, state=%s where id in ('+','.join(map(str, datas['ids']))+')', (str(datas['form']['auction_id']), 'draft'))
+#		cr.execute('delete from auction_bid_line where lot_id in ('+','.join(map(str, datas['ids']))+')')
+#		cr.commit()
+#		cr.close()
+#	return {}
+
+
+def _auction_move_set(self,cr,uid,ids,datas,context={}):
 	if datas['form']['auction_id']:
-		cr = sql_db.db.cursor()
+		#cr = sql_db.db.cursor()
 		cr.execute('update auction_lots set auction_id=%s, obj_price=NULL, ach_login=NULL, ach_uid=NULL, ach_pay_id=NULL, ach_inv_id=NULL, buy_inv_id=NULL, state=%s where id in ('+','.join(map(str, datas['ids']))+')', (str(datas['form']['auction_id']), 'draft'))
 		cr.execute('delete from auction_bid_line where lot_id in ('+','.join(map(str, datas['ids']))+')')
 		cr.commit()
 		cr.close()
 	return {}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 class wiz_auc_lots_auction_move(wizard.interface):
 	states = {

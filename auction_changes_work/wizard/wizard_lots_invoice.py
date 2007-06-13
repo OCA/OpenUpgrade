@@ -49,24 +49,24 @@ invoice_fields = {
 	'number': {'string':'Invoice Number', 'type':'integer'},
 }
 
-def _get_value(self, uid, datas):
+def _get_value(self,cr,uid, datas,context={}):
 	service = netsvc.LocalService("object_proxy")
 	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'])
 	auction = service.execute(uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
-	
+
 	price = 0.0
 	price_topay = 0.0
 	price_paid = 0.0
 	uid = False
 	for lot in lots:
 		price_lot = lot['obj_price'] or 0.0
-		
+
 		costs = service.execute(uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
 		for cost in costs:
 			price_lot += cost['amount']
-			
+
 		price += price_lot
-		
+
 		if lot['ach_uid']:
 			if uid and (lot['ach_uid'][0]<>uid):
 				raise wizard.except_wizard('UserError', ('Two different buyers for the same invoice !\nPlease correct this problem before invoicing', 'init'))

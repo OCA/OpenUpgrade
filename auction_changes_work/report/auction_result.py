@@ -1,6 +1,8 @@
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+# Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
+# $Id$
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -25,21 +27,18 @@
 #
 ##############################################################################
 
+
 import pooler
 import time
 from report import report_sxw
 
-class lots_list(report_sxw.rml_parse):
+
+class auction_catelog(report_sxw.rml_parse):
 	def __init__(self, cr, uid, name, context):
-		super(lots_list, self).__init__(cr, uid, name, context)
+		super(auction_catelog, self).__init__(cr, uid, name, context)
 		self.localcontext.update({
 			'time': time,
-			'bid_line' : self.bid_line
+
 		})
-	def bid_line(self, lot_id):
-		res = self.pool.get('auction.bid.lines').read(self.cr,self.uid,[lot_id])
-		print res;
-		print "=================================================="
-		return True
-report_sxw.report_sxw('report.lots.list', 'auction.lots', 'addons/auction/report/auction_result.rml', parser=lots_list)
+report_sxw.report_sxw('report.auction.catelog', 'auction.lots', 'addons/auction/report/auction_catelog.rml', parser=auction_catelog)
 
