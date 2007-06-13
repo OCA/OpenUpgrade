@@ -12,8 +12,8 @@
 	- on-the-fly rules and access control creation.
 	""",
 	"init_xml" : [],
-	"update_xml" : ["portal_wizard.xml","portal_view.xml"],
-	"demo_xml" : [],
+	"update_xml" : ["portal_wizard.xml","portal_view.xml","portal_data.xml"],
+	"demo_xml" : ["portal_demo.xml"],
 	"active": False,
 	"installable": True
 }

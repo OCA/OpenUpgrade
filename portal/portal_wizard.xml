@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+	<wizard
+		string="Create menu"
+		model="portal.portal"
+		name="portal.create_menu"
+		keyword="tree_but_action"
+		id="wizard_portal_create_menu"/>
+
+	<wizard
+		string="Create User"
+		model="res.partner"
+		name="portal.create_user"
+		keyword="client_action_multi"
+		id="wizard_portal_create_user"/>
+
+</data>
+</terp>

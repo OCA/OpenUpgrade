@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+	<menuitem name="Portal/Customer Portal" id="portal_customer_root" />
+
+	<record model="ir.actions.act_window" id="portal_customer_action_menu">
+		<field name="name">Portal Customer Menu</field>
+		<field name="usage">menu</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_id" ref="base.view_menu"/>
+		<field name="res_model">ir.ui.menu</field>
+		<field name="view_type">tree</field>
+		<field name="domain" eval="[('parent_id','=',ref('portal_customer_root'))]"/>
+	</record>
+
+	<record model="portal.portal" id="portal_customer">
+		<field name="name">Portal Customer</field>
+		<field name="group_id" ref="group_portal"/>
+		<field name="menu_id" ref="portal_customer_root"/>
+		<field name="menu_action_id" ref="portal_customer_action_menu"/>
+		<field name="home_action_id" ref="portal_customer_action_menu"/>
+		<field name="company_id" ref="base.main_company"/>
+	</record>
+
+	<record model="res.users" id="user_portal">
+		<field name="login">portal</field>
+		<field name="password">portal</field>
+		<field name="name">Portal User</field>
+		<field name="signature">Portal User</field>
+		<field name="action_id" ref="portal_customer_action_menu"/>
+		<field name="menu_id" ref="portal_customer_action_menu"/>
+		<field name="address_id" ref="base.main_address"/>
+		<field name="groups_id" eval="[(6,0,[group_portal])]"/>
+		<field name="company_id" ref="base.main_company"/>
+	</record>
+
+
+
+</data>
+</terp>

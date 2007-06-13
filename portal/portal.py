@@ -46,7 +46,7 @@ class portal_portal(osv.osv):
 		Create default menu for the users of the portal.
 		"""
 		menu_action_id = self.pool.get('ir.actions.act_window').create(cr,uid, { 
-			'name': action_name+ ' menu action',
+			'name': action_name+ ' main menu',
 			'usage': 'menu',
 			'type':'ir.actions.act_window',
 			'res_model': "ir.ui.menu",
@@ -88,7 +88,7 @@ class portal_portal(osv.osv):
 			vids.append((0,0, {
 				'sequence':i,
 				'view_id': available_view.get(view[1], view[0]),
-				'view_mode': view[1]
+				'view_mode': view[1],
 			}))
 			i+=1
 
@@ -97,7 +97,6 @@ class portal_portal(osv.osv):
 			'name': menu_name,
 			'view_ids': vids
 			})
-
 
 		## Create the values:
 		value_id = self.pool.get('ir.values').create(cr, uid, {
@@ -109,7 +108,8 @@ class portal_portal(osv.osv):
 			'object': True
 			})
 		## add the rule_group to the user
-		portal.group_id.write(cr,uid,[portal.group_id.id],{'rule_groups': [(4,model.rule_group_id.id)]})
+		if model.rule_group_id:
+			portal.group_id.write(cr,uid,[portal.group_id.id],{'rule_groups': [(4,model.rule_group_id.id)]})
 		return action_id
 	
 portal_portal()
@@ -122,7 +122,7 @@ class portal_model(osv.osv):
 		'name': fields.char('Name',size=64,),
 		'model_id': fields.many2one('ir.model','Model',required=True),
 		'view_ids': fields.many2many('ir.ui.view','portal_model_view_rel','model_id','view_id','Views'),
-		'rule_group_id': fields.many2one('ir.rule.group','Rule group', required=True),
+		'rule_group_id': fields.many2one('ir.rule.group','Rule group'),
 		}
 portal_model()
 
