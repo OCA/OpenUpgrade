@@ -9,7 +9,7 @@
 	<record model="ir.rule" id="invoice_rule">
 		<field name="field_id" search="[('model','=','account.invoice'),('name','=','partner_id')]" model="ir.model.fields"/>
 		<field name="operator">=</field>
-		<field name="operand">user.company_id.id</field>
+		<field name="operand">user.address_id.partner_id.id</field>
 		<field name="rule_group" ref="invoice_rule_group"/>
 	</record>
 	
@@ -17,8 +17,140 @@
 				<field name="name" >Invoice Model</field>
 				<field name="model_id" search="[('model','=','account.invoice')]"/>
 				<field name="rule_group_id" ref="invoice_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[portal_invoice_form,portal_invoice_tree])]"/>
+				<field name="view_ids" eval="[(6,0,[portal_invoice_tree,portal_invoice_form])]"/>
+	</record>
+
+
+
+	<record model="ir.rule.group" id="move_line_rule_group">
+		<field name="name">Portal Move Line rule</field>
+		<field name="model_id" search="[('model','=','account.move.line')]" model="ir.model"/>
+		<field name="global" eval="False"/>
+	</record>
+	<record model="ir.rule" id="move_line_rule">
+		<field name="field_id" search="[('model','=','account.move.line'),('name','=','partner_id')]" model="ir.model.fields"/>
+		<field name="operator">=</field>
+		<field name="operand">user.address_id.partner_id.id</field>
+		<field name="rule_group" ref="move_line_rule_group"/>
 	</record>
 	
+	<record model="portal.model" id="model_move_line">
+				<field name="name" >MoveLine Model</field>
+				<field name="model_id" search="[('model','=','account.move.line')]"/>
+				<field name="rule_group_id" ref="move_line_rule_group"/>
+				<field name="view_ids" eval="[(6,0,[portal_move_line_tree,portal_move_line_form])]"/>
+	</record>
+	
+</data>
+<data fakenoupdate="1"> 
+
+
+	<record model="res.groups" id="portal.portal_group">
+		<field name="rule_groups" eval="[(4,ref('invoice_rule_group'))]"/>
+	</record>
+
+	<record model="res.groups" id="portal.portal_group">## ('account_id','=','partner:'+str(active_id)) 
+		<field name="rule_groups" eval="[(4,ref('move_line_rule_group'))]"/>
+	</record>
+
+
+	<record model="ir.model.access" id="model_access_invoice">
+		<field name="name">Invoice Access</field>
+		<field name="perm_read">True</field>
+		<field name="group_id" ref="portal.portal_group"/>
+		<field name="model_id" search="[('model','=','account.invoice')]"/>
+	</record>
+
+	<record model="ir.model.access" id="model_access_invoice">
+		<field name="name">Invoice Access</field>
+		<field name="perm_read">True</field>
+		<field name="group_id" ref="portal.portal_group"/>
+		<field name="model_id" search="[('model','=','account.invoice')]"/>
+	</record>
+
+	<record model="ir.model.access" id="model_access_move_line">
+		<field name="name">Account Move Line Access</field>
+		<field name="perm_read">True</field>
+		<field name="group_id" ref="portal.portal_group"/>
+		<field name="model_id" search="[('model','=','account.move.line')]"/>
+	</record>
+
+
+
+
+	<record model="ir.actions.act_window" id="portal_action_customer_invoice">
+		<field name="name">Customers Invoices</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('type','=','out_invoice')]</field>
+		<field name="context">{'type':'out_invoice'}</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_inv">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_invoice_tree"/>
+		<field name="act_window_id" ref="portal_action_customer_invoice"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_inv">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_invoice_form"/>
+		<field name="act_window_id" ref="portal_action_customer_invoice"/>
+	</record>
+	<menuitem name="Portal/Customer Portal/Account/Invoices/Customer Invoices"
+              id="portal_menu_customer_invoice" 
+			  action="portal_action_customer_invoice"/>
+
+
+
+	<record model="ir.actions.act_window" id="portal_action_refund_invoice">
+		<field name="name">Customers Refund</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('type','=','out_refund')]</field>
+		<field name="context">{'type':'out_refund'}</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_ref">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_invoice_tree"/>
+		<field name="act_window_id" ref="portal_action_refund_invoice"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_ref">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_invoice_form"/>
+		<field name="act_window_id" ref="portal_action_refund_invoice"/>
+	</record>
+	<menuitem name="Portal/Customer Portal/Account/Invoices/Customer Refund"
+              id="portal_menu_refund_invoice" 
+			  action="portal_action_refund_invoice"/>
+
+
+
+
+
+	<record model="ir.actions.act_window" id="portal_action_account_move">
+		<field name="name">Unreconciled account entries</field>
+		<field name="res_model">account.move.line</field>
+		<field name="domain">[('reconcile_id','=',False),]</field> 
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_tree_move">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_move_line_tree"/>
+		<field name="act_window_id" ref="portal_action_account_move"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="window_view_form_move">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="portal_move_line_form"/>
+		<field name="act_window_id" ref="portal_action_account_move"/>
+	</record>
+	<menuitem name="Portal/Customer Portal/Account/Unreconciled Entries"
+              id="portal_menu_move_line_unreconcilied" 
+			  action="portal_action_account_move"/>
+
+
 </data>
 </terp>
