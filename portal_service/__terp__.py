@@ -7,7 +7,7 @@
 				 "account_analytic_analysis","hr_timesheet_invoice",
 				 "scrum",],
 	"category" : "Generic Modules/Others",
-	"description": "Potal Management for a  service company.",
+	"description": "Potal Management - Service company specific data.",
 	"init_xml" : [],
 	"update_xml" : ["portal_project_view.xml","portal_project_data.xml",
 					"portal_crm_view.xml","portal_crm_data.xml",

@@ -42,7 +42,7 @@
 	</record>
 	
 </data>
-<data fakenoupdate="1"> 
+<data noupdate="1"> 
 
 
 	<record model="res.groups" id="portal.portal_group">
@@ -54,12 +54,6 @@
 	</record>
 
 
-	<record model="ir.model.access" id="model_access_invoice">
-		<field name="name">Invoice Access</field>
-		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
-		<field name="model_id" search="[('model','=','account.invoice')]"/>
-	</record>
 
 	<record model="ir.model.access" id="model_access_invoice">
 		<field name="name">Invoice Access</field>
@@ -93,7 +87,7 @@
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_inv">
 		<field name="sequence" eval="2"/>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">form</field>
 		<field name="view_id" ref="portal_invoice_form"/>
 		<field name="act_window_id" ref="portal_action_customer_invoice"/>
 	</record>

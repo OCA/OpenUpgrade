@@ -98,5 +98,23 @@
 			</form>
 		</field>
 	</record>
+	<record model="ir.ui.view" id="portal_sale_tree">
+		<field name="name">sale.order.tree</field>
+		<field name="model">sale.order</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Sales Orders">
+				<field name="date_order"/>
+				<field name="name"/>
+				<field name="partner_id"/>
+				<field name="partner_shipping_id"/>
+				<field name="shipped"/>
+				<field name="invoiced"/>
+				<field name="amount_untaxed"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
 </data>
 </terp>
