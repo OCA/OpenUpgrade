@@ -44,6 +44,19 @@
 		xsl="auction/report/lots_list.xsl"/>
 
 
+	<report string="Results with Rml"
+	   	model="auction.lots"
+		name="auction.result"
+		rml="auction/report/auction_result.rml"
+		auto="False"/>
+
+	<report string="Catelog with rml"
+	   	model="auction.lots"
+		name="auction.catelog"
+		rml="auction/report/auction_catelog.rml"
+		auto="False"/>
+
+
 	<report string="Lots List with rml"
 	   	model="auction.lots"
 		name="lots.list"
@@ -55,14 +68,17 @@
 		 name="lots.list.landscape"
 		 rml="auction/report/lots_list_landscape.rml"/>
 
+    <report string="Lots List Inventory with rml"
+		 model="auction.lots"
+		 name="lots.list.inventory"
+		 rml="auction/report/lots_list_inventory.rml"/>
 
 
-
-		<!--<report string="Lots List"
+	<report string="Lots List"
 	   	model="auction.lots"
 		name="report.auction.lots.list"
 		xml="auction/report/lots_list.xml"
-		xsl="auction/report/lots_list.xsl"/>-->
+		xsl="auction/report/lots_list.xsl"/>
 
 		<report string="Lots List - Landscape"
 		 model="auction.lots"

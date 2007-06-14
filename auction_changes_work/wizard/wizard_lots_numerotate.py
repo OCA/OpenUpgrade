@@ -89,7 +89,7 @@ def _read_record(self,cr,uid,datas,context={}):
 	found = [r for r in res if r in datas['ids']]
 	if len(found)==0:
 		raise wizard.except_wizard('UserError', 'This record does not exist !')
-	datas = service.execute(cr.dname,uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
+	datas = service.execute(uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
 	return datas[0]
 
 def _numerotate(self,cr,uid,datas,context={}):
