@@ -1,11 +1,15 @@
-import uno
-import string
-import unohelper
-from lib.gui import *
-from lib.error import ErrorDialog
-from com.sun.star.task import XJobExecutor
+if __name__=="__main__":
+    import uno
+    import string
+    import unohelper
+    from com.sun.star.task import XJobExecutor
+    from lib.gui import *
+    from lib.error import ErrorDialog
+    from lib.functions import *
+    import xmlrpclib
 
-class Expression:
+
+class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
         self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
 
@@ -66,4 +70,5 @@ class Expression:
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-#Expression()
+Expression()
+

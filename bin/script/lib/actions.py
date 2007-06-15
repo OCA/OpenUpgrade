@@ -1,6 +1,6 @@
-
-import uno
-import unohelper
+if not __name__=="__main__":
+    import uno
+    import unohelper
 
 #--------------------------------------------------
 # An ActionListener adapter.
@@ -55,3 +55,5 @@ class TextListenerProcAdapter( unohelper.Base, XTextListener ):
     def textChanged( self, oTextEvent ):
         if callable( self.oProcToCall ):
             apply( self.oProcToCall, (oTextEvent,) + self.tParams )
+
+

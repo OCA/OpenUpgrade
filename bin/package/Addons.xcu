@@ -40,36 +40,6 @@
 					<value/>
 				</prop>
 				<node oor:name="Submenu">
-					<node oor:name="m1" oor:op="replace">
-						<prop oor:name="URL" oor:type="xs:string">
-							<value>service:org.openoffice.tiny.report.expression?insert</value>
-						</prop>
-						<prop oor:name="Title" oor:type="xs:string">
-							<value/>
-							<value xml:lang="en-US">Expression</value>
-						</prop>
-						<prop oor:name="Target" oor:type="xs:string">
-							<value>_self</value>
-						</prop>
-						<prop oor:name="Context" oor:type="xs:string">
-							<value>com.sun.star.text.TextDocument</value>
-						</prop>
-					</node>
-					<node oor:name="m2" oor:op="replace">
-						<prop oor:name="URL" oor:type="xs:string">
-							<value>service:org.openoffice.tiny.report.fields?insert</value>
-						</prop>
-						<prop oor:name="Title" oor:type="xs:string">
-							<value/>
-							<value xml:lang="en-US">Fields</value>
-						</prop>
-						<prop oor:name="Target" oor:type="xs:string">
-							<value>_self</value>
-						</prop>
-						<prop oor:name="Context" oor:type="xs:string">
-							<value>com.sun.star.text.TextDocument</value>
-						</prop>
-					</node>
 					<node oor:name="m3" oor:op="replace">
 						<prop oor:name="URL" oor:type="xs:string">
 							<value>service:org.openoffice.tiny.report.repeatln?insert</value>
@@ -85,49 +55,59 @@
 							<value>com.sun.star.text.TextDocument</value>
 						</prop>
 					</node>
+
+					<node oor:name="m2" oor:op="replace">
+						<prop oor:name="URL" oor:type="xs:string">
+							<value>service:org.openoffice.tiny.report.fields?insert</value>
+						</prop>
+						<prop oor:name="Title" oor:type="xs:string">
+							<value/>
+							<value xml:lang="en-US">Fields</value>
+						</prop>
+						<prop oor:name="Target" oor:type="xs:string">
+							<value>_self</value>
+						</prop>
+						<prop oor:name="Context" oor:type="xs:string">
+							<value>com.sun.star.text.TextDocument</value>
+						</prop>
+					</node>
+					<node oor:name="m1" oor:op="replace">
+						<prop oor:name="URL" oor:type="xs:string">
+							<value>service:org.openoffice.tiny.report.expression?insert</value>
+						</prop>
+						<prop oor:name="Title" oor:type="xs:string">
+							<value/>
+							<value xml:lang="en-US">Expression</value>
+						</prop>
+						<prop oor:name="Target" oor:type="xs:string">
+							<value>_self</value>
+						</prop>
+						<prop oor:name="Context" oor:type="xs:string">
+							<value>com.sun.star.text.TextDocument</value>
+						</prop>
+					</node>
+					<node oor:name="m4" oor:op="replace">
+						<prop oor:name="URL" oor:type="xs:string">
+							<value>service:org.openoffice.tiny.report.modify?insert</value>
+						</prop>
+						<prop oor:name="Title" oor:type="xs:string">
+							<value/>
+							<value xml:lang="en-US">Modify</value>
+						</prop>
+						<prop oor:name="Target" oor:type="xs:string">
+							<value>_self</value>
+						</prop>
+						<prop oor:name="Context" oor:type="xs:string">
+							<value>com.sun.star.text.TextDocument</value>
+						</prop>
+					</node>
 				</node>
-				
+
 			</node>
 		</node>
 
 		<node oor:name="OfficeToolBar">
 			<node oor:name="org.openoffice.tiny.report" oor:op="replace">
-				<node oor:name="m1" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-						<value>service:org.openoffice.tiny.report.expression?insert</value>
-					</prop>
-					<prop oor:name="ImageIdentifier" oor:type="xs:string">
-						<value/>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value/>
-						<value xml:lang="en-US">Expression</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument</value>
-					</prop>
-				</node>
-				<node oor:name="m2" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-						<value>service:org.openoffice.tiny.report.fields?insert</value>
-					</prop>
-					<prop oor:name="ImageIdentifier" oor:type="xs:string">
-						<value/>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value/>
-						<value xml:lang="en-US">Fields</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument</value>
-					</prop>
-				</node>
 				<node oor:name="m3" oor:op="replace">
 					<prop oor:name="URL" oor:type="xs:string">
 						<value>service:org.openoffice.tiny.report.repeatln?insert</value>
@@ -146,10 +126,67 @@
 						<value>com.sun.star.text.TextDocument</value>
 					</prop>
 				</node>
+
+				<node oor:name="m2" oor:op="replace">
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>service:org.openoffice.tiny.report.fields?insert</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value/>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value/>
+						<value xml:lang="en-US">Fields</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+				</node>
+
+				<node oor:name="m1" oor:op="replace">
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>service:org.openoffice.tiny.report.expression?insert</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value/>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value/>
+						<value xml:lang="en-US">Expression</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+				</node>
+
+				<node oor:name="m4" oor:op="replace">
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>service:org.openoffice.tiny.report.modify?insert</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value/>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value/>
+						<value xml:lang="en-US">Modify</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+				</node>
 			</node>
 
 		</node>
-		
+
 		<node oor:name="Images">
 			<node oor:name="org.openoffice.tiny.report.image1" oor:op="replace">
 				<prop oor:name="URL">
@@ -167,5 +204,5 @@
 		</node>
 
 	</node>
-	
+
 </oor:component-data>

@@ -1,0 +1,19 @@
+g_ImplementationHelper.addImplementation( \
+        RepeatIn,
+        "org.openoffice.tiny.report.repeatln",
+        ("com.sun.star.task.Job",),)
+
+g_ImplementationHelper.addImplementation( \
+        Fields,
+        "org.openoffice.tiny.report.fields",
+        ("com.sun.star.task.Job",),)
+
+g_ImplementationHelper.addImplementation( \
+        Expression,
+        "org.openoffice.tiny.report.expression",
+        ("com.sun.star.task.Job",),)
+
+g_ImplementationHelper.addImplementation( \
+        modify,
+        "org.openoffice.tiny.report.modify",
+        ("com.sun.star.task.Job",),)

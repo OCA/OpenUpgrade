@@ -1,6 +1,7 @@
-import uno
-import xmlrpclib
-from gui import *
+if not __name__=="__main__":
+    import uno
+    import xmlrpclib
+    from gui import *
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
@@ -25,7 +26,7 @@ def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableNa
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal:
                         insVariable.addItem(aObjectList[j],1)
-        VariableScope(oTcur, sTableName.__getslice__(0,sTableName.rfind(".")))
+        VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList, sTableName.__getslice__(0,sTableName.rfind(".")))
     else:
         for i in range(aItemList.__len__()):
             if aComponentAdd[i]==sTableName:
@@ -163,3 +164,4 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
             if aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
                 aComponentAdd.append(sTableName+"."+oPar.Name)
     return 0
+

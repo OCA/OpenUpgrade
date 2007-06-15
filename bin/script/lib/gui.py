@@ -1,7 +1,7 @@
-import uno
-import unohelper
-
-from actions import *
+if not __name__=="__main__":
+    import uno
+    import unohelper
+    from actions import *
 
 
 #------------------------------------------------------------
@@ -703,6 +703,4 @@ class DBModalDialog:
         """
         self.oDialogControl.endExecute()
 
-    #-----------------------------------------------------
-    #  Implementaion of DBModalDialog Class
-    #-----------------------------------------------------
+
