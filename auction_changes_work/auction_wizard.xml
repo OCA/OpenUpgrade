@@ -3,17 +3,55 @@
 	<data>
 		<!--<delete model="ir.actions.wizard" search="[('wiz_name','like','auction.lots.')]"/>-->
 
-		<wizard string="Send objects to Auction-in-europe.com" model="auction.lots" name="auction.lots.send.aie"/>
-		<wizard string="Send results to Auction-in-europe.com" model="auction.lots" name="auction.lots.send.aie.results"/>
-		<wizard string="Map buyer username to Partners" model="auction.lots" name="auction.lots.buyer_map"/>
-		<wizard string="Change Auction Date" model="auction.lots" name="auction.lots.auction_move"/>
+		<wizard string="Send objects to Auction-in-europe.com"
+		 model="auction.lots"
+		 name="auction.lots.send.aie"
+		 multi="1"/>
 
-		<wizard string="Pay objects" model="auction.lots" name="auction.lots.pay"/>
-		<wizard string="Cancel payment" model="auction.lots" name="auction.lots.cancel"/>
-		<wizard string="Invoice objects" model="auction.lots" name="auction.lots.invoice"/>
-		<wizard string="Numerotation (per lot)" model="auction.lots" name="auction.lots.numerotate"/>
-		<wizard string="Numerotation (automatic)" model="auction.lots" name="auction.lots.numerotate_cont"/>
-		<wizard string="SMS Send" model="auction.lots" name="auction.lots.sms_send"/>
+		<wizard string="Send results to Auction-in-europe.com"
+		model="auction.lots"
+		name="auction.lots.send.aie.results"
+		multi="1"/>
+
+		<wizard string="Map buyer username to Partners"
+		model="auction.lots"
+		name="auction.lots.buyer_map"
+		multi="1"/>
+
+		<wizard string="Change Auction Date"
+		 model="auction.lots"
+		 name="auction.lots.auction_move"
+		 multi="1"/>
+
+		<wizard string="Pay objects"
+		model="auction.lots"
+		name="auction.lots.pay"
+		multi="1"/>
+
+		<wizard string="Cancel payment"
+		model="auction.lots"
+		name="auction.lots.cancel"
+		multi="1"/>
+
+		<wizard string="Invoice objects"
+		model="auction.lots"
+		name="auction.lots.invoice"
+		multi="1"/>
+
+		<wizard string="Numerotation (per lot)"
+		model="auction.lots"
+		name="auction.lots.numerotate"
+		multi="1"/>
+
+		<wizard string="Numerotation (automatic)"
+		 model="auction.lots"
+		 name="auction.lots.numerotate_cont"
+		 multi="1"/>
+
+		<wizard string="SMS Send"
+		 model="auction.lots"
+		 name="auction.lots.sms_send"
+		 multi="1"/>
 	</data>
 </terp>
 

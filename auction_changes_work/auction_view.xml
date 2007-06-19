@@ -1,26 +1,25 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-	<menuitem name="Auction Management" id="menu_root" icon="auction"/>
+	<menuitem name="Auction Management" id="menu_root" icon="terp-auction"/>
 	<menuitem name="Auction Management/Configuration" groups="admin"/>
-
 
 	=======================================================
 	Auction Management/Configuration/artist
 	=======================================================
-	<record model="ir.ui.view" id="v">
+	<record model="ir.ui.view" id="view_auction_artist_tree">
 		<field name="name">auction.artists.tree</field>
 		<field name="model">auction.artists</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Artists">
-				<field name="name"/>
+			<field name="name"/>
 				<field name="birth_death_dates"/>
 				<field name="biography"/>
 			</tree>
 		</field>
 	</record>
-	<record model="ir.ui.view" id="v1">
+	<record model="ir.ui.view" id="view_auction_artist_form">
 		<field name="name">auction.artists.form</field>
 		<field name="model">auction.artists</field>
 		<field name="type">form</field>
@@ -35,23 +34,16 @@
 			</form>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="a">
+	<record model="ir.actions.act_window" id="action_auction_artist">
 		<field name="res_model">auction.artists</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v1"/>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="view_auction_artist_tree"/>
 	</record>
-	<menuitem name="Auction Management/Configuration/Artists" action="a"/>
-
-<record model="ir.actions.act_window" id="at1">
-		<field name="res_model">auction.artists</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v"/>
-	</record>
-	<!--<menuitem name="Operations/Auction/Artists tree view" action="at1"/>-->
-=======================================================
-Auction Management/Configuration/objectcategories
+	<menuitem name="Auction Management/Configuration/Define Artists" action="action_auction_artist" id="menu_auction_artist"/>
 	=======================================================
-	<record model="ir.ui.view" id="v2">
+	Auction Management/Configuration/objectcategories
+	=======================================================
+	<record model="ir.ui.view" id="view_auction_object_categories_tree">
 		<field name="name">auction.lot.category.tree</field>
 		<field name="model">auction.lot.category</field>
 		<field name="type">tree</field>
@@ -61,7 +53,7 @@ Auction Management/Configuration/objectcategories
 				</tree>
 		</field>
 	</record>
-	<record model="ir.ui.view" id="v3">
+	<record model="ir.ui.view" id="view_auction_object_categories_form">
 		<field name="name">auction.lot.category.form</field>
 		<field name="model">auction.lot.category</field>
 		<field name="type">form</field>
@@ -75,18 +67,16 @@ Auction Management/Configuration/objectcategories
 				</form>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="a4">
+	<record model="ir.actions.act_window" id="action_auction_object_categories">
 		<field name="res_model">auction.lot.category</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v3"/>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="view_auction_object_categories_tree"/>
 	</record>
-	<menuitem name="Auction Management/Configuration/Object Categories" action="a4"/>
-
-
+	<menuitem name="Auction Management/Configuration/Object Categories" action="action_auction_object_categories" id="menu_auction_object"/>
 	=======================================================
-Auction Management/Auction Dates
+Auction Management/Auction Dates/New Auction Dates
 	=======================================================
-	<record model="ir.ui.view" id="v_dates_tree">
+	<record model="ir.ui.view" id="view_auction_dates_tree">
 		<field name="name">auction.dates.tree</field>
 		<field name="model">auction.dates</field>
 		<field name="type">tree</field>
@@ -98,7 +88,7 @@ Auction Management/Auction Dates
 			</tree>
 		</field>
 	</record>
-	<record model="ir.ui.view" id="v_dates_form">
+	<record model="ir.ui.view" id="view_auction_dates_form">
 		<field name="name">auction.dates.form</field>
 		<field name="model">auction.dates</field>
 		<field name="type">form</field>
@@ -123,106 +113,43 @@ Auction Management/Auction Dates
 			</form>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="a1">
+	<record model="ir.actions.act_window" id="action_auction_dates_new">
 		<field name="name">Draft Auctions</field>
 		<field name="res_model">auction.dates</field>
-		<field name="view_type">tree</field>
+		<field name="view_type">form</field>
 		<field name="domain">[('state','=','draft')]</field>
-		<field name="view_id" ref="v_dates_tree"/>
+		<field name="view_id" ref="view_auction_dates_form"/>
 	</record>
-
-	<menuitem name="Auction Management/Auction Dates/New Auction Dates" action="a1"/>
-
-
-	<record model="ir.actions.act_window" id="a2">
+	<menuitem name="Auction Management/Auction Dates" groups="admin" />
+	<menuitem name="Auction Management/Auction Dates/New Auction Dates" action="action_auction_dates_new"/>
+	=======================================================
+Auction Management/Auction Dates/Old Auction Dates
+	=======================================================
+	<record model="ir.actions.act_window" id="action_auction_dates_old">
 		<field name="name">Closed Auctions</field>
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','close')]</field>
-		<field name="view_id" ref="v_dates_tree"/>
+		<field name="view_id" ref="view_auction_dates_tree"/>
 	</record>
-	<menuitem name="Auction Management/Auction Dates/Old Auction Dates" action="a2"/>
+	<menuitem name="Auction Management/Auction Dates/Old Auction Dates" action="action_auction_dates_old"/>
 
-	<record model="ir.actions.act_window" id="a3">
+	<record model="ir.actions.act_window" id="action_auction_dates1">
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="v_dates_form"/>
+		<field name="view_id" ref="view_auction_dates_form"/>
 	</record>
-	<menuitem name="Auction Management/Auction Dates" groups="admin"/>
-	<menuitem name="Auction Management/Auction Dates/Auction Dates" action="a3"/>
-
 
 =======================================================
-Auction Management/objects
+Auction Management/Auction Dates/Reporting
 	=======================================================
-	<!-- tree1 form1 for NEW object in the deposit border -->
-	<record model="ir.ui.view" id="v5">
-		<field name="name">auction.lots.tree1</field>
-		<field name="model">auction.lots</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-				<tree string="Auction Objects">
-					<field name="lot_num"/>
-					<field name="obj_num"/>
-					<field name="name"/>
-					<field name="auction_id"/>
-					<field name="vnd_lim"/>
-					<field name="lot_est1"/>
-					<field name="lot_est2"/>
-				</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v6">
-		<field name="name">auction.lots.form1</field>
-		<field name="model">auction.lots</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Catalog">
-				<field name="auction_id" colspan="3"/>
-				<field name="lot_num"/>
-				<field name="obj_num"/>
-				<newline/>
-				<field name="name"/>
-				<field name="name2"/>
-				<field name="lot_type" select="1"/>
-				<newline/>
-				<field name="artist_id"/>
-				<field name="artist2_id"/>
-				<field name="obj_desc" colspan="3"/>
-				<field name="vnd_lim"/>
-				<field name="vnd_lim_net"/>
-				<field name="lot_est1"/>
-				<field name="lot_est2"/>
-				<field name="author_right" domain="[('domain','=','sabam')]"/>
-				<field name="state" readonly="1"/>
-				<field name="tva"/>
-			</form>
-		</field>
-	</record>
 
-	<!-- tree2 form2 for Catalog, All object and Unclassified objects -->
-	<record model="ir.ui.view" id="v7">
-		<field name="name">auction.lots.tree2</field>
-		<field name="model">auction.lots</field>
-		<field name="type">tree</field>
-		<field name="priority" eval="1"/>
-		<field name="arch" type="xml">
-			<tree string="Catalog">
-				<field name="obj_num" string="Ref"/>
-				<field name="name" select="1"/>
-				<field name="ach_login"/>
-				<field name="obj_price"/>
-				<field name="state"/>
-				<field name="obj_comm"/>
-				<field name="bord_vnd_id"/>
-				<field name="lot_est1"/>
-				<field name="lot_est2"/>
-				<field name="lot_type"/>
-				<field name="lot_num"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v8">
+	<menuitem name="Auction Management/Auction Dates/Reporting" action="action_auction_dates_old"/>
+
+	=======================================================
+	Auction Management/objects/All objects"
+	=======================================================
+	<record model="ir.ui.view" id="view_all_objects_form">
 		<field name="name">auction.lots.form2</field>
 		<field name="model">auction.lots</field>
 		<field name="type">form</field>
@@ -269,140 +196,82 @@ Auction Management/objects
 		</field>
 	</record>
 
-	<record model="ir.actions.act_window" id="a6">
+	<record model="ir.actions.act_window" id="action_all_objects">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="v8"/>
+		<field name="view_id" ref="view_all_objects_form"/>
 	</record>
-
 	<menuitem name="Auction Management/Objects" groups="admin"/>
-	<menuitem name="Auction Management/Objects/All objects" action="a6"/>
+	<menuitem name="Auction Management/Objects/All objects" action="action_all_objects"/>
 
-	<record model="ir.actions.act_window" id="a7">
+	<!--<record model="ir.ui.view" id="v5">
+		<field name="name">auction.lots.tree1</field>
+		<field name="model">auction.lots</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+				<tree string="Auction Objects">
+					<field name="lot_num"/>
+					<field name="obj_num"/>
+					<field name="name"/>
+					<field name="auction_id"/>
+					<field name="vnd_lim"/>
+					<field name="lot_est1"/>
+					<field name="lot_est2"/>
+				</tree>
+		</field>
+	</record>-->
+
+	=======================================================
+	Auction Management/objects/All objects/Unclassified objects
+	=======================================================
+	<record model="ir.ui.view" id="view_unclassified_objects_form">
+		<field name="name">auction.lots.form1</field>
+		<field name="model">auction.lots</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Catalog">
+				<field name="auction_id" colspan="3"/>
+				<field name="lot_num"/>
+				<field name="obj_num"/>
+				<newline/>
+				<field name="name"/>
+				<field name="name2"/>
+				<field name="lot_type" select="1"/>
+				<newline/>
+				<field name="artist_id"/>
+				<field name="artist2_id"/>
+				<field name="obj_desc" colspan="3"/>
+				<field name="vnd_lim"/>
+				<field name="vnd_lim_net"/>
+				<field name="lot_est1"/>
+				<field name="lot_est2"/>
+				<field name="author_right" domain="[('domain','=','sabam')]"/>
+				<field name="state" readonly="1"/>
+				<field name="tva"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_unclassified_objects">
 		<field name="name">Unclassified objects</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('auction_id','=',False)]</field>
-		<field name="view_id" ref="v6"/>
+		<field name="view_id" ref="view_unclassified_objects_form"/>
 	</record>
-	<menuitem name="Auction Management/Objects/Unclassified objects" action="a7"/>
-
-	<record model="ir.actions.act_window" id="a8">
-		<field name="res_model">auction.lots</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v6"/>
-		<field name="domain">[('auction_id','=',active_id)]</field>
-	</record>
-
-	<record model="ir.values" id="ir_open_auction_date">
-			<field name="key2" eval="'tree_but_open'"/>
-			<field name="model" eval="'auction.dates'"/>
-			<field name="name">Open Auction Date</field>
-			<field name="value" eval="'ir.actions.act_window,%d'%a8"/>
-			<field name="object" eval="True"/>
-	</record>
-
-	<!--<ir_set>
-	   <field name="keys" eval="[('action','tree_but_open'),('res_model','auction.dates')]"/>
-	   <field name="args" eval="[]"/>
-	   <field name="name">Open Moves</field>
-	   <field name="value" eval="'ir.actions.act_window,%d'%a"/>
-	   <field name="isobject" eval="True"/>
-
-	</ir_set>-->
-
-	<!-- form3: simplified form meant for during the sale (action button in dates) -->
-	<record model="ir.ui.view" id="v9">
-		<field name="name">auction.lots.form3</field>
-		<field name="model">auction.lots</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auction">
-					<field name="obj_num" readonly="1" select="1"/>
-					<newline/>
-					<field name="obj_price" select="1"/>
-					<field name="ach_login" select="1" comparator="="/>
-					<field name="ach_emp"/>
-					<field name="obj_comm"/>
-					<field name="name" readonly="1" select="1"/>
-					<field name="name2" readonly="1" select="1"/>
-					<field name="artist_id" readonly="1"/>
-					<field name="author_right" domain="[('domain','=','sabam')]"/>
-					<newline/>
-					<field name="obj_desc" readonly="1" colspan="3"/>
-					<field name="lot_est1" readonly="1"/>
-					<field name="lot_est2" readonly="1"/>
-					<field name="vnd_lim" readonly="1"/>
-					<field name="vnd_lim_net"/>
-					<field name="bid_lines" widget="one2many_list" colspan="3" readonly="1" view_tree="auction.bid_line.tree2" view="auction.bid_line.form2"/>
-					<field name="state" readonly="1"/>
-			</form>
-		</field>Unclassified objects
-	</record>
-
-	<record model="ir.actions.act_window" id="a9">
-		<field name="res_model">auction.lots</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v9"/>
-		<field name="domain">[('auction_id','=',active_id)]</field>
-	</record>
-<!--	<ir_set>
-
-		<field name="keys" eval="[('action','tree_but_action'),('res_model','auction.dates')]"/>
-	    <field name="args" eval="[]"/>
-	    <field name="name">Open Moves</field>
-	    <field name="value" eval="'ir.actions.act_window,%d'%a"/>
-	    <field name="isobject" eval="True"/>
-	</ir_set>-->
+	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects"/>
 	=======================================================
-	Auction Management/seller
+	Auction Management/objects/All objects/Unsold objects
 	=======================================================
-	<record model="ir.ui.view" id="v24">
-		<field name="name">auction.deposit.cost.tree</field>
-		<field name="model">auction.deposit.cost</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Deposit Costs">
-				<field name="name"/>
-				<field name="amount"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v11">
-		<field name="name">auction.deposit.cost.form</field>
-		<field name="model">auction.deposit.cost</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Deposit Costs">
-				<field name="name"/>
-				<field name="amount"/>
-				<field name="account"/>
-			</form>
-		</field>
-	</record>
+	<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_unclassified_objects"/>
+	=======================================================
+	Auction Management/objects/Objects by auction date
+	=======================================================
+	<menuitem name="Auction Management/Objects/Objects by auction date"  action="action_unclassified_objects"/>
 
-	<record model="ir.actions.act_window" id="d7">
-		<field name="res_model">auction.lots</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v11"/>
-	</record>
-	<menuitem name="Auction Management/Seller/Deposist Costs" action="d7"/>
 	=======================================================
-		Auction Management/seller
+	Auction Management/seller/Deposit_border
 	=======================================================
-	<record model="ir.ui.view" id="v12">
-		<field name="name">auction.deposit.tree</field>
-		<field name="model">auction.deposit</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Deposit Border">
-				<field name="name"/>
-				<field name="date_dep"/>
-				<field name="partner_id"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v13">
+	<record model="ir.ui.view" id="view_deposit_border_form">
 		<field name="name">auction.deposit.form</field>
 		<field name="model">auction.deposit</field>
 		<field name="type">form</field>
@@ -424,21 +293,21 @@ Auction Management/objects
 			</form>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="a10">
+	<record model="ir.actions.act_window" id="action_deposit_border">
 		<field name="res_model">auction.deposit</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="v13"/>
+		<field name="view_id" ref="view_deposit_border_form"/>
 	</record>
-	<menuitem name="Auction Management/Seller" groups="admin"/>
-	<menuitem name="Auction Management/Seller/Deposit Border" action="a10"/>
-
-
-
-
-=======================================================
-		"Auction Management/Buyer
+	<menuitem name="Auction Management/Sellers" groups="admin" />
+	<menuitem name="Auction Management/Sellers/Deposit border" action="action_deposit_border"/>
 	=======================================================
-	<record model="ir.ui.view" id="v14">
+	Auction Management/seller/Reporting
+	=======================================================
+	<menuitem name="Auction Management/Sellers/Reporting" action="action_deposit_border"/>
+	=======================================================
+		"Auction Management/Buyer/Bids
+	=======================================================
+	<record model="ir.ui.view" id="view_bids_tree">
 		<field name="name">auction.bid_line.tree1</field>
 		<field name="model">auction.bid_line</field>
 		<field name="type">tree</field>
@@ -450,7 +319,7 @@ Auction Management/objects
 			</tree>
 		</field>
 	</record>
-	<record model="ir.ui.view" id="v15">
+	<record model="ir.ui.view" id="view_bids_form">
 		<field name="name">auction.bid_line.form1</field>
 		<field name="model">auction.bid_line</field>
 		<field name="type">form</field>
@@ -464,92 +333,17 @@ Auction Management/objects
 	</record>
 
 
-	<record model="ir.actions.act_window" id="b11">
+	<record model="ir.actions.act_window" id="action_bids_form">
 		<field name="res_model">auction.bid</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="v15"/>
+		<field name="view_id" ref="view_bids_form"/>
 	</record>
-		<menuitem name="Auction Management/Buyer" groups="admin"/>
-		<menuitem name="Auction Management/Buyer/Bids Form"  action="b11"/>
-
-
-
-	<record model="ir.ui.view" id="v16">
-		<field name="name">auction.bid_line.tree2</field>
-		<field name="model">auction.bid_line</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Bids">
-				<field name="bid_id"/>
-				<field name="price"/>
-				<field name="call"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v17">
-		<field name="name">auction.bid_line.form2</field>
-		<field name="model">auction.bid_line</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Bids">
-				<field name="bid_id" domain="[('auction_id','=',parent['auction_id'])]"/>
-				<field name="price"/>
-				<field name="call"/>
-			</form>
-		</field>
-	</record>
-
-
-		<record model="ir.actions.act_window" id="b12">
-		<field name="res_model">auction.bid</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v17"/>
-	</record>
-<!--	<menuitem name="Auction Management/Auction/Bids/Bid form2" action="b12"/>-->
-
+	<menuitem name="Auction Management/Buyers" groups="admin" />
+	<menuitem name="Auction Management/Buyers/Bids"  action="action_bids_form"/>
 
 	=======================================================
-	Buyer/all the bids form
+		"Auction Management/Buyer/Reporting
 	=======================================================
-	<record model="ir.ui.view" id="v18">
-		<field name="name">auction.bid.tree</field>
-		<field name="model">auction.bid</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Bids">
-				<field name="name"/>
-				<field name="partner_id"/>
-				<field name="contact_tel"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v19">
-		<field name="name">auction.bid.form</field>
-		<field name="model">auction.bid</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Bids">
-			<separator string="General Info" colspan="3"/>
-				<field name="name" select="1"/>
-				<newline/>
-				<field name="partner_id" select="1"/>
-				<newline/>
-				<field  name="contact_tel" select="1"/>
-				<newline/>
-			<separator string="Bids" colspan="5"/>
-				<field name="auction_id" select="1"/>
-				<newline/>
-				<field widget="one2many_list"  name="bid_lines" view_tree="auction.bid_line.tree1" view="auction.bid_line.form1"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="a11">
-		<field name="res_model">auction.bid</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="v19"/>
-	</record>
-	<menuitem name="Auction Management/Buyer/All Bids Form" action="a11"/>
-
-
+	<menuitem name="Auction Management/Buyers/Reporting"  action="action_bids_form"/>
 </data>
 </terp>

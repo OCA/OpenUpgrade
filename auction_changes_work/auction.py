@@ -83,6 +83,7 @@ class auction_dates(osv.osv):
 	_order = "auction1 desc"
 
 	def close(self, cr, uid, ids, *args):
+		print" IN THE CLOSE FUCNTION"
 		"""
 		Close an auction date.
 
@@ -288,6 +289,7 @@ class auction_lots(osv.osv):
 		if not len(ids):
 			return []
 		result = [ (r['id'], str(r['obj_num'])+' - '+r['name']) for r in self.read(cr, user, ids, ['name','obj_num'])]
+		print "VALUE OF RESULT",result;
 		return result
 
 	def name_search(self, cr, user, name, args=[], operator='ilike', context={}):
@@ -523,7 +525,7 @@ class auction_lots(osv.osv):
 		return self.lots_invoice(cr, uid, ids, invoice_number, buyer_id, action)
 
 	def lots_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
-		"""
+		"""(buyer invoice
 			Create an invoice for selected lots (IDS) to BUYER_ID.
 			Set created invoice to the ACTION state.
 			PRE:

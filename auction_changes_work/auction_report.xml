@@ -8,166 +8,212 @@
 		<report string="Artists Biography"
 			 model="auction.lots"
 			 name="auction.artists_lots"
-			 auto="False" />
+			 auto="False"
+			 multi="1"/>
 
 		<report string="Artists Biography"
 		 model="auction.artists"
 		 name="report.auction.artists"
-		  xml="auction/report/artists.xml"
-		  xsl="auction/report/artists.xsl"/>
+		 xml="auction/report/artists.xml"
+		 xsl="auction/report/artists.xsl"
+		 multi="1"/>
 
 		<report string="Bids"
-		model="auction.bid"
+		 model="auction.bid"
 		 name="report.auction.bid"
-		  xml="auction/report/bids.xml"
-		  xsl="auction/report/bids.xsl"/>
+		 xml="auction/report/bids.xml"
+		 xsl="auction/report/bids.xsl"
+		 multi="1"/>
 
 		<report string="Deposits"
 		model="auction.deposit"
 		name="report.auction.deposit"
 		xml="auction/report/deposit.xml"
-		xsl="auction/report/deposit.xsl"/>
+		xsl="auction/report/deposit.xsl"
+		multi="1"/>
 
 		<report string="Seller Labels"
 		 model="auction.lots"
-		  name="auction.seller_labels"
-		   auto="False"/>
+		 name="auction.seller_labels"
+		 auto="False"
+		 multi="1"/>
 
 		<report string="Invoices"
 		 model="auction.lots"
-		  name="auction.invoice"
-		  auto="False"/>
+		 name="auction.invoice"
+		 auto="False"
+		 multi="1"/>
+
 		<report string="Lots List"
 	   	model="auction.lots"
 		name="report.auction.lots.list"
 		xml="auction/report/lots_list.xml"
-		xsl="auction/report/lots_list.xsl"/>
+		xsl="auction/report/lots_list.xsl"
+		multi="1"/>
 
 
 	<report string="Results with Rml"
 	   	model="auction.lots"
 		name="auction.result"
 		rml="auction/report/auction_result.rml"
-		auto="False"/>
+		auto="False"
+		 multi="1"/>
 
 	<report string="Catelog with rml"
 	   	model="auction.lots"
 		name="auction.catelog"
 		rml="auction/report/auction_catelog.rml"
-		auto="False"/>
+		auto="False"
+		multi="1"/>
 
 
 	<report string="Lots List with rml"
 	   	model="auction.lots"
 		name="lots.list"
 		rml="auction/report/lots_list.rml"
-		auto="False"/>
+		auto="False"
+		multi="1"/>
 
 	<report string="Lots List-Landscape with rml"
 		 model="auction.lots"
 		 name="lots.list.landscape"
-		 rml="auction/report/lots_list_landscape.rml"/>
+		 rml="auction/report/lots_list_landscape.rml"
+
+		 multi="1"/>
 
     <report string="Lots List Inventory with rml"
 		 model="auction.lots"
 		 name="lots.list.inventory"
-		 rml="auction/report/lots_list_inventory.rml"/>
+		 rml="auction/report/lots_list_inventory.rml"
+
+		 multi="1"/>
 
 
 	<report string="Lots List"
 	   	model="auction.lots"
 		name="report.auction.lots.list"
 		xml="auction/report/lots_list.xml"
-		xsl="auction/report/lots_list.xsl"/>
+		xsl="auction/report/lots_list.xsl"
+
+		 multi="1"/>
 
 		<report string="Lots List - Landscape"
 		 model="auction.lots"
 		 name="report.auction.lots.list.landscape"
 		 xml="auction/report/lots_list_landscape.xml"
-		 xsl="auction/report/lots_list_landscape.xsl"/>
+		 xsl="auction/report/lots_list_landscape.xsl"
+
+		  multi="1"/>
 
 		 <report string="Lots List Inventory"
 		  model="auction.lots"
 		  name="report.auction.lots.list.inventory"
 		  xml="auction/report/lots_list_inv.xml"
-		  xsl="auction/report/lots_list_inv.xsl"/>
+		  xsl="auction/report/lots_list_inv.xsl"
+
+		   multi="1"/>
 
 		<report string="Buyer Form (with pictures)"
 		model="auction.lots"
 	    name="report.auction.ach_bordereau.photo"
 	    xml="auction/report/ach_bordereau_photo.xml"
-	    xsl="auction/report/ach_bordereau_photo.xsl"/>
+	    xsl="auction/report/ach_bordereau_photo.xsl"
+
+	     multi="1"/>
 
 		<report string="Buyer Form"
 		 model="auction.lots"
 		 name="report.auction.ach_bordereau"
 		 xml="auction/report/ach_bordereau.xml"
-		 xsl="auction/report/ach_bordereau.xsl"/>
+		 xsl="auction/report/ach_bordereau.xsl"
+
+		  multi="1"/>
 
 		<report string="Seller Form"
 		model="auction.lots"
 		name="report.auction.vnd_bordereau"
 		xml="auction/report/vnd_bordereau.xml"
-		xsl="auction/report/vnd_bordereau.xsl"/>
+		xsl="auction/report/vnd_bordereau.xsl"
+
+		 multi="1"/>
 
 		<report string="Results"
 		model="auction.lots"
 		name="report.auction.results"
 		xml="auction/report/results.xml"
-		 xsl="auction/report/results.xsl"/>
+		 xsl="auction/report/results.xsl"
+
+		  multi="1"/>
 
 		<report string="Catalog"
 		model="auction.lots"
 		name="report.auction.catalog"
 		xml="auction/report/catalog.xml"
-		xsl="auction/report/catalog.xsl"/>
+		xsl="auction/report/catalog.xsl"
+
+		 multi="1"/>
 
 		<report string="Buyer List"
 		model="auction.lots"
 		name="report.auction.buyer.list"
 		xml="auction/report/buyer_list.xml"
-		 xsl="auction/report/buyer_list.xsl"/>
+		 xsl="auction/report/buyer_list.xsl"
+		 menu="False"
+		  multi="1"/>
 
 		<report string="Seller List"
 		 model="auction.lots"
 		 name="report.auction.seller.list"
 		 xml="auction/report/seller_list.xml"
-		 xsl="auction/report/seller_list.xsl"/>
+		 xsl="auction/report/seller_list.xsl"
+		 menu="False"
+		  multi="1"/>
 
 		<report string="Bids per lot (phone list)"
 		model="auction.lots"
 		name="report.auction.lots.bids.phone2"
 		xml="auction/report/lots_bids_phone2.xml"
-		xsl="auction/report/lots_bids_phone2.xsl"/>
+		xsl="auction/report/lots_bids_phone2.xsl"
+
+		 multi="1"/>
 
 		<report string="Bids per lot (phone)"
 		 model="auction.lots"
 		 name="report.auction.lots.bids.phone"
 		 xml="auction/report/lots_bids_phone.xml"
-		 xsl="auction/report/lots_bids_phone.xsl"/>
+		 xsl="auction/report/lots_bids_phone.xsl"
+
+		  multi="1"/>
 
 		<report string="Deposit Letters"
 		model="auction.lots"
 		name="report.auction.lots.deposit"
 		xml="auction/report/lots_deposit.xml"
 		xsl="auction/report/lots_deposit.xsl"/>
+<!--	    keyword="client_print_multi"-->
 
 		<report string="Auction Totals"
 		model="auction.lots"
 		name="auction.total"
-		auto="False"/>
+		auto="False"
+
+		 multi="1"/>
 
 		<report string="Results with buyer"
 		 model="auction.lots"
 		 name="report.auction.results_w_buyer"
 		 xml="auction/report/results_buyer.xml"
-		 xsl="auction/report/results_buyer.xsl"/>
+		 xsl="auction/report/results_buyer.xsl"
+
+		  multi="1"/>
 
 		<report string="Lots with VAT"
 		 model="auction.lots"
 		 name="report.auction.extd_results"
 		  xml="auction/report/lots_with_vat.xml"
-		  xsl="auction/report/lots_with_vat.xsl"/>
+		  xsl="auction/report/lots_with_vat.xsl"
+
+		   multi="1"/>
 	</data>
 </terp>
 
