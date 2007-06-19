@@ -1,30 +1,29 @@
-if __name__=="__main__":
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from lib.error import ErrorDialog
-    from lib.functions import *
-    import xmlrpclib
+import uno
+import string
+import unohelper
+from com.sun.star.task import XJobExecutor
+from lib.gui import *
+from lib.error import ErrorDialog
+from lib.functions import *
+import xmlrpclib
 
 
 class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
         self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
-
+        print "Expression"
         self.win.addFixedText("lblExpression",17 , 10, 35, 15, "Expression :")
         self.win.addEdit("txtExpression", -5, 5, 123, 15)
-        self.win.setEditText("txtExpression",sExpression)
         self.win.addFixedText("lblName", 2, 30, 50, 15, "Displayed Name :")
         self.win.addEdit("txtName", -5, 25, 123, 15)
-        self.win.setEditText("txtName",sName)
         self.win.addButton( "btnOK", -5, -5, 40, 15, "OK",
                         actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton( "btnCancel", -5 - 40 -5, -5, 40, 15, "Cancel",
                         actionListenerProc = self.btnOkOrCancel_clicked )
         self.bModify=bFromModify
-
+        if self.bModify==True:
+            self.win.setEditText("txtExpression",sExpression)
+            self.win.setEditText("txtName",sName)
         self.win.doModalDialog()
 
     def getDesktop(self):
@@ -70,5 +69,11 @@ class Expression(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-Expression()
+if __name__=="__main__":
+    Expression()
+#else:
+#    g_ImplementationHelper.addImplementation( \
+#        Expression,
+#        "org.openoffice.tiny.report.expression",
+#        ("com.sun.star.task.Job",),)
 

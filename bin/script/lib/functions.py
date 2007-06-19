@@ -1,7 +1,6 @@
-if not __name__=="__main__":
-    import uno
-    import xmlrpclib
-    from gui import *
+import uno
+import xmlrpclib
+from gui import *
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:

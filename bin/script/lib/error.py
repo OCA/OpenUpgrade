@@ -1,5 +1,4 @@
-if not __name__=="__main__":
-    from gui import *
+from gui import *
 class ErrorDialog:
     def __init__(self,sErrorMsg, sErrorHelpMsg=""):
         self.win = DBModalDialog(50, 50, 150, 70, "Error Message")

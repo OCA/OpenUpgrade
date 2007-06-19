@@ -1,12 +1,11 @@
-if __name__=="__main__":
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from lib.functions import *
-    from lib.error import ErrorDialog
-    import xmlrpclib
+import uno
+import string
+import unohelper
+from com.sun.star.task import XJobExecutor
+from lib.gui import *
+from lib.functions import *
+from lib.error import ErrorDialog
+import xmlrpclib
 
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
@@ -159,5 +158,12 @@ class Fields(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
+if __name__=="__main__":
+    Fields()
+#else:
+#    g_ImplementationHelper.addImplementation( \
+#        Fields,
+#        "org.openoffice.tiny.report.fields",
+#        ("com.sun.star.task.Job",),)
 
-Fields()
+

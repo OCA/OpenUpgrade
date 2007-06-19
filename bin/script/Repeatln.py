@@ -1,12 +1,11 @@
-if __name__=="__main__":
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from lib.error import ErrorDialog
-    from lib.functions import *
-    import xmlrpclib
+import uno
+import string
+import unohelper
+from com.sun.star.task import XJobExecutor
+from lib.gui import *
+from lib.error import ErrorDialog
+from lib.functions import *
+import xmlrpclib
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
@@ -41,7 +40,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.aListRepeatIn=[]
         # Call method to perform Enumration on Report Document
         EnumDocument(self.aItemList,self.aComponentAdd)
-        print self.aItemList,self.aComponentAdd,self.aObjectList,self.aListRepeatIn
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
         # filled if condition is true
         desktop=getDesktop()
@@ -177,4 +175,12 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-RepeatIn()
+if __name__=="__main__":
+    RepeatIn()
+#else:
+#    g_ImplementationHelper = unohelper.ImplementationHelper()
+#    g_ImplementationHelper.addImplementation( \
+#            RepeatIn,
+#            "org.openoffice.tiny.report.repeatln",
+#            ("com.sun.star.task.Job",),)
+

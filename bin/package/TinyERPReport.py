@@ -1,13 +1,10 @@
-import re
 import uno
+import re
 import string
 import unohelper
 from com.sun.star.task import XJobExecutor
 import xmlrpclib
-
-if __name__=="__main__":
-    import uno
-    import unohelper
+g_ImplementationHelper = unohelper.ImplementationHelper()
 
 #--------------------------------------------------
 # An ActionListener adapter.
@@ -64,11 +61,9 @@ class TextListenerProcAdapter( unohelper.Base, XTextListener ):
             apply( self.oProcToCall, (oTextEvent,) + self.tParams )
 
 
-if __name__=="__main__":
-    from gui import *
 class ErrorDialog:
     def __init__(self,sErrorMsg, sErrorHelpMsg=""):
-        self.win = DBModalDialog(50, 50, 150, 70, "Error Message")
+        self.win = DBModalDialog(50, 50, 150, 90, "Error Message")
         self.win.addFixedText("lblErrMsg", 5, 5, 190, 25, sErrorMsg)
         self.win.addFixedText("lblErrHelpMsg", 5, 30, 190, 25, sErrorHelpMsg)
         self.win.addButton('btnOK', 55,-5,40,15,'Ok'
@@ -76,11 +71,6 @@ class ErrorDialog:
         self.win.doModalDialog()
     def btnOkOrCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
-
-if __name__=="__main__":
-    import uno
-    import xmlrpclib
-    from gui import *
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
@@ -105,7 +95,7 @@ def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableNa
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal:
                         insVariable.addItem(aObjectList[j],1)
-        VariableScope(oTcur, sTableName.__getslice__(0,sTableName.rfind(".")))
+        VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList, sTableName.__getslice__(0,sTableName.rfind(".")))
     else:
         for i in range(aItemList.__len__()):
             if aComponentAdd[i]==sTableName:
@@ -243,11 +233,6 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
             if aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
                 aComponentAdd.append(sTableName+"."+oPar.Name)
     return 0
-
-if __name__=="__main__":
-    import uno
-    import unohelper
-    from actions import *
 
 
 #------------------------------------------------------------
@@ -949,18 +934,6 @@ class DBModalDialog:
         """
         self.oDialogControl.endExecute()
 
-
-if  __name__=="__main__":
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from lib.error import ErrorDialog
-    from lib.functions import *
-    import xmlrpclib
-
-#class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
     def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
@@ -1128,17 +1101,13 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-
-
 if __name__=="__main__":
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from lib.functions import *
-    from lib.error import ErrorDialog
-    import xmlrpclib
+    RepeatIn()
+else:
+    g_ImplementationHelper.addImplementation( \
+            RepeatIn,
+            "org.openoffice.tiny.report.repeatln",
+            ("com.sun.star.task.Job",),)
 
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
@@ -1291,36 +1260,29 @@ class Fields(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-
-
-
 if __name__=="__main__":
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from lib.error import ErrorDialog
-    from lib.functions import *
-    import xmlrpclib
-
+    Fields()
+else:
+    g_ImplementationHelper.addImplementation( \
+        Fields,
+        "org.openoffice.tiny.report.fields",
+        ("com.sun.star.task.Job",),)
 
 class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
         self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
-
         self.win.addFixedText("lblExpression",17 , 10, 35, 15, "Expression :")
         self.win.addEdit("txtExpression", -5, 5, 123, 15)
-        self.win.setEditText("txtExpression",sExpression)
         self.win.addFixedText("lblName", 2, 30, 50, 15, "Displayed Name :")
         self.win.addEdit("txtName", -5, 25, 123, 15)
-        self.win.setEditText("txtName",sName)
         self.win.addButton( "btnOK", -5, -5, 40, 15, "OK",
                         actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton( "btnCancel", -5 - 40 -5, -5, 40, 15, "Cancel",
                         actionListenerProc = self.btnOkOrCancel_clicked )
         self.bModify=bFromModify
-
+        if self.bModify==True:
+            self.win.setEditText("txtExpression",sExpression)
+            self.win.setEditText("txtName",sName)
         self.win.doModalDialog()
 
     def getDesktop(self):
@@ -1366,27 +1328,22 @@ class Expression(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-
-
-
-
 if __name__=="__main__":
-    import re
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from Expression import *
-    from Fields import *
-    from Repeatln import *
-    from lib.error import *
-    import xmlrpclib
+    Expression()
+else:
+    g_ImplementationHelper.addImplementation( \
+        Expression,
+        "org.openoffice.tiny.report.expression",
+        ("com.sun.star.task.Job",),)
 
 
-class modify(unohelper.Base, XJobExecutor ):
+class Modify(unohelper.Base, XJobExecutor ):
 
-    def __init__(self):
+    def __init__( self, ctx ):
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+        self.win=None
         localContext = uno.getComponentContext()
         resolver = localContext.ServiceManager.createInstanceWithContext(
                         "com.sun.star.bridge.UnoUrlResolver", localContext )
@@ -1408,10 +1365,10 @@ class modify(unohelper.Base, XJobExecutor ):
         if not docinfo.getUserFieldValue(0)=="":
             self.sMyHost= docinfo.getUserFieldValue(0)
         else:
-            print "Insert Field-1"
-            self.win.endExecute()
+            ErrorDialog("Please insert user define field Field-1","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069")
+            exit(1)
         # Check weather Field-4 is available or not otherwise exit from application
-        if not docinfo.getUserFieldValue(3)=="":
+        if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
             if self.oVC.TextField:
                 self.oCurObj=self.oVC.TextField
                 self.oMyObject= self.getOperation(self.oVC.TextField.Items.__getitem__(1))
@@ -1425,8 +1382,8 @@ class modify(unohelper.Base, XJobExecutor ):
                 ErrorDialog("Please place your cursor at begaining of field \nwhich you want to modify","")
 
         else:
-            print "Insert Field-4"
-
+            ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
+            exit(1)
     def getOperation(self, str):
         #str = "[[ RepeatIn(objects, 'variable') ]]" #repeatIn
         #str = "[[ saleorder.partner_id.name ]]" # field
@@ -1445,23 +1402,12 @@ class modify(unohelper.Base, XJobExecutor ):
                         return method(res)
                         break
 
-g_ImplementationHelper = unohelper.ImplementationHelper()
-g_ImplementationHelper.addImplementation( \
-        RepeatIn,
-        "org.openoffice.tiny.report.repeatln",
-        ("com.sun.star.task.Job",),)
-
-g_ImplementationHelper.addImplementation( \
-        Fields,
-        "org.openoffice.tiny.report.fields",
-        ("com.sun.star.task.Job",),)
-
-g_ImplementationHelper.addImplementation( \
-        Expression,
-        "org.openoffice.tiny.report.expression",
-        ("com.sun.star.task.Job",),)
-
-g_ImplementationHelper.addImplementation( \
-        modify,
+if __name__=="__main__":
+    Modify()
+else:
+    g_ImplementationHelper.addImplementation( \
+        Modify,
         "org.openoffice.tiny.report.modify",
         ("com.sun.star.task.Job",),)
+
+

@@ -1,15 +1,14 @@
-if __name__=="__main__":
-    import re
-    import uno
-    import string
-    import unohelper
-    from com.sun.star.task import XJobExecutor
-    from lib.gui import *
-    from Expression import *
-    from Fields import *
-    from Repeatln import *
-    from lib.error import *
-    import xmlrpclib
+import re
+import uno
+import string
+import unohelper
+from com.sun.star.task import XJobExecutor
+from lib.gui import *
+from Expression import *
+from Fields import *
+from Repeatln import *
+from lib.error import *
+import xmlrpclib
 
 
 class modify(unohelper.Base, XJobExecutor ):
@@ -37,7 +36,7 @@ class modify(unohelper.Base, XJobExecutor ):
             self.sMyHost= docinfo.getUserFieldValue(0)
         else:
             print "Insert Field-1"
-            self.win.endExecute()
+            exit(1)
         # Check weather Field-4 is available or not otherwise exit from application
         if not docinfo.getUserFieldValue(3)=="":
             if self.oVC.TextField:
@@ -73,4 +72,11 @@ class modify(unohelper.Base, XJobExecutor ):
                         return method(res)
                         break
 
-modify()
+if __name__=="__main__":
+    modify()
+#else:
+#    g_ImplementationHelper.addImplementation( \
+#        modify,
+#        "org.openoffice.tiny.report.modify",
+#        ("com.sun.star.task.Job",),)
+

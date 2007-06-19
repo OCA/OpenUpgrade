@@ -1,6 +1,5 @@
-if not __name__=="__main__":
-    import uno
-    import unohelper
+import uno
+import unohelper
 
 #--------------------------------------------------
 # An ActionListener adapter.
