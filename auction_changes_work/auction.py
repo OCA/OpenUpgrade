@@ -276,7 +276,8 @@ class auction_lots(osv.osv):
 		'buy_inv_id': fields.many2one('account.move','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
 		'vnd_lim_net': fields.boolean('Net ?'),
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True)
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True),
+		'logo':fields.binary("Image"),
 	}
 	_defaults = {
 				'state':lambda *a: 'draft'

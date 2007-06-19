@@ -173,6 +173,7 @@ Auction Management/Auction Dates/Reporting
 						<field name="lot_est2"/>
 						<field name="author_right" domain="[('domain','=','sabam')]"/>
 						<field name="tva"/>
+						<field name="logo" widget="image"/>
 						<field name="obj_desc" colspan="3"/>
 					<separator string="Results" colspan="3"/>
 						<field name="obj_price" select="1"/>
