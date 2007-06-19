@@ -128,7 +128,8 @@ def _inv_uniq(cr, ids):
 	return True
 
 class auction_deposit(osv.osv):
-	_name = "Deposit Border"
+	_name = "auction.deposit"
+	_description="Deposit Border"
 	_columns = {
 		'name': fields.char('Depositer Inventory', size=64, required=True),
 		'partner_id': fields.many2one('res.partner', 'Seller',relate=True, required=True, change_default=True),
