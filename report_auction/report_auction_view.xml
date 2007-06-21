@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+=============================
+Customer/Supplier
+==============================
+
+	<record model="ir.ui.view" id="view_per_seller_customer_tree">
+		<field name="name">report.per.seller.customer.tree</field>
+		<field name="model">report.per.seller.customer</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Customer/Supplier">
+				<field name="name" colspan="4"/>
+				<field name="partner_id"/>
+
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_per_seller_customer_graph">
+		<field name="name">report.per.seller.customer.graph</field>
+		<field name="model">report.per.seller.customer</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Customer/Supplier" type="bar">
+				<field name="name" />
+				<field name="partner_id" />
+			</graph>
+		</field>
+
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_per_seller_customer_tree">
+		<field name="res_model">report.per.seller.customer</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Customer per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
+</data>
+</terp>
