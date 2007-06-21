@@ -61,12 +61,10 @@ class auction_dates(osv.osv):
 		return tmp
 
 	def name_get(self, cr, uid, ids, context={}):
-		print "CALLED"
 		if not len(ids):
 			return []
-		reads = self.read(cr, uid, ids, ['auction_id', 'expo1'], context)
+		reads = self.read(cr, uid, ids, ['name', 'expo1'], context)
 		name = [(r['id'],'['+r['name']+']'+ r['expo1']) for r in reads]
-	
 		return name
 
 	_columns = {
