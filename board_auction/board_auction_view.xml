@@ -19,8 +19,8 @@
 								colspan="4"
 								height="200"
 								width="510"/>
-							<action string="Auction manager board"
-								name="%(report_auction.action_per_seller_customer_tree)d"
+							<action string="My Latest Deposits"
+								name="%(report_auction.action_report_latest_doposit_tree)d"
 								colspan="4"/>
 							<action
 								string="Auction manager board"
@@ -59,7 +59,7 @@
 		</record>
 
 		<menuitem
-			name="Dashboards/Auction/Auction Manager"
+			name="Dashboards/Auction/Auction Member"
 			action="open_board_auction"
 			sequence="1"
 			id="menu_board_auction"/>
