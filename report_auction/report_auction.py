@@ -12,7 +12,7 @@ class report_per_seller_customer(osv.osv):
             cr.execute("""
                 create or replace view report_per_seller_customer as (
                     SELECT
-                        l.id as id
+                        l.id as id,
                         l.name as name,
                         l.partner_id as partner_id
                     from auction_deposit l
