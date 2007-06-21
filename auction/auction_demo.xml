@@ -22,7 +22,7 @@
 		<field name="" />
 	</record>
 -->
-	<record model="auction.dates" id="auction_date_1">
+        <record model="auction.dates" id="auction_date_1">
 		<field name="name">painting Exhibition</field>
 		<field name="expo1" eval="time.strftime('%Y')+'-01-01'" />
 		<field name="expo2" eval="time.strftime('%Y')+'-02-01'" />

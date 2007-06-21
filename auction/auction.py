@@ -30,7 +30,6 @@ import time
 import netsvc
 from osv import fields, osv, orm
 import ir
-
 #----------------------------------------------------------
 # Auction Artists
 #----------------------------------------------------------
@@ -49,7 +48,6 @@ auction_artists()
 #----------------------------------------------------------
 class auction_dates(osv.osv):
 	_name = "auction.dates"
-
 	def _adjudication_get(self, cr, uid, ids, prop, unknow_none,unknow_dict):
 		tmp={}
 		for id in ids:
@@ -59,6 +57,15 @@ class auction_dates(osv.osv):
 			if sum:
 				tmp[id]=sum[0]
 		return tmp
+
+	def name_get(self, cr, uid, ids, context={}):
+		print "CALLED"
+		if not len(ids):
+			return []
+		reads = self.read(cr, uid, ids, ['auction_id', 'expo1'], context)
+		name = [(r['id'],'['+r['name']+']'+ r['expo1']) for r in reads]
+	
+		return name
 
 	_columns = {
 		'name': fields.char('Auction date', size=64, required=True),
@@ -75,6 +82,7 @@ class auction_dates(osv.osv):
 
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
 		'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
+		'journal':fields.many2one('account.journal', 'Journal'),
 	}
 	_defaults = {
 		#'state': lambda uid, page, ref: 'draft'
@@ -244,9 +252,11 @@ def _inv_constraint(cr, ids):
 class auction_lots(osv.osv):
 	_name = "auction.lots"
 	_order = "obj_num,lot_num"
+	_description="Object"
+	
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
-		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
+                'auction_id': fields.many2one('auction.dates', 'Auction Date'),
 		'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
 		'name': fields.char('Short Description',size=64, required=True),
 		'name2': fields.char('Short Description (2)',size=64),
@@ -274,7 +284,8 @@ class auction_lots(osv.osv):
 #CHECKME: seller invoice qui pointe vers un account.move?
 		'buy_inv_id': fields.many2one('account.move','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
-		'vnd_lim_net': fields.boolean('Net ?'),
+		'vnd_lim_net': fields.boolean('Net limit ?'),
+		'image': fields.binary('Image'),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True)
 	}
 	_defaults = {
@@ -680,23 +691,25 @@ auction_lots()
 # Auction Bids
 #----------------------------------------------------------
 class auction_bid(osv.osv):
-	_name = "auction.bid"
-	_columns = {
-		'partner_id': fields.many2one('res.partner', 'Buyer Name', required=True),
-		'contact_tel':fields.char('Contact',size=64),
-		'name': fields.char('Bid ID', size=64,required=True),
-		'auction_id': fields.many2one('auction.dates', 'Auction Date', required=True),
-		'bid_lines': fields.one2many('auction.bid_line', 'bid_id', 'Bid'),
-	}
+    _name = "auction.bid"
+    _description="Bid auctions"
+    _columns = {
+            'partner_id': fields.many2one('res.partner', 'Buyer Name', required=True),
+            'contact_tel':fields.char('Contact',size=64),
+            'name': fields.char('Bid ID', size=64,required=True),
+            'auction_id': fields.many2one('auction.dates', string='Auction Date', required=True),
+            'bid_lines': fields.one2many('auction.bid_line', 'bid_id', 'Bid'),
+    }
 auction_bid()
 
 class auction_bid_lines(osv.osv):
-	_name = "auction.bid_line"
-	_columns = {
-		'name': fields.char('Name',size=64),
-		'bid_id': fields.many2one('auction.bid','Bid ID', required=True),
-		'lot_id': fields.many2one('auction.lots','Lot', required=True),
-		'call': fields.boolean('To be Called'),
-		'price': fields.float('Maximum Price')
-	}
+    _name = "auction.bid_line"
+    _description="Bid"
+    _columns = {
+            'name': fields.char('Name',size=64),
+            'bid_id': fields.many2one('auction.bid','Bid ID', required=True),
+            'lot_id': fields.many2one('auction.lots','Lot', required=True),
+            'call': fields.boolean('To be Called'),
+            'price': fields.float('Maximum Price'),
+    }
 auction_bid_lines()
