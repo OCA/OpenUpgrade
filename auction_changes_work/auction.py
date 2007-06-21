@@ -60,6 +60,15 @@ class auction_dates(osv.osv):
 				tmp[id]=sum[0]
 		return tmp
 
+	def name_get(self, cr, uid, ids, context={}):
+		print "CALLED"
+		if not len(ids):
+			return []
+		reads = self.read(cr, uid, ids, ['auction_id', 'expo1'], context)
+		name = [(r['id'],'['+r['name']+']'+ r['expo1']) for r in reads]
+	
+		return name
+
 	_columns = {
 		'name': fields.char('Auction date', size=64, required=True),
 		'expo1': fields.date('First Exposition Day', required=True),
@@ -75,6 +84,7 @@ class auction_dates(osv.osv):
 
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
 		'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
+		'journal':fields.many2one('account.journal', 'Journal'),
 	}
 	_defaults = {
 		#'state': lambda uid, page, ref: 'draft'
@@ -83,7 +93,6 @@ class auction_dates(osv.osv):
 	_order = "auction1 desc"
 
 	def close(self, cr, uid, ids, *args):
-		print" IN THE CLOSE FUCNTION"
 		"""
 		Close an auction date.
 
@@ -132,7 +141,7 @@ class auction_deposit(osv.osv):
 	_description="Deposit Border"
 	_columns = {
 		'name': fields.char('Depositer Inventory', size=64, required=True),
-		'partner_id': fields.many2one('res.partner', 'Seller',relate=True, required=True, change_default=True),
+		'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
 		'date_dep': fields.date('Deposit date', required=True),
 		'method': fields.selection((('keep','Keep until sold'),('decease','Decrease limit of 10%'),('contact','Contact the Seller')), 'Withdrawned method', required=True),
 		'tax_id': fields.many2one('account.tax', 'Expenses'),
@@ -246,6 +255,8 @@ def _inv_constraint(cr, ids):
 class auction_lots(osv.osv):
 	_name = "auction.lots"
 	_order = "obj_num,lot_num"
+	_description="Object"
+	
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
 		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
@@ -276,9 +287,9 @@ class auction_lots(osv.osv):
 #CHECKME: seller invoice qui pointe vers un account.move?
 		'buy_inv_id': fields.many2one('account.move','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
-		'vnd_lim_net': fields.boolean('Net ?'),
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True),
-		'logo':fields.binary("Image"),
+		'vnd_lim_net': fields.boolean('Net limit ?'),
+		'image': fields.binary('Image'),
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True)
 	}
 	_defaults = {
 				'state':lambda *a: 'draft'
@@ -291,7 +302,6 @@ class auction_lots(osv.osv):
 		if not len(ids):
 			return []
 		result = [ (r['id'], str(r['obj_num'])+' - '+r['name']) for r in self.read(cr, user, ids, ['name','obj_num'])]
-		print "VALUE OF RESULT",result;
 		return result
 
 	def name_search(self, cr, user, name, args=[], operator='ilike', context={}):
@@ -685,6 +695,7 @@ auction_lots()
 #----------------------------------------------------------
 class auction_bid(osv.osv):
 	_name = "auction.bid"
+	_description="Bid auctions"
 	_columns = {
 		'partner_id': fields.many2one('res.partner', 'Buyer Name', required=True),
 		'contact_tel':fields.char('Contact',size=64),
@@ -696,6 +707,7 @@ auction_bid()
 
 class auction_bid_lines(osv.osv):
 	_name = "auction.bid_line"
+	_description="Bid"
 	_columns = {
 		'name': fields.char('Name',size=64),
 		'bid_id': fields.many2one('auction.bid','Bid ID', required=True),
