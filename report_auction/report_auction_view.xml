@@ -37,6 +37,48 @@ Customer/Supplier
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Customer per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
+	<menuitem name="Auction Management/Reporting/Member/Customer per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
+=============================
+My Latest 10 Deposit
+==============================
+
+	<record model="ir.ui.view" id="view_latest_deposit_tree">
+		<field name="name">report.latest.doposit.tree</field>
+		<field name="model">report.latest.doposit</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Customer/Supplier">
+				<field name="name" />
+				<field name="partner_id" />
+				<field name="date_dep" />
+				<field name="method"/>
+				<field name="tax_id"/>
+				<field name="info"/>
+
+
+			</tree>
+		</field>
+	</record>
+
+	<!--<record model="ir.ui.view" id="view_per_seller_customer_graph">
+		<field name="name">report.latest.doposit.graph</field>
+		<field name="model">report.latest.doposit</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Customer/Supplier" type="bar">
+				<field name="name" />
+				<field name="partner_id" />
+			</graph>
+		</field>
+
+	</record>-->
+
+
+	<record model="ir.actions.act_window" id="action_report_latest_doposit_tree">
+		<field name="res_model">report.latest.doposit</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/My Latest 10 Deposit" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
 </data>
 </terp>
