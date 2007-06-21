@@ -1,7 +1,7 @@
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+#					Fabien Pinckaers <fp@tiny.Be>
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -30,6 +30,7 @@ import time
 import netsvc
 from osv import fields, osv, orm
 import ir
+
 #----------------------------------------------------------
 # Auction Artists
 #----------------------------------------------------------
@@ -48,6 +49,7 @@ auction_artists()
 #----------------------------------------------------------
 class auction_dates(osv.osv):
 	_name = "auction.dates"
+
 	def _adjudication_get(self, cr, uid, ids, prop, unknow_none,unknow_dict):
 		tmp={}
 		for id in ids:
@@ -136,6 +138,7 @@ def _inv_uniq(cr, ids):
 
 class auction_deposit(osv.osv):
 	_name = "auction.deposit"
+	_description="Deposit Border"
 	_columns = {
 		'name': fields.char('Depositer Inventory', size=64, required=True),
 		'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
@@ -256,7 +259,7 @@ class auction_lots(osv.osv):
 	
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
-                'auction_id': fields.many2one('auction.dates', 'Auction Date'),
+		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
 		'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
 		'name': fields.char('Short Description',size=64, required=True),
 		'name2': fields.char('Short Description (2)',size=64),
@@ -534,7 +537,7 @@ class auction_lots(osv.osv):
 		return self.lots_invoice(cr, uid, ids, invoice_number, buyer_id, action)
 
 	def lots_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
-		"""
+		"""(buyer invoice
 			Create an invoice for selected lots (IDS) to BUYER_ID.
 			Set created invoice to the ACTION state.
 			PRE:
@@ -691,25 +694,25 @@ auction_lots()
 # Auction Bids
 #----------------------------------------------------------
 class auction_bid(osv.osv):
-    _name = "auction.bid"
-    _description="Bid auctions"
-    _columns = {
-            'partner_id': fields.many2one('res.partner', 'Buyer Name', required=True),
-            'contact_tel':fields.char('Contact',size=64),
-            'name': fields.char('Bid ID', size=64,required=True),
-            'auction_id': fields.many2one('auction.dates', string='Auction Date', required=True),
-            'bid_lines': fields.one2many('auction.bid_line', 'bid_id', 'Bid'),
-    }
+	_name = "auction.bid"
+	_description="Bid auctions"
+	_columns = {
+		'partner_id': fields.many2one('res.partner', 'Buyer Name', required=True),
+		'contact_tel':fields.char('Contact',size=64),
+		'name': fields.char('Bid ID', size=64,required=True),
+		'auction_id': fields.many2one('auction.dates', 'Auction Date', required=True),
+		'bid_lines': fields.one2many('auction.bid_line', 'bid_id', 'Bid'),
+	}
 auction_bid()
 
 class auction_bid_lines(osv.osv):
-    _name = "auction.bid_line"
-    _description="Bid"
-    _columns = {
-            'name': fields.char('Name',size=64),
-            'bid_id': fields.many2one('auction.bid','Bid ID', required=True),
-            'lot_id': fields.many2one('auction.lots','Lot', required=True),
-            'call': fields.boolean('To be Called'),
-            'price': fields.float('Maximum Price'),
-    }
+	_name = "auction.bid_line"
+	_description="Bid"
+	_columns = {
+		'name': fields.char('Name',size=64),
+		'bid_id': fields.many2one('auction.bid','Bid ID', required=True),
+		'lot_id': fields.many2one('auction.lots','Lot', required=True),
+		'call': fields.boolean('To be Called'),
+		'price': fields.float('Maximum Price')
+	}
 auction_bid_lines()
