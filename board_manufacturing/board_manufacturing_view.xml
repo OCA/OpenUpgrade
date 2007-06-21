@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+		<record model="board.note.type" id="note_sale_type">
+			<field name="name">Sales</field>
+		</record>
+
+		<record model="ir.ui.view" id="board_mrp_manager_form">
+			<field name="name">board.mrp.manager.form</field>
+			<field name="model">board.board</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="MRP manager board">
+					<hpaned position="100">
+						<child1>
+							<action
+								string="Next Production Orders"
+								name="%(report_mrp.action_next_production_order_tree)d"
+								colspan="4"
+								height="200"
+								width="510"/>
+							<action string="Deliveries (Out picking)"
+								name="%(report_mrp.action_report_procurement_exception_tree)d"
+								colspan="4"/>
+							<action
+								string="Procurement in Exception"
+								name="%(report_mrp.action_report_procurement_exception_tree)d"
+								colspan="4"/>
+						</child1>
+
+
+						<child2>
+							<button
+								string="Menu"
+								name="%(base.action_menu_admin)d"
+								icon="gtk-ok"
+								type="action"
+								colspan="4"/>
+
+							<action
+								string="Workcenter load"
+								name="%(report_mrp.action_report_workcenter_load_tree)d"
+								view_mode="graph,tree" colspan="4"/>
+							<action
+								string="outgoing/incoming picking"
+								name="%(report_mrp.action_report_procurement_exception_tree)d"
+								view_mode="tree"
+								colspan="4"/>
+						</child2>
+					</hpaned>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="open_board_manufacturing">
+			<field name="res_model">board.board</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="board_mrp_manager_form"/>
+		</record>
+
+		<menuitem
+			name="Dashboards/MRP Manager"
+			action="open_board_manufacturing"
+			sequence="1"
+			id="menu_board_manufacturing"/>
+
+	</data>
+</terp>
