@@ -54,24 +54,11 @@ My Latest 10 Deposit
 				<field name="method"/>
 				<field name="tax_id"/>
 				<field name="info"/>
-
+				<!--<field name="domain">[('user_id','=',uid)]</field>-->
 
 			</tree>
 		</field>
 	</record>
-
-	<!--<record model="ir.ui.view" id="view_per_seller_customer_graph">
-		<field name="name">report.latest.doposit.graph</field>
-		<field name="model">report.latest.doposit</field>
-		<field name="type">graph</field>
-		<field name="arch" type="xml">
-			<graph string="Customer/Supplier" type="bar">
-				<field name="name" />
-				<field name="partner_id" />
-			</graph>
-		</field>
-
-	</record>-->
 
 
 	<record model="ir.actions.act_window" id="action_report_latest_doposit_tree">
@@ -80,5 +67,37 @@ My Latest 10 Deposit
 		<field name="view_mode">tree</field>
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/My Latest 10 Deposit" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
+
+
+==============================
+My Latest 10 Objects
+==============================
+
+	<record model="ir.ui.view" id="view_latest_objects_tree">
+		<field name="name">report.latest.objects.tree</field>
+		<field name="model">report.latest.objects</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Customer/Supplier">
+				<field name="partner_id" />
+				<field name="auction_id" />
+				<field name="obj_desc" />
+				<field name="obj_num"/>
+				<field name="obj_ret"/>
+				<field name="obj_comm"/>
+				<field name="obj_price"/>
+				<!--<field name="domain">[('user_id','=',uid)]</field>-->
+
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_latest_objects_tree">
+		<field name="res_model">report.latest.objects</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/My Latest 10 objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
 </data>
 </terp>
