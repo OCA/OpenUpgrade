@@ -11,7 +11,7 @@ Customer/Supplier
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
-				<field name="name" colspan="4"/>
+				<field name="name" />
 				<field name="partner_id"/>
 
 			</tree>
@@ -49,12 +49,11 @@ My Latest 10 Deposit
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
 				<field name="name" />
-				<field name="partner_id" />
+
 				<field name="date_dep" />
 				<field name="method"/>
 				<field name="tax_id"/>
 				<field name="info"/>
-				<!--<field name="domain">[('user_id','=',uid)]</field>-->
 
 			</tree>
 		</field>
@@ -65,6 +64,7 @@ My Latest 10 Deposit
 		<field name="res_model">report.latest.doposit</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
+		<field name="domain">[('user_id','=',uid)]</field>
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/My Latest 10 Deposit" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
 
@@ -79,14 +79,13 @@ My Latest 10 Objects
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
-				<field name="partner_id" />
-				<field name="auction_id" />
+
+				<field name="bord_vnd_id" />
 				<field name="obj_desc" />
 				<field name="obj_num"/>
 				<field name="obj_ret"/>
 				<field name="obj_comm"/>
 				<field name="obj_price"/>
-				<!--<field name="domain">[('user_id','=',uid)]</field>-->
 
 			</tree>
 		</field>
@@ -97,7 +96,53 @@ My Latest 10 Objects
 		<field name="res_model">report.latest.objects</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
+		<field name="domain">[('user_id','=',uid)]</field>
+
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/My Latest 10 objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
+=============================
+Objects per Day
+==============================
+
+	<record model="ir.ui.view" id="view_report_auction_object_date_tree">
+		<field name="name">report.auction.object.date.tree</field>
+		<field name="model">report.auction.object.date</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Customer/Supplier">
+				<field name="name"/>
+				<field name="date"/>
+				<field name="lot_num"/>
+				<field name="lot_type"/>
+
+
+
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_auction_object_date_graph">
+		<field name="name">report.auction.object.date.graph</field>
+		<field name="model">report.auction.object.date</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Object By day" orientation="horizontal" type="bar">
+				<field name="date"/>
+				<field name="lot_num" operator="+"/>
+				<field name="name" group="True"/>
+			</graph>
+		</field>
+
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_auction_object_date_tree">
+		<field name="res_model">report.auction.object.date</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('name','&gt;=',time.strftime('%Y-%m-01')), ('state','=','draft')]</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
 </data>
 </terp>
