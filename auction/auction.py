@@ -78,7 +78,7 @@ class auction_dates(osv.osv):
 		'seller_costs': fields.many2many('account.tax', 'auction_seller_taxes_rel', 'auction_id', 'tax_id', 'Seller Costs'),
 		'acc_income': fields.many2one('account.account', 'Income Account', required=True),
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
-		'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
+		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
 		'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
@@ -368,8 +368,9 @@ class auction_lots(osv.osv):
 				costs.append({	'type': 1,
 								'id': lot.obj_num,
 								'name': 'Remise lot '+ str(lot.obj_num),
-								'amount': lot.vnd_lim - obj_price_wh_costs,
-								'account_id': lot.auction_id.acc_refund.id }
+								'amount': lot.vnd_lim - obj_price_wh_costs}
+								#'account_id': lot.auction_id.acc_refund.id
+                                                
 							)
 		return costs
 
@@ -410,31 +411,31 @@ class auction_lots(osv.osv):
 			if (total_adj+total_cost)<0:
 #FIXME: translate tax name
 				new_id = bord and bord.id or 0
-				c = {'type':3, 'id':new_id, 'amount':-total_cost-total_adj, 'name':'Ristourne', 'account_id':lots[0].auction_id.acc_refund.id}
+				c = {'type':3, 'id':new_id, 'amount':-total_cost-total_adj, 'name':'Ristourne'}#, 'account_id':lots[0].auction_id.acc_refund.id}
 				costs.append(c)
 		return self._sum_taxes_by_type_and_id(costs)
 
 	# sum remise limite net and ristourne
-##	def compute_seller_costs_summed(self, cr, uid, ids):ach_pay_id
-##		taxes = self.compute_seller_costs(cr, uid, ids)
-##		taxes_summed = {}
-##		for tax in taxes:
-##			if tax['type'] == 1:
-##				tax['id'] = 0
-##	#FIXME: translate tax names
-##				tax['name'] = 'Remise limite nette'
-##			elif tax['type'] == 2:
-##				tax['id'] = 0
-##				tax['name'] = 'Frais divers'
-##			elif tax['type'] == 3:
-##				tax['id'] = 0
-##				tax['name'] = 'Rist.'
-##			key = (tax['type'], tax['id'])
-##			if key in taxes_summed:
-##				taxes_summed[key]['amount'] += tax['amount']
-##			else:
-##				taxes_summed[key] = tax
-##		return taxes_summed.values()
+	def compute_seller_costs_summed(self, cr, uid, ids):ach_pay_id
+		taxes = self.compute_seller_costs(cr, uid, ids)
+		taxes_summed = {}
+		for tax in taxes:
+			if tax['type'] == 1:
+				tax['id'] = 0
+	#FIXME: translate tax names
+				tax['name'] = 'Remise limite nette'
+			elif tax['type'] == 2:
+				tax['id'] = 0
+				tax['name'] = 'Frais divers'
+			elif tax['type'] == 3:
+				tax['id'] = 0
+				tax['name'] = 'Rist.'
+			key = (tax['type'], tax['id'])
+			if key in taxes_summed:
+				taxes_summed[key]['amount'] += tax['amount']
+			else:
+				taxes_summed[key] = tax
+		return taxes_summed.values()
 
 	# creates the transactions between the auction company and the seller
 	# this is done by creating a new in_invoice for each
@@ -472,22 +473,19 @@ class auction_lots(osv.osv):
 			# create invoice lines
 			lines = []
 			for lot in lots:
-##				if lot.obj_price>0:
-##					# create invoice line for this object
-##					lot_name = str(lot.obj_num) + '. ' + lot.name.decode('utf8')
-##					if len(lot_name)>40:
-##						lot_name = lot_name[:37].encode('utf8') + '...'
-##					else:
-##						lot_name = lot_name.encode('utf8')
-
+				if lot.obj_price>0:
+					# create invoice line for this object
+					lot_name = str(lot.obj_num)
+				
+                                     
 #CHECKME: c'est normal que tax_id_list soit calcule pr ts les objets et non	par objet????
 					lines.append({
 						'name': lot.obj_num,
 						'account_id': lot.auction_id.acc_expense, #source account
 						'price_unit': lot.obj_price,
-						'quantity': 1,
-						#'invoice_line_tax_id': tax_id_list,
-                                                'journal_id': lot.auction_id.journal_id.id,
+						'journal_id': lot.auction_id.journal_id.id,
+                                                'quantity': 1,
+                                                'invoice_line_tax_id': lot.bord_vnd_id.tax_id.id,
                                                 'account_analytic_id': lot.auction_id.account_analytic_id.id})
 
 
@@ -511,7 +509,7 @@ class auction_lots(osv.osv):
 					'address_invoice_id': addresses['invoice'],
 					'account_id': acc_payable,
 					'invoice_line': map(lambda x:(0,0,x), lines),
-					# 'tax_line': map(lambda x: (0,0,x), manual_tax_lines),
+					#'tax_line': map(lambda x: (0,0,x), manual_tax_lines),
                                         'journal_id':lot.auction_id.journal_id.id,
                                         'account_analytic_id': lot.auction_id.account_analytic_id.id
                                         

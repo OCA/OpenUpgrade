@@ -109,7 +109,7 @@ Auction Management/Auction Dates/New Auction Dates
 				<separator string="Accounting" colspan="4"/>
 				<field name="acc_income"/>
 				<field name="acc_expense"/>
-				<field name="acc_refund"/>
+				
 				<separator string="Analytic" colspan="4"/>
 				<field name="journal_id"/>
 				<field name="analytic_account_id"/>
@@ -153,7 +153,7 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="view_id" ref="view_auction_dates_form"/>
 	</record>
 	<menuitem name="Auction Management/Auction Dates" groups="admin"/>
-	<menuitem name="Auction Management/Auction Dates/Auction Dates" action="action_auction_dates1"/>
+	<menuitem name="Auction Management/Auction Dates/New Auction Dates" action="action_auction_dates1"/>
 
 
 =======================================================
