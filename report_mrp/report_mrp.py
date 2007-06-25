@@ -67,6 +67,7 @@ class report_in_out_picking(osv.osv):
         'name': fields.char('Name', size=64, required=True),
         'product_qty': fields.float('Quantity (UOM)', required=True),
         'd_name': fields.char('Location Name', size=64, required=True),
+        'd_id': fields.many2one('stock.location', 'Dest. Location', required=True),
 
        }
     def init(self, cr):
@@ -75,6 +76,7 @@ class report_in_out_picking(osv.osv):
                 select
                     m.id as id,
                     m.name as name ,
+                    m.location_dest_id as d_id,
                     sum(m.product_qty) as product_qty,
                     l.name as d_name
                 from
@@ -82,8 +84,8 @@ class report_in_out_picking(osv.osv):
                     stock_location l,
                     stock_picking p
                 where
-                    m.location_id=l.id and m.picking_id=p.id and p.type='internal'
-                group by m.id,m.name,l.name
+                    m.location_dest_id=l.id and m.picking_id=p.id and p.type='internal'
+                group by m.id,m.name,l.name,m.location_dest_id
 
 
             )""")
