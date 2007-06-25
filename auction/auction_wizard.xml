@@ -1,57 +1,74 @@
 <?xml version="1.0"?>
 <terp>
 	<data>
-		<!--<delete model="ir.actions.wizard" search="[('wiz_name','like','auction.lots.')]"/>-->
+	    <!--<delete model="ir.actions.wizard" search="[('wiz_name','like','auction.lots.')]"/>-->
 
 		<wizard string="Send objects to Auction-in-europe.com"
 		 model="auction.lots"
 		 name="auction.lots.send.aie"
-		 multi="1"/>
+		 multi="1"
+		 id="wizard_send"/>
 
 		<wizard string="Send results to Auction-in-europe.com"
 		model="auction.lots"
 		name="auction.lots.send.aie.results"
-		multi="1"/>
+		multi="1"
+		id="wizard_results"/>
 
 		<wizard string="Map buyer username to Partners"
 		model="auction.lots"
 		name="auction.lots.buyer_map"
-		multi="1"/>
+		multi="1"
+		id="wizard_map_user"/>
 
 		<wizard string="Change Auction Date"
 		 model="auction.lots"
 		 name="auction.lots.auction_move"
-		 multi="1"/>
+		 multi="1"
+		 id="wizard_change_auction"/>
 
 		<wizard string="Pay objects"
 		model="auction.lots"
 		name="auction.lots.pay"
-		multi="1"/>
+		multi="1"
+		id="wizard_pay"/>
 
 		<wizard string="Cancel payment"
 		model="auction.lots"
 		name="auction.lots.cancel"
-		multi="1"/>
-
-		<wizard string="Invoice objects"
-		model="auction.lots"
-		name="auction.lots.invoice"
-		multi="1"/>
+		multi="1"
+		id="wizard_cancel_pay"/>
 
 		<wizard string="Numerotation (per lot)"
 		model="auction.lots"
 		name="auction.lots.numerotate"
-		multi="1"/>
+		multi="1"
+		id="wizard_numerotate_lot"/>
 
 		<wizard string="Numerotation (automatic)"
 		 model="auction.lots"
 		 name="auction.lots.numerotate_cont"
-		 multi="1"/>
+		 multi="1"
+		id="wizard_numerotate_automatic"/>
 
 		<wizard string="SMS Send"
 		 model="auction.lots"
 		 name="auction.lots.sms_send"
-		 multi="1"/>
+		 multi="1"
+ 		id="wizard_sms"/>
+
+		 <wizard string="Invoice"
+		 model="auction.lots"
+		 name="auction.lots.invoice"
+		 multi="1"
+		 id="wizard_invoicing"/>
+
+
+		 <wizard string="Invoice objects"
+                 model="auction.lots"
+                 name="auction.lots.make_invoice"
+                 multi="1"
+                 id="wizard_invoice"/>
 	</data>
 </terp>
 

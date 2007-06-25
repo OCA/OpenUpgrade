@@ -82,7 +82,8 @@ class auction_dates(osv.osv):
 
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
 		'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
-		'journal':fields.many2one('account.journal', 'Journal'),
+		'journal_id':fields.many2one('account.journal', 'Journal',required=True),
+                'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
 	}
 	_defaults = {
 		#'state': lambda uid, page, ref: 'draft'
@@ -147,6 +148,7 @@ class auction_deposit(osv.osv):
 		'lot_id': fields.one2many('auction.lots', 'bord_vnd_id', 'Objects'),
 		'specific_cost_ids': fields.one2many('auction.deposit.cost', 'deposit_id', 'Specific Costs'),
 		'total_neg': fields.boolean('Allow Negative Amount'),
+                
 	}
 	_defaults = {
 		'date_dep': lambda *a: time.strftime('%Y-%m-%d'),
@@ -310,6 +312,7 @@ class auction_lots(osv.osv):
 			pass
 		return self.name_get(cr, user, ids)
 
+	
 	def _sum_taxes_by_type_and_id(self, taxes):
 		"""
 		PARAMS: taxes: a list of dictionaries of the form {'id':id, 'amount':amount, ...}
@@ -373,6 +376,10 @@ class auction_lots(osv.osv):
 							)
 		return costs
 
+
+
+
+				
 	def compute_seller_costs(self, cr, uid, ids, manual_only=False):
 		lots = self.browse(cr, uid, ids)
 		costs = []
@@ -411,41 +418,41 @@ class auction_lots(osv.osv):
 		return self._sum_taxes_by_type_and_id(costs)
 
 	# sum remise limite net and ristourne
-	def compute_seller_costs_summed(self, cr, uid, ids):
-		taxes = self.compute_seller_costs(cr, uid, ids)
-		taxes_summed = {}
-		for tax in taxes:
-			if tax['type'] == 1:
-				tax['id'] = 0
-#FIXME: translate tax names
-				tax['name'] = 'Remise limite nette'
-			elif tax['type'] == 2:
-				tax['id'] = 0
-				tax['name'] = 'Frais divers'
-			elif tax['type'] == 3:
-				tax['id'] = 0
-				tax['name'] = 'Rist.'
-			key = (tax['type'], tax['id'])
-			if key in taxes_summed:
-				taxes_summed[key]['amount'] += tax['amount']
-			else:
-				taxes_summed[key] = tax
-		return taxes_summed.values()
+##	def compute_seller_costs_summed(self, cr, uid, ids):ach_pay_id
+##		taxes = self.compute_seller_costs(cr, uid, ids)
+##		taxes_summed = {}
+##		for tax in taxes:
+##			if tax['type'] == 1:
+##				tax['id'] = 0
+##	#FIXME: translate tax names
+##				tax['name'] = 'Remise limite nette'
+##			elif tax['type'] == 2:
+##				tax['id'] = 0
+##				tax['name'] = 'Frais divers'
+##			elif tax['type'] == 3:
+##				tax['id'] = 0
+##				tax['name'] = 'Rist.'
+##			key = (tax['type'], tax['id'])
+##			if key in taxes_summed:
+##				taxes_summed[key]['amount'] += tax['amount']
+##			else:
+##				taxes_summed[key] = tax
+##		return taxes_summed.values()
 
 	# creates the transactions between the auction company and the seller
 	# this is done by creating a new in_invoice for each
-	def seller_trans_create(self, cr, uid, ids):
+	def seller_trans_create(self,cr, uid,ids,context):
 		"""
 			Create a seller invoice for each bord_vnd_id, for selected ids.
 		"""
-		lots = self.browse(cr, uid, ids)
+		lots = self.browse(cr,uid,ids,context)
 
 		# group objects (lots) by (deposit id, auction id)
 		# ie create a dictionary containing lists of objects
 		bord_lots = {}
 		for lot in lots:
 			key = (lot.bord_vnd_id.id,lot.auction_id.id)
-			if not key in bord_lots:
+			if not key in  bord_lots:
 				bord_lots[key] = []
 			bord_lots[key].append(lot)
 
@@ -455,31 +462,36 @@ class auction_lots(osv.osv):
 			if not partner_id:
 				raise osv.except_osv('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lots[0].bord_vnd_id.name,))
 
-			tax_id_list = [c.id for c in lots[0].auction_id.seller_costs]
-			if lots[0].bord_vnd_id.tax_id:
-				tax_id_list.append(lots[0].bord_vnd_id.tax_id.id)
+##			tax_id_list = [c.id for c in lots[0].auction_id.seller_costs]
+##			if lots[0].bord_vnd_id.tax_id:
+##				tax_id_list.append(lots[0].bord_vnd_id.tax_id.id)
 
-			acc_payable = ir.ir_get(cr, uid, [('meta','res.partner'), ('name','account.payable')], [('id',str(partner_id)), ('uid',str(uid))])[0][2]
+			## FIXME : use partner.property_account_payable[0]
+			acc_payable= lots[0].bord_vnd_id.partner_id.property_account_payable[0]
+##			acc_payable = ir.ir_get(cr, uid, [('meta','res.partner'), ('name','account.payable')], [('id',str(partner_id)), ('uid',str(uid))])[0][2]
 			addresses = self.pool.get('res.partner').address_get(cr, uid, [partner_id], ['contact','invoice'])
+			#o=pool.get('auction.dates').search(cr,uid,[auction_id]).browse(cr,uid,['journal_id','account_analytic_id'])
 
 			# create invoice lines
 			lines = []
 			for lot in lots:
-				if lot.obj_price>0:
-					# create invoice line for this object
-					lot_name = str(lot.obj_num) + '. ' + lot.name.decode('utf8')
-					if len(lot_name)>40:
-						lot_name = lot_name[:37].encode('utf8') + '...'
-					else:
-						lot_name = lot_name.encode('utf8')
+##				if lot.obj_price>0:
+##					# create invoice line for this object
+##					lot_name = str(lot.obj_num) + '. ' + lot.name.decode('utf8')
+##					if len(lot_name)>40:
+##						lot_name = lot_name[:37].encode('utf8') + '...'
+##					else:
+##						lot_name = lot_name.encode('utf8')
 
 #CHECKME: c'est normal que tax_id_list soit calcule pr ts les objets et non	par objet????
 					lines.append({
-						'name': lot_name,
+						'name': lot.obj_num,
 						'account_id': lot.auction_id.acc_expense, #source account
 						'price_unit': lot.obj_price,
 						'quantity': 1,
-						'invoice_line_tax_id': tax_id_list})
+						#'invoice_line_tax_id': tax_id_list,
+                                                'journal_id': lot.auction_id.journal_id.id,
+                                                'account_analytic_id': lot.auction_id.account_analytic_id.id})
 
 
 			# create manual tax lines (if some objects have a net limit or some extra taxes have been entered)
@@ -487,10 +499,11 @@ class auction_lots(osv.osv):
 			lot_ids = [l.id for l in lots]
 			manual_costs = compute_seller_costs(cr, uid, lot_ids, True)
 			acc_expense = lots[0].auction_id.acc_expense.id
-			manual_tax_lines = [c.update({'manual': True, 'account_id': acc_expense}) for c in manual_costs]
-
+			#manual_tax_lines = [c.update({'manual': True, 'account_id': acc_expense}) for c in manual_costs]
+			inv_obj=self.pool.get('account.invoice')
+			
 			if len(lines):
-				inv_id = self.pool.get('account.invoice').create(cr, uid, {
+				inv_id = create(cr, uid, {
 					'name': 'Auction'+': '+lots[0].auction_id.name+', '+str(len(lots))+' lot(s)',
 					'type': 'in_invoice',
 					'state': 'draft',
@@ -501,12 +514,19 @@ class auction_lots(osv.osv):
 					'address_invoice_id': addresses['invoice'],
 					'account_id': acc_payable,
 					'invoice_line': map(lambda x:(0,0,x), lines),
-					'tax_line': map(lambda x: (0,0,x), manual_tax_lines)
+					# 'tax_line': map(lambda x: (0,0,x), manual_tax_lines),
+                                        'journal_id':lot.auction_id.journal_id.id,
+                                        'account_analytic_id': lot.auction_id.account_analytic_id.id
+                                        
 				})
+				inv_obj.button_compute(cr, uid, [inv_id])
+			
 
-				wf_service = netsvc.LocalService("workflow")
+				#wf_service = netsvc.LocalService("workflow")
 #Ged> proforma???? c'est normal ca?
-				wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
+				#wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
+				return inv_id
+				
 
 
 	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
@@ -709,7 +729,7 @@ class auction_bid_lines(osv.osv):
 	_columns = {
 		'name': fields.char('Name',size=64),
 		'bid_id': fields.many2one('auction.bid','Bid ID', required=True),
-		'lot_id': fields.many2one('auction.lots','Lot', required=True),
+		'lot_id': fields.many2one('auction.lots','Object', required=True),
 		'call': fields.boolean('To be Called'),
 		'price': fields.float('Maximum Price')
 	}

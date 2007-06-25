@@ -3,6 +3,8 @@
 <data>
 	<menuitem name="Auction Management" id="menu_root" icon="auction"/>
 	<menuitem name="Auction Management/Configuration" groups="admin"/>
+	<menuitem name="Auction Management/Objects/Analytic Balance" id="account_analytic_chart_balance" action="account.action_account_analytic_account_tree2"/>
+
 
 	=======================================================
 	Auction Management/Configuration/artist
@@ -108,9 +110,11 @@ Auction Management/Auction Dates/New Auction Dates
 				<field name="acc_income"/>
 				<field name="acc_expense"/>
 				<field name="acc_refund"/>
+				<separator string="Analytic" colspan="4"/>
+				<field name="journal_id"/>
+				<field name="analytic_account_id"/>
 				<separator string="State" colspan="4"/>
 				<field name="state"/>
-				<field name="journal"/>
 				<button name="close" states="draft" string="Close + Create all invoices" type="object" colspan="2"/>
 			</form>
 		</field>
@@ -233,21 +237,20 @@ Auction Management/Auction Dates/Reporting
 						<field name="obj_num" select="1"/>
 						<field name="lot_type" select="1"/>
 						<field name="lot_num"/>
-						<field name="vnd_lim" select="1"/>
+						<field name="vnd_lim" select="2"/>
 						<field name="lot_est1"/>
 						<field name="lot_est2"/>
 						<field name="tva"/>
 						<field name="vnd_lim_net"/>
-						<field name="name" select="1"/>
-						<field name="name2" select="1"/>
+						<field name="name" select="2"/>
+						<field name="name2" select="2"/>
 						<field name="artist_id" select="1"/>
 						<field name="artist2_id"/>
-						<field name="bord_vnd_id" select="1"/>
+						<field name="bord_vnd_id" select="2"/>
 						<field name="author_right" domain="[('domain','=','sabam')]"/>
 						<field name="obj_desc" colspan="2"/>
-						
-						<separator string="Results" colspan="4"/>
-						<field name="obj_price" select="1"/>
+					<separator string="Results" colspan="4"/>
+						<field name="obj_price" select="2"/>
 						<field name="obj_ret"/>
 						<field name="auction_id" colspan="2"/>
 						<field name="lot_local"/>
@@ -255,14 +258,14 @@ Auction Management/Auction Dates/Reporting
 				</page>
 				<page string="Partner Informations">
 					<separator string="Buyer" colspan="3"/>
-					<field name="ach_uid"  select="1"/>
-					<field name="ach_login" select="1" comparator="="/>
+					<field name="ach_uid"  select="2"/>
+					<field name="ach_login" select="2" comparator="="/>
 					<field name="ach_inv_id"/>
-					<field name="obj_comm" select="1"/>
+					<field name="obj_comm" select="2"/>
 					<field name="ach_pay_id"/>
 					<field name="ach_emp"/>
 					<separator string="State" colspan="3"/>
-					<field name="bid_lines" editable="bottom" widget="one2many_list" colspan="3" view_tree="auction.bid_line.tree2" view="auction.bid_line.form2"/>
+					<field name="bid_lines" widget="one2many_list" colspan="3" view_tree="auction.bid_line.tree2" view="auction.bid_line.form2"/>
 				</page>
 				<page string="Picture">
                                         <field widget="image" name="image"/>
@@ -275,6 +278,7 @@ Auction Management/Auction Dates/Reporting
 	<record model="ir.actions.act_window" id="action_all_objects">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
 	</record>
 	<menuitem name="Auction Management/Objects" groups="admin"/>
 	<menuitem name="Auction Management/Objects/All objects" action="action_all_objects"/>
@@ -361,9 +365,10 @@ Auction Management/Auction Dates/Reporting
 		<field name="name">Unclassified objects</field>
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
 		<field name="domain">[('auction_id','=',False)]</field>
 	</record>
-	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects"/>
+	<menuitem name="Auction Management/Sellers/Unclassified objects" action="action_unclassified_objects"/>
 	<record model="ir.ui.view" id="v12">
 		<field name="name">auction.deposit.tree</field>
 		<field name="model">auction.deposit</field>
@@ -433,8 +438,10 @@ Auction Management/Auction Dates/Reporting
 								<field name="amount"/>
 								<field name="account"/>
 							</form>
+							
 						</field>
 					</page>
+					
 				</notebook>
 			</form>
 		</field>
@@ -451,7 +458,7 @@ Auction Management/Auction Dates/Reporting
 	=======================================================
 	<menuitem name="Auction Management/Sellers/Reporting" action="action_deposit_border"/>
 	=======================================================
-		"Auction Management/Buyer/Bids
+		"Auction Management/Buyers/Bids
 	=======================================================
 	<record model="ir.ui.view" id="view_bids_tree">
 		<field name="name">auction.bid_line.tree1</field>
@@ -483,8 +490,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="res_model">auction.bid</field>
 		<field name="view_type">form</field>
 	</record>
-		<menuitem name="Auction Management/Buyer" groups="admin"/>
-		<menuitem name="Auction Management/Buyer/Bids Form"  action="b11"/>
+		<!--<menuitem name="Auction Management/Buyers" groups="admin"/>-->
+		<!--menuitem name="Auction Management/Buyers/Bids Form"  action="b11"/>-->
 
 
 
@@ -505,7 +512,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="model">auction.bid_line</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Bids" editable="bottom">
+			<form string="Bids" editable="top">
 				<field name="bid_id" domain="[('auction_id','=',parent['auction_id'])]"/>
 				<field name="price"/>
 				<field name="call"/>
@@ -520,10 +527,10 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_id" ref="view_bids_form"/>
 	</record>
 	<menuitem name="Auction Management/Buyers" groups="admin" />
-	<menuitem name="Auction Management/Buyers/Bids"  action="action_bids_form"/>
+	<menuitem name="Auction Management/Buyers/Bid"  action="action_bids_form"/>
 
 	=======================================================
-		"Auction Management/Buyer/Reporting
+		"Auction Management/Buyers/Reporting
 	=======================================================
 	
 	<record model="ir.ui.view" id="v19">
@@ -563,7 +570,7 @@ Auction Management/Auction Dates/Reporting
 		
 	</record>
 	
-	<menuitem name="Auction Management/Buyer/All Bids Form" action="a11"/>
+	<menuitem name="Auction Management/Buyers/All Bids Form" action="a11"/>
 
 
 </data>

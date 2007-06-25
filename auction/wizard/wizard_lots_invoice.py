@@ -35,6 +35,7 @@ invoice_form = '''<?xml version="1.0"?>
 	<field name="objects"/>
 	<field name="amount_topay"/>
 	<field name="amount_paid"/>
+	<!--field name= "tax_applied"/>-->
 	<newline/>
 	<field name="ach_uid" colspan="3"/>
 	<field name="number" colspan="3"/>
@@ -47,16 +48,18 @@ invoice_fields = {
 	'objects': {'string':'# of objects', 'type':'integer', 'required':True, 'readonly':True},
 	'ach_uid': {'string':'Buyer Name', 'type':'many2one', 'required':True, 'relation':'res.partner'},
 	'number': {'string':'Invoice Number', 'type':'integer'},
+        #'tax_applied':{'string':'Tax Applied', 'type':'float', 'readonly':True},
 }
 
 def _get_value(self,cr,uid, datas,context={}):
 	service = netsvc.LocalService("object_proxy")
-	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'])
-	auction = service.execute(uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
+	lots = service.execute(cr,uid, 'auction.lots', 'read', datas['ids'])
+	auction = service.execute(cr,uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
 
 	price = 0.0
 	price_topay = 0.0
 	price_paid = 0.0
+	#tax=data['form']['tax_applied']
 	uid = False
 	for lot in lots:
 		price_lot = lot['obj_price'] or 0.0
@@ -77,8 +80,10 @@ def _get_value(self,cr,uid, datas,context={}):
 				uid = refs[-1]
 		if lot['ach_pay_id']:
 			price_paid += price_lot
+			#*tax
 		else:
 			price_topay += price_lot
+			#*tax
 
 #TODO: recuperer id next invoice (de la sequence)???
 	invoice_number = False
