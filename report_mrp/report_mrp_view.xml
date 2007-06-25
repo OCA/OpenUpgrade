@@ -44,78 +44,7 @@ Next Production Order
 		<field name="domain">[('state','=','ready')]</field>
 	</record>
 	<menuitem name="Production/Reporting/Next production Order" action="action_next_production_order_tree" id="menu_next_order_product"/>
-=============================
-Procurement Exception
-==============================
-	<record model="ir.ui.view" id="view_report_procurement_exception_tree">
-		<field name="name">report.procurement.exception.tree</field>
-		<field name="model">report.procurement.exception</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Procurement Exception">
-				<field name="name"/>
-				<field name="product_id"/>
-				<field name="product_qty"/>
-				<field name="product_uom" string="UOM"/>
-				<field name="date_planned"/>
-				<field name="procure_method"/>
-				<field name="origin"/>
-				<field name="state"/>
-				<field name="message"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_report_procurement_exception_form">
-		<field name="name">report.procurement.exception.form</field>
-		<field name="model">report.procurement.exception</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Procurement Exception">
-				<field name="name"/>
-				<field name="product_id"/>
-				<field name="product_qty"/>
-				<field name="product_uom" string="UOM"/>
-				<field name="date_planned"/>
-				<field name="procure_method"/>
-				<field name="origin"/>
-				<field name="state"/>
-				<field name="message"/>
-			</form>
-		</field>
-	</record>
 
-	<record model="ir.actions.act_window" id="action_report_procurement_exception_tree">
-		<field name="name">Procurement Exception</field>
-		<field name="res_model">report.procurement.exception</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-		<field name="domain">[('state','=','exception')]</field>
-	</record>
-<menuitem name="Production/Reporting/Procurement Exception" action="action_report_procurement_exception_tree" id="menu_report_procurement_exception_tree"/>
-=============================
-Deliveries (outpicking)
-==============================
-
-
-	<record model="ir.ui.view" id="view_report_deliveries_outpicking_tree">
-		<field name="name">report.deliveries.outpicking.tree</field>
-		<field name="model">report.deliveries.outpicking</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Deliveries (outpicking)">
-
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_report_deliveries_outpicking_tree">
-		<field name="name">Procurement Exception</field>
-		<field name="res_model">report.deliveries.outpicking</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-		<field name="domain">[('state','=','exception')]</field>
-	</record>
-	<menuitem name="Production/Reporting/Deliveries (outpicking)" action="action_report_deliveries_outpicking_tree" id="menu_report_deliveries_outpicking_tree"/>
 =============================
 Workcenter load
 ==============================
@@ -127,7 +56,6 @@ Workcenter load
 		<field name="arch" type="xml">
 			<tree string="Workcenters load">
 				<field name="name" select="1" colspan="4"/>
-
 				<field name="cycle"/>
 				<field name="hour"/>
 
