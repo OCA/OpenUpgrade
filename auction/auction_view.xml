@@ -26,7 +26,7 @@
 		<field name="model">auction.artists</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Artists">
+			<form string="Artists Label">
 				<field colspan="4" name="name" select="1"/>
 				<field colspan="4" name="pseudo" select="1"/>
 					<newline/>
@@ -179,12 +179,12 @@ Auction Management/Auction Dates/Reporting
 				<field name="obj_num"/>
 				<field name="bord_vnd_id"/>
 				<field name="lot_num"/>
-				
+
 				<newline/>
 				<field name="name"/>
 				<field name="lot_type" select="1"/>
 				<field name="name2"/>
-				
+
 				<newline/>
 				<field name="artist_id"/>
 				<field name="artist2_id"/>
@@ -192,7 +192,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="vnd_lim"/>
 				<field name="vnd_lim_net"/>
 				<field name="lot_est1"/>
-				
+
 				<field name="author_right" domain="[('domain','=','sabam')]"/>
 				<field name="lot_est2"/>
 				<field name="tva"/>
@@ -406,12 +406,12 @@ Auction Management/Auction Dates/Reporting
 								<field name="auction_id"/>
 								<field name="obj_num"/>
 								<field name="lot_num"/>
-								
+
 								<newline/>
 								<field name="name"/>
 								<field name="lot_type" select="1"/>
 								<field name="name2"/>
-								
+
 								<newline/>
 								<field name="artist_id"/>
 								<field name="artist2_id"/>
@@ -419,7 +419,7 @@ Auction Management/Auction Dates/Reporting
 								<field name="vnd_lim"/>
 								<field name="vnd_lim_net"/>
 								<field name="lot_est1"/>
-								
+
 								<field name="author_right" domain="[('domain','=','sabam')]"/>
 								<field name="lot_est2"/>
 								<field name="tva"/>
@@ -438,10 +438,10 @@ Auction Management/Auction Dates/Reporting
 								<field name="amount"/>
 								<field name="account"/>
 							</form>
-							
+
 						</field>
 					</page>
-					
+
 				</notebook>
 			</form>
 		</field>
@@ -532,7 +532,7 @@ Auction Management/Auction Dates/Reporting
 	=======================================================
 		"Auction Management/Buyers/Reporting
 	=======================================================
-	
+
 	<record model="ir.ui.view" id="v19">
 		<field name="name">auction.bid.form</field>
 		<field name="model">auction.bid</field>
@@ -562,14 +562,14 @@ Auction Management/Auction Dates/Reporting
 			</tree>
 		</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window" id="a11">
 		<field name="res_model">auction.bid</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="v18"/>
-		
+
 	</record>
-	
+
 	<menuitem name="Auction Management/Buyers/All Bids Form" action="a11"/>
 
 
