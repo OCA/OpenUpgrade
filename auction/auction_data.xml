@@ -75,7 +75,7 @@
 		<field name="account_collected_id" ref="auction_expense_costs"/>
 		<field name="account_paid_id" ref="auction_expense_costs"/>
 	</record>
-	
+
 	<ir_set>
 		<field name="keys" eval="[('meta','res.partner'),('name','auction.seller.costs')]"/>
 		<field name="args" eval="[]"/>
