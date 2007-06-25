@@ -61,9 +61,9 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 				<form string="Lot Category">
-					<field name="name" colspan="3" select="1"/>
+					<field name="name" colspan="4" select="1"/>
 					<newline/>
-					<field name="aie_categ" colspan="3"/>
+					<field name="aie_categ" colspan="4"/>
 					<field name="priority"/>
 					<newline/>
 					<field name="active" select="2"/>
@@ -106,7 +106,7 @@ Auction Management/Auction Dates/New Auction Dates
 				<separator string="Commissions" colspan="4"/>
 				<field name="buyer_costs" domain="[('domain','=','auction')]"/>
 				<field name="seller_costs" domain="[('domain','=','auction')]"/>
-				<separator string="Accounting" colspan="3"/>
+				<separator string="Accounting" colspan="4"/>
 				<field name="acc_income"/>
 				<field name="acc_expense"/>
 				<field name="acc_refund"/>
@@ -195,7 +195,7 @@ Auction Management/Auction Dates/Reporting
 				<newline/>
 				<field name="artist_id"/>
 				<field name="artist2_id"/>
-				<field name="obj_desc" colspan="3"/>
+				<field name="obj_desc" colspan="4"/>
 				<field name="vnd_lim"/>
 				<field name="vnd_lim_net"/>
 				<field name="lot_est1"/>
@@ -384,12 +384,19 @@ Auction Management/Auction Dates/Reporting
 					<field name="artist_id" readonly="1"/>
 					<field name="author_right" domain="[('domain','=','sabam')]"/>
 					<newline/>
-					<field name="obj_desc" readonly="1" colspan="3"/>
+					<field name="obj_desc" readonly="1" colspan="4"/>
 					<field name="lot_est1" readonly="1"/>
 					<field name="lot_est2" readonly="1"/>
 					<field name="vnd_lim" readonly="1"/>
 					<field name="vnd_lim_net"/>
-					<field name="bid_lines" widget="one2many_list" colspan="3" readonly="1" view_tree="auction.bid_line.tree2" view="auction.bid_line.form2"/>
+					<field name="bid_lines" colspan="4" readonly="1">
+						<tree string="Bids">
+							<field name="name"/>
+							<field name="bid_id"/>
+							<field name="price"/>
+							<field name="call"/>
+						</tree>
+					</field>
 					<field name="state" readonly="1"/>
 			</form>
 		</field>
@@ -404,10 +411,10 @@ Auction Management/Auction Dates/Reporting
 <!--	<ir_set>
 
 		<field name="keys" eval="[('action','tree_but_action'),('res_model','auction.dates')]"/>
-	    <field name="args" eval="[]"/>
-	    <field name="name">Open Moves</field>
-	    <field name="value" eval="'ir.actions.act_window,%d'%a"/>
-	    <field name="isobject" eval="True"/>
+		<field name="args" eval="[]"/>
+		<field name="name">Open Moves</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
+		<field name="isobject" eval="True"/>
 	</ir_set>-->
 	=======================================================
 	Auction Management/seller
@@ -451,7 +458,16 @@ Auction Management/Auction Dates/Reporting
 						<field name="tax_id" domain="[('domain','=','auction')]"/>
 						<newline/>
 						<field name="lot_id" colspan="4" mode="tree,graph" nolabel="1">
-							<form string="Catalog">
+							<tree string="Objects">
+								<field name="lot_num"/>
+								<field name="obj_num"/>
+								<field name="auction_id"/>
+								<field name="name"/>
+								<field name="vnd_lim"/>
+								<field name="lot_est1"/>
+								<field name="lot_est2"/>
+							</tree>
+							<form string="Objects">
 								<field name="auction_id"/>
 								<field name="obj_num"/>
 								<field name="lot_num"/>
@@ -464,7 +480,7 @@ Auction Management/Auction Dates/Reporting
 								<newline/>
 								<field name="artist_id"/>
 								<field name="artist2_id"/>
-								<field name="obj_desc" colspan="3"/>
+								<field name="obj_desc" colspan="4"/>
 								<field name="vnd_lim"/>
 								<field name="vnd_lim_net"/>
 								<field name="lot_est1"/>
@@ -477,7 +493,7 @@ Auction Management/Auction Dates/Reporting
 						</field>
 					</page>
 					<page string="Extra Costs">
-						<field name="specific_cost_ids" widget="one2many_list" nolabel="1" colspan="3">
+						<field name="specific_cost_ids" widget="one2many_list" nolabel="1" colspan="4">
 							<tree string="Deposit Costs">
 								<field name="name"/>
 								<field name="amount"/>
@@ -526,8 +542,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<form string="Bids">
 				<field name="bid_id"/>
-				<field name="lot_id" domain="[('auction_id','=',parent['auction_id'])]" colspan="3"/>
-				<field name="call" colspan="3"/>
+				<field name="lot_id" domain="[('auction_id','=',parent['auction_id'])]" colspan="4"/>
+				<field name="call" colspan="4"/>
 				<field name="price"/>
 			</form>
 		</field>
@@ -542,32 +558,6 @@ Auction Management/Auction Dates/Reporting
 		<!--menuitem name="Auction Management/Buyers/Bids Form"  action="b11"/>-->
 
 
-
-	<record model="ir.ui.view" id="v16">
-		<field name="name">auction.bid_line.tree2</field>
-		<field name="model">auction.bid_line</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml" >
-			<tree string="Bids" editable="bottom">
-				<field name="bid_id"/>
-				<field name="price"/>
-				<field name="call"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="v17">
-		<field name="name">auction.bid_line.form2</field>
-		<field name="model">auction.bid_line</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Bids" editable="top">
-				<field name="bid_id" domain="[('auction_id','=',parent['auction_id'])]"/>
-				<field name="price"/>
-				<field name="call"/>
-			</form>
-		</field>
-	</record>
-
 	=======================================================
 		"Auction Management/Buyers/Reporting
 	=======================================================
@@ -576,14 +566,27 @@ Auction Management/Auction Dates/Reporting
 		<field name="name">auction.bid.form</field>
 		<field name="model">auction.bid</field>
 		<field name="arch" type="xml">
-                <form string="Bids">
-                <separator string="General Info" colspan="3"/>
-                <field name="auction_id" select="1"/>
-                <field name="name" select="1"/>
-                <field name="partner_id" select="1"/>
-                <field  name="contact_tel" select="1"/>
-            	<field widget="one2many_list"  name="bid_lines" view_tree="auction.bid_line.tree1" view="auction.bid_line.form1"/>
-		</form>
+			<form string="Bids">
+				<separator string="Bid information" colspan="4"/>
+				<field name="name" select="1"/>
+				<newline/>
+				<field name="partner_id" select="1"/>
+				<field  name="contact_tel" select="2"/>
+				<field name="auction_id" select="1"/>
+				<field name="bid_lines" colspan="4">
+					<tree string="Bids" editable="bottom">
+						<field name="lot_id"/>
+						<field name="price"/>
+						<field name="call"/>
+					</tree>
+					<form string="Bids" editable="top">
+						<field name="lot_id" domain="[('auction_id','=',parent['auction_id'])]"/>
+						<field name="price"/>
+						<field name="call"/>
+					</form>
+				
+				</field>
+			</form>
 		</field>
 	</record>
 
