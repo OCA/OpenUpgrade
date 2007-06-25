@@ -19,8 +19,8 @@ class report_per_seller_customer(osv.osv):
                   )""")
 report_per_seller_customer()
 
-class report_latest_doposit(osv.osv):
-        _name = "report.latest.doposit"
+class report_latest_deposit(osv.osv):
+        _name = "report.latest.deposit"
         _description = "Latest 10 Deposits"
         _auto = False
         _columns = {
@@ -37,7 +37,7 @@ class report_latest_doposit(osv.osv):
         }
         def init(self, cr):
             cr.execute("""
-                create or replace view report_latest_doposit as (
+                create or replace view report_latest_deposit as (
                     SELECT
                        l.id as id,
                        l.create_uid as user_id,
@@ -49,11 +49,11 @@ class report_latest_doposit(osv.osv):
                        l.info as info
 
                    from auction_deposit l
-                   order by l.create_date desc
+                   order by l.id desc
                    limit 3
 
                   )""")
-report_latest_doposit()
+report_latest_deposit()
 
 class report_latest_objects(osv.osv):
         _name = "report.latest.objects"
@@ -83,11 +83,9 @@ class report_latest_objects(osv.osv):
                        l.obj_ret as obj_ret,
                        l.obj_comm as obj_comm,
                        l.obj_price as obj_price
-
                    from auction_lots l
-                   order by l.create_date desc
+                   order by l.id desc
                    limit 3
-
                   )""")
 report_latest_objects()
 def _type_get(self, cr, uid,ids):
