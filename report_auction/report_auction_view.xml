@@ -2,6 +2,47 @@
 <terp>
 <data>
 =============================
+Auction adjudication
+==============================
+
+	<record model="ir.ui.view" id="view_report_auction_adjudication_tree">
+		<field name="name">report.auction.adjudication.tree</field>
+		<field name="model">report.auction.adjudication</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Customer/Supplier">
+				<field name="name"/>
+				<field name="adj_total" />
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_auction_adjudication_graph">
+		<field name="name">report.auction.adjudication.graph</field>
+		<field name="model">report.auction.adjudication</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Object By day" orientation="horizontal" type="bar">
+				<field name="name"/>
+				<field name="adj_total" operator="+"/>
+
+			</graph>
+		</field>
+
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_auction_adjudication_tree">
+		<field name="res_model">report.auction.adjudication</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<!--<field name="domain">[('paid','Paid'),('invoiced','Invoiced')]</field>-->
+	</record>
+	<menuitem name="Auction Management/Reporting/Manager/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree"/>
+
+
+=============================
 Customer/Supplier
 ==============================
 
@@ -49,12 +90,10 @@ My Latest 10 Deposit
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
 				<field name="name" />
-
 				<field name="date_dep" />
 				<field name="method"/>
 				<field name="tax_id"/>
 				<field name="info"/>
-
 			</tree>
 		</field>
 	</record>
@@ -64,7 +103,7 @@ My Latest 10 Deposit
 		<field name="res_model">report.latest.deposit</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
-	<!--	<field name="domain">[('user_id','=',uid)]</field>-->
+		<!--<field name="domain">[('user_id','=',uid)]</field>-->
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/My Latest 10 Deposit" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
 
@@ -79,25 +118,20 @@ My Latest 10 Objects
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
-
 				<field name="bord_vnd_id" />
 				<field name="obj_desc" />
 				<field name="obj_num"/>
 				<field name="obj_ret"/>
 				<field name="obj_comm"/>
 				<field name="obj_price"/>
-
 			</tree>
 		</field>
 	</record>
-
-
 	<record model="ir.actions.act_window" id="action_report_latest_objects_tree">
 		<field name="res_model">report.latest.objects</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 		<!--<field name="domain">[('user_id','=',uid)]</field>-->
-
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/My Latest 10 objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
 =============================

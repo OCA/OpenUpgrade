@@ -1,5 +1,50 @@
 from osv import fields,osv
 
+
+class report_auction_adjudication(osv.osv):
+    _name = "report.auction.adjudication"
+    _description = "report_auction_adjudication"
+    _auto = False
+    def _adjudication_get(self, cr, uid, ids, prop, unknow_none,unknow_dict):
+        tmp={}
+        for id in ids:
+            tmp[id]=0.0
+            cr.execute("select sum(obj_price) from auction_lots where auction_id=%d", (id,))
+            sum = cr.fetchone()
+            if sum:
+                tmp[id]=sum[0]
+        return tmp
+    _columns = {
+                'name': fields.char('Auction date', size=64, required=True),
+                'auction1': fields.date('First Auction Day', required=True),
+                'auction2': fields.date('Last Auction Day', required=True),
+                'buyer_costs': fields.many2many('account.tax', 'auction_buyer_taxes_rel', 'auction_id', 'tax_id', 'Buyer Costs'),
+                'seller_costs': fields.many2many('account.tax', 'auction_seller_taxes_rel', 'auction_id', 'tax_id', 'Seller Costs'),
+                'adj_total': fields.float('Total Adjudication'),
+                'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
+
+    }
+
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_auction_adjudication as (
+                select
+                    l.id  as id,
+                    l.name as name,
+                    l.auction1 as auction1,
+                    l.auction2 as auction2,
+                    l.state as state,
+                    sum(m.obj_price) as adj_total
+
+                from
+                    auction_dates l ,auction_lots m
+                where m.auction_id=l.id
+                group by l.id,l.name,l.auction1,l.auction2,l.state
+
+            )
+        """)
+report_auction_adjudication()
+
 class report_per_seller_customer(osv.osv):
         _name = "report.per.seller.customer"
         _description = "Customer per seller"
@@ -83,9 +128,11 @@ class report_latest_objects(osv.osv):
                        l.obj_ret as obj_ret,
                        l.obj_comm as obj_comm,
                        l.obj_price as obj_price
+
                    from auction_lots l
                    order by l.id desc
-                   limit 3
+                   limit 5
+
                   )""")
 report_latest_objects()
 def _type_get(self, cr, uid,ids):
