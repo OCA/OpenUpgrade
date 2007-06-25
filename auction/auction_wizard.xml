@@ -24,13 +24,11 @@
 		<wizard string="Change Auction Date"
 		 model="auction.lots"
 		 name="auction.lots.auction_move"
-		 multi="1"
 		 id="wizard_change_auction"/>
 
 		<wizard string="Pay objects"
 		model="auction.lots"
 		name="auction.lots.pay"
-		multi="1"
 		id="wizard_pay"/>
 
 		<wizard string="Cancel payment"
@@ -64,11 +62,10 @@
 		 id="wizard_invoicing"/>
 
 
-		 <wizard string="Invoice objects"
-                 model="auction.lots"
-                 name="auction.lots.make_invoice"
-                 multi="1"
-                 id="wizard_invoice"/>
+		<wizard string="Invoice objects"
+			model="auction.lots"
+			name="auction.lots.make_invoice"
+			id="wizard_invoice"/>
 	</data>
 </terp>
 
