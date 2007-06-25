@@ -268,6 +268,7 @@ class auction_lots(osv.osv):
 		'lot_est1': fields.float('Minimum Estimation'),
 		'lot_est2': fields.float('Maximum Estimation'),
 		'lot_num': fields.integer('List Number', required=True),
+		'history_ids':fields.one2many('auction.lot.history', 'lot_id', 'Auction history'),
 		'lot_local':fields.char('Location',size=64),
 		'artist_id':fields.many2one('auction.artists', 'Artist/Author'),
 		'artist2_id':fields.many2one('auction.artists', 'Artist/Author 2'),
@@ -722,6 +723,17 @@ class auction_bid(osv.osv):
 		'bid_lines': fields.one2many('auction.bid_line', 'bid_id', 'Bid'),
 	}
 auction_bid()
+
+class auction_lot_history(osv.osv):
+	_name = "auction.lot.history"
+	_description="Lot history"
+	_columns = {
+		'name': fields.char('Reason',size=64),
+		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
+		'auction_id': fields.many2one('auction.dates', 'Auction date', required=True),
+		'price': fields.float('Withdrawn price', digits=(16,2))
+	}
+auction_lot_history()
 
 class auction_bid_lines(osv.osv):
 	_name = "auction.bid_line"

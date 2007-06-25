@@ -232,43 +232,46 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<form string="Catalog">
 				<notebook>
-				<page string="General Informations">
-					<separator string="Object" colspan="4"/>
+
+				<page string="Object summary">
+					<group colspan="2" col="2">
 						<field name="obj_num" select="1"/>
-						<field name="lot_type" select="1"/>
-						<field name="lot_num"/>
-						<field name="vnd_lim" select="2"/>
-						<field name="lot_est1"/>
-						<field name="lot_est2"/>
-						<field name="tva"/>
-						<field name="vnd_lim_net"/>
-						<field name="name" select="2"/>
+						<field name="name" select="1"/>
 						<field name="name2" select="2"/>
 						<field name="artist_id" select="1"/>
 						<field name="artist2_id"/>
-						<field name="bord_vnd_id" select="2"/>
-						<field name="author_right" domain="[('domain','=','sabam')]"/>
-						<field name="obj_desc" colspan="2"/>
-					<separator string="Results" colspan="4"/>
-						<field name="obj_price" select="2"/>
-						<field name="obj_ret"/>
-						<field name="auction_id" colspan="2"/>
-						<field name="lot_local"/>
-						<field name="state" select="1"/>
+					</group>
+					<field widget="image" name="image" nolabel="1" colspan="2"/>
+					<field name="lot_est1"/>
+					<field name="lot_est2"/>
+					<field name="auction_id" colspan="2"/>
+					<field name="lot_type" select="1"/>
+						<field name="tva"/>
+					<separator string="Description" colspan="4"/>
+					<field name="obj_desc" colspan="4" nolabel="1"/>
+					<field name="lot_local"/>
+					<field name="state" select="1"/>
 				</page>
-				<page string="Partner Informations">
-					<separator string="Buyer" colspan="3"/>
+				<page string="Seller">
+					<separator string="Seller information" colspan="4"/>
+					<field name="bord_vnd_id" select="2"/>
+					<field name="lot_num"/>
+					<field name="vnd_lim" select="2"/>
+					<field name="vnd_lim_net"/>
+					<field name="history_ids" colspan="4" nolabel="1"/>
+				</page>
+				<page string="Buyer">
+					<separator string="Buyer information" colspan="4"/>
 					<field name="ach_uid"  select="2"/>
 					<field name="ach_login" select="2" comparator="="/>
 					<field name="ach_inv_id"/>
 					<field name="obj_comm" select="2"/>
 					<field name="ach_pay_id"/>
 					<field name="ach_emp"/>
-					<separator string="State" colspan="3"/>
-					<field name="bid_lines" widget="one2many_list" colspan="3" view_tree="auction.bid_line.tree2" view="auction.bid_line.form2"/>
-				</page>
-				<page string="Picture">
-                                        <field widget="image" name="image"/>
+						<field name="obj_price" select="2"/>
+						<field name="obj_ret"/>
+						<field name="author_right" domain="[('domain','=','sabam')]"/>
+					<field name="bid_lines" colspan="4" nolabel="1"/>
 				</page>
 				</notebook>
 			</form>
