@@ -124,7 +124,7 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','draft')]</field>
-		<field name="view_id" ref="view_auction_dates_form"/>
+		<field name="view_id" eval="False"/>
 	</record>
 	<menuitem 
 		name="Auction Management/Auction Dates/Next auction dates" 
@@ -132,7 +132,7 @@ Auction Management/Auction Dates/New Auction Dates
 		action="action_auction_dates_next"/>
 	<menuitem 
 		name="Auction Management/Objects/Objects by auction" 
-		id="menu_action_auction_dates_next"
+		id="menu_action_auction_dates_next_by_auction"
 		action="action_auction_dates_next"/>
 
 	=======================================================
@@ -208,6 +208,21 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="auction_lot_graph">
+		<field name="name">auction.lots.graph</field>
+		<field name="model">auction.lots</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Lots" type="bar">
+				<field name="lot_type"/>
+				<field name="lot_est1" operator="+"/>
+				<field name="lot_est2" operator="+"/>
+				<field name="obj_price" operator="+"/>
+			</graph>
+		</field>
+	</record>
+
+
 	<!-- tree2 form2 for Catalog, All object and Unclassified objects -->
 	<record model="ir.ui.view" id="v7">
 		<field name="name">auction.lots.tree2</field>
@@ -240,20 +255,22 @@ Auction Management/Auction Dates/Reporting
 			<form string="Catalog">
 				<notebook>
 
-				<page string="Object summary">
+				<page string="Object">
+					<separator string="Object summary" colspan="2"/>
+					<separator string="Photo" colspan="2"/>
 					<group colspan="2" col="2">
 						<field name="obj_num" select="1"/>
 						<field name="name" select="1"/>
 						<field name="name2" select="2"/>
 						<field name="artist_id" select="1"/>
 						<field name="artist2_id"/>
+						<field name="tva"/>
 					</group>
 					<field widget="image" name="image" nolabel="1" colspan="2"/>
 					<field name="lot_est1"/>
 					<field name="lot_est2"/>
 					<field name="auction_id" colspan="2"/>
 					<field name="lot_type" select="1"/>
-						<field name="tva"/>
 					<separator string="Description" colspan="4"/>
 					<field name="obj_desc" colspan="4" nolabel="1"/>
 					<field name="lot_local"/>
@@ -271,13 +288,14 @@ Auction Management/Auction Dates/Reporting
 					<separator string="Buyer information" colspan="4"/>
 					<field name="ach_uid"  select="2"/>
 					<field name="ach_login" select="2" comparator="="/>
-					<field name="ach_inv_id"/>
+					<field name="obj_price" select="2"/>
 					<field name="obj_comm" select="2"/>
-					<field name="ach_pay_id"/>
+					<field name="obj_ret"/>
 					<field name="ach_emp"/>
-						<field name="obj_price" select="2"/>
-						<field name="obj_ret"/>
-						<field name="author_right" domain="[('domain','=','sabam')]"/>
+					<field name="author_right" domain="[('domain','=','sabam')]"/>
+					<newline/>
+					<field name="ach_inv_id"/>
+					<field name="ach_pay_id"/>
 					<field name="bid_lines" colspan="4" nolabel="1"/>
 				</page>
 				</notebook>
@@ -288,7 +306,7 @@ Auction Management/Auction Dates/Reporting
 	<record model="ir.actions.act_window" id="action_all_objects">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
+		<field name="view_mode">form,tree,graph</field>
 	</record>
 	<menuitem 
 		name="Auction Management/Objects/All objects" 
@@ -298,7 +316,7 @@ Auction Management/Auction Dates/Reporting
 	<record model="ir.actions.act_window" id="action_all_objects_unsold">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,graph</field>
 		<field name="domain">[('auction_id','&lt;&gt;', False),('obj_ret','&gt;',0)]</field>
 	</record>
 	<menuitem 
@@ -309,7 +327,7 @@ Auction Management/Auction Dates/Reporting
 	<record model="ir.actions.act_window" id="action_all_objects_unplanned">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,graph</field>
 		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
 	</record>
 	<menuitem 
@@ -425,16 +443,14 @@ Auction Management/Auction Dates/Reporting
 			<form string="Deposit Border Form">
 				<notebook>
 					<page string="General Informations">
-        					<field name="date_dep" select="1"/>
-        					<newline/>
-        					<field name="partner_id" colspan="2" select="1" on_change="partner_id_change(partner_id)"/>
-        					<newline/>
 						<field name="name" select="1"/>
+						<field name="date_dep" select="1"/>
+						<field name="partner_id" select="1" on_change="partner_id_change(partner_id)"/>
+						<field name="method"/>
 						<newline/>
-						<field name="method" colspan="2"/>
+						<field name="tax_id" domain="[('domain','=','auction')]"/>
 						<newline/>
-        					<field name="tax_id" colspan="2" domain="[('domain','=','auction')]"/>
-						<field name="lot_id" colspan="4" >
+						<field name="lot_id" colspan="4" mode="tree,graph" nolabel="1">
 							<form string="Catalog">
 								<field name="auction_id"/>
 								<field name="obj_num"/>

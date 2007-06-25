@@ -160,9 +160,7 @@ class auction_deposit(osv.osv):
 	#	(_inv_uniq, 'Twice the same inventory number !', ['name'])
 	]
 	def partner_id_change(self, cr, uid, ids, part):
-#CHECKME: ce truc me parait bizarre
-		costs = ir.ir_get(cr,uid,[ ('meta','res.partner'), ('name','auction.seller.costs')], [('id',str(part)),('uid',str(uid))])[0][2]
-		return {'value':{'expenses':costs}}
+		return {}
 auction_deposit()
 
 #----------------------------------------------------------
