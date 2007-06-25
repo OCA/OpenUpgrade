@@ -2,7 +2,7 @@
 <terp>
 	<data>
 		<record model="board.note.type" id="note_sale_type">
-			<field name="name">Sales</field>
+			<field name="name">Production</field>
 		</record>
 
 		<record model="ir.ui.view" id="board_mrp_manager_form">
@@ -24,7 +24,7 @@
 								colspan="4"/>
 							<action
 								string="Procurement in Exception"
-								name="%(report_mrp.action_report_procurement_exception_tree)d"
+								name="%(mrp.mrp_procurement_action4)d"
 								colspan="4"/>
 						</child1>
 
@@ -60,7 +60,7 @@
 		</record>
 
 		<menuitem
-			name="Dashboards/MRP Manager"
+			name="Dashboards/Production dashboard"
 			action="open_board_manufacturing"
 			sequence="1"
 			id="menu_board_manufacturing"/>
