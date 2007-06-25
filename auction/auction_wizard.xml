@@ -3,11 +3,10 @@
 	<data>
 	    <!--<delete model="ir.actions.wizard" search="[('wiz_name','like','auction.lots.')]"/>-->
 
-		<wizard string="Send objects to Auction-in-europe.com"
-		 model="auction.lots"
-		 name="auction.lots.send.aie"
-		 multi="1"
-		 id="wizard_send"/>
+		<wizard string="Send to website"
+			model="auction.lots"
+			name="auction.lots.send.aie"
+			id="wizard_send"/>
 
 		<wizard string="Send results to Auction-in-europe.com"
 		model="auction.lots"
