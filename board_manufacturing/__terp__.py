@@ -6,6 +6,7 @@
     "depends":[
         "board",
         "mrp",
+        "stock",
         "report_mrp",
 
 
