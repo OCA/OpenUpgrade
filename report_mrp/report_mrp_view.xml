@@ -70,7 +70,7 @@ Workcenter load
 		<field name="arch" type="xml">
 			<graph string="Workcenter load" type="bar">
 				<field name="name" />
-				<field name="hour" operator="+"/>
+				<field name="cycle" operator="+"/>
 			</graph>
 		</field>
 
