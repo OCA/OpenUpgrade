@@ -285,16 +285,14 @@ class auction_lots(osv.osv):
 		'ach_emp': fields.boolean('Taken Away'),
 		'ach_pay_id': fields.many2one('account.transfer','Payment', readonly=True, states={'draft':[('readonly',False)]}),
 		'ach_inv_id': fields.many2one('account.invoice','Invoice', readonly=True, states={'draft':[('readonly',False)]}),
-#CHECKME: seller invoice qui pointe vers un account.move?
-		'buy_inv_id': fields.many2one('account.move','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
 		'vnd_lim_net': fields.boolean('Net limit ?'),
 		'image': fields.binary('Image'),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True)
 	}
 	_defaults = {
-				'state':lambda *a: 'draft'
-				}
+		'state':lambda *a: 'draft'
+	}
 	_constraints = [
 #		(_inv_constraint, 'Twice the same inventory number !', ['lot_num','bord_vnd_id'])
 	]

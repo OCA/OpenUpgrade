@@ -119,17 +119,24 @@ Auction Management/Auction Dates/New Auction Dates
 			</form>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="action_auction_dates_new">
+	<record model="ir.actions.act_window" id="action_auction_dates_next">
 		<field name="name">Draft Auctions</field>
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','draft')]</field>
 		<field name="view_id" ref="view_auction_dates_form"/>
 	</record>
-	<menuitem name="Auction Management/Auction Dates" groups="admin" />
-	<menuitem name="Auction Management/Auction Dates/New Auction Dates" action="action_auction_dates_new"/>
+	<menuitem 
+		name="Auction Management/Auction Dates/Next auction dates" 
+		id="menu_action_auction_dates_next"
+		action="action_auction_dates_next"/>
+	<menuitem 
+		name="Auction Management/Objects/Objects by auction" 
+		id="menu_action_auction_dates_next"
+		action="action_auction_dates_next"/>
+
 	=======================================================
-Auction Management/Auction Dates/Old Auction Dates
+	Auction Management/Auction Dates/Old Auction Dates
 	=======================================================
 	<record model="ir.actions.act_window" id="action_auction_dates_old">
 		<field name="name">Closed Auctions</field>
@@ -283,9 +290,32 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
-	<menuitem name="Auction Management/Objects" groups="admin"/>
-	<menuitem name="Auction Management/Objects/All objects" action="action_all_objects"/>
+	<menuitem 
+		name="Auction Management/Objects/All objects" 
+		action="action_all_objects"
+		menu="menu_action_all_objects"/>
 
+	<record model="ir.actions.act_window" id="action_all_objects_unsold">
+		<field name="res_model">auction.lots</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('auction_id','&lt;&gt;', False),('obj_ret','&gt;',0)]</field>
+	</record>
+	<menuitem 
+		name="Auction Management/Objects/All objects/Unsold objects" 
+		action="action_all_objects_unsold"
+		id="menu_action_all_objects_unsold"/>
+
+	<record model="ir.actions.act_window" id="action_all_objects_unplanned">
+		<field name="res_model">auction.lots</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
+	</record>
+	<menuitem 
+		name="Auction Management/Objects/All objects/Unplanned objects" 
+		action="action_all_objects_unplanned"
+		id="menu_action_all_objects_unplanned"/>
 
 
 
