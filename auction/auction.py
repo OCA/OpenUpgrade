@@ -512,42 +512,6 @@ class auction_lots(osv.osv):
 		return all_invoices
 				
 
-
-			# create manual tax lines (if some objects have a net limit or some extra taxes have been entered)
-#CHECKME: these 4 lines are untested !!!!!!!!!!!!!!!!!!!!!
-##			lot_ids = [l.id for l in lots]
-##			manual_costs = compute_seller_costs(cr, uid, lot_ids, True)
-##			acc_expense = lots[0].auction_id.acc_expense.id
-##			#manual_tax_lines = [c.update({'manual': True, 'account_id': acc_expense}) for c in manual_costs]
-##			
-##			
-##			if len(lines):
-##				inv_id = create(cr, uid, {
-##					'name': 'Auction'+': '+lots[0].auction_id.name+', '+str(len(lots))+' lot(s)',
-##					'type': 'in_invoice',
-##					'state': 'draft',
-##					'reference': 'Auction',	#CHECKME: c'est pas un peu court?
-##					'partner_ref': lot.bord_vnd_id.name, #CHECKME: c'est juste ca?
-##					'partner_id': partner_id,
-##					'address_contact_id': addresses['contact'],
-##					'address_invoice_id': addresses['invoice'],
-##					'account_id': acc_payable,
-##					'invoice_line': map(lambda x:(0,0,x), lines),
-##					#'tax_line': map(lambda x: (0,0,x), manual_tax_lines),
-##					'journal_id':lot.auction_id.journal_id.id,
-##					'account_analytic_id': lot.auction_id.account_analytic_id.id
-##					
-##				})
-##				inv_obj.button_compute(cr, uid, [inv_id])
-##			
-##
-##				wf_service = netsvc.LocalService("workflow")
-###Ged> proforma???? c'est normal ca?
-##				wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
-##				return inv_id
-
-			
-
 	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
 		lots = self.read(cr, uid, ids, ['ach_inv_id'])
 
