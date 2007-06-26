@@ -26,17 +26,11 @@ ack_fields = {}
 def _makeInvoices(self, cr, uid, data, context):
 	order_obj = pooler.get_pool(cr.dbname).get('auction.lots')
 	newinv = []
-	order_obj.seller_trans_create(cr, uid, data['ids'],context)
-	for id in data['ids']:
-		wf_service = netsvc.LocalService("workflow")
-		wf_service.trg_validate(uid, 'auction.lots', id, 'manual_invoice', cr)
-
-	for o in order_obj.browse(cr, uid, data['ids'], context):
-		for i in o.invoice_ids:
-			newinv.append(i.id)
+	ids = order_obj.seller_trans_create(cr, uid, data['ids'],context)
+	cr.commit()
 	return {
-		'domain': "[('id','in', ["+','.join(map(str,newinv))+"])]",
-		'name': 'Invoices',
+		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
+		'name': 'Seller invoices',
 		'view_type': 'form',
 		'view_mode': 'tree,form',
 		'res_model': 'account.invoice',
