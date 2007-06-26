@@ -64,7 +64,7 @@ class auction_dates(osv.osv):
 		if not len(ids):
 			return []
 		reads = self.read(cr, uid, ids, ['name', 'expo1'], context)
-		name = [(r['id'],'['+r['name']+']'+ r['expo1']) for r in reads]
+		name = [(r['id'],'['+r['expo1']+'] '+ r['name']) for r in reads]
 		return name
 
 	_columns = {
@@ -438,79 +438,50 @@ class auction_lots(osv.osv):
 		"""
 			Create a seller invoice for each bord_vnd_id, for selected ids.
 		"""
-		lots = self.browse(cr,uid,ids,context)
 
-		# group objects (lots) by (deposit id, auction id)
-		# ie create a dictionary containing lists of objects
-		bord_lots = {}
-		for lot in lots:
-			key = (lot.bord_vnd_id.id,lot.auction_id.id)
-			if not key in  bord_lots:
-				bord_lots[key] = []
-			bord_lots[key].append(lot)
-
-		all_invoices = []
 		# use each list of object in turn
-		for lots in bord_lots.values():
-			invoices = {}
-			partner_id = lots[0].bord_vnd_id.partner_id.id
+		invoices = {}
+		for lot in self.browse(cr,uid,ids,context):
+			partner_id = lot.bord_vnd_id.partner_id.id
 			if not partner_id:
-				raise osv.except_osv('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lots[0].bord_vnd_id.name,))
+				raise osv.except_osv('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lot.bord_vnd_id.name,))
 
-##			tax_id_list = [c.id for c in lots[0].auction_id.seller_costs]
-##			if lots[0].bord_vnd_id.tax_id:
-##				tax_id_list.append(lots[0].bord_vnd_id.tax_id.id)
-
-			## FIXME : use partner.property_account_payable[0]
-			acc_payable= lots[0].bord_vnd_id.partner_id.property_account_payable[0]
-##			acc_payable = ir.ir_get(cr, uid, [('meta','res.partner'), ('name','account.payable')], [('id',str(partner_id)), ('uid',str(uid))])[0][2]
-			addresses = self.pool.get('res.partner').address_get(cr, uid, [partner_id], ['contact','invoice'])
-			#o=pool.get('auction.dates').search(cr,uid,[auction_id]).browse(cr,uid,['journal_id','account_analytic_id'])
 			inv_ref=self.pool.get('account.invoice')
 
-			# create invoice lines
-			lines = []
-			for lot in lots:
-				if lot.obj_price>0: lot_name = lot.obj_num
-				if lot.bord_vnd_id.partner_id.id in invoices:
-					inv_id = invoices[lot.bord_vnd_id.partner_id.id]
-				else:
-					inv = {
-						'name': 'Auction:' +lot.name,
-						'journal_id': lot.auction_id.journal_id.id,
-						'partner_id': lot.bord_vnd_id.partner_id.id,
-						'type': 'in_invoice',
-					}
-
-					inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.ach_uid.id)['value'])
-					inv['account_id'] = inv['account_id'] and inv['account_id'][0]
-					inv_id = inv_ref.create(cr, uid, inv, context)
-					inv_ref.button_compute(cr, uid, [inv_id])
-					invoices[lot.bord_vnd_id.partner_id.id] = inv_id
-
-				self.write(cr,uid,[lot.id],{'invoice_id':inv_id, 'state':'invoiced'})
-			
-			#creation des lignes de factures
-				inv_line= {
-					'invoice_id': inv_id,
-					#'product_id': line.bid_lines.id,
-					'quantity': 1,
-					'name': '['+str(lot.obj_num)+'] '+lot.name,
-					'invoice_line_tax_id': [(6,0,lot.tva and [lot.tva.id] or [])],
-					'account_analytic_id': lot.auction_id.account_analytic_id.id,
-					'account_id': lot.auction_id.acc_expense.id,
-					'price_unit': lot.obj_price,
+			if lot.obj_price>0: lot_name = lot.obj_num
+			if lot.bord_vnd_id.id in invoices:
+				inv_id = invoices[lot.bord_vnd_id.id]
+			else:
+				res = self.pool.get('res.partner').address_get(cr, uid, [lot.bord_vnd_id.partner_id.id], ['contact', 'invoice'])
+				contact_addr_id = res['contact']
+				invoice_addr_id = res['invoice']
+				inv = {
+					'name': 'Auction:' +lot.name,
+					'journal_id': lot.auction_id.journal_id.id,
+					'partner_id': lot.bord_vnd_id.partner_id.id,
+					'type': 'in_invoice',
 				}
-				#inv_line.update(self.pool.get('account.invoice.line').product_id_change(cr, uid,[],line.bid_lines.id)['value'])
-				#inv_line['invoice_line_tax_id'] = ('invoice_line_tax_id' in inv_line) and [(6,0,inv_line['invoice_line_tax_id'])] or []
-				print inv_line, context
-				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 
-				all_invoices += invoices.keys()
-		#for i in inv_ids :
-		#	self.wf_service.trg_validate(uid, 'account.invoice',i , 'invoice_open', cr)
-		return all_invoices
-				
+				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.bord_vnd_id.partner_id.id)['value'])
+				inv['account_id'] = inv['account_id'] and inv['account_id'][0]
+				print inv
+				inv_id = inv_ref.create(cr, uid, inv, context)
+				inv_ref.button_compute(cr, uid, [inv_id])
+				invoices[lot.bord_vnd_id.id] = inv_id
+
+			self.write(cr,uid,[lot.id],{'invoice_id':inv_id, 'state':'invoiced'})
+
+			inv_line= {
+				'invoice_id': inv_id,
+				'quantity': 1,
+				'name': '['+str(lot.obj_num)+'] '+lot.name,
+				'invoice_line_tax_id': [(6,0,lot.tva and [lot.tva.id] or [])],
+				'account_analytic_id': lot.auction_id.account_analytic_id.id,
+				'account_id': lot.auction_id.acc_expense.id,
+				'price_unit': lot.obj_price,
+			}
+			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
+		return invoices.values()
 
 	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
 		lots = self.read(cr, uid, ids, ['ach_inv_id'])

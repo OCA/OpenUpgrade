@@ -3,8 +3,6 @@
 <data>
 	<menuitem name="Auction Management" id="menu_root" icon="terp-product"/>
 	<menuitem name="Auction Management/Configuration" groups="admin"/>
-	<menuitem name="Auction Management/Objects/Analytic Balance" id="account_analytic_chart_balance" action="account.action_account_analytic_account_tree2"/>
-
 
 	=======================================================
 	Auction Management/Configuration/artist
@@ -112,7 +110,7 @@ Auction Management/Auction Dates/New Auction Dates
 				
 				<separator string="Analytic" colspan="4"/>
 				<field name="journal_id"/>
-				<field name="analytic_account_id"/>
+				<field name="account_analytic_id"/>
 				<separator string="State" colspan="4"/>
 				<field name="state"/>
 				<button name="close" states="draft" string="Close + Create all invoices" type="object" colspan="2"/>

@@ -39,6 +39,7 @@
 <!-- end == demo data for the auction_lot_Category-->
 
 <!-- start== demo data for the auction_date-->
+
 	<record model="auction.dates" id="auction_date_1">
 		<field name="name">painting Exhibition</field>
 		<field name="expo1" eval="time.strftime('%Y-%m-01')" />
@@ -49,10 +50,9 @@
 
 		<field name="acc_income" ref="account.a_sale"/>
 		<field name="acc_expense" ref="account.a_expense"/>
-		<field name="acc_refund" ref="account.a_expense"/>
 
 		<field name="journal_id" ref="account.expenses_journal"/>
-		<field name="analytic_account_id" model="account.analytic.account" search="[('code','=','002')]"></field>
+		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','002')]"></field>
 
 	</record>
 
@@ -67,10 +67,9 @@
 
 		<field name="acc_income" ref="account.a_sale"/>
 		<field name="acc_expense" ref="account.a_expense"/>
-		<field name="acc_refund" ref="account.a_expense"/>
 
 		<field name="journal_id" ref="account.sales_journal"/>
-		<field name="analytic_account_id" model="account.analytic.account" search="[('code','=','001')]"></field>
+		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
 
 
 </record>
