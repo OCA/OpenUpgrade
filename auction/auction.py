@@ -44,6 +44,7 @@ class auction_artists(osv.osv):
 	}
 auction_artists()
 
+
 #----------------------------------------------------------
 # Auction Dates
 #----------------------------------------------------------
@@ -148,7 +149,7 @@ class auction_deposit(osv.osv):
 		'lot_id': fields.one2many('auction.lots', 'bord_vnd_id', 'Objects'),
 		'specific_cost_ids': fields.one2many('auction.deposit.cost', 'deposit_id', 'Specific Costs'),
 		'total_neg': fields.boolean('Allow Negative Amount'),
-		
+
 	}
 	_defaults = {
 		'date_dep': lambda *a: time.strftime('%Y-%m-%d'),
@@ -254,7 +255,7 @@ class auction_lots(osv.osv):
 	_name = "auction.lots"
 	_order = "obj_num,lot_num"
 	_description="Object"
-	
+
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
 		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
@@ -310,7 +311,7 @@ class auction_lots(osv.osv):
 			pass
 		return self.name_get(cr, user, ids)
 
-	
+
 	def _sum_taxes_by_type_and_id(self, taxes):
 		"""
 		PARAMS: taxes: a list of dictionaries of the form {'id':id, 'amount':amount, ...}
@@ -699,3 +700,31 @@ class auction_bid_lines(osv.osv):
 		'price': fields.float('Maximum Price')
 	}
 auction_bid_lines()
+
+
+
+###########
+#start: creating new class for report(postgresview  for auction)
+
+class report_auction(osv.osv):
+    _name = "report.auction"
+    _description = "Auction Reporting"
+    _auto = False
+    _columns = {
+        'seller': fields.char('Saler Name',size=64, readonly=True, select=True),
+        'object':fields.integer('No of object',readonly=True, select=True),
+        'object_sold':fields.integer('No of objects sold',readonly=True, select=True),
+        'withdrawn':fields.integer('No of Withdrawn', readonly=True, select=True),
+        'total_price':fields.float('Total Price',readonly=True, select=True),
+        'avg_price':fields.float('Average Price', readonly=True, select=True),
+
+    }
+
+    def init(self, cr):
+        print "In init of auction report ..";
+
+report_auction()
+
+
+#end
+###############################################################
