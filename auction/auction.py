@@ -83,7 +83,7 @@ class auction_dates(osv.osv):
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
 		'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'journal_id':fields.many2one('account.journal', 'Journal',required=True),
-                'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
+		'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
 	}
 	_defaults = {
 		#'state': lambda uid, page, ref: 'draft'
@@ -148,7 +148,7 @@ class auction_deposit(osv.osv):
 		'lot_id': fields.one2many('auction.lots', 'bord_vnd_id', 'Objects'),
 		'specific_cost_ids': fields.one2many('auction.deposit.cost', 'deposit_id', 'Specific Costs'),
 		'total_neg': fields.boolean('Allow Negative Amount'),
-                
+		
 	}
 	_defaults = {
 		'date_dep': lambda *a: time.strftime('%Y-%m-%d'),
@@ -283,6 +283,7 @@ class auction_lots(osv.osv):
 		'ach_emp': fields.boolean('Taken Away'),
 		'ach_pay_id': fields.many2one('account.transfer','Payment', readonly=True, states={'draft':[('readonly',False)]}),
 		'ach_inv_id': fields.many2one('account.invoice','Invoice', readonly=True, states={'draft':[('readonly',False)]}),
+		'sel_inv_id': fields.many2one('account.move','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
 		'vnd_lim_net': fields.boolean('Net limit ?'),
 		'image': fields.binary('Image'),
@@ -370,14 +371,8 @@ class auction_lots(osv.osv):
 								'name': 'Remise lot '+ str(lot.obj_num),
 								'amount': lot.vnd_lim - obj_price_wh_costs}
 								#'account_id': lot.auction_id.acc_refund.id
-                                                
 							)
 		return costs
-
-
-
-
-				
 	def compute_seller_costs(self, cr, uid, ids, manual_only=False):
 		lots = self.browse(cr, uid, ids)
 		costs = []
@@ -454,8 +449,10 @@ class auction_lots(osv.osv):
 				bord_lots[key] = []
 			bord_lots[key].append(lot)
 
+		all_invoices = []
 		# use each list of object in turn
 		for lots in bord_lots.values():
+			invoices = {}
 			partner_id = lots[0].bord_vnd_id.partner_id.id
 			if not partner_id:
 				raise osv.except_osv('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lots[0].bord_vnd_id.name,))
@@ -469,60 +466,87 @@ class auction_lots(osv.osv):
 ##			acc_payable = ir.ir_get(cr, uid, [('meta','res.partner'), ('name','account.payable')], [('id',str(partner_id)), ('uid',str(uid))])[0][2]
 			addresses = self.pool.get('res.partner').address_get(cr, uid, [partner_id], ['contact','invoice'])
 			#o=pool.get('auction.dates').search(cr,uid,[auction_id]).browse(cr,uid,['journal_id','account_analytic_id'])
+			inv_ref=self.pool.get('account.invoice')
 
 			# create invoice lines
 			lines = []
 			for lot in lots:
-				if lot.obj_price>0:
-					# create invoice line for this object
-					lot_name = str(lot.obj_num)
-				
-                                     
-#CHECKME: c'est normal que tax_id_list soit calcule pr ts les objets et non	par objet????
-					lines.append({
-						'name': lot.obj_num,
-						'account_id': lot.auction_id.acc_expense, #source account
-						'price_unit': lot.obj_price,
+				if lot.obj_price>0: lot_name = lot.obj_num
+				if lot.bord_vnd_id.partner_id.id in invoices:
+					inv_id = invoices[lot.bord_vnd_id.partner_id.id]
+				else:
+					inv = {
+						'name': 'Auction:' +lot.name,
 						'journal_id': lot.auction_id.journal_id.id,
-                                                'quantity': 1,
-                                                'invoice_line_tax_id': lot.bord_vnd_id.tax_id.id,
-                                                'account_analytic_id': lot.auction_id.account_analytic_id.id})
+						'partner_id': lot.bord_vnd_id.partner_id.id,
+						'type': 'in_invoice',
+					}
+
+					inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.ach_uid.id)['value'])
+					inv['account_id'] = inv['account_id'] and inv['account_id'][0]
+					inv_id = inv_ref.create(cr, uid, inv, context)
+					inv_ref.button_compute(cr, uid, [inv_id])
+					invoices[lot.bord_vnd_id.partner_id.id] = inv_id
+
+				self.write(cr,uid,[lot.id],{'invoice_id':inv_id, 'state':'invoiced'})
+			
+			#creation des lignes de factures
+				inv_line= {
+					'invoice_id': inv_id,
+					#'product_id': line.bid_lines.id,
+					'quantity': 1,
+					'name': '['+str(lot.obj_num)+'] '+lot.name,
+					'invoice_line_tax_id': [(6,0,lot.tva and [lot.tva.id] or [])],
+					'account_analytic_id': lot.auction_id.account_analytic_id.id,
+					'account_id': lot.auction_id.acc_expense.id,
+					'price_unit': lot.obj_price,
+				}
+				#inv_line.update(self.pool.get('account.invoice.line').product_id_change(cr, uid,[],line.bid_lines.id)['value'])
+				#inv_line['invoice_line_tax_id'] = ('invoice_line_tax_id' in inv_line) and [(6,0,inv_line['invoice_line_tax_id'])] or []
+				print inv_line, context
+				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
+
+				all_invoices += invoices.keys()
+		#for i in inv_ids :
+		#	self.wf_service.trg_validate(uid, 'account.invoice',i , 'invoice_open', cr)
+		return all_invoices
+				
 
 
 			# create manual tax lines (if some objects have a net limit or some extra taxes have been entered)
 #CHECKME: these 4 lines are untested !!!!!!!!!!!!!!!!!!!!!
-			lot_ids = [l.id for l in lots]
-			manual_costs = compute_seller_costs(cr, uid, lot_ids, True)
-			acc_expense = lots[0].auction_id.acc_expense.id
-			#manual_tax_lines = [c.update({'manual': True, 'account_id': acc_expense}) for c in manual_costs]
-			inv_obj=self.pool.get('account.invoice')
-			
-			if len(lines):
-				inv_id = create(cr, uid, {
-					'name': 'Auction'+': '+lots[0].auction_id.name+', '+str(len(lots))+' lot(s)',
-					'type': 'in_invoice',
-					'state': 'draft',
-					'reference': 'Auction',	#CHECKME: c'est pas un peu court?
-					'partner_ref': lot.bord_vnd_id.name, #CHECKME: c'est juste ca?
-					'partner_id': partner_id,
-					'address_contact_id': addresses['contact'],
-					'address_invoice_id': addresses['invoice'],
-					'account_id': acc_payable,
-					'invoice_line': map(lambda x:(0,0,x), lines),
-					#'tax_line': map(lambda x: (0,0,x), manual_tax_lines),
-                                        'journal_id':lot.auction_id.journal_id.id,
-                                        'account_analytic_id': lot.auction_id.account_analytic_id.id
-                                        
-				})
-				inv_obj.button_compute(cr, uid, [inv_id])
-			
+##			lot_ids = [l.id for l in lots]
+##			manual_costs = compute_seller_costs(cr, uid, lot_ids, True)
+##			acc_expense = lots[0].auction_id.acc_expense.id
+##			#manual_tax_lines = [c.update({'manual': True, 'account_id': acc_expense}) for c in manual_costs]
+##			
+##			
+##			if len(lines):
+##				inv_id = create(cr, uid, {
+##					'name': 'Auction'+': '+lots[0].auction_id.name+', '+str(len(lots))+' lot(s)',
+##					'type': 'in_invoice',
+##					'state': 'draft',
+##					'reference': 'Auction',	#CHECKME: c'est pas un peu court?
+##					'partner_ref': lot.bord_vnd_id.name, #CHECKME: c'est juste ca?
+##					'partner_id': partner_id,
+##					'address_contact_id': addresses['contact'],
+##					'address_invoice_id': addresses['invoice'],
+##					'account_id': acc_payable,
+##					'invoice_line': map(lambda x:(0,0,x), lines),
+##					#'tax_line': map(lambda x: (0,0,x), manual_tax_lines),
+##					'journal_id':lot.auction_id.journal_id.id,
+##					'account_analytic_id': lot.auction_id.account_analytic_id.id
+##					
+##				})
+##				inv_obj.button_compute(cr, uid, [inv_id])
+##			
+##
+##				wf_service = netsvc.LocalService("workflow")
+###Ged> proforma???? c'est normal ca?
+##				wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
+##				return inv_id
 
-				#wf_service = netsvc.LocalService("workflow")
-#Ged> proforma???? c'est normal ca?
-				#wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
-				return inv_id
-				
-
+			
 
 	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
 		lots = self.read(cr, uid, ids, ['ach_inv_id'])
