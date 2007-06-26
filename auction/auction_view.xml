@@ -107,7 +107,7 @@ Auction Management/Auction Dates/New Auction Dates
 				<separator string="Accounting" colspan="4"/>
 				<field name="acc_income"/>
 				<field name="acc_expense"/>
-				
+
 				<separator string="Analytic" colspan="4"/>
 				<field name="journal_id"/>
 				<field name="account_analytic_id"/>
@@ -124,12 +124,12 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="domain">[('state','=','draft')]</field>
 		<field name="view_id" eval="False"/>
 	</record>
-	<menuitem 
-		name="Auction Management/Auction Dates/Next auction dates" 
+	<menuitem
+		name="Auction Management/Auction Dates/Next auction dates"
 		id="menu_action_auction_dates_next"
 		action="action_auction_dates_next"/>
-	<menuitem 
-		name="Auction Management/Objects/Objects by auction" 
+	<menuitem
+		name="Auction Management/Objects/Objects by auction"
 		id="menu_action_auction_dates_next_by_auction"
 		action="action_auction_dates_next"/>
 
@@ -306,8 +306,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">form,tree,graph</field>
 	</record>
-	<menuitem 
-		name="Auction Management/Objects/All objects" 
+	<menuitem
+		name="Auction Management/Objects/All objects"
 		action="action_all_objects"
 		menu="menu_action_all_objects"/>
 
@@ -317,8 +317,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">tree,form,graph</field>
 		<field name="domain">[('auction_id','&lt;&gt;', False),('obj_ret','&gt;',0)]</field>
 	</record>
-	<menuitem 
-		name="Auction Management/Objects/All objects/Unsold objects" 
+	<menuitem
+		name="Auction Management/Objects/All objects/Unsold objects"
 		action="action_all_objects_unsold"
 		id="menu_action_all_objects_unsold"/>
 
@@ -328,8 +328,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">tree,form,graph</field>
 		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
 	</record>
-	<menuitem 
-		name="Auction Management/Objects/All objects/Unplanned objects" 
+	<menuitem
+		name="Auction Management/Objects/All objects/Unplanned objects"
 		action="action_all_objects_unplanned"
 		id="menu_action_all_objects_unplanned"/>
 
@@ -517,6 +517,103 @@ Auction Management/Auction Dates/Reporting
 	<menuitem name="Auction Management/Sellers" groups="admin" />
 	<menuitem name="Auction Management/Sellers/Deposit border" action="action_deposit_border"/>
 
+<!--start : creating seller Reporting menu for the selller by pmo-->
+
+<record model="ir.ui.view" id="view_auction_form">
+		<field name="name">auction.month.form</field>
+		<field name="model">report.auction</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auction reporting form view">
+				<field name="seller" select="1"/>
+				<field name="object" select="1"/>
+				<field name="object_sold" select="1"/>
+				<field name="withdrawn" select="1"/>
+				<field name="total_price" select="1"/>
+				<field name="avg_price" select="1"/>
+
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_auction_tree">
+		<field name="name">auction.month.tree</field>
+		<field name="model">report.auction</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction reporting tree view">
+
+				<field name="seller" select="1"/>
+				<field name="object" select="1"/>
+				<field name="object_sold" select="1"/>
+				<field name="withdrawn" select="1"/>
+				<field name="total_price" select="1"/>
+				<field name="avg_price" select="1"/>
+
+				</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_auction_reporting1">
+		<field name="name">auction.this.month.tree</field>
+		<field name="res_model">report.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem name="Auction Management/Sellers/Reporting/This Month/view 1 " action="action_auction_reporting1" id="seller_thismonth_view1"/>
+
+	<record model="ir.actions.act_window" id="action_auction_reporting2">
+		<field name="name">auction.this.month.tree</field>
+		<field name="res_model">report.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem name="Auction Management/Sellers/Reporting/This Month/view 2" action="action_auction_reporting2" id="seller_thismonth_view2"/>
+
+	<record model="ir.actions.act_window" id="action_auction_reporting_all1">
+		<field name="name">auction.all.month.tree</field>
+		<field name="res_model">report.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem name="Auction Management/Sellers/Reporting/All Month/view 1 " action="action_auction_reporting_all1" id="seller_allmonth_view1"/>
+
+	<record model="ir.actions.act_window" id="action_auction_reporting_all2">
+		<field name="name">auction.all.month.tree</field>
+		<field name="res_model">report.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem name="Auction Management/Sellers/Reporting/All Month/view 2" action="action_auction_reporting_all2" id="seller_allmonth_view2"/>
+
+
+
+<!--end : creating seller Reporting menu for the selller by pmo-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	=======================================================
 		"Auction Management/Buyers/Bids
 	=======================================================
@@ -582,7 +679,7 @@ Auction Management/Auction Dates/Reporting
 						<field name="price"/>
 						<field name="call"/>
 					</form>
-				
+
 				</field>
 			</form>
 		</field>
@@ -607,8 +704,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="res_model">auction.bid</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem 
-		name="Auction Management/Buyers/Bids" 
+	<menuitem
+		name="Auction Management/Buyers/Bids"
 		action="action_bid_open"
 		id="menu_action_bid_open"/>
 
