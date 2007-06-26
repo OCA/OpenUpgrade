@@ -93,10 +93,9 @@ stock.move compared to internal location src/dest
 		<field name="model">report.in.out.picking</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Workcenters load">
+			<tree string="Internal move">
 				<field name="name" select="1" colspan="4"/>
-				<field name="product_qty"/>
-				<field name="d_name"/>
+				<field name="quantity"/>
 
 			</tree>
 		</field>
@@ -108,8 +107,8 @@ stock.move compared to internal location src/dest
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Workcenter load" type="bar">
-				<field name="d_name" />
-				<field name="product_qty" operator="+"/>
+				<field name="name" />
+				<field name="quantity" />
 			</graph>
 		</field>
 
