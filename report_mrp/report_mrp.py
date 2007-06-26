@@ -59,34 +59,82 @@ class report_workcenter_load(osv.osv):
             )""")
 report_workcenter_load()
 
+class report_source(osv.osv):
+    _name="report.source"
+    _description="source move"
+    _auto = False
+    _columns = {
+        'date': fields.char('Name', size=64, required=True),
+        'sprice': fields.float('Source Move', required=True),
+
+       }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_source as (
+                select
+                    stock_move.id as id,
+                    to_char(stock_move.create_date,'YYYY:IW') as date,
+                    sum((select product_template.standard_price
+                    from product_product inner join product_template on product_product.product_tmpl_id = product_template.id
+                    where product_product.id = product_id) * stock_move.product_qty) as sprice
+                    from stock_move inner join stock_location on
+                        stock_location.id = stock_move.location_id
+                        and stock_location.usage = 'internal'
+                    where stock_move.state = 'done'
+                     group by stock_move.id , stock_move.create_date
+
+
+            )""")
+
+report_source()
+
+class report_dest(osv.osv):
+    _name="report.dest"
+    _description="dest move"
+    _auto = False
+    _columns = {
+        'date': fields.char('Name', size=64, required=True),
+        'dprice': fields.float('Source Move', required=True),
+
+       }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_dest as (
+                select
+                    stock_move.id as id,
+                     to_char(stock_move.create_date,'YYYY:IW') as date,
+                    sum((select product_template.standard_price
+                    from product_product inner join product_template on product_product.product_tmpl_id = product_template.id
+                    where product_product.id = product_id) * stock_move.product_qty) as dprice
+
+
+                    from stock_move inner join stock_location on
+                        stock_location.id = stock_move.location_dest_id
+                        and stock_location.usage = 'internal'
+                    where stock_move.state = 'done'
+                     group by stock_move.id ,stock_move.create_date
+
+            )""")
+
+report_dest()
 class report_in_out_picking(osv.osv):
     _name="report.in.out.picking"
     _description="Workcenter Load"
     _auto = False
     _columns = {
         'name': fields.char('Name', size=64, required=True),
-        'product_qty': fields.float('Quantity (UOM)', required=True),
-        'd_name': fields.char('Location Name', size=64, required=True),
-        'd_id': fields.many2one('stock.location', 'Dest. Location', required=True),
+        'quantity': fields.float('Quantity (UOM)', required=True),
 
        }
     def init(self, cr):
         cr.execute("""
             create or replace view report_in_out_picking as (
-                select
-                    m.id as id,
-                    m.name as name ,
-                    m.location_dest_id as d_id,
-                    sum(m.product_qty) as product_qty,
-                    l.name as d_name
-                from
-                    stock_move m ,
-                    stock_location l,
-                    stock_picking p
-                where
-                    m.location_dest_id=l.id and m.picking_id=p.id and p.type='internal'
-                group by m.id,m.name,l.name,m.location_dest_id
-
+                   select
+                   min(report_dest.id) as id,
+                   sum(report_dest.dprice)-sum(report_source.sprice) as quantity,
+                   report_dest.date as name
+               from report_dest,report_source
+               group by name
 
             )""")
 report_in_out_picking()
