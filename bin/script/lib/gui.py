@@ -1,6 +1,7 @@
 import uno
 import unohelper
-from actions import *
+if __name__<>"package":
+    from actions import *
 
 
 #------------------------------------------------------------
@@ -495,7 +496,7 @@ class DBModalDialog:
     def getComboBoxText( self, cCtrlName):
         """Set the text of the ComboBox."""
         oControl = self.getControl( cCtrlName )
-        return oControl.getText( cText )
+        return oControl.getText()
 
     def getComboBoxSelectedText( self, cCtrlName ):
         """Get the selected text of the ComboBox."""

@@ -1,17 +1,18 @@
 import uno
 import string
 import unohelper
-from com.sun.star.task import XJobExecutor
-from lib.gui import *
-from lib.error import ErrorDialog
-from lib.functions import *
 import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from lib.error import ErrorDialog
+    from lib.functions import *
+
 
 
 class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
         self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
-        print "Expression"
         self.win.addFixedText("lblExpression",17 , 10, 35, 15, "Expression :")
         self.win.addEdit("txtExpression", -5, 5, 123, 15)
         self.win.addFixedText("lblName", 2, 30, 50, 15, "Displayed Name :")
@@ -69,11 +70,11 @@ class Expression(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-if __name__=="__main__":
+if __name__<>"package" and __name__=="__main__":
     Expression()
-#else:
-#    g_ImplementationHelper.addImplementation( \
-#        Expression,
-#        "org.openoffice.tiny.report.expression",
-#        ("com.sun.star.task.Job",),)
+elif __name__=="package":
+    g_ImplementationHelper.addImplementation( \
+        Expression,
+        "org.openoffice.tiny.report.expression",
+        ("com.sun.star.task.Job",),)
 

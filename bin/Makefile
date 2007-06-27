@@ -1,5 +1,5 @@
 create:
-	#cat import script/lib/*.py script/Repeatln.py script/Fields.py script/Expression.py script/modify.py > package/TinyERPReport.py
+	cat import script/lib/*.py script/Repeatln.py script/Fields.py script/Expression.py script/modify.py > package/TinyERPReport.py
 	
 all:
 	rm -f tinyreport.zip

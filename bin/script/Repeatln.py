@@ -1,11 +1,13 @@
 import uno
 import string
 import unohelper
-from com.sun.star.task import XJobExecutor
-from lib.gui import *
-from lib.error import ErrorDialog
-from lib.functions import *
 import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from lib.error import ErrorDialog
+    from lib.functions import *
+
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
@@ -175,12 +177,12 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-if __name__=="__main__":
+if __name__<>"package" and __name__=="__main__":
     RepeatIn()
-#else:
-#    g_ImplementationHelper = unohelper.ImplementationHelper()
-#    g_ImplementationHelper.addImplementation( \
-#            RepeatIn,
-#            "org.openoffice.tiny.report.repeatln",
-#            ("com.sun.star.task.Job",),)
+elif __name__=="package":
+    g_ImplementationHelper = unohelper.ImplementationHelper()
+    g_ImplementationHelper.addImplementation( \
+            RepeatIn,
+            "org.openoffice.tiny.report.repeatln",
+            ("com.sun.star.task.Job",),)
 

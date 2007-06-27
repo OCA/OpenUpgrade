@@ -1,10 +1,7 @@
+__name__="package"
+
 import uno
-import re
-import string
 import unohelper
-from com.sun.star.task import XJobExecutor
-import xmlrpclib
-g_ImplementationHelper = unohelper.ImplementationHelper()
 
 #--------------------------------------------------
 # An ActionListener adapter.
@@ -61,6 +58,8 @@ class TextListenerProcAdapter( unohelper.Base, XTextListener ):
             apply( self.oProcToCall, (oTextEvent,) + self.tParams )
 
 
+if __name__<>"package":
+    from gui import *
 class ErrorDialog:
     def __init__(self,sErrorMsg, sErrorHelpMsg=""):
         self.win = DBModalDialog(50, 50, 150, 90, "Error Message")
@@ -71,6 +70,11 @@ class ErrorDialog:
         self.win.doModalDialog()
     def btnOkOrCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
+
+import uno
+import xmlrpclib
+if __name__<>"package":
+    from gui import *
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
@@ -233,6 +237,11 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
             if aComponentAdd.__contains__(sTableName+"."+oPar.Name)==False:
                 aComponentAdd.append(sTableName+"."+oPar.Name)
     return 0
+
+import uno
+import unohelper
+if __name__<>"package":
+    from actions import *
 
 
 #------------------------------------------------------------
@@ -724,6 +733,11 @@ class DBModalDialog:
         oControl = self.getControl( cCtrlName )
         oControl.setText( cText )
 
+    def getComboBoxText( self, cCtrlName):
+        """Set the text of the ComboBox."""
+        oControl = self.getControl( cCtrlName )
+        return oControl.getText()
+
     def getComboBoxSelectedText( self, cCtrlName ):
         """Get the selected text of the ComboBox."""
         oControl = self.getControl( cCtrlName )
@@ -934,6 +948,19 @@ class DBModalDialog:
         """
         self.oDialogControl.endExecute()
 
+
+import uno
+import string
+import unohelper
+import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from lib.error import ErrorDialog
+    from lib.functions import *
+
+
+#class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
     def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
@@ -1101,13 +1128,25 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-if __name__=="__main__":
+if __name__<>"package" and __name__=="__main__":
     RepeatIn()
-else:
+elif __name__=="package":
+    g_ImplementationHelper = unohelper.ImplementationHelper()
     g_ImplementationHelper.addImplementation( \
             RepeatIn,
             "org.openoffice.tiny.report.repeatln",
             ("com.sun.star.task.Job",),)
+
+import uno
+import string
+import unohelper
+import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from lib.functions import *
+    from lib.error import ErrorDialog
+
 
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
@@ -1187,7 +1226,8 @@ class Fields(unohelper.Base, XJobExecutor ):
     def lstbox_selected(self,oItemEvent):
         try:
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            #sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
             res = sock.execute('terp', 3, 'admin', sObject , 'read',[1])
@@ -1260,13 +1300,26 @@ class Fields(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-if __name__=="__main__":
+if __name__<>"package" and __name__=="__main__":
     Fields()
-else:
+elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
         Fields,
         "org.openoffice.tiny.report.fields",
         ("com.sun.star.task.Job",),)
+
+
+import uno
+import string
+import unohelper
+import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from lib.error import ErrorDialog
+    from lib.functions import *
+
+
 
 class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
@@ -1328,16 +1381,29 @@ class Expression(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-if __name__=="__main__":
+if __name__<>"package" and __name__=="__main__":
     Expression()
-else:
+elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
         Expression,
         "org.openoffice.tiny.report.expression",
         ("com.sun.star.task.Job",),)
 
+import re
+import uno
+import string
+import unohelper
+import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from Expression import Expression
+    from Fields import Fields
+    from Repeatln import RepeatIn
+    from lib.error import *
 
-class Modify(unohelper.Base, XJobExecutor ):
+
+class modify(unohelper.Base, XJobExecutor ):
 
     def __init__( self, ctx ):
         self.ctx     = ctx
@@ -1369,6 +1435,7 @@ class Modify(unohelper.Base, XJobExecutor ):
             exit(1)
         # Check weather Field-4 is available or not otherwise exit from application
         if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
+            print self.oVC.TextField
             if self.oVC.TextField:
                 self.oCurObj=self.oVC.TextField
                 self.oMyObject= self.getOperation(self.oVC.TextField.Items.__getitem__(1))
@@ -1384,6 +1451,7 @@ class Modify(unohelper.Base, XJobExecutor ):
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             exit(1)
+
     def getOperation(self, str):
         #str = "[[ RepeatIn(objects, 'variable') ]]" #repeatIn
         #str = "[[ saleorder.partner_id.name ]]" # field
@@ -1402,12 +1470,11 @@ class Modify(unohelper.Base, XJobExecutor ):
                         return method(res)
                         break
 
-if __name__=="__main__":
-    Modify()
+if __name__<>"package":
+    modify(None)
 else:
     g_ImplementationHelper.addImplementation( \
-        Modify,
+        modify,
         "org.openoffice.tiny.report.modify",
         ("com.sun.star.task.Job",),)
-
 

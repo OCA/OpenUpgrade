@@ -2,18 +2,23 @@ import re
 import uno
 import string
 import unohelper
-from com.sun.star.task import XJobExecutor
-from lib.gui import *
-from Expression import *
-from Fields import *
-from Repeatln import *
-from lib.error import *
 import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from Expression import Expression
+    from Fields import Fields
+    from Repeatln import RepeatIn
+    from lib.error import *
 
 
 class modify(unohelper.Base, XJobExecutor ):
 
-    def __init__(self):
+    def __init__( self, ctx ):
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+        self.win=None
         localContext = uno.getComponentContext()
         resolver = localContext.ServiceManager.createInstanceWithContext(
                         "com.sun.star.bridge.UnoUrlResolver", localContext )
@@ -35,10 +40,11 @@ class modify(unohelper.Base, XJobExecutor ):
         if not docinfo.getUserFieldValue(0)=="":
             self.sMyHost= docinfo.getUserFieldValue(0)
         else:
-            print "Insert Field-1"
+            ErrorDialog("Please insert user define field Field-1","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069")
             exit(1)
         # Check weather Field-4 is available or not otherwise exit from application
-        if not docinfo.getUserFieldValue(3)=="":
+        if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
+            print self.oVC.TextField
             if self.oVC.TextField:
                 self.oCurObj=self.oVC.TextField
                 self.oMyObject= self.getOperation(self.oVC.TextField.Items.__getitem__(1))
@@ -52,7 +58,8 @@ class modify(unohelper.Base, XJobExecutor ):
                 ErrorDialog("Please place your cursor at begaining of field \nwhich you want to modify","")
 
         else:
-            print "Insert Field-4"
+            ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
+            exit(1)
 
     def getOperation(self, str):
         #str = "[[ RepeatIn(objects, 'variable') ]]" #repeatIn
@@ -72,11 +79,11 @@ class modify(unohelper.Base, XJobExecutor ):
                         return method(res)
                         break
 
-if __name__=="__main__":
-    modify()
-#else:
-#    g_ImplementationHelper.addImplementation( \
-#        modify,
-#        "org.openoffice.tiny.report.modify",
-#        ("com.sun.star.task.Job",),)
+if __name__<>"package":
+    modify(None)
+else:
+    g_ImplementationHelper.addImplementation( \
+        modify,
+        "org.openoffice.tiny.report.modify",
+        ("com.sun.star.task.Job",),)
 

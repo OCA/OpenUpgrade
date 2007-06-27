@@ -1,11 +1,13 @@
 import uno
 import string
 import unohelper
-from com.sun.star.task import XJobExecutor
-from lib.gui import *
-from lib.functions import *
-from lib.error import ErrorDialog
 import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from lib.functions import *
+    from lib.error import ErrorDialog
+
 
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
@@ -85,7 +87,8 @@ class Fields(unohelper.Base, XJobExecutor ):
     def lstbox_selected(self,oItemEvent):
         try:
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            #sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
             res = sock.execute('terp', 3, 'admin', sObject , 'read',[1])
@@ -158,12 +161,12 @@ class Fields(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
-if __name__=="__main__":
+if __name__<>"package" and __name__=="__main__":
     Fields()
-#else:
-#    g_ImplementationHelper.addImplementation( \
-#        Fields,
-#        "org.openoffice.tiny.report.fields",
-#        ("com.sun.star.task.Job",),)
+elif __name__=="package":
+    g_ImplementationHelper.addImplementation( \
+        Fields,
+        "org.openoffice.tiny.report.fields",
+        ("com.sun.star.task.Job",),)
 
 

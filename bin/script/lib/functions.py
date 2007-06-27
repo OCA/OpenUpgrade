@@ -1,6 +1,7 @@
 import uno
 import xmlrpclib
-from gui import *
+if __name__<>"package":
+    from gui import *
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
