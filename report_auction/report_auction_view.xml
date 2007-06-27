@@ -12,8 +12,11 @@ Auction adjudication
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
 				<field name="name"/>
+				<field name="auction1"/>
+				<field name="auction2"/>
 				<field name="adj_total" />
-				<field name="state"/>
+				<state name="state" />
+
 			</tree>
 		</field>
 	</record>
@@ -40,7 +43,11 @@ Auction adjudication
 		<!--<field name="domain">[('paid','Paid'),('invoiced','Invoiced')]</field>-->
 	</record>
 	<menuitem name="Auction Management/Reporting/Manager/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree"/>
+
+	<menuitem name="Auction Management/Reporting/Member/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree1"/>
+
 	<menuitem name="Auction Management/Reporting/Member/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree_member"/>
+
 
 
 =============================
@@ -145,10 +152,8 @@ Objects per Day
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
-				<field name="name"/>
 				<field name="date"/>
-				<field name="lot_num"/>
-				<field name="lot_type"/>
+				<field name="obj_num"/>
 			</tree>
 		</field>
 	</record>
@@ -160,8 +165,7 @@ Objects per Day
 		<field name="arch" type="xml">
 			<graph string="Object By day" orientation="horizontal" type="bar">
 				<field name="date"/>
-				<field name="lot_num" operator="+"/>
-				<field name="name" group="True"/>
+				<field name="obj_num" operator="+"/>
 			</graph>
 		</field>
 
@@ -172,7 +176,7 @@ Objects per Day
 		<field name="res_model">report.auction.object.date</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
-		<field name="domain">[('name','&gt;=',time.strftime('%Y-%m-01')), ('state','=','draft')]</field>
+		<field name="domain">[('state','=','draft')]</field>
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
 	<menuitem name="Auction Management/Reporting/Manager/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
