@@ -29,17 +29,16 @@ class report_auction_adjudication(osv.osv):
         cr.execute("""
             create or replace view report_auction_adjudication as (
                 select
-                    l.id  as id,
+                    l.id as id,
                     l.name as name,
                     l.auction1 as auction1,
                     l.auction2 as auction2,
-                    l.state as state,
                     sum(m.obj_price) as adj_total
 
                 from
                     auction_dates l ,auction_lots m
                 where m.auction_id=l.id
-                group by l.id,l.name,l.auction1,l.auction2,l.state
+                group by l.id,l.name,l.auction1,l.auction2
 
             )
         """)
@@ -95,7 +94,7 @@ class report_latest_deposit(osv.osv):
 
                    from auction_deposit l
                    order by l.id desc
-                   limit 3
+                   limit 10
 
                   )""")
 report_latest_deposit()
@@ -131,7 +130,7 @@ class report_latest_objects(osv.osv):
 
                    from auction_lots l
                    order by l.id desc
-                   limit 5
+                   limit 10
 
                   )""")
 report_latest_objects()
@@ -153,7 +152,7 @@ class report_auction_object_date(osv.osv):
             'obj_comm': fields.boolean('Commission'),
             'obj_price': fields.float('Adjudication price'),
             'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True),
-            'date':fields.date('Date', readonly=True),
+            'date': fields.char('Name', size=64, required=True),
             'lot_num': fields.integer('Quantity', required=True),
     }
 
@@ -161,17 +160,14 @@ class report_auction_object_date(osv.osv):
         cr.execute("""
             create or replace view report_auction_object_date as (
                 select
-                    min(l.id) as id,
-                    substring(l.create_date for 10) as date,
-                    l.name as name,
-                    sum(l.lot_num) as lot_num,
-                    l.lot_type as lot_type,
-                    l.state as state
-
+                   min(l.id) as id,
+                   substring(l.create_date for 10) as date,
+                   sum(l.obj_num) as obj_num,
+                   l.state as state
                 from
                     auction_lots l
                 group by
-                    l.create_date,l.name,l.obj_desc,lot_type,state
+                    substring(l.create_date for 10),l.id,l.state
             )
         """)
 report_auction_object_date()
