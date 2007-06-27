@@ -706,8 +706,8 @@ auction_bid_lines()
 ###########
 #start: creating new class for report(postgresview  for auction)
 
-class report_auction(osv.osv):
-    _name = "report.auction"
+class report_seller_auction(osv.osv):
+    _name = "report.seller.auction"
     _description = "Auction Reporting"
     _auto = False
     _columns = {
@@ -723,8 +723,12 @@ class report_auction(osv.osv):
     def init(self, cr):
         print "In init of auction report ..";
 
-report_auction()
+report_seller_auction()
 
 
 #end
 ###############################################################
+
+
+
+
