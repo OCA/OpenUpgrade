@@ -171,3 +171,46 @@ class report_auction_object_date(osv.osv):
             )
         """)
 report_auction_object_date()
+
+class report_auction_estimation_adj_category(osv.osv):
+    _name = "report.auction.estimation.adj.category"
+    _description = "comparison estimate/adjudication "
+    _auto = False
+    _columns = {
+            'auction_id': fields.many2one('auction.dates', 'Auction Date'),
+            'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
+            'name': fields.char('Short Description',size=64, required=True),
+            'lot_type': fields.selection(_type_get, 'Object Type', size=64),
+            'lot_est1': fields.float('Minimum Estimation'),
+            'lot_est2': fields.float('Maximum Estimation'),
+            'obj_desc': fields.text('Object Description'),
+            'obj_num': fields.integer('Catalog Number'),
+            'obj_ret': fields.float('Price retired'),
+            'obj_comm': fields.boolean('Commission'),
+            'obj_price': fields.float('Adjudication price'),
+            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True),
+            'date': fields.char('Name', size=64, required=True),
+            'lot_num': fields.integer('Quantity', required=True),
+            'lot_type': fields.selection(_type_get, 'Object Type', size=64),
+            'adj_total': fields.float('Total Adjudication'),
+    }
+
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_auction_estimation_adj_category as (
+                select
+                   min(l.id) as id,
+                   substring(l.create_date for 7)||'-'||'01' as date,
+                   l.state as state,
+                   l.lot_type as lot_type,
+                   sum(l.lot_est1) as lot_est1,
+                   sum(l.lot_est2) as lot_est2,
+                   sum(m.obj_price) as adj_total
+                from
+                    auction_lots l,auction_lots m
+                where m.auction_id=l.id
+                group by
+                    substring(l.create_date for 7),l.state,l.lot_type
+            )
+        """)
+report_auction_estimation_adj_category()
