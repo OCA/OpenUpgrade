@@ -694,20 +694,11 @@ class auction_bid_lines(osv.osv):
 	}
 auction_bid_lines()
 
-<<<<<<< .mine
+
 class report_unsold_object(osv.osv):
     
     _name='report.unsold.object'
     _description = "Unsold Objects"
-=======
-
-#
-############
-##start: creating new class for report(postgresview  for auction)
-class report_seller_auction(osv.osv):
-    _name = "report.seller.auction"
-    _description = "Auction Reporting on seller view1"
->>>>>>> .r183
     _auto = False
     _columns = {
         'depos': fields.many2one('res.users','User Name',readonly=True),
@@ -716,8 +707,6 @@ class report_seller_auction(osv.osv):
 		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
 
         }
-
-
     
     def init(self, cr):
 		cr.execute("""
@@ -734,6 +723,17 @@ class report_seller_auction(osv.osv):
                                     state = 'unsold'
 				group by lo.auction_id
 			    )""")
+
+
+
+#
+############
+##start: creating new class for report(postgresview  for auction)
+class report_seller_auction(osv.osv):
+    _name = "report.seller.auction"
+    _description = "Auction Reporting on seller view1"
+
+
         cr.execute('''create or replace view report_seller_auction  as
              (select
              rs.id as id,
@@ -742,8 +742,7 @@ class report_seller_auction(osv.osv):
              (select count(al2.id) from auction_lots as al2,auction_deposit ad2
              where ad2.id=al2.bord_vnd_id and al2.state='paid')as "object_sold"
 
-<<<<<<< .mine
-=======
+
              from  auction_deposit ad,res_partner rs,auction_lots al
              where rs.id=ad.partner_id and ad.id=al.bord_vnd_id
              group by rs.id,rs.name
@@ -782,9 +781,6 @@ class report_seller_auction2(osv.osv):
 
 
 report_seller_auction2()
-
-#
-
 
 
 class report_buyer_auction(osv.osv):
