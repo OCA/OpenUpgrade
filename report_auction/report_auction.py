@@ -49,17 +49,28 @@ class report_per_seller_customer(osv.osv):
         _description = "Customer per seller"
         _auto = False
         _columns = {
-                    'name': fields.char('Depositer Inventory', size=64, required=True),
-                    'partner_id': fields.many2one('res.partner', 'Seller',relate=True, required=True, change_default=True),
+                    'name': fields.char('Seller', size=64, required=True),
+                    'no_of_buyer': fields.integer('Buyer'),
         }
         def init(self, cr):
             cr.execute("""
                 create or replace view report_per_seller_customer as (
-                    SELECT
-                        l.id as id,
-                        l.name as name,
-                        l.partner_id as partner_id
-                    from auction_deposit l
+                   select
+                           ad.id as id,
+                           rs.name as name,
+                           count(ab.partner_id) as no_of_buyer
+
+                    from auction_bid ab,
+                        auction_bid_line abl,
+                        auction_lots al,
+                        auction_deposit ad,
+                        res_partner rs
+                    where rs.id=ad.partner_id and
+                         ab.id=abl.bid_id and
+                         abl.lot_id=al.id and
+                         al.bord_vnd_id=ad.id and
+                         ad.partner_id=rs.id
+                    group by rs.name,ad.id
                   )""")
 report_per_seller_customer()
 
