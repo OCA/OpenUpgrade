@@ -199,18 +199,18 @@ class report_auction_estimation_adj_category(osv.osv):
         cr.execute("""
             create or replace view report_auction_estimation_adj_category as (
                 select
-                   min(l.id) as id,
+                    min(l.id) as id,
                    substring(l.create_date for 7)||'-'||'01' as date,
                    l.state as state,
                    l.lot_type as lot_type,
                    sum(l.lot_est1) as lot_est1,
                    sum(l.lot_est2) as lot_est2,
-                   sum(m.obj_price) as adj_total
+                   sum(l.obj_price) as adj_total
                 from
-                    auction_lots l,auction_lots m
-                where m.auction_id=l.id
+                    auction_lots l,auction_dates m
+                where l.auction_id=m.id
                 group by
-                    substring(l.create_date for 7),l.state,l.lot_type
+                    substring(l.create_date for 7),l.state,lot_type
             )
         """)
 report_auction_estimation_adj_category()
