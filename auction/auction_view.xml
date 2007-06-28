@@ -517,10 +517,10 @@ Auction Management/Auction Dates/Reporting
 				<field name="seller" select="1"/>
 				<field name="object" select="1"/>
 				<field name="object_sold" select="1"/>
-				<field name="withdrawn" select="1"/>
-				<field name="total_price" select="1"/>
-				<field name="avg_price" select="1"/>
-
+-			  <!--  <field name="withdrawn" select="1"/>
+			    <field name="total_price" select="1"/>
+			    <field name="avg_price" select="1"/>
+-->
 			</form>
 		</field>
 	</record>
@@ -536,9 +536,9 @@ Auction Management/Auction Dates/Reporting
 				<field name="seller" select="1"/>
 				<field name="object" select="1"/>
 				<field name="object_sold" select="1"/>
-				<field name="withdrawn" select="1"/>
+			<!--	<field name="withdrawn" select="1"/>
 				<field name="total_price" select="1"/>
-				<field name="avg_price" select="1"/>
+				<field name="avg_price" select="1"/>-->
 
 				</tree>
 		</field>
@@ -550,16 +550,54 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">tree</field>
 	</record>
 
-	<menuitem name="Auction Management/Sellers/Reporting/This Month/view 1 " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
+	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller view 1 " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
+
+
+
+
+<record model="ir.ui.view" id="view_auction_form2">
+		<field name="name">auction.month.form2</field>
+		<field name="model">report.seller.auction2</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auction reporting2 form view">
+
+				<field name="seller" select="1"/>
+				<field name="gross_revenue" select="1"/>
+				<field name="net_revenue" select="1"/>
+				<field name="net_margin" select="1"/>
+
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_auction_tree2">
+		<field name="name">auction.month.tree2</field>
+		<field name="model">report.seller.auction2</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction reporting2 tree view">
+
+				<field name="seller" />
+				<field name="gross_revenue" />
+				<field name="net_revenue" />
+				<field name="net_margin" />
+
+				</tree>
+		</field>
+	</record>
+
+
 
 	<record model="ir.actions.act_window" id="action_auction_reporting2">
-		<field name="name">auction.this.month.tree</field>
-		<field name="res_model">report.seller.auction</field>
+		<field name="name">auction.this.month.tree2</field>
+		<field name="res_model">report.seller.auction2</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
 
-	<menuitem name="Auction Management/Sellers/Reporting/This Month/view 2" action="action_auction_reporting2" id="menu_seller_thismonth_view2"/>
+	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller view 2" action="action_auction_reporting2" id="menu_seller_thismonth_view2"/>
 
 	<record model="ir.actions.act_window" id="action_auction_reporting_all1">
 		<field name="name">auction.all.month.tree</field>
@@ -568,7 +606,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">tree</field>
 	</record>
 
-	<menuitem name="Auction Management/Sellers/Reporting/All Month/view 1 " action="action_auction_reporting_all1" id="menu_seller_allmonth_view1"/>
+	<menuitem name="Auction Management/Sellers/Reporting/All Months/seller view 1 " action="action_auction_reporting_all1" id="menu_seller_allmonth_view1"/>
 
 	<record model="ir.actions.act_window" id="action_auction_reporting_all2">
 		<field name="name">auction.all.month.tree</field>
@@ -577,7 +615,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">tree</field>
 	</record>
 
-	<menuitem name="Auction Management/Sellers/Reporting/All Month/view 2" action="action_auction_reporting_all2" id="menu_seller_allmonth_view2"/>
+	<menuitem name="Auction Management/Sellers/Reporting/All Months/seller view 2" action="action_auction_reporting_all2" id="menu_seller_allmonth_view2"/>
 
 
 
@@ -585,16 +623,58 @@ Auction Management/Auction Dates/Reporting
 
 
 
+<!--start : creating buyer Reporting menu for the buyer by pmo-->
+
+
+<record model="ir.ui.view" id="view_auction_buyer_form">
+		<field name="name">auction.buyer.month.form</field>
+		<field name="model">report.buyer.auction</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auction buyer reporting form view">
+
+				<field name="buyer_login" select="1"/>
+				<field name="buyer" select="1"/>
+				<field name="object" select="1"/>
+			    <field name="avg_price" select="1"/>
+				<field name="total_price" select="1"/>
+
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_auction_buyer_tree">
+		<field name="name">auction.buyer.month.tree</field>
+		<field name="model">report.buyer.auction</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction buyer reporting tree view">
+
+				<field name="buyer_login" select="1"/>
+				<field name="buyer" select="1"/>
+				<field name="object" select="1"/>
+			    <field name="avg_price" select="1"/>
+				<field name="total_price" select="1"/>
+
+
+				</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_auction_buyer_reporting">
+		<field name="name">auction.buyer.month.tree</field>
+		<field name="res_model">report.buyer.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+<menuitem name="Auction Management/Buyers/Reporting/This Month/Buyer view 1 " action="action_auction_buyer_reporting" id="menu_buyer_thismonth_view1"/>
 
 
 
 
 
-
-
-
-
-
+<!--end : creating buyer Reporting menu for the buyer by pmo-->
 
 
 
