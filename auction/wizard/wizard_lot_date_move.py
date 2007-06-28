@@ -28,7 +28,7 @@
 
 import wizard
 import netsvc
-
+import pooler
 import sql_db
 
 auction_move = '''<?xml version="1.0"?>
@@ -54,14 +54,11 @@ auction_move_fields = {
 #	return {}
 
 def _auction_move_set(self,cr,uid,datas,context={}):
-	#print "VALUES OF DATAS",datas;
-	print "VALUES OF DATAS",datas['form']
-	if datas['form']['auction_id']:
-		#cr = sql_db.db.cursor()
-		cr.execute('update auction_lots set auction_id=%s, obj_price=NULL, ach_login=NULL, ach_uid=NULL, ach_pay_id=NULL, ach_inv_id=NULL, state=%s where id in ('+','.join(map(str, datas['ids']))+')', (str(datas['form']['auction_id']), 'draft'))
-		cr.execute('delete from auction_bid_line where lot_id in ('+','.join(map(str, datas['ids']))+')')
-		cr.commit()
-		cr.close()
+	recs = pooler.get_pool(cr.dbname).get('auction.lots')
+	rec_ids = datas['ids']
+	if datas['form']['auction_id'] and len(rec_ids) :
+		cr.execute('update auction_lots set auction_id=%s, obj_price=NULL, ach_login=NULL, ach_uid=NULL,ach_inv_id=NULL, state=\'draft\' where id in ('+','.join(map(str, rec_ids))+')', (str(datas['form']['auction_id'])))
+		pooler.get_pool(cr.dbname).get('auction.bid_lines').unlink(cr, uid, rec_ids)
 	return {}
 
 class wiz_auc_lots_auction_move(wizard.interface):

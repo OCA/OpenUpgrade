@@ -113,7 +113,7 @@ Auction Management/Auction Dates/New Auction Dates
 				<field name="account_analytic_id"/>
 				<separator string="State" colspan="4"/>
 				<field name="state"/>
-				<button name="close" states="draft" string="Close + Create all invoices" type="object" colspan="2"/>
+				<!--<button name="close" states="draft" string="Close + Create all invoices" type="object" colspan="2"/>-->
 			</form>
 		</field>
 	</record>
@@ -196,7 +196,7 @@ Auction Management/Auction Dates/Reporting
 
 				<field name="author_right" domain="[('domain','=','sabam')]"/>
 				<field name="lot_est2"/>
-				<field name="tva"/>
+				<field name="product_id"/>
 				<field name="state" readonly="1"/>
 			</form>
 		</field>
@@ -258,7 +258,7 @@ Auction Management/Auction Dates/Reporting
 						<field name="name2" select="2"/>
 						<field name="artist_id" select="2"/>
 						<field name="artist2_id"/>
-						<field name="tva"/>
+						<field name="product_id"/>
 					</group>
 					<field widget="image" name="image" nolabel="1" colspan="2"/>
 					<field name="lot_est1" select="2"/>
@@ -276,6 +276,8 @@ Auction Management/Auction Dates/Reporting
 					<field name="lot_num"/>
 					<field name="vnd_lim"/>
 					<field name="vnd_lim_net"/>
+					<field name="sel_inv_id"/>
+					<field name="paid_ach"/>
 					<field name="history_ids" colspan="4" nolabel="1"/>
 				</page>
 				<page string="Buyer">
@@ -289,7 +291,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="author_right" domain="[('domain','=','sabam')]"/>
 					<newline/>
 					<field name="ach_inv_id"/>
-					<field name="ach_pay_id"/>
+					<field name="paid_vnd"/>
 					<field name="bid_lines" colspan="4" nolabel="1"/>
 				</page>
 				</notebook>
@@ -474,7 +476,7 @@ Auction Management/Auction Dates/Reporting
 
 								<field name="author_right" domain="[('domain','=','sabam')]"/>
 								<field name="lot_est2"/>
-								<field name="tva"/>
+								<field name="product_id"/>
 								<field name="state" readonly="1"/>
 							</form>
 						</field>

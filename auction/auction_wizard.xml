@@ -61,10 +61,16 @@
 		 id="wizard_invoicing"/>
 
 
-		<wizard string="Invoice objects"
+		<wizard string="Invoice Seller objects"
 			model="auction.lots"
 			name="auction.lots.make_invoice"
 			id="wizard_invoice"/>
+
+		<wizard string="Invoice Buyer objects"
+			model="auction.lots"
+			name="auction.lots.make_invoice_buyer"
+			id="wizard_invoice_buyer"/>
+
 	</data>
 </terp>
 

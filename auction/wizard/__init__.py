@@ -36,3 +36,4 @@ import wizard_lots_pay
 import wizard_lots_sms
 import wizard_lot_date_move
 import wizard_auction_journal
+import wizard_auction_invoice_buyer
