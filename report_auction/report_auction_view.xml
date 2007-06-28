@@ -61,7 +61,7 @@ Customer/Supplier
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
 				<field name="name" />
-				<field name="partner_id"/>
+				<field name="no_of_buyer"/>
 
 			</tree>
 		</field>
@@ -74,7 +74,7 @@ Customer/Supplier
 		<field name="arch" type="xml">
 			<graph string="Customer/Supplier" type="bar">
 				<field name="name" />
-				<field name="partner_id" />
+				<field name="no_of_buyer" />
 			</graph>
 		</field>
 
@@ -84,9 +84,9 @@ Customer/Supplier
 	<record model="ir.actions.act_window" id="action_per_seller_customer_tree">
 		<field name="res_model">report.per.seller.customer</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,graph</field>
+		<field name="view_mode">graph,tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/Customer per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Customer per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
 =============================
 My Latest 10 Deposit
 ==============================
@@ -225,6 +225,53 @@ estimation.adj.category
 	<menuitem name="Auction Management/Reporting/Member/This month/estimation/adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
 	<menuitem name="Auction Management/Reporting/Manager/This month/estimation/adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
 
+
+=============================
+sign in sign out report by user
+==============================
+
+	<record model="ir.ui.view" id="view_report_auction_sign_in_out_tree">
+		<field name="name">hr.attendance.tree</field>
+		<field name="model">hr.attendance</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Summary pointing by user ">
+				<field name="employee_id" />
+				<field name="name" />
+				<field name="action" />
+				<field name="action_desc" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_auction_sign_in_out_graph">
+		<field name="name">hr.attendance.graph</field>
+		<field name="model">hr.attendance</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Summary pointing by user " orientation="vertical" type="bar">
+				<field name="employee_id" />
+				<field name="name" />
+			</graph>
+		</field>
+
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_member_tree">
+		<field name="res_model">hr.attendance</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain">[('employee_id','=',uid)]</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree">
+		<field name="res_model">hr.attendance</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
 
 
 </data>
