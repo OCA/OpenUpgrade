@@ -141,7 +141,7 @@ class auction_deposit(osv.osv):
 	_description="Deposit Border"
 	_columns = {
 		'name': fields.char('Depositer Inventory', size=64, required=True),
-		'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
+		'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True, ondelete="set null"),
 		'date_dep': fields.date('Deposit date', required=True),
 		'method': fields.selection((('keep','Keep until sold'),('decease','Decrease limit of 10%'),('contact','Contact the Seller')), 'Withdrawned method', required=True),
 		'tax_id': fields.many2one('account.tax', 'Expenses'),
@@ -258,8 +258,8 @@ class auction_lots(osv.osv):
 
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
-		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
-		'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
+		'auction_id': fields.many2one('auction.dates', 'Auction Date', ondelete="set null"),
+		'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True, ondelete="set null"),
 		'name': fields.char('Short Description',size=64, required=True),
 		'name2': fields.char('Short Description (2)',size=64),
 		'lot_type': fields.selection(_type_get, 'Object Type', size=64),
