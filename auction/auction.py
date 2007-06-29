@@ -254,7 +254,7 @@ class auction_lots(osv.osv):
 	_name = "auction.lots"
 	_order = "obj_num,lot_num"
 	_description="Object"
-	
+
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
 		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
@@ -314,7 +314,7 @@ class auction_lots(osv.osv):
 			pass
 		return self.name_get(cr, user, ids)
 
-	
+
 	def _sum_taxes_by_type_and_id(self, taxes):
 		"""
 		PARAMS: taxes: a list of dictionaries of the form {'id':id, 'amount':amount, ...}
@@ -474,9 +474,9 @@ class auction_lots(osv.osv):
 					inv_id = inv_ref.create(cr, uid, inv, context)
 					inv_ref.button_compute(cr, uid, [inv_id])
 					invoices[lot.bord_vnd_id.id] = inv_id
-					
+
 				self.write(cr,uid,[lot.id],{'sel_inv_id':inv_id,'state':'sold','paid_vnd':'active'})
-				
+
 
 				taxes = map(lambda x: x.id, lot.product_id.taxes_id)
 				if lot.bord_vnd_id.tax_id:
@@ -492,7 +492,7 @@ class auction_lots(osv.osv):
 					'account_analytic_id': lot.auction_id.account_analytic_id.id,
 					'account_id': lot.auction_id.acc_expense.id,
 					'price_unit': lot.obj_price,
-					
+
 					}
 				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 			return invoices.values()
@@ -696,7 +696,7 @@ auction_bid_lines()
 
 
 class report_unsold_object(osv.osv):
-    
+
     _name='report.unsold.object'
     _description = "Unsold Objects"
     _auto = False
@@ -707,7 +707,7 @@ class report_unsold_object(osv.osv):
 		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
 
         }
-    
+
     def init(self, cr):
 		cr.execute("""
 			create or replace view report_unsold_object as (
@@ -732,8 +732,15 @@ class report_unsold_object(osv.osv):
 class report_seller_auction(osv.osv):
     _name = "report.seller.auction"
     _description = "Auction Reporting on seller view1"
+    _auto = False
+    _columns = {
+        'seller': fields.char('Saller Name',size=64, readonly=True, select=True),
+        'object':fields.integer('No of Object',readonly=True, select=True),
+        'object_sold':fields.integer('Object Sold',readonly=True, select=True),
+    }
 
-
+    def init(self, cr):
+        print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction  as
              (select
              rs.id as id,
@@ -749,6 +756,7 @@ class report_seller_auction(osv.osv):
              )''')
 
 
+report_seller_auction()
 ################################################################
 
 class report_seller_auction2(osv.osv):
@@ -815,6 +823,80 @@ class report_buyer_auction(osv.osv):
 
 report_buyer_auction()
 
+
+class report_buyer_auction(osv.osv):
+    _name = "report.buyer.auction"
+    _description = "Auction Reporting on buyer view"
+    _auto = False
+    _columns = {
+        'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
+        'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
+        'object':fields.integer('No of objects',readonly=True, select=True),
+        'avg_price':fields.integer('Avg price', readonly=True, select=True),
+        'total_price':fields.integer('Total price', readonly=True, select=True),
+
+
+    }
+
+    def init(self, cr):
+        print "In init of auction report ..";
+        cr.execute('''
+
+ create or replace view report_buyer_auction  as
+             (select al.id,al.ach_login as "buyer_login",
+             rs.name as "buyer",
+             count(al.id) as "object",
+             al.obj_ret as "total_price",
+             al.obj_ret+obj_price/2 as "avg_price"
+ 			from auction_lots al, auction_bid ab, auction_bid_line abl,res_partner rs
+ 			where al.ach_uid=rs.id group by al.ach_uid,al.ach_login,rs.name,al.obj_ret,al.obj_price,al.id
+             )''')
+
+
+
+report_buyer_auction()
+
+
+
+
+
+
+
+
+
+
+
+class report_buyer_auction2(osv.osv):
+    _name = "report.buyer.auction2"
+    _description = "Auction Reporting on buyer view"
+    _auto = False
+    _columns = {
+        'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
+        'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
+        'object':fields.integer('No of objects',readonly=True, select=True),
+        'avg_price':fields.integer('Avg price', readonly=True, select=True),
+        'total_price':fields.integer('Total price', readonly=True, select=True),
+
+
+    }
+
+    def init(self, cr):
+        print "In init of auction report ..";
+        cr.execute('''
+
+ create or replace view report_buyer_auction2  as
+             (select al.id,al.ach_login as "buyer_login",
+             rs.name as "buyer",
+             count(al.id) as "object",
+             al.obj_ret as "total_price",
+             al.obj_ret+obj_price/2 as "avg_price"
+ 			from auction_lots al, auction_bid ab, auction_bid_line abl,res_partner rs
+ 			where al.ach_uid=rs.id group by al.ach_uid,al.ach_login,rs.name,al.obj_ret,al.obj_price,al.id
+             )''')
+
+
+
+report_buyer_auction2()
 #
 
 
