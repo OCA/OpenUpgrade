@@ -255,6 +255,9 @@ class auction_lots(osv.osv):
 	_order = "obj_num,lot_num"
 	_description="Object"
 
+
+
+
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
 		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
@@ -289,7 +292,8 @@ class auction_lots(osv.osv):
 		'image': fields.binary('Image'),
 		'paid_vnd':fields.boolean('Buyer Paid',readonly=True),
 		'paid_ach':fields.boolean('Seller Paid',readonly=True),
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True)
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
+
 	}
 	_defaults = {
 		'state':lambda *a: 'draft',
@@ -712,16 +716,15 @@ class report_unsold_object(osv.osv):
 		cr.execute("""
 			create or replace view report_unsold_object as (
 				select
-									min(lo.id) as id,
-                                    lo.auction_id as auct_id,
-                                    lo.lot_type as lot,
-                                    lo.product_id as product,
-                                    lo.bord_vnd_id as depos
-				from
-                                    auction.lots lo
-                                where
-                                    state = 'unsold'
-				group by lo.auction_id
+		min(lo.id) as id,
+                lo.auction_id as auct_id,
+                lo.lot_type as lot,
+                lo.product_id as product,
+                lo.bord_vnd_id as depos
+		from
+                  auction_lots lo
+                 where state = 'unsold'
+		 group by lo.auction_id,lo.lot_type,lo.product_id,lo.bord_vnd_id
 			    )""")
 
 
@@ -734,9 +737,10 @@ class report_seller_auction(osv.osv):
     _description = "Auction Reporting on seller view1"
     _auto = False
     _columns = {
-        'seller': fields.char('Saller Name',size=64, readonly=True, select=True),
+        'seller': fields.char('Seller Name',size=64, readonly=True, select=True),
         'object':fields.integer('No of Object',readonly=True, select=True),
         'object_sold':fields.integer('Object Sold',readonly=True, select=True),
+         'total_price':fields.integer('Total Seller price',readonly=True, select=True),
     }
 
     def init(self, cr):
@@ -744,15 +748,15 @@ class report_seller_auction(osv.osv):
         cr.execute('''create or replace view report_seller_auction  as
              (select
              rs.id as id,
-             rs.name as "seller",
-             count(al.id) as "object",
+             rs.name as seller,
+             count(al.id) as object,
              (select count(al2.id) from auction_lots as al2,auction_deposit ad2
-             where ad2.id=al2.bord_vnd_id and al2.state='paid')as "object_sold"
+             where ad2.id=al2.bord_vnd_id and al2.state='paid')as object_sold,
+	     al.obj_price-ast.tax_id as total_price
 
-
-             from  auction_deposit ad,res_partner rs,auction_lots al
-             where rs.id=ad.partner_id and ad.id=al.bord_vnd_id
-             group by rs.id,rs.name
+		from  auction_seller_taxes_rel ast,auction_deposit ad,res_partner rs,auction_lots al,auction_dates ade
+             where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and al.auction_id=ade.id and ade.id=ast.auction_id
+             group by rs.id,rs.name,al.obj_price,ast.tax_id
              )''')
 
 
