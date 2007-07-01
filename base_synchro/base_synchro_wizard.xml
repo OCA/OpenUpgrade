@@ -2,12 +2,12 @@
 <terp>
 	<data>
 		<wizard
-			string="Data Transfer Wizard"
+			string="Synchronize objects"
 			model="account.analytic.account"
 			name="account.analytic.account.transfer"
 			id="wizard_cost_account_synchro"/>
 		<menuitem
-			name="Financial Management/Configuration/Analytic Accounts/Transfer"
+			name="Administration/Synchronization/Execute synchronization"
 			action="wizard_cost_account_synchro"
 			type="wizard"
 			id="menu_wizard_cost_account_synchro"/>

@@ -9,180 +9,168 @@ import tools
 
 acc_synchro_form = '''<?xml version="1.0"?>
 <form string="Transfer Data To Server">
-    <field name="server_url" colspan="4"/>
-    <newline/>
-    <newline/>
+	<field name="server_url" colspan="4"/>
+	<newline/>
+	<newline/>
 </form>'''
+
+acc_synchro_fields = {
+	'server_url': {'string':'Server URL', 'type':'many2one', 'relation':'base.synchro.server','required':True},
+}
 
 finish_form ='''<?xml version="1.0"?>
 <form string="Synchronization Complited!">
-    <label string="Data Transfered successfully!!!" colspan="4"/>
+	<label string="Data Transfered successfully!!!" colspan="4"/>
 </form>
 '''
 
+class RPCProxyOne(object):
+	def __init__(self, server, ressource):
+		self.server = server
+		local_url = 'http://%s:%d/xmlrpc/common'%(server.server_url,server.server_port)
+		rpc = xmlrpclib.ServerProxy(local_url)
+		self.uid = rpc.login(server.server_db, server.login, server.password)
+		local_url = 'http://%s:%d/xmlrpc/object'%(server.server_url,server.server_port)
+		self.rpc = xmlrpclib.ServerProxy(local_url)
+		self.ressource = ressource
+	def __getattr__(self, name):
+		return lambda cr, uid, *args, **kwargs: self.rpc.execute(self.server.server_db, self.uid, self.server.password, self.ressource, name, *args, **kwargs)
 
+class RPCProxy(object):
+	def __init__(self, server):
+		self.server = server
+	def get(self, ressource):
+		return RPCProxyOne(self.server, ressource)
 
 class wizard_cost_account_synchro(wizard.interface):
+	def _synchronize(self, cr, uid, server, object, context):
+		pool = pooler.get_pool(cr.dbname)
+		self.meta = {}
+		ids = []
+		pool1 = RPCProxy(server)
+		pool2 = pool
+		if object.action in ('d','b'):
+			ids = pool1.get('base.synchro.obj')._get_ids(cr, uid, 
+				object.model_id.model, 
+				object.synchronize_date, 
+				eval(object.domain), 
+				{'action':'d'}
+			)
+		if object.action in ('u','b'):
+			ids += pool2.get('base.synchro.obj')._get_ids(cr, uid, 
+				object.model_id.model, 
+				object.synchronize_date, 
+				eval(object.domain), 
+				{'action':'u'}
+			)
+		ids.sort()
+		for dt, id, action in ids:
+			if action=='u':
+				pool_src = pool2
+				pool_dest = pool1
+			else:
+				pool_src = pool1
+				pool_dest = pool2
+			value = pool_src.get(object.model_id.model).read(cr, uid, [id], context)[0]
+			value = self._data_transform(cr, uid, pool_src, object.model_id.model, value, action, context)
 
-    server_url=""
+			id2 = self.get_id(cr, uid, object.id, id, action, context)
+			#
+			# Transform value
+			#
+			if id2:
+				pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
+			else:
+				idnew = pool_dest.get(object.model_id.model).create(cr, uid, value)
+				synid = pool.get('base.synchro.obj.line').create(cr, uid, {
+					'obj_id': object.id,
+					'local_id': (action=='u') and id or idnew,
+					'remote_id': (action=='d') and id or idnew
+				})
+		self.meta = {}
+		return 'finish'
 
-    def _validate_server(self,cr,uid,server_name):
-        pat = re.compile('@|:')
-        pat_list = pat.split(server_name)
-        ret_dict = {}
-        ret_dict['db_name'] = pat_list[0];
-        ret_dict['server_name']=pat_list[1];
-        ret_dict['port']=pat_list[2];
-        return ret_dict
+	#
+	# IN: object and ID
+	# OUT: ID of the remote object computed:
+	#        If object is synchronised, read the sync database
+	#        Otherwise, use the name_search method
+	#
+	def get_id(self, cr, uid, object_id, id, action, context={}):
+		pool = pooler.get_pool(cr.dbname)
+		field_src = (action=='u') and 'local_id' or 'remote_id'
+		field_dest = (action=='d') and 'local_id' or 'remote_id'
+		rid = pool.get('base.synchro.obj.line').search(cr, uid, [('obj_id','=',object_id), (field_src,'=',id)], context)
+		result = False
+		if rid:
+			result  = pool.get('base.synchro.obj.line').read(cr, uid, rid, [field_dest], context=context)[0][field_dest]
+		return result
 
-    def _fields_list(self,cr,uid,field_list,remove_list=None):
-        tmp={}
-        print "tmp before::::::::::",tmp
-        for field in field_list:
-            print "field :",field
-            if field_list[field]['type'] not in remove_list:
-                tmp[field] = field_list[field]
+	def _relation_transform(self, cr, uid, object, id, action, context={}):
+		if not id:
+			return False
+		pool = pooler.get_pool(cr.dbname)
+		cr.execute('''select o.id from base_synchro_obj o left join ir_model m on (o.model_id =m.id) where
+				m.model=%s and
+				o.active''', (object,))
+		obj = cr.fetchone()
+		result = False
+		if obj:
+			result = self.get_id(cr, uid, obj[0], id, action, context)
+		if not result:
+			result = id
+		return result
 
-        print "tmppppppppppppppppppp",tmp
-        return tmp
+	def _data_transform(self, cr, uid, pool_src, object, data, action='u', context={}):
+		self.meta.setdefault(pool_src, {})
+		if not object in self.meta[pool_src]:
+			self.meta[pool_src][object] = pool_src.get(object).fields_get(cr, uid, context)
+		fields = self.meta[pool_src][object]
 
-    def _upload_download(self, cr, uid, data, context):
+		for f in fields:
+			ftype = fields[f]['type']
 
-        port=tools.config['port']
-        port=int(port)
-        local_url = 'http://%s:%d/xmlrpc/'%(tools.config['smtp_server'],port)
-        rpcproxy1 = xmlrpclib.ServerProxy(local_url+'object');
-        url_id = data['form']['server_url']
-        url=rpcproxy1.execute(cr.dbname,uid,'admin','base.synchro.server','read',[url_id])
-        objid=url[0]['obj_id']
-        models = rpcproxy1.execute(cr.dbname,uid,'admin','base.synchro.obj','read',url[0]['obj_id'])
-        url_split=self._validate_server(cr,uid,url[0]['name'])
-        user_name = url[0]['login'];
-        password = url[0]['password'];
-        result = {}
-        result['db_name'] = url_split['db_name'];
-        result['server_name']=url_split['server_name'];
-        result['port']=url_split['port'];
-        self.server_url = 'http://%s:%s/xmlrpc/common'%(result['server_name'],result['port']);
-        try:
-            rpcproxy2 = xmlrpclib.ServerProxy(self.server_url);
-            user_id = rpcproxy2.login(result['db_name'],user_name,password);
-        except Exception,e :
-            raise wizard.except_wizard('ServerError', 'Unable to connect server !')
-        print "server2 connected successfully:::::::::"
-        self.server_url = 'http://%s:%s/xmlrpc/object'%(result['server_name'],result['port']);
-        rpcproxy2 = xmlrpclib.ServerProxy(self.server_url);
+			if ftype in ('function', 'one2many', 'one2one'):
+				del data[f]
+			elif ftype == 'many2one':
+				if data[f]:
+					data[f] = self._relation_transform(cr, uid, fields[f]['relation'], data[f][0], action, context)
+			elif ftype == 'many2many':
+				res = map(lambda x: self._relation_transform(cr, uid, fields[f]['relation'], x, action, context), data[f])
+				data[f] = [(6, 0, res)]
+		del data['id']
+		return data
 
-        for model in models:
-            if (model['action']=='u'):
-                self._create_structure(cr, uid, rpcproxy1,rpcproxy2,model,['admin',password],[cr.dbname,result['db_name']],[uid,user_id],url)
-            elif (model['action']=='d'):
-                self._create_structure(cr, uid, rpcproxy2,rpcproxy1,model,[password,'admin'],[result['db_name'],cr.dbname],[user_id,uid],url)
-        return 'finish'
+	#
+	# Find all objects that are created or modified after the synchronize_date
+	# Synchronize these obejcts
+	# 
+	def _upload_download(self, cr, uid, data, context):
+		pool = pooler.get_pool(cr.dbname)
+		server = pool.get('base.synchro.server').browse(cr, uid, data['form']['server_url'], context)
+		for object in server.obj_ids:
+			dt = time.strftime('%Y-%m-%d %H:%M:%S')
+			self._synchronize(cr, uid, server, object, context)
+			if object.action=='b':
+				dt = time.strftime('%Y-%m-%d %H:%M:%S')
+			pool.get('base.synchro.obj').write(cr, uid, [object.id], {'synchronize_date': dt})
+			cr.commit()
+		return 'finish'
 
-    def _create_structure(self,cr,uid, rpcproxy1,rpcproxy2,model,password,db_name,user_id,url):
-        model_local_fields=rpcproxy1.execute(db_name[0],user_id[0],password[0],model['model_id'][1],'fields_get')
-        model_local_fields=self._fields_list(cr, uid, model_local_fields, ['function','one2many','many2many'])
-        model_data_ids=rpcproxy1.execute(db_name[0],user_id[0],password[0],model['model_id'][1],'search',[])
-        model_data_read=rpcproxy1.execute(db_name[0],user_id[0],password[0],model['model_id'][1],'read',model_data_ids,model_local_fields.keys())
-        for model_data in model_data_read:
-            model_remote = rpcproxy2.execute(db_name[1],user_id[1],password[1],model['model_id'][1],'name_search',model_data['name'],[],'=')
-            if len(model_remote):
-#                del model_data['id']
-                tmp_data=rpcproxy2.execute(db_name[1],user_id[1],password[1],model['model_id'][1],'read',[model_remote[0][0]],model_local_fields.keys())
-                search_list=[];
-                for k,v in model_data.items():
-                    if k != 'id':
-                        if type(v)==type(()):
-                            search_list.append((k,'=',v[0]))
-                        elif type(v)==type([]) and len(tmp_data[0][k]):
-                                search_list.append((k,'=',v[0]))
-                                model_data[k]=tmp_data[0][k][0]
-                        else:
-                            search_list.append((k,'=',v))
-
-                a=rpcproxy2.execute(db_name[1],user_id[1],password[1],model['model_id'][1],'write',[model_remote[0][0]],model_data)
-                acc_sync_obj_line={
-                                    'obj_id':model['id'],
-                                    'local_id':model_data['id'],
-                                    'remote_id':model_remote[0][0],
-                                    'method':'w',
-                                   }
-                insert_local_id_line = pooler.get_pool(cr.dbname).get('base.synchro.obj.line').create(cr,uid,acc_sync_obj_line);
-            else:
-
-                default = {}
-                if not default:
-                    default = {}
-                if 'state' not in default:
-                    if 'state' in rpcproxy1.execute(db_name[0],user_id[0],password[0],model['model_id'][1],'default_get',['state']):
-                        default['state'] = rpcproxy1.execute(db_name[0],user_id[0],password[0],model['model_id'][1],'default_get',['state'])['state']
-                data=rpcproxy1.execute(db_name[0],user_id[0],password[0],model['model_id'][1],'read',[model_data['id']])[0]
-                fields=rpcproxy1.execute(db_name[0],user_id[0],password[0],model['model_id'][1],'fields_get')
-                fields=self._fields_list(cr, uid, fields, ['function','one2many','many2many'])
-                for f in fields:
-
-                    ftype = fields[f]['type']
-                    if f in default:
-                        data[f] = default[f]
-                    elif ftype == 'function':
-                        del data[f]
-                    elif ftype == 'many2one':
-                        try:
-                            res = False
-                            relation=fields[f]['relation']
-                            res2 = rpcproxy1.execute(db_name[0],user_id[0],password[0],relation,'name_search',data[f][1])
-                            res3 = rpcproxy2.execute(db_name[1],user_id[1],password[1],relation,'name_search',data[f][1])
-                            if res3:
-                                data[f] = res3[0][0]
-                            else:
-                                cr_data=rpcproxy1.execute(db_name[0],user_id[0],password[0],relation,'read',[res2[0][0]])
-                                for tk,tv in cr_data[0].items():
-                                    if tk != 'id':
-                                        if type(tv)==type([]) and len(cr_data[0][tk]):
-                                            cr_data[0][tk]=cr_data[0][tk][0]
-                                del cr_data[0]['id']
-                                new_id = rpcproxy2.execute(db_name[1],user_id[1],password[1],relation,'create',cr_data[0])
-                                cr.commit();
-                                data[f] = new_id
-                        except:
-                            pass
-                    elif ftype in ('one2many', 'one2one'):
-                        continue
-                for dk,dv in data.items():
-                    if dk != 'id':
-                        if type(dv)==type([]) and len(data[dk]):
-                            data[dk]=data[dk][0]
-                del data['id']
-                new_id = rpcproxy2.execute(db_name[1],user_id[1],password[1],model['model_id'][1],'create',data)
-                acc_sync_obj_line={
-                    'obj_id':model['id'],
-                    'local_id':model_data['id'],
-                    'remote_id':new_id,
-                    'method':'c',
-                   }
-                insert_local_id_line = pooler.get_pool(cr.dbname).get('base.synchro.obj.line').create(cr,uid,acc_sync_obj_line);
-
-
-    acc_synchro_fields = {
-        'server_url': {'string':'Server URL', 'type':'many2one', 'relation':'base.synchro.server','required':True},
-            }
-
-    states = {
-        'init': {
-            'actions': [],
-            'result': {'type':'form', 'arch':acc_synchro_form, 'fields':acc_synchro_fields, 'state':[('end','Cancel'),('upload_download','Synchronize')]}
-        },
-        'upload_download': {
-            'actions': [],
-            'result':{'type':'choice', 'next_state': _upload_download}
-        },
-        'finish': {
-            'actions': [],
-            'result':{'type':'form', 'arch':finish_form,'fields':{},'state':[('end','Ok')]}
-        },
-
-    }
+	states = {
+		'init': {
+			'actions': [],
+			'result': {'type':'form', 'arch':acc_synchro_form, 'fields':acc_synchro_fields, 'state':[('end','Cancel'),('upload_download','Synchronize')]}
+		},
+		'upload_download': {
+			'actions': [],
+			'result':{'type':'choice', 'next_state': _upload_download}
+		},
+		'finish': {
+			'actions': [],
+			'result':{'type':'form', 'arch':finish_form,'fields':{},'state':[('end','Ok')]}
+		},
+	}
 wizard_cost_account_synchro('account.analytic.account.transfer')
 
 
