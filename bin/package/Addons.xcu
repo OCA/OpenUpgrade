@@ -55,7 +55,14 @@
 							<value>com.sun.star.text.TextDocument</value>
 						</prop>
 					</node>
-
+					<node oor:name="m5" oor:op="replace">
+ 	            		<prop oor:name="Context" oor:type="xs:string">
+ 	                   		<value>com.sun.star.text.TextDocument</value>
+	 	                </prop>
+ 		                <prop oor:name="URL" oor:type="xs:string">
+ 	   		              	<value>private:separator</value>
+ 	    	            </prop>
+ 	        	    </node>
 					<node oor:name="m2" oor:op="replace">
 						<prop oor:name="URL" oor:type="xs:string">
 							<value>service:org.openoffice.tiny.report.fields?insert</value>
@@ -71,6 +78,7 @@
 							<value>com.sun.star.text.TextDocument</value>
 						</prop>
 					</node>
+
 					<node oor:name="m1" oor:op="replace">
 						<prop oor:name="URL" oor:type="xs:string">
 							<value>service:org.openoffice.tiny.report.expression?insert</value>
@@ -86,6 +94,7 @@
 							<value>com.sun.star.text.TextDocument</value>
 						</prop>
 					</node>
+
 					<node oor:name="m4" oor:op="replace">
 						<prop oor:name="URL" oor:type="xs:string">
 							<value>service:org.openoffice.tiny.report.modify?insert</value>
@@ -102,7 +111,6 @@
 						</prop>
 					</node>
 				</node>
-
 			</node>
 		</node>
 
@@ -126,7 +134,14 @@
 						<value>com.sun.star.text.TextDocument</value>
 					</prop>
 				</node>
-
+				<node oor:name="m5" oor:op="replace">
+ 	            	<prop oor:name="Context" oor:type="xs:string">
+ 	                   	<value>com.sun.star.text.TextDocument</value>
+ 	                </prop>
+ 	                <prop oor:name="URL" oor:type="xs:string">
+ 	                  	<value>private:separator</value>
+ 	                </prop>
+ 	            </node>
 				<node oor:name="m2" oor:op="replace">
 					<prop oor:name="URL" oor:type="xs:string">
 						<value>service:org.openoffice.tiny.report.fields?insert</value>
