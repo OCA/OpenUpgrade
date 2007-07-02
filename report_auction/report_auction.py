@@ -1,4 +1,5 @@
 from osv import fields,osv
+from mx import DateTime
 
 
 class report_auction_adjudication(osv.osv):
@@ -225,3 +226,34 @@ class report_auction_estimation_adj_category(osv.osv):
             )
         """)
 report_auction_estimation_adj_category()
+class report_auction_user_pointing(osv.osv):
+    _name = "report.auction.user.pointing"
+    _description = "user pointing "
+    _auto = False
+    _columns = {
+            'user_id': fields.char('User',size=64, required=True, select=1),
+            'name': fields.date('Date', readonly=True),
+            'sheet_id': fields.many2one('hr_timesheet_sheet.sheet', 'Sheet', readonly=True, select="1"),
+            'total_timesheet': fields.float('Project Timesheet', readonly=True),
+      }
+
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_auction_user_pointing as (
+                select r.name as user_id,
+                        l.id as id,
+                        l.total_timesheet as total_timesheet
+
+                from hr_timesheet_sheet_sheet_day l,
+                     hr_timesheet_sheet_sheet h,
+                     res_users r
+                where h.id=l.sheet_id
+                and
+                l.name='2007-07-02'
+                and
+                h.user_id=r.id
+
+            )
+        """)
+report_auction_user_pointing()
+
