@@ -278,6 +278,41 @@ class auction_lots(osv.osv):
 		#end for auction_data in auction_lots_obj:
 		return res
 
+	def _grossprice(self, cr, uid, ids, name, args, context):
+#		print " IN THE BUYER PRICE Fuction",ids
+		res={}
+		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
+
+		for auction_data in auction_lots_obj:
+			total_tax = 0.0
+#			print "Auction data :",auction_data
+			if auction_data['auction_id']:
+				total_tax += auction_data['buyer_price']-auction_data['seller_price']
+				#end for acc_amount in account_taxes:
+				#end if auction_dates['buyer_costs']:
+			#end if auction_data['auction_id']:
+			res[auction_data['id']] = total_tax
+		#end for auction_data in auction_lots_obj:
+		return res
+
+	def _netprice(self, cr, uid, ids, name, args, context):
+#		print " IN THE BUYER PRICE Fuction",ids
+		res={}
+		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
+
+		for auction_data in auction_lots_obj:
+			total_tax = 0.0
+#			print "Auction data :",auction_data
+			if auction_data['auction_id']:
+				total_tax += auction_data['buyer_price']-auction_data['seller_price']
+				#end for acc_amount in account_taxes:
+				#end if auction_dates['buyer_costs']:
+			#end if auction_data['auction_id']:
+			res[auction_data['id']] = total_tax
+		#end for auction_data in auction_lots_obj:
+		return res
+
+
 	def _sellerprice(self, cr, uid, ids, name, args, context):
 #		print " IN THE BUYER PRICE Fuction",ids
 		res={}
@@ -300,6 +335,7 @@ class auction_lots(osv.osv):
 			res[auction_data['id']] = auction_data['obj_price'] - total_tax
 		#end for auction_data in auction_lots_obj:
 		return res
+
 
 
 
@@ -340,6 +376,8 @@ class auction_lots(osv.osv):
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='buyerprice',store=True),
 		'seller_price':fields.function(_sellerprice, method=True, string='sellerprice',store=True),
+		'gross_revenue':fields.function(_grossprice, method=True, string='Grossrevenue',store=True),
+		'net_revenue':fields.function(_netprice, method=True, string='Netrevenue',store=True),
 
 	}
 	_defaults = {
