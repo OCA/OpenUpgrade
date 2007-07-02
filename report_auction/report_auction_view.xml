@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+	<menuitem name="Auction Management/Reporting/Manager" groups="admin"/>
 =============================
 Auction adjudication
 ==============================
@@ -231,44 +232,43 @@ sign in sign out report by user
 ==============================
 
 	<record model="ir.ui.view" id="view_report_auction_sign_in_out_tree">
-		<field name="name">hr.attendance.tree</field>
-		<field name="model">hr.attendance</field>
+		<field name="name">report.auction.user.pointing.tree</field>
+		<field name="model">report.auction.user.pointing</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Summary pointing by user ">
-				<field name="employee_id" />
-				<field name="name" />
-				<field name="action" />
-				<field name="action_desc" />
+				<field name="name"/>
+				<field name="total_timesheet" widget="float_time"/>
 			</tree>
 		</field>
 	</record>
 
 	<record model="ir.ui.view" id="view_report_auction_sign_in_out_graph">
-		<field name="name">hr.attendance.graph</field>
-		<field name="model">hr.attendance</field>
+		<field name="name">report.auction.user.pointing.graph</field>
+		<field name="model">report.auction.user.pointing</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
+
 			<graph string="Summary pointing by user " orientation="vertical" type="bar">
-				<field name="employee_id" />
-				<field name="name" />
+				<field name="user_id" />
+				<field name="total_timesheet" />
 			</graph>
+
 		</field>
 
 	</record>
 
 
 	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_member_tree">
-		<field name="res_model">hr.attendance</field>
+		<field name="res_model">report.auction.user.pointing</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-		<field name="domain">[('employee_id','=',uid)]</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid)]</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree">
-		<field name="res_model">hr.attendance</field>
+		<field name="res_model">report.auction.user.pointing</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-
+		<field name="view_mode">tree,graph</field>
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
 	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
