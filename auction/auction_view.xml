@@ -167,6 +167,8 @@ Auction Management/Auction Dates/Reporting
 					<field name="vnd_lim"/>
 					<field name="lot_est1"/>
 					<field name="lot_est2"/>
+					<field name="buyer_price" />
+					<field name="seller_price" />
 				</tree>
 		</field>
 	</record>
@@ -185,6 +187,8 @@ Auction Management/Auction Dates/Reporting
 				<field name="name"/>
 				<field name="lot_type" select="1"/>
 				<field name="name2"/>
+				<field name="buyer_price" />
+				<field name="seller_price" />
 
 				<newline/>
 				<field name="artist_id"/>
@@ -237,6 +241,8 @@ Auction Management/Auction Dates/Reporting
 				<field name="lot_est2"/>
 				<field name="lot_type" select="1"/>
 				<field name="lot_num"/>
+				<field name="buyer_price" />
+				<field name="seller_price" />
 			</tree>
 		</field>
 	</record>
@@ -269,6 +275,8 @@ Auction Management/Auction Dates/Reporting
 					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
 					<field name="lot_local"/>
 					<field name="state" select="1"/>
+					<field name="buyer_price" />
+					<field name="seller_price" />
 				</page>
 				<page string="Seller">
 					<separator string="Seller information" colspan="4"/>
