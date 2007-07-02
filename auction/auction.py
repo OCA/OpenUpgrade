@@ -828,46 +828,6 @@ class report_buyer_auction(osv.osv):
 report_buyer_auction()
 
 
-class report_buyer_auction(osv.osv):
-    _name = "report.buyer.auction"
-    _description = "Auction Reporting on buyer view"
-    _auto = False
-    _columns = {
-        'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
-        'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
-        'object':fields.integer('No of objects',readonly=True, select=True),
-        'avg_price':fields.integer('Avg price', readonly=True, select=True),
-        'total_price':fields.integer('Total price', readonly=True, select=True),
-
-
-    }
-
-    def init(self, cr):
-        print "In init of auction report ..";
-        cr.execute('''
-
- create or replace view report_buyer_auction  as
-             (select al.id,al.ach_login as "buyer_login",
-             rs.name as "buyer",
-             count(al.id) as "object",
-             al.obj_ret as "total_price",
-             al.obj_ret+obj_price/2 as "avg_price"
- 			from auction_lots al, auction_bid ab, auction_bid_line abl,res_partner rs
- 			where al.ach_uid=rs.id group by al.ach_uid,al.ach_login,rs.name,al.obj_ret,al.obj_price,al.id
-             )''')
-
-
-
-report_buyer_auction()
-
-
-
-
-
-
-
-
-
 
 
 class report_buyer_auction2(osv.osv):
