@@ -590,8 +590,16 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">graph,tree</field>
 	</record>
 
-	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller view 1 " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
+	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller object detail " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
 
+	<record model="ir.actions.act_window" id="action_auction_reporting_all1">
+		<field name="name">auction.all.month.tree</field>
+		<field name="res_model">report.seller.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+
+	<menuitem name="Auction Management/Sellers/Reporting/All Months/Seller object detail " action="action_auction_reporting_all1" id="menu_seller_allmonth_view1"/>
 
 
 
@@ -641,14 +649,6 @@ Auction Management/Auction Dates/Reporting
 
 	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller view 2" action="action_auction_reporting2" id="menu_seller_thismonth_view2"/>
 
-	<record model="ir.actions.act_window" id="action_auction_reporting_all1">
-		<field name="name">auction.all.month.tree</field>
-		<field name="res_model">report.seller.auction</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-	</record>
-
-	<menuitem name="Auction Management/Sellers/Reporting/All Months/seller view 1 " action="action_auction_reporting_all1" id="menu_seller_allmonth_view1"/>
 
 	<record model="ir.actions.act_window" id="action_auction_reporting_all2">
 		<field name="name">auction.all.month.tree</field>
