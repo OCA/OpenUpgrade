@@ -80,7 +80,7 @@ class auction_dates(osv.osv):
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
 		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
-		'state': fields.selection((('draft','Draft'),('sold','Closed'),('unsold','Unsold')),'State', readonly=True),
+		'state': fields.selection((('draft','Draft'),('sold','Closed'),('unsold','Unsold')),'State'),
 		#'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'journal_id':fields.many2one('account.journal', 'Journal',required=True),
 		'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
@@ -372,6 +372,24 @@ class auction_lots(osv.osv):
 		return res
 
 
+	def _is_paid_vnd(self,cr,uid,ids,*a):
+		res = {}
+		lots=self.browse(cr,uid,ids)
+		for lot in lots:
+			res[lot.id] = False
+			if lot.sel_inv_id:
+				if lot.sel_inv_id.state == 'paid':
+					res[lot.id] = True
+		return res
+	def _is_paid_ach(self,cr,uid,ids,*a):
+		res = {}
+		lots=self.browse(cr,uid,ids)
+		for lot in lots:
+			res[lot.id] = False
+			if lot.ach_inv_id:
+				if lot.ach_inv_id.state == 'paid':
+					res[lot.id] = True
+		return res
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
 		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
@@ -398,12 +416,14 @@ class auction_lots(osv.osv):
 		'ach_login': fields.char('Buyer Username',size=64),
 		'ach_uid': fields.many2one('res.partner', 'Buyer'),
 		'ach_emp': fields.boolean('Taken Away'),
-		#'ach_pay_id': fields.many2one('account.transfer','Payment', readonly=True, states={'draft':[('readonly',False)]}),
 		'ach_inv_id': fields.many2one('account.invoice','Buyer Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'sel_inv_id': fields.many2one('account.invoice','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
 		'vnd_lim_net': fields.boolean('Net limit ?'),
 		'image': fields.binary('Image'),
+		'paid_vnd':fields.function(_is_paid_vnd,string='Buyer Paid',method=True,type='boolean'),
+		'paid_ach':fields.function(_is_paid_ach,string='Seller Paid',method=True,type='boolean'),
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
 		'paid_vnd':fields.boolean('Buyer Paid',readonly=True),
 		'paid_ach':fields.boolean('Seller Paid',readonly=True),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
@@ -438,7 +458,6 @@ class auction_lots(osv.osv):
 			pass
 		return self.name_get(cr, user, ids)
 
-
 	def _sum_taxes_by_type_and_id(self, taxes):
 		"""
 		PARAMS: taxes: a list of dictionaries of the form {'id':id, 'amount':amount, ...}
@@ -455,18 +474,18 @@ class auction_lots(osv.osv):
 
 		return taxes_summed.values()
 
-	def compute_buyer_costs(self, cr, uid, ids):
-		lots = self.browse(cr, uid, ids)
-#CHECKME: est-ce que ca vaudrait la peine de faire des groupes de lots qui ont les memes couts pour passer des listes de lots a compute?
-		taxes_res = []
-		for lot in lots:
-			costs_ids = [c.id for c in lot.auction_id.buyer_costs]
-			if (lot.author_right):
-				costs_ids.append(lot.author_right.id)
-			taxes_res.extend(self.pool.get('account.tax').compute(cr, uid, costs_ids, lot.obj_price, 1))
-		for t in taxes_res:
-			t.update({'type': 0})
-		return self._sum_taxes_by_type_and_id(taxes_res)
+#	def compute_buyer_costs(self, cr, uid, ids):
+#		lots = self.browse(cr, uid, ids)
+##CHECKME: est-ce que ca vaudrait la peine de faire des groupes de lots qui ont les memes couts pour passer des listes de lots a compute?
+#		taxes_res = []
+#		for lot in lots:
+#			costs_ids = [c.id for c in lot.auction_id.buyer_costs]
+#			if (lot.author_right):
+#				costs_ids.append(lot.author_right.id)
+#			taxes_res.extend(self.pool.get('account.tax').compute(cr, uid, costs_ids, lot.obj_price, 1))
+#		for t in taxes_res:
+#			t.update({'type': 0})
+#		return self._sum_taxes_by_type_and_id(taxes_res)
 
 	def _compute_lot_seller_costs(self, cr, uid, lot, manual_only=False):
 		costs = []
@@ -599,7 +618,7 @@ class auction_lots(osv.osv):
 					inv_ref.button_compute(cr, uid, [inv_id])
 					invoices[lot.bord_vnd_id.id] = inv_id
 
-				self.write(cr,uid,[lot.id],{'sel_inv_id':inv_id,'state':'sold','paid_vnd':'active'})
+				self.write(cr,uid,[lot.id],{'sel_inv_id':inv_id,'state':'sold'})
 
 
 				taxes = map(lambda x: x.id, lot.product_id.taxes_id)
@@ -679,13 +698,25 @@ class auction_lots(osv.osv):
 				inv_id = inv_ref.create(cr, uid, inv, context)
 				inv_ref.button_compute(cr, uid, [inv_id])
 				invoices[lot.bord_vnd_id.id] = inv_id
-			self.write(cr,uid,[lot.id],{'sel_inv_id':inv_id,'state':'sold','paid_ach':'active'})
+			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 			#calcul des taxes
 			taxes = map(lambda x: x.id, lot.product_id.taxes_id)
 			if lot.author_right:
 				taxes.append(lot.author_right.id)
 			else:
 				taxes+=map(lambda x:x.id, lot.auction_id.buyer_costs)
+
+			print {
+				'invoice_id': inv_id,
+				'quantity': 1,
+				'product_id': lot.product_id.id,
+				'name': '['+str(lot.obj_num)+'] '+ lot.auction_id.name,
+				'invoice_line_tax_id': [(6,0,taxes)],
+				'account_analytic_id': lot.auction_id.account_analytic_id.id,
+				'account_id': lot.auction_id.acc_income.id,
+				'price_unit': lot.obj_price,
+				}
+
 			inv_line= {
 				'invoice_id': inv_id,
 				'quantity': 1,
@@ -827,7 +858,7 @@ class report_unsold_object(osv.osv):
     _columns = {
         'depos': fields.many2one('res.users','User Name',readonly=True),
        	'lot': fields.selection(_type_get, 'Object Type', size=64),
-		'product':fields.many2one('product.product', 'Product', required=True),
+		'product_l':fields.many2one('product.product', 'Product', required=True),
 		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
 
         }
@@ -836,22 +867,48 @@ class report_unsold_object(osv.osv):
 		cr.execute("""
 			create or replace view report_unsold_object as (
 				select
-		min(lo.id) as id,
-                lo.auction_id as auct_id,
-                lo.lot_type as lot,
-                lo.product_id as product,
-                lo.bord_vnd_id as depos
-		from
+					min(lo.id) as id,
+                	lo.auction_id as auct_id,
+                	lo.lot_type as lot,
+                	lo.product_id as product,
+                	lo.bord_vnd_id as depos
+				from
                   auction_lots lo
-                 where state = 'unsold'
-		 group by lo.auction_id,lo.lot_type,lo.product_id,lo.bord_vnd_id
+                 where
+				 	state = 'unsold'
+		 		group by lo.auction_id,lo.lot_type,lo.product_id,lo.bord_vnd_id
+			    )""")
+
+class report_sold_object(osv.osv):
+    
+    _name='report.sold.object'
+    _description = "Sold Objects"
+    _auto = False
+    _columns = {
+        'depos': fields.many2one('res.users','User Name',readonly=True),
+       	'lot': fields.selection(_type_get, 'Object Type', size=64),
+		'product_l':fields.many2one('product.product', 'Product', required=True),
+		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
+
+        }
+    
+    def init(self, cr):
+		cr.execute("""
+			create or replace view report_sold_object as (
+				select
+									min(lo.id) as id,
+                                    lo.auction_id as auct_id,
+                                    lo.lot_type as lot,
+                                    lo.product_id as product_l,
+                                    lo.bord_vnd_id as depos
+				from
+                                    auction.lots lo
+                                where
+                                    state = 'sold'
+				group by lo.auction_id
 			    )""")
 
 
-
-#
-############
-##start: creating new class for report(postgresview  for auction)
 class report_seller_auction(osv.osv):
     _name = "report.seller.auction"
     _description = "Auction Reporting on seller view1"
@@ -883,14 +940,13 @@ class report_seller_auction(osv.osv):
 
 
 report_seller_auction()
-################################################################
 
 class report_seller_auction2(osv.osv):
     _name = "report.seller.auction2"
     _description = "Auction Reporting on seller view2"
     _auto = False
     _columns = {
-        'seller': fields.char('Saller Name',size=64, readonly=True, select=True),
+        'seller': fields.char('Seller Name',size=64, readonly=True, select=True),
         'sum_adj':fields.float('Sum Adjustication',readonly=True, select=True),
 		'gross_revenue':fields.float('Gross_Revenue',readonly=True, select=True),
         'net_revenue':fields.float('Net_Revenue',readonly=True, select=True),
@@ -983,7 +1039,6 @@ class report_buyer_auction2(osv.osv):
 		al.gross_revenue,al.net_revenue,al.net_margin)''')
 
 report_buyer_auction2()
-#
 
 
 

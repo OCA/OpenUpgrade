@@ -103,8 +103,8 @@ Auction Management/Auction Dates/New Auction Dates
 				<field name="auction1" select="1"/>
 				<field name="auction2" select="1"/>
 				<separator string="Commissions" colspan="4"/>
-				<field name="buyer_costs" domain="[('domain','=','auction')]"/>
-				<field name="seller_costs" domain="[('domain','=','auction')]"/>
+				<field name="buyer_costs" /><!--domain="[('domain','=','auction')]"/-->
+				<field name="seller_costs" /> <!--domain="[('domain','=','auction')]"/>-->
 				<separator string="Accounting" colspan="4"/>
 				<field name="acc_income"/>
 				<field name="acc_expense"/>
@@ -298,6 +298,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="vnd_lim_net"/>
 					<field name="sel_inv_id"/>
 					<field name="paid_ach"/>
+
 					<field name="history_ids" colspan="4" nolabel="1"/>
 				</page>
 				<page string="Buyer">
@@ -333,11 +334,64 @@ Auction Management/Auction Dates/Reporting
 	<menuitem name="Auction Management/Objects/All objects"	action="action_all_objects" id="menu_auction_all_objects" menu="menu_action_all_objects"/>
 
 	<record model="ir.actions.act_window" id="action_all_objects_unsold">
-		<field name="res_model">auction.lots</field>
+		<field name="res_model">auction.sold.object</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form,graph</field>
 		<field name="domain">[('auction_id','&lt;&gt;', False),('obj_ret','&gt;',0)]</field>
 	</record>
+	
+<!--	<record model="ir.ui.view" id="view_report_sold_object_form">
+		<field name="depos">report.sold.object.form</field>
+		<field name="lot">report.sold.object</field>
+		<field name="product">form</field>
+		<field name="arch" type="xml">
+			<form string="Sold Objects">
+				<field name="depos" select="1"/>
+				<field name="lot" select="1"/>
+				<field name="product_l" select="1"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_report_sold_object_tree">
+		<field name="depos">report.sold.object.form</field>
+		<field name="lot">report.sold.object</field>
+		<field name="product">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Sold Objects">
+				<field name="depos" select="1"/>
+				<field name="lot" select="1"/>
+				<field name="product_l" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+-->
+
+
+<!--		<record model="ir.ui.view" id="view_report_unsold_object_tree">
+		<field name="depos">report.unsold.object.form</field>
+		<field name="lot">report.unsold.object</field>
+		<field name="product">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Unsold Objects">
+				<field name="depos" select="1"/>
+				<field name="lot" select="1"/>
+				<field name="product_l" select="1"/>
+			</tree>
+		</field>
+	</record>
+		<record model="ir.ui.view" id="view_report_unsold_object_form">
+			<field name="depos">report.unsold.object.form</field>
+			<field name="lot">report.unsold.object</field>
+			<field name="product">form</field>
+			<field name="arch" type="xml">
+			<form string="Unsold Objects">
+				<field name="depos" select="1"/>
+				<field name="lot" select="1"/>
+				<field name="product_l" select="1"/>
+			</form>
+		</field>
+	</record>-->	
 
 	<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_all_objects_unsold" id="menu_all_objects_unsold1"/>
 
@@ -793,7 +847,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<tree string="Bids">
 				<field name="bid_id"/>
-				<field name="lot_id"/>
+			<!--	<field name="lot_id"/>-->
 				<field name="price"/>
 				<field name="call"/>
 			</tree>

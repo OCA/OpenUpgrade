@@ -57,8 +57,9 @@ def _auction_move_set(self,cr,uid,datas,context={}):
 	recs = pooler.get_pool(cr.dbname).get('auction.lots')
 	rec_ids = datas['ids']
 	if datas['form']['auction_id'] and len(rec_ids) :
-		cr.execute('update auction_lots set auction_id=%s, obj_price=NULL, ach_login=NULL, ach_uid=NULL,ach_inv_id=NULL, state=\'draft\' where id in ('+','.join(map(str, rec_ids))+')', (str(datas['form']['auction_id'])))
-		pooler.get_pool(cr.dbname).get('auction.bid_lines').unlink(cr, uid, rec_ids)
+		line_ids= pooler.get_pool(cr.dbname).get('auction.bid_line').search(cr,uid,[('lot_id','in',rec_ids)])
+		pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
+		cr.execute('update auction_lots set auction_id=%s, obj_price=NULL, ach_login=NULL, ach_uid=NULL,ach_inv_id=NULL,sel_inv_id=NULL,state=\'draft\' where id in ('+','.join(map(str, rec_ids))+')', (str(datas['form']['auction_id'])))
 	return {}
 
 class wiz_auc_lots_auction_move(wizard.interface):

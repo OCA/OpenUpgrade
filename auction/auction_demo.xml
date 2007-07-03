@@ -4,6 +4,59 @@
 		<!-- demo data for the auction_artist object-->
 
 
+<!--	<record model="auction.artists" id="auction_art_1">
+		<field name="name">Philippe Lavilier</field>
+		<field name="birth_death_dates">1345-1450</field>
+	</record>
+	<record model="auction.artists" id="auction_art_2">
+		<field name="name">POREAU OSWALD</field>
+		<field name="birth_death_dates">1877-1955</field>
+	</record>
+-->
+		<!-- demo data for the auction taxes-->
+
+	<record id="auction_tax" model="account.tax">
+		<field name="name">Droit dauteur</field>
+		<field name="amount">0.04</field>
+
+	</record>
+	<record id="auction_tax1" model="account.tax">
+                <field name="name">TVA</field>
+                <field name="amount">0.06</field>
+
+    </record>
+
+	<record id="auction_tax2" model="account.tax">
+                <field name="name">TVA1</field>
+                <field name="amount">0.2</field>
+
+    </record>
+	<record id="auction_tax3" model="account.tax">
+                <field name="name">Buyer Costs</field>
+                <field name="amount">0.2</field>
+    </record>
+	<record id="auction_tax4" model="account.tax">
+                <field name="name">Seller Costs1</field>
+                <field name="amount">0.12</field>
+
+    </record>
+	<record id="auction_tax5" model="account.tax">
+                <field name="name">Seller Costs</field>
+                <field name="amount">0.10</field>
+
+    </record>
+	<record id="auction_tax6" model="account.tax">
+                <field name="name">Frais de vente</field>
+                <field name="amount">0.15</field>
+
+    </record>
+
+	<record id="monproduit" model="product.product">
+		<field name="name">Mon produit</field>
+		<field name="taxes_id" eval="[(6,0,[ref('auction_tax2'),ref('auction_tax1'),ref('auction_tax3'),ref('auction_tax4'),ref('auction_tax5'),ref('auction_tax6'),ref('auction_tax')])]"/>
+		<field name="categ_id" ref="product.product_category_pc"/>
+	</record>
+
 
 <!--===========================================================================================-->
 		<!-- start == demo data for the auction_lot_Category object-->
@@ -63,14 +116,13 @@
 
 		<field name="auction1" eval="time.strftime('%Y-%m-14')" />
 		<field name="auction2" eval="time.strftime('%Y-%m-28')" />
-
-
 		<field name="acc_income" ref="account.a_sale"/>
 		<field name="acc_expense" ref="account.a_expense"/>
 
 		<field name="journal_id" ref="account.sales_journal"/>
 		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
-
+<!-- 		<field name="buyer_costs" ref="l10n_ch.vat_24_invest"/> -->
+<!-- 		<field name="seller_costs" ref="l10n_ch.vat_24_invest"/> -->
 
 </record>
 <!-- end == demo data for the auction_dates-->
@@ -110,8 +162,8 @@
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_1_lot_1">
+		<field name="auction_id" ref="auction_date_1" />
 		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
-<!--		<field name="auction_id" model="auction.dates" search="[('id','=','1')]"</field>-->
 		<field name="name">Item 1</field>
 		<field name="lot_num">1</field>
 		<field name="lot_type">glass</field>
@@ -121,12 +173,13 @@
 		<field name="obj_ret">465.00</field>
 		<field name="obj_num">1</field>
 		<field name="obj_price">425.00</field>
-		<!--<field name="tva" model="account.tax" search="[]"/>-->
 		<field name="bord_vnd_id" ref="auction_deposit_1" />
-		<field name="product_id" model="product.product" search="[]"/>
+		<field name="product_id" ref="monproduit"/>                                                    |                            |
+        <field name="author_right" ref="auction_tax"/> 
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_1_lot_2">
+		<field name="auction_id" ref="auction_date_1" />
 		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
 		<field name="name">Item 2</field>
 		<field name="lot_num">2</field>
@@ -138,11 +191,14 @@
 		<field name="obj_num">2</field>
 		<field name="obj_price">1500.00</field>
 		<field name="bord_vnd_id" ref="auction_deposit_1" />
+		<!--field name="product_id" ref="monproduit"/-->                                                    |                            |
+        <field name="author_right" ref="auction_tax"/> 
 		<field name="product_id" model="product.product" search="[]"/>
 		<!--<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_2_lot_1">
+		<!--field name="auction_id" ref="auction_date_1" /-->
 		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
 		<field name="name">Item 3</field>
 		<field name="lot_num">3</field>
@@ -154,12 +210,14 @@
 		<field name="obj_num">4</field>
 		<field name="obj_price">650</field>
 		<field name="bord_vnd_id" ref="auction_deposit_2" />
+		<!--field name="product_id" ref="monproduit"/-->                                                    |                            |
+        <field name="author_right" ref="auction_tax"/> 	
 		<field name="product_id" model="product.product" search="[]"/>
 		<!--<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_2_lot_2">
-	<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
+		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
 		<field name="name">Item 4</field>
 		<field name="lot_num">4</field>
 		<field name="lot_type">Furniture</field>
@@ -170,12 +228,14 @@
 		<field name="obj_num">4</field>
 		<field name="obj_price">375</field>
 		<field name="bord_vnd_id" ref="auction_deposit_2" />
+		<!--field name="product_id" ref="monproduit"/-->                                                    |                            |
+        <field name="author_right" ref="auction_tax"/> 
 		<field name="product_id" model="product.product" search="[]"/>
 		<!--<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_3_lot_1">
-	<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
 		<field name="name">Item 5</field>
 		<field name="lot_num">5</field>
 		<field name="lot_type">glass</field>
@@ -186,12 +246,12 @@
 		<field name="obj_num">5</field>
 		<field name="obj_price">460</field>
 		<field name="bord_vnd_id" ref="auction_deposit_3" />
+        <field name="author_right" ref="auction_tax"/> 
 		<field name="product_id" model="product.product" search="[]"/>
-<!--		<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_3_lot_2">
-	<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
 		<field name="name">Item 6</field>
 		<field name="lot_num">6</field>
 		<field name="lot_type">painting</field>
@@ -202,15 +262,16 @@
 		<field name="obj_num">6</field>
 		<field name="obj_price">85</field>
 		<field name="bord_vnd_id" ref="auction_deposit_3" />
+        <field name="author_right" ref="auction_tax"/> 
 		<field name="product_id" model="product.product" search="[]"/>
-<!--		<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_4_lot_1">
+		<field name="name">Item 7</field>
 		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
 		<field name="name">Item 7"</field>
 		<field name="lot_num">7</field>
-		<field name="lot_type">Jawellery</field>
+		<field name="lot_type">Jewellery</field>
 		<field name="lot_est1">150</field>
 		<field name="lot_est2">400</field>
 		<field name="obj_desc">show pices</field>
@@ -218,8 +279,8 @@
 		<field name="obj_num">1</field>
 		<field name="obj_price">375</field>
 		<field name="bord_vnd_id" ref="auction_deposit_4" />
+        <field name="author_right" ref="auction_tax"/> 
 		<field name="product_id" model="product.product" search="[]"/>
-<!--		<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_4_lot_2">
@@ -234,12 +295,12 @@
 		<field name="obj_num">11</field>
 		<field name="obj_price">550</field>
 		<field name="bord_vnd_id" ref="auction_deposit_4" />
+        <field name="author_right" ref="auction_tax"/> 
 		<field name="product_id" model="product.product" search="[]"/>
-<!--		<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_5_lot_1">
-	<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
 		<field name="name">Item 8</field>
 		<field name="lot_num">8</field>
 		<field name="lot_type">glass</field>
@@ -250,8 +311,8 @@
 		<field name="obj_num">8</field>
 		<field name="obj_price">450</field>
 		<field name="bord_vnd_id" ref="auction_deposit_5" />
+        <field name="author_right" ref="auction_tax"/> 
 		<field name="product_id" model="product.product" search="[]"/>
-<!--		<field name="tva" model="account.tax" search="[]"/>-->
 	</record>
 
 	<record model="auction.lots" id="auction_deposit_5_lot_2">
@@ -266,9 +327,8 @@
 		<field name="obj_num">9</field>
 		<field name="obj_price">175</field>
 		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
 		<field name="product_id" model="product.product" search="[]"/>
-<!--		<field name="author_right" model="product.product" search="[]"/>-->
-
 
 	</record>
 
@@ -381,6 +441,7 @@
 		<field name="bid_id" ref="auction_date_2_bid_5" />
 		<field name="lot_id" ref="auction_deposit_5_lot_2" />
 	</record>
+
 
 </data>
 </terp>

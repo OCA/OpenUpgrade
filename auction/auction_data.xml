@@ -84,5 +84,13 @@
 		<field name="meta" eval="{'type':'many2one', 'string':'Seller Costs', 'relation':'account.tax'}"/>
 	</ir_set>
 
+
+
+	<record id="product.product_product_pc2" model="product.product">
+		<field name="list_price">770.0</field>
+		<field name="standard_price">700.0</field>
+
+	</record>
+
 </data>
 </terp>

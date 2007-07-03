@@ -33,6 +33,7 @@ import wizard_lots_cancel
 import wizard_lots_invoice
 import wizard_lots_numerotate
 import wizard_lots_pay
+import wizard_pay
 import wizard_lots_sms
 import wizard_lot_date_move
 import wizard_auction_journal

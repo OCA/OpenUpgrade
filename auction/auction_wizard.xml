@@ -25,9 +25,13 @@
 		 name="auction.lots.auction_move"
 		 id="wizard_change_auction"/>
 
-		<wizard string="Pay objects"
+		<wizard string="Pay objects of the seller"
 		model="auction.lots"
-		name="auction.lots.pay"
+		name="auction.pay.sel"
+		id="wizard_lots_pay"/>
+		<wizard string="Pay objects of the buyer"
+		model="auction.lots"
+		name="auction.pay.buy"
 		id="wizard_pay"/>
 
 		<wizard string="Cancel payment"
