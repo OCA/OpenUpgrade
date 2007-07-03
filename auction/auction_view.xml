@@ -172,6 +172,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="gross_revenue"/>
 					<field name="net_revenue"/>
 					<field name="gross_margin"/>
+					<field name="net_margin"/>
 				</tree>
 		</field>
 	</record>
@@ -190,6 +191,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="gross_revenue"/>
 				<field name="net_revenue"/>
 				<field name="gross_margin"/>
+				<field name="net_margin"/>
 
 				<newline/>
 				<field name="name"/>
@@ -252,6 +254,7 @@ Auction Management/Auction Dates/Reporting
 			    <field name="gross_revenue"/>
 			    <field name="net_revenue"/>
 			    <field name="gross_margin"/>
+			    <field name="net_margin"/>
 
 			</tree>
 		</field>
@@ -310,7 +313,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="gross_revenue"/>
 					<field name="net_revenue"/>
 					<field name="gross_margin"/>
-
+					<field name="net_margin"/>
 					<newline/>
 					<field name="ach_inv_id"/>
 					<field name="paid_vnd"/>
@@ -541,10 +544,10 @@ Auction Management/Auction Dates/Reporting
 				<field name="seller" select="1"/>
 				<field name="object" select="1"/>
 				<field name="object_sold" select="1"/>
--			  <!--  <field name="withdrawn" select="1"/>
+<!---			    <field name="withdrawn" select="1"/>-->
 			    <field name="total_price" select="1"/>
-			    <field name="avg_price" select="1"/>
--->
+		<!--	    <field name="avg_price" select="1"/>-->
+
 			</form>
 		</field>
 	</record>
@@ -560,9 +563,9 @@ Auction Management/Auction Dates/Reporting
 				<field name="seller" select="1"/>
 				<field name="object" select="1"/>
 				<field name="object_sold" select="1"/>
-			<!--	<field name="withdrawn" select="1"/>
+			<!--	<field name="withdrawn" select="1"/>-->
 				<field name="total_price" select="1"/>
-				<field name="avg_price" select="1"/>-->
+				<!--<field name="avg_price" select="1"/>-->
 
 				</tree>
 		</field>
@@ -587,6 +590,7 @@ Auction Management/Auction Dates/Reporting
 			<form string="Auction reporting2 form view">
 
 				<field name="seller" select="1"/>
+				<field name="sum_adj" select="1"/>
 				<field name="gross_revenue" select="1"/>
 				<field name="net_revenue" select="1"/>
 				<field name="net_margin" select="1"/>
@@ -603,10 +607,11 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<tree string="Auction reporting2 tree view">
 
-				<field name="seller" />
-				<field name="gross_revenue" />
-				<field name="net_revenue" />
-				<field name="net_margin" />
+				<field name="seller" select="1"/>
+				<field name="sum_adj" select="1"/>
+				<field name="gross_revenue" select="1"/>
+				<field name="net_revenue" select="1"/>
+				<field name="net_margin" select="1"/>
 
 				</tree>
 		</field>
