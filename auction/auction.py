@@ -79,7 +79,7 @@ class auction_dates(osv.osv):
 		'acc_income': fields.many2one('account.account', 'Income Account', required=True),
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
 		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
-		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
+		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
 		'state': fields.selection((('draft','Draft'),('sold','Closed'),('unsold','Unsold')),'State', readonly=True),
 		#'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'journal_id':fields.many2one('account.journal', 'Journal',required=True),
@@ -254,7 +254,6 @@ class auction_lots(osv.osv):
 	_name = "auction.lots"
 	_order = "obj_num,lot_num"
 	_description="Object"
-
 	def _buyerprice(self, cr, uid, ids, name, args, context):
 #		print " IN THE BUYER PRICE Fuction",ids
 		res={}
@@ -277,42 +276,6 @@ class auction_lots(osv.osv):
 			res[auction_data['id']] = auction_data['obj_price'] + total_tax
 		#end for auction_data in auction_lots_obj:
 		return res
-
-	def _grossprice(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
-		res={}
-		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
-
-		for auction_data in auction_lots_obj:
-			total_tax = 0.0
-#			print "Auction data :",auction_data
-			if auction_data['auction_id']:
-				total_tax += auction_data['buyer_price']-auction_data['seller_price']
-				#end for acc_amount in account_taxes:
-				#end if auction_dates['buyer_costs']:
-			#end if auction_data['auction_id']:
-			res[auction_data['id']] = total_tax
-		#end for auction_data in auction_lots_obj:
-		return res
-
-	def _netprice(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
-		res={}
-		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
-
-		for auction_data in auction_lots_obj:
-			total_tax = 0.0
-#			print "Auction data :",auction_data
-			if auction_data['auction_id']:
-				total_tax += auction_data['buyer_price']-auction_data['seller_price']
-				#end for acc_amount in account_taxes:
-				#end if auction_dates['buyer_costs']:
-			#end if auction_data['auction_id']:
-			res[auction_data['id']] = total_tax
-		#end for auction_data in auction_lots_obj:
-		return res
-
-
 	def _sellerprice(self, cr, uid, ids, name, args, context):
 #		print " IN THE BUYER PRICE Fuction",ids
 		res={}
@@ -335,8 +298,58 @@ class auction_lots(osv.osv):
 			res[auction_data['id']] = auction_data['obj_price'] - total_tax
 		#end for auction_data in auction_lots_obj:
 		return res
+	def _grossprice(self, cr, uid, ids, name, args, context):
+#		print " IN THE BUYER PRICE Fuction",ids
+		res={}
+		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
 
+		for auction_data in auction_lots_obj:
+			total_tax = 0.0
+#			print "Auction data :",auction_data
+			if auction_data['auction_id']:
+				total_tax += auction_data['buyer_price']-auction_data['seller_price']
+				#end for acc_amount in account_taxes:
+				#end if auction_dates['buyer_costs']:
+			#end if auction_data['auction_id']:
+			res[auction_data['id']] = total_tax
+		#end for auction_data in auction_lots_obj:
+		return res
+	def _netprice(self, cr, uid, ids, name, args, context):
+#		print " IN THE BUYER PRICE Fuction",ids
+		res={}
+		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
 
+		for auction_data in auction_lots_obj:
+			total_tax = 0.0
+#			print "Auction data :",auction_data
+			if auction_data['auction_id']:
+				total_tax += auction_data['buyer_price']-auction_data['seller_price']
+				#end for acc_amount in account_taxes:
+				#end if auction_dates['buyer_costs']:
+			#end if auction_data['auction_id']:
+			res[auction_data['id']] = total_tax
+		#end for auction_data in auction_lots_obj:
+		return res
+	def _grossmargin(self, cr, uid, ids, name, args, context):
+		print " IN THE BUYER PRICE Fuction",ids
+		res={}
+		auction_lots_obj = self.read(cr,uid,ids,['gross_revenue','auction_id'])
+
+		for auction_data in auction_lots_obj:
+			total_tax = 0.0
+#			print "Auction data :",auction_data
+			if auction_data['auction_id']:
+##				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
+				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['adj_total'])[0]
+##				print "Auctiondates :",auction_dates
+				if auction_dates['adj_total']:
+						total_tax += (auction_data['gross_revenue']*100)/auction_dates['adj_total']
+#					#end for acc_amount in account_taxes:
+#				#end if auction_dates['buyer_costs']:
+#			#end if auction_data['auction_id']:
+			res[auction_data['id']] =  total_tax
+#		#end for auction_data in auction_lots_obj:
+		return res
 
 
 	_columns = {
@@ -375,9 +388,10 @@ class auction_lots(osv.osv):
 		'paid_ach':fields.boolean('Seller Paid',readonly=True),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='buyerprice',store=True),
-		'seller_price':fields.function(_sellerprice, method=True, string='sellerprice',store=True),
+		'seller_price': fields.function(_sellerprice, method=True, string='sellerprice',store=True),
 		'gross_revenue':fields.function(_grossprice, method=True, string='Grossrevenue',store=True),
 		'net_revenue':fields.function(_netprice, method=True, string='Netrevenue',store=True),
+		'gross_margin':fields.function(_grossmargin, method=True, string='GrossMargin',store=True),
 
 	}
 	_defaults = {
@@ -388,12 +402,6 @@ class auction_lots(osv.osv):
 	_constraints = [
 #		(_inv_constraint, 'Twice the same inventory number !', ['lot_num','bord_vnd_id'])
 	]
-
-
-def _cal(self, cr, uid,ids):
-
-	cr.execute('select name, name from auction_lot_category order by name')
-	return cr.fetchall()
 
 	def name_get(self, cr, user, ids, context={}):
 		if not len(ids):
@@ -917,6 +925,48 @@ class report_buyer_auction(osv.osv):
 
 
 report_buyer_auction()
+
+
+class report_buyer_auction(osv.osv):
+    _name = "report.buyer.auction"
+    _description = "Auction Reporting on buyer view"
+    _auto = False
+    _columns = {
+        'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
+        'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
+        'object':fields.integer('No of objects',readonly=True, select=True),
+        'avg_price':fields.integer('Avg price', readonly=True, select=True),
+        'total_price':fields.integer('Total price', readonly=True, select=True),
+
+
+    }
+
+    def init(self, cr):
+        print "In init of auction report ..";
+        cr.execute('''
+
+ create or replace view report_buyer_auction  as
+             (select al.id,al.ach_login as "buyer_login",
+             rs.name as "buyer",
+             count(al.id) as "object",
+             al.obj_ret as "total_price",
+             al.obj_ret+obj_price/2 as "avg_price"
+ 			from auction_lots al, auction_bid ab, auction_bid_line abl,res_partner rs
+ 			where al.ach_uid=rs.id group by al.ach_uid,al.ach_login,rs.name,al.obj_ret,al.obj_price,al.id
+             )''')
+
+
+
+report_buyer_auction()
+
+
+
+
+
+
+
+
+
 
 
 class report_buyer_auction2(osv.osv):
