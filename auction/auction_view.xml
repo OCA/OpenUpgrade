@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-	<menuitem name="Auction Management" id="menu_root" icon="terp-product"/>
+	<menuitem name="Auction Management" id="menu_root" icon="terp-auction"/>
 	<menuitem name="Auction Management/Configuration" groups="admin"/>
+
 
 	=======================================================
 	Auction Management/Configuration/artist
@@ -559,21 +560,34 @@ Auction Management/Auction Dates/Reporting
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Auction reporting tree view">
-
 				<field name="seller" select="1"/>
 				<field name="object" select="1"/>
 				<field name="object_sold" select="1"/>
 			<!--	<field name="withdrawn" select="1"/>-->
 				<field name="total_price" select="1"/>
 				<field name="avg_price" select="1"/>
-				</tree>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_auction_graph">
+		<field name="name">auction.month.tree</field>
+		<field name="model">report.seller.auction</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Auction reporting graph view" orientation="vertical" type="bar">
+				<field name="seller" />
+			<!--	<field name="object"operator="+" />-->
+			<!--	<field name="object_sold"/>		-->
+				<field name="total_price" operator="+"/>
+				<field name="avg_price" operator="+" />
+			</graph>
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_auction_reporting1">
 		<field name="name">auction.this.month.tree</field>
 		<field name="res_model">report.seller.auction</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">graph,tree</field>
 	</record>
 
 	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller view 1 " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
@@ -678,7 +692,6 @@ Auction Management/Auction Dates/Reporting
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Auction buyer reporting tree view">
-
 				<field name="buyer_login" select="1"/>
 				<field name="buyer" select="1"/>
 				<field name="object" select="1"/>
