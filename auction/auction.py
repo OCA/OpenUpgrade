@@ -79,7 +79,7 @@ class auction_dates(osv.osv):
 		'acc_income': fields.many2one('account.account', 'Income Account', required=True),
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
 		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
-		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication'),
+		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
 		'state': fields.selection((('draft','Draft'),('sold','Closed'),('unsold','Unsold')),'State', readonly=True),
 		#'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'journal_id':fields.many2one('account.journal', 'Journal',required=True),
@@ -350,6 +350,26 @@ class auction_lots(osv.osv):
 			res[auction_data['id']] =  total_tax
 #		#end for auction_data in auction_lots_obj:
 		return res
+	def _netmargin(self, cr, uid, ids, name, args, context):
+		print " IN THE BUYER PRICE Fuction",ids
+		res={}
+		auction_lots_obj = self.read(cr,uid,ids,['net_revenue','auction_id'])
+
+		for auction_data in auction_lots_obj:
+			total_tax = 0.0
+#			print "Auction data :",auction_data
+			if auction_data['auction_id']:
+##				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
+				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['adj_total'])[0]
+##				print "Auctiondates :",auction_dates
+				if auction_dates['adj_total']:
+						total_tax += (auction_data['net_revenue']*100)/auction_dates['adj_total']
+#					#end for acc_amount in account_taxes:
+#				#end if auction_dates['buyer_costs']:
+#			#end if auction_data['auction_id']:
+			res[auction_data['id']] =  total_tax
+#		#end for auction_data in auction_lots_obj:
+		return res
 
 
 	_columns = {
@@ -392,6 +412,7 @@ class auction_lots(osv.osv):
 		'gross_revenue':fields.function(_grossprice, method=True, string='Grossrevenue',store=True),
 		'net_revenue':fields.function(_netprice, method=True, string='Netrevenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='GrossMargin',store=True),
+		'net_margin':fields.function(_netmargin, method=True, string='NetMargin',store=True),
 
 	}
 	_defaults = {
@@ -837,25 +858,26 @@ class report_seller_auction(osv.osv):
     _auto = False
     _columns = {
         'seller': fields.char('Seller Name',size=64, readonly=True, select=True),
-        'object':fields.integer('No of Object',readonly=True, select=True),
-        'object_sold':fields.integer('Object Sold',readonly=True, select=True),
-         'total_price':fields.integer('Total Seller price',readonly=True, select=True),
+        'object':fields.float('No of Object',readonly=True, select=True),
+        'object_sold':fields.float('Object Sold',readonly=True, select=True),
+        'total_price':fields.float('Total Seller price',readonly=True, select=True),
     }
 
     def init(self, cr):
         print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction  as
              (select
-             rs.id as id,
+             al.id as id,
              rs.name as seller,
              count(al.id) as object,
              (select count(al2.id) from auction_lots as al2,auction_deposit ad2
              where ad2.id=al2.bord_vnd_id and al2.state='paid')as object_sold,
-	     al.obj_price-ast.tax_id as total_price
+	     al.seller_price as total_price
 
-		from  auction_seller_taxes_rel ast,auction_deposit ad,res_partner rs,auction_lots al,auction_dates ade
-             where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and al.auction_id=ade.id and ade.id=ast.auction_id
-             group by rs.id,rs.name,al.obj_price,ast.tax_id
+		from auction_deposit ad,res_partner rs,auction_lots al,auction_dates ade
+             where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and al.auction_id=ade.id
+             group by al.id,rs.name,al.seller_price
+
              )''')
 
 
@@ -868,9 +890,10 @@ class report_seller_auction2(osv.osv):
     _auto = False
     _columns = {
         'seller': fields.char('Saller Name',size=64, readonly=True, select=True),
-        'gross_revenue':fields.integer('Gross_Revenue',readonly=True, select=True),
-        'net_revenue':fields.integer('Net_Revenue',readonly=True, select=True),
-        'net_margin':fields.integer('Net_Margin', readonly=True, select=True),
+        'sum_adj':fields.float('Sum Adjustication',readonly=True, select=True),
+		'gross_revenue':fields.float('Gross_Revenue',readonly=True, select=True),
+        'net_revenue':fields.float('Net_Revenue',readonly=True, select=True),
+        'net_margin':fields.float('Net_Margin', readonly=True, select=True),
 
 
     }
@@ -878,16 +901,16 @@ class report_seller_auction2(osv.osv):
     def init(self, cr):
         print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction2  as
-             (select rs.id as id,rs.name as seller,
+             (select rs.id as id,rs.name as "seller",
+	sum(adt.adj_total) as "sum_adj",
+	al.gross_revenue as "gross_revenue",
+	al.net_revenue as "net_revenue",
+	al.net_margin as "net_margin"
 
-	   abl.price - al.obj_price as gross_revenue,
-	     abl.price - al.obj_price- adc.amount as net_revenue,
-	     abl.price - al.obj_price- adc.amount as net_margin
-
-             from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt,auction_bid_line abl,auction_deposit_cost adc
-             where rs.id=ad.partner_id and ad.id=al.bord_vnd_id
-             group by rs.id,rs.name,abl.price,al.obj_price,adc.amount
-             )''')
+        from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt
+             where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and adt.id=al.auction_id
+             group by rs.id,rs.name,al.gross_revenue,al.net_revenue,al.net_margin)
+             ''')
 
 
 
