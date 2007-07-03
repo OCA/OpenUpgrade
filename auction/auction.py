@@ -861,24 +861,25 @@ class report_seller_auction(osv.osv):
         'object':fields.float('No of Object',readonly=True, select=True),
         'object_sold':fields.float('Object Sold',readonly=True, select=True),
         'total_price':fields.float('Total Seller price',readonly=True, select=True),
-    }
+        'avg_price':fields.float('Avg price',readonly=True, select=True),
+       }
 
     def init(self, cr):
         print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction  as
-             (select
+             (
+             select
              al.id as id,
              rs.name as seller,
              count(al.id) as object,
              (select count(al2.id) from auction_lots as al2,auction_deposit ad2
              where ad2.id=al2.bord_vnd_id and al2.state='paid')as object_sold,
-	     al.seller_price as total_price
+	     al.seller_price as total_price,
+	    al.lot_est1+al.lot_est2 as avg_price
 
 		from auction_deposit ad,res_partner rs,auction_lots al,auction_dates ade
              where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and al.auction_id=ade.id
-             group by al.id,rs.name,al.seller_price
-
-             )''')
+             group by al.id,rs.name,al.seller_price,al.lot_est1,al.lot_est2)''')
 
 
 report_seller_auction()
@@ -925,8 +926,8 @@ class report_buyer_auction(osv.osv):
         'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
         'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
         'object':fields.integer('No of objects',readonly=True, select=True),
+       	'total_price':fields.integer('Total price', readonly=True, select=True),
         'avg_price':fields.integer('Avg price', readonly=True, select=True),
-        'total_price':fields.integer('Total price', readonly=True, select=True),
 
 
     }
@@ -939,58 +940,16 @@ class report_buyer_auction(osv.osv):
              (select al.id,al.ach_login as "buyer_login",
              rs.name as "buyer",
              count(al.id) as "object",
-             al.obj_ret as "total_price",
-             al.obj_ret+obj_price/2 as "avg_price"
- 			from auction_lots al, auction_bid ab, auction_bid_line abl,res_partner rs
- 			where al.ach_uid=rs.id group by al.ach_uid,al.ach_login,rs.name,al.obj_ret,al.obj_price,al.id
+             al.buyer_price as "total_price",
+             ((al.lot_est1+al.lot_est2)/2) as "avg_price"
+ 			from auction_lots al,res_partner rs
+ 			where al.ach_uid=rs.id
+ group by al.ach_uid,al.ach_login,rs.name,al.id,al.lot_est1,al.lot_est2,al.buyer_price
              )''')
 
 
 
 report_buyer_auction()
-
-
-class report_buyer_auction(osv.osv):
-    _name = "report.buyer.auction"
-    _description = "Auction Reporting on buyer view"
-    _auto = False
-    _columns = {
-        'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
-        'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
-        'object':fields.integer('No of objects',readonly=True, select=True),
-        'avg_price':fields.integer('Avg price', readonly=True, select=True),
-        'total_price':fields.integer('Total price', readonly=True, select=True),
-
-
-    }
-
-    def init(self, cr):
-        print "In init of auction report ..";
-        cr.execute('''
-
- create or replace view report_buyer_auction  as
-             (select al.id,al.ach_login as "buyer_login",
-             rs.name as "buyer",
-             count(al.id) as "object",
-             al.obj_ret as "total_price",
-             al.obj_ret+obj_price/2 as "avg_price"
- 			from auction_lots al, auction_bid ab, auction_bid_line abl,res_partner rs
- 			where al.ach_uid=rs.id group by al.ach_uid,al.ach_login,rs.name,al.obj_ret,al.obj_price,al.id
-             )''')
-
-
-
-report_buyer_auction()
-
-
-
-
-
-
-
-
-
-
 
 class report_buyer_auction2(osv.osv):
     _name = "report.buyer.auction2"
@@ -999,9 +958,10 @@ class report_buyer_auction2(osv.osv):
     _columns = {
         'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
         'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
-        'object':fields.integer('No of objects',readonly=True, select=True),
-        'avg_price':fields.integer('Avg price', readonly=True, select=True),
-        'total_price':fields.integer('Total price', readonly=True, select=True),
+        'sumadj':fields.float('sum of adjustication',readonly=True, select=True),
+        'gross_revenue':fields.float('Gross Revenue', readonly=True, select=True),
+        'net_revenue':fields.float('Net Revenue', readonly=True, select=True),
+        'net_margin':fields.float('Net Margin', readonly=True, select=True),
 
 
     }
@@ -1009,18 +969,18 @@ class report_buyer_auction2(osv.osv):
     def init(self, cr):
         print "In init of auction report ..";
         cr.execute('''
-
- create or replace view report_buyer_auction2  as
-             (select al.id,al.ach_login as "buyer_login",
+			create or replace view report_buyer_auction2  as
+             (select al.id,
+			al.ach_login as "buyer_login",
              rs.name as "buyer",
-             count(al.id) as "object",
-             al.obj_ret as "total_price",
-             al.obj_ret+obj_price/2 as "avg_price"
- 			from auction_lots al, auction_bid ab, auction_bid_line abl,res_partner rs
- 			where al.ach_uid=rs.id group by al.ach_uid,al.ach_login,rs.name,al.obj_ret,al.obj_price,al.id
-             )''')
-
-
+            sum(ad.adj_total) as sumadj,
+             al.gross_revenue as gross_revenue,
+	     al.net_revenue as net_revenue,
+             al.net_margin as net_margin
+             	from auction_lots al, auction_bid ab,res_partner rs,auction_dates ad
+ 		where al.ach_uid=rs.id and al.auction_id=ad.id group by
+		al.id,al.ach_uid,al.ach_login,rs.name,ad.adj_total,
+		al.gross_revenue,al.net_revenue,al.net_margin)''')
 
 report_buyer_auction2()
 #
