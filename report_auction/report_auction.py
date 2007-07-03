@@ -249,7 +249,7 @@ class report_auction_user_pointing(osv.osv):
                      res_users r
                 where h.id=l.sheet_id
                 and
-                l.name='2007-07-02'
+                l.name=h.date_current-1
                 and
                 h.user_id=r.id
 
