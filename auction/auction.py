@@ -684,7 +684,7 @@ class auction_lots(osv.osv):
 				return []
 			else:
 				if not partner_ref:
-					raise osv.except_osv('Please, set a buyer for this auction', "Please, set a buyer for this auction")
+					raise osv.except_osv('Error', "Please, set a buyer for this auction")
 				inv_ref=self.pool.get('account.invoice')
 				price = lot.obj_price or 0.0
 				lot_name =lot.obj_num
@@ -833,7 +833,7 @@ class auction_lot_history(osv.osv):
 		'name': fields.char('Reason',size=64),
 		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
 		'auction_id': fields.many2one('auction.dates', 'Auction date', required=True),
-		'price': fields.float('Withdrawn prce', digits=(16,2))
+		'price': fields.float('Withdrawn price', digits=(16,2))
 	}
 auction_lot_history()
 
@@ -919,6 +919,7 @@ class report_seller_auction(osv.osv):
         'object_sold':fields.float('Object Sold',readonly=True, select=True),
         'total_price':fields.float('Total  price',readonly=True, select=True),
         'avg_price':fields.float('Avg price',readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
        }
 
     def init(self, cr):
@@ -927,6 +928,7 @@ class report_seller_auction(osv.osv):
              (
              select
              al.id as id,
+             substring(al.create_date for 10) as date,
              rs.name as seller,
              count(al.id) as object,
              (select count(al2.id) from auction_lots as al2,auction_deposit ad2
@@ -936,7 +938,7 @@ class report_seller_auction(osv.osv):
 
 		from auction_deposit ad,res_partner rs,auction_lots al,auction_dates ade
              where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and al.auction_id=ade.id
-             group by al.id,rs.name,al.seller_price,al.lot_est1,al.lot_est2)''')
+             group by al.id,rs.name,al.seller_price,al.lot_est1,al.lot_est2,al.create_date)''')
 
 
 report_seller_auction()
@@ -1103,7 +1105,6 @@ from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
  ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin)''')
 
 report_auction_view2()
-
 
 
 
