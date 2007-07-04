@@ -218,7 +218,7 @@ def _import_data(self, cr, uid, data, context):
 class coda_import(wizard.interface):
     states = {
         'init' : {
-            'actions' : [_import_data],
+            'actions' : [],
             'result' : {'type' : 'form',
                     'arch' : codawiz_form,
                     'fields' : codawiz_fields,
