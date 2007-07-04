@@ -28,7 +28,7 @@
 
 import wizard_aie_send
 import wizard_aie_send_result
-import wizard_lots_buyer_map
+#import wizard_lots_buyer_map
 import wizard_lots_cancel
 import wizard_lots_invoice
 import wizard_lots_numerotate

@@ -28,7 +28,6 @@
 
 import wizard
 import netsvc
-import wizard
 import netsvc
 import osv
 import time
@@ -88,10 +87,8 @@ def _pay_and_reconcile(self, cr, uid, data, context):
 	account_id = form.get('writeoff_acc_id', False)
 	period_id = form.get('period_id', False)
 	journal_id = form.get('journal_id', False)
-	
-	if lot.sel_inv_id:
-#			obj_search=pool.get('account.invoice').search(cr,uid,data['id']=)
-		pool.get('account.invoice').pay_and_reconcile(lot.ach_inv_id.id, form['amount'], form['dest_account_id'], journal_id, account_id, period_id, journal_id, context)
+	if lot.ach_inv_id:
+		p=pool.get('account.invoice').pay_and_reconcile(['lot.ach_inv_id.id'], form['amount'], form['dest_account_id'], journal_id, account_id, period_id, journal_id, context)
 	return {}
 
 
@@ -99,7 +96,7 @@ class wiz_auc_lots_pay(wizard.interface):
 	states = {
 		'init': {
 			'actions': [],
-			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('pay_and_invoice','Pay and Invoice'), ('pay_and_print','Pay and Print'), ('pay','Pay'), ('end','Cancel')]}
+			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('pay','Pay'), ('end','Cancel')]}
 		},
 			'pay': {
 			'actions': [_pay_and_reconcile],

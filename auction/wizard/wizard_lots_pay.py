@@ -1,7 +1,6 @@
 
 import wizard
 import netsvc
-import wizard
 import netsvc
 import osv
 import time

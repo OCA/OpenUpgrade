@@ -331,10 +331,9 @@ class auction_lots(osv.osv):
 		#end for auction_data in auction_lots_obj:
 		return res
 	def _grossmargin(self, cr, uid, ids, name, args, context):
-		print " IN THE BUYER PRICE Fuction",ids
+		print " sIN THE BUYER PRICE gross margin Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['gross_revenue','auction_id'])
-
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
 #			print "Auction data :",auction_data
@@ -351,7 +350,7 @@ class auction_lots(osv.osv):
 #		#end for auction_data in auction_lots_obj:
 		return res
 	def _netmargin(self, cr, uid, ids, name, args, context):
-		print " IN THE BUYER PRICE Fuction",ids
+		print " IN THE BUYER net margin PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['net_revenue','auction_id'])
 
@@ -423,9 +422,6 @@ class auction_lots(osv.osv):
 		'image': fields.binary('Image'),
 		'paid_vnd':fields.function(_is_paid_vnd,string='Buyer Paid',method=True,type='boolean'),
 		'paid_ach':fields.function(_is_paid_ach,string='Seller Paid',method=True,type='boolean'),
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
-		'paid_vnd':fields.boolean('Buyer Paid',readonly=True),
-		'paid_ach':fields.boolean('Seller Paid',readonly=True),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='buyerprice',store=True),
 		'seller_price': fields.function(_sellerprice, method=True, string='sellerprice',store=True),
@@ -875,14 +871,15 @@ class report_unsold_object(osv.osv):
 				from
                   auction_lots lo
                  where
-				 	state = 'unsold'
+				 	lo.state = 'unsold'
 		 		group by lo.auction_id,lo.lot_type,lo.product_id,lo.bord_vnd_id
 			    )""")
+report_unsold_object()
 
-class report_sold_object(osv.osv):
+class report_unplanned_object(osv.osv):
     
-    _name='report.sold.object'
-    _description = "Sold Objects"
+    _name='report.unplanned.object'
+    _description = "Unplanned Objects"
     _auto = False
     _columns = {
         'depos': fields.many2one('res.users','User Name',readonly=True),
@@ -893,20 +890,14 @@ class report_sold_object(osv.osv):
         }
     
     def init(self, cr):
-		cr.execute("""
-			create or replace view report_sold_object as (
-				select
-									min(lo.id) as id,
-                                    lo.auction_id as auct_id,
-                                    lo.lot_type as lot,
-                                    lo.product_id as product_l,
-                                    lo.bord_vnd_id as depos
-				from
-                                    auction.lots lo
-                                where
-                                    state = 'sold'
-				group by lo.auction_id
-			    )""")
+		cr.execute("""create or replace view report_sold_object as 
+				(
+				select min(lo.id) as id, lo.auction_id as auct_id,lo.lot_type as lot,lo.product_id as product_l,lo.bord_vnd_id as depos
+				from auction_lots lo
+                where lo.auction_id is null
+				group by lo.auction_id,lo.lot_type,lo.product_id,lo.bord_vnd_id )""")
+
+report_unplanned_object()
 
 
 class report_seller_auction(osv.osv):
@@ -959,14 +950,13 @@ class report_seller_auction2(osv.osv):
         print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction2  as
              (select rs.id as id,rs.name as "seller",
-	sum(adt.adj_total) as "sum_adj",
-	al.gross_revenue as "gross_revenue",
-	al.net_revenue as "net_revenue",
-	al.net_margin as "net_margin"
-
-        from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt
-             where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and adt.id=al.auction_id
-             group by rs.id,rs.name,al.gross_revenue,al.net_revenue,al.net_margin)
+				sum(adt.adj_total) as "sum_adj",
+				al.gross_revenue as "gross_revenue",
+				al.net_revenue as "net_revenue",
+				al.net_margin as "net_margin"
+        	from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt
+            where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and adt.id=al.auction_id
+            group by rs.id,rs.name,al.gross_revenue,al.net_revenue,al.net_margin)
              ''')
 
 
@@ -989,7 +979,7 @@ class report_buyer_auction(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
+        #print "In init of auction report ..";
         cr.execute('''
 
  create or replace view report_buyer_auction  as
@@ -1023,7 +1013,7 @@ class report_buyer_auction2(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
+       # print "In init of auction report ..";
         cr.execute('''
 			create or replace view report_buyer_auction2  as
              (select al.id,
