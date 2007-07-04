@@ -27,7 +27,7 @@ Auction adjudication
 		<field name="model">report.auction.adjudication</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-			<graph string="Object By day" orientation="horizontal" type="bar">
+			<graph string="Object By day" type="bar">
 				<field name="name"/>
 				<field name="adj_total" operator="+"/>
 
@@ -164,7 +164,7 @@ Objects per Day
 		<field name="model">report.auction.object.date</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-			<graph string="Object By day" orientation="horizontal" type="bar">
+			<graph string="Object By day"  type="bar">
 				<field name="date"/>
 				<field name="obj_num" operator="+"/>
 			</graph>
