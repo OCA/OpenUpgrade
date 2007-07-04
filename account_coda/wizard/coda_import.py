@@ -1,3 +1,31 @@
+##############################################################################
+#
+# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#                    Fabien Pinckaers <fp@tiny.Be>
+#
+# WARNING: This program as such is intended to be used by professional
+# programmers who take the whole responsability of assessing all potential
+# consequences resulting from its eventual inadequacies and bugs
+# End users who are looking for a ready-to-use solution with commercial
+# garantees and support are strongly adviced to contract a Free Software
+# Service Company
+#
+# This program is Free Software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#
+##############################################################################
+
 import pooler
 import time
 import datetime
@@ -75,6 +103,8 @@ def _coda_parsing(self, cr, uid, data, context):
     isFooter = False
     isOldBal = False
     isNewBal = False
+    str_log = ""
+    err_log = ""
     for line in recordlist:
         if line[0] == '0':
             print "Header Record"
@@ -84,8 +114,9 @@ def _coda_parsing(self, cr, uid, data, context):
                 resstatement['date'] = d
                 period_id = pool.get('account.period').search(cr,uid,[('date_start','<=',time.strftime("%y/%m/%d",time.strptime(d,"%d/%m/%y"))),('date_stop','>=',time.strftime("%y/%m/%d",time.strptime(d,"%d/%m/%y")))])
                 resstatement['period_id'] = period_id[0]
-                bn_statement = pool.get('account.bank.statement').create(cr,uid,resstatement)
+                bn_statement = int(pool.get('account.bank.statement').create(cr,uid,resstatement))
                 isHeader = True
+
         elif line[0] == '1':
             print "OldBalance Record"
             if not isOldBal:
@@ -150,14 +181,15 @@ def _coda_parsing(self, cr, uid, data, context):
     #end for
     print "Finish Loop"
     str_log = "Coda File is Imported Successfully"
-#    pool.get('account.coda').create(cr, uid,{
-#        'name':codafile,
-#        'statement_ids':[(6,0,bn_statement)],
-#        'note':str_log,
-#        'journal_id':data['form']['journal_id'],
-#        'date':time.strftime("%Y-%m-%d"),
-#        'user_id':uid,
-#        })
+    create_dict = {
+        'name':codafile,
+        'statement_ids':bn_statement,
+        'note':str_log,
+        'journal_id':data['form']['journal_id'],
+
+        }
+    print create_dict
+    pool.get('account.coda').create(cr, uid,create_dict)
 
     return {'note':str_log}
 
@@ -178,11 +210,15 @@ def list2float(lst):
                 return str2float((lambda s : s[:-3] + '.' + s[-3:])(lst))
             except:
                 return 0.0
-
+def _import_data(self, cr, uid, data, context):
+    data['form']['journal_id'] = 3
+    data['form']['def_payable']=5
+    data['form']['def_receivable']=10
+    return data['form']
 class coda_import(wizard.interface):
     states = {
         'init' : {
-            'actions' : [],
+            'actions' : [_import_data],
             'result' : {'type' : 'form',
                     'arch' : codawiz_form,
                     'fields' : codawiz_fields,
