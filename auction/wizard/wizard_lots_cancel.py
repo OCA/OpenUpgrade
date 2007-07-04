@@ -28,63 +28,63 @@
 
 import wizard
 import netsvc
+import pooler
 
 paid_form = '''<?xml version="1.0"?>
-<form title="%s">
-	<field name="amount_total"></field>
-	<field name="amount_paid"></field>
-	<field name="objects"></field>
-</form>''' % ("Paid ?",)
-
+<form string="Cancel Payment">
+	<label string="Are you sure you want to refund this invoice ?"/>
+</form>'''
 fields_ask = {
-	'amount_total': {'string':'Amount to cancel', 'type':'float', 'required':True, 'readonly':True},
-	'amount_paid': {'string':'Amount paid', 'type':'float', 'required':True, 'readonly':True},
-	'objects': {'string':'Nbr of objects', 'type':'integer', 'required':True, 'readonly':True},
 }
+#
+#def _get_value(self,cr,uid, datas,context={}):
+##	service = netsvc.LocalService("object_proxy")
+#	lots=pool.get('auction.lots').browse(cr,uid,data['id'],context)
+#
+#	
+##	lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', datas['ids'])
+#
+#	ids = []
+#	pay_ids = {}
+#	price = 0.0
+#	price_paid = 0.0
+#	uid = False
+#
+##TODO: refuse if several payments?
+#	for lot in lots:
+#			price += lot['obj_price']
+#
+#			# add all the buyer costs
+#			costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
+#			for cost in costs:
+#				price += cost['amount']
+#
+##TODO: pr bien faire, faudrait leur poser la question: continue anyway?
+#	if len(ids)<len(datas['ids']):
+##		print ids, datas['ids']
+#		raise wizard.except_wizard('UserError', ('Some object(s) are not paid !', 'init'))
+#
+#	return {'objects':len(ids), 'amount_total':price, 'amount_paid':price_paid}
+#
+#def _cancel(self, uid, datas):
+#	service = netsvc.LocalService("object_proxy")
+#	lots = service.execute(cr.dbname,uid, 'auction.lots', 'lots_cancel_payment', datas['ids'])
+#	return {}
+#
 
-def _get_value(self,cr,uid, datas,context={}):
-	service = netsvc.LocalService("object_proxy")
-	lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', datas['ids'])
-
-	ids = []
-	pay_ids = {}
-	price = 0.0
-	price_paid = 0.0
-	uid = False
-
-#TODO: refuse if several payments?
-	for lot in lots:
-		if lot['ach_pay_id']:
-			payment_id = lot['ach_pay_id'][0]
-			if payment_id not in pay_ids:
-				pay_ids[payment_id] = True
-				price_paid += service.execute(uid, 'account.transfer', 'read', [payment_id], ['amount'])[0]['amount']
-			ids.append(lot['id'])
-
-			# add the object price
-			price += lot['obj_price']
-
-			# add all the buyer costs
-			costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', [lot['id']])
-			for cost in costs:
-				price += cost['amount']
-
-#TODO: pr bien faire, faudrait leur poser la question: continue anyway?
-	if len(ids)<len(datas['ids']):
-#		print ids, datas['ids']
-		raise wizard.except_wizard('UserError', ('Some object(s) are not paid !', 'init'))
-
-	return {'objects':len(ids), 'amount_total':price, 'amount_paid':price_paid}
-
-def _cancel(self, uid, datas):
-	service = netsvc.LocalService("object_proxy")
-	lots = service.execute(cr.dbname,uid, 'auction.lots', 'lots_cancel_payment', datas['ids'])
+def _cancel(self,cr,uid,data,context):
+	pool = pooler.get_pool(cr.dbname)
+	lot = pool.get('auction.lots').browse(cr,uid,data['id'],context)
+	if lot.ach_inv_id:
+		p=pool.get('account.invoice').refund(['lot.ach_inv_id.id'],context)
+	if lot.vnd_inv_id:
+		p=pool.get('account.invoice').refund(['lot.vnd_inv_id.id'],context)
 	return {}
 
 class wiz_auc_lots_cancel(wizard.interface):
 	states = {
 		'init': {
-			'actions': [_get_value],
+			'actions': [],
 			'result': {'type': 'form', 'arch':paid_form, 'fields': fields_ask, 'state':[('make_cancel','Cancel Payment'), ('end','Cancel')]}
 		},
 		'make_cancel': {

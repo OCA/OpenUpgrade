@@ -684,7 +684,7 @@ class auction_lots(osv.osv):
 				return []
 			else:
 				if not partner_ref:
-					raise osv.except_osv('Error', "Please, set a buyer for this auction")
+					raise osv.except_osv('Please, set a buyer for this auction', "Please, set a buyer for this auction")
 				inv_ref=self.pool.get('account.invoice')
 				price = lot.obj_price or 0.0
 				lot_name =lot.obj_num
@@ -833,7 +833,7 @@ class auction_lot_history(osv.osv):
 		'name': fields.char('Reason',size=64),
 		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
 		'auction_id': fields.many2one('auction.dates', 'Auction date', required=True),
-		'price': fields.float('Withdrawn price', digits=(16,2))
+		'price': fields.float('Withdrawn prce', digits=(16,2))
 	}
 auction_lot_history()
 
