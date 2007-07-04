@@ -333,7 +333,7 @@ Auction Management/Auction Dates/Reporting
 	</record>
 	<menuitem name="Auction Management/Objects/All objects"	action="action_all_objects" id="menu_auction_all_objects" menu="menu_action_all_objects"/>
 
-	
+
 <!--	<record model="ir.ui.view" id="view_report_sold_object_form">
 		<field name="">report.sold.object.form</field>
 		<field name="">report.sold.object</field>
@@ -385,7 +385,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="auct_id" select="1"/>
 			</form>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.actions.act_window" id="action_all_objects_unsold">
 		<field name="name">report.unsold.object</field>
 		<field name="res_model">report.unsold.object</field>
@@ -620,6 +620,7 @@ Auction Management/Auction Dates/Reporting
 	<menuitem name="Auction Management/Sellers/Deposit border" action="action_deposit_border" id="menu_auction_deposit_border"/>
 
 <!--start : creating seller Reporting menu for the selller by pmo-->
+
 
 <record model="ir.ui.view" id="view_auction_form">
 		<field name="name">auction.month.form</field>
