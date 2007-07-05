@@ -856,28 +856,28 @@ class report_unsold_object(osv.osv):
     _description = "Unsold Objects"
     _auto = False
     _columns = {
-        'depos': fields.many2one('res.users','User Name',readonly=True),
+        'depos': fields.many2one('res.partner','seller Name',readonly=True),
        	'lot': fields.selection(_type_get, 'Object Type', size=64),
 		'product_l':fields.many2one('product.product', 'Product', required=True),
 		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
+		'state':fields.char('State Name',size=64)
 
         }
 
     def init(self, cr):
 		cr.execute("""
 			create or replace view report_unsold_object as (
-				select
-					min(lo.id) as id,
-                	lo.auction_id as auct_id,
-                	lo.lot_type as lot,
-                	lo.product_id as product,
-                	lo.bord_vnd_id as depos
-				from
-                  auction_lots lo
-                 where
-				 	state = 'unsold'
-		 		group by lo.auction_id,lo.lot_type,lo.product_id,lo.bord_vnd_id
+			select min(lo.id) as id,
+      		lo.auction_id as auct_id,
+      		lo.lot_type as lot,
+      		lo.product_id as product,
+      		lo.bord_vnd_id as depos,
+      		lo.state as state
+			from auction_lots lo where state = 'unsold'
+			group by lo.auction_id,lo.lot_type,lo.product_id,lo.bord_vnd_id,lo.state
 			    )""")
+
+report_unsold_object()
 
 class report_sold_object(osv.osv):
 
@@ -885,28 +885,29 @@ class report_sold_object(osv.osv):
     _description = "Sold Objects"
     _auto = False
     _columns = {
-        'depos': fields.many2one('res.users','User Name',readonly=True),
+        'depos': fields.many2one('res.partner','Seller Name',readonly=True),
        	'lot': fields.selection(_type_get, 'Object Type', size=64),
 		'product_l':fields.many2one('product.product', 'Product', required=True),
 		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
+
 
         }
 
     def init(self, cr):
 		cr.execute("""
 			create or replace view report_sold_object as (
-				select
-									min(lo.id) as id,
-                                    lo.auction_id as auct_id,
-                                    lo.lot_type as lot,
-                                    lo.product_id as product_l,
-                                    lo.bord_vnd_id as depos
-				from
-                                    auction.lots lo
-                                where
-                                    state = 'sold'
-				group by lo.auction_id
+				select min(lo.id) as id,
+				lo.auction_id as auct_id,
+      			lo.lot_type as lot,
+      			 lo.product_id as product_l,
+        		lo.bord_vnd_id as depos
+
+        		  from auction_lots lo
+          where state = 'sold'
+	group by lo.auction_id,lo.product_id,lo.bord_vnd_id,lo.lot_type
 			    )""")
+report_sold_object()
+
 
 
 class report_seller_auction(osv.osv):
@@ -953,6 +954,7 @@ class report_seller_auction2(osv.osv):
 		'gross_revenue':fields.float('Gross_Revenue',readonly=True, select=True),
         'net_revenue':fields.float('Net_Revenue',readonly=True, select=True),
         'net_margin':fields.float('Net_Margin', readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
 
 
     }
@@ -960,7 +962,9 @@ class report_seller_auction2(osv.osv):
     def init(self, cr):
         print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction2  as
-             (select rs.id as id,rs.name as "seller",
+             (select rs.id as id,
+              substring(al.create_date for 10) as date,
+             rs.name as "seller",
 	sum(adt.adj_total) as "sum_adj",
 	al.gross_revenue as "gross_revenue",
 	al.net_revenue as "net_revenue",
@@ -968,7 +972,7 @@ class report_seller_auction2(osv.osv):
 
         from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt
              where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and adt.id=al.auction_id
-             group by rs.id,rs.name,al.gross_revenue,al.net_revenue,al.net_margin)
+             group by rs.id,rs.name,al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)
              ''')
 
 
@@ -986,7 +990,7 @@ class report_buyer_auction(osv.osv):
         'object':fields.integer('No of objects',readonly=True, select=True),
        	'total_price':fields.integer('Total price', readonly=True, select=True),
         'avg_price':fields.integer('Avg price', readonly=True, select=True),
-
+        'date': fields.date('Create Date',  required=True),
 
     }
 
@@ -996,6 +1000,7 @@ class report_buyer_auction(osv.osv):
 
  create or replace view report_buyer_auction  as
              (select al.id,al.ach_login as "buyer_login",
+              substring(al.create_date for 10) as date,
              rs.name as "buyer",
              count(al.id) as "object",
              (sum(ad.adj_total)/count(al.id)) as "total_price",
@@ -1003,7 +1008,7 @@ class report_buyer_auction(osv.osv):
 
  		from auction_lots al,res_partner rs,auction_dates ad
  		where al.ach_uid=rs.id and ad.id=al.auction_id
- group by al.ach_uid,al.ach_login,rs.name,al.id,al.lot_est1,al.lot_est2,al.buyer_price,ad.adj_total
+ group by al.ach_uid,al.ach_login,rs.name,al.id,al.lot_est1,al.lot_est2,al.buyer_price,ad.adj_total,al.create_date
              )''')
 
 
@@ -1021,6 +1026,8 @@ class report_buyer_auction2(osv.osv):
         'gross_revenue':fields.float('Gross Revenue', readonly=True, select=True),
         'net_revenue':fields.float('Net Revenue', readonly=True, select=True),
         'net_margin':fields.float('Net Margin', readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
+
 
 
     }
@@ -1030,6 +1037,7 @@ class report_buyer_auction2(osv.osv):
         cr.execute('''
 			create or replace view report_buyer_auction2  as
              (select al.id,
+               substring(al.create_date for 10) as date,
 			al.ach_login as "buyer_login",
              rs.name as "buyer",
             sum(ad.adj_total) as sumadj,
@@ -1039,7 +1047,7 @@ class report_buyer_auction2(osv.osv):
              	from auction_lots al, auction_bid ab,res_partner rs,auction_dates ad
  		where al.ach_uid=rs.id and al.auction_id=ad.id group by
 		al.id,al.ach_uid,al.ach_login,rs.name,ad.adj_total,
-		al.gross_revenue,al.net_revenue,al.net_margin)''')
+		al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
 
 report_buyer_auction2()
 
@@ -1056,6 +1064,8 @@ class report_auction_view(osv.osv):
         'min_est':fields.float('Minimum Estimation', readonly=True, select=True),
         'max_est':fields.float('Maximum Estimation', readonly=True, select=True),
         'adj_price':fields.float('Adustication price', readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
+
 
 
     }
@@ -1063,7 +1073,9 @@ class report_auction_view(osv.osv):
     def init(self, cr):
         print "In init of auction report ..";
         cr.execute('''create or replace view report_auction_view  as
-             (select  ad.id, ad.name as "auction",
+             (select  ad.id,
+               substring(al.create_date for 10) as date,
+              ad.name as "auction",
 count(al.id) as "nobjects",
  count(al.ach_uid) as "nbuyer",
  count(al.bord_vnd_id) as "nseller",
@@ -1071,7 +1083,7 @@ al.lot_est1 as "min_est",
 al.lot_est2 as "max_est",
 al.obj_price as "adj_price"
 from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
- ad.id,ad.name,al.ach_uid,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price)''')
+ ad.id,ad.name,al.ach_uid,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price,al.create_date)''')
 
 report_auction_view()
 
@@ -1089,20 +1101,24 @@ class report_auction_view2(osv.osv):
 		'gross_revenue':fields.float('grossrevenue',readonly=True, select=True),
         'net_revenue':fields.float('netrevenue',readonly=True, select=True),
         'obj_margin':fields.float('object_margin', readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
+
 
     }
 
     def init(self, cr):
         print "In init of auction report ..";
         cr.execute('''create or replace view report_auction_view2  as
-             (select  ad.id, ad.name as "auction",
+             (select  ad.id,
+               substring(al.create_date for 10) as date,
+                ad.name as "auction",
 sum(ad.adj_total) as "sum_adj",
  al.gross_revenue as "gross_revenue",
  al.net_revenue as "net_revenue",
 (al.net_margin*count(al.id)) as "obj_margin"
 
 from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
- ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin)''')
+ ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
 
 report_auction_view2()
 
