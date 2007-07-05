@@ -145,25 +145,35 @@ def _coda_parsing(self, cr, uid, data, context):
             elif line[1] == '3':
                 print ""
                 st_line_name = line[2:10]
-                print st_line_name
-                st_line_partner_name = line[47:82]
-                print st_line_partner_name
-
-                partner_id = pool.get('res.partner').search(cr,uid,[('name','=',st_line_partner_name)])
-                if partner_id:
-
-                    part = pool.get('res.partner').browse(cr, uid, partner_id[0], context)
-
+                st_line_partner_acc = str(line[10:47]).strip()
+                bank_ids = pool.get('res.partner.bank').search(cr,uid,[('number','=',st_line_partner_acc)])
+                if bank_ids:
+                    bank = pool.get('res.partner.bank').browse(cr,uid,bank_ids[0],context)
+                    part = bank.partner_id
                     line_id = pool.get('account.bank.statement.line').search(cr,uid,[('name','=',st_line_name)])
                     if line_id:
                         _line = pool.get('account.bank.statement.line').browse(cr,uid,line_id.pop(),context)
-                        print _line['amount']
-                        print _line['id']
                         if _line['amount'] < 0:
                             pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_payable[0]})
                         else:
                             pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_receivable[0]})
-                #end if
+
+#
+#                partner_id = pool.get('res.partner').search(cr,uid,[('name','=',st_line_partner_name)])
+#                if partner_id:
+#
+#                    part = pool.get('res.partner').browse(cr, uid, partner_id[0], context)
+#
+#                    line_id = pool.get('account.bank.statement.line').search(cr,uid,[('name','=',st_line_name)])
+#                    if line_id:
+#                        _line = pool.get('account.bank.statement.line').browse(cr,uid,line_id.pop(),context)
+#                        print _line['amount']
+#                        print _line['id']
+#                        if _line['amount'] < 0:
+#                            pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_payable[0]})
+#                        else:
+#                            pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_receivable[0]})
+#                #end if
         elif line[0]=='3':
             print "Information Record"
         elif line[0]=='8':
