@@ -10,7 +10,7 @@ class report_next_production_order(osv.osv):
        'product_id': fields.many2one('product.product', 'Product', required=True, domain=[('type','<>','service')]),
        'product_qty': fields.float('Product Qty', required=True),
        'date_planned': fields.date('Planned date', required=True),
-       'state': fields.selection([('draft','Draft'),('picking_except', 'Picking Exception'),('confirmed','Waiting Goods'),('ready','Ready to Produce'),('in_production','In Production'),('cancel','Canceled'),('done','Done')],'State', readonly=True)
+       'state': fields.selection([('draft','Draft'),('picking_except', 'Packing Exception'),('confirmed','Waiting Goods'),('ready','Ready to Produce'),('in_production','In Production'),('cancel','Canceled'),('done','Done')],'State', readonly=True)
 
     }
 #    _order = 'date_planned desc, priority desc';

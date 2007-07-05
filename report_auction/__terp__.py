@@ -9,6 +9,6 @@
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["report_auction_view.xml"],
-    "active": True,
+    "active": False,
     "installable": True
 }

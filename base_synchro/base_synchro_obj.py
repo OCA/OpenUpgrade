@@ -55,12 +55,9 @@ class base_synchro_obj(osv.osv):
 			domain3 = domain+[('create_date','>=',dt)]
 		else:
 			domain2 = domain3 = domain
-		print domain2
 		ids = self.pool.get(object).search(cr, uid, domain2, context=context)
 		ids += self.pool.get(object).search(cr, uid, domain3, context=context)
-		print 'FOUND', ids
 		for r in self.pool.get(object).perm_read(cr, uid, ids, context, details=False):
-			print r
 			result.append( (r['write_date'] or r['create_date'], r['id'], context.get('action', 'd')))
 		return result
 base_synchro_obj()

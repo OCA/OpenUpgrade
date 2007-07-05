@@ -19,7 +19,7 @@
 								colspan="4"
 								height="200"
 								width="510"/>
-							<action string="Deliveries (Out picking)"
+							<action string="Deliveries (Out packing)"
 								name="%(stock.action_picking_tree2)d"
 								colspan="4"/>
 							<action
@@ -30,19 +30,12 @@
 
 
 						<child2>
-							<button
-								string="Menu"
-								name="%(base.action_menu_admin)d"
-								icon="gtk-ok"
-								type="action"
-								colspan="4"/>
-
 							<action
 								string="Workcenter load"
 								name="%(report_mrp.action_report_workcenter_load_tree)d"
 								view_mode="graph,tree" colspan="4"/>
 							<action
-								string="Outgoing/Incoming picking"
+								string="Outgoing/Incoming packing"
 								name="%(report_mrp.action_report_in_out_picking_tree)d"
 								view_mode="tree"
 								colspan="4"/>

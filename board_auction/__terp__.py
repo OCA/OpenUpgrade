@@ -16,6 +16,6 @@
     This module creates a dashboards for auction that includes:
 
     """,
-    "active":True,
+    "active":False,
     "installable":True,
 }
