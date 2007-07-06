@@ -59,6 +59,13 @@
 		auto="False"
 		 multi="1"/>
 
+	<report string="Catelog with pictures"
+	   	model="auction.lots"
+		name="catelogwithpictures"
+		rml="auction/report/catelogwithpictures.rml"
+		auto="False"
+		multi="1"/>
+
 	<report string="Catelog with rml"
 	   	model="auction.lots"
 		name="auction.catelog"
