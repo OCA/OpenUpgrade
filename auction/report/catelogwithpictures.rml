@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="34.0" y1="28.0" width="527" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Italic" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Bold" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P13" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
+    <paraStyle name="P15" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P16" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P17" fontName="Courier-Bold" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P18" fontName="Courier-Bold" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P19" fontName="Courier-Bold" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Times-BoldItalic" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P21" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P22" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P23" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P24" fontName="Courier-Bold" fontSize="11.0" leading="14"/>
+    <paraStyle name="P25" fontName="Times-Roman" fontSize="9.0" leading="11"/>
+    <paraStyle name="P26" fontName="Times-Roman" fontSize="14.0" leading="17" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P26">
+      <font color="white"> </font>
+    </para>
+    <para style="P25">[[ setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</para>
+    <para style="P20">
+      <font color="white"> </font>
+    </para>
+    <para style="P15">
+      <font face="Times-Roman">Document</font>
+      <font face="Times-Roman">:</font>
+      <font face="Times-Roman">[[o.name]]</font>
+    </para>
+    <para style="P15">
+      <font face="Times-Roman">Adjustication price: </font>
+      <font face="Times-Roman">[[o.obj_price]]</font>
+    </para>
+    <para style="P24">
+      <font color="white"> </font>
+    </para>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <para style="P19">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+
