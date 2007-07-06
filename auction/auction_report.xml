@@ -66,6 +66,14 @@
 		auto="False"
 		multi="1"/>
 
+		<report string="auction object list"
+	   	model="auction.dates"
+		name="auction_objects"
+		rml="auction/report/auction_objects.rml"
+		auto="False"
+		multi="1"/>
+
+
 	<report string="Catelog with rml"
 	   	model="auction.lots"
 		name="auction.catelog"
