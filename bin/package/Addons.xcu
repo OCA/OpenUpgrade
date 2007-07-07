@@ -551,6 +551,45 @@
 					</prop>
 				</node>
 			</node>
+			<node oor:name="org.openoffice.tiny.report.image4" oor:op="replace">
+				<prop oor:name="URL">
+					<value>service:org.openoffice.tiny.report.exporttorml?insert</value>
+				</prop>
+				<node oor:name="UserDefinedImages">
+					<prop oor:name="ImageSmallURL" oor:type="xs:string">
+						<value>%origin%/images/export_rml_s.png</value>
+					</prop>
+					<prop oor:name="ImageBigURL" oor:type="xs:string">
+						<value>%origin%/images/export_rml_b.png</value>
+					</prop>
+				</node>
+			</node>
+			<node oor:name="org.openoffice.tiny.report.image5" oor:op="replace">
+				<prop oor:name="URL">
+					<value>service:org.openoffice.tiny.report.convertFB?insert</value>
+				</prop>
+				<node oor:name="UserDefinedImages">
+					<prop oor:name="ImageSmallURL" oor:type="xs:string">
+						<value>%origin%/images/convetFtoB_s.png</value>
+					</prop>
+					<prop oor:name="ImageBigURL" oor:type="xs:string">
+						<value>%origin%/images/convetFtoB_b.png</value>
+					</prop>
+				</node>
+			</node>
+			<node oor:name="org.openoffice.tiny.report.image6" oor:op="replace">
+				<prop oor:name="URL">
+					<value>service:org.openoffice.tiny.report.convertBF?insert</value>
+				</prop>
+				<node oor:name="UserDefinedImages">
+					<prop oor:name="ImageSmallURL" oor:type="xs:string">
+						<value>%origin%/images/convetBtoF_s.png</value>
+					</prop>
+					<prop oor:name="ImageBigURL" oor:type="xs:string">
+						<value>%origin%/images/convetBtoF_b.png</value>
+					</prop>
+				</node>
+			</node>
 		</node>
 
 	</node>
