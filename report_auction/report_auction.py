@@ -16,16 +16,14 @@ class report_auction_adjudication(osv.osv):
                 tmp[id]=sum[0]
         return tmp
     _columns = {
-                'name': fields.char('Auction date', size=64, required=True),
-                'auction1': fields.date('First Auction Day', required=True),
-                'auction2': fields.date('Last Auction Day', required=True),
+                'name': fields.char('Auction date', size=64, required=True,select=True),
+                'auction1': fields.date('First Auction Day', required=True,select=True),
+                'auction2': fields.date('Last Auction Day', required=True,select=True),
                 'buyer_costs': fields.many2many('account.tax', 'auction_buyer_taxes_rel', 'auction_id', 'tax_id', 'Buyer Costs'),
                 'seller_costs': fields.many2many('account.tax', 'auction_seller_taxes_rel', 'auction_id', 'tax_id', 'Seller Costs'),
-                'adj_total': fields.float('Total Adjudication'),
-                'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
-
+                'adj_total': fields.float('Total Adjudication',select=True),
+                'state': fields.selection((('draft','Draft'),('close','Closed')),'State', select=True),
     }
-
     def init(self, cr):
         cr.execute("""
             create or replace view report_auction_adjudication as (
@@ -50,7 +48,7 @@ class report_per_seller_customer(osv.osv):
         _description = "Customer per seller"
         _auto = False
         _columns = {
-                    'name': fields.char('Seller', size=64, required=True),
+                    'name': fields.char('Seller', size=64, required=True,select=True),
                     'no_of_buyer': fields.integer('Buyer'),
         }
         def init(self, cr):
@@ -80,9 +78,9 @@ class report_latest_deposit(osv.osv):
         _description = "Latest 10 Deposits"
         _auto = False
         _columns = {
-            'name': fields.char('Depositer Inventory', size=64, required=True),
-            'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
-            'date_dep': fields.date('Deposit date', required=True),
+            'name': fields.char('Depositer Inventory', size=64, required=True,select=True),
+            'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True,select=True),
+            'date_dep': fields.date('Deposit date', required=True,select=True),
             'method': fields.selection((('keep','Keep until sold'),('decease','Decrease limit of 10%'),('contact','Contact the Seller')), 'Withdrawned method', required=True),
             'tax_id': fields.many2one('account.tax', 'Expenses'),
             'info': fields.char('Description', size=64),
@@ -118,12 +116,12 @@ class report_latest_objects(osv.osv):
         _columns = {
                 'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
                 'auction_id': fields.many2one('auction.dates', 'Auction Date'),
-                'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
-                'obj_desc': fields.text('Object Description'),
-                'obj_num': fields.integer('Catalog Number'),
-                'obj_ret': fields.float('Price retired'),
-                'obj_comm': fields.boolean('Commission'),
-                'obj_price': fields.float('Adjudication price'),
+                'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True,select=True),
+                'obj_desc': fields.text('Object Description',select=True),
+                'obj_num': fields.integer('Catalog Number',select=True),
+                'obj_ret': fields.float('Price retired',select=True ),
+                'obj_comm': fields.boolean('Commission', select=True),
+                'obj_price': fields.float('Adjudication price', select=True),
                 'user_id':fields.many2one('res.users', 'User',  select=True),
         }
         def init(self, cr):
@@ -159,12 +157,12 @@ class report_auction_object_date(osv.osv):
             'name': fields.char('Short Description',size=64, required=True),
             'lot_type': fields.selection(_type_get, 'Object Type', size=64),
             'obj_desc': fields.text('Object Description'),
-            'obj_num': fields.integer('Catalog Number'),
+            'obj_num': fields.integer('Catalog Number',select=True),
             'obj_ret': fields.float('Price retired'),
             'obj_comm': fields.boolean('Commission'),
             'obj_price': fields.float('Adjudication price'),
-            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True),
-            'date': fields.char('Name', size=64, required=True),
+            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, select=True),
+            'date': fields.char('Name', size=64, required=True,select=True),
             'lot_num': fields.integer('Quantity', required=True),
     }
 
@@ -192,19 +190,19 @@ class report_auction_estimation_adj_category(osv.osv):
             'auction_id': fields.many2one('auction.dates', 'Auction Date'),
             'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
             'name': fields.char('Short Description',size=64, required=True),
-            'lot_type': fields.selection(_type_get, 'Object Type', size=64),
-            'lot_est1': fields.float('Minimum Estimation'),
-            'lot_est2': fields.float('Maximum Estimation'),
-            'obj_desc': fields.text('Object Description'),
+            'lot_type': fields.selection(_type_get, 'Object Type', size=64,select=True),
+            'lot_est1': fields.float('Minimum Estimation',select=True),
+            'lot_est2': fields.float('Maximum Estimation',select=True),
+            'obj_desc': fields.text('Object Description',select=True),
             'obj_num': fields.integer('Catalog Number'),
             'obj_ret': fields.float('Price retired'),
             'obj_comm': fields.boolean('Commission'),
             'obj_price': fields.float('Adjudication price'),
-            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, readonly=True),
-            'date': fields.char('Name', size=64, required=True),
+            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
+            'date': fields.char('Name', size=64, required=True,select=True),
             'lot_num': fields.integer('Quantity', required=True),
             'lot_type': fields.selection(_type_get, 'Object Type', size=64),
-            'adj_total': fields.float('Total Adjudication'),
+            'adj_total': fields.float('Total Adjudication',select=True),
     }
 
     def init(self, cr):
@@ -231,10 +229,10 @@ class report_auction_user_pointing(osv.osv):
     _description = "user pointing "
     _auto = False
     _columns = {
-            'user_id': fields.char('User',size=64, required=True, select=1),
-            'name': fields.date('Date', readonly=True),
-            'sheet_id': fields.many2one('hr_timesheet_sheet.sheet', 'Sheet', readonly=True, select="1"),
-            'total_timesheet': fields.float('Project Timesheet', readonly=True),
+            'user_id': fields.char('User',size=64, required=True, select=True),
+            'name': fields.date('Date', select=True),
+            'sheet_id': fields.many2one('hr_timesheet_sheet.sheet', 'Sheet',  select=True),
+            'total_timesheet': fields.float('Project Timesheet',select=True),
       }
 
     def init(self, cr):
@@ -256,4 +254,7 @@ class report_auction_user_pointing(osv.osv):
             )
         """)
 report_auction_user_pointing()
+
+# Report for Seller and Buyer Reporting Menu
+
 
