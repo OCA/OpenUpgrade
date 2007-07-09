@@ -1,5 +1,5 @@
 {
-	"name" : "Authenticate users with ldap server",
+	"name" : "Authenticate users with ldap server, Multi-Company.",
 	"version" : "0.1",
 	"depends" : ["base"],
 	"author" : "Tiny",
