@@ -35,7 +35,8 @@
 		<pageBreak/>
 	</xsl:template>
 
-	<xsl:template match="bid">
+<!---	<xsl:template match="bid"> make a chaange a data of all the bidders-->
+	<xsl:template match="/">
 		<para style="nospace2"><xsl:value-of select="client_info/partner_name"/></para>
 		<para style="nospace2"><xsl:value-of select="client_info/street"/></para>
 		<para style="nospace2"><xsl:value-of select="client_info/street2"/></para>
