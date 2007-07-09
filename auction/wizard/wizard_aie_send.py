@@ -29,7 +29,7 @@
 #
 # Does not properly work concurently !!!
 #
-
+import pooler
 import wizard
 import netsvc
 import base64
@@ -160,7 +160,6 @@ def _photos_send(uid, uname, passwd, did, ids):
 			fname = datas[0]['datas_fname']
 
 			_photo_bin_send(uname, passwd, ref, did, fname, bin)
-			print
 			print 'SENDING PHOTO', ref
 
 def _get_dates(self,cr,uid, datas,context={}):
@@ -179,12 +178,12 @@ def _get_dates(self,cr,uid, datas,context={}):
 
 def _send(self,cr,uid, datas,context={}):
 	import pickle, thread, sql_db
+ 	cr = pooler.get_db(db_name).cursor()
 
-	cr=sql_db.db.cursor()
+#	cr=sql_db.db.cursor()
 	cr.execute('select name,aie_categ from auction_lot_category')
 	vals = dict(cr.fetchall())
 	cr.close()
-
 	service = netsvc.LocalService("object_proxy")
 	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'],  ['obj_num','lot_num','obj_desc','bord_vnd_id','lot_est1','lot_est2','artist_id','lot_type','aie_categ'])
 	ids = []

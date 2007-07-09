@@ -139,6 +139,8 @@ class auction_deposit(osv.osv):
 	_name = "auction.deposit"
 	_description="Deposit Border"
 	_columns = {
+
+		'image': fields.binary('Image'),
 		'name': fields.char('Depositer Inventory', size=64, required=True),
 		'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
 		'date_dep': fields.date('Deposit date', required=True),
@@ -331,7 +333,7 @@ class auction_lots(osv.osv):
 		#end for auction_data in auction_lots_obj:
 		return res
 	def _grossmargin(self, cr, uid, ids, name, args, context):
-		print " IN THE BUYER PRICE Fuction",ids
+#		print " IN THE BUYER PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['gross_revenue','auction_id'])
 
@@ -351,7 +353,7 @@ class auction_lots(osv.osv):
 #		#end for auction_data in auction_lots_obj:
 		return res
 	def _netmargin(self, cr, uid, ids, name, args, context):
-		print " IN THE BUYER PRICE Fuction",ids
+#		print " IN THE BUYER PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['net_revenue','auction_id'])
 
@@ -424,9 +426,6 @@ class auction_lots(osv.osv):
 		'paid_vnd':fields.function(_is_paid_vnd,string='Buyer Paid',method=True,type='boolean'),
 		'paid_ach':fields.function(_is_paid_ach,string='Seller Paid',method=True,type='boolean'),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
-		'paid_vnd':fields.boolean('Buyer Paid',readonly=True),
-		'paid_ach':fields.boolean('Seller Paid',readonly=True),
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='buyerprice',store=True),
 		'seller_price': fields.function(_sellerprice, method=True, string='sellerprice',store=True),
 		'gross_revenue':fields.function(_grossprice, method=True, string='Grossrevenue',store=True),
@@ -474,18 +473,36 @@ class auction_lots(osv.osv):
 
 		return taxes_summed.values()
 
-#	def compute_buyer_costs(self, cr, uid, ids):
-#		lots = self.browse(cr, uid, ids)
+	def compute_buyer_costs(self, cr, uid, ids):
+		lots = self.browse(cr, uid, ids)
 ##CHECKME: est-ce que ca vaudrait la peine de faire des groupes de lots qui ont les memes couts pour passer des listes de lots a compute?
-#		taxes_res = []
-#		for lot in lots:
-#			costs_ids = [c.id for c in lot.auction_id.buyer_costs]
-#			if (lot.author_right):
-#				costs_ids.append(lot.author_right.id)
-#			taxes_res.extend(self.pool.get('account.tax').compute(cr, uid, costs_ids, lot.obj_price, 1))
+		taxes = []
+		amount_total=0.0
+	#	pt_tax=pool.get('account.tax')
+		for lot in lots:
+			taxes = lot.product_id.taxes_id
+			if lot.bord_vnd_id.tax_id:
+				taxes.append(lot.author_right)
+			else:
+				taxes += lot.auction_id.buyer_costs
+			tax=self.pool.get('account.tax').compute(cr,uid,taxes,lot.obj_price,1)
+			for t in tax:
+				amount_total+=t['amount']
+			amount_total+=lot.obj_price
+
+		return amount_total		
+
+
+
 #		for t in taxes_res:
 #			t.update({'type': 0})
 #		return self._sum_taxes_by_type_and_id(taxes_res)
+
+#	lots=self.browse(cr,uid,ids)
+#	amount=0.0
+#	for lot in lots:
+#		taxes=lot.product_id.taxe_id
+			
 
 	def _compute_lot_seller_costs(self, cr, uid, lot, manual_only=False):
 		costs = []
@@ -824,6 +841,10 @@ class auction_bid(osv.osv):
 		'auction_id': fields.many2one('auction.dates', 'Auction Date', required=True),
 		'bid_lines': fields.one2many('auction.bid_line', 'bid_id', 'Bid'),
 	}
+	_defaults = {
+		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'auction.bid'),
+	}
+
 auction_bid()
 
 class auction_lot_history(osv.osv):
@@ -882,7 +903,7 @@ report_unsold_object()
 class report_sold_object(osv.osv):
 
     _name='report.sold.object'
-    _description = "Sold Objects"
+    _description = "Sold objects"
     _auto = False
     _columns = {
         'depos': fields.many2one('res.partner','Seller Name',readonly=True),

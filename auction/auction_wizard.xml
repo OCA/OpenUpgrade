@@ -25,10 +25,10 @@
 		 name="auction.lots.auction_move"
 		 id="wizard_change_auction"/>
 
-		<wizard string="Pay objects of the seller"
+		<!--wizard string="Pay objects of the seller"
 		model="auction.lots"
 		name="auction.pay.sel"
-		id="wizard_lots_pay"/>
+		id="wizard_lots_pay"/-->
 		<wizard string="Pay objects of the buyer"
 		model="auction.lots"
 		name="auction.pay.buy"
@@ -55,7 +55,6 @@
 		<wizard string="SMS Send"
 		 model="auction.lots"
 		 name="auction.lots.sms_send"
-		 multi="1"
  		id="wizard_sms"/>
 
 		 <!--wizard string="Invoice"

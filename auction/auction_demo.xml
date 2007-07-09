@@ -4,7 +4,7 @@
 		<!-- demo data for the auction_artist object-->
 
 
-<!--	<record model="auction.artists" id="auction_art_1">
+	<record model="auction.artists" id="auction_art_1">
 		<field name="name">Philippe Lavilier</field>
 		<field name="birth_death_dates">1345-1450</field>
 	</record>
@@ -12,8 +12,10 @@
 		<field name="name">POREAU OSWALD</field>
 		<field name="birth_death_dates">1877-1955</field>
 	</record>
--->
-		<!-- demo data for the auction taxes-->
+
+	
+
+	<!-- demo data for the auction taxes-->
 
 	<record id="auction_tax" model="account.tax">
 		<field name="name">Droit dauteur</field>
@@ -25,6 +27,7 @@
                 <field name="amount">0.06</field>
 
     </record>
+
 
 	<record id="auction_tax2" model="account.tax">
                 <field name="name">TVA1</field>
