@@ -1234,7 +1234,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
             #import traceback;traceback.print_exc()
-            self.win.setEditText("txtUName","Error(NULL Value)-Please Enter value")
+            self.win.setEditText("txtUName","/")
     def getRes(self,sock ,sObject,sVar):
         res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
         key = res.keys()
