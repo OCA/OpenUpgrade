@@ -4,16 +4,16 @@
 	<subject>Listing des acheteurs</subject>
 	<auctions type="fields" name="auction_id">
 		<title type="field" name="auction_id.name"/>
-		<cost-index type="call" name="compute_buyer_costs" args="">
+		<cost-index type="call" name="" args="">
 			<id value="id"/>
 			<name value="name"/>
-		</cost-index>
+	</cost-index>
 		<buyers type="fields" name="ach_login">
 			<id type="field" name="id"/>
 			<login type="field" name="ach_login"/>
 			<name type="field" name="ach_uid.name"/>
 			<product type="fields" name="obj_num,id">
-				<cost type="call" name="compute_buyer_costs" args="">
+			<cost type="call" name="" args="">
 					<id value="id"/>
 					<amount value="amount"/>
 				</cost>

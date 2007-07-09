@@ -50,9 +50,9 @@
 		</para>
 
 		<spacer length="1cm" width="1mm"/>
-		
+
 		<xsl:apply-templates select="deposit-lines"/>
-		
+
 		<setNextTemplate name="first_page"/>
 		<pageBreak/>
 	</xsl:template>
@@ -71,11 +71,11 @@
 		<para><xsl:value-of select="person/address/street"/></para>
 		<para><xsl:value-of select="person/address/street2"/></para>
 		<para><xsl:value-of select="person/address/postcode"/><xsl:text> </xsl:text><xsl:value-of select="person/address/city"/></para>
-		<para><xsl:value-of select="person/address/state"/></para>
+<!--		<para><xsl:value-of select="person/address/state"/></para>-->
 		<para><xsl:value-of select="person/address/country"/></para>
-		
+
 		<spacer length="0.4cm" width="1mm"/>
-		
+
 		<para><b t="1">VAT</b>: <xsl:value-of select="person/vat"/></para>
 	</xsl:template>
 

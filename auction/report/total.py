@@ -47,7 +47,8 @@ class report_custom(report_rml):
 
 #		start_time = time.clock()
 
-		lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['obj_price','ach_pay_id','ach_login','obj_comm','lot_est1','lot_est2','bord_vnd_id','ach_emp','auction_id'])
+#			lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['obj_price','ach_pay_id','ach_login','obj_comm','lot_est1','lot_est2','bord_vnd_id','ach_emp','auction_id'])
+		lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['obj_price','ach_login','obj_comm','lot_est1','lot_est2','bord_vnd_id','ach_emp','auction_id'])
 		auction = service.execute(cr.dbname,uid, 'auction.dates', 'read', [lots[0]['auction_id'][0]])[0]
 
 #		mid_time = time.clock()
@@ -76,9 +77,9 @@ class report_custom(report_rml):
 			if l['ach_emp']:
 				emp += 1
 
-			if l['ach_pay_id']:
-				paid_ids.append(l['id'])
-				paid += l['obj_price']
+#			if l['ach_pay_id']:
+#				paid_ids.append(l['id'])
+#				paid += l['obj_price']
 			else:
 				unpaid_ids.append(l['id'])
 				unpaid += l['obj_price']
@@ -91,13 +92,13 @@ class report_custom(report_rml):
 
 #		mid_time2 = time.clock()
 
-		costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', paid_ids)
-		for cost in costs:
-			paid += cost['amount']
-
-		costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', unpaid_ids)
-		for cost in costs:
-			unpaid += cost['amount']
+#		costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', paid_ids)
+#		for cost in costs:
+#			paid += cost['amount']
+#
+#		costs = service.execute(cr.dbname,uid, 'auction.lots', 'compute_buyer_costs', unpaid_ids)
+#		for cost in costs:
+#			unpaid += cost['amount']
 
 #		mid_time3 = time.clock()
 
