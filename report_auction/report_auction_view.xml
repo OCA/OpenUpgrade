@@ -11,12 +11,12 @@ Auction adjudication
 		<field name="model">report.auction.adjudication</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Customer/Supplier">
-				<field name="name"/>
-				<field name="auction1"/>
-				<field name="auction2"/>
-				<field name="adj_total" />
-				<state name="state" />
+			<tree string="Total adjudication">
+				<field name="name" select="1"/>
+				<field name="auction1" select="1"/>
+				<field name="auction2" select="1"/>
+				<field name="adj_total" select="1"/>
+				<state name="state" select="1"/>
 
 			</tree>
 		</field>
@@ -27,9 +27,9 @@ Auction adjudication
 		<field name="model">report.auction.adjudication</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-			<graph string="Object By day" type="bar">
-				<field name="name"/>
-				<field name="adj_total" operator="+"/>
+			<graph string="Total adjudication" type="bar">
+				<field name="name" select="1"/>
+				<field name="adj_total" operator="+" />
 
 			</graph>
 		</field>
@@ -61,8 +61,8 @@ Customer/Supplier
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Customer/Supplier">
-				<field name="name" />
-				<field name="no_of_buyer"/>
+				<field name="name" select="1"/>
+				<field name="no_of_buyer" select="1"/>
 
 			</tree>
 		</field>
@@ -74,8 +74,8 @@ Customer/Supplier
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Customer/Supplier" type="bar">
-				<field name="name" />
-				<field name="no_of_buyer" />
+				<field name="name" select="1"/>
+				<field name="no_of_buyer"  />
 			</graph>
 		</field>
 
@@ -97,12 +97,12 @@ My Latest 10 Deposit
 		<field name="model">report.latest.deposit</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Customer/Supplier">
-				<field name="name" />
-				<field name="date_dep" />
-				<field name="method"/>
-				<field name="tax_id"/>
-				<field name="info"/>
+			<tree string="My Latest 10 deposit">
+				<field name="name" select="1"/>
+				<field name="date_dep" select="1"/>
+				<field name="method" select="1"/>
+				<field name="tax_id" select="1"/>
+				<field name="info" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -126,13 +126,13 @@ My Latest 10 Objects
 		<field name="model">report.latest.objects</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Customer/Supplier">
-				<field name="bord_vnd_id" />
-				<field name="obj_desc" />
-				<field name="obj_num"/>
-				<field name="obj_ret"/>
-				<field name="obj_comm"/>
-				<field name="obj_price"/>
+			<tree string="My Latest 10 deposit">
+				<field name="bord_vnd_id" select="1"/>
+				<field name="obj_desc" select="1"/>
+				<field name="obj_num" select="1"/>
+				<field name="obj_ret" select="1"/>
+				<field name="obj_comm" select="1"/>
+				<field name="obj_price" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -152,9 +152,9 @@ Objects per Day
 		<field name="model">report.auction.object.date</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Customer/Supplier">
-				<field name="date"/>
-				<field name="obj_num"/>
+			<tree string="Objects per Day">
+				<field name="date" select="1"/>
+				<field name="obj_num" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -165,7 +165,7 @@ Objects per Day
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Object By day"  type="bar">
-				<field name="date"/>
+				<field name="date" select="1"/>
 				<field name="obj_num" operator="+"/>
 			</graph>
 		</field>
@@ -192,11 +192,11 @@ estimation.adj.category
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="estimation/adjudication">
-				<field name="lot_type"/>
-				<field name="state"/>
-				<field name="lot_est1"/>
-				<field name="lot_est2"/>
-				<field name="adj_total"/>
+				<field name="lot_type" select="1"/>
+				<field name="state" select="1"/>
+				<field name="lot_est1" select="1"/>
+				<field name="lot_est2" select="1"/>
+				<field name="adj_total" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -207,7 +207,7 @@ estimation.adj.category
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="estimation/adjudication" orientation="vertical" type="bar">
-				<field name="lot_type"/>
+				<field name="lot_type" select="1"/>
 				<field name="lot_est1" operator="+"/>
 				<field name="lot_est2" operator="+"/>
 				<field name="adj_total" operator="+"/>
@@ -237,7 +237,7 @@ sign in sign out report by user
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Summary pointing by user ">
-				<field name="user_id"/>
+				<field name="user_id" select="1"/>
 				<field name="total_timesheet" widget="float_time"/>
 			</tree>
 		</field>
@@ -250,7 +250,7 @@ sign in sign out report by user
 		<field name="arch" type="xml">
 
 			<graph string="Summary pointing by user " orientation="vertical" type="bar">
-				<field name="user_id" />
+				<field name="user_id" select="1"/>
 				<field name="total_timesheet" />
 			</graph>
 
