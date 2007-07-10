@@ -5,6 +5,18 @@
 	<menuitem name="Auction Management/Configuration" groups="admin"/>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 	=======================================================
 	Auction Management/Configuration/artist
 	=======================================================
@@ -147,117 +159,6 @@ Auction Management/Auction Dates/New Auction Dates
 	</record>
 	<menuitem name="Auction Management/Auction Dates" groups="admin"/>
 	<menuitem name="Auction Management/Auction Dates/New Auction Dates" id="menu_auction_dates_new"  action="action_auction_dates1"/>
-
-<!--start : creating auction Reporting menu for the auction by pmo-->
-
-<record model="ir.ui.view" id="view_auction_reports_tree">
-		<field name="name">auction.reports.tree</field>
-		<field name="model">report.auction.view</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Auction Reporting tree view1">
-				<field name="auction" />
-				<field name="nobjects" />
-				<field name="nbuyer" />
-				<field name="nseller" />
-				<field name="min_est" />
-				<field name="max_est" />
-				<field name="adj_price" />
-
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_auction_reports_form">
-		<field name="name">auction.reports.form</field>
-		<field name="model">report.auction.view</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auctions form view 1">
-				<field name="auction" />
-				<field name="nobjects" />
-				<field name="nbuyer" />
-				<field name="nseller" />
-				<field name="min_est" />
-				<field name="max_est" />
-				<field name="adj_price" />
-
-			</form>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_auction_report_thismonth_view1">
-		<field name="name">Auction report view1</field>
-		<field name="res_model">report.auction.view</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
-	</record>
-	<menuitem name="Auction Management/Auction Dates/Reporting/This Month/Auction detail1 " action="action_auction_report_thismonth_view1" id="menu_auction_thismonth_view1"/>
-
-
-<record model="ir.actions.act_window" id="action_auction_report_allmonth_view1">
-		<field name="name">Auction report view2</field>
-		<field name="res_model">report.auction.view</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-	</record>
-	<menuitem name="Auction Management/Auction Dates/Reporting/All Month/Auction detail1 " action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
-
-
-
-	<!--start : auction reporting view 2-->
-
-<record model="ir.ui.view" id="view_auction_reports_tree2">
-		<field name="name">auction.reports.tree2</field>
-		<field name="model">report.auction.view2</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Auction Reporting tree view2">
-				<field name="auction" />
-				<field name="sum_adj" />
-				<field name="gross_revenue" />
-				<field name="net_revenue" />
-				<field name="obj_margin" />
-
-
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_auction_reports_form2">
-		<field name="name">auction.reports.form2</field>
-		<field name="model">report.auction.view2</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auctions form view 2">
-				<field name="auction" />
-				<field name="sum_adj" />
-				<field name="gross_revenue" />
-				<field name="net_revenue" />
-				<field name="obj_margin" />
-
-			</form>
-		</field>
-	</record>
-
-
-
-	<record model="ir.actions.act_window" id="action_auction_report_thismonth_view2">
-		<field name="name">Auction report view2</field>
-		<field name="res_model">report.auction.view2</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
-	</record>
-	<menuitem name="Auction Management/Auction Dates/Reporting/This Month/Auction detail2 " action="action_auction_report_thismonth_view2" id="menu_auction_thismonth_view2"/>
-
-
-<record model="ir.actions.act_window" id="action_auction_report_allmonth_view2">
-		<field name="name">Auction report view2</field>
-		<field name="res_model">report.auction.view2</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-	</record>
-	<menuitem name="Auction Management/Auction Dates/Reporting/All Month/Auction detail2 " action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
-
 
 
 
@@ -718,7 +619,7 @@ Auction Management/Auction Dates/Reporting
 -->
 
 	<!-- form3: simplified form meant for during the sale (action button in dates) -->
-	<record model="ir.ui.view" id="v9"> 
+	<record model="ir.ui.view" id="v9">
 		<field name="name">auction.lots.form3</field>
 		<field name="model">auction.lots</field>
 		<field name="type">form</field>
@@ -864,7 +765,7 @@ Auction Management/Auction Dates/Reporting
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_deposit_border_tree2">
 		<field name="name">Deposit border</field>
 		<field name="model">auction.deposit</field>
@@ -889,268 +790,6 @@ Auction Management/Auction Dates/Reporting
 	</record>
 	<menuitem name="Auction Management/Sellers" groups="admin" />
 	<menuitem name="Auction Management/Sellers/Deposit border" action="action_deposit_border" id="menu_auction_deposit_border"/>
-
-<!--start : creating seller Reporting menu for the selller by pmo-->
-
-<record model="ir.ui.view" id="view_auction_form">
-		<field name="name">auction.month.form</field>
-		<field name="model">report.seller.auction</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auction reporting form view">
-				<field name="seller" select="1"/>
-				<field name="object" select="1"/>
-				<field name="object_sold" select="1"/>
-<!---			    <field name="withdrawn" select="1"/>-->
-			    <field name="total_price" select="1"/>
-				<field name="avg_price" select="1"/>
-			</form>
-
-		</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="view_auction_tree">
-		<field name="name">auction.month.tree</field>
-		<field name="model">report.seller.auction</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Auction reporting tree view">
-				<field name="seller" select="1"/>
-				<field name="object" select="1"/>
-				<field name="object_sold" select="1"/>
-			<!--	<field name="withdrawn" select="1"/>-->
-				<field name="total_price" select="1"/>
-				<field name="avg_price" select="1"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_auction_graph">
-		<field name="name">auction.month.tree</field>
-		<field name="model">report.seller.auction</field>
-		<field name="type">graph</field>
-		<field name="arch" type="xml">
-			<graph string="Auction reporting graph view" orientation="vertical" type="bar">
-				<field name="seller" />
-			<!--	<field name="object"operator="+" />-->
-			<!--	<field name="object_sold"/>		-->
-				<field name="total_price" operator="+"/>
-				<field name="avg_price" operator="+" />
-			</graph>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_auction_reporting1">
-		<field name="name">auction.this.month.tree</field>
-		<field name="res_model">report.seller.auction</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
-		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
-
-	</record>
-
-	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller object detail " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
-
-	<record model="ir.actions.act_window" id="action_auction_reporting_all1">
-		<field name="name">auction.all.month.tree</field>
-		<field name="res_model">report.seller.auction</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
-	</record>
-
-	<menuitem name="Auction Management/Sellers/Reporting/All Months/Seller object detail" action="action_auction_reporting_all1" id="menu_seller_allmonth_view1"/>
-
-
-
-<record model="ir.ui.view" id="view_auction_form2">
-		<field name="name">auction.month.form2</field>
-		<field name="model">report.seller.auction2</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auction reporting2 form view">
-
-				<field name="seller" select="1"/>
-				<field name="sum_adj" select="1"/>
-				<field name="gross_revenue" select="1"/>
-				<field name="net_revenue" select="1"/>
-				<field name="net_margin" select="1"/>
-
-			</form>
-		</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="view_auction_tree2">
-		<field name="name">auction.month.tree2</field>
-		<field name="model">report.seller.auction2</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Auction reporting2 tree view">
-
-				<field name="seller" select="1"/>
-				<field name="sum_adj" select="1"/>
-				<field name="gross_revenue" select="1"/>
-				<field name="net_revenue" select="1"/>
-				<field name="net_margin" select="1"/>
-
-				</tree>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_auction_graph2">
-		<field name="name">auction.month.tree2</field>
-		<field name="model">report.seller.auction2</field>
-		<field name="type">graph</field>
-		<field name="arch" type="xml">
-			<graph string="Auction seller reporting2 graph view" orientation="vertical" type="bar">
-
-				<field name="seller" />
-				<field name="sum_adj" />
-				</graph>
-		</field>
-	</record>
-
-
-
-
-	<record model="ir.actions.act_window" id="action_auction_reporting2">
-		<field name="name">auction.this.month.tree2</field>
-		<field name="res_model">report.seller.auction2</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
-		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
-	</record>
-
-	<menuitem name="Auction Management/Sellers/Reporting/This Month/Seller adjustication detail" action="action_auction_reporting2" id="menu_seller_thismonth_view2"/>
-
-
-	<record model="ir.actions.act_window" id="action_auction_reporting_all2">
-		<field name="name">auction.all.month.tree</field>
-		<field name="res_model">report.seller.auction2</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
-	</record>
-
-	<menuitem name="Auction Management/Sellers/Reporting/All Months/Seller adjustication detail" action="action_auction_reporting_all2" id="menu_seller_allmonth_view2"/>
-
-
-<!--end : creating seller Reporting menu for the selller by pmo-->
-
-
-
-<!--start : creating buyer Reporting menu for the buyer by pmo-->
-
-
-<record model="ir.ui.view" id="view_auction_buyer_form">
-		<field name="name">auction.buyer.month.form</field>
-		<field name="model">report.buyer.auction</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auction buyer reporting form view">
-
-				<field name="buyer_login" select="1"/>
-			    <field name="buyer" select="1"/>
-			    <field name="object" select="1"/>
-			    <field name="total_price" select="1"/>
-			    <field name="avg_price" select="1"/>
-
-			</form>
-		</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="view_auction_buyer_tree">
-		<field name="name">auction.buyer.month.tree</field>
-		<field name="model">report.buyer.auction</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Auction buyer reporting tree view">
-				<field name="buyer_login" select="1"/>
-				<field name="buyer" select="1"/>
-				<field name="object" select="1"/>
-				<field name="total_price" select="1"/>
-				<field name="avg_price" select="1"/>
-		</tree>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_auction_buyer_reporting">
-		<field name="name">auction.buyer.month.tree</field>
-		<field name="res_model">report.buyer.auction</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
-	</record>
-
-<menuitem name="Auction Management/Buyers/Reporting/This Month/Buyer view 1 " action="action_auction_buyer_reporting" id="menu_buyer_thismonth_view1"/>
-
-
-<record model="ir.ui.view" id="view_auction_buyer_form2">
-		<field name="name">auction.buyer.month.form2</field>
-		<field name="model">report.buyer.auction</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Auction buyer reporting form view2">
-
-				<field name="buyer_login" select="1"/>
-				<field name="buyer" select="1"/>
-				<field name="sumadj" select="1"/>
-				<field name="gross_revenue" select="1"/>
-				<field name="net_revenue" select="1"/>
-				<field name="net_margin" select="1"/>
-
-			</form>
-		</field>
-	</record>
-
-
-	<record model="ir.ui.view" id="view_auction_buyer_tree2">
-		<field name="name">auction.buyer.month.tree2</field>
-		<field name="model">report.buyer.auction</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Auction buyer reporting tree view2">
-					<field name="buyer_login" select="1"/>
-					<field name="buyer" select="1"/>
-					<field name="sumadj" select="1"/>
-					<field name="gross_revenue" select="1"/>
-					<field name="net_revenue" select="1"/>
-					<field name="net_margin" select="1"/>
-
-		</tree>
-		</field>
-	</record>
-	<record model="ir.actions.act_window" id="action_auction_buyer_reporting2">
-		<field name="name">auction.buyer.month.tree2</field>
-		<field name="res_model">report.buyer.auction</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
-	</record>
-
-<menuitem name="Auction Management/Buyers/Reporting/This Month/Buyer view 2 " action="action_auction_buyer_reporting2" id="menu_buyer_thismonth_view2"/>
-
-
-<record model="ir.actions.act_window" id="action_auction_buyer_reporting_all1">
-		<field name="name">auction.all.month.tree1</field>
-		<field name="res_model">report.buyer.auction</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-
-	</record>
-
-	<menuitem name="Auction Management/Buyers/Reporting/All Months/buyer view 1 " action="action_auction_buyer_reporting_all1" id="menu_buyer_allmonth_view1"/>
-
-	<record model="ir.actions.act_window" id="action_auction_buyer_reporting_all2">
-		<field name="name">auction.all.month.tree2</field>
-		<field name="res_model">report.seller.auction</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
-
-	</record>
-
-	<menuitem name="Auction Management/Buyers/Reporting/All Months/buyer view 1" action="action_auction_buyer_reporting_all2" id="menu_buyer_allmonth_view2"/>
-
-
-<!--end : creating buyer Reporting menu for the buyer by pmo-->
 
 
 
@@ -1259,6 +898,382 @@ Auction Management/Auction Dates/Reporting
 	</record>
 
 	<menuitem name="Auction Management/Buyers/Bids/Bids line" action="action_bids_form" id="menu_action_bids_form"/>
+
+
+<!--start : creating auction Reporting menu for the auction by pmo-->
+
+<record model="ir.ui.view" id="view_auction_reports_tree">
+		<field name="name">auction.reports.tree</field>
+		<field name="model">report.auction.view</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction Reporting tree view1">
+				<field name="auction" />
+				<field name="nobjects" />
+				<field name="nbuyer" />
+				<field name="nseller" />
+				<field name="min_est" />
+				<field name="max_est" />
+				<field name="adj_price" />
+
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_auction_reports_form">
+		<field name="name">auction.reports.form</field>
+		<field name="model">report.auction.view</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auctions form view 1">
+				<field name="auction" />
+				<field name="nobjects" />
+				<field name="nbuyer" />
+				<field name="nseller" />
+				<field name="min_est" />
+				<field name="max_est" />
+				<field name="adj_price" />
+
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_auction_report_thismonth_view1">
+		<field name="name">Auction report view1</field>
+		<field name="res_model">report.auction.view</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
+
+	</record>
+
+	<menuitem name="Auction Management/Reporting" groups="admin"/>
+	<menuitem name="Auction Management/Reporting/Auction/This Month/Auction detail1 " action="action_auction_report_thismonth_view1" id="menu_auction_thismonth_view1"/>
+
+
+<record model="ir.actions.act_window" id="action_auction_report_allmonth_view1">
+		<field name="name">Auction report view2</field>
+		<field name="res_model">report.auction.view</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+   <menuitem name="Auction Management/Reporting/Auction/All Month/Auction detail1 " action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
+
+
+
+	<!--start : auction reporting view 2-->
+
+<record model="ir.ui.view" id="view_auction_reports_tree2">
+		<field name="name">auction.reports.tree2</field>
+		<field name="model">report.auction.view2</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction Reporting tree view2">
+				<field name="auction" />
+				<field name="sum_adj" />
+				<field name="gross_revenue" />
+				<field name="net_revenue" />
+				<field name="obj_margin" />
+
+
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_auction_reports_form2">
+		<field name="name">auction.reports.form2</field>
+		<field name="model">report.auction.view2</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auctions form view 2">
+				<field name="auction" />
+				<field name="sum_adj" />
+				<field name="gross_revenue" />
+				<field name="net_revenue" />
+				<field name="obj_margin" />
+
+			</form>
+		</field>
+	</record>
+
+
+
+	<record model="ir.actions.act_window" id="action_auction_report_thismonth_view2">
+		<field name="name">Auction report view2</field>
+		<field name="res_model">report.auction.view2</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Auction/This Month/Auction detail2 " action="action_auction_report_thismonth_view2" id="menu_auction_thismonth_view2"/>
+
+
+<record model="ir.actions.act_window" id="action_auction_report_allmonth_view2">
+		<field name="name">Auction report view2</field>
+		<field name="res_model">report.auction.view2</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Auction/All Month/Auction detail2 " action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
+
+<!--start : creating seller Reporting menu for the selller by pmo-->
+
+<record model="ir.ui.view" id="view_auction_form">
+		<field name="name">auction.month.form</field>
+		<field name="model">report.seller.auction</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auction reporting form view">
+				<field name="seller" select="1"/>
+				<field name="object" select="1"/>
+				<field name="object_sold" select="1"/>
+<!---			    <field name="withdrawn" select="1"/>-->
+			    <field name="total_price" select="1"/>
+				<field name="avg_price" select="1"/>
+			</form>
+
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_auction_tree">
+		<field name="name">auction.month.tree</field>
+		<field name="model">report.seller.auction</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction reporting tree view">
+				<field name="seller" select="1"/>
+				<field name="object" select="1"/>
+				<field name="object_sold" select="1"/>
+			<!--	<field name="withdrawn" select="1"/>-->
+				<field name="total_price" select="1"/>
+				<field name="avg_price" select="1"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_auction_graph">
+		<field name="name">auction.month.tree</field>
+		<field name="model">report.seller.auction</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Auction reporting graph view" orientation="vertical" type="bar">
+				<field name="seller" />
+			<!--	<field name="object"operator="+" />-->
+			<!--	<field name="object_sold"/>		-->
+				<field name="total_price" operator="+"/>
+				<field name="avg_price" operator="+" />
+			</graph>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_auction_reporting1">
+		<field name="name">auction.this.month.tree</field>
+		<field name="res_model">report.seller.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
+
+	</record>
+
+		<menuitem name="Auction Management/Reporting/seller/This Month/Seller object detail " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
+
+	<record model="ir.actions.act_window" id="action_auction_reporting_all1">
+		<field name="name">auction.all.month.tree</field>
+		<field name="res_model">report.seller.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+	</record>
+
+	<menuitem name="Auction Management/Reporting/seller/All Months/Seller object detail" action="action_auction_reporting_all1" id="menu_seller_allmonth_view1"/>
+
+
+
+<record model="ir.ui.view" id="view_auction_form2">
+		<field name="name">auction.month.form2</field>
+		<field name="model">report.seller.auction2</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auction reporting2 form view">
+
+				<field name="seller" select="1"/>
+				<field name="sum_adj" select="1"/>
+				<field name="gross_revenue" select="1"/>
+				<field name="net_revenue" select="1"/>
+				<field name="net_margin" select="1"/>
+
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_auction_tree2">
+		<field name="name">auction.month.tree2</field>
+		<field name="model">report.seller.auction2</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction reporting2 tree view">
+
+				<field name="seller" select="1"/>
+				<field name="sum_adj" select="1"/>
+				<field name="gross_revenue" select="1"/>
+				<field name="net_revenue" select="1"/>
+				<field name="net_margin" select="1"/>
+
+				</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_auction_graph2">
+		<field name="name">auction.month.tree2</field>
+		<field name="model">report.seller.auction2</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Auction seller reporting2 graph view" orientation="vertical" type="bar">
+
+				<field name="seller" />
+				<field name="sum_adj" />
+				</graph>
+		</field>
+	</record>
+
+
+
+
+	<record model="ir.actions.act_window" id="action_auction_reporting2">
+		<field name="name">auction.this.month.tree2</field>
+		<field name="res_model">report.seller.auction2</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+
+	<menuitem name="Auction Management/Reporting/seller/This Month/Seller adjustication detail" action="action_auction_reporting2" id="menu_seller_thismonth_view2"/>
+
+
+	<record model="ir.actions.act_window" id="action_auction_reporting_all2">
+		<field name="name">auction.all.month.tree</field>
+		<field name="res_model">report.seller.auction2</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+	</record>
+
+	<menuitem name="Auction Management/Reporting/seller/All Months/Seller adjustication detail" action="action_auction_reporting_all2" id="menu_seller_allmonth_view2"/>
+
+
+<!--end : creating seller Reporting menu for the selller by pmo-->
+
+<!--start : creating buyer Reporting menu for the buyer by pmo-->
+
+
+<record model="ir.ui.view" id="view_auction_buyer_form">
+		<field name="name">auction.buyer.month.form</field>
+		<field name="model">report.buyer.auction</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auction buyer reporting form view">
+
+				<field name="buyer_login" select="1"/>
+			    <field name="buyer" select="1"/>
+			    <field name="object" select="1"/>
+			    <field name="total_price" select="1"/>
+			    <field name="avg_price" select="1"/>
+
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_auction_buyer_tree">
+		<field name="name">auction.buyer.month.tree</field>
+		<field name="model">report.buyer.auction</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction buyer reporting tree view">
+				<field name="buyer_login" select="1"/>
+				<field name="buyer" select="1"/>
+				<field name="object" select="1"/>
+				<field name="total_price" select="1"/>
+				<field name="avg_price" select="1"/>
+		</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_auction_buyer_reporting">
+		<field name="name">auction.buyer.month.tree</field>
+		<field name="res_model">report.buyer.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+
+		<menuitem name="Auction Management/Reporting/Buyer/This Month/Buyer view 1 " action="action_auction_buyer_reporting" id="menu_buyer_thismonth_view1"/>
+
+
+<record model="ir.ui.view" id="view_auction_buyer_form2">
+		<field name="name">auction.buyer.month.form2</field>
+		<field name="model">report.buyer.auction</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Auction buyer reporting form view2">
+
+				<field name="buyer_login" select="1"/>
+				<field name="buyer" select="1"/>
+				<field name="sumadj" select="1"/>
+				<field name="gross_revenue" select="1"/>
+				<field name="net_revenue" select="1"/>
+				<field name="net_margin" select="1"/>
+
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_auction_buyer_tree2">
+		<field name="name">auction.buyer.month.tree2</field>
+		<field name="model">report.buyer.auction</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Auction buyer reporting tree view2">
+					<field name="buyer_login" select="1"/>
+					<field name="buyer" select="1"/>
+					<field name="sumadj" select="1"/>
+					<field name="gross_revenue" select="1"/>
+					<field name="net_revenue" select="1"/>
+					<field name="net_margin" select="1"/>
+
+		</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_auction_buyer_reporting2">
+		<field name="name">auction.buyer.month.tree2</field>
+		<field name="res_model">report.buyer.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+
+		<menuitem name="Auction Management/Reporting/Buyer/This Month/Buyer view 2 " action="action_auction_buyer_reporting2" id="menu_buyer_thismonth_view2"/>
+
+
+<record model="ir.actions.act_window" id="action_auction_buyer_reporting_all1">
+		<field name="name">auction.all.month.tree1</field>
+		<field name="res_model">report.buyer.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+
+	</record>
+
+	<menuitem name="Auction Management/Reporting/Buyer/All Months/buyer view 1 " action="action_auction_buyer_reporting_all1" id="menu_buyer_allmonth_view1"/>
+
+	<record model="ir.actions.act_window" id="action_auction_buyer_reporting_all2">
+		<field name="name">auction.all.month.tree2</field>
+		<field name="res_model">report.seller.auction</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+
+	</record>
+
+<menuitem name="Auction Management/Reporting/Buyer/All Months/buyer view 1" action="action_auction_buyer_reporting_all2" id="menu_buyer_allmonth_view2"/>
+
+
+<!--end : creating buyer Reporting menu for the buyer by pmo-->
+
+
 
 
 
