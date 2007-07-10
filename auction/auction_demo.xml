@@ -124,10 +124,10 @@
 
 		<field name="journal_id" ref="account.sales_journal"/>
 		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
+</record>
 <!-- 		<field name="buyer_costs" ref="l10n_ch.vat_24_invest"/> -->
 <!-- 		<field name="seller_costs" ref="l10n_ch.vat_24_invest"/> -->
 
-</record>
 <!-- end == demo data for the auction_dates-->
 
 

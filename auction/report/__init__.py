@@ -33,7 +33,6 @@ import seller_address
 import artists_lots
 import lots_list
 import lots_list_inventory
-#import catalog_pic_curr
 import auction_result
 import catelogwithpictures
 import auction_objects
