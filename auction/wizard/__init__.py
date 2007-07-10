@@ -38,3 +38,4 @@ import wizard_lots_sms
 import wizard_lot_date_move
 import wizard_auction_journal
 import wizard_auction_invoice_buyer
+import wizard_transfer_unsold_object
