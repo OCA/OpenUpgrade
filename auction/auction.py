@@ -356,7 +356,7 @@ class auction_lots(osv.osv):
 			total_tax = 0.0
 #			print "Auction data :",auction_data
 			if auction_data['auction_id']:
-				total_tax += auction_data['buyer_price']-auction_data['seller_price']-auction_data['costs']
+				total_tax += auction_data['buyer_price']-auction_data['seller_price']#-auction_data['costs']
 				#end for acc_amount in account_taxes:
 				#end if auction_dates['buyer_costs']:
 			#end if auction_data['auction_id']:
