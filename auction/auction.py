@@ -258,11 +258,37 @@ class auction_lots(osv.osv):
 
 
 	def button_not_bought(self,cr,uid,ids,*a):
-		
+		lots=self.browse(cr,uid,ids)
+		for lot in lots:
+			lot.state='unsold'	
 		return True
-
+	def button_bought(self,cr,uid,ids,*a):
+		lots=self.browse(cr,uid,ids)
+		for lot in lots:
+			lot.state='paid'	
+		return True
+#	
+#	def _buyerprice(self,cr,uid,ids,name,args,context):
+#		ttc=0.0
+#		curr_obj=self.browse(cr,uid,ids)
+#		for obj in curr_obj:
+#			if obj:
+#				taxe=obj.buyer_costs.amount or 0.0
+#				price=obj.obj_price or 0.0
+#			ttc=price+(taxe*price)
+#		return ttc
+#	def _sellerprice(self,cr,uid,ids,name,args,context):
+#		print "in the sller auction",ids
+#		ttc=0.0
+#		curr_obj=self.browse(cr,uid,ids)
+#		for obj in curr_obj:
+#			if obj:
+#				taxe=obj.buyer_costs.amount or 0.0
+#				price=obj.obj_price or 0.0
+#			ttc=price-(taxe*price)
+#		return ttc
 	def _buyerprice(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
+		print " IN THE BUYER PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['obj_price','auction_id'])
 
@@ -272,7 +298,7 @@ class auction_lots(osv.osv):
 			if auction_data['auction_id']:
 #				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['buyer_costs'])[0]
-#				print "Auctiondates :",auction_dates
+				print "Auctiondates :",auction_dates
 				if auction_dates['buyer_costs']:
 					account_taxes = self.pool.get('account.tax').read(cr,uid,auction_dates['buyer_costs'],['amount'])
 					for acc_amount in account_taxes:
@@ -330,7 +356,7 @@ class auction_lots(osv.osv):
 			total_tax = 0.0
 #			print "Auction data :",auction_data
 			if auction_data['auction_id']:
-				total_tax += auction_data['buyer_price']-auction_data['seller_price']
+				total_tax += auction_data['buyer_price']-auction_data['seller_price']-auction_data['costs']
 				#end for acc_amount in account_taxes:
 				#end if auction_dates['buyer_costs']:
 			#end if auction_data['auction_id']:
@@ -377,7 +403,21 @@ class auction_lots(osv.osv):
 			res[auction_data['id']] =  total_tax
 #		#end for auction_data in auction_lots_obj:
 		return res
-
+	def _costs(self,cr,uid,ids,context,*a):
+		res={}
+		som=0.0
+	#	costs: Total credit of analytic account 
+	#	/ # objects sold during this auction 
+	#	(excluding analytic lines that are in the analytic journal of the auction date).
+		for lot in self.browse(cr,uid,ids):
+			auct_id=lot.auction_id
+			nb=cr.execute('select count(*) from auction_lots where state=%s and auction_id=%d', ('paid',auct_id))
+			account_analytic_line_obj = self.pool.get('account.analytic.line')
+			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id)])
+			for line in line_ids:
+				som+=line.amount
+			res[lot['id']]=som/nb
+		return res 
 
 	def _is_paid_vnd(self,cr,uid,ids,*a):
 		res = {}
@@ -437,6 +477,7 @@ class auction_lots(osv.osv):
 		'net_revenue':fields.function(_netprice, method=True, string='Netrevenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='GrossMargin',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='NetMargin',store=True),
+		'costs':fields.function(_costs,methode=True,string='Costs',store=True),
 
 	}
 	_defaults = {
@@ -456,10 +497,7 @@ class auction_lots(osv.osv):
 
 	def name_search(self, cr, user, name, args=[], operator='ilike', context={}):
 		ids = self.search(cr, user, [('name',operator,name)]+ args)
-		try:
-			ids += self.search(cr, user, [('obj_num','=',int(name))]+ args)
-		except ValueError, e:
-			pass
+		ids += self.search(cr, user, [('obj_num','=',int(name))]+ args)
 		return self.name_get(cr, user, ids)
 
 	def _sum_taxes_by_type_and_id(self, taxes):
@@ -1059,6 +1097,46 @@ report_auction_view2()
 
 
 
+
+class report_unclassified_object(osv.osv):
+
+    _name='report.unclassified.object'
+    _description = "Unclassified objects"
+    _auto = False
+    _columns = {
+        'depos': fields.many2one('res.partner','Seller Name',readonly=True),
+       	'lot': fields.selection(_type_get, 'Object Type', size=64),
+		'product_l':fields.many2one('product.product', 'Product', required=True),
+		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
+		'lot_est1_l': fields.float('Minimum Estimation'),
+		'lot_est2_l': fields.float('Maximum Estimation'),
+		'artist_id_l':fields.many2one('auction.artists', 'Artist/Author'),
+		'obj_desc_l': fields.text('Object Description'),
+		'name_l': fields.char('Short Description',size=64, required=True),
+		'obj_ret_l':fields.float('Price retired'),
+		'obj_price_l': fields.float('Adjudication price')
+
+        }
+
+    
+    def init(self, cr):
+		cr.execute("""
+			create or replace view report_unclassified_object as (
+				select min(lo.id) as id,
+      			lo.product_id as product_l,
+        		lo.bord_vnd_id as depos,
+				lo.lot_est1 as lot_est1_l,
+				lo.lot_est2 as lot_est2_l,
+				lo.artist_id as artist_id_l,
+				lo.obj_desc as obj_desc_l,
+				lo.name as name_l,
+				lo.obj_price as obj_price_l
+
+        		  from auction_lots lo, auction_lot_category lc
+          where (lo.lot_type= lc.aie_categ) and (lc.aie_categ= 41)
+	group by lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.obj_price,lo.lot_est1,lo.obj_desc,lo.name
+			    )""")
+report_unclassified_object()
 
 
 

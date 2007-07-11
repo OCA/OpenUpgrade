@@ -115,8 +115,8 @@ Auction Management/Auction Dates/New Auction Dates
 				<field name="auction1" select="1"/>
 				<field name="auction2" select="1"/>
 				<separator string="Commissions" colspan="4"/>
-				<field name="buyer_costs" /><!--domain="[('domain','=','auction')]"/-->
-				<field name="seller_costs" /> <!--domain="[('domain','=','auction')]"/>-->
+				<field name="buyer_costs" domain="[('domain','=','auction')]"/>
+				<field name="seller_costs" domain="[('domain','=','auction')]"/>
 				<separator string="Accounting" colspan="4"/>
 				<field name="acc_income"/>
 				<field name="acc_expense"/>
@@ -304,8 +304,8 @@ Auction Management/Auction Dates/Reporting
 
 				 <group col="7" colspan="4">
                     <field name="state" select="2"/>
-                    <button name="button_bought" string="Vendu" states="draft"/>
-                    <button name="button_not_bought" string="Non vendu" states="draft" type="object"/>
+                    <button name="button_bought" string="Vendu" state="unsold,draft" type="object" />
+                    <button name="button_not_bought" string="Non vendu" state="draft,paid" type="object"/>
                 </group>
 
 
@@ -383,13 +383,9 @@ Auction Management/Auction Dates/Reporting
 				<field name="name_l" select="1"/>
 				<field name="obj_price_l" select="1"/>
 				<field name="obj_ret_l" select="1"/>
-
-
 			</tree>
 		</field>
 	</record>
-
-
 	<record model="ir.actions.act_window" id="action_all_objects_sold">
 		<field name="res_model">report.sold.object</field>
 		<field name="view_type">form</field>
@@ -400,7 +396,8 @@ Auction Management/Auction Dates/Reporting
 	<menuitem name="Auction Management/Objects/All objects/Sold objects" action="action_all_objects_sold" id="menu_all_objects_sold1"/>
 
 				<!--end for the sold objects-->
-				<!--objets a vendre-->
+				<!--unclassified objects-->
+					<!--objets a vendre-->
 	<record model="ir.ui.view" id="view_report_object_to_sell_tree">
 		<field name="name">Objects to sell</field>
 		<field name="model">report.auction.objects_to_sell</field>
@@ -667,17 +664,39 @@ Auction Management/Auction Dates/Reporting
 		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
 		<field name="isobject" eval="True"/>
 	</ir_set>-->
+
+	<record model="ir.ui.view" id="view_report_unclassified_object_tree">
+		<field name="name">Unclassified objects</field>
+		<field name="model">report.unclassified.object</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Unclassified Objects">
+				<field name="depos" select="1"/>
+				<field name="product_l" select="1"/>
+				<field name="lot_est1_l" select="1"/>
+				<field name="lot_est2_l" select="1"/>
+				<field name="artist_id_l" select="1"/>
+				<field name="obj_desc_l" select="1"/>
+				<field name="name_l" select="1"/>
+				<field name="obj_price_l" select="1"/>
+				<field name="obj_ret_l" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+
+
 	=======================================================
 	Auction Management/seller
 	=======================================================
 	<record model="ir.actions.act_window" id="action_unclassified_objects">
 		<field name="name">Unclassified objects</field>
-		<field name="res_model">auction.lots</field>
+		<field name="res_model">report.unclassified.object</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('auction_id','=',False)]</field>
 	</record>
-	<menuitem name="Auction Management/Sellers/Unclassified objects" action="action_unclassified_objects"/>
+	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects"/>
 	<record model="ir.ui.view" id="v12">
 		<field name="name">auction.deposit.tree</field>
 		<field name="model">auction.deposit</field>

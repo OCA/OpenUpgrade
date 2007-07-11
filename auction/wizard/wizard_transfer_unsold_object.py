@@ -32,26 +32,29 @@ import netsvc
 import pooler
 from osv.orm import browse_record
 import sql_db
+#<field name="auction_id_from"/>
 
 transfer_unsold_object_form = """<?xml version="1.0"?>
 <form string="Draft To Posted">
     <group col="1" colspan="2">
     <separator colspan="4" string="Transfer unsold Object: Current auction date to another " />
-    </group>
-    <newline/>
     <field name="auction_id_from"/>
+	</group>
     <newline/>
     <field name="auction_id_to"/>
 </form>
 """
 
 transfer_unsold_object_fields = {
-         'auction_id_from': {'string':'From Auction Date', 'type':'many2one', 'required':True, 'relation':'auction.dates'},
+         'auction_id_from': {'string':'From Auction Date', 'type':'many2one', 'readonly':True, 'relation':'auction.dates'},
          'auction_id_to': {'string':'To Auction Date', 'type':'many2one', 'required':True, 'relation':'auction.dates'},
 }
 def _transfer_unsold_object(self, cr, uid, data, context):
         obj_pool = pooler.get_pool(cr.dbname).get('auction.lots')
-        ids= pooler.get_pool(cr.dbname).get('auction.lots').search(cr,uid,[('auction_id','=',data['form']['auction_id_from']),('state','=','unsold')])
+		#.browse(cr,uid,data['id'])
+		
+		#auction_id_from=obj_pool.auction_id
+   		ids= pooler.get_pool(cr.dbname).get('auction.lots').search(cr,uid,[('auction_id','=',data['form']['auction_id_from']),('state','=','unsold')])
 
         for o in obj_pool.browse(cr, uid, ids, context):
                 o.write(cr, uid, ids, {'auction_id':data['form']['auction_id_to']})

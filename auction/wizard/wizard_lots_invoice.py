@@ -39,6 +39,7 @@ invoice_form = '''<?xml version="1.0"?>
 	<newline/>
 	<field name="ach_uid" colspan="3"/>
 	<field name="number" colspan="3"/>
+	<field label="Let this invoice's number "/>
 </form>'''
 
 invoice_fields = {
