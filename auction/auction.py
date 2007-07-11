@@ -350,7 +350,7 @@ class auction_lots(osv.osv):
 	def _netprice(self, cr, uid, ids, name, args, context):
 #		print " IN THE BUYER PRICE Fuction",ids
 		res={}
-		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
+		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id','costs'])
 
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
@@ -384,15 +384,19 @@ class auction_lots(osv.osv):
 #		#end for auction_data in auction_lots_obj:
 		return res
 	def _netmargin(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
+		print " IN THE BUYER PRICE Fuction ids",ids
+		print " IN THE BUYER PRICE Fuction id",id
+
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['net_revenue','auction_id'])
 
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
-#			print "Auction data :",auction_data
+			print "Auction data hello:",auction_data
 			if auction_data['auction_id']:
-##				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
+				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
+				print "auction_data['auction_id'] :",auction_data['auction_id']
+
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['adj_total'])[0]
 ##				print "Auctiondates :",auction_dates
 				if auction_dates['adj_total']:
@@ -416,7 +420,7 @@ class auction_lots(osv.osv):
 			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id)])
 			for line in line_ids:
 				som+=line.amount
-			res[lot['id']]=som/nb
+			res[lot.id]=som/nb
 		return res 
 
 	def _is_paid_vnd(self,cr,uid,ids,*a):
