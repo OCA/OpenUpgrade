@@ -384,9 +384,6 @@ class auction_lots(osv.osv):
 #		#end for auction_data in auction_lots_obj:
 		return res
 	def _netmargin(self, cr, uid, ids, name, args, context):
-		print " IN THE BUYER PRICE Fuction ids",ids
-		print " IN THE BUYER PRICE Fuction id",id
-
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['net_revenue','auction_id'])
 
@@ -420,7 +417,7 @@ class auction_lots(osv.osv):
 			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id)])
 			for line in line_ids:
 				som+=line.amount
-			res[lot.id]=som/nb
+			if nb>0: res[lot.id]=som/nb
 		return res 
 
 	def _is_paid_vnd(self,cr,uid,ids,*a):
@@ -929,39 +926,107 @@ class report_unsold_object(osv.osv):
     _description = "Unsold Objects"
     _auto = False
     _columns = {
-        'depos': fields.many2one('res.partner','seller Name',readonly=True),
+        'depos': fields.many2one('res.partner','Seller Name',readonly=True),
        	'lot': fields.selection(_type_get, 'Object Type', size=64),
 		'product_l':fields.many2one('product.product', 'Product', required=True),
 		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
-		'state':fields.char('State Name',size=64),
 		'lot_est1_l': fields.float('Minimum Estimation'),
 		'lot_est2_l': fields.float('Maximum Estimation'),
 		'artist_id_l':fields.many2one('auction.artists', 'Artist/Author'),
 		'obj_desc_l': fields.text('Object Description'),
 		'name_l': fields.char('Short Description',size=64, required=True),
-		'obj_ret_l':fields.float('Price retired')
+		'obj_ret_l':fields.float('Price retired'),
+		'obj_price_l': fields.float('Adjudication price')
         }
+    def init(self, cr):
+			cr.execute("""
+	create or replace view report_sold_object as (
+				select min(lo.id) as id,
+				lo.auction_id as auct_id,
+      			lo.lot_type as lot,
+      			lo.product_id as product_l,
+        		lo.bord_vnd_id as depos,
+				lo.lot_est1 as lot_est1_l,
+				lo.lot_est2 as lot_est2_l,
+				lo.artist_id as artist_id_l,
+				lo.obj_desc as obj_desc_l,
+				lo.name as name_l,
+				lo.obj_price as obj_price_l
+        		from auction_lots lo
+          where lo.state = 'unsold'
+	group by lo.auction_id,lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.obj_price,lo.lot_est1,lo.obj_desc,lo.name
+			    )""")
+	
+report_unsold_object()
+
+class report_buyer_auction(osv.osv):
+    _name = "report.buyer.auction"
+    _description = "Auction Reporting on buyer view1"
+    _auto = False
+    _columns = {
+        'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
+        'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
+        'object':fields.integer('No of objects',readonly=True, select=True),
+       	'total_price':fields.integer('Total price', readonly=True, select=True),
+        'avg_price':fields.integer('Avg price', readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
+
+    }
 
     def init(self, cr):
-		cr.execute("""
-			create or replace view report_unsold_object as (
-			select min(lo.id) as id,
-      		lo.auction_id as auct_id,
-      		lo.lot_type as lot,
-      		lo.product_id as product,
-      		lo.bord_vnd_id as depos,
-			lo.lot_est1 as lot_est1_l,
-			lo.lot_est2 as lot_est2_l,
-			lo.obj_ret as obj_ret_l,
-			lo.artist_id as artist_id_l,
-			lo.obj_desc as obj_desc_l,
-			lo.name as name_l,
-      		lo.state as state
-			from auction_lots lo where state = 'unsold'
-			group by lo.auction_id,lo.lot_type,lo.product_id,lo.artist_id ,lo.obj_ret,lo.bord_vnd_id,lo.state,lo.lot_est2,lo.lot_est1,lo.obj_desc,lo.name
-			    )""")
+        print "In init of auction report ..";
+        cr.execute('''
 
-report_unsold_object()
+ create or replace view report_buyer_auction  as
+             (select al.id,al.ach_login as "buyer_login",
+              substring(al.create_date for 10) as date,
+             rs.name as "buyer",
+             count(al.id) as "object",
+             (sum(ad.adj_total)/count(al.id)) as "total_price",
+             ((al.lot_est1+al.lot_est2)/2) as "avg_price"
+
+ 		from auction_lots al,res_partner rs,auction_dates ad
+ 		where al.ach_uid=rs.id and ad.id=al.auction_id
+ group by al.ach_uid,al.ach_login,rs.name,al.id,al.lot_est1,al.lot_est2,al.buyer_price,ad.adj_total,al.create_date
+             )''')
+
+
+
+report_buyer_auction()
+
+class report_buyer_auction2(osv.osv):
+    _name = "report.buyer.auction2"
+    _description = "Auction Reporting on buyer view2"
+    _auto = False
+    _columns = {
+        'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
+        'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
+        'sumadj':fields.float('sum of adjustication',readonly=True, select=True),
+        'gross_revenue':fields.float('Gross Revenue', readonly=True, select=True),
+        'net_revenue':fields.float('Net Revenue', readonly=True, select=True),
+        'net_margin':fields.float('Net Margin', readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
+
+    }
+
+    def init(self, cr):
+        print "In init of auction report ..";
+        cr.execute('''
+			create or replace view report_buyer_auction2  as
+             (select al.id,
+               substring(al.create_date for 10) as date,
+			al.ach_login as "buyer_login",
+             rs.name as "buyer",
+            sum(ad.adj_total) as sumadj,
+             al.gross_revenue as gross_revenue,
+	     al.net_revenue as net_revenue,
+             al.net_margin as net_margin
+             	from auction_lots al, auction_bid ab,res_partner rs,auction_dates ad
+ 		where al.ach_uid=rs.id and al.auction_id=ad.id group by
+		al.id,al.ach_uid,al.ach_login,rs.name,ad.adj_total,
+		al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
+
+report_buyer_auction2()
 
 class report_sold_object(osv.osv):
 
@@ -980,10 +1045,7 @@ class report_sold_object(osv.osv):
 		'name_l': fields.char('Short Description',size=64, required=True),
 		'obj_ret_l':fields.float('Price retired'),
 		'obj_price_l': fields.float('Adjudication price')
-
         }
-
-    
     def init(self, cr):
 		cr.execute("""
 			create or replace view report_sold_object as (
@@ -1004,7 +1066,6 @@ class report_sold_object(osv.osv):
 	group by lo.auction_id,lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.obj_price,lo.lot_est1,lo.obj_desc,lo.name
 			    )""")
 report_sold_object()
-
 
 
 class report_seller_auction(osv.osv):
@@ -1071,6 +1132,38 @@ class report_seller_auction2(osv.osv):
              ''')
 report_seller_auction2()
 
+class report_auction_view(osv.osv):
+    _name = "report.auction.view"
+    _description = "Auction Reporting on view1"
+    _auto = False
+    _columns = {
+        'auction': fields.char('Auction Name',size=64, readonly=True, select=True),
+        'nobjects':fields.float('No of objects',readonly=True, select=True),
+		'nbuyer':fields.float('No of buyers',readonly=True, select=True),
+        'nseller':fields.float('No of sellers',readonly=True, select=True),
+        'min_est':fields.float('Minimum Estimation', readonly=True, select=True),
+        'max_est':fields.float('Maximum Estimation', readonly=True, select=True),
+        'adj_price':fields.float('Adustication price', readonly=True, select=True),
+        'date': fields.date('Create Date',  required=True),
+    }
+
+    def init(self, cr):
+        print "In init of auction report ..";
+        cr.execute('''create or replace view report_auction_view  as
+             (select  ad.id,
+            	substring(al.create_date for 10) as date,
+              	ad.name as "auction",
+				count(al.id) as "nobjects",
+				count(al.ach_uid) as "nbuyer",
+				count(al.bord_vnd_id) as "nseller",
+				al.lot_est1 as "min_est",
+				al.lot_est2 as "max_est",
+				al.obj_price as "adj_price"
+				from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
+				ad.id,ad.name,al.ach_uid,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price,al.create_date)''')
+
+report_auction_view()
+
 class report_auction_view2(osv.osv):
     _name = "report.auction.view2"
     _description = "Auction Reporting on  view2"
@@ -1098,10 +1191,6 @@ from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
 
 report_auction_view2()
 
-
-
-
-
 class report_unclassified_object(osv.osv):
 
     _name='report.unclassified.object'
@@ -1121,8 +1210,6 @@ class report_unclassified_object(osv.osv):
 		'obj_price_l': fields.float('Adjudication price')
 
         }
-
-    
     def init(self, cr):
 		cr.execute("""
 			create or replace view report_unclassified_object as (
@@ -1142,5 +1229,41 @@ class report_unclassified_object(osv.osv):
 			    )""")
 report_unclassified_object()
 
+class report_auction_objects_to_sell (osv.osv):
+
+    _name='report.auction.objects_to_sell'
+    _description = "Objects to sell"
+    _auto = False
+    _columns = {
+        'depos': fields.many2one('res.partner','Seller Name',readonly=True),
+       	'lot': fields.selection(_type_get, 'Object Type', size=64),
+		'product_l':fields.many2one('product.product', 'Product', required=True),
+		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
+		'lot_est1_l': fields.float('Minimum Estimation'),
+		'lot_est2_l': fields.float('Maximum Estimation'),
+		'artist_id_l':fields.many2one('auction.artists', 'Artist/Author'),
+		'obj_desc_l': fields.text('Object Description'),
+		'name_l': fields.char('Short Description',size=64, required=True),
+		'obj_ret_l':fields.float('Price retired'),
+		'obj_price_l': fields.float('Adjudication price')
+        }
+    def init(self, cr):
+		cr.execute("""
+			create or replace view report_auction_objects_to_sell as (
+				select min(lo.id) as id,
+				lo.auction_id as auct_id,
+      			lo.lot_type as lot,
+      			lo.product_id as product_l,
+        		lo.bord_vnd_id as depos,
+				lo.lot_est1 as lot_est1_l,
+				lo.lot_est2 as lot_est2_l,
+				lo.artist_id as artist_id_l,
+				lo.obj_desc as obj_desc_l,
+				lo.name as name_l
+			from auction_lots lo
+          	where lo.state = 'sold'
+			group by lo.auction_id,lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.obj_price,lo.lot_est1,lo.obj_desc,lo.name
+			    )""")
+report_auction_objects_to_sell()
 
 
