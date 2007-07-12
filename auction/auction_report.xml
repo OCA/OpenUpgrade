@@ -52,7 +52,7 @@
 		multi="1"/>
 
 
-	<report string="Results with Rml"
+	<report string="Results"
 	   	model="auction.lots"
 		name="auction.result"
 		rml="auction/report/auction_result.rml"
@@ -74,7 +74,7 @@
 		multi="1"/>
 
 
-	<report string="Catelog with rml"
+	<report string="Catelog"
 	   	model="auction.lots"
 		name="auction.catelog"
 		rml="auction/report/auction_catelog.rml"
@@ -82,21 +82,21 @@
 		multi="1"/>
 
 
-	<report string="Lots List with rml"
+	<report string="Lots List"
 	   	model="auction.lots"
 		name="lots.list"
 		rml="auction/report/lots_list.rml"
 		auto="False"
 		multi="1"/>
 
-	<report string="Lots List-Landscape with rml"
+	<report string="Lots List-Landscape"
 		 model="auction.lots"
 		 name="lots.list.landscape"
 		 rml="auction/report/lots_list_landscape.rml"
 
 		 multi="1"/>
 
-    <report string="Lots List Inventory with rml"
+    <report string="Lots List Inventory"
 		 model="auction.lots"
 		 name="lots.list.inventory"
 		 rml="auction/report/lots_list_inventory.rml"
@@ -104,29 +104,29 @@
 		 multi="1"/>
 
 
-	<report string="Lots List"
+	<!--<report string="Lots List"
 	   	model="auction.lots"
 		name="report.auction.lots.list"
 		xml="auction/report/lots_list.xml"
 		xsl="auction/report/lots_list.xsl"
 
 		 multi="1"/>
-
-		<report string="Lots List - Landscape"
+-->
+		<!--<report string="Lots List - Landscape"
 		 model="auction.lots"
 		 name="report.auction.lots.list.landscape"
 		 xml="auction/report/lots_list_landscape.xml"
 		 xsl="auction/report/lots_list_landscape.xsl"
 
-		  multi="1"/>
+		  multi="1"/>-->
 
-		 <report string="Lots List Inventory"
+		<!-- <report string="Lots List Inventory"
 		  model="auction.lots"
 		  name="report.auction.lots.list.inventory"
 		  xml="auction/report/lots_list_inv.xml"
 		  xsl="auction/report/lots_list_inv.xsl"
 
-		   multi="1"/>
+		   multi="1"/>-->
 
 		<report string="Buyer Form (with pictures)"
 		model="auction.lots"
@@ -152,20 +152,20 @@
 
 		 multi="1"/>
 
-		<report string="Results"
+		<!--<report string="Results"
 		model="auction.lots"
 		name="report.auction.results"
 		xml="auction/report/results.xml"
 		 xsl="auction/report/results.xsl"
 
-		  multi="1"/>
+		  multi="1"/>-->
 
-		<report string="Catelog"
+		<!--<report string="Catelog"
 		model="auction.lots"
 		name="report.auction.catalog"
 		xml="auction/report/catalog.xml"
 		xsl="auction/report/catalog.xsl"
-		multi="1"/>
+		multi="1"/>-->
 
 		<report string="Buyer List"
 		model="auction.lots"
