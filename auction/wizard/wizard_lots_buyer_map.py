@@ -46,8 +46,8 @@ buyer_map_fields = {
 def _start(self,cr,uid,datas,context):
 	pool = pooler.get_pool(cr.dbname)
 	rec=pool.get('auction.lots').browse(cr,uid,datas['id'],context)
-	datas['form']['ach_login']= rec and rec.ach_login or False
-	return {}
+	ach_login= rec and rec.ach_login or False
+	return {'ach_login': ach_login}
 
 def _buyer_map_set(self,cr, uid, datas,context):
 	pool = pooler.get_pool(cr.dbname)

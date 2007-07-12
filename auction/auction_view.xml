@@ -422,7 +422,7 @@ Auction Management/Auction Dates/Reporting
 	<record model="ir.actions.act_window" id="action_all_objects_to_sell">
 		<field name="res_model">report.auction.objects_to_sell</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
+		<field name="view_mode">tree,form</field>
 	</record>
 	<menuitem name="Auction Management/Objects/All objects/Objects to sell" action="action_all_objects_to_sell" id="menu_all_objects_to_sell"/>
 
@@ -430,10 +430,10 @@ Auction Management/Auction Dates/Reporting
 
 <!--<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_all_objects_unsold" id="menu_all_objects_unsold1"/>-->
 
-	<record model="ir.actions.act_window" id="action_all_objects_unplanned">11
+	<record model="ir.actions.act_window" id="action_all_objects_unplanned">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
+		<field name="view_mode">tree,form</field>
 		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
 	</record>
 

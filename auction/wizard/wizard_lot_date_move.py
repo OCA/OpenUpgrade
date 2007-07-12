@@ -53,16 +53,23 @@ auction_move_fields = {
 #		cr.close()
 #	return {}
 def _auction_move_set(self,cr,uid,datas,context={}):
-	recs = pooler.get_pool(cr.dbname).get('auction.lots')
-	rec_ids = datas['ids']
-	if datas['form']['auction_id'] and len(rec_ids) :
-		line_ids= pooler.get_pool(cr.dbname).get('auction.bid_line').search(cr,uid,[('lot_id','in',rec_ids)])
-		pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
-		for m in recs.history_ids:
-			new_id = self.pool.get('auction.lot.history').copy(cr, uid, m.id, {'price': recs.obj_ret, 'name': 'reasons'+recs.auction_id.name})
-			cr.execute('insert into auction_lots (auction_id,history_ids) values (%d,%d)', (str(datas['form']['auction_id']), new_id))
-		cr.execute('update auction_lots set auction_id=%s, obj_ret=NULL, obj_price=NULL, ach_login=NULL, ach_uid=NULL,ach_inv_id=NULL,sel_inv_id=NULL,state=\'draft\' where id in ('+','.join(map(str, rec_ids))+')', (str(datas['form']['auction_id'])))
-	#	cr.execute('update auction_lot_history set auction_id=%s where id in ('+','.join(map(str, rec_ids))+')', (str(datas['form']['auction_id'])))
+	if not (datas['form']['auction_id'] and len(datas['ids'])) :
+		return {}
+	refs = pooler.get_pool(cr.dbname).get('auction.lots')
+	rec_ids = refs.browse(cr,uid,datas['ids'])
+
+	line_ids= pooler.get_pool(cr.dbname).get('auction.bid_line').search(cr,uid,[('lot_id','in',datas['ids'])])
+	pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
+	for rec in rec_ids:
+		new_id=pooler.get_pool(cr.dbname).get('auction.lot.history').create(cr,uid,{'auction_id':rec.auction_id.id,'lot_id':rec.id,'price': rec.obj_ret, 'name': 'reasons'+rec.auction_id.auction1})
+		up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[rec.id],{'auction_id':datas['form']['auction_id'],
+																						'obj_ret':None,
+																						'obj_price':None,
+																						'ach_login':None,
+																						'ach_uid':None,
+																						'ach_inv_id':None,
+																						'sel_inv_id':None,
+																						'state':'draft'})
 	return {}
 
 class wiz_auc_lots_auction_move(wizard.interface):

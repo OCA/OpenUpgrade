@@ -596,8 +596,7 @@ class auction_lots(osv.osv):
 			else:
 
 				if not partner_id:
-					raise osv.except_osv('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lot.bord_vnd_id.name,))
-
+					raise  wizard.except_wizard('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lot.bord_vnd_id.name,))
 				inv_ref=self.pool.get('account.invoice')
 
 				if lot.obj_price>0: lot_name = lot.obj_num
@@ -689,7 +688,7 @@ class auction_lots(osv.osv):
 				return []
 			else:
 				if not partner_ref:
-					raise osv.except_osv('Missed buyer !', 'Please fill the field buyer in the third tab.\n Or use the button "Map user" to associate a buyer to this auction !')
+					raise wizard.except_wizard('Missed buyer !', 'Please fill the field buyer in the third tab.\n Or use the button "Map user" to associate a buyer to this auction !')
 
 				inv_ref=self.pool.get('account.invoice')
 				price = lot.obj_price or 0.0
@@ -870,7 +869,7 @@ class report_unsold_object(osv.osv):
         }
     def init(self, cr):
 			cr.execute("""
-	create or replace view report_sold_object as (
+	create or replace view report_unsold_object as (
 				select min(lo.id) as id,
 				lo.auction_id as auct_id,
       			lo.lot_type as lot,
@@ -1130,7 +1129,6 @@ class report_unclassified_object(osv.osv):
         'depos': fields.many2one('res.partner','Seller Name',readonly=True),
        	'lot': fields.selection(_type_get, 'Object Type', size=64),
 		'product_l':fields.many2one('product.product', 'Product', required=True),
-		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
 		'lot_est1_l': fields.float('Minimum Estimation'),
 		'lot_est2_l': fields.float('Maximum Estimation'),
 		'artist_id_l':fields.many2one('auction.artists', 'Artist/Author'),
