@@ -4,19 +4,6 @@
 	<menuitem name="Auction Management" id="menu_root" icon="terp-auction"/>
 	<menuitem name="Auction Management/Configuration" groups="admin"/>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 	=======================================================
 	Auction Management/Configuration/artist
 	=======================================================
@@ -437,7 +424,7 @@ Auction Management/Auction Dates/Reporting
 	<record model="ir.actions.act_window" id="action_all_objects_to_sell">
 		<field name="res_model">report.auction.objects_to_sell</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">form,tree</field>
 	</record>
 	<menuitem name="Auction Management/Objects/All objects/Objects to sell" action="action_all_objects_to_sell" id="menu_all_objects_to_sell"/>
 
@@ -448,7 +435,7 @@ Auction Management/Auction Dates/Reporting
 	<record model="ir.actions.act_window" id="action_all_objects_unplanned">11
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">form,tree</field>
 		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
 	</record>
 
@@ -461,7 +448,7 @@ Auction Management/Auction Dates/Reporting
 		<record model="ir.actions.act_window" id="action_all_objects">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">form,tree,graph</field>
+		<field name="view_mode">form,tree</field>
 	</record>
 	<menuitem name="Auction Management/Objects/All objects"	action="action_all_objects" id="menu_auction_all_objects" menu="menu_action_all_objects"/>
 
@@ -1085,7 +1072,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="name">auction.this.month.tree</field>
 		<field name="res_model">report.seller.auction</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
+		<field name="view_mode">tree</field>
 		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
 
 	</record>
@@ -1096,7 +1083,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="name">auction.all.month.tree</field>
 		<field name="res_model">report.seller.auction</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
+		<field name="view_mode">tree</field>
 	</record>
 
 	<menuitem name="Auction Management/Reporting/seller/All Months/Seller object detail" action="action_auction_reporting_all1" id="menu_seller_allmonth_view1"/>
@@ -1158,7 +1145,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="name">auction.this.month.tree2</field>
 		<field name="res_model">report.seller.auction2</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
+		<field name="view_mode">tree</field>
 		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
 
@@ -1169,7 +1156,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="name">auction.all.month.tree</field>
 		<field name="res_model">report.seller.auction2</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">graph,tree</field>
+		<field name="view_mode">tree</field>
 	</record>
 
 	<menuitem name="Auction Management/Reporting/seller/All Months/Seller adjustication detail" action="action_auction_reporting_all2" id="menu_seller_allmonth_view2"/>
