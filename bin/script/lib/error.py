@@ -7,7 +7,7 @@ class ErrorDialog:
         self.win.addFixedText("lblErrHelpMsg", 5, 30, 190, 25, sErrorHelpMsg)
         self.win.addButton('btnOK', 55,-5,40,15,'Ok'
                      ,actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.doModalDialog()
+        self.win.doModalDialog("",None)
     def btnOkOrCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
 

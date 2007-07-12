@@ -592,8 +592,20 @@
 					</prop>
 				</node>
 			</node>
-
 			<node oor:name="org.openoffice.tiny.report.image7" oor:op="replace">
+				<prop oor:name="URL">
+					<value>service:org.openoffice.tiny.report.modify?insert</value>
+				</prop>
+				<node oor:name="UserDefinedImages">
+					<prop oor:name="ImageSmallURL" oor:type="xs:string">
+						<value>%origin%/images/modify_s.png</value>
+					</prop>
+					<prop oor:name="ImageBigURL" oor:type="xs:string">
+						<value>%origin%/images/modify_b.png</value>
+					</prop>
+				</node>
+			</node>
+			<node oor:name="org.openoffice.tiny.report.image8" oor:op="replace">
 				<prop oor:name="URL">
 					<value>service:org.openoffice.tiny.report.serverparam?insert</value>
 				</prop>

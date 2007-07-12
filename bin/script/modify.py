@@ -44,7 +44,6 @@ class modify(unohelper.Base, XJobExecutor ):
             exit(1)
         # Check weather Field-4 is available or not otherwise exit from application
         if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
-            print self.oVC.TextField
             if self.oVC.TextField:
                 self.oCurObj=self.oVC.TextField
                 self.oMyObject= self.getOperation(self.oVC.TextField.Items.__getitem__(1))
@@ -53,6 +52,7 @@ class modify(unohelper.Base, XJobExecutor ):
                 elif self.oMyObject.__getitem__(0) == "expression":
                     Expression(self.oMyObject.__getitem__(1),self.oCurObj.Items.__getitem__(0),True)
                 elif self.oMyObject.__getitem__(0)=="repeatIn":
+                    #RepeatIn(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
                     RepeatIn(self.oMyObject.__getitem__(1).__getslice__(0,self.oMyObject.__getitem__(1).find(".")),self.oMyObject[2],self.oMyObject.__getitem__(1).__getslice__(self.oMyObject.__getitem__(1).find("."),self.oMyObject.__getitem__(1).__len__()).replace(".","/"),self.oCurObj.Items[0],True)
             else:
                 ErrorDialog("Please place your cursor at begaining of field \nwhich you want to modify","")

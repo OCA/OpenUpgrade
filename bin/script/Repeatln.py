@@ -35,7 +35,10 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         # Variable Declaration
+        self.sValue=None
         self.sObj=None
+        self.sGVariable=sVariable
+        self.sGDisplayName=sDisplayName
         self.aItemList=[]
         self.aComponentAdd=[]
         self.aObjectList=[]
@@ -84,8 +87,10 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 if sObject=="":
                     self.insVariable.setText("List of "+docinfo.getUserFieldValue(3))
                     self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
-                    self.win.setEditText("txtName", sVariable)
-                    self.win.setEditText("txtUName",sDisplayName)
+#                    self.win.setEditText("txtName", sVariable)
+#                    self.win.setEditText("txtUName",sDisplayName)
+                    print sFields
+                    self.sValue= "objects"
                 else:
                     sItem=""
                     i=0
@@ -94,9 +99,10 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                             sItem= self.aObjectList[i]
                             self.insVariable.setText(sItem)
                     genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
-                    self.win.setEditText("txtName", sVariable)
-                    self.win.setEditText("txtUName",sDisplayName)
-            self.win.doModalDialog()
+#                    self.win.setEditText("txtName", sVariable)
+#                    self.win.setEditText("txtUName",sDisplayName)
+                    self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
+            self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
@@ -104,8 +110,12 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
     def lstbox_selected(self,oItemEvent):
         sItem=self.win.getListBoxSelectedItem("lstFields")
         sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]
-        self.win.setEditText("txtName",sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))
-        self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind("/")+1,sItem.__len__())+".-|")
+        if self.bModify==True:
+            self.win.setEditText("txtName", self.sGVariable)
+            self.win.setEditText("txtUName",self.sGDisplayName)
+        else:
+            self.win.setEditText("txtName",sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))
+            self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind("/")+1,sItem.__len__())+".-|")
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -113,18 +123,20 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem=self.win.getComboBoxText("cmbVariable")
             self.aListRepeatIn=[]
             if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
                 genTree(docinfo.getUserFieldValue(3), self.aListRepeatIn, self.insField,self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
             else:
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+            self.win.selectListBoxItemPos("lstFields", 0, True )
 
         else:
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem=self.win.getComboBoxText("cmbVariable")
             self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))
             self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
+            self.win.selectListBoxItemPos("lstFields", 0, True )
 
     def btnOkOrCancel_clicked(self, oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -142,7 +154,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         oCurObj.Items = (sKey,sValue)
                         oCurObj.update()
                     else:
-                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=self.win.getComboBoxText("cmbVariable")
                         sObjName=sObjName.__getslice__(0,sObjName.find("("))
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
@@ -156,7 +168,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         oInputList.Items = (sKey,sValue)
                         text.insertTextContent(cursor,oInputList,False)
                     else:
-                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=self.win.getComboBoxText("cmbVariable")
                         sObjName=sObjName.__getslice__(0,sObjName.find("("))
                         if cursor.TextTable==None:
                             sKey=u""+ self.win.getEditText("txtUName")

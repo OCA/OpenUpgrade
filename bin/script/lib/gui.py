@@ -451,6 +451,11 @@ class DBModalDialog:
         oControl = self.getControl( cCtrlName )
         return oControl.selectItem( cItemText, bSelect )
 
+    def selectListBoxItemPos( self, cCtrlName, nItemPos, bSelect=True ):
+        """Select/Deselect the item at the specified position."""
+        oControl = self.getControl( cCtrlName )
+        return oControl.selectItemPos( nItemPos, bSelect )
+
     def removeListBoxItems( self, cCtrlName, nPosition, nCount=1 ):
         """Remove items from a ListBox."""
         oControl = self.getControl( cCtrlName )
@@ -465,6 +470,11 @@ class DBModalDialog:
         """Returns the currently selected item."""
         oControl = self.getControl( cCtrlName )
         return oControl.getSelectedItem()
+
+    def getListBoxItem( self, cCtrlName, nPosition ):
+        """Return the item at specified position within the ListBox."""
+        oControl = self.getControl( cCtrlName )
+        return oControl.getItem( nPosition )
 
     def getListBoxSelectedItemPos(self,cCtrlName):
 
@@ -697,9 +707,11 @@ class DBModalDialog:
     #   Display the modal dialog.
     #--------------------------------------------------
 
-    def doModalDialog( self ):
+    def doModalDialog( self, sObjName,sValue):
         """Display the dialog as a modal dialog."""
         self.oDialogControl.setVisible( True )
+        if not sValue==None:
+            self.selectListBoxItem( sObjName, sValue, True )
         self.oDialogControl.execute()
 
     def endExecute( self ):

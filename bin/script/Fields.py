@@ -25,11 +25,13 @@ class Fields(unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblUName", 8, 187, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 185, 120, 15,)
 
-        self.sObj=None
         self.win.addButton('btnOK',-5 ,-5,45,15,'Ok'
                      ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.sValue=None
+        self.sObj=None
+        self.sGDisplayName=sDisplayName
         self.aItemList=[]
         self.aComponentAdd=[]
         self.aObjectList=[]
@@ -78,8 +80,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                         sItem= self.aObjectList[i]
                         self.insVariable.setText(sItem)
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-                self.win.setEditText("txtUName",sDisplayName)
-            self.win.doModalDialog()
+#                self.win.setEditText("txtUName",sDisplayName)
+                self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
+            self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
@@ -100,15 +103,15 @@ class Fields(unohelper.Base, XJobExecutor ):
         res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
         key = res.keys()
         key.sort()
+        myval=None
         if not sVar.find("/")==-1:
             myval=sVar.__getslice__(0,sVar.find("/"))
         else:
             myval=sVar
         for k in key:
-            if k==myval:
-                return sObject #res[myval]['relation']
             if (res[k]['type'] in ['many2one']) and k==myval:
                 self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+                return res[myval]['relation']
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -117,7 +120,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             self.aListFields=[]
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem=self.win.getComboBoxText("cmbVariable")
             genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
@@ -140,7 +143,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             elif self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
                 sObjName=""
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                sObjName=self.win.getComboBoxText("cmbVariable")
                 sObjName=sObjName.__getslice__(0,sObjName.find("("))
                 if cursor.TextTable==None:
                     sKey=u""+ self.win.getEditText("txtUName")
