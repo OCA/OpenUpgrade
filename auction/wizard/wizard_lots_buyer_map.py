@@ -28,7 +28,7 @@
 
 import wizard
 import netsvc
-
+import pooler
 import sql_db
 
 buyer_map = '''<?xml version="1.0"?>
@@ -43,57 +43,30 @@ buyer_map_fields = {
 	'ach_uid': {'string':'Buyer', 'type':'many2one', 'required':True, 'relation':'res.partner'},
 }
 
-def _buyer_map_init(self, uid, datas):
-	cr = sql_db.db.cursor()
-	cr.execute('select ach_login, auction_id from auction_lots where id in ('+','.join(map(str, datas['ids']))+') and (ach_uid is null) and (length(ach_login)>0) and (ach_pay_id is null) order by length(ach_login), ach_login limit 1')
-	res = cr.fetchone()
-	if not res:
-		if datas['form'].get('done_some', False):
-			raise wizard.except_wizard('Done', 'All buyers are now mapped.')
-		else:
-			raise wizard.except_wizard('Notice', 'All buyers for the selected objects are already mapped !')
-		
-	ach_login = res[0]
-	ach_uid = False
+def _start(self,cr,uid,datas,context):
+	pool = pooler.get_pool(cr.dbname)
+	rec=pool.get('auction.lots').browse(cr,uid,datas['id'],context)
+	datas['form']['ach_login']= rec and rec.ach_login or False
+	return {}
 
-	# get the id of the partner corresponding to that buyer number
-	cr.execute('select id from res_partner where ref=%s', (ach_login,))
-	ids = cr.fetchall()
+def _buyer_map_set(self,cr, uid, datas,context):
+	pool = pooler.get_pool(cr.dbname)
+	recs=pool.get('auction.lots').browse(cr,uid,datas['ids'],context)
+	for rec in recs:
+		if datas['form']['ach_uid'] and datas['form']['ach_login']:
+			cr.execute('update auction_lots set ach_uid=%d where id in ('+','.join(map(str, datas['ids']))+') and (ach_login=%s)', (datas['form']['ach_uid'], datas['form']['ach_login']))
+		return {'ach_login':'', 'ach_uid':False}
 
-	# if there is only one partner with that ref/buyer number, do the mapping automatically
-	if len(ids)==1:
-		ach_uid = ids[0][0]
-	else:
-		# else if there are no (or several) partner(s) matching that buyer number, look in the bids
-		cr.execute('select partner_id from auction_bid where name=%s and auction_id=%d', (res[0], res[1]))
-		ids = cr.fetchall()
-		if len(ids)==1:
-			ach_uid = ids[0][0]
-	cr.close()
-	return {'ach_login': ach_login, 'ach_uid': ach_uid}
-
-
-def _buyer_map_set(self, uid, datas):
-	if datas['form']['ach_uid'] and datas['form']['ach_login']:
-		cr = sql_db.db.cursor()
-		# TODO: this is a temporary fix, as is the fix in the login method
-		# of service/web_services.py
-		# should be fixed for all wizard, of even better, for all messages between the client and server !!!!
-		# or yet even better, for all psycopg calls !!!!
-		cr.execute('update auction_lots set ach_uid=%d where id in ('+','.join(map(str, datas['ids']))+') and (ach_login=%s)', (datas['form']['ach_uid'], datas['form']['ach_login'].encode('utf-8')))
-		cr.commit()
-		cr.close()
-	return {'ach_login':'', 'ach_uid':False, 'done_some':True}
 
 class wiz_auc_lots_buyer_map(wizard.interface):
 	states = {
 		'init': {
-			'actions': [_buyer_map_init],
+			'actions': [_start],
 			'result': {'type': 'form', 'arch':buyer_map, 'fields': buyer_map_fields, 'state':[('set_buyer', 'Update'),('end','Exit')]}
 		},
 		'set_buyer': {
 			'actions': [_buyer_map_set],
-			'result': {'type': 'state', 'state':'init'}
+			'result': {'type': 'state', 'state':'end'}
 		}
 	}
 

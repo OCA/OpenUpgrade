@@ -172,6 +172,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="net_revenue"/>
 					<field name="gross_margin"/>
 					<field name="net_margin"/>
+					<field name="costs"/>
 				</tree>
 		</field>
 	</record>
@@ -191,12 +192,11 @@ Auction Management/Auction Dates/Reporting
 				<field name="net_revenue"/>
 				<field name="gross_margin"/>
 				<field name="net_margin"/>
-
+				<field name="costs"/>
 				<newline/>
 				<field name="name"/>
 				<field name="lot_type" select="1"/>
 				<field name="name2"/>
-
 				<newline/>
 				<field name="artist_id"/>
 				<field name="artist2_id"/>
@@ -204,7 +204,6 @@ Auction Management/Auction Dates/Reporting
 				<field name="vnd_lim"/>
 				<field name="vnd_lim_net"/>
 				<field name="lot_est1"/>
-
 				<field name="author_right" domain="[('domain','=','sabam')]"/>
 				<field name="lot_est2"/>
 				<field name="product_id"/>
@@ -332,6 +331,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="net_revenue"/>
 					<field name="gross_margin"/>
 					<field name="net_margin"/>
+					<field name="costs"/>
 					<newline/>
 					<field name="ach_inv_id"/>
 					<field name="paid_vnd"/>
@@ -978,8 +978,6 @@ Auction Management/Auction Dates/Reporting
 				<field name="gross_revenue" />
 				<field name="net_revenue" />
 				<field name="obj_margin" />
-
-
 			</tree>
 		</field>
 	</record>

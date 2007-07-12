@@ -267,121 +267,54 @@ class auction_lots(osv.osv):
 		for lot in lots:
 			lot.state='paid'	
 		return True
-#	
-#	def _buyerprice(self,cr,uid,ids,name,args,context):
-#		ttc=0.0
-#		curr_obj=self.browse(cr,uid,ids)
-#		for obj in curr_obj:
-#			if obj:
-#				taxe=obj.buyer_costs.amount or 0.0
-#				price=obj.obj_price or 0.0
-#			ttc=price+(taxe*price)
-#		return ttc
-#	def _sellerprice(self,cr,uid,ids,name,args,context):
-#		print "in the sller auction",ids
-#		ttc=0.0
-#		curr_obj=self.browse(cr,uid,ids)
-#		for obj in curr_obj:
-#			if obj:
-#				taxe=obj.buyer_costs.amount or 0.0
-#				price=obj.obj_price or 0.0
-#			ttc=price-(taxe*price)
-#		return ttc
 	def _buyerprice(self, cr, uid, ids, name, args, context):
-		print " IN THE BUYER PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['obj_price','auction_id'])
 
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
-#			print "Auction data :",auction_data
 			if auction_data['auction_id']:
-#				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['buyer_costs'])[0]
 				print "Auctiondates :",auction_dates
 				if auction_dates['buyer_costs']:
 					account_taxes = self.pool.get('account.tax').read(cr,uid,auction_dates['buyer_costs'],['amount'])
 					for acc_amount in account_taxes:
 						total_tax += acc_amount['amount']
-					#end for acc_amount in account_taxes:
-				#end if auction_dates['buyer_costs']:
-			#end if auction_data['auction_id']:
 			res[auction_data['id']] = auction_data['obj_price'] + total_tax
-		#end for auction_data in auction_lots_obj:
 		return res
 	def _sellerprice(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['obj_price','auction_id'])
-
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
-#			print "Auction data :",auction_data
 			if auction_data['auction_id']:
-#				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['seller_costs'])[0]
-#				print "Auctiondates :",auction_dates
 				if auction_dates['seller_costs']:
 					account_taxes = self.pool.get('account.tax').read(cr,uid,auction_dates['seller_costs'],['amount'])
 					for acc_amount in account_taxes:
 						total_tax += acc_amount['amount']
-					#end for acc_amount in account_taxes:
-				#end if auction_dates['buyer_costs']:
-			#end if auction_data['auction_id']:
 			res[auction_data['id']] = auction_data['obj_price'] - total_tax
-		#end for auction_data in auction_lots_obj:
 		return res
 	def _grossprice(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id'])
-
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
-#			print "Auction data :",auction_data
 			if auction_data['auction_id']:
 				total_tax += auction_data['buyer_price']-auction_data['seller_price']
-				#end for acc_amount in account_taxes:
-				#end if auction_dates['buyer_costs']:
-			#end if auction_data['auction_id']:
 			res[auction_data['id']] = total_tax
-		#end for auction_data in auction_lots_obj:
-		return res
-	def _netprice(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
-		res={}
-		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id','costs'])
-
-		for auction_data in auction_lots_obj:
-			total_tax = 0.0
-#			print "Auction data :",auction_data
-			if auction_data['auction_id']:
-				total_tax += auction_data['buyer_price']-auction_data['seller_price']#-auction_data['costs']
-				#end for acc_amount in account_taxes:
-				#end if auction_dates['buyer_costs']:
-			#end if auction_data['auction_id']:
-			res[auction_data['id']] = total_tax
-		#end for auction_data in auction_lots_obj:
 		return res
 	def _grossmargin(self, cr, uid, ids, name, args, context):
-#		print " IN THE BUYER PRICE Fuction",ids
 		res={}
 		auction_lots_obj = self.read(cr,uid,ids,['gross_revenue','auction_id'])
 
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
-#			print "Auction data :",auction_data
 			if auction_data['auction_id']:
-##				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['adj_total'])[0]
-##				print "Auctiondates :",auction_dates
 				if auction_dates['adj_total']:
 						total_tax += (auction_data['gross_revenue']*100)/auction_dates['adj_total']
-#					#end for acc_amount in account_taxes:
-#				#end if auction_dates['buyer_costs']:
-#			#end if auction_data['auction_id']:
 			res[auction_data['id']] =  total_tax
-#		#end for auction_data in auction_lots_obj:
 		return res
 	def _netmargin(self, cr, uid, ids, name, args, context):
 		res={}
@@ -395,21 +328,18 @@ class auction_lots(osv.osv):
 				print "auction_data['auction_id'] :",auction_data['auction_id']
 
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['adj_total'])[0]
-##				print "Auctiondates :",auction_dates
 				if auction_dates['adj_total']:
 						total_tax += (auction_data['net_revenue']*100)/auction_dates['adj_total']
-#					#end for acc_amount in account_taxes:
-#				#end if auction_dates['buyer_costs']:
-#			#end if auction_data['auction_id']:
 			res[auction_data['id']] =  total_tax
-#		#end for auction_data in auction_lots_obj:
 		return res
 	def _costs(self,cr,uid,ids,context,*a):
+		"""
+		costs: Total credit of analytic account 
+		/ # objects sold during this auction 
+		(excluding analytic lines that are in the analytic journal of the auction date).
+		"""
 		res={}
 		som=0.0
-	#	costs: Total credit of analytic account 
-	#	/ # objects sold during this auction 
-	#	(excluding analytic lines that are in the analytic journal of the auction date).
 		for lot in self.browse(cr,uid,ids):
 			auct_id=lot.auction_id
 			nb=cr.execute('select count(*) from auction_lots where state=%s and auction_id=%d', ('paid',auct_id))
@@ -418,8 +348,19 @@ class auction_lots(osv.osv):
 			for line in line_ids:
 				som+=line.amount
 			if nb>0: res[lot.id]=som/nb
-		return res 
+			else: res[lot.id]= 0
+		return res
 
+	def _netprice(self, cr, uid, ids, name, args, context):
+		res={}
+		auction_lots_obj = self.read(cr,uid,ids,['seller_price','buyer_price','auction_id','costs'])
+		for auction_data in auction_lots_obj:
+			total_tax = 0.0
+			if auction_data['auction_id']:
+				total_tax += auction_data['buyer_price']-auction_data['seller_price']-auction_data['costs']
+			res[auction_data['id']] = total_tax
+		return res
+	
 	def _is_paid_vnd(self,cr,uid,ids,*a):
 		res = {}
 		lots=self.browse(cr,uid,ids)
@@ -472,13 +413,13 @@ class auction_lots(osv.osv):
 		'paid_vnd':fields.function(_is_paid_vnd,string='Buyer Paid',method=True,type='boolean'),
 		'paid_ach':fields.function(_is_paid_ach,string='Seller Paid',method=True,type='boolean'),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
-		'buyer_price': fields.function(_buyerprice, method=True, string='buyerprice',store=True),
-		'seller_price': fields.function(_sellerprice, method=True, string='sellerprice',store=True),
-		'gross_revenue':fields.function(_grossprice, method=True, string='Grossrevenue',store=True),
-		'net_revenue':fields.function(_netprice, method=True, string='Netrevenue',store=True),
-		'gross_margin':fields.function(_grossmargin, method=True, string='GrossMargin',store=True),
-		'net_margin':fields.function(_netmargin, method=True, string='NetMargin',store=True),
-		'costs':fields.function(_costs,methode=True,string='Costs',store=True),
+		'buyer_price': fields.function(_buyerprice, method=True, string='Buyer price',store=True),
+		'seller_price': fields.function(_sellerprice, method=True, string='Seller price',store=True),
+		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
+		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
+		'gross_margin':fields.function(_grossmargin, method=True, string='Gross Margin',store=True),
+		'net_margin':fields.function(_netmargin, method=True, string='Net Margin',store=True),
+		'costs':fields.function(_costs,method=True,string='Costs',store=True),
 
 	}
 	_defaults = {
@@ -700,7 +641,7 @@ class auction_lots(osv.osv):
 					}
 				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 				wf_service = netsvc.LocalService('workflow')
-   	 			wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
+   	 			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
 
 			return invoices.values()
 
@@ -748,7 +689,8 @@ class auction_lots(osv.osv):
 				return []
 			else:
 				if not partner_ref:
-					raise osv.except_osv('Error', "Please, set a buyer for this auction")
+					raise osv.except_osv('Missed buyer !', 'Please fill the field buyer in the third tab.\n Or use the button "Map user" to associate a buyer to this auction !')
+
 				inv_ref=self.pool.get('account.invoice')
 				price = lot.obj_price or 0.0
 				lot_name =lot.obj_num
@@ -770,17 +712,6 @@ class auction_lots(osv.osv):
 			else:
 				taxes+=map(lambda x:x.id, lot.auction_id.buyer_costs)
 
-			print {
-				'invoice_id': inv_id,
-				'quantity': 1,
-				'product_id': lot.product_id.id,
-				'name': '['+str(lot.obj_num)+'] '+ lot.auction_id.name,
-				'invoice_line_tax_id': [(6,0,taxes)],
-				'account_analytic_id': lot.auction_id.account_analytic_id.id,
-				'account_id': lot.auction_id.acc_income.id,
-				'price_unit': lot.obj_price,
-				}
-
 			inv_line= {
 				'invoice_id': inv_id,
 				'quantity': 1,
@@ -793,9 +724,8 @@ class auction_lots(osv.osv):
 				}
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 			wf_service = netsvc.LocalService('workflow')
-       	 	wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_open', cr)
+       	 	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
 		return invoices.values()
-
 
 	def lots_pay(self, cr, uid, ids, buyer_id, account_id, amount):
 		lots = self.browse(cr, uid, ids)
