@@ -305,17 +305,15 @@ Auction Management/Auction Dates/Reporting
 					<field name="vnd_lim_net"/>
 					<field name="sel_inv_id"/>
 					<field name="paid_ach"/>
-					<field name="history_ids" colspan="4" readonly="1"/>
-
-
-						<!-- details to add
-						tree string="History">
+					<field name="history_ids" colspan="4" readonly="1">
+						<tree string="History">
 							<field name="name"/>
 							<field name="lot_id"/>
+							<field name="auction_id"/>
 							<field name="price"/>
 						</tree>
-					</field-->
-				</page>
+					</field>
+					</page>
 				<page string="Buyer">
 					<separator string="Buyer information" colspan="4"/>
 					<field name="ach_uid"  select="2"/>
