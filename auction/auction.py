@@ -1324,8 +1324,8 @@ class report_unplanned_object(osv.osv):
 				lo.obj_desc as obj_desc_l,
 				lo.name as name_l
         		from auction_lots lo
-          where lo.auction_id is null and lo.state='draft'
-	group by lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.lot_est1,lo.obj_desc,lo.name
+        	where lo.auction_id is null and lo.state='draft'
+			group by lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.lot_est1,lo.obj_desc,lo.name
 			    )""")
 
 

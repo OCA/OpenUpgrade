@@ -116,14 +116,24 @@ Auction Management/Auction Dates/New Auction Dates
 			</form>
 		</field>
 	</record>
+
 	<record model="ir.actions.act_window" id="action_auction_dates_next">
 		<field name="name">Draft Auctions</field>
 		<field name="res_model">auction.dates</field>
-		<field name="view_type">tree</field>
+		<field name="view_type">form</field>
 		<field name="domain">[('state','=','draft')]</field>
 		<field name="view_id" eval="False"/>
 	</record>
-	<menuitem name="Auction Management/Auction Dates/Next auction dates" id="menu_auction_dates_next1" action="action_auction_dates_next"/>
+
+	<record model="ir.values" id="open_lot_simplified">
+		<field name="key2">tree_but_open</field>
+		<field name="model">auction.dates</field>
+		<field name="name">Auction</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%action_auction_dates_next"/>
+		<field name="object" eval="True"/>
+	</record>
+
+	<menuitem name="Auction Management/Auction Dates/Next auction dates2" id="menu_auction_dates_next1" action="action_auction_dates_next"/>
 
 	<menuitem name="Auction Management/Objects/Objects by auction" id="menu_auction_dates_next_by_auction" action="action_auction_dates_next"/>
 
@@ -133,10 +143,19 @@ Auction Management/Auction Dates/New Auction Dates
 	<record model="ir.actions.act_window" id="action_auction_dates_old">
 		<field name="name">Closed Auctions</field>
 		<field name="res_model">auction.dates</field>
-		<field name="view_type">tree</field>
+		<field name="view_type">form</field>
 		<field name="domain">[('state','=','close')]</field>
 		<field name="view_id" ref="view_auction_dates_tree"/>
 	</record>
+	
+	<record model="ir.values" id="open_lot">
+		<field name="key2">tree_but_open</field>
+		<field name="model">auction.dates</field>
+		<field name="name">Auction</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%action_auction_dates_old"/>
+		<field name="object" eval="True"/>
+	</record>
+
 	<menuitem name="Auction Management/Auction Dates/Old Auction Dates" id="menu_auction_dates_old" action="action_auction_dates_old"/>
 
 	<record model="ir.actions.act_window" id="action_auction_dates1">
@@ -794,13 +813,6 @@ Auction Management/Auction Dates/Reporting
 	<menuitem name="Auction Management/Sellers" groups="admin" />
 	<menuitem name="Auction Management/Sellers/Deposit border" action="action_deposit_border" id="menu_auction_deposit_border"/>
 
-
-
-
-
-
-
-
 	=======================================================
 		"Auction Management/Buyers/Bids
 	=======================================================
@@ -1211,14 +1223,12 @@ Auction Management/Auction Dates/Reporting
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Auction buyer reporting form view2">
-
 				<field name="buyer_login" select="1"/>
 				<field name="buyer" select="1"/>
 				<field name="sumadj" select="1"/>
 				<field name="gross_revenue" select="1"/>
 				<field name="net_revenue" select="1"/>
 				<field name="net_margin" select="1"/>
-
 			</form>
 		</field>
 	</record>
@@ -1236,7 +1246,6 @@ Auction Management/Auction Dates/Reporting
 					<field name="gross_revenue" select="1"/>
 					<field name="net_revenue" select="1"/>
 					<field name="net_margin" select="1"/>
-
 		</tree>
 		</field>
 	</record>
@@ -1311,7 +1320,6 @@ Auction Management/Auction Dates/Reporting
 			</form>
 		</field>
 	</record>
-	
 
 
 </data>
