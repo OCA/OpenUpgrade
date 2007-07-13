@@ -79,7 +79,7 @@ class auction_dates(osv.osv):
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
 		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
-		'state': fields.selection((('draft','Draft'),('sold','Closed'),('unsold','Unsold')),'State'),
+		'state': fields.selection((('draft','Draft'),('sold','Closed')),'State'),
 		'journal_id': fields.many2one('account.journal', 'Journal', required=True),
 		#'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
@@ -275,7 +275,6 @@ class auction_lots(osv.osv):
 			total_tax = 0.0
 			if auction_data['auction_id']:
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['buyer_costs'])[0]
-				print "Auctiondates :",auction_dates
 				if auction_dates['buyer_costs']:
 					account_taxes = self.pool.get('account.tax').read(cr,uid,auction_dates['buyer_costs'],['amount'])
 					for acc_amount in account_taxes:
@@ -322,11 +321,7 @@ class auction_lots(osv.osv):
 
 		for auction_data in auction_lots_obj:
 			total_tax = 0.0
-			print "Auction data hello:",auction_data
 			if auction_data['auction_id']:
-				print "auction_data['auction_id'][0] :",auction_data['auction_id'][0]
-				print "auction_data['auction_id'] :",auction_data['auction_id']
-
 				auction_dates = self.pool.get('auction.dates').read(cr,uid,[auction_data['auction_id'][0]],['adj_total'])[0]
 				if auction_dates['adj_total']:
 						total_tax += (auction_data['net_revenue']*100)/auction_dates['adj_total']
@@ -596,7 +591,7 @@ class auction_lots(osv.osv):
 			else:
 
 				if not partner_id:
-					raise  wizard.except_wizard('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lot.bord_vnd_id.name,))
+					raise  orm.except_orm('No Partner for Deposit !', "The deposit border named '%s' has no partner, please set one !" % (lot.bord_vnd_id.name,))
 				inv_ref=self.pool.get('account.invoice')
 
 				if lot.obj_price>0: lot_name = lot.obj_num
@@ -636,11 +631,11 @@ class auction_lots(osv.osv):
 					'account_analytic_id': lot.auction_id.account_analytic_id.id,
 					'account_id': lot.auction_id.acc_expense.id,
 					'price_unit': lot.obj_price,
-
 					}
 				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
-				wf_service = netsvc.LocalService('workflow')
-   	 			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+				#laisser l utilisateur saisir le montant total ds la facture du seller
+				#wf_service = netsvc.LocalService('workflow')
+   	 			#wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
 
 			return invoices.values()
 
@@ -688,7 +683,7 @@ class auction_lots(osv.osv):
 				return []
 			else:
 				if not partner_ref:
-					raise wizard.except_wizard('Missed buyer !', 'Please fill the field buyer in the third tab.\n Or use the button "Map user" to associate a buyer to this auction !')
+					raise orm.except_orm('Missed buyer !', 'Please fill the field buyer in the third tab.\n Or use the button "Map user" to associate a buyer to this auction !')
 
 				inv_ref=self.pool.get('account.invoice')
 				price = lot.obj_price or 0.0
@@ -903,7 +898,6 @@ class report_buyer_auction(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''
 
  create or replace view report_buyer_auction  as
@@ -939,7 +933,6 @@ class report_buyer_auction2(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''
 			create or replace view report_buyer_auction2  as
              (select al.id,
@@ -1011,7 +1004,6 @@ class report_seller_auction(osv.osv):
        }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction  as
              (
              select
@@ -1045,7 +1037,6 @@ class report_seller_auction2(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''create or replace view report_seller_auction2  as
              (select rs.id as id,
               substring(al.create_date for 10) as date,
@@ -1077,7 +1068,6 @@ class report_auction_view(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''create or replace view report_auction_view  as
              (select  ad.id,
             	substring(al.create_date for 10) as date,
@@ -1107,7 +1097,6 @@ class report_auction_view2(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''create or replace view report_auction_view2  as
              (select  ad.id, ad.name as "auction",
 sum(ad.adj_total) as "sum_adj",
@@ -1253,7 +1242,6 @@ class report_buyer_auction(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''
 
  create or replace view report_buyer_auction  as
@@ -1289,7 +1277,6 @@ class report_buyer_auction2(osv.osv):
     }
 
     def init(self, cr):
-        print "In init of auction report ..";
         cr.execute('''
 			create or replace view report_buyer_auction2  as
              (select al.id,
