@@ -54,7 +54,7 @@ def ldap_login(oldfnc):
 	def _ldap_login(db, login, passwd):
 		cr = pooler.get_db(db).cursor()
 		module_obj = pooler.get_pool(cr.dbname).get('ir.module.module')
-		module_ids = module_obj.search(cr, 1, [('name', '=', 'users_ldap')])
+		module_ids = module_obj.search(cr, 1, [('name', '=', 'users_ldap_company_any')])
 		if module_ids:
 			state = module_obj.read(cr, 1, module_ids, ['state'])[0]['state']
 			if state in ('installed', 'to upgrade', 'to remove'):
@@ -104,7 +104,7 @@ def ldap_check(oldfnc):
 			return True
 		cr = pooler.get_db(db).cursor()
 		module_obj = pooler.get_pool(cr.dbname).get('ir.module.module')
-		module_ids = module_obj.search(cr, 1, [('name', '=', 'users_ldap')])
+		module_ids = module_obj.search(cr, 1, [('name', '=', 'users_ldap_company_any')])
 		if module_ids:
 			state = module_obj.read(cr, 1, module_ids, ['state'])[0]['state']
 			if state in ('installed', 'to upgrade', 'to remove'):
