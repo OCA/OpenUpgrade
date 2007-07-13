@@ -290,8 +290,8 @@ Auction Management/Auction Dates/Reporting
 
 				 <group col="7" colspan="4">
                     <field name="state" select="2"/>
-                    <button name="button_bought" string="Vendu" state="unsold,draft" type="object" />
-                    <button name="button_not_bought" string="Non vendu" state="draft,paid" type="object"/>
+                    <button name="button_bought" string="Sold" states="unsold,draft" type="object"/>
+                    <button name="button_not_bought" string="Not sold" states="sold" type="object"/>
                 </group>
 
 

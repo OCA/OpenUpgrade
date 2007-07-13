@@ -260,12 +260,12 @@ class auction_lots(osv.osv):
 	def button_not_bought(self,cr,uid,ids,*a):
 		lots=self.browse(cr,uid,ids)
 		for lot in lots:
-			lot.state='unsold'	
+			self.write(cr,uid,[lot.id], {'state':'unsold'})	
 		return True
 	def button_bought(self,cr,uid,ids,*a):
 		lots=self.browse(cr,uid,ids)
 		for lot in lots:
-			lot.state='paid'	
+			self.write(cr,uid,[lot.id], {'state':'sold'})	
 		return True
 	def _buyerprice(self, cr, uid, ids, name, args, context):
 		res={}
@@ -412,7 +412,7 @@ class auction_lots(osv.osv):
 		'image': fields.binary('Image'),
 		'paid_vnd':fields.function(_is_paid_vnd,string='Buyer Paid',method=True,type='boolean'),
 		'paid_ach':fields.function(_is_paid_ach,string='Seller Paid',method=True,type='boolean'),
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid')),'State', required=True, readonly=True),
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('sold','Sold')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='Buyer price',store=True),
 		'seller_price': fields.function(_sellerprice, method=True, string='Seller price',store=True),
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
