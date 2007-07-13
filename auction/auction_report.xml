@@ -5,11 +5,11 @@
 
 		<!-- -->
 
-		<report string="Artists Biography"
+		<!--report string="Artists Biography"
 			model="auction.lots"
 			name="auction.artists_lots"
 			auto="False"
-			multi="1"/>
+			multi="1"/-->
 
 		<report string="Artists Biography"
 		 model="auction.artists"
@@ -136,13 +136,13 @@
 
 	     multi="1"/>
 
-		<report string="Buyer Form"
+		<!--<report string="Buyer Form"
 		 model="auction.lots"
 		 name="report.auction.ach_bordereau"
 		 xml="auction/report/ach_bordereau.xml"
 		 xsl="auction/report/ach_bordereau.xsl"
 
-		  multi="1"/>
+		  multi="1"/-->
 
 		<report string="Seller Form"
 		model="auction.lots"

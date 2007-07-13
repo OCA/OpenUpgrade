@@ -431,10 +431,10 @@ Auction Management/Auction Dates/Reporting
 <!--<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_all_objects_unsold" id="menu_all_objects_unsold1"/>-->
 
 	<record model="ir.actions.act_window" id="action_all_objects_unplanned">
-		<field name="res_model">auction.lots</field>
+		<field name="res_model">report.unplanned.object</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
+		<!--field name="domain">[('auction_id','=', False),('state','=','draft')]</field-->
 	</record>
 
 	<menuitem name="Auction Management/Objects/All objects/Unplanned objects" action="action_all_objects_unplanned" id="menu_all_objects_unplanned1"/>
@@ -679,9 +679,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="res_model">report.unclassified.object</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="domain">[('auction_id','=',False)]</field>
 	</record>
-	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects"/>
+	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects" id="menu_all_objects_unclassified"/>
 	<record model="ir.ui.view" id="v12">
 		<field name="name">auction.deposit.tree</field>
 		<field name="model">auction.deposit</field>
@@ -1277,6 +1276,42 @@ Auction Management/Auction Dates/Reporting
 
 
 
+		<record model="ir.ui.view" id="view_report_unplanned_object_tree">
+		<field name="name">Unplanned objects</field>
+		<field name="model">report.unplanned.object</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Unplanned Objects">
+				<field name="depos" select="1"/>
+				<field name="lot" select="1"/>
+				<field name="product_l" select="1"/>
+				<field name="lot_est1_l" select="1"/>
+				<field name="lot_est2_l" select="1"/>
+				<field name="artist_id_l" select="1"/>
+				<field name="name_l" select="1"/>
+				<field name="obj_desc_l" select="1"/>
+			</tree>
+		</field>
+	</record>
+		<record model="ir.ui.view" id="view_report_unplanned_object_form">
+			<field name="name">Unplanned objects</field>
+			<field name="model">report.unplanned.object</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+			<form string="Unplanned Objects">
+				<field name="depos" select="1"/>
+				<field name="lot" select="1"/>
+				<field name="product_l" select="1"/>
+				<field name="lot_est1_l" select="1"/>
+				<field name="lot_est2_l" select="1"/>
+				<field name="artist_id_l" select="1"/>
+				<field name="obj_desc_l" select="1"/>
+				<field name="name_l" select="1"/>
+
+			</form>
+		</field>
+	</record>
+	
 
 
 </data>
