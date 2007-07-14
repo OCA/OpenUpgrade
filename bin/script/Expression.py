@@ -25,7 +25,7 @@ class Expression(unohelper.Base, XJobExecutor ):
         if self.bModify==True:
             self.win.setEditText("txtExpression",sExpression)
             self.win.setEditText("txtName",sName)
-        self.win.doModalDialog()
+        self.win.doModalDialog("",None)
 
     def getDesktop(self):
         localContext = uno.getComponentContext()

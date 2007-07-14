@@ -165,3 +165,12 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
                 aComponentAdd.append(sTableName+"."+oPar.Name)
     return 0
 
+def getRecersiveSection(oCurrentSection,aSectionList):
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        oParEnum=doc.getText().createEnumeration()
+        aSectionList.append(oCurrentSection.Name)
+        if oCurrentSection.ParentSection:
+            getRecersiveSection(oCurrentSection.ParentSection,aSectionList)
+        else:
+            return

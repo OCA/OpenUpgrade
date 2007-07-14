@@ -37,6 +37,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         # Variable Declaration
         self.sValue=None
         self.sObj=None
+        self.aSectionList=[]
         self.sGVariable=sVariable
         self.sGDisplayName=sDisplayName
         self.aItemList=[]
@@ -64,6 +65,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             cursor = doc.getCurrentController().getViewCursor()
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
+
             for j in range(self.aObjectList.__len__()):
                 if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find(" ")) == "List":
                     self.insVariable.addItem(self.aObjectList[j],1)
@@ -74,11 +76,14 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                             self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextSection:
-                    if self.aComponentAdd[i]== tcur.TextSection.Name:
+                    getRecersiveSection(tcur.TextSection,self.aSectionList)
+                    #for k in range(self.aSectionList.__len__()):
+                    if self.aComponentAdd[i] in self.aSectionList:
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                         for j in range(self.aObjectList.__len__()):
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                                 self.insVariable.addItem(self.aObjectList[j],1)
+
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
@@ -89,7 +94,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
 #                    self.win.setEditText("txtName", sVariable)
 #                    self.win.setEditText("txtUName",sDisplayName)
-                    print sFields
                     self.sValue= "objects"
                 else:
                     sItem=""
@@ -107,6 +111,21 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
 
+
+
+
+    def getSection(self,oParEnum,oCurrentSection):
+        while oParEnum.hasMoreElements():
+            oPar = oParEnum.nextElement()
+            if oPar.supportsService("com.sun.star.text.TextContent"):
+                if oPar.TextSection:
+                    if oPar.TextSection.Name==oCurrentSection.Name:
+                        oInsideEnum=oPar.createEnumeration()
+                        while oInsideEnum.hasMoreElements():
+                            oInside=oInsideEnum.nextElement()
+                            if oInside.supportsService("com.sun.star.text.TextPortion"):
+                                if oInside.TextField:
+                                    print oInside.TextField.Items
     def lstbox_selected(self,oItemEvent):
         sItem=self.win.getListBoxSelectedItem("lstFields")
         sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]

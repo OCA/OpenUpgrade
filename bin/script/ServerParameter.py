@@ -14,20 +14,20 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
-        self.win=DBModalDialog(60, 50, 180, 250, "Server Parameters")
+        self.win=DBModalDialog(60, 50, 180, 250, "Server URL")
         self.win.addFixedText("lblVariable", 8, 12, 60, 15, "Server Connection")
         self.win.addEdit("txtHost",-34,9,85,15)
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
                       ,actionListenerProc = self.btnChange_clicked )
-        self.win.addFixedText("lblReportName", 22, 31, 60, 15, "Report Name")
+        self.win.addFixedText("lblReportName", 22, 31, 60, 15, "Database")
         self.win.addEdit("txtReportName",-2,28,117,15)
-        self.win.addFixedText("lblLoginName", 26, 51, 60, 15, "Login Name")
+        self.win.addFixedText("lblLoginName", 36, 51, 60, 15, "Login")
         self.win.addEdit("txtLoginName",-2,48,117,15)
         self.win.addFixedText("lblPassword", 32, 70, 60, 15, "Password")
         self.win.addEdit("txtPassword",-2,67,117,15)
         self.win.addFixedText("lblModule", 12, 88, 60, 15, "Module Selection")
         self.win.addEdit("txtModule",-2,85,117,15)
-        self.win.doModalDialog()
+        self.win.doModalDialog("",None)
 
     def btnChange_clicked(self,oActionEvent):
         print "Hello change"

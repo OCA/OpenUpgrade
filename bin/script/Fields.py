@@ -31,6 +31,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.sValue=None
         self.sObj=None
+        self.aSectionList=[]
         self.sGDisplayName=sDisplayName
         self.aItemList=[]
         self.aComponentAdd=[]
@@ -63,7 +64,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                             self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextSection:
-                    if self.aComponentAdd[i]== tcur.TextSection.Name:
+                    getRecersiveSection(tcur.TextSection,self.aSectionList)
+                    #for k in range(self.aSectionList.__len__()):
+                    if self.aComponentAdd[i] in self.aSectionList:
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                         for j in range(self.aObjectList.__len__()):
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
