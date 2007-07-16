@@ -147,7 +147,7 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="domain">[('state','=','close')]</field>
 		<field name="view_id" ref="view_auction_dates_tree"/>
 	</record>
-	
+
 	<record model="ir.values" id="open_lot">
 		<field name="key2">tree_but_open</field>
 		<field name="model">auction.dates</field>
@@ -961,7 +961,7 @@ Auction Management/Auction Dates/Reporting
 	</record>
 
 	<menuitem name="Auction Management/Reporting" groups="admin"/>
-	<menuitem name="Auction Management/Reporting/Auction/This Month/Auction detail1 " action="action_auction_report_thismonth_view1" id="menu_auction_thismonth_view1"/>
+	<menuitem name="Auction Management/Reporting/Auction/This Month/Auction details " action="action_auction_report_thismonth_view1" id="menu_auction_thismonth_view1"/>
 
 
 <record model="ir.actions.act_window" id="action_auction_report_allmonth_view1">
@@ -970,7 +970,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-   <menuitem name="Auction Management/Reporting/Auction/All Month/Auction detail1 " action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
+   <menuitem name="Auction Management/Reporting/Auction/All Month/Auction details " action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
 
 
 
@@ -1015,7 +1015,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">tree</field>
 		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Auction/This Month/Auction detail2 " action="action_auction_report_thismonth_view2" id="menu_auction_thismonth_view2"/>
+	<menuitem name="Auction Management/Reporting/Auction/This Month/Result of Auction" action="action_auction_report_thismonth_view2" id="menu_auction_thismonth_view2"/>
 
 
 <record model="ir.actions.act_window" id="action_auction_report_allmonth_view2">
@@ -1024,7 +1024,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Auction/All Month/Auction detail2 " action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
+	<menuitem name="Auction Management/Reporting/Auction/All Month/Result of Auction" action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
 
 <!--start : creating seller Reporting menu for the selller by pmo-->
 
