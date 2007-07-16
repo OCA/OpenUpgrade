@@ -31,7 +31,7 @@ from report import report_sxw
 from osv import osv
 
 class order(report_sxw.rml_parse):
- def order_list(self, cr,uid,ids):
+	def order_list(self, cr,uid,ids):
 		moveline_obj = pooler.get_pool(self.cr.dbname).get('lunch.order')		 
 		cr.execute("select lo.user_id,lo.product,lo.descript,lp.price from lunch_order lo join lunch_product lp on lo.product=lp.name join lunch_category lc on lp.category_id=lc.name order by lc.category desc")
 		res=cr.fetchall()
@@ -48,7 +48,7 @@ class order(report_sxw.rml_parse):
 						}
 
 			self.ret_list.append(ret_dict)
-	return self.ret_list
+		return self.ret_list
 
 	def __init__(self, cr, uid, name, context):
 		super(order, self).__init__(cr, uid, name, context)
