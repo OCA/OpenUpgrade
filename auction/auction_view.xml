@@ -133,7 +133,7 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="object" eval="True"/>
 	</record>
 
-	<menuitem name="Auction Management/Auction Dates/Next auction dates2" id="menu_auction_dates_next1" action="action_auction_dates_next"/>
+	<menuitem name="Auction Management/Auction Dates/Next auction dates" id="menu_auction_dates_next1" action="action_auction_dates_next"/>
 
 	<menuitem name="Auction Management/Objects/Objects by auction" id="menu_auction_dates_next_by_auction" action="action_auction_dates_next"/>
 
@@ -352,7 +352,7 @@ Auction Management/Auction Dates/Reporting
 					<newline/>
 					<field name="ach_inv_id"/>
 					<field name="paid_vnd"/>
-					<field name="bid_lines" colspan="4" nolabel="1"/>
+					<field name="bid_lines" colspan="4" nolabel="1" editable="top"/>
 				</page>
 				</notebook>
 			</form>
@@ -372,7 +372,7 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.ui.view" id="view_report_sold_object_tree">
-		<field name="name">report.sold.object.form</field>
+		<field name="name">Sold objects</field>
 		<field name="model">report.sold.object</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -385,8 +385,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="artist_id_l" select="1"/>
 				<field name="obj_desc_l" select="2"/>
 				<field name="name_l" select="1"/>
-				<field name="obj_price_l" select="1"/>
-				<field name="obj_ret_l" select="1"/>
+				<field name="obj_price_l" select="2"/>
 			</tree>
 		</field>
 	</record>
@@ -495,7 +494,6 @@ Auction Management/Auction Dates/Reporting
 				<field name="artist_id_l" select="1"/>
 				<field name="obj_desc_l" select="2"/>
 				<field name="name_l" select="1"/>
-				<field name="obj_ret_l" select="1"/>
 				<field name="obj_price_l" select="1"/>
 			</form>
 		</field>
@@ -508,7 +506,7 @@ Auction Management/Auction Dates/Reporting
 <!--			for the unsold object start-->
 
 		<record model="ir.ui.view" id="view_report_unsold_object_tree">
-		<field name="name">report.unsold.object.form</field>
+		<field name="name">report.unsold.object.tree</field>
 		<field name="model">report.unsold.object</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -516,13 +514,12 @@ Auction Management/Auction Dates/Reporting
 				<field name="depos" select="1"/>
 				<field name="lot" select="1"/>
 				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="1"/>
-				<field name="lot_est2_l" select="1"/>
+				<field name="lot_est1_l" select="2"/>
+				<field name="lot_est2_l" select="2"/>
 				<field name="artist_id_l" select="1"/>
 				<field name="obj_desc_l" select="1"/>
 				<field name="name_l" select="1"/>
-
-
+				<field name="obj_ret_l" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -540,9 +537,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="artist_id_l" select="1"/>
 				<field name="obj_desc_l" select="1"/>
 				<field name="name_l" select="1"/>
-
-
-
+				<field name="obj_ret_l" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -682,12 +677,26 @@ Auction Management/Auction Dates/Reporting
 				<field name="artist_id_l" select="1"/>
 				<field name="obj_desc_l" select="1"/>
 				<field name="name_l" select="1"/>
-				<field name="obj_price_l" select="1"/>
-				<field name="obj_ret_l" select="1"/>
 			</tree>
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_report_unclassified_object_form">
+		<field name="name">Unclassified objects</field>
+		<field name="model">report.unclassified.object</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Unclassified Objects">
+				<field name="depos" select="1"/>
+				<field name="product_l" select="1"/>
+				<field name="lot_est1_l" select="1"/>
+				<field name="lot_est2_l" select="1"/>
+				<field name="artist_id_l" select="1"/>
+				<field name="obj_desc_l" select="1"/>
+				<field name="name_l" select="1"/>
+			</form>
+		</field>
+	</record>
 
 
 	=======================================================
@@ -1029,7 +1038,7 @@ Auction Management/Auction Dates/Reporting
 <!--start : creating seller Reporting menu for the selller by pmo-->
 
 <record model="ir.ui.view" id="view_auction_form">
-		<field name="name">auction.month.form</field>
+		<field name="name">Seller's auction</field>
 		<field name="model">report.seller.auction</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -1047,7 +1056,7 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.ui.view" id="view_auction_tree">
-		<field name="name">auction.month.tree</field>
+		<field name="name">Seller's auction</field>
 		<field name="model">report.seller.auction</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -1062,7 +1071,7 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 	<record model="ir.ui.view" id="view_auction_graph">
-		<field name="name">auction.month.tree</field>
+		<field name="name">Seller's auction</field>
 		<field name="model">report.seller.auction</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
@@ -1076,7 +1085,7 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_auction_reporting1">
-		<field name="name">auction.this.month.tree</field>
+		<field name="name">Seller's auction</field>
 		<field name="res_model">report.seller.auction</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1087,7 +1096,7 @@ Auction Management/Auction Dates/Reporting
 		<menuitem name="Auction Management/Reporting/seller/This Month/Seller object detail " action="action_auction_reporting1" id="menu_seller_thismonth_view1"/>
 
 	<record model="ir.actions.act_window" id="action_auction_reporting_all1">
-		<field name="name">auction.all.month.tree</field>
+		<field name="name">Seler's auction</field>
 		<field name="res_model">report.seller.auction</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1098,7 +1107,7 @@ Auction Management/Auction Dates/Reporting
 
 
 <record model="ir.ui.view" id="view_auction_form2">
-		<field name="name">auction.month.form2</field>
+		<field name="name">Seller's auction</field>
 		<field name="model">report.seller.auction2</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -1116,7 +1125,7 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.ui.view" id="view_auction_tree2">
-		<field name="name">auction.month.tree2</field>
+		<field name="name">Seller's auction</field>
 		<field name="model">report.seller.auction2</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -1133,7 +1142,7 @@ Auction Management/Auction Dates/Reporting
 	</record>
 
 	<record model="ir.ui.view" id="view_auction_graph2">
-		<field name="name">auction.month.tree2</field>
+		<field name="name">Seller's auction</field>
 		<field name="model">report.seller.auction2</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
@@ -1149,7 +1158,7 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.actions.act_window" id="action_auction_reporting2">
-		<field name="name">auction.this.month.tree2</field>
+		<field name="name">Seller's auction</field>
 		<field name="res_model">report.seller.auction2</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1160,7 +1169,7 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.actions.act_window" id="action_auction_reporting_all2">
-		<field name="name">auction.all.month.tree</field>
+		<field name="name">Seller's auction</field>
 		<field name="res_model">report.seller.auction2</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1175,7 +1184,7 @@ Auction Management/Auction Dates/Reporting
 
 
 <record model="ir.ui.view" id="view_auction_buyer_form">
-		<field name="name">auction.buyer.month.form</field>
+		<field name="name">Buyer's auction</field>
 		<field name="model">report.buyer.auction</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -1193,7 +1202,7 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.ui.view" id="view_auction_buyer_tree">
-		<field name="name">auction.buyer.month.tree</field>
+		<field name="name">Buyer's auction</field>
 		<field name="model">report.buyer.auction</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -1207,7 +1216,7 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_auction_buyer_reporting">
-		<field name="name">auction.buyer.month.tree</field>
+		<field name="name">Buyer's auction</field>
 		<field name="res_model">report.buyer.auction</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1218,7 +1227,7 @@ Auction Management/Auction Dates/Reporting
 
 
 <record model="ir.ui.view" id="view_auction_buyer_form2">
-		<field name="name">auction.buyer.month.form2</field>
+		<field name="name">Buyer's auction</field>
 		<field name="model">report.buyer.auction</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -1235,7 +1244,7 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.ui.view" id="view_auction_buyer_tree2">
-		<field name="name">auction.buyer.month.tree2</field>
+		<field name="name">Buyer's auction</field>
 		<field name="model">report.buyer.auction</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -1250,7 +1259,7 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_auction_buyer_reporting2">
-		<field name="name">auction.buyer.month.tree2</field>
+		<field name="name">Buyer's auction</field>
 		<field name="res_model">report.buyer.auction</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1261,7 +1270,7 @@ Auction Management/Auction Dates/Reporting
 
 
 <record model="ir.actions.act_window" id="action_auction_buyer_reporting_all1">
-		<field name="name">auction.all.month.tree1</field>
+		<field name="name">Buyer's auction</field>
 		<field name="res_model">report.buyer.auction</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1271,7 +1280,7 @@ Auction Management/Auction Dates/Reporting
 	<menuitem name="Auction Management/Reporting/Buyer/All Months/buyer view 1 " action="action_auction_buyer_reporting_all1" id="menu_buyer_allmonth_view1"/>
 
 	<record model="ir.actions.act_window" id="action_auction_buyer_reporting_all2">
-		<field name="name">auction.all.month.tree2</field>
+		<field name="name">Seller's auction by month</field>
 		<field name="res_model">report.seller.auction</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1294,11 +1303,11 @@ Auction Management/Auction Dates/Reporting
 				<field name="depos" select="1"/>
 				<field name="lot" select="1"/>
 				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="1"/>
+				<field name="lot_est1_l" select="2"/>
 				<field name="lot_est2_l" select="1"/>
 				<field name="artist_id_l" select="1"/>
 				<field name="name_l" select="1"/>
-				<field name="obj_desc_l" select="1"/>
+				<field name="obj_desc_l" select="2"/>
 			</tree>
 		</field>
 	</record>

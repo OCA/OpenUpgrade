@@ -20,38 +20,43 @@
 	<record id="auction_tax" model="account.tax">
 		<field name="name">Droit dauteur</field>
 		<field name="amount">0.04</field>
+		<field name="domain">auction</field>
 
 	</record>
 	<record id="auction_tax1" model="account.tax">
                 <field name="name">TVA</field>
                 <field name="amount">0.06</field>
-
+				<field name="domain">auction</field>
     </record>
 
 
 	<record id="auction_tax2" model="account.tax">
                 <field name="name">TVA1</field>
                 <field name="amount">0.2</field>
+				<field name="domain">auction</field>
 
     </record>
 	<record id="auction_tax3" model="account.tax">
                 <field name="name">Buyer Costs</field>
                 <field name="amount">0.2</field>
+				<field name="domain">auction</field>
+
     </record>
 	<record id="auction_tax4" model="account.tax">
                 <field name="name">Seller Costs1</field>
                 <field name="amount">0.12</field>
+				<field name="domain">auction</field>
 
     </record>
 	<record id="auction_tax5" model="account.tax">
                 <field name="name">Seller Costs</field>
                 <field name="amount">0.10</field>
-
+				<field name="domain">auction</field>
     </record>
 	<record id="auction_tax6" model="account.tax">
                 <field name="name">Frais de vente</field>
                 <field name="amount">0.15</field>
-
+				<field name="domain">auction</field>
     </record>
 
 	<record id="monproduit" model="product.product">

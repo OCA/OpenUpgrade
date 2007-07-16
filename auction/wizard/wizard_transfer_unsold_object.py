@@ -59,18 +59,16 @@ def _start(self,cr,uid,data,context):
 def _transfer_unsold_object(self, cr, uid, data, context):
 	#if not (data['form']['auction_id_to']) :
 	#	return {}
-	print "ds transfert objet"
 #Historique de l objet + changement de l auction date + supp des bid line
 	line_ids= pooler.get_pool(cr.dbname).get('auction.bid_line').search(cr,uid,[('lot_id','in',data['ids'])])
 	pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
 	
 	obj_pool = pooler.get_pool(cr.dbname).get('auction.lots')
 	ids= obj_pool.search(cr,uid,[('auction_id','=',data['form']['auction_id_from']),('state','=','unsold')])
-	print "ids",ids
 	for rec in obj_pool.browse(cr, uid, ids, context):
-		print "rec.auction_id",rec.auction_id
+	#	print "rec.auction_id",rec.auction_id
 		new_id=pooler.get_pool(cr.dbname).get('auction.lot.history').create(cr,uid,{'auction_id':rec.auction_id.id,'lot_id':rec.id,'price': rec.obj_ret, 'name': 'reasons'+rec.auction_id.auction1})
-		print new_id
+	#	print new_id
 		up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[rec.id],{'auction_id':data['form']['auction_id_to'],
 																						'obj_ret':None,
 																						'obj_price':None,
