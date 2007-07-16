@@ -31,12 +31,10 @@ import ir
 import pooler
 
 confirm_order_form = """<?xml version="1.0"?>
-
 <form title="Confirm">
-    <separator string="Orders Confirmation" colspan="4"/>
-    <field name="confirm_cashbox"/>
-    <newline/>
- 
+	<separator string="Orders Confirmation" colspan="4"/>
+	<field name="confirm_cashbox"/>
+	<newline/>
 </form>
 """
 
@@ -45,26 +43,16 @@ confirm_order_fields = {
 }
 
 def _confirm(self,cr,uid,data,context):
-   
-    pool= pooler.get_pool(cr.dbname)
-    order_ref = pool.get('lunch.order')
-    order_ref.confirm(cr,uid,data['ids'],data['form']['confirm_cashbox'],context)
-    return {}
+	pool= pooler.get_pool(cr.dbname)
+	order_ref = pool.get('lunch.order')
+	order_ref.confirm(cr,uid,data['ids'],data['form']['confirm_cashbox'],context)
+	return {}
 
-
-
-    
 class order_confirm(wizard.interface):
-
 	states = {
-            
 		'init': {
-                        'action':[],
-                        'result':{'type' : 'form',
-                          'arch' : confirm_order_form,
-			  'fields' : confirm_order_fields,
-                          'state' : [('end', 'Cancel'),('go', 'Confirm Order') ]},
-	
+			'action':[],
+			'result':{'type' : 'form', 'arch' : confirm_order_form, 'fields' : confirm_order_fields, 'state' : [('end', 'Cancel'),('go', 'Confirm Order') ]},
 		},
 		'go' : {
 			'actions' : [_confirm],
