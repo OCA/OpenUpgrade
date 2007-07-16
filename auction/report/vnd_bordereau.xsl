@@ -17,7 +17,7 @@
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
 		</blockTableStyle>
-		
+
 		<blockTableStyle id="product-totals">
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT"/>
@@ -29,38 +29,38 @@
 	<xsl:template name="story">
 		<xsl:apply-templates select="vente-bordereau-list"/>
 	</xsl:template>
-	
+
 	<xsl:template match="vente-bordereau-list">
 		<xsl:apply-templates select="vente-bordereau">
 			<xsl:sort order="ascending" select="inventory"/>
 		</xsl:apply-templates>
 	</xsl:template>
-	
+
 	<xsl:template match="vente-bordereau">
 		<xsl:apply-templates select="client_info"/>
-		
+
 		<nextFrame/>
 		<setNextTemplate name="other_pages"/>
-		
+
 		<para>
 			<b t="1">Document</b>: <xsl:value-of select="subject"/> - <xsl:value-of select="title"/>
 		</para><para>
 			<b t="1">Inventory</b>: <xsl:value-of select="inventory"/>
 		</para>
-		
+
 		<xsl:if test="client_info">
 			<para>
-				<b t="1">Bank Account</b>: <xsl:value-of select="client_info/bank"/>
+<!--				<b t="1">Bank Account</b>: <xsl:value-of select="client_info/bank"/>-->
 			</para><para>
-				<b t="1">Customer Contact</b>:
-				<xsl:value-of select="client_info/phone"/> 
+<!--				<b t="1">Customer Contact</b>:-->
+				<xsl:value-of select="client_info/phone"/>
 				<xsl:if test="number(string-length(client_info/phone) &gt; 0) + number(string-length(client_info/mobile) &gt; 0) = 2">
 					<xsl:text> - </xsl:text>
 				</xsl:if>
 				<xsl:value-of select="client_info/mobile"/>
 			</para>
 		</xsl:if>
-		
+
 		<spacer length="0.8cm"/>
 
 		<xsl:apply-templates select="vente-products"/>

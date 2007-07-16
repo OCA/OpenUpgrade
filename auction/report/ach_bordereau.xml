@@ -2,7 +2,7 @@
 <borderform-list>
 	<city type="data" name="city"/>
 	<date type="function" name="today"/>
-	
+
 	<borderform type="fields" name="ach_login,auction_id,ach_uid">
 		<title type="field" name="auction_id.name"/>
 		<login type="field" name="ach_login"/>
@@ -19,16 +19,16 @@
 			<mobile type="field" name="address.mobile"/>
 		</client_info>
 		<objects>
-			<cost type="call" name="compute_buyer_costs" args="">
+			<!--<cost type="call" name="compute_buyer_costs" args="">
 				<name value="name"/>
 				<amount value="amount"/>
-			</cost>
+			</cost>-->
 			<object type="fields" name="obj_num,id">
 				<id type="field" name="id"/>
-				<cost type="call" name="compute_buyer_costs" args="">
+				<!--<cost type="call" name="compute_buyer_costs" args="">
 					<id value="id"/>
 					<amount value="amount"/>
-				</cost>
+				</cost>-->
 				<ref type="field" name="obj_num"/>
 				<title type="field" name="name"/>
 				<desc type="field" name="obj_desc"/>
