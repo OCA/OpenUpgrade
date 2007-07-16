@@ -260,12 +260,12 @@ class auction_lots(osv.osv):
 	def button_not_bought(self,cr,uid,ids,*a):
 		lots=self.browse(cr,uid,ids)
 		for lot in lots:
-			self.write(cr,uid,[lot.id], {'state':'unsold'})	
+			self.write(cr,uid,[lot.id], {'state':'unsold'})
 		return True
 	def button_bought(self,cr,uid,ids,*a):
 		lots=self.browse(cr,uid,ids)
 		for lot in lots:
-			self.write(cr,uid,[lot.id], {'state':'sold'})	
+			self.write(cr,uid,[lot.id], {'state':'sold'})
 		return True
 	def _buyerprice(self, cr, uid, ids, name, args, context):
 		res={}
@@ -329,8 +329,8 @@ class auction_lots(osv.osv):
 		return res
 	def _costs(self,cr,uid,ids,context,*a):
 		"""
-		costs: Total credit of analytic account 
-		/ # objects sold during this auction 
+		costs: Total credit of analytic account
+		/ # objects sold during this auction
 		(excluding analytic lines that are in the analytic journal of the auction date).
 		"""
 		res={}
@@ -355,7 +355,7 @@ class auction_lots(osv.osv):
 				total_tax += auction_data['buyer_price']-auction_data['seller_price']-auction_data['costs']
 			res[auction_data['id']] = total_tax
 		return res
-	
+
 	def _is_paid_vnd(self,cr,uid,ids,*a):
 		res = {}
 		lots=self.browse(cr,uid,ids)
@@ -470,7 +470,7 @@ class auction_lots(osv.osv):
 				amount_total+=t['amount']
 			amount_total+=lot.obj_price
 
-		return amount_total		
+		return amount_total
 
 
 
@@ -482,7 +482,7 @@ class auction_lots(osv.osv):
 #	amount=0.0
 #	for lot in lots:
 #		taxes=lot.product_id.taxe_id
-			
+
 
 	def _compute_lot_seller_costs(self, cr, uid, lot, manual_only=False):
 		costs = []
@@ -813,7 +813,7 @@ class auction_bid(osv.osv):
 		'name': fields.char('Bid ID', size=64,required=True),
 		'auction_id': fields.many2one('auction.dates', 'Auction Date', required=True),
 		'bid_lines': fields.one2many('auction.bid_line', 'bid_id', 'Bid'),
-	}	
+	}
 	_defaults = {
 		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'auction.bid'),
 	}
@@ -880,7 +880,7 @@ class report_unsold_object(osv.osv):
           where lo.state = 'unsold'
 	group by lo.auction_id,lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.obj_price,lo.lot_est1,lo.obj_desc,lo.name
 			    )""")
-	
+
 report_unsold_object()
 
 class report_buyer_auction(osv.osv):
@@ -1093,19 +1093,21 @@ class report_auction_view2(osv.osv):
 		'gross_revenue':fields.float('grossrevenue',readonly=True, select=True),
         'net_revenue':fields.float('netrevenue',readonly=True, select=True),
         'obj_margin':fields.float('object_margin', readonly=True, select=True),
+         'date': fields.date('Create Date',  required=True),
 
     }
 
     def init(self, cr):
         cr.execute('''create or replace view report_auction_view2  as
              (select  ad.id, ad.name as "auction",
+             substring(al.create_date for 10) as date,
 sum(ad.adj_total) as "sum_adj",
  al.gross_revenue as "gross_revenue",
  al.net_revenue as "net_revenue",
 (al.net_margin*count(al.id)) as "obj_margin"
 
 from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
- ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin)''')
+ ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
 
 report_auction_view2()
 
@@ -1224,7 +1226,7 @@ class report_unsold_object(osv.osv):
           where lo.state = 'unsold'
 	group by lo.auction_id,lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.obj_price,lo.lot_est1,lo.obj_desc,lo.name
 			    )""")
-	
+
 report_unsold_object()
 
 class report_buyer_auction(osv.osv):
@@ -1329,6 +1331,6 @@ class report_unplanned_object(osv.osv):
 			    )""")
 
 
-	
+
 report_unplanned_object()
 
