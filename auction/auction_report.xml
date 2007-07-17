@@ -52,7 +52,7 @@
 		multi="1"/>
 
 
-	<report string="Results"
+	<report string="Results with buyer"
 	   	model="auction.lots"
 		name="auction.result"
 		rml="auction/report/auction_result.rml"
@@ -72,6 +72,17 @@
 		rml="auction/report/auction_objects.rml"
 		auto="False"
 		multi="1"/>
+
+
+		<report string="Auction Totals with rml"
+	   	model="auction.lots"
+		name="auction.total.rml"
+		rml="auction/report/auction_total_rml.rml"
+		auto="False"
+		multi="1"/>
+
+
+
 
 
 	<!--report string="Catelog"
@@ -211,13 +222,13 @@
 			auto="False"
 			multi="1"/>
 
-		<report string="Results with buyer"
+	<!--	<report string="Results with buyer"
 			model="auction.lots"
 			name="report.auction.results_w_buyer"
 			xml="auction/report/results_buyer.xml"
 			xsl="auction/report/results_buyer.xsl"
 			multi="1"/>
-
+-->
 		<report string="Lots with VAT"
 			model="auction.lots"
 			name="report.auction.extd_results"

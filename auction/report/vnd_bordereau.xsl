@@ -2,7 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
 
 	<xsl:import href="../../custom/corporate_defaults.xsl"/>
-	<xsl:import href="../../base/report/rml_template.xsl"/>
+		<xsl:import href="../../base/report/rml_template.xsl"/>
 
 	<xsl:template match="/">
 		<xsl:call-template name="rml"/>
@@ -36,8 +36,8 @@
 		</xsl:apply-templates>
 	</xsl:template>
 
-	<xsl:template match="vente-bordereau">
-		<xsl:apply-templates select="client_info"/>
+		<xsl:template match="vente-bordereau">
+			<xsl:apply-templates select="client_info"/>
 
 		<nextFrame/>
 		<setNextTemplate name="other_pages"/>
