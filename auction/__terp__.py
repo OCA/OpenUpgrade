@@ -8,4 +8,3 @@
 	"active": False,
 	"installable": True
 }
-#"auction_demo.xml",
