@@ -145,8 +145,7 @@ class report_custom(report_rml):
 #		print "seller costs:", mid_time4-mid_time3
 #		print "rest:", end_time-mid_time4
 #		print "total:", end_time-start_time
-
-		return xml
+		return self.post_process_xml_data(cr, uid, xml, context)
 
 report_custom('report.auction.total', 'auction.lots', '', 'addons/auction/report/total.xsl')
 
