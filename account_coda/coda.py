@@ -35,7 +35,7 @@ class account_coda(osv.osv):
     _description = "coda for an Account"
     _columns = {
         'name': fields.binary('Coda file', readonly=True),
-        'statement_ids': fields.many2one('account.bank.statement','Bank Statement', readonly=True),
+        'statement_ids': fields.one2many('account.bank.statement','coda_id','Generated Bank Statement', readonly=True),
         'note': fields.text('Import log', readonly=True),
         'journal_id': fields.many2one('account.journal','Bank Journal', readonly=True,select=True),
         'date': fields.date('Import Date', readonly=True,select=True),
