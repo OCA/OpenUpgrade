@@ -40,6 +40,7 @@
 		<field name="view_id" ref="view_auction_artist_tree"/>
 	</record>
 	<menuitem name="Auction Management/Configuration/Define Artists" action="action_auction_artist" id="menu_auction_artist"/>
+
 	=======================================================
 	Auction Management/Configuration/objectcategories
 	=======================================================
@@ -154,7 +155,7 @@ Auction Management/Auction Dates/New Auction Dates
 			</tree>
 		</field>
 	</record>
-		<record model="ir.ui.view" id="view_report_object_by_auction_form">
+	<record model="ir.ui.view" id="view_report_object_by_auction_form">
 		<field name="name">Objects by auction</field>
 		<field name="model">report.auction.objects_by_auction</field>
 		<field name="type">form</field>
@@ -192,7 +193,6 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="domain">[('state','=','close')]</field>
 		<field name="view_id" ref="view_auction_dates_tree"/>
 	</record>
-
 	<record model="ir.values" id="open_lot">
 		<field name="key2">tree_but_open</field>
 		<field name="model">auction.dates</field>
@@ -524,77 +524,16 @@ Auction Management/Auction Dates/Reporting
 
 	<!--		for the sold object  start-->
 
-
-	<record model="ir.ui.view" id="view_report_sold_object_form">111
-		<field name="name">report.sold.object.form</field>
-		<field name="model">report.sold.object</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Sold Objects">
-				<field name="depos" select="1"/>
-				<field name="lot" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="2"/>
-				<field name="lot_est2_l" select="2"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="2"/>
-				<field name="name_l" select="1"/>
-				<field name="obj_price_l" select="1"/>
-			</form>
-		</field>
-	</record>
-
-
-				<!--end for the sold objects-->
-
-
-<!--			for the unsold object start-->
-
-		<record model="ir.ui.view" id="view_report_unsold_object_tree">
-		<field name="name">report.unsold.object.tree</field>
-		<field name="model">report.unsold.object</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Unsold Objects">
-				<field name="depos" select="1"/>
-				<field name="lot" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="2"/>
-				<field name="lot_est2_l" select="2"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="1"/>
-				<field name="name_l" select="1"/>
-				<field name="obj_ret_l" select="1"/>
-			</tree>
-		</field>
-	</record>
-		<record model="ir.ui.view" id="view_report_unsold_object_form">
-			<field name="name">report.unsold.object.form</field>
-			<field name="model">report.unsold.object</field>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-			<form string="Unsold Objects">
-				<field name="depos" select="1"/>
-				<field name="lot" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="1"/>
-				<field name="lot_est2_l" select="1"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="1"/>
-				<field name="name_l" select="1"/>
-				<field name="obj_ret_l" select="1"/>
-			</form>
-		</field>
-	</record>
-
 	<record model="ir.actions.act_window" id="action_all_objects_unsold">
-		<field name="res_model">report.unsold.object</field>
+		<field name="name">Unsold objects</field>
+		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree</field>
+		<field name="domain">[('state','=','unsold')]</field>
 	</record>
-
-
-	<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_all_objects_unsold" id="menu_all_objects_unsold"/>
+	<menuitem
+		name="Auction Management/Objects/All objects/"
+		action="action_all_objects_unsold" 
+		id="menu_all_objects_unsold"/>
 
 
 			<!--end for the unsold objects-->

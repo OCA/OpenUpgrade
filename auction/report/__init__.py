@@ -36,4 +36,4 @@ import lots_list_inventory
 import auction_result
 import catelogwithpictures
 import auction_objects
-import auction_total_rml
+#import auction_total_rml
