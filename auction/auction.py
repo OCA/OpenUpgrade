@@ -80,6 +80,7 @@ class auction_dates(osv.osv):
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
 		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
+		'journal_id': fields.many2one('account.journal', 'Journal', required=True),
 		'state': fields.selection((('draft','Draft'),('sold','Closed')),'State',required=True),
 		#'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
