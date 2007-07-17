@@ -7,7 +7,7 @@ Auction adjudication
 ==============================
 
 	<record model="ir.ui.view" id="view_report_auction_adjudication_tree">
-		<field name="name">report.auction.adjudication.tree</field>
+		<field name="name">Auction adjudication</field>
 		<field name="model">report.auction.adjudication</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -22,6 +22,19 @@ Auction adjudication
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_report_auction_adjudication_form">
+		<field name="name">Auction adjudication</field>
+		<field name="model">report.auction.adjudication</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Customer/Supplier">
+				<field name="name" select="1"/>
+				<field name="adj_total"  select="1"/>
+				<field name="state"  select="1"/>
+			</form>
+		</field>
+	</record>
+
 	<record model="ir.ui.view" id="view_report_auction_adjudication_graph">
 		<field name="name">report.auction.adjudication.graph</field>
 		<field name="model">report.auction.adjudication</field>
@@ -30,7 +43,6 @@ Auction adjudication
 			<graph string="Total adjudication" type="bar">
 				<field name="name" select="1"/>
 				<field name="adj_total" operator="+" />
-
 			</graph>
 		</field>
 
@@ -67,6 +79,18 @@ Customer/Supplier
 			</tree>
 		</field>
 	</record>
+	<record model="ir.ui.view" id="view_per_seller_customer_form">
+		<field name="name">Seller/customer</field>
+		<field name="model">report.per.seller.customer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Customer/Supplier">
+				<field name="name" select="1"/>
+				<field name="partner_id" select="1"/>
+
+			</form>
+		</field>
+	</record>
 
 	<record model="ir.ui.view" id="view_per_seller_customer_graph">
 		<field name="name">report.per.seller.customer.graph</field>
@@ -92,8 +116,22 @@ Customer/Supplier
 My Latest 10 Deposit
 ==============================
 
+	<record model="ir.ui.view" id="view_latest_deposit_form">
+		<field name="name">Latest deposit </field>
+		<field name="model">report.latest.deposit</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Customer/Supplier">
+				<field name="name" select="1"/>
+				<field name="date_dep" select="1"/>
+				<field name="method" select="1"/>
+				<field name="tax_id" select="1"/>
+				<field name="info" select="1"/>
+			</form>
+		</field>
+	</record>
 	<record model="ir.ui.view" id="view_latest_deposit_tree">
-		<field name="name">report.latest.deposit.tree</field>
+		<field name="name">Latest deposit</field>
 		<field name="model">report.latest.deposit</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -136,6 +174,24 @@ My Latest 10 Objects
 			</tree>
 		</field>
 	</record>
+
+
+		<record model="ir.ui.view" id="view_latest_objects_form">
+		<field name="name">Latest objects</field>
+		<field name="model">report.latest.objects</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Customer/Supplier">
+				<field name="bord_vnd_id" select="1"/>
+				<field name="obj_desc" select="1"/>
+				<field name="obj_num" select="1"/>
+				<field name="obj_ret" select="1"/>
+				<field name="obj_comm" select="1"/>
+				<field name="obj_price" select="1"/>
+			</form>
+		</field>
+	</record>
+
 	<record model="ir.actions.act_window" id="action_report_latest_objects_tree">
 		<field name="res_model">report.latest.objects</field>
 		<field name="view_type">form</field>
@@ -148,7 +204,7 @@ Objects per Day
 ==============================
 
 	<record model="ir.ui.view" id="view_report_auction_object_date_tree">
-		<field name="name">report.auction.object.date.tree</field>
+		<field name="name">Object date</field>
 		<field name="model">report.auction.object.date</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -158,6 +214,21 @@ Objects per Day
 			</tree>
 		</field>
 	</record>
+
+	<record model="ir.ui.view" id="view_report_auction_object_date_form">
+		<field name="name">Object date</field>
+		<field name="model">report.auction.object.date</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Customer/Supplier">
+				<field name="name" select="1"/>
+				<field name="date" select="1"/>
+				<field name="lot_num" select="1"/>
+				<field name="lot_type" select="1"/>
+			</form>
+		</field>
+	</record>
+
 
 	<record model="ir.ui.view" id="view_report_auction_object_date_graph">
 		<field name="name">report.auction.object.date.graph</field>
