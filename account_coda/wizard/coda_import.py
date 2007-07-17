@@ -93,115 +93,175 @@ def _coda_parsing(self, cr, uid, data, context):
     jur_id = data['form']['journal_id']
     def_pay_acc = data['form']['def_payable']
     def_rec_acc = data['form']['def_receivable']
-    recordlist = base64.decodestring(codafile).split('\r\n')
-    recordlist.pop()
-    resstatement = {}
-    resstatement['journal_id'] = jur_id
-    resstatement_lines = []
-    bn_statement = 0
-    isHeader = False
-    isFooter = False
-    isOldBal = False
-    isNewBal = False
+
+
+
     str_log = ""
     err_log = ""
+    bank_statement={}
+    bank_statement_lines={}
+    bank_statements=[]
+
+    recordlist = base64.decodestring(codafile).split('\r\n')
+    recordlist.pop()
     for line in recordlist:
         if line[0] == '0':
-            print "Header Record"
-            if not isHeader:
-                d = str2date(line[5:11])
-                print d
-                resstatement['date'] = d
-                period_id = pool.get('account.period').search(cr,uid,[('date_start','<=',time.strftime("%y/%m/%d",time.strptime(d,"%d/%m/%y"))),('date_stop','>=',time.strftime("%y/%m/%d",time.strptime(d,"%d/%m/%y")))])
-                resstatement['period_id'] = period_id[0]
-                bn_statement = int(pool.get('account.bank.statement').create(cr,uid,resstatement))
-                isHeader = True
+
+            # header data
+            bank_statement={}
+            bank_statement_lines={}
+            bank_statement["bank_statement_line"]={}
+            bank_statement['date'] = str2date(line[5:11])
+            bank_statement['journal_id']=data['form']['journal_id']
+            period_id = pool.get('account.period').search(cr,uid,[('date_start','<=',time.strftime("%y/%m/%d",time.strptime(bank_statement['date'],"%d/%m/%y"))),('date_stop','>=',time.strftime("%y/%m/%d",time.strptime(bank_statement['date'],"%d/%m/%y")))])
+            bank_statement['period_id'] = period_id[0]
+            bank_statement['state']='draft'
+
+
+
 
         elif line[0] == '1':
-            print "OldBalance Record"
-            if not isOldBal:
-                bal_start = list2float(line[43:58])
-                if line[42] == '1':
-                    bal_start = - bal_start
-                pool.get('account.bank.statement').write(cr,uid,[bn_statement],{'balance_start': bal_start})
-                isOldBal = True
+
+            # old balance data
+            bal_start = list2float(line[43:58])
+            if line[42] == '1':
+                bal_start = - bal_start
+            bank_statement["balance_start"]= bal_start
+
+
         elif line[0]=='2':
-            print "Details Record"
+
+            # movement data record 2
             if line[1]=='1':
-                print "movement Record here "
+
+                # movement data record 2.1
                 st_line = {}
-                st_line['statement_id']=bn_statement
+                st_line['statement_id']=0
                 st_line['name'] = line[2:10]
                 st_line['date'] = str2date(line[115:121])
                 st_line_amt = list2float(line[32:47])
 
+                st_line['partner_id']=0
                 if line[31] == '1':
                     st_line_amt = - st_line_amt
                     st_line['account_id'] = def_pay_acc
                 else:
                     st_line['account_id'] = def_rec_acc
                 st_line['amount'] = st_line_amt
-                bn_st_line = pool.get('account.bank.statement.line').create(cr,uid,st_line)
+                print st_line['name']
+                bank_statement_lines[st_line['name']]=st_line
+                bank_statement["bank_statement_line"]=bank_statement_lines
+
             elif line[1] == '3':
-                print ""
+
+                # movement data record 3.1
                 st_line_name = line[2:10]
                 st_line_partner_acc = str(line[10:47]).strip()
                 bank_ids = pool.get('res.partner.bank').search(cr,uid,[('number','=',st_line_partner_acc)])
+
                 if bank_ids:
                     bank = pool.get('res.partner.bank').browse(cr,uid,bank_ids[0],context)
-                    part = bank.partner_id
-                    line_id = pool.get('account.bank.statement.line').search(cr,uid,[('name','=',st_line_name)])
-                    if line_id:
-                        _line = pool.get('account.bank.statement.line').browse(cr,uid,line_id.pop(),context)
-                        if _line['amount'] < 0:
-                            pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_payable[0]})
-                        else:
-                            pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_receivable[0]})
+                    line=bank_statement_lines[st_line_name]
+                    if line and bank.partner_id:
+                        line['partner_id']=bank.partner_id.id
+                        if line['amount'] < 0 :
+                            line['account_id']=bank.partner_id.property_account_payable[0]
+                        else :
+                            line['account_id']=bank.partner_id.property_account_receivable[0]
+                        bank_statement_lines[st_line_name]=line
+                    bank_statement["bank_statement_line"]=bank_statement_lines
 
-#
-#                partner_id = pool.get('res.partner').search(cr,uid,[('name','=',st_line_partner_name)])
-#                if partner_id:
-#
-#                    part = pool.get('res.partner').browse(cr, uid, partner_id[0], context)
-#
-#                    line_id = pool.get('account.bank.statement.line').search(cr,uid,[('name','=',st_line_name)])
-#                    if line_id:
-#                        _line = pool.get('account.bank.statement.line').browse(cr,uid,line_id.pop(),context)
-#                        print _line['amount']
-#                        print _line['id']
-#                        if _line['amount'] < 0:
-#                            pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_payable[0]})
-#                        else:
-#                            pool.get('account.bank.statement.line').write(cr,uid,[_line['id']],{'partner_id':part.id, 'account_id' : part.property_account_receivable[0]})
-#                #end if
         elif line[0]=='3':
-            print "Information Record"
+            pass
         elif line[0]=='8':
-            print "New Balance"
-            if not isNewBal:
-                bal_end = list2float(line[42:57])
-                if line[41] == '1':
-                    bal_end = - bal_end
-                print bal_end
-                pool.get('account.bank.statement').write(cr,uid,[bn_statement],{'balance_end_real': bal_end})
-                isNewBal = True
+
+            # new balance record
+            bal_end = list2float(line[42:57])
+            if line[41] == '1':
+                bal_end = - bal_end
+
+            bank_statement["balance_end_real"]= bal_end
+
+
         elif line[0]=='9':
-            print "Trailler Record"
+            # footer record
+            bank_statements.append(bank_statement)
+
+
+
 
     #end for
-    print "Finish Loop"
-    str_log = "Coda File is Imported Successfully"
-    create_dict = {
+
+    bkst_list=[]
+    nb_err=0
+    err_log=''
+    str_log=''
+    std_log=''
+    str_log1 = "Coda File is Imported  :  "
+
+    print "" + str(len(bank_statements)) + ' Bank Statements   : \n' + str(bank_statements)
+
+    for statement in bank_statements:
+
+        try:
+            bk_st_id = pool.get('account.bank.statement').create(cr,uid,{
+                'journal_id': statement['journal_id'],
+                'date':statement['date'],
+                'period_id':statement['period_id'],
+                'balance_start': statement["balance_start"],
+                'balance_end_real': statement["balance_end_real"],
+                'state':'draft',
+            })
+            lines=statement["bank_statement_line"]
+            for value in lines:
+                line=lines[value]
+
+                pool.get('account.bank.statement.line').create(cr,uid,{
+                           'name':line['name'],
+                           'date': line['date'],
+                           'amount': line['amount'],
+                           'partner_id':line['partner_id'] or 0,
+                           'account_id':line['account_id'],
+                           'statement_id': bk_st_id,
+                           })
+            cr.commit()
+
+            std_log = std_log + "\nDate  : %s, Starting Balance :  %.2f , Ending Balance : %.2f "\
+                      %(statement['date'], float(statement["balance_start"]), float(statement["balance_end_real"]))
+
+
+            bkst_list.append(bk_st_id)
+
+        except osv.except_osv, e:
+            cr.rollback()
+            nb_err+=1
+            err_log= err_log +'\n Application Error : ' + str(e)
+            raise # REMOVEME
+
+        except Exception, e:
+            cr.rollback()
+            nb_err+=1
+            err_log= err_log +'\n System Error : '+str(e)
+            raise # REMOVEME
+        except :
+            cr.rollback()
+            nb_err+=1
+            err_log= err_log +'\n Unknown Error'
+            raise
+
+    err_log= err_log + '\n\nNumber of statements : '+ str(len(bkst_list))
+    err_log= err_log + '\nNumber of error : '+ str(nb_err)
+
+    pool.get('account.coda').create(cr, uid,{
         'name':codafile,
-        'statement_ids':bn_statement,
-        'note':str_log,
+        'statement_ids':[(6,0,bkst_list)],
+        'note':str_log1+std_log+err_log,
         'journal_id':data['form']['journal_id'],
+        'date':time.strftime("%Y-%m-%d"),
+        'user_id':uid,
+        })
 
-        }
-    print create_dict
-    pool.get('account.coda').create(cr, uid,create_dict)
-
-    return {'note':str_log}
+    return {'note':str_log1 + std_log + err_log ,'journal_id': data['form']['journal_id'], 'coda': data['form']['coda']}
 
 
 def str2date(date_str):
