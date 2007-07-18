@@ -79,7 +79,7 @@
 Auction Management/Auction Dates/New Auction Dates
 	=======================================================
 	<record model="ir.ui.view" id="view_auction_dates_tree">
-		<field name="name">auction.dates.tree</field>
+		<field name="name">Auction dates</field>
 		<field name="model">auction.dates</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -91,7 +91,7 @@ Auction Management/Auction Dates/New Auction Dates
 		</field>
 	</record>
 	<record model="ir.ui.view" id="view_auction_dates_form">
-		<field name="name">auction.dates.form</field>
+		<field name="name">Auction dates</field>
 		<field name="model">auction.dates</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -119,7 +119,7 @@ Auction Management/Auction Dates/New Auction Dates
 	</record>
 
 	<record model="ir.actions.act_window" id="action_auction_dates_next">
-		<field name="name">Draft Auctions</field>
+		<field name="name">Next Auctions</field>
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('state','=','draft')]</field>
@@ -187,7 +187,7 @@ Auction Management/Auction Dates/New Auction Dates
 	Auction Management/Auction Dates/Old Auction Dates
 	=======================================================
 	<record model="ir.actions.act_window" id="action_auction_dates_old">
-		<field name="name">Closed Auctions</field>
+		<field name="name">Old Auctions</field>
 		<field name="res_model">auction.dates</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('state','=','close')]</field>
@@ -218,7 +218,7 @@ Auction Management/Auction Dates/Reporting
 	=======================================================
 	<!-- tree1 form1 for NEW object in the deposit border -->
 	<record model="ir.ui.view" id="v5">
-		<field name="name">auction.lots.tree1</field>
+		<field name="name">Auction lots</field>
 		<field name="model">auction.lots</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -242,7 +242,7 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 	<record model="ir.ui.view" id="auction_lot_simplified">
-		<field name="name">auction.lots.form1</field>
+		<field name="name">Auction lots</field>
 		<field name="model">auction.lots</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -278,7 +278,7 @@ Auction Management/Auction Dates/Reporting
 	</record>
 
 	<record model="ir.ui.view" id="auction_lot_graph">
-		<field name="name">auction.lots.graph</field>
+		<field name="name">Auction lots</field>
 		<field name="model">auction.lots</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
@@ -294,7 +294,7 @@ Auction Management/Auction Dates/Reporting
 
 	<!-- tree2 form2 for Catalog, All object and Unclassified objects -->
 	<record model="ir.ui.view" id="v7">
-		<field name="name">auction.lots.tree2</field>
+		<field name="name">Auction lots</field>
 		<field name="model">auction.lots</field>
 		<field name="type">tree</field>
 		<field name="priority" eval="1"/>
@@ -323,7 +323,7 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 	<record model="ir.ui.view" id="auction_lot_detailed">
-		<field name="name">auction.lots.form2</field>
+		<field name="name">Auction lots</field>
 		<field name="model">auction.lots</field>
 		<field name="type">form</field>
 		<field name="priority" eval="8"/>
@@ -986,11 +986,11 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 	<record model="ir.ui.view" id="view_auction_reports_form2">
-		<field name="name">auction.reports.form2</field>
+		<field name="name">Auction report</field>
 		<field name="model">report.auction.view2</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Auctions form view 2">
+			<form string="Auctions">
 				<field name="auction" />
 				<field name="sum_adj" />
 				<field name="gross_revenue" />
@@ -1264,6 +1264,118 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_report_auction_object_date_graph">
+		<field name="name">report.auction.object.date.graph</field>
+		<field name="model">auction.lots</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Object by day"  type="bar">
+				<field name="date" select="1"/>
+				<field name="obj_num" operator="+"/>
+			</graph>
+		</field>
+	</record>
 
+
+	<record model="ir.actions.act_window" id="action_report_auction_object_date_tree">
+		<field name="res_model">auction.lots</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('state','=','draft')]</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
+
+=============================
+estimation.adj.category
+==============================
+
+	<record model="ir.ui.view" id="view_report_auction_estimation_adj_category_tree">
+		<field name="name">report.auction.estimation.adj.category.tree</field>
+		<field name="model">report.auction.estimation.adj.category</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="estimation/adjudication">
+				<field name="lot_type" select="1"/>
+				<field name="state" select="1"/>
+				<field name="lot_est1" select="1"/>
+				<field name="lot_est2" select="1"/>
+				<field name="adj_total" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_auction_estimation_adj_category_graph">
+		<field name="name">report.auction.estimation.adj.category.graph</field>
+		<field name="model">report.auction.estimation.adj.category</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="estimation/adjudication" orientation="vertical" type="bar">
+				<field name="lot_type" select="1"/>
+				<field name="lot_est1" operator="+"/>
+				<field name="lot_est2" operator="+"/>
+				<field name="adj_total" operator="+"/>
+			</graph>
+		</field>
+
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_auction_estimation_adj_category_tree">
+		<field name="res_model">report.auction.estimation.adj.category</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('date','=',time.strftime('%Y-%m-01'))]</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/This month/estimation/adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
+	<menuitem name="Auction Management/Reporting/Manager/This month/estimation/adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
+
+
+==============================
+sign in sign out report by user
+==============================
+
+	<record model="ir.ui.view" id="view_report_auction_sign_in_out_tree">
+		<field name="name">report.auction.user.pointing.tree</field>
+		<field name="model">report.auction.user.pointing</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Summary pointing by user ">
+				<field name="user_id" select="1"/>
+				<field name="total_timesheet" widget="float_time"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_auction_sign_in_out_graph">
+		<field name="name">report.auction.user.pointing.graph</field>
+		<field name="model">report.auction.user.pointing</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+
+			<graph string="Summary pointing by user " orientation="vertical" type="bar">
+				<field name="user_id" select="1"/>
+				<field name="total_timesheet" />
+			</graph>
+		</field>
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_member_tree">
+		<field name="res_model">report.auction.user.pointing</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree">
+		<field name="res_model">report.auction.user.pointing</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
+
+
+=======
+>>>>>>> .r309
 </data>
 </terp>

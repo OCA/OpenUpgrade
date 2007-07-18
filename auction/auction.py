@@ -1098,13 +1098,15 @@ class report_auction_view2(osv.osv):
 
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view2  as
-			 (select  ad.id, ad.name as "auction",
+			 (select  ad.id, 
+			  substring(al.create_date for 10) as date,
+			 ad.name as "auction",
 			sum(ad.adj_total) as "sum_adj",
 			al.gross_revenue as "gross_revenue",
 			al.net_revenue as "net_revenue",
 			(al.net_margin*count(al.id)) as "obj_margin"
 			from auction_dates ad,auction_lots al where ad.id=al.auction_id
-			group by ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin)''')
+			group by ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
 
 report_auction_view2()
 
@@ -1168,3 +1170,111 @@ class report_buyer_auction2(osv.osv):
 			al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
 report_buyer_auction2()
 
+class report_auction_object_date(osv.osv):
+    _name = "report.auction.object.date"
+    _description = "Objects per day"
+    _auto = False
+    _columns = {
+            'auction_id': fields.many2one('auction.dates', 'Auction Date'),
+            'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
+            'name': fields.char('Short Description',size=64, required=True),
+            'lot_type': fields.selection(_type_get, 'Object Type', size=64),
+            'obj_desc': fields.text('Object Description'),
+            'obj_num': fields.integer('Catalog Number',select=True),
+            'obj_ret': fields.float('Price retired'),
+            'obj_comm': fields.boolean('Commission'),
+            'obj_price': fields.float('Adjudication price'),
+            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, select=True),
+            'date': fields.char('Name', size=64, required=True,select=True),
+            'lot_num': fields.integer('Quantity', required=True),
+    }
+
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_auction_object_date as (
+                select
+                   min(l.id) as id,
+                   substring(l.create_date for 10) as date,
+                   count(l.obj_num) as obj_num,
+                   l.state as state
+                from
+                    auction_lots l
+                group by
+                    substring(l.create_date for 10),l.id,l.state
+            )
+        """)
+report_auction_object_date()
+
+class report_auction_estimation_adj_category(osv.osv):
+    _name = "report.auction.estimation.adj.category"
+    _description = "comparison estimate/adjudication "
+    _auto = False
+    _columns = {
+            'auction_id': fields.many2one('auction.dates', 'Auction Date'),
+            'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
+            'name': fields.char('Short Description',size=64, required=True),
+            'lot_type': fields.selection(_type_get, 'Object Type', size=64,select=True),
+            'lot_est1': fields.float('Minimum Estimation',select=True),
+            'lot_est2': fields.float('Maximum Estimation',select=True),
+            'obj_desc': fields.text('Object Description',select=True),
+            'obj_num': fields.integer('Catalog Number'),
+            'obj_ret': fields.float('Price retired'),
+            'obj_comm': fields.boolean('Commission'),
+            'obj_price': fields.float('Adjudication price'),
+            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
+            'date': fields.char('Name', size=64, required=True,select=True),
+            'lot_num': fields.integer('Quantity', required=True),
+            'lot_type': fields.selection(_type_get, 'Object Type', size=64),
+            'adj_total': fields.float('Total Adjudication',select=True),
+    }
+
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_auction_estimation_adj_category as (
+                select
+                    min(l.id) as id,
+                   substring(l.create_date for 7)||'-'||'01' as date,
+                   l.state as state,
+                   l.lot_type as lot_type,
+                   sum(l.lot_est1) as lot_est1,
+                   sum(l.lot_est2) as lot_est2,
+                   sum(l.obj_price) as adj_total
+                from
+                    auction_lots l,auction_dates m
+                where l.auction_id=m.id
+                group by
+                    substring(l.create_date for 7),l.state,lot_type
+            )
+        """)
+report_auction_estimation_adj_category()
+
+#class report_auction_user_pointing(osv.osv):
+#    _name = "report.auction.user.pointing"
+#    _description = "user pointing "
+#    _auto = False
+#    _columns = {
+#            'user_id': fields.char('User',size=64, required=True, select=True),
+#            'name': fields.date('Date', select=True),
+#            'sheet_id': fields.many2one('hr_timesheet_sheet.sheet', 'Sheet',  select=True),
+#            'total_timesheet': fields.float('Project Timesheet',select=True),
+#      }
+#
+#    def init(self, cr):
+#        cr.execute("""
+#            create or replace view report_auction_user_pointing as (
+#                select r.name as user_id,
+#                        l.id as id,
+#                        l.total_timesheet as total_timesheet
+#
+#                from hr_timesheet_sheet_sheet_day l,
+#                     hr_timesheet_sheet_sheet h,
+#                     res_users r
+#                where h.id=l.sheet_id
+#                and
+#                l.name=h.date_current-1
+#                and
+#                h.user_id=r.id
+#
+#            )
+#        """)
+#report_auction_user_pointing()
