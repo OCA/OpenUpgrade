@@ -88,7 +88,7 @@ class payment_order(osv.osv):
     _columns = {
         'name': fields.char('payment Name',size=64),
         'type': fields.selection(type_get, 'Payment Type',required=True),
-        'state': fields.selection([('draft', 'Draft'),('done','Done')], 'State',readonly=True),
+        'state': fields.selection([('draft', 'Draft'),('done','Done')], 'State'),
         'payment_line': fields.one2many('payment.line','order_id','Payment Lines')
 
     }
