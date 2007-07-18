@@ -6,16 +6,20 @@ import pooler
 import xmlrpclib
 import re
 import tools
+import threading
 
 acc_synchro_form = '''<?xml version="1.0"?>
 <form string="Transfer Data To Server">
 	<field name="server_url" colspan="4"/>
 	<newline/>
+	<separator string="Control" colspan="4"/>
+	<field name="user_id"/>
 	<newline/>
 </form>'''
 
 acc_synchro_fields = {
 	'server_url': {'string':'Server URL', 'type':'many2one', 'relation':'base.synchro.server','required':True},
+	'user_id': {'string':'Send Result To', 'type':'many2one', 'relation':'res.users', 'default': lambda uid,data,state: uid},
 }
 
 finish_form ='''<?xml version="1.0"?>
@@ -43,51 +47,64 @@ class RPCProxy(object):
 		return RPCProxyOne(self.server, ressource)
 
 class wizard_cost_account_synchro(wizard.interface):
+	start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
+	report = []
+	report_total = 0
+	report_create = 0
+	report_write = 0
 	def _synchronize(self, cr, uid, server, object, context):
 		pool = pooler.get_pool(cr.dbname)
 		self.meta = {}
 		ids = []
 		pool1 = RPCProxy(server)
 		pool2 = pool
-		if object.action in ('d','b'):
-			ids = pool1.get('base.synchro.obj')._get_ids(cr, uid, 
-				object.model_id.model, 
-				object.synchronize_date, 
-				eval(object.domain), 
-				{'action':'d'}
-			)
-		if object.action in ('u','b'):
-			ids += pool2.get('base.synchro.obj')._get_ids(cr, uid, 
-				object.model_id.model, 
-				object.synchronize_date, 
-				eval(object.domain), 
-				{'action':'u'}
-			)
-		ids.sort()
-		for dt, id, action in ids:
-			if action=='u':
-				pool_src = pool2
-				pool_dest = pool1
-			else:
-				pool_src = pool1
-				pool_dest = pool2
-			value = pool_src.get(object.model_id.model).read(cr, uid, [id], context)[0]
-			value = self._data_transform(cr, uid, pool_src, object.model_id.model, value, action, context)
+		try:
+			if object.action in ('d','b'):
+				ids = pool1.get('base.synchro.obj')._get_ids(cr, uid,
+					object.model_id.model,
+					object.synchronize_date,
+					eval(object.domain),
+					{'action':'d'}
+				)
+			if object.action in ('u','b'):
+				ids += pool2.get('base.synchro.obj')._get_ids(cr, uid,
+					object.model_id.model,
+					object.synchronize_date,
+					eval(object.domain),
+					{'action':'u'}
+				)
+			ids.sort()
+			for dt, id, action in ids:
+				if action=='u':
+					pool_src = pool2
+					pool_dest = pool1
+				else:
+					pool_src = pool1
+					pool_dest = pool2
+				value = pool_src.get(object.model_id.model).read(cr, uid, [id], context)[0]
+				value = self._data_transform(cr, uid, pool_src, object.model_id.model, value, action, context)
 
-			id2 = self.get_id(cr, uid, object.id, id, action, context)
-			#
-			# Transform value
-			#
-			if id2:
-				pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
-			else:
-				idnew = pool_dest.get(object.model_id.model).create(cr, uid, value)
-				synid = pool.get('base.synchro.obj.line').create(cr, uid, {
-					'obj_id': object.id,
-					'local_id': (action=='u') and id or idnew,
-					'remote_id': (action=='d') and id or idnew
-				})
-		self.meta = {}
+				id2 = self.get_id(cr, uid, object.id, id, action, context)
+				#
+				# Transform value
+				#
+				tid=pool_dest.get(object.model_id.model).name_search(cr, uid, value['name'],[],'=',)
+				if id2 or tid:
+					pool_dest.get(object.model_id.model).write(cr, uid, [tid[0][0]], value)
+					self.report_total+=1
+					self.report_write+=1
+				else:
+					idnew = pool_dest.get(object.model_id.model).create(cr, uid, value)
+					self.report_total+=1
+					self.report_create+=1
+					synid = pool.get('base.synchro.obj.line').create(cr, uid, {
+						'obj_id': object.id,
+						'local_id': (action=='u') and id or idnew,
+						'remote_id': (action=='d') and id or idnew
+					})
+			self.meta = {}
+		except Exception,e:
+			self.report.append(e)
 		return 'finish'
 
 	#
@@ -144,8 +161,11 @@ class wizard_cost_account_synchro(wizard.interface):
 	#
 	# Find all objects that are created or modified after the synchronize_date
 	# Synchronize these obejcts
-	# 
-	def _upload_download(self, cr, uid, data, context):
+	#
+	def _upload_download(self, db_name, uid, data, context):
+		cr = pooler.get_db(db_name).cursor()
+		print "In upload_download::::::::"
+		self.start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
 		pool = pooler.get_pool(cr.dbname)
 		server = pool.get('base.synchro.server').browse(cr, uid, data['form']['server_url'], context)
 		for object in server.obj_ids:
@@ -155,6 +175,33 @@ class wizard_cost_account_synchro(wizard.interface):
 				dt = time.strftime('%Y-%m-%d %H:%M:%S')
 			pool.get('base.synchro.obj').write(cr, uid, [object.id], {'synchronize_date': dt})
 			cr.commit()
+		end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
+		if 'user_id' in data['form'] and data['form']['user_id']:
+			request = pooler.get_pool(cr.dbname).get('res.request')
+			summary = '''Here is the Synchronization report.
+			Synchronization Started; %s
+			Synchronization Finnished; %s
+
+			Total Records: %d
+			Write Records: %d
+			Create Records: %d
+			Exception Records:
+			Exceptions;
+			'''% (self.start_date,end_date,self.report_total, self.report_write,self.report_create)
+			summary += '\n'.join(self.report)
+			request.create(cr, uid,
+			  {'name' : "Synchronization report.",
+			   'act_from' : data['form']['user_id'],
+			   'act_to' : data['form']['user_id'],
+			   'body': summary,
+			   })
+		cr.commit()
+		cr.close()
+		return 'finish'
+
+	def _upload_download_multi_thread(self, cr, uid, data, context):
+		threaded_synchronization = threading.Thread(target=self._upload_download, args=(cr.dbname, uid, data, context))
+		threaded_synchronization.start()
 		return 'finish'
 
 	states = {
@@ -164,7 +211,7 @@ class wizard_cost_account_synchro(wizard.interface):
 		},
 		'upload_download': {
 			'actions': [],
-			'result':{'type':'choice', 'next_state': _upload_download}
+			'result':{'type':'choice', 'next_state': _upload_download_multi_thread}
 		},
 		'finish': {
 			'actions': [],
