@@ -237,7 +237,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="gross_margin"/>
 					<field name="net_margin"/>
 					<field name="costs"/>
-
+					<field name="obj_price_l"/>
 				</tree>
 		</field>
 	</record>
@@ -406,122 +406,49 @@ Auction Management/Auction Dates/Reporting
 		</field>
 	</record>
 
-	<!--<record model="ir.actions.act_window" id="action_all_objects_unsold">
-		<field name="res_model">auction.sold.object</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,graph</field>
-		<field name="domain">[('auction_id','&lt;&gt;', False),('obj_ret','&gt;',0)]</field>
-	</record>
--->
 
 
-	<!--		for the sold object  start-->
 
-
-	<record model="ir.ui.view" id="view_report_sold_object_tree">
-		<field name="name">Sold objects</field>
-		<field name="model">report.sold.object</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Sold Objects">
-				<field name="depos" select="1"/>
-				<field name="lot" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="2"/>
-				<field name="lot_est2_l" select="2"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="2"/>
-				<field name="name_l" select="1"/>
-				<field name="obj_price_l" select="2"/>
-			</tree>
-		</field>
-	</record>
 	<record model="ir.actions.act_window" id="action_all_objects_sold">
-		<field name="res_model">report.sold.object</field>
+		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
+		<field name="domain">[('state','=','sold')]</field> 
+
 	</record>
 
 
 	<menuitem name="Auction Management/Objects/All objects/Sold objects" action="action_all_objects_sold" id="menu_all_objects_sold1"/>
 
-				<!--end for the sold objects-->
-				<!--unclassified objects-->
-					<!--objets a vendre-->
-	<record model="ir.ui.view" id="view_report_object_to_sell_tree">
-		<field name="name">Objects to sell</field>
-		<field name="model">report.auction.objects_to_sell</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Objects to sell">
-				<field name="depos" select="1"/>
-				<field name="lot" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="2"/>
-				<field name="lot_est2_l" select="2"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="2"/>
-				<field name="name_l" select="1"/>
 
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_report_object_to_sell_form">
-		<field name="name">Objects to sell</field>
-		<field name="model">report.auction.objects_to_sell</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Objects to sell">
-				<field name="depos" select="1"/>
-				<field name="lot" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="2"/>
-				<field name="lot_est2_l" select="2"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="2"/>
-				<field name="name_l" select="1"/>
-			</form>
-		</field>
-	</record>
+
 
 	<record model="ir.actions.act_window" id="action_all_objects_to_sell">
-		<field name="res_model">report.auction.objects_to_sell</field>
+		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','draft,unsold')]</field>
 	</record>
 	<menuitem name="Auction Management/Objects/All objects/Objects to sell" action="action_all_objects_to_sell" id="menu_all_objects_to_sell"/>
 
-				<!--end for the sold objects and objects to sell-->
 
-<!--<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_all_objects_unsold" id="menu_all_objects_unsold1"/>-->
 
 	<record model="ir.actions.act_window" id="action_all_objects_unplanned">
-		<field name="res_model">report.unplanned.object</field>
+		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<!--field name="domain">[('auction_id','=', False),('state','=','draft')]</field-->
+		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
 	</record>
 
 	<menuitem name="Auction Management/Objects/All objects/Unplanned objects" action="action_all_objects_unplanned" id="menu_all_objects_unplanned1"/>
 
 
-			<!--end action of sold,unsold,unplanned objects-->
-
-
-		<record model="ir.actions.act_window" id="action_all_objects">
+	<record model="ir.actions.act_window" id="action_all_objects">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 	<menuitem name="Auction Management/Objects/All objects"	action="action_all_objects" id="menu_auction_all_objects" menu="menu_action_all_objects"/>
-
-	<!--<record model="ir.actions.act_window" id="action_all_objects_unsold">
-		<field name="res_model">auction.sold.object</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,graph</field>
-		<field name="domain">[('auction_id','&lt;&gt;', False),('obj_ret','&gt;',0)]</field>
-	</record>
--->
 
 
 	<!--		for the sold object  start-->
@@ -533,38 +460,12 @@ Auction Management/Auction Dates/Reporting
 		<field name="domain">[('state','=','unsold')]</field>
 	</record>
 	<menuitem
-		name="Auction Management/Objects/All objects/"
+		name="Auction Management/Objects/All objects/Unsold Objects"
 		action="action_all_objects_unsold"
 		id="menu_all_objects_unsold"/>
 
 
-			<!--end for the unsold objects-->
-
-
-
-
-<!--<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_all_objects_unsold" id="menu_all_objects_unsold1"/>-->
-
-
-
 				<!--start action of sold,unsold,unplanned objects-->
-
-	<!--<record model="ir.actions.act_window" id="action_all_objects_unplanned">
-		<field name="res_model">auction.lots</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,graph</field>
-		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
-	</record>
-	<menuitem name="Auction Management/Objects/All objects/Unsold objects" action="action_all_objects_unsold" id="menu_all_objects_unsold1"/>
-
-	<record model="ir.actions.act_window" id="action_all_objects_unplanned">
-		<field name="res_model">auction.lots</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,graph</field>
-		<field name="domain">[('auction_id','=', False),('state','=','draft')]</field>
-	</record>
-
--->
 
 
 			<!--end action of sold,unsold,unplanned objects-->
@@ -650,53 +551,23 @@ Auction Management/Auction Dates/Reporting
 		<field name="isobject" eval="True"/>
 	</ir_set>-->
 
-	<record model="ir.ui.view" id="view_report_unclassified_object_tree">
-		<field name="name">Unclassified objects</field>
-		<field name="model">report.unclassified.object</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Unclassified Objects">
-				<field name="depos" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="1"/>
-				<field name="lot_est2_l" select="1"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="1"/>
-				<field name="name_l" select="1"/>
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_report_unclassified_object_form">
-		<field name="name">Unclassified objects</field>
-		<field name="model">report.unclassified.object</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Unclassified Objects">
-				<field name="depos" select="1"/>
-				<field name="product_l" select="1"/>
-				<field name="lot_est1_l" select="1"/>
-				<field name="lot_est2_l" select="1"/>
-				<field name="artist_id_l" select="1"/>
-				<field name="obj_desc_l" select="1"/>
-				<field name="name_l" select="1"/>
-			</form>
-		</field>
-	</record>
 
 
 	=======================================================
 	Auction Management/seller
 	=======================================================
 	<record model="ir.actions.act_window" id="action_unclassified_objects">
-		<field name="name">Unclassified objects</field>
-		<field name="res_model">report.unclassified.object</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-	</record>
+        <field name="name">Unclassified objects</field>
+	    <field name="res_model">auction.lots</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+		<field name="domain">[('lot_type','=','41')]</field>
+     </record> 
+
+
 	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects" id="menu_all_objects_unclassified"/>
 	<record model="ir.ui.view" id="v12">
-		<field name="name">auction.deposit.tree</field>
+		<field name="name">Auction.deposit.tree</field>
 		<field name="model">auction.deposit</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -1127,14 +998,14 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_mode">tree</field>
 		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/seller/This Month/Seller adjudication detail" action="action_auction_reporting2" id="menu_seller_thismonth_view2"/>
+	<menuitem name="Auction Management/Reporting/seller/This Month/Seller adjudication details" action="action_auction_reporting2" id="menu_seller_thismonth_view2"/>
 	<record model="ir.actions.act_window" id="action_auction_reporting_all2">
 		<field name="name">Seller's auction</field>
 		<field name="res_model">report.seller.auction2</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/seller/All Months/Seller adjudication detail" action="action_auction_reporting_all2" id="menu_seller_allmonth_view2"/>
+	<menuitem name="Auction Management/Reporting/seller/All Months/Seller adjudication details" action="action_auction_reporting_all2" id="menu_seller_allmonth_view2"/>
 
 <!--start : creating buyer Reporting menu for the buyer by pmo-->
 <record model="ir.ui.view" id="view_auction_buyer_form">
@@ -1227,6 +1098,9 @@ Auction Management/Auction Dates/Reporting
 	</record>
 <menuitem name="Auction Management/Reporting/Buyer/All Months/Buyer's results" action="action_auction_buyer_reporting_all2" id="menu_buyer_allmonth_view2"/>
 
+
+
+
 <!--end : creating buyer Reporting menu for the buyer by pmo-->
 
 		<record model="ir.ui.view" id="view_report_unplanned_object_tree">
@@ -1278,13 +1152,13 @@ Auction Management/Auction Dates/Reporting
 
 
 	<record model="ir.actions.act_window" id="action_report_auction_object_date_tree">
-		<field name="res_model">auction.lots</field>
+		<field name="res_model">auction.lot</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
-	<menuitem name="Auction Management/Reporting/Manager/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
+	<menuitem name="Auction Management/Reporting/Member/Objects Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Objects Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
 
 =============================
 estimation.adj.category
@@ -1375,7 +1249,58 @@ sign in sign out report by user
 	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
 
 
-=======
->>>>>>> .r309
+
+
+==============================
+My Latest 10 Objects
+==============================
+
+    <record model="ir.actions.act_window" id="action_report_latest_objects_tree">
+        <field name="res_model">auction.lots</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+        <!--field name="domain">[('user_id','=',uid)]</field-->
+    </record>
+    <menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/> 
+
+
+=============================
+My Latest Deposit
+==============================
+
+    <record model="ir.actions.act_window" id="action_report_latest_doposit_tree">
+        <field name="res_model">auction.deposit</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree</field>
+    </record>
+    <menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/> 
+
+
+=============================
+Objects per Day
+==============================
+    <record model="ir.ui.view" id="view_report_auction_object_date_tree">
+       <field name="name">Object date</field>
+       <field name="model">report.auction.object.date</field>
+   	<tree string="Objects per Day">
+                <field name="date" select="1"/>
+                <field name="obj_num" select="1"/>
+             </tree>
+         </field>
+     </record> 
+
+	 <record model="ir.ui.view" id="view_report_auction_object_date_form">
+        <field name="name">Object date</field>
+        <field name="model">report.auction.object.date</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Customer/Supplier">
+                <field name="name" select="1"/>
+                <field name="date" select="1"/>
+                <field name="lot_num" select="1"/>
+                <field name="lot_type" />
+             </form>
+         </field>
+     </record>
 </data>
 </terp>

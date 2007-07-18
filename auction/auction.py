@@ -913,44 +913,6 @@ class report_buyer_auction2(osv.osv):
 report_buyer_auction2()
 
 
-class report_sold_object(osv.osv):
-
-	_name='report.sold.object'
-	_description = "Sold objects"
-	_auto = False
-	_columns = {
-		'depos': fields.many2one('res.partner','Seller Name',readonly=True),
-		'lot': fields.selection(_type_get, 'Object Type', size=64),
-		'product_l':fields.many2one('product.product', 'Product', required=True),
-		'auct_id': fields.many2one('auction.dates', 'Auction Date'),
-		'lot_est1_l': fields.float('Minimum Estimation'),
-		'lot_est2_l': fields.float('Maximum Estimation'),
-		'artist_id_l':fields.many2one('auction.artists', 'Artist/Author'),
-		'obj_desc_l': fields.text('Object Description'),
-		'name_l': fields.char('Short Description',size=64, required=True),
-		'obj_price_l': fields.float('Adjudication price')
-		}
-	def init(self, cr):
-		cr.execute("""
-			create or replace view report_sold_object as (
-				select min(lo.id) as id,
-				lo.auction_id as auct_id,
-				lo.lot_type as lot,
-				lo.product_id as product_l,
-				lo.bord_vnd_id as depos,
-				lo.lot_est1 as lot_est1_l,
-				lo.lot_est2 as lot_est2_l,
-				lo.artist_id as artist_id_l,
-				lo.obj_desc as obj_desc_l,
-				lo.name as name_l,
-				lo.obj_price as obj_price_l
-
-				  from auction_lots lo
-		  where lo.state = 'sold'
-	group by lo.auction_id,lo.artist_id,lo.lot_est2 ,lo.product_id,lo.bord_vnd_id,lo.lot_type,lo.obj_price,lo.lot_est1,lo.obj_desc,lo.name
-				)""")
-report_sold_object()
-
 
 class report_seller_auction(osv.osv):
 	_name = "report.seller.auction"
@@ -1021,36 +983,7 @@ class report_seller_auction2(osv.osv):
 
 report_seller_auction2()
 
-#class report_auction_view(osv.osv):
-#	_name = "report.auction.view"
-#	_description = "Auction Reporting"
-#	_auto = False
-#	_columns = {
-#		'auction': fields.char('Auction Name',size=64, readonly=True, select=True),
-#		'nobjects':fields.float('No of objects',readonly=True, select=True),
-#		'nbuyer':fields.float('No of buyers',readonly=True, select=True),
-#		'nseller':fields.float('No of sellers',readonly=True, select=True),
-#		'min_est':fields.float('Minimum Estimation', readonly=True, select=True),
-#		'max_est':fields.float('Maximum Estimation', readonly=True, select=True),
-#		'adj_price':fields.float('Adjudication price', readonly=True, select=True),
-#		'date': fields.date('Create Date',  required=True),
-#	}
-#
-#	def init(self, cr):
-#		cr.execute('''create or replace view report_auction_view  as
-#				 (select  ad.id,
-#					substring(al.create_date for 10) as date,
-#					ad.name as "auction",
-#					count(al.id) as "nobjects",
-#					count(al.ach_uid) as "nbuyer",
-#					count(al.bord_vnd_id) as "nseller",
-#					al.lot_est1 as "min_est",
-#					al.lot_est2 as "max_est",
-#					al.obj_price as "adj_price"
-#					from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
-#					ad.id,ad.name,al.ach_uid,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price,al.create_date)''')
-#
-#report_auction_view()
+
 class report_auction_view(osv.osv):
 	_name = "report.auction.view"
 	_description = "Auction Reporting on view1"
