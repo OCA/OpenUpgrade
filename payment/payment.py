@@ -40,21 +40,12 @@ from tools.misc import currency
 import account
 from account import invoice
 
-#----------------------------------------------------------
-# Workcenters
-#----------------------------------------------------------
-# capacity_hour : capacity per hour. default: 1.0.
-#          Eg: If 5 concurrent operations at one time: capacity = 5 (because 5 employees)
-# unit_per_cycle : how many units are produced for one cycle
-#
-# TODO: Work Center may be recursive ?
-#
 
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
     def amount_payed(self, cr, uid, ids, name, arg, context={}):
-        cr.execute("select sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' inner join account_invoice a on l.invoice_id=a.id ")
+        cr.execute("select sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id="+str(ids[0])+" ")
         amt_paid=cr.fetchone()[0]
         return {ids[0]:amt_paid}
 
@@ -62,8 +53,7 @@ class account_invoice(osv.osv):
 
         total=self._amount_total(cr, uid, ids, name, args={}, context={})
         a=str(total[ids[0]])
-        print "dddddd",a
-        cr.execute("select "+a+"-sum(l.amount) from payment_line l left join payment_order o on l.order_id=o.id   left join account_invoice a on l.invoice_id=a.id ")
+        cr.execute("select "+a+"-sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and l.invoice_id="+str(ids[0])+" ")
         amt_pay=cr.fetchone()[0]
         return {ids[0]:amt_pay}
 
@@ -89,7 +79,6 @@ class payment_order(osv.osv):
     def type_get(self, cr, uid, context={}):
         pay_type_obj = self.pool.get('payment.type')
         ids = pay_type_obj.search(cr, uid, [])
-        print "88888888888",ids
         res = pay_type_obj.read(cr, uid, ids, ['code','name'], context)
         return [(r['code'],r['name']) for r in res]
     _defaults = {
