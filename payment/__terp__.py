@@ -3,7 +3,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Payment",
-    "depends" : ["sale"],
+    "depends" : ["account"],
     "init_xml" : [],
     "demo_xml" : [],
     "description": """
@@ -11,6 +11,6 @@
      Provide a basic mechanism to easily plug various automated payment.
      """,
     "update_xml" : ["payment_view.xml","payment_wizard.xml"],
-    "active": False,
+    "active": True,
     "installable": True
 }
