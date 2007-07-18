@@ -11,6 +11,6 @@
      Provide a basic mechanism to easily plug various automated payment.
      """,
     "update_xml" : ["payment_view.xml","payment_wizard.xml"],
-    "active": True,
+    "active": False,
     "installable": True
 }
