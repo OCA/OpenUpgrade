@@ -413,7 +413,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
-		<field name="domain">[('state','=','sold')]</field> 
+		<field name="domain">[('state','=','sold')]</field>
 
 	</record>
 
@@ -562,7 +562,7 @@ Auction Management/Auction Dates/Reporting
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
 		<field name="domain">[('lot_type','=','41')]</field>
-     </record> 
+     </record>
 
 
 	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects" id="menu_all_objects_unclassified"/>
@@ -1261,7 +1261,7 @@ My Latest 10 Objects
         <field name="view_mode">tree</field>
         <!--field name="domain">[('user_id','=',uid)]</field-->
     </record>
-    <menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/> 
+    <menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
 
 
 =============================
@@ -1273,22 +1273,22 @@ My Latest Deposit
         <field name="view_type">form</field>
         <field name="view_mode">tree</field>
     </record>
-    <menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/> 
+    <menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
 
 
 =============================
 Objects per Day
 ==============================
-    <record model="ir.ui.view" id="view_report_auction_object_date_tree">
+   <!-- <record model="ir.ui.view" id="view_report_auction_object_date_tree">
        <field name="name">Object date</field>
        <field name="model">report.auction.object.date</field>
-   	<tree string="Objects per Day">
+   		<tree string="Objects per Day">
                 <field name="date" select="1"/>
                 <field name="obj_num" select="1"/>
              </tree>
          </field>
-     </record> 
-
+     </record>
+-->
 	 <record model="ir.ui.view" id="view_report_auction_object_date_form">
         <field name="name">Object date</field>
         <field name="model">report.auction.object.date</field>

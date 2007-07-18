@@ -60,10 +60,12 @@
     <paraStyle name="P15" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P16" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P17" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P18" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P19" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P20" rightIndent="0.0" leftIndent="0.0" fontName="Times-BoldItalic" fontSize="12.0" leading="15" alignment="LEFT"/>
-    <paraStyle name="P21" rightIndent="0.0" leftIndent="0.0" fontName="Times-BoldItalic" fontSize="5.0" leading="7" alignment="LEFT"/>
+    <paraStyle name="P18" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Times-BoldItalic" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P20" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P21" fontName="Times-BoldItalic" fontSize="12.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="P22" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P23" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -101,31 +103,23 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P18">[[ repeatIn(objects,'o') ]]</para>
-    <para style="P5">
-      <font color="white"> </font>
-    </para>
-    <para style="P5">
-      <font color="white"> </font>
-    </para>
-    <para style="P8">
-      <font color="white"> </font>
-    </para>
+    <para style="P23">[[ repeatIn(objects,'o') ]]</para>
     <para style="P7">
-      <font face="Times-Roman">Auction Image:</font>
-      <font face="Times-Roman" size="5.0">[[ setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</font>
+      <font face="Times-Roman">Auction Image</font>
+      <font face="Times-Roman" size="6.0">:</font>
     </para>
     <para style="P21">
-      <font color="white"> </font>
+      <font face="Times-Roman" size="5.0"/>
     </para>
-    <para style="P20">
+    <para style="P22">[[ setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</para>
+    <para style="P19">
       <font color="white"> </font>
     </para>
     <para style="P5">
       <font color="white"> </font>
     </para>
     <para style="P7"><font face="Times-Roman">Auction</font>: [[ o.auction_id.name ]]</para>
-    <para style="P8">Auction Date: [[ o.auction1 ]]</para>
+    <para style="P8">Auction Date: [[ o.auction_id.auction1 ]]</para>
     <para style="P8">
       <font color="white"> </font>
     </para>
@@ -163,16 +157,16 @@
           <para style="P16">[[o. obj_num]]</para>
         </td>
         <td>
-          <para style="P19">[[o.lot_est1]]</para>
+          <para style="P18">[[o.lot_est1]]</para>
           <para style="P15">
             <font color="white"> </font>
           </para>
-          <para style="P19">
+          <para style="P18">
             <font color="white"> </font>
           </para>
         </td>
         <td>
-          <para style="P19">[[o.lot_est2]]</para>
+          <para style="P18">[[o.lot_est2]]</para>
         </td>
         <td>
           <para style="P9">
@@ -182,7 +176,7 @@
           </para>
         </td>
         <td>
-          <para style="P19">[[o.obj_price]]</para>
+          <para style="P18">[[o.obj_price]]</para>
         </td>
       </tr>
     </blockTable>
@@ -231,7 +225,7 @@
           </para>
         </td>
         <td>
-          <para style="P19">[[o.obj_price]]</para>
+          <para style="P18">[[o.obj_price]]</para>
         </td>
         <td>
           <para style="P2">
