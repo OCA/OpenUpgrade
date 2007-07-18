@@ -41,31 +41,32 @@
 				<td>Expenses</td>
 				<td>Buyer price</td>
 			</tr>
-			<xsl:apply-templates select="/lots/lot[vat='TVA 6%']">
+			<xsl:apply-templates select="/lots/lot[vat='VAT 6%']">
 				<xsl:sort select="number" data-type="number" />
 			</xsl:apply-templates>
 		</blockTable>
 		<blockTable colWidths="3cm,3cm,3cm,3cm,3cm,3cm" style="vat_total">
 			<tr>
-				<td>Total</td>
+				<td>Total </td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 6%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='TVA 6%']/commission/amount)" />
+
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 6%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='VAT 6%']/commission/amount)" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 6%']/commission/amount)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 6%']/commission/amount)" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 6%'][adjudicated != '']/adjudicated)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 6%'][adjudicated != '']/adjudicated)" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 6%']/expenses/amount)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 6%']/expenses/amount)" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 6%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='TVA 6%']/expenses/amount)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 6%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='VAT 6%']/expenses/amount)" />
 				</td>
 			</tr>
 		</blockTable>
-		<h3>TVA = 21%</h3>
+		<h3>VAT = 21%</h3>
 		<blockTable colWidths="3cm,3cm,3cm,3cm,3cm,3cm" style="vat_table" repeatRows="1">
 			<tr>
 				<td>Lot number</td>
@@ -75,7 +76,7 @@
 				<td>Expenses</td>
 				<td>Buyer price</td>
 			</tr>
-			<xsl:apply-templates select="/lots/lot[vat='TVA 21%']">
+			<xsl:apply-templates select="/lots/lot[vat='VAT 21%']">
 				<xsl:sort select="number" data-type="number"/>
 			</xsl:apply-templates>
 		</blockTable>
@@ -83,19 +84,20 @@
 			<tr>
 				<td>Total</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 21%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='TVA 21%']/commission/amount)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 21%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='VAT 21%']/commission/amount)" />
+					<xsl:value-of select="vat" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 21%']/commission/amount)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 21%']/commission/amount)" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 21%'][adjudicated != '']/adjudicated)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 21%'][adjudicated != '']/adjudicated)" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 21%']/expenses/amount)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 21%']/expenses/amount)" />
 				</td>
 				<td>
-					<xsl:value-of select="sum(/lots/lot[vat='TVA 21%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='TVA 21%']/expenses/amount)" />
+					<xsl:value-of select="sum(/lots/lot[vat='VAT 21%'][adjudicated != '']/adjudicated) + sum(/lots/lot[vat='TVA 21%']/expenses/amount)" />
 				</td>
 			</tr>
 		</blockTable>
@@ -103,6 +105,7 @@
 
 	<xsl:template match="lot">
 		<tr>
+
 			<td><xsl:value-of select="number" /></td>
 			<td>
 				<xsl:choose>
