@@ -31,7 +31,7 @@
 					<field name="user_id" select="1"/>
 					<field name="product" select="1"/>
 					<field name="date" select="1"/>
-					<field name="cashmove" select="1" />
+					<field name="cashmove" select="1"/>
 					<field name="state" select="1"/>
 					<field name="descript" select="1"/>
 				</tree>
@@ -41,14 +41,14 @@
 	
 	
 		<record model="ir.actions.act_window" id="action_lunch_order_form">
-				<field name="name"> Order </field>
+				<field name="name">Make order</field>
 				<field name="res_model">lunch.order</field>
+				<field name="view_mode">form,tree</field>
 		</record>
 		<menuitem name="Tools/Lunch/Make order" id="menu_lunch_order_form" action="action_lunch_order_form"/>
 		
 		<record model="ir.actions.act_window" id="action_lunch_order_day_form">
 				<field name="name"> Order of the day</field>
-				<!--<field name="view_mode">tree,form</field>-->
 				<field name="res_model">lunch.order</field>
 				<field name="domain">[('date','=',time.strftime('%Y-%m-%d'))]</field>
 		
