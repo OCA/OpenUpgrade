@@ -32,6 +32,9 @@ import pooler
 import netsvc
 from osv import fields
 
+import mx.DateTime
+from mx.DateTime import RelativeDateTime, now, DateTime, localtime
+
 
 payment_form = """<?xml version="1.0"?>
 <form string="Payment Order">
@@ -43,39 +46,63 @@ def type_get(self,cr,uid,context):
     pay_type_obj = pooler.get_pool(cr.dbname).get('payment.type')
     ids = pay_type_obj.search(cr, uid, [])
     res = pay_type_obj.read(cr, uid, ids, ['code','name'], context)
-    print str(res)
+
 
     return [(r['code'],r['name']) for r in res]
 
 def _make_payment(self, cr, uid, data, contexts):
     form = data['form']
-    pay_type_obj = pooler.get_pool(cr.dbname).get('account.invoice')
-    ids = pay_type_obj.search(cr, uid, [(' amount_to_pay ', '>', '0'),('date_due ', '<', form['payment_date'])])
-    #ids = pay_type_obj.search(cr, uid, [])
-    res=pay_type_obj.read(cr, uid, ids, ['id','amount_total'])
-    print str(res)
+    invoice_obj = pooler.get_pool(cr.dbname).get('account.invoice')
     pay_obj = pooler.get_pool(cr.dbname).get('payment.order')
-    pay_order = {
+    pay_order_line = pooler.get_pool(cr.dbname).get('payment.line')
+    payment_term_obj=pooler.get_pool(cr.dbname).get('account.payment.term')
+
+    pay_lines=[]
+    ids = invoice_obj.search(cr, uid, [('date_due', '<', form['payment_date'])])
+
+    res=invoice_obj.browse(cr, uid, ids)
+
+    if res:
+        for invoice in res:
+            if(invoice.amount_to_pay > 0):
+                amount_to_pay=amount=invoice.amount_to_pay
+                amount_pay=invoice.amount_pay
+                # sum of all due amount with given date
+                if(invoice.payment_term):
+
+                        res_term=invoice.payment_term.compute(cr,uid,invoice.payment_term.id,invoice.amount_to_pay or invoice.amount_total ,invoice.date_invoice)
+
+                        amount=0
+                        for res_date,res_amount in res_term:
+                            if mx.DateTime.strptime(res_date, '%Y-%m-%d') < invoice.date_invoice :
+                                print res_date
+                                print res_amount
+                                amount +=res_amount
+
+
+                pay_line = {
+                       'invoice_id':invoice.id,
+                       'amount':amount,
+                        }
+                pay_lines.append(pay_line)
+
+
+
+
+    if (pay_lines):
+        state='draft'
+        if form['type']=='manual':
+            state='done'
+        pay_order = {
            'name':form['payment_date'],
-           'state':'draft',
+           'state':state,
            'type':form['type'],
 
           }
-    pay_id=pay_obj.create(cr,uid,pay_order)
-    pay_order_line = pooler.get_pool(cr.dbname).get('payment.line')
-
-
-    if res:
-        for i in range(len(res)):
-            pay_line = {
-                   'invoice_id':res[i]['id'],
-                   'amount':res[i]['amount_total'],
-                   'order_id':pay_id,
-                    }
-            pay_order_line.create(cr,uid,pay_line)
-
-
-
+        pay_id=pay_obj.create(cr,uid,pay_order)
+        for pay_line in pay_lines:
+             pay_line['order_id']=pay_id
+             pay_order_line.create(cr,uid,pay_line)
 
 
     return {}
