@@ -1,7 +1,8 @@
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+# Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
+# $Id$
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -26,14 +27,18 @@
 #
 ##############################################################################
 
-#import flagey_huissier
-import total
-import auction_invoice
-import seller_address
-import artists_lots
-import lots_list
-import lots_list_inventory
-import auction_result
-import catelogwithpictures
-import auction_objects
-import auction_total_rml
+
+import pooler
+import time
+from report import report_sxw
+
+
+class auction_total_rml(report_sxw.rml_parse):
+	def __init__(self, cr, uid, name, context):
+		super(auction_total_rml, self).__init__(cr, uid, name, context)
+		self.localcontext.update({
+			'time': time,
+
+		})
+report_sxw.report_sxw('report.auction.total.rml', 'auction.lots', 'addons/auction/report/auction_total_rml.rml',parser=auction_total_rml)
+
