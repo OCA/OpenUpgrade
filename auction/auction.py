@@ -886,7 +886,7 @@ class report_buyer_auction2(osv.osv):
 	_columns = {
 		'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
 		'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
-		'sumadj':fields.float('sum of adjustication',readonly=True, select=True),
+		'sumadj':fields.float('Sum of adjustication',readonly=True, select=True),
 		'gross_revenue':fields.float('Gross Revenue', readonly=True, select=True),
 		'net_revenue':fields.float('Net Revenue', readonly=True, select=True),
 		'net_margin':fields.float('Net Margin', readonly=True, select=True),
@@ -902,9 +902,9 @@ class report_buyer_auction2(osv.osv):
 			al.ach_login as "buyer_login",
 			 rs.name as "buyer",
 			sum(ad.adj_total) as sumadj,
-			 al.gross_revenue as gross_revenue,
-		 al.net_revenue as net_revenue,
-			 al.net_margin as net_margin
+			 sum(al.gross_revenue) as gross_revenue,
+		 sum(al.net_revenue) as net_revenue,
+			 sum(al.net_margin) as net_margin
 				from auction_lots al, auction_bid ab,res_partner rs,auction_dates ad
 		where al.ach_uid=rs.id and al.auction_id=ad.id group by
 		al.id,al.ach_uid,al.ach_login,rs.name,ad.adj_total,
@@ -957,12 +957,10 @@ class report_seller_auction2(osv.osv):
 	_columns = {
 		'seller': fields.char('Seller Name',size=64, readonly=True, select=True),
 		'sum_adj':fields.float('Sum Adjustication',readonly=True, select=True),
-		'gross_revenue':fields.float('Gross_Revenue',readonly=True, select=True),
-		'net_revenue':fields.float('Net_Revenue',readonly=True, select=True),
-		'net_margin':fields.float('Net_Margin', readonly=True, select=True),
+		'gross_revenue':fields.float('Gross revenue',readonly=True, select=True),
+		'net_revenue':fields.float('Net revenue',readonly=True, select=True),
+		'net_margin':fields.float('Net margin', readonly=True, select=True),
 		'date': fields.date('Create Date',  required=True),
-
-
 	}
 
 	def init(self, cr):
@@ -972,9 +970,9 @@ class report_seller_auction2(osv.osv):
 			substring(al.create_date for 10) as date,
 			rs.name as "seller",
 			sum(adt.adj_total) as "sum_adj",
-			al.gross_revenue as "gross_revenue",
-			al.net_revenue as "net_revenue",
-			al.net_margin as "net_margin"
+			sum(al.gross_revenue) as "gross_revenue",
+			sum(al.net_revenue) as "net_revenue",
+			sum(al.net_margin) as "net_margin"
 
 		from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt
 			 where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and adt.id=al.auction_id
@@ -1007,9 +1005,9 @@ class report_auction_view(osv.osv):
 		count(al.id) as "nobjects",
 		count(al.ach_uid) as "nbuyer",
 		count(al.bord_vnd_id) as "nseller",
-		al.lot_est1 as "min_est",
-		al.lot_est2 as "max_est",
-		al.obj_price as "adj_price"
+		sum(al.lot_est1) as "min_est",
+		sum(al.lot_est2) as "max_est",
+		sum(al.obj_price) as "adj_price"
 		from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
 		ad.id,ad.name,al.ach_uid,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price,al.create_date)''')
 
@@ -1035,8 +1033,8 @@ class report_auction_view2(osv.osv):
 			  substring(al.create_date for 10) as date,
 			 ad.name as "auction",
 			sum(ad.adj_total) as "sum_adj",
-			al.gross_revenue as "gross_revenue",
-			al.net_revenue as "net_revenue",
+			sum(al.gross_revenue) as "gross_revenue",
+			sum(al.net_revenue) as "net_revenue",
 			(al.net_margin*count(al.id)) as "obj_margin"
 			from auction_dates ad,auction_lots al where ad.id=al.auction_id
 			group by ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
@@ -1078,7 +1076,7 @@ class report_buyer_auction2(osv.osv):
 	_columns = {
 		'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
 		'buyer':fields.char('Buyer',size=64, readonly=True, select=True),
-		'sumadj':fields.float('sum of adjustication',readonly=True, select=True),
+		'sumadj':fields.float('Sum of adjustication',readonly=True, select=True),
 		'gross_revenue':fields.float('Gross Revenue', readonly=True, select=True),
 		'net_revenue':fields.float('Net Revenue', readonly=True, select=True),
 		'net_margin':fields.float('Net Margin', readonly=True, select=True),
@@ -1094,9 +1092,9 @@ class report_buyer_auction2(osv.osv):
 			al.ach_login as "buyer_login",
 			rs.name as "buyer",
 			sum(ad.adj_total) as sumadj,
-			al.gross_revenue as gross_revenue,
-			al.net_revenue as net_revenue,
-			al.net_margin as net_margin
+			sum(al.gross_revenue) as gross_revenue,
+			sum(al.net_revenue) as net_revenue,
+			sum(al.net_margin) as net_margin
 			from auction_lots al, auction_bid ab,res_partner rs,auction_dates ad
 			where al.ach_uid=rs.id and al.auction_id=ad.id group by
 			al.id,al.ach_uid,al.ach_login,rs.name,ad.adj_total,
@@ -1107,19 +1105,14 @@ class report_auction_object_date(osv.osv):
     _name = "report.auction.object.date"
     _description = "Objects per day"
     _auto = False
-    _columns = {
-            'auction_id': fields.many2one('auction.dates', 'Auction Date'),
-            'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
-            'name': fields.char('Short Description',size=64, required=True),
+    _columns = { 
+			'name': fields.char('Short Description',size=64, required=True),
             'lot_type': fields.selection(_type_get, 'Object Type', size=64),
-            'obj_desc': fields.text('Object Description'),
             'obj_num': fields.integer('Catalog Number',select=True),
-            'obj_ret': fields.float('Price retired'),
-            'obj_comm': fields.boolean('Commission'),
-            'obj_price': fields.float('Adjudication price'),
+            'obj_price': fields.float('Adjudication price'), 
+			'date': fields.char('Name', size=64, required=True,select=True),
             'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, select=True),
-            'date': fields.char('Name', size=64, required=True,select=True),
-            'lot_num': fields.integer('Quantity', required=True),
+            'lot_num': fields.integer('Quantity', required=True)
     }
 
     def init(self, cr):
@@ -1144,19 +1137,12 @@ class report_auction_estimation_adj_category(osv.osv):
     _auto = False
     _columns = {
             'auction_id': fields.many2one('auction.dates', 'Auction Date'),
-            'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
-            'name': fields.char('Short Description',size=64, required=True),
             'lot_type': fields.selection(_type_get, 'Object Type', size=64,select=True),
             'lot_est1': fields.float('Minimum Estimation',select=True),
             'lot_est2': fields.float('Maximum Estimation',select=True),
-            'obj_desc': fields.text('Object Description',select=True),
-            'obj_num': fields.integer('Catalog Number'),
-            'obj_ret': fields.float('Price retired'),
-            'obj_comm': fields.boolean('Commission'),
             'obj_price': fields.float('Adjudication price'),
             'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
             'date': fields.char('Name', size=64, required=True,select=True),
-            'lot_num': fields.integer('Quantity', required=True),
             'lot_type': fields.selection(_type_get, 'Object Type', size=64),
             'adj_total': fields.float('Total Adjudication',select=True),
     }
@@ -1211,3 +1197,31 @@ report_auction_estimation_adj_category()
 #            )
 #        """)
 #report_auction_user_pointing()
+
+
+class report_auction_adjudication(osv.osv):
+    _name = "report.auction.adjudication"
+    _description = "report_auction_adjudication"
+    _auto = False
+    _columns = {
+			'name': fields.char('Auction date', size=64, required=True,select=True),
+			'state': fields.selection((('draft','Draft'),('close','Closed')),'State', select=True),
+			'adj_total': fields.float('Total Adjudication',select=True)
+    }
+
+
+    def init(self, cr):
+    	cr.execute("""
+            create or replace view report_auction_adjudication as (
+                select
+                    l.id as id,
+                    l.name as name,
+                    sum(m.obj_price) as adj_total
+                from
+                    auction_dates l ,auction_lots m
+                where m.auction_id=l.id
+                group by l.id,l.name,l.auction1,l.auction2
+
+            )
+        """)
+report_auction_adjudication()
