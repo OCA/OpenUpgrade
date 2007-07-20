@@ -30,7 +30,8 @@ import time
 import netsvc
 from osv import fields, osv, orm
 import ir
-
+from mx import DateTime
+import time
 #----------------------------------------------------------
 # Auction Artists
 #----------------------------------------------------------
@@ -1029,7 +1030,7 @@ class report_auction_view2(osv.osv):
 
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view2  as
-			 (select  ad.id, 
+			 (select  ad.id,
 			  substring(al.create_date for 10) as date,
 			 ad.name as "auction",
 			sum(ad.adj_total) as "sum_adj",
@@ -1105,11 +1106,11 @@ class report_auction_object_date(osv.osv):
     _name = "report.auction.object.date"
     _description = "Objects per day"
     _auto = False
-    _columns = { 
+    _columns = {
 			'name': fields.char('Short Description',size=64, required=True),
             'lot_type': fields.selection(_type_get, 'Object Type', size=64),
             'obj_num': fields.integer('Catalog Number',select=True),
-            'obj_price': fields.float('Adjudication price'), 
+            'obj_price': fields.float('Adjudication price'),
 			'date': fields.char('Name', size=64, required=True,select=True),
             'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, select=True),
             'lot_num': fields.integer('Quantity', required=True)
@@ -1225,3 +1226,131 @@ class report_auction_adjudication(osv.osv):
             )
         """)
 report_auction_adjudication()
+
+
+
+
+
+class hr_attendance(osv.osv):
+	_name = "hr.attendance"
+	_description = "Attendance"
+	_inherit="hr.attendance"
+
+#	def _total_attendance(self, cr, uid, ids, name, args, context):
+#		print "ids:::name:::args:::",ids,name,args
+##		result = {}
+##		for day in self.browse(cr, uid, ids, context):
+##			result[day.id] = 0.0
+##			obj = self.pool.get('hr_timesheet_sheet.sheet.day')
+##			ids = obj.search(cr, uid, [('sheet_id','=',day.id),('name','=',day.date_current)])
+##			if ids:
+##				result[day.id] = obj.read(cr, uid, ids, ['total_timesheet'])[0]['total_timesheet'] or 0.0
+#		return True
+#
+	def create(self, cr, uid, vals, context={}):
+		print "INTHE CREATE FUNCTION and print the vals:::::::::::::::",vals
+		new_id = super(osv.osv, self).create(cr, uid, vals, context)
+		print "new_id::::::::::::::::",new_id,type(new_id)
+		self.write(cr, uid, [int(new_id)], vals, context)
+		return new_id
+#		print "value of recird _id::::::::::::",record_id
+#		journal_name = self.browse(cr, uid, [record_id])[0].name
+#		print "name",journal_name
+#		periods = self.pool.get('account.period')
+#		ids = periods.search(cr, uid, [('date_stop','>=',time.strftime('%Y-%m-%d'))])
+#		for period in periods.browse(cr, uid, ids):
+#			self.pool.get('account.journal.period').create(cr, uid, {
+#				'name': (journal_name or '')+':'+(period.code or ''),
+#				'journal_id': journal_id,
+#				'period_id': period.id
+#			})
+#		return action
+
+	def _total_attendance(self, cr, uid, ids, vals, context):
+		print "ID::::::::::::",ids,vals
+		if vals['action']=='sign_out':
+			get_id=self.pool.get('hr.attendance').search(cr,uid,[('action','=','sign_in'),('employee_id','=',vals['employee_id']),('id','<',ids[0])])
+			print "get_id::::;;",max(get_id)
+			p_vals=self.pool.get('hr.attendance').read(cr,uid,[max(get_id)])[0]
+			print "p_vals:::::::::",p_vals,p_vals['name']
+			print "sign_out :::: sign_in::::",DateTime.strptime(vals['name'], '%Y-%m-%d %H:%M:%S'),DateTime.strptime(p_vals['name'], '%Y-%m-%d %H:%M:%S')
+			#total=  DateTime.strptime(vals['name'], '%Y-%m-%d %H:%M:%S')-DateTime.strptime(p_vals['name'], '%Y-%m-%d %H:%M:%S')
+			total= (DateTime.strptime(vals['name'], '%Y-%m-%d %H:%M:%S')-DateTime.strptime(p_vals['name'], '%Y-%m-%d %H:%M:%S')).strftime('%H.%M')
+			print"Total Difference:::::::::",total
+			return total
+		else:
+			return False
+
+	def write(self, cr, uid, ids, vals, context={}):
+		print "idsssssssss::::::::",ids
+		#print "VALUE OF VAL",vals['name']
+		if vals.has_key('name'):
+			write_id = super(osv.osv, self).write(cr, uid, ids, vals, context)
+			tot=self._total_attendance(cr, uid, ids, vals, context)
+			if tot:
+#				print"Total ::::::",time.strftime('%H:%M',tot)
+#				#print "Total Diff : ", DateTime.strptime(tot,'%H.%M')
+#
+#				print "a::::::",a
+
+#				a=tot
+#				print "value of a::::::::",a(type)
+				super(osv.osv, self).write(cr, uid, ids, {'total':tot}, context)
+			return True
+		else:
+			return super(osv.osv, self).write(cr, uid, ids, vals, context)
+#
+#
+#		print "INTHE WRITE FUNCTION and print the vals:::::::::::::::",vals
+#		record_id = super(osv.osv, self).create(cr, uid, vals, context)
+#		print "value of recird _id::::::::::::",record_id
+#		journal_name = self.browse(cr, uid, [record_id])[0].name
+#		print "name",journal_name
+#		periods = self.pool.get('account.period')
+#		ids = periods.search(cr, uid, [('date_stop','>=',time.strftime('%Y-%m-%d'))])
+#		for period in periods.browse(cr, uid, ids):
+#			self.pool.get('account.journal.period').create(cr, uid, {
+#				'name': (journal_name or '')+':'+(period.code or ''),
+#				'journal_id': journal_id,
+#				'period_id': period.id
+#			})
+		return True
+
+
+	_columns={
+			  'total': fields.float(string='Total Attendance', digits=(16,2),select='True')
+			  }
+
+
+hr_attendance()
+
+
+
+class report_signin_signout(osv.osv):
+    _name = "report.signin.signout"
+    _description = "report for the sign in and sign out"
+    _auto = False
+    _columns = {
+            'emp_name': fields.char('Employeename',size=64, required=True),
+            'day': fields.date('Timesheet Date', select=True),
+            'emp_id': fields.integer('Employee id',  select=True),
+            'total_timesheet': fields.float('Project Timesheet',select=True),
+      }
+
+
+    def init(self, cr):
+        cr.execute("""
+
+create or replace view report_signin_signout as (
+
+select a.id as id,sum(a.total) as total_timesheet,substring(a.name for 10) as day,
+a.employee_id as emp_id,h.name as emp_name from
+ hr_attendance a,hr_employee h where h.id=a.employee_id
+group by a.employee_id,h.name,substring(a.name for 10),h.name,a.total,a.id)
+
+        """)
+report_signin_signout()
+
+
+
+

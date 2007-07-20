@@ -377,7 +377,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
-		<field name="domain">[('state','=','sold')]</field> 
+		<field name="domain">[('state','=','sold')]</field>
 
 	</record>
 
@@ -429,7 +429,7 @@ Auction Management/Auction Dates/Reporting
 		id="menu_all_objects_unsold"/>
 
 
-		
+
 	<!-- form3: simplified form meant for during the sale (action button in dates) -->
 	<record model="ir.ui.view" id="v9">
 		<field name="name">auction.lots.form3</field>
@@ -483,7 +483,7 @@ Auction Management/Auction Dates/Reporting
         <field name="view_type">form</field>
         <field name="view_mode">tree,form</field>
 		<field name="domain">[('lot_type','=','41')]</field>
-     </record> 
+     </record>
 
 
 	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects" id="menu_all_objects_unclassified"/>
@@ -1104,7 +1104,7 @@ estimation.adj.category
 	<menuitem name="Auction Management/Reporting/Manager/This month/estimation/adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
 
 
-==============================
+=<!--=============================
 sign in sign out report by user
 ==============================
 
@@ -1147,6 +1147,55 @@ sign in sign out report by user
 	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
 	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
 
+-->
+
+
+<!--=================================created by pmo for the sign in report===============================================-->
+
+
+
+
+	<record model="ir.ui.view" id="view_report_auction_sign_in_out_tree1">
+		<field name="name">report.signin.signout.tree</field>
+		<field name="model">report.signin.signout</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Summary pointing by user ">
+				<field name="emp_name" select="1"/>
+				<field name="day" select="1"/>
+				<field name="total_timesheet" widget="float_time"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_auction_sign_in_out_graph1">
+		<field name="name">report.signin.signout.graph</field>
+		<field name="model">report.signin.signout</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+
+			<graph string="Summary pointing by user " orientation="vertical" type="bar">
+				<field name="emp_name" select="1"/>
+				<field name="total_timesheet" operator="+"/>
+				<field name="day" select="1" group="True"/>
+			</graph>
+		</field>
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_member_tree1">
+		<field name="res_model">report.signin.signout</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree1">
+		<field name="res_model">report.signin.signout</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+	</record>
+	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out1" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
+	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out1"  action="action_report_auction_sign_in_out_manager_tree1" id="menu_report_auction_sign_in_out_manager_tree1"/>
+
 
 
 
@@ -1160,7 +1209,7 @@ My Latest 10 Objects
         <field name="view_mode">tree</field>
         <!--field name="domain">[('user_id','=',uid)]</field-->
     </record>
-    <menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/> 
+    <menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
 
 
 =============================
@@ -1172,7 +1221,7 @@ My Latest Deposit
         <field name="view_type">form</field>
         <field name="view_mode">tree</field>
     </record>
-    <menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/> 
+    <menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
 
 
 =============================
@@ -1186,7 +1235,7 @@ Objects per Day
                 <field name="obj_num" select="1"/>
 
              </tree>
-     </record> 
+     </record>
 
 	 <record model="ir.ui.view" id="view_report_auction_object_date_form">
         <field name="name">Object date</field>
