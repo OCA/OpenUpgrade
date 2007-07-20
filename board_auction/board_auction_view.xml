@@ -12,7 +12,6 @@
 			<field name="arch" type="xml">
 				<form string="Auction manager ">
 					<hpaned position="100">
-						
 						<child1>
 							<action
 								string="My Latest Objects"
@@ -24,13 +23,14 @@
 								name="%(auction.action_report_latest_doposit_tree)d"
 								colspan="4"/>
 							</child1>
-							<action
-								string="Summary pointing by user"
-								name="%(report_auction.action_report_auction_sign_in_out_member_tree)d"
-								view_mode="graph,tree"
-								colspan="4"/>
-						</child1>
+
 						<child2>
+							<button
+								string="Menu"
+								name="%(base.action_menu_admin)d"
+								icon="gtk-ok"
+								type="action"
+								colspan="4"/>
 
 							<action
 								string="Objects By Day"
@@ -72,3 +72,4 @@
 
 </data>
 </terp>
+

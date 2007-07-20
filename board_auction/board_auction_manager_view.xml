@@ -18,23 +18,10 @@
 							<action
 								string="My latest objects"
 								name="%(auction.action_report_latest_objects_tree)d"
-								string="Total Adjudications"
-								name="%(report_auction.action_report_auction_adjudication_tree)d"
-								view_mode="graph,tree"
-								colspan="4"
-								height="200"
-								width="510"/>
+								/>
 							<action string="My latest deposits"
-								name="%(auction.action_report_latest_doposit_tree)d"
-							<action string="Customers/suppliers"
-								name="%(report_auction.action_per_seller_customer_tree)d"
-								colspan="4"/>
-							<action
-								string="Summary pointing by user"
-								name="%(report_auction.action_report_auction_sign_in_out_manager_tree)d"
-								view_mode="graph,tree"
-								colspan="4"/>
-						</child1>
+								name="%(auction.action_report_latest_doposit_tree)d"/>
+							</child1>
 
 						<child2>
 							<button
@@ -47,21 +34,21 @@
 								string="Total Adjudications"
 								name="%(auction.action_report_auction_adjudication_tree)d"
 								view_mode="graph,tree"
-								colspan="4"
 								/>
-							<action
-								string="Objects by day"
-								name="%(auction.action_report_auction_object_date_tree)d"
-								string="Comparision est/adj per product "
-								name="%(report_auction.action_report_auction_estimation_adj_category_tree)d"
-								view_mode="graph,tree" colspan="4"/>
-						
 							<action
 								string="Estimations/Adjudication"
 								name="%(auction.action_report_auction_estimation_adj_category_tree)d"
+								view_mode="graph,tree" />
+						
+							<action
 								string="Objects by day"
-								name="%(report_auction.action_report_auction_object_date_tree)d"
-								view_mode="graph,tree" colspan="4"/>
+								name="%(auction.action_report_auction_object_date_tree)d"
+								view_mode="graph,tree" />
+							<action
+								string="Summary pointing by user"
+								name="%(auction.action_report_auction_sign_in_out_member_tree1)d"
+								view_mode="graph,tree"
+								/>
 	
 						</child2>
 					</hpaned>
