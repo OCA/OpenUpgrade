@@ -446,6 +446,11 @@ class DBModalDialog:
         if itemListenerProc != None:
             self.addItemListenerProc( cCtrlName, itemListenerProc )
 
+    def addListBoxItems( self, cCtrlName, tcItemTexts, nPosition=0 ):
+        """Add a tupple of items to the ListBox at specified position."""
+        oControl = self.getControl( cCtrlName )
+        oControl.addItems( tcItemTexts, nPosition )
+
     def selectListBoxItem( self, cCtrlName, cItemText, bSelect=True ):
         """Selects/Deselects the ispecified item."""
         oControl = self.getControl( cCtrlName )

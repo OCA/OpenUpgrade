@@ -17,18 +17,19 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
         self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
                             itemListenerProc=self.cmbVariable_selected)
+        self.insVariable = self.win.getControl( "cmbVariable" )
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Field to loop on :")
         self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False,itemListenerProc=self.lstbox_selected)
+        self.insField = self.win.getControl( "lstFields" )
 
-        self.insVariable = self.win.getControl( "cmbVariable" )
         self.win.addFixedText("lblName", 12, 187, 60, 15, "Variable name :")
         self.win.addEdit("txtName", 180-120-2, 185, 120, 15,)
 
         self.win.addFixedText("lblUName", 8, 207, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 205, 120, 15,)
 
-        self.insField = self.win.getControl( "lstFields" )
+
         self.win.addButton('btnOK',-2 ,-10,45,15,'Ok'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
