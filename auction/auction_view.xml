@@ -1189,19 +1189,14 @@ sign in sign out report by user
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 	</record>
-	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree1">
-		<field name="res_model">report.signin.signout</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,graph</field>
-	</record>
-	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out1" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
-	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out1"  action="action_report_auction_sign_in_out_manager_tree1" id="menu_report_auction_sign_in_out_manager_tree1"/>
+	<menuitem name="Auction Management/Reporting/Member/Summury of sign in-out" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
+	<menuitem name="Auction Management/Reporting/Manager/Summury of sign in-out"  action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_manager_tree1"/>
 
 
 
 
 ==============================
-My Latest 10 Objects
+My Latest Objects
 ==============================
 
     <record model="ir.actions.act_window" id="action_report_latest_objects_tree">
@@ -1232,11 +1227,11 @@ Objects per Day
        <field name="name">Object date</field>
        <field name="model">report.auction.object.date</field>
    	<tree string="Objects per Day">
-                <field name="date" select="1"/>
+                <field name="name" select="1" />
                 <field name="obj_num" select="1"/>
-				<!--field name="name" select="1"/>
-				<field name="lot_type" select="1"/>
-				<field name="state" select="1"/-->
+				<!--field name="name" />
+				<field name="lot_type" />
+				<field name="state" /-->
 
              </tree>
      </record>
@@ -1247,13 +1242,11 @@ Objects per Day
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Objects per Day">
-                <field name="date" select="1"/>
+                <field name="name" select="1"/>
                 <field name="obj_num" select="1"/>
              </form>
          </field>
      </record>
-
-
 
 	<record model="ir.ui.view" id="view_report_auction_object_date_graph">
 		<field name="name">report.auction.object.date.graph</field>
@@ -1261,7 +1254,7 @@ Objects per Day
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Objects per day"  type="bar">
-				<field name="date" select="1"/>
+				<field name="name" select="1"/>
 				<field name="obj_num" operator="+"/>
 			</graph>
 		</field>
