@@ -67,12 +67,16 @@ class ErrorDialog:
         self.win.addFixedText("lblErrHelpMsg", 5, 30, 190, 25, sErrorHelpMsg)
         self.win.addButton('btnOK', 55,-5,40,15,'Ok'
                      ,actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.doModalDialog()
+        self.win.doModalDialog("",None)
     def btnOkOrCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
 
 import uno
 import xmlrpclib
+import re
+import socket
+import cPickle
+import marshal
 if __name__<>"package":
     from gui import *
 
@@ -238,7 +242,96 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
                 aComponentAdd.append(sTableName+"."+oPar.Name)
     return 0
 
-import uno
+def getRecersiveSection(oCurrentSection,aSectionList):
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        oParEnum=doc.getText().createEnumeration()
+        aSectionList.append(oCurrentSection.Name)
+        if oCurrentSection.ParentSection:
+            getRecersiveSection(oCurrentSection.ParentSection,aSectionList)
+        else:
+            return
+def getConnectionStatus(url):
+    m = re.match('^(http[s]?://|socket://)([\w.\-]+):(\d{1,5})$', url or '')
+    if not m:
+        return -1
+    if m.group(1) == 'http://' or m.group(1) == 'https://':
+        sock = xmlrpclib.ServerProxy(url + '/xmlrpc/db')
+        try:
+            return sock.list()
+        except:
+            return -1
+    else:
+        sock = mysocket
+        #sock = xmlrpclib.ServerProxy(url + '/xmlrpc/common')
+        try:
+            sock.connect(m.group(2), int(m.group(3)))
+            sock.mysend(('db', 'list'))
+            res = sock.myreceive()
+            sock.disconnect()
+            return res
+        except Exception, e:
+            return -1
+
+class Myexception(Exception):
+    def __init__(self, faultCode, faultString):
+        self.faultCode = faultCode
+        self.faultString = faultString
+
+class mysocket:
+    def __init__(self, sock=None):
+        print "abc"
+        if sock is None:
+            self.sock = socket.socket(
+            socket.AF_INET, socket.SOCK_STREAM)
+        else:
+            self.sock = sock
+        self.sock.settimeout(60)
+    def connect(self, host, port=False):
+        if not port:
+            protocol, buf = host.split('//')
+            host, port = buf.split(':')
+        self.sock.connect((host, int(port)))
+    def disconnect(self):
+        self.sock.shutdown(socket.SHUT_RDWR)
+        self.sock.close()
+    def mysend(self, msg, exception=False, traceback=None):
+        msg = cPickle.dumps([msg,traceback])
+        size = len(msg)
+        self.sock.send('%8d' % size)
+        self.sock.send(exception and "1" or "0")
+        totalsent = 0
+        while totalsent < size:
+            sent = self.sock.send(msg[totalsent:])
+            if sent == 0:
+                raise RuntimeError, "socket connection broken"
+            totalsent = totalsent + sent
+    def myreceive(self):
+        buf=''
+        while len(buf) < 8:
+            chunk = self.sock.recv(8 - len(buf))
+            if chunk == '':
+                raise RuntimeError, "socket connection broken"
+            buf += chunk
+        size = int(buf)
+        buf = self.sock.recv(1)
+        if buf != "0":
+            exception = buf
+        else:
+            exception = False
+        msg = ''
+        while len(msg) < size:
+            chunk = self.sock.recv(size-len(msg))
+            if chunk == '':
+                raise RuntimeError, "socket connection broken"
+            msg = msg + chunk
+        res = cPickle.loads(msg)
+        if isinstance(res[0],Exception):
+            if exception:
+                raise Myexception(str(res[0]), str(res[1]))
+            raise res[0]
+        else:
+            return res[0]import uno
 import unohelper
 if __name__<>"package":
     from actions import *
@@ -686,10 +779,20 @@ class DBModalDialog:
         if itemListenerProc != None:
             self.addItemListenerProc( cCtrlName, itemListenerProc )
 
+    def addListBoxItems( self, cCtrlName, tcItemTexts, nPosition=0 ):
+        """Add a tupple of items to the ListBox at specified position."""
+        oControl = self.getControl( cCtrlName )
+        oControl.addItems( tcItemTexts, nPosition )
+
     def selectListBoxItem( self, cCtrlName, cItemText, bSelect=True ):
         """Selects/Deselects the ispecified item."""
         oControl = self.getControl( cCtrlName )
         return oControl.selectItem( cItemText, bSelect )
+
+    def selectListBoxItemPos( self, cCtrlName, nItemPos, bSelect=True ):
+        """Select/Deselect the item at the specified position."""
+        oControl = self.getControl( cCtrlName )
+        return oControl.selectItemPos( nItemPos, bSelect )
 
     def removeListBoxItems( self, cCtrlName, nPosition, nCount=1 ):
         """Remove items from a ListBox."""
@@ -705,6 +808,11 @@ class DBModalDialog:
         """Returns the currently selected item."""
         oControl = self.getControl( cCtrlName )
         return oControl.getSelectedItem()
+
+    def getListBoxItem( self, cCtrlName, nPosition ):
+        """Return the item at specified position within the ListBox."""
+        oControl = self.getControl( cCtrlName )
+        return oControl.getItem( nPosition )
 
     def getListBoxSelectedItemPos(self,cCtrlName):
 
@@ -937,9 +1045,11 @@ class DBModalDialog:
     #   Display the modal dialog.
     #--------------------------------------------------
 
-    def doModalDialog( self ):
+    def doModalDialog( self, sObjName,sValue):
         """Display the dialog as a modal dialog."""
         self.oDialogControl.setVisible( True )
+        if not sValue==None:
+            self.selectListBoxItem( sObjName, sValue, True )
         self.oDialogControl.execute()
 
     def endExecute( self ):
@@ -968,25 +1078,30 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
         self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
                             itemListenerProc=self.cmbVariable_selected)
+        self.insVariable = self.win.getControl( "cmbVariable" )
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Field to loop on :")
         self.win.addComboListBox("lstFields", 180-120-2, 30, 120, 150, False,itemListenerProc=self.lstbox_selected)
+        self.insField = self.win.getControl( "lstFields" )
 
-        self.insVariable = self.win.getControl( "cmbVariable" )
         self.win.addFixedText("lblName", 12, 187, 60, 15, "Variable name :")
         self.win.addEdit("txtName", 180-120-2, 185, 120, 15,)
 
         self.win.addFixedText("lblUName", 8, 207, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 205, 120, 15,)
 
-        self.insField = self.win.getControl( "lstFields" )
+
         self.win.addButton('btnOK',-2 ,-10,45,15,'Ok'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
         self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         # Variable Declaration
+        self.sValue=None
         self.sObj=None
+        self.aSectionList=[]
+        self.sGVariable=sVariable
+        self.sGDisplayName=sDisplayName
         self.aItemList=[]
         self.aComponentAdd=[]
         self.aObjectList=[]
@@ -1012,6 +1127,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             cursor = doc.getCurrentController().getViewCursor()
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
+
             for j in range(self.aObjectList.__len__()):
                 if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find(" ")) == "List":
                     self.insVariable.addItem(self.aObjectList[j],1)
@@ -1022,11 +1138,14 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                             self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextSection:
-                    if self.aComponentAdd[i]== tcur.TextSection.Name:
+                    getRecersiveSection(tcur.TextSection,self.aSectionList)
+                    #for k in range(self.aSectionList.__len__()):
+                    if self.aComponentAdd[i] in self.aSectionList:
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                         for j in range(self.aObjectList.__len__()):
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                                 self.insVariable.addItem(self.aObjectList[j],1)
+
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
@@ -1035,8 +1154,9 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 if sObject=="":
                     self.insVariable.setText("List of "+docinfo.getUserFieldValue(3))
                     self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
-                    self.win.setEditText("txtName", sVariable)
-                    self.win.setEditText("txtUName",sDisplayName)
+#                    self.win.setEditText("txtName", sVariable)
+#                    self.win.setEditText("txtUName",sDisplayName)
+                    self.sValue= "objects"
                 else:
                     sItem=""
                     i=0
@@ -1045,18 +1165,38 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                             sItem= self.aObjectList[i]
                             self.insVariable.setText(sItem)
                     genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
-                    self.win.setEditText("txtName", sVariable)
-                    self.win.setEditText("txtUName",sDisplayName)
-            self.win.doModalDialog()
+#                    self.win.setEditText("txtName", sVariable)
+#                    self.win.setEditText("txtUName",sDisplayName)
+                    self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
+            self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
 
+
+
+
+    def getSection(self,oParEnum,oCurrentSection):
+        while oParEnum.hasMoreElements():
+            oPar = oParEnum.nextElement()
+            if oPar.supportsService("com.sun.star.text.TextContent"):
+                if oPar.TextSection:
+                    if oPar.TextSection.Name==oCurrentSection.Name:
+                        oInsideEnum=oPar.createEnumeration()
+                        while oInsideEnum.hasMoreElements():
+                            oInside=oInsideEnum.nextElement()
+                            if oInside.supportsService("com.sun.star.text.TextPortion"):
+                                if oInside.TextField:
+                                    print oInside.TextField.Items
     def lstbox_selected(self,oItemEvent):
         sItem=self.win.getListBoxSelectedItem("lstFields")
         sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]
-        self.win.setEditText("txtName",sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))
-        self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind("/")+1,sItem.__len__())+".-|")
+        if self.bModify==True:
+            self.win.setEditText("txtName", self.sGVariable)
+            self.win.setEditText("txtUName",self.sGDisplayName)
+        else:
+            self.win.setEditText("txtName",sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))
+            self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind("/")+1,sItem.__len__())+".-|")
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -1064,18 +1204,20 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem=self.win.getComboBoxText("cmbVariable")
             self.aListRepeatIn=[]
             if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
                 genTree(docinfo.getUserFieldValue(3), self.aListRepeatIn, self.insField,self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
             else:
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+            self.win.selectListBoxItemPos("lstFields", 0, True )
 
         else:
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem=self.win.getComboBoxText("cmbVariable")
             self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))
             self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
+            self.win.selectListBoxItemPos("lstFields", 0, True )
 
     def btnOkOrCancel_clicked(self, oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -1093,7 +1235,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         oCurObj.Items = (sKey,sValue)
                         oCurObj.update()
                     else:
-                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=self.win.getComboBoxText("cmbVariable")
                         sObjName=sObjName.__getslice__(0,sObjName.find("("))
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
@@ -1107,7 +1249,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         oInputList.Items = (sKey,sValue)
                         text.insertTextContent(cursor,oInputList,False)
                     else:
-                        sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                        sObjName=self.win.getComboBoxText("cmbVariable")
                         sObjName=sObjName.__getslice__(0,sObjName.find("("))
                         if cursor.TextTable==None:
                             sKey=u""+ self.win.getEditText("txtUName")
@@ -1164,11 +1306,14 @@ class Fields(unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblUName", 8, 187, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 185, 120, 15,)
 
-        self.sObj=None
         self.win.addButton('btnOK',-5 ,-5,45,15,'Ok'
                      ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.sValue=None
+        self.sObj=None
+        self.aSectionList=[]
+        self.sGDisplayName=sDisplayName
         self.aItemList=[]
         self.aComponentAdd=[]
         self.aObjectList=[]
@@ -1200,7 +1345,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                             self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextSection:
-                    if self.aComponentAdd[i]== tcur.TextSection.Name:
+                    getRecersiveSection(tcur.TextSection,self.aSectionList)
+                    #for k in range(self.aSectionList.__len__()):
+                    if self.aComponentAdd[i] in self.aSectionList:
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                         for j in range(self.aObjectList.__len__()):
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
@@ -1217,8 +1364,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                         sItem= self.aObjectList[i]
                         self.insVariable.setText(sItem)
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-                self.win.setEditText("txtUName",sDisplayName)
-            self.win.doModalDialog()
+#                self.win.setEditText("txtUName",sDisplayName)
+                self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
+            self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
             self.win.endExecute()
@@ -1239,15 +1387,15 @@ class Fields(unohelper.Base, XJobExecutor ):
         res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
         key = res.keys()
         key.sort()
+        myval=None
         if not sVar.find("/")==-1:
             myval=sVar.__getslice__(0,sVar.find("/"))
         else:
             myval=sVar
         for k in key:
-            if k==myval:
-                return sObject #res[myval]['relation']
             if (res[k]['type'] in ['many2one']) and k==myval:
                 self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+                return res[myval]['relation']
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -1256,7 +1404,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             self.aListFields=[]
-            sItem=self.win.getComboBoxSelectedText("cmbVariable")
+            sItem=self.win.getComboBoxText("cmbVariable")
             genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
@@ -1279,7 +1427,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             elif self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
                 sObjName=""
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                sObjName=self.win.getComboBoxSelectedText("cmbVariable")
+                sObjName=self.win.getComboBoxText("cmbVariable")
                 sObjName=sObjName.__getslice__(0,sObjName.find("("))
                 if cursor.TextTable==None:
                     sKey=u""+ self.win.getEditText("txtUName")
@@ -1336,7 +1484,7 @@ class Expression(unohelper.Base, XJobExecutor ):
         if self.bModify==True:
             self.win.setEditText("txtExpression",sExpression)
             self.win.setEditText("txtName",sName)
-        self.win.doModalDialog()
+        self.win.doModalDialog("",None)
 
     def getDesktop(self):
         localContext = uno.getComponentContext()
@@ -1435,7 +1583,6 @@ class modify(unohelper.Base, XJobExecutor ):
             exit(1)
         # Check weather Field-4 is available or not otherwise exit from application
         if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
-            print self.oVC.TextField
             if self.oVC.TextField:
                 self.oCurObj=self.oVC.TextField
                 self.oMyObject= self.getOperation(self.oVC.TextField.Items.__getitem__(1))
@@ -1444,6 +1591,7 @@ class modify(unohelper.Base, XJobExecutor ):
                 elif self.oMyObject.__getitem__(0) == "expression":
                     Expression(self.oMyObject.__getitem__(1),self.oCurObj.Items.__getitem__(0),True)
                 elif self.oMyObject.__getitem__(0)=="repeatIn":
+                    #RepeatIn(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
                     RepeatIn(self.oMyObject.__getitem__(1).__getslice__(0,self.oMyObject.__getitem__(1).find(".")),self.oMyObject[2],self.oMyObject.__getitem__(1).__getslice__(self.oMyObject.__getitem__(1).find("."),self.oMyObject.__getitem__(1).__len__()).replace(".","/"),self.oCurObj.Items[0],True)
             else:
                 ErrorDialog("Please place your cursor at begaining of field \nwhich you want to modify","")
@@ -1483,27 +1631,73 @@ import string
 import unohelper
 import xmlrpclib
 from com.sun.star.task import XJobExecutor
-
 if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
+    from Change import *
 
 class ServerParameter( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
-        self.win=DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
-        self.win.addFixedText("lblVariable", 8, 12, 60, 15, "Server Connection")
-        self.win.addEdit("txtHost",-34,9,85,15)
+
+        self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
+
+        self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Server URL")
+        self.win.addEdit("txtHost",-34,9,91,15)
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
                       ,actionListenerProc = self.btnChange_clicked )
 
-        self.win.doModalDialog()
+        self.win.addFixedText("lblDatabaseName", 6, 31, 60, 15, "Database")
+        #self.win.addFixedText("lblMsg", -2,28,123,15)
+        self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
+        self.lstDatabase = self.win.getControl( "lstDatabase" )
+
+        #self.win.setEnabled("lblMsg",False)
+
+        self.win.addFixedText("lblLoginName", 17, 51, 60, 15, "Login")
+        self.win.addEdit("txtLoginName",-2,48,123,15)
+
+        self.win.addFixedText("lblPassword", 6, 70, 60, 15, "Password")
+        self.win.addEdit("txtPassword",-2,67,123,15)
+
+        self.win.addButton('btnOK',-2 ,-5, 60,15,'Test Connection'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+
+        self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+
+        self.win.doModalDialog("",None)
+
+    def btnOkOrCancel_clicked(self,oActionEvent):
+        if oActionEvent.Source.getModel().Name == "btnOK":
+            sock = xmlrpclib.ServerProxy(self.win.getEditText("txtHost")+'/xmlrpc/common')
+            sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
+            sLogin=self.win.getEditText("txtLoginName")
+            sPassword=self.win.getEditText("txtPassword")
+            UID = sock.login(sDatabase,sLogin,sPassword)
+            print UID
+            if not UID:
+                ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
+            else:
+                self.win.endExecute()
+        elif oActionEvent.Source.getModel().Name == "btnCancel":
+            self.win.endExecute()
 
     def btnChange_clicked(self,oActionEvent):
-        print "Hello change"
+        aVal=[]
+        Change(aVal)
+        if aVal[1]== -1:
+            pass
+        elif aVal[1]==0:
+            pass
+        else:
+            self.win.setEditText("txtHost",aVal[0])
+            for i in range(aVal[1].__len__()):
+                self.lstDatabase.addItem(aVal[1][i],i)
+
 
 if __name__<>"package" and __name__=="__main__":
     ServerParameter(None)
@@ -1511,4 +1705,56 @@ elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
             ServerParameter,
             "org.openoffice.tiny.report.serverparam",
-            ("com.sun.star.task.Job",),)
+            ("com.sun.star.task.Job",),)if __name__<>"package":
+    from lib.gui import *
+    from lib.functions import *
+
+class Change:
+    def __init__(self, aVal= None):
+        self.win=DBModalDialog(60, 50, 120, 90, "Connect to Tiny ERP Server")
+
+        self.win.addFixedText("lblVariable", 38, 12, 60, 15, "Server")
+        self.win.addEdit("txtHost",-2,9,60,15)
+
+        self.win.addFixedText("lblReportName",45 , 31, 60, 15, "Port")
+        self.win.addEdit("txtPort",-2,28,60,15)
+
+        self.win.addFixedText("lblLoginName", 2, 51, 60, 15, "Protocol Connection")
+
+        self.win.addComboListBox("lstProtocol", -2, 48, 60, 15, True)
+        self.lstProtocol = self.win.getControl( "lstProtocol" )
+
+        self.lstProtocol.addItem( "XML-RPC", 0)
+        self.lstProtocol.addItem( "XML-RPC secure", 1)
+        self.lstProtocol.addItem( "NET-RPC (faster)", 2)
+
+        self.win.addButton( 'btnOK', -2, -5, 30, 15, 'Ok'
+                      , actionListenerProc = self.btnOkOrCancel_clicked )
+
+        self.win.addButton( 'btnCancel', -2 - 30 - 5 ,-5, 30, 15, 'Cancel'
+                      , actionListenerProc = self.btnOkOrCancel_clicked )
+        self.aVal=aVal
+        self.protocol={'XML-RPC': 'http://',
+            'XML-RPC secure': 'https://',
+            'NET-RPC (faster)': 'socket://',}
+        self.win.doModalDialog( "lstProtocol", 0)
+
+    def cmbProtocol_selected(self,oItemEvent):
+        pass
+    def btnOkOrCancel_clicked(self,oActionEvent):
+        if oActionEvent.Source.getModel().Name == "btnOK":
+            url = self.protocol[self.win.getListBoxSelectedItem("lstProtocol")]+self.win.getEditText("txtHost")+":"+self.win.getEditText("txtPort")
+            res = getConnectionStatus(url)
+            if res == -1:
+                self.aVal.append("Sever Could not found")
+                self.aVal.append(res)
+            elif res == 0:
+                self.aVal.append("No Database Available")
+                self.aVal.append(res)
+            else:
+                self.aVal.append(url)
+                self.aVal.append(res)
+            #return self.aVal
+            self.win.endExecute()
+        elif oActionEvent.Source.getModel().Name =="btnCancel":
+            self.win.endExecute()
