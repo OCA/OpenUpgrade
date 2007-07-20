@@ -350,7 +350,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="ach_login" select="2" comparator="="/>
 					<field name="obj_price" select="2"/>
 					<field name="obj_comm" select="2"/>
-					<field name="obj_ret"/>
+					<field name="obj_ret" on_change="onchange_obj_ret(obj_ret,obj_price)"/>
 					<field name="ach_emp"/>
 					<field name="author_right" domain="[('domain','=','sabam')]"/>
 					<field name="buyer_price"/>
@@ -594,6 +594,7 @@ Auction Management/Auction Dates/Reporting
 	</record>
 
 	<record model="ir.actions.act_window" id="action_deposit_border">
+		<field name="name">Deposit border</field>
 		<field name="res_model">auction.deposit</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_deposit_border_tree2"/>
@@ -1100,8 +1101,8 @@ estimation.adj.category
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('date','=',time.strftime('%Y-%m-01'))]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/This month/estimation/adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
-	<menuitem name="Auction Management/Reporting/Manager/This month/estimation/adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
+	<menuitem name="Auction Management/Reporting/Member/This month/Estimation/Adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
+	<menuitem name="Auction Management/Reporting/Manager/This month/Estimation/Adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
 
 
 =<!--=============================
@@ -1233,6 +1234,9 @@ Objects per Day
    	<tree string="Objects per Day">
                 <field name="date" select="1"/>
                 <field name="obj_num" select="1"/>
+				<!--field name="name" select="1"/>
+				<field name="lot_type" select="1"/>
+				<field name="state" select="1"/-->
 
              </tree>
      </record>
@@ -1242,7 +1246,7 @@ Objects per Day
         <field name="model">report.auction.object.date</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="Customer/Supplier">
+            <form string="Objects per Day">
                 <field name="date" select="1"/>
                 <field name="obj_num" select="1"/>
              </form>
@@ -1256,7 +1260,7 @@ Objects per Day
 		<field name="model">report.auction.object.date</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-			<graph string="Objects by day"  type="bar">
+			<graph string="Objects per day"  type="bar">
 				<field name="date" select="1"/>
 				<field name="obj_num" operator="+"/>
 			</graph>
