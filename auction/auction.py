@@ -293,7 +293,7 @@ class auction_lots(osv.osv):
 			print "amount total bu-uyer", amount_total
 			res[lot.id] = amount_total
 		return res
-	
+
 	#Buyer price: Adj price + Buyer taxes from auction date
 	def _sellerprice(self, cr, uid, ids, name, args, context):
 		res={}
@@ -313,7 +313,7 @@ class auction_lots(osv.osv):
 			tax=pt_tax.compute(cr,uid,taxes,montant,1)
 			for t in tax:
 				amount_total=t['amount']
-			res[lot.id] =  montant-amount_total 
+			res[lot.id] =  montant-amount_total
 			print res
 		return res
 
@@ -332,7 +332,7 @@ class auction_lots(osv.osv):
 	def _grossmargin(self, cr, uid, ids, name, args, context):
 		"""
 		gross Margin : Gross revenue * 100 / Adjudication
-		(state==unsold or obj_ret_price>0): adj_price = 0 (=> gross margin = 0, net margin is negative) 
+		(state==unsold or obj_ret_price>0): adj_price = 0 (=> gross margin = 0, net margin is negative)
 		"""
 
 		res={}
@@ -341,7 +341,7 @@ class auction_lots(osv.osv):
 		auction_lots_obj = self.read(cr,uid,ids,['gross_revenue','auction_id','lot_est1','obj_price','state','obj_ret'])
 		for auction_data in auction_lots_obj:
 			if (auction_data['state']=='unsold') or (auction_data['obj_ret']>0): #pbleme avec le write=> boucle infinie
-				res[auction_data['id']]=0	
+				res[auction_data['id']]=0
 				montant=0.0
 			elif ((auction_data ['obj_price']==0) and (auction_data['state']=='draft')):
 				montant=auction_data['lot_est1']
@@ -359,7 +359,7 @@ class auction_lots(osv.osv):
 			obj_price=0
 		#for lot in lots:
 		#	if (lot.obj_ret>0):
-		#		lot.obj_price=0	
+		#		lot.obj_price=0
 			result = {'value': {'obj_price': 0}}
 		return result
 
@@ -393,7 +393,7 @@ class auction_lots(osv.osv):
 			res[auction_data['id']] = total_tax
 		return res
 
-	
+
 	def _netmargin(self, cr, uid, ids, name, args, context):
 		res={}
 		total_tax = 0.0
@@ -402,7 +402,7 @@ class auction_lots(osv.osv):
 		auction_lots_obj = self.read(cr,uid,ids,['net_revenue','auction_id','lot_est1','obj_price','state'])
 		for auction_data in auction_lots_obj:
 			if ((auction_data ['obj_price']==0) and (auction_data['state']=='draft')):
-				montant=auction_data['lot_est1'] 
+				montant=auction_data['lot_est1']
 			else: montant=auction_data ['obj_price']
 			total_tax += (auction_data['net_revenue']*100)/montant
 			print "total tax",total_tax
@@ -1033,36 +1033,36 @@ class report_seller_auction2(osv.osv):
 report_seller_auction2()
 
 
-class report_auction_view(osv.osv):
-	_name = "report.auction.view"
-	_description = "Auction Reporting on view1"
-	_auto = False
-	_columns = {
-		'auction': fields.char('Auction Name',size=64, readonly=True, select=True),
-		'nobjects':fields.float('No of objects',readonly=True, select=True),
-		'nbuyer':fields.float('No of buyers',readonly=True, select=True),
-		'nseller':fields.float('No of sellers',readonly=True, select=True),
-		'min_est':fields.float('Minimum Estimation', readonly=True, select=True),
-		'max_est':fields.float('Maximum Estimation', readonly=True, select=True),
-		'adj_price':fields.float('Adustication price', readonly=True, select=True),
-		'date': fields.date('Create Date',  required=True)
-	}
-
-	def init(self, cr):
-		cr.execute('''create or replace view report_auction_view  as
-		(select  ad.id,
-		al.create_date as date,
-		ad.name as "auction",
-		count(al.id) as "nobjects",
-		count(al.ach_uid) as "nbuyer",
-		count(al.bord_vnd_id) as "nseller",
-		sum(al.lot_est1) as "min_est",
-		sum(al.lot_est2) as "max_est",
-		sum(al.obj_price) as "adj_price"
-		from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
-		ad.id,ad.name,al.ach_uid,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price,al.create_date)''')
-
-report_auction_view()
+#class report_auction_view(osv.osv):
+#	_name = "report.auction.view"
+#	_description = "Auction Reporting on view1"
+#	_auto = False
+#	_columns = {
+#		'auction': fields.char('Auction Name',size=64, readonly=True, select=True),
+#		'nobjects':fields.float('No of objects',readonly=True, select=True),
+#		'nbuyer':fields.float('No of buyers',readonly=True, select=True),
+#		'nseller':fields.float('No of sellers',readonly=True, select=True),
+#		'min_est':fields.float('Minimum Estimation', readonly=True, select=True),
+#		'max_est':fields.float('Maximum Estimation', readonly=True, select=True),
+#		'adj_price':fields.float('Adustication price', readonly=True, select=True),
+#		'date': fields.date('Create Date',  required=True)
+#	}
+#
+#	def init(self, cr):
+#		cr.execute('''create or replace view report_auction_view  as
+#		(select  ad.id,
+#		al.create_date as date,
+#		ad.name as "auction",
+#		count(al.id) as "nobjects",
+#		count(al.ach_uid) as "nbuyer",
+#		count(al.bord_vnd_id) as "nseller",
+#		sum(al.lot_est1) as "min_est",
+#		sum(al.lot_est2) as "max_est",
+#		sum(al.obj_price) as "adj_price"
+#		from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
+#		ad.id,ad.name,al.ach_uid,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price,al.create_date)''')
+#
+#report_auction_view()
 
 class report_auction_view2(osv.osv):
 	_name = "report.auction.view2"
@@ -1105,7 +1105,7 @@ report_auction_view2()
 #
 #	def init(self, cr):
 #		cr.execute('''create or replace view report_auction_view2  as
-#			 (select  ad.id, 
+#			 (select  ad.id,
 #			 al.create_date as date,
 #			 ad.name as "auction",
 #			sum(ad.adj_total) as "sum_adj",
@@ -1185,7 +1185,7 @@ class report_auction_object_date(osv.osv):
 		'name': fields.char('Short Description',size=64, required=True),
 		'lot_type': fields.selection(_type_get, 'Object Type', size=64),
 		'obj_num': fields.integer('Catalog Number',select=True),
-		'obj_price': fields.float('Adjudication price'), 
+		'obj_price': fields.float('Adjudication price'),
 		'date': fields.date('Created date'),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, select=True),
 		'lot_num': fields.integer('Quantity', required=True)
@@ -1210,13 +1210,13 @@ report_auction_object_date()
 #    _name = "report.auction.object.date"
 #    _description = "Objects per day"
 #    _auto = False
-#    _columns = { 
+#    _columns = {
 #			'name': fields.char('Short Description',size=64, required=True),
 #            'lot_type': fields.selection(_type_get, 'Object Type', size=64),
 #            'obj_num': fields.integer('Catalog Number',select=True),
-#            'obj_price': fields.float('Adjudication price'), 
+#            'obj_price': fields.float('Adjudication price'),
 #			'date': fields.date('Create date',required=True),
-#			
+#
 #            'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, select=True),
 #            'lot_num': fields.integer('Quantity', required=True)
 #    }
