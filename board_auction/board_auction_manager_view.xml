@@ -2,7 +2,7 @@
 <terp>
 	<data>
 		<record model="board.note.type" id="note_auction_type1">
-			<field name="name">Auction Manager</field>
+			<field name="name">Auction manager</field>
 		</record>
 
 		<record model="ir.ui.view" id="board_auction_manager_form1">
@@ -10,16 +10,22 @@
 			<field name="model">board.board</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Auction Manager ">
+				<form string="Auction manager ">
 					<hpaned position="100">
 						<child1>
+
+						
 							<action
+								string="My latest objects"
+								name="%(auction.action_report_latest_objects_tree)d"
 								string="Total Adjudications"
 								name="%(report_auction.action_report_auction_adjudication_tree)d"
 								view_mode="graph,tree"
 								colspan="4"
 								height="200"
 								width="510"/>
+							<action string="My latest deposits"
+								name="%(auction.action_report_latest_doposit_tree)d"
 							<action string="Customers/suppliers"
 								name="%(report_auction.action_per_seller_customer_tree)d"
 								colspan="4"/>
@@ -37,15 +43,26 @@
 								icon="gtk-ok"
 								type="action"
 								colspan="4"/>
-
 							<action
+								string="Total Adjudications"
+								name="%(auction.action_report_auction_adjudication_tree)d"
+								view_mode="graph,tree"
+								colspan="4"
+								/>
+							<action
+								string="Objects by day"
+								name="%(auction.action_report_auction_object_date_tree)d"
 								string="Comparision est/adj per product "
 								name="%(report_auction.action_report_auction_estimation_adj_category_tree)d"
 								view_mode="graph,tree" colspan="4"/>
+						
 							<action
+								string="Estimations/Adjudication"
+								name="%(auction.action_report_auction_estimation_adj_category_tree)d"
 								string="Objects by day"
 								name="%(report_auction.action_report_auction_object_date_tree)d"
 								view_mode="graph,tree" colspan="4"/>
+	
 						</child2>
 					</hpaned>
 				</form>

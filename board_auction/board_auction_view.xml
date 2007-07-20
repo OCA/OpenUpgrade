@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <terp>
-	<data>
+<data>
 		<record model="board.note.type" id="note_auction_type">
 			<field name="name">Auction</field>
 		</record>
@@ -12,16 +12,18 @@
 			<field name="arch" type="xml">
 				<form string="Auction manager ">
 					<hpaned position="100">
+						
 						<child1>
 							<action
-								string="My 10 Latest Objects"
-								name="%(report_auction.action_report_latest_objects_tree)d"
+								string="My Latest Objects"
+								name="%(auction.action_report_latest_objects_tree)d"
 								colspan="4"
 								height="200"
 								width="510"/>
-							<action string="My 10 Latest Deposits"
-								name="%(report_auction.action_report_latest_doposit_tree)d"
+							<action string="My Latest Deposits"
+								name="%(auction.action_report_latest_doposit_tree)d"
 								colspan="4"/>
+							</child1>
 							<action
 								string="Summary pointing by user"
 								name="%(report_auction.action_report_auction_sign_in_out_member_tree)d"
@@ -31,13 +33,22 @@
 						<child2>
 
 							<action
-								string="Comparision est/adj Product "
-								name="%(report_auction.action_report_auction_estimation_adj_category_tree)d"
-								view_mode="graph,tree" colspan="4"/>
-							<action
 								string="Objects By Day"
-								name="%(report_auction.action_report_auction_object_date_tree)d"
+								name="%(auction.action_report_auction_object_date_tree)d"
 								view_mode="graph,tree" colspan="4"/>
+						<action
+								string="Estimations/Adjudication"
+								name="%(auction.action_report_auction_estimation_adj_category_tree)d"
+								view_mode="graph,tree" colspan="4"/>
+						<action
+								string="Total Adjudications"
+								name="%(auction.action_report_auction_adjudication_tree)d"
+								view_mode="graph,tree"
+								colspan="4"
+								/>
+						
+
+	
 						</child2>
 					</hpaned>
 				</form>
@@ -59,5 +70,5 @@
 			sequence="1"
 			id="menu_board_auction"/>
 
-	</data>
+</data>
 </terp>

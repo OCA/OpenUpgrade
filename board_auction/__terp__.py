@@ -6,10 +6,10 @@
     "depends":[
         "board",
         "auction",
-        "report_auction",
+	#	"report_auction",
 
 
-    ],
+            ],
     "demo_xml":["board_auction_demo.xml"],
     "update_xml":["board_auction_view.xml","board_auction_manager_view.xml"],
     "description": """
@@ -19,3 +19,8 @@
     "active":False,
     "installable":True,
 }
+
+
+
+
+
