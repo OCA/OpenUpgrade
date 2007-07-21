@@ -50,10 +50,16 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             sLogin=self.win.getEditText("txtLoginName")
             sPassword=self.win.getEditText("txtPassword")
             UID = sock.login(sDatabase,sLogin,sPassword)
-            print UID
             if not UID:
                 ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
             else:
+                desktop=getDesktop()
+                doc = desktop.getCurrentComponent()
+                docinfo=doc.getDocumentInfo()
+                docinfo.setUserFieldValue(0,self.win.getEditText("txtHost"))
+                docinfo.setUserFieldValue(1,self.win.getEditText("txtLoginName"))
+                docinfo.setUserFieldValue(2,"")
+                docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -78,3 +84,4 @@ elif __name__=="package":
             ServerParameter,
             "org.openoffice.tiny.report.serverparam",
             ("com.sun.star.task.Job",),)
+

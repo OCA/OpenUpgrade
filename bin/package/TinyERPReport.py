@@ -331,7 +331,9 @@ class mysocket:
                 raise Myexception(str(res[0]), str(res[1]))
             raise res[0]
         else:
-            return res[0]import uno
+            return res[0]
+
+import uno
 import unohelper
 if __name__<>"package":
     from actions import *
@@ -1678,7 +1680,6 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             sLogin=self.win.getEditText("txtLoginName")
             sPassword=self.win.getEditText("txtPassword")
             UID = sock.login(sDatabase,sLogin,sPassword)
-            print UID
             if not UID:
                 ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
             else:
@@ -1705,7 +1706,9 @@ elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
             ServerParameter,
             "org.openoffice.tiny.report.serverparam",
-            ("com.sun.star.task.Job",),)if __name__<>"package":
+            ("com.sun.star.task.Job",),)
+
+if __name__<>"package":
     from lib.gui import *
     from lib.functions import *
 
