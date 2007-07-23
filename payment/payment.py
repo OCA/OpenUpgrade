@@ -40,26 +40,26 @@ from tools.misc import currency
 import account
 from account import invoice
 
-
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
-    def amount_payed(self, cr, uid, ids, name, arg, context={}):
-        cr.execute("select sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id="+str(ids[0])+" ")
-        amt_paid=cr.fetchone()[0]
-        return {ids[0]:amt_paid}
+    def amount_payed(self, cr, uid, ids, name, arg, context):
+        cr.execute("select invoice_id,sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id in (%s) group by invoice_id;"% (",".join(map(str,ids))))
+        res3=cr.fetchall()
+        amt_paid=dict(res3)
+        return amt_paid
 
-    def amount_to_pay(self, cr, uid, ids, name, arg, context={}):
-
-        total=self._amount_total(cr, uid, ids, name, args={}, context={})
-        a=str(total[ids[0]])
-        cr.execute("select "+a+"-sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and l.invoice_id="+str(ids[0])+" ")
-        amt_pay=cr.fetchone()[0]
-        return {ids[0]:amt_pay}
-
+    def amount_to_pay(self, cr, uid, ids, name, arg, context):
+        total=self._amount_total(cr, uid, ids, name, arg, context)
+        cr.execute("SELECT invoice_id, sum(amount) from payment_line l inner join payment_order o on l.order_id=o.id and l.invoice_id in (%s)group by invoice_id;"% (",".join(map(str,ids))))
+        res=cr.fetchall()
+        res1=dict(res)
+        for i in res1:
+            total[i] -= res1[i]
+        return total
     _columns = {
-        'amount_pay' : fields.function(amount_payed, method=True, type='float', string='Amount paid',store=True),
-        'amount_to_pay' : fields.function(amount_to_pay, method=True, type='float', string='Amount to pay',store=True),
+        'amount_pay' : fields.function(amount_payed, method=True, type='float', string='Amount paid'),
+        'amount_to_pay' : fields.function(amount_to_pay, method=True, type='float', string='Amount to pay'),
                 }
 account_invoice()
 
@@ -67,8 +67,8 @@ class payment_type(osv.osv):
     _name = 'payment.type'
     _description = 'Payment type'
     _columns = {
-        'name': fields.char('Name', size=64, required=True,translate=True),
-        'code': fields.char('code', size=64, required=True,translate=True),
+        'name': fields.char('Name', size=64, required=True),
+        'code': fields.char('code', size=64, required=True),
                 }
 payment_type()
 
