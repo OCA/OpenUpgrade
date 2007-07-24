@@ -4,12 +4,12 @@
     "author" : "Tiny",
     "category" : "Generic Modules/Payment",
     "depends" : ["account"],
-    "init_xml" : [],
+    "init_xml" : ["payment_data.xml"],
     "description": """
      This is the module which Provide an more efficient way to manage invoice payment,
      Provide a basic mechanism to easily plug various automated payment.
      """,
-     "demo_xml" : ["payment_demo.xml"],
+     "demo_xml" : [],
     "update_xml" : ["payment_view.xml","payment_wizard.xml"],
     "active": False,
     "installable": True

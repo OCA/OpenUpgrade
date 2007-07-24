@@ -32,3 +32,4 @@
 
 import payment
 import wizard
+import invoice

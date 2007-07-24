@@ -2,8 +2,6 @@
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #
-# $Id: mrp.py 1292 2005-09-08 03:26:33Z pinky $
-#
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
 # consequences resulting from its eventual inadequacies and bugs
@@ -29,43 +27,7 @@
 
 from osv import fields
 from osv import osv
-import ir
 
-import netsvc
-import time
-from mx import DateTime
-from tools.misc import currency
-
-
-import account
-from account import invoice
-
-class account_invoice(osv.osv):
-    _inherit = "account.invoice"
-
-    def amount_payed(self, cr, uid, ids, name, arg={}, context={}):
-        cr.execute("SELECT invoice_id,sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id in (%s)group by invoice_id;"% (",".join(map(str,ids))))
-        amt_paid=cr.fetchall()
-        if len(amt_paid)==0:
-            for i in ids:
-                t=(i,0.0)
-                amt_paid.append(t)
-        res3=dict(amt_paid)
-        return res3
-
-    def amount_to_pay(self, cr, uid, ids, name, arg={}, context={}):
-        total=self._amount_total(cr, uid, ids, name, arg, context)
-        cr.execute("SELECT invoice_id, sum(amount) from payment_line l inner join payment_order o on l.order_id=o.id and l.invoice_id in (%s)group by invoice_id;"% (",".join(map(str,ids))))
-        res=cr.fetchall()
-        res1=dict(res)
-        for i in res1:
-            total[i] -= res1[i]
-        return total
-    _columns = {
-        'amount_pay' : fields.function(amount_payed, method=True, type='float', string='Amount paid'),
-        'amount_to_pay' : fields.function(amount_to_pay, method=True, type='float', string='Amount to pay'),
-                }
-account_invoice()
 
 class payment_type(osv.osv):
     _name = 'payment.type'
@@ -74,6 +36,11 @@ class payment_type(osv.osv):
         'name': fields.char('Name', size=64, required=True),
         'code': fields.char('code', size=64, required=True),
                 }
+
+    def compatible_bank_account_type(self,cr,uid,type):
+        t = self.pool.get('res.partner.bank.type')
+        return t.read(cr,uid,t.search(cr,uid,[]),['name'])
+    
 payment_type()
 
 class payment_order(osv.osv):
@@ -84,7 +51,7 @@ class payment_order(osv.osv):
         pay_type_obj = self.pool.get('payment.type')
         ids = pay_type_obj.search(cr, uid, [])
         res = pay_type_obj.read(cr, uid, ids, ['code','name'], context)
-        return [(r['code'],r['name']) for r in res]
+        return [(r['name'],r['name']) for r in res]
     _defaults = {
              'state': lambda *a: 'draft',
        }
@@ -93,7 +60,7 @@ class payment_order(osv.osv):
         'name': fields.char('Payment Name',size=64),
         'type': fields.selection(type_get, 'Payment Type',required=True),
         'state': fields.selection([('draft', 'Draft'),('done','Done')], 'State'),
-        'payment_line': fields.one2many('payment.line','order_id','Payment Lines')
+        'payment_lines': fields.one2many('payment.line','order_id','Payment Lines')
 
     }
 
