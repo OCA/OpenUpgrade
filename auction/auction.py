@@ -912,16 +912,16 @@ class report_buyer_auction(osv.osv):
 		cr.execute('''
 
  create or replace view report_buyer_auction  as
-			 (select al.id,al.ach_login as "buyer_login",
-			  substring(al.create_date for 10) as date,
-			 rs.name as "buyer",
-			 count(al.id) as "object",
-			 (sum(ad.adj_total)/count(al.id)) as "total_price",
-			 ((al.lot_est1+al.lot_est2)/2) as "avg_price"
-		from auction_lots al,res_partner rs,auction_dates ad
-		where al.ach_uid=rs.id and ad.id=al.auction_id
- group by al.ach_uid,al.ach_login,rs.name,al.id,al.lot_est1,al.lot_est2,al.buyer_price,ad.adj_total,al.create_date
-			 )''')
+			(select al.id,al.ach_login as "buyer_login",
+			substring(al.create_date for 10) as date,
+			rs.name as "buyer",
+			count(al.id) as "object",
+			(sum(ad.adj_total)/count(al.id)) as "total_price",
+			(SUM(al.lot_est1+al.lot_est2)/2) as "avg_price"
+			from auction_lots al,res_partner rs,auction_dates ad
+			where al.ach_uid=rs.id and ad.id=al.auction_id
+ 			group by al.ach_uid,al.ach_login,rs.name,al.id,al.create_date
+			)''')
 
 report_buyer_auction()
 
@@ -936,8 +936,7 @@ class report_buyer_auction2(osv.osv):
 		'gross_revenue':fields.float('Gross Revenue', readonly=True, select=True),
 		'net_revenue':fields.float('Net Revenue', readonly=True, select=True),
 		'net_margin':fields.float('Net Margin', readonly=True, select=True),
-		'date': fields.date('Create Date',  required=True),
-
+		'date': fields.date('Create Date',  required=True)
 	}
 
 	def init(self, cr):
@@ -952,9 +951,8 @@ class report_buyer_auction2(osv.osv):
 		 	sum(al.net_revenue) as net_revenue,
 			sum(al.net_margin) as net_margin
 			from auction_lots al, auction_bid ab,res_partner rs,auction_dates ad
-		where al.ach_uid=rs.id and al.auction_id=ad.id group by
-		al.id,al.ach_uid,al.ach_login,rs.name,ad.adj_total,
-		al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
+			where al.ach_uid=rs.id and al.auction_id=ad.id 
+			group by al.id,al.ach_uid,al.ach_login,rs.name,al.create_date)''')
 
 report_buyer_auction2()
 
@@ -964,31 +962,30 @@ class report_seller_auction(osv.osv):
 	_auto = False
 	_columns = {
 		'seller': fields.char('Seller Name',size=64, readonly=True, select=True),
-		'object':fields.float('No of Object',readonly=True, select=True),
-		'object_sold':fields.float('Object Sold',readonly=True, select=True),
+		#'object':fields.integer('No of Objects',readonly=True, select=True),
+		'object_sold':fields.integer('Objects Sold',readonly=True, select=True),
 		'total_price':fields.float('Total  price',readonly=True, select=True),
 		'avg_price':fields.float('Avg price',readonly=True, select=True),
-		'date': fields.date('Create Date',  required=True)
+		'date': fields.date('Create Date',  required=True),
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('sold','Sold')),'State',readonly=True)
+
 	   }
 
 	def init(self, cr):
 		cr.execute('''create or replace view report_seller_auction  as
-			 (
-			 select
-			 al.id as id,
-			 substring(al.create_date for 10) as date,
-			 rs.name as seller,
-			 count(al.id) as object,
-			 (select count(al2.id) from auction_lots as al2,auction_deposit ad2
-			 where ad2.id=al2.bord_vnd_id and al2.state='paid')as object_sold,
-	  (sum(ade.adj_total)/count(al.id)) as "total_price",
-		al.lot_est1+al.lot_est2 as avg_price
-
-		from auction_deposit ad,res_partner rs,auction_lots al,auction_dates ade
-			 where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and al.auction_id=ade.id
-			 group by al.id,rs.name,al.seller_price,al.lot_est1,al.lot_est2,al.create_date)''')
-
-
+			(
+			select
+			substring(al.create_date for 10) as date,
+			min(al.id) as id,
+			rs.name as seller,
+	 		(SUM(ade.adj_total)/count(al.id)) as "total_price",
+			SUM(al.lot_est1+al.lot_est2) as avg_price,
+			(SELECT COUNT(al2.id) from auction_lots as al2,auction_deposit ad2
+			WHERE ad2.id=al2.bord_vnd_id and al2.state='sold') as object_sold,
+			al.state
+			from auction_deposit ad,res_partner rs,auction_lots al,auction_dates ade
+			where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and al.auction_id=ade.id
+			group by al.state,rs.name,object_sold,substring(al.create_date for 10))''')
 report_seller_auction()
 
 class report_seller_auction2(osv.osv):
@@ -1006,16 +1003,16 @@ class report_seller_auction2(osv.osv):
 
 	def init(self, cr):
 		cr.execute('''create or replace view report_seller_auction2  as
-			 (select rs.id as id,
+			(select rs.id as id,
 			substring(al.create_date for 10) as date,
 			rs.name as "seller",
 			sum(adt.adj_total) as "sum_adj",
 			sum(al.gross_revenue) as "gross_revenue",
 			sum(al.net_revenue) as "net_revenue",
 			sum(al.net_margin) as "net_margin"
-		from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt
-			 where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and adt.id=al.auction_id
-			 group by rs.id,rs.name,al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)
+			from  auction_deposit ad,res_partner rs,auction_lots al,auction_dates adt
+			where rs.id=ad.partner_id and ad.id=al.bord_vnd_id and adt.id=al.auction_id
+			group by rs.id,rs.name,al.create_date)
 			 ''')
 
 report_seller_auction2()
@@ -1035,15 +1032,15 @@ class report_auction_view2(osv.osv):
 
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view2  as
-			 (select  ad.id,
-			  substring(al.create_date for 10) as date,
-			 ad.name as "auction",
-			sum(ad.adj_total) as "sum_adj",
-			al.gross_revenue as "gross_revenue",
-			al.net_revenue as "net_revenue",
-			(al.net_margin*count(al.id)) as "obj_margin"
+			(select  ad.id,
+			substring(al.create_date for 10) as date,
+			ad.name as "auction",
+			SUM(ad.adj_total) as "sum_adj",
+			SUM(al.gross_revenue) as "gross_revenue",
+			SUM(al.net_revenue) as "net_revenue",
+			(SUM(al.net_margin)*count(al.id)) as "obj_margin"
 			from auction_dates ad,auction_lots al where ad.id=al.auction_id
-			group by ad.id,ad.name,ad.adj_total,al.gross_revenue,al.net_revenue,al.net_margin,al.create_date)''')
+			group by ad.id,ad.name,al.create_date)''')
 
 report_auction_view2()
 
@@ -1066,16 +1063,16 @@ class report_auction_view(osv.osv):
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view  as
 		(select  ad.id,
-		al.create_date as date,
 		ad.name as "auction",
 		count(al.id) as "nobjects",
 		count(al.ach_uid) as "nbuyer",
 		count(al.bord_vnd_id) as "nseller",
 		sum(al.lot_est1) as "min_est",
 		sum(al.lot_est2) as "max_est",
-		sum(al.obj_price) as "adj_price"
+		sum(al.obj_price) as "adj_price",
+		min(al.create_date) as "date"
 		from auction_dates ad,auction_lots al where ad.id=al.auction_id group by
-		ad.id,ad.name,al.bord_vnd_id,al.lot_est1,al.lot_est2,al.obj_price,al.create_date)''')
+		ad.id,ad.name)''')
 
 report_auction_view()
 
@@ -1114,7 +1111,6 @@ class report_auction_estimation_adj_category(osv.osv):
 	_auto = False
 	_columns = {
 			'auction_id': fields.many2one('auction.dates', 'Auction Date'),
-			'lot_type': fields.selection(_type_get, 'Object Type', size=64,select=True),
 			'lot_est1': fields.float('Minimum Estimation',select=True),
 			'lot_est2': fields.float('Maximum Estimation',select=True),
 			'obj_price': fields.float('Adjudication price'),
@@ -1144,38 +1140,6 @@ class report_auction_estimation_adj_category(osv.osv):
 		""")
 report_auction_estimation_adj_category()
 
-#class report_auction_user_pointing(osv.osv):
-#	_name = "report.auction.user.pointing"
-#	_description = "user pointing "
-#	_auto = False
-#	_columns = {
-#			'user_id': fields.char('User',size=64, required=True, select=True),
-#			'name': fields.date('Date', select=True),
-#			'sheet_id': fields.many2one('hr_timesheet_sheet.sheet', 'Sheet',  select=True),
-#			'total_timesheet': fields.float('Project Timesheet',select=True),
-#	  }
-#
-#	def init(self, cr):
-#		cr.execute("""
-#			create or replace view report_auction_user_pointing as (
-#				select r.name as user_id,
-#						l.id as id,
-#						l.total_timesheet as total_timesheet
-#
-#				from hr_timesheet_sheet_sheet_day l,
-#					 hr_timesheet_sheet_sheet h,
-#					 res_users r
-#				where h.id=l.sheet_id
-#				and
-#				l.name=h.date_current-1
-#				and
-#				h.user_id=r.id
-#
-#			)
-#		""")
-#report_auction_user_pointing()
-
-
 class report_auction_adjudication(osv.osv):
 	_name = "report.auction.adjudication"
 	_description = "report_auction_adjudication"
@@ -1202,72 +1166,100 @@ class report_auction_adjudication(osv.osv):
 			)
 		""")
 report_auction_adjudication()
+#
+#class hr_attendance(osv.osv):
+#	_name = "hr.attendance"
+#	_description = "Attendance"
+#	_inherit="hr.attendance"
+#
+#	def create(self, cr, uid, vals, context={}):
+#		new_id = super(osv.osv, self).create(cr, uid, vals, context)
+#		self.write(cr, uid, [int(new_id)], vals, context)
+#		return new_id
+#
+#	def _total_attendance(self, cr, uid, ids, vals, context):
+#		if vals['action']=='sign_out':
+#			get_id=self.pool.get('hr.attendance').search(cr,uid,[('action','=','sign_in'),('employee_id','=',vals['employee_id']),('id','<',ids[0])])
+#			p_vals=self.pool.get('hr.attendance').read(cr,uid,[max(get_id)])[0]
+#			total= (DateTime.strptime(vals['name'], '%Y-%m-%d %H:%M:%S')-DateTime.strptime(p_vals['name'], '%Y-%m-%d %H:%M:%S')).strftime('%H.%M')
+#			return total
+#		else:
+#			return False
+#
+#	def write(self, cr, uid, ids, vals, context={}):
+#		if vals.has_key('name'):
+#			write_id = super(osv.osv, self).write(cr, uid, ids, vals, context)
+#			tot=self._total_attendance(cr, uid, ids, vals, context)
+#			if tot:
+#				super(osv.osv, self).write(cr, uid, ids, {'total':tot}, context)
+#			return True
+#		else:
+#			return super(osv.osv, self).write(cr, uid, ids, vals, context)
+#		return True
+#	_columns={
+#		'total': fields.float(string='Total Attendance', digits=(16,2),select='True')
+#	}
+#hr_attendance()
+#
+#class report_signin_signout(osv.osv):
+#	_name = "report.signin.signout"
+#	_description = "Report for sign in and out"
+#	_auto = False
+#	_columns = {
+#			'emp_name': fields.char('Employee name',size=64, required=True),
+#			'day': fields.date('Date', select=True),
+#			'emp_id': fields.integer('Employee id',  select=True),
+#			'total_timesheet': fields.float('Attendance',select=True),
+#	}
+#
+#
+#	def init(self, cr):
+#		cr.execute("""
+#	create or replace view report_signin_signout as (
+#	select a.id as id,sum(a.total) as total_timesheet,substring(a.name for 10) as day,
+#	a.employee_id as emp_id,h.name as emp_name from
+#	hr_attendance a,hr_employee h where h.id=a.employee_id
+#	group by a.employee_id,h.name,substring(a.name for 10),h.name,a.total,a.id)
+#
+#		""")
+#report_signin_signout()
+#
 
-
-
-
-
-class hr_attendance(osv.osv):
-	_name = "hr.attendance"
-	_description = "Attendance"
-	_inherit="hr.attendance"
-
-	def create(self, cr, uid, vals, context={}):
-		new_id = super(osv.osv, self).create(cr, uid, vals, context)
-		self.write(cr, uid, [int(new_id)], vals, context)
-		return new_id
-
-	def _total_attendance(self, cr, uid, ids, vals, context):
-		if vals['action']=='sign_out':
-			get_id=self.pool.get('hr.attendance').search(cr,uid,[('action','=','sign_in'),('employee_id','=',vals['employee_id']),('id','<',ids[0])])
-			p_vals=self.pool.get('hr.attendance').read(cr,uid,[max(get_id)])[0]
-			total= (DateTime.strptime(vals['name'], '%Y-%m-%d %H:%M:%S')-DateTime.strptime(p_vals['name'], '%Y-%m-%d %H:%M:%S')).strftime('%H.%M')
-			return total
-		else:
-			return False
-
-	def write(self, cr, uid, ids, vals, context={}):
-		if vals.has_key('name'):
-			write_id = super(osv.osv, self).write(cr, uid, ids, vals, context)
-			tot=self._total_attendance(cr, uid, ids, vals, context)
-			if tot:
-				super(osv.osv, self).write(cr, uid, ids, {'total':tot}, context)
-			return True
-		else:
-			return super(osv.osv, self).write(cr, uid, ids, vals, context)
-		return True
-
-
-	_columns={
-		'total': fields.float(string='Total Attendance', digits=(16,2),select='True')
-	}
-hr_attendance()
-
-class report_signin_signout(osv.osv):
-	_name = "report.signin.signout"
-	_description = "Report for sign in and out"
+class report_attendance(osv.osv):
+	_name="report.attendance"
+	_description = "Report Sign In/Out"
 	_auto = False
+	#_rec_name='date'
 	_columns = {
-			'emp_name': fields.char('Employee name',size=64, required=True),
-			'day': fields.date('Date', select=True),
-			'emp_id': fields.integer('Employee id',  select=True),
-			'total_timesheet': fields.float('Attendance',select=True),
-	}
-
-
+		'name': fields.date('Date', readonly=True,select=1),
+		'employee_id' : fields.many2one('hr.employee', 'Employee', select=1, readonly=True),
+		'total_attendance': fields.float('Total', readonly=True),
+}
 	def init(self, cr):
-		cr.execute("""
+		cr.execute("""CREATE OR REPLACE VIEW report_attendance AS
+			SELECT
+				id,
+				name,
+				employee_id,
+				CASE WHEN SUM(total_attendance) < 0
+					THEN (SUM(total_attendance) +
+						CASE WHEN current_date <> name
+							THEN 1440
+							ELSE (EXTRACT(hour FROM current_time) * 60) + EXTRACT(minute FROM current_time)
+						END
+						)
+					ELSE SUM(total_attendance)
+				END /60  as total_attendance
+			FROM (
+				SELECT
+					max(a.id) as id,
+					a.name::date as name,
+					a.employee_id,
+					SUM(((EXTRACT(hour FROM a.name) * 60) + EXTRACT(minute FROM a.name)) * (CASE WHEN a.action = 'sign_in' THEN -1 ELSE 1 END)) as total_attendance
+				FROM hr_attendance a
+				GROUP BY a.name::date, a.employee_id
+			) AS fs
+			GROUP BY name,fs.id,employee_id
+			""")
 
-	create or replace view report_signin_signout as (
-
-	select a.id as id,sum(a.total) as total_timesheet,substring(a.name for 10) as day,
-	a.employee_id as emp_id,h.name as emp_name from
-	hr_attendance a,hr_employee h where h.id=a.employee_id
-	group by a.employee_id,h.name,substring(a.name for 10),h.name,a.total,a.id)
-
-		""")
-report_signin_signout()
-
-
-
-
+report_attendance()

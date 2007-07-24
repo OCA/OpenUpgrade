@@ -736,6 +736,8 @@ Auction Management/Auction Dates/Reporting
 				<field name="min_est" />
 				<field name="max_est" />
 				<field name="adj_price" />
+				<field name="date" />
+
 
 			</form>
 		</field>
@@ -758,7 +760,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-   <menuitem name="Auction Management/Reporting/Auction/All Month/Auction details " action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
+   <menuitem name="Auction Management/Reporting/Auction/All Months/Auction details " action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
 
 
 
@@ -775,6 +777,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="gross_revenue" />
 				<field name="net_revenue" />
 				<field name="obj_margin" />
+				<field name="date" />
 			</tree>
 		</field>
 	</record>
@@ -789,6 +792,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="gross_revenue" />
 				<field name="net_revenue" />
 				<field name="obj_margin" />
+				<field name="date" />
 			</form>
 		</field>
 	</record>
@@ -809,7 +813,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Auction/All Month/Result of Auction" action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
+	<menuitem name="Auction Management/Reporting/Auction/All Months/Result of Auction" action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
 
 <!--start : creating seller Reporting menu for the selller by pmo-->
 
@@ -820,7 +824,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<form string="Auction reporting form view">
 				<field name="seller" select="1"/>
-				<field name="object" select="1"/>
+				<!--field name="object" select="1"/-->
 				<field name="object_sold" select="1"/>
 <!---			    <field name="withdrawn" select="1"/>-->
 			    <field name="total_price" select="1"/>
@@ -837,11 +841,12 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<tree string="Auction reporting tree view">
 				<field name="seller" select="1"/>
-				<field name="object" select="1"/>
 				<field name="object_sold" select="1"/>
 			<!--	<field name="withdrawn" select="1"/>-->
 				<field name="total_price" select="1"/>
 				<field name="avg_price" select="1"/>
+				<field name="date" />
+				<field name="state" />
 			</tree>
 		</field>
 	</record>
@@ -853,7 +858,7 @@ Auction Management/Auction Dates/Reporting
 			<graph string="Auction reporting graph view" orientation="vertical" type="bar">
 				<field name="seller" />
 			<!--	<field name="object"operator="+" />-->
-			<!--	<field name="object_sold"/>		-->
+			<!--	<field name="object_sold"/>	-->
 				<field name="total_price" operator="+"/>
 				<field name="avg_price" operator="+" />
 			</graph>
@@ -899,6 +904,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="gross_revenue" select="1"/>
 				<field name="net_revenue" select="1"/>
 				<field name="net_margin" select="1"/>
+				<field name="date" select="1"/>
 				</tree>
 		</field>
 	</record>
@@ -955,6 +961,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="object" select="1"/>
 				<field name="total_price" select="1"/>
 				<field name="avg_price" select="1"/>
+				<field name="date" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -1151,54 +1158,47 @@ sign in sign out report by user
 -->
 
 
-<!--=================================created by pmo for the sign in report===============================================-->
-
-
-
-
 	<record model="ir.ui.view" id="view_report_auction_sign_in_out_tree1">
-		<field name="name">report.signin.signout.tree</field>
-		<field name="model">report.signin.signout</field>
+		<field name="name">report attendance</field>
+		<field name="model">report.attendance</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Summary pointing by user ">
-				<field name="emp_name" select="1"/>
-				<field name="day" select="1"/>
-				<field name="total_timesheet" widget="float_time"/>
+			<tree string="User's pointing: details for the month ">
+				<field name="employee_id" select="1"/>
+				<field name="name" select="1"/>
+				<field name="total_attendance" select="1"/>
 			</tree>
 		</field>
 	</record>
 
 	<record model="ir.ui.view" id="view_report_auction_sign_in_out_graph1">
-		<field name="name">report.signin.signout.graph</field>
-		<field name="model">report.signin.signout</field>
+		<field name="name">Graph attendance</field>
+		<field name="model">report.attendance</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 
-			<graph string="Summary pointing by user " orientation="vertical" type="bar">
-				<field name="emp_name" select="1"/>
-				<field name="total_timesheet" operator="+"/>
-				<field name="day" select="1" group="True"/>
-			</graph>
+			<graph string="User's pointing for the current month"  rientation="vertical" type="bar">
+				<field name="employee_id" select="1"/>
+				<field name="total_attendance" operator="+"/>
+				<field name="name" select="1"/>
+		</graph>
+
 		</field>
 	</record>
 
 
 	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_member_tree1">
-		<field name="res_model">report.signin.signout</field>
+		<field name="res_model">report.attendance</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('name','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/Summury of sign in-out" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
-	<menuitem name="Auction Management/Reporting/Manager/Summury of sign in-out"  action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_manager_tree1"/>
-
-
-
+	<menuitem name="Auction Management/Reporting/Member/Attendance" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
+	<menuitem name="Auction Management/Reporting/Manager/Attendance"  action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_manager_tree1"/>
 
 ==============================
 My Latest Objects
 ==============================
-
     <record model="ir.actions.act_window" id="action_report_latest_objects_tree">
         <field name="res_model">auction.lots</field>
         <field name="view_type">form</field>
