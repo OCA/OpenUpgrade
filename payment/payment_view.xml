@@ -128,7 +128,6 @@
 			<tree string="Payment Line">
 				<field name="invoice_id"/>
 				<field name="amount"/>
-
 			</tree>
 		</field>
 		</record>
@@ -138,7 +137,7 @@
 			<field name="view_type">tree</field>
 			<field name="view_mode">form,tree</field>
 		</record>
-	    <menuitem name="Payment Management/Payment Line" id="menu_action_payment_line_form" action="action_payment_line_form"/>
+	    <!--<menuitem name="Payment Management/Payment Line" id="menu_action_payment_line_form" action="action_payment_line_form"/>-->
 
 	</data>
 </terp>
