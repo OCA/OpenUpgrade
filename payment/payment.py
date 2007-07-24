@@ -43,7 +43,7 @@ from account import invoice
 class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
-    def amount_payed(self, cr, uid, ids, name, arg, context):
+    def amount_payed(self, cr, uid, ids, name, arg={}, context={}):
         cr.execute("SELECT invoice_id,sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id in (%s)group by invoice_id;"% (",".join(map(str,ids))))
         amt_paid=cr.fetchall()
         if len(amt_paid)==0:
@@ -51,10 +51,9 @@ class account_invoice(osv.osv):
                 t=(i,0.0)
                 amt_paid.append(t)
         res3=dict(amt_paid)
-        print "res3",res3
         return res3
 
-    def amount_to_pay(self, cr, uid, ids, name, arg, context):
+    def amount_to_pay(self, cr, uid, ids, name, arg={}, context={}):
         total=self._amount_total(cr, uid, ids, name, arg, context)
         cr.execute("SELECT invoice_id, sum(amount) from payment_line l inner join payment_order o on l.order_id=o.id and l.invoice_id in (%s)group by invoice_id;"% (",".join(map(str,ids))))
         res=cr.fetchall()
@@ -91,7 +90,7 @@ class payment_order(osv.osv):
        }
 
     _columns = {
-        'name': fields.char('payment Name',size=64),
+        'name': fields.char('Payment Name',size=64),
         'type': fields.selection(type_get, 'Payment Type',required=True),
         'state': fields.selection([('draft', 'Draft'),('done','Done')], 'State'),
         'payment_line': fields.one2many('payment.line','order_id','Payment Lines')
@@ -109,4 +108,14 @@ class payment_line(osv.osv):
         'invoice_id': fields.many2one('account.invoice','Payment Invoice',required=True),
         'amount': fields.float('Payment Amount', digits=(16,4)),
      }
+    def onchange_invoice_id(self, cr, uid, id, invoice_id, context={}):
+        if not invoice_id:
+            return {}
+        invoices=self.pool.get('account.invoice').browse(cr,uid,[invoice_id])
+        amount=0.0
+        for invoice in invoices:
+            amount=invoice.amount_to_pay
+
+        return {'value': {'amount': amount}}
+
 payment_line()
