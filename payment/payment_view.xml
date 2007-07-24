@@ -76,18 +76,37 @@
 			</tree>
 		</field>
 		</record>
-
-
-
 		<record model="ir.actions.act_window" id="action_payment_order_form">
 			<field name="name">Payment Order</field>
 			<field name="res_model">payment.order</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record>
-
 	    <menuitem name="Payment Management/Payment Order" id="menu_action_payment_order_form" action="action_payment_order_form"/>
 
+		<!--  Make Paymenet order tree view-->
+		<record model="ir.ui.view" id="view_payment_order_tree1">
+			<field name="name">payment.order.tree</field>
+			<field name="model">payment.order</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="4"/>
+			<field name="arch" type="xml">
+				<tree string="Payment Order">
+					<field name="name"/>
+					<field name="type"/>
+<!--				<field name="payment_line" />-->
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_payment_order_tree1">
+			<field name="name">Payment Order</field>
+			<field name="res_model">payment.order</field>
+			<field name="view_type">tree</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+	    <menuitem name="Payment Management/All Payment Order" id="menu_action_payment_order_tree1" action="action_payment_order_tree1"/>
 
 		<record model="ir.ui.view" id="view_payment_line_form">
 			<field name="name">payment.line.form</field>
@@ -97,7 +116,6 @@
 				<form string="Payment Line">
 					<field name="invoice_id" select="1"/>
 					<field name="amount" select="1"/>
-
 				</form>
 			</field>
 		</record>
