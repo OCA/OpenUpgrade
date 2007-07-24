@@ -44,10 +44,13 @@ class account_invoice(osv.osv):
     _inherit = "account.invoice"
 
     def amount_payed(self, cr, uid, ids, name, arg, context):
-        cr.execute("select invoice_id,sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id in (%s) group by invoice_id;"% (",".join(map(str,ids))))
-        res3=cr.fetchall()
-        amt_paid=dict(res3)
-        return amt_paid
+        cr.execute("SELECT invoice_id,sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id in (%s)group by invoice_id;"% (",".join(map(str,ids))))
+        amt_paid=cr.fetchall()
+        for i in ids:
+            t=(i,0.0)
+            amt_paid.append(t)
+        res3=dict(amt_paid)
+        return res3
 
     def amount_to_pay(self, cr, uid, ids, name, arg, context):
         total=self._amount_total(cr, uid, ids, name, arg, context)
