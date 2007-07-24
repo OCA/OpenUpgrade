@@ -52,7 +52,7 @@
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="city"/>
 		</para>
-		<para><xsl:value-of select="country"/></para>
+<!--		<para><xsl:value-of select="country"/></para>-->
 	</xsl:template>
 
 	<xsl:template match="borderform">
