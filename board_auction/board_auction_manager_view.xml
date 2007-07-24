@@ -21,7 +21,12 @@
 								/>
 							<action string="My latest deposits"
 								name="%(auction.action_report_latest_doposit_tree)d"/>
-							</child1>
+							<action
+								string="Summary pointing by user"
+								name="%(auction.action_report_auction_sign_in_out_member_tree1)d"
+								view_mode="tree,graph"
+							/>
+	</child1>
 
 						<child2>
 							<button
@@ -29,7 +34,8 @@
 								name="%(open_board_auction)d"
 								icon="gtk-ok"
 								type="action"
-								colspan="4"/>
+								colspan="3"
+								/>
 							<action
 								string="Total Adjudications"
 								name="%(auction.action_report_auction_adjudication_tree)d"
@@ -44,12 +50,7 @@
 								string="Objects by day"
 								name="%(auction.action_report_auction_object_date_tree)d"
 								view_mode="graph,tree" />
-							<action
-								string="Summary pointing by user"
-								name="%(auction.action_report_auction_sign_in_out_member_tree1)d"
-								view_mode="graph,tree"
-								/>
-	
+								
 						</child2>
 					</hpaned>
 				</form>
