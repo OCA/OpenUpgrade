@@ -11,7 +11,7 @@
      """,
      "demo_xml" : ["payment_demo.xml"],
     "update_xml" : ["payment_view.xml","payment_wizard.xml"],
-    "active": True,
+    "active": False,
     "installable": True
 }
 
