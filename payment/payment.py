@@ -46,10 +46,12 @@ class account_invoice(osv.osv):
     def amount_payed(self, cr, uid, ids, name, arg, context):
         cr.execute("SELECT invoice_id,sum(l.amount) from payment_line l inner join payment_order o on l.order_id=o.id and o.state='done' and l.invoice_id in (%s)group by invoice_id;"% (",".join(map(str,ids))))
         amt_paid=cr.fetchall()
-        for i in ids:
-            t=(i,0.0)
-            amt_paid.append(t)
+        if len(amt_paid)==0:
+            for i in ids:
+                t=(i,0.0)
+                amt_paid.append(t)
         res3=dict(amt_paid)
+        print "res3",res3
         return res3
 
     def amount_to_pay(self, cr, uid, ids, name, arg, context):
