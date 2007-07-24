@@ -58,7 +58,7 @@ def _make_payment(self, cr, uid, data, contexts):
     payment_term_obj=pooler.get_pool(cr.dbname).get('account.payment.term')
 
     pay_lines=[]
-    ids = invoice_obj.search(cr, uid, [('date_due', '<', form['payment_date'])])
+    ids = invoice_obj.search(cr, uid, [('state','!=','draft'),('date_due', '<', form['payment_date'])])
 
     res=invoice_obj.browse(cr, uid, ids)
 
@@ -69,14 +69,10 @@ def _make_payment(self, cr, uid, data, contexts):
                 amount_pay=invoice.amount_pay
                 # sum of all due amount with given date
                 if(invoice.payment_term):
-
-                        res_term=invoice.payment_term.compute(cr,uid,invoice.payment_term.id,invoice.amount_to_pay or invoice.amount_total ,invoice.date_invoice)
-
+                        res_term=invoice.payment_term.compute(cr,uid,invoice.payment_term.id,invoice.amount_to_pay ,invoice.date_invoice)
                         amount=0
                         for res_date,res_amount in res_term:
                             if mx.DateTime.strptime(res_date, '%Y-%m-%d') < invoice.date_invoice :
-                                print res_date
-                                print res_amount
                                 amount +=res_amount
 
 
