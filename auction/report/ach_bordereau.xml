@@ -23,6 +23,17 @@
 					<!--<name value="name"/>-->
 					<amount value="amount"/>
 			</cost>
+
+			<!--<cost type="field" name="auction_id.buyer_costs"/>
+					<name value="name"/>
+					<amount value="amount"/>
+			</cost>-->
+
+
+			<cost type="call" name="compute_buyer_costs" args="">
+					<!--<name value="name"/>-->
+					<amount value="amount"/>
+			</cost>
 			<object type="fields" name="obj_num,id">
 				<id type="field" name="id"/>
 				<cost type="call" name="compute_buyer_costs" args="">

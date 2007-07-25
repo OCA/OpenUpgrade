@@ -155,6 +155,15 @@
 
 		  multi="1"/>
 
+
+		  <report string="Buyer Form with rml"
+		  model="auction.lots"
+		  name="buyer_form_report"
+		  rml="auction/report/buyer_form_report.rml"
+		  auto="False"
+		  multi="1"/>
+
+
 		<report string="Seller Form"
 		model="auction.lots"
 		name="report.auction.vnd_bordereau"
