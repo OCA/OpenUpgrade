@@ -505,10 +505,11 @@ class auction_lots(osv.osv):
 		return taxes_summed.values()
 
 	def compute_buyer_costs(self, cr, uid, ids):
+		amount_total = {}
 		lots = self.browse(cr, uid, ids)
 ##CHECKME: est-ce que ca vaudrait la peine de faire des groupes de lots qui ont les memes couts pour passer des listes de lots a compute?
 		taxes = []
-		amount_total=0.0
+		amount=0.0
 	#	pt_tax=pool.get('account.tax')
 		for lot in lots:
 			taxes = lot.product_id.taxes_id
@@ -518,9 +519,12 @@ class auction_lots(osv.osv):
 				taxes += lot.auction_id.buyer_costs
 			tax=self.pool.get('account.tax').compute(cr,uid,taxes,lot.obj_price,1)
 			for t in tax:
-				amount_total+=t['amount']
-			amount_total+=lot.obj_price
+				amount+=t['amount']
+			amount+=lot.obj_price
 
+		print "VALUE OF AMOUNT TOTAL",amount
+		amount_total['value']= amount
+		amount_total['amount']= amount
 		return amount_total
 
 
@@ -951,7 +955,7 @@ class report_buyer_auction2(osv.osv):
 		 	sum(al.net_revenue) as net_revenue,
 			sum(al.net_margin) as net_margin
 			from auction_lots al, auction_bid ab,res_partner rs,auction_dates ad
-			where al.ach_uid=rs.id and al.auction_id=ad.id 
+			where al.ach_uid=rs.id and al.auction_id=ad.id
 			group by al.id,al.ach_uid,al.ach_login,rs.name,al.create_date)''')
 
 report_buyer_auction2()
