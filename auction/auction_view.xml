@@ -343,8 +343,8 @@ Auction Management/Auction Dates/Reporting
 		<field name="domain">[('state','=','sold')]</field>
 	</record>
 	<menuitem
-		name="Auction Management/Objects/All objects/Sold objects" 
-		action="action_all_objects_sold" 
+		name="Auction Management/Objects/All objects/Sold objects"
+		action="action_all_objects_sold"
 		id="menu_all_objects_sold1"/>
 
 	<record model="ir.actions.act_window" id="action_all_objects_to_sell">
@@ -1173,12 +1173,9 @@ Objects per Day
 	<record model="ir.ui.view" id="view_report_auction_object_date_tree">
 	   <field name="name">Object date</field>
 	   <field name="model">report.auction.object.date</field>
-   	<tree string="Objects per Day">
+   			<tree string="Objects per Day">
 				<field name="name" select="1" />
 				<field name="obj_num" select="1"/>
-				<!--field name="name" />
-				<field name="lot_type" />
-				<field name="state" /-->
 
 			 </tree>
 	 </record>
@@ -1201,8 +1198,9 @@ Objects per Day
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Objects per day"  type="bar">
-				<field name="name" select="1"/>
+				<field name="name"/>
 				<field name="obj_num" operator="+"/>
+				<field name="ach_uid" group="True"/>
 			</graph>
 		</field>
 	</record>
@@ -1212,7 +1210,7 @@ Objects per Day
 		<field name="res_model">report.auction.object.date</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
-		<field name="domain">[('state','=','draft')]</field>
+		<field name="domain">[('state','=','sold')]</field>
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/Objects Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
 	<menuitem name="Auction Management/Reporting/Manager/Objects Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
@@ -1268,7 +1266,7 @@ Objects per Day
 		<field name="domain">[('state','=', 'draft')]</field>
 	</record>
 	<menuitem name="Auction Management/Objects/Objects by auction"
-		id="menu_auction_dates_next_by_auction" 
+		id="menu_auction_dates_next_by_auction"
 		action="action_report_object_by_auction"/>
 
 
