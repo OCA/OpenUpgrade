@@ -12,14 +12,14 @@
 		<paraStyle name="login-title" fontName="Helvetica" fontSize="12"/>
 		<paraStyle name="login" fontName="Helvetica-Bold" fontSize="16"/>
 		<paraStyle name="cost-name" fontName="Helvetica-BoldOblique" fontSize="10" alignment="RIGHT"/>
-		
+
 		<blockTableStyle id="objects">
 			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT" start="-3,0" stop="-1,-1"/>
 			 <lineStyle kind="LINEBELOW" start="0,0" stop="-1,0"/>
 		</blockTableStyle>
-		
+
 		<blockTableStyle id="object-totals">
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT"/>
@@ -58,25 +58,25 @@
 
 	<xsl:template match="borderform">
 		<xsl:apply-templates select="client_info"/>
-		
+
 		<setNextTemplate name="other_pages"/>
 		<nextFrame/>
-		
+
 		<para style="login-title" t="1">Plate Number:</para>
 		<para style="login"><xsl:value-of select="login"/></para>
 
 		<spacer length="1cm"/>
-		
+
 		<para>
 			<b t="1">Document</b>: <xsl:text t="1">Buyer form</xsl:text>
 		</para><para>
 			<b t="1">Auction</b>: <xsl:value-of select="title"/>
 		</para>
-		
+
 		<xsl:if test="client_info">
 			<para>
-				<b t="1">Customer Contact</b>: 
-				<xsl:value-of select="client_info/phone"/> 
+				<b t="1">Customer Contact</b>:
+				<xsl:value-of select="client_info/phone"/>
 				<xsl:if test="number(string-length(client_info/mobile) &gt; 0) + number(string-length(client_info/phone) &gt; 0) = 2">
 					<xsl:text> - </xsl:text>
 				</xsl:if>
@@ -85,9 +85,9 @@
 				<b t="1">Customer Reference</b>: <xsl:value-of select="client_info/ref"/>
 			</para>
 		</xsl:if>
-		
+
 		<spacer length="1cm"/>
-		
+
 		<xsl:apply-templates select="objects"/>
 
 		<setNextTemplate name="first_page"/>
@@ -107,7 +107,7 @@
 			<xsl:apply-templates select="object"/>
 		</blockTable>
 		<condPageBreak height="3.2cm"/>
-		
+
 		<blockTable colWidths="1.8cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="object-totals">
 			<tr>
 				<td/>
@@ -139,7 +139,7 @@
 			<td><xsl:value-of select="format-number(amount, '#,##0.00')"/></td>
 		</tr>
 	</xsl:template>
-	
+
 	<xsl:template match="object">
 		<tr>
 			<td><xsl:value-of select="ref"/></td>
@@ -163,5 +163,4 @@
 			</td>
 		</tr>
 	</xsl:template>
-
 </xsl:stylesheet>
