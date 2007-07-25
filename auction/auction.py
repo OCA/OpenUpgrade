@@ -960,7 +960,7 @@ class report_buyer_auction2(osv.osv):
 					auction_lots al,
 					auction_dates ad
 				where
-					al.auction_id=ad.id 
+					al.auction_id=ad.id
 				group by
 					al.ach_uid,
 					al.ach_login,
@@ -998,8 +998,8 @@ class report_seller_auction(osv.osv):
 				from
 					auction_deposit ad,
 					auction_lots al
-				where 
-					ad.id=al.bord_vnd_id 
+				where
+					ad.id=al.bord_vnd_id
 				group by
 					ad.partner_id,
 					al.state,
@@ -1103,7 +1103,7 @@ class report_auction_view(osv.osv):
 				sum(al.lot_est1) as "min_est",
 				sum(al.lot_est2) as "max_est",
 				sum(al.obj_price) as "adj_price"
-			from 
+			from
 				auction_lots al
 			group by
 				al.auction_id
@@ -1121,7 +1121,9 @@ class report_auction_object_date(osv.osv):
 		'obj_price': fields.float('Adjudication price'),
 		'name': fields.date('Created date'),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True, select=True),
-		'lot_num': fields.integer('Quantity', required=True)
+		'lot_num': fields.integer('Quantity', required=True),
+		'user':fields.integer('User',select=True),
+		'ach_uid': fields.many2one('res.partner', 'Buyer'),
 	}
 
 	def init(self, cr):
@@ -1131,11 +1133,14 @@ class report_auction_object_date(osv.osv):
 				   min(l.id) as id,
 				   substring(l.create_date for 10) as name,
 				   count(l.obj_num) as obj_num,
-				   l.state as state
+				   l.state as state,
+				   l.create_uid as user,
+				   l.ach_uid as ach_uid
 				from
 					auction_lots l
+
 				group by
-					substring(l.create_date for 10),l.id,l.state
+					substring(l.create_date for 10),l.id,l.state,l.create_uid,l.ach_uid
 			)
 		""")
 report_auction_object_date()
