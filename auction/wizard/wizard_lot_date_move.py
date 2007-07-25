@@ -61,15 +61,21 @@ def _auction_move_set(self,cr,uid,datas,context={}):
 	line_ids= pooler.get_pool(cr.dbname).get('auction.bid_line').search(cr,uid,[('lot_id','in',datas['ids'])])
 	pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
 	for rec in rec_ids:
-		new_id=pooler.get_pool(cr.dbname).get('auction.lot.history').create(cr,uid,{'auction_id':rec.auction_id.id,'lot_id':rec.id,'price': rec.obj_ret, 'name': 'reasons'+rec.auction_id.auction1})
-		up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[rec.id],{'auction_id':datas['form']['auction_id'],
-																						'obj_ret':None,
-																						'obj_price':None,
-																						'ach_login':None,
-																						'ach_uid':None,
-																						'ach_inv_id':None,
-																						'sel_inv_id':None,
-																						'state':'draft'})
+		new_id=pooler.get_pool(cr.dbname).get('auction.lot.history').create(cr,uid,{
+			'auction_id':rec.auction_id.id,
+			'lot_id':rec.id,
+			'price': rec.obj_ret
+		})
+		up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[rec.id],{
+			'auction_id':datas['form']['auction_id'],
+			'obj_ret':None,
+			'obj_price':None,
+			'ach_login':None,
+			'ach_uid':None,
+			'ach_inv_id':None,
+			'sel_inv_id':None,
+			'obj_num':None,
+			'state':'draft'})
 	return {}
 
 class wiz_auc_lots_auction_move(wizard.interface):

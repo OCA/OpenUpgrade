@@ -39,11 +39,13 @@
 		multi="1"
 		id="wizard_cancel_pay"/>
 
+		<!--
 		<wizard string="Numerotation (per lot)"
 		model="auction.lots"
 		name="auction.lots.numerotate"
 		multi="1"
 		id="wizard_numerotate_lot"/>
+		-->
 
 		<wizard string="Numerotation (automatic)"
 		 model="auction.lots"
@@ -72,10 +74,13 @@
 			model="auction.lots"
 			name="auction.lots.make_invoice_buyer"
 			id="wizard_invoice_buyer"/>
+
+		<!--
 		<wizard string="Transfer unsold objects"
 			model="auction.lots"
 			name="auction.lots.transfer.unsold.object"
 			id="wizard_transfer_unsold_objects"/>
+		-->
 
 	</data>
 </terp>

@@ -56,7 +56,7 @@
 		<field name="type">percent</field>
 		<field name="applicable_type">code</field>
 		<field name="amount">0.04</field>
-		<field name="domain">sabam,auction</field>
+		<field name="domain">sabam</field>
 		<field name="account_collected_id" ref="auction_income_costs"/>
 		<field name="account_paid_id" ref="auction_income_costs"/>
 		<field name="python_applicable">result = (price_unit&gt;=1250)</field>
@@ -65,7 +65,7 @@
 		<field name="name">Buyer Costs (20%)</field>
 		<field name="type">percent</field>
 		<field name="amount">0.20</field>
-		<field name="domain">sabam,auction</field>
+		<field name="domain">auction</field>
 		<field name="account_collected_id" ref="auction_income_costs"/>
 		<field name="account_paid_id" ref="auction_income_costs"/>
 	</record>

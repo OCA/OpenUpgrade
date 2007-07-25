@@ -44,24 +44,23 @@
     </record>
 	<record id="auction_tax4" model="account.tax">
                 <field name="name">Seller Costs1</field>
-                <field name="amount">0.12</field>
+                <field name="amount">-0.12</field>
 				<field name="domain">auction</field>
 
     </record>
 	<record id="auction_tax5" model="account.tax">
                 <field name="name">Seller Costs</field>
-                <field name="amount">0.10</field>
+                <field name="amount">-0.10</field>
 				<field name="domain">auction</field>
     </record>
 	<record id="auction_tax6" model="account.tax">
                 <field name="name">Frais de vente</field>
-                <field name="amount">0.15</field>
+                <field name="amount">-0.15</field>
 				<field name="domain">auction</field>
     </record>
 
 	<record id="monproduit" model="product.product">
-		<field name="name">Mon produit</field>
-		<field name="taxes_id" eval="[(6,0,[ref('auction_tax2'),ref('auction_tax1'),ref('auction_tax3'),ref('auction_tax4'),ref('auction_tax5'),ref('auction_tax6'),ref('auction_tax')])]"/>
+		<field name="name">Oeuvres a 21%</field>
 		<field name="categ_id" ref="product.product_category_pc"/>
 	</record>
 

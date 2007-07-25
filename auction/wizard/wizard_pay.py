@@ -37,15 +37,23 @@ pay_form = '''<?xml version="1.0"?>
 <form string="Pay invoice">
 	<field name="amount"/>
 	<field name="dest_account_id"/>
-	<field name="journal_id"/>
+	<field name="journal_id" domain="[('type','=','cash')]"/>
 	<field name="period_id"/>
 </form>'''
+
+
+def _get_period(cr, uid, context):
+	periods = self.pool.get('account.period').find(cr, uid)
+	if periods:
+		return periods[0]
+	else:
+		return False
 
 pay_fields = {
 	'amount': {'string': 'Amount paid', 'type':'float', 'required':True},
 	'dest_account_id': {'string':'Payment to Account', 'type':'many2one', 'required':True, 'relation':'account.account', 'domain':[('type','=','cash')]},
 	'journal_id': {'string': 'Journal', 'type': 'many2one', 'relation':'account.journal', 'required':True},
-	'period_id': {'string': 'Period', 'type': 'many2one', 'relation':'account.period', 'required':True},
+	'period_id': {'string': 'Period', 'type': 'many2one', 'relation':'account.period'},
 }
 #def pay_n_check(self, cr, uid, data, context):
 #
@@ -86,6 +94,11 @@ def _pay_and_reconcile(self, cr, uid, data, context):
 	form = data['form']
 	account_id = form.get('writeoff_acc_id', False)
 	period_id = form.get('period_id', False)
+	if not period_id:
+		periods = pool.get('account.period').find(cr, uid)
+		if periods:
+			period_id = periods[0]
+
 	journal_id = form.get('journal_id', False)
 	if lot.ach_inv_id:
 		p=pool.get('account.invoice').pay_and_reconcile(['lot.ach_inv_id.id'], form['amount'], form['dest_account_id'], journal_id, account_id, period_id, journal_id, context)

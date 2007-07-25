@@ -43,7 +43,7 @@ numerotate_fields_cont = {
 numerotate_form = '''<?xml version="1.0"?>
 <form title="%s">
 	<group col="1">
-		<separator string="%s"/>
+		<separator string="%s" colspan="4"/>
 		<field name="bord_vnd_id"/>
 		<field name="lot_num"/>
 	</group>
@@ -82,10 +82,7 @@ numerotate_fields2 = {
 def _read_record(self,cr,uid,datas,context={}):
 	form = datas['form']
 	service = netsvc.LocalService("object_proxy")
-	ids = service.execute(cr.dbname,uid, 'auction.deposit', 'search', [('name','=',form['bord_vnd_id'])])
-	res = []
-	for id in ids:
-		res += service.execute(cr.dbname,uid, 'auction.lots', 'search', [('bord_vnd_id','=',id), ('lot_num','=',int(form['lot_num']))])
+	res = service.execute(cr.dbname,uid, 'auction.lots', 'search', [('bord_vnd_id','=',form['bord_vnd_id']), ('lot_num','=',int(form['lot_num']))])
 	found = [r for r in res if r in datas['ids']]
 	if len(found)==0:
 		raise wizard.except_wizard('UserError', 'This record does not exist !')
@@ -149,17 +146,3 @@ class wiz_auc_lots_numerotate(wizard.interface):
 		}
 	}
 wiz_auc_lots_numerotate('auction.lots.numerotate_cont');
-
-
-#def _set_number(self, uid, datas):
-#	service = netsvc.LocalService("object_proxy")
-#	res = service.execute(uid, 'auction.lots', 'numerotate', datas['ids'])
-#
-#class wiz_auc_lots_numerotate(wizard.interface):
-#	states = {
-#		'init': {
-#			'actions': [_set_number],
-#			'result': {'type': 'state', 'state':'end'}
-#		}
-#	}
-#wiz_auc_lots_numerotate('auction.lots.numerotate');

@@ -43,30 +43,57 @@ buyer_map_fields = {
 	'ach_uid': {'string':'Buyer', 'type':'many2one', 'required':True, 'relation':'res.partner'},
 }
 
+
+#
+# Try to find an object not mapped
+#
+def _state_check(self, cr, uid, data, context):
+	pool = pooler.get_pool(cr.dbname)
+	for rec in pool.get('auction.lots').browse(cr,uid,data['ids'],context):
+		if not rec.ach_uid and rec.ach_login:
+			return 'check'
+	return 'done'
+
 def _start(self,cr,uid,datas,context):
 	pool = pooler.get_pool(cr.dbname)
-	rec=pool.get('auction.lots').browse(cr,uid,datas['id'],context)
-	ach_login= rec and rec.ach_login or False
-	return {'ach_login': ach_login}
+	for rec in pool.get('auction.lots').browse(cr,uid,datas['ids'],context):
+		if not rec.ach_uid and rec.ach_login:
+			return {'ach_login': rec.ach_login}
+	return {}
 
 def _buyer_map_set(self,cr, uid, datas,context):
 	pool = pooler.get_pool(cr.dbname)
 	recs=pool.get('auction.lots').browse(cr,uid,datas['ids'],context)
 	for rec in recs:
-		if datas['form']['ach_uid'] and datas['form']['ach_login']:
-			cr.execute('update auction_lots set ach_uid=%d where id in ('+','.join(map(str, datas['ids']))+') and (ach_login=%s)', (datas['form']['ach_uid'], datas['form']['ach_login']))
-		return {'ach_login':'', 'ach_uid':False}
-
+		if rec.ach_login==datas['form']['ach_login']:
+			pool.get('auction.lots').write(cr, uid, [rec.id], {'ach_uid':  datas['form']['ach_uid']}, context=context)
+			cr.commit()
+	return {'ach_login':False, 'ach_uid':False}
 
 class wiz_auc_lots_buyer_map(wizard.interface):
 	states = {
 		'init': {
+			'actions': [],
+			'result': {'type': 'choice', 'next_state':_state_check}
+		},
+		'check': {
 			'actions': [_start],
-			'result': {'type': 'form', 'arch':buyer_map, 'fields': buyer_map_fields, 'state':[('set_buyer', 'Update'),('end','Exit')]}
+			'result': {'type': 'form', 'arch':buyer_map, 'fields': buyer_map_fields, 'state':[('end','Exit'),('set_buyer', 'Update')]}
 		},
 		'set_buyer': {
 			'actions': [_buyer_map_set],
-			'result': {'type': 'state', 'state':'end'}
+			'result': {'type': 'state', 'state':'init'}
+		},
+		'done': {
+			'actions': [_start],
+			'result': {
+				'type': 'form',
+				'arch':'''<?xml version="1.0"?>
+				<form title="Mapping result">
+					<label string="All objects are assigned to buyers !"/>
+				</form>''',
+				'fields': {}, 
+				'state':[('end','Close')]}
 		}
 	}
 
