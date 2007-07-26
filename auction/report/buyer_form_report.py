@@ -43,14 +43,14 @@ class buyer_form_report(report_sxw.rml_parse):
 
 	def sum_taxes(self, auction_id,obj_price):
 
-		 print "=====================",auction_id
+		 print "Auction Id :",auction_id
 		 buyer_cost = self.pool.get('auction.dates').read(self.cr,self.uid,[auction_id],['buyer_costs'])[0]
-		 print "=====================",buyer_cost['buyer_costs']
+		 print "Buyer Cost :",buyer_cost['buyer_costs']
 		 total_amount = 0.0
 		 for id in buyer_cost['buyer_costs'] :
 		 	print "Pooler",self.pool.get('account.tax')
 		 	amount = self.pool.get('account.tax').read(self.cr,self.uid,[id],['amount'])[0]['amount']
-		 	print  "======================",amount
+		 	print  "Amoubnt :",amount
 		 	total_amount += (amount*obj_price)
 
 
