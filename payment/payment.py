@@ -27,21 +27,32 @@
 
 from osv import fields
 from osv import osv
-
+import time
 
 class payment_type(osv.osv):
     _name = 'payment.type'
     _description = 'Payment type'
     _columns = {
         'name': fields.char('Name', size=64, required=True),
-        'code': fields.char('code', size=64, required=True),
+	'suitable_bank_types': fields.many2many('res.partner.bank.type',
+						'bank_type_payment_type_rel',
+						'pay_type_id','bank_type_id',
+						'Suitable bank types')
                 }
 
-    def compatible_bank_account_type(self,cr,uid,type):
+    def suitable_bank_account_code(self,cr,uid,type_name,context):
         t = self.pool.get('res.partner.bank.type')
-        return t.read(cr,uid,t.search(cr,uid,[]),['name'])
+        return t.read(cr,uid,t.search(cr,uid,[]),['code'],context=context)
     
 payment_type()
+
+
+def type_get(self, cr, uid, context={}):
+    pay_type_obj = self.pool.get('payment.type')
+    ids = pay_type_obj.search(cr, uid, [])
+    res = pay_type_obj.read(cr, uid, ids, ['code','name'], context)
+    return [(r['name'],r['name']) for r in res]+[('','')] 
+
 
 class payment_order(osv.osv):
     _name = 'payment.order'
@@ -52,37 +63,38 @@ class payment_order(osv.osv):
         ids = pay_type_obj.search(cr, uid, [])
         res = pay_type_obj.read(cr, uid, ids, ['code','name'], context)
         return [(r['name'],r['name']) for r in res]
-    _defaults = {
-             'state': lambda *a: 'draft',
-       }
 
+    _rec_name = 'date'
     _columns = {
-        'name': fields.char('Payment Name',size=64),
-        'type': fields.selection(type_get, 'Payment Type',required=True),
-        'state': fields.selection([('draft', 'Draft'),('done','Done')], 'State'),
-        'payment_lines': fields.one2many('payment.line','order_id','Payment Lines')
+        'date': fields.date('Payment Date',size=64),
+        'type': fields.selection(type_get, 'Payment Type'),
+        'state': fields.selection([('draft', 'Draft'),('open','Open'),
+				   ('cancel','Cancelled'),('done','Done')], 'State'),
+        'payment_lines': fields.one2many('payment.line','order','Payment Lines')
 
     }
+    _defaults = {
+	'date': time.strftime('%Y-%m-%d'),
+	'state': lambda *a: 'draft',
+       }
 
 payment_order()
 
 class payment_line(osv.osv):
     _name = 'payment.line'
     _description = 'Payment Line'
+    _rec_name = 'move_line'
     _columns = {
-        'order_id': fields.many2one('payment.order','Order', ondelete='cascade', select=True),
-        'name': fields.char('Payment Name', size=64),
-        'invoice_id': fields.many2one('account.invoice','Payment Invoice',required=True),
+        'move_line': fields.many2one('account.move.line','Entry Line',required=True),
         'amount': fields.float('Payment Amount', digits=(16,4)),
+	'type': fields.selection(type_get, 'Payment Type',required=True),
+	'bank': fields.many2one('res.partner.bank','Bank Account'),
+        'order': fields.many2one('payment.order','Order', ondelete='cascade', select=True),
      }
-    def onchange_invoice_id(self, cr, uid, id, invoice_id, context={}):
-        if not invoice_id:
+    def onchange_move_line(self, cr, uid, id, move_line, context={}):
+        if not move_line:
             return {}
-        invoices=self.pool.get('account.invoice').browse(cr,uid,[invoice_id])
-        amount=0.0
-        for invoice in invoices:
-            amount=invoice.amount_to_pay
-
-        return {'value': {'amount': amount}}
+        line=self.pool.get('account.move.line').browse(cr,uid,move_line)
+        return {'value': {'amount': line.debit}}
 
 payment_line()

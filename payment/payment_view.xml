@@ -1,8 +1,8 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
-		<menuitem name="Payment Management" id="menu_main" icon="terp-project"/>
-		<menuitem name="Payment Management/Configuration" groups="admin" sequence="1"/>
+		<menuitem name="Financial Management/Payment Management" id="menu_main" icon="terp-project"/>
+		<menuitem name="Financial Management/Payment Management/Configuration" groups="admin" sequence="1"/>
 
 		<record model="ir.ui.view" id="view_payment_type_form">
 			<field name="name">payment.type.form</field>
@@ -11,7 +11,7 @@
 			<field name="arch" type="xml">
 				<form string="Payment Type">
 					<field name="name" select="1"/>
-					<field name="code" select="1"/>
+					<field name="suitable_bank_types" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -19,9 +19,9 @@
 			<field name="name">Payment Type</field>
 			<field name="res_model">payment.type</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">form,tree</field>
+			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Payment Management/Configuration/Payment Type" id="menu_action_payment_type_form" action="action_payment_type_form"/>
+		<menuitem name="Financial Management/Payment Management/Configuration/Payment Type" id="menu_action_payment_type_form" action="action_payment_type_form"/>
 
 	    <record model="ir.ui.view" id="view_payment_order_form">
 			<field name="name">payment.order.form</field>
@@ -29,37 +29,13 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Payment Order">
-					<field name="name" select="1"/>
+					<field name="date" select="1"/>
 					<field name="type" select="1"/>
 					<field name="payment_lines" select="1" colspan="4" widget="one2many_list"/>
 					<field name="state" select="1"/>
    				</form>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_account_invoice_inhe">
-			<field name="name">account.invoice.form.inhe</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="currency_id" position="before">
-					<field name="amount_pay" />
-					<field name="amount_to_pay" />
-				</field>
-			</field>
-	    </record>
-	    <record model="ir.ui.view" id="view_account_invoice_supplier_inhe">
-			<field name="name">account.invoice.supplier.form.inhe</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_supplier_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<field name="currency_id" position="before">
-					<field name="amount_pay" />
-					<field name="amount_to_pay" />
-				</field>
-			</field>
-	    </record>
 
 		<record model="ir.ui.view" id="view_payment_order_tree">
 		<field name="name">payment.order.tree</field>
@@ -68,7 +44,7 @@
 		<field name="priority" eval="4"/>
 		<field name="arch" type="xml">
 			<tree string="Payment Order">
-				<field name="name"/>
+				<field name="date"/>
 				<field name="type"/>
 				<field name="state" />
 			</tree>
@@ -80,7 +56,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-	    <menuitem name="Payment Management/Payment Order" id="menu_action_payment_order_form" action="action_payment_order_form"/>
+	    <menuitem name="Financial Management/Payment Management/Payment Order" id="menu_action_payment_order_form" action="action_payment_order_form"/>
 
 
 

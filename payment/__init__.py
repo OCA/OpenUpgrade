@@ -32,4 +32,4 @@
 
 import payment
 import wizard
-import invoice
+import account_move_line
