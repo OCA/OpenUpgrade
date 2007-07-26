@@ -1138,7 +1138,7 @@ sign in sign out report by user
 		<field name="res_model">report.attendance</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
-		<field name="domain"> [('name','ilike',time.strftime('%Y-%m'))]</field>
+		<!--<field name="domain"> [('name','ilike',time.strftime('%Y-%m'))]</field>-->
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/Attendance" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
 	<menuitem name="Auction Management/Reporting/Manager/Attendance"  action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_manager_tree1"/>
