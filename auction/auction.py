@@ -1158,6 +1158,7 @@ class report_auction_estimation_adj_category(osv.osv):
 			'date': fields.char('Name', size=64, required=True,select=True),
 			'lot_type': fields.selection(_type_get, 'Object Type', size=64),
 			'adj_total': fields.float('Total Adjudication',select=True),
+			'user_id':fields.many2one('res.users', 'User', select=True),
 	}
 
 	def init(self, cr):
@@ -1170,14 +1171,15 @@ class report_auction_estimation_adj_category(osv.osv):
 				   l.lot_type as lot_type,
 				   sum(l.lot_est1) as lot_est1,
 				   sum(l.lot_est2) as lot_est2,
-				   sum(l.obj_price) as adj_total
+				   sum(l.obj_price) as adj_total,
+				   l.create_uid as user_id
 				from
 					auction_lots l,auction_dates m
 				where l.auction_id=m.id and l.obj_price >0
 					and
 					l.create_date > current_date + interval '-3 month'
 				group by
-					 substring(l.create_date for 7),l.state,lot_type
+					 substring(l.create_date for 7),l.state,lot_type,l.create_uid
 			)
 		""")
 report_auction_estimation_adj_category()
