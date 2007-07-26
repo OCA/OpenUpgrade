@@ -1299,6 +1299,7 @@ class report_attendance(osv.osv):
 					a.employee_id,
 					SUM(((EXTRACT(hour FROM a.name) * 60) + EXTRACT(minute FROM a.name)) * (CASE WHEN a.action = 'sign_in' THEN -1 ELSE 1 END)) as total_attendance
 				FROM hr_attendance a
+				where name > current_date + interval '-1 day'
 				GROUP BY a.name::date, a.employee_id
 			) AS fs
 			GROUP BY name,fs.id,employee_id
