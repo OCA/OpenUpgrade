@@ -1040,9 +1040,11 @@ estimation.adj.category
 		<field name="arch" type="xml">
 			<graph string="Estimation/Adjudication" orientation="vertical" type="bar">
 				<field name="lot_type" select="1"/>
+				<field name="user_id" group="True"/>
 				<field name="lot_est1" operator="+"/>
 				<field name="lot_est2" operator="+"/>
 				<field name="adj_total" operator="+"/>
+
 			</graph>
 		</field>
 
