@@ -39,3 +39,6 @@ import wizard_lot_date_move
 import wizard_auction_journal
 import wizard_auction_invoice_buyer
 import wizard_transfer_unsold_object
+import auction_wizard_enable_taken
+import auction_wizard_able_taken
+

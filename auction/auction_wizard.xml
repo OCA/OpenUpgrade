@@ -81,6 +81,16 @@
 			name="auction.lots.transfer.unsold.object"
 			id="wizard_transfer_unsold_objects"/>
 		-->
+			<wizard string="Enable objects"
+			model="auction.lots"
+			name="auction.lots.enable"
+			id="auction_wizard_enable_taken"/>
+		
+			<wizard string="Able objects"
+			model="auction.lots"
+			name="auction.lots.able"
+			id="auction_wizard_able_taken"/>
+
 
 	</data>
 </terp>

@@ -124,7 +124,7 @@ class wiz_auc_lots_numerotate(wizard.interface):
 		},
 		'search': {
 			'actions': [_read_record],
-			'result': {'type': 'form', 'arch':numerotate_form2, 'fields': numerotate_fields2, 'state':[('set_number','Numerotation'), ('end','Exit')]}
+			'result': {'type': 'form', 'arch':numerotate_form2, 'fields': numerotate_fields2, 'state':[('end','Exit'),('set_number','Numerotation')]}
 		},
 		'set_number': {
 			'actions': [_numerotate],
@@ -138,7 +138,7 @@ class wiz_auc_lots_numerotate(wizard.interface):
 	states = {
 		'init': {
 			'actions': [],
-			'result': {'type': 'form', 'arch':numerotate_form_cont, 'fields': numerotate_fields_cont, 'state':[('set_number','Numerotation'), ('end','Exit')]}
+			'result': {'type': 'form', 'arch':numerotate_form_cont, 'fields': numerotate_fields_cont, 'state':[('end','Exit'),('set_number','Numerotation')]}
 		},
 		'set_number': {
 			'actions': [_numerotate_cont],
