@@ -16,15 +16,14 @@
 							<action
 								string="My Latest Objects"
 								name="%(auction.action_report_latest_objects_tree)d"
-								colspan="4"
 								height="200"
 								width="510"/>
 							<action string="My Latest Deposits"
 								name="%(auction.action_report_latest_doposit_tree)d"
-								colspan="4"/>
-							<action string="Object statistic"
-								name="%(auction.action_report_object_encoded_tree)d"
-								colspan="4"/>
+								/>
+							<action string="Objects statistics"
+								name="%(auction.action_report_object_encoded_member_tree)d"
+								/>
 							</child1>
 
 						<child2>
