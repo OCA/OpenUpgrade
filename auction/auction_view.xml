@@ -1348,5 +1348,42 @@ Auction adjudication
 		<field name="view_mode">tree</field>
 	</record>
 	<menuitem name="Auction Management/Sellers/Depositer statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_member"/>
+=============================
+Object encoded
+==============================
+
+	<record model="ir.ui.view" id="view_report_object_encoded_tree">
+		<field name="name">report.object.encoded.tree</field>
+		<field name="model">report.object.encoded</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Object statistic">
+				<field name="date" select="1"/>
+				<field name="state" select="1"/>
+				<field name="user_id" select="1"/>
+				<field name="estimation" select="1"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_object_encoded_graph">
+		<field name="name">report.object.encoded.graph</field>
+		<field name="model">report.object.encoded</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Object statistic" type="bar">
+				<field name="user_id" select="1"/>
+				<field name="estimation" operator="+" />
+
+			</graph>
+		</field>
+	</record>
+
+
+	<record model="ir.actions.act_window" id="action_report_object_encoded_tree">
+		<field name="res_model">report.object.encoded</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+	</record>
 </data>
 </terp>
