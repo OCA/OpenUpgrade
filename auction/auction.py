@@ -286,7 +286,8 @@ class auction_lots(osv.osv):
 			res[lot.id] = amount_total
 		return res
 
-	def _sellerprice(self, cr, uid, ids, name, args, context):
+
+	def _sellerprice(self, cr, uid, ids,*a):
 		res={}
 		lots=self.pool.get('auction.lots').browse(cr,uid,ids)
 		pt_tax=self.pool.get('account.tax')
@@ -654,16 +655,14 @@ class auction_lots(osv.osv):
 						'journal_id': lot.auction_id.journal_id.id,
 						'partner_id': lot.bord_vnd_id.partner_id.id,
 						'type': 'in_invoice',
+						'check_total':self._sellerprice(cr, uid, [lot.id])[lot.id],
 						}
-
 					inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.bord_vnd_id.partner_id.id)['value'])
 					inv['account_id'] = inv['account_id'] and inv['account_id'][0]
 					inv_id = inv_ref.create(cr, uid, inv, context)
-					inv_ref.button_compute(cr, uid, [inv_id])
+				#	inv_ref.button_compute(cr, uid, [inv_id])
 					invoices[lot.bord_vnd_id.id] = inv_id
-
 				self.write(cr,uid,[lot.id],{'sel_inv_id':inv_id,'state':'sold'})
-
 				taxes = map(lambda x: x.id, lot.product_id.taxes_id)
 				if lot.bord_vnd_id.tax_id:
 					taxes.append(lot.bord_vnd_id.tax_id.id)
@@ -680,11 +679,15 @@ class auction_lots(osv.osv):
 					'price_unit': lot.obj_price,
 					}
 				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
+				inv_ref.button_compute(cr, uid, [inv_id])
 				#laisser l utilisateur saisir le montant total ds la facture du seller
-				#wf_service = netsvc.LocalService('workflow')
-				#wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-
+			#	wf_service = netsvc.LocalService('workflow')
+			#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+				#cr.execute("select min(ai.id),ai.partner_id,SUM(ai.amount_total),SUM(amount_tax) from account_invoice ai, auction_lots al WHERE al.sel_inv_id=ai.id GROUP BY ai.partner_id")
+				#r=cr.fetchall()
+						
 			return invoices.values()
+			
 
 #	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
 #		lots = self.read(cr, uid, ids, ['ach_inv_id'])

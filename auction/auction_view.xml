@@ -1041,13 +1041,13 @@ estimation.adj.category
 		<field name="model">report.auction.estimation.adj.category</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-			<graph string="Estimation/Adjudication" orientation="vertical" type="bar">
+			<graph string="Min est/Adj/Max est" orientation="vertical" type="bar">
 				<field name="lot_type" select="1"/>
 				<field name="user_id" group="True"/>
 				<field name="lot_est1" operator="+"/>
-				<field name="lot_est2" operator="+"/>
 				<field name="adj_total" operator="+"/>
-
+				<field name="lot_est2" operator="+"/>
+				
 			</graph>
 		</field>
 
