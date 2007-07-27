@@ -2,7 +2,7 @@ __name__="package"
 
 import uno
 import unohelper
-
+import os
 #--------------------------------------------------
 # An ActionListener adapter.
 # This object implements com.sun.star.awt.XActionListener.
@@ -10,6 +10,9 @@ import unohelper
 #  python procedure, passing it...
 #   1. the oActionEvent
 #   2. any other parameters you specified to this object's constructor (as a tuple).
+os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
+passwd=""
+loginstatus=False
 from com.sun.star.awt import XActionListener
 class ActionListenerProcAdapter( unohelper.Base, XActionListener ):
     def __init__( self, oProcToCall, tParams=() ):
@@ -1070,12 +1073,16 @@ if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
-
+    from ServerParameter import *
+    from LoginTest import *
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
     def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
+        LoginTest()
+        if not loginstatus:
+            exit(1)
         self.win = DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
         self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
@@ -1156,8 +1163,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 if sObject=="":
                     self.insVariable.setText("List of "+docinfo.getUserFieldValue(3))
                     self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
-#                    self.win.setEditText("txtName", sVariable)
-#                    self.win.setEditText("txtUName",sDisplayName)
+                    self.win.setEditText("txtName", sVariable)
+                    self.win.setEditText("txtUName",sDisplayName)
                     self.sValue= "objects"
                 else:
                     sItem=""
@@ -1172,24 +1179,24 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
             self.win.doModalDialog("lstFields",self.sValue)
         else:
-            ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
+            ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
             self.win.endExecute()
 
 
 
 
-    def getSection(self,oParEnum,oCurrentSection):
-        while oParEnum.hasMoreElements():
-            oPar = oParEnum.nextElement()
-            if oPar.supportsService("com.sun.star.text.TextContent"):
-                if oPar.TextSection:
-                    if oPar.TextSection.Name==oCurrentSection.Name:
-                        oInsideEnum=oPar.createEnumeration()
-                        while oInsideEnum.hasMoreElements():
-                            oInside=oInsideEnum.nextElement()
-                            if oInside.supportsService("com.sun.star.text.TextPortion"):
-                                if oInside.TextField:
-                                    print oInside.TextField.Items
+#    def getSection(self,oParEnum,oCurrentSection):
+#        while oParEnum.hasMoreElements():
+#            oPar = oParEnum.nextElement()
+#            if oPar.supportsService("com.sun.star.text.TextContent"):
+#                if oPar.TextSection:
+#                    if oPar.TextSection.Name==oCurrentSection.Name:
+#                        oInsideEnum=oPar.createEnumeration()
+#                        while oInsideEnum.hasMoreElements():
+#                            oInside=oInsideEnum.nextElement()
+#                            if oInside.supportsService("com.sun.star.text.TextPortion"):
+#                                if oInside.TextField:
+#                                    print oInside.TextField.Items
     def lstbox_selected(self,oItemEvent):
         sItem=self.win.getListBoxSelectedItem("lstFields")
         sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]
@@ -1290,10 +1297,14 @@ if __name__<>"package":
     from lib.gui import *
     from lib.functions import *
     from lib.error import ErrorDialog
+    from LoginTest import *
 
 
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
+        LoginTest()
+        if not loginstatus:
+            exit(1)
         self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
 
         self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
@@ -1385,6 +1396,8 @@ class Fields(unohelper.Base, XJobExecutor ):
         except:
             #import traceback;traceback.print_exc()
             self.win.setEditText("txtUName","/")
+        if self.bModify:
+            self.win.setEditText("txtUName",self.sGDisplayName)
     def getRes(self,sock ,sObject,sVar):
         res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
         key = res.keys()
@@ -1473,6 +1486,9 @@ if __name__<>"package":
 
 class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
+        LoginTest()
+        if not loginstatus:
+            exit(1)
         self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
         self.win.addFixedText("lblExpression",17 , 10, 35, 15, "Expression :")
         self.win.addEdit("txtExpression", -5, 5, 123, 15)
@@ -1644,11 +1660,19 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
-
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
         self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
 
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Server URL")
-        self.win.addEdit("txtHost",-34,9,91,15)
+        res=getConnectionStatus(docinfo.getUserFieldValue(0))
+        if res == -1:
+            ErrorDialog("Could not connect to the server!","")
+        elif res == 0:
+            ErrorDialog("No Database found !!!","")
+
+        self.win.addEdit("txtHost",-34,9,91,15,docinfo.getUserFieldValue(0))
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
                       ,actionListenerProc = self.btnChange_clicked )
 
@@ -1656,11 +1680,13 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         #self.win.addFixedText("lblMsg", -2,28,123,15)
         self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
         self.lstDatabase = self.win.getControl( "lstDatabase" )
-
+        for i in range(res.__len__()):
+            self.lstDatabase.addItem(res[i],i)
+        #self.win.selectListBoxItem( "lstDatabase", docinfo.getUserFieldValue(2), True )
         #self.win.setEnabled("lblMsg",False)
 
         self.win.addFixedText("lblLoginName", 17, 51, 60, 15, "Login")
-        self.win.addEdit("txtLoginName",-2,48,123,15)
+        self.win.addEdit("txtLoginName",-2,48,123,15,docinfo.getUserFieldValue(1))
 
         self.win.addFixedText("lblPassword", 6, 70, 60, 15, "Password")
         self.win.addEdit("txtPassword",-2,67,123,15)
@@ -1671,7 +1697,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.doModalDialog("",None)
+        self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOkOrCancel_clicked(self,oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -1683,6 +1709,17 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
             if not UID:
                 ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
             else:
+                desktop=getDesktop()
+                doc = desktop.getCurrentComponent()
+                docinfo=doc.getDocumentInfo()
+                docinfo.setUserFieldValue(0,self.win.getEditText("txtHost"))
+                docinfo.setUserFieldValue(1,self.win.getEditText("txtLoginName"))
+                global passwd
+                passwd=self.win.getEditText("txtPassword")
+                global loginstatus
+                loginstatus=True
+                docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
+                docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -1691,9 +1728,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         aVal=[]
         Change(aVal)
         if aVal[1]== -1:
-            pass
+            ErrorDialog(aVal[0],"")
         elif aVal[1]==0:
-            pass
+            ErrorDialog(aVal[0],"")
         else:
             self.win.setEditText("txtHost",aVal[0])
             for i in range(aVal[1].__len__()):
@@ -1749,10 +1786,10 @@ class Change:
             url = self.protocol[self.win.getListBoxSelectedItem("lstProtocol")]+self.win.getEditText("txtHost")+":"+self.win.getEditText("txtPort")
             res = getConnectionStatus(url)
             if res == -1:
-                self.aVal.append("Sever Could not found")
+                self.aVal.append("Could not connect to the server!")
                 self.aVal.append(res)
             elif res == 0:
-                self.aVal.append("No Database Available")
+                self.aVal.append("No Database found !!!")
                 self.aVal.append(res)
             else:
                 self.aVal.append(url)
@@ -1761,3 +1798,80 @@ class Change:
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name =="btnCancel":
             self.win.endExecute()
+
+
+import uno
+import string
+import unohelper
+import xmlrpclib
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from lib.error import ErrorDialog
+    from lib.functions import *
+#
+#
+# Start OpenOffice.org, listen for connections and open testing document
+#
+
+class NewReport(unohelper.Base, XJobExecutor):
+    def __init__(self,ctx):
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+        LoginTest()
+        if not loginstatus:
+            exit(1)
+        self.win=DBModalDialog(60, 50, 180, 115, "Open New Report")
+        self.win.addFixedText("lblModuleSelection", 2, 12, 60, 15, "Module Selection")
+        self.win.addComboListBox("lstModule", -2,9,123,80 , False)
+        self.lstModule = self.win.getControl( "lstModule" )
+
+        sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
+        ids = sock.execute('trunk_terp', 3, 'admin', 'ir.model' , 'search',[])
+        fields = [ 'model']
+        res = sock.execute('trunk_terp', 3, 'admin', 'ir.model' , 'read', ids, fields)
+        for i in range(res.__len__()):
+            self.lstModule.addItem(res[i]['model'],self.lstModule.getItemCount())
+
+        self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+
+        self.win.addButton('btnCancel',-2 - 70 - 5 ,-5, 35,15,'Cancel'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+
+        self.win.doModalDialog("",None)
+
+    def btnOkOrCancel_clicked(self,oActionEvent):
+        if oActionEvent.Source.getModel().Name=="btnOK":
+            desktop=getDesktop()
+            doc = desktop.getCurrentComponent()
+            docinfo=doc.getDocumentInfo()
+            print self.lstModule.getSelectedItem()
+            docinfo.setUserFieldValue(3,self.lstModule.getSelectedItem())
+            self.win.endExecute()
+        elif oActionEvent.Source.getModel().Name=="btnCancel":
+            self.win.endExecute()
+
+if __name__<>"package" and __name__=="__main__":
+    NewReport(None)
+elif __name__=="package":
+    g_ImplementationHelper.addImplementation( \
+            NewReport,
+            "org.openoffice.tiny.report.opennewreport",
+            ("com.sun.star.task.Job",),)
+
+
+
+if __name__<>"package":
+    from ServerParameter import *
+    from lib.gui import *
+
+class LoginTest:
+    def __init__(self):
+        if not loginstatus:
+            ServerParameter(None)
+
+    def btnOkOrCancel_clicked( self, oActionEvent ):
+        self.win.endExecute()
+

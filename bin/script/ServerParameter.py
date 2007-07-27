@@ -14,11 +14,19 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
-
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
         self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
 
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Server URL")
-        self.win.addEdit("txtHost",-34,9,91,15)
+        res=getConnectionStatus(docinfo.getUserFieldValue(0))
+        if res == -1:
+            ErrorDialog("Could not connect to the server!","")
+        elif res == 0:
+            ErrorDialog("No Database found !!!","")
+
+        self.win.addEdit("txtHost",-34,9,91,15,docinfo.getUserFieldValue(0))
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
                       ,actionListenerProc = self.btnChange_clicked )
 
@@ -26,11 +34,13 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         #self.win.addFixedText("lblMsg", -2,28,123,15)
         self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
         self.lstDatabase = self.win.getControl( "lstDatabase" )
-
+        for i in range(res.__len__()):
+            self.lstDatabase.addItem(res[i],i)
+        #self.win.selectListBoxItem( "lstDatabase", docinfo.getUserFieldValue(2), True )
         #self.win.setEnabled("lblMsg",False)
 
         self.win.addFixedText("lblLoginName", 17, 51, 60, 15, "Login")
-        self.win.addEdit("txtLoginName",-2,48,123,15)
+        self.win.addEdit("txtLoginName",-2,48,123,15,docinfo.getUserFieldValue(1))
 
         self.win.addFixedText("lblPassword", 6, 70, 60, 15, "Password")
         self.win.addEdit("txtPassword",-2,67,123,15)
@@ -41,7 +51,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.doModalDialog("",None)
+        self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOkOrCancel_clicked(self,oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -58,7 +68,11 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 docinfo=doc.getDocumentInfo()
                 docinfo.setUserFieldValue(0,self.win.getEditText("txtHost"))
                 docinfo.setUserFieldValue(1,self.win.getEditText("txtLoginName"))
-                docinfo.setUserFieldValue(2,"")
+                global passwd
+                passwd=self.win.getEditText("txtPassword")
+                global loginstatus
+                loginstatus=True
+                docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
                 docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
@@ -68,9 +82,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         aVal=[]
         Change(aVal)
         if aVal[1]== -1:
-            pass
+            ErrorDialog(aVal[0],"")
         elif aVal[1]==0:
-            pass
+            ErrorDialog(aVal[0],"")
         else:
             self.win.setEditText("txtHost",aVal[0])
             for i in range(aVal[1].__len__()):

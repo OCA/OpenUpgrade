@@ -7,10 +7,14 @@ if __name__<>"package":
     from lib.gui import *
     from lib.functions import *
     from lib.error import ErrorDialog
+    from LoginTest import *
 
 
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
+        LoginTest()
+        if not loginstatus:
+            exit(1)
         self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
 
         self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
@@ -102,6 +106,8 @@ class Fields(unohelper.Base, XJobExecutor ):
         except:
             #import traceback;traceback.print_exc()
             self.win.setEditText("txtUName","/")
+        if self.bModify:
+            self.win.setEditText("txtUName",self.sGDisplayName)
     def getRes(self,sock ,sObject,sVar):
         res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
         key = res.keys()

@@ -1,6 +1,6 @@
 import uno
 import unohelper
-
+import os
 #--------------------------------------------------
 # An ActionListener adapter.
 # This object implements com.sun.star.awt.XActionListener.
@@ -8,6 +8,9 @@ import unohelper
 #  python procedure, passing it...
 #   1. the oActionEvent
 #   2. any other parameters you specified to this object's constructor (as a tuple).
+os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
+passwd=""
+loginstatus=False
 from com.sun.star.awt import XActionListener
 class ActionListenerProcAdapter( unohelper.Base, XActionListener ):
     def __init__( self, oProcToCall, tParams=() ):

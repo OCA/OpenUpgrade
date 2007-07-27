@@ -39,10 +39,10 @@ class Change:
             url = self.protocol[self.win.getListBoxSelectedItem("lstProtocol")]+self.win.getEditText("txtHost")+":"+self.win.getEditText("txtPort")
             res = getConnectionStatus(url)
             if res == -1:
-                self.aVal.append("Sever Could not found")
+                self.aVal.append("Could not connect to the server!")
                 self.aVal.append(res)
             elif res == 0:
-                self.aVal.append("No Database Available")
+                self.aVal.append("No Database found !!!")
                 self.aVal.append(res)
             else:
                 self.aVal.append(url)

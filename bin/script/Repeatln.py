@@ -7,12 +7,16 @@ if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
-
+    from ServerParameter import *
+    from LoginTest import *
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
     def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
+        LoginTest()
+        if not loginstatus:
+            exit(1)
         self.win = DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
         self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
@@ -93,8 +97,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 if sObject=="":
                     self.insVariable.setText("List of "+docinfo.getUserFieldValue(3))
                     self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
-#                    self.win.setEditText("txtName", sVariable)
-#                    self.win.setEditText("txtUName",sDisplayName)
+                    self.win.setEditText("txtName", sVariable)
+                    self.win.setEditText("txtUName",sDisplayName)
                     self.sValue= "objects"
                 else:
                     sItem=""
@@ -109,24 +113,24 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
             self.win.doModalDialog("lstFields",self.sValue)
         else:
-            ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
+            ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
             self.win.endExecute()
 
 
 
 
-    def getSection(self,oParEnum,oCurrentSection):
-        while oParEnum.hasMoreElements():
-            oPar = oParEnum.nextElement()
-            if oPar.supportsService("com.sun.star.text.TextContent"):
-                if oPar.TextSection:
-                    if oPar.TextSection.Name==oCurrentSection.Name:
-                        oInsideEnum=oPar.createEnumeration()
-                        while oInsideEnum.hasMoreElements():
-                            oInside=oInsideEnum.nextElement()
-                            if oInside.supportsService("com.sun.star.text.TextPortion"):
-                                if oInside.TextField:
-                                    print oInside.TextField.Items
+#    def getSection(self,oParEnum,oCurrentSection):
+#        while oParEnum.hasMoreElements():
+#            oPar = oParEnum.nextElement()
+#            if oPar.supportsService("com.sun.star.text.TextContent"):
+#                if oPar.TextSection:
+#                    if oPar.TextSection.Name==oCurrentSection.Name:
+#                        oInsideEnum=oPar.createEnumeration()
+#                        while oInsideEnum.hasMoreElements():
+#                            oInside=oInsideEnum.nextElement()
+#                            if oInside.supportsService("com.sun.star.text.TextPortion"):
+#                                if oInside.TextField:
+#                                    print oInside.TextField.Items
     def lstbox_selected(self,oItemEvent):
         sItem=self.win.getListBoxSelectedItem("lstFields")
         sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]
