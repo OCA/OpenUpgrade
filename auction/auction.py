@@ -1007,7 +1007,7 @@ class report_seller_auction(osv.osv):
 				from
 					auction_dates ad,
 					auction_lots al
-				where 
+				where
 					al.auction_id=ad.id
 				group by
 					al.ach_uid,
@@ -1031,7 +1031,7 @@ class report_seller_auction2(osv.osv):
 
 	def init(self, cr):
 		cr.execute('''create or replace view report_seller_auction2  as
-			(select 
+			(select
 				min(al.id) as id,
 				ad.auction1 as date,
 				al.ach_uid as seller,
@@ -1105,7 +1105,7 @@ class report_auction_view(osv.osv):
 	}
 
 	def init(self, cr):
-		cr.execute('''create or replace view report_auction_view  as 
+		cr.execute('''create or replace view report_auction_view  as
 			(select
 				al.auction_id as id,
 				al.auction_id as "auction_id",
@@ -1140,7 +1140,7 @@ class report_auction_object_date(osv.osv):
  #l.create_uid as user,
 
 	def init(self, cr):
-		cr.execute("""create or replace view report_auction_object_date as 
+		cr.execute("""create or replace view report_auction_object_date as
 			(select
 			   min(l.id) as id,
 			   substring(l.create_date for 7)|| '-01' as name,
@@ -1278,7 +1278,7 @@ class report_deposit_border(osv.osv):
 }
 	def init(self, cr):
 		cr.execute("""CREATE OR REPLACE VIEW report_deposit_border AS
-			SELECT 
+			SELECT
 				min(al.id) as id,
 				ab.partner_id as seller,
 				ab.name as bord,
@@ -1286,11 +1286,36 @@ class report_deposit_border(osv.osv):
 				SUM((al.lot_est1 + al.lot_est2)/2) as moy_est,
 				SUM(al.net_revenue)/(count(ad.id)) as total_marge
 
-			FROM 
+			FROM
 				auction_lots al,auction_deposit ab,auction_dates ad
-			WHERE 
-				ad.id=al.auction_id 
+			WHERE
+				ad.id=al.auction_id
 				and al.bord_vnd_id=ab.id
 			GROUP BY
 				ab.name,ab.partner_id""")
 report_deposit_border()
+class report_object_encoded(osv.osv):
+	_name = "report.object.encoded"
+	_description = "Object encoded"
+	_auto = False
+	_columns = {
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
+		'user_id':fields.many2one('res.users', 'User', select=True),
+		'estimation': fields.float('Estimation',select=True),
+		'date': fields.date('Create Date',  required=True),
+		'gross_revenue':fields.float('Gross revenue',readonly=True, select=True),
+		'net_revenue':fields.float('Net revenue',readonly=True, select=True),
+		'net_margin':fields.float('Net margin', readonly=True, select=True),
+	}
+	def init(self, cr):
+		cr.execute('''create or replace view report_object_encoded  as
+			(select al.id as id,
+				substring(al.create_date for 10) as date,
+				al.state as state,
+				al.create_uid as user_id,
+				sum((100*lot_est1)/obj_price) as estimation
+			from auction_lots al
+			where al.obj_price>0 and state='draft'
+			group by al.id,substring(al.create_date for 10), al.state, al.create_uid)
+			 ''')
+report_object_encoded()
