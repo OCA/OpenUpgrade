@@ -1339,6 +1339,7 @@ Auction adjudication
 				<field name="moy_est" select="1"/>
 				<field name="total_marge" select="1"/>
 				<field name="nb_obj" select="1"/>
+				<field name="obj_num" select="1"/>
 				</tree>
 		</field>
 	</record>
@@ -1362,6 +1363,8 @@ Object encoded
 				<field name="state" select="1"/>
 				<field name="user_id" select="1"/>
 				<field name="estimation" select="1"/>
+				<field name="obj_ret" select="1"/>
+				<field name="obj_num" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -1371,19 +1374,74 @@ Object encoded
 		<field name="model">report.object.encoded</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-			<graph string="Object statistic" type="bar">
+			<graph string="Objects statistics" type="bar">
 				<field name="user_id" select="1"/>
 				<field name="estimation" operator="+" />
-
+				<field name="obj_ret"  operator="+" />
+				<field name="obj_num"  operator="+" />
 			</graph>
 		</field>
 	</record>
 
-
-	<record model="ir.actions.act_window" id="action_report_object_encoded_tree">
+	<record model="ir.actions.act_window" id="action_report_object_encoded_member_tree">
 		<field name="res_model">report.object.encoded</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
+		<field name="domain"> [('user_id','=',uid)]</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
+
+	<menuitem name="Auction Management/Reporting/Member/Objects statistics" action="action_report_object_encoded_member_tree" id="menu_report_objects_tree_member"/>
+
+
+	<record model="ir.ui.view" id="view_report_object_encoded_manager_tree">
+		<field name="name">report.object.encoded.tree</field>
+		<field name="model">report.object.encoded.manager</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Objects statistics">
+				<field name="user_id" select="1"/>
+				<field name="estimation" select="1"/>
+				<field name="obj_ret" select="1"/>
+				<field name="obj_num" select="1"/>
+				<field name="adj" select="1"/>
+				<field name="obj_margin" select="1"/>
+				<field name="net_revenue" select="1"/>
+				<field name="gross_revenue" select="1"/>
+				<field name="state" select="1"/>
+				<field name="date" select="1"/>
+
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_report_object_encoded_manager_graph">
+		<field name="name">report.object.encoded.graph</field>
+		<field name="model">report.object.encoded.manager</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Object statistic" type="bar">
+				<field name="user_id" select="1"/>
+				<field name="estimation" operator="+" />
+				<field name="obj_ret"  operator="+" />
+				<field name="obj_num"  operator="+" />
+				<field name="adj"  operator="+" />
+				<field name="obj_margin"  operator="+" />
+				<field name="net_revenue" operator="+" />
+				<field name="gross_revenue" operator="+" />
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_report_object_encoded_manager_tree">
+		<field name="res_model">report.object.encoded.manager</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
+	</record>
+
+	<menuitem name="Auction Management/Reporting/Manager/Objects statistics" action="action_report_object_encoded_manager_tree" id="menu_report_objects_tree_manager"/>
+
+
 </data>
 </terp>

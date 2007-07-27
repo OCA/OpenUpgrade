@@ -683,8 +683,9 @@ class auction_lots(osv.osv):
 				#laisser l utilisateur saisir le montant total ds la facture du seller
 			#	wf_service = netsvc.LocalService('workflow')
 			#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-				#cr.execute("select min(ai.id),ai.partner_id,SUM(ai.amount_total),SUM(amount_tax) from account_invoice ai, auction_lots al WHERE al.sel_inv_id=ai.id GROUP BY ai.partner_id")
-				#r=cr.fetchall()
+				cr.execute("select min(ai.id),ai.partner_id,SUM(ai.amount_total),SUM(amount_tax) from account_invoice ai, auction_lots al WHERE al.sel_inv_id=ai.id GROUP BY ai.partner_id")
+				r=cr.fetchall()
+				print "R",r
 						
 			return invoices.values()
 			
@@ -1308,17 +1309,59 @@ class report_object_encoded(osv.osv):
 		'date': fields.date('Create Date',  required=True),
 		'gross_revenue':fields.float('Gross revenue',readonly=True, select=True),
 		'net_revenue':fields.float('Net revenue',readonly=True, select=True),
-		'net_margin':fields.float('Net margin', readonly=True, select=True),
+		'obj_margin':fields.float('Net margin', readonly=True, select=True),
+		'obj_ret':fields.integer('# obj ret', readonly=True, select=True),
+		'adj':fields.integer('Adj.', readonly=True, select=True),
+		'obj_num':fields.integer('# of Encoded obj.', readonly=True, select=True),
 	}
 	def init(self, cr):
 		cr.execute('''create or replace view report_object_encoded  as
-			(select al.id as id,
+			(select min(al.id) as id,
 				substring(al.create_date for 10) as date,
 				al.state as state,
 				al.create_uid as user_id,
-				sum((100*lot_est1)/obj_price) as estimation
+				(SELECT count(1) FROM auction_lots WHERE obj_ret>0) as obj_ret,
+				sum((100* al.lot_est1)/al.obj_price) as estimation,
+				COUNT(al.obj_num) as obj_num
 			from auction_lots al
 			where al.obj_price>0 and state='draft'
-			group by al.id,substring(al.create_date for 10), al.state, al.create_uid)
+			group by substring(al.create_date for 10), al.state, al.create_uid)
 			 ''')
 report_object_encoded()
+
+
+class report_object_encoded_manager(osv.osv):
+	_name = "report.object.encoded.manager"
+	_description = "Object encoded"
+	_auto = False
+	_columns = {
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
+		'user_id':fields.many2one('res.users', 'User', select=True),
+		'estimation': fields.float('Estimation',select=True),
+		'date': fields.date('Create Date',  required=True),
+		'gross_revenue':fields.float('Gross revenue',readonly=True, select=True),
+		'net_revenue':fields.float('Net revenue',readonly=True, select=True),
+		'obj_margin':fields.float('Net margin', readonly=True, select=True),
+		'obj_ret':fields.integer('# obj ret', readonly=True, select=True),
+		'adj':fields.integer('Adj.', readonly=True, select=True),
+		'obj_num':fields.integer('# of Encoded obj.', readonly=True, select=True),
+	}
+	def init(self, cr):
+		cr.execute('''create or replace view report_object_encoded_manager  as
+			(select
+				min(al.id) as id,
+				substring(al.create_date for 10) as date,
+				al.state as state,
+				al.create_uid as user_id,
+				sum((100*lot_est1)/obj_price) as estimation,
+				(SELECT count(1) FROM auction_lots WHERE obj_ret>0) as obj_ret,
+				SUM(al.gross_revenue) as "gross_revenue",
+				SUM(al.net_revenue) as "net_revenue",
+				SUM(al.net_revenue)/count(al.id) as "obj_margin",
+				COUNT(al.obj_num) as obj_num,
+				SUM(al.obj_price) as "adj"
+			from auction_lots al
+			where al.obj_price>0 and state='draft'
+			group by substring(al.create_date for 10), al.state, al.create_uid)
+			 ''')
+report_object_encoded_manager()
