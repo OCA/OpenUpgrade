@@ -49,8 +49,8 @@
     <paraStyle name="P11" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER"/>
     <paraStyle name="P12" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
     <paraStyle name="P13" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P14" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P15" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P15" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P16" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P17" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
@@ -70,7 +70,7 @@
           </para>
         </td>
         <td>
-          <para style="P3">Buyer Form</para>
+          <para style="P3">Seller Form</para>
         </td>
         <td>
           <para style="P4">
@@ -101,31 +101,35 @@
       <font color="white"> </font>
     </para>
     <para style="P13">[[ repeatIn(objects,'o') ]]</para>
-    <para style="P13">
+    <para style="P14">
+      <font face="Times-Roman" size="11.0"> Seller Name: [[ o.bord_vnd_id.partner_id.name ]]</font>
       <font color="white"> .........</font>
       <font color="white"> .........</font>
-      <font color="white"> .........</font>
-      <font color="white"> .........</font>
-      <font face="Times-Roman" size="11.0">Buyer Name: [[ o.ach_uid.name]]</font>
     </para>
-    <para style="P14">Plate Number:<font face="Times-Roman">[[ o.ach_login]]</font></para>
-    <para style="P14">Document: Buyer Form</para>
-    <para style="P14">Auction: [[ o.auction_id.name ]]</para>
-    <para style="P14">Customer Contact:</para>
-    <para style="P14">Customer Reference:</para>
     <para style="P14">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="147.0,113.0,73.0,192.0" style="Table2">
+    <para style="P14">
+      <font color="white"> </font>
+    </para>
+    <para style="P15">Inventory: [[ o.bord_vnd_id.name ]]</para>
+    <para style="P15">Document: [[ o.auction_id.name ]]</para>
+    <para style="P15">
+      <font color="white"> </font>
+    </para>
+    <para style="P15">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="138.0,109.0,119.0,159.0" style="Table2">
       <tr>
         <td>
           <para style="P1">Catelog No</para>
         </td>
         <td>
-          <para style="P1">Description</para>
+          <para style="P1">List No</para>
         </td>
         <td>
-          <para style="P1">Paid</para>
+          <para style="P1">Description</para>
         </td>
         <td>
           <para style="P1">Adj(EUR)</para>
@@ -138,7 +142,7 @@
           <para style="P1">[[ o.obj_num ]]</para>
         </td>
         <td>
-          <para style="P1">[[ o.name ]]</para>
+          <para style="P1">[[ o.lot_num]]</para>
           <para style="P1">
             <font color="white"> </font>
           </para>
@@ -147,7 +151,7 @@
           </para>
         </td>
         <td>
-          <para style="P1">[[ o.state]]</para>
+          <para style="P1">[[ o.name ]] </para>
         </td>
         <td>
           <blockTable colWidths="94.0,94.0" style="Table4">
@@ -169,7 +173,7 @@
             </tr>
             <tr>
               <td>
-                <para style="P7">Buyer Costs:</para>
+                <para style="P7">Seller Costs:</para>
               </td>
               <td>
                 <para style="P7">[[ sum_taxes(o.auction_id.id,o.obj_price) ]]</para>
@@ -180,7 +184,7 @@
                 <para style="P7">Total:</para>
               </td>
               <td>
-                <para style="P15">[[ o.obj_price + sum_taxes(o.auction_id.id,o.obj_price) ]]</para>
+                <para style="P16">[[ o.obj_price + sum_taxes(o.auction_id.id,o.obj_price) ]]</para>
               </td>
             </tr>
           </blockTable>
@@ -190,9 +194,6 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P6">
-      <font color="white"> </font>
-    </para>
     <para style="P6">
       <font color="white"> </font>
     </para>
