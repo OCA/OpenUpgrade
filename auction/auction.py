@@ -454,7 +454,7 @@ class auction_lots(osv.osv):
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='Gross Margin',store=True),
 		'costs':fields.function(_costs,method=True,string='Indirect costs',store=True),
-		'statement': fields.many2one('account.bank.statement', 'Statement'),
+#		'statement': fields.many2one('account.bank.statement', 'Statement'),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='Net Margin',store=True)
 	}
@@ -686,9 +686,9 @@ class auction_lots(osv.osv):
 				cr.execute("select min(ai.id),ai.partner_id,SUM(ai.amount_total),SUM(amount_tax) from account_invoice ai, auction_lots al WHERE al.sel_inv_id=ai.id GROUP BY ai.partner_id")
 				r=cr.fetchall()
 				print "R",r
-						
+
 			return invoices.values()
-			
+
 
 #	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
 #		lots = self.read(cr, uid, ids, ['ach_inv_id'])

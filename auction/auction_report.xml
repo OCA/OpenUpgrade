@@ -156,22 +156,28 @@
 		  multi="1"/-->
 
 
-		  <report string="Buyer Form with rml"
+		  <report string="Buyer Form"
 		  model="auction.lots"
 		  name="buyer_form_report"
 		  rml="auction/report/buyer_form_report.rml"
 		  auto="False"
 		  multi="1"/>
 
+		  <report string="seller Form"
+		  model="auction.lots"
+		  name="seller_form_report"
+		  rml="auction/report/seller_form_report.rml"
+		  auto="False"
+		  multi="1"/>
 
-		<report string="Seller Form"
+		<!--<report string="Seller Form"
 		model="auction.lots"
 		name="report.auction.vnd_bordereau"
 		xml="auction/report/vnd_bordereau.xml"
 		xsl="auction/report/vnd_bordereau.xsl"
 
 		 multi="1"/>
-
+-->
 		<!--<report string="Results"
 		model="auction.lots"
 		name="report.auction.results"

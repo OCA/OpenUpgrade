@@ -33,6 +33,11 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
@@ -49,6 +54,10 @@
     <paraStyle name="P11" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
     <paraStyle name="P12" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P13" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P15" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P16" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P17" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -146,30 +155,118 @@
           <para style="P1">[[ o.state]]</para>
         </td>
         <td>
-          <blockTable colWidths="189.0" style="Table4">
+          <blockTable colWidths="94.0,94.0" style="Table4">
             <tr>
+              <td>
+                <para style="P7"/>
+              </td>
               <td>
                 <para style="P7">[[ o.obj_price ]] </para>
               </td>
             </tr>
             <tr>
               <td>
-                <para style="P8">SubTotal:<font face="Times-Roman">[[ o.obj_price ]]</font></para>
+                <para style="P14">SubTotal: </para>
+              </td>
+              <td>
+                <para style="P14">[[ o.obj_price ]]</para>
               </td>
             </tr>
             <tr>
               <td>
-                <para style="P6">Buyer Costs :</para>
-                <para style="P6">[[ sum_taxes(o.auction_id.id,o.obj_price) ]]</para>
+                <para style="P7">Buyer Costs:</para>
+              </td>
+              <td>
+                <para style="P16">
+                  <font face="Times-Roman" size="11.0">[[ sum_taxes(o.auction_id.id,o.obj_price) ]]</font>
+                </para>
               </td>
             </tr>
             <tr>
               <td>
-                <para style="P6">Total: [[ o.obj_price + sum_taxes(o.auction_id.id,o.obj_price) ]]</para>
+                <para style="P7">Total:</para>
+              </td>
+              <td>
+                <para style="P17">[[ o.obj_price + sum_taxes(o.auction_id.id,o.obj_price) ]]</para>
               </td>
             </tr>
           </blockTable>
           <para style="P5">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="262.0,262.0" style="Table5">
+      <tr>
+        <td>
+          <para style="P7">[[ o.obj_price ]] </para>
+        </td>
+        <td>
+          <para style="P6">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P8">SubTotal:<font face="Times-Roman">[[ o.obj_price ]]</font></para>
+        </td>
+        <td>
+          <para style="P6">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6"><font face="Times-Roman" size="11.0">Buyer Costs: </font>[[ sum_taxes(o.auction_id.id,o.obj_price) ]]</para>
+        </td>
+        <td>
+          <para style="P6">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P6">Total: [[ o.obj_price ]] +<font face="Times-Roman" size="11.0">[[ sum_taxes(o.auction_id.id,o.obj_price) ]]</font></para>
+        </td>
+        <td>
+          <para style="P6">
             <font color="white"> </font>
           </para>
         </td>

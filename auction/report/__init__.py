@@ -37,6 +37,7 @@ import auction_result
 import catelogwithpictures
 import auction_objects
 import buyer_form_report
+import seller_form_report
 #import auction_total_rml
 #import auction_report
 import auction_total_rml
