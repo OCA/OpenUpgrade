@@ -20,11 +20,12 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
 
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Server URL")
-        res=getConnectionStatus(docinfo.getUserFieldValue(0))
-        if res == -1:
-            ErrorDialog("Could not connect to the server!","")
-        elif res == 0:
-            ErrorDialog("No Database found !!!","")
+        if docinfo.getUserFieldValue(0)<>"":
+            res=getConnectionStatus(docinfo.getUserFieldValue(0))
+            if res == -1:
+                ErrorDialog("Could not connect to the server!","")
+            elif res == 0:
+                ErrorDialog("No Database found !!!","")
 
         self.win.addEdit("txtHost",-34,9,91,15,docinfo.getUserFieldValue(0))
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
@@ -34,8 +35,10 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         #self.win.addFixedText("lblMsg", -2,28,123,15)
         self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
         self.lstDatabase = self.win.getControl( "lstDatabase" )
-        for i in range(res.__len__()):
-            self.lstDatabase.addItem(res[i],i)
+        if docinfo.getUserFieldValue(0)<>"":
+            self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
+            for i in range(res.__len__()):
+                self.lstDatabase.addItem(res[i],i)
         #self.win.selectListBoxItem( "lstDatabase", docinfo.getUserFieldValue(2), True )
         #self.win.setEnabled("lblMsg",False)
 
@@ -73,20 +76,23 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 global loginstatus
                 loginstatus=True
                 docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
-                docinfo.setUserFieldValue(3,"")
+                #docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
     def btnChange_clicked(self,oActionEvent):
         aVal=[]
-        Change(aVal)
+        url= self.win.getEditText("txtHost")
+        print url
+        Change(aVal,url)
         if aVal[1]== -1:
             ErrorDialog(aVal[0],"")
         elif aVal[1]==0:
             ErrorDialog(aVal[0],"")
         else:
             self.win.setEditText("txtHost",aVal[0])
+            self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
             for i in range(aVal[1].__len__()):
                 self.lstDatabase.addItem(aVal[1][i],i)
 

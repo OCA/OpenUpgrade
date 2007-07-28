@@ -232,6 +232,36 @@
 						</prop>
 					</node>
 					<node oor:name="m43" oor:op="replace">
+						<prop oor:name="URL" oor:type="xs:string">
+							<value>service:org.openoffice.tiny.report.modifyreport?insert</value>
+						</prop>
+						<prop oor:name="Title" oor:type="xs:string">
+							<value/>
+							<value xml:lang="en-US">Modify Existing Report</value>
+						</prop>
+						<prop oor:name="Target" oor:type="xs:string">
+							<value>_self</value>
+						</prop>
+						<prop oor:name="Context" oor:type="xs:string">
+							<value>com.sun.star.text.TextDocument</value>
+						</prop>
+					</node>
+					<node oor:name="m44" oor:op="replace">
+						<prop oor:name="URL" oor:type="xs:string">
+							<value>service:org.openoffice.tiny.report.updatereport?insert</value>
+						</prop>
+						<prop oor:name="Title" oor:type="xs:string">
+							<value/>
+							<value xml:lang="en-US">Update Report</value>
+						</prop>
+						<prop oor:name="Target" oor:type="xs:string">
+							<value>_self</value>
+						</prop>
+						<prop oor:name="Context" oor:type="xs:string">
+							<value>com.sun.star.text.TextDocument</value>
+						</prop>
+					</node>
+					<node oor:name="m45" oor:op="replace">
  	            		<prop oor:name="Context" oor:type="xs:string">
  	                   		<value>com.sun.star.text.TextDocument</value>
 	 	                </prop>
@@ -486,6 +516,42 @@
 					</prop>
 				</node>
 				<node oor:name="m43" oor:op="replace">
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>service:org.openoffice.tiny.report.modifyreport?insert</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value/>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value/>
+						<value xml:lang="en-US">Modify Existing Report</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+				</node>
+				<node oor:name="m44" oor:op="replace">
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>service:org.openoffice.tiny.report.updatereport?insert</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value/>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value/>
+						<value xml:lang="en-US">Update Report</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+				</node>
+				<node oor:name="m45" oor:op="replace">
  	            	<prop oor:name="Context" oor:type="xs:string">
  	                   	<value>com.sun.star.text.TextDocument</value>
  	                </prop>

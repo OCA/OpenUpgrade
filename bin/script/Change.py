@@ -3,14 +3,17 @@ if __name__<>"package":
     from lib.functions import *
 
 class Change:
-    def __init__(self, aVal= None):
+    def __init__(self, aVal= None, sURL=""):
         self.win=DBModalDialog(60, 50, 120, 90, "Connect to Tiny ERP Server")
 
         self.win.addFixedText("lblVariable", 38, 12, 60, 15, "Server")
-        self.win.addEdit("txtHost",-2,9,60,15)
+
+        if sURL<>"":
+            print sURL.__getslice__(sURL.rfind(":")+1,sURL.__len__())
+        self.win.addEdit("txtHost",-2,9,60,15,sURL.__getslice__(sURL.find("/")+2,sURL.rfind(":")))
 
         self.win.addFixedText("lblReportName",45 , 31, 60, 15, "Port")
-        self.win.addEdit("txtPort",-2,28,60,15)
+        self.win.addEdit("txtPort",-2,28,60,15,sURL.__getslice__(sURL.rfind(":")+1,sURL.__len__()))
 
         self.win.addFixedText("lblLoginName", 2, 51, 60, 15, "Protocol Connection")
 
@@ -30,7 +33,11 @@ class Change:
         self.protocol={'XML-RPC': 'http://',
             'XML-RPC secure': 'https://',
             'NET-RPC (faster)': 'socket://',}
-        self.win.doModalDialog( "lstProtocol", 0)
+        sValue=""
+        if sURL<>"":
+            sValue=self.protocol.keys()[self.protocol.values().index(sURL.__getslice__(0,sURL.find("/")+2))]
+
+        self.win.doModalDialog( "lstProtocol", sValue)
 
     def cmbProtocol_selected(self,oItemEvent):
         pass
