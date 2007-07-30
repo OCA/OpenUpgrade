@@ -275,7 +275,6 @@ Auction Management/Auction Dates/Reporting
 					<field name="auction_id" colspan="2" select="1"/>
 					<field name="lot_type" select="2"/>
 					<field name="lot_local"/>
-<!--					<field name="statement"/>-->
 					<separator string="Description" colspan="4"/>
 					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
 
@@ -326,6 +325,7 @@ Auction Management/Auction Dates/Reporting
 					<newline/>
 					<field name="ach_inv_id"/>
 					<field name="paid_ach"/>
+					<field name="statement"/>
 					<field name="bid_lines" colspan="4" nolabel="1" editable="top"/>
 				</page>
 				</notebook>
@@ -1025,11 +1025,12 @@ estimation.adj.category
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Min est/Adj/Max est">
+				<field name="name" select="1"/>
 				<field name="lot_type" select="1"/>
-				<field name="state" select="1"/>
-				<field name="lot_est1" select="1"/>
-				<field name="lot_est2" select="1"/>
-				<field name="adj_total" select="1"/>
+				<field name="user_id" select="1"/>
+				<field name="lot_est1"/>
+				<field name="lot_est2"/>
+				<field name="adj_total"/>
 			</tree>
 		</field>
 	</record>
@@ -1041,11 +1042,10 @@ estimation.adj.category
 		<field name="arch" type="xml">
 			<graph string="Min est/Adj/Max est" orientation="vertical" type="bar">
 				<field name="lot_type" select="1"/>
-				<field name="user_id" group="True"/>
 				<field name="lot_est1" operator="+"/>
 				<field name="adj_total" operator="+"/>
 				<field name="lot_est2" operator="+"/>
-
+				<field name="user_id" group="True"/>
 			</graph>
 		</field>
 
@@ -1057,7 +1057,7 @@ estimation.adj.category
 		<field name="res_model">report.auction.estimation.adj.category</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
-		<field name="domain">[('date','=',time.strftime('%Y-%m-01')),('state','=','sold')]</field>
+		<field name="domain">[('date','=',time.strftime('%Y-%m-01'))]</field>
 	</record>
 	<menuitem name="Auction Management/Reporting/Member/Adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
 	<menuitem name="Auction Management/Reporting/Manager/Adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
@@ -1191,8 +1191,9 @@ Objects per Day
 	   <field name="model">report.auction.object.date</field>
    			<tree string="Objects per Day">
 				<field name="name" select="1" />
+				<field name="month" select="1" />
+				<field name="user_id" select="1"/>
 				<field name="obj_num" select="1"/>
-				<field name="ach_uid" select="1"/>
 			 </tree>
 	 </record>
 
@@ -1204,7 +1205,8 @@ Objects per Day
 			<form string="Objects per Day">
 				<field name="name" select="1"/>
 				<field name="obj_num" select="1"/>
-				<field name="ach_uid" select="1"/>
+				<field name="user_id" select="1"/>
+				<field name="month" select="1"/>
 			 </form>
 		 </field>
 	 </record>
@@ -1217,20 +1219,32 @@ Objects per Day
 			<graph string="Objects per day"  type="bar">
 				<field name="name" select="1"/>
 				<field name="obj_num" operator="+"/>
-				<field name="ach_uid" group="True"/>
+				<field name="user_id" group="True"/>
 			</graph>
 		</field>
 	</record>
 
 
+	<record model="ir.actions.act_window" id="action_report_auction_object_date_tree_my">
+		<field name="res_model">report.auction.object.date</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('user_id','=',uid),('month','=',time.strftime('%Y-%m-01'))]</field>
+	</record>
 	<record model="ir.actions.act_window" id="action_report_auction_object_date_tree">
 		<field name="res_model">report.auction.object.date</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
-		<field name="domain">[('state','=','sold')]</field>
+		<field name="domain">[('month','=',time.strftime('%Y-%m-01'))]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/Objects Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
-	<menuitem name="Auction Management/Reporting/Manager/Objects Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
+	<menuitem 
+		name="Auction Management/Reporting/Manager/Encoded objects per day" 
+		action="action_report_auction_object_date_tree" 
+		id="menu_report_auction_object_date_tree"/>
+	<menuitem 
+		name="Auction Management/Reporting/Member/My encoded objects per day"
+		action="action_report_auction_object_date_tree_my"
+		id="menu_report_auction_object_date_tree1_my"/>
 
 #
 # Object by auction
