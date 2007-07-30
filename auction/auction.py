@@ -671,7 +671,6 @@ class auction_lots(osv.osv):
 						inv_id=myids[0]
 					else:
 						inv_id = inv_ref.create(cr, uid, inv, context)
-
 					invoices[lot.bord_vnd_id.id] = inv_id
 				self.write(cr,uid,[lot.id],{'sel_inv_id':inv_id,'state':'sold'})
 				taxes = map(lambda x: x.id, lot.product_id.taxes_id)
@@ -690,21 +689,11 @@ class auction_lots(osv.osv):
 					'account_id': lot.auction_id.acc_expense.id,
 					'price_unit': lot.obj_price,
 					}
-
-
-
 				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 				inv_ref.button_compute(cr, uid, [inv_id])
-			#	inv_ref.button_compute(cr, uid, [invoice_id])
-				#laisser l utilisateur saisir le montant total ds la facture du seller
-			#	wf_service = netsvc.LocalService('workflow')
-			#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-#				cr.execute("select min(ai.id),ai.partner_id,SUM(ai.amount_total),SUM(amount_tax) from account_invoice ai, auction_lots al WHERE al.sel_inv_id=ai.id GROUP BY ai.partner_id")
-#				r=cr.fetchall()
-
-
-		#	return invoices.values()
-			return res
+				wf_service = netsvc.LocalService('workflow')
+				wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+			return invoices.values()
 
 
 #	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
