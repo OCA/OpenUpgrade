@@ -26,7 +26,7 @@ class lunch_product(osv.osv):
 		'name': fields.char('Name', size=50, required=True),
 		'category_id': fields.selection(_category_name_get, 'Category', size=32),
 		'description': fields.char('Description', size=40, required=False),
-		'price': fields.float('Price'),
+		'price': fields.float('Price', digits=(16,2)),
 	}
 
 lunch_product()
@@ -59,7 +59,7 @@ class lunch_cashmove(osv.osv):
 	_columns={
 		'name': fields.char('Name',size=128),
 		'user_cashmove': fields.many2one('res.users','User Name', required=True),
-		'amount': fields.float('Amount'),
+		'amount': fields.float('Amount', digits=(16,2)),
 		'box':fields.many2one('lunch.cashbox','Box Name',size=30,required=True),
 		'active':fields.boolean('Active'),
 		}
@@ -76,13 +76,24 @@ class lunch_order(osv.osv):
 	_name='lunch.order'
 	_rec_name= "user_id"
 
+	def _price_get(self, cr, uid, ids, name, args, context=None):
+		res = {}
+		for o in self.browse(cr, uid, ids):
+			res[o.id] = o.product.price
+		return res
+
 	_columns={
-		'user_id': fields.many2one('res.users','User Name', required=True,readonly=True,states={'draft':[('readonly',False)]}),
-		'product':fields.many2one('lunch.product','Product', required=True,readonly=True,states={'draft':[('readonly',False)]}),
+		'user_id': fields.many2one('res.users','User Name', required=True,
+			readonly=True, states={'draft':[('readonly',False)]}),
+		'product':fields.many2one('lunch.product','Product', required=True,
+			readonly=True, states={'draft':[('readonly',False)]}, change_default=True),
 		'date': fields.date('Date',readonly=True,states={'draft':[('readonly',False)]}),
 		'cashmove':fields.many2one('lunch.cashmove', 'CashMove' , readonly=True  ),
-		'descript':fields.char('Description Order', readonly=True, size=50,states={'draft':[('readonly',False)]}),
-		'state': fields.selection([('draft','Draft'), ('confirmed','Confirmed'),],'State', readonly=True, select=True),
+		'descript':fields.char('Description Order', readonly=True, size=50,
+			states={'draft':[('readonly',False)]}),
+		'state': fields.selection([('draft','Draft'), ('confirmed','Confirmed'),],
+			'State', readonly=True, select=True),
+		'price': fields.function(_price_get, method=True, string="Price"),
 	}
 
 	_defaults={
@@ -114,6 +125,12 @@ class lunch_order(osv.osv):
 		self.write(cr,uid,ids,{'state':'draft'})
 		return {}
 
+	def onchange_product(self, cr, uid, ids, product):
+		if not product:
+			return {'value': {'price': 0.0}}
+		price = self.pool.get('lunch.product').read(cr, uid, product, ['price'])['price']
+		return {'value': {'price': price}}
+
 lunch_order()
 
 class report_lunch_amount(osv.osv):
@@ -124,7 +141,7 @@ class report_lunch_amount(osv.osv):
 
 	_columns = {
 		'user_id': fields.many2one('res.users','User Name',readonly=True),
-		'amount': fields.float('Amount', readonly=True),
+		'amount': fields.float('Amount', readonly=True, digits=(16,2)),
 		'box':fields.many2one('lunch.cashbox','Box Name',size=30,readonly=True),
 		}
 

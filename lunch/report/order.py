@@ -30,44 +30,22 @@ import time
 from report import report_sxw
 from osv import osv
 
+
 class order(report_sxw.rml_parse):
-	def order_list(self, cr,uid,ids):
-		moveline_obj = pooler.get_pool(self.cr.dbname).get('lunch.order')		 
-		cr.execute("select lo.user_id,lo.product,lo.descript,lp.price from lunch_order lo join lunch_product lp on lo.product=lp.name join lunch_category lc on lp.category_id=lc.name order by lc.category desc")
-		res=cr.fetchall()
 
-		for r in res:
-			if not res:
-				self.ret_list.append(0.0)
-			else:
-				ret_dict={
-						'user_id':res[0]['user_id'],
-						'product':res[0]['product'],
-						'descript':res[0]['descript'],
-						'price':res[0]['price']
-						}
-
-			self.ret_list.append(ret_dict)
-		return self.ret_list
+	def sum_price(self, orders):
+		res = 0.0
+		for o in orders:
+			res += o.price
+		return res
 
 	def __init__(self, cr, uid, name, context):
 		super(order, self).__init__(cr, uid, name, context)
-		user=self.pool.get('res.users').browse(cr,uid,uid)
-		partner = user.company_id.partner_id
-		address=partner.address and partner.address[0] or ""
-		street = address and address.street or ""
-		city=address and address.city
-		tel=address and address.mobile
 
 		self.localcontext.update({
 		'time': time,
-				'street': street,
-				'tel':tel,
-				'city':city,
-				'oder_list': self.order_list,
-				
+		'sum_price': self.sum_price,
 		})
-	def _add_header(self, node):
-		return True
 
-report_sxw.report_sxw('report.lunch.order','lunch.order','addons/lunch/report/order.rml',parser=order)
+report_sxw.report_sxw('report.lunch.order', 'lunch.order',
+		'addons/lunch/report/order.rml',parser=order, header=False)
