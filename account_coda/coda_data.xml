@@ -6,11 +6,11 @@
 	</record>
 
 	<record model="res.partner.bank" id="partner_bank1">
-		<field name="name">301915554082</field>
-		<field name="number">301915554082</field>
-		<field name="type_id" model='res.partner.bank.type' search="[('name','=','Other')]"></field>
-		<field name="bank_name">001150000</field>
-		<field name="bank_code">001150000</field>
+		<!--<field name="name">301915554082</field>-->
+		<field name="acc_number">301915554082</field>
+<!--	<field name="type_id" model='res.partner.bank.type' search="[('name','=','Other')]"></field>
+		<field name="bank_name">001150000</field>-->
+		<!--<field name="bank_code">001150000</field>-->
 		<field name="partner_id" ref="partner_demo1"></field>
 	</record>
 
@@ -26,8 +26,5 @@
 		<field name="bank_code">001150000</field>
 		<field name="partner_id" ref="partner_demo2"></field>
 	</record>-->
-
-
-
 </data>
 </terp>
