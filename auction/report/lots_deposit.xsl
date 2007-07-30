@@ -28,9 +28,9 @@
 		<frame id="main" x1="2cm" y1="2.5cm" width="17.0cm" height="19cm"/>
 	</xsl:template>
 
-	<xsl:template name="other_pages_frames">
-		<frame id="main" x1="2cm" y1="2.5cm" width="17.0cm" height="23cm"/>
-	</xsl:template>
+<!--	<xsl:template name="other_pages_frames">-->
+<!--		<frame id="main" x1="2cm" y1="2.5cm" width="17.0cm" height="23cm"/>-->
+<!--	</xsl:template>-->
 
 	<xsl:template name="story">
 		<xsl:apply-templates select="deposit-form"/>
@@ -48,7 +48,7 @@
 		<xsl:apply-templates select="deposit-infos"/>
 
 		<nextFrame/>
-		<setNextTemplate name="other_pages"/>
+<!--		<setNextTemplate name="other_pages"/>-->
 
 		<para style="date">Bruxelles, le <xsl:value-of select="//date"/></para>
 
@@ -83,8 +83,8 @@
 
 		<spacer length="0.5cm" width="1mm"/>
 
-		<setNextTemplate name="first_page"/>
-		<pageBreak/>
+<!--		<setNextTemplate name="first_page"/>-->
+<!--		<pageBreak/>-->
 	</xsl:template>
 
 	<xsl:template match="deposit-infos">
