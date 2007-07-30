@@ -454,7 +454,7 @@ class auction_lots(osv.osv):
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='Gross Margin',store=True),
 		'costs':fields.function(_costs,method=True,string='Indirect costs',store=True),
-#		'statement': fields.many2one('account.bank.statement', 'Statement'),
+		'statement': fields.many2one('account.bank.statement', 'Statement'),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='Net Margin',store=True)
 	}
@@ -634,6 +634,7 @@ class auction_lots(osv.osv):
 
 		# use each list of object in turn
 		invoices = {}
+		group={}
 		for lot in self.browse(cr,uid,ids,context):
 			partner_id = lot.bord_vnd_id.partner_id.id
 			if not lot.auction_id.id: return []
@@ -657,6 +658,12 @@ class auction_lots(osv.osv):
 						'type': 'in_invoice',
 						'check_total':self._sellerprice(cr, uid, [lot.id])[lot.id],
 						}
+#					if lot.partner_id:
+#						invoice_id=group[p.partner_id.id]
+#					else:
+#						invoice_id= self.pool.get('account.invoice').create(cr, uid, inv ,context= context)
+#					res[lot.id]= invoice_id
+					
 					inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.bord_vnd_id.partner_id.id)['value'])
 					inv['account_id'] = inv['account_id'] and inv['account_id'][0]
 					inv_id = inv_ref.create(cr, uid, inv, context)
@@ -670,6 +677,7 @@ class auction_lots(osv.osv):
 					taxes += map(lambda x: x.id, lot.auction_id.seller_costs)
 				inv_line= {
 					'invoice_id': inv_id,
+				#	'invoice_id':invoice_id,
 					'quantity': 1,
 					'product_id': lot.product_id.id,
 					'name': '['+str(lot.obj_num)+'] '+lot.auction_id.name,
@@ -678,16 +686,21 @@ class auction_lots(osv.osv):
 					'account_id': lot.auction_id.acc_expense.id,
 					'price_unit': lot.obj_price,
 					}
+				
+
+
 				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 				inv_ref.button_compute(cr, uid, [inv_id])
+			#	inv_ref.button_compute(cr, uid, [invoice_id])
 				#laisser l utilisateur saisir le montant total ds la facture du seller
 			#	wf_service = netsvc.LocalService('workflow')
 			#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-				cr.execute("select min(ai.id),ai.partner_id,SUM(ai.amount_total),SUM(amount_tax) from account_invoice ai, auction_lots al WHERE al.sel_inv_id=ai.id GROUP BY ai.partner_id")
-				r=cr.fetchall()
-				print "R",r
+#				cr.execute("select min(ai.id),ai.partner_id,SUM(ai.amount_total),SUM(amount_tax) from account_invoice ai, auction_lots al WHERE al.sel_inv_id=ai.id GROUP BY ai.partner_id")
+#				r=cr.fetchall()
 
-			return invoices.values()
+
+		#	return invoices.values()
+			return res
 
 
 #	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
@@ -755,7 +768,6 @@ class auction_lots(osv.osv):
 					inv_id = inv_ref.create(cr, uid, inv, context)
 			inv_ref.button_compute(cr, uid, [inv_id])
 			invoices[lot.bord_vnd_id.id] = inv_id
-			print "%%%%%%%%%%%%%%%%",inv_id
 			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 			#calcul des taxes
 			taxes = map(lambda x: x.id, lot.product_id.taxes_id)
@@ -1005,23 +1017,24 @@ class report_seller_auction(osv.osv):
 		cr.execute('''
 			create or replace view report_seller_auction  as (
 				select
-					ad.id as auction,
+					adl.id as auction,
 					min(al.id) as id,
-					ad.auction1 as date,
-					al.ach_uid as seller,
+					adl.auction1 as date,
+					ad.partner_id as seller,
 					count(al.id) as "object_number",
 					SUM(al.obj_price) as "total_price",
 					(SUM(al.obj_price)/count(al.id)) as avg_price,
 					sum(al.lot_est1+al.lot_est2)/2 as avg_estimation,
 					al.state
 				from
-					auction_dates ad,
-					auction_lots al
+					auction_dates adl,
+					auction_lots al,
+					auction_deposit ad
 				where
-					al.auction_id=ad.id
+					al.auction_id=adl.id and ad.id=al.bord_vnd_id 
 				group by
-					al.ach_uid,
-					al.state,ad.auction1,ad.id
+					ad.partner_id,
+					al.state,adl.auction1,adl.id
 				)''')
 report_seller_auction()
 
@@ -1043,19 +1056,19 @@ class report_seller_auction2(osv.osv):
 		cr.execute('''create or replace view report_seller_auction2  as
 			(select
 				min(al.id) as id,
-				ad.auction1 as date,
-				al.ach_uid as seller,
-				ad.id as auction,
+				adl.auction1 as date,
+				ad.partner_id as seller,
+				adl.id as auction,
 				sum(al.obj_price) as "sum_adj",
 				sum(al.gross_revenue) as "gross_revenue",
 				sum(al.net_revenue) as "net_revenue",
 				sum(al.net_margin) as "net_margin"
 			from
-				auction_lots al,auction_dates ad
+				auction_lots al,auction_dates adl,auction_deposit ad
 			where
-				ad.id=al.auction_id
+				adl.id=al.auction_id and ad.id=al.bord_vnd_id
 			group by
-				al.ach_uid,ad.auction1,ad.id)
+				al.ach_uid,adl.auction1,adl.id,ad.partner_id)
 			 ''')
 
 report_seller_auction2()

@@ -1026,7 +1026,7 @@ estimation.adj.category
 		<field name="model">report.auction.estimation.adj.category</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Estimation/Adjudication">
+			<tree string="Min est/Adj/Max est">
 				<field name="lot_type" select="1"/>
 				<field name="state" select="1"/>
 				<field name="lot_est1" select="1"/>
@@ -1055,6 +1055,7 @@ estimation.adj.category
 
 
 	<record model="ir.actions.act_window" id="action_report_auction_estimation_adj_category_tree">
+		<field name="name">Min est/Adj/Max est</field>
 		<field name="res_model">report.auction.estimation.adj.category</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>

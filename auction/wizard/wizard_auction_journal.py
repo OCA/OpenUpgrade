@@ -66,7 +66,7 @@ class make_invoice(wizard.interface):
 			'result' : {'type' : 'form',
 				    'arch' : invoice_form,
 				    'fields' : invoice_fields,
-				    'state' : [('invoice', 'Create invoices'), ('end', 'Cancel'),]}
+				    'state' : [('end', 'Cancel'),('invoice', 'Create invoices')]}
 		},
 		'invoice' : {
 			'actions' : [_makeInvoices],

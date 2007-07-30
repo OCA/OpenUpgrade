@@ -13,9 +13,9 @@
     <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
-      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
-      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#ffffff" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#ffffff" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#ffffff" start="2,0" stop="2,0"/>
       <blockBackground colorName="#e6e6e6" start="0,1" stop="0,1"/>
       <blockBackground colorName="#e6e6e6" start="1,1" stop="1,1"/>
       <blockBackground colorName="#e6e6e6" start="2,1" stop="2,1"/>
@@ -62,12 +62,24 @@
           </para>
         </td>
         <td>
-          <para style="P1">[[repeatIn(objects,'o')]]</para>
-          <para style="P1">Lists des objets</para>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+          <para style="P1">Lots Lists</para>
         </td>
         <td>
-          <para style="P2">From [[o.auction_id.expo1]]</para>
-          <para style="P2">to [[ o.auction_id.expo2]]</para>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
+          <para style="P2">
+            <font color="white"> </font>
+          </para>
         </td>
       </tr>
       <tr>
@@ -142,9 +154,7 @@
           <para style="P11">[[o.bord_vnd_id.partner_id.name ]]</para>
         </td>
         <td>
-          <para style="P6">
-            <font color="white"> </font>
-          </para>
+          <para style="P6">[[o.buyer_price]]</para>
         </td>
       </tr>
     </blockTable>

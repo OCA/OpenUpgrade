@@ -10,7 +10,6 @@
 			name="auction.artists_lots"
 			auto="False"
 			multi="1"/-->
-
 		<report string="Artists Biography"
 		 model="auction.artists"
 		 name="report.auction.artists"
@@ -38,26 +37,11 @@
 		 auto="False"
 		 multi="1"/>
 
-		<report string="Invoices"
+		<!--report string="Invoices"
 		 model="auction.lots"
 		 name="auction.invoice"
 		 auto="False"
-		 multi="1"/>
-
-		<report string="Lots List"
-	   	model="auction.lots"
-		name="report.auction.lots.list"
-		xml="auction/report/lots_list.xml"
-		xsl="auction/report/lots_list.xsl"
-		multi="1"/>
-
-
-	<report string="Results with buyer"
-	   	model="auction.lots"
-		name="auction.result"
-		rml="auction/report/auction_result.rml"
-		auto="False"
-		 multi="1"/>
+		 multi="1"/-->
 
 	<report string="Catalog with pictures"
 	   	model="auction.lots"
@@ -66,25 +50,7 @@
 		auto="False"
 		multi="1"/>
 
-		<report string="buyer form with pictures"
-	   	model="auction.lots"
-		name="auction.objects"
-		rml="auction/report/auction_objects.rml"
-		auto="False"
-		multi="1"/>
-
-
-		<report string="Auction Totals with lists"
-	   	model="auction.lots"
-		name="auction.total.rml"
-		rml="auction/report/auction_total_rml.rml"
-		auto="False"
-		multi="1"/>
-
-
-
-
-
+	
 	<!--report string="Catelog"
 	   	model="auction.lots"
 		name="auction.catelog"
@@ -93,7 +59,7 @@
 		multi="1"/-->
 
 
-	<report string="Lots List"
+	<report string="Lots List2"
 	   	model="auction.lots"
 		name="lots.list"
 		rml="auction/report/lots_list.rml"
@@ -104,50 +70,25 @@
 		 model="auction.lots"
 		 name="lots.list.landscape"
 		 rml="auction/report/lots_list_landscape.rml"
-
 		 multi="1"/>
 
     <report string="Lots List Inventory"
 		 model="auction.lots"
 		 name="lots.list.inventory"
 		 rml="auction/report/lots_list_inventory.rml"
-
 		 multi="1"/>
 
 
-	<!--<report string="Lots List"
+	<report string="Lots List"
 	   	model="auction.lots"
 		name="report.auction.lots.list"
 		xml="auction/report/lots_list.xml"
 		xsl="auction/report/lots_list.xsl"
 
 		 multi="1"/>
--->
-		<!--<report string="Lots List - Landscape"
-		 model="auction.lots"
-		 name="report.auction.lots.list.landscape"
-		 xml="auction/report/lots_list_landscape.xml"
-		 xsl="auction/report/lots_list_landscape.xsl"
 
-		  multi="1"/>-->
 
-		<!-- <report string="Lots List Inventory"
-		  model="auction.lots"
-		  name="report.auction.lots.list.inventory"
-		  xml="auction/report/lots_list_inv.xml"
-		  xsl="auction/report/lots_list_inv.xsl"
-
-		   multi="1"/>-->
-
-<!--		<report string="Buyer Form (with pictures)"
-		model="auction.lots"
-	    name="report.auction.ach_bordereau.photo"
-	    xml="auction/report/ach_bordereau_photo.xml"
-	    xsl="auction/report/ach_bordereau_photo.xsl"
-
-	     multi="1"/>-->
-
-	<!--	<report string="Buyer Form"
+	<!--<report string="Buyer Form"
 		 model="auction.lots"
 		 name="report.auction.ach_bordereau"
 		 xml="auction/report/ach_bordereau.xml"
@@ -162,8 +103,8 @@
 		  rml="auction/report/buyer_form_report.rml"
 		  auto="False"
 		  multi="1"/>
-
-		  <report string="seller Form"
+		
+		  <report string="Seller form"
 		  model="auction.lots"
 		  name="seller_form_report"
 		  rml="auction/report/seller_form_report.rml"
@@ -178,14 +119,6 @@
 
 		 multi="1"/>
 -->
-		<!--<report string="Results"
-		model="auction.lots"
-		name="report.auction.results"
-		xml="auction/report/results.xml"
-		 xsl="auction/report/results.xsl"
-
-		  multi="1"/>-->
-
 		<!--<report string="Catelog"
 		model="auction.lots"
 		name="report.auction.catalog"
@@ -231,10 +164,10 @@
 		xsl="auction/report/lots_deposit.xsl"/>
 <!--	    keyword="client_print_multi"-->
 
-		<report string="Auction Totals"
+		<report string="Auction's results"
 			model="auction.lots"
-			name="auction.total"
-			auto="False"
+			name="auction.result"
+		  	rml="auction/report/auction_result.rml"
 			multi="1"/>
 
 	<!--	<report string="Results with buyer"
@@ -244,12 +177,6 @@
 			xsl="auction/report/results_buyer.xsl"
 			multi="1"/>
 -->
-		<report string="Lots with VAT"
-			model="auction.lots"
-			name="report.auction.extd_results"
-			xml="auction/report/lots_with_vat.xml"
-			xsl="auction/report/lots_with_vat.xsl"
-			multi="1"/>
 		</data>
 </terp>
 
