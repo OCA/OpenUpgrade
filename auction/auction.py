@@ -64,8 +64,8 @@ class auction_dates(osv.osv):
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):
 			return []
-		reads = self.read(cr, uid, ids, ['name', 'expo1'], context)
-		name = [(r['id'],'['+r['expo1']+'] '+ r['name']) for r in reads]
+		reads = self.read(cr, uid, ids, ['name', 'auction1'], context)
+		name = [(r['id'],'['+r['auction1']+'] '+ r['name']) for r in reads]
 		return name
 
 	_columns = {
@@ -74,7 +74,8 @@ class auction_dates(osv.osv):
 		'expo2': fields.date('Last Exposition Day', required=True),
 		'auction1': fields.date('First Auction Day', required=True),
 		'auction2': fields.date('Last Auction Day', required=True),
-		'journal_id': fields.many2one('account.journal', 'Journal', required=True),
+		'journal_id': fields.many2one('account.journal', 'Buyer Journal', required=True),
+		'journal_seller_id': fields.many2one('account.journal', 'Seller Journal', required=True),
 		'buyer_costs': fields.many2many('account.tax', 'auction_buyer_taxes_rel', 'auction_id', 'tax_id', 'Buyer Costs'),
 		'seller_costs': fields.many2many('account.tax', 'auction_seller_taxes_rel', 'auction_id', 'tax_id', 'Seller Costs'),
 		'acc_income': fields.many2one('account.account', 'Income Account', required=True),
@@ -88,7 +89,6 @@ class auction_dates(osv.osv):
 
 	}
 	_defaults = {
-		#'state': lambda uid, page, ref: 'draft'
 		'state': lambda *a: 'draft',
 	}
 	_order = "auction1 desc"
@@ -140,12 +140,14 @@ def _inv_uniq(cr, ids):
 class auction_deposit(osv.osv):
 	_name = "auction.deposit"
 	_description="Deposit Border"
+	_order = "id desc"
 	_columns = {
 		'name': fields.char('Depositer Inventory', size=64, required=True),
 		'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
 		'date_dep': fields.date('Deposit date', required=True),
 		'method': fields.selection((('keep','Keep until sold'),('decease','Decrease limit of 10%'),('contact','Contact the Seller')), 'Withdrawned method', required=True),
 		'tax_id': fields.many2one('account.tax', 'Expenses'),
+		'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
 		'info': fields.char('Description', size=64),
 		'lot_id': fields.one2many('auction.lots', 'bord_vnd_id', 'Objects'),
 		'specific_cost_ids': fields.one2many('auction.deposit.cost', 'deposit_id', 'Specific Costs'),
@@ -278,7 +280,8 @@ class auction_lots(osv.osv):
 			taxes = []
 			if lot.author_right:
 				taxes.append(lot.author_right)
-			taxes += lot.auction_id.buyer_costs
+			if lot.auction_id:
+				taxes += lot.auction_id.buyer_costs
 			tax=pt_tax.compute(cr,uid,taxes,montant,1)
 			for t in tax:
 				amount_total+=t['amount']
@@ -300,7 +303,7 @@ class auction_lots(osv.osv):
 			taxes = []
 			if lot.bord_vnd_id.tax_id:
 				taxes.append(lot.bord_vnd_id.tax_id)
-			elif lot.auction_id.seller_costs:
+			elif lot.auction_id and lot.auction_id.seller_costs:
 				taxes += lot.auction_id.seller_costs
 			tax=pt_tax.compute(cr,uid,taxes,montant,1)
 			for t in tax:
@@ -358,6 +361,9 @@ class auction_lots(osv.osv):
 		som=0.0
 
 		for lot in self.browse(cr,uid,ids):
+			if not lot.auction_id:
+				res[lot.id] = 0.0
+				continue
 			auct_id=lot.auction_id.id
 			cr.execute('select count(*) from auction_lots where auction_id=%d', (auct_id,))
 			nb = cr.fetchone()[0]
@@ -421,11 +427,12 @@ class auction_lots(osv.osv):
 		'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
 		'name': fields.char('Short Description',size=64, required=True),
 		'name2': fields.char('Short Description (2)',size=64),
-		'lot_type': fields.selection(_type_get, 'Object Type', size=64),
+		'lot_type': fields.selection(_type_get, 'Object category', size=64),
 		'author_right': fields.many2one('account.tax', 'Author rights'),
 		'lot_est1': fields.float('Minimum Estimation'),
 		'lot_est2': fields.float('Maximum Estimation'),
-		'lot_num': fields.integer('List Number', required=True, ),
+		'lot_num': fields.integer('List Number', required=True, select=1 ),
+		'create_uid': fields.many2one('res.users', 'Created by', readonly=True),
 		'history_ids':fields.one2many('auction.lot.history', 'lot_id', 'Auction history'),
 		'lot_local':fields.char('Location',size=64),
 		'artist_id':fields.many2one('auction.artists', 'Artist/Author'),
@@ -454,7 +461,7 @@ class auction_lots(osv.osv):
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='Gross Margin',store=True),
 		'costs':fields.function(_costs,method=True,string='Indirect costs',store=True),
-		'statement': fields.many2one('account.bank.statement', 'Statement'),
+		'statement': fields.many2one('account.bank.statement', 'Statement', readonly=True),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='Net Margin',store=True)
 	}
@@ -889,11 +896,11 @@ class auction_lot_history(osv.osv):
 	_columns = {
 		'name': fields.date('Date',size=64),
 		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
-		'auction_id': fields.many2one('auction.dates', 'Auction date', required=True),
+		'auction_id': fields.many2one('auction.dates', 'Auction date', required=True, ondelete='cascade'),
 		'price': fields.float('Withdrawn price', digits=(16,2))
 	}
 	_defaults = {
-		'name': time.strftime('%Y-%m-%d')
+		'name': lambda *args: time.strftime('%Y-%m-%d')
 	}
 auction_lot_history()
 
@@ -901,11 +908,14 @@ class auction_bid_lines(osv.osv):
 	_name = "auction.bid_line"
 	_description="Bid"
 	_columns = {
-		'name': fields.char('Name',size=64),
-		'bid_id': fields.many2one('auction.bid','Bid ID', required=True),
-		'lot_id': fields.many2one('auction.lots','Object', required=True),
+		'name': fields.char('Bid date',size=64),
+		'bid_id': fields.many2one('auction.bid','Bid ID', required=True, ondelete='cascade'),
+		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
 		'call': fields.boolean('To be Called'),
 		'price': fields.float('Maximum Price')
+	}
+	_defaults = {
+		'name': lambda *args: time.strftime('%Y-%m-%d')
 	}
 auction_bid_lines()
 
@@ -1038,11 +1048,11 @@ class report_seller_auction2(osv.osv):
 	_columns = {
 		'seller': fields.many2one('res.partner','Seller',readonly=True, select=1),
 		'auction': fields.many2one('auction.dates', 'Auction date',readonly=True, select=1),
-		'sum_adj':fields.float('Sum Adjustication',readonly=True, select=True),
-		'gross_revenue':fields.float('Gross revenue',readonly=True, select=True),
-		'net_revenue':fields.float('Net revenue',readonly=True, select=True),
-		'net_margin':fields.float('Net margin', readonly=True, select=True),
-		'date': fields.date('Start of auction',  required=True),
+		'sum_adj':fields.float('Sum Adjustication',readonly=True, select=2),
+		'gross_revenue':fields.float('Gross revenue',readonly=True, select=2),
+		'net_revenue':fields.float('Net revenue',readonly=True, select=2),
+		'net_margin':fields.float('Net margin', readonly=True, select=2),
+		'date': fields.date('Start of auction',  required=1),
 	}
 
 	def init(self, cr):
@@ -1178,14 +1188,14 @@ class report_auction_estimation_adj_category(osv.osv):
 	_auto = False
 	_columns = {
 			'auction_id': fields.many2one('auction.dates', 'Auction Date'),
-			'lot_est1': fields.float('Minimum Estimation',select=True),
-			'lot_est2': fields.float('Maximum Estimation',select=True),
+			'lot_est1': fields.float('Minimum Estimation',select=2),
+			'lot_est2': fields.float('Maximum Estimation',select=2),
 			'obj_price': fields.float('Adjudication price'),
 			'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
-			'date': fields.char('Name', size=64, required=True,select=True),
+			'date': fields.char('Name', size=64, required=True,select=1),
 			'lot_type': fields.selection(_type_get, 'Object Type', size=64),
-			'adj_total': fields.float('Total Adjudication',select=True),
-			'user_id':fields.many2one('res.users', 'User', select=True)
+			'adj_total': fields.float('Total Adjudication',select=2),
+			'user_id':fields.many2one('res.users', 'User', select=1)
 	}
 
 	def init(self, cr):
@@ -1310,21 +1320,22 @@ class report_deposit_border(osv.osv):
 			GROUP BY
 				ab.name,ab.partner_id""")
 report_deposit_border()
+
 class report_object_encoded(osv.osv):
 	_name = "report.object.encoded"
 	_description = "Object encoded"
 	_auto = False
 	_columns = {
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
-		'user_id':fields.many2one('res.users', 'User', select=True),
-		'estimation': fields.float('Estimation',select=True),
+		'user_id':fields.many2one('res.users', 'User', select=1),
+		'estimation': fields.float('Estimation',select=2),
 		'date': fields.date('Create Date',  required=True),
-		'gross_revenue':fields.float('Gross revenue',readonly=True, select=True),
-		'net_revenue':fields.float('Net revenue',readonly=True, select=True),
-		'obj_margin':fields.float('Net margin', readonly=True, select=True),
-		'obj_ret':fields.integer('# obj ret', readonly=True, select=True),
-		'adj':fields.integer('Adj.', readonly=True, select=True),
-		'obj_num':fields.integer('# of Encoded obj.', readonly=True, select=True),
+		'gross_revenue':fields.float('Gross revenue',readonly=True, select=2),
+		'net_revenue':fields.float('Net revenue',readonly=True, select=2),
+		'obj_margin':fields.float('Net margin', readonly=True, select=2),
+		'obj_ret':fields.integer('# obj ret', readonly=True, select=2),
+		'adj':fields.integer('Adj.', readonly=True, select=2),
+		'obj_num':fields.integer('# of Encoded obj.', readonly=True, select=1),
 	}
 	def init(self, cr):
 		cr.execute('''create or replace view report_object_encoded  as

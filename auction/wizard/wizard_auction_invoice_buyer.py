@@ -7,7 +7,8 @@ invoice_form = '''<?xml version="1.0"?>
 <form title="Paid ?">
 	<field name="amount"/>
 	<field name="objects"/>
-	<field name="number" colspan="3"/>
+	<field name="number"/>
+	<label string="(Keep empty for automatic number)" colspan="2"/>
 </form>'''
 
 invoice_fields = {

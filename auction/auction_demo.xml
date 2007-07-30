@@ -111,7 +111,8 @@
 		<field name="acc_income" ref="account.a_sale"/>
 		<field name="acc_expense" ref="account.a_expense"/>
 
-		<field name="journal_id" ref="account.expenses_journal"/>
+		<field name="journal_id" ref="account.sales_journal"/>
+		<field name="journal_seller_id" ref="account.expenses_journal"/>
 		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','002')]"></field>
 
 	</record>
@@ -127,6 +128,7 @@
 		<field name="acc_expense" ref="account.a_expense"/>
 
 		<field name="journal_id" ref="account.sales_journal"/>
+		<field name="journal_seller_id" ref="account.expenses_journal"/>
 		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
 </record>
 <!-- 		<field name="buyer_costs" ref="l10n_ch.vat_24_invest"/> -->
