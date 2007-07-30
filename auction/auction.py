@@ -736,7 +736,7 @@ class auction_lots(osv.osv):
 			else:
 				if not partner_ref:
 					raise orm.except_orm('Missed buyer !', 'Please fill the field buyer in the third tab or use the button "Map user" to associate a buyer to this auction !')
-				else: lot.partner_ref=l
+				else: lot.partner_ref= lot.ach_uid.id
 				inv_ref=self.pool.get('account.invoice')
 				price = lot.obj_price or 0.0
 				lot_name =lot.obj_num
@@ -747,9 +747,15 @@ class auction_lots(osv.osv):
 					'type': 'out_invoice',}
 				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', lot.ach_uid.id)['value'])
 				inv['account_id'] = inv['account_id'] and inv['account_id'][0]
-				inv_id = inv_ref.create(cr, uid, inv, context)
-				inv_ref.button_compute(cr, uid, [inv_id])
-				invoices[lot.bord_vnd_id.id] = inv_id
+				myids=inv_ref.search(cr,uid,[('partner_id','=',partner_ref),('state','=','open')])
+				if  myids:
+					inv_id=myids[0]
+
+				else:
+					inv_id = inv_ref.create(cr, uid, inv, context)
+			inv_ref.button_compute(cr, uid, [inv_id])
+			invoices[lot.bord_vnd_id.id] = inv_id
+			print "%%%%%%%%%%%%%%%%",inv_id
 			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 			#calcul des taxes
 			taxes = map(lambda x: x.id, lot.product_id.taxes_id)
