@@ -666,7 +666,7 @@ class auction_lots(osv.osv):
 
 					inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.bord_vnd_id.partner_id.id)['value'])
 					inv['account_id'] = inv['account_id'] and inv['account_id'][0]
-					myids=inv_ref.search(cr,uid,[('partner_id','=',partner_ref)])
+					myids=inv_ref.search(cr,uid,[('partner_id','=',partner_id)])
 					if  myids:
 						inv_id=myids[0]
 					else:
