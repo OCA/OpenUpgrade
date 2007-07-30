@@ -663,11 +663,15 @@ class auction_lots(osv.osv):
 #					else:
 #						invoice_id= self.pool.get('account.invoice').create(cr, uid, inv ,context= context)
 #					res[lot.id]= invoice_id
-					
+
 					inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.bord_vnd_id.partner_id.id)['value'])
 					inv['account_id'] = inv['account_id'] and inv['account_id'][0]
-					inv_id = inv_ref.create(cr, uid, inv, context)
-				#	inv_ref.button_compute(cr, uid, [inv_id])
+					myids=inv_ref.search(cr,uid,[('partner_id','=',partner_ref)])
+					if  myids:
+						inv_id=myids[0]
+					else:
+						inv_id = inv_ref.create(cr, uid, inv, context)
+
 					invoices[lot.bord_vnd_id.id] = inv_id
 				self.write(cr,uid,[lot.id],{'sel_inv_id':inv_id,'state':'sold'})
 				taxes = map(lambda x: x.id, lot.product_id.taxes_id)
@@ -686,7 +690,7 @@ class auction_lots(osv.osv):
 					'account_id': lot.auction_id.acc_expense.id,
 					'price_unit': lot.obj_price,
 					}
-				
+
 
 
 				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
@@ -1031,7 +1035,7 @@ class report_seller_auction(osv.osv):
 					auction_lots al,
 					auction_deposit ad
 				where
-					al.auction_id=adl.id and ad.id=al.bord_vnd_id 
+					al.auction_id=adl.id and ad.id=al.bord_vnd_id
 				group by
 					ad.partner_id,
 					al.state,adl.auction1,adl.id
