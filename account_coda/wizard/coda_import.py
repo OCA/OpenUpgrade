@@ -265,9 +265,9 @@ def _import_data(self, cr, uid, data, context):
     return data['form']
 class coda_import(wizard.interface):
     def _action_open_window(self, cr, uid, data, context):
-        res=_coda_parsing(self,cr,uid,data,context)
+        form=data['form']
         return {
-            'domain':"[('id','=',%d)]"%(res['statment_id']),
+            'domain':"[('id','=',%d)]"%(form['statment_id']),
             'name': 'Standard entries',
             'view_type': 'form',
             'view_mode': 'tree,form',
@@ -281,14 +281,14 @@ class coda_import(wizard.interface):
             'result' : {'type' : 'form',
                     'arch' : codawiz_form,
                     'fields' : codawiz_fields,
-                    'state' : [('open', 'Open Statement'),('extraction', 'Ok') ]}
+                    'state' : [('extraction', 'Ok') ]}
         },
         'extraction' : {
             'actions' : [_coda_parsing],
             'result' : {'type' : 'form',
                     'arch' : result_form,
                     'fields' : result_fields,
-                    'state' : [('end', 'Cancel')]}
+                    'state' : [('end', 'Ok'),('open', 'Open Statement')]}
         },
         'open': {
             'actions': [],
