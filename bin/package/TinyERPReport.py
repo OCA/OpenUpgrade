@@ -1081,7 +1081,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
     def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
         LoginTest()
-        if not loginstatus:
+        if not loginstatus and __name__=="package":
             exit(1)
         self.win = DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
@@ -1303,7 +1303,7 @@ if __name__<>"package":
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
         LoginTest()
-        if not loginstatus:
+        if not loginstatus and __name__=="package":
             exit(1)
         self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
 
@@ -1387,11 +1387,14 @@ class Fields(unohelper.Base, XJobExecutor ):
     def lstbox_selected(self,oItemEvent):
         try:
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+            desktop=getDesktop()
+            doc =desktop.getCurrentComponent()
+            docinfo=doc.getDocumentInfo()
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
-            res = sock.execute('terp', 3, 'admin', sObject , 'read',[1])
+            res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
             #import traceback;traceback.print_exc()
@@ -1399,7 +1402,10 @@ class Fields(unohelper.Base, XJobExecutor ):
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
     def getRes(self,sock ,sObject,sVar):
-        res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None
@@ -1411,6 +1417,8 @@ class Fields(unohelper.Base, XJobExecutor ):
             if (res[k]['type'] in ['many2one']) and k==myval:
                 self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
                 return res[myval]['relation']
+            elif k==myval:
+                return sObject
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -1487,7 +1495,7 @@ if __name__<>"package":
 class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
         LoginTest()
-        if not loginstatus:
+        if not loginstatus and __name__=="package":
             exit(1)
         self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
         self.win.addFixedText("lblExpression",17 , 10, 35, 15, "Expression :")
@@ -1822,6 +1830,7 @@ if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
+    from LoginTest import *
 #
 #
 # Start OpenOffice.org, listen for connections and open testing document
@@ -1833,19 +1842,26 @@ class NewReport(unohelper.Base, XJobExecutor):
         self.module  = "tiny_report"
         self.version = "0.1"
         LoginTest()
-        if not loginstatus:
+        if not loginstatus and __name__=="package":
             exit(1)
         self.win=DBModalDialog(60, 50, 180, 115, "Open New Report")
         self.win.addFixedText("lblModuleSelection", 2, 12, 60, 15, "Module Selection")
         self.win.addComboListBox("lstModule", -2,9,123,80 , False)
         self.lstModule = self.win.getControl( "lstModule" )
+        self.aModuleName=[]
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        print docinfo.getUserFieldValue(0)
+        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
-        sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
-        ids = sock.execute('trunk_terp', 3, 'admin', 'ir.model' , 'search',[])
-        fields = [ 'model']
-        res = sock.execute('trunk_terp', 3, 'admin', 'ir.model' , 'read', ids, fields)
+        ids = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
+        fields = [ 'model','name']
+        res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
         for i in range(res.__len__()):
-            self.lstModule.addItem(res[i]['model'],self.lstModule.getItemCount())
+            self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
+            self.aModuleName.append(res[i]['model'])
+
 
         self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
@@ -1860,8 +1876,8 @@ class NewReport(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
-            print self.lstModule.getSelectedItem()
-            docinfo.setUserFieldValue(3,self.lstModule.getSelectedItem())
+            print self.lstModule.getSelectedItemPos()
+            docinfo.setUserFieldValue(3,self.aModuleName[self.lstModule.getSelectedItemPos()])
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name=="btnCancel":
             self.win.endExecute()

@@ -13,7 +13,7 @@ if __name__<>"package":
 class Expression(unohelper.Base, XJobExecutor ):
     def __init__(self,sExpression="",sName="", bFromModify=False):
         LoginTest()
-        if not loginstatus:
+        if not loginstatus and __name__=="package":
             exit(1)
         self.win = DBModalDialog(60, 50, 180, 65, "Expression Builder")
         self.win.addFixedText("lblExpression",17 , 10, 35, 15, "Expression :")

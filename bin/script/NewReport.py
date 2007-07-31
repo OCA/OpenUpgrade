@@ -19,12 +19,13 @@ class NewReport(unohelper.Base, XJobExecutor):
         self.module  = "tiny_report"
         self.version = "0.1"
         LoginTest()
-        if not loginstatus:
+        if not loginstatus and __name__=="package":
             exit(1)
         self.win=DBModalDialog(60, 50, 180, 115, "Open New Report")
         self.win.addFixedText("lblModuleSelection", 2, 12, 60, 15, "Module Selection")
         self.win.addComboListBox("lstModule", -2,9,123,80 , False)
         self.lstModule = self.win.getControl( "lstModule" )
+        self.aModuleName=[]
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
@@ -32,10 +33,12 @@ class NewReport(unohelper.Base, XJobExecutor):
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
         ids = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
-        fields = [ 'model']
+        fields = [ 'model','name']
         res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
         for i in range(res.__len__()):
-            self.lstModule.addItem(res[i]['model'],self.lstModule.getItemCount())
+            self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
+            self.aModuleName.append(res[i]['model'])
+
 
         self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
@@ -50,8 +53,8 @@ class NewReport(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
-            print self.lstModule.getSelectedItem()
-            docinfo.setUserFieldValue(3,self.lstModule.getSelectedItem())
+            print self.lstModule.getSelectedItemPos()
+            docinfo.setUserFieldValue(3,self.aModuleName[self.lstModule.getSelectedItemPos()])
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name=="btnCancel":
             self.win.endExecute()

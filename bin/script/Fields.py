@@ -13,7 +13,7 @@ if __name__<>"package":
 class Fields(unohelper.Base, XJobExecutor ):
     def __init__(self,sVariable="",sFields="",sDisplayName="",bFromModify=False):
         LoginTest()
-        if not loginstatus:
+        if not loginstatus and __name__=="package":
             exit(1)
         self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
 
@@ -97,11 +97,14 @@ class Fields(unohelper.Base, XJobExecutor ):
     def lstbox_selected(self,oItemEvent):
         try:
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+            desktop=getDesktop()
+            doc =desktop.getCurrentComponent()
+            docinfo=doc.getDocumentInfo()
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
-            res = sock.execute('terp', 3, 'admin', sObject , 'read',[1])
+            res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
             #import traceback;traceback.print_exc()
@@ -109,7 +112,10 @@ class Fields(unohelper.Base, XJobExecutor ):
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
     def getRes(self,sock ,sObject,sVar):
-        res = sock.execute('terp', 3, 'admin', sObject , 'fields_get')
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None
@@ -121,6 +127,8 @@ class Fields(unohelper.Base, XJobExecutor ):
             if (res[k]['type'] in ['many2one']) and k==myval:
                 self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
                 return res[myval]['relation']
+            elif k==myval:
+                return sObject
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
