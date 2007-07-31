@@ -25,7 +25,6 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-
 import pooler
 import time
 import datetime
@@ -53,6 +52,7 @@ codawiz_fields = {
         'type':'many2one',
         'relation':'account.journal',
         'required':True,
+
     },
     'coda' : {
         'string':'Coda File',
@@ -64,12 +64,14 @@ codawiz_fields = {
         'type' : 'many2one',
         'relation': 'account.account',
         'required':True,
+        'domain':[('type','=','payable')],
     },
     'def_receivable' : {
         'string' : 'Default receivable Account',
         'type' : 'many2one',
         'relation': 'account.account',
         'required':True,
+        'domain':[('type','=','receivable')],
     }
 }
 
@@ -85,6 +87,8 @@ result_fields = {
     'note' : {'string':'Log','type':'text'}
 
 }
+
+
 
 def _coda_parsing(self, cr, uid, data, context):
     print "Coda Parsing is start here..........."
@@ -189,7 +193,7 @@ def _coda_parsing(self, cr, uid, data, context):
             lines=statement["bank_statement_line"]
             for value in lines:
                 line=lines[value]
-                pool.get('account.bank.statement.line').create(cr,uid,{
+                id=pool.get('account.bank.statement.line').create(cr,uid,{
                            'name':line['name'],
                            'date': line['date'],
                            'amount': line['amount'],
@@ -235,7 +239,7 @@ def _coda_parsing(self, cr, uid, data, context):
         'user_id':uid,
         })
 
-    return {'note':str_log1 + std_log + err_log ,'journal_id': data['form']['journal_id'], 'coda': data['form']['coda']}
+    return {'note':str_log1 + std_log + err_log ,'journal_id': data['form']['journal_id'], 'coda': data['form']['coda'],'statment_id':bk_st_id}
 
 
 def str2date(date_str):
@@ -260,21 +264,37 @@ def _import_data(self, cr, uid, data, context):
     data['form']['def_receivable']=10
     return data['form']
 class coda_import(wizard.interface):
+    def _action_open_window(self, cr, uid, data, context):
+        res=_coda_parsing(self,cr,uid,data,context)
+        return {
+            'domain':"[('id','=',%d)]"%(res['statment_id']),
+            'name': 'Standard entries',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.bank.statement',
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
     states = {
         'init' : {
             'actions' : [],
             'result' : {'type' : 'form',
                     'arch' : codawiz_form,
                     'fields' : codawiz_fields,
-                    'state' : [('end', 'Cancel'),('extraction', 'Ok') ]}
+                    'state' : [('open', 'Open Statement'),('extraction', 'Ok') ]}
         },
         'extraction' : {
             'actions' : [_coda_parsing],
             'result' : {'type' : 'form',
-                        'arch' : result_form,
-                        'fields' : result_fields,
-                        'state' : [('end', 'Quit') ]}
+                    'arch' : result_form,
+                    'fields' : result_fields,
+                    'state' : [('end', 'Cancel')]}
         },
+        'open': {
+            'actions': [],
+            'result': {'type': 'action', 'action': _action_open_window, 'state': 'end'}
+
+            },
 
     }
 coda_import("account.coda_import")
