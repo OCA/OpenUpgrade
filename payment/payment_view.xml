@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
-		<menuitem name="Financial Management/Payment Management" id="menu_main" icon="terp-project"/>
+		<menuitem name="Financial Management/Payment Management" id="menu_main" />
 		<menuitem name="Financial Management/Payment Management/Configuration" groups="admin" sequence="1"/>
 
 		<record model="ir.ui.view" id="view_payment_type_form">
@@ -11,6 +11,7 @@
 			<field name="arch" type="xml">
 				<form string="Payment Type">
 					<field name="name" select="1"/>
+					<field name="code" />
 					<field name="suitable_bank_types" select="1"/>
 				</form>
 			</field>
@@ -30,9 +31,19 @@
 			<field name="arch" type="xml">
 				<form string="Payment Order">
 					<field name="date" select="1"/>
-					<field name="type" select="1"/>
-					<field name="payment_lines" select="1" colspan="4" widget="one2many_list"/>
-					<field name="state" select="1"/>
+					<field name="type" />
+					<field name="journal" select="2"/>
+					<field name="bank"/>
+					<field name="user_id" select="2"/>
+					<button name="%(wizard_payment)d" string="Populate Payment" type="action" colspan="2"/>
+					<field name="payment_lines" select="1" colspan="4" widget="one2many_list" nolabel="1"/>
+					<group colspan="4" col="6">
+					<field name="state" select="1" readonly="1"/>
+					<button name="cancel" states="draft,open" string="Cancel"/>
+					<button name="open" states="draft" string="Open"/>
+					<button name="done" states="open" string="Make Payment"/>
+					<button name="set_to_draft" states="cancel" type="object" string="Set to draft"/>
+					</group>
    				</form>
 			</field>
 		</record>
@@ -47,6 +58,7 @@
 				<field name="date"/>
 				<field name="type"/>
 				<field name="state" />
+				<field name="total"/>
 			</tree>
 		</field>
 		</record>
@@ -62,25 +74,37 @@
 
 
 		<record model="ir.ui.view" id="view_payment_line_form">
-			<field name="name">payment.line.form</field>
+			<field name="name">Payment Line</field>
 			<field name="model">payment.line</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Payment Line">
-					<field name="invoice_id" select="1" on_change="onchange_invoice_id(invoice_id)" domain="[('state','&lt;&gt;','draft')]"/>
+					<field name="move_line" select="1" on_change="onchange_move_line(move_line)" domain="[('reconcile_id','=', False), ('debit', '>',0)]"/>
 					<field name="amount" select="1" />
+					<field name="bank"/>
+					<field name="to_pay"/>
+					<field name="partner"/>
+					<field name="ref"/>
+					<field name="date_maturity"/>
+					<field name="date_created"/>
 				</form>
 			</field>
 		</record>
 		<record model="ir.ui.view" id="view_payment_line_tree">
-		<field name="name">payment.line.tree</field>
+		<field name="name">Payment Lines</field>
 		<field name="model">payment.line</field>
 		<field name="type">tree</field>
 		<field name="priority" eval="4"/>
 		<field name="arch" type="xml">
-			<tree string="Payment Line">
-				<field name="invoice_id"/>
-				<field name="amount"/>
+			<tree string="Payment Line" editable="bottom">
+				<field name="move_line"/>
+				<field name="bank"/>
+				<field name="amount" sum="Amount Total"/>
+				<field name="to_pay"/>
+				<field name="partner"/>
+				<field name="ref"/>
+				<field name="date_maturity"/>
+				<field name="date_created"/>
 			</tree>
 		</field>
 		</record>
