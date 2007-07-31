@@ -263,6 +263,7 @@ def _import_data(self, cr, uid, data, context):
     data['form']['def_payable']=5
     data['form']['def_receivable']=10
     return data['form']
+    domain = "[('user_id', '=', uid)]"
 class coda_import(wizard.interface):
     def _action_open_window(self, cr, uid, data, context):
         form=data['form']
@@ -270,10 +271,11 @@ class coda_import(wizard.interface):
             'domain':"[('id','=',%d)]"%(form['statment_id']),
             'name': 'Standard entries',
             'view_type': 'form',
-            'view_mode': 'tree,form',
+            'view_mode': 'form,tree',
             'res_model': 'account.bank.statement',
             'view_id': False,
-            'type': 'ir.actions.act_window'
+            'type': 'ir.actions.act_window',
+            'res_id':form['statment_id'],
         }
     states = {
         'init' : {
@@ -281,14 +283,14 @@ class coda_import(wizard.interface):
             'result' : {'type' : 'form',
                     'arch' : codawiz_form,
                     'fields' : codawiz_fields,
-                    'state' : [('extraction', 'Ok') ]}
+                    'state' : [('extraction', '_Ok') ]}
         },
         'extraction' : {
             'actions' : [_coda_parsing],
             'result' : {'type' : 'form',
                     'arch' : result_form,
                     'fields' : result_fields,
-                    'state' : [('end', 'Ok'),('open', 'Open Statement')]}
+                    'state' : [('end', '_Close'),('open', '_Open Statement')]}
         },
         'open': {
             'actions': [],
