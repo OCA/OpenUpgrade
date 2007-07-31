@@ -1,30 +1,16 @@
 <?xml version="1.0"?>
 <terp>
-<data noupdate="1">
-	<record model="res.partner" id="partner_demo1">
-		<field name="name">PROLIBRE SARL             CAROUGE G</field>
-	</record>
+<data>
 
-	<record model="res.partner.bank" id="partner_bank1">
-		<!--<field name="name">301915554082</field>-->
+	<record model="res.partner.bank" id="base.res_partner_agrolait">
 		<field name="acc_number">301915554082</field>
-<!--	<field name="type_id" model='res.partner.bank.type' search="[('name','=','Other')]"></field>
-		<field name="bank_name">001150000</field>-->
-		<!--<field name="bank_code">001150000</field>-->
-		<field name="partner_id" ref="partner_demo1"></field>
+		<field name="partner_id" ref="base.res_partner_agrolait"/>
 	</record>
 
-	<!--<record model="res.partner" id="partner_demo2">
-		<field name="name">SEDNACOM                  43 ALLEE</field>
+	<record model="res.partner.bank" id="base.res_partner_10">
+		<field name="acc_number">050000000017</field>
+		<field name="partner_id" ref="base.res_partner_10"/>
 	</record>
 
-	<record model="res.partner.bank" id="partner_bank2">
-		<field name="name">050000000017</field>
-		<field name="number">050000000017</field>
-		<field name="type_id" model='res.partner.bank.type' search="[('name','=','Other')]"></field>
-		<field name="bank_name">001150000</field>
-		<field name="bank_code">001150000</field>
-		<field name="partner_id" ref="partner_demo2"></field>
-	</record>-->
 </data>
 </terp>
