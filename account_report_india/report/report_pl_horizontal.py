@@ -122,6 +122,12 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                 res['balance']=balance_dict[aobj.id]['balance']
                 res['type']=aobj.user_type.code
                 res['level']=aobj.level
+                if res['level']== False:
+                    if aobj.parent_id:
+                        for r in result:
+                            if r['name']== aobj.parent_id.name:
+                                res['level'] = r['level'] + 1
+                                break
                 if res['level'] > 4:
                     res['outer']='-1'
                     if res['type'] == 'expense':
@@ -136,7 +142,7 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                     else:
                          self.result_sum_income_cr +=res['balance']
                     
-                if res['level']== 3:
+                if res['level']== 3 or res['level'] < 3:
                     res['outer']='1'
                     if res['type'] == 'expense':
                         self.result_sum_dr +=res['balance']
@@ -165,31 +171,17 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                 self.res_pl['balance']=(self.result_sum_dr - self.result_sum_cr)
             else:
                 self.res_pl['type']='Net Profit'
-                self.res_pl['balance']=(self.result_sum_cr - self.result_sum_dr)   
-        temp={}
-        for i in range(0,max(len(cal_list['expense']),len(cal_list['income']))):
-            if i < len(cal_list['expense']) and i < len(cal_list['income']):
-                temp={
-                      'name' : cal_list['expense'][i]['name'],
-                      'type' : cal_list['expense'][i]['type'],
-                      'level': cal_list['expense'][i]['level'],
-                      'outer': cal_list['expense'][i]['outer'],
-                      'balance':cal_list['expense'][i]['balance'],
-                      'name1' : cal_list['income'][i]['name'],
-                      'type1' : cal_list['income'][i]['type'],
-                      'level1': cal_list['income'][i]['level'],
-                      'outer1': cal_list['income'][i]['outer'],
-                      'balance1':cal_list['income'][i]['balance'],
-                      }
-                self.result_temp.append(temp)
-            else:
-                if i < len(cal_list['income']):
+                self.res_pl['balance']=(self.result_sum_cr - self.result_sum_dr)
+        if cal_list:   
+            temp={}
+            for i in range(0,max(len(cal_list['expense']),len(cal_list['income']))):
+                if i < len(cal_list['expense']) and i < len(cal_list['income']):
                     temp={
-                          'name' : '',
-                          'type' : '',
-                          'level': False,
-                          'outer': '',
-                          'balance':False,
+                          'name' : cal_list['expense'][i]['name'],
+                          'type' : cal_list['expense'][i]['type'],
+                          'level': cal_list['expense'][i]['level'],
+                          'outer': cal_list['expense'][i]['outer'],
+                          'balance':cal_list['expense'][i]['balance'],
                           'name1' : cal_list['income'][i]['name'],
                           'type1' : cal_list['income'][i]['type'],
                           'level1': cal_list['income'][i]['level'],
@@ -197,20 +189,35 @@ class report_pl_account_horizontal(rml_parse.rml_parse):
                           'balance1':cal_list['income'][i]['balance'],
                           }
                     self.result_temp.append(temp)
-                if  i < len(cal_list['expense']): 
-                    temp={
-                          'name' : cal_list['expense'][i]['name'],
-                          'type' : cal_list['expense'][i]['type'],
-                          'level': cal_list['expense'][i]['level'],
-                          'outer': cal_list['expense'][i]['outer'],
-                          'balance':cal_list['expense'][i]['balance'],
-                          'name1' : '',
-                          'type1' : '',
-                          'level1': False,
-                          'outer1': '',
-                          'balance1':False,
-                          }
-                    self.result_temp.append(temp)
+                else:
+                    if i < len(cal_list['income']):
+                        temp={
+                              'name' : '',
+                              'type' : '',
+                              'level': False,
+                              'outer': False,
+                              'balance':False,
+                              'name1' : cal_list['income'][i]['name'],
+                              'type1' : cal_list['income'][i]['type'],
+                              'level1': cal_list['income'][i]['level'],
+                              'outer1': cal_list['income'][i]['outer'],
+                              'balance1':cal_list['income'][i]['balance'],
+                              }
+                        self.result_temp.append(temp)
+                    if  i < len(cal_list['expense']): 
+                        temp={
+                              'name' : cal_list['expense'][i]['name'],
+                              'type' : cal_list['expense'][i]['type'],
+                              'level': cal_list['expense'][i]['level'],
+                              'outer': cal_list['expense'][i]['outer'],
+                              'balance':cal_list['expense'][i]['balance'],
+                              'name1' : '',
+                              'type1' : '',
+                              'level1': False,
+                              'outer1': False,
+                              'balance1':False,
+                              }
+                        self.result_temp.append(temp)
         return None
     
     def get_acc_obj(self,obj_list,group):

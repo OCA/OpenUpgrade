@@ -120,6 +120,12 @@ class report_pl_account(report_sxw.rml_parse):
                 res['balance']=balance_dict[aobj.id]['balance']
                 res['type']=aobj.user_type.code
                 res['level']=aobj.level
+                if res['level']== False:
+                    if aobj.parent_id:
+                        for r in result:
+                            if r['name']== aobj.parent_id.name:
+                                res['level'] = r['level'] + 1
+                                break
                 if res['level'] > 4:
                     res['outer']='-1'
                     if res['type'] == 'expense':

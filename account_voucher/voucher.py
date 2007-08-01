@@ -168,7 +168,7 @@ class account_voucher(osv.osv):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
 
-    def unlink(self, cr, uid, ids):
+    def unlink(self, cr, uid, ids,context={}):
         vouchers = self.read(cr, uid, ids, ['state'])
         unlink_ids = []
         for t in vouchers:
@@ -176,7 +176,7 @@ class account_voucher(osv.osv):
                 unlink_ids.append(t['id'])
             else:
                 raise osv.except_osv('Invalid action !', 'Cannot delete invoice(s) which are already opened or paid !')
-        osv.osv.unlink(self, cr, uid, unlink_ids)
+        osv.osv.unlink(self, cr, uid, unlink_ids,context)
         return True
     
     def _get_analytic_lines(self, cr, uid, id):
