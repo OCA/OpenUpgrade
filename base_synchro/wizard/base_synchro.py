@@ -91,15 +91,17 @@ class wizard_cost_account_synchro(wizard.interface):
 			if id2:
 				try:
 					pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
+					print 'Write', value
 				except Exception, e:
-					self.report.append('Unable to update record ['+str(id2)+']:'+str(value.get('name', '?')))
+					self.report.append('ERROR: Unable to update record ['+str(id2)+']:'+str(value.get('name', '?')))
 				self.report_total+=1
 				self.report_write+=1
 			else:
 				try:
 					pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
+					print 'Create', value
 				except Exception, e:
-					self.report.append('Unable to create record:'+str(value.get('name', '?')))
+					self.report.append('ERROR: Unable to create record:'+str(value.get('name', '?')))
 				idnew = pool_dest.get(object.model_id.model).create(cr, uid, value)
 				synid = pool.get('base.synchro.obj.line').create(cr, uid, {
 					'obj_id': object.id,
@@ -109,7 +111,6 @@ class wizard_cost_account_synchro(wizard.interface):
 				self.report_total+=1
 				self.report_create+=1
 		self.meta = {}
-		print self.report
 		return 'finish'
 
 	#
@@ -153,7 +154,7 @@ class wizard_cost_account_synchro(wizard.interface):
 				result = res[0][0]
 			else:
 				# LOG this in the report, better message.
-				print 'Relation not found, set to null.'
+				print self.report.append('WARNING: Record "%s" on relation %s not found, set to null.' % (names,object))
 		return result
 
 	def _data_transform(self, cr, uid, pool_src, pool_dest, object, data, action='u', context={}):
@@ -191,26 +192,30 @@ class wizard_cost_account_synchro(wizard.interface):
 			dt = time.strftime('%Y-%m-%d %H:%M:%S')
 			self._synchronize(cr, uid, server, object, context)
 			if object.action=='b':
+				time.sleep(1)
 				dt = time.strftime('%Y-%m-%d %H:%M:%S')
 			pool.get('base.synchro.obj').write(cr, uid, [object.id], {'synchronize_date': dt})
 			cr.commit()
 		end_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
 		if 'user_id' in data['form'] and data['form']['user_id']:
 			request = pooler.get_pool(cr.dbname).get('res.request')
-			summary = '''Here is the Synchronization report.
-			Synchronization Started; %s
-			Synchronization Finnished; %s
+			if not self.report:
+				self.report.append('No exception.')
+			summary = '''Here is the synchronization report:
 
-			Total Records: %d
-			Write Records: %d
-			Create Records: %d
-			Exception Records:
-			Exceptions;
+Synchronization started: %s
+Synchronization finnished: %s
+
+Synchronized records: %d
+Records updated: %d
+Records created: %d
+
+Exceptions:
 			'''% (start_date,end_date,self.report_total, self.report_write,self.report_create)
 			summary += '\n'.join(self.report)
 			request.create(cr, uid, {
-				'name' : "Synchronization report.",
-				'act_from' : data['form']['user_id'],
+				'name' : "Synchronization report",
+				'act_from' : uid,
 				'act_to' : data['form']['user_id'],
 				'body': summary,
 			})
