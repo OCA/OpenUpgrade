@@ -389,7 +389,7 @@
 
 	<record model="auction.bid" id="auction_date_1_bid_4">
 		<field name="name">bid4</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id"   model="res.partner" search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_1" />
 	</record>
 
@@ -400,7 +400,7 @@
 
 	<record model="auction.bid" id="auction_date_1_bid_5">
 		<field name="name">bid5</field>
-		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_1" />
 	</record>
 
@@ -411,7 +411,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_1">
 		<field name="name">bid6</field>
-		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
@@ -422,7 +422,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_2">
 		<field name="name">bid7</field>
-		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
@@ -433,7 +433,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_3">
 		<field name="name">bid8</field>
-		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
@@ -444,7 +444,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_4">
 		<field name="name">bid9</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
@@ -455,7 +455,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_5">
 		<field name="name">bid10</field>
-		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
