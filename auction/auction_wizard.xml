@@ -33,11 +33,11 @@
 		name="auction.pay.buy"
 		id="wizard_pay"/>
 
-		<wizard string="Cancel payment"
+		<!--wizard string="Cancel payment"
 		model="auction.lots"
 		name="auction.lots.cancel"
 		multi="1"
-		id="wizard_cancel_pay"/>
+		id="wizard_cancel_pay"/-->
 
 		<!--
 		<wizard string="Numerotation (per lot)"
@@ -73,7 +73,7 @@
 		<wizard string="Invoice Buyer objects"
 			model="auction.lots"
 			name="auction.lots.make_invoice_buyer"
-			id="wizard_invoice_buyer"/>
+			id="wizard_invoice_buyer1"/>
 
 		<!--
 		<wizard string="Transfer unsold objects"
@@ -81,17 +81,16 @@
 			name="auction.lots.transfer.unsold.object"
 			id="wizard_transfer_unsold_objects"/>
 		-->
-			<wizard string="Enable objects"
+			<wizard string="Unmark as taken away"
 			model="auction.lots"
 			name="auction.lots.enable"
 			id="auction_wizard_enable_taken"/>
 		
-			<wizard string="Able objects"
+			<wizard string="Mark as taken away"
 			model="auction.lots"
 			name="auction.lots.able"
 			id="auction_wizard_able_taken"/>
-
-
+			
 	</data>
 </terp>
 

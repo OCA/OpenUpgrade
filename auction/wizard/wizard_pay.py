@@ -40,9 +40,18 @@ import pooler
 pay_form = '''<?xml version="1.0"?>
 <form string="Pay invoice">
 	<field name="amount"/>
-	<field name="dest_account_id"/>
-	<field name="journal_id" domain="[('type','=','cash')]"/>
+	<field name="statement_id" />
+	<field name="amount2"/>
+	<field name="statement_id2" />
+	<field name="amount3"/>
+	<field name="statement_id3" />
 </form>'''
+
+def _start(self,cr,uid,data,context):
+	pool = pooler.get_pool(cr.dbname)
+	rec=pool.get('auction.lots').browse(cr,uid,data['id'],context)
+	amount1= rec and rec.buyer_price or False
+	return {'amount':amount1}
 
 
 def _get_period(cr, uid, context):
@@ -54,8 +63,12 @@ def _get_period(cr, uid, context):
 
 pay_fields = {
 	'amount': {'string': 'Amount paid', 'type':'float', 'required':True},
-	'journal_id': {'string': 'Journal', 'type': 'many2one', 'relation':'account.journal', 'required':True},
-	'dest_account_id': {'string':'Payment to Account', 'type':'many2one', 'required':True, 'relation':'account.account', 'domain':[('type','=','cash')]},
+	'buyer_id': {'string': 'Buyer', 'type': 'many2one', 'relation':'res.users', 'required':True},
+	'statement_id': {'string':'Statement', 'type':'many2one', 'required':True, 'relation':'account.bank.statement.line'},
+	'amount2': {'string': 'Amount paid', 'type':'float'},
+	'statement_id2': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement.line'},
+	'amount3': {'string': 'Amount paid', 'type':'float'},
+	'statement_id3': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement.line'},
 }
 #def pay_n_check(self, cr, uid, data, context):
 #
@@ -92,23 +105,20 @@ pay_fields = {
 
 
 def _pay_and_reconcile(self, cr, uid, data, context):
+	print "DS PAY AND RECONCILE"
 	pool = pooler.get_pool(cr.dbname)
 	lots = pool.get('auction.lots').browse(cr,uid,data['ids'],context)
 	form = data['form']
-	journal = form['journal_id']
 	for lot in lots:
-		new_id=pooler.get_pool(cr.dbname).get('account.bank.statement.line').create(cr,uid,{'name':lot.product_id.id,
+		new_id=pooler.get_pool(cr.dbname).get('account.bank.statement.line').create(cr,uid,{'name':'Auction:'+ lot.auction_id.id +'  '+lots.id,
+																							'date': time.strftime('%Y-%m-%d'),
 																							'partner_id':lot.ach_uid.id,
-																							'account_id':form['dest_account_id'],
+																							'type':'customer',
+																							'account_id':lot.auction_id.journal_id.id,
 																							'amount':form['amount']
 																							})
-		
-		up_payment=pooler.get_pool(cr.dbname).get('account.bank.statement').write(cr,uid,[lot.statement.id],{'journal_id':journal,
-																								'line_ids': [(6,0,[new_id])]
-																								})
+		up_payment=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'statement_id': new_id})
 	return {}
-
-
 
 	#	pool = pooler.get_pool(cr.dbname)
 #	lot = pool.get('auction.lots').browse(cr,uid,data['id'],context)
@@ -125,17 +135,20 @@ def _pay_and_reconcile(self, cr, uid, data, context):
 #		#p=pool.get('account.invoice').pay_and_reconcile(['lot.ach_inv_id.id'], form['amount'], form['dest_account_id'], journal_id, account_id, period_id, journal_id, context)
 #	return {}
 
-
+def test(*a):
+	print "TEST"
+	return {}
 class wiz_auc_lots_pay(wizard.interface):
 	states = {
 		'init': {
-			'actions': [],
-			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('pay','Pay'), ('end','Cancel')]}
+			'actions': [_start],
+			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('test','Pay amount'),('end','Cancel')]}
 		},
-			'pay': {
-			'actions': [_pay_and_reconcile],
-			'result': {'type': 'state', 'state':'end'}
+		'test': {'actions': [],'result':{'type':'action','action':test,'state':'end'} },
+		'pay_amount': {
+		'actions': [_pay_and_reconcile],
+		'result': {'type': 'state', 'state':'end'}
 		}}
-wiz_auc_lots_pay('auction.pay.buy');
+wiz_auc_lots_pay('auction.pay.buy')
 
 

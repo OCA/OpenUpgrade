@@ -9,21 +9,26 @@ invoice_form = '''<?xml version="1.0"?>
 	<field name="objects"/>
 	<field name="number"/>
 	<label string="(Keep empty for automatic number)" colspan="2"/>
+	<field name="buyer_id"/>
 </form>'''
 
 invoice_fields = {
 	'amount': {'string':'Invoiced Amount', 'type':'float', 'required':True, 'readonly':True},
 	'objects': {'string':'# of objects', 'type':'integer', 'required':True, 'readonly':True},
 	'number': {'string':'Invoice Number', 'type':'integer'},
+	'buyer_id':{'string': 'Buyer', 'type': 'many2one', 'relation':'res.partner', 'required':True}
+
 }
 
 
 def _values(self,cr,uid, datas,context={}):
-	lots= pooler.get_pool(cr.dbname).get('auction.lots').browse(cr,uid,datas['ids'])
+	pool = pooler.get_pool(cr.dbname)
+	lots= pool.get('auction.lots').browse(cr,uid,datas['ids'])
 	price = 0.0
 	amount_total=0.0
 	pt_tax=pooler.get_pool(cr.dbname).get('account.tax')
 	for lot in lots:
+		buyer=lot and lot.ach_uid or False
 		taxes = lot.product_id.taxes_id
 		if lot.author_right:
 			taxes.append(lot.author_right)
@@ -33,13 +38,18 @@ def _values(self,cr,uid, datas,context={}):
 		for t in tax:
 			amount_total+=t['amount']
 		amount_total+=lot.obj_price
+	#	up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'ach_uid':datas['form']['buyer_id']})
 	invoice_number = False
-	return {'objects':len(datas['ids']), 'amount':amount_total, 'number':invoice_number}
+	return {'objects':len(datas['ids']), 'amount':amount_total, 'number':invoice_number,'buyer_id':buyer}
 
 
 def _makeInvoices(self, cr, uid, data, context):
 	order_obj = pooler.get_pool(cr.dbname).get('auction.lots')
 	newinv = []
+	pool = pooler.get_pool(cr.dbname)
+	lots= order_obj.browse(cr,uid,data['ids'])
+	for lot in lots:
+		up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'ach_uid':data['form']['buyer_id']})
 	ids = order_obj.lots_invoice(cr, uid, data['ids'],context)
 	cr.commit()
 	return {
@@ -61,7 +71,7 @@ class make_invoice(wizard.interface):
 			'result' : {'type' : 'form',
 				    'arch' : invoice_form,
 				    'fields' : invoice_fields,
-				    'state' : [('invoice', 'Create invoices'), ('end', 'Cancel'),]}
+				    'state' : [('end', 'Cancel'),('invoice', 'Create invoices')]}
 		},
 		'invoice' : {
 			'actions' : [_makeInvoices],

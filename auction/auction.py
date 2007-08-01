@@ -82,8 +82,7 @@ class auction_dates(osv.osv):
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
 		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
-		'journal_id': fields.many2one('account.journal', 'Journal', required=True),
-		'state': fields.selection((('draft','Draft'),('sold','Closed')),'State',required=True, select=1, readonly=True),
+		'state': fields.selection((('draft','Draft'),('closed','Closed')),'State',required=True, select=1, readonly=True),
 		#'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
 
@@ -98,29 +97,20 @@ class auction_dates(osv.osv):
 		Close an auction date.
 
 		Create invoices for all buyers and sellers.
-		STATE = unsold instead of 'close'
+		STATE ='close'
 
 		RETURN: True
 		"""
-		cr.execute('select count(*) as c from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0 and ach_uid is null and obj_price is not null', ('draft',))
+		# objects vendus mais non factures
+		cr.execute('select count(*) as c from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
 		nbr = cr.fetchone()[0]
-		if nbr>0:
-			cr.execute('select * from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0 and ach_uid is null and obj_price is not null', ('draft',))
-			raise orm.except_orm('UserError', ('Please assign all buyer before closing the auction !', 'init'))
 		ach_uids = {}
-		cr.execute('select ach_uid,id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
-		for arg in cr.fetchall():
-			if arg[0] not in ach_uids:
-				ach_uids[arg[0]]=[]
-			ach_uids[arg[0]].append(arg[1])
-		for arg in ach_uids:
-			self.pool.get('auction.lots').lots_invoice(cr, uid, ach_uids[arg], arg)
-		cr.execute('update auction_lots set obj_price=0.0 where obj_price is null and auction_id in ('+','.join(map(str,ids))+')')
-		cr.execute('update auction_lots set state=%s where state=%s and auction_id in ('+','.join(map(str,ids))+')', ('draft','unsold'))
-		cr.execute('select * from auction_lots where auction_id in ('+','.join(map(str,ids))+') and obj_price>0')
+		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
+		self.pool.get('auction.lots').buyer_proforma(cr, uid, [x[0] for x in cr.fetchall()],{})
+		cr.execute('select * from auction_lots where auction_id in ('+','.join(map(str,ids))+')and state=%s and obj_price>0', ('draft',))
 		ids2 = [x[0] for x in cr.fetchall()]
-		self.pool.get('auction.lots').seller_trans_create(cr, uid, ids2)
-		self.write(cr, uid, ids, {'state':'unsold'})
+		self.pool.get('auction.lots').seller_trans_create(cr, uid, ids2,{})
+		self.write(cr, uid, ids, {'state':'closed'}) #close the auction
 		return True
 auction_dates()
 
@@ -368,6 +358,7 @@ class auction_lots(osv.osv):
 			nb = cr.fetchone()[0]
 			account_analytic_line_obj = self.pool.get('account.analytic.line')
 			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id)])
+			
 			for line in account_analytic_line_obj.browse(cr,uid,line_ids):
 				if line.amount:
 					som-=line.amount
@@ -460,7 +451,7 @@ class auction_lots(osv.osv):
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='Gross Margin (%)',store=True),
 		'costs':fields.function(_costs,method=True,string='Indirect costs',store=True),
-		'statement': fields.many2one('account.bank.statement', 'Payement', readonly=True),
+		'statement_id': fields.many2one('account.bank.statement.line', 'Payment', readonly=True),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='Net Margin (%)',store=True)
 	}
@@ -522,7 +513,6 @@ class auction_lots(osv.osv):
 				amount+=t['amount']
 			amount+=lot.obj_price
 
-		print "VALUE OF AMOUNT TOTAL",amount
 		amount_total['value']= amount
 		amount_total['amount']= amount
 		return amount_total
@@ -630,8 +620,58 @@ class auction_lots(osv.osv):
 			else:
 				taxes_summed[key] = tax
 		return taxes_summed.values()
+	def buyer_proforma(self,cr,uid,ids,context):
+		invoices = {}
+		inv_ref=self.pool.get('account.invoice')
+#		acc_receiv=self.pool.get('account.account').search([cr,uid,[('code','=','4010')]])
+		for lot in self.browse(cr,uid,ids,context):
+			partner_r=self.pool.get('res.partner')
+			partn=partner_r.search(cr,uid,[('name','=','Unknown')])
+			partner_ref =lot.ach_uid.id or partn 
+			lot_name = lot.obj_num
+			print partner_ref
+			res = self.pool.get('res.partner').address_get(cr, uid, partner_ref, ['contact', 'invoice'])
+			contact_addr_id = res['contact']
+			invoice_addr_id = res['invoice']
+			inv = {
+				'name': 'Auction proforma:' +lot.name,
+				'journal_id': lot.auction_id.journal_id.id,
+				'partner_id': partner_ref[0],
+				'type': 'out_invoice',
+			#	'state':'proforma',
+			}
+			print "inv",inv
+			inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', partner_ref[0])['value'])
+			inv['account_id'] = inv['account_id'] and inv['account_id'][0]
+			print "INV",inv
+			inv_id = inv_ref.create(cr, uid, inv, context)
+			invoices[partner_ref[0]] = inv_id
+			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 
-	# creates the transactions between tInvoicehe auction company and the seller
+			#calcul des taxes
+			taxes = map(lambda x: x.id, lot.product_id.taxes_id)
+			taxes+=map(lambda x:x.id, lot.auction_id.buyer_costs)
+			if lot.author_right:
+				taxes.append(lot.author_right.id)
+
+			inv_line= {
+				'invoice_id': inv_id,
+				'quantity': 1,
+				'product_id': lot.product_id.id,
+				'name': 'proforma'+'['+str(lot.obj_num)+'] '+ lot.name,
+				'invoice_line_tax_id': [(6,0,taxes)],
+				'account_analytic_id': lot.auction_id.account_analytic_id.id,
+				'account_id': lot.auction_id.acc_income.id,
+				'price_unit': lot.obj_price,
+			}
+			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
+			inv_ref.button_compute(cr, uid, [inv_id])
+		#	wf_service = netsvc.LocalService('workflow')
+		#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+		return invoices.values()
+	
+
+	# creates the transactions between the auction company and the seller
 	# this is done by creating a new in_invoice for each
 	def seller_trans_create(self,cr, uid,ids,context):
 		"""
@@ -640,16 +680,12 @@ class auction_lots(osv.osv):
 
 		# use each list of object in turn
 		invoices = {}
-		group={}
 		inv_ref=self.pool.get('account.invoice')
 		for lot in self.browse(cr,uid,ids,context):
 			partner_id = lot.bord_vnd_id.partner_id.id
 			if not lot.auction_id.id:
 				continue
-
-
 			lot_name = lot.obj_num
-
 			if lot.bord_vnd_id.id in invoices:
 				inv_id = invoices[lot.bord_vnd_id.id]
 			else:
@@ -689,10 +725,10 @@ class auction_lots(osv.osv):
 			inv_ref.button_compute(cr, uid, [inv_id])
 		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
 			inv_ref.write(cr, uid, [inv.id], {
-				'check_total': inv.total
+				'check_total': inv.amount_total
 			})
-			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
+			#wf_service = netsvc.LocalService('workflow')
+			#wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
 
 #	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
@@ -731,33 +767,29 @@ class auction_lots(osv.osv):
 
 			RETURN: id of generated invoice
 		"""
-
 		dt = time.strftime('%Y-%m-%d')
 		inv_ref=self.pool.get('account.invoice')
 		invoices={}
 		for lot in self.browse(cr, uid, ids,context):
-			partner_ref = lot.ach_uid.id
+		#	partner_ref = lot.ach_uid.id
 			if not lot.auction_id.id:
 				continue
-			if not partner_ref:
-				raise orm.except_orm('Missed buyer !', 'Please fill the field buyer in the third tab or use the button "Map user" to associate a buyer to this auction !')
-
+		#	if not partner_ref:
+		#		raise orm.except_orm('Missed buyer !', 'Please fill the field buyer in the third tab or use the button "Map user" to associate a buyer to this auction !')
 			if (lot.auction_id.id,lot.ach_uid.id) in invoices:
 				inv_id = invoices[(lot.auction_id.id,lot.ach_uid.id)]
 			else:
 				price = lot.obj_price or 0.0
 				lot_name =lot.obj_num
 				inv={
-					'name':lot.auction_id.name,
+					'name':'Auction:' +lot.name,
 					'journal_id': lot.auction_id.journal_id.id,
 					'partner_id': lot.ach_uid.id,
 					'type': 'out_invoice'
 				}
 				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', lot.ach_uid.id)['value'])
 				inv['account_id'] = inv['account_id'] and inv['account_id'][0]
-
 				inv_id = inv_ref.create(cr, uid, inv, context)
-
 				invoices[(lot.auction_id.id,lot.ach_uid.id)] = inv_id
 			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 
@@ -780,8 +812,8 @@ class auction_lots(osv.osv):
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
 			inv_ref.button_compute(cr, uid, [inv.id])
-			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
+		#	wf_service = netsvc.LocalService('workflow')
+		#	wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
 
 	def lots_pay(self, cr, uid, ids, buyer_id, account_id, amount):
@@ -1045,7 +1077,7 @@ class report_seller_auction2(osv.osv):
 		'gross_revenue':fields.float('Gross revenue',readonly=True, select=2),
 		'net_revenue':fields.float('Net revenue',readonly=True, select=2),
 		'net_margin':fields.float('Net margin', readonly=True, select=2),
-		'date': fields.date('Start of auction',  required=1),
+		'date': fields.date('Auction date',  required=1),
 	}
 
 	def init(self, cr):
@@ -1053,8 +1085,8 @@ class report_seller_auction2(osv.osv):
 			(select
 				min(al.id) as id,
 				adl.auction1 as date,
-				ad.partner_id as seller,
 				adl.id as auction,
+				ad.partner_id as seller,
 				sum(al.obj_price) as "sum_adj",
 				sum(al.gross_revenue) as "gross_revenue",
 				sum(al.net_revenue) as "net_revenue",
@@ -1082,7 +1114,7 @@ class report_auction_view2(osv.osv):
 		'net_revenue':fields.float('Net revenue',readonly=True),
 		'obj_margin':fields.float('Avg margin', readonly=True),
 		'obj_margin_procent':fields.float('Net margin (%)', readonly=True),
-		'date': fields.date('Beginning of auction',  required=True, select=1)
+		'date': fields.date('Auction date',  required=True, select=1)
 	}
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view2 as (
@@ -1127,7 +1159,7 @@ class report_auction_view(osv.osv):
 				al.auction_id as id,
 				al.auction_id as "auction_id",
 				count(al.id) as "nobjects",
-				count(al.ach_uid) as "nbuyer",
+				count(al.ach_login) as "nbuyer",
 				count(al.bord_vnd_id) as "nseller",
 				sum(al.lot_est1) as "min_est",
 				sum(al.lot_est2) as "max_est",
@@ -1174,6 +1206,7 @@ class report_auction_estimation_adj_category(osv.osv):
 	_name = "report.auction.estimation.adj.category"
 	_description = "comparaison estimate/adjudication "
 	_auto = False
+	_rec_name='date'
 	_columns = {
 			'lot_est1': fields.float('Minimum Estimation',select=2),
 			'lot_est2': fields.float('Maximum Estimation',select=2),
@@ -1212,7 +1245,10 @@ class report_auction_adjudication(osv.osv):
 	_columns = {
 			'name': fields.many2one('auction.dates','Auction date',readonly=True,select=1),
 			'state': fields.selection((('draft','Draft'),('close','Closed')),'State', select=1),
-			'adj_total': fields.float('Total Adjudication')
+			'adj_total': fields.float('Total Adjudication'),
+			'date': fields.date('Date', readonly=True,select=1),
+			'user_id':fields.many2one('res.users', 'User',select=1)
+
 	}
 
 
@@ -1222,13 +1258,17 @@ class report_auction_adjudication(osv.osv):
 				select
 					l.id as id,
 					l.id as name,
-					sum(m.obj_price) as adj_total
+					sum(m.obj_price) as adj_total,
+				   	substring(l.create_date for 7)||'-'||'01' as date,
+					l.create_uid as user_id,
+					l.state
 				from
 					auction_dates l ,auction_lots m
 					where
 						m.auction_id=l.id
 					group by
-						l.id,l.name,l.auction1,l.auction2
+						l.id,l.state,l.name,l.create_uid,substring(l.create_date for 7)
+
 			)
 		""")
 report_auction_adjudication()
@@ -1310,7 +1350,7 @@ class report_object_encoded(osv.osv):
 	_description = "Object encoded"
 	_auto = False
 	_columns = {
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=1),
 		'user_id':fields.many2one('res.users', 'User', select=1),
 		'estimation': fields.float('Estimation',select=2),
 		'date': fields.date('Create Date',  required=True),
@@ -1319,7 +1359,7 @@ class report_object_encoded(osv.osv):
 		'obj_margin':fields.float('Net margin', readonly=True, select=2),
 		'obj_ret':fields.integer('# obj ret', readonly=True, select=2),
 		'adj':fields.integer('Adj.', readonly=True, select=2),
-		'obj_num':fields.integer('# of Encoded obj.', readonly=True, select=1),
+		'obj_num':fields.integer('# of Encoded obj.', readonly=True, select=2),
 	}
 	def init(self, cr):
 		cr.execute('''create or replace view report_object_encoded  as
