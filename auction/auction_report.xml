@@ -50,13 +50,13 @@
 		auto="False"
 		multi="1"/>
 
-	
-	<!--report string="Catelog"
+
+	<!--<report string="Catelogin rml"
 	   	model="auction.lots"
-		name="auction.catelog"
+		name="report.auction.catelog"
 		rml="auction/report/auction_catelog.rml"
 		auto="False"
-		multi="1"/-->
+		multi="1"/>-->
 
 
 	<report string="Lots List2"
@@ -103,7 +103,7 @@
 		  rml="auction/report/buyer_form_report.rml"
 		  auto="False"
 		  multi="1"/>
-		
+
 		  <report string="Seller form"
 		  model="auction.lots"
 		  name="seller_form_report"
@@ -119,12 +119,12 @@
 
 		 multi="1"/>
 -->
-		<!--<report string="Catelog"
+		<report string="Catelog"
 		model="auction.lots"
-		name="report.auction.catalog"
+		name="auction.catalog"
 		xml="auction/report/catalog.xml"
 		xsl="auction/report/catalog.xsl"
-		multi="1"/>-->
+		multi="1"/>
 
 		<report string="Buyer List"
 		model="auction.lots"
