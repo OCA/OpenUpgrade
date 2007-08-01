@@ -1,9 +1,19 @@
 <?xml version="1.0"?>
 <terp>
 <data noupdate="1">
+
+
+	<!--demo data for the partner-->
+
+	<record id="partener_record1" model="res.partner">
+		<field name="name">Unknown</field>
+	</record>
+
+
+
+
+
 		<!-- demo data for the auction_artist object-->
-
-
 	<record model="auction.artists" id="auction_art_1">
 		<field name="name">Philippe Lavilier</field>
 		<field name="birth_death_dates">1345-1450</field>
@@ -63,6 +73,9 @@
 		<field name="name">Oeuvres a 21%</field>
 		<field name="categ_id" ref="product.product_category_pc"/>
 	</record>
+
+
+
 
 
 <!--===========================================================================================-->
@@ -142,7 +155,7 @@
 
 	<record model="auction.deposit" id="auction_deposit_1">
 	<field name="date_dep" eval="time.strftime('%Y')+'-04-01'"/>
-	<field name="partner_id" model="res.partner" search="[('name','=','ASUStek')]"></field>
+	<field name="partner_id" model="res.partner" search="[('name','=','Unknown')]"></field>
 	<field name="method">keep</field>
 	</record>
 
@@ -166,7 +179,7 @@
 
 	<record model="auction.deposit" id="auction_deposit_5">
 	<field name="date_dep" eval="time.strftime('%Y')+'-04-12'"/>
-	<field name="partner_id" model="res.partner" search="[('name','=','Ecole de Commerce de Liege')]"></field>
+	<field name="partner_id" model="res.partner" search="[('name','=','Unknown')]"></field>
 	<field name="method">keep</field>
 	</record>
 
@@ -343,7 +356,7 @@
 
 	<record model="auction.bid" id="auction_date_1_bid_1">
 		<field name="name">bid1</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner" search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_1" />
 	</record>
 
@@ -354,7 +367,7 @@
 
 	<record model="auction.bid" id="auction_date_1_bid_2">
 		<field name="name">bid2</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id"  model="res.partner"  search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_1" />
 	</record>
 
@@ -365,7 +378,7 @@
 
 	<record model="auction.bid" id="auction_date_1_bid_3">
 		<field name="name">bid3</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"   search="[('name','=','Unknown')]"/>
 		<field name="auction_id" ref="auction_date_1" />
 	</record>
 
@@ -387,7 +400,7 @@
 
 	<record model="auction.bid" id="auction_date_1_bid_5">
 		<field name="name">bid5</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
 		<field name="auction_id" ref="auction_date_1" />
 	</record>
 
@@ -398,7 +411,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_1">
 		<field name="name">bid6</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
@@ -409,7 +422,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_2">
 		<field name="name">bid7</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
@@ -420,7 +433,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_3">
 		<field name="name">bid8</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
@@ -442,7 +455,7 @@
 
 	<record model="auction.bid" id="auction_date_2_bid_5">
 		<field name="name">bid10</field>
-		<field name="partner_id" search="[('name','=','ASUStek')]"/>
+		<field name="partner_id" model="res.partner"  search="[('name','=','ASUStek')]"/>
 		<field name="auction_id" ref="auction_date_2" />
 	</record>
 
