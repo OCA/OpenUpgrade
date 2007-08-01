@@ -40,5 +40,5 @@ class auction_catelog(report_sxw.rml_parse):
 			'time': time,
 
 		})
-report_sxw.report_sxw('report.auction_catelog', 'auction.lots', 'addons/auction/report/auction_catelog.rml', parser=auction_catelog)
+report_sxw.report_sxw('report.auction.catelog', 'auction.lots', 'addons/auction/report/auction_catelog.rml', parser=auction_catelog)
 
