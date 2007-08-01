@@ -35,22 +35,13 @@
 								colspan="4"/>
 
 							<action
-								string="Objects By Day"
+								string="My objects By Day"
 								name="%(auction.action_report_auction_object_date_tree)d"
 								view_mode="graph,tree" colspan="4"/>
 						<action
 								string="Estimations/Adjudication"
 								name="%(auction.action_report_auction_estimation_adj_category_tree)d"
 								view_mode="graph,tree" colspan="4"/>
-						<action
-								string="Total Adjudications"
-								name="%(auction.action_report_auction_adjudication_tree)d"
-								view_mode="graph,tree"
-								colspan="4"
-								/>
-
-
-
 						</child2>
 					</hpaned>
 				</form>

@@ -16,10 +16,10 @@
 
 						
 							<action
-								string="My latest objects"
+								string="Latest objects"
 								name="%(auction.action_report_latest_objects_tree)d"
 								/>
-							<action string="My latest deposits"
+							<action string="Latest deposits"
 								name="%(auction.action_report_latest_doposit_tree)d"/>
 							<action
 								string="Summary pointing by user"
@@ -33,26 +33,26 @@
 
 						<child2>
 							<button
-								string="My tasks board"
+								string="Menu"
 								name="%(open_board_auction)d"
 								icon="gtk-ok"
 								type="action"
-								colspan="3"
+								colspan="4"
 								/>
 							<action
 								string="Total Adjudications"
 								name="%(auction.action_report_auction_adjudication_tree)d"
 								view_mode="graph,tree"
-								/>
+								colspan="4"/>
 							<action
 								string="Estimations/Adjudication"
 								name="%(auction.action_report_auction_estimation_adj_category_tree)d"
-								view_mode="graph,tree" />
+								view_mode="graph,tree" colspan="4" />
 						
 							<action
 								string="Objects by day"
 								name="%(auction.action_report_auction_object_date_tree)d"
-								view_mode="graph,tree" />
+								view_mode="graph,tree" colspan="4" />
 								
 						</child2>
 					</hpaned>
