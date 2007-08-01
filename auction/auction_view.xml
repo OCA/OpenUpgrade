@@ -886,9 +886,9 @@ Auction Management/Auction Dates/Reporting
 			<form string="Auction buyer reporting form view">
 				<field name="buyer_login" select="1"/>
 				<field name="buyer" select="1"/>
-				<field name="object" select="1"/>
-				<field name="total_price" select="1"/>
-				<field name="avg_price" select="1"/>
+				<field name="object"/>
+				<field name="total_price"/>
+				<field name="avg_price"/>
 			</form>
 		</field>
 	</record>
@@ -923,10 +923,10 @@ Auction Management/Auction Dates/Reporting
 			<form string="Auction buyer reporting form view2">
 				<field name="buyer_login" select="1"/>
 				<field name="buyer" select="1"/>
-				<field name="sumadj" select="1"/>
-				<field name="gross_revenue" select="1"/>
-				<field name="net_revenue" select="1"/>
-				<field name="net_margin" select="1"/>
+				<field name="sumadj" />
+				<field name="gross_revenue" />
+				<field name="net_revenue" />
+				<field name="net_margin" />
 			</form>
 		</field>
 	</record>

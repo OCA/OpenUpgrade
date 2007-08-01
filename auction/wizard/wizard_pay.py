@@ -39,6 +39,8 @@ import pooler
 #'dest_account_id': {'string':'Payment to Account', 'type':'many2one', 'required':True, 'relation':'account.account', 'domain':[('type','=','cash')]},
 pay_form = '''<?xml version="1.0"?>
 <form string="Pay invoice">
+	<field name="buyer_id"/>
+	<newline/>
 	<field name="amount"/>
 	<field name="statement_id" />
 	<field name="amount2"/>
@@ -63,7 +65,7 @@ def _get_period(cr, uid, context):
 
 pay_fields = {
 	'amount': {'string': 'Amount paid', 'type':'float', 'required':True},
-	'buyer_id': {'string': 'Buyer', 'type': 'many2one', 'relation':'res.users', 'required':True},
+	'buyer_id': {'string': 'Buyer', 'type': 'many2one', 'relation':'res.partner', 'required':True},
 	'statement_id': {'string':'Statement', 'type':'many2one', 'required':True, 'relation':'account.bank.statement.line'},
 	'amount2': {'string': 'Amount paid', 'type':'float'},
 	'statement_id2': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement.line'},
@@ -105,20 +107,46 @@ pay_fields = {
 
 
 def _pay_and_reconcile(self, cr, uid, data, context):
-	print "DS PAY AND RECONCILE"
 	pool = pooler.get_pool(cr.dbname)
 	lots = pool.get('auction.lots').browse(cr,uid,data['ids'],context)
-	form = data['form']
 	for lot in lots:
-		new_id=pooler.get_pool(cr.dbname).get('account.bank.statement.line').create(cr,uid,{'name':'Auction:'+ lot.auction_id.id +'  '+lots.id,
+		new_statement=pooler.get_pool(cr.dbname).get('account.bank.statement').create(cr,uid,{'journal_id':lot.auction_id.journal_id.id,
+																							'balance_start':0,
+																							'balance_end_real':0, 
+																							'state':'draft',})
+		new_id=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id']],{
 																							'date': time.strftime('%Y-%m-%d'),
 																							'partner_id':lot.ach_uid.id,
 																							'type':'customer',
-																							'account_id':lot.auction_id.journal_id.id,
-																							'amount':form['amount']
+																							'statement_id':new_statement,
+																							'account_id':lot.auction_id.acc_income.id,
+																							'amount':-data['form']['amount']
 																							})
-		up_payment=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'statement_id': new_id})
+	
+	#	up_payment=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'statement_id': new_id})
+	#	up_statement=pooler.get_pool(cr.dbname).get('account.bank.statement').write(cr,uid,[new_statement],{'line_ids': [(6,0,[new_id])]})
+		if (data['form']['amount2']>0) and (data['form']['statement_id2']):
+			new_id2=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id2']],{
+																							'date': time.strftime('%Y-%m-%d'),
+																							'partner_id':lot.ach_uid.id,
+																							'type':'customer',
+																							'statement_id':new_statement,
+																							'account_id':lot.auction_id.acc_income.id,
+																							'amount':-data['form']['amount2']
+																							})
+		if (data['form']['amount3']>0) and (data['form']['statement_id3']):
+			new_id3=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id3']],{
+																							'date': time.strftime('%Y-%m-%d'),
+																							'partner_id':lot.ach_uid.id,
+																							'type':'customer',
+																							'statement_id':new_statement,
+																							'account_id':lot.auction_id.acc_income.id,
+																							'amount':-data['form']['amount3']
+																							})
+#	pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']-data['form']['amount3']})
+
 	return {}
+
 
 	#	pool = pooler.get_pool(cr.dbname)
 #	lot = pool.get('auction.lots').browse(cr,uid,data['id'],context)
@@ -135,17 +163,13 @@ def _pay_and_reconcile(self, cr, uid, data, context):
 #		#p=pool.get('account.invoice').pay_and_reconcile(['lot.ach_inv_id.id'], form['amount'], form['dest_account_id'], journal_id, account_id, period_id, journal_id, context)
 #	return {}
 
-def test(*a):
-	print "TEST"
-	return {}
 class wiz_auc_lots_pay(wizard.interface):
 	states = {
 		'init': {
 			'actions': [_start],
-			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('test','Pay amount'),('end','Cancel')]}
+			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('end','Cancel'),('pay','Pay')]}
 		},
-		'test': {'actions': [],'result':{'type':'action','action':test,'state':'end'} },
-		'pay_amount': {
+		'pay': {
 		'actions': [_pay_and_reconcile],
 		'result': {'type': 'state', 'state':'end'}
 		}}

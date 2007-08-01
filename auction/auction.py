@@ -992,10 +992,10 @@ class report_buyer_auction2(osv.osv):
 		'auction': fields.many2one('auction.dates', 'Auction date',readonly=True, select=1),
 		'buyer_login': fields.char('Buyer Login',size=64, readonly=True, select=True),
 		'buyer':fields.many2one('res.partner', 'Buyer', readonly=True, select=2),
-		'sumadj':fields.float('Sum of adjustication',readonly=True, select=True),
-		'gross_revenue':fields.float('Gross Revenue', readonly=True, select=True),
-		'net_revenue':fields.float('Net Revenue', readonly=True, select=True),
-		'net_margin':fields.float('Net Margin', readonly=True, select=True),
+		'sumadj':fields.float('Sum of adjustication',readonly=True),
+		'gross_revenue':fields.float('Gross Revenue', readonly=True),
+		'net_revenue':fields.float('Net Revenue', readonly=True),
+		'net_margin':fields.float('Net Margin', readonly=True),
 		'date': fields.date('Create Date',  required=True)
 	}
 	def init(self, cr):
