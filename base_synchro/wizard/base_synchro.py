@@ -58,53 +58,58 @@ class wizard_cost_account_synchro(wizard.interface):
 		ids = []
 		pool1 = RPCProxy(server)
 		pool2 = pool
-		try:
-			if object.action in ('d','b'):
-				ids = pool1.get('base.synchro.obj')._get_ids(cr, uid,
-					object.model_id.model,
-					object.synchronize_date,
-					eval(object.domain),
-					{'action':'d'}
-				)
-			if object.action in ('u','b'):
-				ids += pool2.get('base.synchro.obj')._get_ids(cr, uid,
-					object.model_id.model,
-					object.synchronize_date,
-					eval(object.domain),
-					{'action':'u'}
-				)
-			ids.sort()
-			for dt, id, action in ids:
-				if action=='u':
-					pool_src = pool2
-					pool_dest = pool1
-				else:
-					pool_src = pool1
-					pool_dest = pool2
-				value = pool_src.get(object.model_id.model).read(cr, uid, [id], context)[0]
-				value = self._data_transform(cr, uid, pool_src, object.model_id.model, value, action, context)
-
-				id2 = self.get_id(cr, uid, object.id, id, action, context)
-				#
-				# Transform value
-				#
-				tid=pool_dest.get(object.model_id.model).name_search(cr, uid, value['name'],[],'=',)
-				if id2 or tid:
-					pool_dest.get(object.model_id.model).write(cr, uid, [tid[0][0]], value)
-					self.report_total+=1
-					self.report_write+=1
-				else:
-					idnew = pool_dest.get(object.model_id.model).create(cr, uid, value)
-					self.report_total+=1
-					self.report_create+=1
-					synid = pool.get('base.synchro.obj.line').create(cr, uid, {
-						'obj_id': object.id,
-						'local_id': (action=='u') and id or idnew,
-						'remote_id': (action=='d') and id or idnew
-					})
-			self.meta = {}
-		except Exception,e:
-			self.report.append(e)
+		#try:
+		if object.action in ('d','b'):
+			ids = pool1.get('base.synchro.obj')._get_ids(cr, uid,
+				object.model_id.model,
+				object.synchronize_date,
+				eval(object.domain),
+				{'action':'d'}
+			)
+		if object.action in ('u','b'):
+			ids += pool2.get('base.synchro.obj')._get_ids(cr, uid,
+				object.model_id.model,
+				object.synchronize_date,
+				eval(object.domain),
+				{'action':'u'}
+			)
+		ids.sort()
+		for dt, id, action in ids:
+			if action=='u':
+				pool_src = pool2
+				pool_dest = pool1
+			else:
+				pool_src = pool1
+				pool_dest = pool2
+			value = pool_src.get(object.model_id.model).read(cr, uid, [id])[0]
+			value = self._data_transform(cr, uid, pool_src, pool_dest, object.model_id.model, value, action)
+			id2 = self.get_id(cr, uid, object.id, id, action, context)
+			#
+			# Transform value
+			#
+			#tid=pool_dest.get(object.model_id.model).name_search(cr, uid, value['name'],[],'=',)
+			if id2:
+				try:
+					pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
+				except Exception, e:
+					self.report.append('Unable to update record ['+str(id2)+']:'+str(value.get('name', '?')))
+				self.report_total+=1
+				self.report_write+=1
+			else:
+				try:
+					pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
+				except Exception, e:
+					self.report.append('Unable to create record:'+str(value.get('name', '?')))
+				idnew = pool_dest.get(object.model_id.model).create(cr, uid, value)
+				synid = pool.get('base.synchro.obj.line').create(cr, uid, {
+					'obj_id': object.id,
+					'local_id': (action=='u') and id or idnew,
+					'remote_id': (action=='d') and id or idnew
+				})
+				self.report_total+=1
+				self.report_create+=1
+		self.meta = {}
+		print self.report
 		return 'finish'
 
 	#
@@ -117,13 +122,14 @@ class wizard_cost_account_synchro(wizard.interface):
 		pool = pooler.get_pool(cr.dbname)
 		field_src = (action=='u') and 'local_id' or 'remote_id'
 		field_dest = (action=='d') and 'local_id' or 'remote_id'
-		rid = pool.get('base.synchro.obj.line').search(cr, uid, [('obj_id','=',object_id), (field_src,'=',id)], context)
+		print object_id, id
+		rid = pool.get('base.synchro.obj.line').search(cr, uid, [('obj_id','=',object_id), (field_src,'=',id)], context=context)
 		result = False
 		if rid:
 			result  = pool.get('base.synchro.obj.line').read(cr, uid, rid, [field_dest], context=context)[0][field_dest]
 		return result
 
-	def _relation_transform(self, cr, uid, object, id, action, context={}):
+	def _relation_transform(self, cr, uid, pool_src, pool_dest, object, id, action, context={}):
 		if not id:
 			return False
 		pool = pooler.get_pool(cr.dbname)
@@ -133,12 +139,24 @@ class wizard_cost_account_synchro(wizard.interface):
 		obj = cr.fetchone()
 		result = False
 		if obj:
+			#
+			# If the object is synchronised and found, set it
+			#
 			result = self.get_id(cr, uid, obj[0], id, action, context)
-		if not result:
-			result = id
+		else:
+			#
+			# If not synchronized, try to find it with name_get/name_search
+			#
+			names = pool_src.get(object).name_get(cr, uid, [id], context)[0][1]
+			res = pool_dest.get(object).name_search(cr, uid, names)
+			if res:
+				result = res[0][0]
+			else:
+				# LOG this in the report, better message.
+				print 'Relation not found, set to null.'
 		return result
 
-	def _data_transform(self, cr, uid, pool_src, object, data, action='u', context={}):
+	def _data_transform(self, cr, uid, pool_src, pool_dest, object, data, action='u', context={}):
 		self.meta.setdefault(pool_src, {})
 		if not object in self.meta[pool_src]:
 			self.meta[pool_src][object] = pool_src.get(object).fields_get(cr, uid, context)
@@ -151,9 +169,11 @@ class wizard_cost_account_synchro(wizard.interface):
 				del data[f]
 			elif ftype == 'many2one':
 				if data[f]:
-					data[f] = self._relation_transform(cr, uid, fields[f]['relation'], data[f][0], action, context)
+					data[f] = self._relation_transform(cr, uid, pool_src, pool_dest, fields[f]['relation'], data[f][0], action, context)
+					if not data[f]:
+						del data[f]
 			elif ftype == 'many2many':
-				res = map(lambda x: self._relation_transform(cr, uid, fields[f]['relation'], x, action, context), data[f])
+				res = map(lambda x: self._relation_transform(cr, uid, pool_src, pool_dest, fields[f]['relation'], x, action, context), data[f])
 				data[f] = [(6, 0, res)]
 		del data['id']
 		return data
@@ -164,8 +184,7 @@ class wizard_cost_account_synchro(wizard.interface):
 	#
 	def _upload_download(self, db_name, uid, data, context):
 		cr = pooler.get_db(db_name).cursor()
-		print "In upload_download::::::::"
-		self.start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
+		start_date = time.strftime('%Y-%m-%d, %Hh %Mm %Ss')
 		pool = pooler.get_pool(cr.dbname)
 		server = pool.get('base.synchro.server').browse(cr, uid, data['form']['server_url'], context)
 		for object in server.obj_ids:
@@ -187,14 +206,14 @@ class wizard_cost_account_synchro(wizard.interface):
 			Create Records: %d
 			Exception Records:
 			Exceptions;
-			'''% (self.start_date,end_date,self.report_total, self.report_write,self.report_create)
+			'''% (start_date,end_date,self.report_total, self.report_write,self.report_create)
 			summary += '\n'.join(self.report)
-			request.create(cr, uid,
-			  {'name' : "Synchronization report.",
-			   'act_from' : data['form']['user_id'],
-			   'act_to' : data['form']['user_id'],
-			   'body': summary,
-			   })
+			request.create(cr, uid, {
+				'name' : "Synchronization report.",
+				'act_from' : data['form']['user_id'],
+				'act_to' : data['form']['user_id'],
+				'body': summary,
+			})
 		cr.commit()
 		cr.close()
 		return 'finish'
