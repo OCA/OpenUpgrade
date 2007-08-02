@@ -24,7 +24,7 @@ acc_synchro_fields = {
 
 finish_form ='''<?xml version="1.0"?>
 <form string="Synchronization Complited!">
-	<label string="Data Transfered successfully!!!" colspan="4"/>
+	<label string="The synchronisation has been started.\nYou will receive a request when it's done." colspan="4"/>
 </form>
 '''
 
