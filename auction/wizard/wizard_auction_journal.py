@@ -30,7 +30,7 @@ def _values(self,cr,uid, datas,context={}):
 		taxes = lot.product_id.taxes_id
 		if lot.bord_vnd_id.tax_id:
 			taxes.append(lot.bord_vnd_id.tax_id)
-		else:
+		if lot.auction_id:
 			taxes += lot.auction_id.seller_costs
 		tax=pt_tax.compute(cr,uid,taxes,lot.obj_price,1)
 		for t in tax:

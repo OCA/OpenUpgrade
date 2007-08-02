@@ -276,9 +276,10 @@ Auction Management/Auction Dates/Reporting
 					<field name="auction_id" colspan="2" select="1"/>
 					<field name="lot_type" select="2"/>
 					<field name="lot_local"/>
-					<!--field name="statement_id"/-->
 					<separator string="Description" colspan="4"/>
-					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
+					<field name="obj_desc" colspan="2" nolabel="1" select="2"/>	
+					<field name="statement_id"/>
+
 					<!--field name="state" select="1"/-->
 				 <group col="5" colspan="4">
 					<field name="state" select="2"/>
@@ -324,6 +325,7 @@ Auction Management/Auction Dates/Reporting
 					<newline/>
 					<field name="ach_inv_id"/>
 					<field name="paid_ach"/>
+					<field name="is_ok" select="2"/>
 					<field name="bid_lines" colspan="4" nolabel="1" editable="top"/>
 				</page>
 				</notebook>
@@ -1395,7 +1397,7 @@ Object encoded
 				<field name="user_id" select="1"/>
 				<field name="estimation" select="2"/>
 				<field name="obj_ret" select="2"/>
-				<field name="obj_num" select="2"/>
+				<field name="obj_num" select="2" sum="# objects"/>
 			</form>
 		</field>
 	</record>
@@ -1449,12 +1451,11 @@ Object encoded
 				<field name="user_id" select="1"/>
 				<field name="estimation" />
 				<field name="obj_ret" />
-				<field name="obj_num" select="1"/>
-				<field name="adj" />
+				<field name="obj_num" sum="# objects" select="1"/>
+				<field name="adj" sum="Total adj."/>
 				<field name="obj_margin" />
-				<field name="net_revenue" />
-				<field name="gross_revenue"/>
-				<field name="state" select="1"/>
+				<field name="net_revenue"  sum="Total net rev."/>
+				<field name="gross_revenue"  sum="Total gross rev."/>
 				<field name="date" select="1"/>
 
 			</tree>

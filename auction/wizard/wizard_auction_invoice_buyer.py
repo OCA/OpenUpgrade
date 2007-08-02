@@ -16,7 +16,7 @@ invoice_fields = {
 	'amount': {'string':'Invoiced Amount', 'type':'float', 'required':True, 'readonly':True},
 	'objects': {'string':'# of objects', 'type':'integer', 'required':True, 'readonly':True},
 	'number': {'string':'Invoice Number', 'type':'integer'},
-	'buyer_id':{'string': 'Buyer', 'type': 'many2one', 'relation':'res.partner', 'required':True}
+	'buyer_id':{'string': 'Buyer', 'type': 'many2one', 'relation':'res.partner'}
 
 }
 
@@ -32,7 +32,7 @@ def _values(self,cr,uid, datas,context={}):
 		taxes = lot.product_id.taxes_id
 		if lot.author_right:
 			taxes.append(lot.author_right)
-		else:
+		if lot.auction_id:
 			taxes += lot.auction_id.buyer_costs
 		tax=pt_tax.compute(cr,uid,taxes,lot.obj_price,1)
 		for t in tax:

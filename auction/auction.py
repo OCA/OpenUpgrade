@@ -435,6 +435,7 @@ class auction_lots(osv.osv):
 		'ach_login': fields.char('Buyer Username',size=64),
 		'ach_uid': fields.many2one('res.partner', 'Buyer'),
 		'ach_emp': fields.boolean('Taken Away'),
+		'is_ok': fields.boolean('Buyer s payment'),
 		'ach_inv_id': fields.many2one('account.invoice','Buyer Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'sel_inv_id': fields.many2one('account.invoice','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
@@ -448,7 +449,7 @@ class auction_lots(osv.osv):
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='Gross Margin (%)',store=True),
 		'costs':fields.function(_costs,method=True,string='Indirect costs',store=True),
-	#	'statement_id': fields.many2one('account.bank.statement.line', 'Payment', readonly=True),
+		'statement_id': fields.many2many('account.bank.statement.line', 'auction_statement_line_rel','auction_id', 'statement','Payment'),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='Net Margin (%)',store=True)
 	}
@@ -628,46 +629,49 @@ class auction_lots(osv.osv):
 			partner_r=self.pool.get('res.partner')
 			if not lot.ach_uid.id:
 				raise orm.except_orm('Missed buyer !', 'The object "%s" has no buyer assigned.' % (lot.name,))
-			partner_ref =lot.ach_uid.id
-			lot_name = lot.obj_num
-			res = self.pool.get('res.partner').address_get(cr, uid, [partner_ref], ['contact', 'invoice'])
-			contact_addr_id = res['contact']
-			invoice_addr_id = res['invoice']
-			inv = {
-				'name': 'Auction proforma:' +lot.name,
-				'journal_id': lot.auction_id.journal_id.id,
-				'partner_id': partner_ref,
-				'type': 'out_invoice',
-			#	'state':'proforma',
-			}
-			print "inv",inv
-			inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', partner_ref)['value'])
-			inv['account_id'] = inv['account_id'] and inv['account_id'][0]
-			print "INV",inv
-			inv_id = inv_ref.create(cr, uid, inv, context)
-			invoices[partner_ref] = inv_id
-			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
+			else:
+				partner_ref =lot.ach_uid.id
+				lot_name = lot.obj_num
+				res = self.pool.get('res.partner').address_get(cr, uid, [partner_ref], ['contact', 'invoice'])
+				contact_addr_id = res['contact']
+				invoice_addr_id = res['invoice']
+				inv = {
+					'name': 'Auction proforma:' +lot.name,
+					'journal_id': lot.auction_id.journal_id.id,
+					'partner_id': partner_ref,
+					'type': 'out_invoice',
+				#	'state':'proforma',
+				}
+				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', partner_ref)['value'])
+				inv['account_id'] = inv['account_id'] and inv['account_id'][0]
+				inv_id = inv_ref.create(cr, uid, inv, context)
+				invoices[partner_ref] = inv_id
+				self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 
-			#calcul des taxes
-			taxes = map(lambda x: x.id, lot.product_id.taxes_id)
-			taxes+=map(lambda x:x.id, lot.auction_id.buyer_costs)
-			if lot.author_right:
-				taxes.append(lot.author_right.id)
+				#calcul des taxes
+				taxes = map(lambda x: x.id, lot.product_id.taxes_id)
+				taxes+=map(lambda x:x.id, lot.auction_id.buyer_costs)
+				if lot.author_right:
+					taxes.append(lot.author_right.id)
 
-			inv_line= {
-				'invoice_id': inv_id,
-				'quantity': 1,
-				'product_id': lot.product_id.id,
-				'name': 'proforma'+'['+str(lot.obj_num)+'] '+ lot.name,
-				'invoice_line_tax_id': [(6,0,taxes)],
-				'account_analytic_id': lot.auction_id.account_analytic_id.id,
-				'account_id': lot.auction_id.acc_income.id,
-				'price_unit': lot.obj_price,
-			}
-			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
-			inv_ref.button_compute(cr, uid, [inv_id])
-		#	wf_service = netsvc.LocalService('workflow')
-		#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
+				inv_line= {
+					'invoice_id': inv_id,
+					'quantity': 1,
+					'product_id': lot.product_id.id,
+					'name': 'proforma'+'['+str(lot.obj_num)+'] '+ lot.name,
+					'invoice_line_tax_id': [(6,0,taxes)],
+					'account_analytic_id': lot.auction_id.account_analytic_id.id,
+					'account_id': lot.auction_id.acc_income.id,
+					'price_unit': lot.obj_price,
+				}
+				self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
+			#	inv_ref.button_compute(cr, uid, [inv_id])
+			#	wf_service = netsvc.LocalService('workflow')
+			#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
+			inv_ref.button_compute(cr, uid, [inv.id])
+			wf_service = netsvc.LocalService('workflow')
+			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
 	
 
@@ -774,8 +778,8 @@ class auction_lots(osv.osv):
 		#	partner_ref = lot.ach_uid.id
 			if not lot.auction_id.id:
 				continue
-		#	if not partner_ref:
-		#		raise orm.except_orm('Missed buyer !', 'Please fill the field buyer in the third tab or use the button "Map user" to associate a buyer to this auction !')
+			if not partner_ref:
+				raise orm.except_orm('Missed buyer !', 'Please fill the field buyer in the third tab or use the button "Map user" to associate a buyer to this auction !')
 			if (lot.auction_id.id,lot.ach_uid.id) in invoices:
 				inv_id = invoices[(lot.auction_id.id,lot.ach_uid.id)]
 			else:
@@ -811,11 +815,11 @@ class auction_lots(osv.osv):
 			}
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 #		inv_ref.button_compute(cr, uid, [inv_id])
-
+	#		inv_ref.button_compute(cr, uid, [inv_id])
 		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
 			inv_ref.button_compute(cr, uid, [inv.id])
-		#	wf_service = netsvc.LocalService('workflow')
-		#	wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
+			wf_service = netsvc.LocalService('workflow')
+			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
 
 	def lots_pay(self, cr, uid, ids, buyer_id, account_id, amount):
@@ -1371,7 +1375,7 @@ class report_object_encoded(osv.osv):
 				al.create_uid as user_id,
 				(SELECT count(1) FROM auction_lots WHERE obj_ret>0) as obj_ret,
 				sum((100* al.lot_est1)/al.obj_price) as estimation,
-				COUNT(al.obj_num) as obj_num
+				COUNT(al.product_id) as obj_num
 			from auction_lots al
 			where al.obj_price>0 and state='draft'
 			group by substring(al.create_date for 10), al.state, al.create_uid)
@@ -1384,7 +1388,6 @@ class report_object_encoded_manager(osv.osv):
 	_description = "Object encoded"
 	_auto = False
 	_columns = {
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('invoiced','Invoiced')),'State', required=True,select=True),
 		'user_id':fields.many2one('res.users', 'User', select=True),
 		'estimation': fields.float('Estimation',select=True),
 		'date': fields.date('Create Date',  required=True),
@@ -1400,17 +1403,16 @@ class report_object_encoded_manager(osv.osv):
 			(select
 				min(al.id) as id,
 				substring(al.create_date for 10) as date,
-				al.state as state,
 				al.create_uid as user_id,
 				sum((100*lot_est1)/obj_price) as estimation,
 				(SELECT count(1) FROM auction_lots WHERE obj_ret>0) as obj_ret,
 				SUM(al.gross_revenue) as "gross_revenue",
 				SUM(al.net_revenue) as "net_revenue",
 				SUM(al.net_revenue)/count(al.id) as "obj_margin",
-				COUNT(al.obj_num) as obj_num,
+				COUNT(al.product_id) as obj_num,
 				SUM(al.obj_price) as "adj"
 			from auction_lots al
-			where al.obj_price>0 and state='draft'
-			group by substring(al.create_date for 10), al.state, al.create_uid)
+			where al.obj_price>0
+			group by substring(al.create_date for 10), al.create_uid)
 			 ''')
 report_object_encoded_manager()
