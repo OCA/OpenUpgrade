@@ -347,22 +347,25 @@ class auction_lots(osv.osv):
 		(excluding analytic lines that are in the analytic journal of the auction date).
 		"""
 		res={}
-		som=0.0
-
 		for lot in self.browse(cr,uid,ids):
+			som=0.0
 			if not lot.auction_id:
 				res[lot.id] = 0.0
 				continue
 			auct_id=lot.auction_id.id
 			cr.execute('select count(*) from auction_lots where auction_id=%d', (auct_id,))
 			nb = cr.fetchone()[0]
-			account_analytic_line_obj = self.pool.get('account.analytic.line')
-			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id)])
+		#	account_analytic_line_obj = self.pool.get('account.analytic.line')
+		#	line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id),('journal_seller_id', '<>', lot.auction_id.journal_id.id)])
+		#	indir_cost=lot.bord_vnd_id.specific_cost_ids
+			for r in lot.bord_vnd_id.specific_cost_ids:
+				som+=r.amount
 			
-			for line in account_analytic_line_obj.browse(cr,uid,line_ids):
-				if line.amount:
-					som-=line.amount
-			res[lot.id]=som/nb
+		#	for line in account_analytic_line_obj.browse(cr,uid,line_ids):
+		#		if line.amount:
+		#			som-=line.amount
+		#	res[lot.id]=tot/nb
+			res[lot.id]=som
 		return res
 
 	def _netprice(self, cr, uid, ids, name, args, context):
@@ -451,7 +454,7 @@ class auction_lots(osv.osv):
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
 		'gross_margin':fields.function(_grossmargin, method=True, string='Gross Margin (%)',store=True),
 		'costs':fields.function(_costs,method=True,string='Indirect costs',store=True),
-		'statement_id': fields.many2one('account.bank.statement.line', 'Payment', readonly=True),
+	#	'statement_id': fields.many2one('account.bank.statement.line', 'Payment', readonly=True),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='Net Margin (%)',store=True)
 	}
@@ -667,7 +670,7 @@ class auction_lots(osv.osv):
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
 			inv_ref.button_compute(cr, uid, [inv_id])
 		#	wf_service = netsvc.LocalService('workflow')
-		#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+		#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
 		return invoices.values()
 	
 
@@ -727,8 +730,8 @@ class auction_lots(osv.osv):
 			inv_ref.write(cr, uid, [inv.id], {
 				'check_total': inv.amount_total
 			})
-			#wf_service = netsvc.LocalService('workflow')
-			#wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
+			wf_service = netsvc.LocalService('workflow')
+			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
 
 #	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
@@ -810,8 +813,10 @@ class auction_lots(osv.osv):
 				'price_unit': lot.obj_price,
 			}
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
-		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
-			inv_ref.button_compute(cr, uid, [inv.id])
+		inv_ref.button_compute(cr, uid, [inv_id])
+
+#		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
+#			inv_ref.button_compute(cr, uid, [inv.id])
 		#	wf_service = netsvc.LocalService('workflow')
 		#	wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()

@@ -143,8 +143,12 @@ def _pay_and_reconcile(self, cr, uid, data, context):
 																							'account_id':lot.auction_id.acc_income.id,
 																							'amount':-data['form']['amount3']
 																							})
-#	pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']-data['form']['amount3']})
-
+#	if data['form']['amount1'] and data['form']['amount2'] and data['form']['amount3']:
+#		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']-data['form']['amount3']})
+#	elif data['form']['amount1'] and data['form']['amount2']:
+#		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']})
+#	elif data['form']['amount1'] :
+#		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']})
 	return {}
 
 

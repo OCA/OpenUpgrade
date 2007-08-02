@@ -276,7 +276,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="auction_id" colspan="2" select="1"/>
 					<field name="lot_type" select="2"/>
 					<field name="lot_local"/>
-					<field name="statement_id"/>
+					<!--field name="statement_id"/-->
 					<separator string="Description" colspan="4"/>
 					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
 					<!--field name="state" select="1"/-->
@@ -702,7 +702,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-   <menuitem name="Auction Management/Reporting/Auction/Summary by auction " action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
+   <menuitem name="Auction Management/Reporting/Auction/Auction's summary" action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
 
 
 
@@ -757,7 +757,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Auction/Result of Auction" action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
+	<menuitem name="Auction Management/Reporting/Auction/Auction's revenues" action="action_auction_report_allmonth_view2" id="menu_auction_allmonth_view2"/>
 
 <!--start : creating seller Reporting menu for the selller by pmo-->
 
@@ -1174,7 +1174,12 @@ My Latest Objects
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('create_uid','=',uid)]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
+	<!--menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/-->
+	<record model="ir.actions.act_window" id="action_report_latest_objects_manager_tree">
+		<field name="res_model">auction.lots</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
 
 =============================
@@ -1187,8 +1192,13 @@ My Latest Deposit
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('create_uid','=',uid)]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
+	<!--menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/-->
 
+	<record model="ir.actions.act_window" id="action_report_latest_doposit_manager_tree">
+		<field name="res_model">auction.deposit</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
 =============================
 Objects per Day
@@ -1427,7 +1437,7 @@ Object encoded
 		<field name="domain"> [('user_id','=',uid),('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
 
-	<menuitem name="Auction Management/Reporting/Member/Objects statistics" action="action_report_object_encoded_member_tree" id="menu_report_objects_tree_member"/>
+	<!--menuitem name="Auction Management/Reporting/Member/Objects statistics" action="action_report_object_encoded_member_tree" id="menu_report_objects_tree_member"/-->
 
 
 	<record model="ir.ui.view" id="view_report_object_encoded_manager_tree">
@@ -1474,7 +1484,7 @@ Object encoded
 		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
 
-	<menuitem name="Auction Management/Reporting/Manager/Objects statistics" action="action_report_object_encoded_manager_tree" id="menu_report_objects_tree_manager"/>
+	<!--menuitem name="Auction Management/Reporting/Manager/Objects statistics" action="action_report_object_encoded_manager_tree" id="menu_report_objects_tree_manager"/-->
 
 
 </data>
