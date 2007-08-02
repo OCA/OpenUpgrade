@@ -4,6 +4,7 @@ import re
 import socket
 import cPickle
 import marshal
+import tempfile
 if __name__<>"package":
     from gui import *
 
@@ -260,3 +261,24 @@ class mysocket:
         else:
             return res[0]
 
+def GetAFileName():
+    oFileDialog=None
+    iAccept=None
+    sPath=""
+    InitPath=""
+    oUcb=None
+    oFileDialog = createUnoService("com.sun.star.ui.dialogs.FilePicker")
+    oUcb = createUnoService("com.sun.star.ucb.SimpleFileAccess")
+    oFileDialog.appendFilter("TinyReport File","*.sxw")
+    oFileDialog.setCurrentFilter("TinyReport File")
+    if InitPath == "":
+        InitPath =tempfile.gettempdir()
+    #End If
+    if oUcb.exists(InitPath):
+        oFileDialog.setDisplayDirectory(InitPath)
+    #End If
+    iAccept = oFileDialog.execute()
+    if iAccept == 1:
+        sPath = oFileDialog.Files[0]
+    oFileDialog.dispose()
+    return sPath
