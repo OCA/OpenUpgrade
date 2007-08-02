@@ -81,13 +81,13 @@
     </record>
 	<record id="auction_tax3" model="account.tax">
                 <field name="name">Buyer Costs</field>
-                <field name="amount">0.2</field>
+                <field name="amount">0.21</field>
 				<field name="domain">auction</field>
 
     </record>
 	<record id="auction_tax4" model="account.tax">
                 <field name="name">Seller Costs1</field>
-                <field name="amount">-0.12</field>
+                <field name="amount">-0.10</field>
 				<field name="domain">auction</field>
 
     </record>
@@ -153,7 +153,8 @@
 
 		<field name="auction1" eval="time.strftime('%Y-%m-20')" />
 		<field name="auction2" eval="time.strftime('%Y-%m-28')" />
-
+		<field name="buyer_costs" model="account.tax" search="[('name','=','Buyer Costs')]"></field>
+		<field name="seller_costs" model="account.tax" search="[('name','=','Seller Costs')]"></field>
 		<field name="acc_income" ref="account.a_sale"/>
 		<field name="acc_expense" ref="account.a_expense"/>
 
@@ -167,6 +168,8 @@
 		<field name="name">Antique Items Exhibition</field>
 		<field name="expo1" eval="time.strftime('%Y-%m-01')" />
 		<field name="expo2" eval="time.strftime('%Y-%m-10')" />
+		<field name="buyer_costs" model="account.tax" search="[('name','=','Buyer Costs')]"></field>
+		<field name="seller_costs" model="account.tax" search="[('name','=','Seller Costs')]"></field>
 
 		<field name="auction1" eval="time.strftime('%Y-%m-14')" />
 		<field name="auction2" eval="time.strftime('%Y-%m-28')" />
