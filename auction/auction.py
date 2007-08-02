@@ -317,22 +317,17 @@ class auction_lots(osv.osv):
 		gross Margin : Gross revenue * 100 / Adjudication
 		(state==unsold or obj_ret_price>0): adj_price = 0 (=> gross margin = 0, net margin is negative)
 		"""
-
 		res={}
-		total=0.0
-		montant=0.0
-		auction_lots_obj = self.read(cr,uid,ids,['gross_revenue','auction_id','lot_est1','obj_price','state','obj_ret'])
-		for auction_data in auction_lots_obj:
-			if (auction_data['state']=='unsold') or (auction_data['obj_ret']>0): #pbleme avec le write=> boucle infinie
-				res[auction_data['id']]=0
-				montant=0.0
-			elif ((auction_data ['obj_price']==0) and (auction_data['state']=='draft')):
-				montant=auction_data['lot_est1']
-			else: montant=auction_data['obj_price']
-			if montant >0:
-				total+=(auction_data['gross_revenue']*100)/montant
-			else: total=0
-			res[auction_data['id']]=total
+		for lot in self.browse(cr, uid, ids, context):
+			if ((lot.obj_price==0) and (lot.state=='draft')):
+				montant=lot.lot_est1
+			else:
+				montant=lot.obj_price
+			if lot.obj_price>0:
+				total=(lot.gross_revenue*100.0) /lot.obj_price
+			else:
+				total = 0.0
+			res[lot.id]=round(total,2)
 		return res
 
 	def onchange_obj_ret(self, cr, uid, ids, obj_ret, *args):
@@ -355,17 +350,16 @@ class auction_lots(osv.osv):
 			auct_id=lot.auction_id.id
 			cr.execute('select count(*) from auction_lots where auction_id=%d', (auct_id,))
 			nb = cr.fetchone()[0]
-		#	account_analytic_line_obj = self.pool.get('account.analytic.line')
-		#	line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id),('journal_seller_id', '<>', lot.auction_id.journal_id.id)])
-		#	indir_cost=lot.bord_vnd_id.specific_cost_ids
-			for r in lot.bord_vnd_id.specific_cost_ids:
-				som+=r.amount
+			account_analytic_line_obj = self.pool.get('account.analytic.line')
+			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('move_id.journal_id', '<>', lot.auction_id.journal_id.id),('move_id.journal_id', '<>', lot.auction_id.journal_id.id)])
+			#indir_cost=lot.bord_vnd_id.specific_cost_ids
+			#for r in lot.bord_vnd_id.specific_cost_ids:
+			#	som+=r.amount
 			
-		#	for line in account_analytic_line_obj.browse(cr,uid,line_ids):
-		#		if line.amount:
-		#			som-=line.amount
-		#	res[lot.id]=tot/nb
-			res[lot.id]=som
+			for line in account_analytic_line_obj.browse(cr,uid,line_ids):
+				if line.amount:
+					som-=line.amount
+			res[lot.id]=som/nb
 		return res
 
 	def _netprice(self, cr, uid, ids, name, args, context):
@@ -623,32 +617,35 @@ class auction_lots(osv.osv):
 			else:
 				taxes_summed[key] = tax
 		return taxes_summed.values()
+
 	def buyer_proforma(self,cr,uid,ids,context):
 		invoices = {}
 		inv_ref=self.pool.get('account.invoice')
 #		acc_receiv=self.pool.get('account.account').search([cr,uid,[('code','=','4010')]])
 		for lot in self.browse(cr,uid,ids,context):
+			if not lot.obj_price>0:
+				continue
 			partner_r=self.pool.get('res.partner')
-			partn=partner_r.search(cr,uid,[('name','=','Unknown')])
-			partner_ref =lot.ach_uid.id or partn 
+			if not lot.ach_uid.id:
+				raise orm.except_orm('Missed buyer !', 'The object "%s" has no buyer assigned.' % (lot.name,))
+			partner_ref =lot.ach_uid.id
 			lot_name = lot.obj_num
-			print partner_ref
-			res = self.pool.get('res.partner').address_get(cr, uid, partner_ref, ['contact', 'invoice'])
+			res = self.pool.get('res.partner').address_get(cr, uid, [partner_ref], ['contact', 'invoice'])
 			contact_addr_id = res['contact']
 			invoice_addr_id = res['invoice']
 			inv = {
 				'name': 'Auction proforma:' +lot.name,
 				'journal_id': lot.auction_id.journal_id.id,
-				'partner_id': partner_ref[0],
+				'partner_id': partner_ref,
 				'type': 'out_invoice',
 			#	'state':'proforma',
 			}
 			print "inv",inv
-			inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', partner_ref[0])['value'])
+			inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', partner_ref)['value'])
 			inv['account_id'] = inv['account_id'] and inv['account_id'][0]
 			print "INV",inv
 			inv_id = inv_ref.create(cr, uid, inv, context)
-			invoices[partner_ref[0]] = inv_id
+			invoices[partner_ref] = inv_id
 			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 
 			#calcul des taxes

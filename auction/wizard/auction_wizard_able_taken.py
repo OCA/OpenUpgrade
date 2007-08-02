@@ -31,7 +31,7 @@ import netsvc
 import pooler
 take_form = """<?xml version="1.0"?>
 <form title="Confirm">
-	<separator string="Confirmation able taken away" colspan="4"/>
+	<separator string="Confirmation set taken away" colspan="4"/>
 	<newline/>
 </form>
 """
@@ -39,24 +39,11 @@ take_form = """<?xml version="1.0"?>
 take_fields = {
 #	'confirm_en': {'string':'Catalog Number', 'type':'integer'},
 }
-def _start(self,cr,uid,data,context):
-	pool = pooler.get_pool(cr.dbname)
-	recs=pool.get('auction.lots').browse(cr,uid,data['ids'],context)
-	catalog_num=False
-	for rec in recs:
-		if rec.ach_emp:
-			catalog_num= rec and rec.obj_num or False
-
-	return {'confirm_en':catalog_num}
-
 
 def _confirm_able(self,cr,uid,data,context={}):
 	res={}
 	pool = pooler.get_pool(cr.dbname)
-	lots=pool.get('auction.lots').browse(cr,uid,data['ids'],context)
-	for lot in lots:
-		if lot.ach_uid and not lot.ach_emp:
-			lot_up=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'ach_emp':True})
+	pool.write(cr,uid,data['ids'],{'ach_emp':True})
 	return {}
 
 class able_take_away(wizard.interface):

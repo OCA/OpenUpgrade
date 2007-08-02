@@ -42,22 +42,10 @@ take_form = """<?xml version="1.0"?>
 take_fields = {
 	'confirm_en': {'string':'Catalog Number', 'type':'integer'},
 }
-def _start(self,cr,uid,data,context):
-	pool = pooler.get_pool(cr.dbname)
-	recs=pool.get('auction.lots').browse(cr,uid,data['ids'],context)
-	catalog_num=False
-	for rec in recs:
-		if rec.ach_emp:
-			catalog_num= rec and rec.obj_num or False
-	return {'confirm_en':catalog_num}
-
 
 def _confirm_enable(self,cr,uid,data,context={}):
-	res={}
 	pool = pooler.get_pool(cr.dbname)
-	lots=pool.get('auction.lots').browse(cr,uid,data['ids'],context)
-	for lot in lots:
-		lot_up=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'ach_emp':False})
+	pool.get('auction.lots').write(cr,uid,data['ids'],{'ach_emp':False})
 	return {}
 
 class enable_take_away(wizard.interface):
