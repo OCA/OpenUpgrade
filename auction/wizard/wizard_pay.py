@@ -38,134 +38,129 @@ import pooler
 #'period_id': {'string': 'Period', 'type': 'many2one', 'relation':'account.period'},
 #'dest_account_id': {'string':'Payment to Account', 'type':'many2one', 'required':True, 'relation':'account.account', 'domain':[('type','=','cash')]},
 pay_form = '''<?xml version="1.0"?>
-<form string="Pay invoice">
-	<field name="buyer_id"/>
-	<newline/>
+<form string="Pay objects">
 	<field name="amount"/>
-	<field name="statement_id" />
+	<field name="statement_id1" />
 	<field name="amount2"/>
 	<field name="statement_id2" />
 	<field name="amount3"/>
 	<field name="statement_id3" />
+	<newline/>
+	<field name="buyer_id"/>
+	<field name="total"/>
 </form>'''
 
 def _start(self,cr,uid,data,context):
 	pool = pooler.get_pool(cr.dbname)
-	rec=pool.get('auction.lots').browse(cr,uid,data['id'],context)
-	amount1= rec and rec.buyer_price or False
-	return {'amount':amount1}
-
-
-def _get_period(cr, uid, context):
-	periods = self.pool.get('account.period').find(cr, uid)
-	if periods:
-		return periods[0]
-	else:
-		return False
+	rec=pool.get('auction.lots').browse(cr,uid,data['ids'],context)
+	amount1=0.0
+	for r in rec:
+		amount1+=r.buyer_price
+		buyer= r and r.ach_uid.id or False
+	return {'amount':amount1, 'total':amount1,'buyer_id':buyer}
 
 pay_fields = {
-	'amount': {'string': 'Amount paid', 'type':'float', 'required':True},
-	'buyer_id': {'string': 'Buyer', 'type': 'many2one', 'relation':'res.partner', 'required':True},
-	'statement_id': {'string':'Statement', 'type':'many2one', 'required':True, 'relation':'account.bank.statement.line'},
+	'amount': {'string': 'Amount paid', 'type':'float'},
+	'buyer_id': {'string': 'Buyer', 'type': 'many2one', 'relation':'res.partner'},
+	'statement_id1': {'string':'Statement', 'type':'many2one', 'required':True, 'relation':'account.bank.statement'},
 	'amount2': {'string': 'Amount paid', 'type':'float'},
-	'statement_id2': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement.line'},
+	'statement_id2': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement'},
 	'amount3': {'string': 'Amount paid', 'type':'float'},
-	'statement_id3': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement.line'},
+	'statement_id3': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement'},
+	'total': {'string': 'Amount to paid', 'type':'float'}
 }
-#def pay_n_check(self, cr, uid, data, context):
-#
-#	auction = pool.get('auction.lots').browse(cr,uid,data['id'],context)
-#	try:
-#		
-#		for lot in auction:
-#                            
-#        	if not lot.auction_id :
-#            	raise osv.except_osv("Error","No payment defined for this auction.")
-#			i=1
-#			tot= 0
-#			for payment in auction:
-#				if not payment.journal_id :
-#					raise osv.except_osv("Error","No journal defined for the payment line %d" % (i,))
-#				if not payment.ach_inv_id.amount :
-#					raise osv.except_osv("Error","No amount defined for the payment line %d." % (i,))
-#				i+=1
-#				tot+= payment.ach_inv_id.amount
-#			if abs(float(tot)) - abs(float(lot.obj_ret)) > 10**-6:
-#				raise osv.except_osv("Error","The amount paid does not match the total amount")
-#		else:
-#			for lot in auction:
-#              if not lot.journal_id :
-#				raise osv.except_osv("Error","Please choose a journal for the auction ("+lot.name+").")
-#			pool.get('auction.lots').create(cr,uid,{
-#				'auction_id': lot.auction.id,
-#				'journal_id': lot.journal_id,
-#
-#				})
-# 	except osv.except_osv, e:
-#		raise wizard.except_wizard(e.name, e.name)
-#	return True
-
 
 def _pay_and_reconcile(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
 	lots = pool.get('auction.lots').browse(cr,uid,data['ids'],context)
+	ref_bk_s=pooler.get_pool(cr.dbname).get('account.bank.statement.line')
 	for lot in lots:
-		new_statement=pooler.get_pool(cr.dbname).get('account.bank.statement').create(cr,uid,{'journal_id':lot.auction_id.journal_id.id,
-																							'balance_start':0,
-																							'balance_end_real':0, 
-																							'state':'draft',})
-		new_id=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id']],{
-																							'date': time.strftime('%Y-%m-%d'),
-																							'partner_id':lot.ach_uid.id,
-																							'type':'customer',
-																							'statement_id':new_statement,
-																							'account_id':lot.auction_id.acc_income.id,
-																							'amount':-data['form']['amount']
-																							})
-	
-	#	up_payment=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'statement_id': new_id})
-	#	up_statement=pooler.get_pool(cr.dbname).get('account.bank.statement').write(cr,uid,[new_statement],{'line_ids': [(6,0,[new_id])]})
+		if not data['form']['buyer_id']:
+			raise wizard.except_wizard('Error !', 'No buyer for "%s": Please set one.'%(lot.name))
+		else:
+			pool.get('auction.lots').write(cr,uid,[lot.id],{'ach_uid':data['form']['buyer_id']})
+		if not lot.auction_id:
+			raise wizard.except_wizard('Error !', 'No auction date for "%s": Please set one.'%(lot.name))
+		new_id=ref_bk_s.create(cr,uid,{'name':'Payment1:'+ lot.name,
+										'date': time.strftime('%Y-%m-%d'),
+										'partner_id':lot.ach_uid.id,
+										'type':'customer',
+										'statement_id':data['form']['statement_id1'],
+										'account_id':lot.auction_id.acc_income.id,
+										'amount':-data['form']['amount']
+										})
+		new_id2=ref_bk_s.create(cr,uid,{'name':'Payment2:'+ lot.name ,
+										'date': time.strftime('%Y-%m-%d'),
+										'partner_id':lot.ach_uid.id,
+										'type':'customer',
+										'statement_id':data['form']['statement_id2'],
+										'account_id':lot.auction_id.acc_income.id,
+										'amount':-data['form']['amount2']
+										})
+		new_id3=ref_bk_s.create(cr,uid,{'name':'Payment3:'+ lot.name ,
+										'date': time.strftime('%Y-%m-%d'),
+										'partner_id':lot.ach_uid.id,
+										'type':'customer',
+										'statement_id':data['form']['statement_id3'],
+										'account_id':lot.auction_id.acc_income.id,
+										'amount':-data['form']['amount3']
+										})
+		if (data['form']['amount']>0) and (data['form']['statement_id1']):
+			pool.get('auction.lots').write(cr,uid,[lot.id],{'statement_id':[(6,0,[new_id])]})
 		if (data['form']['amount2']>0) and (data['form']['statement_id2']):
-			new_id2=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id2']],{
-																							'date': time.strftime('%Y-%m-%d'),
-																							'partner_id':lot.ach_uid.id,
-																							'type':'customer',
-																							'statement_id':new_statement,
-																							'account_id':lot.auction_id.acc_income.id,
-																							'amount':-data['form']['amount2']
-																							})
+			pool.get('auction.lots').write(cr,uid,[lot.id],{'statement_id':[(4,new_id2)]})
 		if (data['form']['amount3']>0) and (data['form']['statement_id3']):
-			new_id3=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id3']],{
-																							'date': time.strftime('%Y-%m-%d'),
-																							'partner_id':lot.ach_uid.id,
-																							'type':'customer',
-																							'statement_id':new_statement,
-																							'account_id':lot.auction_id.acc_income.id,
-																							'amount':-data['form']['amount3']
-																							})
-#	if data['form']['amount1'] and data['form']['amount2'] and data['form']['amount3']:
-#		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']-data['form']['amount3']})
-#	elif data['form']['amount1'] and data['form']['amount2']:
-#		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']})
-#	elif data['form']['amount1'] :
-#		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']})
+			pool.get('auction.lots').write(cr,uid,[lot.id],{'statement_id':[(4,new_id3)]})
+		if data['form']['total']==(data['form']['amount']+data['form']['amount2']+data['form']['amount3']):
+			pool.get('auction.lots').write(cr,uid,[lot.id],{'is_ok':True})
+	
 	return {}
 
-
-	#	pool = pooler.get_pool(cr.dbname)
-#	lot = pool.get('auction.lots').browse(cr,uid,data['id'],context)
-#	form = data['form']
-#	account_id = form.get('writeoff_acc_id', False)
-#	period_id = form.get('period_id', False)
-#	if not period_id:
-#		periods = pool.get('account.period').find(cr, uid)
-#		if periods:
-#			period_id = periods[0]
-#
-#	journal_id = form.get('journal_id', False)
-#	if lot.ach_inv_id:
-#		#p=pool.get('account.invoice').pay_and_reconcile(['lot.ach_inv_id.id'], form['amount'], form['dest_account_id'], journal_id, account_id, period_id, journal_id, context)
+#	pool = pooler.get_pool(cr.dbname)
+#	lots = pool.get('auction.lots').browse(cr,uid,data['ids'],context)
+#	for lot in lots:
+#		new_statement=pooler.get_pool(cr.dbname).get('account.bank.statement').create(cr,uid,{'journal_id':lot.auction_id.journal_id.id,
+#																							'balance_start':0,
+#																							'balance_end_real':0, 
+#																							'state':'draft',})
+#		new_id=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id']],{
+#																							'date': time.strftime('%Y-%m-%d'),
+#																							'partner_id':lot.ach_uid.id,
+#																							'type':'customer',
+#																							'statement_id':new_statement,
+#																							'account_id':lot.auction_id.acc_income.id,
+#																							'amount':-data['form']['amount']
+#																							})
+#	
+#	#	up_payment=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'statement_id': new_id})
+#	#	up_statement=pooler.get_pool(cr.dbname).get('account.bank.statement').write(cr,uid,[new_statement],{'line_ids': [(6,0,[new_id])]})
+#		if (data['form']['amount2']>0) and (data['form']['statement_id2']):
+#			new_id2=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id2']],{
+#																							'date': time.strftime('%Y-%m-%d'),
+#																							'partner_id':lot.ach_uid.id,
+#																							'type':'customer',
+#																							'statement_id':new_statement,
+#																							'account_id':lot.auction_id.acc_income.id,
+#																							'amount':-data['form']['amount2']
+#																							})
+#		if (data['form']['amount3']>0) and (data['form']['statement_id3']):
+#			new_id3=pooler.get_pool(cr.dbname).get('account.bank.statement.line').write(cr,uid,[data['form']['statement_id3']],{
+#																							'date': time.strftime('%Y-%m-%d'),
+#																							'partner_id':lot.ach_uid.id,
+#																							'type':'customer',
+#																							'statement_id':new_statement,
+#																							'account_id':lot.auction_id.acc_income.id,
+#																							'amount':-data['form']['amount3']
+#																							})
+##	if data['form']['amount1'] and data['form']['amount2'] and data['form']['amount3']:
+##		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']-data['form']['amount3']})
+##	elif data['form']['amount1'] and data['form']['amount2']:
+##		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']-data['form']['amount2']})
+##	elif data['form']['amount1'] :
+##		pool.get('account.bank.statement').write(cr,uid,[new_statement],{'balance_end_real': -data['form']['amount1']})
 #	return {}
+#
+#
 
 class wiz_auc_lots_pay(wizard.interface):
 	states = {
