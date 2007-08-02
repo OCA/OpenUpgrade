@@ -28,7 +28,7 @@ def _values(self,cr,uid, datas,context={}):
 	amount_total=0.0
 	pt_tax=pooler.get_pool(cr.dbname).get('account.tax')
 	for lot in lots:
-		buyer=lot and lot.ach_uid or False
+		buyer=lot and lot.ach_uid.id or False
 		taxes = lot.product_id.taxes_id
 		if lot.author_right:
 			taxes.append(lot.author_right)

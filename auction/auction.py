@@ -813,10 +813,10 @@ class auction_lots(osv.osv):
 				'price_unit': lot.obj_price,
 			}
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
-		inv_ref.button_compute(cr, uid, [inv_id])
+#		inv_ref.button_compute(cr, uid, [inv_id])
 
-#		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
-#			inv_ref.button_compute(cr, uid, [inv.id])
+		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
+			inv_ref.button_compute(cr, uid, [inv.id])
 		#	wf_service = netsvc.LocalService('workflow')
 		#	wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
