@@ -10,7 +10,7 @@
 	 Provide a basic mechanism to easily plug various automated payment.
 	 """,
 	 "demo_xml" : [],
-	"update_xml" : ["payment_wizard.xml","payment_view.xml","payment_workflow.xml"],
+	"update_xml" : ["payment_wizard.xml","payment_view.xml","payment_workflow.xml","payment_sequence.xml"],
 	"active": False,
 	"installable": True
 }

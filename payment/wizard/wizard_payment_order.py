@@ -46,64 +46,33 @@ ask_fields={
 def search_entries(self, cr, uid, data, context):
 
 	pool= pooler.get_pool(cr.dbname)
-	move_line_obj = pool.get('account.move.line')
-	payment = pool.get('payment.order').read(cr,uid,data['id'],['date','type'])
-	account_ids = pool.get('account.account').search(cr,uid,[('type','=','payable')])
-
 	# Search for move line to pay:
-	clause = [('reconcile_id', '=', False), ('credit', '>',0),('account_id','in',account_ids)]
-	mline_ids = move_line_obj.search(cr, uid, clause ,context)
-
+	mline_ids = pool.get('account.move.line').search(cr, uid,
+					[('reconcile_id', '=', False),
+					('amount_to_pay', '>',0)],
+					context)
 
 	if not mline_ids:
 		ask_fields['entries']['domain']= [('id','in',[])]
 		return {}
 	
-	invoice_obj= pool.get('account.invoice')
-	## Search for the corresponding invoices
-	cr.execute('''select DISTINCT i.id,l.id
-				  from account_invoice i
-				  inner join account_move m on (i.move_id = m.id)
-					   inner join account_move_line l on (m.id = l.move_id)
-				  where l.id in (%s) ''' % ",".join(map(str,mline_ids)))
-
-
-	inv2lines= {}
-	line2bank= {}
-	for inv_id, line_id in cr.fetchall():
-		inv2lines[inv_id]= inv2lines.get(inv_id,[])+[line_id]
-	invoices= invoice_obj.browse(cr,uid,inv2lines.keys(),context=context)
-	if payment['type'] != 'manual':
-		## Evaluate the suitables bank account codes
-		bank_type= pool.get('payment.type').suitable_bank_types(cr,uid,payment['type'],context=context)
-		## Search a suitable bank for each invoice partner
-		for invoice in invoices:
-			for b in invoice.partner_id.bank_ids:
-				if b.state in bank_type:	 # The state field contain (the code of) the type of bank
-					line2bank.update([(x,b.id) for x in inv2lines[invoice.id]])
-					break
-	else :
-		for invoice in invoices:
-			if invoice.partner_id.bank_ids:
-				line2bank.update([(x,invoice.partner_id.bank_ids[0].id) for x in inv2lines[invoice.id]])
-
-	data['line2bank']= line2bank
-	ask_fields['entries']['domain']= [('id','in',line2bank.keys()),('amount_to_pay','>',0)]
-	return {}
+	ask_fields['entries']['domain']= [('id','in',mline_ids)]
+	return {'entries': mline_ids}
 
 def create_payment(self, cr, uid, data, context):
-	line2bank= data.get('line2bank')
-	if not line2bank: return {}
 	mline_ids= data['form']['entries'][0][2]
-	pool= pooler.get_pool(cr.dbname)
-	payment_line_obj = pool.get('payment.line')
-	payment = pool.get('payment.order').read(cr,uid,data['id'],['type'])
+	if not mline_ids: return {}
+
+	pool= pooler.get_pool(cr.dbname)	
+	payment = pool.get('payment.order').read(cr,uid,data['id'],['mode'])
+	line2bank= pool.get('account.move.line').line2bank(cr,uid,
+				mline_ids,payment['mode'],context)
 
 	## Finally populate the current payment with new lines:
 	for line in pool.get('account.move.line').browse(cr,uid,mline_ids,context=context):
-		payment_line_obj.create(cr,uid,{
+		pool.get('payment.line').create(cr,uid,{
 			'move_line': line.id,
-			'amount':line.credit,
+			'amount':line.amount_to_pay, 
 			'bank':line2bank.get(line.id),
 			'payment_order': payment['id'],
 			})
@@ -113,9 +82,9 @@ def create_payment(self, cr, uid, data, context):
 class wizard_payment_order(wizard.interface):
 	"""
 	Create a payment object with lines corresponding to the account move line
-	to pay according to the date and the type provided by the user.
+	to pay according to the date and the mode provided by the user.
 	Hypothesis:
-	- Small number of non-reconcilied move line , payment type	and bank account type,
+	- Small number of non-reconcilied move line , payment mode	and bank account type,
 	- Big number of partner and bank account.
 
 	If a type is given, unsuitable account move lines are ignored.
