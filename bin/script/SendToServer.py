@@ -17,7 +17,11 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
-
+        LoginTest()
+        if not loginstatus and __name__=="package":
+            exit(1)
+        self.win=DBModalDialog(60, 50, 180, 135, "Modify Existing Report")
+        self.win.addFixedText("lblReport", 2, 3, 60, 15, "Report Selection")
 
 
 

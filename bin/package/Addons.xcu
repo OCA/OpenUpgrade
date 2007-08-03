@@ -112,7 +112,7 @@
 
 					<node oor:name="m24" oor:op="replace">
 						<prop oor:name="URL" oor:type="xs:string">
-							<value>service:org.openoffice.tiny.report.modify?insert</value>
+							<value>service:org.openoffice.tiny.report.langtag?insert</value>
 						</prop>
 						<prop oor:name="Title" oor:type="xs:string">
 							<value/>
@@ -127,7 +127,7 @@
 					</node>
 					<node oor:name="m25" oor:op="replace">
 						<prop oor:name="URL" oor:type="xs:string">
-							<value>service:org.openoffice.tiny.report.langtag?insert</value>
+							<value>service:org.openoffice.tiny.report.modify?insert</value>
 						</prop>
 						<prop oor:name="Title" oor:type="xs:string">
 							<value/>
@@ -238,21 +238,6 @@
 						<prop oor:name="Title" oor:type="xs:string">
 							<value/>
 							<value xml:lang="en-US">Modify Existing Report</value>
-						</prop>
-						<prop oor:name="Target" oor:type="xs:string">
-							<value>_self</value>
-						</prop>
-						<prop oor:name="Context" oor:type="xs:string">
-							<value>com.sun.star.text.TextDocument</value>
-						</prop>
-					</node>
-					<node oor:name="m44" oor:op="replace">
-						<prop oor:name="URL" oor:type="xs:string">
-							<value>service:org.openoffice.tiny.report.updatereport?insert</value>
-						</prop>
-						<prop oor:name="Title" oor:type="xs:string">
-							<value/>
-							<value xml:lang="en-US">Update Report</value>
 						</prop>
 						<prop oor:name="Target" oor:type="xs:string">
 							<value>_self</value>
@@ -525,24 +510,6 @@
 					<prop oor:name="Title" oor:type="xs:string">
 						<value/>
 						<value xml:lang="en-US">Modify Existing Report</value>
-					</prop>
-					<prop oor:name="Target" oor:type="xs:string">
-						<value>_self</value>
-					</prop>
-					<prop oor:name="Context" oor:type="xs:string">
-						<value>com.sun.star.text.TextDocument</value>
-					</prop>
-				</node>
-				<node oor:name="m44" oor:op="replace">
-					<prop oor:name="URL" oor:type="xs:string">
-						<value>service:org.openoffice.tiny.report.updatereport?insert</value>
-					</prop>
-					<prop oor:name="ImageIdentifier" oor:type="xs:string">
-						<value/>
-					</prop>
-					<prop oor:name="Title" oor:type="xs:string">
-						<value/>
-						<value xml:lang="en-US">Update Report</value>
 					</prop>
 					<prop oor:name="Target" oor:type="xs:string">
 						<value>_self</value>

@@ -1,3 +1,5 @@
+
+
 import uno
 import string
 import unohelper
@@ -60,18 +62,34 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 fp = file(fp_name, 'wb+')
                 fp.write(data)
                 fp.close()
+            url="file://"+self.win.getEditText("lblModuleSelection1")
+            arr=Array()
+            oDoc2 = desktop.loadComponentFromURL(url, "abc", 55, arr)
+            oVC= oDoc2.getCurrentController().getViewCursor()
+            oText = oVC.getText()
+            oCur=oText.createTextCursorByRange(oVC.getStart())
+            oCur.insertDocumentFromURL(url, Array())
+            docinfo2=oDoc2.getDocumentInfo()
+            docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
+            docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
+            docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
+            if oDoc2.isModified():
+                if oDoc2.hasLocation() and not oDoc2.isReadonly():
+                    oDoc2.store()
+                #End If
+            #End If
+            #os.system( "`which ooffice` '-accept=socket,host=localhost,port=2002;urp;'")
             ErrorDialog("Download is Completed","Your file has been placed here :\n"+ self.win.getEditText("lblModuleSelection1"),"Download Message")
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
 
-#           file('/tmp/data.sxw', 'w').write(data)
-
 if __name__<>"package" and __name__=="__main__":
     ModifyExistingReport(None)
 elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
             ModifyExistingReport,
-            "org.openoffice.tiny.report.modifyreport  ",
+            "org.openoffice.tiny.report.modifyreport",
             ("com.sun.star.task.Job",),)
+

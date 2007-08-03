@@ -54,7 +54,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
+        self.win.doModalDialog("",None)
+        #self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOkOrCancel_clicked(self,oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnOK":
