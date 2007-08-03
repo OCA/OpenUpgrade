@@ -94,8 +94,9 @@
 				<form string="CashMove">
 					<field name="name" select="1"/>
 					<field name="user_cashmove" select="1"/>
-					<field name="amount" select="1"/>
+					<field name="amount" select="2"/>
 					<field name="box" select="1"/>
+					<field name="create_date" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -110,6 +111,7 @@
 					<field name="user_cashmove" select="1"/>
 					<field name="amount" select="1"/>
 					<field name="box" select="1"/>
+					<field name="create_date"/>
 				</tree>
 			</field>
 		</record>

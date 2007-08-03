@@ -61,6 +61,7 @@ class lunch_cashmove(osv.osv):
 		'amount': fields.float('Amount', digits=(16,2)),
 		'box':fields.many2one('lunch.cashbox','Box Name',size=30,required=True),
 		'active':fields.boolean('Active'),
+		'create_date': fields.datetime('Created date', readonly=True),
 		}
 
 	_defaults={
