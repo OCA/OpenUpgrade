@@ -24,20 +24,21 @@ invoice_fields = {
 def _values(self,cr,uid, datas,context={}):
 	pool = pooler.get_pool(cr.dbname)
 	lots= pool.get('auction.lots').browse(cr,uid,datas['ids'])
-	price = 0.0
+#	price = 0.0
 	amount_total=0.0
-	pt_tax=pooler.get_pool(cr.dbname).get('account.tax')
+#	pt_tax=pooler.get_pool(cr.dbname).get('account.tax')
 	for lot in lots:
 		buyer=lot and lot.ach_uid.id or False
-		taxes = lot.product_id.taxes_id
-		if lot.author_right:
-			taxes.append(lot.author_right)
-		if lot.auction_id:
-			taxes += lot.auction_id.buyer_costs
-		tax=pt_tax.compute(cr,uid,taxes,lot.obj_price,1)
-		for t in tax:
-			amount_total+=t['amount']
-		amount_total+=lot.obj_price
+		amount_total+=lot.buyer_price
+#		taxes = lot.product_id.taxes_id
+#		if lot.author_right:
+#			taxes.append(lot.author_right)
+#		if lot.auction_id:
+#			taxes += lot.auction_id.buyer_costs
+#		tax=pt_tax.compute(cr,uid,taxes,lot.obj_price,1)
+#		for t in tax:
+#			amount_total+=t['amount']
+#		amount_total+=lot.obj_price
 	#	up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'ach_uid':datas['form']['buyer_id']})
 	invoice_number = False
 	return {'objects':len(datas['ids']), 'amount':amount_total, 'number':invoice_number,'buyer_id':buyer}

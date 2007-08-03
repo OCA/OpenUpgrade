@@ -277,7 +277,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="lot_type" select="2"/>
 					<field name="lot_local"/>
 					<separator string="Description" colspan="4"/>
-					<field name="obj_desc" colspan="2" nolabel="1" select="2"/>
+					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
 					<field name="statement_id" domain="[('state','=','draft')]" colspan="4" readonly="1" nolabel="1"
 						widget="one2many_list">
 						<tree string="Payment's history">

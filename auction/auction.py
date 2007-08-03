@@ -104,7 +104,7 @@ class auction_dates(osv.osv):
 		nbr = cr.fetchone()[0]
 		ach_uids = {}
 		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
-		self.pool.get('auction.lots').buyer_proforma(cr, uid, [x[0] for x in cr.fetchall()],{})
+		self.pool.get('auction.lots').lots_invoice(cr, uid, [x[0] for x in cr.fetchall()],{})
 		cr.execute('select * from auction_lots where auction_id in ('+','.join(map(str,ids))+')and state=%s and obj_price>0', ('draft',))
 		ids2 = [x[0] for x in cr.fetchall()]
 		self.pool.get('auction.lots').seller_trans_create(cr, uid, ids2,{})
@@ -348,7 +348,7 @@ class auction_lots(osv.osv):
 			cr.execute('select count(*) from auction_lots where auction_id=%d', (auct_id,))
 			nb = cr.fetchone()[0]
 			account_analytic_line_obj = self.pool.get('account.analytic.line')
-			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('move_id.journal_id', '<>', lot.auction_id.journal_id.id),('move_id.journal_id', '<>', lot.auction_id.journal_id.id)])
+			line_ids = account_analytic_line_obj.search(cr, uid, [('account_id', '=', lot.auction_id.account_analytic_id.id),('journal_id', '<>', lot.auction_id.journal_id.id),('journal_id', '<>', lot.auction_id.journal_seller_id.id)])
 			#indir_cost=lot.bord_vnd_id.specific_cost_ids
 			#for r in lot.bord_vnd_id.specific_cost_ids:
 			#	som+=r.amount
@@ -665,10 +665,9 @@ class auction_lots(osv.osv):
 			#	inv_ref.button_compute(cr, uid, [inv_id])
 			#	wf_service = netsvc.LocalService('workflow')
 			#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
-			inv_ref.button_compute(cr, uid, [inv.id])
+			inv_ref.button_compute(cr, uid, invoice.values())
 			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
+			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
 		return invoices.values()
 	
 
@@ -723,7 +722,7 @@ class auction_lots(osv.osv):
 				'price_unit': lot.obj_price,
 			}
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
-			inv_ref.button_compute(cr, uid, [inv_id])
+			inv_ref.button_compute(cr, uid, invoices.values())
 		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
 			inv_ref.write(cr, uid, [inv.id], {
 				'check_total': inv.amount_total
@@ -731,31 +730,6 @@ class auction_lots(osv.osv):
 			wf_service = netsvc.LocalService('workflow')
 			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
-
-#	def lots_invoice_and_cancel_old_invoice(self, cr, uid, ids, invoice_number=False, buyer_id=False, action=False):
-#		lots = self.read(cr, uid, ids, ['ach_inv_id'])
-#
-#		num_invoiced = 0
-#		inv_ids = {}
-#		for lot in lots:
-#			if lot['ach_inv_id']:
-#				inv_ids[lot['ach_inv_id'][0]] = True
-#				num_invoiced += 1
-#
-#		if num_invoiced:
-#			if not invoice_number:
-#				# if some objects were already invoiced and the user didn't specify an invoice number,
-#				# raise an exception
-#				raise orm.except_orm('UserError', ('%d object(s) are already invoiced !' % (num_invoiced,), 'init'))
-#			else:
-#				wf_service = netsvc.LocalService("workflow")
-#				# if the user gave an invoice number, cancel the old invoices containing
-#				# the selected objects
-#				for id in inv_ids:
-#					wf_service.trg_validate(uid, 'account.invoice', id, 'invoice_cancel', cr)
-#
-#		# create a new invoice for the selected objects
-#		return self.lots_invoice(cr, uid, ids, invoice_number, buyer_id, action)
 
 	def lots_invoice(self, cr, uid, ids, context):
 		"""(buyer invoice
@@ -776,8 +750,8 @@ class auction_lots(osv.osv):
 			if not lot.auction_id.id:
 				continue
 			partner_r=self.pool.get('res.partner')
-			if not lot.ach_uid.id:
-				raise orm.except_orm('Missed buyer !', 'The object "%s" has no buyer assigned.' % (lot.name,))
+		#	if not lot.ach_uid.id:
+		#		raise orm.except_orm('Missed buyer !', 'The object "%s" has no buyer assigned.' % (lot.name,))
 			if (lot.auction_id.id,lot.ach_uid.id) in invoices:
 				inv_id = invoices[(lot.auction_id.id,lot.ach_uid.id)]
 			else:
@@ -812,78 +786,14 @@ class auction_lots(osv.osv):
 				'price_unit': lot.obj_price,
 			}
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
-#		inv_ref.button_compute(cr, uid, [inv_id])
+	#	inv_ref.button_compute(cr, uid, [inv_id])
 	#		inv_ref.button_compute(cr, uid, [inv_id])
-		for inv in inv_ref.browse(cr, uid, invoices.values(), context):
-			inv_ref.button_compute(cr, uid, [inv.id])
-			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
+			inv_ref.button_compute(cr, uid, [inv_id])
+	#	for l in  inv_ref.browse(cr, uid, invoices.values(), context):
+	#		wf_service = netsvc.LocalService('workflow')
+	#		wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_open', cr)
 		return invoices.values()
 
-	def lots_pay(self, cr, uid, ids, buyer_id, account_id, amount):
-		lots = self.browse(cr, uid, ids)
-		if not len(lots):
-			return True
-
-		partner_ref = lots[0].ach_login
-		auction = lots[0].auction_id
-		auction_ref = auction.auction1
-		account_src_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (buyer_id or []) and [('id',str(buyer_id))] )[0][2]
-
-#TODO: passer par le systeme de traduction
-		auction_name = u'Auction ' + auction_ref + u', Part.: '+(partner_ref or '')+ u', %d lot(s)' %(len(lots),)
-
-		transfer = {
-			'name': auction_name[:60],
-			'partner_id': buyer_id,
-			'reference': auction_ref,
-			'account_src_id': account_src_id,
-			'type': 'in_payment',
-			'account_dest_id': account_id,
-			'amount': amount,
-		}
-
-		transfer_id = self.pool.get('account.transfer').create(cr, uid, transfer)
-		self.pool.get('account.transfer').pay_validate(cr,uid,[transfer_id])
-		self.write(cr, uid, ids, {'state':'paid', 'ach_pay_id':transfer_id})
-		return True
-
-	def lots_cancel_payment(self, cr, uid, ids):
-		cr.execute('select id,ach_pay_id,ach_inv_id,state from auction_lots where ach_pay_id is not null and id in ('+','.join(map(str, ids))+')')
-		results = cr.dictfetchall()
-
-		pay_ids = []			# list of payment ids
-		lot_invoiced_ids = []	# list of lot ids whose state is 'paid' and inv_id is not null
-		lot_paid_ids = []		# list of lot ids whose state is 'paid' and inv_id is null
-		not_paid_ids = []		# list of lot ids whose state is not 'paid'
-		number_lot_paid = 0
-		for r in results:
-			if r['ach_pay_id']:
-				pay_ids.append(r['ach_pay_id'])
-				number_lot_paid += 1
-
-			if r['state']=='paid':
-				if r['ach_inv_id']:
-					lot_invoiced_ids.append(r['id'])
-				else:
-					lot_paid_ids.append(r['id'])
-			else:
-				not_paid_ids.append(r['id'])
-
-		if len(ids)!=number_lot_paid:
-			print "Warning: not all lots were paid"
-
-		if len(pay_ids):
-			self.pool.get('account.transfer').pay_cancel(cr, uid, pay_ids)
-			self.pool.get('account.transfer').unlink(cr, uid, pay_ids)
-
-		if len(lot_paid_ids):
-			self.write(cr,uid,lot_paid_ids, {'ach_pay_id':False, 'state':'draft'})
-		if len(lot_invoiced_ids):
-			self.write(cr,uid,lot_invoiced_ids, {'ach_pay_id':False, 'state':'invoiced'})
-		if len(not_paid_ids):
-			self.write(cr,uid,not_paid_ids, {'ach_pay_id':False})
-		return True
 
 	def numerotate(self, cr, uid, ids):
 		cr.execute('select auction_id from auction_lots where id=%d', (ids[0],))

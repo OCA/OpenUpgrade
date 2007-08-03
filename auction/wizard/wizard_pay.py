@@ -62,7 +62,7 @@ pay_fields = {
 	'statement_id2': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement'},
 	'amount3': {'string': 'Amount paid', 'type':'float'},
 	'statement_id3': {'string':'Statement', 'type':'many2one', 'relation':'account.bank.statement'},
-	'total': {'string': 'Amount to paid', 'type':'float'}
+	'total': {'string': 'Amount to paid', 'type':'float','readonly':True}
 }
 
 def _pay_and_reconcile(self, cr, uid, data, context):

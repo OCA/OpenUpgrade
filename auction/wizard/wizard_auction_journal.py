@@ -27,16 +27,16 @@ def _values(self,cr,uid, datas,context={}):
 	amount_total=0.0
 	pt_tax=pooler.get_pool(cr.dbname).get('account.tax')
 	for lot in lots:
-		taxes = lot.product_id.taxes_id
-		if lot.bord_vnd_id.tax_id:
-			taxes.append(lot.bord_vnd_id.tax_id)
-		if lot.auction_id:
-			taxes += lot.auction_id.seller_costs
-		tax=pt_tax.compute(cr,uid,taxes,lot.obj_price,1)
-		for t in tax:
-			amount_total+=t['amount']
-		amount_total+=lot.obj_price
-		
+	#	taxes = lot.product_id.taxes_id
+	#	if lot.bord_vnd_id.tax_id:
+	#		taxes.append(lot.bord_vnd_id.tax_id)
+	#	if lot.auction_id:
+	#		taxes += lot.auction_id.seller_costs
+	#	tax=pt_tax.compute(cr,uid,taxes,lot.obj_price,1)
+	#	for t in tax:
+	#		amount_total+=t['amount']
+	#	amount_total+=lot.obj_price
+		amount_total+=lot.seller_price	
 #TODO: recuperer id next invoice (de la sequence)???
 	invoice_number = False
 	return {'objects':len(datas['ids']), 'amount':amount_total, 'number':invoice_number}
