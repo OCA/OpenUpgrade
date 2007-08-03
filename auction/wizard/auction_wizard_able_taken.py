@@ -43,7 +43,7 @@ take_fields = {
 def _confirm_able(self,cr,uid,data,context={}):
 	res={}
 	pool = pooler.get_pool(cr.dbname)
-	pool.write(cr,uid,data['ids'],{'ach_emp':True})
+	pool.get('auction.lots').write(cr,uid,data['ids'],{'ach_emp':True})
 	return {}
 
 class able_take_away(wizard.interface):

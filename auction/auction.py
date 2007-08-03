@@ -775,8 +775,9 @@ class auction_lots(osv.osv):
 		#	partner_ref = lot.ach_uid.id
 			if not lot.auction_id.id:
 				continue
-			if not partner_ref:
-				raise orm.except_orm('Missed buyer !', 'Please fill the field buyer in the third tab or use the button "Map user" to associate a buyer to this auction !')
+			partner_r=self.pool.get('res.partner')
+			if not lot.ach_uid.id:
+				raise orm.except_orm('Missed buyer !', 'The object "%s" has no buyer assigned.' % (lot.name,))
 			if (lot.auction_id.id,lot.ach_uid.id) in invoices:
 				inv_id = invoices[(lot.auction_id.id,lot.ach_uid.id)]
 			else:
