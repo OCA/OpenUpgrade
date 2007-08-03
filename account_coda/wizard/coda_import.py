@@ -103,8 +103,7 @@ def _coda_parsing(self, cr, uid, data, context):
     bank_statement={}
     bank_statement_lines={}
     bank_statements=[]
-
-    recordlist = base64.decodestring(codafile).split('\r\n')
+    recordlist = base64.decodestring(codafile).split('\n')#remove \r by dhaval
     recordlist.pop()
     for line in recordlist:
         if line[0] == '0':
@@ -132,6 +131,12 @@ def _coda_parsing(self, cr, uid, data, context):
                 st_line['name'] = line[2:10]
                 st_line['date'] = str2date(line[115:121])
                 st_line_amt = list2float(line[32:47])
+
+                if line[61]=='1':
+                    st_line['ref']=(line[65:77])
+                else:
+                    st_line['ref']=''
+
                 st_line['partner_id']=0
                 if line[31] == '1':
                     st_line_amt = - st_line_amt
@@ -140,6 +145,7 @@ def _coda_parsing(self, cr, uid, data, context):
                     st_line['account_id'] = def_rec_acc
                 st_line['amount'] = st_line_amt
                 bank_statement_lines[st_line['name']]=st_line
+
                 bank_statement["bank_statement_line"]=bank_statement_lines
 
             elif line[1] == '3':
@@ -173,6 +179,8 @@ def _coda_parsing(self, cr, uid, data, context):
             bank_statements.append(bank_statement)
     #end for
     bkst_list=[]
+    #bk_st_id=0
+
     nb_err=0
     err_log=''
     str_log=''
@@ -201,6 +209,8 @@ def _coda_parsing(self, cr, uid, data, context):
                            'partner_id':line['partner_id'] or 0,
                            'account_id':line['account_id'],
                            'statement_id': bk_st_id,
+                           'note':'Test',#today
+                           'ref':line['ref'],#today
                            })
             cr.commit()
 
@@ -209,6 +219,7 @@ def _coda_parsing(self, cr, uid, data, context):
 
 
             bkst_list.append(bk_st_id)
+
 
         except osv.except_osv, e:
             cr.rollback()
@@ -227,12 +238,13 @@ def _coda_parsing(self, cr, uid, data, context):
             err_log= err_log +'\n Unknown Error'
             raise
 
-    err_log= err_log + '\n\nNumber of statements : '+ str(len(bkst_list))
+    err_log= err_log + '\n\nNumber of statements : '+ str(len([bkst_list]))
     err_log= err_log + '\nNumber of error : '+ str(nb_err)
 
     pool.get('account.coda').create(cr, uid,{
         'name':codafile,
-        'statement_ids':[(6,0,bkst_list)],
+        #'statement_ids':[(6,0,bkst_list)],
+        'statement_id':bk_st_id,
         'note':str_log1+std_log+err_log,
         'journal_id':data['form']['journal_id'],
         'date':time.strftime("%Y-%m-%d"),
