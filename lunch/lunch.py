@@ -14,7 +14,7 @@ class lunch_category(osv.osv):
 lunch_category()
 
 class lunch_product(osv.osv):
-	_name='lunch.product'	
+	_name = 'lunch.product'
 
 	def _category_name_get(self, cr, uid, context={}):
 		obj = self.pool.get('lunch.category')
@@ -45,7 +45,6 @@ class lunch_cashbox(osv.osv):
 		'manager':fields.many2one('res.users','Manager'),
 		'name':fields.char('Name',size=30,required=True, unique = True),
 		'sum_remain': fields.function(amount_available, method=True, string='Remained Total'),
-		'moves': fields.one2many('lunch.cashmove','box','Moves'),
 		}
 
 lunch_cashbox()
