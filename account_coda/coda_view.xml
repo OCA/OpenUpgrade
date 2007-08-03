@@ -12,7 +12,7 @@
 				<field name="journal_id" />
 				<field name="date" />
 				<field name="user_id" />
-				<field name="statement_ids" />
+				<field name="statement_id"/>
 				<field name="note" colspan="4"/>
 			</form>
 		</field>
@@ -44,6 +44,12 @@
 
 	<menuitem name="Financial Management/Periodical Processing/Import Coda Statements" action="wizard_account_coda_import"
 	type="wizard"  id="menu_account_coda_wizard" sequence="15"/>
+
+
+	<act_window name="Open Payment"
+		res_model="payment.order"
+		src_model="account.coda"
+		id="act_account_payment_account_bank_statement"/>
 
 	</data>
 </terp>
