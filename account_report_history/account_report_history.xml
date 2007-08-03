@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+
+		<record model="ir.ui.view" id="account_report_history_tree">
+			<field name="name">account.report.history1</field>
+			<field name="model">account.report.history</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Account Report History">
+					<field name="period_id"/>
+					<field name="fiscalyear_id"/>
+					<field name="name"/>
+					<field name="val"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_report_history_form">
+			<field name="name">account.report.history2</field>
+			<field name="model">account.report.history</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Account Report History">
+					<field name="period_id"/>
+					<field name="fiscalyear_id"/>
+					<field name="name"/>
+					<field name="val"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_report_history_graph">
+			<field name="name">account.report.history3</field>
+			<field name="model">account.report.history</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Account Report History" type="bar">
+					<field name="period_id"/>
+					<field name="val" />
+					<field name="name" group="True"/>
+
+				</graph>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="account_report_history_record">
+			<field name="res_model">account.report.history</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form,graph</field>
+			<field name="view_id" ref="account_report_history_tree"/>
+		</record>
+
+
+		<menuitem name="Financial Management/Configuration/Reporting/Account History"
+		id="menu_account_report_history_record"
+		action="account_report_history_record"/>
+
+		<record model="ir.ui.view" id="account_report_history_tree2">
+			<field name="name">account.report.history4</field>
+			<field name="model">account.report.history</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Account Report History">
+					<field name="period_id"/>
+					<field name="fiscalyear_id"/>
+					<field name="name"/>
+					<field name="val"/>
+				</tree>
+			</field>
+		</record>
+
+
+-		<record model="ir.actions.act_window" id="account_report_history_record_structure">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">account.report.history</field>
+			<field name="domain">[('name','=', active_id)]</field>
+			<field name="view_type">tree</field>
+			<field name="view_id" ref="account_report_history_tree2"/>
+			<field name="view_mode">tree,form,graph</field>
+		</record>
+
+		<record model="ir.values" id="ir_open_account_history_view">
+			<field name="key2">tree_but_open</field>
+			<field name="model">account.report.report</field>
+			<field name="name">Open Account History</field>
+			<field name="value" eval="'ir.actions.act_window,%d'%account_report_history_record_structure"/>
+			<field name="object" eval="True"/>
+		</record>
+
+
+	</data>
+</terp>
