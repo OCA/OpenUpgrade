@@ -80,10 +80,8 @@ class auction_dates(osv.osv):
 		'seller_costs': fields.many2many('account.tax', 'auction_seller_taxes_rel', 'auction_id', 'tax_id', 'Seller Costs'),
 		'acc_income': fields.many2one('account.account', 'Income Account', required=True),
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
-		#'acc_refund': fields.many2one('account.account', 'Refund Account', required=True),
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
 		'state': fields.selection((('draft','Draft'),('closed','Closed')),'State',required=True, select=1, readonly=True),
-		#'state': fields.selection((('draft','Draft'),('close','Closed')),'State', readonly=True),
 		'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
 
 	}
@@ -149,7 +147,6 @@ class auction_deposit(osv.osv):
 		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'auction.deposit'),
 	}
 	_constraints = [
-	#	(_inv_uniq, 'Twice the same inventory number !', ['name'])
 	]
 	def partner_id_change(self, cr, uid, ids, part):
 		return {}

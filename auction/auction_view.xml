@@ -277,9 +277,14 @@ Auction Management/Auction Dates/Reporting
 					<field name="lot_type" select="2"/>
 					<field name="lot_local"/>
 					<separator string="Description" colspan="4"/>
-					<field name="obj_desc" colspan="2" nolabel="1" select="2"/>	
-					<field name="statement_id"/>
-
+					<field name="obj_desc" colspan="2" nolabel="1" select="2"/>
+					<field name="statement_id" colspan="4" readonly="1">
+						<tree string="Payment's history">
+							<field name="name"/>
+							<field name="amount"/>
+							<field name="date"/>
+						</tree>
+					</field>
 					<!--field name="state" select="1"/-->
 				 <group col="5" colspan="4">
 					<field name="state" select="2"/>
@@ -287,8 +292,8 @@ Auction Management/Auction Dates/Reporting
 					<button name="button_not_bought" string="Not sold" states="draft" type="object"/>
 					<button name="button_draft" string="Set to draft" states="sold,unsold" type="object"/>
 				</group>
-
 				</page>
+
 				<page string="Seller">
 					<separator string="Seller information" colspan="4"/>
 					<field name="bord_vnd_id" select="2"/>
@@ -1061,16 +1066,23 @@ estimation.adj.category
 			</graph>
 		</field>
 	</record>
-
-	<record model="ir.actions.act_window" id="action_report_auction_estimation_adj_category_tree">
+		<record model="ir.actions.act_window" id="action_report_auction_estimation_adj_category_manager_tree">
 		<field name="name">Min est/Adj/Max est</field>
 		<field name="res_model">report.auction.estimation.adj.category</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('date','like',time.strftime('%Y-%m'))]</field>
 	</record>
-<!--menuitem name="Auction Management/Reporting/Member/Adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/-->
-	<menuitem name="Auction Management/Reporting/Manager/Comparison of estimations"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
+
+	<record model="ir.actions.act_window" id="action_report_auction_estimation_adj_category_member_tree">
+		<field name="name">Min est/Adj/Max est</field>
+		<field name="res_model">report.auction.estimation.adj.category</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('date','like',time.strftime('%Y-%m')),('user_id','=',uid)]</field>
+	</record>
+<menuitem name="Auction Management/Reporting/Member/Comparison of estimations" action="action_report_auction_estimation_adj_category_member_tree" id="menu_report_auction_estimation_adj_category_member"/>
+	<menuitem name="Auction Management/Reporting/Manager/Comparison of estimations"  action="action_report_auction_estimation_adj_category_manager_tree" id="menu_report_auction_estimation_adj_category_manager"/>
 
 
 =<!--=============================
