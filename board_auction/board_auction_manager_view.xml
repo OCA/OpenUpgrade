@@ -17,13 +17,14 @@
 						
 							<action
 								string="Latest objects"
-								name="%(auction.action_report_latest_objects_tree)d"
-								/>
+								name="%(auction.action_report_latest_objects_manager_tree)d"
+								height="200"
+								width="510"	/>
 							<action string="Latest deposits"
-								name="%(auction.action_report_latest_doposit_tree)d"/>
+								name="%(auction.action_report_latest_doposit_manager_tree)d"/>
 							<action
 								string="Summary pointing by user"
-								name="%(auction.action_report_auction_sign_in_out_member_tree1)d"
+								name="%(auction.action_report_auction_sign_in_out_manager_tree1)d"
 								view_mode="tree,graph"
 							/>
 							<action string="Objects statistics"
@@ -46,7 +47,7 @@
 								colspan="4"/>
 							<action
 								string="Min/Adj/Max"
-								name="%(auction.action_report_auction_estimation_adj_category_tree)d"
+								name="%(auction.action_report_auction_estimation_adj_category_manager_tree)d"
 								view_mode="graph,tree" colspan="4" />
 						
 							<action
