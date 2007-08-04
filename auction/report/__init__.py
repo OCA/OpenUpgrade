@@ -38,6 +38,9 @@ import catelogwithpictures
 import auction_objects
 import buyer_form_report
 import seller_form_report
+import buyer_list
+import auction_catelog
 #import auction_total_rml
 #import auction_report
 import auction_total_rml
+import deposit_seller

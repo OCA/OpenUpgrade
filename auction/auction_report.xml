@@ -51,13 +51,21 @@
 		multi="1"/>
 
 
-	<!--<report string="Catelogin rml"
+	<report string="Catalog"
 	   	model="auction.lots"
-		name="report.auction.catelog"
+		name="auction.catelog"
 		rml="auction/report/auction_catelog.rml"
 		auto="False"
-		multi="1"/>-->
+		multi="1"/>-
 
+
+
+	<report string="Deposit Letter"
+	   	model="auction.lots"
+		name="deposit.seller"
+		rml="auction/report/deposit_seller.rml"
+		auto="False"
+		multi="1"/>-
 
 	<report string="Lots List2"
 	   	model="auction.lots"
@@ -65,6 +73,15 @@
 		rml="auction/report/lots_list.rml"
 		auto="False"
 		multi="1"/>
+
+
+
+
+
+
+
+
+
 
 	<report string="Lots List-Landscape"
 		 model="auction.lots"
@@ -87,6 +104,23 @@
 
 		 multi="1"/>
 
+
+	<report string="Buyer lists"
+	   	model="auction.lots"
+		name="buyer.list"
+		rml="auction/report/buyer_list.rml"
+		auto="False"
+		multi="1"/>
+
+
+
+
+	<report string="Auction Totals with lists"
+	   	model="auction.lots"
+		name="auction.total.rml"
+		rml="auction/report/auction_total_rml.rml"
+		auto="False"
+		multi="1"/>
 
 	<!--<report string="Buyer Form"
 		 model="auction.lots"
@@ -119,13 +153,13 @@
 
 		 multi="1"/>
 -->
-		<report string="Catelog"
+		<!--<report string="Catelog"
 		model="auction.lots"
 		name="auction.catalog"
 		xml="auction/report/catalog.xml"
 		xsl="auction/report/catalog.xsl"
 		multi="1"/>
-
+-->
 		<report string="Buyer List"
 		model="auction.lots"
 		name="report.auction.buyer.list"
@@ -157,12 +191,12 @@
 		 xsl="auction/report/lots_bids_phone.xsl"
 		 multi="1"/>
 
-		<report string="Deposit Letters"
+		<!--<report string="Deposit Letters"
 		model="auction.lots"
 		name="report.auction.lots.deposit"
 		xml="auction/report/lots_deposit.xml"
 		xsl="auction/report/lots_deposit.xsl"/>
-<!--	    keyword="client_print_multi"-->
+	 keyword="client_print_multi" -->
 
 		<report string="Auction's results"
 			model="auction.lots"
