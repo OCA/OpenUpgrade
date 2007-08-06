@@ -33,7 +33,7 @@
 	"author":"Tiny",
 	"category":"Account Coda",
 	"depends":["base", "account","account_report"],
-	"demo_xml":["coda_data.xml"],
+	"demo_xml":["coda_demo.xml"],
 	"init_xml":[],
 	"update_xml" : ["coda_wizard.xml","coda_view.xml"],
 	"active":False,
