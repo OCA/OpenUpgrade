@@ -49,6 +49,8 @@
 	<act_window name="Open Payment"
 		res_model="payment.order"
 		src_model="account.coda"
+		view_type="form"
+		view_mode="tree,form"
 		id="act_account_payment_account_bank_statement"/>
 
 	</data>
