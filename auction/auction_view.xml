@@ -278,15 +278,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="lot_local"/>
 					<separator string="Description" colspan="4"/>
 					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
-					<field name="statement_id" domain="[('state','=','draft')]" colspan="4" readonly="1" nolabel="1"
-						widget="one2many_list">
-						<tree string="Payment's history">
-							<field name="name"/>
-							<field name="amount"/>
-							<field name="date"/>
-						</tree>
-					</field>
-					<!--field name="state" select="1"/-->
+									<!--field name="state" select="1"/-->
 				 <group col="5" colspan="4">
 					<field name="state" select="2"/>
 					<button name="button_bought" string="Sold" states="draft" type="object"/>
@@ -332,8 +324,20 @@ Auction Management/Auction Dates/Reporting
 					<field name="ach_inv_id"/>
 					<field name="paid_ach"/>
 					<field name="is_ok" select="2"/>
-					<field name="bid_lines" colspan="4" nolabel="1" editable="top"/>
+					<field name="statement_id" domain="[('state','=','draft')]" colspan="4" readonly="1" nolabel="1"
+						widget="one2many_list">
+						<tree string="Payment's history">
+							<field name="statement_id"/>
+							<field name="amount"/>
+							<field name="date"/>
+						</tree>
+					</field>
+
 				</page>
+			<page string="Bids">
+				<field name="bid_lines" colspan="4" nolabel="1" editable="top"/>
+			</page>
+
 				</notebook>
 			</form>
 		</field>
@@ -393,12 +397,15 @@ Auction Management/Auction Dates/Reporting
 
 
 	<!-- form3: simplified form meant for during the sale (action button in dates) -->
+	<!--form par defaut-->
 	<record model="ir.ui.view" id="auction_lots_sell_form">
 		<field name="name">auction.lots.form3</field>
 		<field name="model">auction.lots</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Auction">
+				<notebook>
+				<page string="Auction">
 					<field name="obj_num" readonly="1" select="1"/>
 					<field name="auction_id" select="2"/>
 					<field name="obj_price" select="1"/>
@@ -412,6 +419,8 @@ Auction Management/Auction Dates/Reporting
 					<field name="artist_id" readonly="1"/>
 					<field name="author_right" domain="[('domain','=','sabam')]"/>
 					<newline/>
+					<field name="buyer_price"/>
+					<field name="is_ok" select="1"/>
 					<field name="obj_desc" readonly="1" colspan="4"/>
 					<field name="lot_est1" readonly="1"/>
 					<field name="lot_est2" readonly="1"/>
@@ -431,6 +440,18 @@ Auction Management/Auction Dates/Reporting
 					<button name="button_not_bought" string="Not sold" states="draft" type="object"/>
 					<button name="button_draft" string="Set to draft" states="sold,unsold" type="object"/>
 					</group>
+				</page>
+				<page string="Statements">
+					<field name="statement_id" domain="[('state','=','draft')]" colspan="4" readonly="1" nolabel="1"
+						widget="one2many_list">
+						<tree string="Payment's history">
+							<field name="name"/>
+							<field name="amount"/>
+							<field name="date"/>
+				</tree>
+					</field>
+				</page>
+			</notebook>
 			</form>
 		</field>
 	</record>
@@ -678,6 +699,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="auction_id" />
 				<field name="nobjects" />
 				<field name="nbuyer" />
+				<field name="obj_ret" />
 				<field name="nseller" />
 				<field name="min_est" />
 				<field name="max_est" />
@@ -709,6 +731,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="res_model">report.auction.view</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
+		<!--field name="domain">[('auction_id','=', active_id)]</field-->
 	</record>
    <menuitem name="Auction Management/Reporting/Auction/Auction's summary" action="action_auction_report_allmonth_view1" id="menu_auction_allmonth_view1"/>
 
@@ -795,8 +818,8 @@ Auction Management/Auction Dates/Reporting
 				<field name="seller" select="1"/>
 				<field name="object_number" select="2"/>
 				<field name="total_price" select="2"/>
-				<field name="avg_price" select="2"/>
-				<field name="avg_estimation" select="2"/>
+				<field name="avg_price" select="2" />
+				<field name="avg_estimation" select="2" />
 			</tree>
 		</field>
 	</record>
@@ -807,7 +830,6 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<graph string="Auction reporting graph view" orientation="vertical" type="bar">
 				<field name="seller" />
-			<!--	<field name="object"operator="+" />-->
 			<!--	<field name="object_sold"/>	-->
 				<field name="total_price" operator="+"/>
 				<field name="avg_price" operator="+" />
@@ -842,7 +864,7 @@ Auction Management/Auction Dates/Reporting
 				<field name="sum_adj" select="1"/>
 				<field name="gross_revenue" select="1"/>
 				<field name="net_revenue" select="1"/>
-				<field name="net_margin" select="1"/>
+				<field name="net_margin" select="1" />
 				<field name="date" select="1"/>
 
 			</form>
@@ -856,10 +878,10 @@ Auction Management/Auction Dates/Reporting
 			<tree string="Auction reporting2 tree view">
 				<field name="auction" select="1"/>
 				<field name="seller" select="1"/>
-				<field name="sum_adj" select="1"/>
+				<field name="sum_adj" select="1" sum="Sum adj"/>
 				<field name="gross_revenue" select="1"/>
 				<field name="net_revenue" select="1"/>
-				<field name="net_margin" select="1"/>
+				<field name="net_margin" select="1" sum="Sum net margin"/>
 				<field name="date" select="1"/>
 				</tree>
 		</field>
@@ -947,10 +969,10 @@ Auction Management/Auction Dates/Reporting
 					<field name="auction" select="1"/>
 					<field name="buyer_login" select="1"/>
 					<field name="buyer" select="1"/>
-					<field name="sumadj" select="1"/>
+					<field name="sumadj" select="1" sum="Sum adj"/>
 					<field name="gross_revenue" select="1"/>
 					<field name="net_revenue" select="1"/>
-					<field name="net_margin" select="1"/>
+					<field name="net_margin" select="1" sum="Sum net margin"/>
 		</tree>
 		</field>
 	</record>
@@ -971,7 +993,7 @@ Auction Management/Auction Dates/Reporting
 	</record>
 	<menuitem name="Auction Management/Reporting/Buyer/Buyer's summary" action="action_auction_buyer_reporting_all1" id="menu_buyer_allmonth_view1"/>
 	<record model="ir.actions.act_window" id="action_auction_buyer_reporting_all2">
-		<field name="name">Seller's auction for all months</field>
+		<field name="name">Buyer's auction for all months</field>
 		<field name="res_model">report.buyer.auction2</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
@@ -1033,6 +1055,7 @@ estimation.adj.category
 				<field name="lot_est1" select="2"/>
 				<field name="lot_est2" select="2"/>
 				<field name="adj_total" select="2"/>
+				<field name="date" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -1048,6 +1071,7 @@ estimation.adj.category
 				<field name="lot_est1" select="1"/>
 				<field name="lot_est2" select="1"/>
 				<field name="adj_total" select="1"/>
+				<field name="date" select="1"/>
 			</tree>
 		</field>
 	</record>
@@ -1082,7 +1106,7 @@ estimation.adj.category
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('date','like',time.strftime('%Y-%m')),('user_id','=',uid)]</field>
 	</record>
-<menuitem name="Auction Management/Reporting/Member/Comparison of estimations" action="action_report_auction_estimation_adj_category_member_tree" id="menu_report_auction_estimation_adj_category_member"/>
+<menuitem name="Auction Management/Reporting/Employee/Comparison of estimations" action="action_report_auction_estimation_adj_category_member_tree" id="menu_report_auction_estimation_adj_category_member"/>
 	<menuitem name="Auction Management/Reporting/Manager/Comparison of estimations"  action="action_report_auction_estimation_adj_category_manager_tree" id="menu_report_auction_estimation_adj_category_manager"/>
 
 
@@ -1168,7 +1192,7 @@ sign in sign out report by user
 		<field name="domain"> [('employee_id','=',uid)]</field>
 		<!--<field name="domain"> [('name','ilike',time.strftime('%Y-%m'))]</field>-->
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/Attendance" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
+	<menuitem name="Auction Management/Reporting/Employee/Attendance" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
 
 
 	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree1">
@@ -1207,7 +1231,7 @@ My Latest Deposit
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('create_uid','=',uid)]</field>
 	</record>
-	<!--menuitem name="Auction Management/Reporting/Member/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/-->
+	<menuitem name="Auction Management/Reporting/Employees/My Latest Deposits" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
 
 	<record model="ir.actions.act_window" id="action_report_latest_doposit_manager_tree">
 		<field name="res_model">auction.deposit</field>
@@ -1215,6 +1239,7 @@ My Latest Deposit
 		<field name="view_mode">tree,form</field>
 	</record>
 
+	<menuitem name="Auction Management/Reporting/Manager/Latest Deposits" action="action_report_latest_doposit_manager_tree" id="menu_report_latest_doposit_tree_manager"/>
 =============================
 Objects per Day
 ==============================
@@ -1277,7 +1302,7 @@ Objects per Day
 		action="action_report_auction_object_date_tree" 
 		id="menu_report_auction_object_date_tree"/>
 	<menuitem 
-		name="Auction Management/Reporting/Member/My encoded objects per day"
+		name="Auction Management/Reporting/Employee/My encoded objects per day"
 		action="action_report_auction_object_date_tree_my"
 		id="menu_report_auction_object_date_tree1_my"/>
 
@@ -1332,7 +1357,11 @@ Objects per Day
 		id="menu_auction_dates_next_by_auction"
 		action="action_report_object_by_auction"/>
 
-
+	<act_window name="Open lots"
+		domain="[('auction_id', '=', active_id)]"
+		res_model="auction.lots"
+		src_model="auction.dates"
+		id="act_auction_lot_line_open"/>
 
 =============================
 Auction adjudication
@@ -1346,7 +1375,6 @@ Auction adjudication
 			<tree string="Total adjudication">
 				<field name="name" select="1"/>
 				<field name="adj_total" select="1"/>
-				<field name="user_id" select="1"/>
 				<field name="state" select="1"/>
 			</tree>
 		</field>
@@ -1395,7 +1423,8 @@ Auction adjudication
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-	<menuitem name="Auction Management/Sellers/Depositer's statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_member"/>
+	<menuitem name="Auction Management/Reporting/Manager/ Depositer's statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_m"/>
+	<menuitem name="Auction Management/Reporting/Employees/ Depositer's statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_member"/>
 =============================
 Object encoded
 ==============================
@@ -1415,12 +1444,29 @@ Object encoded
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_report_object_encoded_tree">
+<record model="ir.ui.view" id="view_report_object_encoded_tree">
+<field name="name">report.object.encoded.tree</field>
+<field name="model">report.object.encoded</field>
+<field name="type">tree</field>
+
+	<field name="arch" type="xml">
+
+	<tree string="Objects statistics">
+<field name="date" select="1"/>
+<field name="state" select="1"/>
+<field name="user_id" select="1"/>
+<field name="estimation"/>
+<field name="obj_ret"/>
+<field name="obj_num"/>
+</tree>
+</field>
+</record>
+<!--	<record model="ir.ui.view" id="view_report_object_encoded_tree">
 		<field name="name">report.object.encoded.tree</field>
 		<field name="model">report.object.encoded</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Objects statistics">
+			<tree string="Objects statistics" >
 				<field name="date" select="1"/>
 				<field name="state" select="1"/>
 				<field name="user_id" select="1"/>
@@ -1430,7 +1476,7 @@ Object encoded
 			</tree>
 		</field>
 	</record>
-
+-->
 	<record model="ir.ui.view" id="view_report_object_encoded_graph">
 		<field name="name">report.object.encoded.graph</field>
 		<field name="model">report.object.encoded</field>

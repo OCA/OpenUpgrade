@@ -61,12 +61,12 @@
 
 		<!-- demo data for the account tax code-->
 
-		<record model="account.tax.code" id="account_tax_code_id1">
+		<!--record model="account.tax.code" id="account_tax_code_id1">
 		<field name="name">VAT 1%</field>
 		<field name="code">VAT01</field>
 		<field name="company_id" model="res.company"  search="[]"/>
 
-	</record>
+	</record>-->
 
 <!-- demo data for the auction taxes-->
 
@@ -106,14 +106,20 @@
                 <field name="amount">-0.10</field>
 				<field name="domain">auction</field>
     </record>
+	<record id="auction_tax7" model="account.tax">
+                <field name="name">20%</field>
+                <field name="amount">0</field>
+				<field name="domain">auction</field>
+
+    </record>
 
 <!--    	example for creating a demo data for the tax with basecode and tax code-->
 	<record id="auction_tax6" model="account.tax">
                 <field name="name">Frais de vente</field>
                 <field name="amount">-0.15</field>
 				<field name="domain">auction</field>
-				<field name="base_code_id" ref="account_tax_code_id1"/>
-				<field name="'tax_code_id" ref="account_tax_code_id1"/>
+				<!--field name="base_code_id" ref="account_tax_code_id1"/-->
+				<!--field name="'tax_code_id" ref="account_tax_code_id1"/-->
     </record>
 
 	<record id="monproduit" model="product.product">

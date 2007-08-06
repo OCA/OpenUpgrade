@@ -750,8 +750,8 @@ class auction_lots(osv.osv):
 			if not lot.auction_id.id:
 				continue
 			partner_r=self.pool.get('res.partner')
-		#	if not lot.ach_uid.id:
-		#		raise orm.except_orm('Missed buyer !', 'The object "%s" has no buyer assigned.' % (lot.name,))
+			if not lot.ach_uid.id:
+				raise orm.except_orm('Missed buyer !', 'The object "%s" has no buyer assigned.' % (lot.name,))
 			if (lot.auction_id.id,lot.ach_uid.id) in invoices:
 				inv_id = invoices[(lot.auction_id.id,lot.ach_uid.id)]
 			else:
@@ -768,7 +768,6 @@ class auction_lots(osv.osv):
 				inv_id = inv_ref.create(cr, uid, inv, context)
 				invoices[(lot.auction_id.id,lot.ach_uid.id)] = inv_id
 			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
-
 			#calcul des taxes
 			taxes = map(lambda x: x.id, lot.product_id.taxes_id)
 			taxes+=map(lambda x:x.id, lot.auction_id.buyer_costs)
@@ -789,9 +788,9 @@ class auction_lots(osv.osv):
 	#	inv_ref.button_compute(cr, uid, [inv_id])
 	#		inv_ref.button_compute(cr, uid, [inv_id])
 			inv_ref.button_compute(cr, uid, [inv_id])
-	#	for l in  inv_ref.browse(cr, uid, invoices.values(), context):
-	#		wf_service = netsvc.LocalService('workflow')
-	#		wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_open', cr)
+		for l in  inv_ref.browse(cr, uid, invoices.values(), context):
+			wf_service = netsvc.LocalService('workflow')
+			wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_open', cr)
 		return invoices.values()
 
 
@@ -1033,7 +1032,7 @@ class report_auction_view2(osv.osv):
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view2 as (
 			select
-				ad.id,
+				min(ad.id) as id,
 				ad.auction1 as date,
 				ad.id as "auction",
 				count(al.id) as "obj_number",
@@ -1065,18 +1064,20 @@ class report_auction_view(osv.osv):
 		'min_est':fields.float('Minimum Estimation', readonly=True, select=2),
 		'max_est':fields.float('Maximum Estimation', readonly=True, select=2),
 		'adj_price':fields.float('Adjudication price', readonly=True, select=2),
+		'obj_ret':fields.integer('# obj ret', readonly=True, select=2)
 	}
 
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view  as
 			(select
-				al.auction_id as id,
+				min(al.id) as id,
 				al.auction_id as "auction_id",
 				count(al.id) as "nobjects",
 				count(al.ach_login) as "nbuyer",
 				count(al.bord_vnd_id) as "nseller",
 				sum(al.lot_est1) as "min_est",
 				sum(al.lot_est2) as "max_est",
+				(SELECT count(1) FROM auction_lots WHERE obj_ret>0) as obj_ret,
 				sum(al.obj_price) as "adj_price"
 			from
 				auction_lots al
