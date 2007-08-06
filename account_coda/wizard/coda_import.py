@@ -89,7 +89,6 @@ result_fields = {
 }
 
 
-
 def _coda_parsing(self, cr, uid, data, context):
     print "Coda Parsing is start here..........."
     pool = pooler.get_pool(cr.dbname)
@@ -113,7 +112,8 @@ def _coda_parsing(self, cr, uid, data, context):
             bank_statement["bank_statement_line"]={}
             bank_statement['date'] = str2date(line[5:11])
             bank_statement['journal_id']=data['form']['journal_id']
-            period_id = pool.get('account.period').search(cr,uid,[('date_start','<=',time.strftime("%y/%m/%d",time.strptime(bank_statement['date'],"%d/%m/%y"))),('date_stop','>=',time.strftime("%y/%m/%d",time.strptime(bank_statement['date'],"%d/%m/%y")))])
+            #period_id = pool.get('account.period').search(cr,uid,[('date_start','<=',time.strftime("%y/%m/%d",time.strptime(bank_statement['date'],"%d/%m/%y"))),('date_stop','>=',time.strftime("%y/%m/%d",time.strptime(bank_statement['date'],"%d/%m/%y")))])
+            period_id = pool.get('account.period').search(cr,uid,[('date_start','<=',time.strftime('%Y-%m-%d',time.strptime(bank_statement['date'],"%y/%m/%d"))),('date_stop','>=',time.strftime('%Y-%m-%d',time.strptime(bank_statement['date'],"%y/%m/%d")))])
             bank_statement['period_id'] = period_id[0]
             bank_statement['state']='draft'
         elif line[0] == '1':
@@ -141,8 +141,9 @@ def _coda_parsing(self, cr, uid, data, context):
                 else:
                     st_line['free_comm']=line[62:115]
                     st_line['ref']=''
-#                st_line['val_date']=line[47:53]
-#                st_line['entry_date']=line[115:121]
+
+                st_line['val_date']=time.strftime('%Y-%m-%d',time.strptime(str2date(line[47:53]),"%y/%m/%d")),
+                st_line['entry_date']=time.strftime('%Y-%m-%d',time.strptime(str2date(line[115:121]),"%y/%m/%d")),
                 st_line['partner_id']=0
                 if line[31] == '1':
                     st_line_amt = - st_line_amt
@@ -151,7 +152,6 @@ def _coda_parsing(self, cr, uid, data, context):
                     st_line['account_id'] = def_rec_acc
                 st_line['amount'] = st_line_amt
                 bank_statement_lines[st_line['name']]=st_line
-
                 bank_statement["bank_statement_line"]=bank_statement_lines
 
             elif line[1] == '3':
@@ -214,7 +214,7 @@ def _coda_parsing(self, cr, uid, data, context):
         try:
             bk_st_id = pool.get('account.bank.statement').create(cr,uid,{
                 'journal_id': statement['journal_id'],
-                'date':statement['date'],
+                'date':time.strftime('%Y-%m-%d',time.strptime(statement['date'],"%y/%m/%d")),
                 'period_id':statement['period_id'],
                 'balance_start': statement["balance_start"],
                 'balance_end_real': statement["balance_end_real"],
@@ -223,8 +223,7 @@ def _coda_parsing(self, cr, uid, data, context):
             lines=statement["bank_statement_line"]
             for value in lines:
                 line=lines[value]
-                str_not1=" Partner name:%s \n Partner Account Number:%s \n Communication:%s \n \n"%(line["contry_name"],line["cntry_number"],line["free_comm"])
-                #str_not1=" Partner name:%s \n Partner Account Number:%s \n Communication:%s \n Value Date:%s \n Entry Date:%s \n"%(line["contry_name"],line["cntry_number"],line["free_comm"],line["val_date"],line["entry_date"])
+                str_not1="Partner name:%s \n Partner Account Number:%s \n Communication:%s \n Value Date:%s \n Entry Date:%s \n"%(line["contry_name"],line["cntry_number"],line["free_comm"],line["val_date"],line["entry_date"][0])
                 id=pool.get('account.bank.statement.line').create(cr,uid,{
                            'name':line['name'],
                            'date': line['date'],
@@ -278,6 +277,7 @@ def _coda_parsing(self, cr, uid, data, context):
 
 def str2date(date_str):
             return time.strftime("%y/%m/%d",time.strptime(date_str,"%d%m%y"))
+
 def str2float(str):
     try:
         return float(str)
