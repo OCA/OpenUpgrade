@@ -45,13 +45,13 @@
 	<menuitem name="Financial Management/Periodical processing/Import Coda Statements" action="wizard_account_coda_import"
 	type="wizard"  id="menu_account_coda_wizard" sequence="15"/>
 
-
-	<act_window name="Open Payment"
-		res_model="payment.order"
-		src_model="account.coda"
+	<act_window name="Coda import"
+		domain="[('statement_id', '=', active_id)]"
+		res_model="account.coda"
+		src_model="account.bank.statement"
 		view_type="form"
 		view_mode="tree,form"
-		id="act_account_payment_account_bank_statement"/>
+ 		id="act_account_payment_account_bank_statement"/>
 
 	</data>
 </terp>
