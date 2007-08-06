@@ -924,7 +924,7 @@ class report_buyer_auction2(osv.osv):
 					ad.id as auction,
 					sum(al.gross_revenue) as gross_revenue,
 					sum(al.net_revenue) as net_revenue,
-					sum(al.net_margin) as net_margin
+					avg(al.net_margin) as net_margin
 				from
 					auction_lots al,
 					auction_dates ad
@@ -1004,7 +1004,7 @@ class report_seller_auction2(osv.osv):
 				sum(al.obj_price) as "sum_adj",
 				sum(al.gross_revenue) as "gross_revenue",
 				sum(al.net_revenue) as "net_revenue",
-				sum(al.net_margin) as "net_margin"
+				avg(al.net_margin) as "net_margin"
 			from
 				auction_lots al,auction_dates adl,auction_deposit ad
 			where

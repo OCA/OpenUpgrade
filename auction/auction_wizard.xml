@@ -17,11 +17,13 @@
 		<wizard string="Map buyer username to Partners"
 		model="auction.lots"
 		name="auction.lots.buyer_map"
+		multi="1"
 		id="wizard_map_user"/>
 
 		<wizard string="Change Auction Date"
 		 model="auction.lots"
 		 name="auction.lots.auction_move"
+		multi="1"
 		 id="wizard_change_auction"/>
 
 		<!--wizard string="Pay objects of the seller"
@@ -56,6 +58,7 @@
 		<wizard string="SMS Send"
 		 model="auction.lots"
 		 name="auction.lots.sms_send"
+		multi="1"
  		id="wizard_sms"/>
 
 		 <!--wizard string="Invoice"
@@ -68,6 +71,7 @@
 		<wizard string="Invoice Seller objects"
 			model="auction.lots"
 			name="auction.lots.make_invoice"
+		multi="1"
 			id="wizard_invoice"/>
 
 		<wizard string="Invoice Buyer objects"
@@ -75,20 +79,16 @@
 			name="auction.lots.make_invoice_buyer"
 			id="wizard_invoice_buyer1"/>
 
-		<!--
-		<wizard string="Transfer unsold objects"
-			model="auction.lots"
-			name="auction.lots.transfer.unsold.object"
-			id="wizard_transfer_unsold_objects"/>
-		-->
-			<wizard string="Unmark as taken away"
+		<wizard string="Unmark as taken away"
 			model="auction.lots"
 			name="auction.lots.enable"
+			multi="1"
 			id="auction_wizard_enable_taken"/>
 		
-			<wizard string="Mark as taken away"
+		<wizard string="Mark as taken away"
 			model="auction.lots"
 			name="auction.lots.able"
+			multi="1"
 			id="auction_wizard_able_taken"/>
 			
 	</data>
