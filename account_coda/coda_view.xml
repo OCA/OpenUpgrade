@@ -7,7 +7,7 @@
 		<field name="model">account.coda</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="V11">
+			<form string="Coda import">
 				<field name="name" />
 				<field name="journal_id" />
 				<field name="date" />
@@ -24,7 +24,7 @@
 		<field name="model">account.coda</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="V11">
+			<tree string="Coda import">
 				<field name="journal_id" />
 				<field name="date" />
 				<field name="user_id" />
@@ -33,7 +33,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_account_coda">
-		<field name="name">account.coda</field>
+		<field name="name">Coda import</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">account.coda</field>
 		<field name="view_type">form</field>
@@ -42,7 +42,7 @@
 
 	<menuitem name="Financial Management/Reporting/Coda Statements" id="menu_account_coda" action="action_account_coda" sequence="12"/>
 
-	<menuitem name="Financial Management/Periodical Processing/Import Coda Statements" action="wizard_account_coda_import"
+	<menuitem name="Financial Management/Periodical processing/Import Coda Statements" action="wizard_account_coda_import"
 	type="wizard"  id="menu_account_coda_wizard" sequence="15"/>
 
 
