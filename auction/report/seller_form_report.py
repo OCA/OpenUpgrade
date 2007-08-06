@@ -36,24 +36,28 @@ from osv import osv
 class seller_form_report(report_sxw.rml_parse):
 	def __init__(self, cr, uid, name, context):
 		super(seller_form_report, self).__init__(cr, uid, name, context)
+		lot=self.pool.get('auction.lots').browse(cr,uid,uid)
+		#address=lot.bord_vnd_id.address_get(self.cr,self.uid,[partner.id])
+	#	partner=lot.bord_vnd_id.partner_id
+	#	address=partner.address and partner.address[0] or ""
+	#	street = address and address.street or ""
+	
+
+			
 		self.localcontext.update({
 			'time': time,
 			'sum_taxes': self.sum_taxes,
-	})
+	#		'street':street,
+	#		'address':address,
+})
 
+		
 	def sum_taxes(self, auction_id,obj_price):
-
-		 print "Auction Id :",auction_id
 		 seller_cost = self.pool.get('auction.dates').read(self.cr,self.uid,[auction_id],['seller_costs'])[0]
-		 print "Buyer Cost :",seller_cost['seller_costs']
 		 total_amount = 0.0
 		 for id in seller_cost['seller_costs'] :
-		 	print "Pooler",self.pool.get('account.tax')
 		 	amount = self.pool.get('account.tax').read(self.cr,self.uid,[id],['amount'])[0]['amount']
-		 	print  "Amount :",amount
 		 	total_amount += (amount*obj_price)
-
-
 		 return total_amount
 
 

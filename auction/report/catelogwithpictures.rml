@@ -52,7 +52,7 @@
     <para style="P26">
       <font color="white"> </font>
     </para>
-    <para style="P25">[[ setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</para>
+    <para style="P25">[[setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)})]][[o.image or setTag('image','para')]]</para>
     <para style="P20">
       <font color="white"> </font>
     </para>
