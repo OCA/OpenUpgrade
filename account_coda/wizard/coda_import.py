@@ -122,6 +122,9 @@ def _coda_parsing(self, cr, uid, data, context):
             if line[42] == '1':
                 bal_start = - bal_start
             bank_statement["balance_start"]= bal_start
+            bank_statement["acc_number"]=line[5:17]
+            bank_statement["acc_holder"]=line[64:90]
+
         elif line[0]=='2':
             # movement data record 2
             if line[1]=='1':
@@ -134,9 +137,12 @@ def _coda_parsing(self, cr, uid, data, context):
 
                 if line[61]=='1':
                     st_line['ref']=(line[65:77])
+                    st_line['free_comm']=''
                 else:
+                    st_line['free_comm']=line[62:115]
                     st_line['ref']=''
-
+#                st_line['val_date']=line[47:53]
+#                st_line['entry_date']=line[115:121]
                 st_line['partner_id']=0
                 if line[31] == '1':
                     st_line_amt = - st_line_amt
@@ -152,19 +158,32 @@ def _coda_parsing(self, cr, uid, data, context):
                 # movement data record 3.1
                 st_line_name = line[2:10]
                 st_line_partner_acc = str(line[10:47]).strip()
+                cntry_number=line[10:47]
+                contry_name=line[47:125]
                 #bank_ids = pool.get('res.partner.bank').search(cr,uid,[('number','=',st_line_partner_acc)])
                 bank_ids = pool.get('res.partner.bank').search(cr,uid,[('acc_number','=',st_line_partner_acc)])
                 if bank_ids:
                     bank = pool.get('res.partner.bank').browse(cr,uid,bank_ids[0],context)
                     line=bank_statement_lines[st_line_name]
+                    line['cntry_number']=cntry_number
+                    line['contry_name']=contry_name
+
                     if line and bank.partner_id:
                         line['partner_id']=bank.partner_id.id
                         if line['amount'] < 0 :
                             line['account_id']=bank.partner_id.property_account_payable[0]
                         else :
                             line['account_id']=bank.partner_id.property_account_receivable[0]
+
                         bank_statement_lines[st_line_name]=line
-                    bank_statement["bank_statement_line"]=bank_statement_lines
+                else:
+                    line=bank_statement_lines[st_line_name]
+                    line['cntry_number']=cntry_number
+                    line['contry_name']=contry_name
+                    bank_statement_lines[st_line_name]=line
+
+
+                bank_statement["bank_statement_line"]=bank_statement_lines
         elif line[0]=='3':
             pass
         elif line[0]=='8':
@@ -186,8 +205,11 @@ def _coda_parsing(self, cr, uid, data, context):
     str_log=''
     std_log=''
     str_log1 = "Coda File is Imported  :  "
-    print "" + str(len(bank_statements)) + ' Bank Statements   : \n' + str(bank_statements)
+    str_not=''
+    str_not1=''
 
+
+    print "" + str(len(bank_statements)) + ' Bank Statements   : \n' + str(bank_statements)
     for statement in bank_statements:
         try:
             bk_st_id = pool.get('account.bank.statement').create(cr,uid,{
@@ -201,6 +223,8 @@ def _coda_parsing(self, cr, uid, data, context):
             lines=statement["bank_statement_line"]
             for value in lines:
                 line=lines[value]
+                str_not1=" Partner name:%s \n Partner Account Number:%s \n Communication:%s \n \n"%(line["contry_name"],line["cntry_number"],line["free_comm"])
+                #str_not1=" Partner name:%s \n Partner Account Number:%s \n Communication:%s \n Value Date:%s \n Entry Date:%s \n"%(line["contry_name"],line["cntry_number"],line["free_comm"],line["val_date"],line["entry_date"])
                 id=pool.get('account.bank.statement.line').create(cr,uid,{
                            'name':line['name'],
                            'date': line['date'],
@@ -209,17 +233,15 @@ def _coda_parsing(self, cr, uid, data, context):
                            'partner_id':line['partner_id'] or 0,
                            'account_id':line['account_id'],
                            'statement_id': bk_st_id,
-                           'note':'Test',#today
-                           'ref':line['ref'],#today
+                           'note':str_not1,
+                           'ref':line['ref'],
                            })
             cr.commit()
 
+            str_not= "\n \n Account Number: %s \n Account Holder Name: %s " %(statement["acc_number"],statement["acc_holder"])
             std_log = std_log + "\nDate  : %s, Starting Balance :  %.2f , Ending Balance : %.2f "\
                       %(statement['date'], float(statement["balance_start"]), float(statement["balance_end_real"]))
-
-
             bkst_list.append(bk_st_id)
-
 
         except osv.except_osv, e:
             cr.rollback()
@@ -239,13 +261,13 @@ def _coda_parsing(self, cr, uid, data, context):
             raise
 
     err_log= err_log + '\n\nNumber of statements : '+ str(len([bkst_list]))
-    err_log= err_log + '\nNumber of error : '+ str(nb_err)
+    err_log= err_log + '\nNumber of error :'+ str(nb_err) +'\n'
 
     pool.get('account.coda').create(cr, uid,{
         'name':codafile,
         #'statement_ids':[(6,0,bkst_list)],
         'statement_id':bk_st_id,
-        'note':str_log1+std_log+err_log,
+        'note':str_log1+str_not+std_log+err_log,
         'journal_id':data['form']['journal_id'],
         'date':time.strftime("%Y-%m-%d"),
         'user_id':uid,
@@ -281,7 +303,7 @@ class coda_import(wizard.interface):
         form=data['form']
         return {
             'domain':"[('id','=',%d)]"%(form['statment_id']),
-            'name': 'Standard entries',
+            'name': 'Statement',
             'view_type': 'form',
             'view_mode': 'form,tree',
             'res_model': 'account.bank.statement',
