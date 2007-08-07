@@ -30,15 +30,16 @@
 		 model="auction.lots"
 		 name="bids.lots"
 		 rml="auction/report/bids_lots.rml"
+		 id="bid_phone"
+		 multi="1"/>
+
+		<report string="Bids"
+		 model="auction.bid"
+		 name="auction.bids"
+		 rml="auction/report/auction_bids.rml"
 		 id="bid_auction"
 		 multi="1"/>
 
-		<!--report string="Bids"
-		 model="auction.bid"
-		 name="report.auction.bid"
-		 xml="auction/report/bids.xml"
-		 xsl="auction/report/bids.xsl"
-		 multi="1"/-->
 
 		<!--report string="Deposits"
 		model="auction.deposit"
