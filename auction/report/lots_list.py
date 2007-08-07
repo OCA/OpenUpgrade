@@ -41,5 +41,5 @@ class lots_list(report_sxw.rml_parse):
 		print res;
 		print "=================================================="
 		return True
-report_sxw.report_sxw('report.lots.list', 'auction.lots', 'addons/auction/report/auction_result.rml', parser=lots_list)
+report_sxw.report_sxw('report.lots.list', 'auction.lots', 'addons/auction/report/lots_list.rml', parser=lots_list)
 
