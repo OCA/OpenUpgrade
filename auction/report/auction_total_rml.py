@@ -34,11 +34,23 @@ from report import report_sxw
 
 
 class auction_total_rml(report_sxw.rml_parse):
-	def __init__(self, cr, uid, name, context):
-		super(auction_total_rml, self).__init__(cr, uid, name, context)
-		self.localcontext.update({
-			'time': time,
+    def __init__(self, cr, uid, name, context):
+        super(auction_total_rml, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+            'sum_taxes':self.sum_taxes,
+            'sold_item':self.sold_item,
+            'sum_buyer':self.sum_buyer()
 
-		})
-report_sxw.report_sxw('report.auction.total.rml', 'auction.lots', 'addons/auction/report/auction_total_rml.rml',parser=auction_total_rml)
+        })
+
+    def sum_taxes(self, auction_id):
+        return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)])))
+    def sold_item(self, auction_id):
+        return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('state','in',['unsold','draft'])])))
+#    def sum_buyer(self, auction_id):
+#        return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)],[('ach_uid','>=',[])])))
+
+
+report_sxw.report_sxw('report.auction.total.rml', 'auction.lots', 'addons/auction/report/auction_total.rml',parser=auction_total_rml)
 
