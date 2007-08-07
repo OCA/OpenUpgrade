@@ -14,6 +14,12 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
       <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#e6e6e6" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#e6e6e6" start="4,0" stop="4,0"/>
+      <blockBackground colorName="#e6e6e6" start="5,0" stop="5,0"/>
     </blockTableStyle>
     <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
@@ -23,13 +29,15 @@
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Times-Roman" alignment="CENTER"/>
-    <paraStyle name="P2" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P3" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P5" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" fontName="Times-Roman" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P7" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P1" fontName="Courier" alignment="CENTER"/>
+    <paraStyle name="P2" rightIndent="13.0" leftIndent="11.0" fontName="Courier-BoldOblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Courier" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Bold" fontSize="12.0" leading="15" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -45,72 +53,62 @@
     <para style="Standard">
       <font color="white"> </font>
     </para>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
     <para style="P1">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="67.0,157.0,77.0,84.0,84.0,56.0" style="Table6">
+    <blockTable colWidths="35.0,209.0,64.0,40.0,128.0,48.0" style="Table6">
       <tr>
         <td>
-          <para style="P7">Catelog No</para>
+          <para style="P2">Cat.N</para>
         </td>
         <td>
-          <para style="P7">Description and Bids<font face="Times-Roman" size="8.0"/></para>
+          <para style="P2">Description and Bids </para>
         </td>
         <td>
-          <para style="P7">Est </para>
+          <para style="P2">Est Min/Max</para>
         </td>
         <td>
-          <para style="P7">Limit</para>
+          <para style="P2">Limit</para>
         </td>
         <td>
-          <para style="P7">Inv name</para>
+          <para style="P2">Inv,name</para>
         </td>
         <td>
-          <para style="P7">Buyer price</para>
+          <para style="P2">Buyer price</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="67.0,157.0,77.0,84.0,84.0,56.0" style="Table2">
+    <blockTable colWidths="35.0,209.0,64.0,40.0,128.0,48.0" style="Table2">
       <tr>
         <td>
-          <para style="P3"><font face="Times-Roman">[[repeatIn(objects,'o') ]]</font>[[o. obj_num]]</para>
+          <para style="P3">[[repeatIn(objects,'o') ]][[o. obj_num]]</para>
         </td>
         <td>
-          <para style="P4">
-            <font face="Times-Roman" size="12.0">[[o.name ]]</font>
-          </para>
+          <para style="P4">[[o.name ]]</para>
+          <para style="P4">[[o.bid_lines and o.bid_lines[0].bid_id.contact_tel or False]]</para>
         </td>
         <td>
-          <para style="P5">[[o.lot_est1]] -[[o.lot_est2]]</para>
+          <para style="P5">[[o.lot_est1]] <font face="Times-Roman">/</font>[[o.lot_est2]]</para>
         </td>
         <td>
           <para style="P5">[[o.vnd_lim]]</para>
         </td>
         <td>
-          <para style="P3">[[o.bord_vnd_id.partner_id.name ]]</para>
+          <para style="P6">
+            <font face="Courier">[[ o.bord_vnd_id.name ]]</font>
+          </para>
+          <para style="P7">[[o.bord_vnd_id.partner_id.name ]]</para>
+          <para style="P7">
+            <font color="white"> </font>
+          </para>
         </td>
         <td>
-          <para style="P6">[[o.buyer_price]]</para>
+          <para style="P8">[[o.buyer_price]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P2">
+    <para style="P9">
       <font color="white"> </font>
-    </para>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <para style="P3">
-      <font face="Times-Bold" size="12.0"/>
     </para>
   </story>
 </document>

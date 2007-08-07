@@ -48,7 +48,8 @@
 		name="catelogwithpictures"
 		rml="auction/report/catelogwithpictures.rml"
 		auto="False"
-		multi="1"/>
+		multi="1"
+		id="1"/>
 
 
 	<report string="Catalog"
@@ -67,12 +68,14 @@
 		auto="False"
 		multi="1"/>
 
-	<!--report string="Lots List2"
+	<report string="Lots List sxw"
 	   	model="auction.lots"
 		name="lots.list"
 		rml="auction/report/lots_list.rml"
 		auto="False"
-		multi="1"/-->
+		multi="1"
+		id="2"/>
+
 
 
 	<report string="Lots List-Landscape"
