@@ -15,6 +15,15 @@
 		 name="report.auction.artists"
 		 xml="auction/report/artists.xml"
 		 xsl="auction/report/artists.xsl"
+		 id="art2"
+		 multi="1"/>
+
+		<report string="Artists Biography"
+
+		 model="auction.lots"
+		 name="auction.artists"
+		 rml="auction/report/auction_artists.rml"
+		 id="art_auction"
 		 multi="1"/>
 
 		<report string="Bids"
@@ -24,24 +33,18 @@
 		 xsl="auction/report/bids.xsl"
 		 multi="1"/>
 
-		<report string="Deposits"
+		<!--report string="Deposits"
 		model="auction.deposit"
 		name="report.auction.deposit"
 		xml="auction/report/deposit.xml"
 		xsl="auction/report/deposit.xsl"
-		multi="1"/>
+		multi="1"/-->
 
 		<report string="Seller Labels"
 		 model="auction.lots"
 		 name="auction.seller_labels"
 		 auto="False"
 		 multi="1"/>
-
-		<!--report string="Invoices"
-		 model="auction.lots"
-		 name="auction.invoice"
-		 auto="False"
-		 multi="1"/-->
 
 	<report string="Catalog with pictures"
 	   	model="auction.lots"
@@ -57,7 +60,7 @@
 		name="auction.catelog"
 		rml="auction/report/auction_catelog.rml"
 		auto="False"
-		multi="1"/>-
+		multi="1"/>
 
 
 
@@ -107,24 +110,12 @@
 		auto="False"
 		multi="1"/>
 
-
-
-
 	<report string="Auction Totals with lists"
 	   	model="auction.lots"
 		name="auction.total.rml"
 		rml="auction/report/auction_total_rml.rml"
 		auto="False"
 		multi="1"/>
-
-	<!--<report string="Buyer Form"
-		 model="auction.lots"
-		 name="report.auction.ach_bordereau"
-		 xml="auction/report/ach_bordereau.xml"
-		 xsl="auction/report/ach_bordereau.xsl"
-
-		  multi="1"/-->
-
 
 		  <report string="Buyer Form"
 		  model="auction.lots"
@@ -140,14 +131,6 @@
 		  auto="False"
 		  multi="1"/>
 
-		<!--<report string="Seller Form"
-		model="auction.lots"
-		name="report.auction.vnd_bordereau"
-		xml="auction/report/vnd_bordereau.xml"
-		xsl="auction/report/vnd_bordereau.xsl"
-
-		 multi="1"/>
--->
 		<!--<report string="Catelog"
 		model="auction.lots"
 		name="auction.catalog"
@@ -155,14 +138,6 @@
 		xsl="auction/report/catalog.xsl"
 		multi="1"/>
 -->
-	<!--	<report string="Buyer List"
-		model="auction.lots"
-		name="report.auction.buyer.list"
-		xml="auction/report/buyer_list.xml"
-		xsl="auction/report/buyer_list.xsl"
-		menu="False"
-		multi="1"/>-->
-
 		<report string="Seller List"
 		 model="auction.lots"
 		 name="report.auction.seller.list"
@@ -186,26 +161,19 @@
 		 xsl="auction/report/lots_bids_phone.xsl"
 		 multi="1"/>
 
-		<!--<report string="Deposit Letters"
-		model="auction.lots"
-		name="report.auction.lots.deposit"
-		xml="auction/report/lots_deposit.xml"
-		xsl="auction/report/lots_deposit.xsl"/>
-	 keyword="client_print_multi" -->
-
 		<report string="Auction's results"
 			model="auction.lots"
 			name="auction.result"
 		  	rml="auction/report/auction_result.rml"
 			multi="1"/>
 
-	<!--	<report string="Results with buyer"
+		<report string="Results with buyer"
 			model="auction.lots"
-			name="report.auction.results_w_buyer"
-			xml="auction/report/results_buyer.xml"
-			xsl="auction/report/results_buyer.xsl"
-			multi="1"/>
--->
+			name="report.auction.buyer.result"
+			rml="auction/report/auction_buyer_result.rml"
+			multi="1"
+			id="res_w_buyer"/>
+
 		</data>
 </terp>
 

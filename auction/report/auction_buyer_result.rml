@@ -26,12 +26,10 @@
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" rightIndent="13.0" leftIndent="11.0" fontName="Courier-BoldOblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P2" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P3" fontName="Times-Bold" fontSize="12.0" leading="15" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" rightIndent="13.0" leftIndent="11.0" fontName="Courier-BoldOblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P5" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P1" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" rightIndent="13.0" leftIndent="11.0" fontName="Courier-BoldOblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Bold" fontSize="12.0" leading="15" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -41,48 +39,46 @@
     <paraStyle name="Index" fontName="Times-Roman"/>
   </stylesheet>
   <story>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
     <para style="P1">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="77.0,74.0,85.0" style="Table6">
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="77.0,74.0,218.0" style="Table6">
       <tr>
         <td>
-          <para style="P1">Num</para>
+          <para style="P2">Num</para>
         </td>
         <td>
-          <para style="P1">Adj</para>
+          <para style="P2">Adj</para>
         </td>
         <td>
-          <para style="P1">Buyer</para>
+          <para style="P2">Buyer</para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="77.0,74.0,85.0" style="Table2">
+    <blockTable colWidths="77.0,74.0,218.0" style="Table2">
       <tr>
         <td>
-          <para style="P2">[[repeatIn(objects,'o') ]]<font face="Times-Roman" size="12.0">[[o. obj_num ]]</font></para>
+          <para style="P1">[[repeatIn(objects,'o') ]]<font face="Times-Roman" size="12.0">[[o. obj_num ]]</font></para>
         </td>
         <td>
-          <para style="P2">[[ o.obj_price]]</para>
+          <para style="P1">[[ o.obj_price]]</para>
         </td>
         <td>
-          <para style="P6">
-            <font face="Times-Roman">[[o.ach_uid and o.ach_uid.name or False ]]</font>
-          </para>
+          <para style="P3">[[o.ach_uid and o.ach_uid.name or False ]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P3">
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <para style="P4">
       <font color="white"> </font>
     </para>
     <para style="P3">
       <font color="white"> </font>
-    </para>
-    <para style="P6">
-      <font face="Times-Roman"/>
     </para>
   </story>
 </document>

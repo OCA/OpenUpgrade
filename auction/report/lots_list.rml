@@ -34,7 +34,7 @@
     <paraStyle name="P3" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P4" fontName="Courier" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P5" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" rightIndent="17.0" leftIndent="0.0" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P7" rightIndent="17.0" leftIndent="0.0" fontName="Courier" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P8" fontName="Courier" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P9" fontName="Times-Bold" fontSize="12.0" leading="15" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -94,9 +94,7 @@
           <para style="P5">[[o.vnd_lim_net and 'NET' or False]]</para>
         </td>
         <td>
-          <para style="P6">
-            <font face="Courier">[[ o.bord_vnd_id.name ]]</font>
-          </para>
+          <para style="P6">[[ o.bord_vnd_id.name ]]</para>
           <para style="P7">[[o.bord_vnd_id.partner_id.name ]]</para>
           <para style="P7">
             <font color="white"> </font>
