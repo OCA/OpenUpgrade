@@ -90,7 +90,7 @@ class auction_total_rml(report_sxw.rml_parse):
 
     def chek_paid(self, auction_id):
         print "################chek paid function",auction_id
-        self.cr.execute("select count(*) from auction_lots where auction_id=%d and paid_ach='True'"%(auction_id))
+        self.cr.execute("select count(*) from auction_lots where auction_id=%d and paid_ach='1'"%(auction_id))
         res = self.cr.fetchone()
         print "value of res",res
         print "print thte value",str(res[0]);
@@ -100,7 +100,7 @@ class auction_total_rml(report_sxw.rml_parse):
 
     def sum_credit(self, auction_id):
         print "################sum credit function",auction_id
-        self.cr.execute("select sum(buyer_price) from auction_lots where auction_id=%d and paid_ach='True'"%(auction_id))
+        self.cr.execute("select sum(buyer_price) from auction_lots where auction_id=%d and paid_ach='1'"%(auction_id))
         res = self.cr.fetchone()
         print "value of res",res
         print "print thte value",str(res[0]);
@@ -108,7 +108,7 @@ class auction_total_rml(report_sxw.rml_parse):
 
     def sum_debit(self, auction_id):
         print "################sum debit function",auction_id
-        self.cr.execute("select sum(seller_price) from auction_lots where auction_id=%d and paid_ach= 'True'"%(auction_id))
+        self.cr.execute("select sum(seller_price) from auction_lots where auction_id=%d and paid_ach='1'"%(auction_id))
         res = self.cr.fetchone()
         print "value of res",res
         print "print thte value",str(res[0]);
