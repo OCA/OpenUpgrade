@@ -335,7 +335,14 @@ Auction Management/Auction Dates/Reporting
 
 				</page>
 			<page string="Bids">
-				<field name="bid_lines" colspan="4" nolabel="1" editable="top"/>
+				<field name="bid_lines" colspan="4" nolabel="1" editable="top">
+						<tree string="Bids"  editable="top">
+							<field name="bid_id"/>
+							<field name="price"/>
+							<field name="call"/>
+						</tree>
+					</field>
+
 			</page>
 
 				</notebook>
@@ -444,7 +451,7 @@ Auction Management/Auction Dates/Reporting
 				<page string="Statements">
 					<field name="statement_id" domain="[('state','=','draft')]" colspan="4" readonly="1" nolabel="1"
 						widget="one2many_list">
-						<tree string="Payment's history">
+						<tree string="Payment's history" editable="top">
 							<field name="name"/>
 							<field name="amount"/>
 							<field name="date"/>
@@ -462,14 +469,12 @@ Auction Management/Auction Dates/Reporting
 	=======================================================
 	<record model="ir.actions.act_window" id="action_unclassified_objects">
 		<field name="name">Unclassified objects</field>
-		<field name="res_model">auction.lots</field>
+		<field name="res_model">report.unclassified.objects</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="domain">[('lot_type','=','41')]</field>
 	 </record>
-
-
 	<menuitem name="Auction Management/Objects/All objects/Unclassified objects" action="action_unclassified_objects" id="menu_all_objects_unclassified"/>
+
 	<record model="ir.ui.view" id="v12">
 		<field name="name">Auction.deposit.tree</field>
 		<field name="model">auction.deposit</field>
@@ -1106,7 +1111,7 @@ estimation.adj.category
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('date','like',time.strftime('%Y-%m')),('user_id','=',uid)]</field>
 	</record>
-<menuitem name="Auction Management/Reporting/Employee/Comparison of estimations" action="action_report_auction_estimation_adj_category_member_tree" id="menu_report_auction_estimation_adj_category_member"/>
+<menuitem name="Auction Management/Reporting/Employees/Comparison of estimations" action="action_report_auction_estimation_adj_category_member_tree" id="menu_report_auction_estimation_adj_category_member"/>
 	<menuitem name="Auction Management/Reporting/Manager/Comparison of estimations"  action="action_report_auction_estimation_adj_category_manager_tree" id="menu_report_auction_estimation_adj_category_manager"/>
 
 
@@ -1192,7 +1197,7 @@ sign in sign out report by user
 		<field name="domain"> [('employee_id','=',uid)]</field>
 		<!--<field name="domain"> [('name','ilike',time.strftime('%Y-%m'))]</field>-->
 	</record>
-	<menuitem name="Auction Management/Reporting/Employee/Attendance" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
+	<menuitem name="Auction Management/Reporting/Employees/Attendance" action="action_report_auction_sign_in_out_member_tree1" id="menu_report_auction_sign_in_out_member_tree1"/>
 
 
 	<record model="ir.actions.act_window" id="action_report_auction_sign_in_out_manager_tree1">
@@ -1302,7 +1307,7 @@ Objects per Day
 		action="action_report_auction_object_date_tree" 
 		id="menu_report_auction_object_date_tree"/>
 	<menuitem 
-		name="Auction Management/Reporting/Employee/My encoded objects per day"
+		name="Auction Management/Reporting/Employees/My encoded objects per day"
 		action="action_report_auction_object_date_tree_my"
 		id="menu_report_auction_object_date_tree1_my"/>
 
@@ -1545,7 +1550,27 @@ Object encoded
 	</record>
 
 	<!--menuitem name="Auction Management/Reporting/Manager/Objects statistics" action="action_report_object_encoded_manager_tree" id="menu_report_objects_tree_manager"/-->
-
+	<record model="ir.ui.view" id="view_report_unclassified_objects">
+		<field name="name">report.unclassified.objects</field>
+		<field name="model">report.unclassified.objects</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Unclassified objects">
+				<field name="obj_num" string="Ref" select="1"/>
+				<field name="name" select="1"/>
+				<field name="ach_login"/>
+				<field name="obj_price"/>
+				<field name="state" select="1"/>
+				<field name="obj_comm"/>
+				<field name="bord_vnd_id"/>
+				<field name="lot_num"/>
+				<field name="lot_est1"/>
+				<field name="lot_est2"/>
+				<field name="lot_type" select="1"/>
+				<field name="auction"/>
+			</tree>
+		</field>
+	</record>
 
 </data>
 </terp>

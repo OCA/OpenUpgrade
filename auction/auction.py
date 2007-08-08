@@ -438,8 +438,8 @@ class auction_lots(osv.osv):
 		'vnd_lim': fields.float('Seller limit'),
 		'vnd_lim_net': fields.boolean('Net limit ?'),
 		'image': fields.binary('Image'),
-		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,type='boolean'),
-		'paid_ach':fields.function(_is_paid_ach,string='Buyer invoice reconciled',method=True,type='boolean'),
+		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,store=True),
+		'paid_ach':fields.function(_is_paid_ach,string='Buyer invoice reconciled',method=True,store=True),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('sold','Sold')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='Buyer price',store=True),
 		'seller_price': fields.function(_sellerprice, method=True, string='Seller price',store=True),
@@ -1236,7 +1236,7 @@ class report_deposit_border(osv.osv):
 	_rec_name='bord'
 	_columns = {
 		'bord': fields.char('Depositer Inventory', size=64, required=True),
-		'seller': fields.many2one('res.users','Seller',select=1),
+		'seller': fields.many2one('res.partner','Seller',select=1),
 		'moy_est' : fields.float('Avg. Est', select=1, readonly=True),
 		'total_marge': fields.float('Total margin', readonly=True),
 		'nb_obj':fields.float('# of objects', readonly=True),
@@ -1325,3 +1325,44 @@ class report_object_encoded_manager(osv.osv):
 			group by substring(al.create_date for 10), al.create_uid)
 			 ''')
 report_object_encoded_manager()
+
+class report_unclassified_objects(osv.osv):
+	_name = "report.unclassified.objects"
+	_description = "Unclassified objects "
+	_auto = False
+	_columns = {
+		'name': fields.char('Short Description',size=64, required=True),
+		'obj_num': fields.integer('Catalog Number'),
+		'obj_price': fields.float('Adjudication price'),
+		'lot_num': fields.integer('List Number', required=True, select=1 ),
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('sold','Sold')),'State', required=True, readonly=True),
+		'obj_comm': fields.boolean('Commission'),
+		'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
+		'ach_login': fields.char('Buyer Username',size=64),
+		'lot_est1': fields.float('Minimum Estimation'),
+		'lot_est2': fields.float('Maximum Estimation'),
+		'lot_type': fields.selection(_type_get, 'Object category', size=64),
+		'auction': fields.many2one('auction.dates', 'Auction date',readonly=True, select=1),
+	}
+	def init(self, cr):
+		cr.execute("""create or replace view report_unclassified_objects as
+			(select
+				min(al.id) as id,
+				al.name as name,
+				al.obj_price as obj_price,
+				al.obj_num as obj_num,
+				al.lot_num as lot_num,
+				al.state as state,
+				al.obj_comm as obj_comm,
+				al.bord_vnd_id as bord_vnd_id,
+				al.ach_login as ach_login,
+				al.lot_est1 as lot_est1,
+				al.lot_est2 as lot_est2,
+				al.lot_type as lot_type,
+				al.auction_id as auction
+			from auction_lots al,auction_lot_category ac
+			where (al.lot_type=ac.name) AND (ac.aie_categ='41') AND (al.auction_id is null)
+group by al.obj_price,al.obj_num, al.lot_num, al.state, al.obj_comm,al.bord_vnd_id,al.ach_login,al.lot_est1,al.lot_est2,al.lot_type,al.auction_id,al.name)
+			 """)
+report_unclassified_objects()
+
