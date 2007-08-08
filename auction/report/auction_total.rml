@@ -254,9 +254,7 @@
           <para style="P22"># of items taken away:</para>
         </td>
         <td>
-          <para style="P22">
-            <font color="white"> </font>
-          </para>
+          <para style="P22">[[ count_take(o.auction_id.id) ]]</para>
         </td>
       </tr>
       <tr>
@@ -264,7 +262,7 @@
           <para style="P22">Credit:</para>
         </td>
         <td>
-          <para style="P22">[[sum_credit(o.auction_id.id ]]</para>
+          <para style="P22">[[ sum_credit(o.auction_id.id) ]]</para>
         </td>
       </tr>
       <tr>
@@ -272,7 +270,7 @@
           <para style="P22">Paid:</para>
         </td>
         <td>
-          <para style="P22">[[chek_paid(o.auction_id.id ]]</para>
+          <para style="P22">[[ chek_paid(o.auction_id.id) ]]</para>
         </td>
       </tr>
       <tr>
@@ -366,7 +364,7 @@
           <para style="P22">Debit:</para>
         </td>
         <td>
-          <para style="P22">[[sum_debit(o.auction_id.id ]]</para>
+          <para style="P22">[[ sum_debit(o.auction_id.id) ]]</para>
         </td>
       </tr>
     </blockTable>
