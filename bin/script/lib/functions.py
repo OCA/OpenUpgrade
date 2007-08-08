@@ -11,7 +11,10 @@ if __name__<>"package":
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
         sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
-        res = sock.execute('terp', 3, 'admin', object , 'fields_get')
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), object , 'fields_get')
         key = res.keys()
         key.sort()
         for k in key:
@@ -75,7 +78,10 @@ def getList(aObjectList,host,count):
 
 def getRelation(sRelName, sItem, sObjName, aObjectList, host ):
         sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
-        res = sock.execute('terp', 3, 'admin', sRelName , 'fields_get')
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sRelName , 'fields_get')
         key = res.keys()
         for k in key:
             if sItem.find(".") == -1:

@@ -10,6 +10,7 @@ import os
 #   2. any other parameters you specified to this object's constructor (as a tuple).
 os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
 passwd=""
+database=""
 loginstatus=False
 from com.sun.star.awt import XActionListener
 class ActionListenerProcAdapter( unohelper.Base, XActionListener ):

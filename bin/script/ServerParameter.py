@@ -76,7 +76,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 passwd=self.win.getEditText("txtPassword")
                 global loginstatus
                 loginstatus=True
-                docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
+                global database
+                database=sDatabase
+                #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
                 #docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":

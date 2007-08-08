@@ -12,6 +12,7 @@ import os
 #   2. any other parameters you specified to this object's constructor (as a tuple).
 os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
 passwd=""
+database=""
 loginstatus=False
 from com.sun.star.awt import XActionListener
 class ActionListenerProcAdapter( unohelper.Base, XActionListener ):
@@ -87,7 +88,10 @@ if __name__<>"package":
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
         sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
-        res = sock.execute('terp', 3, 'admin', object , 'fields_get')
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), object , 'fields_get')
         key = res.keys()
         key.sort()
         for k in key:
@@ -151,7 +155,10 @@ def getList(aObjectList,host,count):
 
 def getRelation(sRelName, sItem, sObjName, aObjectList, host ):
         sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
-        res = sock.execute('terp', 3, 'admin', sRelName , 'fields_get')
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sRelName , 'fields_get')
         key = res.keys()
         for k in key:
             if sItem.find(".") == -1:
@@ -1418,7 +1425,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
-            res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
             #import traceback;traceback.print_exc()
@@ -1429,7 +1436,7 @@ class Fields(unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None
@@ -1732,7 +1739,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
+        self.win.doModalDialog("",None)
+        #self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOkOrCancel_clicked(self,oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -1753,7 +1761,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 passwd=self.win.getEditText("txtPassword")
                 global loginstatus
                 loginstatus=True
-                docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
+                global database
+                database=sDatabase
+                #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
                 #docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
@@ -1855,7 +1865,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from LoginTest import *
-#
+
 #
 # Start OpenOffice.org, listen for connections and open testing document
 #
@@ -1868,10 +1878,11 @@ class NewReport(unohelper.Base, XJobExecutor):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
-        self.win=DBModalDialog(60, 50, 180, 115, "Open New Report")
+        self.win=DBModalDialog(60, 50, 180, 135, "Open New Report")
         self.win.addFixedText("lblModuleSelection", 2, 12, 60, 15, "Module Selection")
         self.win.addComboListBox("lstModule", -2,9,123,80 , False)
         self.lstModule = self.win.getControl( "lstModule" )
+        self.win.addFixedText("lblReportName", 2, 12, 60, 15, "Report Name")
         self.aModuleName=[]
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
@@ -1885,14 +1896,10 @@ class NewReport(unohelper.Base, XJobExecutor):
         for i in range(res.__len__()):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])
-
-
         self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
-
         self.win.addButton('btnCancel',-2 - 70 - 5 ,-5, 35,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
-
         self.win.doModalDialog("",None)
 
     def btnOkOrCancel_clicked(self,oActionEvent):
@@ -1957,13 +1964,13 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.ids = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
+        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
-        fields=['name','report_name']
-        res_other = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
-        for i in range(res_other.__len__()):
-            if res_other[i]['name']<>"":
-                self.lstReport.addItem(res_other[i]['name'],self.lstReport.getItemCount())
+        fields=['name','report_name','model']
+        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
+        for i in range(self.res_other.__len__()):
+            if self.res_other[i]['name']<>"":
+                self.lstReport.addItem(self.res_other[i]['name'],self.lstReport.getItemCount())
 
         self.win.addFixedText("lblModuleSelection1", 2, 98, 178, 15, "Module Selection")
         self.win.addButton('btnSave',-2 ,-5,80,15,'Save to Temp Directory'
@@ -1971,7 +1978,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         self.win.addButton('btnCancel',-2 -80 ,-5,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         #os.system( "oowriter /home/hjo/Desktop/aaa.sxw &" )
-        self.win.doModalDialog("lstReport",res_other[0]['name'])
+        self.win.doModalDialog("lstReport",self.res_other[0]['name'])
 
     def lstbox_selected(self,oItemEvent):
         #print self.win.getListBoxSelectedItemPos("lstReport")
@@ -1982,20 +1989,35 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
+            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
             if res['report_sxw_content']:
                 data = base64.decodestring(res['report_sxw_content'])
                 fp_name = self.win.getEditText("lblModuleSelection1")
-                fp = file(fp_name, 'wb+')
+                fp = file(fp_name, 'wb')
                 fp.write(data)
                 fp.close()
+            url="file://"+self.win.getEditText("lblModuleSelection1")
+            arr=Array()
+            oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
+            oVC= oDoc2.getCurrentController().getViewCursor()
+            oText = oVC.getText()
+            oCur=oText.createTextCursorByRange(oVC.getStart())
+            oCur.insertDocumentFromURL(url, Array())
+            docinfo2=oDoc2.getDocumentInfo()
+            docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
+            docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
+            docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
+            docinfo2.setUserFieldValue(3,self.res_other[self.win.getListBoxSelectedItemPos("lstReport")]['model'])
+            if oDoc2.isModified():
+                if oDoc2.hasLocation() and not oDoc2.isReadonly():
+                    oDoc2.store()
+                #End If
+            #End If
+            #os.system( "`which ooffice` '-accept=socket,host=localhost,port=2002;urp;'")
             ErrorDialog("Download is Completed","Your file has been placed here :\n"+ self.win.getEditText("lblModuleSelection1"),"Download Message")
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
-
-
-#           file('/tmp/data.sxw', 'w').write(data)
 
 if __name__<>"package" and __name__=="__main__":
     ModifyExistingReport(None)
@@ -2004,4 +2026,75 @@ elif __name__=="package":
             ModifyExistingReport,
             "org.openoffice.tiny.report.modifyreport",
             ("com.sun.star.task.Job",),)
+
+
+
+import uno
+import string
+import unohelper
+import xmlrpclib
+import base64, tempfile
+from com.sun.star.task import XJobExecutor
+import os
+import sys
+if __name__<>'package':
+    from lib.gui import *
+    from lib.error import *
+    from LoginTest import *
+    from lib.functions import *
+
+class SendtoServer(unohelper.Base, XJobExecutor):
+    def __init__(self,ctx):
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+        LoginTest()
+        if not loginstatus and __name__=="package":
+            exit(1)
+#        else:
+#            self.database="trunk_1"
+        desktop=getDesktop()
+        oDoc2 = desktop.getCurrentComponent()
+        docinfo=oDoc2.getDocumentInfo()
+        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+        fields=['name','report_name','model']
+        res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
+        print res_other
+        self.win = DBModalDialog(60, 50, 180, 65, "Send To Server")
+        self.win.addFixedText("lblExpression",10 , 9, 40, 15, "Report Name :")
+        self.win.addEdit("txtExpression", -5, 5, 123, 15,res_other[0]['name'])
+        self.win.addFixedText("lblName", 2, 30, 50, 15, "Technical Name :")
+        self.win.addEdit("txtName", -5, 25, 123, 15,res_other[0]['report_name'])
+        self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
+                        actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
+                        actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.doModalDialog("",None)
+    def btnOkOrCancel_clicked(self, oActionEvent):
+        if oActionEvent.Source.getModel().Name == "btnSend":
+            desktop=getDesktop()
+            oDoc2 = desktop.getCurrentComponent()
+            docinfo=oDoc2.getDocumentInfo()
+            print "abc",oDoc2.isModified(),oDoc2.hasLocation()
+            if oDoc2.isModified() and not oDoc2.hasLocation():
+                ErrorDialog("Please Save your file in filesystem !!!","File->Save OR File->Save As")
+            elif oDoc2.isModified() and oDoc2.hasLocation():
+                oDoc2.store()
+                url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
+                fp = file(url, 'rb')#"Love has the power to break all chains - Swim the deepest seas - Endure the strongest pains - Love is the glow in the darkest night leading you on until you have sight."
+                data=fp.read()
+                fp.close()
+                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
+                self.win.endExecute()
+        elif oActionEvent.Source.getModel().Name == "btnCancel":
+            self.win.endExecute()
+if __name__<>"package" and __name__=="__main__":
+    SendtoServer(None)
+elif __name__=="package":
+    g_ImplementationHelper.addImplementation( \
+            SendtoServer,
+            "org.openoffice.tiny.report.sendtoserver",
+            ("com.sun.star.task.Job",),)
+
 

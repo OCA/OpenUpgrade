@@ -456,7 +456,7 @@
 						<value>com.sun.star.text.TextDocument</value>
 					</prop>
 				</node>
-				<node oor:name="m34" oor:op="replace">
+<!--				<node oor:name="m34" oor:op="replace">
  	            	<prop oor:name="Context" oor:type="xs:string">
  	                   	<value>com.sun.star.text.TextDocument</value>
  	                </prop>
@@ -517,7 +517,7 @@
 					<prop oor:name="Context" oor:type="xs:string">
 						<value>com.sun.star.text.TextDocument</value>
 					</prop>
-				</node>
+				</node>-->
 				<node oor:name="m45" oor:op="replace">
  	            	<prop oor:name="Context" oor:type="xs:string">
  	                   	<value>com.sun.star.text.TextDocument</value>
@@ -648,6 +648,19 @@
 					</prop>
 					<prop oor:name="ImageBigURL" oor:type="xs:string" oor:width="100">
 						<value>%origin%/images/server_b.png</value>
+					</prop>
+				</node>
+			</node>
+			<node oor:name="org.openoffice.tiny.report.image9" oor:op="replace">
+				<prop oor:name="URL">
+					<value>service:org.openoffice.tiny.report.about?insert</value>
+				</prop>
+				<node oor:name="UserDefinedImages">
+					<prop oor:name="ImageSmallURL" oor:type="xs:string">
+						<value>%origin%/images/aboutus_s.png</value>
+					</prop>
+					<prop oor:name="ImageBigURL" oor:type="xs:string" oor:width="100">
+						<value>%origin%/images/aboutus_b.png</value>
 					</prop>
 				</node>
 			</node>
