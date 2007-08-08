@@ -25,7 +25,7 @@
 		 rml="auction/report/auction_artists.rml"
 		 id="art_auction"
 		 multi="1"/>
-	
+
 		<report string="Bids phones"
 		 model="auction.lots"
 		 name="bids.lots"
@@ -81,8 +81,10 @@
 		name="lots.list"
 		rml="auction/report/lots_list.rml"
 		auto="False"
-		multi="1"
-		id="2"/>
+		multi="1"/>
+
+
+
 
 	<report string="Lots List-Landscape"
 		 model="auction.lots"
@@ -97,13 +99,16 @@
 		 multi="1"/>
 
 
-	<!--report string="Lots List"
+	-<!--<report string="Lots List"
+-->
+	<!--<report string="Lots List"
+
 	   	model="auction.lots"
 		name="report.auction.lots.list"
 		xml="auction/report/lots_list.xml"
 		xsl="auction/report/lots_list.xsl"
-
-		 multi="1"/-->
+		 multi="1"/>
+-->
 
 
 	<report string="Buyer lists"
@@ -116,7 +121,7 @@
 	<report string="Auction Totals with lists"
 	   	model="auction.lots"
 		name="auction.total.rml"
-		rml="auction/report/auction_total_rml.rml"
+		rml="auction/report/auction_total.rml"
 		auto="False"
 		multi="1"/>
 
