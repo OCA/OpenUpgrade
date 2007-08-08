@@ -40,17 +40,35 @@ class auction_total_rml(report_sxw.rml_parse):
             'time': time,
             'sum_taxes':self.sum_taxes,
             'sold_item':self.sold_item,
-            'sum_buyer':self.sum_buyer()
-
+            'sum_buyer':self.sum_buyer,
+            'sum_seller':self.sum_seller,
+            'sum_buyer_paid':self.sum_buyer_paid,
         })
 
     def sum_taxes(self, auction_id):
         return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)])))
     def sold_item(self, auction_id):
         return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('state','in',['unsold','draft'])])))
-#    def sum_buyer(self, auction_id):
-#        return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)],[('ach_uid','>=',[])])))
+    def sum_buyer(self, auction_id):
+        print "################buyer sum function",auction_id
+        self.cr.execute('select count(*) from auction_lots where auction_id=%d AND ach_uid is not null'%(auction_id))
+        res = self.cr.fetchone()
+        print "%%%%%%%%rts",str(res[0]);
+        return str(res[0])
+    def sum_seller(self, auction_id):
+        print "################seller function",auction_id
+        self.cr.execute('select count(*) from auction_lots where auction_id=%d AND bord_vnd_id is not null'%(auction_id))
+        res = self.cr.fetchone()
+        print "print thte value",str(res[0]);
+        return str(res[0])
 
+    def sum_buyer_paid(self, auction_id):
+        print "###############in byerpaid function",auction_id
+        self.cr.execute("select count(*) from auction_lots where auction_id=%d AND state = 'paid'"%(auction_id))
+        res = self.cr.fetchone()
+        print "^^^^^^",res;
+        print "%%%%%%%%rts",str(res[0]);
+        return str(res[0])
 
 report_sxw.report_sxw('report.auction.total.rml', 'auction.lots', 'addons/auction/report/auction_total.rml',parser=auction_total_rml)
 
