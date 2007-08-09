@@ -25,16 +25,20 @@
     <paraStyle name="P1" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="RIGHT"/>
     <paraStyle name="P2" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P3" fontName="Times-Roman"/>
-    <paraStyle name="P4" rightIndent="13.0" leftIndent="11.0" fontName="Courier-BoldOblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P5" rightIndent="13.0" leftIndent="11.0" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" rightIndent="13.0" leftIndent="11.0" fontName="Courier-Oblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P7" rightIndent="13.0" leftIndent="11.0" fontName="Courier-Oblique" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" rightIndent="14.0" leftIndent="2.0" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" rightIndent="1.0" leftIndent="-3.0" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="JUSTIFY" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" rightIndent="13.0" leftIndent="11.0" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" rightIndent="0.0" leftIndent="37.0" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Courier" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="P9" fontName="Courier" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="P10" fontName="Courier" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="3.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Addressee" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="3.0"/>
     <paraStyle name="Index" fontName="Times-Roman"/>
   </stylesheet>
   <story>
@@ -47,36 +51,36 @@
     <para style="P3">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="77.0,38.0,357.0,53.0" style="Table3">
+    <blockTable colWidths="34.0,32.0,451.0,45.0" style="Table3">
       <tr>
         <td>
           <para style="P4">Inv</para>
         </td>
         <td>
-          <para style="P4">List. N</para>
+          <para style="P5">List.N</para>
         </td>
         <td>
-          <para style="P4">Description</para>
+          <para style="P6">Description</para>
         </td>
         <td>
-          <para style="P4">cat.N.</para>
+          <para style="P7">cat.N.</para>
         </td>
       </tr>
       <tr>
         <td>
-          <para style="P5">
-            <font face="Times-Roman" size="6.0">[[repeatIn(objects,'o')]] </font>
-            <font face="Courier-Oblique" size="10.0">[[o.bord_vnd_id.name]]</font>
+          <para style="P8">
+            <font face="Times-Roman" size="4.0">[[repeatIn(objects,'o')]]</font>
+            <font face="Times-Roman">[[o.bord_vnd_id.name]]</font>
           </para>
         </td>
         <td>
-          <para style="P6">[[o.lot_num]]</para>
+          <para style="P8">[[o.lot_num]]</para>
         </td>
         <td>
-          <para style="P7">[[o.name]]</para>
+          <para style="P9">[[o.obj_desc]]</para>
         </td>
         <td>
-          <para style="P6">[[o.obj_num]]</para>
+          <para style="P10">[[o.obj_num]]</para>
         </td>
       </tr>
     </blockTable>

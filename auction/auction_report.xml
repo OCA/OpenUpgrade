@@ -85,12 +85,19 @@
 
 
 
+		<report string="Lots List - Landscape"
+		 model="auction.lots"
+		 name="report.auction.lots.list.landscape"
+		 xml="auction/report/lots_list_landscape.xml"
+		 xsl="auction/report/lots_list_landscape.xsl"
+		id="lot_list_inv"
+		  multi="1"/>
 
-	<report string="Lots List-Landscape"
+	<!--report string="Lots List-Landscape"
 		 model="auction.lots"
 		 name="lots.list.landscape"
 		 rml="auction/report/lots_list_landscape.rml"
-		 multi="1"/>
+		 multi="1"/-->
 
     <report string="Lots List Inventory"
 		 model="auction.lots"
