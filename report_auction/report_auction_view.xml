@@ -111,7 +111,7 @@ Customer/Supplier
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Manager/Customer per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Customer Per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
 =============================
 My Latest 10 Deposit
 ==============================
@@ -198,7 +198,7 @@ My Latest 10 Objects
 		<field name="view_mode">tree</field>
 		<!--<field name="domain">[('user_id','=',uid)]</field>-->
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/My Latest 10 objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
+	<menuitem name="Auction Management/Reporting/Member/My Latest 10 Objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
 =============================
 Objects per Day
 ==============================
@@ -294,8 +294,8 @@ estimation.adj.category
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('date','=',time.strftime('%Y-%m-01'))]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/This month/estimation/adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
-	<menuitem name="Auction Management/Reporting/Manager/This month/estimation/adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
+	<menuitem name="Auction Management/Reporting/Member/This Month/Estimation/Adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
+	<menuitem name="Auction Management/Reporting/Manager/This Month/Estimation/Adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
 
 
 =============================
@@ -341,8 +341,8 @@ sign in sign out report by user
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
-	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
+	<menuitem name="Auction Management/Reporting/Member/Summury of Sign_in Sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Summury of Sign_in Sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
 
 
 </data>

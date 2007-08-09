@@ -38,7 +38,7 @@
 			<field name="view_type">form</field>
 		</record>
 		<menuitem 
-			name="Administration/Synchronization/History/Synchronized instances"
+			name="Administration/Synchronization/History/Synchronized Instances"
 			action="action_base_synchro_obj_line_tree"
 			id="menu_action_base_synchro_obj_line_tree" />
 
@@ -85,7 +85,7 @@
 			<field name="view_type">form</field>
 		</record>
 
-		<menuitem name="Administration/Synchronization/Synchronized objects"
+		<menuitem name="Administration/Synchronization/Synchronized Objects"
 			action="action_transfer_tree" 
 			id="transfer_menu_id" />
 
@@ -128,7 +128,7 @@
 		</record>
 
 		<record model="ir.actions.act_window" id="action_base_synchro_server_tree">
-			<field name="name">Synchronized servers</field>
+			<field name="name">Synchronized Servers</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">base.synchro.server</field>
 			<field name="view_type">form</field>

@@ -126,7 +126,7 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="domain">[('state','=','draft')]</field>
 		<field name="view_id" eval="False"/>
 	</record>
-	<menuitem name="Auction Management/Auction Dates/Next auction dates" id="menu_auction_dates_next1" action="action_auction_dates_next"/>
+	<menuitem name="Auction Management/Auction Dates/Next Auction Dates" id="menu_auction_dates_next1" action="action_auction_dates_next"/>
 	=======================================================
 	Auction Management/Auction Dates/Old Auction Dates
 	=======================================================
@@ -359,7 +359,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="domain">[('state','=','sold')]</field>
 	</record>
 	<menuitem
-		name="Auction Management/Objects/All objects/Sold objects"
+		name="Auction Management/Objects/All Objects/Sold Objects"
 		action="action_all_objects_sold"
 		id="menu_all_objects_sold1"/>
 
@@ -1155,8 +1155,8 @@ sign in sign out report by user
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/summury of sign_in sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
-	<menuitem name="Auction Management/Reporting/Manager/summury of sign_in sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
+	<menuitem name="Auction Management/Reporting/Member/Summury of Sign_in Sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Summury of Sign_in Sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
 
 -->
 
@@ -1218,7 +1218,7 @@ My Latest Objects
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('create_uid','=',uid)]</field>
 	</record>
-	<!--menuitem name="Auction Management/Reporting/Member/My Latest objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/-->
+	<!--menuitem name="Auction Management/Reporting/Member/My Latest Objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/-->
 	<record model="ir.actions.act_window" id="action_report_latest_objects_manager_tree">
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
@@ -1303,11 +1303,11 @@ Objects per Day
 		<field name="domain">[('month','=',time.strftime('%Y-%m-01'))]</field>
 	</record>
 	<menuitem 
-		name="Auction Management/Reporting/Manager/Encoded objects per day" 
+		name="Auction Management/Reporting/Manager/Encoded Objects Per Day" 
 		action="action_report_auction_object_date_tree" 
 		id="menu_report_auction_object_date_tree"/>
 	<menuitem 
-		name="Auction Management/Reporting/Employees/My encoded objects per day"
+		name="Auction Management/Reporting/Employee/My Encoded Objects Per Day"
 		action="action_report_auction_object_date_tree_my"
 		id="menu_report_auction_object_date_tree1_my"/>
 
@@ -1358,7 +1358,7 @@ Objects per Day
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=', 'draft')]</field>
 	</record>
-	<menuitem name="Auction Management/Objects/Objects by auction"
+	<menuitem name="Auction Management/Objects/Objects by Auction"
 		id="menu_auction_dates_next_by_auction"
 		action="action_report_object_by_auction"/>
 
@@ -1405,7 +1405,7 @@ Auction adjudication
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Manager/Adjudication by auction" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree"/>
+	<menuitem name="Auction Management/Reporting/Manager/Adjudication by Auction" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree"/>
 
 	<!--menuitem name="Auction Management/Reporting/Member/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree1"/-->
 
@@ -1428,8 +1428,8 @@ Auction adjudication
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Manager/ Depositer's statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_m"/>
-	<menuitem name="Auction Management/Reporting/Employees/ Depositer's statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_member"/>
+	<menuitem name="Auction Management/Reporting/Manager/ Depositer's Statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_m"/>
+	<menuitem name="Auction Management/Reporting/Employees/ Depositer's Statistics" action="menu_view_auction_deposit_tree" id="menu_report_deposit_tree_member"/>
 =============================
 Object encoded
 ==============================
@@ -1503,7 +1503,7 @@ Object encoded
 		<field name="domain"> [('user_id','=',uid),('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
 
-	<!--menuitem name="Auction Management/Reporting/Member/Objects statistics" action="action_report_object_encoded_member_tree" id="menu_report_objects_tree_member"/-->
+	<!--menuitem name="Auction Management/Reporting/Member/Objects Statistics" action="action_report_object_encoded_member_tree" id="menu_report_objects_tree_member"/-->
 
 
 	<record model="ir.ui.view" id="view_report_object_encoded_manager_tree">
@@ -1549,7 +1549,7 @@ Object encoded
 		<field name="domain">[('date','ilike',time.strftime('%Y-%m'))]</field>
 	</record>
 
-	<!--menuitem name="Auction Management/Reporting/Manager/Objects statistics" action="action_report_object_encoded_manager_tree" id="menu_report_objects_tree_manager"/-->
+	<!--menuitem name="Auction Management/Reporting/Manager/Objects Statistics" action="action_report_object_encoded_manager_tree" id="menu_report_objects_tree_manager"/-->
 	<record model="ir.ui.view" id="view_report_unclassified_objects">
 		<field name="name">report.unclassified.objects</field>
 		<field name="model">report.unclassified.objects</field>
