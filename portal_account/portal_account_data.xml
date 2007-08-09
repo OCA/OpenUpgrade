@@ -17,7 +17,7 @@
 				<field name="name" >Invoice Model</field>
 				<field name="model_id" search="[('model','=','account.invoice')]"/>
 				<field name="rule_group_id" ref="invoice_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[portal_invoice_tree,portal_invoice_form])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('portal_invoice_tree'),ref('portal_invoice_form')])]"/>
 	</record>
 
 
@@ -38,7 +38,7 @@
 				<field name="name" >MoveLine Model</field>
 				<field name="model_id" search="[('model','=','account.move.line')]"/>
 				<field name="rule_group_id" ref="move_line_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[portal_move_line_tree,portal_move_line_form])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('portal_move_line_tree'),ref('portal_move_line_form')])]"/>
 	</record>
 	
 </data>

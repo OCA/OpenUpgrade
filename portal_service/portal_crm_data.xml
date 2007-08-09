@@ -19,7 +19,7 @@
 				<field name="name" >Case Model</field>
 				<field name="model_id" search="[('model','=','crm.case')]"/>
 				<field name="rule_group_id" ref="case_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[portal_crm_case_tree_view,portal_crm_case_view])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('portal_crm_case_tree_view'),ref('portal_crm_case_view')])]"/>
 	</record>
 	
 </data>

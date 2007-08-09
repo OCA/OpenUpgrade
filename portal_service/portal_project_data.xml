@@ -18,7 +18,7 @@
 				<field name="name" >Project Model</field>
 				<field name="model_id" search="[('model','=','project.project')]"/>
 				<field name="rule_group_id" ref="project_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[view_project])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('view_project')])]"/>
 	</record>
 
 	<record model="ir.rule.group" id="analytic_account_rule_group">
@@ -38,7 +38,7 @@
 				<field name="name" >Analytic Account Model</field>
 				<field name="model_id" search="[('model','=','account.analytic.account')]"/>
 				<field name="rule_group_id" ref="analytic_account_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[portal_analytic_account_tree,portal_analytic_account_form])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('portal_analytic_account_tree'),ref('portal_analytic_account_form')])]"/>
 	</record>	
 
 </data>

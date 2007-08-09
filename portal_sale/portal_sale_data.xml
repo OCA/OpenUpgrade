@@ -17,7 +17,7 @@
 				<field name="name">Sale Model</field>
 				<field name="model_id" search="[('model','=','sale.order')]"/>
 				<field name="rule_group_id" ref="sale_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[portal_sale_form,portal_sale_tree])]"/>
+				<field name="view_ids" eval="[(6,0,[ref('portal_sale_form'),ref('portal_sale_tree')])]"/>
 	</record>
 
 </data>
