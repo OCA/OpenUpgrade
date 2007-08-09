@@ -264,6 +264,7 @@ class auction_lots(osv.osv):
 			else:
 				montant=lot.obj_price
 			taxes = []
+			taxes = lot.product_id.taxes_id
 			if lot.author_right:
 				taxes.append(lot.author_right)
 			if lot.auction_id:
@@ -287,6 +288,7 @@ class auction_lots(osv.osv):
 			else:
 				montant=lot.obj_price
 			taxes = []
+			taxes = lot.product_id.taxes_id
 			if lot.bord_vnd_id.tax_id:
 				taxes.append(lot.bord_vnd_id.tax_id)
 			elif lot.auction_id and lot.auction_id.seller_costs:
@@ -438,8 +440,8 @@ class auction_lots(osv.osv):
 		'vnd_lim': fields.float('Seller limit'),
 		'vnd_lim_net': fields.boolean('Net limit ?'),
 		'image': fields.binary('Image'),
-		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,store=True),
-		'paid_ach':fields.function(_is_paid_ach,string='Buyer invoice reconciled',method=True,store=True),
+		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,type='boolean',store=True),
+		'paid_ach':fields.function(_is_paid_ach,string='Buyer invoice reconciled',method=True, type='boolean',store=True),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('sold','Sold')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='Buyer price',store=True),
 		'seller_price': fields.function(_sellerprice, method=True, string='Seller price',store=True),

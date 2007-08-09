@@ -34,27 +34,39 @@ from report import report_sxw
 from osv import osv
 
 class buyer_list(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
-        super(buyer_list, self).__init__(cr, uid, name, context)
-        self.localcontext.update({
-            'time': time,
-            'sum_taxes': self.sum_taxes,
-    })
+	def __init__(self, cr, uid, name, context):
+		super(buyer_list, self).__init__(cr, uid, name, context)
+		self.localcontext.update({
+			'time': time,
+			'sum_taxes': self.sum_taxes,
+			'sum_debit_buyer': self.sum_debit_buyer
+	})
 
-    def sum_taxes(self, auction_id,obj_price):
+	def sum_taxes(self, lot):
+#		buyer_cost = self.pool.get('auction.dates').read(self.cr,self.uid,[auction_id],['buyer_costs'])[0]
+#		total_amount = 0.0
+#		for id in buyer_cost['buyer_costs'] :
+#			amount = self.pool.get('account.tax').read(self.cr,self.uid,[id],['amount'])[0]['amount']
+#			total_amount += (amount*obj_price)
+#		 return total_amount
+		amount=0.0
+		taxes=[]
+		taxes = lot.product_id.taxes_id
+		taxes += lot.auction_id.buyer_costs
+		if lot.bord_vnd_id.tax_id:
+			taxes+=lot.author_right
+		tax=self.pool.get('account.tax').compute(self.cr,self.uid,taxes,lot.obj_price,1)
+		for t in tax:
+			amount+=t['amount']
+		print "amount",amount
+		print "tax",tax
+		return amount
 
-         print "Auction Id :",auction_id
-         buyer_cost = self.pool.get('auction.dates').read(self.cr,self.uid,[auction_id],['buyer_costs'])[0]
-         print "Buyer Cost :",buyer_cost['buyer_costs']
-         total_amount = 0.0
-         for id in buyer_cost['buyer_costs'] :
-             print "Pooler",self.pool.get('account.tax')
-             amount = self.pool.get('account.tax').read(self.cr,self.uid,[id],['amount'])[0]['amount']
-             print  "Amoubnt :",amount
-             total_amount += (amount*obj_price)
-
-
-         return total_amount
+	def sum_debit_buyer(self,object):
+		auct_id=object.auction_id.id
+		self.cr.execute('select buyer_price from auction_lots where auction_id=%d'%(auct_id,))
+		res = self.cr.fetchone()
+		return str(res[0] or 0)
 
 
 report_sxw.report_sxw('report.buyer.list', 'auction.lots', 'addons/auction/report/buyer_list.rml', parser=buyer_list)
