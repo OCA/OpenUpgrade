@@ -68,23 +68,47 @@
 	</record>
 
 	<record model="account.tax.code" id="account_tax_code_id2">
-		<field name="name">VAT 2%</field>
-		<field name="code">VAT02</field>
+		<field name="name">VAT 20%</field>
+		<field name="code">VAT20</field>
 		<field name="company_id" model="res.company"  search="[]"/>
 	</record>
+
+
+	<record model="account.tax.code" id="account_tax_code_id3">
+		<field name="name">VAT 10%</field>
+		<field name="code">VAT10</field>
+		<field name="company_id" model="res.company"  search="[]"/>
+	</record>
+
+	<record model="account.tax.code" id="account_tax_code_id4">
+		<field name="name">VAT 12%</field>
+		<field name="code">VAT12</field>
+		<field name="company_id" model="res.company"  search="[]"/>
+	</record>
+
+	<record model="account.tax.code" id="account_tax_code_id5">
+		<field name="name">VAT 5%</field>
+		<field name="code">VAT5</field>
+		<field name="company_id" model="res.company"  search="[]"/>
+	</record>
+
 
 <!-- demo data for the auction taxes-->
 
 	<record id="auction_tax" model="account.tax">
 		<field name="name">Droit d'auteur</field>
-		<field name="amount">0.04</field>
+		<field name="amount">0.05</field>
 		<field name="domain">sabam</field>
+		<field name="base_code_id" ref="account_tax_code_id5"/>
+		<field name="tax_code_id" ref="account_tax_code_id5"/>
 
 	</record>
 	<record id="auction_tax1" model="account.tax">
                 <field name="name">TVA</field>
-                <field name="amount">0.06</field>
+                <field name="amount">0.12</field>
 				<field name="domain">auction</field>
+				<field name="base_code_id" ref="account_tax_code_id4"/>
+				<field name="tax_code_id" ref="account_tax_code_id4"/>
     </record>
 
 
@@ -92,31 +116,34 @@
                 <field name="name">TVA1</field>
                 <field name="amount">0.2</field>
 				<field name="domain">auction</field>
+				<field name="base_code_id" ref="account_tax_code_id2"/>
+				<field name="tax_code_id" ref="account_tax_code_id2"/>
 
     </record>
 	<record id="auction_tax3" model="account.tax">
                 <field name="name">Buyer Costs</field>
                 <field name="amount">0.21</field>
 				<field name="domain">auction</field>
+				<field name="base_code_id" ref="account_tax_code_id1"/>
+				<field name="tax_code_id" ref="account_tax_code_id1"/>
 
     </record>
 	<record id="auction_tax4" model="account.tax">
                 <field name="name">Seller Costs1</field>
                 <field name="amount">-0.10</field>
 				<field name="domain">auction</field>
+				<field name="base_code_id" ref="account_tax_code_id1"/>
+				<field name="tax_code_id" ref="account_tax_code_id1"/>
 
     </record>
 	<record id="auction_tax5" model="account.tax">
                 <field name="name">Seller Costs</field>
                 <field name="amount">-0.10</field>
 				<field name="domain">auction</field>
+				<field name="base_code_id" ref="account_tax_code_id3"/>
+				<field name="tax_code_id" ref="account_tax_code_id3"/>
     </record>
-	<record id="auction_tax7" model="account.tax">
-                <field name="name">20%</field>
-                <field name="amount">0</field>
-				<field name="domain">auction</field>
 
-    </record>
 
 <!--    	example for creating a demo data for the tax with basecode and tax code-->
 	<record id="auction_tax6" model="account.tax">
@@ -127,6 +154,13 @@
 				<field name="tax_code_id" ref="account_tax_code_id1"/>
     </record>
 
+		<record id="auction_tax20" model="account.tax">
+                <field name="name">Frais de vente</field>
+                <field name="amount">0</field>
+				<field name="domain">auction</field>
+				<field name="base_code_id" ref="account_tax_code_id2"/>
+				<field name="tax_code_id" ref="account_tax_code_id2"/>
+    </record>
 	<record id="monproduit" model="product.product">
 		<field name="name">Oeuvres a 21%</field>
 		<field name="categ_id" ref="product.product_category_pc"/>
