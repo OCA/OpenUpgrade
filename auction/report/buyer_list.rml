@@ -35,8 +35,7 @@
     <paraStyle name="P5" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P6" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P7" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P8" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P9" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -64,7 +63,7 @@
     <para style="P5">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="135.0,118.0,99.0,51.0,51.0" style="Table2">
+    <blockTable colWidths="171.0,118.0,99.0,51.0,93.0" style="Table2">
       <tr>
         <td>
           <para style="P6">Buyer </para>
@@ -83,15 +82,13 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="135.0,118.0,99.0,51.0,51.0" style="Table3">
+    <blockTable colWidths="171.0,118.0,99.0,51.0,93.0" style="Table3">
       <tr>
         <td>
           <para style="P5"><font face="Times-Roman" size="7.0">[[ repeatIn(objects,'o') ]]</font> [[ o.ach_uid and o.ach_uid.name or False]]</para>
         </td>
         <td>
-          <para style="P8">
-            <font face="Times-Roman" size="9.0">[[ o.obj_price ]]</font>
-          </para>
+          <para style="P5">[[ o.obj_price ]]</para>
         </td>
         <td>
           <para style="P5">[[ sum_taxes( o.auction_id.id,o.obj_price)]] </para>
@@ -104,7 +101,7 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P9">
+    <para style="P8">
       <font color="white"> </font>
     </para>
   </story>
