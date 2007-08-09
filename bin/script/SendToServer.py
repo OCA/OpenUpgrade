@@ -60,6 +60,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
+
 if __name__<>"package" and __name__=="__main__":
     SendtoServer(None)
 elif __name__=="package":

@@ -1890,9 +1890,9 @@ class NewReport(unohelper.Base, XJobExecutor):
         print docinfo.getUserFieldValue(0)
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
-        ids = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
+        ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
         fields = [ 'model','name']
-        res = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
         for i in range(res.__len__()):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])
@@ -2000,9 +2000,9 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             arr=Array()
             oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
             oVC= oDoc2.getCurrentController().getViewCursor()
-            oText = oVC.getText()
-            oCur=oText.createTextCursorByRange(oVC.getStart())
-            oCur.insertDocumentFromURL(url, Array())
+            #oText = oVC.getText()
+            #oCur=oText.createTextCursorByRange(oVC.getStart())
+            #oCur.insertDocumentFromURL(url, Array())
             docinfo2=oDoc2.getDocumentInfo()
             docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
             docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
@@ -2081,7 +2081,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             elif oDoc2.isModified() and oDoc2.hasLocation():
                 oDoc2.store()
                 url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
-                fp = file(url, 'rb')#"Love has the power to break all chains - Swim the deepest seas - Endure the strongest pains - Love is the glow in the darkest night leading you on until you have sight."
+                fp = file(url, 'rb')
                 data=fp.read()
                 fp.close()
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
@@ -2096,5 +2096,4 @@ elif __name__=="package":
             SendtoServer,
             "org.openoffice.tiny.report.sendtoserver",
             ("com.sun.star.task.Job",),)
-
 
