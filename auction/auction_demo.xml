@@ -61,12 +61,17 @@
 
 		<!-- demo data for the account tax code-->
 
-		<!--record model="account.tax.code" id="account_tax_code_id1">
+		<record model="account.tax.code" id="account_tax_code_id1">
 		<field name="name">VAT 1%</field>
 		<field name="code">VAT01</field>
 		<field name="company_id" model="res.company"  search="[]"/>
+	</record>
 
-	</record>-->
+	<record model="account.tax.code" id="account_tax_code_id2">
+		<field name="name">VAT 2%</field>
+		<field name="code">VAT02</field>
+		<field name="company_id" model="res.company"  search="[]"/>
+	</record>
 
 <!-- demo data for the auction taxes-->
 
@@ -118,8 +123,8 @@
                 <field name="name">Frais de vente</field>
                 <field name="amount">-0.15</field>
 				<field name="domain">auction</field>
-				<!--field name="base_code_id" ref="account_tax_code_id1"/-->
-				<!--field name="'tax_code_id" ref="account_tax_code_id1"/-->
+				<field name="base_code_id" ref="account_tax_code_id1"/>
+				<field name="tax_code_id" ref="account_tax_code_id1"/>
     </record>
 
 	<record id="monproduit" model="product.product">
