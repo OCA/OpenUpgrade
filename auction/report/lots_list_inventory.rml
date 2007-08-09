@@ -26,8 +26,9 @@
     <paraStyle name="P2" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P3" fontName="Times-Roman"/>
     <paraStyle name="P4" rightIndent="13.0" leftIndent="11.0" fontName="Courier-BoldOblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P5" rightIndent="13.0" leftIndent="11.0" fontName="Courier-Oblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" rightIndent="13.0" leftIndent="11.0" fontName="Courier-Oblique" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" rightIndent="13.0" leftIndent="11.0" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" rightIndent="13.0" leftIndent="11.0" fontName="Courier-Oblique" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" rightIndent="13.0" leftIndent="11.0" fontName="Courier-Oblique" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -46,7 +47,7 @@
     <para style="P3">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="64.0,45.0,363.0,53.0" style="Table3">
+    <blockTable colWidths="77.0,38.0,357.0,53.0" style="Table3">
       <tr>
         <td>
           <para style="P4">Inv</para>
@@ -63,28 +64,22 @@
       </tr>
       <tr>
         <td>
-          <para style="P5">[[ repeatIn(objects,'o') ]][[o.bord_vnd_id.name]]</para>
           <para style="P5">
-            <font color="white"> </font>
+            <font face="Times-Roman" size="6.0">[[repeatIn(objects,'o')]] </font>
+            <font face="Courier-Oblique" size="10.0">[[o.bord_vnd_id.name]]</font>
           </para>
         </td>
         <td>
-          <para style="P5">[[o.lot_num]]</para>
+          <para style="P6">[[o.lot_num]]</para>
         </td>
         <td>
-          <para style="P6">[[o.name]]</para>
+          <para style="P7">[[o.name]]</para>
         </td>
         <td>
-          <para style="P5">[[o.obj_num]]</para>
+          <para style="P6">[[o.obj_num]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
-    <para style="Standard">
-      <font color="white"> </font>
-    </para>
     <para style="Standard">
       <font color="white"> </font>
     </para>
