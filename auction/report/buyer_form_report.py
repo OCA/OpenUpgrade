@@ -52,12 +52,6 @@ class buyer_form_report(report_sxw.rml_parse):
 		for t in tax:
 			amount+=t['amount']
 		return amount
-#		 buyer_cost = self.pool.get('auction.dates').read(self.cr,self.uid,[auction_id],['buyer_costs'])[0]
-#		 total_amount = 0.0
-#		 for id in buyer_cost['buyer_costs'] :
-#		 	amount = self.pool.get('account.tax').read(self.cr,self.uid,[id],['amount'])[0]['amount']
-#		 	total_amount += (amount*obj_price)
-		# return total_amount
 
 
 report_sxw.report_sxw('report.buyer_form_report', 'auction.lots', 'addons/auction/report/buyer_form_report.rml', parser=buyer_form_report)

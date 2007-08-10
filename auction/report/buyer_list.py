@@ -53,7 +53,7 @@ class buyer_list(report_sxw.rml_parse):
 		taxes=[]
 		taxes = lot.product_id.taxes_id
 		taxes += lot.auction_id.buyer_costs
-		if lot.bord_vnd_id.tax_id:
+		if lot.author_right:
 			taxes+=lot.author_right
 		tax=self.pool.get('account.tax').compute(self.cr,self.uid,taxes,lot.obj_price,1)
 		for t in tax:

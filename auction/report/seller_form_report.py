@@ -52,13 +52,19 @@ class seller_form_report(report_sxw.rml_parse):
 })
 
 		
-	def sum_taxes(self, auction_id,obj_price):
-		 seller_cost = self.pool.get('auction.dates').read(self.cr,self.uid,[auction_id],['seller_costs'])[0]
-		 total_amount = 0.0
-		 for id in seller_cost['seller_costs'] :
-		 	amount = self.pool.get('account.tax').read(self.cr,self.uid,[id],['amount'])[0]['amount']
-		 	total_amount += (amount*obj_price)
-		 return total_amount
+	def sum_taxes(self, lot):
+		taxes=[]
+		print lot.auction_id and lot.auction_id.seller_costs[0].amount or False
+
+		amount=0.0
+		if lot.bord_vnd_id.tax_id:
+			taxes.append(lot.bord_vnd_id.tax_id)
+		elif lot.auction_id and lot.auction_id.seller_costs:
+			taxes += lot.auction_id.seller_costs
+		tax=self.pool.get('account.tax').compute(self.cr,self.uid,taxes,lot.obj_price,1)
+		for t in tax:
+			amount+=t['amount']
+		return amount
 
 
 report_sxw.report_sxw('report.seller_form_report', 'auction.lots', 'addons/auction/report/seller_form_report.rml', parser=seller_form_report)
