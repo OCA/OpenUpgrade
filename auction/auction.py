@@ -264,7 +264,6 @@ class auction_lots(osv.osv):
 			else:
 				montant=lot.obj_price
 			taxes = []
-			taxes = lot.product_id.taxes_id
 			if lot.author_right:
 				taxes.append(lot.author_right)
 			if lot.auction_id:
@@ -288,7 +287,6 @@ class auction_lots(osv.osv):
 			else:
 				montant=lot.obj_price
 			taxes = []
-			taxes = lot.product_id.taxes_id
 			if lot.bord_vnd_id.tax_id:
 				taxes.append(lot.bord_vnd_id.tax_id)
 			elif lot.auction_id and lot.auction_id.seller_costs:
