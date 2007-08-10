@@ -487,7 +487,6 @@ class auction_lots(osv.osv):
 				taxes_summed[key]['amount'] += tax['amount']
 			else:
 				taxes_summed[key] = tax
-
 		return taxes_summed.values()
 
 	def compute_buyer_costs(self, cr, uid, ids):
