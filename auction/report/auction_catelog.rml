@@ -9,19 +9,20 @@
     <blockTableStyle id="Standard_Outline">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
+
     </blockTableStyle>
     <blockTableStyle id="Table3">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-	<lineStyle kind="LINEBELOW" colorName="red" start="0,-1" stop="-1,-1"/>
-      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
-
-      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
-      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
+			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
+			 <blockBackground colorName="grey" start="0,0" stop="-1,0"/>
+			 <blockTextColor colorName="white" start="0,0" stop="-1,0"/>
+			 <lineStyle kind="LINEBELOW" start="0,0" stop="-1,0"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
-	<lineStyle kind="LINEBELOW" colorName="red" start="0,-1" stop="-1,-1"/>
+
 
 
     </initialize>
