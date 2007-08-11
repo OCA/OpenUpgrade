@@ -13,9 +13,8 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-# "Love, like a river, will cut a new path Whenever it meets an obstacle."
-# "Don't be afraid of showing affection. Be warm and tender, thoughtful and affectionate. Men are more helped by sympathy than by service. Love is more than money, and a kind word will give more pleasure than a present."
-# We find rest in those we love, and we provide a resting place in ourselves for those who love us.
+#
+#
 class SendtoServer(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
         self.ctx     = ctx
