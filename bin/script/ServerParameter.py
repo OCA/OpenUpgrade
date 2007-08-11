@@ -20,13 +20,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
 
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Server URL")
-        if docinfo.getUserFieldValue(0)<>"":
-            res=getConnectionStatus(docinfo.getUserFieldValue(0))
-            if res == -1:
-                ErrorDialog("Could not connect to the server!","")
-            elif res == 0:
-                ErrorDialog("No Database found !!!","")
-
+        if docinfo.getUserFieldValue(0)=="":
+            docinfo.setUserFieldValue(0,"http://localhost:8069")
         self.win.addEdit("txtHost",-34,9,91,15,docinfo.getUserFieldValue(0))
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
                       ,actionListenerProc = self.btnChange_clicked )
@@ -35,10 +30,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         #self.win.addFixedText("lblMsg", -2,28,123,15)
         self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
         self.lstDatabase = self.win.getControl( "lstDatabase" )
-        if docinfo.getUserFieldValue(0)<>"":
-            self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
-            for i in range(res.__len__()):
-                self.lstDatabase.addItem(res[i],i)
+
         #self.win.selectListBoxItem( "lstDatabase", docinfo.getUserFieldValue(2), True )
         #self.win.setEnabled("lblMsg",False)
 
@@ -53,8 +45,22 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
 
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
+        sValue=""
+        if docinfo.getUserFieldValue(0)<>"":
+            res=getConnectionStatus(docinfo.getUserFieldValue(0))
+            if res == -1:
+                sValue="Could not connect to the server!"
+                self.lstDatabase.addItem("Could not connect to the server!",0)
+            elif res == 0:
+                sValue="No Database found !!!"
+                self.lstDatabase.addItem("No Database found !!!",0)
+            else:
+                self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
+                for i in range(res.__len__()):
+                    self.lstDatabase.addItem(res[i],i)
 
-        self.win.doModalDialog("",None)
+        self.win.doModalDialog("lstDatabase",sValue)
+
         #self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOkOrCancel_clicked(self,oActionEvent):

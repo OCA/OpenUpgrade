@@ -21,8 +21,8 @@ class Change:
         self.lstProtocol = self.win.getControl( "lstProtocol" )
 
         self.lstProtocol.addItem( "XML-RPC", 0)
-        self.lstProtocol.addItem( "XML-RPC secure", 1)
-        self.lstProtocol.addItem( "NET-RPC (faster)", 2)
+        #self.lstProtocol.addItem( "XML-RPC secure", 1)
+        #self.lstProtocol.addItem( "NET-RPC (faster)", 2)
 
         self.win.addButton( 'btnOK', -2, -5, 30, 15, 'Ok'
                       , actionListenerProc = self.btnOkOrCancel_clicked )
@@ -33,7 +33,7 @@ class Change:
         self.protocol={'XML-RPC': 'http://',
             'XML-RPC secure': 'https://',
             'NET-RPC (faster)': 'socket://',}
-        sValue=""
+        sValue=self.protocol.keys()[0]
         if sURL<>"":
             sValue=self.protocol.keys()[self.protocol.values().index(sURL.__getslice__(0,sURL.find("/")+2))]
 

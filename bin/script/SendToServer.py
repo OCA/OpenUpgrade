@@ -13,7 +13,9 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-
+# "Love, like a river, will cut a new path Whenever it meets an obstacle."
+# "Don't be afraid of showing affection. Be warm and tender, thoughtful and affectionate. Men are more helped by sympathy than by service. Love is more than money, and a kind word will give more pleasure than a present."
+# We find rest in those we love, and we provide a resting place in ourselves for those who love us.
 class SendtoServer(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
         self.ctx     = ctx
@@ -30,12 +32,11 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
         fields=['name','report_name','model']
         res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
-        print res_other
         self.win = DBModalDialog(60, 50, 180, 65, "Send To Server")
-        self.win.addFixedText("lblExpression",10 , 9, 40, 15, "Report Name :")
-        self.win.addEdit("txtExpression", -5, 5, 123, 15,res_other[0]['name'])
-        self.win.addFixedText("lblName", 2, 30, 50, 15, "Technical Name :")
-        self.win.addEdit("txtName", -5, 25, 123, 15,res_other[0]['report_name'])
+        self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
+        self.win.addEdit("txtName", -5, 5, 123, 15,res_other[0]['name'])
+        self.win.addFixedText("lblReportName", 2, 30, 50, 15, "Technical Name :")
+        self.win.addEdit("txtReportName", -5, 25, 123, 15,res_other[0]['report_name'])
         self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
                         actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
@@ -46,10 +47,9 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             oDoc2 = desktop.getCurrentComponent()
             docinfo=oDoc2.getDocumentInfo()
-            print "abc",oDoc2.isModified(),oDoc2.hasLocation()
             if oDoc2.isModified() and not oDoc2.hasLocation():
                 ErrorDialog("Please Save your file in filesystem !!!","File->Save OR File->Save As")
-            elif oDoc2.isModified() and oDoc2.hasLocation():
+            else:
                 oDoc2.store()
                 url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
                 fp = file(url, 'rb')
@@ -57,7 +57,8 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 fp.close()
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                 res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
-                self.win.endExecute()
+                res1 = sock.execute(database, 3, docinfo.getUserFieldValue(1),'ir.actions.report.xml','write',int(docinfo.getUserFieldValue(2)),{'name': self.win.getEditText("txtName")})
+            self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
