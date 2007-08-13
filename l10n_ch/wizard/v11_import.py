@@ -168,7 +168,8 @@ def _v11_parsing(self, cr, uid, data, context):
 
 		# get the invoice via his number
 		try:
-			invoice_id= invoice_obj.search(cr,uid,[ ('number','=',int(rec['invoice_ref'])) ])[0]
+			invoice_id= invoice_obj.search(cr,uid,[ ('number','=',int(rec['invoice_ref']))])[0]
+							   
 		except:
 			err_log = err_log + '\n * No invoice with invoice number '+ rec['invoice_ref'].lstrip('0') + '.\n  line : '+rec['line_number']
 			nb_err+=1
@@ -189,7 +190,12 @@ def _v11_parsing(self, cr, uid, data, context):
 				'balance_start': 0,
 				'balance_end_real': i.amount_total, 
 				'state':'draft',
-			})
+			})	
+			r_id= pool.get('account.bank.statement.reconcile').create(cr, uid,
+					{'name': time.strftime('%Y-%m-%d'),
+					 'line_ids': [(6, 0, i.move_line_id_payment_get(cr, uid, [i.id]))],
+					 })		
+
 			pool.get('account.bank.statement.line').create(cr,uid,{
 				'name':i.number,
 				'date': time.strftime('%Y-%m-%d'),
@@ -198,7 +204,7 @@ def _v11_parsing(self, cr, uid, data, context):
 				'partner_id':i.partner_id.id,
 				'account_id':i.account_id.id,
 				'statement_id': bk_st_id,
-				'invoice_id': i.id,
+				'reconcile_id': r_id
 			})
 
 

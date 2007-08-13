@@ -26,5 +26,7 @@
 #
 ##############################################################################
 
-import report
-import wizard
+import dta_wizard
+import wizard_bvr
+import v11_import
+

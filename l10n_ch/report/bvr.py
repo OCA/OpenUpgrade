@@ -80,6 +80,7 @@ class account_invoice_bvr(report_sxw.rml_parse):
 report_sxw.report_sxw(
 	'report.l10n_ch.bvr',
 	'account.invoice',
-	'addons/l10n_ch/bvr/report/bvr.rml',
+	'addons/l10n_ch/report/bvr.rml',
 	parser=account_invoice_bvr,
 	header=False)
+

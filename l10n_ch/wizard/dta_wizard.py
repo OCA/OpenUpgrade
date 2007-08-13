@@ -34,48 +34,8 @@ import pooler
 import mx.DateTime
 from mx.DateTime import RelativeDateTime, DateTime
 
-def _bank_get(self, cr, uid, context={}):
-	pool = pooler.get_pool(cr.dbname)
-	partner_id = pool.get('res.users').browse(cr,uid,[uid])[0].company_id.partner_id
-
-	obj = pool.get('res.partner.bank')
-	ids = obj.search(cr, uid, [('partner_id','=',partner_id.id)])
-	res = obj.read(cr, uid, ids, ['active', 'name'], context)
-	res = [(r['id'], r['name']) for r in res]
-	return res 
 
 
-check_form = """<?xml version="1.0"?>
-<form string="DTA file creation">
-<separator colspan="4" string="DTA Details :" />
-	<field name="bank"/>
-	<field name="journal"/>
-	<field name="dta_line_ids" nolabel="1"  colspan="4" />
-</form>
-"""
-
-check_fields = {
-	'dta_line_ids' : {
-		'string':'DTA lines',
-		'type':'one2many',
-		'relation':'account.dta.line',
-		},
-	'bank' : {
-		'string':'Bank Account',
-		'type':'selection',
-		'selection':_bank_get,
-		'required': True,
-	},
-
-	'journal' : {
-		'string':'Journal',
-		'type':'many2one',
-		'relation':'account.journal',
-		'domain':"[('type','=','cash')]",
-		'required': True,
-		'help':'The journal used for the bank statement',
-	},
-}
 
 
 res_form = """<?xml version="1.0"?>
@@ -91,77 +51,12 @@ res_fields = {
 	'dta' : {
 		'string':'DTA File',
 		'type':'binary',
-		'required':True,
 		'readonly':True,
 	},
 	'note' : {'string':'Log','type':'text'}
 }
 
-
-def _get_bank(self,cr,uid,data,context):
-	pool = pooler.get_pool(cr.dbname)
-	user = pool.get('res.users').browse(cr,uid,[uid])[0]
-	company= user.company_id
-	
-	if company.partner_id.bank_ids:
-		bank = company.partner_id.bank_ids[0]
-		return {'bank':bank.bank_name,'bank_code':bank.bank_code or ''} # 'city':'',
-
-	return {}
-
-
-def _get_dta_lines(self,cr,uid,data,context):
-	pool = pooler.get_pool(cr.dbname)
-
-	res= {}
-
-	user = pool.get('res.users').browse(cr,uid,[uid])[0]
-	company= user.company_id
-	
-	if company.partner_id.bank_ids:
-		bank = company.partner_id.bank_ids[0]
-		res.update({'bank':bank.bank_name,'bank_code':bank.bank_code or ''}) # 'city':'',
-
-
-	dta_line_obj = pool.get('account.dta.line')
-	lines=[]
-
-	id_dta= pool.get('account.dta').create(cr,uid,{
-		'date':time.strftime('%Y-%m-%d'),
-		'user_id':uid,
-		})
-
-
-	for i in pool.get('account.invoice').browse(cr,uid,data['ids']):
-		if i.dta_state in ['none','paid'] or i.state in ['draft','cancel','paid']:
-			continue
-
-		cash_disc_date=""
-		discount=""
-		if i.payment_term :
-			disc_list= pool.get('account.payment.term').get_discounts(cr,uid,i.payment_term.id, i.date_invoice)
-
-			for (cash_disc_date,discount) in disc_list:
-				if cash_disc_date >= time.strftime('%Y-%m-%d'):
-					break
-
-		
-		lines.append(dta_line_obj.create(cr,uid,{
-			'name': i.id,
-			'partner_id': i.partner_id.id,
-			'due_date': i.date_due,
-			'invoice_date': i.date_invoice,
-			'cashdisc_date': cash_disc_date and cash_disc_date or None,
-			'amount_to_pay': discount and i.amount_total*(1-discount) or i.amount_total,
-			'amount_invoice': i.amount_total,
-			'amount_cashdisc': discount and i.amount_total*(1-discount),
-			'dta_id': id_dta,
-			}))
-		
-	res.update({'dta_line_ids': lines,'dta_id': id_dta})
-	return res
-
-
+res_states= []
 
 trans=[(u'é','e'),
 	   (u'è','e'),
@@ -202,7 +97,7 @@ class record:
 		Must instanciate a fields list, field = (name,size)
 		and update a local_values dict.
 		"""
-		raise Exception, "not implemented"
+		raise "not implemented"
 
 	def generate(self):
 		res=''
@@ -363,29 +258,41 @@ def c_ljust(s, size):
 	return s
 
 
+class Log:
+	def __init__(self):
+		self.content= ""
+		self.error= False
+	def add(self,s,error=True):
+		self.content= self.content + s
+		if error:
+			self.error= error
+	def __call__(self):
+		return self.content
+
 
 def _create_dta(self,cr,uid,data,context):
 
-	# cree des gt836
+
 	v={}
 	v['uid'] = str(uid)
 	v['creation_date']= time.strftime('%y%m%d')
-	log=''
+	log=Log()
 	dta=''
 
 	pool = pooler.get_pool(cr.dbname)
-	bank= pool.get('res.partner.bank').browse(cr,uid,[data['form']['bank']])[0]
+	payment= pool.get('payment.order').browse(cr,uid,data['id'],context)
 
+	if not payment.mode or payment.mode.type.code != 'dta':
+		return {'note':'No payment mode or payment type code invalid.'}
+	bank= payment.mode.bank_id
 	if not bank:
 		return {'note':'No bank account for the company.'}
 	
+ 	v['comp_bank_name']= bank.bank_id.name or False
+ 	v['comp_bank_clearing'] = bank.clearing
 
- 	v['comp_bank_name']= bank.name or False
- 	v['comp_bank_clearing'] = bank.bank_clearing or False # clearing 
-	v['comp_bank_code'] = bank.bank_code or False # swift or BIC
-
- 	if not v['comp_bank_clearing']:
- 		return {'note':'You must provide a Clearing Number for your bank account.'}
+	if not v['comp_bank_clearing']:
+		return {'note':'You must provide a Clearing Number for your bank account.'}
 	
 	user = pool.get('res.users').browse(cr,uid,[uid])[0]
 	company= user.company_id
@@ -396,10 +303,10 @@ def _create_dta(self,cr,uid,data,context):
 	v['comp_city'] = co_addr.city
 	v['comp_name'] = co_addr.name
 	
-	v['comp_dta'] = ''#FIXME
+	v['comp_dta'] = ''#XXX not mandatory in pratice
 
 
-	v['comp_bank_number'] = bank.number or ''
+	v['comp_bank_number'] = bank.acc_number or ''
 
 	v['comp_bank_iban'] = bank.iban or ''
 	if not v['comp_bank_iban'] : 
@@ -412,59 +319,61 @@ def _create_dta(self,cr,uid,data,context):
 	seq= 1
 	amount_tot = 0
 	th_amount_tot= 0
-	dta_id=data['form']['dta_id']
-
-	if not dta_id :
-		return {'note':'No dta line'}
-
-	# write the bank account for the dta object
-	pool.get('account.dta').write(cr,uid,[dta_id],{'bank':data['form']['bank']})
-
-	dta_line_ids= []
-
-	for line in data['form']['dta_line_ids']:
-		if  line[1]!=0 and line[2] and line[2]['partner_id']:
-			dta_line_ids.append(line[1])
-			th_amount_tot += line[2]['amount_to_pay']
-			dta_line_obj.write(cr, uid, [line[1]] , line[2] )
+	reconciles_and_st_lines= []
 
 
-	# creation of a bank statement : TODO ajouter le partner 
  	bk_st_id = pool.get('account.bank.statement').create(cr,uid,{
- 		'journal_id':data['form']['journal'],
+ 		'journal_id': payment.mode.journal.id,
  		'balance_start':0,
  		'balance_end_real':0, 
  		'state':'draft',
  		})
 
-	for dtal in dta_line_obj.browse(cr,uid,dta_line_ids):
-
-		i = dtal.name #dta_line.name is the invoice id
+	## Fetch the invoices:
+	cr.execute('''select i.id,pl.id 
+	              from payment_line pl
+				   join account_move_line ml on (pl.move_line_id = ml.id)
+				   join account_move m on (ml.move_id = m.id)
+				   join account_invoice i on (i.move_id = m.id)
+				   join payment_order p on (pl.order_id = p.id)
+				  where p.id = %s
+				  '''%payment.id)
+	payment_lines= []
+	invoices= []
+	for i,p in cr.fetchall():
+		payment_lines.append(p)
+		invoices.append(i)
+	line2inv= dict(zip(payment_lines,
+					   pool.get('account.invoice').browse(cr,uid,invoices,context)))
+	del payment_lines, invoices
+	
+	for pline in payment.line_ids:
+		i = line2inv[pline.id]
 		invoice_number = i.number or '??'
-		if not i.partner_bank_id:
-			log= log +'\nNo partner bank defined. (invoice '+ invoice_number +')' 
+		if not pline.bank_id:
+			log.add('\nNo partner bank defined. (partner: '+pline.partner_id.name+', entry:'+pline.move_line_id.name+').')
 			continue
 				
 		
 		v['sequence'] = str(seq).rjust(5).replace(' ','0')
-		v['amount_to_pay']= str(dtal.amount_to_pay).replace('.',',')
+		v['amount_to_pay']= str(pline.amount).replace('.',',')
 		v['invoice_number'] = invoice_number or ''
 		v['invoice_currency'] = i.currency_id.code or ''
 		if not v['invoice_currency'] :
-			log= log +'\nInvoice currency code undefined. (invoice '+ invoice_number +')' 
+			log.add('\nInvoice currency code undefined. (partner: '+pline.partner_id.name+', entry:'+pline.move_line_id.name+', invoice '+invoice_number+').')
 			continue
 
 		
-		v['partner_bank_name'] =  i.partner_bank_id.bank_name or False
-		v['partner_bank_clearing'] =  i.partner_bank_id.bank_clearing or False
+		v['partner_bank_name'] =  pline.bank_id.bank_id.name or False
+		v['partner_bank_clearing'] =  pline.bank_id.clearing or False
 		if not v['partner_bank_name'] :
-			log= log +'\nPartner bank account not well defined. (invoice '+ invoice_number +')' 
+			log.add('\nPartner bank account not well defined, please provide a name for the associated bank (partner: '+pline.partner_id.name+', bank:'+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+').')
 			continue
 
-		v['partner_bank_iban']=  i.partner_bank_id.iban or False
-		v['partner_bank_number']=  i.partner_bank_id.number  and i.partner_bank_id.number.replace('.','').replace('-','') or  False
+		v['partner_bank_iban']=  pline.bank_id.iban or False
+		v['partner_bank_number']=  pline.bank_id.acc_number  and pline.bank_id.acc_number.replace('.','').replace('-','') or  False
 		
-		v['partner_bvr']= i.partner_bank_id.bvr_number or ''
+		v['partner_bvr']= pline.bank_id.bvr_number or ''
 		
 		if v['partner_bvr']:
 			v['partner_bvr']= v['partner_bvr'].replace('-','')
@@ -472,39 +381,44 @@ def _create_dta(self,cr,uid,data,context):
 				v['partner_bvr']= v['partner_bvr'][:2]+ '0'*(9-len(v['partner_bvr'])) +v['partner_bvr'][2:]
 
 
+		if pline.bank_id.bank_address_id:
+			v['partner_bank_city']= pline.bank_id.bank_address_id.city or False
+			v['partner_bank_street']= pline.bank_id.bank_address_id.street or ''
+			v['partner_bank_zip']= pline.bank_id.bank_address_id.zip or ''
+			v['partner_bank_country']= pline.bank_id.bank_address_id.country_id  and pline.bank_id.bank_address_id.country_id.name or ''
 
-		v['partner_bank_city']= i.partner_bank_id.city or False
-		v['partner_bank_street']= i.partner_bank_id.street or ''
-		v['partner_bank_zip']= i.partner_bank_id.zip or ''
-		v['partner_bank_country']= i.partner_bank_id.country_id  and i.partner_bank_id.country_id.name or ''
-		v['partner_bank_code']= i.partner_bank_id.bank_code or False
+		v['partner_bank_code']=  False # for future : place BIC number here 
 		v['invoice_reference']= i.reference
 		v['invoice_bvr_num']= i.bvr_ref_num
 		if v['invoice_bvr_num']:
 			v['invoice_bvr_num'] = v['invoice_bvr_num'].replace(' ', '').rjust(27).replace(' ','0')
 			
 		v['partner_comment']= i.partner_comment
-		
-		v['partner_name'] = i.partner_id and i.partner_id.name or ''
-		if i.partner_id and i.partner_id.address and i.partner_id.address[0]:
-			v['partner_street'] = i.partner_id.address[0].street
-			v['partner_city']= i.partner_id.address[0].city
-			v['partner_zip']= i.partner_id.address[0].zip
+		v['partner_name'] = pline.partner_id and pline.partner_id.name or ''
+		if pline.partner_id and pline.partner_id.address and pline.partner_id.address[0]:
+			v['partner_street'] = pline.partner_id.address[0].street
+			v['partner_city']= pline.partner_id.address[0].city
+			v['partner_zip']= pline.partner_id.address[0].zip
 			# If iban => country=country code for space reason
-			elec_pay = i.partner_bank_id.type_id.elec_pay
+			elec_pay = pline.bank_id.state
 			if elec_pay == 'iban':
-				v['partner_country']= i.partner_id.address[0].country_id and i.partner_id.address[0].country_id.code+'-' or ''
+				v['partner_country']= pline.partner_id.address[0].country_id and pline.partner_id.address[0].country_id.code+'-' or ''
 			else:
-				v['partner_country']= i.partner_id.address[0].country_id and i.partner_id.address[0].country_id.name or ''
+				v['partner_country']= pline.partner_id.address[0].country_id and pline.partner_id.address[0].country_id.name or ''
 		else:
 			v['partner_street'] =''
 			v['partner_city']= ''
 			v['partner_zip']= ''
 			v['partner_country']= ''
-			log= log +'\nNo address for the invoice partner. (invoice '+ invoice_number+')' 
+			log.add('\nNo address for the partner: '+pline.partner_id.name)
 
-		
-		date_value = dtal.cashdisc_date or dtal.due_date
+
+		date_value= False
+		if payment.date_prefered == 'fixed' and payment.date_planned:
+			date_value = payment.date_planned
+		elif payment.date_prefered == 'due':
+			date_value = pline.due_date
+
 		if date_value :
 			date_value = mx.DateTime.strptime( date_value,'%Y-%m-%d') or  mx.DateTime.now()
 			v['date_value'] = date_value.strftime("%y%m%d")
@@ -515,44 +429,39 @@ def _create_dta(self,cr,uid,data,context):
 		# si payment structure  -> bvr (826)
 		# si non -> (827) 
 
-		elec_pay = i.partner_bank_id.type_id.elec_pay
-		if not elec_pay :
-			log= log +'\nBank type does not support DTA. (invoice '+ invoice_number +')' 
-			continue
-
-		if elec_pay == 'iban':
+		if elec_pay == 'dta_iban':
 			# If iban => country=country code for space reason
 			v['comp_country'] = co_addr.country_id and co_addr.country_id.code+'-' or ''
 			record_type = record_gt836
 			if not v['partner_bank_iban']:
-				log= log +'\nNo iban number for the partner bank. (invoice '+ invoice_number +')' 
+				log.add('\nNo iban number for the partner bank:'+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
 				continue
 
-			if v['partner_bank_code'] :
+			if v['partner_bank_code'] : # bank code is swift (BIC address)
 				v['option_id_bank']= 'A'
 				v['partner_bank_ident']= v['partner_bank_code']
 			elif v['partner_bank_city']:
 				#
 				# added by fabien
 				#
-				log= log +'\nCode IBAN or Swift code doesn t exist. (invoice '+ invoice_number +')' 
-				continue
+# 				log.add("\nCode IBAN or Swift code doesn't exist for the partner bank:"+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
+# 				continue
 
 				v['option_id_bank']= 'D'
 				v['partner_bank_ident']= v['partner_bank_name'] +' '+v['partner_bank_street']\
 					+' '+v['partner_bank_zip']+' '+v['partner_bank_city']\
 					+' '+v['partner_bank_country']
 			else:
-				log= log +'\nYou must provide the bank city or the bank code. (invoice '+ invoice_number +')' 
+				log.add("\nYou must provide the bank city or the bank code for the partner bank:"+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
 				continue
 
 			
 		elif elec_pay == 'bvrbank' or elec_pay == 'bvrpost':
 			if not v['invoice_bvr_num']:
-				log= log +'\nYou must provide an Bvr reference number. (invoice '+ invoice_number +')' 
+				log.add('\nYou must provide a Bvr reference number. (invoice '+ invoice_number +')')
 				continue
 			if not v['partner_bvr']:
-				log= log +'\nYou must provide a BVR reference number in the partner bank. (invoice '+ invoice_number +')' 
+				log.add("\nYou must provide a BVR number on the partner bank:"+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
 				continue
 			record_type = record_gt826
 			
@@ -563,65 +472,61 @@ def _create_dta(self,cr,uid,data,context):
 				if  v['partner_bank_iban'] :
 					v['partner_bank_number']= v['partner_bank_iban'] 
 				else:
-					log= log +'\nYou must provide a bank number in the partner bank. (invoice '+ invoice_number +')' 
+					log.add('\nYou must provide a bank number in the partner bank. (invoice '+ invoice_number +')')
 					continue
 
 			if not  v['partner_bank_clearing']:
-				log= log +'\nPartner bank must have a Clearing Number for a BV Bank operation. (invoice '+ invoice_number +')' 
+				log.add('\nPartner bank must have a Clearing Number for a BV Bank operation. (invoice '+ invoice_number +')')
 				continue
 			v['partner_bank_number'] = '/C/'+v['partner_bank_number']
  			record_type = record_gt827
-
 			
  		elif elec_pay == 'bvpost':
 			if not v['partner_bank_number']:
-				log= log +'\nYou must provide a post number in the partner bank. (invoice '+ invoice_number +')' 
+				log.add('\nYou must provide a post number in the partner bank. (invoice '+ invoice_number +')')
 				continue
 			v['partner_bank_clearing']= ''
 			v['partner_bank_number'] = '/C/'+v['partner_bank_number']
  			record_type = record_gt827
 			
 		else:
-			log= log +'\nBank type not supported. (invoice '+ invoice_number +')' 
+			log.add('\nBank type not supported. (partner:'+ pline.partner_id.name +\
+					', bank:'+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+\
+					', type:'+elec_pay+')')
 			continue
 
 
 		try:
 			dta_line = record_type(v).generate()
 		except Exception,e :
-			log= log +'\nERROR:'+ str(e)+'(invoice '+ invoice_number+')' 
-			dta_line_obj.write(cr,uid,[dtal.id],{'state':'cancel'})			
+			log.add('\nERROR:'+ str(e)+'(invoice '+ invoice_number+')')
 			raise
 			continue
 
 		#logging
-		log = log + "Invoice : %s, Amount paid : %d %s, Value date : %s, State : Paid."%\
-			  (invoice_number,dtal.amount_to_pay,v['invoice_currency'],date_value and date_value.strftime("%Y-%m-%d") or 'Empty date')
+		log.add("Invoice : %s, Amount paid : %d %s, Value date : %s, State : Paid."%\
+			  (invoice_number,pline.amount,v['invoice_currency'],date_value and\
+			   date_value.strftime("%Y-%m-%d") or 'Empty date'),error=False)
 
-		reconcile_id = pool.get('account.bank.statement.reconcile').create(cr, uid, {
-			'name': time.strftime('%Y-%m-%d'),
-			'line_ids': [(6, 0, i.move_line_id_payment_get(cr, uid, [i.id]))],
-			})
-
-		pool.get('account.bank.statement.line').create(cr,uid,{
-			'name':i.number,
-			'date': time.strftime('%Y-%m-%d'),
-			'amount': -dtal.amount_to_pay,
-			'type':{'out_invoice':'customer','in_invoice':'supplier','out_refund':'customer','in_refund':'supplier'}[i.type],
-			'partner_id':i.partner_id.id,
-			'account_id':i.account_id.id,
-			'statement_id': bk_st_id,
-			'reconcile_id': reconcile_id,
-			})
+		reconciles_and_st_lines.append((
+			{'name': time.strftime('%Y-%m-%d'),
+			 'line_ids': [(6, 0, i.move_line_id_payment_get(cr, uid, [i.id]))],
+			},
+			{'name':i.number,
+			 'date': time.strftime('%Y-%m-%d'),
+			 'amount': -pline.amount,
+			 'type':{'out_invoice':'customer','in_invoice':'supplier',
+					 'out_refund':'customer','in_refund':'supplier'}[i.type],
+			 'partner_id':pline.partner_id.id,
+			 'account_id':i.account_id.id,
+			 'statement_id': bk_st_id,
+			 
+			}))
 
 		dta = dta + dta_line
-		amount_tot += dtal.amount_to_pay
-		inv_obj.write(cr,uid,[i.id],{'dta_state':'paid'})
-		dta_line_obj.write(cr,uid,[dtal.id],{'state':'done'})
+		amount_tot += pline.amount
 		seq += 1
 		
-	# bank statement updated with the total amount :
-	pool.get('account.bank.statement').write(cr,uid,[bk_st_id],{'balance_end_real': -amount_tot})
 	
 	# segment total
 	v['amount_total'] = str(amount_tot).replace('.',',')
@@ -630,36 +535,68 @@ def _create_dta(self,cr,uid,data,context):
 		if dta :
 			dta = dta + record_gt890(v).generate()
 	except Exception,e :
-		log= log +'\n'+ str(e) + 'CORRUPTED FILE !\n'
+		log.add('\n'+ str(e) + 'CORRUPTED FILE !\n')
 		raise
 		
 
-	log = log + "\n--\nSummary :\nTotal amount paid : %.2f\nTotal amount expected : %.2f"%(amount_tot,th_amount_tot) 
-	pool.get('account.dta').write(cr,uid,[dta_id],{'note':log,'name':base64.encodestring(dta or "")})
+	log.add("\n--\nSummary :\nTotal amount paid : %.2f\nTotal amount expected : %.2f"\
+			%(amount_tot,th_amount_tot),error=False)
+
+	if not log.error:
+		dta_data= base64.encodestring(dta)
+		if reconciles_and_st_lines:
+			data['statement'] = {
+				'journal_id': payment.mode.journal.id,
+				'balance_start':0,
+				'balance_end_real':0, 
+				'balance_end_real': -amount_tot,
+				'state':'draft',
+			}
+
+			data['reconciles_and_st_lines']= reconciles_and_st_lines
+	else:
+		dta_data= False
+	return {'note':log(), 'dta': dta_data}
+
+
+
+def _open_statement(self, cr, uid, data, context):
+	pool= pooler.get_pool(cr.dbname)
+	if not 'statement' in data:
+		raise wizard.except_wizard('Error', 'No statement generated.')
+	statement_id= pool.get('account.bank.statement').create(cr,uid,data['statement'])
+
+	for r,l in data['reconciles_and_st_lines']:
+		r_id= pool.get('account.bank.statement.reconcile').create(cr, uid, r)
+		l.update({'reconcile_id': r_id})
+		l_id= pool.get('account.bank.statement.line').create(cr,uid,l)
+
+	return {
+		'name': 'Bank Statement',
+		'view_type': 'form',
+		'view_mode': 'form,tree',
+		'res_model': 'account.bank.statement',
+		'view_id': False,
+		'type': 'ir.actions.act_window',
+		'res_id': statement_id,
+	}
 	
-	return {'note':log, 'dta': base64.encodestring(dta)}
-
-
-
 class wizard_dta_create(wizard.interface):
 	states = {
-		
-		'init':{
-		'actions' : [_get_dta_lines],
-		'result' : {'type' : 'form',
-				    'arch' : check_form,
-				    'fields' : check_fields,
-				    'state' : [('end', 'Cancel'),('creation', 'Yes') ]}
-		},
-
-		'creation' : {
+		'init' : {
 			'actions' : [_create_dta],
 			'result' : {'type' : 'form',
 						'arch' : res_form,
 						'fields' : res_fields,
-						'state' : [('end', 'Quit') ]}
+						'state' : [('end', 'Quit'),
+								   ('open','Generate statement')]}
 		},
-
+		'open' : {'actions': [],		
+					   'result':{'type':'action',
+								 'action':_open_statement,
+								 'state':'end'}
+					   }
+			 
 	}
 
 wizard_dta_create('account.dta_create')

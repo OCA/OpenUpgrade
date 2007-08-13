@@ -26,8 +26,11 @@
 #
 ##############################################################################
 
-import bvr
-import dta
-import v11
+import invoice
+import company
 import partner
 import company
+import wizard
+import payment
+import report
+import v11
