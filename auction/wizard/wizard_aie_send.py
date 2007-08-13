@@ -35,6 +35,7 @@ import netsvc
 import base64
 import mimetypes
 import httplib
+import threading
 
 login_form = '''<?xml version="1.0"?>
 <form title="Login">
@@ -148,19 +149,21 @@ def _photo_bin_send(uname, passwd, ref, did, photo_name, photo_data):
 	return post_multipart('auction-in-europe.com', "/bin/photo.cgi", (('uname',uname),('ref',ref),('passwd',passwd),('did',did)),(('file',photo_name,photo_data),))
 
 
-def _photos_send(uid, uname, passwd, did, ids):
+def _photos_send(db_name,uid, uname, passwd, did, ids):
 	print '_photos_send'
+	print "********************START****************"
 	for (ref,id) in ids:
 		service = netsvc.LocalService("object_proxy")
-		ids_attach = service.execute(uid, 'ir.attachment', 'search', [('res_model','=','auction.lots'), ('res_id', '=',id)])
-		datas = service.execute(uid, 'ir.attachment', 'read', ids_attach)
+		ids_attach = service.execute(db_name,uid, 'ir.attachment', 'search', [('res_model','=','auction.lots'), ('res_id', '=',id)])
+		datas = service.execute(db_name,uid, 'ir.attachment', 'read', ids_attach)
 		print '    object', ref, id, len(datas), 'photos founs'
 		if len(datas):
 			bin = base64.decodestring(datas[0]['datas'])
 			fname = datas[0]['datas_fname']
 
 			_photo_bin_send(uname, passwd, ref, did, fname, bin)
-			print 'SENDING PHOTO', ref
+			print 'SENDING PHOTO...............', ref
+		print "***************COMPLETE**********"
 
 def _get_dates(self,cr,uid, datas,context={}):
 	global send_fields
@@ -176,16 +179,21 @@ def _get_dates(self,cr,uid, datas,context={}):
 		raise "Connection to WWW.Auction-in-Europe.com failed !"
 	return {'objects':len(datas['ids'])}
 
-def _send(self,cr,uid, datas,context={}):
+def _send(self,db_name,uid, datas,context={}):
 	import pickle, thread, sql_db
- 	cr = pooler.get_db(db_name).cursor()
+ 	#cr = pooler.get_db(cr.dbname).cursor()
 
 #	cr=sql_db.db.cursor()
+	print "...................send function Opened..................."
+	cr = pooler.get_db(db_name).cursor()
+
 	cr.execute('select name,aie_categ from auction_lot_category')
 	vals = dict(cr.fetchall())
 	cr.close()
+	print vals
+
 	service = netsvc.LocalService("object_proxy")
-	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'],  ['obj_num','lot_num','obj_desc','bord_vnd_id','lot_est1','lot_est2','artist_id','lot_type','aie_categ'])
+	lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', datas['ids'],  ['obj_num','lot_num','obj_desc','bord_vnd_id','lot_est1','lot_est2','artist_id','lot_type','aie_categ'])
 	ids = []
 	for l in lots:
 		if datas['form']['numerotation']=='prov':
@@ -210,7 +218,13 @@ def _send(self,cr,uid, datas,context={}):
 		ids.append((l['ref'], l['id']))
 	args = pickle.dumps(lots)
 	print thread.start_new_thread(_catalog_send, (datas['form']['uname'],datas['form']['password'],datas['form']['lang'],datas['form']['dates'], args))
-	print thread.start_new_thread(_photos_send, (uid, datas['form']['uname'],datas['form']['password'],datas['form']['dates'], ids))
+	print thread.start_new_thread(_photos_send, (cr.dbname,uid, datas['form']['uname'],datas['form']['password'],datas['form']['dates'], ids))
+	print "...................send function closed..................."
+	return {}
+
+def _send_pdf(self, cr, uid, data, context):
+	threaded_calculation = threading.Thread(target=_send, args=(self, cr.dbname, uid, data, context))
+	threaded_calculation.start()
 	return {}
 
 class wiz_auc_lots_pay(wizard.interface):
@@ -224,7 +238,7 @@ class wiz_auc_lots_pay(wizard.interface):
 			'result': {'type': 'form', 'arch':send_form, 'fields': send_fields, 'state':[('send','Send on your website'),('end','Cancel')]}
 		},
 		'send': {
-			'actions': [_send],
+			'actions': [_send_pdf],
 			'result': {'type': 'state', 'state':'end'}
 		}
 	}
