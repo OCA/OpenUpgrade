@@ -17,7 +17,7 @@
     <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBELOW" colorName="red" start="0,-1" stop="-1,-1"/>
+     <lineStyle kind="LINEBELOW" colorName="red" start="0,-1" stop="-1,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
@@ -42,10 +42,10 @@
     <paraStyle name="P8" rightIndent="12.0" leftIndent="0.0" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="3.0"/>
     <paraStyle name="P9" rightIndent="0.0" leftIndent="13.0" fontName="Times-Roman" fontSize="13.0" leading="16" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P10" rightIndent="0.0" leftIndent="13.0" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="2.0"/>
-    <paraStyle name="P11" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P12" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P13" rightIndent="0.0" leftIndent="13.0" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="2.0"/>
-    <paraStyle name="P14" rightIndent="0.0" leftIndent="13.0" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="2.0"/>
+    <paraStyle name="P11" rightIndent="0.0" leftIndent="13.0" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="2.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P13" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P14" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
@@ -70,11 +70,11 @@
           </para>
         </td>
         <td>
-          <para style="P11">[[o.bord_vnd_id.partner_id.name]]</para>
-          <para style="P11">[[o.bord_vnd_id.partner_id.address[0].street]]</para>
-          <para style="P11">[[o.bord_vnd_id.partner_id.address[0].zip]],[[o.bord_vnd_id.partner_id.address[0].city]]</para>
-          <para style="P11">[[o.bord_vnd_id.partner_id.address[0].country_id.name]]</para>
-          <para style="P11">
+          <para style="P12">[[o.bord_vnd_id.partner_id.name]]</para>
+          <para style="P12">[[o.bord_vnd_id.partner_id.address[0].street]]</para>
+          <para style="P12">[[o.bord_vnd_id.partner_id.address[0].zip]],[[o.bord_vnd_id.partner_id.address[0].city]]</para>
+          <para style="P12">[[o.bord_vnd_id.partner_id.address[0].country_id.name]]</para>
+          <para style="P12">
             <font color="white"> </font>
           </para>
         </td>
@@ -86,14 +86,13 @@
     <para style="Table Heading">
       <font color="white"> </font>
     </para>
-    <para style="P11">Document:Bordereau de vente [[ o.auction_id.name ]]</para>
-    <para style="P11">Inventory: [[ o.bord_vnd_id.name ]]</para>
-    <para style="P11">Bank Account: </para>
-    <para style="P11">Customer Contact: [[ o.bord_vnd_id.address and o.bord_vnd_id.address[0].phone or False]]</para>
-    <para style="P11">
-      <font color="white"> </font>
+    <para style="P14">Document:Bordereau de vente [[ o.auction_id.name ]]</para>
+    <para style="P14">Inventory: [[ o.bord_vnd_id.name ]]</para>
+    <para style="P14">
+      <font face="Times-Roman">Bank Account: </font>
     </para>
-    <para style="P12">
+    <para style="P14">Customer Contact: [[ o.bord_vnd_id.address and o.bord_vnd_id.address[0].phone or False]]</para>
+    <para style="P13">
       <font color="white"> </font>
     </para>
     <blockTable colWidths="77.0,130.0,85.0,99.0,134.0" style="Table2">
@@ -146,7 +145,7 @@
             </tr>
             <tr>
               <td>
-                <para style="P13">
+                <para style="P11">
                   <font face="Times-Roman" size="11.0">[[ sum_taxes(o) ]]</font>
                 </para>
               </td>
