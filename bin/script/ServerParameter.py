@@ -40,7 +40,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblPassword", 6, 70, 60, 15, "Password")
         self.win.addEdit("txtPassword",-2,67,123,15)
 
-        self.win.addButton('btnOK',-2 ,-5, 60,15,'Test Connection'
+        self.win.addButton('btnOK',-2 ,-5, 60,15,'Connect'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
