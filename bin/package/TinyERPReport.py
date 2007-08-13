@@ -10,7 +10,8 @@ import os
 #  python procedure, passing it...
 #   1. the oActionEvent
 #   2. any other parameters you specified to this object's constructor (as a tuple).
-os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
+if __name__<>"package":
+    os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
 passwd=""
 database=""
 loginstatus=False
@@ -393,12 +394,17 @@ def getServiceManager( cHost="localhost", cPort="2002" ):
         # Get the uno component context from the PyUNO runtime
         oLocalContext = uno.getComponentContext()
         # Create the UnoUrlResolver on the Python side.
-        oLocalResolver = oLocalContext.ServiceManager.createInstanceWithContext(
-                                    "com.sun.star.bridge.UnoUrlResolver", oLocalContext )
+
         # Connect to the running OpenOffice.org and get its context.
-        oContext = oLocalResolver.resolve( "uno:socket,host=" + cHost + ",port=" + cPort + ";urp;StarOffice.ComponentContext" )
+        if __name__<>"package":
+            oLocalResolver = oLocalContext.ServiceManager.createInstanceWithContext(
+                                    "com.sun.star.bridge.UnoUrlResolver", oLocalContext )
+            oContext = oLocalResolver.resolve( "uno:socket,host=" + cHost + ",port=" + cPort + ";urp;StarOffice.ComponentContext" )
         # Get the ServiceManager object
-        goServiceManager = oContext.ServiceManager
+            goServiceManager = oContext.ServiceManager
+        else:
+            goServiceManager=oLocalContext.ServiceManager
+
     return goServiceManager
 
 
@@ -430,7 +436,7 @@ def getDesktop():
         StarDesktop = createUnoService( "com.sun.star.frame.Desktop" )
     return StarDesktop
 # preload the StarDesktop variable.
-getDesktop()
+#getDesktop()
 
 
 # The CoreReflection object.
@@ -773,6 +779,7 @@ class DBModalDialog:
                         bDropdown=None,
                         cLabel=None,
                         nTabIndex=None,
+                        sImagePath=None,
                          ):
         oControlModel = self.oDialogModel.createInstance( cCtrlServiceName )
         self.oDialogModel.insertByName( cCtrlName, oControlModel )
@@ -797,6 +804,8 @@ class DBModalDialog:
         if nTabIndex != None:
             oControlModel.TabIndex = nTabIndex
 
+        if sImagePath != None:
+            oControlModel.ImageURL = sImagePath
     #--------------------------------------------------
     #   Access controls and control models
     #--------------------------------------------------
@@ -903,6 +912,22 @@ class DBModalDialog:
         oControl = self.getControl( cCtrlName )
         oControlModel = oControl.getModel()
         return oControlModel
+    #---------------------------------------------------
+    #    com.sun.star.awt.UnoControlImageControlModel
+    #---------------------------------------------------
+    def addImageControl( self, cCtrlName, nPositionX, nPositionY, nWidth, nHeight,
+                        sImagePath="",
+                        itemListenerProc=None,
+                        actionListenerProc=None ):
+
+        mod = self.addControl( "com.sun.star.awt.UnoControlImageControlModel",
+                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight, sImagePath=sImagePath)
+
+        if itemListenerProc != None:
+            self.addItemListenerProc( cCtrlName, itemListenerProc )
+        if actionListenerProc != None:
+            self.addActionListenerProc( cCtrlName, actionListenerProc )
+
 
     #--------------------------------------------------
     #   Adjust properties of control models
@@ -1543,19 +1568,11 @@ class Expression(unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtName",sName)
         self.win.doModalDialog("",None)
 
-    def getDesktop(self):
-        localContext = uno.getComponentContext()
-        resolver = localContext.ServiceManager.createInstanceWithContext(
-                        "com.sun.star.bridge.UnoUrlResolver", localContext )
-        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
-        remoteContext = smgr.getPropertyValue( "DefaultContext" )
-        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
-        return desktop
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
-            desktop=self.getDesktop()
+            desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
@@ -1615,12 +1632,13 @@ class modify(unohelper.Base, XJobExecutor ):
         self.module  = "tiny_report"
         self.version = "0.1"
         self.win=None
-        localContext = uno.getComponentContext()
-        resolver = localContext.ServiceManager.createInstanceWithContext(
-                        "com.sun.star.bridge.UnoUrlResolver", localContext )
-        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
-        remoteContext = smgr.getPropertyValue( "DefaultContext" )
-        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
+#        localContext = uno.getComponentContext()
+#        resolver = localContext.ServiceManager.createInstanceWithContext(
+#                        "com.sun.star.bridge.UnoUrlResolver", localContext )
+#        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
+#        remoteContext = smgr.getPropertyValue( "DefaultContext" )
+#        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
+        desktop = getDesktop()
         Doc =desktop.getCurrentComponent()
         self.oVC = Doc.CurrentController.getViewCursor()
         # Variable Declaration
@@ -2095,9 +2113,8 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-# "Love is a portion of the soul itself, and it is of the same nature as the celestial breathing of the atmosphere of paradise."
-# "Don't be afraid of showing affection. Be warm and tender, thoughtful and affectionate. Men are more helped by sympathy than by service. Love is more than money, and a kind word will give more pleasure than a present."
-# We find rest in those we love, and we provide a resting place in ourselves for those who love us.
+#
+#
 class SendtoServer(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
         self.ctx     = ctx
@@ -2127,33 +2144,19 @@ class SendtoServer(unohelper.Base, XJobExecutor):
     def btnOkOrCancel_clicked(self, oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnSend":
             desktop=getDesktop()
-            ErrorDialog("1","")
             oDoc2 = desktop.getCurrentComponent()
-            ErrorDialog("2","")
             docinfo=oDoc2.getDocumentInfo()
-            ErrorDialog("3","")
             if oDoc2.isModified() and not oDoc2.hasLocation():
-                ErrorDialog("4","")
                 ErrorDialog("Please Save your file in filesystem !!!","File->Save OR File->Save As")
-            elif oDoc2.isModified() and oDoc2.hasLocation():
-                ErrorDialog("5","")
+            else:
                 oDoc2.store()
-                ErrorDialog("6","")
                 url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
-                ErrorDialog("7","")
                 fp = file(url, 'rb')
-                ErrorDialog("8","")
                 data=fp.read()
-                ErrorDialog("9","")
                 fp.close()
-                ErrorDialog("10","")
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                ErrorDialog(database+docinfo.getUserFieldValue(1)+docinfo.getUserFieldValue(2),"")
                 res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
-                ErrorDialog("11","")
-                res1= sock.execute(database, 3, docinfo.getUserFieldValue(1),'ir.actions.report.xml','write',int(docinfo.getUserFieldValue(2)),{'name': self.win.getEditText("txtName")})
-                ErrorDialog("12","")
-            ErrorDialog("13","")
+                res1 = sock.execute(database, 3, docinfo.getUserFieldValue(1),'ir.actions.report.xml','write',int(docinfo.getUserFieldValue(2)),{'name': self.win.getEditText("txtName")})
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -2166,3 +2169,49 @@ elif __name__=="package":
             "org.openoffice.tiny.report.sendtoserver",
             ("com.sun.star.task.Job",),)
 
+
+
+import uno
+#import string
+#import unohelper
+#import xmlrpclib
+#import base64, tempfile
+from com.sun.star.task import XJobExecutor
+#import os
+#import sys
+if __name__<>'package':
+    from lib.gui import *
+#    from lib.error import *
+#    from LoginTest import *
+#    from lib.functions import *
+
+class About(unohelper.Base, XJobExecutor):
+    def __init__(self,ctx):
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+#        LoginTest()
+#        if not loginstatus and __name__=="package":
+#            exit(1)
+##        else:
+##            self.database="trunk_1"
+#        desktop=getDesktop()
+#        oDoc2 = desktop.getCurrentComponent()
+#        docinfo=oDoc2.getDocumentInfo()
+#        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+#        fields=['name','report_name','model']
+#        res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
+        self.win = DBModalDialog(60, 50, 225, 169, ".:: About Us !!! ::.")
+        if __name__<>"package":
+            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file:///home/hjo/Desktop/trunk/bin/script/About.jpg")
+        else:
+            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="images/About.jpg")
+        self.win.doModalDialog("",None)
+
+if __name__<>"package" and __name__=="__main__":
+    About(None)
+elif __name__=="package":
+    g_ImplementationHelper.addImplementation( \
+            About,
+            "org.openoffice.tiny.report.about",
+            ("com.sun.star.task.Job",),)

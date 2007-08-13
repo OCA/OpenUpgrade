@@ -19,12 +19,13 @@ class modify(unohelper.Base, XJobExecutor ):
         self.module  = "tiny_report"
         self.version = "0.1"
         self.win=None
-        localContext = uno.getComponentContext()
-        resolver = localContext.ServiceManager.createInstanceWithContext(
-                        "com.sun.star.bridge.UnoUrlResolver", localContext )
-        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
-        remoteContext = smgr.getPropertyValue( "DefaultContext" )
-        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
+#        localContext = uno.getComponentContext()
+#        resolver = localContext.ServiceManager.createInstanceWithContext(
+#                        "com.sun.star.bridge.UnoUrlResolver", localContext )
+#        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
+#        remoteContext = smgr.getPropertyValue( "DefaultContext" )
+#        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
+        desktop = getDesktop()
         Doc =desktop.getCurrentComponent()
         self.oVC = Doc.CurrentController.getViewCursor()
         # Variable Declaration

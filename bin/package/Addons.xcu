@@ -664,6 +664,19 @@
 					</prop>
 				</node>
 			</node>
+			<node oor:name="org.openoffice.tiny.report.image10" oor:op="replace">
+				<prop oor:name="URL">
+					<value>service:org.openoffice.tiny.report.langtag?insert</value>
+				</prop>
+				<node oor:name="UserDefinedImages">
+					<prop oor:name="ImageSmallURL" oor:type="xs:string">
+						<value>%origin%/images/lang_s.png</value>
+					</prop>
+					<prop oor:name="ImageBigURL" oor:type="xs:string" oor:width="100">
+						<value>%origin%/images/lang_b.png</value>
+					</prop>
+				</node>
+			</node>
 		</node>
 
 	</node>

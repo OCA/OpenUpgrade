@@ -8,7 +8,8 @@ import os
 #  python procedure, passing it...
 #   1. the oActionEvent
 #   2. any other parameters you specified to this object's constructor (as a tuple).
-os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
+if __name__<>"package":
+    os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
 passwd=""
 database=""
 loginstatus=False

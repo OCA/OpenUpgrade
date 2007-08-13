@@ -30,19 +30,11 @@ class Expression(unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtName",sName)
         self.win.doModalDialog("",None)
 
-    def getDesktop(self):
-        localContext = uno.getComponentContext()
-        resolver = localContext.ServiceManager.createInstanceWithContext(
-                        "com.sun.star.bridge.UnoUrlResolver", localContext )
-        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
-        remoteContext = smgr.getPropertyValue( "DefaultContext" )
-        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
-        return desktop
 
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
-            desktop=self.getDesktop()
+            desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()

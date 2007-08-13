@@ -24,12 +24,17 @@ def getServiceManager( cHost="localhost", cPort="2002" ):
         # Get the uno component context from the PyUNO runtime
         oLocalContext = uno.getComponentContext()
         # Create the UnoUrlResolver on the Python side.
-        oLocalResolver = oLocalContext.ServiceManager.createInstanceWithContext(
-                                    "com.sun.star.bridge.UnoUrlResolver", oLocalContext )
+
         # Connect to the running OpenOffice.org and get its context.
-        oContext = oLocalResolver.resolve( "uno:socket,host=" + cHost + ",port=" + cPort + ";urp;StarOffice.ComponentContext" )
+        if __name__<>"package":
+            oLocalResolver = oLocalContext.ServiceManager.createInstanceWithContext(
+                                    "com.sun.star.bridge.UnoUrlResolver", oLocalContext )
+            oContext = oLocalResolver.resolve( "uno:socket,host=" + cHost + ",port=" + cPort + ";urp;StarOffice.ComponentContext" )
         # Get the ServiceManager object
-        goServiceManager = oContext.ServiceManager
+            goServiceManager = oContext.ServiceManager
+        else:
+            goServiceManager=oLocalContext.ServiceManager
+
     return goServiceManager
 
 
@@ -61,7 +66,7 @@ def getDesktop():
         StarDesktop = createUnoService( "com.sun.star.frame.Desktop" )
     return StarDesktop
 # preload the StarDesktop variable.
-getDesktop()
+#getDesktop()
 
 
 # The CoreReflection object.
@@ -404,6 +409,7 @@ class DBModalDialog:
                         bDropdown=None,
                         cLabel=None,
                         nTabIndex=None,
+                        sImagePath=None,
                          ):
         oControlModel = self.oDialogModel.createInstance( cCtrlServiceName )
         self.oDialogModel.insertByName( cCtrlName, oControlModel )
@@ -428,6 +434,8 @@ class DBModalDialog:
         if nTabIndex != None:
             oControlModel.TabIndex = nTabIndex
 
+        if sImagePath != None:
+            oControlModel.ImageURL = sImagePath
     #--------------------------------------------------
     #   Access controls and control models
     #--------------------------------------------------
@@ -534,6 +542,22 @@ class DBModalDialog:
         oControl = self.getControl( cCtrlName )
         oControlModel = oControl.getModel()
         return oControlModel
+    #---------------------------------------------------
+    #    com.sun.star.awt.UnoControlImageControlModel
+    #---------------------------------------------------
+    def addImageControl( self, cCtrlName, nPositionX, nPositionY, nWidth, nHeight,
+                        sImagePath="",
+                        itemListenerProc=None,
+                        actionListenerProc=None ):
+
+        mod = self.addControl( "com.sun.star.awt.UnoControlImageControlModel",
+                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight, sImagePath=sImagePath)
+
+        if itemListenerProc != None:
+            self.addItemListenerProc( cCtrlName, itemListenerProc )
+        if actionListenerProc != None:
+            self.addActionListenerProc( cCtrlName, actionListenerProc )
+
 
     #--------------------------------------------------
     #   Adjust properties of control models
