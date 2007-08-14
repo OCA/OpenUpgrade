@@ -27,5 +27,5 @@
 ##############################################################################
 
 
-import payment_order
+import payment_export
 import wizard
