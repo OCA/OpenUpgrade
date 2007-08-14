@@ -193,6 +193,7 @@ def _create_pay(self,cr,uid,data,context):
         bank = bank_obj.browse(cr, uid, bank_id[0], context)
         v['institution_code']=bank.institution_code
     pay_line_obj=pool.get('payment.line')
+    pay_order1=pool.get('payment.order').browse(cr, uid, data['id'],context)
     pay_line_id = pay_line_obj.search(cr, uid, [('order_id','=',data['id'])])
     pay_line =pay_line_obj.read(cr, uid, pay_line_id,['partner_id','amount','bank_id'])
     seq=0
@@ -202,24 +203,25 @@ def _create_pay(self,cr,uid,data,context):
         #sub1 start
         v['sequence'] = str(seq).rjust(4).replace(' ','0')
         v['sub_div1']='01'
-        v['order_exe_date']=''
+        v['order_exe_date']=time.strftime('%d%m%y',time.strptime(pay_order1.date_done,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
         v['order_ref']=''#14-29
         v['cur_code']='BEF'#static set .but is available in entry line object..
-        v['code_pay']='C'#two values 'C' or 'D'
+        v['code_pay']='C'#two values 'C' or 'D'  *should be change
         v['amt_pay']=float2str(pay['amount'])
         total=total+pay['amount']
         v['acc_debit']=bank.acc_number
-        v['indicate_date']=''# three value blank,1,2,
+        v['indicate_date']=''# three value blank,1,2, *should be correct...blank is for order execution date .see sub01=pos 94
+
 
         #sub6 start
         v['sequence1']=str(seq).rjust(4).replace(' ','0')
         v['sub_div6']='06'
         if pay['bank_id']:
-            bank1 = bank_obj.read(cr, uid, pay['bank_id'][0])
+            bank1 = bank_obj.read(cr, uid, pay['bank_id'][0])#searching pay line bank account number
             if bank1['state']=='bank':
                 v['benf_accnt_no']=bank1['acc_number']
                 v['type_accnt']='2'
-            elif bank1['state']=='iban':
+            elif bank1['state']=='pay_iban':
                 v['benf_accnt_no']=bank1['iban']
                 v['type_accnt']='1'
             else:
@@ -237,16 +239,18 @@ def _create_pay(self,cr,uid,data,context):
             v['benf_name']=i.name
             v['benf_address']=str(i.street)+str(i.street2)+str(i.city)+str(i.state_id.name)+str(i.country_id.name)#continue this record to sub07...pos 8-42
 
+
         #seg 10 start
         v['sequence2']=str(seq).rjust(4).replace(' ','0')
         v['sub_div10']='10'
-        v['order_msg']=''#msg from order customer to order cutomer bank
-        v['method_pay']='EUR'#see attachment 1.5..multiple values are available
-        v['charge_code']=''
-        v['cur_code_debit']=''#'BEF'
+        v['order_msg']=''#msg from order customer to order cutomer bank *should be correct
+        v['method_pay']='EUR'#see attachment 1.5..multiple values are available *should be correct
+        v['charge_code']='' #*should be correct
+        v['cur_code_debit']=''#'BEF' *should be correct
         v['debit_cost']='000000000000'#field will only fill when ordering customer account debitted with charges if not field will contain blank or zero
-        v['benf_country_code']=''
+        v['benf_country_code']=i.country_id.code
         pay_order =pay_order+record_payline(v).generate()
+
 
     #trailer record........start
     v2['tot_record']=str(seq)
@@ -260,6 +264,7 @@ def _create_pay(self,cr,uid,data,context):
         raise
     pool.get('account.pay').write(cr,uid,[id_exp],{'note':log,'name':base64.encodestring(pay_order or "")})
     return {'note':log, 'pay': base64.encodestring(pay_order)}
+
 
 def float2str(lst):
             #return str(lst).replace('.','')
