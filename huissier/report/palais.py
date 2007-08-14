@@ -42,4 +42,4 @@ class huissier_palais(report_rml):
 		cr.close()
 		return report_rml.create(self, uid, new_ids, datas, context)
 
-huissier_palais('report.huissier.palais', 'huissier.dossier', 'addons/huissier/report/palais.xml', 'addons/huissier/report/palais.xsl')
+huissier_palais('report.huissier_palais', 'huissier.dossier', 'addons/huissier/report/palais.xml', 'addons/huissier/report/palais.xsl')

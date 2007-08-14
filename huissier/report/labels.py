@@ -30,15 +30,15 @@
 import sql_db
 from osv.osv import osv_pools
 from report.interface import report_rml
-
+import pooler
 class report_custom(report_rml):
 	def create(self, uid, ids, datas, context):
 		start = datas['form']['start']
 		stop = datas['form']['stop']
-		
 		# select all ranges which contain some labels in the (start, stop) range
-		cr = sql_db.db.cursor()
-		new_ids = osv_pools.get('huissier.vignettes').search(cr, uid, [('first','<=',stop),('last','>=',start)])
+		vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
+		#cr = sql_db.db.cursor()
+		new_ids = vignettes_obj.search(cr, uid, [('first','<=',stop),('last','>=',start)])
 		cr.close()
 		
 #		file('/tmp/terp.xml','wb+').write(xml)

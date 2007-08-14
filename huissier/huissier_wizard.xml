@@ -29,7 +29,10 @@
 		<wizard string="Cloturer le PV" model="huissier.lots" name="huissier.dossier.close.from_lot"/>
 		
 		<wizard
-		string="Impression facture" model="huissier.deposit" name="huissier.deposit.invoice" menu="False"
+		string="Impression facture"
+		model="huissier.deposit" 
+		name="huissier.deposit.invoice"
+		menu="False"
 		id="wizard_deposit_invoice"
 		multi="1"/>
 

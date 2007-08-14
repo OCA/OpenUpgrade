@@ -36,10 +36,7 @@ def _invoice_labels(self,cr,uid,datas,context):
 #	service = netsvc.LocalService("object_proxy")
 #	invoice_id = service.execute(uid, 'huissier.vignettes', 'invoice', [datas['id']])
 	vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
-	newinv = []
-	print "IDS",datas['ids']
 	ids = vign_obj.invoice(cr, uid, datas['ids'],context)
-	cr.commit()
 	cr.commit()
 	return {
 		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",

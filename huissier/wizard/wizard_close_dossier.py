@@ -26,10 +26,10 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-
+import pooler
 import wizard
 import netsvc
-
+import pooler
 close_form = '''<?xml version="1.0"?>
 <form title="Paid ?">
 	<field name="adj"/>
@@ -60,12 +60,18 @@ wait_form = '''<?xml version="1.0"?>
 
 class wizard_close_dossier(wizard.interface):
 	def _get_value(self, uid, datas):
-		service = netsvc.LocalService("object_proxy")
+		#service = netsvc.LocalService("object_proxy")
+		#res = service.execute(uid, 'huissier.dossier', 'read', datas['ids'], ['amount_adj_calculated','amount_costs','amount_total','amount_room_costs'])
+	
+		dossier_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
+		lots = dossier_obj.browse(cr, uid, datas['ids'])
+		amount_adj_cal=lots[0].amount_adj_calculated
+		costs=lots[0].amount_costs 
+		total=lots[0].amount_total
+		room=lots[0].amount_room_costs 
+		return len(res) and {'adj': amount_adj_cal, 'frais':costs, 'total':total, 'salle':room} or {}
 
-		res = service.execute(uid, 'huissier.dossier', 'read', datas['ids'], ['amount_adj_calculated','amount_costs','amount_total','amount_room_costs'])
-		return len(res) and {'adj':res[0]['amount_adj_calculated'], 'frais':res[0]['amount_costs'], 'total':res[0]['amount_total'], 'salle':res[0]['amount_room_costs']} or {}
-
-	def _close_dossier(self, uid, datas):
+	def _close_dossier(self,cr,uid,datas,context):
 		service = netsvc.LocalService("object_proxy")
 		res = service.execute(uid, 'huissier.dossier', 'close', datas['ids'], datas['form']['voirie'], datas['form']['acquis'])
 		return {'refund_id':res[0], 'invoice_id':res[1]}
@@ -119,22 +125,41 @@ class wizard_close_dossier(wizard.interface):
 wizard_close_dossier('huissier.dossier.close')
 
 class wizard_close_dossier_from_lot(wizard_close_dossier):
-	def _get_value(self, uid, datas,context={}):
-		service = netsvc.LocalService("object_proxy")
-
+	def _get_value(self,cr, uid, datas,context={}):
 		# get the dossier from the first lot
-		lots = service.execute(uid, 'huissier.lots', 'read', [datas['ids'][0]], ['dossier_id'])
-		dossier_id = lots and lots[0]['dossier_id'][0] or False
-		dossier_ids = dossier_id and [dossier_id] or []
+		dossier_obj = pooler.get_pool(cr.dbname).get('huissier.lots')
+		lots = dossier_obj.browse(cr, uid, datas['ids'])
+		dossiers = lots[0].dossier_id.id or False
 #TODO: error si dossier déjà fermé? le prob c'est il faut pouvoir corriger une erreur...
-		res = service.execute(uid, 'huissier.dossier', 'read', dossier_ids, ['amount_adj_calculated','amount_costs','amount_total','amount_room_costs'])
-		return res and {'dossier_id':dossier_id, 'adj':res[0]['amount_adj_calculated'], 'frais':res[0]['amount_costs'], 'total':res[0]['amount_total'], 'salle':res[0]['amount_room_costs']} or {'dossier_id':dossier_id}
+		amount_adj_cal=lots[0].dossier_id.amount_adj_calculated
+		costs=lots[0].dossier_id.amount_costs 
+		total=lots[0].dossier_id.amount_total
+		room=lots[0].dossier_id.amount_room_costs 
+		return {'dossier_id':dossiers, 'adj':amount_adj_cal, 'frais':costs, 'total':total, 'salle':room} or {'dossier_id':dossier_id}
 
-	def _close_dossier(self, uid, datas):
-		service = netsvc.LocalService("object_proxy")
-		
-		res = service.execute(uid, 'huissier.dossier', 'close', [datas['form']['dossier_id']], datas['form']['voirie'], datas['form']['acquis'])
-		return {'ids':[datas['form']['dossier_id']], 'refund_id':res[0], 'invoice_id':res[1]}
+	def _close_dossier(self, cr,uid, datas,context):
+	#	service = netsvc.LocalService("object_proxy")
+	#	res = service.execute(uid, 'huissier.dossier', 'close', [datas['form']['dossier_id']], datas['form']['voirie'], datas['form']['acquis'])
+		dossier_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
+		lots = dossier_obj.close(cr, uid, [datas['form']['dossier_id']], datas['form']['voirie'], datas['form']['acquis'])
+
+	#	return {
+	#	'ids':[datas['form']['dossier_id']],
+	#	'refund_id':res[0],
+	#	'invoice_id':res[1]}
+	#	cr.commit()
+	#	return {
+	#		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
+	#		'name': 'Seller invoices',
+	#		'view_type': 'form',
+	#		'view_mode': 'tree,form',
+	#		'res_model': 'account.invoice',
+	#		'view_id': False,
+	#		'context': "{'type':'out_refund'}",
+	#		'type': 'ir.actions.act_window'
+	#	}
+		return {}
+
 
 	states = {
 		'init': {

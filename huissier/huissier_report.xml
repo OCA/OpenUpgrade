@@ -5,12 +5,10 @@
 		<report string="Facture salle"
 			model="huissier.dossier" 
 			name="huissier.invoice.salle" 
-			auto="False"
 			menu="False"/>
 		<report string="Facture vignette"
 		model="huissier.vignettes" 
 		name="huissier.label.invoices" 
-		auto="False" 
 		menu="False"
 		/>
 		<report 
@@ -19,16 +17,27 @@
 		name="huissier.labels" 
 		xml="huissier/report/labels.xml"
 		xsl="huissier/report/labels.xsl"
-		auto="False"
 		id="report_labels"/>
 		
 		<!-- xsl attribute is needed for the translation system -->
-		<report string="PV" model="huissier.dossier" name="huissier.pv" xsl="huissier/report/pv.xsl" auto="False"/>
-		<report string="PV" model="huissier.lots" name="huissier.pv.from_lot" xsl="huissier/report/pv.xsl" auto="False" menu="False"/>
-	<report 
+		<report
+		string="PV" 
+		model="huissier.dossier"
+		name="huissier_pv" 
+		xsl="huissier/report/pv.xsl"
+		/>
+
+		<report 
+		string="PV"
+		model="huissier.lots"
+		name="huissier.pv.from_lot"
+		xsl="huissier/report/pv.xsl"
+		menu="False"/>
+
+		<report 
 		string="Attestation" 
 		model="huissier.lots" 
-		name="huissier.lots.attestation" 
+		name="huissier.lots_attestation" 
 		xml="huissier/report/attestation.xml" 
 		xsl="huissier/report/attestation.xsl"
 		auto="False"
@@ -37,13 +46,26 @@
 		string="Ticket"	
 		id="report_ticket" 
 		model="huissier.lots" 
-		name="huissier.lots.ticket" 
+		name="huissier.lots_ticket" 
 		xml="huissier/report/ticket.xml" 
 		xsl="huissier/report/ticket.xsl"
-		auto="False"/>
+		/>
 		
-		<report string="Listing palais" model="huissier.dossier" name="huissier.palais" auto="False" menu="False"/>
-		<report string="Totaux des ventes" model="huissier.dossier" name="huissier.dossier.totals" xml="huissier/report/total.xml" xsl="huissier/report/total.xsl"/>
+		<report
+		string="Listing palais" 
+		model="huissier.dossier" 
+		name="report.huissier_palais"
+		xml="huissier/report/palais.xml" 
+		xsl="huissier/report/palais.xsl"
+		menu="False"
+		/>
+	
+		<report 
+		string="Totaux des ventes"
+		model="huissier.dossier"
+		name="huissier.dossier.totals"
+		xml="huissier/report/total.xml" 
+		xsl="huissier/report/total.xsl"/>
 
 </data>
 </terp>

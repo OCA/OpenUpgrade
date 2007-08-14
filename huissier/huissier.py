@@ -74,12 +74,20 @@ class huissier_dossier(osv.osv):
 		return res
 		
 	def _room_costs_get(self, cr, uid, ids, prop=None, unknown_none=None, unknown_dict={}):
-		dossiers = self.browse(cr, uid, ids)
-		res = {}
-		for d in dossiers:
-			total = self._adjudication_get(cr, uid, [d.id])[d.id]
-			costs = d.room_cost_id and self.pool.get('account.tax').compute(cr, uid, [d.room_cost_id.id], total, 1) or []
-			res[d.id] = reduce(lambda x, y: x+y['amount'], costs, 0.0)
+		res={}
+		lots=self.browse(cr,uid,ids)
+		pt_tax=self.pool.get('account.tax')
+		for lot in lots:
+			amount_total=0.0
+			total = self._adjudication_get(cr, uid, [lot.id])[lot.id]
+			taxes=[]
+			amount_total=0.0
+			if lot.room_cost_id:
+				taxes.append(lot.room_cost_id)
+			costs =pt_tax.compute(cr, uid, taxes, total, 1) 
+			for t in taxes:
+				amount_total+=t['amount']
+			res[lot.id]=amount_total
 		return res
 
 	_columns = {
@@ -87,9 +95,7 @@ class huissier_dossier(osv.osv):
 		'num_vignette': fields.integer(u'Numéro de vignette', required=True),
 		#domain="[('category_id','=','Etudes')]",
 		'etude_id': fields.many2one('res.partner', u'Etude', required=True),
-
 		'date_creation': fields.date(u'Création'),
-
 		'creancier': fields.many2one('res.partner', u'Créancier'),
 #		'creancier_name': fields.char('Nom', size=64),
 #		'creancier_address': fields.char('Adresse', size=128),
@@ -120,7 +126,7 @@ class huissier_dossier(osv.osv):
 		'amount_adj_calculated': fields.function(_adjudication_get, method=True, string=u'Adjudications'),
 		'amount_costs': fields.function(_costs_get, method=True, string=u'Frais'),
 		'amount_total': fields.function(_total_get, method=True, string=u'Total'),
-		'amount_room_costs': fields.function(_room_costs_get, method=True, string=u'Frais de salle'),
+		'amount_room_costs': fields.function(_room_costs_get,method=True, string=u'Frais de salle'),
 		'amount_voirie': fields.float(u'Frais de voirie', digits=(12,2)),
 		
 		'state': fields.selection((('draft',u'Ouvert'),('closed',u'Fermé'),('canceled',u'Annulé')), u'État', readonly=True),
@@ -218,8 +224,9 @@ class huissier_dossier(osv.osv):
 		for dossier in self.browse(cr, uid, ids):
 			etude = dossier.etude_id
 			lang = etude.lang or 'fr'
-			account_receive_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], [('id',str(etude.id))] )[0][2]
-				
+		#	account_receive_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], [('id',str(etude.id))] )[0][2]
+			account_receive_id=dossier.etude_id.property_account_receivable[0]
+			print "compte recevable",account_receive_id
 			lines = []
 			invoice_desc = invoice_desc_str[lang]
 			line_desc = frais_salle_str[lang]
@@ -246,7 +253,7 @@ class huissier_dossier(osv.osv):
 				'partner_id': etude.id,
 				'address_contact_id': addr['contact'],
 				'address_invoice_id': addr['invoice'],
-				'partner_ref': etude.ref,
+			#	'partner_ref': etude.ref,
 				'date_invoice': dt,
 				'date_due': dt,
 				'invoice_line': lines,
@@ -254,10 +261,8 @@ class huissier_dossier(osv.osv):
 				'account_id': account_receive_id,
 				'comment': acquis and acquis_strings[lang] or False
 			}
-
-			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice,context)
+			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
 			self.write(cr, uid, ids, {'invoice_id':invoice_id})
-
 			wf_service = netsvc.LocalService("workflow")
 			wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
 			invoice_ids.append(invoice_id)
@@ -291,17 +296,14 @@ class huissier_dossier(osv.osv):
 		
 	def close(self, cr, uid, ids, frais_voirie=False, acquis=False):
 		assert len(ids)==1
-	
 		if isinstance(frais_voirie, float):
 			self.write(cr, uid, ids, {'amount_voirie': frais_voirie})
-			
 		toinvoice = self.read(cr, uid, ids, ['toinvoice'])[0]['toinvoice']
 		if toinvoice:
 #			self.create_invoice_and_cancel_old(cr, uid, ids)
 			(refund_id, invoice_id) = self.create_invoice_and_refund_old(cr, uid, ids, acquis)
 		else:
 			(refund_id, invoice_id) = (False, False)
-		
 		# stores amount adjudicated for faster retrieval later
 		amount_adj = self.read(cr, uid, ids, ['amount_adj_calculated'])[0]['amount_adj_calculated']
 		self.write(cr, uid, ids, {'state':'closed', 'amount_adj':amount_adj})
@@ -408,10 +410,21 @@ class huissier_lots(osv.osv):
 		return res and res[0]['vat'] or False
 
 	def get_costs_amount(self, cr, uid, ids, dossier_id, adj_price):
-		dossier = self.pool.get('huissier.dossier').read(cr, uid, [dossier_id], ['cost_id'])[0]
-		costs = self.pool.get('account.tax').compute(cr, uid, [dossier['cost_id'][0]], adj_price, 1)
-		cost_amount = reduce(lambda x, y: x+y['amount'], costs, 0.0)
-		return cost_amount
+		res={}
+#		dossier = self.pool.get('huissier.dossier').read(cr, uid, [dossier_id], ['cost_id'])[0]
+		
+		pt_tax=self.pool.get('account.tax')
+		taxes=[]
+		amount_total=0.0
+		obj_lot=self.browse(cr,uid,ids)[0]
+		if obj_lot.dossier_id:
+			taxes.append(obj_lot.dossier_id.cost_id)
+		costs = pt_tax.compute(cr, uid, taxes, obj_lot.adj_price, 1)
+		for t in taxes:
+			amount_total+=t['amount']
+		#res[obj_lot.id]=amount_total
+#		cost_amount = reduce(lambda x, y: x+y['amount'], costs, 0.0)
+		return amount_total
 	
 	def onchange_adj_price(self, cr, uid, ids, dossier_id, adj_price):
 		return {'value':{'price_wh_costs': adj_price + self.get_costs_amount(cr, uid, ids, dossier_id, adj_price)}}
