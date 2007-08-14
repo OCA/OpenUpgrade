@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lots-list>
+	<etude type="zoom" name="dossier_id.etude_id">
+		<name type="field" name="name"/>
+		<street type="field" name="address.street"/>
+		<zip type="field" name="address.zip"/>
+		<city type="field" name="address.city"/>
+	</etude>
+	<date type="field" name="dossier_id.date_reelle"/>
+	<buyer type="fields" name="buyer_name,buyer_address">
+		<name type="field" name="buyer_name"/>
+		<address type="field" name="buyer_address"/>
+		<zip type="field" name="buyer_zip"/>
+		<city type="field" name="buyer_city"/>
+		<lang type="field" name="buyer_lang"/>
+		<lot type="fields" name="id">
+			<id type="field" name="id"/>
+			<number type="field" name="number"/>
+			<description type="field" name="name"/>
+			<adj_price type="field" name="adj_price"/>
+			<costs type="field" name="amount_costs"/>
+		</lot>
+	</buyer>
+</lots-list>

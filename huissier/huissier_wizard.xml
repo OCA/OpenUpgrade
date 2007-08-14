@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<terp>
+	<data>
+		<delete model="ir.actions.wizard" search="[('wiz_name','like','huissier.')]"/>
+
+		<wizard id="wizard.listing.palais" string="Listing Palais" model="huissier.dossier" name="huissier.palais"/>
+		<menuitem name="Operations/Huissier/Listing Palais" action="wizard.listing.palais" type="wizard"/>
+	
+		<wizard id="wizard.labels.reprint" string="Réimpression de vignettes" model="huissier.vignettes" name="huissier.labels.reprint" menu="False"/>
+		<menuitem name="Operations/Huissier/Réimpression de vignettes" action="wizard.labels.reprint" type="wizard"/>
+
+		<wizard id="wizard.dossier.close" string="Cloturer le PV" model="huissier.dossier" name="huissier.dossier.close" menu="False"/>
+		<wizard string="Cloturer le PV" model="huissier.lots" name="huissier.dossier.close.from_lot"/>
+		
+		<wizard id="wizard.deposit.invoice" string="Impression facture" model="huissier.deposit" name="huissier.deposit.invoice" menu="False"/>
+
+		<wizard id="wizard.labels.invoice" string="Facturer les vignettes" model="huissier.vignettes" name="huissier.labels.invoice" menu="False"/>
+		<wizard id="wizard.labels.pay" string="Payer les vignettes" model="huissier.vignettes" name="huissier.labels.pay" menu="False"/>
+	</data>
+</terp>
+

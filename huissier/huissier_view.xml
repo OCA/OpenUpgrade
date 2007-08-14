@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<terp>
+<data>
+	<delete model="ir.ui.view" search="[('name','like','huissier.')]"/>
+	<delete model="ir.actions.act_window" search="[('name','like','huissier.')]"/>
+
+<!--
+	=======================================================
+	dossiers
+	=======================================================
+-->	
+	<record model="ir.ui.view" id="v_dossier_tree_old">
+		<field name="name">huissier.dossier.tree</field>
+		<field name="model">huissier.dossier</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Dossiers">
+				<field name="num_vignette"/>
+				<field name="etude_id"/>
+				<field name="debiteur"/>
+				<field name="date_prevue"/>
+				<field name="date_reelle"/>
+				<field name="amount_adj"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="v_dossier_tree_cur">
+		<field name="name">huissier.dossier.tree</field>
+		<field name="model">huissier.dossier</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Dossiers">
+				<field name="num_vignette"/>
+				<field name="etude_id"/>
+				<field name="debiteur"/>
+				<field name="date_prevue"/>
+				<field name="date_reelle"/>
+				<field name="amount_adj_calculated"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="v_dossier_form">
+		<field name="name">huissier.dossier.form</field>
+		<field name="model">huissier.dossier</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Signalétique des ventes">
+				<notebook>
+					<page string="Général">
+						<separator string="Informations générales" colspan="3"/>
+
+						<field name="num_vignette" on_change="onchange_num_vignette(num_vignette)" select="1"/>
+						<field name="etude_id" select="1"/>
+		<!--				
+						<separator string="Creancier" colspan="3"/>
+						
+						<field name="creancier_name" select="1"/>
+						<field name="creancier_address"/>
+						<field name="creancier_zip"/>
+						<field name="creancier_city"/>
+		-->
+						<field name="creancier" select="1"/>
+
+		<!--				
+						<separator string="Debiteur" colspan="3"/>
+						
+						<field name="debiteur_name" select="1"/>
+						<field name="debiteur_address"/>
+						<field name="debiteur_zip"/>
+						<field name="debiteur_city"/>
+						<field name="debiteur_naissance"/>
+						<field name="debiteur_tva"/>
+		-->				
+						<field name="debiteur" select="1"/>
+
+						<separator string="Dates" colspan="3"/>
+						
+						<field name="date_creation"/>
+						<newline/>
+						<field name="date_prevue" select="1"/>
+						<field name="date_reelle" select="1"/>
+		<!--				
+						<field name="rentree_mobilier"/>
+						<field name="sortie_mobilier"/>
+		-->				
+						<separator string="Divers" colspan="3"/>
+						
+						<field name="toinvoice"/>
+						<field name="tolist"/>
+						
+						<field name="cost_id"/>
+						<field name="room_cost_id"/>
+						<field name="salle_account_id"/>
+						<field name="voirie_account_id"/>
+		<!--				
+						<field name="cubage"/>
+		-->				
+						<field name="lang"/>
+
+						<separator string="État" colspan="3"/>
+						
+						<field name="state"/>
+						<button name="cancel" string="Annuler" type="object" states="draft"/>
+						<button name="%(wizard.dossier.close)d" string="Recréer le PV/Refacturer la vente" type="action" states="closed"/>
+					</page>
+					<page string="Garde">
+						<field name="deposit_id" widget="one2many_list" nolabel="1"/>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.dossier</field>
+		<field name="res_model">huissier.dossier</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="v_dossier_form"/>
+	</record>
+	<menuitem name="Operations/Huissier/Signalétique des ventes" action="a"/>
+
+<!--
+	=======================================================
+	lots
+	=======================================================
+-->	
+	<record model="ir.ui.view" id="v">
+		<field name="name">huissier.lots.tree</field>
+		<field name="model">huissier.lots</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Lots">
+				<field name="number"/>
+				<field name="name"/>
+				<field name="buyer_name"/>
+				<field name="adj_price"/>
+				<field name="price_wh_costs"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="v">
+		<field name="name">huissier.lots.form</field>
+		<field name="model">huissier.lots</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Lots">
+				<group col="12" colspan="4">
+					<field name="number" select="1"/>
+					<field name="name" select="1" colspan="9"/>
+				</group>
+				<group col="5" colspan="4">
+					<field name="adj_price" select="1" string="Prix"/>
+					<field name="vat"/>
+				</group>
+				<group col="17" colspan="4">
+					<field name="buyer_ref" select="1" context="show_ref='1'" on_change="onchange_buyer_ref(buyer_ref)"/>
+					<field name="buyer_name" select="1" colspan="11"/>
+					<field name="buyer_vat" colspan="2"/>
+				</group>
+				<group col="12" colspan="4">
+					<field name="buyer_address" colspan="6"/>
+					<field name="buyer_zip"/>
+					<field name="buyer_city" colspan="2"/>
+				</group>
+				<group col="10" colspan="4">
+					<field name="buyer_lang"/>
+					<button name="%(report.attestation)d" string="Attestation" type="action"/>
+					<button name="%(report.ticket)d" string="Ticket" type="action"/>
+				</group>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.lots.from_a_date</field>
+		<field name="res_model">huissier.lots</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="v"/>
+		<field name="domain">[('dossier_id','=',active_id)]</field>
+	</record>
+	
+	<ir_set>
+		<field name="keys" eval="[('action','tree_but_open'),('res_model','huissier.dossier')]"/>
+		<field name="args" eval="[]"/>
+		<field name="name">Open Moves</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
+		<field name="isobject" eval="True"/>
+	</ir_set>
+	
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.dossier</field>
+		<field name="res_model">huissier.dossier</field>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="v_dossier_form"/>
+	</record>
+	<menuitem name="Operations/Huissier/Ventes" action="a"/>
+	
+	<record model="ir.ui.view" id="v">
+		<field name="name">huissier.lots.form</field>
+		<field name="model">huissier.lots</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Lots">
+				<field name="dossier_id"/>
+				<newline/>
+				<group col="12" colspan="4">
+					<field name="number" select="1"/>
+					<field name="name" select="1" colspan="9"/>
+				</group>
+				<group col="5" colspan="4">
+					<field name="adj_price" select="1" string="Prix"/>
+					<field name="vat"/>
+				</group>
+				<group col="17" colspan="4">
+					<field name="buyer_ref" select="1" context="show_ref='1'" on_change="onchange_buyer_ref(buyer_ref)"/>
+					<field name="buyer_name" select="1" colspan="11"/>
+					<field name="buyer_vat" colspan="2"/>
+				</group>
+				<group col="12" colspan="4">
+					<field name="buyer_address" colspan="6"/>
+					<field name="buyer_zip"/>
+					<field name="buyer_city" colspan="2"/>
+				</group>
+				<group col="10" colspan="4">
+					<field name="buyer_lang"/>
+					<button name="%(report.attestation)d" string="Attestation" type="action"/>
+					<button name="%(report.ticket)d" string="Ticket" type="action"/>
+				</group>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.lots.from_all_dates</field>
+		<field name="res_model">huissier.lots</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="v"/>
+	</record>
+	<menuitem name="Operations/Huissier/Lots" action="a"/>
+
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.dossier</field>
+		<field name="res_model">huissier.dossier</field>
+		<field name="view_type">tree</field>
+		<field name="domain">[('state','=','draft')]</field>
+		<field name="view_id" ref="v_dossier_tree_cur"/>
+	</record>
+	<menuitem name="Operations/Huissier/Ventes/Ventes en cours" action="a"/>
+	
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.dossier</field>
+		<field name="res_model">huissier.dossier</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','closed')]</field>
+		<field name="view_id" ref="v_dossier_tree_old"/>
+<!--		
+		<field name="view_id" ref="v_dossier_form"/>
+-->		
+	</record>
+	<menuitem name="Operations/Huissier/Ventes/Anciennes ventes" action="a"/>
+	
+<!--
+	=======================================================
+	vignettes
+	=======================================================
+-->	
+	<record model="ir.ui.view" id="v">
+		<field name="name">huissier.vignettes.tree</field>
+		<field name="model">huissier.vignettes</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Vignettes">
+				<field name="etude_id"/>
+				<field name="quantity"/>
+				<field name="first"/>
+				<field name="last"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="v">
+		<field name="name">huissier.vignettes.form</field>
+		<field name="model">huissier.vignettes</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Vignettes">
+				<field name="etude_id" select="1"/>
+				<newline/>
+				<field name="quantity" on_change="onchange_quantity(quantity,first)"/>
+				<field name="price"/>
+				<field name="first" select="1"/>
+				<field name="last" on_change="onchange_last(first,last)" select="1"/>
+				<field name="acquis"/>
+				<field name="income_account_id"/>
+				<newline/>
+				<field name="invoice_id"/>
+				<field name="transfer_id"/>
+				<newline/>
+				<field name="state"/>
+				<button name="%(wizard.labels.invoice)d" string="Imprimer et facturer" type="action" states="draft"/>
+				<button name="%(wizard.labels.pay)d" string="Payer" type="action" states="invoiced"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.vignettes</field>
+		<field name="res_model">huissier.vignettes</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="v"/>
+	</record>
+	<menuitem name="Operations/Huissier/Vignettes" action="a"/>
+
+<!--	
+	=======================================================
+	garde meuble
+	=======================================================
+-->	
+	<record model="ir.ui.view" id="v">
+		<field name="name">huissier.deposit.tree</field>
+		<field name="model">huissier.deposit</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Garde meuble">
+				<field name="dossier_id"/>
+				<field name="rentree_mobilier"/>
+				<field name="cubage"/>
+				<field name="nombre_vehicule"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="v">
+		<field name="name">huissier.deposit.form</field>
+		<field name="model">huissier.deposit</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Garde meuble">
+				<notebook>
+					<page string="General">
+						<field name="dossier_id" on_change="onchange_dossier(dossier_id)" select="1" colspan="3"/>
+						<newline/>
+						<field name="billing_partner_id" select="1" colspan="3"/>
+<!--				
+						<field name="lang"/>
+-->				
+						<newline/>
+						<field name="line_desc" colspan="3"/>
+						<newline/>
+						<field name="rentree_mobilier"/>
+						<field name="sortie_mobilier"/>
+						<newline/>
+						<field name="cubage"/>
+						<field name="prix_garde_meuble"/>
+						<newline/>
+						<field name="nombre_vehicule"/>
+						<field name="forfait_vehicule"/>
+						<newline/>
+						<field name="nombre_expo"/>
+						<field name="forfait_expo"/>
+						<newline/>
+						<field name="acquis"/>
+						<newline/>
+						<field name="income_account_id"/>
+						<newline/>
+						<field name="state"/>
+						<group col="2" colspan="2">
+							<button name="%(wizard.deposit.invoice)d" string="Facturer immédiatement" type="action" states="draft"/>
+							<button name="start_periodic_invoice" string="Facturer tous les mois" type="object" states="draft"/>
+							<button name="stop_periodic_invoice" string="Arreter la facturation automatique" type="object" states="running"/>
+							<button name="reopen" string="Réouvrir" type="object" states="closed"/>
+						</group>
+					</page>
+					<page string="Factures">
+						<field name="invoice_id"/>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="a">
+		<field name="name">huissier.deposit</field>
+		<field name="res_model">huissier.deposit</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="v"/>
+	</record>
+	<menuitem name="Operations/Huissier/Garde" action="a"/>
+</data>
+</terp>
