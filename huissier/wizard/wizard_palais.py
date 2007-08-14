@@ -43,7 +43,7 @@ palais_fields = {
 	'date2': {'string':u'Fin de période', 'type':'date', 'required':True},
 }
 
-def _get_value(self, uid, datas):
+def _get_value(self,cr,uid,datas,context):
 	return {'date1':time.strftime('%Y-%m-%d'), 'date2':time.strftime('%Y-%m-%d')}
 
 class wizard_palais(wizard.interface):

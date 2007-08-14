@@ -85,8 +85,8 @@ class huissier_dossier(osv.osv):
 	_columns = {
 #		'name': fields.integer(u'Numéro de vignette'),
 		'num_vignette': fields.integer(u'Numéro de vignette', required=True),
-		
-		'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id','=','Etudes')]", required=True),
+		#domain="[('category_id','=','Etudes')]",
+		'etude_id': fields.many2one('res.partner', u'Etude', required=True),
 
 		'date_creation': fields.date(u'Création'),
 
@@ -133,12 +133,12 @@ class huissier_dossier(osv.osv):
 		'deposit_id': fields.one2many('huissier.deposit', 'dossier_id', u'Garde meuble'),
 	}
 	_defaults = {
-		'toinvoice': lambda obj,cr,uid: True, 
-		'tolist': lambda obj,cr,uid: True, 
-		'state': lambda obj,cr,uid: 'draft',
-		'date_creation': lambda obj,cr,uid: time.strftime('%Y-%m-%d'),
-		'date_prevue': lambda obj,cr,uid: time.strftime('%Y-%m-%d'),
-		'date_reelle': lambda obj,cr,uid: time.strftime('%Y-%m-%d'),
+		'toinvoice': lambda *a: True, 
+		'tolist': lambda *a: True, 
+		'state': lambda *a: 'draft',
+		'date_creation': lambda *a: time.strftime('%Y-%m-%d'),
+		'date_prevue': lambda *a: time.strftime('%Y-%m-%d'),
+		'date_reelle': lambda *a: time.strftime('%Y-%m-%d'),
 	}
 	
 	# check 
@@ -255,7 +255,7 @@ class huissier_dossier(osv.osv):
 				'comment': acquis and acquis_strings[lang] or False
 			}
 
-			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
+			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice,context)
 			self.write(cr, uid, ids, {'invoice_id':invoice_id})
 
 			wf_service = netsvc.LocalService("workflow")
@@ -307,13 +307,13 @@ class huissier_dossier(osv.osv):
 		self.write(cr, uid, ids, {'state':'closed', 'amount_adj':amount_adj})
 		return (refund_id, invoice_id)
 	
-	def cancel(self, cr, uid, ids):
+	def cancel(self, cr, uid, ids,context):
 		self.write(cr, uid, ids, {'state':'canceled'})
 		return True
 			
 huissier_dossier()
 
-def _lang_get(self, cr, user):
+def _lang_get(self, cr, user,ids):
 	cr.execute('select code, name from res_lang order by name')
 	return cr.fetchall() or [(False, '/')]
 	
@@ -369,8 +369,8 @@ class huissier_lots(osv.osv):
 #		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer', digits=(12,2)),
 	}
 	_defaults = {
-		'number': lambda obj,cr,uid: obj._get_next_lot_number(cr, uid),
-		'vat': lambda obj,cr,uid: obj._get_lot_default_vat(cr, uid)
+		'number': lambda obj,cr,uid,*a: obj._get_next_lot_number(cr, uid),
+		'vat': lambda obj,cr,uid,*a: obj._get_lot_default_vat(cr, uid)
 	}
 
 
@@ -458,8 +458,7 @@ class huissier_vignettes(osv.osv):
 		'last': fields.integer(u'Référence de fin', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 		'acquis': fields.boolean(u'Pour acquis', states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 		'invoice_id': fields.many2one('account.invoice', u'Facture', readonly=True),
-		# a rajouter apres installation
-		#	'transfer_id': fields.many2one('account.transfer', u'Payement', readonly=True),
+	# n existe plus	'transfer_id': fields.many2one('account.transfer', u'Payement', readonly=True),
 		'income_account_id': fields.many2one('account.account', 'Compte Revenus', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 		'date_creation': fields.datetime(u'Date de création'),
 #		'state': fields.selection( (('draft',u'draft'),('waiting',u'en attente'),('invoiced',u'facturées')),u'État', readonly=True),
@@ -467,10 +466,10 @@ class huissier_vignettes(osv.osv):
 		'value': fields.function(_get_range_value, method=True, string=u'A payer'),
 	}
 	_defaults = {
-		'date_creation': lambda obj,cr,z: time.strftime('%Y-%m-%d %H:%M:%S'),
-		'price': lambda obj,cr,uid: 11.0,
-		'first': lambda obj,cr,uid: obj._get_next_first_number(cr, uid),
-		'state': lambda obj,cr,uid: 'draft',
+		'date_creation': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'price': lambda *a: 11.0,
+		'first': lambda obj,cr,uid,*a: obj._get_next_first_number(cr, uid),
+		'state': lambda *a: 'draft',
 	}
 
 	def _get_next_first_number(self, cr, uid):
@@ -487,31 +486,30 @@ class huissier_vignettes(osv.osv):
 			return {}
 		else:
 			return {'value':{'quantity':last - first + 1}}
-	
-	def pay(self, cr, uid, ids, account_id):
-		label_ranges = self.browse(cr, uid, ids)
-		if not len(label_ranges):
-			return []
-		
-		for lr in label_ranges:
-			partner_id = lr.etude_id.id
-			account_src_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (partner_id or []) and [('id',str(partner_id))] )[0][2]
-			transfer_name = u'Payement des vignettes %d à %d (%d vignettes)' % (lr.first, lr.last, lr.quantity)
-			transfer = {
-				'name': transfer_name,
-				'partner_id': partner_id,
-				'account_src_id': account_src_id,
-				'type': 'in_payment',
-				'account_dest_id': account_id,
-				'amount': lr.value,
-			}
-
-			transfer_id = self.pool.get('account.transfer').create(cr, uid, transfer)
-			self.pool.get('account.transfer').pay_validate(cr,uid,[transfer_id])
-			
-			self.write(cr, uid, [lr.id], {'transfer_id':transfer_id, 'state':'paid'})
-			
-	def invoice(self, cr, uid, ids):
+	#remplace sur l objet pay des factures
+#	def pay(self, cr, uid, ids, account_id):
+#		label_ranges = self.browse(cr, uid, ids)
+#		if not len(label_ranges):
+#			return []
+#		
+#		for lr in label_ranges:
+#			partner_id = lr.etude_id.id
+#			account_src_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (partner_id or []) and [('id',str(partner_id))] )[0][2]
+#			transfer_name = u'Payement des vignettes %d à %d (%d vignettes)' % (lr.first, lr.last, lr.quantity)
+#			transfer = {
+#				'name': transfer_name,
+#				'partner_id': partner_id,
+#				'account_src_id': account_src_id,
+#				'type': 'in_payment',
+#				'account_dest_id': account_id,
+#				'amount': lr.value,
+#			}
+#		#	transfer_id = self.pool.get('account.transfer').create(cr, uid, transfer)
+#		#	self.pool.get('account.transfer').pay_validate(cr,uid,[transfer_id])
+#			
+#		#	self.write(cr, uid, [lr.id], {'transfer_id':transfer_id, 'state':'paid'})
+#			
+	def invoice(self, cr, uid, ids,context):
 		"""
 			Create an invoice for selected range of 'vignettes' (ids)
 		"""
@@ -540,7 +538,6 @@ class huissier_vignettes(osv.osv):
 			'fr': u'Facture de vignettes (%d vignette(s))',
 			'nl': u'Vignetten faktuur (%d vignette(n))'
 		}
-
 		# use each list of label ranges in turn
 		for label_ranges in label_ranges_etude.values():
 			etude = label_ranges[0].etude_id
@@ -606,7 +603,7 @@ class huissier_deposit(osv.osv):
 		'state': fields.selection((('draft',u'draft'),('running',u'en cours'),('closed',u'retiré')), u'Statut', readonly=True),
 	}
 	_defaults = {
-		'state': lambda obj,cr,uid: 'draft',
+		'state': lambda *a: 'draft',
 	}
 	
 	def invoice(self, cr, uid, ids):
@@ -637,8 +634,8 @@ class huissier_deposit(osv.osv):
 			
 			invoice_desc = invoice_descs[lang]
 			
-			account_receive_id = ir.ir_get(cr, uid, [('meta','res.partner'),('name','account.receivable')], [('id',str(partner.id))] )[0][2]
-
+			#account_receive_id = ir.ir_get(cr, uid, [('meta','res.partner'),('name','account.receivable')], [('id',str(partner.id))] )[0][2]
+		
 			lines = []
 			line_desc = deposit.line_desc
 			lines.append((0, False, {'name':deposit.line_desc, 'quantity':deposit.cubage, 'account_id':deposit.income_account_id.id, 'price_unit':deposit.prix_garde_meuble}))
@@ -662,12 +659,12 @@ class huissier_deposit(osv.osv):
 				'partner_id': partner.id,
 				'address_contact_id': addr['contact'],
 				'address_invoice_id': addr['invoice'],
-				'partner_ref': partner.ref,
+			#	'partner_ref': partner.ref,
 				'date_invoice': dt,
 				'date_due': dt,
 				'invoice_line': lines,
 				'type': 'out_invoice',
-				'account_id': account_receive_id,
+				'account_id': deposit.billing_partner_id.property_account_receivable[0],#account_receive_id,
 				'comment': deposit.acquis and acquis_strings[lang] or False
 			}
 			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
@@ -677,15 +674,15 @@ class huissier_deposit(osv.osv):
 			invoice_ids.append(invoice_id)
 		return invoice_ids
 			
-	def start_periodic_invoice(self, cr, uid, ids):
+	def start_periodic_invoice(self, cr, uid, ids,context):
 		self.write(cr, uid, ids, {'state':'running'})
 		return True
 
-	def stop_periodic_invoice(self, cr, uid, ids):
+	def stop_periodic_invoice(self, cr, uid, ids,context):
 		self.write(cr, uid, ids, {'state':'closed'})
 		return True
 
-	def invoice_once(self, cr, uid, ids):
+	def invoice_once(self, cr, uid, ids,context):
 		assert len(ids)==1
 		invoice_id = self.invoice(cr, uid, ids)[0]
 		wf_service = netsvc.LocalService("workflow")
@@ -693,7 +690,7 @@ class huissier_deposit(osv.osv):
 		self.write(cr, uid, ids, {'state':'closed'})
 		return invoice_id
 		
-	def reopen(self, cr, uid, ids):
+	def reopen(self, cr, uid, ids,context):
 		self.write(cr, uid, ids, {'state':'draft'})
 		return True
 		

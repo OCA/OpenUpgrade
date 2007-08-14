@@ -29,11 +29,28 @@
 
 import wizard
 import netsvc
+import pooler
 
 # l'interet d'avoir un wizard pour ca est de pouvoir imprimer les vignettes directement
-def _invoice_labels(self, uid, datas):
-	service = netsvc.LocalService("object_proxy")
-	invoice_id = service.execute(uid, 'huissier.vignettes', 'invoice', [datas['id']])
+def _invoice_labels(self,cr,uid,datas,context):
+#	service = netsvc.LocalService("object_proxy")
+#	invoice_id = service.execute(uid, 'huissier.vignettes', 'invoice', [datas['id']])
+	vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
+	newinv = []
+	print "IDS",datas['ids']
+	ids = vign_obj.invoice(cr, uid, datas['ids'],context)
+	cr.commit()
+	cr.commit()
+	return {
+		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
+		'name': 'Invoices',
+		'view_type': 'form',
+		'view_mode': 'tree,form',
+		'res_model': 'account.invoice',
+		'view_id': False,
+		'context': "{'type':'out_refund'}",
+		'type': 'ir.actions.act_window'
+	}
 	return {}
 
 class wizard_invoice_labels(wizard.interface):

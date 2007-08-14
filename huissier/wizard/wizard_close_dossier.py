@@ -119,7 +119,7 @@ class wizard_close_dossier(wizard.interface):
 wizard_close_dossier('huissier.dossier.close')
 
 class wizard_close_dossier_from_lot(wizard_close_dossier):
-	def _get_value(self, uid, datas):
+	def _get_value(self, uid, datas,context={}):
 		service = netsvc.LocalService("object_proxy")
 
 		# get the dossier from the first lot

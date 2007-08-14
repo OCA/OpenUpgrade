@@ -30,11 +30,13 @@
 from report.interface import report_rml
 from osv.osv import osv_pools
 import sql_db
+import pooler
 
 class huissier_palais(report_rml):
 	def create(self, uid, ids, datas, context):
-		cr = sql_db.db.cursor()
-		new_ids = osv_pools.get('huissier.dossier').search(cr, uid, [('tolist', '=', True), ('date_reelle','>=',datas['form']['date1']), ('date_reelle','<=',datas['form']['date2'])])
+		#cr = sql_db.db.cursor()
+		pool = pooler.get_pool(cr.dbname)
+		new_ids = pool.get('huissier.dossier').search(cr, uid, [('tolist', '=', True), ('date_reelle','>=',datas['form']['date1']), ('date_reelle','<=',datas['form']['date2'])])
 		if not new_ids:
 			raise Exception, "Il n'y a aucun dossier entre ces deux dates!"
 		cr.close()

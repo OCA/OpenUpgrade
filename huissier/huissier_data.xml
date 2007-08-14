@@ -42,9 +42,9 @@
 		<field name="code">7x*</field>
 		<field name="type">view</field>
 		<field name="currency_id" search="[('name','=','EUR')]"/>
-		<field name="parent_id" type="list">
+		<!--<field name="parent_id" type="list">
 			<value search="[('type','=','view'),('code','=','7')]" model="account.account"/>
-		</field>
+		</field-->
 	</record>
 
 	<record model="account.account" id="huissier_salle">
@@ -52,28 +52,28 @@
 		<field name="code">7x*</field>
 		<field name="type">income</field>
 		<field name="currency_id" search="[('name','=','EUR')]"/>
-		<field name="parent_id" eval="[auction_income_view]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/-->
 	</record>
 	<record model="account.account" id="huissier_voirie">
 		<field name="name">Frais de voirie</field>
 		<field name="code">7x*</field>
 		<field name="type">income</field>
 		<field name="currency_id" search="[('name','=','EUR')]"/>
-		<field name="parent_id" eval="[auction_income_view]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/-->
 	</record>
 	<record model="account.account" id="huissier_vignettes">
 		<field name="name">Vignettes</field>
 		<field name="code">7x*</field>
 		<field name="type">income</field>
 		<field name="currency_id" search="[('name','=','EUR')]"/>
-		<field name="parent_id" eval="[auction_income_view]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/>-->
 	</record>
 	<record model="account.account" id="huissier_garde">
 		<field name="name">Frais de garde</field>
 		<field name="code">7x*</field>
 		<field name="type">income</field>
 		<field name="currency_id" search="[('name','=','EUR')]"/>
-		<field name="parent_id" eval="[auction_income_view]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/>-->
 	</record>
 
 	<!-- TAXES (TVA) -->	

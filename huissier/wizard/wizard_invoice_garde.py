@@ -28,7 +28,7 @@
 ##############################################################################
 
 import time
-
+import pooler
 import wizard
 import netsvc
 
@@ -52,10 +52,23 @@ close_fields = {
 
 
 class wizard_invoice_deposit(wizard.interface):
-	def _invoice_deposit(self, uid, datas):
-		service = netsvc.LocalService("object_proxy")
-		invoice_id = service.execute(uid, 'huissier.deposit', 'invoice_once', datas['ids'])
-		return {'ids':[invoice_id]}
+	def _invoice_deposit(self,cr, uid, datas,context):
+	#	service = netsvc.LocalService("object_proxy")
+	#	invoice_id = service.execute(uid, 'huissier.deposit', 'invoice_once', datas['ids'])
+		order_obj = pooler.get_pool(cr.dbname).get('huissier.deposit')
+		ids = order_obj.invoice_once(cr, uid, datas['ids'],context)
+		cr.commit()
+	#	return {
+	#	'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
+	#	'name': 'Garde invoices',
+	#	'view_type': 'form',
+	#	'view_mode': 'tree,form',
+	#	'res_model': 'account.invoice',
+	#	'view_id': False,
+	#	'context': "{'type':'out_refund'}",
+	#	'type': 'ir.actions.act_window'
+	#	}
+		return {}
 	
 	states = {
 		'init': {
