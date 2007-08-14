@@ -42,7 +42,8 @@ payment_fields = {
 export_form = """<?xml version="1.0"?>
 <form string="Payment Export">
    <field name="pay"/>
-</form>"""
+   <field name="note" colspan="4" nolabel="1"/>
+   </form>"""
 
 export_fields = {
     'pay' : {
@@ -51,6 +52,7 @@ export_fields = {
         'required':False,
         'readonly':True,
     },
+    'note' : {'string':'Log','type':'text'},
 }
 trans=[(u'ￃﾩ','e'),
        (u'ￃﾨ','e'),
@@ -172,8 +174,8 @@ def _create_pay(self,cr,uid,data,context):
     v1['creation_date']= time.strftime('%y%m%d')
     v1['app_code']='51'
     v1['reg_number']=''#25-34
-    v1['id_sender']=''#Blank 35-44
-    v1['id_order_customer']=''#Blank 46-56
+    v1['id_sender']=''#Blank *should be fill 35-44
+    v1['id_order_customer']=''#Blank 46-56 *should be fill
     v1['ver_code']='3'
     v1['bilateral']='' #see attach ment 1.2  and 59-70
     v1['totalisation_code ']='0'#two values 0 or 1
@@ -182,6 +184,10 @@ def _create_pay(self,cr,uid,data,context):
     pay_header =record_header(v1).generate()
 
     pool = pooler.get_pool(cr.dbname)
+    payment=pool.get('payment.order').browse(cr, uid, data['id'],context)
+    if not payment.mode: #or payment.mode.type.code != 'pay':
+        return {'note':'No payment mode or payment type code invalid.'}
+
     bank_obj=pool.get('res.partner.bank')
     id_exp= pool.get('account.pay').create(cr,uid,{
     'name':'test',
@@ -191,9 +197,11 @@ def _create_pay(self,cr,uid,data,context):
     bank_id=cr.fetchone()
     if bank_id:
         bank = bank_obj.browse(cr, uid, bank_id[0], context)
+        if not bank:
+            return {'note':'Please provide bank for the ordering customer.'}
         v['institution_code']=bank.institution_code
+
     pay_line_obj=pool.get('payment.line')
-    pay_order1=pool.get('payment.order').browse(cr, uid, data['id'],context)
     pay_line_id = pay_line_obj.search(cr, uid, [('order_id','=',data['id'])])
     pay_line =pay_line_obj.read(cr, uid, pay_line_id,['partner_id','amount','bank_id'])
     seq=0
@@ -203,15 +211,17 @@ def _create_pay(self,cr,uid,data,context):
         #sub1 start
         v['sequence'] = str(seq).rjust(4).replace(' ','0')
         v['sub_div1']='01'
-        v['order_exe_date']=time.strftime('%d%m%y',time.strptime(pay_order1.date_done,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
+        v['order_exe_date']=time.strftime('%d%m%y',time.strptime(payment.date_done,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
         v['order_ref']=''#14-29
         v['cur_code']='BEF'#static set .but is available in entry line object..
         v['code_pay']='C'#two values 'C' or 'D'  *should be change
         v['amt_pay']=float2str(pay['amount'])
         total=total+pay['amount']
         v['acc_debit']=bank.acc_number
-        v['indicate_date']=''# three value blank,1,2, *should be correct...blank is for order execution date .see sub01=pos 94
+        if not v['acc_debit']:
+            return {'note':'Please provide bank account number for the ordering customer.'}
 
+        v['indicate_date']=''# three value blank,1,2, *should be correct...blank is for order execution date .see sub01=pos 94
 
         #sub6 start
         v['sequence1']=str(seq).rjust(4).replace(' ','0')
@@ -220,9 +230,13 @@ def _create_pay(self,cr,uid,data,context):
             bank1 = bank_obj.read(cr, uid, pay['bank_id'][0])#searching pay line bank account number
             if bank1['state']=='bank':
                 v['benf_accnt_no']=bank1['acc_number']
+                if not  v['benf_accnt_no']:
+                    return {'note':'Please Provide bank Account number for bank in payment line'}
                 v['type_accnt']='2'
             elif bank1['state']=='pay_iban':
                 v['benf_accnt_no']=bank1['iban']
+                if not  v['benf_accnt_no']:
+                    return {'note':'Please Provide bank iban number for bank in payment line'}
                 v['type_accnt']='1'
             else:
                 v['type_accnt']=''
@@ -249,6 +263,8 @@ def _create_pay(self,cr,uid,data,context):
         v['cur_code_debit']=''#'BEF' *should be correct
         v['debit_cost']='000000000000'#field will only fill when ordering customer account debitted with charges if not field will contain blank or zero
         v['benf_country_code']=i.country_id.code
+        if not v['benf_country_code']:
+            return {'note':'Please Provide Country for payment line partner'}
         pay_order =pay_order+record_payline(v).generate()
 
 
