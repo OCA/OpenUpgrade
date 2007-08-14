@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+
+
+  <!-- Define new types -->
+  <record model="res.partner.bank.type" id="pay_iban">
+	<field name="name">pay-export-Iban Partner</field>
+	<field name="code">pay_iban</field>
+  </record>
+
+ <record model="res.partner.bank.type" id="pay_bank">
+	<field name="name">pay-export-bank Partner</field>
+	<field name="code">pay_bank</field>
+  </record>
+
+
+
+  <!-- Adjust the fields attributes for pay_iban-->
+  <record model="res.partner.bank.type.field" id="iban_institution_code_field">
+	<field name="name">institution_code</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+  <record model="res.partner.bank.type.field" id="iban_field">
+	<field name="name">iban</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+
+  <!-- Adjust the fields attributes for pay_bank-->
+  <record model="res.partner.bank.type.field" id="bank_institution_code_field">
+	<field name="name">institution_code</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+  <record model="res.partner.bank.type.field" id="bank_field">
+	<field name="name">acc_number</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+
+  <!-- Define a payment type -->
+  <record model="payment.type" id="payment_type_pay">
+	<field name="name">Pay Export</field>
+	<field name="code">pay</field>
+	<field name="suitable_bank_types"
+		   eval="[(6,0,[ref('pay_iban'),ref('pay_bank'),])]"/>
+  </record>
+
+
+</data>
+</terp>
