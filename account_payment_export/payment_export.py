@@ -27,7 +27,8 @@
 
 import time
 from osv import osv,fields
-
+import netsvc
+import pooler
 
 
 class account_pay(osv.osv):
@@ -47,3 +48,13 @@ class res_partner_bank(osv.osv):
                 'institution_code':fields.char('Institution code.', size=32),
     }
 res_partner_bank()
+
+
+class payment_order(osv.osv):
+    _inherit = "payment.order"
+
+    def get_wizard(self,mode):
+        if mode=='pay':
+            return self._module,'wizard_account_payment_create'
+        return super(payment_order,self).get_wizard(mode)
+payment_order()
