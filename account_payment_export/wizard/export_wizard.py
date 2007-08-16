@@ -32,7 +32,9 @@ from osv import osv
 import time
 import pooler
 import mx.DateTime
-from mx.DateTime import RelativeDateTime, DateTime
+from mx.DateTime import RelativeDateTime, now, DateTime, localtime
+
+
 
 payment_form = """<?xml version="1.0"?>
 <form string="Payment Export">
@@ -211,7 +213,11 @@ def _create_pay(self,cr,uid,data,context):
         #sub1 start
         v['sequence'] = str(seq).rjust(4).replace(' ','0')
         v['sub_div1']='01'
-        v['order_exe_date']=time.strftime('%d%m%y',time.strptime(payment.date_done,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
+        if payment.date_prefered=='now':
+            exec_date=now().strftime('%Y-%m-%d')
+            v['order_exe_date']=time.strftime('%d%m%y',time.strptime(exec_date,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
+        else:
+            v['order_exe_date']=''
         v['order_ref']=''#14-29
         v['cur_code']='BEF'#static set .but is available in entry line object..
         v['code_pay']='C'#two values 'C' or 'D'  *should be change
@@ -220,7 +226,6 @@ def _create_pay(self,cr,uid,data,context):
         v['acc_debit']=bank.acc_number
         if not v['acc_debit']:
             return {'note':'Please provide bank account number for the ordering customer.'}
-
         v['indicate_date']=''# three value blank,1,2, *should be correct...blank is for order execution date .see sub01=pos 94
 
         #sub6 start
@@ -240,6 +245,8 @@ def _create_pay(self,cr,uid,data,context):
                 v['type_accnt']='1'
             else:
                 v['type_accnt']=''
+        else:
+            return {'note':'Please Provide Bank Account in payment line'}
         v['bank_country_code']=''
         part_addres_obj=pool.get('res.partner.address')
         part_address_id = part_addres_obj.search(cr, uid, [('partner_id','=',bank1['partner_id'][0])])
