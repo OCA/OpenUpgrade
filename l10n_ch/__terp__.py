@@ -17,7 +17,6 @@
 		"bvr_report.xml",
 		"bvr_wizard.xml",
 		"company_view.xml",
-		"dta_demo.xml" # REMOVE ME
 	],
 	"active": False,
 	"installable": True,
