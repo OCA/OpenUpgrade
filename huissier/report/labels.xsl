@@ -71,14 +71,13 @@
 				<xsl:text>cm</xsl:text>
 			</xsl:attribute>
 		</frame>
-
+ <xsl:variable name="number">
 		<xsl:if test="number($number) &lt; $number_frames - 1">
 			<xsl:call-template name="vignette-frame">
 				<xsl:with-param name="number" select="$number + 1"/>
 			</xsl:call-template>
-		</xsl:if>
+		</xsl:if> </xsl:variable> 
 	</xsl:template>
-	
 	<xsl:template match="vignette-range">
 <!--	
 		<para>First: <xsl:value-of select="number(first)"/></para>

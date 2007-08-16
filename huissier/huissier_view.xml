@@ -10,7 +10,7 @@
 	=======================================================
 -->	
 	<record model="ir.ui.view" id="v_dossier_tree_old">
-		<field name="name">huissier.dossier.tree</field>
+		<field name="name">>Dossier huissier</field>
 		<field name="model">huissier.dossier</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -25,7 +25,7 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="v_dossier_tree_cur">
-		<field name="name">huissier.dossier.tree</field>
+		<field name="name">Dossier huissier</field>
 		<field name="model">huissier.dossier</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -111,7 +111,7 @@
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="a_dossier">
-		<field name="name">huissier.dossier</field>
+		<field name="name">Dossier huissier</field>
 		<field name="res_model">huissier.dossier</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_dossier_tree_cur"/>
@@ -124,7 +124,7 @@
 	=======================================================
 -->	
 	<record model="ir.ui.view" id="v_lots_tree">
-		<field name="name">huissier.lots.tree</field>
+		<field name="name">Lots</field>
 		<field name="model">huissier.lots</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -138,7 +138,7 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="v_lots_form">
-		<field name="name">huissier.lots.form</field>
+		<field name="name">Lots</field>
 		<field name="model">huissier.lots</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -171,7 +171,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="a">
-		<field name="name">huissier.lots.from_a_date</field>
+		<field name="name">Lots</field>
 		<field name="res_model">huissier.lots</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_lots_tree"/>
@@ -190,11 +190,11 @@
 		<field name="model">huissier.dossier</field>
 		<field name="name">Open Moves</field>
 		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
-		<field name="isobject" eval="True"/>
+		<field name="object" eval="True"/>
 	</record>
 	
 	<record model="ir.actions.act_window" id="a_dossier_v">
-		<field name="name">huissier.dossier</field>
+		<field name="name">Dossier huissier</field>
 		<field name="res_model">huissier.dossier</field>
 		<field name="view_type">tree</field>
 		<!--field name="view_id" ref="v_dossier_form"/-->
@@ -202,7 +202,7 @@
 	<menuitem name="Operations/Huissier/Ventes" action="a_dossier_v" id="menu_dossier_form_act"/> <!--or id=a-->
 	
 	<record model="ir.ui.view" id="v1">
-		<field name="name">huissier.lots.form</field>
+		<field name="name">Lots</field>
 		<field name="model">huissier.lots</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -245,7 +245,7 @@
 	<menuitem name="Operations/Huissier/Lots" action="a1" id="menu_lot_form"/>
 
 	<record model="ir.actions.act_window" id="a2">
-		<field name="name">huissier.dossier</field>
+		<field name="name">Dossier huissier</field>
 		<field name="res_model">huissier.dossier</field>
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','draft')]</field>
@@ -254,11 +254,11 @@
 	<menuitem name="Operations/Huissier/Ventes/Ventes en cours" action="a2" id="menu_lot_tree"/>
 	
 	<record model="ir.actions.act_window" id="a3">
-		<field name="name">huissier.dossier</field>
+		<field name="name">Dossier huissier</field>
 		<field name="res_model">huissier.dossier</field>
-		<field name="view_type">form</field>
+		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','closed')]</field>
-		<field name="view_id" ref="v_dossier_tree_old"/>
+		<field name="view_id" ref="v_dossier_tree_cur"/>
 <!--		
 		<field name="view_id" ref="v_dossier_form"/>
 -->		
@@ -271,7 +271,7 @@
 	=======================================================
 -->	
 	<record model="ir.ui.view" id="v_vignettes_tree">
-		<field name="name">huissier.vignettes.tree</field>
+		<field name="name">Vignettes</field>
 		<field name="model">huissier.vignettes</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -284,12 +284,12 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="v_vignettes_form">
-		<field name="name">huissier.vignettes.form</field>
+		<field name="name">Vignettes</field>
 		<field name="model">huissier.vignettes</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Vignettes">
-				<field name="etude_id" select="1"/>
+				<field name="etude_id" select="1" /><!--domain="[('category_id','=','Etudes')]" />-->
 				<newline/>
 				<field name="quantity" on_change="onchange_quantity(quantity,first)"/>
 				<field name="price"/>
@@ -303,13 +303,13 @@
 				<newline/>
 				<field name="state"/>
 				<button name="%(wizard_labels_invoice)d" string="Imprimer et facturer" type="action" states="draft"/>
-				<button name="%(wizard_labels_pay)d" string="Payer" type="action" states="invoiced"/>
+				<!--<button name="%(wizard_labels_pay)d" string="Payer" type="action" states="invoiced"/>-->
 			</form>
 		</field>
 	</record>
 
 	<record model="ir.actions.act_window" id="a_vignettes">
-		<field name="name">huissier.vignettes</field>
+		<field name="name">Vignettes</field>
 		<field name="res_model">huissier.vignettes</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_vignettes_tree"/>
@@ -323,7 +323,7 @@
 	=======================================================
 -->	
 	<record model="ir.ui.view" id="v_deposit_tree">
-		<field name="name">huissier deposit</field>
+		<field name="name">Deposit</field>
 		<field name="model">huissier.deposit</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -336,7 +336,7 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="v_deposit_form">
-		<field name="name">huissier deposit </field>
+		<field name="name">Deposit </field>
 		<field name="model">huissier.deposit</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -381,7 +381,7 @@
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="a6">
-		<field name="name">huissier.deposit</field>
+		<field name="name">Deposit</field>
 		<field name="res_model">huissier.deposit</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_deposit_tree"/>

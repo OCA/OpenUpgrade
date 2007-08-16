@@ -155,6 +155,6 @@ class report_custom(report_rml):
 #		file('/tmp/terp.xml','wb+').write(xml)
 		return xml
 
-report_custom('report.huissier_pv', 'huissier.lots', '', 'addons/huissier/report/pv.xsl')
+report_custom('report.huissier_pv', 'huissier.lots','', 'addons/huissier/report/pv.xsl')
 
 

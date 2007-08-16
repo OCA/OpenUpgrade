@@ -59,22 +59,28 @@ wait_form = '''<?xml version="1.0"?>
 </form>'''
 
 class wizard_close_dossier(wizard.interface):
-	def _get_value(self, uid, datas):
+	def _get_value(self,cr, uid, datas,context):
 		#service = netsvc.LocalService("object_proxy")
 		#res = service.execute(uid, 'huissier.dossier', 'read', datas['ids'], ['amount_adj_calculated','amount_costs','amount_total','amount_room_costs'])
 	
 		dossier_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
 		lots = dossier_obj.browse(cr, uid, datas['ids'])
-		amount_adj_cal=lots[0].amount_adj_calculated
+		cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%d", (datas['id'],))
+		sum=cr.fetchone()
+		amount_adj_cal=sum and sum[0] or 0.0
 		costs=lots[0].amount_costs 
 		total=lots[0].amount_total
 		room=lots[0].amount_room_costs 
-		return len(res) and {'adj': amount_adj_cal, 'frais':costs, 'total':total, 'salle':room} or {}
+		return {'adj': amount_adj_cal , 'frais':costs, 'total':total, 'salle':room} or {}
 
 	def _close_dossier(self,cr,uid,datas,context):
-		service = netsvc.LocalService("object_proxy")
-		res = service.execute(uid, 'huissier.dossier', 'close', datas['ids'], datas['form']['voirie'], datas['form']['acquis'])
-		return {'refund_id':res[0], 'invoice_id':res[1]}
+		#service = netsvc.LocalService("object_proxy")
+		dossier_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
+		lots = dossier_obj.close(cr, uid, datas['ids'], datas['form']['voirie'], datas['form']['acquis'])
+
+#		res = service.execute(uid, 'huissier.dossier', 'close', datas['ids'], datas['form']['voirie'], datas['form']['acquis'])
+#		return {'refund_id':res[0], 'invoice_id':res[1]}
+		return {}
 		
 	def _get_invoice_id(self, uid, datas):
 		return {'ids': [datas['form']['invoice_id']]}
@@ -131,8 +137,12 @@ class wizard_close_dossier_from_lot(wizard_close_dossier):
 		lots = dossier_obj.browse(cr, uid, datas['ids'])
 		dossiers = lots[0].dossier_id.id or False
 #TODO: error si dossier déjà fermé? le prob c'est il faut pouvoir corriger une erreur...
-		amount_adj_cal=lots[0].dossier_id.amount_adj_calculated
-		costs=lots[0].dossier_id.amount_costs 
+		cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%d", (datas['id'],))
+		sum=cr.fetchone()
+		amount_adj_cal=sum and sum[0] or 0.0
+	#	amount_adj_cal=lots[0].dossier_id.amount_adj_calculated
+		costs=lots[0].dossier_id.amount_costs  
+		print "COSTS",costs
 		total=lots[0].dossier_id.amount_total
 		room=lots[0].dossier_id.amount_room_costs 
 		return {'dossier_id':dossiers, 'adj':amount_adj_cal, 'frais':costs, 'total':total, 'salle':room} or {'dossier_id':dossier_id}

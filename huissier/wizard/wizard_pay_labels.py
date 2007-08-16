@@ -28,7 +28,7 @@
 ##############################################################################
 
 import time
-
+import pooler
 import wizard
 import netsvc
 
@@ -51,16 +51,22 @@ pay_fields = {
 	'account_id': {'string':u'Compte destination', 'type':'many2one', 'required':True, 'relation':'account.account', 'domain':[('type','=','cash')]},
 }
 
-def _get_value(self, uid, datas):
-	print "_get_value"
-	service = netsvc.LocalService("object_proxy")
-	res = service.execute(uid, 'huissier.vignettes', 'read', datas['ids'], ['first', 'last', 'quantity', 'price', 'value'])
-	if not len(res):
+def _get_value(self,cr, uid, datas,context):
+	vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
+	res = vign_obj.browse(cr, uid, datas['ids'],context)[0]
+#	service = netsvc.LocalService("object_proxy")
+#	res = service.execute(uid, 'huissier.vignettes', 'read', datas['ids'], ['first', 'last', 'quantity', 'price', 'value'])
+	if not res:
 		return {}
-	return res[0]
+	print "GET VALUE",res.value or False
+	return {'first':res.first, 'last':res.last, 'quantity':res.quantity,'price':res.price, 'value':res.value }
 	
-def _pay_labels(self, uid, datas):
+def _pay_labels(self,cr, uid, datas,context):
 	print "_pay_labels"
+	vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
+	ids = vign_obj.pay(cr, uid, datas['id'], datas['form']['account_id'])
+	cr.commit()
+
 	service = netsvc.LocalService("object_proxy")
 	pay_id = service.execute(uid, 'huissier.vignettes', 'pay', [datas['id']], datas['form']['account_id'])
 	return {}

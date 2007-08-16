@@ -38,4 +38,7 @@ class label_invoices(report_int):
 	def result(self):
 		return self._obj_invoice.result()
 
-label_invoices('report.huissier.label.invoices')
+		})
+
+label_invoices('report.huissier.label.invoices','huissier.vignettes','addons/auction/report/labels.xml', 'addons/auction/report/labels.xsl')
+

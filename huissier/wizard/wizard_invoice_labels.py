@@ -38,16 +38,16 @@ def _invoice_labels(self,cr,uid,datas,context):
 	vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
 	ids = vign_obj.invoice(cr, uid, datas['ids'],context)
 	cr.commit()
-	return {
-		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
-		'name': 'Invoices',
-		'view_type': 'form',
-		'view_mode': 'tree,form',
-		'res_model': 'account.invoice',
-		'view_id': False,
-		'context': "{'type':'out_refund'}",
-		'type': 'ir.actions.act_window'
-	}
+#	return {
+#		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
+#		'name': 'Invoices',
+#		'view_type': 'form',
+#		'view_mode': 'tree,form',
+#		'res_model': 'account.invoice',
+#		'view_id': False,
+#		'context': "{'type':'out_refund'}",
+#		'type': 'ir.actions.act_window'
+#	}
 	return {}
 
 class wizard_invoice_labels(wizard.interface):

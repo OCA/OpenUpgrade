@@ -353,7 +353,6 @@ class huissier_lots(osv.osv):
 		'name': fields.char(u'Description', size=256, required=True),
 		'vat': fields.many2one('account.tax', u'Taxe', domain="[('domain','=','tva')]", required=True),
 		'adj_price': fields.float(u"Prix d'adjudication", digits=(12,2)),
-		
 		'buyer_ref': fields.many2one('res.partner', u'Réf. client', domain="[('category_id', '=', 'Clients habituels')]"),
 #		'buyer_ref': fields.char(u'Réf. client', size=64),
 #		'buyer_name': fields.char(u'Nom et Prénom', size=64),
@@ -365,7 +364,7 @@ class huissier_lots(osv.osv):
 		'buyer_birthdate': fields.char(u'Date de naissance', size=64),
 		'buyer_vat': fields.char(u'TVA', size=64),
 		'buyer_lang': fields.selection(_lang_get, 'Langue', size=2),
-		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais'),
+		'amount_costs': fields.function(_get_costs,store=True, method=True, string=u'Frais'),
 #		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais', digits=(12,2)),
 		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer'),
 #		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer', digits=(12,2)),
@@ -463,6 +462,7 @@ class huissier_vignettes(osv.osv):
 			res[id] = price * quantity
 		return res
 		
+	#	'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 	_columns = {
 		'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 		'price': fields.float(u'Prix unitaire', digits=(12,2), required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
@@ -557,8 +557,8 @@ class huissier_vignettes(osv.osv):
 			lang = etude.lang or 'fr'
 			label_quantity = reduce(lambda total, lr: total + lr['quantity'], label_ranges, 0.0)
 			invoice_desc = invoice_descs[lang] % (label_quantity,)
-
-			account_receive_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], [('id',str(etude.id))] )[0][2]
+			account_receive_id=label_ranges[0].etude_id.property_account_receivable[0]
+		#	account_receive_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], [('id',str(etude.id))] )[0][2]
 
 			lines = []
 			for lr in label_ranges:
@@ -576,7 +576,7 @@ class huissier_vignettes(osv.osv):
 				'partner_id': etude.id,
 				'address_contact_id': addr['contact'],
 				'address_invoice_id': addr['invoice'],
-				'partner_ref': etude.ref,
+			#	'partner_ref': etude.ref,
 				'date_invoice': dt,
 				'date_due': dt,
 				'invoice_line': lines,
