@@ -13,6 +13,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
+    database="trunk_1"
 
 #
 
@@ -21,11 +22,11 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
+
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
-#        elif __name__<>"package":
-#            self.database="trunk_1"
+
         self.win=DBModalDialog(60, 50, 180, 120, "Modify Existing Report")
         self.win.addFixedText("lblReport", 2, 3, 60, 15, "Report Selection")
         self.win.addComboListBox("lstReport", -1,15,178,80 , False,itemListenerProc=self.lstbox_selected)
@@ -38,6 +39,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
         self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
+
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
                 self.lstReport.addItem(self.res_other[i]['name'],self.lstReport.getItemCount())
@@ -47,7 +49,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton('btnCancel',-2 -80 ,-5,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
-        #os.system( "oowriter /home/hjo/Desktop/aaa.sxw &" )
+
         self.win.doModalDialog("lstReport",self.res_other[0]['name'])
 
     def lstbox_selected(self,oItemEvent):
@@ -71,10 +73,6 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             url="file://"+fp_name
             arr=Array()
             oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
-            #oVC= oDoc2.getCurrentController().getViewCursor()
-            #oText = oVC.getText()
-            #oCur=oText.createTextCursorByRange(oVC.getStart())
-            #oCur.insertDocumentFromURL(url, Array())
             docinfo2=oDoc2.getDocumentInfo()
             docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
             docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))

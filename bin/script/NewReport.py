@@ -22,14 +22,12 @@ class NewReport(unohelper.Base, XJobExecutor):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
-#        else:
-#            database="trunk_1"
         self.win=DBModalDialog(60, 50, 180, 135, "Open New Report")
         self.win.addFixedText("lblModuleSelection", 6, 12, 60, 15, "Module Selection")
         self.win.addComboListBox("lstModule", -2,9,123,80 , False)
         self.lstModule = self.win.getControl( "lstModule" )
-        self.win.addFixedText("lblReportName", 17 ,95 , 60, 15, "Report Name")
-        self.win.addEdit("txtReportName", -2, 92, 123, 15)
+#        self.win.addFixedText("lblReportName", 17 ,95 , 60, 15, "Report Name")
+#        self.win.addEdit("txtReportName", -2, 92, 123, 15)
         self.aModuleName=[]
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
@@ -53,31 +51,10 @@ class NewReport(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
-            print self.lstModule.getSelectedItemPos()
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            id=self.getID()
-            print id
-            rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': self.aModuleName[self.lstModule.getSelectedItemPos()],'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
-            print "1",rec
-            res=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
-
-            print res
-            docinfo.setUserFieldValue(2,id)
             docinfo.setUserFieldValue(3,self.aModuleName[self.lstModule.getSelectedItemPos()])
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name=="btnCancel":
             self.win.endExecute()
-    def getID(self):
-        res = {}
-        #res['name'] ='abc'
-        res['model'] =self.aModuleName[self.lstModule.getSelectedItemPos()]
-        res['report_name'] =self.win.getEditText("txtReportName")
-        desktop=getDesktop()
-        doc = desktop.getCurrentComponent()
-        docinfo=doc.getDocumentInfo()
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        id=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
-        return id
 
 if __name__<>"package" and __name__=="__main__":
     NewReport(None)

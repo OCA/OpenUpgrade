@@ -32,9 +32,9 @@ class About(unohelper.Base, XJobExecutor):
 #        res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
         self.win = DBModalDialog(60, 50, 225, 169, ".:: About Us !!! ::.")
         if __name__<>"package":
-            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file:///home/hjo/Desktop/trunk/bin/script/About.jpg")
+            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file://About.jpg")
         else:
-            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="images/About.jpg")
+            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file://images/About.jpg")
         self.win.doModalDialog("",None)
 
 if __name__<>"package" and __name__=="__main__":
@@ -44,3 +44,4 @@ elif __name__=="package":
             About,
             "org.openoffice.tiny.report.about",
             ("com.sun.star.task.Job",),)
+

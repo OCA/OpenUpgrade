@@ -8,6 +8,7 @@ if __name__<>"package":
     from lib.functions import *
     from lib.error import ErrorDialog
     from LoginTest import *
+    database="trunk_1"
 
 
 class Fields(unohelper.Base, XJobExecutor ):

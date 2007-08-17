@@ -9,6 +9,7 @@ if __name__<>"package":
     from lib.functions import *
     from ServerParameter import *
     from LoginTest import *
+    database="trunk_1"
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
@@ -32,7 +33,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
         self.win.addFixedText("lblUName", 8, 207, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 205, 120, 15,)
-
 
         self.win.addButton('btnOK',-2 ,-10,45,15,'Ok'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
@@ -115,9 +115,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         else:
             ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
             self.win.endExecute()
-
-
-
 
 #    def getSection(self,oParEnum,oCurrentSection):
 #        while oParEnum.hasMoreElements():
@@ -222,3 +219,4 @@ elif __name__=="package":
             "org.openoffice.tiny.report.repeatln",
             ("com.sun.star.task.Job",),)
 
+#Love me when I least deserve it, because that's when I really need it.

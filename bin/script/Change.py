@@ -8,8 +8,8 @@ class Change:
 
         self.win.addFixedText("lblVariable", 38, 12, 60, 15, "Server")
 
-        if sURL<>"":
-            print sURL.__getslice__(sURL.rfind(":")+1,sURL.__len__())
+#        if sURL<>"":
+#            print sURL.__getslice__(sURL.rfind(":")+1,sURL.__len__())
         self.win.addEdit("txtHost",-2,9,60,15,sURL.__getslice__(sURL.find("/")+2,sURL.rfind(":")))
 
         self.win.addFixedText("lblReportName",45 , 31, 60, 15, "Port")

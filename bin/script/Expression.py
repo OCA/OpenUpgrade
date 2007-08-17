@@ -7,6 +7,7 @@ if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
+    database="trunk_1"
 
 
 
