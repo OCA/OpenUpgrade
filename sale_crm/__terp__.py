@@ -3,7 +3,7 @@
 	"version" : "1.0",
 	"author" : "Tiny",
 	"website" : "http://tinyerp.com/module_sale.html",
-	"depends" : ["sale", "crm"],
+	"depends" : ["sale", "crm", "product", "account"],
 	"category" : "Generic Modules/Sales & Purchases",
 	"description": """
 	This module adds a shortcut on one or several cases in the CRM.
