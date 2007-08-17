@@ -34,8 +34,8 @@
     "category":"Payment Order Export",
     "depends":["base", "account","account_payment"],
     "demo_xml":["payment_export_demo.xml"],
-    "init_xml":["payment_export_data.xml"],
-    "update_xml" : ["payment_export_wizard.xml","payment_export_view.xml"],
+    "init_xml":[],
+    "update_xml" : ["payment_export_wizard.xml","payment_export_view.xml","payment_export_data.xml"],
     "active":False,
     "installable":True,
 }
