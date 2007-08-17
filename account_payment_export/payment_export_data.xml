@@ -11,8 +11,8 @@
   </record>
 
  <record model="res.partner.bank.type" id="pay_bank">
-	<field name="name">pay-export-bank Partner</field>
-	<field name="code">pay_bank</field>
+	<field name="name">pay-export-Company</field>
+	<field name="code">pay_company</field>
   </record>
 
 
@@ -31,20 +31,43 @@
 	<field name="readonly" eval="False"/>
   </record>
 
+  <record model="res.partner.bank.type.field" id="bank_field_iban">
+	<field name="name">bank_id</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
 
-  <!-- Adjust the fields attributes for pay_bank-->
+  <record model="res.partner.bank.type.field" id="address_field_iban">
+	<field name="name">bank_address_id</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+
+  <!-- Adjust the fields attributes for pay_company-->
   <record model="res.partner.bank.type.field" id="bank_institution_code_field">
 	<field name="name">institution_code</field>
 	<field name="bank_type_id" ref="pay_bank"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
   </record>
+
   <record model="res.partner.bank.type.field" id="bank_field">
-	<field name="name">acc_number</field>
+	<field name="name">iban</field>
 	<field name="bank_type_id" ref="pay_bank"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
   </record>
+
+  <record model="res.partner.bank.type.field" id="bank_field_pay">
+	<field name="name">clearing</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
 
 
   <!-- Define a payment type -->
