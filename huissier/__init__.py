@@ -29,3 +29,5 @@
 import huissier
 import wizard
 import report
+
+print '-'*50

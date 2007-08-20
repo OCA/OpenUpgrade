@@ -44,6 +44,7 @@ reprint_fields = {
 #def _get_value(self, uid, datas):
 #	return {}
 
+
 class wizard_reprint(wizard.interface):
 	states = {
 		'init': {

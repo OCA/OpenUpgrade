@@ -38,6 +38,7 @@ def _invoice_labels(self,cr,uid,datas,context):
 	vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
 	ids = vign_obj.invoice(cr, uid, datas['ids'],context)
 	cr.commit()
+	print "Facturation finie"
 #	return {
 #		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
 #		'name': 'Invoices',
@@ -55,6 +56,7 @@ class wizard_invoice_labels(wizard.interface):
 		'init': {
 			'actions': [_invoice_labels],
 #			'result': {'type': 'state', 'state':'end'}
+
 			'result': {'type': 'print', 'report':'huissier.labels', 'state':'end'}
 		}
 	}

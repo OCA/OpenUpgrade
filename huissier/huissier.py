@@ -101,38 +101,33 @@ class huissier_dossier(osv.osv):
 #		'creancier_address': fields.char('Adresse', size=128),
 #		'creancier_zip': fields.char('Code postal', change_default=True, size=24),
 #		'creancier_city': fields.char('Ville', size=64),
-
 		'debiteur': fields.many2one('res.partner', u'Débiteur'),
 #		'debiteur_name': fields.char('Nom', size=64),
 #		'debiteur_address': fields.char('Adresse', size=128),
 #		'debiteur_zip': fields.char('Code postal', change_default=True, size=24),
 #		'debiteur_city': fields.char('Ville', size=64),
-
 #		'debiteur_naissance': fields.date('Date de naissance'),
 #		'debiteur_tva':fields.char('TVA', size=32),
-		
 		'date_prevue': fields.date(u'Date prévue'),
 		'date_reelle': fields.date(u'Date réelle'),
-		
 		'lang': fields.selection((('fr',u'Français'),('nl',u'Néerlandais')), u'Langue', required=True),
-		
 		'toinvoice': fields.boolean(u'Facturer?'),
 		'tolist': fields.boolean(u'Listing palais?'),
-
 		'cost_id': fields.many2one('account.tax', u'Frais de Vente', domain="[('domain','=','frais')]", required=True),
 		'room_cost_id': fields.many2one('account.tax', u'Frais de Salle', domain="[('domain','=','salle')]", required=True),
-
 		'amount_adj': fields.float(u'Adjudications', digits=(14,2)),
-		'amount_adj_calculated': fields.function(_adjudication_get, method=True, string=u'Adjudications'),
-		'amount_costs': fields.function(_costs_get, method=True, string=u'Frais'),
-		'amount_total': fields.function(_total_get, method=True, string=u'Total'),
-		'amount_room_costs': fields.function(_room_costs_get,method=True, string=u'Frais de salle'),
+		'amount_adj_calculated': fields.function(_adjudication_get, store=True, method=True, string=u'Adjudications'),
+		'amount_costs': fields.function(_costs_get, method=True, string=u'Frais',store=True),
+		'amount_total': fields.function(_total_get, method=True, string=u'Total',store=True),
+		'amount_room_costs': fields.function(_room_costs_get,method=True,string=u'Frais de salle' ,store=True ),
 		'amount_voirie': fields.float(u'Frais de voirie', digits=(12,2)),
 		
 		'state': fields.selection((('draft',u'Ouvert'),('closed',u'Fermé'),('canceled',u'Annulé')), u'État', readonly=True),
-		
+
 		'lot_id': fields.one2many('huissier.lots', 'dossier_id', u'Objets'),
 		'invoice_id': fields.many2one('account.invoice', u'Facture'),
+		'refund_id': fields.many2one('account.invoice', u'Facture remboursee'),
+
 		'salle_account_id': fields.many2one('account.account', 'Compte Frais de Salle', required=True),
 		'voirie_account_id': fields.many2one('account.account', 'Compte Frais de Voirie', required=True),
 #		'expense_account_id': fields.many2one('account.account', 'Expense Account', required=True),
@@ -226,7 +221,6 @@ class huissier_dossier(osv.osv):
 			lang = etude.lang or 'fr'
 		#	account_receive_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], [('id',str(etude.id))] )[0][2]
 			account_receive_id=dossier.etude_id.property_account_receivable[0]
-			print "compte recevable",account_receive_id
 			lines = []
 			invoice_desc = invoice_desc_str[lang]
 			line_desc = frais_salle_str[lang]
@@ -271,7 +265,6 @@ class huissier_dossier(osv.osv):
 #	def create_invoice_and_cancel_old(self, cr, uid, ids):
 	def create_invoice_and_refund_old(self, cr, uid, ids, acquis=False):
 		assert len(ids)==1
-
 		dossier = self.read(cr, uid, ids, ['invoice_id']) #[0]['invoice_id'][0]
 		invoice = dossier[0]['invoice_id']
 		invoice_id = invoice and invoice[0] or False
@@ -283,15 +276,13 @@ class huissier_dossier(osv.osv):
 			# cancel old invoice
 #			wf_service = netsvc.LocalService("workflow")
 #			wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_cancel', cr)a
-
+			
 			# refund old invoice
 			refund_id = self.pool.get('account.invoice').refund(cr, uid, [invoice_id])[0]
 			wf_service = netsvc.LocalService("workflow")
 			wf_service.trg_validate(uid, 'account.invoice', refund_id, 'invoice_open', cr)
-
 		# create a new invoice
 		invoice_id = self.invoice(cr, uid, ids, acquis)[0]
-		
 		return (refund_id, invoice_id)
 		
 	def close(self, cr, uid, ids, frais_voirie=False, acquis=False):
@@ -306,7 +297,7 @@ class huissier_dossier(osv.osv):
 			(refund_id, invoice_id) = (False, False)
 		# stores amount adjudicated for faster retrieval later
 		amount_adj = self.read(cr, uid, ids, ['amount_adj_calculated'])[0]['amount_adj_calculated']
-		self.write(cr, uid, ids, {'state':'closed', 'amount_adj':amount_adj})
+		self.write(cr, uid, ids, {'state':'closed', 'amount_adj':amount_adj,'refund_id':refund_id})
 		return (refund_id, invoice_id)
 	
 	def cancel(self, cr, uid, ids,context):
@@ -346,6 +337,14 @@ class huissier_lots(osv.osv):
 				price = 0.0
 			res[id] = self.get_costs_amount(cr, uid, ids, dossier, price)
 		return res
+	def button_not_bought(self,cr,uid,ids,*a):
+		return self.write(cr,uid,ids, {'state':'non_vendu'})
+
+	def button_draft(self,cr,uid,ids,*a):
+		return self.write(cr,uid,ids, {'state':'draft'})
+
+	def button_bought(self,cr,uid,ids,*a):
+		return self.write(cr,uid,ids, {'state':'vendu'})
 
 	_columns = {
 		'dossier_id': fields.many2one('huissier.dossier', u'Dossier huissier'),
@@ -356,22 +355,27 @@ class huissier_lots(osv.osv):
 		'buyer_ref': fields.many2one('res.partner', u'Réf. client', domain="[('category_id', '=', 'Clients habituels')]"),
 #		'buyer_ref': fields.char(u'Réf. client', size=64),
 #		'buyer_name': fields.char(u'Nom et Prénom', size=64),
-		'buyer_name': fields.char(u'Nom', size=64),
 #		'buyer_firstname': fields.char(u'Prénom', size=64),
-		'buyer_address': fields.char(u'Adresse', size=128),
-		'buyer_zip': fields.char(u'Code postal', change_default=True, size=24),
-		'buyer_city': fields.char(u'Ville', size=64),
+	#"""enleve et remplace par champ partner.address
+	#'buyer_name': fields.char(u'Nom', size=64),	'buyer_address': fields.char(u'Adresse', size=128),
+	#	'buyer_zip': fields.char(u'Code postal', change_default=True, size=24),
+	#	'buyer_city': fields.char(u'Ville', size=64),"""
+
+		'buyer_address': fields.many2one('res.partner.address', 'Adresse Acheteur'),
 		'buyer_birthdate': fields.char(u'Date de naissance', size=64),
 		'buyer_vat': fields.char(u'TVA', size=64),
 		'buyer_lang': fields.selection(_lang_get, 'Langue', size=2),
-		'amount_costs': fields.function(_get_costs,store=True, method=True, string=u'Frais'),
+		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais',store=True),
 #		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais', digits=(12,2)),
 		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer'),
 #		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer', digits=(12,2)),
+		'state': fields.selection((('draft','Brouillon'),('non_vendu','Non vendu'),('vendu','vendu')),'State',  readonly=True),
 	}
 	_defaults = {
 		'number': lambda obj,cr,uid,*a: obj._get_next_lot_number(cr, uid),
-		'vat': lambda obj,cr,uid,*a: obj._get_lot_default_vat(cr, uid)
+		'vat': lambda obj,cr,uid,*a: obj._get_lot_default_vat(cr, uid),
+		'state': lambda *a: 'draft',
+
 	}
 
 
@@ -437,6 +441,8 @@ class huissier_lots(osv.osv):
 				'value': {'buyer_name':False, 'buyer_address':False, 'buyer_zip':False, 'buyer_city':False, 'buyer_birthdate':False, 'buyer_vat':False, 'buyer_lang':False},
 				'readonly': {'buyer_name':False, 'buyer_address':False, 'buyer_zip':False, 'buyer_city':False, 'buyer_birthdate':False, 'buyer_vat':False, 'buyer_lang':False}
 			}
+				#return {'value': {'buyer_name':False, 'buyer_address':False, 'buyer_zip':False, 'buyer_city':False, 'buyer_birthdate':False, 'buyer_vat':False, 'buyer_lang':False},
+				#'readonly': {'buyer_name':False, 'buyer_address':False, 'buyer_zip':False, 'buyer_city':False, 'buyer_birthdate':False, 'buyer_vat':False, 'buyer_lang':False}
 		partner = self.pool.get('res.partner').browse(cr, uid, buyer_id)
 		address = partner.address[0]
 		return {
@@ -477,6 +483,8 @@ class huissier_vignettes(osv.osv):
 #		'state': fields.selection( (('draft',u'draft'),('waiting',u'en attente'),('invoiced',u'facturées')),u'État', readonly=True),
 		'state': fields.selection( (('draft',u'draft'),('invoiced',u'facturées'),('paid',u'payées')),u'État', readonly=True),
 		'value': fields.function(_get_range_value, method=True, string=u'A payer'),
+	#	'refund_id': fields.many2one('account.invoice', u'Facture remboursee', readonly=True),
+
 	}
 	_defaults = {
 		'date_creation': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
@@ -716,4 +724,34 @@ class huissier_deposit(osv.osv):
 		return {'value':{'billing_partner_id':dossier['etude_id']}}
 huissier_deposit()
 
-
+#class report_deposit_border(osv.osv):
+#	_name="report.deposit.border"
+#	_description = "Report deposit border"
+#	_auto = False
+#	_rec_name='bord'
+#	_columns = {
+#		'bord': fields.char('Depositer Inventory', size=64, required=True),
+#		'creancier': fields.many2one('res.partner',u'Créancier',select=1),
+#		'moy_est' : fields.float('Avg. Est', select=1, readonly=True),
+#		'total_marge': fields.float('Total margin', readonly=True),
+#		'nb_obj':fields.float('# of objects', readonly=True),
+#}
+#	def init(self, cr):
+#		cr.execute("""CREATE OR REPLACE VIEW report_deposit_border AS
+#			SELECT
+#				min(al.id) as id,
+#				ab.partner_id as seller,
+#				ab.name as bord,
+#				COUNT(al.id) as nb_obj,
+#				SUM((al.lot_est1 + al.lot_est2)/2) as moy_est,
+#				SUM(al.net_revenue)/(count(ad.id)) as total_marge
+#
+#			FROM
+#				auction_lots al,auction_deposit ab,auction_dates ad
+#			WHERE
+#				ad.id=al.auction_id
+#				and al.bord_vnd_id=ab.id
+#			GROUP BY
+#				ab.name,ab.partner_id""")
+#report_deposit_border()
+#

@@ -106,6 +106,9 @@
 					<page string="Garde">
 						<field name="deposit_id" widget="one2many_list" nolabel="1"/>
 					</page>
+					<page string="Objets">
+						<field name="lot_id" widget="one2many_list" nolabel="1"/>
+					</page>
 				</notebook>
 			</form>
 		</field>
@@ -131,7 +134,7 @@
 			<tree string="Lots">
 				<field name="number"/>
 				<field name="name"/>
-				<field name="buyer_name"/>
+				<!--R field name="buyer_name"/-->
 				<field name="adj_price"/>
 				<field name="price_wh_costs"/>
 			</tree>
@@ -152,15 +155,23 @@
 					<field name="vat"/>
 				</group>
 				<group col="17" colspan="4">
-					<field name="buyer_ref" select="1" context="show_ref='1'" on_change="onchange_buyer_ref(buyer_ref)"/>
-					<field name="buyer_name" select="1" colspan="11"/>
+					<field name="buyer_ref" select="1" context="show_ref='1'" /> <!--on_change="onchange_buyer_ref(buyer_ref)"/-->
+					<!--field name="buyer_name" select="1" colspan="11"/-->
 					<field name="buyer_vat" colspan="2"/>
 				</group>
-				<group col="12" colspan="4">
+				<field name="buyer_address" colspan="6"/>
+				<!-- Rgroup col="12" colspan="4">
 					<field name="buyer_address" colspan="6"/>
 					<field name="buyer_zip"/>
 					<field name="buyer_city" colspan="2"/>
+				</group-->
+				 <group col="12" colspan="4">
+					<field name="state" select="2"/>
+					<button name="button_bought" string="Vendu" states="draft" type="object"/>
+					<button name="button_not_bought" string="Non Vendu" states="draft" type="object"/>
+					<button name="button_draft" string="Brouillon" states="vendu,non_vendu" type="object"/>
 				</group>
+
 				<group col="10" colspan="4">
 					<field name="buyer_lang"/>
 					<button name="%(report_attestation)d" string="Attestation" type="action"/>
@@ -218,21 +229,31 @@
 				</group>
 				<group col="17" colspan="4">
 					<field name="buyer_ref" select="1" context="show_ref='1'" on_change="onchange_buyer_ref(buyer_ref)"/>
-					<field name="buyer_name" select="1" colspan="11"/>
+					<!--retire existe ds buyer addressfield name="buyer_name" select="1" colspan="11"/-->
 					<field name="buyer_vat" colspan="2"/>
 				</group>
-				<group col="12" colspan="4">
+				<!--group col="12" colspan="4">
 					<field name="buyer_address" colspan="6"/>
 					<field name="buyer_zip"/>
 					<field name="buyer_city" colspan="2"/>
 				</group>
-				<newline/>
-				<!--group col="10" colspan="4"-->
+				<newline/>-->
+				<field name="buyer_address" select= "1" />
+
+
+				<group col="5" colspan="4">
+					<field name="state" select="2"/>
+					<button name="button_bought" string="Vendu" states="draft" type="object"/>
+					<button name="button_not_bought" string="Non Vendu" states="draft" type="object"/>
+					<button name="button_draft" string="Brouillon" states="vendu,non_vendu" type="object"/>
+				</group>
+
+				<group col="10" colspan="4">
 					<field name="buyer_lang"/>
 					<newline/>
 					<button name="%(report_attestation)d" string="Attestation" type="action"/>
 					<button name="%(report_ticket)d" string="Ticket" type="action"/>
-				<!--/group-->
+				</group>
 			</form>
 		</field>
 	</record>
@@ -387,5 +408,33 @@
 		<field name="view_id" ref="v_deposit_tree"/>
 	</record>
 	<menuitem name="Operations/Huissier/Garde" action="a6" id="menu_huissier_deposit_act"/>
+
+
+	<record model="ir.actions.act_window" id="v_client">
+		<field name="name">Client</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('category_id','=','Clients Habituels')]</field>
+		<!--field name="category_id" eval="[(6,0,[ref('res_etudes')])]"/-->
+	</record>
+
+	<menuitem name="Partners/Partners/Clients Habituels" action="v_client" id="menu_client"/>
+	<record model="ir.actions.act_window" id="v_client2">
+		<field name="name">Client</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('category_id','=','Etudes')]</field>
+		<!--field name="category_id" eval="[(6,0,[ref('res_clients')])]"/-->
+	</record>
+
+	<menuitem name="Partners/Partners/Etudes" action="v_client2" id="menu_client2"/>
+
+	<record model="ir.actions.act_window" id="v_seq">
+		<field name="name">Sequences</field>
+		<field name="res_model">ir.sequence</field>
+		<field name="view_type">form</field>
+	</record>
+	<menuitem name="Operations/Huissier/Sequences" action="v_seq" id="menu_seq"/>
+
 </data>
 </terp>

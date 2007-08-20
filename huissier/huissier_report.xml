@@ -14,15 +14,14 @@
 		auto="False"
 		id="v_huiss_vign"
 		/>
+		-->
 		<report 
 		string="Vignettes" 
 		model="huissier.vignettes"
 		name="huissier.labels" 
 		xml="huissier/report/labels.xml"
 		xsl="huissier/report/labels.xsl"
-		auto="False"
-		id="report_labels"/>
-		-->
+		id="v_report_labels"/>
 		<!-- xsl attribute is needed for the translation system -->
 	
 
@@ -91,14 +90,14 @@
 		<report 
 		string="Vignettes" 
 		model="huissier.vignettes"
-		name="huissier.labels.reprint" 
+		name="huissier.labels.print" 
 		xml="huissier/report/labels.xml" 
 		xsl="huissier/report/labels.xsl"
-		id="report_labels"
+		id="id_report_label"
 		/>
 		
 		<!-- xsl attribute is needed for the translation system -->
-		<report string="PV" model="huissier.dossier" name="report.huissier_pv"  id="v_13"/>
+		<report string="PV" model="huissier.dossier" name="huissier.pv"  id="vdossier_13"/>
 		<report string="PV" model="huissier.lots" name="report.huissier.pv.from_lot" xml="huissier/report/pv.xml" xsl="huissier/report/pv.xsl" menu="False" id="v_12"/>
 		
 		<report string="Listing palais" model="huissier.dossier" name="report.huissier.palais" menu="False"/>

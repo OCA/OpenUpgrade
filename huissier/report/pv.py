@@ -26,11 +26,10 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
-
-import sql_db
-from osv.osv import osv_pools
+import pooler
 from report.interface import report_rml
 from tools.amount_to_text import amount_to_text
+print "HERE"*100
 
 
 def toxml(val):
@@ -49,20 +48,19 @@ class report_custom(report_rml):
 	def __init__(self, name, table, tmpl, xsl):
 		report_rml.__init__(self, name, table, tmpl, xsl)
 
-	def create_xml(self, uid, ids, datas, context={}):
+	def create_xml(self, cr,uid, ids, datas, context={}):
 		if len(ids) != 1:
 			return ''
 
-		cr = sql_db.db.cursor()
-		tax_obj = osv_pools.get('account.tax')
-		
+	#	cr = sql_db.db.cursor()
+		pool =pooler.get_pool(cr.dbname)
+		tax_obj=pool.get('account.tax')
 		dossier_id = ids[0]
-		dossier = osv_pools.get('huissier.dossier').browse(cr, uid, dossier_id)
+		dossier = pool.get('huissier.dossier').browse(cr, uid, dossier_id)
 		lots = dossier.lot_id
 		lang = dossier.lang 
 		terms = terms_dict[dossier.lang]
 		context.update({'lang':lang})
-		
 		adj = dossier.amount_adj
 		costs = dossier.amount_costs
 		total = dossier.amount_total
@@ -95,18 +93,21 @@ class report_custom(report_rml):
 
 		vats = {}
 		i = 1
+		taxes=[]
 		for l in lots:
-			vid = l.vat.id
-			if not vid in vats:
-				vats[vid] = {
+		#	vid = l.vat.id
+			taxes.append(l.vat)
+			
+			if not l.vat.id in vats:
+				vats[l.vat.id] = {
 					'value': l.vat.amount,
 					'lots_numbers': str(i),
 					'amount_adj': l.adj_price,
 				}
 			else:
-				vats[vid]['lots_numbers'] += ','+str(i)
-				vats[vid]['amount_adj'] += l.adj_price
-			tax_res = tax_obj.compute(cr, uid, [vid], l.adj_price, 1)
+				vats[l.vat.id]['lots_numbers'] += ','+str(i)
+				vats[l.vat.id]['amount_adj'] += l.adj_price
+			tax_res = tax_obj.compute(cr, uid, taxes, l.adj_price, 1)
 			tax_amount = reduce(lambda x, y: x+y['amount'], tax_res, 0.0)
 			vat6 = (l.vat.amount==0.06) and tax_amount or 0.0
 			vat21 = (l.vat.amount==0.21) and tax_amount or 0.0
@@ -150,11 +151,10 @@ class report_custom(report_rml):
 	</vat>''' % (v['value']*100, v['lots_numbers'], v['amount_adj'], v['amount_adj']*v['value'])
 			
 		xml += '</report>'
-		cr.close()
 		
 #		file('/tmp/terp.xml','wb+').write(xml)
 		return xml
 
-report_custom('report.huissier_pv', 'huissier.lots','', 'addons/huissier/report/pv.xsl')
+report_custom('report.huissier.pv', 'huissier.lots','', 'addons/huissier/report/pv.xsl')
 
 

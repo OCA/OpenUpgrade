@@ -74,25 +74,44 @@ class wizard_close_dossier(wizard.interface):
 		return {'adj': amount_adj_cal , 'frais':costs, 'total':total, 'salle':room} or {}
 
 	def _close_dossier(self,cr,uid,datas,context):
-		#service = netsvc.LocalService("object_proxy")
+#service = netsvc.LocalService("object_proxy")
 		dossier_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
-		lots = dossier_obj.close(cr, uid, datas['ids'], datas['form']['voirie'], datas['form']['acquis'])
-
+		datas['refund_id'], datas['invoice_id'] = dossier_obj.close(cr, uid, datas['ids'], datas['form']['voirie'], datas['form']['acquis'])
+		dossier_id=dossier_obj.browse(cr,uid,datas['ids'])[0]
+		ref_id=dossier_id.refund_id.id or False
+		inv_id=dossier_id.invoice_id.id or False
 #		res = service.execute(uid, 'huissier.dossier', 'close', datas['ids'], datas['form']['voirie'], datas['form']['acquis'])
 #		return {'refund_id':res[0], 'invoice_id':res[1]}
-		return {}
+		return {'refund_id':ref_id,'invoice_id':inv_id}
 		
-	def _get_invoice_id(self, uid, datas):
-		return {'ids': [datas['form']['invoice_id']]}
-	
-	def _check_invoice(self, uid, datas):
-		return datas['form']['invoice_id'] and 'wait_pv' or 'end'
+	def _get_invoice_id(self, cr,uid, datas,context):
 		
-	def _check_refund(self, uid, datas):
-		return datas['form']['refund_id'] and 'wait_invoice' or 'end'
+#		return {'ids': [datas['form']['invoice_id']]}
+		vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
+		vign=vignettes_obj.browse(cr,uid,datas['ids'])[0]
+		return {'ids':vign.invoice_id.id}
+	def _check_invoice(self,cr, uid, datas,context):
+		vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
+		vign=vignettes_obj.browse(cr,uid,datas['ids'])[0]
+		return vign.invoice_id and 'wait_pv' or 'end' 
+
+#return datas['form']['invoice_id'] and 'wait_pv' or 'end'
 		
-	def _get_refund_id(self, uid, datas):
-		return {'ids': [datas['form']['refund_id']]}
+	def _check_refund(self,cr, uid, datas,context): 
+		vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
+		vign=vignettes_obj.browse(cr,uid,datas['ids'])[0]
+		return vign.invoice_id and 'wait_invoice' or 'end'
+
+	#	return datas['form']['refund_id'] and 'wait_invoice' or 'end'
+		
+	def _get_refund_id(self,cr, uid, datas,context):
+		vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
+#		r_id,i_id= vignettes_obj.close(cr,uid,data['ids'])
+		vign=vignettes_obj.browse(cr,uid,datas['ids'])[0]
+		vign_id=vign.refund_id or False
+		return {'ids':vign_id.id}
+
+	#	return {'ids': datas['refund_id']}
 		
 	states = {
 		'init': {
@@ -140,9 +159,9 @@ class wizard_close_dossier_from_lot(wizard_close_dossier):
 		cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%d", (datas['id'],))
 		sum=cr.fetchone()
 		amount_adj_cal=sum and sum[0] or 0.0
-	#	amount_adj_cal=lots[0].dossier_id.amount_adj_calculated
-		costs=lots[0].dossier_id.amount_costs  
-		print "COSTS",costs
+		if not lots[0].dossier_id:
+			raise wizard.except_wizard('Erreur !', 'Veuillez saisir une etude') 
+		costs=lots[0].dossier_id.amount_costs 
 		total=lots[0].dossier_id.amount_total
 		room=lots[0].dossier_id.amount_room_costs 
 		return {'dossier_id':dossiers, 'adj':amount_adj_cal, 'frais':costs, 'total':total, 'salle':room} or {'dossier_id':dossier_id}
@@ -151,9 +170,8 @@ class wizard_close_dossier_from_lot(wizard_close_dossier):
 	#	service = netsvc.LocalService("object_proxy")
 	#	res = service.execute(uid, 'huissier.dossier', 'close', [datas['form']['dossier_id']], datas['form']['voirie'], datas['form']['acquis'])
 		dossier_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
-		lots = dossier_obj.close(cr, uid, [datas['form']['dossier_id']], datas['form']['voirie'], datas['form']['acquis'])
-
-	#	return {
+		(r,v) = dossier_obj.close(cr, uid, [datas['form']['dossier_id']], datas['form']['voirie'], datas['form']['acquis'])
+		#	return {
 	#	'ids':[datas['form']['dossier_id']],
 	#	'refund_id':res[0],
 	#	'invoice_id':res[1]}

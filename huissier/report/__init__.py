@@ -30,4 +30,5 @@ import palais
 import pv
 import labels
 import label_invoices
+import labels_vignettes
 
