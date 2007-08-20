@@ -1,0 +1,33 @@
+To do, document module, in this order:
+
+1. Make the system works on the same port then the current server. Just uses
+   another URL. I think you must subcribe. I propose this as the root:
+       /document/dbname/repository_name
+
+2. Bugfix so that it works with ressources having name like "SO/0001"
+   It should replace the name on the fly. Try browsing the list of
+   Sales order in the demo data.
+
+3. Bugfix so that it correctly indexes all documents, and you must be
+   able to perform a search in the GTK interface through all documents.
+   It seems to be an encoding problem, data should be encoded in uft8 in
+   the database (or unicode ?)
+
+4. Finnish the content printing so that you can select a report with a
+   domain [('res_model','=',parent.model_id)]. It must uses this report
+   for the printing on demand
+
+5. Develop the possibility to store contents in directories or in postgresql.
+   It must works with rm, when directories are moved. Don't store all files
+   in the same dir, it's efficient. Create directories like the one you see
+   through the DAV access. Use ID's:
+   Example:
+      Projects / Absences / Paid Absences
+   Shoud become:
+      123/123.456/123.789/321.pdf
+   Where:
+      123 is the ID of the Project directory
+	  456, 789 are ID's of analytic accounts in the project hyerarchy (tree)
+	  321 is the ID of the ir.attachment
+
+6. Create a good documentation representing all features on the wiki.
