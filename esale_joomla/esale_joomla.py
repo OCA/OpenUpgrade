@@ -221,7 +221,8 @@ class esale_joomla_order(osv.osv):
 	def order_create(self, cr, uid, ids, context={}):
 		for order in self.browse(cr, uid, ids, context):
 			if not (order.partner_id and order.partner_invoice_id and order.partner_shipping_id):
-				raise osv.except_osv('No addresses !', 'You must assign addresses before creating the order.')
+				raise osv.except_osv('No addresses !',
+						'You must assign addresses before creating the order.')
 			pricelist_id=order.partner_id.property_product_pricelist.id
 			order_lines = []
 			for line in order.order_lines:
@@ -232,7 +233,10 @@ class esale_joomla_order(osv.osv):
 					'product_uom': line.product_uom_id.id,
 					'price_unit': line.price_unit,
 				}
-				val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None, pricelist_id, line.product_id.id, line.product_qty, line.product_uom_id.id, name=line.name)['value']
+				val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None,
+						pricelist_id, line.product_id.id, line.product_qty,
+						line.product_uom_id.id, name=line.name,
+						partner_id=order.partner_id.id)['value']
 				del val_new['price_unit']
 				del val_new['weight']
 				val.update( val_new )
