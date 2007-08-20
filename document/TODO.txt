@@ -1,4 +1,13 @@
+Some Notes:
+
+* Use cadaver, the command line DAV client, to test the DAV connection during
+  developments
+* Sometimes you have to kill manually the server:
+  CTRL-Z
+  kill -9 %1
+
 To do, document module, in this order:
+
 
 1. Make the system works on the same port then the current server. Just uses
    another URL. I think you must subcribe this like a service and don't run
@@ -39,3 +48,26 @@ To do, document module, in this order:
 	  321 is the ID of the ir.attachment
 
 6. Create a good documentation representing all features on the wiki.
+
+7. Overwrite create and write of the ir.attachement object to:
+   fill-in, according to the content (data field):
+   * file_size,
+   * properties,
+   * indexed content.
+   So that indexing (and others fields) will not only works from the DAV interface
+   but also from attachement.
+
+8. Add properties on document:
+   Author, Version, Descritpion, Title
+   We can search on properties.
+   These properties are extracted from the document when parsing for indexing.
+
+9. Check-In/Out. Add buttons on document and a state and a user field to check
+   in/out. If a user checks out a document, the others users will not be able to
+   modify (override) it. The state is then Being Used, Check In reset the state
+   to Available.
+
+   I think this should work through LDAP too, I saw check in/out options in 
+   cadaver's command.
+
+10. Implement DAV properties (version, ...)
