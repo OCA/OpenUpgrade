@@ -1,7 +1,15 @@
 To do, document module, in this order:
 
 1. Make the system works on the same port then the current server. Just uses
-   another URL. I think you must subcribe. I propose this as the root:
+   another URL. I think you must subcribe this like a service and don't run
+   your own server. Check how the service directory works for dispatching
+   requests.
+   You may have to create a handler who routes to the right handler according
+   to the url used: /document/... is for DAV, the others are for XML-RPC.
+   It should be feasible has DAV is over HTTP like XML-RPX.
+   Check if we can easily support DAV HTTPS if Tiny ERP is run a https. (I
+   think it should work directly)
+   I propose this as the root:
        /document/dbname/repository_name
 
 2. Bugfix so that it works with ressources having name like "SO/0001"
