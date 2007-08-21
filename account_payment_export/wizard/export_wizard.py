@@ -210,6 +210,7 @@ def _create_pay(self,cr,uid,data,context):
     pay_line =pay_line_obj.read(cr, uid, pay_line_id,['partner_id','amount','bank_id','move_line_id'])
     seq=0
     total=0
+
     for pay in pay_line:
         seq=seq+1
         v['sequence'] = str(seq).rjust(4).replace(' ','0')
@@ -219,9 +220,9 @@ def _create_pay(self,cr,uid,data,context):
             v['order_exe_date']=time.strftime('%d%m%y',time.strptime(exec_date,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
         else:
             v['order_exe_date']=''
-        v['order_ref']=''#14-29
+        v['order_ref']=''#14-29 #should be fill. see page 23
         v['cur_code']='BEF'#static set .but is available in entry line object..
-        v['code_pay']='C'#two values 'C' or 'D'  *should be change
+        v['code_pay']='C'#two values 'C' or 'D'  *should be modified
         v['amt_pay']=float2str(pay['amount'])
         total=total+pay['amount']
         v['acc_debit']=bank.acc_number
@@ -241,7 +242,22 @@ def _create_pay(self,cr,uid,data,context):
           '''%(payment.id,str(pay['move_line_id'][0])))
         res=cr.fetchall()
         if not res:
-            print "res................blank"#create invoice here
+            adr = pool.get('res.partner').address_get(cr, uid, [pay['partner_id']], ['default','invoice','shipping'])
+            move_line=pool.get('account.move.line').browse(cr, uid,pay['move_line_id'][0],context)
+
+            ids =pool.get('res.partner').search(cr, uid, [('id','=',pay['partner_id'])])
+            partner=pool.get('res.partner').read(cr, uid,ids,['property_account_receivable'],context)
+            a=partner[0]['property_account_receivable'][0]
+            #-----create invoice for new entry line .
+            invoice = {
+                'account_id': a,
+                'partner_id': pay['partner_id'],
+                'address_invoice_id':adr['invoice'] or adr['default'],
+                'move_id':move_line.move_id.id,
+                'journal_id':move_line.journal_id.id
+                }
+            inv_id = pool.get('account.invoice').create(cr, uid, invoice)
+            inv=pool.get('account.invoice').browse(cr, uid, inv_id,context)
         else:
             inv=pool.get('account.invoice').browse(cr, uid, res[0][0],context)
         v['sub_div6']='06'
