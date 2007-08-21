@@ -68,6 +68,20 @@
 	<field name="readonly" eval="False"/>
   </record>
 
+  <record model="res.partner.bank.type.field" id="bank_field_company">
+	<field name="name">bank_id</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <record model="res.partner.bank.type.field" id="address_field_company">
+	<field name="name">bank_address_id</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
 
 
   <!-- Define a payment type -->
