@@ -242,22 +242,7 @@ def _create_pay(self,cr,uid,data,context):
           '''%(payment.id,str(pay['move_line_id'][0])))
         res=cr.fetchall()
         if not res:
-            adr = pool.get('res.partner').address_get(cr, uid, [pay['partner_id']], ['default','invoice','shipping'])
-            move_line=pool.get('account.move.line').browse(cr, uid,pay['move_line_id'][0],context)
-
-            ids =pool.get('res.partner').search(cr, uid, [('id','=',pay['partner_id'])])
-            partner=pool.get('res.partner').read(cr, uid,ids,['property_account_receivable'],context)
-            a=partner[0]['property_account_receivable'][0]
-            #-----create invoice for new entry line .
-            invoice = {
-                'account_id': a,
-                'partner_id': pay['partner_id'],
-                'address_invoice_id':adr['invoice'] or adr['default'],
-                'move_id':move_line.move_id.id,
-                'journal_id':move_line.journal_id.id
-                }
-            inv_id = pool.get('account.invoice').create(cr, uid, invoice)
-            inv=pool.get('account.invoice').browse(cr, uid, inv_id,context)
+            return {'note':'Wizard can not Generate Export file,there is no Related Invoice for \nEntry line:'+str(pay['move_line_id'])+''}
         else:
             inv=pool.get('account.invoice').browse(cr, uid, res[0][0],context)
         v['sub_div6']='06'
