@@ -109,7 +109,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
             #import traceback;traceback.print_exc()
-            self.win.setEditText("txtUName","/")
+            self.win.setEditText("txtUName","TTT")
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
     def getRes(self,sock ,sObject,sVar):

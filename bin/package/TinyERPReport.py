@@ -292,7 +292,6 @@ class Myexception(Exception):
 
 class mysocket:
     def __init__(self, sock=None):
-        print "abc"
         if sock is None:
             self.sock = socket.socket(
             socket.AF_INET, socket.SOCK_STREAM)
@@ -1120,6 +1119,8 @@ class DBModalDialog:
         self.oDialogControl.endExecute()
 
 
+
+
 import uno
 import string
 import unohelper
@@ -1138,8 +1139,10 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
     def __init__(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
         # Interface Design
         LoginTest()
+
         if not loginstatus and __name__=="package":
             exit(1)
+
         self.win = DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
         self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
@@ -1180,42 +1183,58 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         docinfo=doc.getDocumentInfo()
         # Check weather Field-1 is available if not then exit from application
         self.sMyHost= ""
+
         if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
             self.sMyHost= docinfo.getUserFieldValue(0)
             self.count=0
             oParEnum = doc.getTextFields().createEnumeration()
+
             while oParEnum.hasMoreElements():
                 oPar = oParEnum.nextElement()
+
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     self.count += 1
+
             getList(self.aObjectList, self.sMyHost,self.count)
             cursor = doc.getCurrentController().getViewCursor()
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
 
             for j in range(self.aObjectList.__len__()):
+
                 if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find(" ")) == "List":
                     self.insVariable.addItem(self.aObjectList[j],1)
             for i in range(self.aItemList.__len__()):
+
                 if self.aComponentAdd[i]=="Document":
                     sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
                     for j in range(self.aObjectList.__len__()):
+
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                             self.insVariable.addItem(self.aObjectList[j],1)
+
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
                     #for k in range(self.aSectionList.__len__()):
+
                     if self.aComponentAdd[i] in self.aSectionList:
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+
                         for j in range(self.aObjectList.__len__()):
+
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
                                 self.insVariable.addItem(self.aObjectList[j],1)
 
                 if tcur.TextTable:
+
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
+
             self.bModify=bFromModify
+
             if self.bModify==True:
+
                 if sObject=="":
                     self.insVariable.setText("List of "+docinfo.getUserFieldValue(3))
                     self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
@@ -1225,41 +1244,38 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 else:
                     sItem=""
                     i=0
+
                     for i in range(self.aObjectList.__len__()):
+
                         if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sObject:
                             sItem= self.aObjectList[i]
                             self.insVariable.setText(sItem)
+
                     genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
 #                    self.win.setEditText("txtName", sVariable)
 #                    self.win.setEditText("txtUName",sDisplayName)
+
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
+
             self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
             self.win.endExecute()
 
-#    def getSection(self,oParEnum,oCurrentSection):
-#        while oParEnum.hasMoreElements():
-#            oPar = oParEnum.nextElement()
-#            if oPar.supportsService("com.sun.star.text.TextContent"):
-#                if oPar.TextSection:
-#                    if oPar.TextSection.Name==oCurrentSection.Name:
-#                        oInsideEnum=oPar.createEnumeration()
-#                        while oInsideEnum.hasMoreElements():
-#                            oInside=oInsideEnum.nextElement()
-#                            if oInside.supportsService("com.sun.star.text.TextPortion"):
-#                                if oInside.TextField:
-#                                    print oInside.TextField.Items
     def lstbox_selected(self,oItemEvent):
+
         sItem=self.win.getListBoxSelectedItem("lstFields")
         sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]
+
         if self.bModify==True:
             self.win.setEditText("txtName", self.sGVariable)
             self.win.setEditText("txtUName",self.sGDisplayName)
         else:
             self.win.setEditText("txtName",sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))
             self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind("/")+1,sItem.__len__())+".-|")
+
     def cmbVariable_selected(self,oItemEvent):
+
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
             desktop=getDesktop()
@@ -1268,10 +1284,12 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxText("cmbVariable")
             self.aListRepeatIn=[]
+
             if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
                 genTree(docinfo.getUserFieldValue(3), self.aListRepeatIn, self.insField,self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
             else:
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+
             self.win.selectListBoxItemPos("lstFields", 0, True )
 
         else:
@@ -1287,10 +1305,13 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
+
             if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" and self.win.getEditText("txtUName") != "" :
                 sObjName=""
+
                 if self.bModify==True:
                     oCurObj=cursor.TextField
+
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
@@ -1305,6 +1326,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         oCurObj.update()
                 else:
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
@@ -1313,6 +1335,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     else:
                         sObjName=self.win.getComboBoxText("cmbVariable")
                         sObjName=sObjName.__getslice__(0,sObjName.find("("))
+
                         if cursor.TextTable==None:
                             sKey=u""+ self.win.getEditText("txtUName")
                             sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
@@ -1326,6 +1349,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                             sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
                             oInputList.Items = (sKey,sValue)
                             tableText.insertTextContent(cursor,oInputList,False)
+
                 self.win.endExecute()
             else:
                 ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
@@ -1341,7 +1365,7 @@ elif __name__=="package":
             "org.openoffice.tiny.report.repeatln",
             ("com.sun.star.task.Job",),)
 
-#Love me when I least deserve it, because that's when I really need it.import uno
+import uno
 import string
 import unohelper
 import xmlrpclib
@@ -1452,7 +1476,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
             #import traceback;traceback.print_exc()
-            self.win.setEditText("txtUName","/")
+            self.win.setEditText("txtUName","TTT")
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
     def getRes(self,sock ,sObject,sVar):
@@ -1711,7 +1735,6 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from Change import *
-    database="trunk_1"
 
 class ServerParameter( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
@@ -1744,7 +1767,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblPassword", 6, 70, 60, 15, "Password")
         self.win.addEdit("txtPassword",-2,67,123,15)
 
-        self.win.addButton('btnOK',-2 ,-5, 60,15,'Test Connection'
+        self.win.addButton('btnOK',-2 ,-5, 60,15,'Connect'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
         self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
@@ -2212,7 +2235,7 @@ class About(unohelper.Base, XJobExecutor):
 #        res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
         self.win = DBModalDialog(60, 50, 225, 169, ".:: About Us !!! ::.")
         if __name__<>"package":
-            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file:///home/hjo/Desktop/trunk/bin/script/About.jpg")
+            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file://About.jpg")
         else:
             self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file://images/About.jpg")
         self.win.doModalDialog("",None)
@@ -2224,4 +2247,150 @@ elif __name__=="package":
             About,
             "org.openoffice.tiny.report.about",
             ("com.sun.star.task.Job",),)
+
+
+
+import uno
+import unohelper
+import string
+import re
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from LoginTest import *
+    database="trunk_1"
+
+class ConvertBracesToField( unohelper.Base, XJobExecutor ):
+
+    def __init__(self,ctx):
+
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+        LoginTest()
+        if not loginstatus and __name__=="package":
+            exit(1)
+        self.aReportSyntex=[]
+        self.getBraces(self.aReportSyntex)
+
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+
+#        for r in self.aReportSyntex:
+#            if r[1]=="RepeatIn":
+#                print r[0],r[1]
+
+
+    def getBraces(self,aReportSyntex=[]):
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+        aSearchString=[]
+        aReplaceString=[]
+        aRes=[]
+        try:
+            regexes = [['\[\[ repeatIn\( (.+), \'([a-zA-Z0-9_]+)\' \) \]\]','RepeatIn'],['\[\[([a-zA-Z0-9_\.]+)\]\]','Field'],['\[\[.+?\]\]','Expression']]
+            search = doc.createSearchDescriptor()
+            search.SearchRegularExpression = True
+            for reg in regexes:
+                search.SearchString = reg[0]
+                found = doc.findFirst( search )
+                while found:
+                    res=re.findall(reg[0],found.String)
+                    if found.String not in [r[0] for r in aReportSyntex] and len(res) == 1:
+                        aReportSyntex.append([found.String,reg[1]])
+                        text=found.getText()
+
+                        oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+                        oInputList.Items=(u""+found.String,u""+found.String)
+
+                        text.insertTextContent(found,oInputList,False)
+                        found.String =""
+
+                    else:
+                        aRes.append([res,reg[1]])
+                        found = doc.findNext(found.End, search)
+
+            search = doc.createSearchDescriptor()
+            search.SearchRegularExpression = False
+            for res in aRes:
+                for r in res[0]:
+                    search.SearchString=r
+                    found=doc.findFirst(search)
+                    while found:
+                        aReportSyntex.append([found.String,res[1]])
+                        text=found.getText()
+
+                        oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+                        oInputList.Items=(u""+found.String,u""+found.String)
+
+                        text.insertTextContent(found,oInputList,False)
+                        found.String =""
+                        found = doc.findNext(found.End, search)
+        except:
+            pass
+
+
+if __name__<>"package":
+    ConvertBracesToField(None)
+else:
+    g_ImplementationHelper.addImplementation( \
+        ConvertBracesToField,
+        "org.openoffice.tiny.report.convertBF",
+        ("com.sun.star.task.Job",),)
+
+
+
+#"Loving can cost a lot but not loving always costs more, and those who fear to love often find that want of love is an emptiness that robs the joy from life.
+import uno
+import unohelper
+import string
+import re
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from LoginTest import *
+    database="trunk_1"
+
+class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
+
+    def __init__(self,ctx):
+
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+        LoginTest()
+        if not loginstatus and __name__=="package":
+            exit(1)
+        self.aReportSyntex=[]
+        self.getFields()
+
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+
+
+    def getFields(self):
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+
+        count=0
+        try:
+            oParEnum = doc.getTextFields().createEnumeration()
+            while oParEnum.hasMoreElements():
+                oPar = oParEnum.nextElement()
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                    oPar.getAnchor().Text.insertString(oPar.getAnchor(),oPar.Items[1],False)
+                    oPar.dispose()
+        except:
+            pass
+
+
+if __name__<>"package":
+    ConvertFieldsToBraces(None)
+else:
+    g_ImplementationHelper.addImplementation( \
+        ConvertFieldsToBraces,
+        "org.openoffice.tiny.report.convertFB",
+        ("com.sun.star.task.Job",),)
+
+
 
