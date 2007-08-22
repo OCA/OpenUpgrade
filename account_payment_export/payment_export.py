@@ -45,7 +45,7 @@ account_pay()
 class res_partner_bank(osv.osv):
     _inherit = "res.partner.bank"
     _columns = {
-                'institution_code':fields.char('Institution code.', size=32),
+                'institution_code':fields.char('Institution code.', size=3),
     }
 res_partner_bank()
 
