@@ -17,8 +17,8 @@
     <blockTableStyle id="Tableau2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-	   <lineStyle kind="LINEBELOW" colorName="red" start="0,0" stop="-1,0"/>
 
+	   <lineStyle kind="LINEBELOW" colorName="red" start="0,0" stop="-1,0"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
@@ -96,9 +96,9 @@
       <font color="white"> </font>
     </para>
     <para style="P10">Date de la vente:<font face="Times-Roman"> [[ time.strftime('%d/%m/%Y')]]</font></para>
-    <para style="P10">Etude: <font face="Times-Roman">[[o.dossier_id.etude_id.name or False]]</font></para>
-    <para style="P10">Adresse:<font face="Times-Roman">[[o.buyer_address and o.buyer_address.street or False]],[[o.buyer_address and o.buyer_address.zip or False]][[o.buyer_address and o.buyer_address.city or False]]</font></para>
-    <para style="P10"><font face="Times-Roman">Acheteur:</font>[[o.buyer_address and o.buyer_address.name]]</para>
+    <para style="P10">Etude: <font face="Times-Roman">[[o.dossier_id and o.dossier_id.etude_id.name or False]]</font></para>
+    <para style="P10">Adresse:<font face="Times-Roman">[[o.buyer_address or False]],[[o.buyer_zip or False]] [[o.buyer_city or False]]</font></para>
+    <para style="P10"><font face="Times-Roman">Acheteur:</font>[[o.buyer_name or False]]</para>
     <para style="P11">
       <font color="white"> </font>
     </para>

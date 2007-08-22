@@ -24,6 +24,12 @@
 		id="v_report_labels"/>
 		<!-- xsl attribute is needed for the translation system -->
 	
+	<report 
+		string="Badges" 
+		model="res.partner"
+		name="huissier.badge" 
+		rml="huissier/report/badge.rml"
+		id="v_report_badge"/>
 
 
 <!--		<report 

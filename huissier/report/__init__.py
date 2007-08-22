@@ -33,3 +33,4 @@ import label_invoices
 import labels_vignettes
 import ticket
 import attestation
+import badge

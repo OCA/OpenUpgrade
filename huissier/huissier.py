@@ -126,7 +126,7 @@ class huissier_dossier(osv.osv):
 
 		'lot_id': fields.one2many('huissier.lots', 'dossier_id', u'Objets'),
 		'invoice_id': fields.many2one('account.invoice', u'Facture'),
-		'refund_id': fields.many2one('account.invoice', u'Facture remboursee'),
+		'refund_id': fields.many2one('account.invoice', u'Facture remboursée'),
 
 		'salle_account_id': fields.many2one('account.account', 'Compte Frais de Salle', required=True),
 		'voirie_account_id': fields.many2one('account.account', 'Compte Frais de Voirie', required=True),
@@ -357,11 +357,11 @@ class huissier_lots(osv.osv):
 #		'buyer_name': fields.char(u'Nom et Prénom', size=64),
 #		'buyer_firstname': fields.char(u'Prénom', size=64),
 	#"""enleve et remplace par champ partner.address
-	#'buyer_name': fields.char(u'Nom', size=64),	'buyer_address': fields.char(u'Adresse', size=128),
-	#	'buyer_zip': fields.char(u'Code postal', change_default=True, size=24),
-	#	'buyer_city': fields.char(u'Ville', size=64),"""
+		'buyer_name': fields.char(u'Nom', size=64),	'buyer_address': fields.char(u'Adresse', size=128),
+		'buyer_zip': fields.char(u'Code postal', change_default=True, size=24),
+		'buyer_city': fields.char(u'Ville', size=64),
 
-		'buyer_address': fields.many2one('res.partner.address', 'Adresse Acheteur'),
+#		'buyer_address': fields.many2one('res.partner.address', 'Adresse Acheteur'),
 		'buyer_birthdate': fields.char(u'Date de naissance', size=64),
 		'buyer_vat': fields.char(u'TVA', size=64),
 		'buyer_lang': fields.selection(_lang_get, 'Langue', size=2),

@@ -159,12 +159,12 @@
 					<!--field name="buyer_name" select="1" colspan="11"/-->
 					<field name="buyer_vat" colspan="2"/>
 				</group>
-				<field name="buyer_address" colspan="6"/>
-				<!-- Rgroup col="12" colspan="4">
+				<!--field name="buyer_address" colspan="6"/-->
+				<group col="12" colspan="4">
 					<field name="buyer_address" colspan="6"/>
 					<field name="buyer_zip"/>
 					<field name="buyer_city" colspan="2"/>
-				</group-->
+				</group>
 				 <group col="12" colspan="4">
 					<field name="state" select="2"/>
 					<button name="button_bought" string="Vendu" states="draft" type="object"/>
@@ -232,13 +232,13 @@
 					<!--retire existe ds buyer addressfield name="buyer_name" select="1" colspan="11"/-->
 					<field name="buyer_vat" colspan="2"/>
 				</group>
-				<!--group col="12" colspan="4">
+				<group col="12" colspan="4">
 					<field name="buyer_address" colspan="6"/>
 					<field name="buyer_zip"/>
 					<field name="buyer_city" colspan="2"/>
 				</group>
-				<newline/>-->
-				<field name="buyer_address" select= "1" />
+				<newline/>
+				<!--field name="buyer_address" select= "1" /-->
 
 
 				<group col="5" colspan="4">
@@ -409,15 +409,27 @@
 	</record>
 	<menuitem name="Operations/Huissier/Garde" action="a6" id="menu_huissier_deposit_act"/>
 
+	<record model="ir.ui.view" id="view_partner_form">
+		<field name="name">res.partner.form.inherit</field>
+		<field name="model">res.partner</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<field name="lang" position="after">
+				<field name="ean13" select="2"/>
+				<newline/>
+			</field>
+		</field>
+	</record>
 
 	<record model="ir.actions.act_window" id="v_client">
 		<field name="name">Client</field>
 		<field name="res_model">res.partner</field>
 		<field name="view_type">form</field>
-		<field name="domain">[('category_id','=','Clients Habituels')]</field>
+		<field name="domain">[('category_id','=','Clients_Habituels')]</field>
 		<!--field name="category_id" eval="[(6,0,[ref('res_etudes')])]"/-->
 	</record>
-
+	
 	<menuitem name="Partners/Partners/Clients Habituels" action="v_client" id="menu_client"/>
 	<record model="ir.actions.act_window" id="v_client2">
 		<field name="name">Client</field>
