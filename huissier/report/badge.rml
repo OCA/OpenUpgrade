@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
+    <paraStyle name="P2" fontName="Courier-Bold" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Courier-Bold" fontSize="11.0" leading="14"/>
+    <paraStyle name="P4" fontName="Courier-Bold" fontSize="11.0" leading="14"/>
+    <paraStyle name="P5" rightIndent="1.0" leftIndent="0.0" fontName="Courier-Bold" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P6" fontName="Times-Bold" fontSize="10.0" leading="13"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <para style="P3">
+      <font face="Times-Roman">Nom:</font>
+      <font face="Times-Roman">[[o.name or False]]</font>
+    </para>
+    <para style="P4">Adresse:<font face="Times-Roman">[[o.address and o.address[0].street or False]],[[o.address and o.address[0].city or False]]</font></para>
+    <para style="P5">Badge:<font face="Times-Roman">[[o.ean13 or False]]</font></para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+	<para><barCode x="1cm" y="0" code="Code128">[[o.ean13 or False]]</barCode></para>
+  </story>
+</document>
+
