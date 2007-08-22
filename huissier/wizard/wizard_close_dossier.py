@@ -144,7 +144,7 @@ class wizard_close_dossier(wizard.interface):
 		},
 		'print_refund': {
 			'actions': [_get_refund_id],
-			'result': {'type':'print', 'report':'account.invoice', 'get_id_from_action':True, 'state':'end'}
+			'result': {'type':'print', 'report':'account.invoice', 'state':'end'}
 		}
 	}
 wizard_close_dossier('huissier.dossier.close')
