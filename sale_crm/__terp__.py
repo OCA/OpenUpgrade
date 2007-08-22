@@ -10,8 +10,10 @@
 	This shortcut allows you to generate a sale order based the selected case.
 	If different cases are open (a list), it generates one sale order by
 	case.
-
 	The case is then closed and linked to the generated sale order.
+
+	It also add a shortcut on one or several partners.
+	This shorcut allows you to generate a CRM case for the partners.
 	""",
 	"init_xml" : [],
 	"demo_xml" : [],
