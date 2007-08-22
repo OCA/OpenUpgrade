@@ -174,8 +174,8 @@
 
 				<group col="10" colspan="4">
 					<field name="buyer_lang"/>
-					<button name="%(report_attestation)d" string="Attestation" type="action"/>
-					<button name="%(report_ticket)d" string="Ticket" type="action"/>
+					<button name="%(report_attestation1)d" string="Attestation" type="action"/>
+					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
 				</group>
 			</form>
 		</field>
@@ -200,7 +200,7 @@
 		<field name="key2">tree_but_open</field>
 		<field name="model">huissier.dossier</field>
 		<field name="name">Open Moves</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
+		<field name="value" eval="'ir.actions.act_window,%d'%a_dossier"/>
 		<field name="object" eval="True"/>
 	</record>
 	
@@ -251,8 +251,8 @@
 				<group col="10" colspan="4">
 					<field name="buyer_lang"/>
 					<newline/>
-					<button name="%(report_attestation)d" string="Attestation" type="action"/>
-					<button name="%(report_ticket)d" string="Ticket" type="action"/>
+					<button name="%(report_attestation1)d" string="Attestation" type="action"/>
+					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
 				</group>
 			</form>
 		</field>

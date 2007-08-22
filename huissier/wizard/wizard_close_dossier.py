@@ -93,7 +93,7 @@ class wizard_close_dossier(wizard.interface):
 	def _check_invoice(self,cr, uid, datas,context):
 		vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.dossier')
 		vign=vignettes_obj.browse(cr,uid,datas['ids'])[0]
-		return vign.invoice_id and 'wait_pv' or 'end' 
+		return vign.invoice_id.id and 'wait_pv' or 'end' 
 
 #return datas['form']['invoice_id'] and 'wait_pv' or 'end'
 		
@@ -132,7 +132,7 @@ class wizard_close_dossier(wizard.interface):
 		},
 		'print_invoice': {
 			'actions': [_get_invoice_id],
-			'result': {'type':'print', 'report':'account.invoice', 'get_id_from_action':True, 'state':'check_refund'}
+			'result': {'type':'print', 'report':'account.invoice', 'state':'check_refund'}
 		},
 		'check_refund': {
 			'actions': [],
@@ -176,17 +176,17 @@ class wizard_close_dossier_from_lot(wizard_close_dossier):
 	#	'refund_id':res[0],
 	#	'invoice_id':res[1]}
 	#	cr.commit()
-	#	return {
-	#		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
-	#		'name': 'Seller invoices',
-	#		'view_type': 'form',
-	#		'view_mode': 'tree,form',
-	#		'res_model': 'account.invoice',
-	#		'view_id': False,
-	#		'context': "{'type':'out_refund'}",
-	#		'type': 'ir.actions.act_window'
-	#	}
-		return {}
+		return {
+			'domain': "[('id','in', ["+','.join(map(str,datas['ids']))+"])]",
+			'name': 'Invoices',
+			'view_type': 'form',
+			'view_mode': 'tree,form',
+			'res_model': 'account.invoice',
+			'view_id': False,
+			'context': "{'type':'out_refund'}",
+			'type': 'ir.actions.act_window'
+		}
+	#	return {}
 
 
 	states = {

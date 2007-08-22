@@ -67,8 +67,8 @@ def _pay_labels(self,cr, uid, datas,context):
 	ids = vign_obj.pay(cr, uid, datas['id'], datas['form']['account_id'])
 	cr.commit()
 
-	service = netsvc.LocalService("object_proxy")
-	pay_id = service.execute(uid, 'huissier.vignettes', 'pay', [datas['id']], datas['form']['account_id'])
+#	service = netsvc.LocalService("object_proxy")
+#	pay_id = service.execute(uid, 'huissier.vignettes', 'pay', [datas['id']], datas['form']['account_id'])
 	return {}
 
 class wizard_pay_labels(wizard.interface):
