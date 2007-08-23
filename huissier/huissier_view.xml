@@ -161,11 +161,15 @@
 					<field name="buyer_name" select="1" colspan="11"/>
 					<field name="buyer_vat" colspan="2"/>
 				</group>
-				<!--field name="buyer_address" colspan="6"/-->
 				<group col="12" colspan="4">
 					<field name="buyer_address" colspan="6"/>
 					<field name="buyer_zip"/>
 					<field name="buyer_city" colspan="2"/>
+				</group>
+				<group col="10" colspan="4">
+					<field name="buyer_lang"/>
+					<button name="%(report_attestation1)d" string="Attestation" type="action"/>
+					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
 				</group>
 				 <group col="12" colspan="4">
 					<field name="state" select="2"/>
@@ -174,14 +178,9 @@
 					<button name="button_draft" string="Brouillon" states="vendu,non_vendu" type="object"/>
 				</group>
 
-				<group col="10" colspan="4">
-					<field name="buyer_lang"/>
-					<button name="%(report_attestation1)d" string="Attestation" type="action"/>
-					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
-				</group>
 				</page>
 				<page string="Photo">
-					<field name="image" colspan="4" widget="image"/>
+					<field name="image" nolabel="1" colspan="4" widget="image"/>
 				</page>
 				</notebook>
 			</form>
