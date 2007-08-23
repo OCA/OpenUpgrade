@@ -119,7 +119,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_dossier_tree_cur"/>
 	</record>
-	<menuitem name="Operations/Huissier/Signalétique des ventes" action="a_dossier" id="menu_dossier_act"/>
+	<menuitem name="Huissier/Signalétique des ventes" action="a_dossier" id="menu_dossier_act"/>
 
 <!--
 	=======================================================
@@ -217,7 +217,7 @@
 		<field name="view_type">tree</field>
 		<!--field name="view_id" ref="v_dossier_form"/-->
 	</record>
-	<menuitem name="Operations/Huissier/Ventes" action="a_dossier_v" id="menu_dossier_form_act"/> <!--or id=a-->
+	<menuitem name="Huissier/Ventes" action="a_dossier_v" id="menu_dossier_form_act"/> <!--or id=a-->
 	
 	<record model="ir.ui.view" id="v1">
 		<field name="name">Lots</field>
@@ -278,7 +278,7 @@
 		<field name="view_mode">form,tree</field>
 		<field name="view_id" ref="v1"/>
 	</record>
-	<menuitem name="Operations/Huissier/Lots" action="a1" id="menu_lot_form"/>
+	<menuitem name="Huissier/Lots" action="a1" id="menu_lot_form"/>
 
 	<record model="ir.actions.act_window" id="a2">
 		<field name="name">Dossier huissier</field>
@@ -287,7 +287,7 @@
 		<field name="domain">[('state','=','draft')]</field>
 		<field name="view_id" ref="v_dossier_tree_cur"/>
 	</record>
-	<menuitem name="Operations/Huissier/Ventes/Ventes en cours" action="a2" id="menu_lot_tree"/>
+	<menuitem name="Huissier/Ventes/Ventes en cours" action="a2" id="menu_lot_tree"/>
 	
 	<record model="ir.actions.act_window" id="a3">
 		<field name="name">Dossier huissier</field>
@@ -299,7 +299,7 @@
 		<field name="view_id" ref="v_dossier_form"/>
 -->		
 	</record>
-	<menuitem name="Operations/Huissier/Ventes/Anciennes ventes" action="a3" id="menu_lot_action"/>
+	<menuitem name="Huissier/Ventes/Anciennes ventes" action="a3" id="menu_lot_action"/>
 	
 <!--
 	=======================================================
@@ -350,7 +350,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_vignettes_tree"/>
 	</record>
-	<menuitem name="Operations/Huissier/Vignettes" action="a_vignettes" id="menu_vignette_act"/>
+	<menuitem name="Huissier/Vignettes" action="a_vignettes" id="menu_vignette_act"/>
 
 <!--	
 	=======================================================
@@ -421,7 +421,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_deposit_tree"/>
 	</record>
-	<menuitem name="Operations/Huissier/Garde" action="a6" id="menu_huissier_deposit_act"/>
+	<menuitem name="Huissier/Garde" action="a6" id="menu_huissier_deposit_act"/>
 
 	<record model="ir.ui.view" id="view_partner_form">
 		<field name="name">res.partner.form.inherit</field>
@@ -436,31 +436,12 @@
 		</field>
 	</record>
 
-<!--	<record model="ir.actions.act_window" id="v_client">
-		<field name="name">Client</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="domain">[('category_id','=','Clients_Habituels')]</field-->
-		<!--field name="category_id" eval="[(6,0,[ref('res_etudes')])]"/-->
-<!--	</record>
-	-->
-<!--	<menuitem name="Partners/Partners/Clients Habituels" action="v_client" id="menu_client"/>-->
-<!--	<record model="ir.actions.act_window" id="v_client2">
-		<field name="name">Client</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="domain">[('category_id','=','Etudes')]</field>-->
-		<!--field name="category_id" eval="[(6,0,[ref('res_clients')])]"/-->
-	<!--/record>
--->
-	<!--menuitem name="Partners/Partners/Etudes" action="v_client2" id="menu_client2"/-->
-
 	<record model="ir.actions.act_window" id="v_seq">
 		<field name="name">Sequences</field>
 		<field name="res_model">ir.sequence</field>
 		<field name="view_type">form</field>
 	</record>
-	<menuitem name="Operations/Huissier/Sequences" action="v_seq" id="menu_seq"/>
+	<menuitem name="Huissier/Sequences" action="v_seq" id="menu_seq"/>
 
 
 
@@ -477,27 +458,5 @@
 		</field>
 	</record>
 
-<!--	<record model="ir.actions.act_window" id="v_partn">
-		<field name="name">Partenaires</field>
-		<field name="res_model">huissier.partenaire</field>
-		<field name="view_type">form</field>
-	</record>
-	<menuitem name="Partners/Partner/Partenaires" action="v_partn" id="menu_partn"/>
--->
-	<record model="ir.actions.act_window" id="v_client1">
-		<field name="name">Client</field>
-		<field name="res_model">huissier.partenaire</field>
-		<field name="view_type">form</field>
-		<field name="domain">[('category_id','=','Clients_Habituels')]</field>
-	</record>
-	<menuitem name="Partners/Partners/Clients Habituels" action="v_client1" id="menu_client1"/>
-	<record model="ir.actions.act_window" id="v_client2">
-		<field name="name">Client</field>
-		<field name="res_model">huissier.partenaire</field>
-		<field name="view_type">form</field>
-		<field name="domain">[('category_id','=','Etudes')]</field>
-		<!--field name="category_id" eval="[(6,0,[ref('res_clients')])]"/-->
-	</record>
-	<menuitem name="Partners/Partners/Etudes" action="v_client2" id="menu_client2"/>
 </data>
 </terp>
