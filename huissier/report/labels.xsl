@@ -14,11 +14,9 @@
 	<xsl:variable name="number_frames">8</xsl:variable>
 	<xsl:variable name="number">0</xsl:variable>
 
-
 	<xsl:template match="/">
 		<xsl:apply-templates select="vignette-ranges"/>
 	</xsl:template>
-
 
 	<xsl:template match="vignette-ranges">
 		<document xmlns:fo="http://www.w3.org/1999/XSL/Format">
@@ -74,15 +72,14 @@
 				<xsl:text>cm</xsl:text>
 			</xsl:attribute>
 		</frame>
-
+ <xsl:variable name="number">
 		<xsl:if test="number($number) &lt; $number_frames - 1">
 			<xsl:call-template name="vignette-frame">
 				<xsl:with-param name="number" select="$number + 1"/>
 			</xsl:call-template>
-		</xsl:if>
+		</xsl:if> </xsl:variable>
 	</xsl:template>
-
-	<xsl:template match="vignette-ranges">
+	<xsl:template match="vignette-range">
 <!--
 		<para>First: <xsl:value-of select="number(first)"/></para>
 		<para>Last: <xsl:value-of select="number(last)"/></para>
@@ -128,20 +125,20 @@
 		<para>$First: <xsl:value-of select="$first"/></para>
 		<para>$Last: <xsl:value-of select="$last"/></para>
 -->
-		<xsl:call-template name="vignette-range">
+		<xsl:call-template name="vignette">
 			<xsl:with-param name="number" select="number($first)"/>
 			<xsl:with-param name="last" select="number($last)"/>
 			<xsl:with-param name="price" select="price"/>
 		</xsl:call-template>
 	</xsl:template>
 
-	<xsl:template name="vignette-range">
+	<xsl:template name="vignette">
 <!--
 		<xsl:param name="number">0</xsl:param>
 		<xsl:param name="last">0</xsl:param>
 		<xsl:param name="price">0</xsl:param>
 -->
-		<para>Volet à apposer sur le PV de placard</para>
+		<para>Volet Ã  apposer sur le PV de placard</para>
 		<para>Strook aan te brengen op het PV van de aanplakking</para>
 
 		<spacer length="2mm"/>
@@ -165,25 +162,13 @@
 
 		<nextFrame/>
 
-		<para>Volet à apposer sur le placard à afficher à la salle - Strook aan te </para>
+		<para>Volet Ã  apposer sur le placard Ã  afficher Ã  la salle - Strook aan te </para>
 		<para>brengen op de plakbrief die in de verkoopzaal moet aangeplakt</para>
 
 		<spacer length="2mm"/>
 
 		<blockTable colWidths="4.9cm,4.9cm" style="num_and_price">
-
-<!--			<tr>-->
-<!--				<td>-->
-<!--				<para style="number">-->
-<!--				<xsl:value-of select="$number"/>-->
-<!--				</para>-->
-<!--				</td>-->
-<!--				<td>-->
-<!--					<para style="price">Prix/Prijs: EUR-->
-<!--						<xsl:value-of select="format-number($price, '#.##0,00', 'MyFormat')"/>-->
-<!--					</para>-->
-<!--				</td>-->
-<!--			</tr>-->
+			<tr><td><para style="number"><xsl:value-of select="$number"/></para></td><td><para style="price">Prix/Prijs: EUR <xsl:value-of select="format-number($price, '#.##0,00', 'MyFormat')"/></para></td></tr>
 			<tr>
 				<td><para style="salle">SALLE DE VENTE DES HUISSIERS DE JUSTICE DE BRUXELLES</para></td>
 				<td><para style="salle">VERKOOPZAAL VAN DE GERECHTS-</para><para style="salle">DEURWAARDERS BRUSSEL</para></td>
@@ -201,8 +186,8 @@
 
 		<nextFrame/>
 
-		<xsl:if test="number($number)&lt;number(last)">
-			<xsl:call-template name="vignette-range">
+		<xsl:if test="number($number) &lt; number($last)">
+			<xsl:call-template name="vignette">
 				<xsl:with-param name="number" select="$number + 1"/>
 				<xsl:with-param name="last" select="$last"/>
 				<xsl:with-param name="price" select="$price"/>

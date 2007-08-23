@@ -117,7 +117,7 @@
 		<field name="name">Dossier huissier</field>
 		<field name="res_model">huissier.dossier</field>
 		<field name="view_type">form</field>
-		<!--field name="view_id" ref="v_dossier_tree_cur"/-->
+		<field name="view_id" ref="v_dossier_tree_cur"/>
 	</record>
 	<menuitem name="Operations/Huissier/Signalétique des ventes" action="a_dossier" id="menu_dossier_act"/>
 
@@ -334,7 +334,6 @@
 		<field name="res_model">huissier.vignettes</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="v_vignettes_tree"/>
-	<!--	comparer avec l ancien-->
 	</record>
 	<menuitem name="Operations/Huissier/Vignettes" action="a_vignettes" id="menu_vignette_act"/>
 
