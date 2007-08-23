@@ -113,8 +113,8 @@ class huissier_dossier(osv.osv):
 		'lang': fields.selection((('fr',u'Français'),('nl',u'Néerlandais')), u'Langue', required=True),
 		'toinvoice': fields.boolean(u'Facturer?'),
 		'tolist': fields.boolean(u'Listing palais?'),
-		'cost_id': fields.many2one('account.tax', u'Frais de Vente', domain="[('domain','=','frais')]", required=True),
-		'room_cost_id': fields.many2one('account.tax', u'Frais de Salle', domain="[('domain','=','salle')]", required=True),
+		'cost_id': fields.many2one('account.tax', u'Frais de Vente', domain="[('domain','=','frais')]"),
+		'room_cost_id': fields.many2one('account.tax', u'Frais de Salle', domain="[('domain','=','salle')]"),
 		'amount_adj': fields.float(u'Adjudications', digits=(14,2)),
 		'amount_adj_calculated': fields.function(_adjudication_get, store=True, method=True, string=u'Adjudications'),
 		'amount_costs': fields.function(_costs_get, method=True, string=u'Frais',store=True),
@@ -125,8 +125,8 @@ class huissier_dossier(osv.osv):
 		'lot_id': fields.one2many('huissier.lots', 'dossier_id', u'Objets'),
 		'invoice_id': fields.many2one('account.invoice', u'Facture'),
 		'refund_id': fields.many2one('account.invoice', u'Facture remboursée'),
-		'salle_account_id': fields.many2one('account.account', 'Compte Frais de Salle', required=True),
-		'voirie_account_id': fields.many2one('account.account', 'Compte Frais de Voirie', required=True),
+		'salle_account_id': fields.many2one('account.account', 'Compte Frais de Salle'),
+		'voirie_account_id': fields.many2one('account.account', 'Compte Frais de Voirie'),
 #		'expense_account_id': fields.many2one('account.account', 'Expense Account', required=True),
 		'deposit_id': fields.one2many('huissier.deposit', 'dossier_id', u'Garde meuble'),
 	}
@@ -244,13 +244,13 @@ class huissier_dossier(osv.osv):
 				'partner_id': etude.id,
 				'address_contact_id': addr['contact'],
 				'address_invoice_id': addr['invoice'],
-			#	'partner_ref': etude.ref,
+				'origin': etude.ref,
 				'date_invoice': dt,
 				'date_due': dt,
 				'invoice_line': lines,
 				'type': 'out_invoice',
 				'account_id': account_receive_id,
-				'comment': acquis and acquis_strings[lang] or False
+				'comment': acquis and acquis_strings.get(lang, 'Pour acquit') or False
 			}
 			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
 			self.write(cr, uid, ids, {'invoice_id':invoice_id})
@@ -468,7 +468,7 @@ class huissier_vignettes(osv.osv):
 		
 	#	'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 	_columns = {
-		'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
+		'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 		'price': fields.float(u'Prix unitaire', digits=(12,2), required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 		'quantity': fields.integer(u'Quantité', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
 		'first': fields.integer(u'Référence de départ', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
@@ -651,7 +651,7 @@ class huissier_deposit(osv.osv):
 			dossier_id = deposit.dossier_id.id
 			lang = partner.lang or 'fr'
 			
-			invoice_desc = invoice_descs[lang]
+			invoice_desc = invoice_descs.get(lang, invoice_descs['fr'])
 			
 			#account_receive_id = ir.ir_get(cr, uid, [('meta','res.partner'),('name','account.receivable')], [('id',str(partner.id))] )[0][2]
 		
@@ -671,6 +671,11 @@ class huissier_deposit(osv.osv):
 
 			# get the number from the sequence (we set it manually)
 			number = self.pool.get('ir.sequence').get(cr, uid, 'huissier.invoice.garde')
+			print number
+			print partner.id
+			print  deposit.billing_partner_id
+			print deposit.billing_partner_id.property_account_receivable
+			print deposit.acquis
 			new_invoice = {
 				'number': number,
 				'name': invoice_desc,
@@ -678,14 +683,14 @@ class huissier_deposit(osv.osv):
 				'partner_id': partner.id,
 				'address_contact_id': addr['contact'],
 				'address_invoice_id': addr['invoice'],
-			#	'partner_ref': partner.ref,
 				'date_invoice': dt,
 				'date_due': dt,
 				'invoice_line': lines,
 				'type': 'out_invoice',
-				'account_id': deposit.billing_partner_id.property_account_receivable[0],#account_receive_id,
+				'account_id': deposit.billing_partner_id.property_account_receivable.id,
 				'comment': deposit.acquis and acquis_strings[lang] or False
 			}
+			print new_invoice
 			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
 #			'invoice_id': fields.many2many('account.invoice', 'huissier_deposit_invoice_rel', 'deposit_id', 'invoice_id', u'Factures'),
 			cr.execute('insert into huissier_deposit_invoice_rel (deposit_id, invoice_id) values (%d, %d)', (deposit.id, invoice_id))
@@ -754,9 +759,7 @@ huissier_deposit()
 #report_deposit_border()
 #
 class huissier_partenaire(osv.osv):
-	_name = 'huissier.partenaire'
 	_inherit = 'res.partner'
-	_table = 'res_partner'
 	_columns = {
 		'image': fields.binary('Image'),
 	}

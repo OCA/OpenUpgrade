@@ -47,12 +47,12 @@
 			<form string="Signalétique des ventes">
 				<notebook>
 					<page string="Général">
-						<separator string="Informations générales" colspan="3"/>
+						<separator string="Informations générales" colspan="4"/>
 
 						<field name="num_vignette" on_change="onchange_num_vignette(num_vignette)" select="1"/>
 						<field name="etude_id" select="1" domain="[('category_id','=','Etudes')]"/>
 		<!--				
-						<separator string="Creancier" colspan="3"/>
+						<separator string="Creancier" colspan="4"/>
 						
 						<field name="creancier_name" select="1"/>
 						<field name="creancier_address"/>
@@ -62,7 +62,7 @@
 						<field name="creancier" select="1"/>
 
 		<!--				
-						<separator string="Debiteur" colspan="3"/>
+						<separator string="Debiteur" colspan="4"/>
 						
 						<field name="debiteur_name" select="1"/>
 						<field name="debiteur_address"/>
@@ -73,7 +73,7 @@
 		-->				
 						<field name="debiteur" select="1"/>
 
-						<separator string="Dates" colspan="3"/>
+						<separator string="Dates" colspan="4"/>
 						
 						<field name="date_creation"/>
 						<newline/>
@@ -83,21 +83,21 @@
 						<field name="rentree_mobilier"/>
 						<field name="sortie_mobilier"/>
 		-->				
-						<separator string="Divers" colspan="3"/>
+						<separator string="Divers" colspan="4"/>
 						
 						<field name="toinvoice"/>
 						<field name="tolist"/>
 						
-						<field name="cost_id"/>
-						<field name="room_cost_id"/>
-						<field name="salle_account_id"/>
-						<field name="voirie_account_id"/>
+						<field name="cost_id" required="1"/>
+						<field name="room_cost_id" required="1"/>
+						<field name="salle_account_id" required="1"/>
+						<field name="voirie_account_id" required="1"/>
 		<!--				
 						<field name="cubage"/>
 		-->				
 						<field name="lang"/>
 
-						<separator string="État" colspan="3"/>
+						<separator string="État" colspan="4"/>
 						
 						<field name="state"/>
 						<button name="cancel" string="Annuler" type="object" states="draft"/>
@@ -140,6 +140,20 @@
 			</tree>
 		</field>
 	</record>
+	<record model="ir.ui.view" id="v_lots_form_photo">
+		<field name="name">Photos lots</field>
+		<field name="model">huissier.lots</field>
+		<field name="type">form</field>
+		<field name="priority" eval="40"/>
+		<field name="arch" type="xml">
+			<form string="Photos">
+				<field name="number" select="1"/>
+				<field name="name" select="1" colspan="9"/>
+				<field name="image" nolabel="1" colspan="4" widget="image"/>
+			</form>
+		</field>
+	</record>
+
 	<record model="ir.ui.view" id="v_lots_form">
 		<field name="name">Lots</field>
 		<field name="model">huissier.lots</field>
@@ -153,7 +167,7 @@
 					<field name="name" select="1" colspan="9"/>
 				</group>
 				<group col="5" colspan="4">
-					<field name="adj_price" select="1" string="Prix"/>
+					<field name="adj_price" select="2" string="Prix"/>
 					<field name="vat"/>
 				</group>
 				<group col="17" colspan="4">
@@ -195,26 +209,36 @@
 		<field name="domain">[('dossier_id','=',active_id)]</field>
 	</record>
 	
-<!--	<ir_set>
-		<field name="keys" eval="[('action','tree_but_open'),('res_model','huissier.dossier')]"/>
-		<field name="args" eval="[]"/>
-		<field name="name">Open Moves</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
-		<field name="isobject" eval="True"/>
-	</ir_set>-->
 	<record model="ir.values" id="ir_open_auction_lots">
 		<field name="key2">tree_but_open</field>
 		<field name="model">huissier.dossier</field>
-		<field name="name">Open Moves</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%a_dossier"/>
+		<field name="name">Open Lots</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%a"/>
 		<field name="object" eval="True"/>
 	</record>
+
+
+	<record model="ir.actions.act_window" id="a66">
+		<field name="name">Photos</field>
+		<field name="res_model">huissier.lots</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="v_lots_form_photo"/>
+		<field name="domain">[('dossier_id','=',active_id)]</field>
+	</record>
 	
+	<record model="ir.values" id="ir_open_auction_lots_66">
+		<field name="key2">tree_but_open</field>
+		<field name="model">huissier.dossier</field>
+		<field name="name">Lots</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%a66"/>
+		<field name="object" eval="True"/>
+	</record>
+		
 	<record model="ir.actions.act_window" id="a_dossier_v">
 		<field name="name">Dossier huissier</field>
 		<field name="res_model">huissier.dossier</field>
-		<field name="view_type">tree</field>
-		<!--field name="view_id" ref="v_dossier_form"/-->
+		<field name="view_type">form</field>
 	</record>
 	<menuitem name="Huissier/Ventes" action="a_dossier_v" id="menu_dossier_form_act"/> <!--or id=a-->
 	
@@ -229,10 +253,10 @@
 				<field name="dossier_id"/>
 				<group col="12" colspan="4">
 					<field name="number" select="1"/>
-					<field name="name" select="1" colspan="3"/>
+					<field name="name" select="1" colspan="4"/>
 				</group>
 				<group col="5" colspan="4">
-					<field name="adj_price" select="1" string="Prix"/>
+					<field name="adj_price" select="2" string="Prix"/>
 					<field name="vat"/>
 				</group>
 				<group col="17" colspan="4">
@@ -374,11 +398,11 @@
 			<form string="Garde meuble">
 				<notebook>
 					<page string="General">
-						<field name="dossier_id" on_change="onchange_dossier(dossier_id)" select="1" colspan="3"/>
+						<field name="dossier_id" on_change="onchange_dossier(dossier_id)" select="1" colspan="4"/>
 						<newline/>
-						<field name="billing_partner_id" select="1" colspan="3"/>
+						<field name="billing_partner_id" select="1" colspan="4"/>
 						<newline/>
-						<field name="line_desc" colspan="3"/>
+						<field name="line_desc" colspan="4"/>
 						<newline/>
 						<field name="rentree_mobilier"/>
 						<field name="sortie_mobilier"/>
@@ -430,27 +454,17 @@
 
 	<record model="ir.ui.view" id="view_partenaires_form">
 		<field name="name">Partenaires</field>
-		<field name="model">huissier.partenaire</field>
+		<field name="model">res.partner</field>
 		<field name="type">form</field>
 		<field name="inherit_id" ref="base.view_partner_form"/>
 		<field name="arch" type="xml">
-		
 			<notebook position="inside">
 				<page string="Photo">
 					<field name="image" colspan="4" nolabel="1" widget="image"/>
 				</page>
 			</notebook>
-
 		</field>
 	</record>
-
-	<record model="ir.actions.act_window" id="v_partn">
-		<field name="name">Partenaires</field>
-		<field name="res_model">huissier.partenaire</field>
-		<field name="view_type">form</field>
-	</record>
-
-	<menuitem name="Partners/Partenaires" action="v_partn" id="menu_partn"/>
 
 </data>
 </terp>

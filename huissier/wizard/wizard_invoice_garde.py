@@ -68,7 +68,7 @@ class wizard_invoice_deposit(wizard.interface):
 	#	'context': "{'type':'out_refund'}",
 	#	'type': 'ir.actions.act_window'
 	#	}
-		return {}
+		return {'ids':[ids]}
 	
 	states = {
 		'init': {
