@@ -15,8 +15,8 @@
     </initialize>
     <paraStyle name="P1" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
     <paraStyle name="P2" fontName="Courier-Bold" fontSize="11.0" leading="14" alignment="CENTER"/>
-    <paraStyle name="P3" fontName="Courier-Bold" fontSize="11.0" leading="14"/>
-    <paraStyle name="P4" fontName="Courier-Bold" fontSize="11.0" leading="14"/>
+    <paraStyle name="P3" fontName="Courier-Bold" fontSize="20.0" leading="25"/>
+    <paraStyle name="P4" fontName="Courier-Bold" fontSize="12.0" leading="15"/>
     <paraStyle name="P5" rightIndent="1.0" leftIndent="0.0" fontName="Courier-Bold" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P6" fontName="Times-Bold" fontSize="10.0" leading="13"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
@@ -43,18 +43,20 @@
       <font color="white"> </font>
     </para>
     <para style="P3">
-      <font face="Times-Roman">Nom:</font>
       <font face="Times-Roman">[[o.name or False]]</font>
     </para>
-    <para style="P4">Adresse:<font face="Times-Roman">[[o.address and o.address[0].street or False]],[[o.address and o.address[0].city or False]]</font></para>
-    <para style="P5">Badge:<font face="Times-Roman">[[o.ean13 or False]]</font></para>
-    <para style="P6">
-      <font color="white"> </font>
+    <para style="P4">
+      <font face="Times-Roman">[[o.address and o.address[0].street or False]],[[o.address and o.address[0].city or False]]</font>
+    </para>
+    <para style="P5">
+      <font face="Times-Roman">[[o.ref or False]]</font>
     </para>
     <para style="P6">
       <font color="white"> </font>
     </para>
-	<para><barCode x="1cm" y="0" code="Code128">[[o.ean13 or False]]</barCode></para>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
   </story>
 </document>
 

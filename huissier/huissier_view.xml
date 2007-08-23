@@ -146,6 +146,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Lots">
+			<notebook>
+			<page string="Lot">
 				<group col="12" colspan="4">
 					<field name="number" select="1"/>
 					<field name="name" select="1" colspan="9"/>
@@ -177,6 +179,11 @@
 					<button name="%(report_attestation1)d" string="Attestation" type="action"/>
 					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
 				</group>
+				</page>
+				<page string="Photos">
+					<field name="image" colspan="4" widget="image"/>
+				</page>
+				</notebook>
 			</form>
 		</field>
 	</record>
@@ -218,6 +225,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Lots">
+			<notebook>
+			<page string="Lot">
 				<field name="dossier_id"/>
 				<group col="12" colspan="4">
 					<field name="number" select="1"/>
@@ -254,6 +263,12 @@
 					<button name="%(report_attestation1)d" string="Attestation" type="action"/>
 					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
 				</group>
+				</page>
+				<page string="Photos">
+					<field name="image" colspan="4" widget="image"/>
+				</page>
+				</notebook>
+
 			</form>
 		</field>
 	</record>
@@ -421,24 +436,24 @@
 		</field>
 	</record>
 
-	<record model="ir.actions.act_window" id="v_client">
+<!--	<record model="ir.actions.act_window" id="v_client">
 		<field name="name">Client</field>
 		<field name="res_model">res.partner</field>
 		<field name="view_type">form</field>
-		<field name="domain">[('category_id','=','Clients_Habituels')]</field>
+		<field name="domain">[('category_id','=','Clients_Habituels')]</field-->
 		<!--field name="category_id" eval="[(6,0,[ref('res_etudes')])]"/-->
-	</record>
-	
-	<menuitem name="Partners/Partners/Clients Habituels" action="v_client" id="menu_client"/>
-	<record model="ir.actions.act_window" id="v_client2">
+<!--	</record>
+	-->
+<!--	<menuitem name="Partners/Partners/Clients Habituels" action="v_client" id="menu_client"/>-->
+<!--	<record model="ir.actions.act_window" id="v_client2">
 		<field name="name">Client</field>
 		<field name="res_model">res.partner</field>
 		<field name="view_type">form</field>
-		<field name="domain">[('category_id','=','Etudes')]</field>
+		<field name="domain">[('category_id','=','Etudes')]</field>-->
 		<!--field name="category_id" eval="[(6,0,[ref('res_clients')])]"/-->
-	</record>
-
-	<menuitem name="Partners/Partners/Etudes" action="v_client2" id="menu_client2"/>
+	<!--/record>
+-->
+	<!--menuitem name="Partners/Partners/Etudes" action="v_client2" id="menu_client2"/-->
 
 	<record model="ir.actions.act_window" id="v_seq">
 		<field name="name">Sequences</field>
@@ -447,5 +462,42 @@
 	</record>
 	<menuitem name="Operations/Huissier/Sequences" action="v_seq" id="menu_seq"/>
 
+
+
+	<record model="ir.ui.view" id="view_partenaires_form">
+		<field name="name">Partenaires</field>
+		<field name="model">huissier.partenaire</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+		<field name="lang" position="after">
+			<field name="image" colspan="4" widget="image"/>
+		<newline/>
+		</field>
+		</field>
+	</record>
+
+<!--	<record model="ir.actions.act_window" id="v_partn">
+		<field name="name">Partenaires</field>
+		<field name="res_model">huissier.partenaire</field>
+		<field name="view_type">form</field>
+	</record>
+	<menuitem name="Partners/Partner/Partenaires" action="v_partn" id="menu_partn"/>
+-->
+	<record model="ir.actions.act_window" id="v_client1">
+		<field name="name">Client</field>
+		<field name="res_model">huissier.partenaire</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('category_id','=','Clients_Habituels')]</field>
+	</record>
+	<menuitem name="Partners/Partners/Clients Habituels" action="v_client1" id="menu_client1"/>
+	<record model="ir.actions.act_window" id="v_client2">
+		<field name="name">Client</field>
+		<field name="res_model">huissier.partenaire</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('category_id','=','Etudes')]</field>
+		<!--field name="category_id" eval="[(6,0,[ref('res_clients')])]"/-->
+	</record>
+	<menuitem name="Partners/Partners/Etudes" action="v_client2" id="menu_client2"/>
 </data>
 </terp>

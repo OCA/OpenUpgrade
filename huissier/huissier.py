@@ -358,7 +358,7 @@ class huissier_lots(osv.osv):
 		'buyer_address': fields.char(u'Adresse', size=128),
 		'buyer_zip': fields.char(u'Code postal', change_default=True, size=24),
 		'buyer_city': fields.char(u'Ville', size=64),
-
+		'image': fields.binary('Image'),
 #		'buyer_address': fields.many2one('res.partner.address', 'Adresse Acheteur'),
 		'buyer_birthdate': fields.char(u'Date de naissance', size=64),
 		'buyer_vat': fields.char(u'TVA', size=64),
@@ -753,3 +753,12 @@ huissier_deposit()
 #				ab.name,ab.partner_id""")
 #report_deposit_border()
 #
+class huissier_partenaire(osv.osv):
+	_name = 'huissier.partenaire'
+	_inherit = 'res.partner'
+	_table = 'res_partner'
+	_columns = {
+		'image': fields.binary('Image'),
+	}
+huissier_partenaire()
+
