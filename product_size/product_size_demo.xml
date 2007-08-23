@@ -1,0 +1,177 @@
+<terp>
+	<data noupdate="1">
+
+	<record id="product_uom_categ_size2" model="product.uom.categ">
+		<field name="name">Square Length</field>
+	</record>
+	<record id="product_uom_categ_size" model="product.uom.categ">
+		<field name="name">Length</field>
+	</record>
+	<record id="product_uom_m" model="product.uom">
+		<field name="category_id" ref="product_uom_categ_size"/>
+		<field name="name">M</field>
+	</record>
+	<record id="product_uom_ft" model="product.uom">
+		<field name="category_id" ref="product_uom_categ_size"/>
+		<field name="name">Ft</field>
+		<field name="factor">0.3048</field>
+	</record>
+	<record id="product_uom_m2" model="product.uom">
+		<field name="category_id" ref="product_uom_categ_size2"/>
+		<field name="name">Sq.M</field>
+	</record>
+
+	<record id="res_partner_amcofr" model="res.partner">
+		<field name="name">Ampco France</field>
+		<field name="user_id" ref="base.user_demo"/>
+	</record>
+	<record id="res_partner_amcofoundry" model="res.partner">
+		<field name="name">Ampco Foundry</field>
+	</record>
+	<record id="res_partner_amcosa" model="res.partner">
+		<field name="name">Ampco SA</field>
+		<field name="user_id" ref="base.user_demo"/>
+	</record>
+	<record id="res_partner_address_1" model="res.partner.address">
+		<field name="city">Bruxelles</field>
+		<field name="name">Benoit Mortier</field>
+		<field name="zip">75000</field>
+		<field name="country_id" model="res.country" search="[('name','=','France')]"/>
+		<field name="email">info@opensides.be</field>
+		<field name="phone">(+33)2 211 34 83</field>
+		<field name="street">Rue des Palais 44, bte 33</field>
+		<field name="type">default</field>
+		<field name="partner_id" ref="res_partner_amcofr"/>
+	</record>
+	<record id="res_partner_address_2" model="res.partner.address">
+		<field name="city">Marly</field>
+		<field name="name">Benoit Mortier</field>
+		<field name="zip">1723</field>
+		<field name="country_id" model="res.country" search="[('code','=','CH')]"/>
+		<field name="email">info@ampco.ch</field>
+		<field name="phone">(+41)2 211 34 83</field>
+		<field name="street">Rte de chesalles 48</field>
+		<field name="type">default</field>
+		<field name="partner_id" ref="res_partner_amcosa"/>
+	</record>
+	<record id="res_partner_address_3" model="res.partner.address">
+		<field name="city">Marly</field>
+		<field name="name">Benoit Mortier</field>
+		<field name="zip">1723</field>
+		<field name="country_id" model="res.country" search="[('code','=','CH')]"/>
+		<field name="email">info@ampco.ch</field>
+		<field name="phone">(+41)2 211 34 83</field>
+		<field name="street">Rte de chesalles 48</field>
+		<field name="type">default</field>
+		<field name="partner_id" ref="res_partner_amcofoundry"/>
+	</record>
+
+
+	<record model="res.company" id="base.main_company">
+		<field name="name">Amco France</field>
+		<field name="partner_id" ref="res_partner_amcofr"/>
+		<field name="rml_header1">Your Solution Provider</field>
+	</record>
+
+	<record model="res.company" id="main_company_sa">
+		<field name="name">Ampco SA</field>
+		<field name="partner_id" ref="res_partner_amcosa"/>
+		<field name="rml_header1">Your Solution Provider</field>
+		<field name="rml_footer1">Web: http://tiny.be - Tel: (+32).81.81.37.00 - Bank: CPH 126-2013269-07</field>
+		<field name="rml_footer2">IBAN: BE74 1262 0132 6907 - SWIFT: GKCCBEBB - VAT: BE0477.472.701</field>
+		<field name="currency_id" ref="base.EUR"/>
+	</record>
+	<record model="res.users" id="base.user_demo">
+		<field name="address_id" ref="main_company_sa"/>
+	</record>
+
+
+
+		<record id="product_product_ampco25" model="product.product">
+			<field name="supply_method">buy</field>
+			<field name="list_price">7.0</field>
+			<field name="standard_price">5.0</field>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field name="uos_id" ref="product_uom_m" />
+			<field name="uos_coeff">20</field>
+			<field name="name">Ampco25 Rectangle Bar</field>
+			<field name="procure_method">make_to_order</field>
+			<field name="width">101.6</field>
+			<field name="length">254.0</field>
+			<field name="thickness">1</field>
+			<field name="default_code">AMPCO25</field>
+			<field name="ean13">3307630302014</field>
+			<field name="categ_id" search="[]" model="product.category"/>
+		</record>
+		<record model="product.supplierinfo" id="supplier_ampco25">
+			<field name="name" ref="res_partner_amcofoundry"/>
+			<field name="product_id" ref="product_product_ampco25"/>
+			<field name="delay" eval="15"/>
+		</record>
+
+		<record id="product_product_ampco25_cut" model="product.product">
+			<field name="supply_method">buy</field>
+			<field name="list_price">7.0</field>
+			<field name="standard_price">5.0</field>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field name="uos_id" ref="product_uom_m" />
+			<field name="uos_coeff">20</field>
+			<field name="name">Ampco25 Rectangle Bar - Cutted</field>
+			<field name="width">101.6</field>
+			<field name="length">254.0</field>
+			<field name="thickness">1</field>
+			<field name="default_code">AMPCO25CUT</field>
+			<field name="ean13">3307630302014</field>
+			<field name="procure_method">make_to_order</field>
+			<field name="categ_id" search="[]" model="product.category"/>
+		</record>
+		<record model="product.supplierinfo" id="supplier_ampco25cut">
+			<field name="name" ref="res_partner_amcosa"/>
+			<field name="product_id" ref="product_product_ampco25_cut"/>
+			<field name="delay" eval="15"/>
+		</record>
+
+
+		<record id="product_product_ampco21" model="product.product">
+			<field name="supply_method">buy</field>
+			<field name="list_price">8.0</field>
+			<field name="standard_price">6.0</field>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field name="uos_id" ref="product_uom_m2" />
+			<field name="uos_coeff">1045.45</field>
+			<field name="name">AMPCO21 plate</field>
+			<field name="procure_method">make_to_order</field>
+			<field name="width">450</field>
+			<field name="length">1500</field>
+			<field name="thickness">145.0</field>
+			<field name="default_code">AMPCO21</field>
+			<field name="ean13">3307631101876</field>
+			<field name="categ_id" search="[]" model="product.category"/>
+		</record>
+
+	<record id="mrp_workcenter_0" model="mrp.workcenter">
+		<field name="name">Cutting Machine</field>
+		<field name="type">hr</field>
+	</record>
+
+<record id="mrp_bom_0" model="mrp.bom">
+	<field name="name">Ampco25 Cutted</field>
+	<field name="product_uom" ref="product.product_uom_unit"/>
+	<field name="product_qty">2.0</field>
+	<field name="type">normal</field>
+	<field name="product_id" ref="product_product_ampco25_cut"/>
+</record>
+<record id="mrp_bom_1" model="mrp.bom">
+	<field name="name">Ampco25</field>
+	<field name="product_uom" ref="product.product_uom_unit"/>
+	<field name="product_qty">0.2</field>
+	<field name="type">normal</field>
+	<field name="product_id" ref="product_product_ampco25"/>
+	<field name="bom_id" ref="mrp_bom_0"/>
+</record>
+
+	</data>
+</terp>
