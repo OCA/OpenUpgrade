@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<terp>
+	<data noupdate="1">
+	<record model="res.partner" id="partner_unknown">
+			<field name="name">Unknown</field>
+	</record>
+	<record model="res.partner.address" id="address_unknown">
+			<field name="name">Unknown</field>
+			<field name="partner_id" ref="partner_unknown"></field>
+	</record>
+	
+	<record model="account.account" id="account_Frais_de_salle">
+			<field name="name">Frais de salle</field>
+			<field name="code">7x*</field>
+			<field name="type">income</field>
+			<field name="parent_id" eval="[(6,0,[ref('account.minimal_0')])]"></field>
+			<field name="company_id" ref="base.main_company"/>
+	</record>
+	<record model="account.account" id="account_Frais_de_voirie">
+			<field name="name">Frais de voirie</field>
+			<field name="code">7x*</field>
+			<field name="type">income</field>
+			<field name="parent_id" eval="[(6,0,[ref('account.minimal_0')])]"></field>
+			<field name="company_id" ref="base.main_company"/>
+	</record>
+	<record model="account.account" id="account_Vignettes">
+			<field name="name">Vignettes</field>
+			<field name="code">7x*</field>
+			<field name="type">income</field>
+			<field name="parent_id" eval="[(6,0,[ref('account.minimal_0')])]"></field>
+			<field name="company_id" ref="base.main_company"/>
+	</record>
+	<record model="account.account" id="account_Frais_de_garde">
+			<field name="name">Frais de garde</field>
+			<field name="code">7x*</field>
+			<field name="type">income</field>
+			<field name="parent_id" eval="[(6,0,[ref('account.minimal_0')])]"></field>
+			<field name="company_id" ref="base.main_company"/>
+	</record>
+	
+	<record model="account.account" id="account_unknown">
+			<field name="name">unknown</field>
+			<field name="code">7x*</field>
+			<field name="type">income</field>
+			<field name="parent_id" eval="[(6,0,[ref('account.minimal_0')])]"></field>
+			<field name="company_id" ref="base.main_company"/>
+	</record>
+
+	</data>
+</terp>

@@ -1,0 +1,1 @@
+{'category': 'Data Module', 'init_xml': ['huissier_db.xml', 'res.lang.csv', 'res.partner.csv', 'res.partner.address.csv', 'account.invoice.csv', 'account.invoice.line.csv', 'huissier.vignettes.csv'], 'name': 'Huissier Data', 'author': 'Tiny', 'depends': ['base', 'huissier'], 'version': '1.0', 'active': False, 'demo_xml': [], 'installable': True}
