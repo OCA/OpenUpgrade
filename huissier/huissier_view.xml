@@ -134,7 +134,7 @@
 			<tree string="Lots">
 				<field name="number"/>
 				<field name="name"/>
-				<!--R field name="buyer_name"/-->
+				<field name="buyer_name"/>
 				<field name="adj_price"/>
 				<field name="price_wh_costs"/>
 			</tree>
@@ -158,7 +158,7 @@
 				</group>
 				<group col="17" colspan="4">
 					<field name="buyer_ref" select="1" context="show_ref='1'" /> <!--on_change="onchange_buyer_ref(buyer_ref)"/-->
-					<!--field name="buyer_name" select="1" colspan="11"/-->
+					<field name="buyer_name" select="1" colspan="11"/>
 					<field name="buyer_vat" colspan="2"/>
 				</group>
 				<!--field name="buyer_address" colspan="6"/-->
@@ -180,7 +180,7 @@
 					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
 				</group>
 				</page>
-				<page string="Photos">
+				<page string="Photo">
 					<field name="image" colspan="4" widget="image"/>
 				</page>
 				</notebook>
@@ -238,7 +238,7 @@
 				</group>
 				<group col="17" colspan="4">
 					<field name="buyer_ref" select="1" context="show_ref='1'" on_change="onchange_buyer_ref(buyer_ref)"/>
-					<!--retire existe ds buyer addressfield name="buyer_name" select="1" colspan="11"/-->
+					<field name="buyer_name" select="1" colspan="11"/>
 					<field name="buyer_vat" colspan="2"/>
 				</group>
 				<group col="12" colspan="4">
@@ -264,7 +264,7 @@
 					<button name="%(report_ticket1)d" string="Ticket" type="action"/>
 				</group>
 				</page>
-				<page string="Photos">
+				<page string="Photo">
 					<field name="image" colspan="4" widget="image"/>
 				</page>
 				</notebook>
@@ -295,9 +295,6 @@
 		<field name="view_type">tree</field>
 		<field name="domain">[('state','=','closed')]</field>
 		<field name="view_id" ref="v_dossier_tree_cur"/>
-<!--		
-		<field name="view_id" ref="v_dossier_form"/>
--->		
 	</record>
 	<menuitem name="Huissier/Ventes/Anciennes ventes" action="a3" id="menu_lot_action"/>
 	
@@ -423,18 +420,6 @@
 	</record>
 	<menuitem name="Huissier/Garde" action="a6" id="menu_huissier_deposit_act"/>
 
-	<record model="ir.ui.view" id="view_partner_form">
-		<field name="name">res.partner.form.inherit</field>
-		<field name="model">res.partner</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="lang" position="after">
-				<field name="ean13" select="2"/>
-				<newline/>
-			</field>
-		</field>
-	</record>
 
 	<record model="ir.actions.act_window" id="v_seq">
 		<field name="name">Sequences</field>
@@ -444,19 +429,29 @@
 	<menuitem name="Huissier/Sequences" action="v_seq" id="menu_seq"/>
 
 
-
 	<record model="ir.ui.view" id="view_partenaires_form">
 		<field name="name">Partenaires</field>
 		<field name="model">huissier.partenaire</field>
 		<field name="type">form</field>
 		<field name="inherit_id" ref="base.view_partner_form"/>
 		<field name="arch" type="xml">
-		<field name="lang" position="after">
-			<field name="image" colspan="4" widget="image"/>
-		<newline/>
-		</field>
+		
+			<notebook position="inside">
+				<page string="Photo">
+					<field name="image" colspan="4" nolabel="1" widget="image"/>
+				</page>
+			</notebook>
+
 		</field>
 	</record>
+
+	<record model="ir.actions.act_window" id="v_partn">
+		<field name="name">Partenaires</field>
+		<field name="res_model">huissier.partenaire</field>
+		<field name="view_type">form</field>
+	</record>
+
+	<menuitem name="Partners/Partenaires" action="v_partn" id="menu_partn"/>
 
 </data>
 </terp>
