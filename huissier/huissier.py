@@ -367,7 +367,7 @@ class huissier_lots(osv.osv):
 #		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais', digits=(12,2)),
 		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer'),
 #		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer', digits=(12,2)),
-		'state': fields.selection((('draft','Brouillon'),('non_vendu','Non vendu'),('vendu','vendu')),'State',  readonly=True),
+		'state': fields.selection((('draft','Brouillon'),('non_vendu','Non vendu'),('vendu','vendu'),('emporte',u'Emporté')),'State',  readonly=True),
 	}
 	_defaults = {
 		'number': lambda obj,cr,uid,*a: obj._get_next_lot_number(cr, uid),
@@ -723,6 +723,7 @@ class huissier_partenaire(osv.osv):
 	_inherit = 'res.partner'
 	_columns = {
 		'image': fields.binary('Image'),
+		'date_creation': fields.date(u'Création badge'),
+		'date_expiration':fields.date('Expiration badge')
 	}
 huissier_partenaire()
-

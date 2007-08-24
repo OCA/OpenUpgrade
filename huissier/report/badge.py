@@ -28,7 +28,6 @@
 #
 ##############################################################################
 
-from reportlab.platypus import Frame
 import pooler
 import time
 from report import report_sxw

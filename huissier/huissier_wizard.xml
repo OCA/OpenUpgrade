@@ -35,6 +35,14 @@
 		menu="False"
 		id="wizard_deposit_invoice"
 		multi="1"/>
+		
+		<wizard
+		string="Paiement"
+		model="huissier.lots" 
+		name="huissier.lots.payment"
+		id="wizard_payment_lots"
+		/>
+
 
 		<wizard id="wizard_labels_invoice" string="Facturer les vignettes" model="huissier.vignettes" name="huissier.labels.invoice" menu="False"/>
 		<wizard id="wizard_labels_pay" string="Payer les vignettes" model="huissier.vignettes" name="huissier.labels.pay" menu="False"/>

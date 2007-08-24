@@ -117,7 +117,7 @@
 		<field name="name">Dossier huissier</field>
 		<field name="res_model">huissier.dossier</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="v_dossier_tree_cur"/>
+<!--		<field name="view_id" ref="v_dossier_tree_cur"/-->
 	</record>
 	<menuitem name="Huissier/Signalétique des ventes" action="a_dossier" id="menu_dossier_act"/>
 
@@ -137,6 +137,7 @@
 				<field name="buyer_name"/>
 				<field name="adj_price"/>
 				<field name="price_wh_costs"/>
+				<field name="state"/>
 			</tree>
 		</field>
 	</record>
@@ -302,6 +303,29 @@
 		<field name="view_id" ref="v1"/>
 	</record>
 	<menuitem name="Huissier/Lots" action="a1" id="menu_lot_form"/>
+	<record model="ir.actions.act_window" id="action_all_objects_unsold">
+		<field name="name">Lots non vendus</field>
+		<field name="res_model">huissier.lots</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','non_vendu')]</field>
+
+	</record>
+	<menuitem
+		name="Huissier/Lots non vendus"
+		action="action_all_objects_unsold"
+		id="menu_all_objects_unsold"/>
+
+	<record model="ir.actions.act_window" id="action_all_objects_sold">
+		<field name="name">Lots</field>
+		<field name="res_model">huissier.lots</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','vendu')]</field>
+	</record>
+	<menuitem
+		name="Huissier/Lots vendus et non emportés"
+		action="action_all_objects_sold"
+		id="menu_all_objects_sold"/>
+
 
 	<record model="ir.actions.act_window" id="a2">
 		<field name="name">Dossier huissier</field>
@@ -460,6 +484,8 @@
 		<field name="arch" type="xml">
 			<notebook position="inside">
 				<page string="Photo">
+					<field name="date_creation"/>
+					<field name="date_expiration"/>
 					<field name="image" colspan="4" nolabel="1" widget="image"/>
 				</page>
 			</notebook>

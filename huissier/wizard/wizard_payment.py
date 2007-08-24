@@ -1,3 +1,4 @@
+# -*- coding: iso-8859-1 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -25,12 +26,42 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
+import pooler
+import wizard
+import netsvc
 
-import wizard_palais
-import wizard_invoice_garde
-import wizard_invoice_labels
-import wizard_reprint_labels
-import wizard_pay_labels
-import wizard_close_dossier
-import wizard_payment
+reprint_form = '''<?xml version="1.0"?>
+<form title="Paiement du lot">
+	<field name="scan_code" colspan="4"/>
+</form>'''
+
+reprint_fields = {
+#	'scan_code': {'string':u'Code client', 'type':'char', 'required':True},
+	'scan_code': {'string': 'client', 'type': 'many2one', 'relation':'res.partner'},
+
+}
+
+#def _get_value(self, uid, datas):
+#	return {}
+def def_payment(self, cr, uid, data, context):
+	pool = pooler.get_pool(cr.dbname)
+	code_client=data['form']['scan_code'] 
+	find_id= pool.get('res.partner').browse(cr,uid,data['form']['scan_code'])
+	pool.get('huissier.lots').write(cr,uid,data['ids'],{'state':'vendu','buyer_ref':find_id.id})
+	return {}
+
+
+class wizard_payment(wizard.interface):
+	states = {
+		'init': {
+			'actions': [], 
+			'result': {'type':'form', 'arch':reprint_form, 'fields':reprint_fields, 'state':[('payer','payer'), ('end','Annuler')]}
+		},
+		'payer': {
+			'actions': [def_payment],
+			'result': {'type':'state', 'state':'end'}
+		}
+	}
+wizard_payment('huissier.lots.payment')
+
 
