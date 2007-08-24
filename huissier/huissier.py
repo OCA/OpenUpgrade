@@ -217,7 +217,7 @@ class huissier_dossier(osv.osv):
 			etude = dossier.etude_id
 			lang = etude.lang or 'fr'
 		#	account_receive_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], [('id',str(etude.id))] )[0][2]
-			account_receive_id=dossier.etude_id.property_account_receivable[0]
+			account_receive_id=dossier.etude_id.property_account_receivable.id
 			lines = []
 			invoice_desc = invoice_desc_str[lang]
 			line_desc = frais_salle_str[lang]
@@ -563,9 +563,7 @@ class huissier_vignettes(osv.osv):
 			lang = etude.lang or 'fr'
 			label_quantity = reduce(lambda total, lr: total + lr['quantity'], label_ranges, 0.0)
 			invoice_desc = invoice_descs[lang] % (label_quantity,)
-			account_receive_id=label_ranges[0].etude_id.property_account_receivable[0]
-		#	account_receive_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], [('id',str(etude.id))] )[0][2]
-
+			account_receive_id=label_ranges[0].etude_id.property_account_receivable.id
 			lines = []
 			for lr in label_ranges:
 				line_desc = line_descs[lang] % (lr.first, lr.last)
@@ -671,11 +669,6 @@ class huissier_deposit(osv.osv):
 
 			# get the number from the sequence (we set it manually)
 			number = self.pool.get('ir.sequence').get(cr, uid, 'huissier.invoice.garde')
-			print number
-			print partner.id
-			print  deposit.billing_partner_id
-			print deposit.billing_partner_id.property_account_receivable
-			print deposit.acquis
 			new_invoice = {
 				'number': number,
 				'name': invoice_desc,
@@ -690,7 +683,6 @@ class huissier_deposit(osv.osv):
 				'account_id': deposit.billing_partner_id.property_account_receivable.id,
 				'comment': deposit.acquis and acquis_strings[lang] or False
 			}
-			print new_invoice
 			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
 #			'invoice_id': fields.many2many('account.invoice', 'huissier_deposit_invoice_rel', 'deposit_id', 'invoice_id', u'Factures'),
 			cr.execute('insert into huissier_deposit_invoice_rel (deposit_id, invoice_id) values (%d, %d)', (deposit.id, invoice_id))
@@ -727,37 +719,6 @@ class huissier_deposit(osv.osv):
 		return {'value':{'billing_partner_id':dossier['etude_id']}}
 huissier_deposit()
 
-#class report_deposit_border(osv.osv):
-#	_name="report.deposit.border"
-#	_description = "Report deposit border"
-#	_auto = False
-#	_rec_name='bord'
-#	_columns = {
-#		'bord': fields.char('Depositer Inventory', size=64, required=True),
-#		'creancier': fields.many2one('res.partner',u'Créancier',select=1),
-#		'moy_est' : fields.float('Avg. Est', select=1, readonly=True),
-#		'total_marge': fields.float('Total margin', readonly=True),
-#		'nb_obj':fields.float('# of objects', readonly=True),
-#}
-#	def init(self, cr):
-#		cr.execute("""CREATE OR REPLACE VIEW report_deposit_border AS
-#			SELECT
-#				min(al.id) as id,
-#				ab.partner_id as seller,
-#				ab.name as bord,
-#				COUNT(al.id) as nb_obj,
-#				SUM((al.lot_est1 + al.lot_est2)/2) as moy_est,
-#				SUM(al.net_revenue)/(count(ad.id)) as total_marge
-#
-#			FROM
-#				auction_lots al,auction_deposit ab,auction_dates ad
-#			WHERE
-#				ad.id=al.auction_id
-#				and al.bord_vnd_id=ab.id
-#			GROUP BY
-#				ab.name,ab.partner_id""")
-#report_deposit_border()
-#
 class huissier_partenaire(osv.osv):
 	_inherit = 'res.partner'
 	_columns = {

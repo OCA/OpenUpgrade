@@ -39,6 +39,6 @@ class huissier_badge(report_sxw.rml_parse):
         self.localcontext.update({
             'time': time,
         })
-report_sxw.report_sxw('report.huissier.badge', 'huissier.partenaire', 'addons/huissier/report/badge.rml',parser=huissier_badge)
+report_sxw.report_sxw('report.huissier.badge', 'res.partner', 'addons/huissier/report/badge.rml',parser=huissier_badge)
 
 

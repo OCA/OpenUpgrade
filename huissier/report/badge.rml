@@ -10,24 +10,29 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
+    <blockTableStyle id="Tableau3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
     <blockTableStyle id="Tableau2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
+    <paraStyle name="center" alignment="CENTER"/>
     <paraStyle name="P1" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
     <paraStyle name="P2" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P3" fontName="Courier-Bold" fontSize="20.0" leading="25"/>
-    <paraStyle name="P4" fontName="Times-Bold" fontSize="20.0" leading="25"/>
-    <paraStyle name="P5" fontName="Times-Roman" fontSize="20.0" leading="25"/>
-    <paraStyle name="P6" fontName="Times-Roman" fontSize="12.0" leading="15"/>
-    <paraStyle name="P7" fontName="Courier" fontSize="11.0" leading="14"/>
-    <paraStyle name="P8" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT"/>
-    <paraStyle name="P9" fontName="Courier" fontSize="12.0" leading="15"/>
-    <paraStyle name="P10" fontName="Times-Bold" fontSize="10.0" leading="13"/>
-    <paraStyle name="P11" fontName="Courier-Bold" fontSize="12.0" leading="15"/>
+    <paraStyle name="P4" fontName="Times-Bold" fontSize="11.0" leading="17"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="RIGHT"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT"/>
+    <paraStyle name="P8" fontName="Courier" fontSize="12.0" leading="15"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="10.0" leading="13"/>
+    <paraStyle name="P10" fontName="Courier-Bold" fontSize="12.0" leading="15"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="First line indent" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -55,58 +60,35 @@
       <font color="white"> </font>
     </para>
     <para style="P3">
-      <font face="Times-Roman"/>
+      <font color="white"> </font>
     </para>
-    <blockTable colWidths="290.0,124.0" style="Tableau2">
+	<blockTable style="Tableau2" colWidths="90mm" rowHeights="55mm">
+	<tr>
+	<td>
+	<para style="center">
+	Maison des Huissiers de Justice de Bruxelles S.C.
+	</para><para style="center">
+	Huis van de Gerechtsdeurwaarders van Brussel C.V.
+	</para>
+    <blockTable style="Tableau3" colWidths="60mm,30mm" rowHeights="55mm">
       <tr>
         <td>
           <para style="P4">[[o.name or False]]</para>
-          <para style="P5">
-            <font face="Times-Roman" size="12.0">[[o.address and o.address[0].street or False]],</font>
-          </para>
-          <para style="P6">[[o.address and o.address[0].city or False]]</para>
-          <para style="P7">
-            <font color="white"> </font>
-          </para>
-          <para style="P6">TÉL: [[o.mobile or False]]</para>
-          <para style="P6">IDENTIFIANT:<font face="Times-Roman" size="14.0">[[o.ref or False]]</font></para>
-          <para style="P6">DATE:[[ time.strftime('%d/%m/%Y') ]]</para>
-          <para style="P6">
-            <font color="white"> </font>
-          </para>
-          <para style="P6">
-            <font color="white"> </font>
-          </para>
-          <para style="P5">[[o.ref or False]]</para>
-          <para style="P6">
-            <font color="white"> </font>
-          </para>
+          <para style="P5">[[o.address and o.address[0].name or False]]</para>
+          <para style="P5">[[o.address and o.address[0].street or False]]</para>
+          <para style="P5">[[o.address and o.address[0].zip or False]] [[o.address and o.address[0].city or False]]</para>
+          <para style="P5">[[o.address and o.address[0].country_id and o.address[0].country_id.name or False]]</para>
+          <para style="P5">ID: [[o.id or False]]</para>
+          <barCode code="code128" xdim="0.03" height="0.4" quiet="0">[[o.id or False]]</barCode>
         </td>
         <td>
-          <para style="P8">
-            <font color="white"> </font>
-          </para>
-          <para style="P8">[[ setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</para>
+          <para style="P7">[[ setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</para>
+          <para style="P5">[[ time.strftime('%d/%m/%Y') ]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P8">
-      <font color="white"> </font>
-    </para>
-    <para style="P9">
-      <font color="white"> </font>
-    </para>
-    <para style="P10">
-      <font face="Times-Roman"/>
-    </para>
-    <para style="Frame contents">
-      <font color="white"> </font>
-    </para>
-    <para style="Frame contents">
-      <font color="white"> </font>
-    </para>
-    <para style="P11"/>
-.<para><barCode x="1cm" y="0" code="Code128">[[o.code or False]]</barCode></para>
+	</td></tr>
+    </blockTable>
   </story>
 </document>
 
