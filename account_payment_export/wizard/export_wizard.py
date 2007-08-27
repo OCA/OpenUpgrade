@@ -77,7 +77,6 @@ class record:
                   'seg_num3':'1','seg_num4':'1','seg_num5':'1','seg_num_t':'9',
                    'flag':'0','flag1':'\n'
                            }
-        self.post={'date_value_hdr':'000000','type_paiement':'0'}
         self.init_local_context()
 
     def init_local_context(self):
@@ -94,9 +93,6 @@ class record:
                 value = self.pre[field[0]]
             elif self.global_values.has_key(field[0]):
                 value = self.global_values[field[0]]
-
-            elif self.post.has_key(field[0]):
-                value = self.post[field[0]]
             else :
                 pass
                 #raise Exception(field[0]+' not found !')
@@ -256,6 +252,7 @@ def _create_pay(self,cr,uid,data,context):
         else:
             inv=pool.get('account.invoice').browse(cr, uid, res[0][0],context)
         v['sub_div6']='06'
+
         if pay['bank_id']:
             bank1 = bank_obj.read(cr, uid, pay['bank_id'][0])#searching pay line bank account number
             if bank1['state']=='bank':
@@ -269,13 +266,16 @@ def _create_pay(self,cr,uid,data,context):
                 v['type_accnt']=''
         else:
             return {'note':'Please Provide Bank Account in payment line for \npartner:'+inv.partner_id.name+' Ref:'+res[0][1]+''}
+
         part_addres_obj=pool.get('res.partner.address')
         v['bank_country_code']=''
+
         if bank1['bank_address_id']:
             bank2 = part_addres_obj.read(cr, uid, bank1['bank_address_id'][0])#get bank address of counrty for pos 113-114 sub06
             if bank2['country_id']:
                 code_country=pool.get('res.country').read(cr,uid,bank2['country_id'][0],['code'])#get bank address of counrty for pos 113-114 sub06
                 v['bank_country_code']=code_country['code']
+
         v['benf_name']=inv.partner_id.name
         v['benf_address']=str(inv.address_invoice_id.street)+blank_space+str(inv.address_invoice_id.street2)
         if inv.address_invoice_id.country_id and inv.address_invoice_id.state_id:
