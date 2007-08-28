@@ -1,7 +1,9 @@
+
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+# Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
+# $Id$
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -26,12 +28,16 @@
 #
 ##############################################################################
 
-import palais
-import pv
-import labels
-import label_invoices
-import labels_vignettes
-import ticket
-import attestation
-import badge
-import code_bar_lot
+import pooler
+import time
+from report import report_sxw
+
+class huissier_code_produit(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(huissier_code_produit, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+report_sxw.report_sxw('report.huissier.code_bar_lot', 'huissier.lots', 'addons/huissier/report/code_bar_lot.rml',parser=huissier_code_produit,header=False)
+
+

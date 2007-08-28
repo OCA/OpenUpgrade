@@ -15,13 +15,13 @@
 		id="v_huiss_vign"
 		/>
 		-->
-		<report 
+		<!--report 
 		string="Vignettes1" 
 		model="huissier.vignettes"
 		name="huissier.labels.print" 
 		xml="huissier/report/labels.xml"
 		xsl="huissier/report/labels.xsl"
-		id="v_report_labels"/>
+		id="v_report_labels"/-->
 		<!-- xsl attribute is needed for the translation system -->
 	
 	<report 
@@ -31,6 +31,12 @@
 		rml="huissier/report/badge.rml"
 		id="v_report_badge"/>
 
+	<report 
+		string="Code barres du lot" 
+		model="huissier.lots"
+		name="huissier.code_bar_lot" 
+		rml="huissier/report/code_bar_lot.rml"
+		id="v_report_barcode_lot"/>
 
 <!--		<report 
 		string="PV"

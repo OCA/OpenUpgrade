@@ -338,24 +338,24 @@ class huissier_lots(osv.osv):
 		return self.write(cr,uid,ids, {'state':'non_vendu'})
 
 	def button_draft(self,cr,uid,ids,*a):
-		return self.write(cr,uid,ids, {'state':'draft'})
+ 		return self.write(cr,uid,ids, {'state':'draft'})
+ 
+ 	def button_bought(self,cr,uid,ids,*a):
+ 		return self.write(cr,uid,ids, {'state':'vendu'})
 
-	def button_bought(self,cr,uid,ids,*a):
-		return self.write(cr,uid,ids, {'state':'vendu'})
-
-	_columns = {
-		'dossier_id': fields.many2one('huissier.dossier', u'Dossier huissier'),
+ 	_columns = {
+ 		'dossier_id': fields.many2one('huissier.dossier', u'Dossier huissier'),
 		'number': fields.integer(u'Lot', required=True, readonly=True),
 		'name': fields.char(u'Description', size=256, required=True),
-		'vat': fields.many2one('account.tax', u'Taxe', domain="[('domain','=','tva')]", required=True),
+ 		'vat': fields.many2one('account.tax', u'Taxe', domain="[('domain','=','tva')]", required=True),
 		'adj_price': fields.float(u"Prix d'adjudication", digits=(12,2)),
-		'buyer_ref': fields.many2one('res.partner', u'Réf. client', domain="[('category_id', '=', 'Clients habituels')]"),
+ 		'buyer_ref': fields.many2one('res.partner', u'Réf. client', domain="[('category_id', '=', 'Clients habituels')]"),
 #		'buyer_ref': fields.char(u'Réf. client', size=64),
 #		'buyer_name': fields.char(u'Nom et Prénom', size=64),
-#		'buyer_firstname': fields.char(u'Prénom', size=64),
+ #		'buyer_firstname': fields.char(u'Prénom', size=64),
 	#"""enleve et remplace par champ partner.address
 		'buyer_name': fields.char(u'Nom', size=64),
-		'buyer_address': fields.char(u'Adresse', size=128),
+ 		'buyer_address': fields.char(u'Adresse', size=128),
 		'buyer_zip': fields.char(u'Code postal', change_default=True, size=24),
 		'buyer_city': fields.char(u'Ville', size=64),
 		'image': fields.binary('Image'),
@@ -366,13 +366,16 @@ class huissier_lots(osv.osv):
 		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais',store=True),
 #		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais', digits=(12,2)),
 		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer'),
+		'payer':fields.boolean('payer'),
 #		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer', digits=(12,2)),
+		'code_produit':fields.char('Code du lot',size=64),
 		'state': fields.selection((('draft','Brouillon'),('non_vendu','Non vendu'),('vendu','vendu'),('emporte',u'Emporté')),'State',  readonly=True),
 	}
 	_defaults = {
 		'number': lambda obj,cr,uid,*a: obj._get_next_lot_number(cr, uid),
 		'vat': lambda obj,cr,uid,*a: obj._get_lot_default_vat(cr, uid),
 		'state': lambda *a: 'draft',
+		'payer': lambda *a: 'True',
 
 	}
 
@@ -481,7 +484,8 @@ class huissier_vignettes(osv.osv):
 #		'state': fields.selection( (('draft',u'draft'),('waiting',u'en attente'),('invoiced',u'facturées')),u'État', readonly=True),
 		'state': fields.selection( (('draft',u'draft'),('invoiced',u'facturées'),('paid',u'payées')),u'État', readonly=True),
 		'value': fields.function(_get_range_value, method=True, string=u'A payer'),
-	#	'refund_id': fields.many2one('account.invoice', u'Facture remboursee', readonly=True),
+		#	'refund_id': fields.many2one('account.invoice', u'Facture remboursee', readonly=True),
+
 
 	}
 	_defaults = {
@@ -489,6 +493,7 @@ class huissier_vignettes(osv.osv):
 		'price': lambda *a: 11.0,
 		'first': lambda obj,cr,uid,*a: obj._get_next_first_number(cr, uid),
 		'state': lambda *a: 'draft',
+
 	}
 
 	def _get_next_first_number(self, cr, uid):
