@@ -313,7 +313,7 @@
 
 	</record>
 	<menuitem
-		name="Huissier/Lots non vendus"
+		name="Huissier/Lots/Lots non vendus"
 		action="action_all_objects_unsold"
 		id="menu_all_objects_unsold"/>
 
@@ -324,7 +324,7 @@
 		<field name="domain">[('state','=','vendu')]</field>
 	</record>
 	<menuitem
-		name="Huissier/Lots vendus et non emportés"
+		name="Huissier/Lots/Lots vendus et non emportés"
 		action="action_all_objects_sold"
 		id="menu_all_objects_sold"/>
 
