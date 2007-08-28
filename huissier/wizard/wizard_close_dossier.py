@@ -159,8 +159,8 @@ class wizard_close_dossier_from_lot(wizard_close_dossier):
 		cr.execute("select sum(adj_price) from huissier_lots where dossier_id=%d", (datas['id'],))
 		sum=cr.fetchone()
 		amount_adj_cal=sum and sum[0] or 0.0
-		if not lots[0].dossier_id:
-			raise wizard.except_wizard('Erreur !', 'Veuillez saisir une etude') 
+#		if not lots[0].dossier_id:
+#			raise wizard.except_wizard('Erreur !', 'Veuillez saisir une etude') 
 		costs=lots[0].dossier_id.amount_costs 
 		total=lots[0].dossier_id.amount_total
 		room=lots[0].dossier_id.amount_room_costs 

@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
-  <template pageSize="(8.01cm,5.97cm)" title="Test" author="Martin Simon" >
+  <template pageSize="(8.5cm,3.5cm)" title="Test" author="Martin Simon" >
 	<pageTemplate id="first">
-	  <frame id="first" x1="-70" y1="-90" width="307" height="215"/>
+	  <frame id="first" x1="0" y1="0" width="82mm" height="33mm"/>
 	</pageTemplate>
   </template>
   <stylesheet>
@@ -20,8 +20,8 @@
 	<paraStyle name="P1" fontName="Times-Roman" fontSize="10.0" leading="9" alignment="CENTER"/>
 	<paraStyle name="P2" fontName="Times-Roman" fontSize="10.0" leading="9" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
 	<paraStyle name="P3" fontName="Courier-Bold" fontSize="10.0" leading="15" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-	<paraStyle name="P4" fontName="Times-Bold" fontSize="10.0" leading="16"/>
-	<paraStyle name="P5" fontName="Times-Roman" fontSize="10.0" leading="13"/>
+	<paraStyle name="P4" fontName="Times-Bold" fontSize="8.0" leading="12"/>
+	<paraStyle name="P5" fontName="Times-Roman" fontSize="8.0" leading="12"/>
 	<paraStyle name="P6" fontName="Times-Roman" fontSize="10.0" leading="11" alignment="RIGHT"/>
 	<paraStyle name="P7" fontName="Courier-Bold" fontSize="10.0" leading="15"/>
 	<paraStyle name="Standard" fontName="Times-Roman"/>
@@ -38,17 +38,16 @@
   </stylesheet>
   <story>
 	[[ repeatIn(objects,'o') ]]
-	<blockTable colWidths="105.0,48.0" style="Tableau1">
+	<blockTable colWidths="4.5cm,3cm" style="Tableau1">
 	  <tr>
 		<td>
-		  <para style="P4">[[o.name or False]]</para>
-		  <para style="P5">[[o.address and o.address[0].street or False]] [[o.address and o.address[0].zip or False]] [[o.address and o.address[0].city or False]] [[o.address and o.address[0].country_id and o.address[0].country_id.name or False]]</para>
-		  <para style="P5">Date Création:[[ o.date_creation or False]]</para>
-		  <para style="P5">Date Expiration: [[o.date_expiration or False]]</para>
+		  <para style="P4">[[ o.name[:30] ]]</para>
+		  <para style="P5">[[ o.address and o.address[0].street[:30] or False]], [[o.address and o.address[0].zip[:5] or False]] [[o.address and o.address[0].city[:15] or False]] [[o.address and o.address[0].country_id and o.address[0].country_id.code or False]]</para>
+		  <para style="P5">Expiration: [[o.date_expiration or False]], [[ o.ref ]]</para>
 		  <barCode code="code128" xdim="0.03" height="0.4" quiet="0">[[o.ref or False]]</barCode>
 		</td>
 		<td>
-		  <para style="P6">[[ setTag('para','image',{'width':'100.0','height':'80.0','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</para>
+		  <para style="P6">[[ setTag('para','image',{'width':'2.7cm','height':'2.6cm','name':str(o.id)}) ]][[ o.image or setTag('image','para') ]]</para>
 		</td>
 	  </tr>
 	</blockTable>

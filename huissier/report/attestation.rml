@@ -108,7 +108,7 @@
     <para style="P13">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="26.0,316.0,118.0" style="Tableau2">
+    <blockTable colWidths="26.0,346.0,88.0" style="Tableau2">
       <tr>
         <td>
           <para style="P14">N°</para>
@@ -117,7 +117,7 @@
           <para style="P15">Description</para>
         </td>
         <td>
-          <para style="P15">Lot</para>
+          <para style="P15">Code</para>
         </td>
       </tr>
       <tr>
@@ -128,7 +128,7 @@
           <para style="P17">[[o.name]]</para>
         </td>
         <td>
-		  <barCode code="code128" xdim="0.03" height="0.4" quiet="0">[[o.code_produit or False]]</barCode>
+		  <barCode code="code128" xdim="0.03" height="0.4" quiet="0">ID[[o.id or False]]</barCode>
         </td>
       </tr>
     </blockTable>

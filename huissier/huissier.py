@@ -314,6 +314,19 @@ class huissier_lots(osv.osv):
 	_name = "huissier.lots"
 	_auto = True
 	_order = "number"
+	def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
+		if not args:
+			args=[]
+		if not context:
+			context={}
+		if name and name.startswith('ID'):
+			try:
+				ids = self.search(cr, uid, [('id', '=', int(name[2:]))] + args, limit=limit, context=context)
+			except:
+				ids=[]
+		if not ids:
+			ids = self.search(cr, uid, args, limit=limit, context=context)
+		return self.name_get(cr, uid, ids, context)
 
 	def _get_price_wh_costs(self, cr, uid, ids, name, arg, context):
 		res = {}
@@ -366,17 +379,15 @@ class huissier_lots(osv.osv):
 		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais',store=True),
 #		'amount_costs': fields.function(_get_costs, method=True, string=u'Frais', digits=(12,2)),
 		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer'),
-		'payer':fields.boolean('payer'),
+#		'payer':fields.boolean('payer'),
 #		'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer', digits=(12,2)),
-		'code_produit':fields.char('Code du lot',size=64),
 		'state': fields.selection((('draft','Brouillon'),('non_vendu','Non vendu'),('vendu','vendu'),('emporte',u'Emporté')),'State',  readonly=True),
 	}
 	_defaults = {
 		'number': lambda obj,cr,uid,*a: obj._get_next_lot_number(cr, uid),
 		'vat': lambda obj,cr,uid,*a: obj._get_lot_default_vat(cr, uid),
 		'state': lambda *a: 'draft',
-		'payer': lambda *a: 'True',
-
+#		'payer': lambda *a: 'True',
 	}
 
 
@@ -724,11 +735,18 @@ class huissier_deposit(osv.osv):
 		return {'value':{'billing_partner_id':dossier['etude_id']}}
 huissier_deposit()
 
+from mx import DateTime
+
 class huissier_partenaire(osv.osv):
 	_inherit = 'res.partner'
 	_columns = {
 		'image': fields.binary('Image'),
 		'date_creation': fields.date(u'Création badge'),
 		'date_expiration':fields.date('Expiration badge')
+	}
+	_defaults = {
+		'date_creation': lambda *args: time.strftime('%Y-%m-%d'),
+		'date_expiration': lambda *args: (DateTime.now() + DateTime.RelativeDateTime(years=+1)).strftime('%Y-%m-%d'),
+		'ref': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'res.partner'),
 	}
 huissier_partenaire()

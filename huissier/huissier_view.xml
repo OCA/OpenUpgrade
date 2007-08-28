@@ -260,7 +260,6 @@
 				<group col="5" colspan="4">
 					<field name="adj_price" select="2" string="Prix"/>
 					<field name="vat"/>
-					<field name="code_produit"/>
 				</group>
 				<group col="17" colspan="4">
 					<field name="buyer_ref" select="1" context="show_ref='1'" on_change="onchange_buyer_ref(buyer_ref)"/>
@@ -276,7 +275,6 @@
 				<!--field name="buyer_address" select= "1" /-->
 
 
-				<field name="payer"/>
 				<group col="5" colspan="4">
 					<field name="state" select="2"/>
 					<button name="button_bought" string="Vendu" states="draft" type="object"/>
