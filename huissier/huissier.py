@@ -352,6 +352,9 @@ class huissier_lots(osv.osv):
 
 	def button_draft(self,cr,uid,ids,*a):
  		return self.write(cr,uid,ids, {'state':'draft'})
+
+ 	def button_emporte(self,cr,uid,ids,*a):
+ 		return self.write(cr,uid,ids, {'state':'emporte'})
  
  	def button_bought(self,cr,uid,ids,*a):
  		return self.write(cr,uid,ids, {'state':'vendu'})

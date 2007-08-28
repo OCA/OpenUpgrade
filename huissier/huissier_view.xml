@@ -275,11 +275,12 @@
 				<!--field name="buyer_address" select= "1" /-->
 
 
-				<group col="5" colspan="4">
+				<group col="6" colspan="4">
 					<field name="state" select="2"/>
 					<button name="button_bought" string="Vendu" states="draft" type="object"/>
 					<button name="button_not_bought" string="Non Vendu" states="draft" type="object"/>
-					<button name="button_draft" string="Brouillon" states="vendu,non_vendu" type="object"/>
+					<button name="button_emporte" string="Emporte" states="vendu" type="object"/>
+					<button name="button_draft" string="Brouillon" states="vendu,non_vendu,emporte" type="object"/>
 				</group>
 
 				<group col="10" colspan="4">
