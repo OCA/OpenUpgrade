@@ -105,7 +105,6 @@ class record:
 
 
 class record_header(record):
-    # -> total
     def init_local_context(self):
         self.fields=[
             #Header record start
@@ -113,20 +112,17 @@ class record_header(record):
             ('creation_date',6),('padding',12),
             ('institution_code',3),('app_code',2),('reg_number',10),('id_sender',11),('id_order_customer',11),('padding',1),
             ('ver_code',1),('bilateral',12),('totalisation_code',1),('padding',4),('ver_subcode',1),('padding',52),('flag1',1)
-
             ]
 
 class record_trailer(record):
-    # -> total
     def init_local_context(self):
         self.fields=[
-            #Header record start
+            #Trailer record start
             ('seg_num_t',1),
             ('tot_record',6),('tot_pay_order',6),
             ('tot_amount',15),('padding',100),('flag1',1),
             ]
 class record_payline(record):
-    # -> total
     def init_local_context(self):
         self.fields=[
             ('seg_num2',1),('sequence',4),('sub_div1',2),('order_exe_date',6),
@@ -210,8 +206,7 @@ def _create_pay(self,cr,uid,data,context):
 
     pay_line_obj=pool.get('payment.line')
     pay_line_id = pay_line_obj.search(cr, uid, [('order_id','=',data['id'])])
-    pay_line =pay_line_obj.read(cr, uid, pay_line_id,['partner_id','amount','bank_id','move_line_id'])
-    print pay_line
+    pay_line =pay_line_obj.read(cr, uid, pay_line_id,['partner_id','amount','bank_id','move_line_id','to_pay'])
     if not pay_line:
         return {'note':'Wizard can not generate Export file ,There is no Payment Lines'}
     for pay in pay_line:
@@ -227,6 +222,8 @@ def _create_pay(self,cr,uid,data,context):
         v['order_ref']=''#14-29 #should be fill. see page 23
         v['cur_code']='BEF'#static set .but is available in entry line object..
         v['code_pay']='C'#two values 'C' or 'D'  *should be modified
+        if pay['amount']==0.0 or pay['amount']>pay['to_pay']:
+            return {'note':'Payment Amount should Not be Zero or not greater then To-Pay amount in Payment Lines'}
         v['amt_pay']=float2str(pay['amount'])
         total=total+pay['amount']
         v['acc_debit']=bank.acc_number
@@ -319,7 +316,7 @@ def _create_pay(self,cr,uid,data,context):
     except Exception,e :
         log= log +'\n'+ str(e) + 'CORRUPTED FILE !\n'
         raise
-    log.add("Successfully Exported\n--\nSummary:\nTotal amount paid : %.2f \nTotal Number of Payments:%.2f \n-- "\
+    log.add("Successfully Exported\n--\nSummary:\n\nTotal amount paid : %.2f \nTotal Number of Payments : %d \n-- "\
             %(total,seq))
 
     pool.get('account.pay').write(cr,uid,[id_exp],{'note':log,'name':base64.encodestring(pay_order or "")})
