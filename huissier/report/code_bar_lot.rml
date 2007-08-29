@@ -40,7 +40,7 @@
         <td>
           <para style="P2">
             [[o.dossier_id and o.dossier_id.date_creation or False]]
-            , Nr.  [[o.number]]
+            , Nr. [[o.number]], ID[[ str(o.id) ]]
           </para>
           <para style="P1">[[ str(o.name)[:40] ]]</para>
 	<barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="50">[['ID'+str(o.id)]]</barCode>

@@ -1,3 +1,4 @@
+# -*- coding: iso-8859-1 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -26,13 +27,53 @@
 #
 ##############################################################################
 
-import wizard_palais
-import wizard_invoice_garde
-import wizard_invoice_labels
-import wizard_reprint_labels
-import wizard_pay_labels
-import wizard_close_dossier
-import wizard_payment
-import wizard_caisse
-import wizard_emporte
+import wizard
+import netsvc
+
+import pooler
+from tools.misc import UpdateableStr
+
+
+# Dossier
+
+_lot_arch = """<?xml version="1.0"?>
+<form string="Mark Lots" height="500" width="1000">
+	<label string="Selectionner les lots qui sont livres" colspan="4"/>
+	<field name="lot_ids" nolabel="1" colspan="4" domain="[('state','=','vendu')]"/>
+</form>
+"""
+_lot_fields = {
+	'lot_ids': {'string':'Lots Emportes','relation':'huissier.lots','type':'many2many'}
+}
+
+def _to_xml(s):
+	return s.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+
+def _process(self, cr, uid, data, context):
+	pool = pooler.get_pool(cr.dbname)
+	lot_obj = pool.get('huissier.lots')
+	if data['form']['lot_ids']:
+		lot_obj.write(cr, uid, data['form']['lot_ids'][0][2], {'state':'emporte'})
+	return {'lot_ids': []}
+
+class wizard_reprint(wizard.interface):
+	states = {
+		'valid': {
+			'actions': [_process],
+			'result': {'type':'state', 'state':'init'}
+		},
+		'init': {
+			'actions': [],
+			'result': {
+				'type':'form', 
+				'arch': _lot_arch,
+				'fields': _lot_fields,
+				'state': [
+					('valid','       Valider       ')
+				],
+			}
+		}
+	}
+wizard_reprint('huissier.emporte')
+
 
