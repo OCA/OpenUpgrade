@@ -1,58 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
-<!--<xsl:import href="../../custom/corporate_defaults.xsl"/>-->
-<xsl:template match="catalog">
+<xsl:template match="report">
 <document>
-<docinit>
-</docinit>
+
 <template>
-        <pageTemplate id="first">
-                <pageGraphics>
-                        <stroke color="(0.6,0.3,0.1)"/>
-                        <fill color="(0.6,0.3,0.1)"/>
+	<pageTemplate id="first">
+		<pageGraphics>
+			<stroke color="(0.6,0.3,0.1)"/>
+			<fill color="(0.6,0.3,0.1)"/>
 
-                        <image x="2cm" y="22cm" width="5cm" height="5cm" file="/home/pmo/Desktop/najjla/images/aeko_logo.jpg"/>
-                        <setFont name="Helvetica" size="15"/>
-                        <drawCentredString x="14cm" y="25.3cm">BVBA Veilingen AEKO</drawCentredString>
-                        <setFont name="Helvetica" size="13"/>
-                        <drawCentredString x="14cm" y="24.7cm">Gouverneur Verwilghensingel 18C - B 3500 Hasselt</drawCentredString>
-                        <drawCentredString x="14cm" y="24.1cm">Tel: 011/22.04.08 - Fax: 011/23.31.03</drawCentredString>
-                        <drawCentredString x="14cm" y="23.5cm">Website: Aeko.be - E-Mail: info@aeko.be</drawCentredString>
-                        <drawCentredString x="14cm" y="22.9cm">H.R.HASSELT: 104464</drawCentredString>
-                        <fill color="(0.2,0.2,0.2)"/>
-                        <stroke color="(0.2,0.2,0.2)"/>
-                        <setFont name="Helvetica" size="14"/>
-                        <drawCentredString x="105mm" y="4.7cm">Bezoek onze volledige catalogus op www.aeko.be</drawCentredString>
+			<image x="7cm" y="25cm" file="/home/pmo/Desktop/najjla/images/flagey_logo.jpg"/>
 
-                        <setFont name="Helvetica" size="12"/>
-                        <drawCentredString x="105mm" y="3.5cm">Expertise en inname van goederen voor onze volgende veilingen:</drawCentredString>
-                        <drawCentredString x="105mm" y="3.0cm">elke woensdag van 10.00 to 12.00 en van 14.00 to 17.00 uur</drawCentredString>
-                        <drawCentredString x="105mm" y="2.5cm">en na afspraak op tel. 011.22.04.08</drawCentredString>
-                </pageGraphics>
-                <frame id="column" x1="2.0cm" y1="6cm" width="18cm" height="16cm"/>
-        </pageTemplate>
-        <pageTemplate id="others">
-                <pageGraphics>
-                        <drawRightString x="18.5cm" y="27.2cm"><xsl:value-of select="info"/></drawRightString>
-                        <lineMode width="1mm"/>
-                        <lines>2.0cm 27cm 19cm 27cm</lines>
-                        <setFont name="Helvetica" size="30"/>
-                        <drawString x="20mm" y="27.2cm">AEKO</drawString>
-                        <fill color="(0.2,0.2,0.2)"/>
-                        <stroke color="(0.2,0.2,0.2)"/>
-                        <lineMode width="0.5mm"/>
-                        <lines>1.5cm 1.8cm 19.5cm 1.8cm</lines>
+			<lines>1cm 3.0cm 20cm 3.0cm</lines>
+			<setFont name="Helvetica" size="15"/>
+			<drawCentredString x="105mm" y="2.2cm">Hotel des ventes Flagey</drawCentredString>
+			<setFont name="Helvetica" size="11"/>
+			<drawCentredString x="105mm" y="1.6cm">Rue du Nid, 4 - B-1050 Bruxelles - Tel: 02/644.97.67</drawCentredString>
+			<drawCentredString x="105mm" y="1.0cm">Web: Flagey.com - Mail: info@flagey.com - Fax: 02.646.32.35</drawCentredString>
 
-                        <setFont name="Helvetica" size="12"/>
-                        <drawString x="15mm" y="1.2cm">www.aeko.be</drawString>
-                        <drawCentredString x="105mm" y="1.2cm">Tel: 011.22.04.08 - Fax: 011.23.31.03</drawCentredString>
-                        <drawRightString x="195mm" y="1.2cm">info@aeko.be</drawRightString>
-                </pageGraphics>
-                <frame id="column" x1="2cm" y1="2.4cm" width="17cm" height="24cm"/>
-        </pageTemplate>
+
+			<fill color="(0.2,0.2,0.2)"/>
+			<stroke color="(0.2,0.2,0.2)"/>
+
+		</pageGraphics>
+		<frame id="column" x1="2.0cm" y1="6cm" width="18cm" height="18cm"/>
+	</pageTemplate>
+	<pageTemplate id="others">
+		<pageGraphics>
+			<image x="-0.0cm" y="27.3cm" file="/home/pmo/Desktop/najjla/images/flagey_head.png"/>
+			<drawRightString x="17.5cm" y="27.6cm">Vente antiquitée mardi 12 juin 07 à 10H</drawRightString>
+			<lineMode width="1mm"/>
+			<setFont name="Helvetica" size="26"/>
+			<!-- <drawString x="10mm" y="27.8cm">Flagey.com</drawString> -->
+			<fill color="(0.2,0.2,0.2)"/>
+			<stroke color="#2b24b6"/>
+			<lineMode width="0.5mm"/>
+			<lines>1cm 1.6cm 20cm 1.6cm</lines>
+			<lines>1.0cm 27.3cm 20cm 27.3cm</lines>
+
+			<setFont name="Helvetica" size="12"/>
+			<drawString x="10mm" y="1.0cm">www.flagey.com</drawString>
+			<drawCentredString x="105mm" y="1.0cm">Tel: 02.644.97.67 - Fax: 02.646.32.35</drawCentredString>
+			<drawRightString x="200mm" y="1.0cm">info@flagey.com</drawRightString>
+		</pageGraphics>
+		<frame id="column" x1="1cm" y1="1.5cm" width="9.4cm" height="25.5cm"/>
+		<frame id="column" x1="10.8cm" y1="1.5cm" width="9.4cm" height="25.5cm"/>
+	</pageTemplate>
 </template>
 <stylesheet>
-        <paraStyle name="slogan" fontName="Helvetica-Bold" fontSize="20" alignment="center"/>
+        <paraStyle name="slogan1" fontName="Helvetica-Bold" fontSize="15" alignment="left"/>
+         <paraStyle name="slogan2" fontName="Helvetica" fontSize="12"  alignment="left"/>
+        <paraStyle name="slogan" fontName="Helvetica-Bold" fontSize="15" alignment="center"/>
         <paraStyle name="footnote" fontName="Helvetica" fontSize="10" alignment="center"/>
         <paraStyle name="note" fontName="Helvetica" fontSize="8" leftIndent="3mm"/>
         <paraStyle name="homehead" fontName="Helvetica" fontSize="12" alignment="center"/>
@@ -63,9 +61,9 @@
                 <blockTopPadding value="0"/>
                 <blockBottomPadding value="0"/>
         </blockTableStyle>
-        <blockTableStyle id="product">
+        <blockTableStyle id="product1">
                 <blockValign value="TOP"/>
-                <blockAlignment value="CENTER" start="0,0" stop="0,-1"/>
+                <blockAlignment value="LEFT" start="0,2" stop="0,-5"/>
         </blockTableStyle>
         <blockTableStyle id="donation">
                 <blockFont name="Helvetica-BoldOblique" size="24" start="0,0" stop="-1,0"/>
@@ -73,36 +71,45 @@
                 <lineStyle kind="LINEBELOW" start="0,0" stop="-1,0"/>
         </blockTableStyle>
 </stylesheet>
-<story>
-        <para style="slogan"><xsl:value-of select="info"/></para>
 
-        <spacer length="0.7cm"/>
+	<story>
+	<para style="slogan"> Vente antiquitée <xsl:value-of select="catalog/name"/></para>
+	<spacer length="1.0cm"/>
+	<para style="slogan">le mardi 12 juin 07 à 10H <xsl:value-of select="catalog/AuctionDate1"/> <xsl:value-of select="catalog/AuctionDate2"/></para>
 
-
-        <spacer length="1.0cm"/>
-
-        <blockTable colWidths="5cm,7cm">
-        <tr>
-                <td>
-                        <image height="6cm" width="7cm">
-                        <xsl:attribute name="file">
-                                <xsl:value-of select="promotion1"/>
-                        </xsl:attribute>
-                        </image>
-                </td>
-
-        </tr>
-        </blockTable>
+	<spacer length="1.0cm"/>
+	<spacer length="0.7cm"/>
 
 
+<blockTable colWidths="11cm,8cm">
 
-        <setNextTemplate name="others"/>
+	<tr>
+		<td>
 
-        <pageBreak/>
-
-        <xsl:apply-templates select="products"/>
+<!--			<para><xsl:value-of select="catalog/promotion1"/></para>-->
+			<image height="6cm" width="7cm" >
+<!--				<xsl:attribute name="file">-->
+					<xsl:value-of select="catalog/promotion1"/>
+<!--				</xsl:attribute>-->
+			</image>
+		</td>
+		<td>
+			<image height="6cm" width="7cm">
+					<xsl:value-of select="catalog/promotion2"/>
+			</image>
+		</td>
+</tr>
+	</blockTable>
+<setNextTemplate name="others"/>
+	<pageBreak/>
+	<xsl:apply-templates select="catalog/products"/>
 </story>
 </document>
+</xsl:template>
+
+
+<xsl:template match="products">
+		<xsl:apply-templates select="product"/>
 </xsl:template>
 
 <xsl:template match="product">
@@ -111,54 +118,56 @@
         </xsl:if>
 
         <xsl:choose>
-                <xsl:when test="0">
-                        <!-- photo on the left (code in unused at the moment) -->
+             <xsl:when test="1">
+<!--                         photo on the left (code in unused at the moment)-->
 
-                        <blockTable style="product" colWidths="5.5cm,11.5cm">
-                        <tr>
+            <blockTable style="product1" colWidths="5.0cm,5.0cm">
+                 <tr>
+                     <td>
+                       <para style="slogan1">
+	                  <xsl:value-of select="infos/lot_num"/>--<xsl:value-of select="infos/info"/>
+						  <spacer length="2.0cm"/></para>
+		     			   <xsl:if test="lot_est1&gt;0">
+				           <para style="slogan2">
+				            Max Est <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/Min Est<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+				            </para>
+				       </xsl:if>
+					</td>
+						<td>
+						<image height="4.5cm" width="6cm">
+									<xsl:value-of select="Image"/>
+						</image>
+				   </td>
+		    </tr>
+      </blockTable>
+    </xsl:when>
+    <xsl:otherwise>
+			<!-- photo on the right-->
 
-                                <td>
+     <blockTable style="product1" colWidths="11cm,8cm">
+         <tr>
+           	<td>
 
-
-                                        <para>
-                                                <xsl:for-each select="infos/info[position() &gt; 1]">
-                                                        <xsl:value-of select="."/>
-                                                </xsl:for-each>
-                                        </para>
-
-                                        <spacer length="1mm"/>
-
-                                        <xsl:if test="lot_est1&gt;0">
-                                                <para>
-                                                        <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/> / <xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
-                                                </para>
-                                        </xsl:if>
-                                </td>
-                        </tr>
-                        </blockTable>
-                </xsl:when>
-                <xsl:otherwise>
-                        <!-- photo on the right -->
-
-                        <blockTable style="product" colWidths="11.5cm,5.5cm">
-                        <tr>
-                                <td>
-
-                                        <spacer length="1mm"/>
+                              <spacer length="1mm"/>
 
 
 
                                         <xsl:for-each select="infos/info[position() &gt; 1]">
                                                 <para>
-                                                        <xsl:value-of select="."/>
+                                                  <xsl:value-of select="lot_num"/>--<xsl:value-of select="infos/info"/>
+
                                                 </para>
                                         </xsl:for-each>
+									</td>
 
                                         <spacer length="1mm"/>
-
+								<td>
+                            	     <image height="6cm" width="7cm">
+											<xsl:value-of select="Image"/>
+									</image>
                                         <xsl:if test="lot_est1&gt;0">
                                                 <para>
-                                                        <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/> / <xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+                                                      Est <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/> / <xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
                                                 </para>
                                         </xsl:if>
                                 </td>
@@ -169,8 +178,5 @@
         </xsl:choose>
 </xsl:template>
 
-<xsl:template match="products">
-        <xsl:apply-templates select="product"/>
-</xsl:template>
-</xsl:stylesheet>
 
+</xsl:stylesheet>
