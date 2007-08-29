@@ -54,7 +54,7 @@
     <paraStyle name="Index" fontName="Times-Roman"/>
   </stylesheet>
   <story>
-    <para style="P1">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P1">[[ repeatIn(_get_obj(data),'o') ]]</para>
     <para style="P1">
       <font color="white"> </font>
     </para>
@@ -98,8 +98,7 @@
     <para style="P10">Date de la vente:<font face="Times-Roman"> [[ time.strftime('%d/%m/%Y')]]</font></para>
     <para style="P10">Etude: <font face="Times-Roman">[[o.dossier_id and o.dossier_id.etude_id.name or False]]</font></para>
     <para style="P11">
-      <font face="Times-Roman" size="13.0">Adresse:</font>
-      <font face="Times-Roman" size="13.0">[[o.dossier_id.etude_id.address[0] and o.dossier_id.etude_id.address[0].street or False]] [[o.dossier_id.etude_id.adress[0] and o.dossier_id.etude_id.address[0].zip or False]] [[o.dossier_id.etude_id.adress[0] and o.dossier_id.etude_id.address[0].city or False]]</font>
+      <font face="Times-Roman" size="13.0">[[o.dossier_id.etude_id.address[0] and o.dossier_id.etude_id.address[0].street or False]] [[o.dossier_id.etude_id.address[0] and o.dossier_id.etude_id.address[0].zip or False]] [[o.dossier_id.etude_id.address[0] and o.dossier_id.etude_id.address[0].city or False]]</font>
     </para>
     <para style="P10"><font face="Times-Roman">Acheteur:</font>[[o.buyer_name or False]]</para>
     <para style="P12">

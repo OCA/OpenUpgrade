@@ -33,4 +33,5 @@ import wizard_reprint_labels
 import wizard_pay_labels
 import wizard_close_dossier
 import wizard_payment
+import wizard_caisse
 

@@ -34,11 +34,17 @@ import time
 from report import report_sxw
 
 class huissier_attestation(report_sxw.rml_parse):
+    def _get_obj(self, data):
+        print data
+        return self.pool.get('huissier.lots').browse(self.cr, self.uid, data['form']['attest_ids'])
     def __init__(self, cr, uid, name, context):
         super(huissier_attestation, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
+            '_get_obj': self._get_obj
         })
 report_sxw.report_sxw('report.huissier.lots_attestation', 'huissier.lots', 'addons/huissier/report/attestation.rml',parser=huissier_attestation, header= False)
+
+report_sxw.report_sxw('report.huissier.lots_attestation2', 'huissier.lots', 'addons/huissier/report/attestation2.rml',parser=huissier_attestation, header= False)
 
 

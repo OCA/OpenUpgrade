@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <terp>
 	<data>
-		<!--delete model="ir.actions.wizard" search="[('wiz_name','like','huissier.')]"/>-->
-
+		<wizard 
+		string="Gestion caisse" 
+		model="huissier.dossier" 
+		name="huissier.caisse"
+		multi="1"
+		id="wizard_caisse"/>
+		<menuitem name="Huissier/Gestion Caisse" action="wizard_caisse" type="wizard" id="menu_wizard_caisse"/>
+	
 		<wizard 
 		string="Listing Palais" 
 		model="huissier.dossier" 
