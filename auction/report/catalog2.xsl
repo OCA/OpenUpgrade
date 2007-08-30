@@ -83,7 +83,7 @@
 
 <blockTable colWidths="11cm,8cm">
 
-	<tr>
+	<tr>-
 		<td>
 
 <!--			<para><xsl:value-of select="catalog/promotion1"/></para>-->
@@ -99,7 +99,7 @@
 			</image>
 		</td>
 </tr>
-	</blockTable>
+</blockTable>
 <setNextTemplate name="others"/>
 	<pageBreak/>
 	<xsl:apply-templates select="catalog/products"/>
@@ -113,20 +113,20 @@
 </xsl:template>
 
 <xsl:template match="product">
-        <xsl:if test="newpage">
-                <condPageBreak height="20cm"/>
-        </xsl:if>
+<!--        <xsl:if test="newpage">-->
+<!--                <condPageBreak height="20cm"/>-->
+<!--        </xsl:if>-->
+<xsl:choose>
+<xsl:when test="string-length(infos/Image) &gt;2">
 
-        <xsl:choose>
-             <xsl:when test="1">
-<!--                         photo on the left (code in unused at the moment)-->
 
-            <blockTable style="product1" colWidths="5.0cm,5.0cm">
+            <blockTable style="product1" colWidths="4.0cm,5.0cm">
                  <tr>
                      <td>
                        <para style="slogan1">
-	                  <xsl:value-of select="infos/lot_num"/>--<xsl:value-of select="infos/info"/>
-						  <spacer length="2.0cm"/></para>
+	                  <xsl:value-of select="infos/lot_num"/>-- <spacer length="0.5mm"/> <xsl:value-of select="infos/info"/>
+						</para>
+						  <spacer length="6.0mm"/>
 		     			   <xsl:if test="lot_est1&gt;0">
 				           <para style="slogan2">
 				            Max Est <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/Min Est<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
@@ -134,48 +134,36 @@
 				       </xsl:if>
 					</td>
 						<td>
-						<image height="4.5cm" width="6cm">
-									<xsl:value-of select="Image"/>
+						<image height="3.5cm" width="5cm">
+									<xsl:value-of select="infos/Image"/>
 						</image>
 				   </td>
 		    </tr>
-      </blockTable>
-    </xsl:when>
-    <xsl:otherwise>
+  </blockTable>
+</xsl:when>
+<xsl:otherwise>
 			<!-- photo on the right-->
 
-     <blockTable style="product1" colWidths="11cm,8cm">
-         <tr>
-           	<td>
+       <blockTable style="product1" colWidths="8.5cm">
+		       <tr>
 
-                              <spacer length="1mm"/>
+		                     <td>
+		                       <para style="slogan1">
+			                  <xsl:value-of select="infos/lot_num"/>-- <spacer length="0.5mm"/> <xsl:value-of select="infos/info"/>
+								</para>
+								  <spacer length="8.0mm"/>
+				     			   <xsl:if test="lot_est1&gt;0">
+						           <para style="slogan2">
+						            Max Est <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/Min Est<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+						            </para>
+						       </xsl:if>
+							</td>
 
+				  </tr>
+  </blockTable>
+</xsl:otherwise>
+</xsl:choose>
 
-
-                                        <xsl:for-each select="infos/info[position() &gt; 1]">
-                                                <para>
-                                                  <xsl:value-of select="lot_num"/>--<xsl:value-of select="infos/info"/>
-
-                                                </para>
-                                        </xsl:for-each>
-									</td>
-
-                                        <spacer length="1mm"/>
-								<td>
-                            	     <image height="6cm" width="7cm">
-											<xsl:value-of select="Image"/>
-									</image>
-                                        <xsl:if test="lot_est1&gt;0">
-                                                <para>
-                                                      Est <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/> / <xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
-                                                </para>
-                                        </xsl:if>
-                                </td>
-
-                        </tr>
-                        </blockTable>
-                </xsl:otherwise>
-        </xsl:choose>
 </xsl:template>
 
 
