@@ -104,7 +104,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
-            sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
+            sObject=getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
@@ -112,6 +112,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtUName","TTT")
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
+
     def getRes(self,sock ,sObject,sVar):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
@@ -130,6 +131,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                 return res[myval]['relation']
             elif k==myval:
                 return sObject
+
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')

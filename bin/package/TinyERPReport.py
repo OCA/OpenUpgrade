@@ -85,6 +85,7 @@ import marshal
 import tempfile
 if __name__<>"package":
     from gui import *
+    database="trunk_1"
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
@@ -181,11 +182,31 @@ def getPath(sPath,sMain):
             if sPath.__getslice__(0,sPath.find(".")) == sMain:
                 break;
             else:
-                if sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")) == sPath.__getslice__(0,sPath.find(".")):
-                    sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
-                    getPath(sPath, sMain)
+                res = re.findall('\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]',sPath)
+                if len(res) <> 0:
+                    if sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")) == sPath.__getslice__(0,sPath.find(".")):
+                        sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
+                        getPath(sPath, sMain)
     return sPath
 
+#def getRes(sock ,sObject,sVar):
+#    desktop=getDesktop()
+#    doc =desktop.getCurrentComponent()
+#    docinfo=doc.getDocumentInfo()
+#    res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+#    key = res.keys()
+#    key.sort()
+#    myval=None
+#    if not sVar.find("/")==-1:
+#        myval=sVar.__getslice__(0,sVar.find("/"))
+#    else:
+#        myval=sVar
+#    for k in key:
+#        if (res[k]['type'] in ['many2one']) and k==myval:
+#            self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+#            return res[myval]['relation']
+#        elif k==myval:
+#            return sObject
 
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
@@ -1471,7 +1492,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
-            sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
+            sObject=getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
@@ -1479,6 +1500,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtUName","TTT")
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
+
     def getRes(self,sock ,sObject,sVar):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
@@ -1497,6 +1519,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                 return res[myval]['relation']
             elif k==myval:
                 return sObject
+
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -2256,6 +2279,7 @@ import string
 import re
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
+
     from lib.gui import *
     from LoginTest import *
     database="trunk_1"
@@ -2268,41 +2292,138 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         self.module  = "tiny_report"
         self.version = "0.1"
         LoginTest()
+
         if not loginstatus and __name__=="package":
             exit(1)
+
         self.aReportSyntex=[]
         self.getBraces(self.aReportSyntex)
 
+        self.setValue()
+
+    def setValue(self):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
+        docinfo=  doc.getDocumentInfo()
+        count = 0
+        regexes = [
+                  ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"]
+                  ]
+        oFieldObject = []
+        oRepeatInObjects = []
+        saRepeatInList = []
+        sHost = docinfo.getUserFieldValue(0)
+        nCount = 0
+        oParEnum = doc.getTextFields().createEnumeration()
+        while oParEnum.hasMoreElements():
+            oPar = oParEnum.nextElement()
+            nCount += 1
+        getList(oRepeatInObjects,sHost,nCount)
+        print oRepeatInObjects
+        for ro in oRepeatInObjects:
+            if ro.find("(")<>-1:
+                saRepeatInList.append([ro.__getslice__(0,ro.find("(")),ro.__getslice__(ro.find("(")+1,ro.find(")"))])
+        print saRepeatInList
+        try:
+            oParEnum = doc.getTextFields().createEnumeration()
+            while oParEnum.hasMoreElements():
+                oPar = oParEnum.nextElement()
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                    for reg in regexes:
+                        res=re.findall(reg[0],oPar.Items[1])
+                        if len(res) <> 0:
+                            if res[0][0] == "objects":
+                                sTemp = docinfo.getUserFieldValue(3)
+                                sTemp = u"|-." + sTemp.__getslice__(sTemp.rfind(".")+1,len(sTemp)) + ".-|"
+                                oPar.Items=(sTemp,oPar.Items[1])
+                                oPar.update()
+                            elif type(res[0]) <> type(u''):
+                                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
+                                sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0].__getslice__(res[0][0].find(".")+1,len(res[0][0])).replace(".","/"))
+                                r = sock.execute(database, 3, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
+                                oPar.Items=(u"|-." + r[res[0][0].__getslice__(res[0][0].rfind(".")+1 ,len(res[0][0]))]["string"] + ".-|",oPar.Items[1])
+                                oPar.update()
+                            else:
+                                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
+                                obj = None
+                                for rl in saRepeatInList:
+                                    if rl[0] == res[0].__getslice__(0,res[0].find(".")):
+                                        obj=rl[1]
+                                try:
+                                    sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
+                                    r = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+                                except:
+                                    r = "TTT"
 
-#        for r in self.aReportSyntex:
-#            if r[1]=="RepeatIn":
-#                print r[0],r[1]
+                                if len(r) <> 0:
+                                    if r <> "TTT":
+                                        oPar.Items=(u"" + str(r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]) ,oPar.Items[1])
+                                        oPar.update()
+                                    else:
+                                        oPar.Items=(u""+r,oPar.Items[1])
+                                        oPar.update()
+                                else:
+                                    oPar.Items=(u"TTT",oPar.Items[1])
+                                    oPar.update()
+        except:
+            import traceback;traceback.print_exc()
 
+    def getRes(self,sock,sObject,sVar):
+        desktop=getDesktop()
+        doc =desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        key = res.keys()
+        key.sort()
+        myval=None
+        if not sVar.find("/")==-1:
+            myval=sVar.__getslice__(0,sVar.find("/"))
+        else:
+            myval=sVar
+        for k in key:
+            if (res[k]['type'] in ['many2one']) and k==myval:
 
+                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+                return res[myval]['relation']
+            elif k==myval:
+                return sObject
     def getBraces(self,aReportSyntex=[]):
+
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         aSearchString=[]
         aReplaceString=[]
         aRes=[]
+
         try:
-            regexes = [['\[\[ repeatIn\( (.+), \'([a-zA-Z0-9_]+)\' \) \]\]','RepeatIn'],['\[\[([a-zA-Z0-9_\.]+)\]\]','Field'],['\[\[.+?\]\]','Expression']]
+            regexes = [
+                ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
+                ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
+                ['\\[\\[ *.+? \\]\\]', "Expression"]
+                ]
+
+            #regexes = [['\[\[ repeatIn\( (.+), \'([a-zA-Z0-9_]+)\' \) \]\]','RepeatIn'],['\[\[([a-zA-Z0-9_\.]+)\]\]','Field'],['\[\[.+?\]\]','Expression']]
+
             search = doc.createSearchDescriptor()
             search.SearchRegularExpression = True
+
             for reg in regexes:
                 search.SearchString = reg[0]
                 found = doc.findFirst( search )
+
                 while found:
                     res=re.findall(reg[0],found.String)
+
                     if found.String not in [r[0] for r in aReportSyntex] and len(res) == 1:
-                        aReportSyntex.append([found.String,reg[1]])
+
                         text=found.getText()
-
                         oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                        oInputList.Items=(u""+found.String,u""+found.String)
-
+                        if reg[1]<>"Expression":
+                            oInputList.Items=(u""+found.String,u""+found.String)
+                        else:
+                            oInputList.Items=(u"???????",u""+found.String)
+                        aReportSyntex.append([oInputList,reg[1]])
                         text.insertTextContent(found,oInputList,False)
                         found.String =""
 
@@ -2312,17 +2433,23 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 
             search = doc.createSearchDescriptor()
             search.SearchRegularExpression = False
+
             for res in aRes:
+
                 for r in res[0]:
                     search.SearchString=r
                     found=doc.findFirst(search)
+
                     while found:
-                        aReportSyntex.append([found.String,res[1]])
+
                         text=found.getText()
 
                         oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                        oInputList.Items=(u""+found.String,u""+found.String)
-
+                        if res[1]<>"Expression":
+                            oInputList.Items=(u""+found.String,u""+found.String)
+                        else:
+                            oInputList.Items=(u"???????",u""+found.String)
+                        aReportSyntex.append([oInputList,res[1]])
                         text.insertTextContent(found,oInputList,False)
                         found.String =""
                         found = doc.findNext(found.End, search)
@@ -2330,9 +2457,12 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             pass
 
 
+
 if __name__<>"package":
+
     ConvertBracesToField(None)
 else:
+
     g_ImplementationHelper.addImplementation( \
         ConvertBracesToField,
         "org.openoffice.tiny.report.convertBF",
@@ -2340,7 +2470,6 @@ else:
 
 
 
-#"Loving can cost a lot but not loving always costs more, and those who fear to love often find that want of love is an emptiness that robs the joy from life.
 import uno
 import unohelper
 import string

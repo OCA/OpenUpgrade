@@ -7,6 +7,7 @@ import marshal
 import tempfile
 if __name__<>"package":
     from gui import *
+    database="trunk_1"
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
@@ -103,11 +104,31 @@ def getPath(sPath,sMain):
             if sPath.__getslice__(0,sPath.find(".")) == sMain:
                 break;
             else:
-                if sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")) == sPath.__getslice__(0,sPath.find(".")):
-                    sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
-                    getPath(sPath, sMain)
+                res = re.findall('\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]',sPath)
+                if len(res) <> 0:
+                    if sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")) == sPath.__getslice__(0,sPath.find(".")):
+                        sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
+                        getPath(sPath, sMain)
     return sPath
 
+#def getRes(sock ,sObject,sVar):
+#    desktop=getDesktop()
+#    doc =desktop.getCurrentComponent()
+#    docinfo=doc.getDocumentInfo()
+#    res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+#    key = res.keys()
+#    key.sort()
+#    myval=None
+#    if not sVar.find("/")==-1:
+#        myval=sVar.__getslice__(0,sVar.find("/"))
+#    else:
+#        myval=sVar
+#    for k in key:
+#        if (res[k]['type'] in ['many2one']) and k==myval:
+#            self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+#            return res[myval]['relation']
+#        elif k==myval:
+#            return sObject
 
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()

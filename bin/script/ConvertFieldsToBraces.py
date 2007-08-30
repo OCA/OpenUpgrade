@@ -1,6 +1,5 @@
 
 
-#"Loving can cost a lot but not loving always costs more, and those who fear to love often find that want of love is an emptiness that robs the joy from life.
 import uno
 import unohelper
 import string
