@@ -39,27 +39,34 @@ def _invoice_labels(self,cr,uid,datas,context):
 	ids = vign_obj.invoice(cr, uid, datas['ids'],context)
 	cr.commit()
 	print "Facturation finie"
-#	return {
-#		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
-#		'name': 'Invoices',
-#		'view_type': 'form',
-#		'view_mode': 'tree,form',
-#		'res_model': 'account.invoice',
-#		'view_id': False,
-#		'context': "{'type':'out_refund'}",
-#		'type': 'ir.actions.act_window'
-#	}
-	return {}
+	print "ids",ids
+	return{}
+
+def facture(self, cr, uid, data, context):
+	id_vignette = pooler.get_pool(cr.dbname).get('huissier.vignettes').browse(cr,uid,data['ids'])
+	inv_vignette= id_vignette[0].invoice_id.id or false
+	if not inv_vignette: return {}
+	return {
+		'domain': str([('id', 'in', [inv_vignette])]),
+		'name': 'Factures de vignettes en attente',
+		'view_type': 'form',
+		'view_mode': 'tree,form',
+		'res_model': 'account.invoice',
+		'view_id': False,
+		'type': 'ir.actions.act_window'
+	}
+
 
 class wizard_invoice_labels(wizard.interface):
 	states = {
 		'init': {
 			'actions': [_invoice_labels],
-#			'result': {'type': 'state', 'state':'end'}
-
-			'result': {'type': 'print', 'report':'huissier.labels', 'state':'end'}
+			'result': {'type': 'print', 'report':'huissier.labels', 'state': 'fin'}
+		},
+		'fin':{
+			'actions':[],
+			'result':{'type':'action', 'action':facture, 'state':'end'}
 		}
 	}
 wizard_invoice_labels('huissier.labels.invoice')
-
 

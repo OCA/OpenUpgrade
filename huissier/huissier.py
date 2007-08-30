@@ -252,11 +252,11 @@ class huissier_dossier(osv.osv):
 				'account_id': account_receive_id,
 				'comment': acquis and acquis_strings.get(lang, 'Pour acquit') or False
 			}
-			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
-			self.write(cr, uid, ids, {'invoice_id':invoice_id})
+			invoice_id1 = self.pool.get('account.invoice').create(cr, uid, new_invoice)
+			self.write(cr, uid, ids, {'invoice_id':invoice_id1})
 			wf_service = netsvc.LocalService("workflow")
-			wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
-			invoice_ids.append(invoice_id)
+			wf_service.trg_validate(uid, 'account.invoice', invoice_id1, 'invoice_open', cr)
+			invoice_ids.append(invoice_id1)
 		return invoice_ids
 		
 #	def create_invoice_and_cancel_old(self, cr, uid, ids):
