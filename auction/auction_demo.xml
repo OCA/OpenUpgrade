@@ -288,10 +288,10 @@
 		<field name="lot_est2">700</field>
 		<field name="obj_desc">show pices</field>
 		<field name="obj_ret">465.00</field>
-		<field name="obj_num">1</field>
+		<field name="obj_num">01</field>
 		<field name="obj_price">0.00</field>
 		<field name="bord_vnd_id" ref="auction_deposit_1" />
-		<field name="product_id" ref="monproduit"/>                                                    |                            |
+		<field name="product_id" ref="monproduit"/>
         <field name="author_right" ref="auction_tax"/>
 	</record>
 
@@ -305,10 +305,10 @@
 		<field name="lot_est2">1700</field>
 		<field name="obj_desc">show pices</field>
 		<field name="obj_ret">0.00</field>
-		<field name="obj_num">2</field>
+		<field name="obj_num">02</field>
 		<field name="obj_price">1500.00</field>
 		<field name="bord_vnd_id" ref="auction_deposit_1" />
-		<!--field name="product_id" ref="monproduit"/-->                                                    |                            |
+		<!--field name="product_id" ref="monproduit"/-->                                                                              |
         <field name="author_right" ref="auction_tax"/>
 		<field name="product_id" model="product.product" search="[]"/>
 		<!--<field name="tva" model="account.tax" search="[]"/>-->
@@ -448,6 +448,264 @@
 		<field name="product_id" model="product.product" search="[]"/>
 
 	</record>
+
+	<record model="auction.lots" id="auction_deposit_6_lot_1">
+	<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="name">mobile photos</field>
+		<field name="lot_num">10</field>
+		<field name="lot_type">mobile</field>
+		<field name="lot_est1">4500</field>
+		<field name="lot_est2">4700</field>
+		<field name="obj_desc">show models</field>
+		<field name="obj_ret">4650</field>
+		<field name="obj_num">10</field>
+		<field name="obj_price">4800.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+	<record model="auction.lots" id="auction_deposit_6_lot_2">
+	<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
+		<field name="name">Antique photos</field>
+		<field name="lot_num">11</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">11</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+	<record model="auction.lots" id="auction_deposit_7_lot_1">
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="name">Hardware  photos</field>
+		<field name="lot_num">12</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">2600</field>
+		<field name="lot_est2">2800</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2550</field>
+		<field name="obj_num">12</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+	<record model="auction.lots" id="auction_deposit_7_lot_2">
+		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
+		<field name="name">Home Appliance photos</field>
+		<field name="lot_num">12</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">12</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+	<record model="auction.lots" id="auction_deposit_8_lot_1">
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="name">mobile accesories photos</field>
+		<field name="lot_num">13</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">13</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+
+
+	<record model="auction.lots" id="auction_deposit_8_lot_2">
+		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
+		<field name="name">Authors photos</field>
+		<field name="lot_num">14</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">14</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+
+	<record model="auction.lots" id="auction_deposit_9_lot_1">
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="name">Authors photos</field>
+		<field name="lot_num">15</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">15</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+	<record model="auction.lots" id="auction_deposit_9_lot_2">
+		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
+		<field name="name">Authors photos</field>
+		<field name="lot_num">16</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">16</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+
+	<record model="auction.lots" id="auction_deposit_10_lot_1">
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="name">Authors photos</field>
+		<field name="lot_num">17</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">17</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+
+
+	<record model="auction.lots" id="auction_deposit_10_lot_2">
+		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
+		<field name="name">Authors photos</field>
+		<field name="lot_num">18</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">18</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+
+
+
+	<record model="auction.lots" id="auction_deposit_11_lot_1">
+		<field name="auction_id" model="auction.dates" search="[('id','=',1)]"></field>
+		<field name="name">Authors photos</field>
+		<field name="lot_num">19</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">19</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+	<record model="auction.lots" id="auction_deposit_12_lot_2">
+		<field name="auction_id" model="auction.dates" search="[('id','=',2)]"></field>
+		<field name="name">Authors photos</field>
+		<field name="lot_num">20</field>
+		<field name="lot_type">common</field>
+		<field name="lot_est1">1600</field>
+		<field name="lot_est2">2200</field>
+		<field name="obj_desc">show map Items</field>
+		<field name="obj_ret">2150</field>
+		<field name="obj_num">20</field>
+		<field name="obj_price">2050.00</field>
+		<field name="bord_vnd_id" ref="auction_deposit_5" />
+		<field name="author_right" ref="auction_tax"/>
+		<field name="product_id" model="product.product" search="[]"/>
+
+	</record>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	<record model="auction.bid" id="auction_date_1_bid_1">
 		<field name="name">bid1</field>

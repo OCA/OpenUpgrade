@@ -109,18 +109,23 @@
 
 
 <xsl:template match="products">
-		<xsl:apply-templates select="product"/>
+			<xsl:apply-templates select="product">
+				<xsl:sort order="ascending" data-type="number" select="infos/lot_num"/>
+			</xsl:apply-templates>
+
 </xsl:template>
 
 <xsl:template match="product">
 <!--        <xsl:if test="newpage">-->
 <!--                <condPageBreak height="20cm"/>-->
 <!--        </xsl:if>-->
+
 <xsl:choose>
 <xsl:when test="string-length(infos/Image) &gt;2">
 
 
-            <blockTable style="product1" colWidths="4.0cm,5.0cm">
+            <blockTable style="product1" colWidths="4.5cm,4.5cm">
+
                  <tr>
                      <td>
                        <para style="slogan1">
@@ -134,7 +139,7 @@
 				       </xsl:if>
 					</td>
 						<td>
-						<image height="3.5cm" width="5cm">
+						<image height="3.5cm" width="4.5cm">
 									<xsl:value-of select="infos/Image"/>
 						</image>
 				   </td>
@@ -144,7 +149,7 @@
 <xsl:otherwise>
 			<!-- photo on the right-->
 
-       <blockTable style="product1" colWidths="8.5cm">
+       <blockTable style="product1" colWidths="9.0cm">
 		       <tr>
 
 		                     <td>
