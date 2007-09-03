@@ -51,11 +51,7 @@ class auction_catalog(report_rml):
     def create_xml(self, cr, uid, ids, data, context):
 
         xml = self.catalog_xml(cr, uid, ids, data, context)
-        #return self.post_process_xml_data(cr, uid, xml, context)
-        print "********************************************"
         temp=self.post_process_xml_data(cr, uid, xml, context)
-#        print temp
-#        print "********************************************",temp
 
         return temp
     def catalog_xml(self,cr,uid,ids,data,context):
@@ -73,13 +69,8 @@ class auction_catalog(report_rml):
         tab_avoid = []
         tab_no_photo=[]
 
-        print "IDSSSSSS",ids
-        print  " PRITESG::::::::::::"
-
- #     self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)]))
         ab=pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,ids,['auction_id','name','lot_num','lot_est1','lot_est2'],context)
 
-        print "AB::::::::::::",ab[0]
 
         auction_dates_ids = [x["auction_id"][0] for x in ab]
         res=pooler.get_pool(cr.dbname).get('auction.dates').read(cr,uid,auction_dates_ids,['name','auction1','auction2'],context)
@@ -133,31 +124,16 @@ class auction_catalog(report_rml):
         print 'query :select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')'
         cr.execute('select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')')
         res = cr.dictfetchall()
-        #print "rESSSSSSSSS",res
+
 
         for cat in res:
 #            print "CAT:::::",cat
             product =doc.createElement('product')
             products.appendChild(product)
 
-#            lot_num = doc.createElement('lot_num')
-#            lot_num.appendChild(doc.createTextNode(escape(ab[0]['lot_num'])))
-#            product.appendChild(lot_num)
-#
-#            lot_img = doc.createElement('Image')
-#            lot_img.appendChild(doc.createTextNode(ab[0]['image']))
-#            product.appendChild(lot_img)
-
-
-
-
-
             if cat['name']:
                 infos = doc.createElement('infos')
                 lines = re.split('<br/>|\n', cat['name'])
-    #            lines = cat['info'].splitlines()
-
-#                print "lines:::::::::",lines
 
                 for line in lines:
                     print  "LINE:::::::",line
@@ -178,16 +154,6 @@ class auction_catalog(report_rml):
                     limg.appendChild(doc.createTextNode(cat['image']))
                     infos.appendChild(limg)
 
-
-
-#            if ab[0]['image']:
-#                print "type of image::::::::",type(ab[0]['image'])
-#                lot_img = doc.createElement('Image')
-#                #abc=(ab[0]['image'])
-#                #print "VALUE OF ABC",type(abc)
-#                lot_img.appendChild(doc.createTextNode((ab[0]['image'])))
-#
-#                product.appendChild(lot_img)
 
 
 
@@ -214,12 +180,6 @@ class auction_catalog(report_rml):
                 product.appendChild(ref4)
 
         xml1 = doc.toxml()
-#        print "*************************"
-#        print "generated : \n", xml1
-#
-#
-##            print "TYPE OF XML",xml
-#    #        print "Modified xml \n",type xml
 
         return xml1
 auction_catalog('report.auction.cat_flagy', 'auction.lots','','addons/auction/report/catalog2.xsl')
