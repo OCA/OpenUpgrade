@@ -9,7 +9,7 @@
 			<stroke color="(0.6,0.3,0.1)"/>
 			<fill color="(0.6,0.3,0.1)"/>
 
-			<image x="7cm" y="25cm" file="/home/pmo/Desktop/najjla/images/flagey_logo.jpg"/>
+			<image x="7cm" y="25cm" file="/home/nel/Desktop/Image3.jpg"/>
 
 			<lines>1cm 3.0cm 20cm 3.0cm</lines>
 			<setFont name="Helvetica" size="15"/>
@@ -27,8 +27,8 @@
 	</pageTemplate>
 	<pageTemplate id="others">
 		<pageGraphics>
-			<image x="-0.0cm" y="27.3cm" file="/home/pmo/Desktop/najjla/images/flagey_head.png"/>
-			<drawRightString x="17.5cm" y="27.6cm">Vente antiquitée mardi 12 juin 07 à 10H</drawRightString>
+			<image x="-0.0cm" y="27.3cm" file="/home/nel/Desktop/Image3.jpg"/>
+			<drawRightString x="17.5cm" y="27.6cm">Vente antiquité mardi 12 juin 07 à 10H</drawRightString>
 			<lineMode width="1mm"/>
 			<setFont name="Helvetica" size="26"/>
 			<!-- <drawString x="10mm" y="27.8cm">Flagey.com</drawString> -->
@@ -73,9 +73,10 @@
 </stylesheet>
 
 	<story>
-	<para style="slogan"> Vente antiquitée <xsl:value-of select="catalog/name"/></para>
-	<spacer length="1.0cm"/>
-	<para style="slogan">le mardi 12 juin 07 à 10H <xsl:value-of select="catalog/AuctionDate1"/> <xsl:value-of select="catalog/AuctionDate2"/></para>
+	<para style="slogan"> Vente antiquité du <xsl:value-of select="catalog/AuctionDate1"/></para>
+
+	<spacer length="0.1cm"/>
+	<para style="slogan">à 10H </para>
 
 	<spacer length="1.0cm"/>
 	<spacer length="0.7cm"/>
@@ -173,3 +174,4 @@
 
 
 </xsl:stylesheet>
+

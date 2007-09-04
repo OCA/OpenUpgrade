@@ -103,12 +103,14 @@ class auction_dates(osv.osv):
 		cr.execute('select count(*) as c from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
 		nbr = cr.fetchone()[0]
 		ach_uids = {}
+		self.write(cr, uid, ids, {'state':'closed'}) #close the auction
+
 		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
 		self.pool.get('auction.lots').lots_invoice(cr, uid, [x[0] for x in cr.fetchall()],{})
 		cr.execute('select * from auction_lots where auction_id in ('+','.join(map(str,ids))+')and state=%s and obj_price>0', ('draft',))
 		ids2 = [x[0] for x in cr.fetchall()]
 		self.pool.get('auction.lots').seller_trans_create(cr, uid, ids2,{})
-		self.write(cr, uid, ids, {'state':'closed'}) #close the auction
+		#self.write(cr, uid, ids, {'state':'closed'}) #close the auction
 		return True
 auction_dates()
 
@@ -459,6 +461,7 @@ class auction_lots(osv.osv):
 #		(_inv_constraint, 'Twice the same inventory number !', ['lot_num','bord_vnd_id'])
 	]
 
+
 	def name_get(self, cr, user, ids, context={}):
 		if not len(ids):
 			return []
@@ -698,7 +701,8 @@ class auction_lots(osv.osv):
 					'type': 'in_invoice',
 				}
 				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'in_invoice', lot.bord_vnd_id.partner_id.id)['value'])
-				inv['account_id'] = inv['account_id'] and inv['account_id'][0]
+			#	inv['account_id'] = inv['account_id'] and inv['account_id'][0]
+				print "ACCOUT",account_id
 				inv_id = inv_ref.create(cr, uid, inv, context)
 				invoices[lot.bord_vnd_id.id] = inv_id
 
@@ -763,7 +767,7 @@ class auction_lots(osv.osv):
 					'type': 'out_invoice'
 				}
 				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', lot.ach_uid.id)['value'])
-				inv['account_id'] = inv['account_id'] and inv['account_id'][0]
+				#inv['account_id'] = inv['account_id'] and inv['account_id'][0]
 				inv_id = inv_ref.create(cr, uid, inv, context)
 				invoices[(lot.auction_id.id,lot.ach_uid.id)] = inv_id
 			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
