@@ -43,188 +43,152 @@ import netsvc
 import base64
 
 def escape(s):
-	return str(s or '').replace('<br/>','').decode('latin1','replace').encode('utf-8')
+    return str(s or '').replace('<br/>','').decode('latin1','replace').encode('utf-8')
 
 
 class auction_catalog(report_rml):
 
-	def create_xml(self, cr, uid, ids, data, context):
+    def create_xml(self, cr, uid, ids, data, context):
 
-		xml = self.catalog_xml(cr, uid, ids, data, context)
-		#return self.post_process_xml_data(cr, uid, xml, context)
-		print "********************************************"
-		temp=self.post_process_xml_data(cr, uid, xml, context)
-#		print temp
-#		print "********************************************",temp
+        xml = self.catalog_xml(cr, uid, ids, data, context)
+        temp=self.post_process_xml_data(cr, uid, xml, context)
 
-		return temp
-	def catalog_xml(self,cr,uid,ids,data,context):
-		
-		impl = minidom.getDOMImplementation()
+        return temp
+    def catalog_xml(self,cr,uid,ids,data,context):
+        impl = minidom.getDOMImplementation()
 
-		doc = impl.createDocument(None, "report", None)
+        doc = impl.createDocument(None, "report", None)
 
-		#catalog element
-		catalog=doc.createElement('catalog')
-		doc.documentElement.appendChild(catalog)
+        #catalog element
+        catalog=doc.createElement('catalog')
+        doc.documentElement.appendChild(catalog)
 
 
-		infodb='info'
-		commdb='comm'
-		tab_avoid = []
-		tab_no_photo=[]
+        infodb='info'
+        commdb='comm'
+        tab_avoid = []
+        tab_no_photo=[]
 
-		print "IDSSSSSS",ids
+        ab=pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,ids,['auction_id','name','lot_num','lot_est1','lot_est2'],context)
 
- #	 self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)]))
-		ab=pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,ids,['auction_id','name','lot_num','lot_est1','lot_est2'],context)
-		lot=pooler.get_pool(cr.dbname).get('auction.lots').browse(cr,uid,ids,context)[0]
-		if not lot.auction_id:
-			raise Exception, "Aucune vente sélectionée!"
-		auction_dates_ids=[]	
-		auction_dates_ids.append(lot.auction_id.id)
-#		auction_dates_ids=map(lambda x:lot.auction_id.id)
-	#	auction_dates_ids = [x['auction_id'][0] for x in ab]
-		res=pooler.get_pool(cr.dbname).get('auction.dates').read(cr,uid,auction_dates_ids,['name','auction1','auction2'],context)
-		print "RES",res
-		# name emelment
-		key = 'name'
-		categ = doc.createElement(key)
-		categ.appendChild(doc.createTextNode(escape(res[0]["name"])))
-		catalog.appendChild(categ)
 
-		 #Auctuion Date element
-		categ = doc.createElement("AuctionDate1")
-		categ.appendChild(doc.createTextNode(escape(res[0]['auction1'])))
-		catalog.appendChild(categ)
+        auction_dates_ids = [x["auction_id"][0] for x in ab]
 
-		# Action Date 2 element
-		categ = doc.createElement("AuctionDate2")
-		categ.appendChild(doc.createTextNode(escape(res[0]['auction2'])))
-		catalog.appendChild(categ)
+
+        res=pooler.get_pool(cr.dbname).get('auction.dates').read(cr,uid,auction_dates_ids,['name','auction1','auction2'],context)
+
+
+        #for print a day of date
+        #datetime.datetime(int(a[:4]),int(a[5:7]),int(a[8:])).strftime('%A')
 
 
 
-#		  promotion element
-		promo = doc.createElement('promotion1')
+            # name emelment
+        key = 'name'
+        categ = doc.createElement(key)
+        categ.appendChild(doc.createTextNode(escape(res[0]["name"])))
+        catalog.appendChild(categ)
 
-		fp = file('/home/nel/Desktop/lj8100.jpg','r')
-		file_data = fp.read()
+         #Auctuion Date element
+        categ = doc.createElement("AuctionDate1")
+        categ.appendChild(doc.createTextNode(escape(res[0]['auction1'])))
+        catalog.appendChild(categ)
 
-		promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
-		catalog.appendChild(promo)
-
-		promo = doc.createElement('promotion2')
-
-		fp = file('/home/nel/Desktop/Image3.jpg','r')
-		file_data = fp.read()
-
-		promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
-		catalog.appendChild(promo)
-
-
-		#product element
-		products = doc.createElement('products')
-		catalog.appendChild(products)
-
-		side = 0
-		length = 0
-		auction_ids = []
-		for test in ab:
-			if test.has_key('auction_id'):
-				auction_ids.append(str(test['auction_id'][0]))
-		print 'query :select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')'
-		cr.execute('select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')')
-		res = cr.dictfetchall()
-		#print "rESSSSSSSSS",res
-
-		for cat in res:
-#			print "CAT:::::",cat
-			product =doc.createElement('product')
-			products.appendChild(product)
-
-#			lot_num = doc.createElement('lot_num')
-#			lot_num.appendChild(doc.createTextNode(escape(ab[0]['lot_num'])))
-#			product.appendChild(lot_num)
-#
-#			lot_img = doc.createElement('Image')
-#			lot_img.appendChild(doc.createTextNode(ab[0]['image']))
-#			product.appendChild(lot_img)
+        # Action Date 2 element
+        categ = doc.createElement("AuctionDate2")
+        categ.appendChild(doc.createTextNode(escape(res[0]['auction2'])))
+        catalog.appendChild(categ)
 
 
 
+#          promotion element
+        promo = doc.createElement('promotion1')
+
+        fp = file('/home/pmo/Desktop/najjla/images/lj8100.jpg','r')
+        file_data = fp.read()
+
+        promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
+        catalog.appendChild(promo)
+
+        promo = doc.createElement('promotion2')
+
+        fp = file('/home/pmo/Desktop/najjla/images/aeko_logo.jpg','r')
+        file_data = fp.read()
+
+        promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
+        catalog.appendChild(promo)
 
 
-			if cat['name']:
-				infos = doc.createElement('infos')
-				lines = re.split('<br/>|\n', cat['name'])
-	#			lines = cat['info'].splitlines()
+        #product element
+        products = doc.createElement('products')
+        catalog.appendChild(products)
 
-#				print "lines:::::::::",lines
-
-				for line in lines:
-					print  "LINE:::::::",line
-					xline = doc.createElement('info')
-					xline.appendChild(doc.createTextNode(escape(line)))
-					infos.appendChild(xline)
-				product.appendChild(infos)
-
-				if cat['lot_num']:
-					lnum = doc.createElement('lot_num')
-					lnum.appendChild(doc.createTextNode(escape(cat['lot_num'])))
-					infos.appendChild(lnum)
+        side = 0
+        length = 0
+        auction_ids = []
+        for test in ab:
+            if test.has_key('auction_id'):
+                auction_ids.append(str(test['auction_id'][0]))
+        print 'query :select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')'
+        cr.execute('select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')')
+        res = cr.dictfetchall()
 
 
-				if  cat['image']:
-					print "Cat Image ",cat['image']
-					limg = doc.createElement('Image')
-					limg.appendChild(doc.createTextNode(cat['image']))
-					infos.appendChild(limg)
+        for cat in res:
+#            print "CAT:::::",cat
+            product =doc.createElement('product')
+            products.appendChild(product)
+
+            if cat['name']:
+                infos = doc.createElement('infos')
+                lines = re.split('<br/>|\n', cat['name'])
+
+                for line in lines:
+                    print  "LINE:::::::",line
+                    xline = doc.createElement('info')
+                    xline.appendChild(doc.createTextNode(escape(line)))
+                    infos.appendChild(xline)
+                product.appendChild(infos)
+
+                if cat['lot_num']:
+                    lnum = doc.createElement('lot_num')
+                    lnum.appendChild(doc.createTextNode(escape(cat['lot_num'])))
+                    infos.appendChild(lnum)
+
+
+                if  cat['image']:
+                    print "Cat Image ",cat['image']
+                    limg = doc.createElement('Image')
+                    limg.appendChild(doc.createTextNode(cat['image']))
+                    infos.appendChild(limg)
 
 
 
-#			if ab[0]['image']:
-#				print "type of image::::::::",type(ab[0]['image'])
-#				lot_img = doc.createElement('Image')
-#				#abc=(ab[0]['image'])
-#				#print "VALUE OF ABC",type(abc)
-#				lot_img.appendChild(doc.createTextNode((ab[0]['image'])))
-#
-#				product.appendChild(lot_img)
+
+            for key in ('lot_est1','lot_est2'):
+
+                ref2 = doc.createElement(key)
+                ref2.appendChild(doc.createTextNode( escape(cat[key] or 0.0)))
+                product.appendChild(ref2)
+
+            oldlength = length
+            length += 2.0
 
 
+            if length>23.7:
+                side += 1
+                length = length - oldlength
+                ref3 = doc.createElement('newpage')
+                ref3.appendChild(doc.createTextNode( "1" ))
+                product.appendChild(ref3)
 
-			for key in ('lot_est1','lot_est2'):
+            if side%2:
+                ref4 = doc.createElement('side')
+                ref4.appendChild(doc.createTextNode( "1" ))
+                product.appendChild(ref4)
 
-				ref2 = doc.createElement(key)
-				ref2.appendChild(doc.createTextNode( escape(cat[key] or 0.0)))
-				product.appendChild(ref2)
+        xml1 = doc.toxml()
 
-			oldlength = length
-			length += 2.0
-
-
-			if length>23.7:
-				side += 1
-				length = length - oldlength
-				ref3 = doc.createElement('newpage')
-				ref3.appendChild(doc.createTextNode( "1" ))
-				product.appendChild(ref3)
-
-			if side%2:
-				ref4 = doc.createElement('side')
-				ref4.appendChild(doc.createTextNode( "1" ))
-				product.appendChild(ref4)
-
-		xml1 = doc.toxml()
-#		print "*************************"
-#		print "generated : \n", xml1
-#
-#
-##			print "TYPE OF XML",xml
-#	#		print "Modified xml \n",type xml
-
-		return xml1
+        return xml1
 auction_catalog('report.auction.cat_flagy', 'auction.lots','','addons/auction/report/catalog2.xsl')
-
 
