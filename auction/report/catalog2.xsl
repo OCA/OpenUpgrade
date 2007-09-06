@@ -50,8 +50,8 @@
 	</pageTemplate>
 </template>
 <stylesheet>
-        <paraStyle name="slogan1" fontName="Helvetica-Bold" fontSize="9" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
-		<paraStyle name="slogan" fontName="Helvetica" fontSize="9" alignment="center" spaceBefore="0.0" spaceAfter="0.0"/>
+        <paraStyle name="slogan1" fontName="Times-Roman" fontSize="10" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
+		<paraStyle name="slogan" fontName="Times-Italic" fontSize="10" alignment="center" spaceBefore="0.0" spaceAfter="0.0"/>
          <paraStyle name="slogan3" fontName="Helvetica" fontSize="10" alignment="center" spaceAfter="0.5" />
           <paraStyle name="slogan4" fontName="Helvetica" fontSize="10" alignment="right" spaceBefore="0.0"/>
         <paraStyle name="footnote" fontName="Helvetica" fontSize="10" alignment="center" />
@@ -141,7 +141,7 @@
 						  <spacer length="2.0mm"/>
 		     			   <xsl:if test="lot_est1&gt;0">
 				           <para style="slogan">
-				             Est <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+				             Est</para> <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
 				            </para>
 				       </xsl:if>
 					</td>
