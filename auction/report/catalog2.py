@@ -41,6 +41,7 @@ import os
 import re
 import netsvc
 import base64
+import wizard
 
 def escape(s):
     return str(s or '').replace('<br/>','').decode('latin1','replace').encode('utf-8')
@@ -71,8 +72,15 @@ class auction_catalog(report_rml):
 
         ab=pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,ids,['auction_id','name','lot_num','lot_est1','lot_est2'],context)
 
+        print "AB::::::::::::::::",ab[0]['auction_id']
+        if not ab[0]['auction_id']:
+        	#raise wizard.except_wizard('UserError', 'There is no auctiondate for this lot!')
+        	raise osv.except_osv('Error', 'There is no auctiondate for this lot!')
+        	#raise Exception, 'ConceptionError, bad report name, should start with "report."'
 
         auction_dates_ids = [x["auction_id"][0] for x in ab]
+
+
 
 
         res=pooler.get_pool(cr.dbname).get('auction.dates').read(cr,uid,auction_dates_ids,['name','auction1','auction2'],context)
