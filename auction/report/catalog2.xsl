@@ -50,9 +50,9 @@
 	</pageTemplate>
 </template>
 <stylesheet>
-        <paraStyle name="slogan1" fontName="Times-Roman" fontSize="11" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
-		<paraStyle name="slogan" fontName="Times-Italic" fontSize="11" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
-         <paraStyle name="slogan3"  xml:lang="en-fr" fontName="Helvetica" fontSize="11" alignment="center" spaceAfter="0.5" />
+        <paraStyle name="slogan1" fontName="Times-Roman" fontSize="10" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
+		<paraStyle name="slogan" fontName="Times-Italic" fontSize="10" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
+         <paraStyle name="slogan3"   fontName="Helvetica" fontSize="10" alignment="center" spaceAfter="0.5" />
           <paraStyle name="slogan4" fontName="Helvetica" fontSize="10" alignment="right" spaceBefore="0.0"/>
         <paraStyle name="footnote" fontName="Helvetica" fontSize="10" alignment="center" />
         <paraStyle name="note" fontName="Helvetica" fontSize="8" leftIndent="3mm"/>
