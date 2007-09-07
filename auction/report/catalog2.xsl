@@ -149,7 +149,7 @@
 				       </xsl:if>
 					</td>
 						<td>
-						<image height="3.5cm" width="4.0cm">
+						<image height="2.0cm" width="3.0cm">
 									<xsl:value-of select="infos/Image"/>
 						</image>
 				   </td>
