@@ -26,11 +26,20 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
-#        res_other=None
-#        if not docinfo.getUserFieldValue(2)=="":
-#            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-#            fields=['name','report_name','model']
-#            res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
+        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
+        fields=['name','state']
+        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
+        bFlag = False
+        if len(self.res_other) > 0:
+            for r in self.res_other:
+                if r['state'] == "installed":
+                    bFlag = True
+        else:
+            exit(1)
+        if bFlag <> True:
+            ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
+            exit(1)
         self.win = DBModalDialog(60, 50, 180, 65, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
         self.win.addEdit("txtName", -5, 5, 123, 15)#,res_other[0]['name'])

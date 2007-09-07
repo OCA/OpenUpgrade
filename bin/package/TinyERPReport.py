@@ -1492,7 +1492,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
-            sObject=getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
+            sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
@@ -2053,6 +2053,19 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
+        fields=['name','state']
+        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
+        bFlag = False
+        if len(self.res_other) > 0:
+            for r in self.res_other:
+                if r['state'] == "installed":
+                    bFlag = True
+        else:
+            exit(1)
+        if bFlag <> True:
+            ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
+            exit(1)
         self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
@@ -2096,18 +2109,13 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
             docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
             docinfo2.setUserFieldValue(3,self.res_other[self.win.getListBoxSelectedItemPos("lstReport")]['model'])
-            print "abc"
             if oDoc2.isModified():
-                print "abc"
                 if oDoc2.hasLocation() and not oDoc2.isReadonly():
-                    print "abc"
                     oDoc2.store()
-            print "abc"
                 #End If
             #End If
             #os.system( "`which ooffice` '-accept=socket,host=localhost,port=2002;urp;'")
             ErrorDialog("Download is Completed","Your file has been placed here :\n"+ fp_name,"Download Message")
-            print "abc"
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -2148,11 +2156,20 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
-#        res_other=None
-#        if not docinfo.getUserFieldValue(2)=="":
-#            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-#            fields=['name','report_name','model']
-#            res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
+        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
+        fields=['name','state']
+        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
+        bFlag = False
+        if len(self.res_other) > 0:
+            for r in self.res_other:
+                if r['state'] == "installed":
+                    bFlag = True
+        else:
+            exit(1)
+        if bFlag <> True:
+            ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
+            exit(1)
         self.win = DBModalDialog(60, 50, 180, 65, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
         self.win.addEdit("txtName", -5, 5, 123, 15)#,res_other[0]['name'])
@@ -2245,22 +2262,18 @@ class About(unohelper.Base, XJobExecutor):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
-#        LoginTest()
-#        if not loginstatus and __name__=="package":
-#            exit(1)
-##        else:
-##            self.database="trunk_1"
-#        desktop=getDesktop()
-#        oDoc2 = desktop.getCurrentComponent()
-#        docinfo=oDoc2.getDocumentInfo()
-#        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-#        fields=['name','report_name','model']
-#        res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read',[docinfo.getUserFieldValue(2)] ,fields)
-        self.win = DBModalDialog(60, 50, 225, 169, ".:: About Us !!! ::.")
-        if __name__<>"package":
-            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file://About.jpg")
+        self.win = DBModalDialog(60, 50, 225, 170, ".:: About Us !!! ::.")
+        #sMessage = "Tiny Report v1.0 \nCopyright 2007-TODAY Tiny sprl \nThis product is free software, under the GPL licence."
+
+        #self.obj = "images/About.jpg"
+        #self.win.addFixedText("lblUName", 5, 5, 140, 45, self.obj)
+
+        if __name__=="package":
+
+            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath= "file:///home/hjo/Desktop/trunk/bin/package/images/About.jpg")#path.__getslice__(0,path.rfind("/")) + "/package/images/About.jpg")
         else:
-            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file://images/About.jpg")
+            print "abc"
+            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file:///home/hjo/Desktop/trunk/bin/package/images/About.jpg")
         self.win.doModalDialog("",None)
 
 if __name__<>"package" and __name__=="__main__":

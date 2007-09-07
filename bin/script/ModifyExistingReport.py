@@ -35,6 +35,19 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
+        fields=['name','state']
+        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
+        bFlag = False
+        if len(self.res_other) > 0:
+            for r in self.res_other:
+                if r['state'] == "installed":
+                    bFlag = True
+        else:
+            exit(1)
+        if bFlag <> True:
+            ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
+            exit(1)
         self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
@@ -78,18 +91,13 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
             docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
             docinfo2.setUserFieldValue(3,self.res_other[self.win.getListBoxSelectedItemPos("lstReport")]['model'])
-            print "abc"
             if oDoc2.isModified():
-                print "abc"
                 if oDoc2.hasLocation() and not oDoc2.isReadonly():
-                    print "abc"
                     oDoc2.store()
-            print "abc"
                 #End If
             #End If
             #os.system( "`which ooffice` '-accept=socket,host=localhost,port=2002;urp;'")
             ErrorDialog("Download is Completed","Your file has been placed here :\n"+ fp_name,"Download Message")
-            print "abc"
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
