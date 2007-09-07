@@ -75,7 +75,7 @@
           </para>
         </td>
         <td>
-          <para style="P6">[[ time.strftime('%Y-%m-%d') ]] </para>
+          <para style="P6">[[time.strftime('%Y-%m-%d')]] </para>
         </td>
       </tr>
     </blockTable>
@@ -96,7 +96,7 @@
           <para style="P9">Auction: </para>
         </td>
         <td>
-          <para style="P9">[[ o.auction_id and o.auction_id.name ]]</para>
+          <para style="P9">[[o.auction_id and o.auction_id.name]]</para>
         </td>
       </tr>
       <tr>
@@ -104,7 +104,7 @@
           <para style="P9">Date:</para>
         </td>
         <td>
-          <para style="P9">[[ o.auction_id and o.auction_id.auction1 ]]</para>
+          <para style="P9">[[o.auction_id and o.auction_id.auction1]]</para>
         </td>
       </tr>
     </blockTable>
@@ -127,7 +127,7 @@
           <para style="P9"># of items:</para>
         </td>
         <td>
-          <para style="P9">[[sum_taxes(o.auction_id.id ) ]]</para>
+          <para style="P9">[[sum_taxes(o.auction_id.id )]]</para>
         </td>
       </tr>
       <tr>
@@ -135,7 +135,7 @@
           <para style="P9">Min Estimate:</para>
         </td>
         <td>
-          <para style="P9">[[sum_minadj(o.auction_id.id ) ]]</para>
+          <para style="P9">[[sum_minadj(o.auction_id.id )]]</para>
         </td>
       </tr>
       <tr>
@@ -143,7 +143,7 @@
           <para style="P9">Max Estimate:</para>
         </td>
         <td>
-          <para style="P9">[[ sum_maxadj(o.auction_id.id ) ]]</para>
+          <para style="P9">[[sum_maxadj(o.auction_id.id )]]</para>
         </td>
       </tr>
       <tr>
@@ -151,7 +151,7 @@
           <para style="P9"># of unsold items:</para>
         </td>
         <td>
-          <para style="P9">[[ sold_item(o)]]</para>
+          <para style="P9">[[sold_item(o)]]</para>
         </td>
       </tr>
       <tr>
@@ -159,7 +159,7 @@
           <para style="P9">Adjudication:</para>
         </td>
         <td>
-          <para style="P9">[[ sum_adj(o.auction_id.id) ]]</para>
+          <para style="P9">[[sum_adj(o.auction_id.id)]]</para>
         </td>
       </tr>
     </blockTable>
@@ -173,7 +173,7 @@
           <para style="P9"># of buyers:</para>
         </td>
         <td>
-          <para style="P9">[[ sum_buyer(o.auction_id.id ) ]]</para>
+          <para style="P9">[[sum_buyer(o.auction_id.id )]]</para>
         </td>
       </tr>
       <tr>
@@ -181,7 +181,7 @@
           <para style="P9"># of paid items <font face="Times-Roman" size="7.0">(based on invoices):</font></para>
         </td>
         <td>
-          <para style="P9">[[ sum_buyer_paid(o.auction_id.id ) ]]</para>
+          <para style="P9">[[sum_buyer_paid(o.auction_id.id) ]]</para>
         </td>
       </tr>
       <tr>
@@ -189,7 +189,7 @@
           <para style="P9"># of commissions:</para>
         </td>
         <td>
-          <para style="P9">[[ count_comm(o.auction_id.id ) ]]</para>
+          <para style="P9">[[count_comm(o.auction_id.id )]]</para>
         </td>
       </tr>
       <tr>
@@ -197,7 +197,7 @@
           <para style="P9"># of items taken away:</para>
         </td>
         <td>
-          <para style="P9">[[ count_take(o.auction_id.id) ]]</para>
+          <para style="P9">[[count_take(o.auction_id.id)]]</para>
         </td>
       </tr>
       <tr>
@@ -221,7 +221,7 @@
           <para style="P9">Paid:</para>
         </td>
         <td>
-          <para style="P9">[[chek_paid(o.auction_id.id )]]</para>
+          <para style="P9">[[chek_paid(o.auction_id.id)]]</para>
         </td>
       </tr>
     </blockTable>
@@ -256,7 +256,7 @@
           <para style="P9"># of sellers:</para>
         </td>
         <td>
-          <para style="P9">[[sum_seller(o.auction_id.id ) ]]</para>
+          <para style="P9">[[sum_seller(o.auction_id.id )]]</para>
         </td>
       </tr>
       <tr>

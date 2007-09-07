@@ -41,14 +41,14 @@
 		 auto="False"
 		 multi="1"/>
 
-	<report string="Catalog with pictures"
+<!--	<report string="Catalog with pictures"
 	   	model="auction.lots"
 		name="catelogwithpictures"
 		rml="auction/report/catelogwithpictures.rml"
 		auto="False"
 		multi="1"
 		id="1"/>
-
+-->
 	<report string="Catalog"
 	   	model="auction.lots"
 		name="auction.catelog"
@@ -89,8 +89,7 @@
 
 
 
-<report string="Lots List aaa"
-
+<report string="Lots List"
 	   	model="auction.lots"
 		name="report.auction.lots.list"
 		xml="auction/report/lots_list.xml"
@@ -155,12 +154,12 @@
 		 multi="1"/>
 
 
-		<report string="Bids per lot (phone)xsl"
+		<!--<report string="Bids per lot (phone)xsl"
 		 model="auction.lots"
 		 name="report.auction.lots.bids.phone"
 		 xml="auction/report/lots_bids_phone.xml"
 		 xsl="auction/report/lots_bids_phone.xsl"
-		 multi="1"/>
+		 multi="1"/>-->
 
 		<report string="Auction's results"
 			model="auction.lots"

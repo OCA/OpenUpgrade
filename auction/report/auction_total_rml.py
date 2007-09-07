@@ -86,7 +86,7 @@ class auction_total_rml(report_sxw.rml_parse):
 		return str(res[0])
 
 	def chek_paid(self, auction_id):
-		self.cr.execute("select count(1) from auction_lots where auction_id=%d and ((paid_ach=1) or (is_ok='T')) "%(auction_id))
+		self.cr.execute("select count(1) from auction_lots where auction_id=%d and ((paid_ach='T') or (is_ok='T')) "%(auction_id))
 		res = self.cr.fetchone()
 		return str(res[0])
 	def check_paid_seller(self, auction_id):
@@ -95,14 +95,16 @@ class auction_total_rml(report_sxw.rml_parse):
 		return str(res[0])
 
 	def sum_credit(self,object):
+		print "ICI CA BLOQUE"
 		auct_id=object.auction_id.id
-		self.cr.execute('select sum(buyer_price) from auction_lots where auction_id=%d and paid_ach=1'%(auct_id,))
+		print auct_id
+		self.cr.execute("select sum(buyer_price) from auction_lots where (auction_id=%d) and (paid_ach='T')"%(auct_id,))
 		res = self.cr.fetchone()
 		return str(res[0] or 0)
 
 	def sum_debit_buyer(self,object):
 		auct_id=object.auction_id.id
-		self.cr.execute('select sum(buyer_price) from auction_lots where auction_id=%d and paid_ach=0'%(auct_id,))
+		self.cr.execute("select sum(buyer_price) from auction_lots where auction_id=%d and paid_ach='F'"%(auct_id,))
 		res = self.cr.fetchone()
 		return str(res[0] or 0)
 

@@ -10,7 +10,7 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Table2">
+    <blockTableStyle id="Tableau1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
       <lineStyle kind="GRID" colorName="black"/>
@@ -19,21 +19,15 @@
       <blockBackground colorName="#cccccc" start="2,0" stop="2,0"/>
       <blockBackground colorName="#cccccc" start="3,0" stop="3,0"/>
     </blockTableStyle>
-    <blockTableStyle id="Tableau1">
-      <blockAlignment value="LEFT"/>
-      <blockValign value="TOP"/>
-      <lineStyle kind="GRID" colorName="black"/>
-    </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
     <paraStyle name="P1" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P2" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P3" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" fontName="Courier-Bold" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P5" fontName="Courier-Bold" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" fontName="Courier" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P7" fontName="Courier" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Courier" fontSize="7.0" leading="9" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Courier" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Courier" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Courier" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
@@ -56,13 +50,13 @@
     <para style="P1">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="70.0,140.0,90.0,101.0" style="Table2">
+    <blockTable colWidths="70.0,140.0,90.0,139.0" style="Tableau1">
       <tr>
         <td>
           <para style="P2">Cat.N </para>
         </td>
         <td>
-          <para style="P3">Name</para>
+          <para style="P2">Name</para>
         </td>
         <td>
           <para style="P2">Bid</para>
@@ -71,27 +65,23 @@
           <para style="P2">Phone</para>
         </td>
       </tr>
-    </blockTable>
-    <blockTable colWidths="70.0,140.0,90.0,100.0" style="Tableau1">
       <tr>
         <td>
-          <para style="P4">
-            <font face="Times-Roman" size="7.0">[[ repeatIn(objects,'o') ]]</font>
-          </para>
-          <para style="P5">[[o.obj_num]]</para>
+          <para style="P3">[[ repeatIn(objects,'o') ]]</para>
+          <para style="P4">[[o.obj_num]]</para>
         </td>
         <td>
           <para style="P4">[[ o.ach_uid and o.ach_uid.name or False]]</para>
         </td>
         <td>
-          <para style="P6">[[o.bid_lines[0] and o.bid_lines[0].bid_id.name or False]]</para>
+          <para style="P5">[[o.bid_lines[0] and o.bid_lines[0].bid_id.name or False]]</para>
         </td>
         <td>
-          <para style="P7">[[o.bid_lines[0] and o.bid_lines[0].bid_id.contact_tel or False]]</para>
+          <para style="P6">[[o.bid_lines[0] and o.bid_lines[0].bid_id.contact_tel or False]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P6">
+    <para style="P5">
       <font color="white"> </font>
     </para>
   </story>
