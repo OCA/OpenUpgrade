@@ -30,7 +30,7 @@
 	<pageTemplate id="others">
 		<pageGraphics>
 			<image x="1.0cm" y="27.3cm" file="/home/pmo/Desktop/najjla/images/flagey_head.png"/>
-			<drawRightString x="17.5cm" y="27.6cm">Vente antiquitée mardi 12 juin 07 à 10H</drawRightString>
+			<drawRightString x="19.0cm" y="27.6cm"> Vente  antiquitée le  <xsl:value-of select="date:day-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:day-in-month(catalog/AuctionDate1)"/>&#160;<xsl:value-of select="date:month-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:year(catalog/AuctionDate1)"/></drawRightString>
 			<lineMode width="1mm"/>
 			<setFont name="Helvetica" size="26"/>
 			<!-- <drawString x="10mm" y="27.8cm">Flagey.com</drawString> -->
@@ -50,9 +50,9 @@
 	</pageTemplate>
 </template>
 <stylesheet>
-        <paraStyle name="slogan1" fontName="Times-Roman" fontSize="10" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
-		<paraStyle name="slogan" fontName="Times-Italic" fontSize="10" alignment="center" spaceBefore="0.0" spaceAfter="0.0"/>
-         <paraStyle name="slogan3" fontName="Helvetica" fontSize="10" alignment="center" spaceAfter="0.5" />
+        <paraStyle name="slogan1" fontName="Times-Roman" fontSize="11" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
+		<paraStyle name="slogan" fontName="Times-Italic" fontSize="11" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
+         <paraStyle name="slogan3"  xml:lang="en-fr" fontName="Helvetica" fontSize="11" alignment="center" spaceAfter="0.5" />
           <paraStyle name="slogan4" fontName="Helvetica" fontSize="10" alignment="right" spaceBefore="0.0"/>
         <paraStyle name="footnote" fontName="Helvetica" fontSize="10" alignment="center" />
         <paraStyle name="note" fontName="Helvetica" fontSize="8" leftIndent="3mm"/>
@@ -136,12 +136,15 @@
                  <tr>
                      <td>
                        <para style="slogan1">
-	                  <xsl:value-of select="infos/lot_num"/>--<xsl:value-of select="infos/info"/>
-						</para>
+	                  <xpre><b><xsl:value-of select="infos/lot_num"/> &#160;- &#160;</b>  <xsl:value-of select="infos/info"/>
+						</xpre></para>
 						  <spacer length="2.0mm"/>
 		     			   <xsl:if test="lot_est1&gt;0">
-				           <para style="slogan">
-				             Est</para> <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+				           <para style="slogan1">
+				           <xpre>
+				             Est. <i> <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+				            </i>
+				            </xpre>
 				            </para>
 				       </xsl:if>
 					</td>
@@ -161,12 +164,16 @@
 
 		                     <td>
 		                       <para style="slogan1">
-			                  <xsl:value-of select="infos/lot_num"/>--  <xsl:value-of select="infos/info"/>
-								</para>
+		                       <xpre>
+			                  <b><xsl:value-of select="infos/lot_num"/>&#160;- &#160;</b>  <xsl:value-of select="infos/info"/>
+								</xpre></para>
 								  <spacer length="2.0mm"/>
 				     			   <xsl:if test="lot_est1&gt;0">
-						           <para style="slogan">
-						            Est <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+						           <para style="slogan1">
+						           <xpre>
+						            Est. <i><xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
+						           </i>
+						           </xpre>
 						            </para>
 						       </xsl:if>
 							</td>
