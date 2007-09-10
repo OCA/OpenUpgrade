@@ -128,12 +128,12 @@ class auction_total_rml(report_sxw.rml_parse):
 	def sum_minadj(self, auction_id):
 		self.cr.execute('select sum(lot_est1) from auction_lots where auction_id=%d '%(auction_id))
 		res = self.cr.fetchone()
-		return str(res[0])
+		return str(res[0]) or 0
 
 	def sum_maxadj(self, auction_id):
 		self.cr.execute('select sum(lot_est2) from auction_lots where auction_id=%d '%(auction_id))
 		res = self.cr.fetchone()
-		return str(res[0])
+		return str(res[0]) or 0
 
 	def sum_buyer_paid(self, auction_id):
 		self.cr.execute("select count(*) from auction_lots where auction_id=%d AND state = 'paid'"%(auction_id))
