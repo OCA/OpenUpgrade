@@ -130,12 +130,12 @@
 
 
 
-		<report
+		<!--<report
 			id="report_auction_catalog"
 			string="Catalog flagey"
 			model="auction.lots"
 			name="auction.cat_flagy"
-			xsl="'auction/report/catalog2.xsl"/>
+			xsl="'auction/report/catalog2.xsl"/>-->
 
 
 		<report string="Seller List"
@@ -173,6 +173,16 @@
 			rml="auction/report/auction_buyer_result.rml"
 			multi="1"
 			id="res_w_buyer"/>
+
+
+			<wizard
+			id="auction_catalog_flagy"
+			string="Auction Catalog Flagy"
+			model="auction.lots"
+			name="auction.catalog.flagey"
+			keyword="client_print_multi"/>
+
+
 
 		</data>
 </terp>
