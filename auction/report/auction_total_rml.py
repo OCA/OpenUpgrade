@@ -105,13 +105,18 @@ class auction_total_rml(report_sxw.rml_parse):
 	def sum_debit_buyer(self,object):
 		auct_id=object.auction_id.id
 		self.cr.execute("select sum(buyer_price) from auction_lots where auction_id=%d and paid_ach='F'"%(auct_id,))
+		#self.cr.execute("select sum(buyer_price) from auction_lots where auction_id=%d and (paid_vnd = false or paid_vnd is null)"(auct_id,))
 		res = self.cr.fetchone()
 		return str(res[0] or 0)
 
 	def sum_debit(self, object):
 		auct_id=object.auction_id.id
-		self.cr.execute("select sum(seller_price) from auction_lots where auction_id=%d and paid_vnd='0'"%(auct_id))
+		print "VALUES IFauction id",auct_id
+		#self.cr.execute("select sum(seller_price) from auction_lots where auction_id=%d and paid_vnd='F'"%(auct_id))
+		self.cr.execute("select sum(seller_price) from auction_lots where auction_id=%d and (paid_vnd = false or paid_vnd is null)"%(auct_id))
 		res = self.cr.fetchone()
+		print "RESSSSSSSSSSSS",res
+		print "VALUES IF RESSUM_DEBIT",str(res[0])
 		return str(res[0] or 0)
 
 	def sum_credit_seller(self, object):
