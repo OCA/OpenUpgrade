@@ -95,9 +95,7 @@ class auction_total_rml(report_sxw.rml_parse):
 		return str(res[0])
 
 	def sum_credit(self,object):
-		print "ICI CA BLOQUE"
 		auct_id=object.auction_id.id
-		print auct_id
 		self.cr.execute("select sum(buyer_price) from auction_lots where (auction_id=%d) and (paid_ach='T' or paid_ach is null)"%(auct_id,))
 		res = self.cr.fetchone()
 		return str(res[0] or 0)

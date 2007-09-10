@@ -105,10 +105,15 @@ class auction_dates(osv.osv):
 		ach_uids = {}
 		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
 		r=self.pool.get('auction.lots').lots_invoice(cr, uid, [x[0] for x in cr.fetchall()],{})
-		cr.execute('select * from auction_lots where auction_id in ('+','.join(map(str,ids))+')and state=%s and obj_price>0', ('draft',))
+		print "R",r
+		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and obj_price>0')
 		ids2 = [x[0] for x in cr.fetchall()]
+		print "IDS2",ids2
+		print "IDS CLOSE",ids
 	#	for auction in auction_ids:
 		c=self.pool.get('auction.lots').seller_trans_create(cr, uid, ids2,{})
+		print "C",c
+
 		self.write(cr, uid, ids, {'state':'closed'}) #close the auction
 		return True
 auction_dates()

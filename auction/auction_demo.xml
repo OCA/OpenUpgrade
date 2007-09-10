@@ -220,8 +220,8 @@
 
 		<field name="journal_id" ref="account.sales_journal"/>
 		<field name="journal_seller_id" ref="account.expenses_journal"/>
-		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','002')]"></field>
-	<!--	<field name="state">draft</field>-->
+		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
+
 	</record>
 
 	<record model="auction.dates" id="auction_date_2">
@@ -239,10 +239,9 @@
 		<field name="journal_id" ref="account.sales_journal"/>
 		<field name="journal_seller_id" ref="account.expenses_journal"/>
 		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
-	<!--	<field name="state">Draft</field>-->
+
 </record>
-<!-- 		<field name="buyer_costs" ref="l10n_ch.vat_24_invest"/> -->
-<!-- 		<field name="seller_costs" ref="l10n_ch.vat_24_invest"/> -->
+
 
 <!-- end == demo data for the auction_dates-->
 
