@@ -9,7 +9,7 @@
 	"website": "http://www.tinyerp.com",
 	"depends" : ["base", "account", "base_vat", "base_iban","account_payment"],
 	"init_xml" : ["dta_data.xml", "vaudtax_data.xml", "zip_code_default.xml",],
-	"demo_xml" : ["vaudtax_data_demo.xml"],
+	"demo_xml" : ["vaudtax_data_demo.xml","dta_demo.xml"],
 	"update_xml" : [
 		"dta_view.xml","dta_wizard.xml",
 		"v11_wizard.xml","v11_view.xml",
