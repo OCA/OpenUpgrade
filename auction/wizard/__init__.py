@@ -41,4 +41,5 @@ import wizard_auction_invoice_buyer
 import wizard_transfer_unsold_object
 import auction_wizard_enable_taken
 import auction_wizard_able_taken
+import auction_catalog_flagey
 
