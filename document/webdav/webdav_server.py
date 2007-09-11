@@ -36,8 +36,11 @@ try:
 except:
 	db=None
 if cr:
-	cr.execute("select server_url,server_port,directory_id from document_repository where active")
-	for host,port,directory_id in cr.fetchall():
-		ds = dav_server(host, port, db_name, directory_id)
-		ds.start()
-	cr.close()
+	try:
+		cr.execute("select server_url,server_port,directory_id from document_repository where active")
+		for host,port,directory_id in cr.fetchall():
+			ds = dav_server(host, port, db_name, directory_id)
+			ds.start()
+		cr.close()
+	except:
+		pass

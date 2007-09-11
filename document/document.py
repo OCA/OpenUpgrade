@@ -229,7 +229,7 @@ class document_directory_content(osv.osv):
 		'sequence': fields.integer('Sequence', size=16),
 		'suffix': fields.char('Suffix', size=16),
 		'versioning': fields.boolean('Versioning'),
-		'report_id': fields.many2one('ir.actions.report.xml', 'Report'),
+		'report_id': fields.integer('Report'),
 		'extension': fields.selection([('.pdf','.pdf'),('','None')], 'Extension', required=True),
 		'directory_id': fields.many2one('document.directory', 'Directory')
 	}
