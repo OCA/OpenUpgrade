@@ -4,11 +4,11 @@
 
 	<xsl:decimal-format name="MyFormat" NaN="" zero-digit="0" decimal-separator="," grouping-separator="."/>
 	
-	<xsl:variable name="initial_bottom_pos">21.5</xsl:variable>
+	<xsl:variable name="initial_bottom_pos">21.8</xsl:variable>
 	<xsl:variable name="initial_left_pos">0.4</xsl:variable>
-	<xsl:variable name="height_increment">6.78</xsl:variable>
-	<xsl:variable name="width_increment">10.15</xsl:variable>
-	<xsl:variable name="frame_height">6.7cm</xsl:variable>
+	<xsl:variable name="height_increment">7</xsl:variable>
+	<xsl:variable name="width_increment">10.5</xsl:variable>
+	<xsl:variable name="frame_height">6.8cm</xsl:variable>
 	<xsl:variable name="frame_width">9.9cm</xsl:variable>
 	<xsl:variable name="number_columns">2</xsl:variable>
 	<xsl:variable name="number_frames">8</xsl:variable>

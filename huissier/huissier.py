@@ -252,11 +252,11 @@ class huissier_dossier(osv.osv):
 				'account_id': account_receive_id,
 				'comment': acquis and acquis_strings.get(lang, 'Pour acquit') or False
 			}
-			invoice_id1 = self.pool.get('account.invoice').create(cr, uid, new_invoice)
-			self.write(cr, uid, ids, {'invoice_id':invoice_id1})
+			invoice_id = self.pool.get('account.invoice').create(cr, uid, new_invoice)
+			self.write(cr, uid, ids, {'invoice_id':invoice_id})
 			wf_service = netsvc.LocalService("workflow")
-			wf_service.trg_validate(uid, 'account.invoice', invoice_id1, 'invoice_open', cr)
-			invoice_ids.append(invoice_id1)
+			wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
+			invoice_ids.append(invoice_id)
 		return invoice_ids
 		
 #	def create_invoice_and_cancel_old(self, cr, uid, ids):
@@ -319,6 +319,7 @@ class huissier_lots(osv.osv):
 			args=[]
 		if not context:
 			context={}
+		ids = []
 		if name and name.startswith('ID'):
 			try:
 				ids = self.search(cr, uid, [('id', '=', int(name[2:]))] + args, limit=limit, context=context)
@@ -330,12 +331,11 @@ class huissier_lots(osv.osv):
 
 	def _get_price_wh_costs(self, cr, uid, ids, name, arg, context):
 		res = {}
-		cr.execute("select id, dossier_id, adj_price from huissier_lots where id in ("+','.join([str(id) for id in ids])+")")
-		for (id, dossier, price) in cr.fetchall():
-#FIXME: there is a bug somewhere: the 0.0 from a spinint gets saved as a None value in the DB :(
-			if not price:
-				price = 0.0
-			res[id] = price + self.get_costs_amount(cr, uid, ids, dossier, price)
+		for obj in self.browse(cr, uid, ids):
+			try:
+				res[obj.id] = obj.adj_price + obj.adj_price * obj.dossier_id.cost_id.amount
+			except:
+				res[obj.id] = 0.0
 		return res
 
 	def _get_costs(self, cr, uid, ids, name, arg, context):
@@ -365,7 +365,7 @@ class huissier_lots(osv.osv):
 		'name': fields.char(u'Description', size=256, required=True),
  		'vat': fields.many2one('account.tax', u'Taxe', domain="[('domain','=','tva')]", required=True),
 		'adj_price': fields.float(u"Prix d'adjudication", digits=(12,2)),
- 		'buyer_ref': fields.many2one('res.partner', u'Réf. client', domain="[('category_id', '=', 'Clients habituels')]"),
+ 		'buyer_ref': fields.many2one('res.partner', 'Client'),
 #		'buyer_ref': fields.char(u'Réf. client', size=64),
 #		'buyer_name': fields.char(u'Nom et Prénom', size=64),
  #		'buyer_firstname': fields.char(u'Prénom', size=64),

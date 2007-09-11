@@ -46,7 +46,6 @@ dossier_fields = {
 }
 
 def _get_value(self, uid, datas, *args, **kwargs):
-	print 'Got Value'
 	return {'partner_id':False}
 
 _lot_arch = UpdateableStr()
@@ -57,8 +56,9 @@ _lot_fields = {
 def _to_xml(s):
 	return s.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
 
+_all_lots = []
+
 def _get_lots(self, cr, uid, data, context):
-	print "GET LOTS"
 	pool = pooler.get_pool(cr.dbname)
 	lot_obj = pool.get('huissier.lots')
 	dids = lot_obj.search(cr, uid, [('dossier_id','=',data['form']['dossier_id']),('state','=','draft')])
@@ -67,28 +67,36 @@ def _get_lots(self, cr, uid, data, context):
 	<field name="partner_id" colspan="4"/>
 	"""
 	_arch_lst = []
+	_all_lots = []
 	for lot in lot_obj.browse(cr, uid, dids, context=context):
 		_arch_lst.append('<field name="lot_%s" nolabel="1" height="60" width="30" colspan="2"/>' % (lot.id))
 		_arch_lst.append('<group col="2" colspan="2">')
 		_arch_lst.append('<label string="%s" align="0.0" colspan="2"/>' % _to_xml(str(lot.number)+' - '+lot.name))
-		_arch_lst.append('<label string="Adjudication: %.2f" align="0.0" colspan="2"/>' % (lot.adj_price or 0.0))
+		_arch_lst.append('<label string="Adjudication: %.2f, A Payer: %.2f" align="0.0" colspan="2"/>' % (lot.adj_price or 0.0, lot.price_wh_costs or 0.0))
 		_arch_lst.append('</group>')
 		_lot_fields['lot_'+str(lot.id)]  = {'string': 'Lot '+str(lot.number),'type':'boolean'}
+		_all_lots.append('lot_'+str(lot.id))
 	_arch = _arch+'\n'.join(_arch_lst)+"""</form>"""
-	print _arch
 	_lot_arch.string = _arch
-	return {'partner_id':False}
+	return {'partner_id':False, 'attest_ids':[]}
 
 def _process(self, cr, uid, data, context):
-	print 'PROCESS'
 	attestation_ids = []
-	for key in data['form'].keys():
+	kk = data['form'].keys()
+	kk.sort()
+	key3 = False
+	for key in kk:
 		if key.startswith('lot_'):
 			if  data['form'][key]:
 				pool = pooler.get_pool(cr.dbname)
 				lot_obj = pool.get('huissier.lots')
-				lot_obj.write(cr, uid, int(key[4:]), {'state':'vendu'})
+				lot_obj.write(cr, uid, int(key[4:]), {'state':'vendu', 'buyer_ref':data['form']['partner_id']})
 				attestation_ids.append(int(key[4:]))
+				key3 = key
+
+	if key3:
+		return {'attest_ids': attestation_ids, key3:False}
+
 	return {'attest_ids': attestation_ids}
 
 class wizard_reprint(wizard.interface):
