@@ -25,7 +25,7 @@ class lunch_product(osv.osv):
 	_columns = {
 		'name': fields.char('Name', size=50, required=True),
 		'category_id': fields.selection(_category_name_get, 'Category', size=32),
-		'description': fields.char('Description', size=40, required=False),
+		'description': fields.char('Description', size=128, required=False),
 		'price': fields.float('Price', digits=(16,2)),
 	}
 
