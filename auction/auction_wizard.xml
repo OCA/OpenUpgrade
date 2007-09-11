@@ -84,13 +84,21 @@
 			name="auction.lots.enable"
 			multi="1"
 			id="auction_wizard_enable_taken"/>
-		
+
 		<wizard string="Mark as taken away"
 			model="auction.lots"
 			name="auction.lots.able"
 			multi="1"
 			id="auction_wizard_able_taken"/>
-			
+
+			<wizard
+			id="auction_catalog_flagy"
+			string="Auction Catalog Flagy"
+			model="auction.lots"
+			name="auction.catalog.flagey"
+			keyword="client_print_multi"/>
+
+
 	</data>
 </terp>
 
