@@ -7,7 +7,7 @@ import marshal
 import tempfile
 if __name__<>"package":
     from gui import *
-    database="trunk_1"
+    database="db_rc2"
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:

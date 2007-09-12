@@ -8,6 +8,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from LoginTest import *
+    database="db_trunk"
 #
 #
 #
@@ -22,9 +23,9 @@ class NewReport(unohelper.Base, XJobExecutor):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
-        self.win=DBModalDialog(60, 50, 180, 135, "Open New Report")
-        self.win.addFixedText("lblModuleSelection", 6, 12, 60, 15, "Module Selection")
-        self.win.addComboListBox("lstModule", -2,9,123,80 , False)
+        self.win=DBModalDialog(60, 50, 180, 115, "Open New Report")
+        self.win.addFixedText("lblModuleSelection", 2, 2, 60, 15, "Module Selection")
+        self.win.addComboListBox("lstModule", -2,13,176,80 , False)
         self.lstModule = self.win.getControl( "lstModule" )
 #        self.win.addFixedText("lblReportName", 17 ,95 , 60, 15, "Report Name")
 #        self.win.addEdit("txtReportName", -2, 92, 123, 15)

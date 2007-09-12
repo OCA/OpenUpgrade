@@ -9,7 +9,7 @@ if __name__<>"package":
 
     from lib.gui import *
     from LoginTest import *
-    database="trunk_1"
+    database="db_rc2"
 
 class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 
@@ -79,12 +79,13 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
+                                    print res[0].__getslice__(res[0].find(".")+1,len(res[0])),sObject
                                     r = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
-
                                 if len(r) <> 0:
                                     if r <> "TTT":
+                                        print res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))
                                         oPar.Items=(u"" + str(r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]) ,oPar.Items[1])
                                         oPar.update()
                                     else:
@@ -110,11 +111,8 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             myval=sVar
         for k in key:
             if (res[k]['type'] in ['many2one']) and k==myval:
-
-                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
-                return res[myval]['relation']
-            elif k==myval:
-                return sObject
+                sObject = self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+        return sObject
     def getBraces(self,aReportSyntex=[]):
 
         desktop=getDesktop()

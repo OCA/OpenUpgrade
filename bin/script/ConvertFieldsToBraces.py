@@ -8,7 +8,7 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
-    database="trunk_1"
+    database="db_rc2"
 
 class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
 
@@ -22,9 +22,6 @@ class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
             exit(1)
         self.aReportSyntex=[]
         self.getFields()
-
-        desktop=getDesktop()
-        doc = desktop.getCurrentComponent()
 
 
     def getFields(self):
@@ -41,6 +38,8 @@ class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
                     oPar.dispose()
         except:
             pass
+
+
 
 
 if __name__<>"package":

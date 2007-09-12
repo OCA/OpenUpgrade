@@ -75,7 +75,7 @@ class About(unohelper.Base, XJobExecutor):
 #
 #            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath= "file:///home/hjo/Desktop/trunk/bin/package/images/About.jpg")#path.__getslice__(0,path.rfind("/")) + "/package/images/About.jpg")
 #        else:
-#            print "abc"
+#
 #            self.win.addImageControl("imgAbout",0,0,225,169,sImagePath="file:///home/hjo/Desktop/trunk/bin/package/images/About.jpg")
         self.win.doModalDialog("",None)
 

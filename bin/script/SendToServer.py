@@ -12,7 +12,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-    database="trunk_1"
+    database="db_rc2"
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -58,12 +58,10 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             oDoc2 = desktop.getCurrentComponent()
             docinfo=oDoc2.getDocumentInfo()
-
+            self.getInverseFieldsRecord(1)
             fp_name = tempfile.mktemp('.'+"sxw")
             if not oDoc2.hasLocation():
                 oDoc2.storeAsURL("file://"+fp_name,Array())
-
-
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             if docinfo.getUserFieldValue(2)=="":
                 id=self.getID()
@@ -79,7 +77,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             fp = file(url, 'rb')
             data=fp.read()
             fp.close()
-
+            self.getInverseFieldsRecord(0)
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
             self.win.endExecute()
@@ -101,6 +99,24 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
         id=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
         return id
+
+    def getInverseFieldsRecord(self,nVal):
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+
+        count=0
+        try:
+            oParEnum = doc.getTextFields().createEnumeration()
+            while oParEnum.hasMoreElements():
+                oPar = oParEnum.nextElement()
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                    oPar.SelectedItem = oPar.Items[nVal]
+                    if nVal==0:
+                        oPar.update()
+
+        except:
+            pass
+
 
 if __name__<>"package" and __name__=="__main__":
     SendtoServer(None)
