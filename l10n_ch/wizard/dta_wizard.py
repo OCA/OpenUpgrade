@@ -155,7 +155,7 @@ class record_gt826(record):
 						 'format':'0'})
 
 class record_gt827(record):
-	# -> interne suisse
+	# -> interne suisse (bvpost et bvbank)
 	def init_local_context(self):
 		self.fields=[
 			('seg_num1',2),
@@ -287,8 +287,8 @@ def _create_dta(self,cr,uid,data,context):
 	bank= payment.mode.bank_id
 	if not bank:
 		return {'note':'No bank account for the company.'}
-	
- 	v['comp_bank_name']= bank.bank_id.name or False
+
+	v['comp_bank_name']= bank.bank_id and bank.bank_id.name or False
  	v['comp_bank_clearing'] = bank.clearing
 
 	if not v['comp_bank_clearing']:
@@ -364,7 +364,7 @@ def _create_dta(self,cr,uid,data,context):
 			continue
 
 		
-		v['partner_bank_name'] =  pline.bank_id.bank_id.name or False
+		v['partner_bank_name'] =  pline.bank_id.bank_id and pline.bank_id.bank_id.name or False
 		v['partner_bank_clearing'] =  pline.bank_id.clearing or False
 		if not v['partner_bank_name'] :
 			log.add('\nPartner bank account not well defined, please provide a name for the associated bank (partner: '+pline.partner_id.name+', bank:'+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+').')
@@ -372,6 +372,7 @@ def _create_dta(self,cr,uid,data,context):
 
 		v['partner_bank_iban']=  pline.bank_id.iban or False
 		v['partner_bank_number']=  pline.bank_id.acc_number  and pline.bank_id.acc_number.replace('.','').replace('-','') or  False
+		v['partner_post_number']=  pline.bank_id.post_number  and pline.bank_id.post_number.replace('.','').replace('-','') or  False
 		
 		v['partner_bvr']= pline.bank_id.bvr_number or ''
 		
@@ -482,11 +483,11 @@ def _create_dta(self,cr,uid,data,context):
  			record_type = record_gt827
 			
  		elif elec_pay == 'bvpost':
-			if not v['partner_bank_number']:
+			if not v['partner_post_number']:
 				log.add('\nYou must provide a post number in the partner bank. (invoice '+ invoice_number +')')
 				continue
 			v['partner_bank_clearing']= ''
-			v['partner_bank_number'] = '/C/'+v['partner_bank_number']
+			v['partner_bank_number'] = '/C/'+v['partner_post_number']
  			record_type = record_gt827
 			
 		else:

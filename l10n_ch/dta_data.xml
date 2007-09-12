@@ -125,9 +125,29 @@
   </record>
 
   <!-- Adjust the fields attributes for bvpost -->
+  <record model="res.partner.bank.type.field" id="bank_field_bvpost">
+	<field name="name">bank_id</field>
+	<field name="bank_type_id" ref="bvpost"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
   <record model="res.partner.bank.type.field" id="post_field_bvpost">
 	<field name="name">post_number</field>
 	<field name="bank_type_id" ref="bvpost"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <!-- Adjust the fields attributes for bvbank -->
+  <record model="res.partner.bank.type.field" id="bank_field_bvbank">
+	<field name="name">bank_id</field>
+	<field name="bank_type_id" ref="bvbank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+  <record model="res.partner.bank.type.field" id="acc_num_field_bvbank">
+	<field name="name">acc_number</field>
+	<field name="bank_type_id" ref="bvbank"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
   </record>
