@@ -76,8 +76,8 @@ class auction_catalog(report_rml):
 			print "LOTSIDS",lot_ids
 			ab=pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,lot_ids,['auction_id','name','lot_num','lot_est1','lot_est2'],context)
 		#abi=pooler.get_pool(cr.dbname).get('auction.lots').browse(cr,uid,ids)[0]
-			print "AB::::::::::::::::",ab[0]['auction_id']
-			print "AB::::::::::::::::",ab
+		#	print "AB::::::::::::::::",ab[0]['auction_id']
+		#	print "AB::::::::::::::::",ab
 		#print "AB::::::::::::::::",ab['auction_id'][0]
 #		if not ab[0]['auction_id']:
 #
@@ -118,7 +118,7 @@ class auction_catalog(report_rml):
 	#		  promotion element
 			promo = doc.createElement('promotion1')
 
-			fp = file('/home/pmo/images/lj8100.jpg','r')
+			fp = file('/home/nel/Desktop/images/lj8100.jpg','r')
 			file_data = fp.read()
 
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
@@ -126,7 +126,7 @@ class auction_catalog(report_rml):
 
 			promo = doc.createElement('promotion2')
 
-			fp = file('/home/pmo/images/aeko_logo.jpg','r')
+			fp = file('/home/nel/Desktop/images/aeko_logo.jpg','r')
 			file_data = fp.read()
 
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
@@ -144,12 +144,10 @@ class auction_catalog(report_rml):
 				if test.has_key('auction_id'):
 					auction_ids.append(str(test['auction_id'][0]))
 			print 'query :select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')'
+			print "auction",auction_ids
 			cr.execute('select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')')
 			res = cr.dictfetchall()
-
-
 			for cat in res:
-	#			print "CAT:::::",cat
 				product =doc.createElement('product')
 				products.appendChild(product)
 
