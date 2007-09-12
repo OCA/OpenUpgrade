@@ -1,0 +1,8 @@
+id,domain,name,account_collected_id,account_paid_id,amount,child_depend,python_compute,active,python_applicable,type,applicable_type
+tax1,,TVA 21%,Tax TVA,Tax TVA,0.2100,,# price_unit # address : res.partner.address object or False result = price_unit * 0.10,t,,percent,true
+tax2,,TVA 6%,Tax TVA,Tax TVA,0.0600,,# price_unit # address : res.partner.address object or False result = price_unit * 0.10,t,,percent,true
+tax3,sabam,Author rights (4%),Auction Buyer Costs,Auction Buyer Costs,0.0400,,# price_unit # address : res.partner.address object or False result = price_unit * 0.10,t,result = (price_unit>=1250),percent,code
+tax4,auction,Buyer Costs (20%),Auction Buyer Costs,Auction Buyer Costs,0.2000,f,# price_unit # address : res.partner.address object or False result = price_unit * 0.10,t,,percent,true
+tax5,auction,Seller Costs (12%),Auction Seller Costs,Auction Seller Costs,-0.1200,f,# price_unit # address : res.partner.address object or False result = price_unit * 0.10,t,,percent,true
+tax6,auction,Seller Costs (10%),Auction Seller Costs,Auction Seller Costs,-0.1000,f,,t,,percent,true
+tax7,auction,Frais de vente (15%),Auction Adjudications,Auction Adjudications,-0.1500,f,# price_unit # address : res.partner.address object or False result = price_unit * 0.10,t,,percent,true

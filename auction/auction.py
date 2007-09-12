@@ -105,15 +105,10 @@ class auction_dates(osv.osv):
 		ach_uids = {}
 		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
 		r=self.pool.get('auction.lots').lots_invoice(cr, uid, [x[0] for x in cr.fetchall()],{})
-		print "R",r
 		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and obj_price>0')
 		ids2 = [x[0] for x in cr.fetchall()]
-		print "IDS2",ids2
-		print "IDS CLOSE",ids
 	#	for auction in auction_ids:
 		c=self.pool.get('auction.lots').seller_trans_create(cr, uid, ids2,{})
-		print "C",c
-
 		self.write(cr, uid, ids, {'state':'closed'}) #close the auction
 		return True
 auction_dates()
@@ -683,8 +678,6 @@ class auction_lots(osv.osv):
 		"""
 			Create a seller invoice for each bord_vnd_id, for selected ids.
 		"""
-		print "ds facture seller"
-		print ids
 		# use each list of object in turn
 		invoices = {}
 		inv_ref=self.pool.get('account.invoice')
@@ -736,9 +729,6 @@ class auction_lots(osv.osv):
 			})
 			wf_service = netsvc.LocalService('workflow')
 			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
-			print "ici valuer facture"
-			print invoices
-			print invoices.values()
 		return invoices.values()
 
 	def lots_invoice(self, cr, uid, ids, context):
@@ -801,10 +791,6 @@ class auction_lots(osv.osv):
 		for l in  inv_ref.browse(cr, uid, invoices.values(), context):
 			wf_service = netsvc.LocalService('workflow')
 			wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_open', cr)
-			print "ici valuer facture"
-			print invoices
-			print invoices.values()
-
 		return invoices.values()
 
 

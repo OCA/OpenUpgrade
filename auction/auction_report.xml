@@ -2,6 +2,14 @@
 <terp>
 	<data>
 		<!--<delete model="ir.actions.report.xml" search="[('model','like','auction.')]"/>-->
+		
+
+		<report string="Artists Biography"
+			model="auction.lots"
+			name="auction.artists_lots"
+			auto="False"
+			id="v_artist"
+			multi="1"/>
 
 		<report string="Artists Biography"
 		 model="auction.artists"
@@ -9,14 +17,6 @@
 		 xml="auction/report/artists.xml"
 		 xsl="auction/report/artists.xsl"
 		 id="art2"
-		 multi="1"/>
-
-		<report string="Artists Biography"
-
-		 model="auction.lots"
-		 name="auction.artists"
-		 rml="auction/report/auction_artists.rml"
-		 id="art_auction"
 		 multi="1"/>
 
 		<report string="Bids phones"
@@ -175,12 +175,12 @@
 			id="res_w_buyer"/>
 
 
-		<!--	<wizard
+			<wizard
 			id="auction_catalog_flagy"
-			string="Auction Catalog Flagy"
-			model="auction.lots"
+			string="Catalog Flagey"
+			model="auction.dates"
 			name="auction.catalog.flagey"
-			keyword="client_print_multi"/>-->
+			keyword="client_print_multi"/>
 
 
 
