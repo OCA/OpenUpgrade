@@ -42,6 +42,7 @@ import re
 import netsvc
 import base64
 import wizard
+import photo_shadow
 
 def escape(s):
 	return str(s or '').replace('<br/>','').decode('latin1','replace').encode('utf-8')
@@ -55,7 +56,7 @@ class auction_catalog(report_rml):
 		temp=self.post_process_xml_data(cr, uid, xml, context)
 
 		return temp
-	def catalog_xml(self,cr,uid,ids,data,context):
+	def catalog_xml(self,cr,uid,ids,data,context,cwid="0"):
 		impl = minidom.getDOMImplementation()
 
 		doc = impl.createDocument(None, "report", None)
@@ -118,15 +119,17 @@ class auction_catalog(report_rml):
 	#		  promotion element
 			promo = doc.createElement('promotion1')
 
-			fp = file('/home/nel/Desktop/images/lj8100.jpg','r')
+			fp = file('/home/pmo/Desktop/images/lj8100.jpg','r')
 			file_data = fp.read()
+
+
 
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
 			catalog.appendChild(promo)
 
 			promo = doc.createElement('promotion2')
 
-			fp = file('/home/nel/Desktop/images/aeko_logo.jpg','r')
+			fp = file('/home/pmo/Desktop/images/aeko_logo.jpg','r')
 			file_data = fp.read()
 
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
@@ -167,12 +170,29 @@ class auction_catalog(report_rml):
 						lnum.appendChild(doc.createTextNode(escape(cat['lot_num'])))
 						infos.appendChild(lnum)
 
-
-					if  cat['image']:
-						print "Cat Image ",cat['image']
+					dest = os.path.join('/tmp/pdf_catalog/',str(cwid),str(cat['obj_desc'])+'.jpg')
+					if not cat['image']:
+						print "Cat wiht no Image "
+#						limg = doc.createElement('Image')
+#						limg.appendChild(doc.createTextNode(cat['image']))
+#						infos.appendChild(limg)
+					else:
+						import random
 						limg = doc.createElement('Image')
-						limg.appendChild(doc.createTextNode(cat['image']))
+						file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
+						fp = file(file_name,'wb+')
+						content = base64.decodestring(cat['image'])
+						fp.write(content)
+						fp.close()
+						fp = file(file_name,'r')
+						size = photo_shadow.convert_catalog(fp, '/tmp/test.jpg')
+						fp = file('/tmp/test.jpg')
+						file_data = fp.read()
+						test_data = base64.encodestring(file_data)
+
+						limg.appendChild(doc.createTextNode(test_data))
 						infos.appendChild(limg)
+
 
 
 
