@@ -45,6 +45,13 @@
 			<field name="parent_id" eval="[(6,0,[ref('account.minimal_0')])]"></field>
 			<field name="company_id" ref="base.main_company"/>
 	</record>
+	<record model="account.account" id="account_main_receivable">
+			<field name="name">Main Receivable</field>
+			<field name="code">400*</field>
+			<field name="type">receivable</field>
+			<field name="parent_id" eval="[(6,0,[ref('account.minimal_0')])]"></field>
+			<field name="company_id" ref="base.main_company"/>
+	</record>
 
 	<record model="account.account" id="account_unknown">
 			<field name="name">unknown</field>
@@ -108,28 +115,22 @@
 		<field name="code">it_IT</field>
 		<field name="name">Italian</field>
 	</record>
-
 	<record model="res.lang" id="lang_pt">
 		<field name="code">pt_PT</field>
 		<field name="name">Portuguese</field>
-	</record>
-
-	<record model="res.lang" id="lang_en">
-		<field name="code">en_EN</field>
-		<field name="name">English</field>
 	</record>
 
 
 	<!-- country -->
 	<record model="res.country" id="ho">
 		<field name="name">Holland</field>
-		<field name="code">NL</field>
+		<field name="code">ho</field>
 
 	</record>
 
 	<record model="res.country" id="k1">
 		<field name="name">Spagna</field>
-		<field name="code">ES</field>
+		<field name="code">k1</field>
 
 	</record>
 	<record model="res.country" id="k2">
@@ -139,7 +140,7 @@
 	</record>
 	<record model="res.country" id="k3">
 		<field name="name">Deutschland</field>
-		<field name="code">GE</field>
+		<field name="code">k3</field>
 
 	</record>
 	<record model="res.country" id="k4">
@@ -171,7 +172,7 @@
 
 	<record model="auction.deposit" id="auction_unknown">
 	<field name="date_dep" eval="time.strftime('%Y')+'-04-05'"/>
-	<field name="partner_id" ref="partner_unknown"/>
+	<field name="partner_id" model="res.partner" search="[('name','=','Unknown1')]"></field>
 	<field name="method">keep</field>
 	</record>
 
