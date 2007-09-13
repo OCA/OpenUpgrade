@@ -203,6 +203,13 @@
 		<field name="partner_id" ref="partner_unknown"/>
 		<field name="auction_id" ref="auction_date_unknown"/>
 	</record>
+	<record id="product_product_unknown" model="product.product">
+		<field name="list_price">0.0</field>
+		<field name="standard_price">0.0</field>
+		<field name="type">service</field>
+		<field name="name">Onsite Senior Intervention</field>
+		<field name="categ_id" model="product.category" search="[('name','=','All products')]"></field>
+	</record>
 	</data>
 </terp>
 
