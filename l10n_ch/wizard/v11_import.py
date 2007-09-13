@@ -102,14 +102,11 @@ def _v11_parsing(self, cr, uid, data, context):
 	std_log=''
 	nb_err=0
 
-	# v11 parsing :
-	for char  in base64.decodestring(v11file):
-
-		if not char == '\n':
-			line += char
-
-		else :
-
+	# v11 parsing see :
+	for l  in base64.decodestring(v11file).split("\n"):
+		# Extra loop to manage files without carriage return:
+		while l:
+			(line,l)= (l[:128],l[128:])
 			record['genre'] = line[0:3]
 
 			if record['genre'] == '999':
@@ -139,12 +136,14 @@ def _v11_parsing(self, cr, uid, data, context):
 						'line_number': str(lnb),
 				}
 
+
 				total_compute+= float(record['montant'])
 				rec_list.append( record )
-
 			lnb+=1
 			line=""
 
+
+			
 	# check the amounts :
 	if not total_compute == float(total['tot_montant']):
 		return {'note': 'Incorrect total amount V11 file, import aborted.' }
