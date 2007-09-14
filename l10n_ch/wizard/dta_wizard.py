@@ -296,6 +296,7 @@ def _create_dta(self,cr,uid,data,context):
 	
 	user = pool.get('res.users').browse(cr,uid,[uid])[0]
 	company= user.company_id
+	#XXX dirty code use get_addr
 	co_addr= company.partner_id.address[0]
 	v['comp_country'] = co_addr.country_id and co_addr.country_id.name or ''
 	v['comp_street'] = co_addr.street or ''
@@ -315,6 +316,7 @@ def _create_dta(self,cr,uid,data,context):
 	
 	inv_obj = pool.get('account.invoice')
 	dta_line_obj = pool.get('account.dta.line')
+	res_partner_bank_obj = pool.get('res.partner.bank')
 
 	seq= 1
 	amount_tot = 0
@@ -367,7 +369,7 @@ def _create_dta(self,cr,uid,data,context):
 		v['partner_bank_name'] =  pline.bank_id.bank_id and pline.bank_id.bank_id.name or False
 		v['partner_bank_clearing'] =  pline.bank_id.clearing or False
 		if not v['partner_bank_name'] :
-			log.add('\nPartner bank account not well defined, please provide a name for the associated bank (partner: '+pline.partner_id.name+', bank:'+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+').')
+			log.add('\nPartner bank account not well defined, please provide a name for the associated bank (partner: '+pline.partner_id.name+', bank:'+res_partner_bank_obj.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+').')
 			continue
 
 		v['partner_bank_iban']=  pline.bank_id.iban or False
@@ -382,11 +384,12 @@ def _create_dta(self,cr,uid,data,context):
 				v['partner_bvr']= v['partner_bvr'][:2]+ '0'*(9-len(v['partner_bvr'])) +v['partner_bvr'][2:]
 
 
-		if pline.bank_id.bank_address_id:
-			v['partner_bank_city']= pline.bank_id.bank_address_id.city or False
-			v['partner_bank_street']= pline.bank_id.bank_address_id.street or ''
-			v['partner_bank_zip']= pline.bank_id.bank_address_id.zip or ''
-			v['partner_bank_country']= pline.bank_id.bank_address_id.country_id  and pline.bank_id.bank_address_id.country_id.name or ''
+		if pline.bank_id.bank:
+			v['partner_bank_city'] = pline.bank_id.bank.city or False
+			v['partner_bank_street'] = pline.bank_id.bank.street or ''
+			v['partner_bank_zip'] = pline.bank_id.bank.zip or ''
+			v['partner_bank_country'] = pline.bank_id.bank.country and \
+					pline.bank_id.bank.country.name or ''
 
 		v['partner_bank_code']=  False # for future : place BIC number here 
 		v['invoice_reference']= i.reference
@@ -401,7 +404,7 @@ def _create_dta(self,cr,uid,data,context):
 			v['partner_city']= pline.partner_id.address[0].city
 			v['partner_zip']= pline.partner_id.address[0].zip
 			# If iban => country=country code for space reason
-			elec_pay = pline.bank_id.state
+			elec_pay = pline.bank_id.state #Bank type
 			if elec_pay == 'iban':
 				v['partner_country']= pline.partner_id.address[0].country_id and pline.partner_id.address[0].country_id.code+'-' or ''
 			else:
@@ -435,7 +438,10 @@ def _create_dta(self,cr,uid,data,context):
 			v['comp_country'] = co_addr.country_id and co_addr.country_id.code+'-' or ''
 			record_type = record_gt836
 			if not v['partner_bank_iban']:
-				log.add('\nNo iban number for the partner bank:'+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
+				log.add('\nNo iban number for the partner bank:' + \
+						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
+							context)[0][1] + \
+									' (partner: ' + pline.partner_id.name + ').')
 				continue
 
 			if v['partner_bank_code'] : # bank code is swift (BIC address)
@@ -453,7 +459,11 @@ def _create_dta(self,cr,uid,data,context):
 					+' '+v['partner_bank_zip']+' '+v['partner_bank_city']\
 					+' '+v['partner_bank_country']
 			else:
-				log.add("\nYou must provide the bank city or the bank code for the partner bank:"+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
+				log.add("\nYou must provide the bank city "
+				"or the bank code for the partner bank:" + \
+						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
+							context)[0][1] + \
+									' (partner: ' + pline.partner_id.name + ').')
 				continue
 
 			
@@ -462,12 +472,15 @@ def _create_dta(self,cr,uid,data,context):
 				log.add('\nYou must provide a Bvr reference number. (invoice '+ invoice_number +')')
 				continue
 			if not v['partner_bvr']:
-				log.add("\nYou must provide a BVR number on the partner bank:"+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
+				log.add("\nYou must provide a BVR number "
+				"on the partner bank:" + \
+						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
+							context)[0][1] + \
+									' (partner: ' + pline.partner_id.name + ').')
 				continue
 			record_type = record_gt826
-			
-			
-			
+
+
 		elif elec_pay == 'bvbank':
 			if not v['partner_bank_number'] :
 				if  v['partner_bank_iban'] :
@@ -492,8 +505,10 @@ def _create_dta(self,cr,uid,data,context):
 			
 		else:
 			log.add('\nBank type not supported. (partner:'+ pline.partner_id.name +\
-					', bank:'+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+\
-					', type:'+elec_pay+')')
+					', bank:' + \
+					res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
+						context)[0][1] + \
+						', type:' + elec_pay + ')')
 			continue
 
 
