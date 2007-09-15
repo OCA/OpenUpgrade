@@ -17,7 +17,7 @@
     <blockTableStyle id="Tableau6">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBELOW" colorName="red" start="0,0" stop="-1,0"/>
+      <lineStyle kind="LINEBELOW" colorName="red" start="0,-1" stop="-1,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Tableau2">
       <blockAlignment value="LEFT"/>
@@ -26,8 +26,8 @@
     <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEABOVE" colorName="red" start="0,0" stop="0,0"/>
-	 <lineStyle kind="LINEBELOW" colorName="red" start="0,-2" stop="0,-2"/>
+       <lineStyle kind="LINEABOVE" colorName="red" start="0,-1" stop="-1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="red" start="0,-2" stop="-1,-2"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
@@ -47,7 +47,6 @@
     <paraStyle name="P13" rightIndent="12.0" leftIndent="0.0" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P14" rightIndent="0.0" leftIndent="13.0" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="RIGHT" spaceBefore="0.0" spaceAfter="2.0"/>
     <paraStyle name="P15" rightIndent="0.0" leftIndent="13.0" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P16" fontName="Times-Roman" fontSize="7.0" leading="9"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -67,7 +66,7 @@
       <font color="white"> </font>
     </para>
     <para style="P1">[[ repeatIn(buyerinfo(),'o') ]]</para>
-    <para style="P2">
+    <para style="P1">
       <font color="white"> </font>
     </para>
     <para style="P2">
