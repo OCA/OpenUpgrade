@@ -11,7 +11,7 @@
 			<stroke color="(0.6,0.3,0.1)"/>
 			<fill color="(0.6,0.3,0.1)"/>
 			<!--Image-->
-			<image x="7cm" y="25cm" file="/home/nel/Desktop/images/aeko_logo.jpg"/>
+			<image x="7cm" y="25cm" file="/home/pmo/Desktop/images/aeko_logo.jpg"/>
 
 			<lines>1cm 3.0cm 20cm 3.0cm</lines>
 			<setFont name="Helvetica" size="15"/>
@@ -30,7 +30,7 @@
 	<pageTemplate id="others">
 		<pageGraphics>
 <!--			<image x="1.0cm" y="27.3cm" file="/home/pmo/images/aeko_logo.jpg"/>-->
-	
+
 			<!--image x="1.0cm" y="27.3cm" file="/home/nel/Desktop/images/flagey_head.png"/-->
 			<drawRightString x="19.0cm" y="27.6cm"> Vente  antiquitée le  <xsl:value-of select="date:day-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:day-in-month(catalog/AuctionDate1)"/>&#160;<xsl:value-of select="date:month-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:year(catalog/AuctionDate1)"/></drawRightString>
 			<lineMode width="1mm"/>
@@ -53,6 +53,8 @@
 </template>
 <stylesheet>
         <paraStyle name="slogan1" fontName="Times-Roman" fontSize="11" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
+         <paraStyle name="slogan2" fontName="Times-Roman" fontSize="11" alignment="right" spaceBefore="0.0" spaceAfter="0.0"/>
+         <paraStyle name="slogan5"  alignment="right" />
 		<paraStyle name="slogan" fontName="Times-Italic" fontSize="11" alignment="left" spaceBefore="0.0" spaceAfter="0.0"/>
          <paraStyle name="slogan3"  xml:lang="en-fr" fontName="Helvetica" fontSize="11" alignment="center" spaceAfter="0.5" />
           <paraStyle name="slogan4" fontName="Helvetica" fontSize="10" alignment="right" spaceBefore="0.0"/>
@@ -66,6 +68,14 @@
                 <blockTopPadding value="0"/>
                 <blockBottomPadding value="0"/>
         </blockTableStyle>
+        <blockTableStyle id="imagestyle">
+
+         <blockHalign value="right"/>
+     	<blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
+
+
+        </blockTableStyle>
+
         <blockTableStyle id="product1">
                 <blockValign value="TOP"/>
                 <blockTopPadding legnth="0"  start="0,0" stop="0,-1" />
@@ -90,7 +100,7 @@
 	<spacer length="0.7cm"/>
 
 
-<blockTable colWidths="11cm,8cm">
+<blockTable colWidths="11cm,8cm" style="imagestyle">
 
 	<tr>-
 		<td>
@@ -130,8 +140,8 @@
 <!--        </xsl:if>-->
 
 <xsl:choose>
-<xsl:when test="string-length(infos/Image) &gt;2">
-
+<xsl:when test="string-length(infos/photo) &gt;2  or string-length(infos/photo_small) &gt;2 or string-length(infos/photo_large) &gt;2 ">
+"
 
             <blockTable style="product1" colWidths="5.0cm,4.0cm">
 
@@ -142,7 +152,7 @@
 						</xpre></para>
 						  <spacer length="2.0mm"/>
 		     			   <xsl:if test="lot_est1&gt;0">
-				           <para style="slogan1">
+				           <para style="slogan2">
 				           <xpre>
 				             Est. <i> <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
 				            </i>
@@ -150,10 +160,40 @@
 				            </para>
 				       </xsl:if>
 					</td>
-						<td>
-						<image height="2.0cm" width="3.0cm">
-									<xsl:value-of select="infos/Image"/>
-						</image>
+						<td alignment="right">
+
+							<xsl:if test="infos/photo">
+							<image height="4cm" width="4cm" imageSide="right">
+<!--									<xsl:attribute name="file">-->
+										<xsl:value-of select="infos/photo"/>
+<!--									</xsl:attribute>-->
+									</image>
+
+							</xsl:if>
+							<xsl:if test="infos/photo_small" >
+
+									<image height="2.25cm" width="2.25cm"  >
+
+										<xsl:value-of select="infos/photo_small"/>
+
+									</image>
+
+							</xsl:if>
+							<xsl:if test="infos/photo_large">
+
+									<image height="4cm" width="4cm" imageSide="right">
+
+										<xsl:value-of select="infos/photo_large"/>
+
+									</image>
+
+							</xsl:if>
+
+
+<!--						<image  width="3.0cm">-->
+<!--									<xsl:value-of select="infos/Image"/>-->
+<!--						</image>-->
+
 				   </td>
 		    </tr>
   </blockTable>
@@ -171,7 +211,7 @@
 								</xpre></para>
 								  <spacer length="2.0mm"/>
 				     			   <xsl:if test="lot_est1&gt;0">
-						           <para style="slogan1">
+						           <para style="slogan2">
 						           <xpre>
 						            Est. <i><xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
 						           </i>

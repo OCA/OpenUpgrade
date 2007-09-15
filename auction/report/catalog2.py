@@ -74,7 +74,7 @@ class auction_catalog(report_rml):
 		print "IDS::::::::::::::::",ids
 		for id in ids:
 			lot_ids=pooler.get_pool(cr.dbname).get('auction.lots').search(cr, uid, [('auction_id', '=', id)])
-			print "LOTSIDS",lot_ids
+#			print "LOTSIDS",lot_ids
 			ab=pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,lot_ids,['auction_id','name','lot_num','lot_est1','lot_est2'],context)
 		#abi=pooler.get_pool(cr.dbname).get('auction.lots').browse(cr,uid,ids)[0]
 		#	print "AB::::::::::::::::",ab[0]['auction_id']
@@ -151,6 +151,7 @@ class auction_catalog(report_rml):
 			cr.execute('select * from auction_lots where auction_id in ('+ ','.join(auction_ids)+')')
 			res = cr.dictfetchall()
 			for cat in res:
+				print "CAT********",cat
 				product =doc.createElement('product')
 				products.appendChild(product)
 
@@ -159,7 +160,7 @@ class auction_catalog(report_rml):
 					lines = re.split('<br/>|\n', cat['name'])
 
 					for line in lines:
-						print  "LINE:::::::",line
+#						print  "LINE:::::::",line
 						xline = doc.createElement('info')
 						xline.appendChild(doc.createTextNode(escape(line)))
 						infos.appendChild(xline)
@@ -176,25 +177,65 @@ class auction_catalog(report_rml):
 #						limg = doc.createElement('Image')
 #						limg.appendChild(doc.createTextNode(cat['image']))
 #						infos.appendChild(limg)
+
+
 					else:
-						import random
-						limg = doc.createElement('Image')
-						file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
-						fp = file(file_name,'wb+')
-						content = base64.decodestring(cat['image'])
-						fp.write(content)
-						fp.close()
-						fp = file(file_name,'r')
-						size = photo_shadow.convert_catalog(fp, '/tmp/test.jpg')
-						fp = file('/tmp/test.jpg')
-						file_data = fp.read()
-						test_data = base64.encodestring(file_data)
+						if cat ['ref'] == 'medium':
+							import random
+							limg = doc.createElement('photo')
+							file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
+							fp = file(file_name,'wb+')
+							content = base64.decodestring(cat['image'])
+							fp.write(content)
+							fp.close()
+							fp = file(file_name,'r')
+							size = photo_shadow.convert_catalog(fp, '/tmp/test.jpg')
+							fp = file('/tmp/test.jpg')
+							file_data = fp.read()
+							test_data = base64.encodestring(file_data)
+							limg.appendChild(doc.createTextNode(test_data))
+							infos.appendChild(limg)
 
-						limg.appendChild(doc.createTextNode(test_data))
-						infos.appendChild(limg)
+						elif cat ['ref'] == 'small':
+							print"in else if"
+							import random
+							limg = doc.createElement('photo_small')
+							file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
+							fp = file(file_name,'wb+')
+							content = base64.decodestring(cat['image'])
+							fp.write(content)
+							fp.close()
+							fp = file(file_name,'r')
+							size = photo_shadow.convert_catalog(fp, '/tmp/test.jpg',110)
+							fp = file('/tmp/test.jpg')
+							file_data = fp.read()
+							test_data = base64.encodestring(file_data)
+
+							limg.appendChild(doc.createTextNode(test_data))
+							infos.appendChild(limg)
 
 
+						else:
+							print"in else if"
+							import random
+							limg = doc.createElement('photo_large')
+							file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
+							fp = file(file_name,'wb+')
+							content = base64.decodestring(cat['image'])
+							fp.write(content)
+							fp.close()
+							fp = file(file_name,'r')
+							size = photo_shadow.convert_catalog(fp, '/tmp/test.jpg',220)
+							fp = file('/tmp/test.jpg')
+							file_data = fp.read()
+							test_data = base64.encodestring(file_data)
 
+							limg.appendChild(doc.createTextNode(test_data))
+							infos.appendChild(limg)
+
+
+				print "CAT>>>>>>>>>>>>>>>>>>",cat
+				print "cat[ref]>>>>>>>>",cat['ref']
 
 
 				for key in ('lot_est1','lot_est2'):
@@ -220,6 +261,7 @@ class auction_catalog(report_rml):
 					product.appendChild(ref4)
 
 				xml1 = doc.toxml()
+				print "xmllllllllllllllll",xml1
 
 		return xml1
 auction_catalog('report.auction.cat_flagy', 'auction.dates','','addons/auction/report/catalog2.xsl')
