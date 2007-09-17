@@ -50,14 +50,14 @@ buyer_map_fields = {
 def _state_check(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
 	for rec in pool.get('auction.lots').browse(cr,uid,data['ids'],context):
-		if not rec.ach_uid and rec.ach_login:
+		if (not rec.ach_uid and rec.ach_login):
 			return 'check'
 	return 'done'
 
 def _start(self,cr,uid,datas,context):
 	pool = pooler.get_pool(cr.dbname)
 	for rec in pool.get('auction.lots').browse(cr,uid,datas['ids'],context):
-		if not rec.ach_uid and rec.ach_login:
+		if (not rec.ach_uid and rec.ach_login):
 			return {'ach_login': rec.ach_login}
 	return {}
 

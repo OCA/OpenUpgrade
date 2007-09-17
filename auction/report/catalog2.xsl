@@ -11,7 +11,7 @@
 			<stroke color="(0.6,0.3,0.1)"/>
 			<fill color="(0.6,0.3,0.1)"/>
 			<!--Image-->
-			<image x="7cm" y="25cm" file="/home/pmo/Desktop/images/aeko_logo.jpg"/>
+			<image x="7cm" y="25cm" file="/home/nel/Desktop/images/aeko_logo.jpg"/>
 
 			<lines>1cm 3.0cm 20cm 3.0cm</lines>
 			<setFont name="Helvetica" size="15"/>

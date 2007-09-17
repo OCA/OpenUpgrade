@@ -42,7 +42,7 @@ import re
 import netsvc
 import base64
 import wizard
-import photo_shadow
+#import photo_shadow
 
 def escape(s):
 	return str(s or '').replace('<br/>','').decode('latin1','replace').encode('utf-8')
@@ -119,7 +119,7 @@ class auction_catalog(report_rml):
 	#		  promotion element
 			promo = doc.createElement('promotion1')
 
-			fp = file('/home/pmo/Desktop/images/lj8100.jpg','r')
+			fp = file('/home/nel/Desktop/images/lj8100.jpg','r')
 			file_data = fp.read()
 
 
@@ -129,7 +129,7 @@ class auction_catalog(report_rml):
 
 			promo = doc.createElement('promotion2')
 
-			fp = file('/home/pmo/Desktop/images/aeko_logo.jpg','r')
+			fp = file('/home/nel/Desktop/images/aeko_logo.jpg','r')
 			file_data = fp.read()
 
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
