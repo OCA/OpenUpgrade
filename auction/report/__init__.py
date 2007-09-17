@@ -50,4 +50,4 @@ import bids_lots
 import bids_phones_details
 import auction_bids
 import catalog2
-
+import report_lot_bar_code

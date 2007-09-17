@@ -1,7 +1,9 @@
+
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+# Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
+# $Id$
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -26,21 +28,16 @@
 #
 ##############################################################################
 
-import wizard_aie_send
-import wizard_aie_send_result
-import wizard_lots_buyer_map
-import wizard_lots_cancel
-import wizard_lots_invoice
-import wizard_lots_numerotate
-import wizard_lots_pay
-import wizard_pay
-import wizard_lots_sms
-import wizard_lot_date_move
-import wizard_auction_journal
-import wizard_auction_invoice_buyer
-import wizard_transfer_unsold_object
-import auction_wizard_enable_taken
-import auction_wizard_able_taken
-import auction_catalog_flagey
-import wizard_lots_barcode
-import wizard_emporte
+import pooler
+import time
+from report import report_sxw
+
+class auction_code_produit(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(auction_code_produit, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+report_sxw.report_sxw('report.auction.code_bar_lot', 'auction.lots', 'addons/auction/report/report_lot_bar_code.rml',parser=auction_code_produit,header=False)
+
+

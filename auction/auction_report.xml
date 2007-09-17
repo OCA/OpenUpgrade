@@ -34,6 +34,13 @@
 		 multi="1"/>
 
 
+	<report 
+		string="Code barres du lot" 
+		model="auction.lots"
+		name="auction.code_bar_lot" 
+		rml="auction/report/report_lot_bar_code.rml"
+		id="v_report_barcode_lot"/>
+
 
 		<report string="Seller Labels"
 		 model="auction.lots"

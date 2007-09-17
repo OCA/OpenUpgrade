@@ -34,6 +34,17 @@
 		model="auction.lots"
 		name="auction.pay.buy"
 		id="wizard_pay"/>
+		<wizard 
+			string="Gestion emporte" 
+			model="auction.dates" 
+			name="auction.taken"
+			multi="1"
+			id="wizard_emporte"/>
+	<menuitem name="Auction Management/Outils Bar Codes/Gestion des livraisons" 
+		action="wizard_emporte" 
+		type="wizard"
+		id="menu_wizard_emporte"
+		/>
 
 		<!--wizard string="Cancel payment"
 		model="auction.lots"

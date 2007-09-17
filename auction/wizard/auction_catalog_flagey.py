@@ -7,7 +7,7 @@ def _wo_check(self, cr, uid, data, context):
 	print data
 	for ab in pool.get('auction.lots').read(cr,uid,data['ids'],['auction_id']):
 		if not ab.get('auction_id',False):
-			raise wizard.except_wizard('Error!','No Auction Date selected for this  Lot')
+			raise wizard.except_wizard('Error!','No Lots belong to this Auction Date')
 	return 'report'
 
 class wizard_report(wizard.interface):

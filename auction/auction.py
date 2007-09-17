@@ -247,6 +247,8 @@ class auction_lots(osv.osv):
 
 	def button_not_bought(self,cr,uid,ids,*a):
 		return self.write(cr,uid,ids, {'state':'unsold'})
+	def button_taken_away(self,cr,uid,ids,*a):
+		return self.write(cr,uid,ids, {'state':'taken_away'})
 
 	def button_draft(self,cr,uid,ids,*a):
 		return self.write(cr,uid,ids, {'state':'draft'})
@@ -441,7 +443,7 @@ class auction_lots(osv.osv):
 		'image': fields.binary('Image'),
 		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,type='boolean',store=True),
 		'paid_ach':fields.function(_is_paid_ach,string='Buyer invoice reconciled',method=True, type='boolean',store=True),
-		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('sold','Sold')),'State', required=True, readonly=True),
+		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('sold','Sold'),('taken_away','Taken away')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='Buyer price',store=True),
 		'seller_price': fields.function(_sellerprice, method=True, string='Seller price',store=True),
 		'gross_revenue':fields.function(_grossprice, method=True, string='Gross revenue',store=True),
@@ -670,7 +672,7 @@ class auction_lots(osv.osv):
 			#	wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
 			inv_ref.button_compute(cr, uid, invoice.values())
 			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_proforma', cr)
 		return invoices.values()
 
 
@@ -792,7 +794,7 @@ class auction_lots(osv.osv):
 			inv_ref.button_compute(cr, uid, [inv_id])
 		for l in  inv_ref.browse(cr, uid, invoices.values(), context):
 			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_open', cr)
+			wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_proforma', cr)
 		return invoices.values()
 
 
