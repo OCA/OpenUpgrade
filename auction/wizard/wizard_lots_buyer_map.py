@@ -50,7 +50,8 @@ buyer_map_fields = {
 def _state_check(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
 	for rec in pool.get('auction.lots').browse(cr,uid,data['ids'],context):
-		if (not rec.ach_uid and rec.ach_login):
+		print rec.ach_uid , rec.ach_login
+		if (not rec.ach_uid or rec.ach_login):
 			return 'check'
 	return 'done'
 
@@ -92,7 +93,7 @@ class wiz_auc_lots_buyer_map(wizard.interface):
 				<form title="Mapping result">
 					<label string="All objects are assigned to buyers !"/>
 				</form>''',
-				'fields': {}, 
+				'fields': {},
 				'state':[('end','Close')]}
 		}
 	}
