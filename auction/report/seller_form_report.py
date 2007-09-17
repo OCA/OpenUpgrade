@@ -47,7 +47,7 @@ class seller_form_report(report_sxw.rml_parse):
 		self.localcontext.update({
 			'time': time,
 			'sum_taxes': self.sum_taxes,
-				'sellerrinfo' : self.seller_info,
+			'sellerinfo' : self.seller_info,
 	#		'street':street,
 	#		'address':address,
 })
@@ -75,10 +75,10 @@ class seller_form_report(report_sxw.rml_parse):
 			print "Object :",object
 #			print ret_dict
 
-			partner = ret_dict.get(object.bord_vnd_id.id,False)
+			partner = ret_dict.get(object.bord_vnd_id.partner_id.id,False)
 			print "seller :",partner
 			if not partner:
-				ret_dict[object.ach_uid.id] = {'partner' : object.ach_uid or False,'lots':[object]}
+				ret_dict[object.bord_vnd_id.partner_id.id] = {'partner' : object.bord_vnd_id.partner_id or False,'lots':[object]}
 			else:
 				lots = partner.get('lots')
 				print "Lots :",lots
