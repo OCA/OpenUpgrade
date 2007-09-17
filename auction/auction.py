@@ -353,7 +353,7 @@ class auction_lots(osv.osv):
 			#indir_cost=lot.bord_vnd_id.specific_cost_ids
 			#for r in lot.bord_vnd_id.specific_cost_ids:
 			#	som+=r.amount
-			
+
 			for line in account_analytic_line_obj.browse(cr,uid,line_ids):
 				if line.amount:
 					som-=line.amount
@@ -449,11 +449,13 @@ class auction_lots(osv.osv):
 		'costs':fields.function(_costs,method=True,string='Indirect costs',store=True),
 		'statement_id': fields.many2many('account.bank.statement.line', 'auction_statement_line_rel','auction_id', 'statement','Payment'),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
-		'net_margin':fields.function(_netmargin, method=True, string='Net Margin (%)',store=True)
+		'net_margin':fields.function(_netmargin, method=True, string='Net Margin (%)',store=True),
+		'ref': fields.selection((('small','Small'),('medium','Medium'),('large','Large')),'Image size'),
 	}
 	_defaults = {
 		'state':lambda *a: 'draft',
-		'lot_num':lambda *a:1
+		'lot_num':lambda *a:1,
+		'ref':lambda *a: 'medium',
 
 	}
 	_constraints = [
@@ -670,7 +672,7 @@ class auction_lots(osv.osv):
 			wf_service = netsvc.LocalService('workflow')
 			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
 		return invoices.values()
-	
+
 
 	# creates the transactions between the auction company and the seller
 	# this is done by creating a new in_invoice for each
