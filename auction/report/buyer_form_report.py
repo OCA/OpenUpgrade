@@ -34,12 +34,15 @@ from report import report_sxw
 from osv import osv
 
 class buyer_form_report(report_sxw.rml_parse):
+	count=0
+	c=0
 	def __init__(self, cr, uid, name, context):
 		super(buyer_form_report, self).__init__(cr, uid, name, context)
 		self.localcontext.update({
 			'time': time,
 			'sum_taxes': self.sum_taxes,
 			'buyerinfo' : self.buyer_info,
+			'grand_total' : self.grand_buyer_total,
 	})
 
 	def sum_taxes(self, lot):
@@ -65,15 +68,25 @@ class buyer_form_report(report_sxw.rml_parse):
 			partner = ret_dict.get(object.ach_uid.id,False)
 			print "Partner :",partner
 			if not partner:
+
 				ret_dict[object.ach_uid.id] = {'partner' : object.ach_uid or False,'lots':[object]}
 			else:
+
 				lots = partner.get('lots')
 				print "Lots :",lots
 				lots.append(object)
 #		print 'ret dict :',ret_dict
 #		buyer_ids=self.pool.get(auction.lots).read(cr,uid,lot)
+
+
 		print "Return ret_dict.values() :",ret_dict.values()
 		return ret_dict.values()
+
+	def grand_buyer_total(self,o):
+		grand_total = 0
+		for oo in o:
+			grand_total =grand_total + oo['obj_price'] +self.sum_taxes(oo)
+		return grand_total
 
 report_sxw.report_sxw('report.buyer_form_report', 'auction.lots', 'addons/auction/report/buyer_form_report.rml', parser=buyer_form_report)
 
