@@ -41,17 +41,18 @@ class seller_form_report(report_sxw.rml_parse):
 	#	partner=lot.bord_vnd_id.partner_id
 	#	address=partner.address and partner.address[0] or ""
 	#	street = address and address.street or ""
-	
 
-			
+
+
 		self.localcontext.update({
 			'time': time,
 			'sum_taxes': self.sum_taxes,
+				'sellerrinfo' : self.seller_info,
 	#		'street':street,
 	#		'address':address,
 })
 
-		
+
 	def sum_taxes(self, lot):
 		taxes=[]
 		print lot.auction_id and lot.auction_id.seller_costs[0].amount or False
@@ -65,6 +66,27 @@ class seller_form_report(report_sxw.rml_parse):
 		for t in tax:
 			amount+=t['amount']
 		return amount
+	def seller_info(self):
+		objects = [object for object in self.localcontext.get('objects')]
+		print "OBJECTS",objects
+		ret_dict = {}
+		ret_list = []
+		for object in objects:
+			print "Object :",object
+#			print ret_dict
+
+			partner = ret_dict.get(object.bord_vnd_id.id,False)
+			print "seller :",partner
+			if not partner:
+				ret_dict[object.ach_uid.id] = {'partner' : object.ach_uid or False,'lots':[object]}
+			else:
+				lots = partner.get('lots')
+				print "Lots :",lots
+				lots.append(object)
+#		print 'ret dict :',ret_dict
+#		buyer_ids=self.pool.get(auction.lots).read(cr,uid,lot)
+		print "Return ret_dict.values() :",ret_dict.values()
+		return ret_dict.values()
 
 
 report_sxw.report_sxw('report.seller_form_report', 'auction.lots', 'addons/auction/report/seller_form_report.rml', parser=seller_form_report)
