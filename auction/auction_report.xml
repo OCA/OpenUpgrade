@@ -34,10 +34,10 @@
 		 multi="1"/>
 
 
-	<report 
-		string="Code barres du lot" 
+	<report
+		string="Code barres du lot"
 		model="auction.lots"
-		name="auction.code_bar_lot" 
+		name="auction.code_bar_lot"
 		rml="auction/report/report_lot_bar_code.rml"
 		id="v_report_barcode_lot"/>
 
@@ -63,12 +63,12 @@
 		auto="False"
 		multi="1"/>
 
-	<report string="Deposit Letter"
+	<!--<report string="Deposit Letter"
 	   	model="auction.lots"
 		name="deposit.seller"
 		rml="auction/report/deposit_seller.rml"
 		auto="False"
-		multi="1"/>
+		multi="1"/>-->
 
 	<report string="Lots List"
 	   	model="auction.lots"
@@ -134,15 +134,15 @@
 		  auto="False"
 		  multi="1"/>-->
 
-		<report string="Buyer Form" 
+		<report string="Buyer Form"
 		id="buyer_form_id"
-		model="auction.lots" 
+		model="auction.lots"
 		name="report.auction.ach_bordereau"
 		xml="auction/report/ach_bordereau.xml"
 		xsl="auction/report/ach_bordereau.xsl" 
 		multi="1"/>
 
-		<report string="Deposits" 
+		<report string="Deposits"
 		id="id_deposit"
 		model="auction.deposit"
 		name="report.auction.deposit"
@@ -156,11 +156,11 @@
 			name="auction.cat_flagy"
 			xsl="'auction/report/catalog2.xsl"/>-->
 
-		<report string="Seller Form" 
+		<report string="Seller Form"
 		id="seller_lots_3"
-		model="auction.lots" 
-		name="report.auction.vnd_bordereau" 
-		xml="auction/report/vnd_bordereau.xml" 
+		model="auction.lots"
+		name="report.auction.vnd_bordereau"
+		xml="auction/report/vnd_bordereau.xml"
 		xsl="auction/report/vnd_bordereau.xsl"
 		multi="1"/>
 
