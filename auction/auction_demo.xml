@@ -216,7 +216,7 @@
 
 		<field name="journal_id" ref="account.sales_journal"/>
 		<field name="journal_seller_id" ref="account.expenses_journal"/>
-		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','1')]"></field>
+		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
 
 	</record>
 
@@ -234,7 +234,7 @@
 
 		<field name="journal_id" ref="account.sales_journal"/>
 		<field name="journal_seller_id" ref="account.expenses_journal"/>
-		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','1')]"></field>
+		<field name="account_analytic_id" model="account.analytic.account" search="[('code','=','001')]"></field>
 
 </record>
 
