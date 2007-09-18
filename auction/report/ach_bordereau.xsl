@@ -91,7 +91,7 @@
 		<xsl:apply-templates select="objects"/>
 
 		<setNextTemplate name="first_page"/>
-		<pageBreak/>
+<!-- by writing this it leave an extra page		<pageBreak/>-->
 	</xsl:template>
 
 	<xsl:template match="objects">
@@ -163,4 +163,6 @@
 			</td>
 		</tr>
 	</xsl:template>
+
+
 </xsl:stylesheet>
