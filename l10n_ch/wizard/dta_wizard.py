@@ -272,7 +272,6 @@ class Log:
 
 def _create_dta(self,cr,uid,data,context):
 
-
 	v={}
 	v['uid'] = str(uid)
 	v['creation_date']= time.strftime('%y%m%d')
@@ -288,7 +287,7 @@ def _create_dta(self,cr,uid,data,context):
 	if not bank:
 		return {'note':'No bank account for the company.'}
 
-	v['comp_bank_name']= bank.bank_id and bank.bank_id.name or False
+	v['comp_bank_name']= bank.bank and bank.bank.name or False
  	v['comp_bank_clearing'] = bank.clearing
 
 	if not v['comp_bank_clearing']:
@@ -366,7 +365,7 @@ def _create_dta(self,cr,uid,data,context):
 			continue
 
 		
-		v['partner_bank_name'] =  pline.bank_id.bank_id and pline.bank_id.bank_id.name or False
+		v['partner_bank_name'] =  pline.bank_id.bank and pline.bank_id.bank.name or False
 		v['partner_bank_clearing'] =  pline.bank_id.clearing or False
 		if not v['partner_bank_name'] :
 			log.add('\nPartner bank account not well defined, please provide a name for the associated bank (partner: '+pline.partner_id.name+', bank:'+res_partner_bank_obj.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+').')
@@ -391,7 +390,7 @@ def _create_dta(self,cr,uid,data,context):
 			v['partner_bank_country'] = pline.bank_id.bank.country and \
 					pline.bank_id.bank.country.name or ''
 
-		v['partner_bank_code']=  False # for future : place BIC number here 
+		v['partner_bank_code']= pline.bank_id.bank.bic
 		v['invoice_reference']= i.reference
 		v['invoice_bvr_num']= i.bvr_ref_num
 		if v['invoice_bvr_num']:
@@ -448,11 +447,6 @@ def _create_dta(self,cr,uid,data,context):
 				v['option_id_bank']= 'A'
 				v['partner_bank_ident']= v['partner_bank_code']
 			elif v['partner_bank_city']:
-				#
-				# added by fabien
-				#
-# 				log.add("\nCode IBAN or Swift code doesn't exist for the partner bank:"+pline.bank_id.name_get(cr,uid,[pline.bank_id.id],context)[0][1]+' (partner: '+pline.partner_id.name+').')
-# 				continue
 
 				v['option_id_bank']= 'D'
 				v['partner_bank_ident']= v['partner_bank_name'] +' '+v['partner_bank_street']\
@@ -460,7 +454,7 @@ def _create_dta(self,cr,uid,data,context):
 					+' '+v['partner_bank_country']
 			else:
 				log.add("\nYou must provide the bank city "
-				"or the bank code for the partner bank:" + \
+				"or the bic code for the partner bank:" + \
 						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
 							context)[0][1] + \
 									' (partner: ' + pline.partner_id.name + ').')
@@ -570,6 +564,7 @@ def _create_dta(self,cr,uid,data,context):
 			}
 
 			data['reconciles_and_st_lines']= reconciles_and_st_lines
+		pool.get('payment.order').set_done(cr,uid,data['id'],context)
 	else:
 		dta_data= False
 	return {'note':log(), 'dta': dta_data}

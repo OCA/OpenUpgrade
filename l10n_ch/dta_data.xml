@@ -83,13 +83,7 @@
 	<field name="readonly" eval="False"/>
   </record>
   <record model="res.partner.bank.type.field" id="bank_field_iban">
-	<field name="name">bank_id</field>
-	<field name="bank_type_id" ref="dta_iban"/>
-	<field name="required" eval="True"/>
-	<field name="readonly" eval="False"/>
-  </record>
-  <record model="res.partner.bank.type.field" id="address_field_iban">
-	<field name="name">bank_address_id</field>
+	<field name="name">bank</field>
 	<field name="bank_type_id" ref="dta_iban"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
@@ -98,7 +92,7 @@
 
   <!-- Adjust the fields attributes for bvrbank-->
   <record model="res.partner.bank.type.field" id="bank_field_bvrbank">
-	<field name="name">bank_id</field>
+	<field name="name">bank</field>
 	<field name="bank_type_id" ref="bvrbank"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
@@ -112,7 +106,7 @@
 
   <!-- Adjust the fields attributes for bvrpost-->
   <record model="res.partner.bank.type.field" id="bank_field_bvrpost">
-	<field name="name">bank_id</field>
+	<field name="name">bank</field>
 	<field name="bank_type_id" ref="bvrpost"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
@@ -126,7 +120,7 @@
 
   <!-- Adjust the fields attributes for bvpost -->
   <record model="res.partner.bank.type.field" id="bank_field_bvpost">
-	<field name="name">bank_id</field>
+	<field name="name">bank</field>
 	<field name="bank_type_id" ref="bvpost"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
@@ -140,7 +134,7 @@
 
   <!-- Adjust the fields attributes for bvbank -->
   <record model="res.partner.bank.type.field" id="bank_field_bvbank">
-	<field name="name">bank_id</field>
+	<field name="name">bank</field>
 	<field name="bank_type_id" ref="bvbank"/>
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
