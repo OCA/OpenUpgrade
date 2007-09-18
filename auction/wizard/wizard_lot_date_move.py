@@ -66,7 +66,7 @@ def _auction_move_set(self,cr,uid,datas,context={}):
 	rec_ids = refs.browse(cr,uid,datas['ids'])
 	
 	line_ids= pooler.get_pool(cr.dbname).get('auction.bid_line').search(cr,uid,[('lot_id','in',datas['ids'])])
-	pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
+#	pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
 	for rec in rec_ids:
 		new_id=pooler.get_pool(cr.dbname).get('auction.lot.history').create(cr,uid,{
 			'auction_id':rec.auction_id.id,

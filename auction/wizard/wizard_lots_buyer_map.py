@@ -48,7 +48,6 @@ buyer_map_fields = {
 # Try to find an object not mapped
 #
 def _state_check(self, cr, uid, data, context):
-	print "check ici"
 	pool = pooler.get_pool(cr.dbname)
 	for rec in pool.get('auction.lots').browse(cr,uid,data['ids'],context):
 		print rec
@@ -61,7 +60,6 @@ def _state_check(self, cr, uid, data, context):
 def _start(self,cr,uid,datas,context):
 	pool = pooler.get_pool(cr.dbname)
 	for rec in pool.get('auction.lots').browse(cr,uid,datas['ids'],context):
-		print "REC",rec
 		if (not rec.ach_uid and rec.ach_login):
 			return {'ach_login': rec.ach_login}
 	return {}

@@ -281,15 +281,14 @@ Auction Management/Auction Dates/Reporting
 
 					<separator string="Description" colspan="4"/>
 					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
-									<!--field name="state" select="1"/-->
-				 <group col="5" colspan="4">
 					<field name="state" colspan="1" select="2"/>
-					<button name="button_bought" string="Sold" states="draft" type="object"/>
-					<button name="button_not_bought" string="Not sold" states="draft" type="object"/>
-					<button name="button_draft" string="Set to draft" states="sold,unsold" type="object"/>
-					<button name="button_taken_away" string="Taken away" states="sold" type="object"/>
+				 	<group col="4" colspan="2">
+						<button name="button_bought" string="Sold" states="draft" type="object"/>
+						<button name="button_not_bought" string="Not sold" states="draft" type="object"/>
+						<button name="button_draft" string="Set to draft" states="sold,unsold" type="object"/>
+						<button name="button_taken_away" string="Taken away" states="sold" type="object"/>
 
-				</group>
+					</group>
 				</page>
 
 				<page string="Seller">
@@ -345,6 +344,14 @@ Auction Management/Auction Dates/Reporting
 							<field name="bid_id"/>
 							<field name="price"/>
 							<field name="call"/>
+						</tree>		</field>
+
+						<field name="history_bids_ids" colspan="4" readonly="1">
+						<tree string="History of bids">
+							<field name="partner_id"/>
+							<field name="name"/>
+							<field name="auction_id"/>
+							<field name="bid_lines"/>
 						</tree>
 					</field>
 
@@ -510,6 +517,7 @@ Auction Management/Auction Dates/Reporting
 						<field name="method"/>
 						<newline/>
 						<field name="tax_id" domain="[('domain','=','auction')]"/>
+						<field name="transfer"/>
 						<newline/>
 						<field name="lot_id" colspan="4" mode="tree,graph" nolabel="1">
 							<tree string="Objects">

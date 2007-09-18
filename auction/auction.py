@@ -130,6 +130,7 @@ class auction_deposit(osv.osv):
 	_description="Deposit Border"
 	_order = "id desc"
 	_columns = {
+		'transfer' : fields.boolean('Transfer'),
 		'name': fields.char('Depositer Inventory', size=64, required=True),
 		'partner_id': fields.many2one('res.partner', 'Seller', required=True, change_default=True),
 		'date_dep': fields.date('Deposit date', required=True),
