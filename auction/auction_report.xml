@@ -120,22 +120,33 @@
 		id="total_result1"
 		multi="1"/>
 
-		  <report string="Buyer Form"
+<!--		  <report string="Buyer Form"
 		  model="auction.lots"
 		  name="buyer_form_report"
 		  rml="auction/report/buyer_form_report.rml"
 		  auto="False"
 		  multi="1"/>
-
-		  <report string="Seller form"
+-->
+<!--		  <report string="Seller form"
 		  model="auction.lots"
 		  name="seller_form_report"
 		  rml="auction/report/seller_form_report.rml"
 		  auto="False"
-		  multi="1"/>
+		  multi="1"/>-->
 
+		<report string="Buyer Form" 
+		id="buyer_form_id"
+		model="auction.lots" 
+		name="report.auction.ach_bordereau"
+		xml="auction/report/ach_bordereau.xml"
+		xsl="auction/report/ach_bordereau.xsl"/>
 
-
+		<report string="Deposits" 
+		id="id_deposit"
+		model="auction.deposit"
+		name="report.auction.deposit"
+		xml="auction/report/deposit.xml"
+		xsl="auction/report/deposit.xsl"/>
 
 		<!--<report
 			id="report_auction_catalog"
@@ -144,6 +155,12 @@
 			name="auction.cat_flagy"
 			xsl="'auction/report/catalog2.xsl"/>-->
 
+		<report string="Seller Form" 
+		id="seller_lots_3"
+		model="auction.lots" 
+		name="report.auction.vnd_bordereau" 
+		xml="auction/report/vnd_bordereau.xml" 
+		xsl="auction/report/vnd_bordereau.xsl"/>
 
 		<report string="Seller List"
 		 model="auction.lots"

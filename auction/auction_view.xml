@@ -607,9 +607,10 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<tree string="Bids">
 				<field name="bid_id"/>
-				<field name="lot_id"/>
+			<!--	<field name="lot_id"/>-->
 				<field name="price"/>
 				<field name="call"/>
+				<field name="auction"/>
 			</tree>
 		</field>
 	</record>
@@ -1577,6 +1578,13 @@ Object encoded
 			</tree>
 		</field>
 	</record>
+
+	<act_window name="Bordereau de dépôt"
+		domain="[('partner_id', '=', active_id)]"
+		res_model="auction.deposit"
+		src_model="res.partner"
+		id="act_auction_lot_open_deposit"/>
+
 
 </data>
 </terp>

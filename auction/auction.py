@@ -849,12 +849,22 @@ auction_lot_history()
 class auction_bid_lines(osv.osv):
 	_name = "auction.bid_line"
 	_description="Bid"
+
+	def _get_name(self,cr,uid,ids,*a):
+		res = {}
+		lots=self.browse(cr,uid,ids)
+		for lot in lots:
+			res[lot.id] = lot.lot_id.auction_id.id
+		print lot.lot_id.auction_id.name
+		return res
+
 	_columns = {
 		'name': fields.char('Bid date',size=64),
 		'bid_id': fields.many2one('auction.bid','Bid ID', required=True, ondelete='cascade'),
 		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
 		'call': fields.boolean('To be Called'),
-		'price': fields.float('Maximum Price')
+		'price': fields.float('Maximum Price'),
+		'auction': fields.function(_get_name, method=True, string='Auction Name',store=True),
 	}
 	_defaults = {
 		'name': lambda *args: time.strftime('%Y-%m-%d')
