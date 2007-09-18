@@ -42,5 +42,5 @@ import wizard_transfer_unsold_object
 import auction_wizard_enable_taken
 import auction_wizard_able_taken
 import auction_catalog_flagey
-import wizard_lots_barcode
+#import wizard_lots_barcode
 import wizard_emporte
