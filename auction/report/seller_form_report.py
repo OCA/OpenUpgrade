@@ -48,6 +48,7 @@ class seller_form_report(report_sxw.rml_parse):
 			'time': time,
 			'sum_taxes': self.sum_taxes,
 			'sellerinfo' : self.seller_info,
+			'grand_total' : self.grand_seller_total,
 	#		'street':street,
 	#		'address':address,
 })
@@ -87,7 +88,14 @@ class seller_form_report(report_sxw.rml_parse):
 #		buyer_ids=self.pool.get(auction.lots).read(cr,uid,lot)
 		print "Return ret_dict.values() :",ret_dict.values()
 		return ret_dict.values()
+	def grand_seller_total(self,o):
+		grand_total = 0
+		for oo in o:
+			print "the value of grand totoal",grand_total
+			print "the value of self.sum_taxes(oo)",self.sum_taxes(oo)
+			print "the value of oo['obj_price']",oo['obj_price']
+			grand_total =grand_total + oo['obj_price']+ self.sum_taxes(oo)
+		return grand_total
 
 
 report_sxw.report_sxw('report.seller_form_report', 'auction.lots', 'addons/auction/report/seller_form_report.rml', parser=seller_form_report)
-
