@@ -506,7 +506,7 @@ class auction_lots(osv.osv):
 			taxes = lot.product_id.taxes_id
 			if lot.bord_vnd_id.tax_id:
 				taxes.append(lot.author_right)
-			else:
+			elif lot.auction_id:
 				taxes += lot.auction_id.buyer_costs
 			tax=self.pool.get('account.tax').compute(cr,uid,taxes,lot.obj_price,1)
 			for t in tax:
@@ -863,26 +863,26 @@ class auction_bid_lines(osv.osv):
 #			res[lot.id] = lot.lot_id.auction_id.name
 #			print lot.lot_id.auction_id.name
 #		return res
-	
-	def return_name(self, cr, uid, ids, lot_id,context):
-		res={}
-		autions = self.pool.get('auction.lots').browse(cr, uid, lot_id)
-		v_auction=auctions.auction_id.name or False
-		print v_auction
-		res[id]= v_auction
-		return res
-
 	_columns = {
 		'name': fields.char('Bid date',size=64),
 		'bid_id': fields.many2one('auction.bid','Bid ID', required=True, ondelete='cascade'),
 		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
 		'call': fields.boolean('To be Called'),
 		'price': fields.float('Maximum Price'),
-	#	'auction': fields.function(return_name, method=True, string='Auction Name'),
+		'auction': fields.char(string='Auction Name', size=64)
 	}
 	_defaults = {
 		'name': lambda *args: time.strftime('%Y-%m-%d')
 	}
+	
+	def onchange_name(self, cr, uid, ids, lot_id):
+		if not lot_id:
+			return {'value': {'auction':False}}
+		auctions = self.pool.get('auction.lots').browse(cr, uid, lot_id)
+		v_auction=auctions.auction_id.name or False
+		return {'value': {'auction': v_auction}}
+
+
 auction_bid_lines()
 
 class report_buyer_auction(osv.osv):

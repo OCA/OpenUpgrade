@@ -52,12 +52,19 @@ auction_move_fields = {
 #		cr.commit()
 #		cr.close()
 #	return {}
+def _top(self,cr,uid,datas,context={}):
+	refs = pooler.get_pool(cr.dbname).get('auction.lots')
+	rec_ids = refs.browse(cr,uid,datas['ids'])
+	for rec in rec_ids:
+		if not rec.auction_id:
+			raise wizard.except_wizard('Error !','You can not move a lot that has no auction date')
+	return {}
 def _auction_move_set(self,cr,uid,datas,context={}):
 	if not (datas['form']['auction_id'] and len(datas['ids'])) :
 		return {}
 	refs = pooler.get_pool(cr.dbname).get('auction.lots')
 	rec_ids = refs.browse(cr,uid,datas['ids'])
-
+	
 	line_ids= pooler.get_pool(cr.dbname).get('auction.bid_line').search(cr,uid,[('lot_id','in',datas['ids'])])
 	pooler.get_pool(cr.dbname).get('auction.bid_line').unlink(cr, uid, line_ids)
 	for rec in rec_ids:
@@ -81,7 +88,7 @@ def _auction_move_set(self,cr,uid,datas,context={}):
 class wiz_auc_lots_auction_move(wizard.interface):
 	states = {
 		'init': {
-			'actions': [],
+			'actions': [_top],
 			'result': {'type': 'form', 'arch':auction_move, 'fields': auction_move_fields, 'state':[('set_date', 'Move to Auction date'),('end','Cancel')]}
 		},
 		'set_date': {

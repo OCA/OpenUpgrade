@@ -620,11 +620,11 @@ Auction Management/Auction Dates/Reporting
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Bids">
-				<field name="bid_id"/>
-				<field name="lot_id" domain="[('auction_id','=',parent['auction_id'])]" colspan="4"/><!-- on_change="onchange_contact(lot_id)"/>-->
-				<field name="call" colspan="4"/>
+				<field name="bid_id" select="1"/>
+				<field name="lot_id" domain="[('auction_id','=',parent['auction_id'])]" on_change="onchange_name(lot_id)" colspan="4"/>
+				<field name="call" colspan="4" select="1"/>
 				<field name="price"/>
-				<field name="auction"/>
+				<!--field name="auction"/-->
 
 			</form>
 		</field>
