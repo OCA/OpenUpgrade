@@ -621,9 +621,11 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<form string="Bids">
 				<field name="bid_id"/>
-				<field name="lot_id" domain="[('auction_id','=',parent['auction_id'])]" colspan="4"/>
+				<field name="lot_id" domain="[('auction_id','=',parent['auction_id'])]" colspan="4"/><!-- on_change="onchange_contact(lot_id)"/>-->
 				<field name="call" colspan="4"/>
 				<field name="price"/>
+				<field name="auction"/>
+
 			</form>
 		</field>
 	</record>
@@ -649,7 +651,7 @@ Auction Management/Auction Dates/Reporting
 				<separator string="Bid information" colspan="4"/>
 				<field name="name" select="1"/>
 				<newline/>
-				<field name="partner_id" select="1"/>
+				<field name="partner_id" select="1" on_change="onchange_contact(partner_id)"/>
 				<field  name="contact_tel" select="2"/>
 				<field name="auction_id" select="1"/>
 				<field name="bid_lines" colspan="4">

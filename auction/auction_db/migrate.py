@@ -146,7 +146,7 @@ import_sql(cr,
 		vnd_lim,
 		vnd_lim_net,
 		state,	
-		'auction_db.product_unknown' as "product_id:id"	
+		'auction_demo.monproduit' as "product_id:id"	
 	from
 		auction_lots
 	order by

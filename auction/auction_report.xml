@@ -139,7 +139,8 @@
 		model="auction.lots" 
 		name="report.auction.ach_bordereau"
 		xml="auction/report/ach_bordereau.xml"
-		xsl="auction/report/ach_bordereau.xsl"/>
+		xsl="auction/report/ach_bordereau.xsl" 
+		multi="1"/>
 
 		<report string="Deposits" 
 		id="id_deposit"
@@ -160,7 +161,8 @@
 		model="auction.lots" 
 		name="report.auction.vnd_bordereau" 
 		xml="auction/report/vnd_bordereau.xml" 
-		xsl="auction/report/vnd_bordereau.xsl"/>
+		xsl="auction/report/vnd_bordereau.xsl"
+		multi="1"/>
 
 		<report string="Seller List"
 		 model="auction.lots"

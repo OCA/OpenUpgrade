@@ -531,16 +531,16 @@ class auction_lots(osv.osv):
 
 	def _compute_lot_seller_costs(self, cr, uid, lot, manual_only=False):
 		costs = []
-
-		tax_cost_ids = [i.id for i in lot.auction_id.seller_costs]
-
+		tax_cost_ids=[]
+#		tax_cost_ids = [i.id for i in lot.auction_id.seller_costs]
 		# if there is a specific deposit cost for this depositer, add it
 		border_id = lot.bord_vnd_id
 		if border_id:
 			if border_id.tax_id:
-				tax_cost_ids.append(border_id.tax_id.id)
+				tax_cost_ids.append(border_id.tax_id)
+			elif lot.auction_id and lot.auction_id.seller_costs:
+				tax_cost_ids += lot.auction_id.seller_costs
 		tax_costs = self.pool.get('account.tax').compute(cr, uid, tax_cost_ids, lot.obj_price, 1)
-
 		# delete useless keys from the costs computed by the tax object... this is useless but cleaner...
 		for cost in tax_costs:
 			del cost['account_paid_id']
@@ -829,6 +829,12 @@ class auction_bid(osv.osv):
 	_defaults = {
 		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'auction.bid'),
 	}
+	def onchange_contact(self, cr, uid, ids, partner_id):
+		if not partner_id:
+			return {'value': {'contact_tel':False}}
+		contact = self.pool.get('res.partner').browse(cr, uid, partner_id)
+		v_contact=contact.address[0] and contact.address[0].phone or False
+		return {'value': {'contact_tel': v_contact}}
 
 auction_bid()
 
@@ -850,12 +856,20 @@ class auction_bid_lines(osv.osv):
 	_name = "auction.bid_line"
 	_description="Bid"
 
-	def _get_name(self,cr,uid,ids,*a):
-		res = {}
-		lots=self.browse(cr,uid,ids)
-		for lot in lots:
-			res[lot.id] = lot.lot_id.auction_id.id
-		print lot.lot_id.auction_id.name
+#	def get_nom(self,cr,uid,ids,*a):
+#		res = {}
+#		lots=self.browse(cr,uid,ids)
+#		for lot in lots:
+#			res[lot.id] = lot.lot_id.auction_id.name
+#			print lot.lot_id.auction_id.name
+#		return res
+	
+	def return_name(self, cr, uid, ids, lot_id,context):
+		res={}
+		autions = self.pool.get('auction.lots').browse(cr, uid, lot_id)
+		v_auction=auctions.auction_id.name or False
+		print v_auction
+		res[id]= v_auction
 		return res
 
 	_columns = {
@@ -864,7 +878,7 @@ class auction_bid_lines(osv.osv):
 		'lot_id': fields.many2one('auction.lots','Object', required=True, ondelete='cascade'),
 		'call': fields.boolean('To be Called'),
 		'price': fields.float('Maximum Price'),
-		'auction': fields.function(_get_name, method=True, string='Auction Name',store=True),
+	#	'auction': fields.function(return_name, method=True, string='Auction Name'),
 	}
 	_defaults = {
 		'name': lambda *args: time.strftime('%Y-%m-%d')
