@@ -89,4 +89,3 @@ class buyer_form_report(report_sxw.rml_parse):
 		return grand_total
 
 report_sxw.report_sxw('report.buyer_form_report', 'auction.lots', 'addons/auction/report/buyer_form_report.rml', parser=buyer_form_report)
-
