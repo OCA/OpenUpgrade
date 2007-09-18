@@ -54,7 +54,7 @@ def _state_check(self, cr, uid, data, context):
 		print rec
 		if not rec.ach_uid and not rec.ach_login:
 			raise wizard.except_wizard ('Error','No username is associated to this lot!')
-		if (not rec.ach_uid or rec.ach_login):
+		if (not rec.ach_uid or not rec.ach_login):
 			return 'check'
 	return 'done'
 
@@ -90,7 +90,7 @@ class wiz_auc_lots_buyer_map(wizard.interface):
 			'result': {'type': 'state', 'state':'init'}
 		},
 		'done': {
-			'actions': [_start],
+			'actions': [],
 			'result': {
 				'type': 'form',
 				'arch':'''<?xml version="1.0"?>
