@@ -42,7 +42,7 @@ import re
 import netsvc
 import base64
 import wizard
-#import photo_shadow
+import photo_shadow
 
 def escape(s):
 	return str(s or '').replace('<br/>','').decode('latin1','replace').encode('utf-8')
