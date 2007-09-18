@@ -11,6 +11,7 @@
 	<xsl:template name="stylesheet">
 		<paraStyle name="login-title" fontName="Helvetica" fontSize="12"/>
 		<paraStyle name="login" fontName="Helvetica-Bold" fontSize="16"/>
+		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="RIGHT"/>
 		<paraStyle name="cost-name" fontName="Helvetica-BoldOblique" fontSize="10" alignment="RIGHT"/>
 
 		<blockTableStyle id="objects">
@@ -39,28 +40,30 @@
 	</xsl:template>
 
 	<xsl:template match="client_info">
-		<para>
+		<para style="style1">
 			<b>
 				<xsl:value-of select="title"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="name"/>
 			</b>
 		</para>
-		<para><xsl:value-of select="street"/></para>
-		<para><xsl:value-of select="street2"/></para>
-		<para>
+		<para style="style1"><xsl:value-of select="street"/></para>
+		<para style="style1"><xsl:value-of select="street2"/></para>
+		<para style="style1">
 			<xsl:value-of select="zip"/>
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="city"/>
 		</para>
-		<para><xsl:value-of select="country"/></para>
+		<para style="style1"><xsl:value-of select="country"/></para>
 	</xsl:template>
 
 	<xsl:template match="borderform">
+	<setNextTemplate name="other_pages"/>
+		<nextFrame/>
 		<xsl:apply-templates select="client_info"/>
 
-		<setNextTemplate name="other_pages"/>
-		<nextFrame/>
+<!--		<setNextTemplate name="other_pages"/>-->
+<!--		<nextFrame/>-->
 
 		<para style="login-title" t="1">Plate Number:</para>
 		<para style="login"><xsl:value-of select="login"/></para>
@@ -90,8 +93,8 @@
 
 		<xsl:apply-templates select="objects"/>
 
-		<setNextTemplate name="first_page"/>
-<!-- by writing this it leave an extra page		<pageBreak/>-->
+<!--		<setNextTemplate name="first_page"/>-->
+<!--<pageBreak/>-->
 	</xsl:template>
 
 	<xsl:template match="objects">
