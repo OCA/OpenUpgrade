@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:fo="http://www.w3.org/1999/XSL/Format">
-
 	<xsl:import href="../../custom/corporate_defaults.xsl"/>
 		<xsl:import href="../../base/report/rml_template.xsl"/>
 
@@ -10,14 +9,12 @@
 
 	<xsl:template name="stylesheet">
 		<paraStyle name="name" fontName="Helvetica-Bold" fontSize="16"/>
-
 		<blockTableStyle id="products">
 			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
 			 <lineStyle kind="LINEBELOW" start="0,0" stop="-1,0"/>
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
 		</blockTableStyle>
-
 		<blockTableStyle id="product-totals">
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT"/>
@@ -35,16 +32,15 @@
 			<xsl:sort order="ascending" select="inventory"/>
 		</xsl:apply-templates>
 	</xsl:template>
-
-		<xsl:template match="vente-bordereau">
-			<xsl:apply-templates select="client_info"/>
-
+	<xsl:template match="vente-bordereau">
 		<nextFrame/>
 		<setNextTemplate name="other_pages"/>
-
+			<xsl:apply-templates select="client_info"/>
+			<spacer length="0.8cm"/>
 		<para>
 			<b t="1">Document</b>: <xsl:value-of select="subject"/> - <xsl:value-of select="title"/>
-		</para><para>
+		</para>
+		<para>
 			<b t="1">Inventory</b>: <xsl:value-of select="inventory"/>
 		</para>
 
@@ -65,8 +61,8 @@
 
 		<xsl:apply-templates select="vente-products"/>
 
-		<setNextTemplate name="first_page"/>
-		<pageBreak/>
+<!--		<setNextTemplate name="first_page"/>-->
+<!--		<pageBreak/>-->
 	</xsl:template>
 
 	<xsl:template match="client_info">
@@ -137,5 +133,4 @@
 			</td>
 		</tr>
 	</xsl:template>
-
 </xsl:stylesheet>
