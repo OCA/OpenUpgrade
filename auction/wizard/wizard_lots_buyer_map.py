@@ -49,7 +49,10 @@ buyer_map_fields = {
 #
 def _state_check(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
-	for rec in pool.get('auction.lots').browse(cr,uid,data['ids'],context):
+	cr.execute('select id from auction_lots where (ach_uid is null and ach_login is not null)  ')
+	v_ids=[x[0] for x in cr.fetchall()]
+	#ids_not_mapped=pool.get('auction.lots').search(cr,uid,[('rec.ach_uid','=',False)])
+	for rec in pool.get('auction.lots').browse(cr,uid,v_ids,context):
 		print rec
 		if not rec.ach_uid and not rec.ach_login:
 			raise wizard.except_wizard ('Error','No username is associated to this lot!')
@@ -88,7 +91,7 @@ class wiz_auc_lots_buyer_map(wizard.interface):
 			'result': {'type': 'state', 'state':'init'}
 		},
 		'done': {
-			'actions': [],
+			'actions': [_start],
 			'result': {
 				'type': 'form',
 				'arch':'''<?xml version="1.0"?>
