@@ -138,8 +138,13 @@
 			<td/>
 			<td/>
 			<td/>
-			<td><xsl:value-of select="name"/>:</td>
-			<td><xsl:value-of select="format-number(amount, '#,##0.00')"/></td>
+<!--			<td><xsl:value-of select="name"/>:</td>-->
+<!--			<td><xsl:value-of select="format-number(amount, '#,##0.00')"/></td>-->
+
+
+			<td><xsl:value-of select="name"/>Costs:</td>
+			<td><xsl:value-of select="format-number(sum(cost/amount) + amount, '#,##0.00')"/></td>
+
 		</tr>
 	</xsl:template>
 
