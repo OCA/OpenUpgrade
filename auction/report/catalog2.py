@@ -119,7 +119,8 @@ class auction_catalog(report_rml):
 	#		  promotion element
 			promo = doc.createElement('promotion1')
 
-			fp = file('/home/pmo/Desktop/najjla/images/lj8100.jpg','r')
+		#	fp = file('/home/pmo/Desktop/najjla/images/lj8100.jpg','r')
+			fp = file('/home/nel/Desktop/images/lj8100.jpg','r')
 			file_data = fp.read()
 
 
@@ -129,7 +130,8 @@ class auction_catalog(report_rml):
 
 			promo = doc.createElement('promotion2')
 
-			fp = file('/home/pmo/Desktop/najjla/images/aeko_logo.jpg','r')
+			#fp = file('/home/pmo/Desktop/najjla/images/aeko_logo.jpg','r')
+			fp = file('/home/nel/Desktop/images/aeko_logo.jpg','r')
 			file_data = fp.read()
 
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))

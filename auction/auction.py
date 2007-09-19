@@ -512,8 +512,7 @@ class auction_lots(osv.osv):
 			tax=self.pool.get('account.tax').compute(cr,uid,taxes,lot.obj_price,1)
 			for t in tax:
 				amount+=t['amount']
-			amount+=lot.obj_price
-
+			#amount+=lot.obj_price
 		amount_total['value']= amount
 		amount_total['amount']= amount
 		return amount_total
