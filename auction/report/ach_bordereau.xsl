@@ -120,7 +120,15 @@
 				<td t="1">Subtotal:</td>
 				<td><xsl:value-of select="format-number(sum(object[price != '']/price), '#,##0.00')"/></td>
 			</tr>
-			<xsl:apply-templates select="cost"/>
+<!--			<xsl:apply-templates select="cost"/>-->
+			<tr>
+				<td/>
+				<td/>
+				<td/>
+				<td/>
+				<td t="1">Cost:</td>
+				<td><xsl:value-of select="format-number(sum(object/cost/amount), '#,##0.00')"/></td>
+			</tr>
 			<tr>
 				<td/>
 				<td/>
@@ -132,21 +140,21 @@
 		</blockTable>
 	</xsl:template>
 
-	<xsl:template match="cost">
-		<tr>
-			<td/>
-			<td/>
-			<td/>
-			<td/>
+<!--	<xsl:template match="cost">-->
+<!--		<tr>-->
+<!--			<td/>-->
+<!--			<td/>-->
+<!--			<td/>-->
+<!--			<td/>-->
 <!--			<td><xsl:value-of select="name"/>:</td>-->
 <!--			<td><xsl:value-of select="format-number(amount, '#,##0.00')"/></td>-->
-
-
-			<td><xsl:value-of select="name"/>Costs:</td>
-			<td><xsl:value-of select="format-number(sum(cost/amount) + amount, '#,##0.00')"/></td>
-
-		</tr>
-	</xsl:template>
+<!---->
+<!---->
+<!--			<td><xsl:value-of select="name"/>Costs:</td>-->
+<!--			<td><xsl:value-of select="format-number(sum(object/cost))"/></td>-->
+<!---->
+<!--		</tr>-->
+<!--	</xsl:template>-->
 
 	<xsl:template match="object">
 		<tr>
