@@ -15,6 +15,7 @@
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
 		</blockTableStyle>
+		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="RIGHT"/>
 		<blockTableStyle id="product-totals">
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT"/>
@@ -66,15 +67,21 @@
 	</xsl:template>
 
 	<xsl:template match="client_info">
-		<para>
-			<xsl:value-of select="title" />
-			<xsl:text> </xsl:text>
-			<xsl:value-of select="name"/>
+		<para style="style1">
+			<b>
+				<xsl:value-of select="title"/>
+				<xsl:text> </xsl:text>
+				<xsl:value-of select="name"/>
+			</b>
 		</para>
-		<para><xsl:value-of select="street"/></para>
-		<para><xsl:value-of select="street2"/></para>
-		<para><xsl:value-of select="zip"/><xsl:text> </xsl:text><xsl:value-of select="city"/></para>
-		<para><xsl:value-of select="country"/></para>
+		<para style="style1"><xsl:value-of select="street"/></para>
+		<para style="style1"><xsl:value-of select="street2"/></para>
+		<para style="style1">
+			<xsl:value-of select="zip"/>
+			<xsl:text> </xsl:text>
+			<xsl:value-of select="city"/>
+		</para>
+		<para style="style1"><xsl:value-of select="country"/></para>
 	</xsl:template>
 
 	<xsl:template match="vente-products">
