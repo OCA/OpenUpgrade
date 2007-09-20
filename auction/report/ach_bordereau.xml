@@ -34,8 +34,16 @@
 				<name value="name"/>
 					<amount value="amount"/>
 			</cost>-->
+
+
+
+
+
 			<object type="fields" name="obj_num,id">
 				<id type="field" name="id"/>
+				<barcode type="field" name="id" addchecksum="false" print-text="true"/>
+				<!--<barcode value="id" addchecksum="false" print-text="true"/>
+-->
 				<cost type="call" name="compute_buyer_costs" args="">
 					<!--<id value="id"/>-->
 					<amount value="amount"/>

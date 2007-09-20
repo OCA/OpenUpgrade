@@ -3,6 +3,7 @@
 
 	<xsl:import href="../../custom/corporate_defaults.xsl"/>
 	<xsl:import href="../../base/report/rml_template.xsl"/>
+
 	<xsl:template match="/">
 		<xsl:call-template name="rml"/>
 	</xsl:template>
@@ -14,16 +15,31 @@
 		<blockTableStyle id="objects">
 			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
 			 <blockValign value="TOP"/>
-			 <blockAlignment value="RIGHT" start="-3,0" stop="-1,-1"/>
+			 <blockAlignment value="RIGHT" start="0,1" stop="1,-1"/>
 			 <lineStyle kind="LINEBELOW" start="0,0" stop="-1,0"/>
 		</blockTableStyle>
 		<blockTableStyle id="object-totals">
 			 <blockValign value="TOP"/>
-			 <blockAlignment value="RIGHT"/>
+			 <blockAlignment value="RIGHT" start="0,1" stop="1,-1"/>
 			 <lineStyle kind="LINEABOVE" start="-1,0" stop="-1,0"/>
 			 <lineStyle kind="LINEABOVE" start="-1,-1" stop="-1,-1"/>
 		</blockTableStyle>
-	</xsl:template>
+
+		<fo:root font-family="Times" font-size="10pt">
+			<fo:layout-master-set>
+				<fo:simple-page-master master-name="barcodes-page">
+						<fo:region-body margin="0.5in" border="0.25pt solid silver" padding="10pt"/>
+				</fo:simple-page-master>
+		   </fo:layout-master-set>
+
+		<fo:page-sequence master-reference="barcodes-page">
+
+		<fo:flow flow-name="xsl-region-body">
+	<xsl:apply-templates/>
+</fo:flow>
+</fo:page-sequence>
+</fo:root>
+</xsl:template>
 	<xsl:template name="story">
 		<xsl:apply-templates select="borderform-list"/>
 	</xsl:template>
@@ -86,8 +102,9 @@
 <!--<pageBreak/>-->
 	</xsl:template>
 	<xsl:template match="objects">
-		<blockTable colWidths="1.8cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="objects">
+		<blockTable colWidths="1.4cm,1.8cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="objects">
 			<tr>
+				<td t="1">Lot</td>
 				<td t="1">Cat. N.</td>
 				<td t="1">Description</td>
 				<td t="1">Paid</td>
@@ -98,8 +115,9 @@
 			<xsl:apply-templates select="object"/>
 		</blockTable>
 		<condPageBreak height="3.2cm"/>
-		<blockTable colWidths="1.8cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="object-totals">
+		<blockTable colWidths="1.4cm,1.8cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="object-totals">
 			<tr>
+				<td/>
 				<td/>
 				<td/>
 				<td/>
@@ -113,10 +131,12 @@
 				<td/>
 				<td/>
 				<td/>
+				<td/>
 				<td t="1">Cost:</td>
 				<td><xsl:value-of select="format-number(sum(object/cost/amount), '#,##0.00')"/></td>
 			</tr>
 			<tr>
+				<td/>
 				<td/>
 				<td/>
 				<td/>
@@ -127,24 +147,11 @@
 		</blockTable>
 	</xsl:template>
 
-<!--	<xsl:template match="cost">-->
-<!--		<tr>-->
-<!--			<td/>-->
-<!--			<td/>-->
-<!--			<td/>-->
-<!--			<td/>-->
-<!--			<td><xsl:value-of select="name"/>:</td>-->
-<!--			<td><xsl:value-of select="format-number(amount, '#,##0.00')"/></td>-->
-<!---->
-<!---->
-<!--			<td><xsl:value-of select="name"/>Costs:</td>-->
-<!--			<td><xsl:value-of select="format-number(sum(object/cost))"/></td>-->
-<!---->
-<!--		</tr>-->
-<!--	</xsl:template>-->
+
 
 	<xsl:template match="object">
 		<tr>
+			<td><xsl:value-of select="ref"/><barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="50"  alignment="CENTER"></barCode></td>
 			<td><xsl:value-of select="ref"/></td>
 			<td>
 				<para>
@@ -165,7 +172,6 @@
 				</xsl:if>
 			</td>
 		</tr>
-	</xsl:template>
-
+</xsl:template>
 
 </xsl:stylesheet>
