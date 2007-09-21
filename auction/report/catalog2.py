@@ -157,9 +157,9 @@ class auction_catalog(report_rml):
 				product =doc.createElement('product')
 				products.appendChild(product)
 
-				if cat['name']:
+				if cat['obj_desc']:
 					infos = doc.createElement('infos')
-					lines = re.split('<br/>|\n', cat['name'])
+					lines = re.split('<br/>|\n', cat['obj_desc'])
 
 					for line in lines:
 #						print  "LINE:::::::",line
