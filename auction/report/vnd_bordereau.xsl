@@ -85,17 +85,22 @@
 	</xsl:template>
 
 	<xsl:template match="vente-products">
-		<blockTable colWidths="2.0cm,2.0cm,12.0cm,2.4cm" style="products">
+		<blockTable colWidths="2.0cm,2.0cm,2.0cm,12.0cm,2.4cm" style="products">
 			<tr>
-				<td t="1">Cat. N.</td><td t="1">List N.</td><td t="1">Description</td><td t="1">Adj.(EUR)</td>
+				<td t="1">Lot</td>
+				<td t="1">Cat. N.</td>
+				<td t="1">List N.</td>
+				<td t="1">Description</td>
+				<td t="1">Adj.(EUR)</td>
 			</tr>
 			<xsl:apply-templates select="product">
 				<xsl:sort order="ascending" data-type="number" select="num_catalog"/>
 			</xsl:apply-templates>
 		</blockTable>
 		<condPageBreak height="3.2cm"/>
-		<blockTable colWidths="2.0cm,2.0cm,12.0cm,2.4cm" style="product-totals">
+		<blockTable colWidths="2.0cm,2.0cm,2.0cm,12.0cm,2.4cm" style="product-totals">
 			<tr>
+				<td/>
 				<td/>
 				<td/>
 				<td t="1">Subtotal:</td>
@@ -108,6 +113,7 @@
 			<tr>
 				<td/>
 				<td/>
+				<td/>
 				<td t="1">Total:</td>
 				<td><xsl:value-of select="format-number(sum(product[price != '']/price) + sum(cost/amount), '#,##0.00')"/></td>
 			</tr>
@@ -118,6 +124,7 @@
 		<tr>
 			<td/>
 			<td/>
+			<td/>
 			<td><xsl:value-of select="name"/>:</td>
 			<td><xsl:value-of select="format-number(amount, '#,##0.00')"/></td>
 		</tr>
@@ -125,6 +132,7 @@
 
 	<xsl:template match="product">
 		<tr>
+			<td><xsl:value-of select="ref"/><barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="50"  alignment="CENTER"></barCode></td>
 			<td><xsl:value-of select="num_catalog"/></td>
 			<td><xsl:value-of select="num_inv"/></td>
 			<td><para><b><xsl:value-of select="title"/></b></para></td>
