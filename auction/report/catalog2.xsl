@@ -165,7 +165,7 @@
 						<td align="right">
 
 							<xsl:if test="infos/photo">
-							<image height="4.5cm" width="4cm" horizontal-align= "right ">
+							<image height="4.0cm" width="3.0cm" horizontal-align= "right ">
 <!--									<xsl:attribute name="file">-->
 										<xsl:value-of select="infos/photo" />
 <!--									</xsl:attribute>-->
@@ -174,7 +174,7 @@
 							</xsl:if>
 							<xsl:if test="infos/photo_small" >
 
-									<image height="3.5cm" width="4cm" horizontal-align= "right " >
+									<image height="3.0cm" width="3.0cm" horizontal-align= "right " >
 
 										<xsl:value-of select="infos/photo_small"/>
 
