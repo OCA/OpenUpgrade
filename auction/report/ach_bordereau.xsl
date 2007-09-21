@@ -25,20 +25,7 @@
 			 <lineStyle kind="LINEABOVE" start="-1,-1" stop="-1,-1"/>
 		</blockTableStyle>
 
-		<fo:root font-family="Times" font-size="10pt">
-			<fo:layout-master-set>
-				<fo:simple-page-master master-name="barcodes-page">
-						<fo:region-body margin="0.5in" border="0.25pt solid silver" padding="10pt"/>
-				</fo:simple-page-master>
-		   </fo:layout-master-set>
 
-		<fo:page-sequence master-reference="barcodes-page">
-
-		<fo:flow flow-name="xsl-region-body">
-	<xsl:apply-templates/>
-</fo:flow>
-</fo:page-sequence>
-</fo:root>
 </xsl:template>
 	<xsl:template name="story">
 		<xsl:apply-templates select="borderform-list"/>
@@ -102,10 +89,10 @@
 <!--<pageBreak/>-->
 	</xsl:template>
 	<xsl:template match="objects">
-		<blockTable colWidths="1.4cm,1.8cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="objects">
+		<blockTable colWidths="1.2cm,1.0cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="objects">
 			<tr>
 				<td t="1">Lot</td>
-				<td t="1">Cat. N.</td>
+				<td t="1">Cat</td>
 				<td t="1">Description</td>
 				<td t="1">Paid</td>
 				<td t="1">Adj.(EUR)</td>
@@ -115,7 +102,7 @@
 			<xsl:apply-templates select="object"/>
 		</blockTable>
 		<condPageBreak height="3.2cm"/>
-		<blockTable colWidths="1.4cm,1.8cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="object-totals">
+		<blockTable colWidths="1.2cm,1.0cm,9.8cm,1.5cm,2.5cm,1.85cm,1.85cm" style="object-totals">
 			<tr>
 				<td/>
 				<td/>
