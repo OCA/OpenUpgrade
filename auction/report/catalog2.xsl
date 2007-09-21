@@ -13,6 +13,7 @@
 			<!--Image-->
 			<!--image x="7cm" y="25cm" file="/home/pmo/Desktop/najjla/images/aeko_logo.jpg"/-->
 			<image x="7cm" y="25cm" file="/home/nel/Desktop/images/aeko_logo.jpg"/>
+<!--			<image x="7cm" y="25cm" file="/home/tinyadmin/Desktop/najjla/images/aeko_logo.jpg"/>-->
 			<lines>1cm 3.0cm 20cm 3.0cm</lines>
 			<setFont name="Helvetica" size="15"/>
 			<drawCentredString x="105mm" y="2.2cm">Hotel des ventes Flagey</drawCentredString>
@@ -31,8 +32,8 @@
 		<pageGraphics>
 			<!--image x="1.0cm" y="27.3cm" file="/home/pmo/images/aeko_logo.jpg"/-->
 
-			<image x="1.0cm" y="27.3cm" file="/home/nel/Desktop/images/aeko_logo.jpg"/>
-			<!--image x="1.0cm" y="27.3cm" file="/home/nel/Desktop/images/flagey_head.png"/-->
+<!--			<image x="1.0cm" y="27.3cm" file="/home/nel/Desktop/images/aeko_logo.jpg"/>-->
+			<image x="1.0cm" y="27.3cm" file="/home/tinyadmin/Desktop/najjla/images/flagey_head.png"/>
 			<drawRightString x="19.0cm" y="27.6cm"> Vente  antiquitée le  <xsl:value-of select="date:day-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:day-in-month(catalog/AuctionDate1)"/>&#160;<xsl:value-of select="date:month-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:year(catalog/AuctionDate1)"/></drawRightString>
 			<lineMode width="1mm"/>
 			<setFont name="Helvetica" size="26"/>
@@ -161,19 +162,19 @@
 				            </para>
 				       </xsl:if>
 					</td>
-						<td alignment="right">
+						<td align="right">
 
 							<xsl:if test="infos/photo">
-							<image height="4cm" width="4cm" imageSide="right">
+							<image height="4cm" width="4cm" horizontal-align= "right ">
 <!--									<xsl:attribute name="file">-->
-										<xsl:value-of select="infos/photo"/>
+										<xsl:value-of select="infos/photo" />
 <!--									</xsl:attribute>-->
 									</image>
 
 							</xsl:if>
 							<xsl:if test="infos/photo_small" >
 
-									<image height="2.25cm" width="2.25cm"  >
+									<image height="3.5cm" width="4cm" horizontal-align= "right " >
 
 										<xsl:value-of select="infos/photo_small"/>
 
@@ -182,7 +183,7 @@
 							</xsl:if>
 							<xsl:if test="infos/photo_large">
 
-									<image height="4cm" width="4cm" imageSide="right">
+									<image height="4.5cm" width="4cm" imageSide="right">
 
 										<xsl:value-of select="infos/photo_large"/>
 
