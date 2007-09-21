@@ -119,8 +119,8 @@ class auction_catalog(report_rml):
 	#		  promotion element
 			promo = doc.createElement('promotion1')
 
-		#	fp = file('/home/pmo/Desktop/najjla/images/lj8100.jpg','r')
-			fp = file('/home/nel/Desktop/images/lj8100.jpg','r')
+			fp = file('/home/tinyadmin/Desktop/najjla/images/lj8100.jpg','r')
+		#	fp = file('/home/nel/Desktop/images/lj8100.jpg','r')
 			file_data = fp.read()
 
 
@@ -130,8 +130,8 @@ class auction_catalog(report_rml):
 
 			promo = doc.createElement('promotion2')
 
-			#fp = file('/home/pmo/Desktop/najjla/images/aeko_logo.jpg','r')
-			fp = file('/home/nel/Desktop/images/aeko_logo.jpg','r')
+			fp = file('/home/tinyadmin/Desktop/najjla/images/aeko_logo.jpg','r')
+			#fp = file('/home/nel/Desktop/images/aeko_logo.jpg','r')
 			file_data = fp.read()
 
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
@@ -182,7 +182,7 @@ class auction_catalog(report_rml):
 
 
 					else:
-						if cat ['ref'] == 'medium':
+						if cat ['ref'] == 'medium' or cat ['ref'] == 'large':
 							import random
 							limg = doc.createElement('photo')
 							file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
@@ -217,23 +217,6 @@ class auction_catalog(report_rml):
 							infos.appendChild(limg)
 
 
-						else:
-							print"in else if"
-							import random
-							limg = doc.createElement('photo_large')
-							file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
-							fp = file(file_name,'wb+')
-							content = base64.decodestring(cat['image'])
-							fp.write(content)
-							fp.close()
-							fp = file(file_name,'r')
-							size = photo_shadow.convert_catalog(fp, '/tmp/test.jpg',220)
-							fp = file('/tmp/test.jpg')
-							file_data = fp.read()
-							test_data = base64.encodestring(file_data)
-
-							limg.appendChild(doc.createTextNode(test_data))
-							infos.appendChild(limg)
 
 
 				print "CAT>>>>>>>>>>>>>>>>>>",cat

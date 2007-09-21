@@ -11,8 +11,8 @@
 			<stroke color="(0.6,0.3,0.1)"/>
 			<fill color="(0.6,0.3,0.1)"/>
 			<!--Image-->
-			<!--image x="7cm" y="25cm" file="/home/pmo/Desktop/najjla/images/aeko_logo.jpg"/-->
-			<image x="7cm" y="25cm" file="/home/nel/Desktop/images/aeko_logo.jpg"/>
+			<image x="7cm" y="25cm" file="/home/tinyadmin/Desktop/najjla/images/aeko_logo.jpg"/>
+<!--			<image x="7cm" y="25cm" file="/home/nel/Desktop/images/aeko_logo.jpg"/>-->
 <!--			<image x="7cm" y="25cm" file="/home/tinyadmin/Desktop/najjla/images/aeko_logo.jpg"/>-->
 			<lines>1cm 3.0cm 20cm 3.0cm</lines>
 			<setFont name="Helvetica" size="15"/>
@@ -142,7 +142,7 @@
 <!--        </xsl:if>-->
 
 <xsl:choose>
-<xsl:when test="string-length(infos/photo) &gt;2  or string-length(infos/photo_small) &gt;2 or string-length(infos/photo_large) &gt;2 ">
+<xsl:when test="string-length(infos/photo) &gt;2  or string-length(infos/photo_small) &gt;2 ">
 "
 
             <blockTable style="product1" colWidths="5.0cm,4.0cm">
@@ -165,7 +165,7 @@
 						<td align="right">
 
 							<xsl:if test="infos/photo">
-							<image height="4cm" width="4cm" horizontal-align= "right ">
+							<image height="4.5cm" width="4cm" horizontal-align= "right ">
 <!--									<xsl:attribute name="file">-->
 										<xsl:value-of select="infos/photo" />
 <!--									</xsl:attribute>-->
@@ -177,15 +177,6 @@
 									<image height="3.5cm" width="4cm" horizontal-align= "right " >
 
 										<xsl:value-of select="infos/photo_small"/>
-
-									</image>
-
-							</xsl:if>
-							<xsl:if test="infos/photo_large">
-
-									<image height="4.5cm" width="4cm" imageSide="right">
-
-										<xsl:value-of select="infos/photo_large"/>
 
 									</image>
 
