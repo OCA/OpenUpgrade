@@ -23,11 +23,12 @@
 			<cost type="call" name="compute_seller_costs" args="">
 				<type value="type"/>
 				<id value="id"/>
-				<!--<barcode type="field" name="id" addchecksum="false" print-text="true"/>-->
+
 				<name value="name"/>
 				<amount value="amount"/>
 			</cost>
 			<product type="fields" name="obj_num,id">
+			<ref type="field" name="id"/>
 				<num_catalog type="field" name="obj_num"/>
 				<num_inv type="field" name="lot_num"/>
 				<title type="field" name="name"/>

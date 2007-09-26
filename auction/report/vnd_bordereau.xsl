@@ -85,7 +85,7 @@
 	</xsl:template>
 
 	<xsl:template match="vente-products">
-		<blockTable colWidths="2.0cm,2.0cm,2.0cm,12.0cm,2.4cm" style="products">
+		<blockTable colWidths="2.0cm,1.9cm,1.9cm,11.0cm,2.4cm" style="products">
 			<tr>
 				<td t="1">Lot</td>
 				<td t="1">Cat. N.</td>
@@ -98,7 +98,7 @@
 			</xsl:apply-templates>
 		</blockTable>
 		<condPageBreak height="3.2cm"/>
-		<blockTable colWidths="2.0cm,2.0cm,2.0cm,12.0cm,2.4cm" style="product-totals">
+		<blockTable colWidths="2.0cm,1.9cm,1.9cm,11.0cm,2.4cm" style="product-totals">
 			<tr>
 				<td/>
 				<td/>
@@ -132,7 +132,7 @@
 
 	<xsl:template match="product">
 		<tr>
-			<td><xsl:value-of select="ref"/><barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="50"  alignment="CENTER"></barCode></td>
+			<td><barCode type="codarbar" code="Code128" height="26.8" quiet="9" fontName="Times-Roman" fontSize="50"  alignment="CENTER"><xsl:value-of select="ref"/></barCode></td>
 			<td><xsl:value-of select="num_catalog"/></td>
 			<td><xsl:value-of select="num_inv"/></td>
 			<td><para><b><xsl:value-of select="title"/></b></para></td>
