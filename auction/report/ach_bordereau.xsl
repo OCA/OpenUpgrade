@@ -89,7 +89,8 @@
 <!--<pageBreak/>-->
 	</xsl:template>
 	<xsl:template match="objects">
-		<blockTable colWidths="1.2cm,1.0cm,9.8cm,1.5cm,2.5cm,2cm,2cm" style="objects">
+		<blockTable colWidths="1.2cm,1.4cm,10.0cm,1.5cm,2.3cm,1.5cm,1.5cm" style="objects">
+
 			<tr>
 				<td t="1">Lot</td>
 				<td t="1">Cat</td>
@@ -102,7 +103,7 @@
 			<xsl:apply-templates select="object"/>
 		</blockTable>
 		<condPageBreak height="3.2cm"/>
-		<blockTable colWidths="1.2cm,1.0cm,9.8cm,1.5cm,2.5cm,1.85cm,1.85cm" style="object-totals">
+		<blockTable colWidths="1.2cm,1.4cm,10.0cm,1.5cm,2.3cm,1.5cm,1.5cm" style="object-totals">
 			<tr>
 				<td/>
 				<td/>
@@ -138,7 +139,7 @@
 
 	<xsl:template match="object">
 		<tr>
-			<td><xsl:value-of select="ref"/><barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="50"  alignment="CENTER"></barCode></td>
+			<td><barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="70"  alignment="CENTER"><xsl:value-of select="barcode"/></barCode></td>
 			<td><xsl:value-of select="ref"/></td>
 			<td>
 				<para>
