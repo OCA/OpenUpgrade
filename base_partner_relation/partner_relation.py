@@ -29,6 +29,7 @@
 
 from osv import fields,osv
 
+
 class res_partner_relation(osv.osv):
 	_description='The partner object'
 	_name = "res.partner.relation"
@@ -40,10 +41,11 @@ class res_partner_relation(osv.osv):
 	_defaults = {
 		'name' : lambda *a: 'invoice',
 	}
+
 res_partner_relation()
 
+
 class res_partner(osv.osv):
-	_description='The partner object'
 	_inherit = "res.partner"
 	_columns = {
 		'relation_ids': fields.one2many('res.partner.relation', 'partner_id', 'Relations')
@@ -74,5 +76,25 @@ class res_partner(osv.osv):
 		if len(todo):
 			result.update(super(res_partner, self).address_get(cr, uid, ids, todo))
 		return result
+
 res_partner()
 
+
+class PartnerAddress(osv.osv):
+	_inherit = 'res.partner.address'
+
+	def _where_calc(self, cursor, user, args, active_test=True, context=None):
+		partner_obj = self.pool.get('res.partner')
+
+		args = args[:]
+		for arg in args:
+			if arg[0] == 'partner_id' and arg[1] == '=':
+				partner = partner_obj.browse(cursor, user, arg[2],
+						context=context)
+				arg[1] = 'in'
+				arg[2] = [arg[2]] + [ x.relation_id.id \
+						for x in partner.relation_ids ]
+		return super(PartnerAddress, self)._where_calc(cursor, user, args,
+				active_test=active_test, context=context)
+
+PartnerAddress()
