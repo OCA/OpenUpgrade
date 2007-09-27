@@ -53,15 +53,20 @@ def _state_check(self, cr, uid, data, context):
 	v_ids=[x[0] for x in cr.fetchall()]
 	#ids_not_mapped=pool.get('auction.lots').search(cr,uid,[('rec.ach_uid','=',False)])
 	for rec in pool.get('auction.lots').browse(cr,uid,v_ids,context):
-		print rec
-		if not rec.ach_uid and not rec.ach_login:
-			raise wizard.except_wizard ('Error','No username is associated to this lot!')
+	#	if not rec.ach_uid and not rec.ach_login:
+	#		raise wizard.except_wizard ('Error','No username is associated to this lot!')
 		if (not rec.ach_uid or not rec.ach_login):
 			return 'check'
 	return 'done'
 
 def _start(self,cr,uid,datas,context):
 	pool = pooler.get_pool(cr.dbname)
+	for rec in pool.get('auction.lots').browse(cr,uid,datas['ids'],context):
+		if (len(datas['ids'])==1) and (not rec.ach_uid and not rec.ach_login):
+			raise wizard.except_wizard('Error', 'No buyer setted for this lot')
+		if not rec.ach_uid and rec.ach_login:
+			return {'ach_login': rec.ach_login}
+
 	for rec in pool.get('auction.lots').browse(cr,uid,datas['ids'],context):
 		if (not rec.ach_uid and rec.ach_login):
 			return {'ach_login': rec.ach_login}
