@@ -80,7 +80,8 @@
 
         <blockTableStyle id="product1">
                 <blockValign value="TOP"/>
-              <blockAlignment value="RIGHT" start="1,0" stop="-1,0"/>
+<!--              <blockAlignment value="RIGHT" start="1,0" stop="-1,0"/>-->
+				 <blockAlignment value="RIGHT"/>
 
                 <blockTopPadding legnth="0"  start="0,0" stop="0,-1" />
                 <blockLeftPadding legnth="0"  start="0,0" stop="0,-1" />
@@ -170,7 +171,7 @@
 							<xsl:if test="infos/photo">
 
 
-							<image x="0" y="0" width="120" height="80" >
+							<image x="0" y="0" height="3.0cm" width="2.5cm"  >
 
 
 									<xsl:value-of select="infos/photo" />
@@ -180,7 +181,7 @@
 							</xsl:if>
 							<xsl:if test="infos/photo_small" >
 
-									<image x="0" y="0" width="100" height="70" >
+									<image x="0" y="0" height="2.5cm" width="2cm" >
 
 									<xsl:value-of select="infos/photo_small"/>
 
