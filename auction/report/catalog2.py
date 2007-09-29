@@ -93,13 +93,13 @@ class auction_catalog(report_rml):
 			promo = doc.createElement('promotion1')
 
 #			fp = file('/home/tinyadmin/Desktop/najjla/images/lj8100.jpg','r')
-			fp = file('/home/nel/Desktop/images/lj8100.jpg','r')
+			fp = file('/home/pmo/Desktop/images/lj8100.jpg','r')
 			file_data = fp.read()
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
 			catalog.appendChild(promo)
 			promo = doc.createElement('promotion2')
 		#	fp = file('/home/tinyadmin/Desktop/najjla/images/aeko_logo.jpg','r')
-			fp = file('/home/nel/Desktop/images/aeko_logo.jpg','r')
+			fp = file('/home/pmo/Desktop/images/aeko_logo.jpg','r')
 			file_data = fp.read()
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
 			catalog.appendChild(promo)
@@ -121,7 +121,7 @@ class auction_catalog(report_rml):
 
 				if cat['obj_desc']:
 					infos = doc.createElement('infos')
-					lines = re.split('<br/>|\n', cat['obj_desc'])
+					lines = re.split('<br/>|\n', unicode(cat['obj_desc'],'utf-8').encode('latin1'))
 
 					for line in lines:
 						xline = doc.createElement('info')

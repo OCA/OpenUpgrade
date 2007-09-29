@@ -12,7 +12,7 @@
 			<fill color="(0.6,0.3,0.1)"/>
 			<!--Image-->
 			<!--image x="7cm" y="25cm" file="/home/pmo/Desktop/najjla/images/aeko_logo.jpg"/-->
-			<image x="7cm" y="25cm" file="/home/nel/Desktop/images/flagey_logo.jpg"/>
+			<image x="7cm" y="25cm" file="/home/pmo/Desktop/images/flagey_logo.jpg"/>
 <!--			<image x="7cm" y="25cm" file="/home/tinyadmin/Desktop/najjla/images/aeko_logo.jpg"/>-->
 			<lines>1cm 3.0cm 20cm 3.0cm</lines>
 			<setFont name="Helvetica" size="15"/>
@@ -32,7 +32,7 @@
 		<pageGraphics>
 			<!--image x="1.0cm" y="27.3cm" file="/home/pmo/images/aeko_logo.jpg"/-->
 
-			<image x="1.0cm" y="27.3cm" file="/home/nel/Desktop/images/flagey_head.png"/>
+			<image x="1.0cm" y="27.3cm" file="/home/pmo/Desktop/images/flagey_head.png"/>
 			<!--image x="1.0cm" y="27.3cm" file="/home/tinyadmin/Desktop/najjla/images/flagey_head.png"/-->
 			<drawRightString x="19.0cm" y="27.6cm"> Vente  antiquitée le  <xsl:value-of select="date:day-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:day-in-month(catalog/AuctionDate1)"/>&#160;<xsl:value-of select="date:month-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:year(catalog/AuctionDate1)"/></drawRightString>
 			<lineMode width="1mm"/>
@@ -80,6 +80,8 @@
 
         <blockTableStyle id="product1">
                 <blockValign value="TOP"/>
+              <blockAlignment value="RIGHT" start="1,0" stop="-1,0"/>
+
                 <blockTopPadding legnth="0"  start="0,0" stop="0,-1" />
                 <blockLeftPadding legnth="0"  start="0,0" stop="0,-1" />
 
@@ -143,9 +145,9 @@
 
 <xsl:choose>
 <xsl:when test="string-length(infos/photo) &gt;2  or string-length(infos/photo_small) &gt;2 ">
-"
 
-            <blockTable style="product1" colWidths="6.0cm,4.0cm">
+
+            <blockTable style="product1" colWidths="4.5cm,4.5cm" >
 
                  <tr>
                      <td>
@@ -162,34 +164,31 @@
 				            </para>
 				       </xsl:if>
 					</td>
-						<td align="right">
+						<td>
+
 
 							<xsl:if test="infos/photo">
-<!-- .mine
-							<image height="4cm" width="3cm" horizontal-align= "right ">
-							<image height="4.5cm" width="4cm" horizontal-align= "right ">-->
 
-							<image height="3.0cm" width="2.5cm" horizontal-align= "right ">
-<!--									<xsl:attribute name="file">-->
-										<xsl:value-of select="infos/photo" />
-<!--									</xsl:attribute>-->
+
+							<image x="0" y="0" width="120" height="80" >
+
+
+									<xsl:value-of select="infos/photo" />
+
 									</image>
 
 							</xsl:if>
 							<xsl:if test="infos/photo_small" >
 
-									<image height="2.0cm" width="2.5cm" horizontal-align= "right " >
+									<image x="0" y="0" width="100" height="70" >
 
-										<xsl:value-of select="infos/photo_small"/>
+									<xsl:value-of select="infos/photo_small"/>
 
 									</image>
 
 							</xsl:if>
 
 
-<!--						<image  width="3.0cm">-->
-<!--									<xsl:value-of select="infos/Image"/>-->
-<!--						</image>-->
 
 				   </td>
 		    </tr>
@@ -198,7 +197,7 @@
 <xsl:otherwise>
 			<!-- photo on the right-->
 
-       <blockTable style="product1" colWidths="7.5cm">
+       <blockTable style="product1" colWidths="9cm">
 		       <tr>
 		                     <td>
 		                       <para style="slogan1">
