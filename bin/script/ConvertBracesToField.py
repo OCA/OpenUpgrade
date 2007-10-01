@@ -47,11 +47,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             oPar = oParEnum.nextElement()
             nCount += 1
         getList(oRepeatInObjects,sHost,nCount)
-        print oRepeatInObjects
         for ro in oRepeatInObjects:
             if ro.find("(")<>-1:
                 saRepeatInList.append([ro.__getslice__(0,ro.find("(")),ro.__getslice__(ro.find("(")+1,ro.find(")"))])
-        print saRepeatInList
         try:
             oParEnum = doc.getTextFields().createEnumeration()
             while oParEnum.hasMoreElements():
@@ -79,13 +77,11 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
-                                    print res[0].__getslice__(res[0].find(".")+1,len(res[0])),sObject
                                     r = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
                                 if len(r) <> 0:
                                     if r <> "TTT":
-                                        print res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))
                                         oPar.Items=(u"" + str(r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]) ,oPar.Items[1])
                                         oPar.update()
                                     else:

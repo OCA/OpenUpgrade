@@ -13,7 +13,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
-    database="trunk_1"
+    database="latest_server"
 
 #
 
@@ -84,7 +84,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 fp.write(data)
                 fp.close()
             url="file://"+fp_name
-            arr=Array()
+            arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
             docinfo2=oDoc2.getDocumentInfo()
             docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])

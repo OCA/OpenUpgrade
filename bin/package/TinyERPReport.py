@@ -85,7 +85,7 @@ import marshal
 import tempfile
 if __name__<>"package":
     from gui import *
-    database="trunk_1"
+    database="db_rc2"
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
@@ -1843,7 +1843,6 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
     def btnChange_clicked(self,oActionEvent):
         aVal=[]
         url= self.win.getEditText("txtHost")
-        print url
         Change(aVal,url)
         if aVal[1]== -1:
             ErrorDialog(aVal[0],"")
@@ -2032,7 +2031,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
-    database="trunk_1"
+    database="latest_server"
 
 #
 
@@ -2103,7 +2102,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 fp.write(data)
                 fp.close()
             url="file://"+fp_name
-            arr=Array()
+            arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
             docinfo2=oDoc2.getDocumentInfo()
             docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
@@ -2143,7 +2142,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-    database="trunk_1"
+    database="db_rc2"
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -2189,12 +2188,10 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             oDoc2 = desktop.getCurrentComponent()
             docinfo=oDoc2.getDocumentInfo()
-
+            self.getInverseFieldsRecord(1)
             fp_name = tempfile.mktemp('.'+"sxw")
             if not oDoc2.hasLocation():
                 oDoc2.storeAsURL("file://"+fp_name,Array())
-
-
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             if docinfo.getUserFieldValue(2)=="":
                 id=self.getID()
@@ -2210,7 +2207,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             fp = file(url, 'rb')
             data=fp.read()
             fp.close()
-
+            self.getInverseFieldsRecord(0)
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
             self.win.endExecute()
@@ -2232,6 +2229,24 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
         id=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
         return id
+
+    def getInverseFieldsRecord(self,nVal):
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+
+        count=0
+        try:
+            oParEnum = doc.getTextFields().createEnumeration()
+            while oParEnum.hasMoreElements():
+                oPar = oParEnum.nextElement()
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                    oPar.SelectedItem = oPar.Items[nVal]
+                    if nVal==0:
+                        oPar.update()
+
+        except:
+            pass
+
 
 if __name__<>"package" and __name__=="__main__":
     SendtoServer(None)
@@ -2342,7 +2357,7 @@ if __name__<>"package":
 
     from lib.gui import *
     from LoginTest import *
-    database="trunk_1"
+    database="db_rc2"
 
 class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 
@@ -2412,12 +2427,13 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
+                                    print res[0].__getslice__(res[0].find(".")+1,len(res[0])),sObject
                                     r = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
-
                                 if len(r) <> 0:
                                     if r <> "TTT":
+                                        print res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))
                                         oPar.Items=(u"" + str(r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]) ,oPar.Items[1])
                                         oPar.update()
                                     else:
@@ -2443,11 +2459,8 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             myval=sVar
         for k in key:
             if (res[k]['type'] in ['many2one']) and k==myval:
-
-                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
-                return res[myval]['relation']
-            elif k==myval:
-                return sObject
+                sObject = self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+        return sObject
     def getBraces(self,aReportSyntex=[]):
 
         desktop=getDesktop()
@@ -2538,7 +2551,7 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
-    database="trunk_1"
+    database="db_rc2"
 
 class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
 
@@ -2552,9 +2565,6 @@ class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
             exit(1)
         self.aReportSyntex=[]
         self.getFields()
-
-        desktop=getDesktop()
-        doc = desktop.getCurrentComponent()
 
 
     def getFields(self):
@@ -2573,6 +2583,8 @@ class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
             pass
 
 
+
+
 if __name__<>"package":
     ConvertFieldsToBraces(None)
 else:
@@ -2583,3 +2595,99 @@ else:
 
 
 
+
+import uno
+import unohelper
+import string
+import tempfile
+import base64
+from com.sun.star.task import XJobExecutor
+if __name__<>"package":
+    from lib.gui import *
+    from LoginTest import *
+    from lib.error import *
+    database="latest_server"
+
+class ExportToRML( unohelper.Base, XJobExecutor ):
+
+    def __init__(self,ctx):
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
+        LoginTest()
+        if not loginstatus and __name__=="package":
+            exit(1)
+
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+
+        # Read Data from sxw file
+        tmpsxw = tempfile.mktemp('.'+"sxw")
+        if not doc.hasLocation():
+            mytype = Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
+            doc.storeAsURL("file://"+tmpsxw,mytype)
+        url=doc.getURL().__getslice__(7,doc.getURL().__len__())
+        fp = file(url, 'rb')
+        data=fp.read()
+        fp.close()
+
+        #tmprml = tempfile.mktemp('.'+"rml")
+        print docinfo.getUserFieldValue(2),"==========="
+        if docinfo.getUserFieldValue(2) == "":
+            ErrorDialog("Please Save this file on server","Use Send To Server Option in Tiny Report Menu","Error")
+            exit(1)
+        tmprml = self.GetAFileName()
+        if tmprml == None:
+            exit(1)
+        tmprml = tmprml.__getslice__(7,len(tmprml))
+
+        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
+        try:
+            if res['report_rml_content']:
+                data = res['report_rml_content']
+                fp = file(tmprml, 'wb')
+                fp.write(data)
+                fp.close()
+        except:
+            pass
+        #self.win.doModalDialog("",None)
+
+    def GetAFileName(self):
+        oFileDialog=None
+        iAccept=None
+        sPath=""
+        InitPath=""
+        oUcb=None
+        sFilePickerArgs = Array(10)
+        oFileDialog = createUnoService("com.sun.star.ui.dialogs.FilePicker")
+        oUcb = createUnoService("com.sun.star.ucb.SimpleFileAccess")
+        oFileDialog.initialize(sFilePickerArgs)
+        oFileDialog.appendFilter("TinyReport File Save To ....","*.rml")
+        oFileDialog.setCurrentFilter("Report Markup Language(rml)")
+        f_path=tempfile.mktemp("","")
+        f_path = "Tiny-"+f_path.__getslice__(f_path.rfind("/")+1,len(f_path))
+        oFileDialog.setDefaultName(f_path)
+        if InitPath == "":
+            InitPath = tempfile.gettempdir()
+        #End If
+        if oUcb.exists(InitPath):
+            oFileDialog.setDisplayDirectory(InitPath)
+        #End If
+        iAccept = oFileDialog.execute()
+        if iAccept == 1:
+            sPath = oFileDialog.Files[0]
+        else:
+            sPath = None
+        oFileDialog.dispose()
+        return sPath
+
+
+if __name__<>"package" and __name__=="__main__":
+    ExportToRML(None)
+elif __name__=="package":
+    g_ImplementationHelper.addImplementation( \
+            ExportToRML,
+            "org.openoffice.tiny.report.exporttorml",
+            ("com.sun.star.task.Job",),)

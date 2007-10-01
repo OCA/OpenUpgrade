@@ -65,17 +65,3 @@ elif __name__=="package":
             "org.openoffice.tiny.report.opennewreport",
             ("com.sun.star.task.Job",),)
 
-#sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model.data' , 'ir_set','action','client_print_multi','report_name_string',['modelname'],'ir.actions.report.xml,'+str(id),replace=True,isobject=True)
-
-#self.pool.get('ir.model.data').ir_set(cr, self.uid, 'action', keyword, res['name'], [res['model']], value, replace=replace, isobject=True, xml_id=xml_id)
-#'action','client_print_multi','report_name_string',['modelname'],'ir.actions.report.xml,'+str(id),replace=True,isobject=True
-#(04:58:49  IST) Fabien Pinckaers: Create the report and the ir_set
-#(04:59:11  IST) Fabien Pinckaers: Call the method ir_set
-#(04:59:18  IST) Fabien Pinckaers: on object ir.model.data
-#(04:59:22  IST) Hardik Joshi: ok
-#(04:59:44  IST) Hardik Joshi: i got idea
-#(05:00:21  IST) Fabien Pinckaers: With arguments: 'action','client_print_multi','report_name_string',['modelname'],'ir.actions.report.xml,'+str(id),replace=True,isobject=True
-#(05:00:41  IST) Fabien Pinckaers: Where id is the id of the ir.actions.report.xml object you created for this report.
-#(05:00:56  IST) Fabien Pinckaers: See _tag_repot in tools/convert.py
-#(05:01:05  IST) Hardik Joshi: ok
-#(05:01:21  IST) Fabien Pinckaers: That creates reports when parsing .xml file for data loading at install.

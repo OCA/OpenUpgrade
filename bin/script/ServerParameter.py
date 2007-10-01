@@ -93,7 +93,6 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
     def btnChange_clicked(self,oActionEvent):
         aVal=[]
         url= self.win.getEditText("txtHost")
-        print url
         Change(aVal,url)
         if aVal[1]== -1:
             ErrorDialog(aVal[0],"")
