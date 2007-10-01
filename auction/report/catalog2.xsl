@@ -147,7 +147,6 @@
 <xsl:choose>
 <xsl:when test="string-length(infos/photo) &gt;2  or string-length(infos/photo_small) &gt;2 ">
 
-
             <blockTable style="product1" colWidths="4.5cm,4.5cm" >
 
                  <tr>

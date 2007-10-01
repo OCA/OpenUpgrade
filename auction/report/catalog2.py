@@ -118,14 +118,12 @@ class auction_catalog(report_rml):
 			for cat in res:
 				product =doc.createElement('product')
 				products.appendChild(product)
-
 				if cat['obj_desc']:
 					infos = doc.createElement('infos')
 					lines = re.split('<br/>|\n', unicode(cat['obj_desc'],'utf-8').encode('latin1'))
-
 					for line in lines:
 						xline = doc.createElement('info')
-						xline.appendChild(doc.createTextNode(escape(line)))
+						xline.appendChild(doc.createTextNode(escape(line.decode('latin-1','replace').encode('utf-8'))))
 						infos.appendChild(xline)
 					product.appendChild(infos)
 					if cat['lot_num']:
@@ -134,6 +132,7 @@ class auction_catalog(report_rml):
 						infos.appendChild(lnum)
 
 					dest = os.path.join('/tmp/pdf_catalog/',str(cwid),str(cat['obj_desc'])+'.jpg')
+					print dest
 					if not cat['image']:
 						print "Cat wiht no Image "
 #						limg = doc.createElement('Image')

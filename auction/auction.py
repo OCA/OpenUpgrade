@@ -453,7 +453,6 @@ class auction_lots(osv.osv):
 		'statement_id': fields.many2many('account.bank.statement.line', 'auction_statement_line_rel','auction_id', 'statement','Payment'),
 		'net_revenue':fields.function(_netprice, method=True, string='Net revenue',store=True),
 		'net_margin':fields.function(_netmargin, method=True, string='Net Margin (%)',store=True),
-		'ref': fields.selection((('small','Small'),('medium','Medium'),('large','Large')),'Image size'),
 	}
 	_defaults = {
 		'state':lambda *a: 'draft',
