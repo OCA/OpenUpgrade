@@ -112,7 +112,7 @@ def _get_dates(self,cr,uid, datas, context):
 		raise "Connection to WWW.Auction-in-Europe.com failed !"
 	return {'objects':len(datas['ids'])}
 
-def _send(self, uid, datas):
+def _send(self,cr,uid, datas, context):
 	import pickle
 	service = netsvc.LocalService("object_proxy")
 	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'],  ['obj_num','obj_price'])
