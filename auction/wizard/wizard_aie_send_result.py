@@ -115,7 +115,7 @@ def _get_dates(self,cr,uid, datas, context):
 def _send(self,cr,uid, datas, context):
 	import pickle
 	service = netsvc.LocalService("object_proxy")
-	lots = service.execute(uid, 'auction.lots', 'read', datas['ids'],  ['obj_num','obj_price'])
+	lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', datas['ids'],  ['obj_num','obj_price'])
 	args = pickle.dumps(lots)
 	_catalog_send(datas['form']['uname'],datas['form']['password'], datas['form']['dates'], args)
 	return {}
