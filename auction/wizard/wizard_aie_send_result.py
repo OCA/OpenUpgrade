@@ -98,7 +98,7 @@ def _catalog_send(uname, passwd, did, catalog):
 		return val
 	return post_multipart('auction-in-europe.com', "/bin/catalog_result.cgi", (('uname',uname),('password',passwd),('did',did)),(('file',catalog),))
 
-def _get_dates(self, uid, datas):
+def _get_dates(self,cr,uid, datas, context):
 	global send_fields
 	import httplib
 	conn = httplib.HTTPConnection('www.auction-in-europe.com')
