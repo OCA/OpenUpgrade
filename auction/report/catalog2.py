@@ -92,14 +92,12 @@ class auction_catalog(report_rml):
 	#		  promotion element
 			promo = doc.createElement('promotion1')
 
-#			fp = file('/home/tinyadmin/Desktop/najjla/images/lj8100.jpg','r')
-			fp = file('/home/pmo/Desktop/images/lj8100.jpg','r')
+			fp = file('/home/tiny/terp/4.2/server/bin/addons/auction/report/images/flagey_logo.jpg','r')
 			file_data = fp.read()
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
 			catalog.appendChild(promo)
 			promo = doc.createElement('promotion2')
-		#	fp = file('/home/tinyadmin/Desktop/najjla/images/aeko_logo.jpg','r')
-			fp = file('/home/pmo/Desktop/images/aeko_logo.jpg','r')
+			fp = file('/home/tiny/terp/4.2/server/bin/addons/auction/report/images/aeko_logo.jpg','r')
 			file_data = fp.read()
 			promo.appendChild(doc.createTextNode(base64.encodestring(file_data)))
 			catalog.appendChild(promo)
