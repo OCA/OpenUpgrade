@@ -9,7 +9,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="line_ids" position="after">
-					<field name="delegated_ids" colspan="4" nolabel="1">
+					<field name="delegate_ids" colspan="4" nolabel="1">
 						<tree string="Assigned Planning" editable="bottom">
 							<field name="account_id"/>
 							<field name="amount"/>
