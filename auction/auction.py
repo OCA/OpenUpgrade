@@ -457,7 +457,7 @@ class auction_lots(osv.osv):
 	_defaults = {
 		'state':lambda *a: 'draft',
 		'lot_num':lambda *a:1,
-		'ref':lambda *a: 'medium',
+
 
 	}
 	_constraints = [
@@ -873,7 +873,7 @@ class auction_bid_lines(osv.osv):
 	_defaults = {
 		'name': lambda *args: time.strftime('%Y-%m-%d')
 	}
-	
+
 	def onchange_name(self, cr, uid, ids, lot_id):
 		if not lot_id:
 			return {'value': {'auction':False}}

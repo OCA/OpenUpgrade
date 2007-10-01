@@ -135,27 +135,9 @@ class auction_catalog(report_rml):
 					print dest
 					if not cat['image']:
 						print "Cat wiht no Image "
-#						limg = doc.createElement('Image')
-#						limg.appendChild(doc.createTextNode(cat['image']))
-#						infos.appendChild(limg)
+
 					else:
-						if cat ['ref'] == 'medium' or cat ['ref'] == 'large':
-							import random
-							limg = doc.createElement('photo')
-							file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
-							fp = file(file_name,'wb+')
-							content = base64.decodestring(cat['image'])
-							fp.write(content)
-							fp.close()
-							fp = file(file_name,'r')
-							size = photo_shadow.convert_catalog(fp, '/tmp/test.jpg')
-							fp = file('/tmp/test.jpg')
-							file_data = fp.read()
-							test_data = base64.encodestring(file_data)
-							limg.appendChild(doc.createTextNode(test_data))
-							infos.appendChild(limg)
-						elif cat ['ref'] == 'small':
-							print"in else if"
+							print"in else "
 							import random
 							limg = doc.createElement('photo_small')
 							file_name = '/tmp/image_%d.jpg' % (random.randint(1,1000),)
@@ -170,7 +152,7 @@ class auction_catalog(report_rml):
 							test_data = base64.encodestring(file_data)
 							limg.appendChild(doc.createTextNode(test_data))
 							infos.appendChild(limg)
-				print "cat[ref]>>>>>>>>",cat['ref']
+
 				for key in ('lot_est1','lot_est2'):
 					ref2 = doc.createElement(key)
 					ref2.appendChild(doc.createTextNode( escape(cat[key] or 0.0)))

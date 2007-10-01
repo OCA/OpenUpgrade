@@ -166,18 +166,6 @@
 					</td>
 						<td>
 
-
-							<xsl:if test="infos/photo">
-
-
-							<image x="0" y="0" height="3.0cm" width="2.5cm"  >
-
-
-									<xsl:value-of select="infos/photo" />
-
-									</image>
-
-							</xsl:if>
 							<xsl:if test="infos/photo_small" >
 
 									<image x="0" y="0" height="2.5cm" width="2cm" >
