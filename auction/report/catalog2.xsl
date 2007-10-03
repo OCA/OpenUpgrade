@@ -6,12 +6,13 @@
 <document>
 
 <template>
-	<pageTemplate id="first">
-		<pageGraphics>
-			<stroke color="(0.6,0.3,0.1)"/>
-			<fill color="(0.6,0.3,0.1)"/>
-			<!--Image-->
+<!--	<pageTemplate id="first">-->
+<!--		<pageGraphics>-->
+<!--			<stroke color="(0.6,0.3,0.1)"/>-->
+<!--			<fill color="(0.6,0.3,0.1)"/>-->
+
 			<image x="7cm" y="25cm" file="/home/tiny/terp/4.2/server/bin/addons/auction/report/images/aeko_logo.jpg"/>
+						<image x="7cm" y="25cm" file="/home/pmo/Desktop/images/aeko_logo.jpg"/>
 			<lines>1cm 3.0cm 20cm 3.0cm</lines>
 			<setFont name="Helvetica" size="15"/>
 			<drawCentredString x="105mm" y="2.2cm">Hotel des ventes Flagey</drawCentredString>
@@ -23,16 +24,17 @@
 			<fill color="(0.2,0.2,0.2)"/>
 			<stroke color="(0.2,0.2,0.2)"/>
 
-		</pageGraphics>
-		<frame id="column" x1="2.0cm" y1="6cm" width="18cm" height="18cm"/>
-	</pageTemplate>
-	<pageTemplate id="others">
+<!--		</pageGraphics>-->
+<!--		<frame id="column" x1="2.0cm" y1="6cm" width="18cm" height="18cm"/>-->
+<!--	</pageTemplate>-->
+	<pageTemplate id="first">
 		<pageGraphics>
-			<image x="1.0cm" y="27.3cm" file="/home/tiny/terp/4.2/server/bin/addons/auction/report/images/flagey_head.png"/>
-			<drawRightString x="19.0cm" y="27.6cm"> Vente  antiquitée le  <xsl:value-of select="date:day-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:day-in-month(catalog/AuctionDate1)"/>&#160;<xsl:value-of select="date:month-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:year(catalog/AuctionDate1)"/></drawRightString>
+<!--			<image x="1.0cm" y="27.3cm" file="/home/tiny/terp/4.2/server/bin/addons/auction/report/images/flagey_head.png"/>-->
+-			<image x="1.0cm" y="27.3cm" file="/home/pmo/Desktop/images/flagey_head.png"/>
+			<drawRightString x="19.0cm" y="27.6cm"> Vente  antiquitée le  <xsl:value-of select="date:day-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:day-in-month(catalog/AuctionDate1)"/>&#160;<xsl:value-of select="date:month-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:year(catalog/AuctionDate1)"/></drawRightString>-->
 			<lineMode width="1mm"/>
 			<setFont name="Helvetica" size="26"/>
-			<!-- <drawString x="10mm" y="27.8cm">Flagey.com</drawString> -->
+<!--			<drawString x="10mm" y="27.8cm">Flagey.com</drawString>-->
 			<fill color="(0.2,0.2,0.2)"/>
 			<stroke color="#2b24b6"/>
 			<lineMode width="0.5mm"/>
@@ -92,35 +94,9 @@
 </stylesheet>
 
 	<story>
-	<para style="slogan3"> Vente antiquitée <xsl:value-of select="catalog/name"/>  le  <xsl:value-of select="date:day-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:day-in-month(catalog/AuctionDate1)"/>&#160;<xsl:value-of select="date:month-name(catalog/AuctionDate1)"/> &#160;<xsl:value-of select="date:year(catalog/AuctionDate1)"/>
 
-</para>
-
-	<spacer length="1.0cm"/>
-	<spacer length="0.7cm"/>
-
-
-<blockTable colWidths="11cm,8cm" style="imagestyle">
-
-	<tr>-
-		<td>
-
-<!--			<para><xsl:value-of select="catalog/promotion1"/></para>-->
-			<image height="6cm" width="7cm" >
-<!--				<xsl:attribute name="file">-->
-					<xsl:value-of select="catalog/promotion1"/>
-<!--				</xsl:attribute>-->
-			</image>
-		</td>
-		<td>
-			<image height="6cm" width="7cm">
-					<xsl:value-of select="catalog/promotion2"/>
-			</image>
-		</td>
-</tr>
-</blockTable>
-<setNextTemplate name="others"/>
-	<pageBreak/>
+<!--<setNextTemplate name="others"/>-->
+<!--	<pageBreak/>-->
 	<xsl:apply-templates select="catalog/products"/>
 </story>
 </document>
@@ -142,7 +118,7 @@
 <xsl:choose>
 <xsl:when test="string-length(infos/photo) &gt;2  or string-length(infos/photo_small) &gt;2 ">
 
-            <blockTable style="product1" colWidths="4.5cm,4.5cm" >
+            <blockTable style="product1" colWidths="6.5cm,2.5cm" >
 
                  <tr>
                      <td>
@@ -153,10 +129,7 @@
 		     			   <xsl:if test="lot_est1&gt;0">
 				           <para style="slogan2">
 				           <xpre>
-				             Est. <i> <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro
-				            </i>
-				            </xpre>
-				            </para>
+				             Est. <i> <xsl:value-of select="format-number(lot_est1, '#,##0.00')"/>/&#160;<xsl:value-of select="format-number(lot_est2, '#,##0.00')"/> Euro</i></xpre></para>
 				       </xsl:if>
 					</td>
 						<td>
@@ -170,9 +143,6 @@
 									</image>
 
 							</xsl:if>
-
-
-
 				   </td>
 		    </tr>
   </blockTable>
