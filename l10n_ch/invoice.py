@@ -1,9 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#
-# $Id: account.py 1005 2005-07-25 08:41:42Z nicoe $
+# Copyright (c) 2004-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -29,56 +27,39 @@
 ##############################################################################
 
 import time
-import netsvc
 from osv import fields, osv
-import ir
+from tools import mod10r
+
 
 class account_invoice(osv.osv):
-	
 	_inherit = "account.invoice"
+
+	def _get_reference_type(self, cursor, user, context=None):
+		res = super(account_invoice, self)._get_reference_type(cursor, user,
+				context=context)
+		res.append(('bvr', 'BVR'))
+		return res
+
 	_columns = {
-		'dta_state': fields.selection([('none','None'),
-									   ('2bp','To be paid'),
-									   ('paid','Paid')],
-									  'DTA state',readonly=True,select=True, states={'draft':[('readonly',False)]}),
-		'bvr_ref_num': fields.char('Bvr Reference Number', size=64,readonly=True, states={'draft':[('readonly',False)]}),
-		'partner_comment':fields.char('Partner Comment', size=112, readonly=True, states={'draft':[('readonly',False)]}),
+		'reference_type': fields.selection(_get_reference_type, 'Reference Type',
+			required=True),
 	}
 
-	_defaults = {
-		'dta_state': lambda *a: 'none',
-	}
-
-
-	def _mod10r(self,nbr):
-		"""
-		Input arg : account or invoice number
-		Output return: the same number completed with the recursive mod10
-		key
-		"""
-
-		codec=[0,9,4,6,8,2,7,1,3,5]
-		report = 0
-		result=""
-		for chiffre in nbr:
-			result += chiffre			
-			if chiffre.isdigit():
-				report = codec[ (int(chiffre) +report) % 10 ] 
-		return result + str((10-report) % 10)
-
-
-	# 0100054150009>132000000000000000000000014+ 1300132412>
 	def _check_bvr(self, cr, uid, ids):
+		"""
+		0100054150009>132000000000000000000000014+ 1300132412>
+		"""
 		invoices = self.browse(cr,uid,ids)
 		for invoice in invoices:
-			if invoice.bvr_ref_num and self._mod10r(invoice.bvr_ref_num[:-1]) != invoice.bvr_ref_num:
+			if invoice.reference_type == 'bvr' \
+					and invoice.reference \
+					and mod10r(invoice.reference[:-1]) \
+					!= invoice.reference:
 				return False
 		return True
-	
+
 	_constraints = [
-		(_check_bvr, 'Error : Invalid Bvr Number (wrong checksum).', ['bvr_ref_num'])
+		(_check_bvr, 'Error : Invalid Bvr Number (wrong checksum).', ['reference'])
 	]
 
-	
 account_invoice()
-

@@ -34,27 +34,27 @@
   </record>
 
   <record model="res.partner.bank.type" id="dta_iban">
-	<field name="name">Dta-Iban Partner</field>
+	<field name="name">DTA-IBAN</field>
 	<field name="code">dta_iban</field>
   </record>
 
   <record model="res.partner.bank.type" id="bvrbank">
-	<field name="name">Dta-Bvrbank Partner </field>
+	<field name="name">DTA-BVRBANK</field>
 	<field name="code">bvrbank</field>
   </record>
 
   <record model="res.partner.bank.type" id="bvrpost">
-	<field name="name">Dta-Bvrpost Partner </field>
+	<field name="name">DTA-BVRPOST</field>
 	<field name="code">bvrpost</field>
   </record>
 
   <record model="res.partner.bank.type" id="bvpost">
-	<field name="name">Dta-Bvpost Partner </field>
+	<field name="name">DTA-BVPOST</field>
 	<field name="code">bvpost</field>
   </record>
 
   <record model="res.partner.bank.type" id="bvbank">
-	<field name="name">Dta-Bvbank Partner </field>
+	<field name="name">DTA-BVBANK</field>
 	<field name="code">bvbank</field>
   </record>
 
@@ -149,7 +149,7 @@
 
   <!-- Define a payment type -->
   <record model="payment.type" id="payment_type_dta">
-	<field name="name">Dta</field>
+	<field name="name">DTA</field>
 	<field name="code">dta</field>
 	<field name="suitable_bank_types" 
 		   eval="[(6,0,[ref('dta_iban'),ref('bvrbank'),ref('bvrpost'),ref('bvbank'),ref('bvpost')])]"/>

@@ -27,6 +27,7 @@
 
 import time
 from report import report_sxw
+from tools import mod10r
 
 class account_invoice_bvr(report_sxw.rml_parse):
 	def __init__(self, cr, uid, name, context):
@@ -34,7 +35,7 @@ class account_invoice_bvr(report_sxw.rml_parse):
 		self.localcontext.update({
 			'time': time,
 			'user':self.pool.get("res.users").browse(cr,uid,uid),
-			'mod10r': self._mod10r,
+			'mod10r': mod10r,
 			'_space': self._space,
 			'_get_ref': self._get_ref,
 			'_bank_get': self._bank_get,
@@ -56,26 +57,7 @@ class account_invoice_bvr(report_sxw.rml_parse):
 		res = ''
 		if bank.bvr_adherent_num:
 			res = bank.bvr_adherent_num
-		return self._mod10r(res+o.number.rjust(26-len(res), '0'))
-
-	def _mod10r(self,nbr):
-		"""
-		Input arg : account or invoice number
-		Output return: the same number completed with the recursive mod10
-		key
-		"""
-
-		codec=[0,9,4,6,8,2,7,1,3,5]
-		report = 0
-		result=""
-		for chiffre in nbr:
-			
-			if not chiffre.isdigit():
-				continue
-			
-			report = codec[ (int(chiffre) +report) % 10 ] 
-			result += chiffre
-		return result + str((10-report) % 10)
+		return mod10r(res + o.number.rjust(26-len(res), '0'))
 
 report_sxw.report_sxw(
 	'report.l10n_ch.bvr',
