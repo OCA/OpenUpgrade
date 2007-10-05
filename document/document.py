@@ -26,6 +26,9 @@
 #
 ##############################################################################
 
+from webdav.content_index import content_index
+import base64
+
 from osv import osv, fields
 import urlparse
 
@@ -68,7 +71,7 @@ class node_class(object):
 			where.append( (fobj._rec_name,'=',nodename) )
 		ids = fobj.search(self.cr, self.uid, where, context=self.context)
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
-		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file'), res) + res2
+		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','_'), x, False, type='file'), res) + res2
 
 	def _child_get(self, nodename=False):
 		if self.type<>'collection':
@@ -80,7 +83,7 @@ class node_class(object):
 			where.append(('parent_id','=',self.object.id))
 			ids = self.object.search(self.cr, self.uid, where, self.context)
 			res = self.object.browse(self.cr, self.uid, ids,self.context)
-			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
+			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','_'), x, False), res)
 		elif self.object.type=="ressource":
 
 			where = []
@@ -101,7 +104,7 @@ class node_class(object):
 
 			ids = obj.search(self.cr, self.uid, where, self.context)
 			res = obj.browse(self.cr, self.uid, ids,self.context)
-			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, self.object, x), res)
+			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','_'), self.object, x), res)
 
 		else:
 			print "*** Directory type", self.object.type, "not implemented !"
@@ -196,6 +199,12 @@ class document_directory(osv.osv):
 		#childs,object2 = self._get_childs(cr, uid, object, False, context)
 		#result = map(lambda x: urlparse.urljoin(path+'/',x.name), childs)
 		return result
+
+	def create(self, cr, user, vals, context=None):
+		if vals.get('name',False) and (vals.get('name').find('/')+1 or vals.get('name').find('@')+1 or vals.get('name').find('$')+1 or vals.get('name').find('#')+1) :
+			raise webdav.DAV.errors.DAV_NotFound('Directory name must not contain special character...')
+		return super(document_directory,self).create(cr, user, vals, context)
+
 document_directory()
 
 class document_repository(osv.osv):
@@ -267,6 +276,14 @@ class document_file(osv.osv):
 	_sql_constraints = [
 		#('filename_uniq', 'unique (datas_fname,parent_id)', 'The filename must be unique !')
 	]
+
+	def create(self, cr, user, vals, context=None):
+		vals['file_size']= len(vals['datas'])
+		vals['index_content']= content_index(base64.decodestring(vals['datas']), vals['name'], None)
+		vals['file_type']= vals['name'].split('.')[1] or False
+		return super(document_file,self).create(cr, user, vals, context)
+
+
 document_file()
 
 
