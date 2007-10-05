@@ -17,7 +17,7 @@ from DAV.iface import *
 from DAV.davcmd import copyone, copytree, moveone, movetree, delone, deltree
 
 class tinyerp_handler(dav_interface):
-	""" 
+	"""
 	This class models a Tiny ERP interface for the DAV server
 	"""
 	def __init__(self, db_name, uri, directory_id, verbose=False):
@@ -211,7 +211,7 @@ class tinyerp_handler(dav_interface):
 			'file_size': len(data),
 			'datas': base64.encodestring(data),
 			'index_content': content_index(data, objname, content_type or None),
-			'file_type': content_type or False,
+			'file_type': objname.split('.')[1] or False,
 			'parent_id': node.object and node.object.id or False,
 		}
 		if node.object2:
@@ -264,17 +264,17 @@ class tinyerp_handler(dav_interface):
 	###
 
 	def delone(self,uri):
-		""" delete a single resource 
+		""" delete a single resource
 
 		You have to return a result dict of the form
 		uri:error_code
 		or None if everything's ok
-		
+
 		"""
 		return delone(self,uri)
 
 	def deltree(self,uri):
-		""" delete a collection 
+		""" delete a collection
 
 		You have to return a result dict of the form
 		uri:error_code
@@ -289,19 +289,19 @@ class tinyerp_handler(dav_interface):
 	###
 
 	def moveone(self,src,dst,overwrite):
-		""" move one resource with Depth=0 
+		""" move one resource with Depth=0
 
 		an alternative implementation would be
 
 		result_code=201
-		if overwrite: 
+		if overwrite:
 			result_code=204
 			r=os.system("rm -f '%s'" %dst)
 			if r: return 412
 		r=os.system("mv '%s' '%s'" %(src,dst))
 		if r: return 412
 		return result_code
-	   
+
 		(untested!). This would not use the davcmd functions
 		and thus can only detect errors directly on the root node.
 		"""
@@ -313,14 +313,14 @@ class tinyerp_handler(dav_interface):
 		an alternative implementation would be
 
 		result_code=201
-		if overwrite: 
+		if overwrite:
 			result_code=204
 			r=os.system("rm -rf '%s'" %dst)
 			if r: return 412
 		r=os.system("mv '%s' '%s'" %(src,dst))
 		if r: return 412
 		return result_code
-	   
+
 		(untested!). This would not use the davcmd functions
 		and thus can only detect errors directly on the root node"""
 
@@ -331,19 +331,19 @@ class tinyerp_handler(dav_interface):
 	###
 
 	def copyone(self,src,dst,overwrite):
-		""" copy one resource with Depth=0 
+		""" copy one resource with Depth=0
 
 		an alternative implementation would be
 
 		result_code=201
-		if overwrite: 
+		if overwrite:
 			result_code=204
 			r=os.system("rm -f '%s'" %dst)
 			if r: return 412
 		r=os.system("cp '%s' '%s'" %(src,dst))
 		if r: return 412
 		return result_code
-	   
+
 		(untested!). This would not use the davcmd functions
 		and thus can only detect errors directly on the root node.
 		"""
@@ -355,14 +355,14 @@ class tinyerp_handler(dav_interface):
 		an alternative implementation would be
 
 		result_code=201
-		if overwrite: 
+		if overwrite:
 			result_code=204
 			r=os.system("rm -rf '%s'" %dst)
 			if r: return 412
 		r=os.system("cp -r '%s' '%s'" %(src,dst))
 		if r: return 412
 		return result_code
-	   
+
 		(untested!). This would not use the davcmd functions
 		and thus can only detect errors directly on the root node"""
 
