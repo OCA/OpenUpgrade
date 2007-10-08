@@ -1,0 +1,16 @@
+{
+    "name":"Ampco",
+    "version":"1.0",
+    "author":"Tiny",
+    "category":"Ampco",
+    "depends":[
+        "base","product","sale"
+       ],
+    "demo_xml":[],
+    "update_xml":[
+            "ampco_view.xml",
+            "product_heatcode/product_heatcode_view.xml",
+          ],
+    "active":True,
+    "installable":True,
+}
