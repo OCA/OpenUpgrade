@@ -152,7 +152,7 @@ class document_directory(osv.osv):
 		'parent_id': fields.many2one('document.directory', 'Parent Item'),
 		'child_ids': fields.one2many('document.directory', 'parent_id', 'Childs'),
 		'file_ids': fields.one2many('ir.attachment', 'parent_id', 'Files'),
-		'content_ids': fields.one2many('document.directory.content', 'directory_id', 'Content'),
+		'content_ids': fields.one2many('document.directory.content', 'directory_id', 'Virtual Files'),
 		'type': fields.selection([('directory','Static Directory'),('link','Link to Another Directory'),('ressource','Other Ressources')], 'Type', required=True),
 		'ressource_type_id': fields.many2one('ir.model', 'Ressource Model'),
 		'ressource_tree': fields.boolean('Tree Structure'),
