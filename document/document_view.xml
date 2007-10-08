@@ -69,7 +69,7 @@
 							<field name="sequence"/>
 							<field name="suffix"/>
 							<field name="extension"/>
-							<field name="report_id"/>
+							<field name="report_id" domain="[('model','=',parent.ressource_type_id)]"/>
 						</form>
 						<tree string="Contents">
 							<field name="sequence"/>

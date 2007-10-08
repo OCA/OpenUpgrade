@@ -109,8 +109,8 @@ class tinyerp_handler(dav_interface):
 		if node.type=='file':
 			return base64.decodestring(node.object.datas or '')
 		elif node.type=='content':
-			ids = pool.get('ir.actions.report.xml').search(cr, 3, [('model','=',node.object._name)])
-			report = pool.get('ir.actions.report.xml').browse(cr, 3, ids)[0]
+			print node.report_id
+			report = pool.get('ir.actions.report.xml').browse(cr, 3, node.report_id)
 			srv = netsvc.LocalService('report.'+report.report_name)
 			pdf,pdftype = srv.create(cr, 3, [node.object.id], {}, {})
 			return pdf
