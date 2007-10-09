@@ -50,7 +50,7 @@ second_form = '''<?xml version="1.0"?>
 	<field name="action_id"/>
 </form>'''
 second_fields = {
-	'menu': {'string':'Name', 'type':'char', 'required':True, },
+	'menu': {'string':'Name', 'type':'char', 'required':True, 'size':64},
 	'action_id': {'string':'Action', 'type':'many2one', 'required':True,
 				  'relation': 'ir.actions.act_window',},
 	'parent_menu_id': {'string':'Parent Menu', 'type':'many2one', 'required':True,

@@ -12,12 +12,11 @@
 		<field name="operand">user.address_id.partner_id.id</field>
 		<field name="rule_group" ref="invoice_rule_group"/>
 	</record>
-	
 	<record model="portal.model" id="model_invoice">
-				<field name="name" >Invoice Model</field>
-				<field name="model_id" search="[('model','=','account.invoice')]"/>
-				<field name="rule_group_id" ref="invoice_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('portal_invoice_tree'),ref('portal_invoice_form')])]"/>
+		<field name="name" >Invoice Model</field>
+		<field name="model_id" search="[('model','=','account.invoice')]"/>
+		<field name="rule_group_id" ref="invoice_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('portal_invoice_tree'),ref('portal_invoice_form')])]"/>
 	</record>
 
 
@@ -40,10 +39,8 @@
 				<field name="rule_group_id" ref="move_line_rule_group"/>
 				<field name="view_ids" eval="[(6,0,[ref('portal_move_line_tree'),ref('portal_move_line_form')])]"/>
 	</record>
-	
 </data>
 <data noupdate="1"> 
-
 
 	<record model="res.groups" id="portal.portal_group">
 		<field name="rule_groups" eval="[(4,ref('invoice_rule_group'))]"/>
@@ -73,7 +70,7 @@
 
 
 	<record model="ir.actions.act_window" id="portal_action_customer_invoice">
-		<field name="name">Customers Invoices</field>
+		<field name="name">Your Invoices</field>
 		<field name="res_model">account.invoice</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('type','=','out_invoice')]</field>
@@ -91,14 +88,14 @@
 		<field name="view_id" ref="portal_invoice_form"/>
 		<field name="act_window_id" ref="portal_action_customer_invoice"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Account/Invoices/Customer Invoices"
-              id="portal_menu_customer_invoice" 
-			  action="portal_action_customer_invoice"/>
+	<menuitem name="Portal/Customer Portal/Account/Invoices/Your Invoices"
+		id="portal_menu_customer_invoice" 
+		action="portal_action_customer_invoice"/>
 
 
 
 	<record model="ir.actions.act_window" id="portal_action_refund_invoice">
-		<field name="name">Customers Refund</field>
+		<field name="name">Your Refunds</field>
 		<field name="res_model">account.invoice</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('type','=','out_refund')]</field>
@@ -117,15 +114,15 @@
 		<field name="act_window_id" ref="portal_action_refund_invoice"/>
 	</record>
 	<menuitem name="Portal/Customer Portal/Account/Invoices/Customer Refund"
-              id="portal_menu_refund_invoice" 
-			  action="portal_action_refund_invoice"/>
+		id="portal_menu_refund_invoice" 
+		action="portal_action_refund_invoice"/>
 
 
 
 
 
 	<record model="ir.actions.act_window" id="portal_action_account_move">
-		<field name="name">Unreconciled account entries</field>
+		<field name="name">Payables &amp; Receivables</field>
 		<field name="res_model">account.move.line</field>
 		<field name="domain">[('reconcile_id','=',False),]</field> 
 	</record>
@@ -141,7 +138,7 @@
 		<field name="view_id" ref="portal_move_line_form"/>
 		<field name="act_window_id" ref="portal_action_account_move"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Account/Unreconciled Entries"
+	<menuitem name="Portal/Customer Portal/Account/Payables &amp; Receivables"
               id="portal_menu_move_line_unreconcilied" 
 			  action="portal_action_account_move"/>
 
