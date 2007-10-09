@@ -40,11 +40,20 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         if bFlag <> True:
             ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
             exit(1)
+        report_name = ""
+        name=""
+        if docinfo.getUserFieldValue(2)<>"":
+            #self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('id','=',int(docinfo.getUserFieldValue(2)))])
+            #print ids
+            fields=['name','report_name']
+            self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+            name = self.res_other[0]['name']
+            report_name = self.res_other[0]['report_name']
         self.win = DBModalDialog(60, 50, 180, 85, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
-        self.win.addEdit("txtName", -5, 5, 123, 15)#,res_other[0]['name'])
+        self.win.addEdit("txtName", -5, 5, 123, 15,name)
         self.win.addFixedText("lblReportName", 2, 30, 50, 15, "Technical Name :")
-        self.win.addEdit("txtReportName", -5, 25, 123, 15)#,res_other[0]['report_name'])
+        self.win.addEdit("txtReportName", -5, 25, 123, 15,report_name)
         self.win.addCheckBox("chkHeader", 51, 45, 70 ,15, "Corporate Header")
         self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
                         actionListenerProc = self.btnOkOrCancel_clicked)
@@ -79,9 +88,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
             bHeader = True
-            print self.win.getCheckBoxState("chkHeader")
             if self.win.getCheckBoxState("chkHeader")==0:
-                print "false"
                 bHeader = False
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),{"header":bHeader})
             self.win.endExecute()

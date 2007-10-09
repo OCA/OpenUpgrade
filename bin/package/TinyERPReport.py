@@ -1992,20 +1992,6 @@ elif __name__=="package":
             "org.openoffice.tiny.report.opennewreport",
             ("com.sun.star.task.Job",),)
 
-#sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model.data' , 'ir_set','action','client_print_multi','report_name_string',['modelname'],'ir.actions.report.xml,'+str(id),replace=True,isobject=True)
-
-#self.pool.get('ir.model.data').ir_set(cr, self.uid, 'action', keyword, res['name'], [res['model']], value, replace=replace, isobject=True, xml_id=xml_id)
-#'action','client_print_multi','report_name_string',['modelname'],'ir.actions.report.xml,'+str(id),replace=True,isobject=True
-#(04:58:49  IST) Fabien Pinckaers: Create the report and the ir_set
-#(04:59:11  IST) Fabien Pinckaers: Call the method ir_set
-#(04:59:18  IST) Fabien Pinckaers: on object ir.model.data
-#(04:59:22  IST) Hardik Joshi: ok
-#(04:59:44  IST) Hardik Joshi: i got idea
-#(05:00:21  IST) Fabien Pinckaers: With arguments: 'action','client_print_multi','report_name_string',['modelname'],'ir.actions.report.xml,'+str(id),replace=True,isobject=True
-#(05:00:41  IST) Fabien Pinckaers: Where id is the id of the ir.actions.report.xml object you created for this report.
-#(05:00:56  IST) Fabien Pinckaers: See _tag_repot in tools/convert.py
-#(05:01:05  IST) Hardik Joshi: ok
-#(05:01:21  IST) Fabien Pinckaers: That creates reports when parsing .xml file for data loading at install.
 
 if __name__<>"package":
     from ServerParameter import *
@@ -2142,7 +2128,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-    database="db_rc2"
+    database="latest_server"
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -2170,21 +2156,30 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         if bFlag <> True:
             ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
             exit(1)
-        self.win = DBModalDialog(60, 50, 180, 65, "Send To Server")
+        report_name = ""
+        name=""
+        if docinfo.getUserFieldValue(2)<>"":
+            #self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('id','=',int(docinfo.getUserFieldValue(2)))])
+            #print ids
+            fields=['name','report_name']
+            self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+            name = self.res_other[0]['name']
+            report_name = self.res_other[0]['report_name']
+        self.win = DBModalDialog(60, 50, 180, 85, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
-        self.win.addEdit("txtName", -5, 5, 123, 15)#,res_other[0]['name'])
+        self.win.addEdit("txtName", -5, 5, 123, 15,name)
         self.win.addFixedText("lblReportName", 2, 30, 50, 15, "Technical Name :")
-        self.win.addEdit("txtReportName", -5, 25, 123, 15)#,res_other[0]['report_name'])
+        self.win.addEdit("txtReportName", -5, 25, 123, 15,report_name)
+        self.win.addCheckBox("chkHeader", 51, 45, 70 ,15, "Corporate Header")
         self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
-                        actionListenerProc = self.btnOkOrCancel_clicked )
+                        actionListenerProc = self.btnOkOrCancel_clicked)
         self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
-                        actionListenerProc = self.btnOkOrCancel_clicked )
+                        actionListenerProc = self.btnOkOrCancel_clicked)
         self.win.doModalDialog("",None)
 
     def btnOkOrCancel_clicked(self, oActionEvent):
 
         if oActionEvent.Source.getModel().Name == "btnSend":
-
             desktop=getDesktop()
             oDoc2 = desktop.getCurrentComponent()
             docinfo=oDoc2.getDocumentInfo()
@@ -2198,10 +2193,8 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 docinfo.setUserFieldValue(2,id)
             else:
                 id=docinfo.getUserFieldValue(2)
-
             rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
             res=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
-
             oDoc2.store()
             url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
             fp = file(url, 'rb')
@@ -2210,10 +2203,14 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             self.getInverseFieldsRecord(0)
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
+            bHeader = True
+            if self.win.getCheckBoxState("chkHeader")==0:
+                bHeader = False
+            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),{"header":bHeader})
             self.win.endExecute()
 
-        elif oActionEvent.Source.getModel().Name == "btnCancel":
 
+        elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
     def getID(self):
@@ -2222,12 +2219,18 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         docinfo=doc.getDocumentInfo()
 
         res = {}
+
         res['name'] =self.win.getEditText("txtName")
+
         res['model'] =docinfo.getUserFieldValue(3)
+
         res['report_name'] =self.win.getEditText("txtReportName")
 
+
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+
         id=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
+
         return id
 
     def getInverseFieldsRecord(self,nVal):
@@ -2395,11 +2398,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             oPar = oParEnum.nextElement()
             nCount += 1
         getList(oRepeatInObjects,sHost,nCount)
-        print oRepeatInObjects
         for ro in oRepeatInObjects:
             if ro.find("(")<>-1:
                 saRepeatInList.append([ro.__getslice__(0,ro.find("(")),ro.__getslice__(ro.find("(")+1,ro.find(")"))])
-        print saRepeatInList
         try:
             oParEnum = doc.getTextFields().createEnumeration()
             while oParEnum.hasMoreElements():
@@ -2427,13 +2428,11 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
-                                    print res[0].__getslice__(res[0].find(".")+1,len(res[0])),sObject
                                     r = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
                                 if len(r) <> 0:
                                     if r <> "TTT":
-                                        print res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))
                                         oPar.Items=(u"" + str(r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]) ,oPar.Items[1])
                                         oPar.update()
                                     else:
@@ -2633,7 +2632,6 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         fp.close()
 
         #tmprml = tempfile.mktemp('.'+"rml")
-        print docinfo.getUserFieldValue(2),"==========="
         if docinfo.getUserFieldValue(2) == "":
             ErrorDialog("Please Save this file on server","Use Send To Server Option in Tiny Report Menu","Error")
             exit(1)
