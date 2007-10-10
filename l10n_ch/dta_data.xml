@@ -1,26 +1,24 @@
 <?xml version="1.0"?>
 <terp>
-<data>
+	<data>
 
 
-  <!-- Memo : 
+	<!-- Memo :
 	   Mandatory for all kind of dta payment:
 	   * for the partner bank:
 	     - a bank name
-	   * for the company: 
+	   * for the company:
 	     - iban
-	     - bank clearing
 	   Mandatory for iban payment:
 	   * for the partner:
 	     - iban
-		 - BIC / iban or a city
+	     - BIC / iban or a city
 	   Mandatory for bvrpost/bvrbank payment:
 	   * for the partner:
 	     - bvr ref number on the partner bank
 	   Mandatory for bvbank payment:
 	   * for the partner:
 	     - bank number
-		 - clearing number
 	   Mandatory for bvpost payment:
 	   * for the partner:
 	     - post number
@@ -61,12 +59,6 @@
 
 
   <!-- Adjust the fields attributes for dta_company-->
-  <record model="res.partner.bank.type.field" id="bank_clearing_field">
-	<field name="name">clearing</field>
-	<field name="bank_type_id" ref="bank_dta"/>
-	<field name="required" eval="True"/>
-	<field name="readonly" eval="False"/>
-  </record>
   <record model="res.partner.bank.type.field" id="iban_field">
 	<field name="name">iban</field>
 	<field name="bank_type_id" ref="bank_dta"/>

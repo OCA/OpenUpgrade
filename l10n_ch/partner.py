@@ -37,6 +37,5 @@ class res_partner_bank(osv.osv):
 		'post_number': fields.char('Post number', size=64),
 		'bvr_number': fields.char('BVR number', size=11),
 		'bvr_adherent_num': fields.char('BVR adherent number', size=11),
-		'clearing': fields.char('Clearing number', size=64),
 	}
 res_partner_bank()

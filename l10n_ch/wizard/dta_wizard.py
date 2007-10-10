@@ -383,7 +383,7 @@ def _create_dta(obj, cr, uid, data, context):
 		return {'note':'No bank account for the company.'}
 
 	v['comp_bank_name']= bank.bank and bank.bank.name or False
-	v['comp_bank_clearing'] = bank.clearing
+	v['comp_bank_clearing'] = bank.bank.clearing
 
 	if not v['comp_bank_clearing']:
 		return {'note':
@@ -420,6 +420,10 @@ def _create_dta(obj, cr, uid, data, context):
 					pline.partner_id.name + ', entry:' + \
 					pline.move_line_id.name + ').')
 			continue
+		if not pline.bank_id.bank:
+			log.add('\nNo bank defined on the bank account. (partner: ' + \
+					pline.partner_id.name + ', entry:' + \
+					pline.move_line_id.name + ').')
 
 		v['sequence'] = str(seq).rjust(5).replace(' ', '0')
 		v['amount_to_pay']= str(pline.amount_currency).replace('.', ',')
@@ -428,7 +432,7 @@ def _create_dta(obj, cr, uid, data, context):
 
 		v['partner_bank_name'] =  pline.bank_id.bank and pline.bank_id.bank.name \
 				or False
-		v['partner_bank_clearing'] =  pline.bank_id.clearing or False
+		v['partner_bank_clearing'] =  pline.bank_id.bank.clearing or False
 		if not v['partner_bank_name'] :
 			log.add('\nPartner bank account not well defined, please provide a name '
 			'for the associated bank (partner: ' + pline.partner_id.name + \

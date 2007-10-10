@@ -41,8 +41,8 @@ class account_invoice(osv.osv):
 		return res
 
 	_columns = {
-		'reference_type': fields.selection(_get_reference_type, 'Reference Type',
-			required=True),
+		'reference_type': fields.selection(_get_reference_type,
+			'Reference Type', required=True),
 	}
 
 	def _check_bvr(self, cr, uid, ids):
@@ -51,11 +51,11 @@ class account_invoice(osv.osv):
 		"""
 		invoices = self.browse(cr,uid,ids)
 		for invoice in invoices:
-			if invoice.reference_type == 'bvr' \
-					and invoice.reference \
-					and mod10r(invoice.reference[:-1]) \
-					!= invoice.reference:
-				return False
+			if invoice.reference_type == 'bvr':
+				if not invoice.reference:
+					return False
+				if mod10r(invoice.reference[:-1]) != invoice.reference:
+					return False
 		return True
 
 	_constraints = [

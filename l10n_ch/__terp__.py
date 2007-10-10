@@ -19,6 +19,7 @@
 		"bvr_report.xml",
 		"bvr_wizard.xml",
 		"company_view.xml",
+		'bank_view.xml',
 	],
 	"active": False,
 	"installable": True,
