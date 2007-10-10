@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<terp>
+	<data>
+
+		<record model="ir.ui.view" id="view_res_bank_form">
+			<field name="name">res.bank.form</field>
+			<field name="model">res.bank</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_res_bank_form"/>
+			<field name="arch" type="xml">
+				<field name="bic" position="after">
+					<field name="clearing" select="2"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</terp>
