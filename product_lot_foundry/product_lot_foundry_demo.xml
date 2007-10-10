@@ -1,5 +1,31 @@
 <terp>
 	<data noupdate="1">
+		<record model="product.lot.foundry.heatcode" id="mwk31879">
+			<field name="name">MWK 31879</field>
+			<field name="state">valid</field>
+		</record>
+		<record model="product.lot.foundry.heatcode.chemical">
+			<field name="name">Zn</field>
+			<field name="state">80%</field>
+			<field name="heatcode_id" ref="mwk31879"/>
+		</record>
+		<record model="product.lot.foundry.heatcode.chemical">
+			<field name="name">Cu</field>
+			<field name="state">90%</field>
+			<field name="heatcode_id" ref="mwk31879"/>
+		</record>
+		<record model="product.lot.foundry.heatcode.chemical">
+			<field name="name">Mg</field>
+			<field name="state">15%</field>
+			<field name="heatcode_id" ref="mwk31879"/>
+		</record>
+
+		<record model="product.lot.foundry.heatcode.mecanical">
+			<field name="name">Poids</field>
+			<field name="state">1.234 Kg/Sm</field>
+			<field name="heatcode_id" ref="mwk31879"/>
+		</record>
+
 
 	</data>
 </terp>

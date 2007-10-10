@@ -27,7 +27,7 @@
 #
 ##############################################################################
 
-import datetime
+import time
 from osv import fields,osv
 import pooler
 
@@ -39,9 +39,15 @@ class stock_heatcode(osv.osv):
 		'date': fields.date('Date', required=True),
 		'chemical_ids': fields.one2many('product.lot.foundry.heatcode.chemical', 'heatcode_id', 'Chemical Properties'),
 		'mecanical_ids': fields.one2many('product.lot.foundry.heatcode.mecanical', 'heatcode_id','Mecanical Properties'),
+		'lot_ids': fields.one2many('stock.production.lot', 'heatcode_id','Lots'),
+		'state': fields.selection([
+			('draft','Draft'),
+			('valid','Valid')
+		], 'State', required=True)
 	}
 	_defaults = {
-		'date': lambda *args: time.strftime('%Y-%m-%d')
+		'date': lambda *args: time.strftime('%Y-%m-%d'),
+		'state': lambda *args: 'draft'
 	}
 stock_heatcode()
 
