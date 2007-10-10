@@ -1,0 +1,139 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<record model="ir.ui.view" id="view_production_lot_tree">
+			<field name="name">stock.production.lot.foundry.tree</field>
+			<field name="model">stock.production.lot</field>
+			<field name="inherit_id" ref="stock.view_production_lot_tree" />
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="revisions" position="replace">
+					<field name="size_x"/>
+					<field name="size_y"/>
+					<field name="size_z"/>
+					<field name="available"/>
+					<field name="status"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_move_form_expiry">
+			<field name="name">stock.production.lot.form</field>
+			<field name="model">stock.production.lot</field>
+			<field name="inherit_id" ref="stock.view_production_lot_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<separator position="before">
+					<field name="status" select="2"/>
+					<field name="product_id" colspan="4"/>
+					<field name="size_x" label="Dimension" select="1"/>
+					<field name="type" select="2"/>
+					<field name="size_y" select="1"/>
+					<field name="size_z" select="1"/>
+					<field name="heatcode_id" colspan="4" select="2"/>
+					<field name="quality_info" colspan="4"/>
+					<field name="available" colspan="4"/>
+					<field name="reservation_ids" colspan="4">
+						<tree string="Reservations">
+							<field name="name"/>
+							<field name="date"/>
+							<field name="size_x"/>
+							<field name="size_y"/>
+							<field name="size_z"/>
+						</tree>
+					</field>
+				</separator>
+			</field>
+		</record>
+
+		# --------------------------------------------------------------------
+		# Heat Code
+		# --------------------------------------------------------------------
+
+		<record model="ir.ui.view" id="view_product_lot_foundry_heatcode_tree">
+			<field name="name">product.lot.foundry.heatcode.tree</field>
+			<field name="model">product.lot.foundry.heatcode</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Heat code">
+					<field name="name"/>
+					<field name="date"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+
+
+		<record model="ir.ui.view" id="view_product_lot_foundry_heatcode_form">
+			<field name="name">product.lot.foundry.heatcode.form</field>
+			<field name="model">product.lot.foundry.heatcode</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Heat code">
+					<notebook colspan="4">
+					<page string="Heat Code">
+						<field name="name" select="1"/>
+						<field name="date" select="1"/>
+						<separator string="Chemical Properties" colspan="4"/>
+						<field name="chemical_ids" colspan="4" nolabel="1">
+							<tree string="Chemical Properties" editable="bottom">
+								<field name="name"/>
+								<field name="value"/>
+							</tree>
+						</field>
+						<separator string="Mechanical Properties" colspan="4"/>
+						<field name="mecanical_ids" colspan="4" nolabel="1">
+							<tree string="Mechanical Properties" editable="bottom">
+								<field name="name"/>
+								<field name="value"/>
+							</tree>
+						</field>
+						<field name="state"/>
+					</page><page string="Lots">
+						<field name="lot_ids" nolabel="1" colspan="4"/>
+					</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+
+	<record model="ir.actions.act_window" id="action_heatcode_all">
+		<field name="name">Heat Codes</field>
+		<field name="res_model">product.lot.foundry.heatcode</field>
+		<field name="view_type">form</field>
+	</record>
+	<menuitem name="Inventory Control/Heat Codes"
+		id="menu_action_heatcode_all"
+		action="action_heatcode_all"/> 
+
+	<record model="ir.actions.act_window" id="action_heatcode_draft">
+		<field name="name">Draft Heat Codes</field>
+		<field name="res_model">product.lot.foundry.heatcode</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','draft')]</field>
+	</record>
+	<menuitem name="Inventory Control/Heat Codes/"
+		id="menu_action_heatcode_draft"
+		action="action_heatcode_draft"/> 
+
+	<record model="ir.ui.view" id="view_product_form_expiry">
+		<field name="name">product.normal.form</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view" />
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Dimensions">
+					<field name="size_x" />
+					<field name="size_y" />
+					<field name="size_z" />
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+
+	</data>
+</terp>
+
