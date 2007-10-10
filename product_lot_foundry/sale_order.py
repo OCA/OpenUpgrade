@@ -58,11 +58,20 @@ class sale_order_line(osv.osv):
 
 	_columns = {
 		'prodlot_id' : fields.many2one('stock.production.lot', 'Production lot', help="Production lot is used to put a serial number on the production"),
+		'prodlot_ids' : fields.one2many('stock.production.lot.all', 'line_id', 'Lots Assignation', help="Production lot is used to put a serial number on the production"),
 		'size_x' : fields.float(digits=(16,2), string='Width'),
 		'size_y' : fields.float(digits=(16,2), string='Height'),
 		'size_z' : fields.float(digits=(16,2), string='Thickness'),
 	}
 sale_order_line()
+
+class prod_lot_lines(osv.osv):
+	_name='stock.production.lot.all'
+	_columns = {
+		'name': fields.float('Quantity'),
+		'lot_id': fields.many2one('stock.production.lot', 'Lot'),
+	}
+prod_lot_lines()
 
 class sale_order(osv.osv):
 	_inherit = "sale.order"
@@ -78,6 +87,11 @@ class sale_order(osv.osv):
 						'size_y': line.size_y,
 						'size_z': line.size_z,
 						'lot_id': line.prodlot_id.id
+					})
+				for move in line.move_ids:
+					self.pool.get('stock.move').write(cr, uid, {
+						'prodlot_id': line.prodlot_id.id or False,
+						'name': '%.2f x %.2f x %.2f' % (line.size_x or 1.0, line.size_y or 1.0, line.size_z or 1.0)
 					})
 		return res
 sale_order()

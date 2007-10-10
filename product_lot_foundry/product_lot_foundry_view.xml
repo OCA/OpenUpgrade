@@ -133,6 +133,12 @@
 		</field>
 	</record>
 
+	<act_window name="Lots"
+		domain="[('product_id', '=', active_id)]"
+		res_model="stock.production.lot"
+		src_model="product.product"
+		id="act_production_product"/>
+
 
 	</data>
 </terp>

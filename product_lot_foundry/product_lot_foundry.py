@@ -160,6 +160,7 @@ class product_product(osv.osv):
 		'size_x': fields.float('Width'),
 		'size_y': fields.float('Length'),
 		'size_z': fields.float('Thickness'),
+		'lot_ids': fields.one2many('stock.production.lot', 'product_id', 'Lots')
 	}
 product_product()
 

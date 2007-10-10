@@ -38,6 +38,13 @@
 										<field name="size_x" on_change="size_change(size_x,size_y,size_z,product_id,product_uom_qty)"/>
 										<field name="size_y" on_change="size_change(size_x,size_y,size_z,product_id,product_uom_qty)"/>
 										<field name="size_z" on_change="size_change(size_x,size_y,size_z,product_id,product_uom_qty)"/>
+										<field name="prodlot_ids" colspan="4">
+											<tree string="Lots Assignations" editable="bottom">
+												<field name="name"/>
+												<field name="lot_id" context="product=parent.product_id" domain="[('product_id','=',parent.product_id)]" required="1"/>
+
+											</tree>
+										</field>
 					
 										<separator string="Manual Description" colspan="4"/>
 										<field name="name" colspan="4" select="2"/>
