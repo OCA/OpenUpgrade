@@ -81,7 +81,7 @@ class auction_dates(osv.osv):
 		'acc_income': fields.many2one('account.account', 'Income Account', required=True),
 		'acc_expense': fields.many2one('account.account', 'Expense Account', required=True),
 		'adj_total': fields.function(_adjudication_get, method=True, string='Total Adjudication',store=True),
-		'state': fields.selection((('draft','Draft'),('closed','Closed')),'State',required=True, select=1, readonly=True),
+		'state': fields.selection((('draft','Draft'),('close','Closed')),'State',select=1, readonly=True),
 		'account_analytic_id': fields.many2one('account.analytic.account', 'Analytic Account', required=True),
 
 	}
@@ -1059,22 +1059,23 @@ class report_auction_view2(osv.osv):
 	def init(self, cr):
 		cr.execute('''create or replace view report_auction_view2 as (
 			select
-				min(ad.id) as id,
+				ad.id as id,
 				ad.auction1 as date,
 				ad.id as "auction",
 				count(al.id) as "obj_number",
 				SUM(al.obj_price) as "sum_adj",
 				SUM(al.gross_revenue) as "gross_revenue",
 				SUM(al.net_revenue) as "net_revenue",
-				SUM(al.net_revenue)/count(al.id) as "obj_margin",
+				avg(al.net_revenue) as "obj_margin",
 				SUM(al.net_revenue)*100/sum(al.obj_price) as "obj_margin_procent"
 			from
-				auction_lots al
+				auction_dates ad
 			left join
-				auction_dates ad on (al.auction_id=ad.id)
+				auction_lots al on (al.auction_id = ad.id)
 			group by
-				ad.id,
-				ad.auction1
+				ad.id, ad.auction1
+			having
+				sum(al.obj_price) <> 0
 			)''')
 report_auction_view2()
 
