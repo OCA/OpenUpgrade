@@ -32,7 +32,7 @@
     "version":"1.0",
     "author":"Tiny",
     "category":"Payment Order Export",
-    "depends":["base", "account","account_payment"],
+    "depends":["base", "account","account_payment","base_iban"],
     "demo_xml":["payment_export_demo.xml"],
     "init_xml":[],
     "update_xml" : ["payment_export_wizard.xml","payment_export_view.xml","payment_export_data.xml"],
