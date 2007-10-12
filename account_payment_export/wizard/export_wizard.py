@@ -223,7 +223,7 @@ def _create_pay(self,cr,uid,data,context):
         else:
             v['order_exe_date']=''
         v['order_ref']=pay['name']#14-29
-        v['cur_code']=''#blank set .but is available in entry line object.. 30-32
+
 
         if pay['amount']==0.0 or pay['amount']>pay['to_pay']:
             return {'note':'Payment Amount should Not be Zero or not greater then To-Pay amount in Payment Lines'}
@@ -235,7 +235,7 @@ def _create_pay(self,cr,uid,data,context):
             default_cur=entry_line.currency_id
         elif payment.user_id.company_id.currency_id:
             default_cur=payment.user_id.company_id.currency_id.code
-
+        v['cur_code']=default_cur#30-32
         if default_cur != pay['currency'][1]:
             v['code_pay']='D'#two values 'C' or 'D'  *should be modified
             v['cur_code_debit_1']=pay['currency'][1]#blank set .but is available in entry line object.. 30-32
