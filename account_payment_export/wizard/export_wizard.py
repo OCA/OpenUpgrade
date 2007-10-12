@@ -110,7 +110,7 @@ class record_header(record):
             #Header record start
             ('seg_num1',1),
             ('creation_date',6),('padding',12),
-            ('institution_code',3),('app_code',2),('reg_number',10),('id_sender',11),('id_order_customer',11),('padding',1),
+            ('institution_code',3),('app_code',2),('reg_number',10),('id_sender',11),('id_order_customer',11),('file_status',1),
             ('ver_code',1),('bilateral',12),('totalisation_code',1),('padding',4),('ver_subcode',1),('padding',52),('flag1',1)
             ]
 
@@ -127,7 +127,7 @@ class record_payline(record):
         self.fields=[
             ('seg_num2',1),('sequence',4),('sub_div1',2),('order_exe_date',6),
             ('order_ref',16),('cur_code',3),('padding',1),('code_pay',1),('amt_pay',15),('padding',1),
-            ('cur_code_debit',3),('padding',6),
+            ('cur_code_debit_1',3),('padding',6),
             ('acc_debit',12),('padding',22),('indicate_date',1),('padding',34),('flag1',1),
 
             ('seg_num3',1),('sequence1',4),('sub_div6',2),('benf_accnt_no',34),('benf_name',35),('benf_address',35),
@@ -138,7 +138,6 @@ class record_payline(record):
 
             ('seg_num4',1),('sequence2',4),('sub_div10',2),('order_msg',35),('method_pay',3),('charge_code',3),('padding',1),
             ('cur_code_debit',3),('padding',6),('debit_cost',12),('padding',1),('benf_country_code',2),('padding',55),('flag1',1),
-
             ]
 
 def c_ljust(s, size):
@@ -173,21 +172,22 @@ def _create_pay(self,cr,uid,data,context):
     seq=0
     total=0
     pay_order=''
+    pool = pooler.get_pool(cr.dbname)
+    payment=pool.get('payment.order').browse(cr, uid, data['id'],context)
 
     #Header Record Start
     v1['uid'] = str(uid)
     v1['creation_date']= time.strftime('%y%m%d')
     v1['app_code']='51'
-    v1['reg_number']=''#25-34
-    v1['id_sender']=''#Blank *should be fill 35-44
-    v1['id_order_customer']=''#Blank 46-56 *should be fill
+    v1['reg_number']=payment.reference#25-34
+    v1['id_sender']=payment.user_id.address_id.partner_id.vat or ''#add vat number of current user's partner 35-44
+    v1['id_order_customer']=payment.user_id.address_id.partner_id.vat or ''#vat number46-56
     v1['ver_code']='3'
     v1['bilateral']='' #see attach ment 1.2  and 59-70
-    v1['totalisation_code ']='0'#two values 0 or 1
+    v1['totalisation_code ']='0'#two values 0,no globalization
+    v1['file_status']=''
     v1['ver_subcode']='1'
 
-    pool = pooler.get_pool(cr.dbname)
-    payment=pool.get('payment.order').browse(cr, uid, data['id'],context)
     bank_obj=pool.get('res.partner.bank')
     id_exp= pool.get('account.pay').create(cr,uid,{'name':'test'})
     #look in the mode for insititute_code or protocol number
@@ -206,12 +206,15 @@ def _create_pay(self,cr,uid,data,context):
 
     pay_line_obj=pool.get('payment.line')
     pay_line_id = pay_line_obj.search(cr, uid, [('order_id','=',data['id'])])
-    pay_line =pay_line_obj.read(cr, uid, pay_line_id,['partner_id','amount','bank_id','move_line_id','to_pay'])
+    pay_line =pay_line_obj.read(cr, uid, pay_line_id,['currency','partner_id','amount','bank_id','move_line_id','to_pay','name'])
     if not pay_line:
         return {'note':'Wizard can not generate Export file ,There is no Payment Lines'}
     for pay in pay_line:
         seq=seq+1
         #sub1 Start
+
+        entry_line_obj=pool.get('account.move.line')
+        entry_line=entry_line_obj.browse(cr, uid,pay['move_line_id'][0],context)
         v['sequence'] = str(seq).rjust(4).replace(' ','0')
         v['sub_div1']='01'
         if payment.date_prefered=='now':
@@ -219,12 +222,29 @@ def _create_pay(self,cr,uid,data,context):
             v['order_exe_date']=time.strftime('%d%m%y',time.strptime(exec_date,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
         else:
             v['order_exe_date']=''
-        v['order_ref']=''#14-29 #should be fill. see page 23
-        v['cur_code']='BEF'#static set .but is available in entry line object..
-        v['code_pay']='C'#two values 'C' or 'D'  *should be modified
+        v['order_ref']=pay['name']#14-29
+        v['cur_code']=''#blank set .but is available in entry line object.. 30-32
+
         if pay['amount']==0.0 or pay['amount']>pay['to_pay']:
             return {'note':'Payment Amount should Not be Zero or not greater then To-Pay amount in Payment Lines'}
         v['amt_pay']=float2str(pay['amount'])
+
+        if payment.mode.journal.currency:
+            default_cur=payment.mode.journal.currency.code
+        elif entry_line.currency_id:
+            default_cur=entry_line.currency_id
+        elif payment.user_id.company_id.currency_id:
+            default_cur=payment.user_id.company_id.currency_id.code
+
+        if default_cur != pay['currency'][1]:
+            v['code_pay']='D'#two values 'C' or 'D'  *should be modified
+            v['cur_code_debit_1']=pay['currency'][1]#blank set .but is available in entry line object.. 30-32
+            v['cur_code_debit']=pay['currency'][1]#sub 10 50-52
+        else:
+            v['code_pay']='C'
+            v['cur_code_debit_1']=''
+            v['cur_code_debit']=''
+
         total=total+pay['amount']
         v['acc_debit']=bank.acc_number
         if not v['acc_debit']:
@@ -264,23 +284,23 @@ def _create_pay(self,cr,uid,data,context):
         else:
             return {'note':'Please Provide Bank Account in payment line for \npartner:'+inv.partner_id.name+' Ref:'+res[0][1]+''}
 
-        part_addres_obj=pool.get('res.partner.address')
+        #part_addres_obj=pool.get('res.partner.address')#should be correct may by res.bank today
+        part_addres_obj=pool.get('res.bank')
         v['bank_country_code']=''
-
-        if bank1['bank_address_id']:
-            bank2 = part_addres_obj.read(cr, uid, bank1['bank_address_id'][0])#get bank address of counrty for pos 113-114 sub06
-            if bank2['country_id']:
-                code_country=pool.get('res.country').read(cr,uid,bank2['country_id'][0],['code'])#get bank address of counrty for pos 113-114 sub06
+        if bank1['bank']:
+            bank2 = part_addres_obj.read(cr, uid, bank1['bank'][0])#get bank address of counrty for pos 113-114 sub06
+            if bank2['country']:
+                code_country=pool.get('res.country').read(cr,uid,bank2['country'][0],['code'])#get bank address of counrty for pos 113-114 sub06
                 v['bank_country_code']=code_country['code']
 
         v['benf_name']=inv.partner_id.name
-        v['benf_address']=str(inv.address_invoice_id.street)+blank_space+str(inv.address_invoice_id.street2)
+        v['benf_address']=(inv.address_invoice_id.street or '')+blank_space +(inv.address_invoice_id.street2 or '')
         if inv.address_invoice_id.country_id and inv.address_invoice_id.state_id:
             v['benf_address_place']=str(inv.address_invoice_id.city)+blank_space+str(inv.address_invoice_id.state_id.name)+blank_space+str(inv.address_invoice_id.country_id.name )
             if not inv.address_invoice_id.city:
                 return {'note':'Please Provide city for partner address for\n' 'Bank Account:'+str(pay['bank_id'][1])+blank_space+',Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
         else:
-            return {'note':'Please Provide Country or State for\n' 'Bank Account:'+str(pay['bank_id'][1])+blank_space+',Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
+            return {'note':'Please Provide Country or State for\n' 'Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
         #sub6 End
 
         #sub7 start
@@ -294,9 +314,9 @@ def _create_pay(self,cr,uid,data,context):
         v['sequence2']=str(seq).rjust(4).replace(' ','0')
         v['sub_div10']='10'
         v['order_msg']=''#msg from order customer to order cutomer bank *should be correct
-        v['method_pay']='EUR'#see attachment 1.5..multiple values are available *should be correct
-        v['charge_code']='' #*should be correct
-        v['cur_code_debit']=''#'BEF' *should be correct
+        v['method_pay']='NOR'#43-45
+        v['charge_code']='SHA' #*should be correct
+        #v['cur_code_debit'] assign in sub 01
         v['debit_cost']='000000000000'#field will only fill when ordering customer account debitted with charges if not field will contain blank or zero
         v['benf_country_code']=inv.address_invoice_id.country_id.code
         if not v['benf_country_code']:
