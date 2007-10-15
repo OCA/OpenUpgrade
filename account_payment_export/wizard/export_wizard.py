@@ -212,7 +212,6 @@ def _create_pay(self,cr,uid,data,context):
     for pay in pay_line:
         seq=seq+1
         #sub1 Start
-
         entry_line_obj=pool.get('account.move.line')
         entry_line=entry_line_obj.browse(cr, uid,pay['move_line_id'][0],context)
         v['sequence'] = str(seq).rjust(4).replace(' ','0')
@@ -223,22 +222,20 @@ def _create_pay(self,cr,uid,data,context):
         else:
             v['order_exe_date']=''
         v['order_ref']=pay['name']#14-29
-
-
         if pay['amount']==0.0 or pay['amount']>pay['to_pay']:
             return {'note':'Payment Amount should Not be Zero or not greater then To-Pay amount in Payment Lines'}
-        v['amt_pay']=float2str(pay['amount'])
+        v['amt_pay']=float2str('%.2f'%pay['amount'])
 
         if payment.mode.journal.currency:
             default_cur=payment.mode.journal.currency.code
         elif entry_line.currency_id:
-            default_cur=entry_line.currency_id
+            default_cur=entry_line.currency_id.code
         elif payment.user_id.company_id.currency_id:
             default_cur=payment.user_id.company_id.currency_id.code
         v['cur_code']=default_cur#30-32
         if default_cur != pay['currency'][1]:
             v['code_pay']='D'#two values 'C' or 'D'  *should be modified
-            v['cur_code_debit_1']=pay['currency'][1]#blank set .but is available in entry line object.. 30-32
+            v['cur_code_debit_1']=pay['currency'][1]# 30-32
             v['cur_code_debit']=pay['currency'][1]#sub 10 50-52
         else:
             v['code_pay']='C'
@@ -344,7 +341,7 @@ def _create_pay(self,cr,uid,data,context):
 
 
 def float2str(lst):
-            return str(lst).rjust(15).replace('.','0')
+            return str(lst).rjust(16).replace('.','')
 
 class wizard_pay_create(wizard.interface):
     states = {
