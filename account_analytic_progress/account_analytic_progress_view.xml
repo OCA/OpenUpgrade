@@ -29,6 +29,7 @@
 		<field name="res_model">account.analytic.account</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('state','=','open')]</field>
 		<field name="view_id" ref="account_analytic_progress_graph"/>
 	</record>
 	<menuitem name="Financial Management/Reporting/Analytic/Remainging Turnover by Account"
