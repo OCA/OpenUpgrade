@@ -324,7 +324,7 @@ def _create_pay(self,cr,uid,data,context):
     #Trailer Record Start
     v2['tot_record']=str(seq)
     v2['tot_pay_order']=str(seq)
-    v2['tot_amount']=float2str(total)
+    v2['tot_amount']=float2str('%.2f'%total)
     pay_trailer=record_trailer(v2).generate()
     #Trailer Record End
 
