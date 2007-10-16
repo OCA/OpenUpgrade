@@ -210,7 +210,7 @@ class tinyerp_handler(dav_interface):
 			'datas_fname': objname,
 			'file_size': len(data),
 			'datas': base64.encodestring(data),
-			'index_content': content_index(data, objname, content_type or None),
+			#'index_content': content_index(data, objname, content_type or None),
 			'file_type': objname.split('.')[1] or False,
 			'parent_id': node.object and node.object.id or False,
 		}

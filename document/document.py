@@ -279,7 +279,10 @@ class document_file(osv.osv):
 
 	def create(self, cr, user, vals, context=None):
 		vals['file_size']= len(vals['datas'])
-		vals['index_content']= content_index(base64.decodestring(vals['datas']), vals['name'], None)
+		if ('datas' in vals) and ('name' in vals):
+			res = content_index(base64.decodestring(vals['datas']), vals['name'], vals.get('content_type', None))
+			res = res.encode('ascii', 'replace').decode('ascii')
+			vals['index_content']=  res
 		vals['file_type']= vals['name'].split('.')[1] or False
 		return super(document_file,self).create(cr, user, vals, context)
 
