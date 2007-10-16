@@ -103,7 +103,6 @@ class record:
 
         return res
 
-
 class record_header(record):
     def init_local_context(self):
         self.fields=[
@@ -122,6 +121,7 @@ class record_trailer(record):
             ('tot_record',6),('tot_pay_order',6),
             ('tot_amount',15),('padding',100),('flag1',1),
             ]
+
 class record_payline(record):
     def init_local_context(self):
         self.fields=[
@@ -200,27 +200,31 @@ def _create_pay(self,cr,uid,data,context):
         v1['institution_code']=bank.institution_code
         if not v1['institution_code']:
             return {'note':'Please Provide Institution Code number for Ordering Customer'}
-
     pay_header =record_header(v1).generate()
     #Header Record End
 
     pay_line_obj=pool.get('payment.line')
     pay_line_id = pay_line_obj.search(cr, uid, [('order_id','=',data['id'])])
     pay_line =pay_line_obj.read(cr, uid, pay_line_id,['currency','partner_id','amount','bank_id','move_line_id','to_pay','name'])
+
     if not pay_line:
         return {'note':'Wizard can not generate Export file ,There is no Payment Lines'}
+
     for pay in pay_line:
-        seq=seq+1
+
         #sub1 Start
+        seq=seq+1
         entry_line_obj=pool.get('account.move.line')
         entry_line=entry_line_obj.browse(cr, uid,pay['move_line_id'][0],context)
         v['sequence'] = str(seq).rjust(4).replace(' ','0')
         v['sub_div1']='01'
+
         if payment.date_prefered=='now':
             exec_date=now().strftime('%Y-%m-%d')
             v['order_exe_date']=time.strftime('%d%m%y',time.strptime(exec_date,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
         else:
             v['order_exe_date']=''
+
         v['order_ref']=pay['name']#14-29
         if pay['amount']==0.0 or pay['amount']>pay['to_pay']:
             return {'note':'Payment Amount should Not be Zero or not greater then To-Pay amount in Payment Lines'}
@@ -232,7 +236,9 @@ def _create_pay(self,cr,uid,data,context):
             default_cur=entry_line.currency_id.code
         elif payment.user_id.company_id.currency_id:
             default_cur=payment.user_id.company_id.currency_id.code
+
         v['cur_code']=default_cur#30-32
+
         if default_cur != pay['currency'][1]:
             v['code_pay']='D'#two values 'C' or 'D'  *should be modified
             v['cur_code_debit_1']=pay['currency'][1]# 30-32
@@ -261,6 +267,7 @@ def _create_pay(self,cr,uid,data,context):
           where p.id = %s and pl.move_line_id= %s
           '''%(payment.id,str(pay['move_line_id'][0])))
         res=cr.fetchall()
+
         if not res:
             return {'note':'Wizard can not Generate Export file,there is no Related Invoice for \nEntry line:'+str(pay['move_line_id'])+''}
         else:
@@ -284,6 +291,7 @@ def _create_pay(self,cr,uid,data,context):
         #part_addres_obj=pool.get('res.partner.address')#should be correct may by res.bank today
         part_addres_obj=pool.get('res.bank')
         v['bank_country_code']=''
+
         if bank1['bank']:
             bank2 = part_addres_obj.read(cr, uid, bank1['bank'][0])#get bank address of counrty for pos 113-114 sub06
             if bank2['country']:
@@ -292,12 +300,13 @@ def _create_pay(self,cr,uid,data,context):
 
         v['benf_name']=inv.partner_id.name
         v['benf_address']=(inv.address_invoice_id.street or '')+blank_space +(inv.address_invoice_id.street2 or '')
-        if inv.address_invoice_id.country_id and inv.address_invoice_id.state_id:
-            v['benf_address_place']=str(inv.address_invoice_id.city)+blank_space+str(inv.address_invoice_id.state_id.name)+blank_space+str(inv.address_invoice_id.country_id.name )
+
+        if inv.address_invoice_id.country_id:
+            v['benf_address_place']=str(inv.address_invoice_id.city)+blank_space+(inv.address_invoice_id.state_id and inv.address_invoice_id.state_id.name or '')+blank_space+str(inv.address_invoice_id.country_id.name )
             if not inv.address_invoice_id.city:
                 return {'note':'Please Provide city for partner address for\n' 'Bank Account:'+str(pay['bank_id'][1])+blank_space+',Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
         else:
-            return {'note':'Please Provide Country or State for\n' 'Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
+            return {'note':'Please Provide Country for\n' 'Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
         #sub6 End
 
         #sub7 start
@@ -337,8 +346,8 @@ def _create_pay(self,cr,uid,data,context):
             %(total,seq))
 
     pool.get('account.pay').write(cr,uid,[id_exp],{'note':log,'name':base64.encodestring(pay_order or "")})
-    return {'note':log(), 'pay': base64.encodestring(pay_order)}
 
+    return {'note':log(), 'pay': base64.encodestring(pay_order)}
 
 def float2str(lst):
             return str(lst).rjust(16).replace('.','')
@@ -354,5 +363,4 @@ class wizard_pay_create(wizard.interface):
         },
 
     }
-
 wizard_pay_create('account.payment_create')
