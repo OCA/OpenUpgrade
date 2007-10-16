@@ -31,17 +31,20 @@ import wizard
 
 _export_form = '''<?xml version="1.0"?>
 <form string="EDI file export">
+	<label string="Not Implemented!"/>
 	<separator string="Export to the following directory" colspan="4" />
 	<field name="ediexportdir" colspan="4" />
 </form>'''
 
-_export_fields = { 	'ediexportdir' : {	'string' : 'EDI Import Dir', 
-										'type' : 'char', 
-										'size' : 100, 
-										'default' : lambda *a: '/edi/reception', 
-										'required' : True 
-									},
-				}
+_export_fields = {
+		'ediexportdir': {
+			'string' : 'EDI Import Dir',
+			'type' : 'char',
+			'size' : 100,
+			'default' : lambda *a: '/edi/reception',
+			'required' : True
+		},
+}
 
 _export_done_form = '''<?xml version="1.0"?>
 <form string="EDI file exported">
@@ -56,13 +59,28 @@ def _do_export(self, cr, uid, data, context):
 class wiz_edi_export(wizard.interface):
 	states = {
 		'init' : {
-			'actions' : [],
-			'result' : { 'type' : 'form', 'arch' : _import_form, 'fields' : _import_fields, 'state' : (('end', 'Cancel'),('export', 'Export Sales') )},
+			'actions': [],
+			'result': {
+				'type': 'form',
+				'arch': _export_form,
+				'fields': _export_fields,
+				'state': [
+					('end', 'Cancel'),
+					('export', 'Export Sales')
+				],
 			},
+		},
 		'export' : {
-			'actions' : [_do_export],
-			'result' : { 'type' : 'form', 'arch' : _export_done_form, 'fields' : _export_done_fields, 'state' : (('end', 'Ok'),)},
+			'actions': [_do_export],
+			'result': {
+				'type': 'form',
+				'arch': _export_done_form,
+				'fields': _export_done_fields,
+				'state': [
+					('end', 'Ok')
+				],
 			},
+		},
 	}
 
 wiz_edi_export('edi.export')

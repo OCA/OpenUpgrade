@@ -44,21 +44,25 @@ _import_form = '''<?xml version="1.0"?>
 	<field name="error" />
 </form>'''
 
-_import_fields = { 	'ediimportdir' : {	'string' : 'EDI Import Dir', 
-										'type' : 'char', 
-										'size' : 100, 
-										'default' : lambda *a: '/edi/reception', 
-										'required' : True 
-									},
-					'current' : {		'string' : 'Current',
-										'type' : 'boolean',
-										'default' : lambda *a: True,
-									},
-					'error' : {			'string' : 'Error',
-										'type' : 'boolean',
-										'default' : lambda *a: False,
-									},
-				}
+_import_fields = {
+		'ediimportdir': {
+			'string': 'EDI Import Dir',
+			'type': 'char',
+			'size': 100,
+			'default': lambda *a: '/edi/reception',
+			'required': True
+		},
+		'current': {
+			'string': 'Current',
+			'type': 'boolean',
+			'default': lambda *a: True,
+		},
+		'error': {
+			'string': 'Error',
+			'type': 'boolean',
+			'default': lambda *a: False,
+		},
+}
 
 _import_done_form = '''<?xml version="1.0"?>
 <form string="EDI file imported">
