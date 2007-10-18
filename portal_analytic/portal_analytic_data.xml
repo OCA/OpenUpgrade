@@ -84,27 +84,5 @@
 	<menuitem name="Portal/Customer Portal/Contracts/Closed Contracts" id="portal_menu_analytic_account_closed" 
 	          action="portal_action_analytic_account_closed"/>
 
-
-
-	<record model="ir.actions.act_window" id="portal_action_project">
-		<field name="name">Projects</field>
-		<field name="res_model">project.project</field>
-		<field name="view_type">tree</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_project_t">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_project"/>
-		<field name="act_window_id" ref="portal_action_project"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_project_f">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="portal_edit_project"/>
-		<field name="act_window_id" ref="portal_action_project"/>
-	</record>
-	<menuitem name="Portal/Customer Portal/Your Projects/Your Projects" id="portal_menu_project" action="portal_service.portal_action_project"/>
-
-
 </data>
 </terp>

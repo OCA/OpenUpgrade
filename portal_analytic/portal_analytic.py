@@ -30,7 +30,8 @@ from osv import fields, osv
 
 class portal_analytic_account(osv.osv):
 	_name = "portal.analytic.account"
-	_inherit = "account_analytic_account"
+	_inherit = "account.analytic.account"
+	_table = "account_analytic_account"
 	_columns = {
 	}
 portal_analytic_account()
