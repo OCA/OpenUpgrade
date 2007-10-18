@@ -89,6 +89,12 @@ class project_gtd_timebox(osv.osv):
 		'context4_id': fields.many2one('project.gtd.context', 'Context 4'),
 		'context5_id': fields.many2one('project.gtd.context', 'Context 5'),
 		'context6_id': fields.many2one('project.gtd.context', 'Context 6'),
+		'col_project': fields.boolean('Project'),
+		'col_date_start': fields.boolean('Date Start'),
+		'col_priority': fields.boolean('Priority'),
+		'col_deadline': fields.boolean('Deadline'),
+		'col_planned_hours': fields.boolean('Planned Hours'),
+		'col_effective_hours': fields.boolean('Effective Hours'),
 	}
 	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
 		res = super(project_gtd_timebox,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
@@ -114,17 +120,25 @@ class project_gtd_timebox(osv.osv):
 				<field name="%s" colspan="4" nolabel="1">
 					<tree editable="bottom" colors="grey:state in ('done','pending');red:state=='cancelled'" string="Tasks">
 						<field name="name"/>
-						<field name="project_id" required="1"/>
-						<field name="date_start"/>
-						<field name="priority"/>
-						<field name="date_deadline"/>
-						<field name="planned_hours"  widget="float_time" sum="Est. Hours"/>
-						<field name="effective_hours"  widget="float_time" sum="Eff. Hours"/>
+				""" % (getattr(rec, 'context%d_id'%(i,)).name, 'task%d_ids'%(i,))
+				if rec.col_project:
+					res['arch'] += '<field name="project_id" required="1"/>\n'
+				if rec.col_date_start:
+					res['arch'] += '<field name="date_start"/>\n'
+				if rec.col_priority:
+					res['arch'] += '<field name="priority"/>\n'
+				if rec.col_deadline:
+					res['arch'] += '<field name="date_deadline"/>\n'
+				if rec.col_planned_hours:
+					res['arch'] += '<field name="planned_hours"  widget="float_time" sum="Est. Hours"/>\n'
+				if rec.col_effective_hours:
+					res['arch'] += '<field name="effective_hours"  widget="float_time" sum="Eff. Hours"/>\n'
+				res['arch'] += """
 						<field name="state" readonly="1"/>
 					</tree>
 				</field>
 			</page>
-				""" % (getattr(rec, 'context%d_id'%(i,)).name, 'task%d_ids'%(i,))
+				"""
 
 			res['arch']+="""
 		</notebook>
@@ -136,7 +150,13 @@ class project_gtd_timebox(osv.osv):
 		res['fields'] = xfields
 		return res
 	_defaults = {
-		'type': lambda *args: 'daily'
+		'type': lambda *args: 'daily',
+		'col_project': lambda *args: True,
+		'col_date_start': lambda *args: True,
+		'col_priority': lambda *args: True,
+		'col_deadline': lambda *args: False,
+		'col_planned_hours': lambda *args: True,
+		'col_effective_hours': lambda *args: False
 	}
 project_gtd_timebox()
 

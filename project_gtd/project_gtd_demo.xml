@@ -31,6 +31,9 @@
 		<field name="context2_id" ref="context_car"/>
 		<field name="context3_id" ref="context_travel"/>
 		<field name="context4_id" ref="context_home"/>
+		<field name="col_project" eval="False"/>
+		<field name="col_effective_hours" eval="True"/>
+		<field name="col_date_start" eval="False"/>
 	</record>
 	<record model="project.gtd.timebox" id="timebox_weekly">
 		<field name="name">Weekly</field>
@@ -41,6 +44,8 @@
 		<field name="context2_id" ref="context_car"/>
 		<field name="context3_id" ref="context_travel"/>
 		<field name="context4_id" ref="context_home"/>
+		<field name="col_deadline" eval="True"/>
+		<field name="col_effective_hours" eval="True"/>
 	</record>
 	<record model="project.gtd.timebox" id="timebox_monthly">
 		<field name="name">Monthly</field>
@@ -51,6 +56,8 @@
 		<field name="context2_id" ref="context_car"/>
 		<field name="context3_id" ref="context_travel"/>
 		<field name="context4_id" ref="context_home"/>
+		<field name="col_deadline" eval="True"/>
+		<field name="col_effective_hours" eval="True"/>
 	</record>
 	<record model="project.gtd.timebox" id="timebox_lt">
 		<field name="name">Long Term</field>
@@ -61,6 +68,8 @@
 		<field name="context2_id" ref="context_car"/>
 		<field name="context3_id" ref="context_travel"/>
 		<field name="context4_id" ref="context_home"/>
+		<field name="col_deadline" eval="True"/>
+		<field name="col_effective_hours" eval="True"/>
 	</record>
 
 	</data>

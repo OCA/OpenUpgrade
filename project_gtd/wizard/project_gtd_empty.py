@@ -44,13 +44,15 @@ class wiz_timebox_empty(wizard.interface):
 		close = []
 		up = []
 		for task in pool.get('project.task').browse(cr, uid, tids, context):
-			if (task.state in ('cancel','done')) or ('user_id','<>',uid):
+			if (task.state in ('cancel','done')) or (task.user_id.id<>uid):
 				close.append(task.id)
 			else:
 				up.append(task.id)
 		if up:
+			print 'UP', up
 			pool.get('project.task').write(cr, uid, up, {'timebox_id':ids[0]})
 		if close:
+			print 'CLOSE', close
 			pool.get('project.task').write(cr, uid, close, {'timebox_id':False})
 		return {}
 
