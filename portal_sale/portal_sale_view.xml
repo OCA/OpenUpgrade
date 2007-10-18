@@ -6,7 +6,7 @@
 		<field name="model">sale.order</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Sales Order">
+			<form string="Sales Order" link="0">
 				<notebook>
 					<page string="Sale Order">
 						<field name="name" select="1"/>
@@ -103,7 +103,7 @@
 		<field name="model">sale.order</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Sales Orders">
+			<tree string="Sales Orders" link="0">
 				<field name="date_order"/>
 				<field name="name"/>
 				<field name="partner_id"/>

@@ -42,12 +42,38 @@ product_product()
 class crm_case_section(osv.osv):
 	_inherit = "crm.case.section"
 	_columns = {
-		'package_weight': fields.float('Package Weight', digits=(16,2)),
-	}
-	_defaults = {
-		'package_weight': lambda *args: 0.0
+		'package_product_id': fields.many2one('product.product', 'Package Product'),
+		'analytic_account_id': fields.many2one('account.analytic.account', 'Main Analytic Account'),
+		'analytic_journal_id': fields.many2one('account.analytic.journal', 'Analytic Journal'),
 	}
 crm_case_section()
+
+class crm_case(osv.osv):
+	_inherit = "crm.case"
+	def case_open(self, cr, uid, ids, *args):
+		res = super(crm_case, self).case_open(cr, uid, ids, *args)
+		for case in self.browse(cr,uid, ids):
+			section = case.section_id
+			if section.package_product_id and section.analytic_account_id and section.analytic_journal_id:
+				partner = self.pool.get('res.users').browse(cr, uid, uid).address_id.partner_id.id
+				aids = self.pool.get('account.analytic.account').search(cr, uid, [('partner_id','=',partner),('state','in',('open','draft')),('parent_id','child_of',[section.analytic_account_id.id])])
+				if not aids:
+					raise osv.except_osv('You can not open this case !', 'No valid analytic account defined for your user.\nPlease contact the administrator.')
+				self.pool.get('account.analytic.line').create(cr, uid, {
+					'name': case.name,
+					'amount': 0.0,
+					'unit_amount': 1,
+					'product_uom_id': section.package_product_id.uom_id.id,
+					'product_id': section.package_product_id.id,
+					'account_id': aids[0],
+					'general_account_id': section.package_product_id.property_account_income.id or section.package_product_id.categ_id.property_account_income_categ.id,
+					'journal_id': section.analytic_journal_id.id,
+					'user_id': uid,
+					'ref': 'CASE'+str(case.id)
+				})
+		return res
+crm_case()
+
 
 class account_analytic_line_package(osv.osv):
 	_name = "account.analytic.line.package"

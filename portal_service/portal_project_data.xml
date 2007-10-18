@@ -15,40 +15,18 @@
 
 
 	<record model="portal.model" id="model_project">
-				<field name="name" >Project Model</field>
-				<field name="model_id" search="[('model','=','project.project')]"/>
-				<field name="rule_group_id" ref="project_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('view_project')])]"/>
+		<field name="name" >Project Model</field>
+		<field name="model_id" search="[('model','=','project.project')]"/>
+		<field name="rule_group_id" ref="project_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('view_project')])]"/>
 	</record>
 
-	<record model="ir.rule.group" id="analytic_account_rule_group">
-		<field name="name">Portal analytic account rule</field>
-		<field name="model_id" search="[('model','=','account.analytic.account')]" model="ir.model"/>
-		<field name="global" eval="False"/>
-	</record>
-	<record model="ir.rule" id="analytic_account_rule">
-		<field name="field_id" search="[('model','=','account.analytic.account'),('name','=','partner_id')]" model="ir.model.fields"/>
-		<field name="operator">=</field>
-		<field name="operand">user.address_id.partner_id.id</field>
-		<field name="rule_group" ref="analytic_account_rule_group"/>
-	</record>
-
-
-	<record model="portal.model" id="model_analytic_account">
-				<field name="name" >Analytic Account Model</field>
-				<field name="model_id" search="[('model','=','account.analytic.account')]"/>
-				<field name="rule_group_id" ref="analytic_account_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('portal_analytic_account_tree'),ref('portal_analytic_account_form')])]"/>
-	</record>	
 
 </data>
 <data noupdate="1">
 
 	<record model="res.groups" id="portal.portal_group">
 		<field name="rule_groups" eval="[(4,ref('project_rule_group'))]"/>
-	</record>
-	<record model="res.groups" id="portal.portal_group">
-		<field name="rule_groups" eval="[(4,ref('analytic_account_rule_group'))]"/>
 	</record>
 
 	<record model="ir.model.access" id="model_access_project">
@@ -57,63 +35,6 @@
 		<field name="group_id" ref="portal.portal_group"/>
 		<field name="model_id" search="[('model','=','project.project')]"/>
 	</record>
-	<record model="ir.model.access" id="model_access_analytic_account">
-		<field name="name">Analytic Account Access</field>
-		<field name="perm_read">True</field>
-		<field name="group_id" ref="portal.portal_group"/>
-		<field name="model_id" search="[('model','=','account.analytic.account')]"/>
-	</record>
-
-
-	<record model="ir.actions.act_window" id="portal_action_analytic_account_opened">
-		<field name="name">Opened Contracts</field>
-		<field name="res_model">account.analytic.account</field>
-		<field name="view_type">form</field>
-<!-- 		<field name="view_mode">tree,form</field> -->
-<!-- 		<field name="view_id" ref="portal_analytic_account_tree"/> -->
-		<field name="domain">[('state','&lt;&gt;','close'),('state','&lt;&gt;','draft')]</field>		
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_aa_o">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="portal_analytic_account_tree"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_opened"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_aa_o">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="portal_analytic_account_form"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_opened"/>
-	</record>
-
-	<menuitem name="Portal/Customer Portal/Contracts/Open Contracts" 
-	          id="portal_menu_analytic_account_opened" action="portal_action_analytic_account_opened"/>
-
-
-	<record model="ir.actions.act_window" id="portal_action_analytic_account_closed">
-		<field name="name">Closed Contracts</field>
-		<field name="res_model">account.analytic.account</field>
-		<field name="view_type">form</field>
-<!-- 		<field name="view_mode">tree,form</field> -->
-<!-- 		<field name="view_id" ref="portal_analytic_account_tree"/> -->
-		<field name="domain">[('state','=','close')]</field>		
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_tree_aa_c">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="portal_analytic_account_tree"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_closed"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="window_view_form_aa_c">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="portal_analytic_account_form"/>
-		<field name="act_window_id" ref="portal_action_analytic_account_closed"/>
-	</record>
-	<menuitem name="Portal/Customer Portal/Contracts/Closed Contracts" id="portal_menu_analytic_account_closed" 
-	          action="portal_action_analytic_account_closed"/>
-
-
 
 	<record model="ir.actions.act_window" id="portal_action_project">
 		<field name="name">Projects</field>
@@ -133,7 +54,6 @@
 		<field name="act_window_id" ref="portal_action_project"/>
 	</record>
 	<menuitem name="Portal/Customer Portal/Your Projects/Your Projects" id="portal_menu_project" action="portal_service.portal_action_project"/>
-
 
 </data>
 </terp>

@@ -7,7 +7,7 @@
 		<field name="model">account.invoice</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Invoice">
+			<form string="Invoice" link="0">
 			<notebook>
 				<page string="Invoice">
 					<field name="partner_id" readonly="1" select="1"/>
@@ -59,7 +59,7 @@
 		<field name="model">account.invoice</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Invoice" colors="grey:state=='draft'">
+			<tree string="Invoice" colors="grey:state=='draft'" link="0">
 				<field name="name"/>
 				<field name="type"/>
 				<field name="number"/>
@@ -81,7 +81,7 @@
 		<field name="type">tree</field>
 		<field name="priority" eval="4"/>
 		<field name="arch" type="xml">
-			<tree string="Account Entry Line">
+			<tree string="Account Entry Line" link="0">
 				<field name="date"/>
 				<field name="move_id"/>
 				<field name="ref"/>
@@ -103,7 +103,7 @@
 		<field name="type">form</field>
 		<field name="priority" eval="2"/>
 		<field name="arch" type="xml">
-			<form string="Account Entry Line">
+			<form string="Account Entry Line" link="0">
 				<notebook>
 				<page string="Information">
 				<separator string="General Information" colspan="4"/>

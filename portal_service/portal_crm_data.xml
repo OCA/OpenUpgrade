@@ -16,10 +16,24 @@
 
 
 	<record model="portal.model" id="model_case">
-				<field name="name" >Case Model</field>
-				<field name="model_id" search="[('model','=','crm.case')]"/>
-				<field name="rule_group_id" ref="case_rule_group"/>
-				<field name="view_ids" eval="[(6,0,[ref('portal_crm_case_tree_view'),ref('portal_crm_case_view')])]"/>
+		<field name="name" >Case Model</field>
+		<field name="model_id" search="[('model','=','crm.case')]"/>
+		<field name="rule_group_id" ref="case_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('portal_crm_case_tree_view'),ref('portal_crm_case_view')])]"/>
+	</record>
+
+	<record model="portal.model" id="model_case_simplified">
+		<field name="name" >Case Model - Normal RW</field>
+		<field name="model_id" search="[('model','=','crm.case')]"/>
+		<field name="rule_group_id" ref="case_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('crm.crm_case_tree-view'),ref('crm.crm_case-view')])]"/>
+	</record>
+	
+	<record model="portal.model" id="model_case_simplified">
+		<field name="name" >Case Model - Simplified</field>
+		<field name="model_id" search="[('model','=','crm.case')]"/>
+		<field name="rule_group_id" ref="case_rule_group"/>
+		<field name="view_ids" eval="[(6,0,[ref('portal_crm_case_tree_view_simplified'),ref('portal_crm_case_view_simplified')])]"/>
 	</record>
 	
 </data>

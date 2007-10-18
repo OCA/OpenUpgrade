@@ -11,10 +11,10 @@
 			<notebook position="inside">
 				<page string="Package Weight">
 					<separator string="Analytic Package" colspan="4"/>
-					<field name="package_weight" string="Product name" colspan="4" />
-					<label string="Zero if not part of a package" colspan="4"/>
-					<label string="&lt;0 if it's a service unit" colspan="4"/>
-					<label string="&gt;0 if it's a activity unit" colspan="4"/>
+					<field name="package_product_id" colspan="4" />
+					<field name="analytic_journal_id" colspan="4" />
+					<field name="analytic_account_id" colspan="4" />
+					<label string="The parent account of all package account" colspan="4"/>
 				</page>
 			</notebook>
 		</field>

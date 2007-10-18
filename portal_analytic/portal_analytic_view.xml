@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+		<record model="ir.ui.view" id="portal_analytic_account_tree">
+			<field name="name">portal.analytic.account.tree</field>
+			<field name="model">portal.analytic.account</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Analytic Account" link="0">
+					<field name="name"/>
+					<field name="date" />
+					<field name="quantity" />
+					<field name="quantity_max" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="portal_analytic_account_form">
+			<field name="name">portal.analytic.account.form</field>
+			<field name="model">portal.analytic.account</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Analytic Account" link="0">
+					<notebook>
+						<page string="Account Data">
+							<field name="name" select="1"/>
+							<field name="code" select="1"/>
+							<field name="date_start" />
+							<field name="date" select="2"/>
+							<field name="active"/>
+							<newline/>
+							<field name="quantity_max" />
+							<field name="user_id" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+
+</data>
+</terp>
+

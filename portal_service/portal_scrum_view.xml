@@ -23,7 +23,7 @@
 		<field name="type">tree</field>
 		<field name="field_parent">child_id</field>
 		<field name="arch" type="xml">
-			<tree string="Scrum Projects">
+			<tree string="Scrum Projects" link="0">
 				<field name="name" />
 				<field name="manager" />
 				<field name="product_owner_id" />
