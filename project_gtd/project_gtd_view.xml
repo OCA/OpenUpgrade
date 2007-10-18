@@ -188,7 +188,7 @@
 
 
 	<act_window name="My Inbox"
-		domain="[('user_id', '=', uid),('timebox_id','=',False)]"
+		domain="[('user_id', '=', uid),('timebox_id','=',False),('state','in',('draft','open'))]"
 		res_model="project.task"
 		src_model="project.gtd.timebox"
 		view_type="form"
