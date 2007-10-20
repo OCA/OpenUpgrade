@@ -15,12 +15,12 @@
 		<blockTableStyle id="objects">
 			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
 			 <blockValign value="TOP"/>
-			 <blockAlignment value="RIGHT" start="0,1" stop="1,-1"/>
+			 <blockAlignment value="RIGHT" start="2,1" stop="-1,-1"/>
 			 <lineStyle kind="LINEBELOW" start="0,0" stop="-1,0"/>
 		</blockTableStyle>
 		<blockTableStyle id="object-totals">
 			 <blockValign value="TOP"/>
-			 <blockAlignment value="RIGHT" start="0,1" stop="1,-1"/>
+			 <blockAlignment value="RIGHT" start="2,0" stop="-1,-1"/>
 			 <lineStyle kind="LINEABOVE" start="-1,0" stop="-1,0"/>
 			 <lineStyle kind="LINEABOVE" start="-1,-1" stop="-1,-1"/>
 		</blockTableStyle>
@@ -89,10 +89,10 @@
 <!--<pageBreak/>-->
 	</xsl:template>
 	<xsl:template match="objects">
-		<blockTable colWidths="1.2cm,1.4cm,10.0cm,1.5cm,2.3cm,1.5cm,1.5cm" style="objects">
+		<blockTable colWidths="0.2cm,1.4cm,9.0cm,1.5cm,2.3cm,2.5cm,2.5cm" style="objects">
 
 			<tr>
-				<td t="1">Lot</td>
+				<td t="1"></td>
 				<td t="1">Cat</td>
 				<td t="1">Description</td>
 				<td t="1">Paid</td>
@@ -103,7 +103,7 @@
 			<xsl:apply-templates select="object"/>
 		</blockTable>
 		<condPageBreak height="3.2cm"/>
-		<blockTable colWidths="1.2cm,1.4cm,10.0cm,1.5cm,2.3cm,1.5cm,1.5cm" style="object-totals">
+		<blockTable colWidths="0.2cm,1.4cm,9.0cm,1.5cm,2.3cm,2.5cm,2.5cm" style="object-totals">
 			<tr>
 				<td/>
 				<td/>
@@ -139,7 +139,7 @@
 
 	<xsl:template match="object">
 		<tr>
-			<td><barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="70"  alignment="CENTER"><xsl:value-of select="barcode"/></barCode></td>
+			<td></td>
 			<td><xsl:value-of select="ref"/></td>
 			<td>
 				<para>

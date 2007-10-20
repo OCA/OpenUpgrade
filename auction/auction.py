@@ -762,7 +762,8 @@ class auction_lots(osv.osv):
 				price = lot.obj_price or 0.0
 				lot_name =lot.obj_num
 				inv={
-					'name':'Auction:' +lot.name,
+					'name':lot.auction_id.name or '',
+					'reference': lot.ach_login,
 					'journal_id': lot.auction_id.journal_id.id,
 					'partner_id': lot.ach_uid.id,
 					'type': 'out_invoice'
