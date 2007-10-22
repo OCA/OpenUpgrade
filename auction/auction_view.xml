@@ -1328,6 +1328,7 @@ Objects per Day
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('auction_id','=', active_id)]</field>
+		<field name="limit" eval="2000"/>
 	</record>
 	<record model="ir.values" id="ir_open_auction_lots">
 		<field name="key2">tree_but_open</field>
@@ -1342,6 +1343,7 @@ Objects per Day
 		<field name="res_model">auction.lots</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('auction_id','=',active_id)]</field>
+		<field name="limit" eval="2000"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_auction_lots_open_view1">
 		<field name="sequence" eval="1"/>
