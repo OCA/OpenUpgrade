@@ -458,8 +458,7 @@ class auction_lots(osv.osv):
 	_defaults = {
 		'state':lambda *a: 'draft',
 		'lot_num':lambda *a:1,
-
-
+		'is_ok': lambda *a: False
 	}
 	_constraints = [
 #		(_inv_constraint, 'Twice the same inventory number !', ['lot_num','bord_vnd_id'])

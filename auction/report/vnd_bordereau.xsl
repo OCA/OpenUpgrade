@@ -132,7 +132,7 @@
 
 	<xsl:template match="product">
 		<tr>
-			<td><barCode type="codarbar" code="Code128" height="26.8" quiet="9" fontName="Times-Roman" fontSize="50"  alignment="CENTER"><xsl:value-of select="ref"/></barCode></td>
+			<td></td>
 			<td><xsl:value-of select="num_catalog"/></td>
 			<td><xsl:value-of select="num_inv"/></td>
 			<td><para><b><xsl:value-of select="title"/></b></para></td>
