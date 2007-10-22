@@ -144,7 +144,7 @@ Auction Management/Auction Dates/New Auction Dates
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_auction_dates_form"/>
 	</record>
-	<menuitem name="Auction Management/Auction Dates" groups="admin"/>
+	<menuitem name="Auction Management/Auction Dates"/>
 	<menuitem name="Auction Management/Auction Dates/New Auction Dates" id="menu_auction_dates_new"  action="action_auction_dates1"/>
 
 
@@ -595,7 +595,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_deposit_border_tree2"/>
 	</record>
-	<menuitem name="Auction Management/Sellers" groups="admin" />
+	<menuitem name="Auction Management/Sellers"/>
 	<menuitem name="Auction Management/Sellers/Deposit border" action="action_deposit_border" id="menu_auction_deposit_border"/>
 
 	=======================================================
@@ -738,7 +738,7 @@ Auction Management/Auction Dates/Reporting
 			</form>
 		</field>
 	</record>
-	<menuitem name="Auction Management/Reporting" groups="admin"/>
+	<menuitem name="Auction Management/Reporting"/>
 
 
 <record model="ir.actions.act_window" id="action_auction_report_allmonth_view1">
