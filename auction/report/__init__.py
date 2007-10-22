@@ -38,7 +38,7 @@ import catelogwithpictures
 import auction_objects
 import buyer_form_report
 import seller_form_report
-import buyer_list
+#import buyer_list
 import auction_catelog
 import auction_buyer_result
 #import auction_total_rml
@@ -51,3 +51,4 @@ import bids_phones_details
 import auction_bids
 import catalog2
 import report_lot_bar_code
+import huissier

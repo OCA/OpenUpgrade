@@ -28,7 +28,7 @@
 
 import wizard
 import netsvc
-
+import pooler
 import sql_db
 
 numerotate_form_cont = '''<?xml version="1.0"?>
@@ -86,7 +86,10 @@ def _read_record(self,cr,uid,datas,context={}):
 	found = [r for r in res if r in datas['ids']]
 	if len(found)==0:
 		raise wizard.except_wizard('UserError', 'This record does not exist !')
-	datas = service.execute(uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
+	#datas = service.execute(uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
+	datas = pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'])
+	print datas
+	print "yy", datas[0]
 	return datas[0]
 
 def _numerotate(self,cr,uid,datas,context={}):
@@ -110,9 +113,13 @@ def _numerotate(self,cr,uid,datas,context={}):
 
 def _numerotate_cont(self,cr,uid,datas,context={}):
 	nbr = int(datas['form']['number'])
-	service = netsvc.LocalService("object_proxy")
-	for id in datas['ids']:
-		service.execute(cr.dbname,uid,'auction.lots', 'write', [id], {'obj_num':nbr} )
+#	service = netsvc.LocalService("object_proxy")
+	refs = pooler.get_pool(cr.dbname).get('auction.lots')
+	rec_ids = refs.browse(cr,uid,datas['ids'])
+	print "est passe ici"
+	for rec_id in rec_ids:#datas['ids']:
+		#service.execute(cr.dbname,uid,'auction.lots', 'write', [id], {'obj_num':nbr} )
+		refs.write(cr,uid,[res_id.id],{'obj_num':nbr})
 		nbr+=1
 	return {}
 

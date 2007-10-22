@@ -3,6 +3,15 @@
 	<data>
 		<!--<delete model="ir.actions.report.xml" search="[('model','like','auction.')]"/>-->
 
+		<report string="Listing Huissiers"
+		model="auction.lots"
+		name="flagey.huissier"
+		xsl="auction/report/huissier.xsl"
+		auto="False"
+		id="v_huissier"
+		/>
+
+
 		<report string="Artists Biography"
 		 model="auction.artists"
 		 name="report.auction.artists"
@@ -104,15 +113,6 @@
 		xsl="auction/report/lots_list.xsl"
 		 multi="1"/>
 
-
-
-	<report string="Buyer lists"
-	   	model="auction.lots"
-		name="buyer.list"
-		rml="auction/report/buyer_list.rml"
-		auto="False"
-		multi="1"/>
-
 	<report string="Auction Totals with lists"
 	   	model="auction.lots"
 		name="auction.total.rml"
@@ -165,15 +165,32 @@
 		xml="auction/report/vnd_bordereau.xml"
 		xsl="auction/report/vnd_bordereau.xsl"
 		multi="1"/>
-
 		<report string="Seller List"
+		model="auction.lots" 
+		multi="1"
+		id="seller_form_id"
+		name="report.auction.seller.list" 
+		xml="auction/report/seller_list.xml"
+		xsl="auction/report/seller_list.xsl"/>
+
+
+		<report string="Buyer List"
+		model="auction.lots"
+		name="report.auction.buyer.list"
+		id="buy_id_list"
+		xml="auction/report/buyer_list.xml" 
+		xsl="auction/report/buyer_list.xsl"
+		/>
+
+<!--		<report string="Seller List"
 		 model="auction.lots"
 		 name="report.auction.seller.list"
 		 xml="auction/report/seller_list.xml"
 		 xsl="auction/report/seller_list.xsl"
 		 menu="False"
+		 id="v_seller_list"
 		  multi="1"/>
-
+-->
 		<report string="Bids per lot (phone)"
 		 model="auction.lots"
 		 name="bids.phones.details"
