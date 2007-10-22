@@ -22,7 +22,7 @@
 		<field name="view_ids" eval="[(6,0,[ref('portal_crm_case_tree_view'),ref('portal_crm_case_view')])]"/>
 	</record>
 
-	<record model="portal.model" id="model_case_simplified">
+	<record model="portal.model" id="model_case_normal">
 		<field name="name" >Case Model - Normal RW</field>
 		<field name="model_id" search="[('model','=','crm.case')]"/>
 		<field name="rule_group_id" ref="case_rule_group"/>

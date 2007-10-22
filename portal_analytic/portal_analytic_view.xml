@@ -27,27 +27,33 @@
 						<page string="Account Data">
 							<field name="name" select="1"/>
 							<field name="code" select="1"/>
-							<field name="date_start" />
 							<field name="date" select="2"/>
-							<field name="active"/>
-							<newline/>
-							<field name="quantity_max" />
+							<field name="date_start" />
 							<field name="user_id" />
+							<separator string="Quantities" colspan="4"/>
+							<field name="quantity" />
+							<field name="quantity_max" />
+						</page>
+						<page string="Stats by month">  
+							<field name="month_ids" colspan="4" nolabel="1">
+								<tree string="Month">
+									<field name="name"/>
+									<field name="unit_amount" widget="float_time"/>
+								</tree>
+							</field>
+						</page>
+						<page string="Stats by user"> 
+							<field name="user_ids" colspan="4" nolabel="1">
+								<tree string="User">
+									<field name="name"/>
+									<field name="unit_amount" widget="float_time"/>
+								</tree>
+							</field>
 						</page>
 					</notebook>
 				</form>
 			</field>
 		</record>
-
-	<act_window name="All Operations"
-		domain="[('account_id', '=', active_id)]"
-		res_model="account.analytic.line.package"
-		src_model="portal.analytic.account"
-		view_type="form"
-		view_mode="tree"
-		view="account_analytic_package.view_account_analytic_line_package_tree_simplified"
-		id="act_portal_analytic_operations"/>
-
 </data>
 </terp>
 
