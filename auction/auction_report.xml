@@ -140,7 +140,7 @@
 		model="auction.lots"
 		name="report.auction.ach_bordereau"
 		xml="auction/report/ach_bordereau.xml"
-		xsl="auction/report/ach_bordereau.xsl" 
+		xsl="auction/report/ach_bordereau.xsl"
 		multi="0"
 		/>
 
@@ -165,22 +165,23 @@
 		xml="auction/report/vnd_bordereau.xml"
 		xsl="auction/report/vnd_bordereau.xsl"
 		multi="1"/>
+
 		<report string="Seller List"
-		model="auction.lots" 
+		model="auction.lots"
 		multi="1"
 		id="seller_form_id"
-		name="report.auction.seller.list" 
+		name="report.auction.seller.list"
 		xml="auction/report/seller_list.xml"
 		xsl="auction/report/seller_list.xsl"/>
 
 
 		<report string="Buyer List"
 		model="auction.lots"
-		name="report.auction.buyer.list"
+		name="report.buyer.list"
 		id="buy_id_list"
-		xml="auction/report/buyer_list.xml" 
-		xsl="auction/report/buyer_list.xsl"
-		/>
+	    rml="auction/report/buyer_list.rml"
+	    multi="1"/>
+
 
 <!--		<report string="Seller List"
 		 model="auction.lots"

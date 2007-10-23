@@ -39,8 +39,30 @@ class buyer_list(report_sxw.rml_parse):
 		self.localcontext.update({
 			'time': time,
 			'sum_taxes': self.sum_taxes,
-			'sum_debit_buyer': self.sum_debit_buyer
+			'sum_debit_buyer': self.sum_debit_buyer,
+			'print_ids' : self.print_ids,
+			'getAuction_Dates' : self.getAuction_Dates
 	})
+
+	def print_ids(self):
+		print "asdasd"
+
+
+	def getAuction_Dates(self,aut_lots):
+
+		print "aaaa: ",abc
+		return None
+		print abc
+		auc_lot_ids = []
+		for lot in aut_lots:
+			auc_lot_ids.append(lot.id)
+		print "selected lots: ",auc_lot_ids
+		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id')
+		auc_date_ids = self.cr.fetchall()
+		auc_dates = self.pool.get('auction.dates').read(self.cr,self.uid,auc_date_ids)
+#		sql='#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');'
+		print auc_dates
+		return auc_dates
 
 	def sum_taxes(self, lot):
 #		buyer_cost = self.pool.get('auction.dates').read(self.cr,self.uid,[auction_id],['buyer_costs'])[0]
@@ -62,10 +84,13 @@ class buyer_list(report_sxw.rml_parse):
 		print "tax",tax
 		return amount
 
-	def sum_debit_buyer(self,object):
-		auct_id=object.auction_id.id
-		self.cr.execute('select buyer_price from auction_lots where auction_id=%d'%(auct_id,))
+	def sum_debit_buyer(self,auc_id):
+		#auct_id=object.auction_id.id
+#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');
+
+		self.cr.execute('select buyer_price,is_ok,obj_price,ach_uid, from auction_lots where auction_id=%d'%(auct_id,))
 		res = self.cr.fetchone()
+		print "***************VALUES OF RES",res[0]
 		return str(res[0] or 0)
 
 
