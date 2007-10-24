@@ -40,13 +40,18 @@ numerotate_fields_cont = {
 	'number': {'string':'First Number', 'type':'integer', 'required':True}
 }
 
+numerotate_not_exist = '''<?xml version="1.0"?>
+<form title="%s">
+	<label string="This lot does not exist !" colspan="4"/>
+</form>''' % ('Catalog Numerotation',)
+
+
 numerotate_form = '''<?xml version="1.0"?>
 <form title="%s">
-	<group col="1">
-		<separator string="%s" colspan="4"/>
-		<field name="bord_vnd_id"/>
-		<field name="lot_num"/>
-	</group>
+	<separator string="%s" colspan="4"/>
+	<field name="bord_vnd_id"/>
+	<newline/>
+	<field name="lot_num"/>
 </form>''' % ('Catalog Numerotation','Object Reference')
 
 numerotate_fields = {
@@ -57,20 +62,20 @@ numerotate_fields = {
 numerotate_form2 = '''<?xml version="1.0"?>
 <form title="%s">
 	<group>
-		<separator string="%s" colspan="2"/>
-		<field name="lot_inv" readonly="1"/>
+		<separator string="%s" colspan="4"/>
+		<field name="bord_vnd_id" readonly="1"/>
 		<field name="lot_num" readonly="1"/>
 		<field name="name" readonly="1" colspan="3"/>
 		<field name="obj_desc" readonly="1" colspan="3"/>
 		<field name="lot_est1" readonly="1"/>
 		<field name="lot_est2" readonly="1"/>
-		<separator string="%s" colspan="2"/>
+		<separator string="%s" colspan="4"/>
 		<field name="obj_num"/>
 	</group>
 </form>''' % ('Catalog Numerotation','Object Reference','Object Reference')
 
 numerotate_fields2 = {
-	'lot_inv': {'string':'Object Inventory', 'type':'char', 'readonly':True},
+	'bord_vnd_id': {'string':'Object Inventory', 'type':'many2one', 'relation':'auction.deposit', 'readonly':True},
 	'lot_num': {'string':'Inventory Number', 'type':'integer', 'readonly':True},
 	'lot_est1': {'string':'Minimum Estimation', 'type':'float', 'readonly':True},
 	'lot_est2': {'string':'Maximum Estimation', 'type':'float', 'readonly':True},
@@ -81,45 +86,36 @@ numerotate_fields2 = {
 
 def _read_record(self,cr,uid,datas,context={}):
 	form = datas['form']
-	service = netsvc.LocalService("object_proxy")
-	res = service.execute(cr.dbname,uid, 'auction.lots', 'search', [('bord_vnd_id','=',form['bord_vnd_id']), ('lot_num','=',int(form['lot_num']))])
+	res = pooler.get_pool(cr.dbname).get('auction.lots').search(cr,uid,[('bord_vnd_id','=',form['bord_vnd_id']), ('lot_num','=',int(form['lot_num']))])
 	found = [r for r in res if r in datas['ids']]
 	if len(found)==0:
 		raise wizard.except_wizard('UserError', 'This record does not exist !')
-	#datas = service.execute(uid, 'auction.lots', 'read', found, ['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'] )
-	datas = pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'])
-	print datas
-	print "yy", datas[0]
+	datas = pooler.get_pool(cr.dbname).get('auction.lots').read(cr,uid,found,['obj_num', 'name', 'lot_est1', 'lot_est2', 'obj_desc'])
 	return datas[0]
+
+def _test_exist(self,cr,uid,datas,context={}):
+	form = datas['form']
+	res = pooler.get_pool(cr.dbname).get('auction.lots').search(cr,uid,[('bord_vnd_id','=',form['bord_vnd_id']), ('lot_num','=',int(form['lot_num']))])
+	found = [r for r in res if r in datas['ids']]
+	if len(found)==0:
+		return 'not_exist'
+	return 'search'
 
 def _numerotate(self,cr,uid,datas,context={}):
 	form = datas['form']
-	try:
-		service = netsvc.LocalService("object_proxy")
-		ids = service.execute(cr.dbname,uid,'auction.deposit', 'search', [('name','=',form['bord_vnd_id'])])
-		if not len(ids):
-			raise wizard.except_wizard('UserError', 'None object with this inventory found !')
-		res = service.execute(cr.dbname,uid,'auction.lots', 'search', [('bord_vnd_id','=',ids[0]), ('lot_num','=',int(form['lot_num']))])
-		found = [r for r in res if r in datas['ids']]
-	except:
-		raise wizard.except_wizard('ValidateError', ('Wrong values !', 'end'))
+	res = pooler.get_pool(cr.dbname).get('auction.lots').search(cr,uid,[('bord_vnd_id','=',form['bord_vnd_id']), ('lot_num','=',int(form['lot_num']))])
+	found = [r for r in res if r in datas['ids']]
 	if len(found)==0:
-		raise wizard.except_wizard('UserError', 'None object with this inventory found !')
-	try:
-		service.execute(cr.dbname,uid,'auction.lots', 'write', found, {'obj_num':int(form['obj_num'])} )
-		return {'lot_inv':'', 'lot_num':''}
-	except:
-		raise wizard.except_wizard('ValidateError', ('Wrong values !', 'end'))
+		raise wizard.except_wizard('UserError', 'This record does not exist !')
+	pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,found,{'obj_num':int(form['obj_num'])} )
+	return {'lot_inv':'', 'lot_num':''}
 
 def _numerotate_cont(self,cr,uid,datas,context={}):
 	nbr = int(datas['form']['number'])
-#	service = netsvc.LocalService("object_proxy")
 	refs = pooler.get_pool(cr.dbname).get('auction.lots')
 	rec_ids = refs.browse(cr,uid,datas['ids'])
-	print "est passe ici"
-	for rec_id in rec_ids:#datas['ids']:
-		#service.execute(cr.dbname,uid,'auction.lots', 'write', [id], {'obj_num':nbr} )
-		refs.write(cr,uid,[res_id.id],{'obj_num':nbr})
+	for rec_id in rec_ids:
+		refs.write(cr,uid,[rec_id.id],{'obj_num':nbr})
 		nbr+=1
 	return {}
 
@@ -127,11 +123,19 @@ class wiz_auc_lots_numerotate(wizard.interface):
 	states = {
 		'init': {
 			'actions': [],
-			'result': {'type': 'form', 'arch':numerotate_form, 'fields': numerotate_fields, 'state':[('search','Continue'), ('end','Exit')]}
+			'result': {'type': 'form', 'arch':numerotate_form, 'fields': numerotate_fields, 'state':[('end','Cancel'),('choice','Continue')]}
 		},
 		'search': {
 			'actions': [_read_record],
-			'result': {'type': 'form', 'arch':numerotate_form2, 'fields': numerotate_fields2, 'state':[('end','Exit'),('set_number','Numerotation')]}
+			'result': {'type': 'form', 'arch':numerotate_form2, 'fields': numerotate_fields2, 'state':[('end','Exit'),('init','Back'),('set_number','Numerotate')]}
+		},
+		'choice' : {
+			'actions' : [],
+			'result' : {'type' : 'choice', 'next_state': _test_exist }
+		},
+		'not_exist' : {
+			'actions': [],
+			'result': {'type': 'form', 'arch':numerotate_not_exist, 'fields': {}, 'state':[('end','Exit'),('init','Retry')]}
 		},
 		'set_number': {
 			'actions': [_numerotate],
