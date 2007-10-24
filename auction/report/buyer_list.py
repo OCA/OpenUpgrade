@@ -42,7 +42,7 @@ class buyer_list(report_sxw.rml_parse):
 #			'sum_debit_buyer': self.sum_debit_buyer,
 			'lines_lots_from_auction' : self.lines_lots_from_auction,
 			'lines_lots_auct_lot' : self.lines_lots_auct_lot,
-			'sum_adj_price':self.sum_adj_price(objects)
+			'sum_adj_price':self.sum_adj_price
 
 	})
 
@@ -93,13 +93,17 @@ class buyer_list(report_sxw.rml_parse):
 			print "*********auction_lot id",auc_lots_ids
 			auc_lot_obj=self.pool.get('auction.lots').browse(self.cr,self.uid,auc_lots_ids)
 			print "********AUCTION_LOT _OBJECT",auc_lot_obj[0].name
+			for id in auc_lot_obj:
+				print "IDSSSSSSSSSSS",id
+				auct_dat.append(id)
+		return auct_dat
 
 
 #		print "AUCT LIST",auct_dat
 #		print "LIST ******FIELDS",auct_dat[0]['name']
 #		sql='#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');'
 		print "RETURN************"
-		return auc_lot_obj
+
 
 
 	def sum_adj_price(self,objects):
