@@ -85,7 +85,13 @@ def ldap_login(oldfnc):
 									users_obj = pooler.get_pool(cr.dbname).get('res.users')
 									action_obj = pooler.get_pool(cr.dbname).get('ir.actions.actions')
 									action_id = action_obj.search(cr, 1, [('usage', '=', 'menu')])[0]
-									res = users_obj.create(cr, 1, {'name': name, 'login': login.encode('utf-8'), 'company_id': res_company['id'], 'action_id': action_id})
+									res = users_obj.create(cr, 1, {
+										'name': name,
+										'login': login.encode('utf-8'),
+										'company_id': res_company['id'],
+										'action_id': action_id,
+										'menu_id': action_id,
+										})
 									cr.commit()
 									cr.close()
 									return res
