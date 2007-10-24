@@ -10,7 +10,7 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Table3">
+    <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
       <lineStyle kind="GRID" colorName="black"/>
@@ -28,18 +28,17 @@
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Times-Bold" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P2" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P3" fontName="Times-Bold" fontSize="15.0" leading="19" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" fontName="Times-Roman" fontSize="7.0" leading="9"/>
-    <paraStyle name="P5" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P7" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P8" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P9" fontName="Courier-BoldOblique" fontSize="6.0" leading="8" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P10" fontName="Courier-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P11" fontName="Courier-Bold" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P12" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P1" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="7.0" leading="9"/>
+    <paraStyle name="P3" fontName="Courier-BoldOblique" fontSize="8.0" leading="10"/>
+    <paraStyle name="P4" fontName="Times-Bold" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Bold" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -50,108 +49,90 @@
     <paraStyle name="Index" fontName="Times-Roman"/>
   </stylesheet>
   <story>
-    <para style="P1">[[ repeatIn(objects,'o') ]]</para>
-    <para style="P1">
+    <para style="P4">
       <font color="white"> </font>
     </para>
-    <para style="P2">[[ time.strftime('%d/%m/%Y')]]</para>
-    <para style="P1">
+    <para style="P5">
+      <font face="Times-Bold" size="11.0">[[ time.strftime('%d/%m/%Y')]</font>
+    </para>
+    <para style="P6">[[ repeatIn(lines_lots_from_auction(objects),'o') ]]</para>
+    <para style="P6">
+      <font face="Times-Roman" size="15.0"/>
+    </para>
+    <para style="P7">[[o['name'] or False]]</para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <section>
+      <para style="P2">
+        <font color="white"> </font>
+      </para>
+      <blockTable colWidths="166.0,123.0,99.0,97.0,46.0" style="Table2">
+        <tr>
+          <td>
+            <para style="P6">Buyer </para>
+          </td>
+          <td>
+            <para style="P6">Adj(EUR)</para>
+          </td>
+          <td>
+            <para style="P6">Buyer costs([['%.0f'%(o.auction_id.buyer_costs and o.auction_id.buyer_costs[0].amount*100)]]%)</para>
+          </td>
+          <td>
+            <para style="P6">To pay</para>
+          </td>
+          <td>
+            <para style="P6">Paid</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P6">[[ repeatIn(lines_lots_auct_lot(objects),'a') ]]</para>
+            <para style="P6">[[ a['ach_uid'] and a['ach_uid'].name or False]]</para>
+          </td>
+          <td>
+            <para style="P6">
+              <font face="Times-Bold" size="11.0">[[ '%.2f' %a['obj_price'] ]]</font>
+            </para>
+          </td>
+          <td>
+            <para style="P6">[['%.2f' %(a['buyer_price'] - a['obj_price'])]]</para>
+          </td>
+          <td>
+            <para style="P6">[['%.2f' %a['buyer_price'] ]]</para>
+          </td>
+          <td>
+            <para style="P6">[[(a['is_ok'] or a['paid_ach']) and 'Paid' or 'Not paid']]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="Standard">
+        <font color="white"> </font>
+      </para>
+    </section>
+    <para style="P2">
       <font color="white"> </font>
     </para>
     <para style="P3">
       <font color="white"> </font>
     </para>
-    <para style="P3">[[r.auction_id.name or False]]</para>
-    <para style="P4">
-      <font color="white"> </font>
-    </para>
-    <para style="P5">
-      <font color="white"> </font>
-    </para>
-    <para style="P6">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="166.0,123.0,99.0,97.0,46.0" style="Table3">
-      <tr>
-        <td>
-          <para style="P7">Buyer </para>
-        </td>
-        <td>
-          <para style="P8">Adj(EUR)</para>
-        </td>
-        <td>
-          <para style="P8">Buyer costs([['%.0f'%(o.auction_id.buyer_costs and o.auction_id.buyer_costs[0].amount*100)]]%)</para>
-        </td>
-        <td>
-          <para style="P8">To pay</para>
-        </td>
-        <td>
-          <para style="P8">Paid</para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P9">[[repeatIn(r.auction_id.id,'o') ]]</para>
-        </td>
-        <td>
-          <para style="P8">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P8">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P8">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P10">[[ l.ach_uid and l.ach_uid.name or False]]</para>
-        </td>
-        <td>
-          <para style="P11">[[ '%.2f' %l.obj_price ]]</para>
-        </td>
-        <td>
-          <para style="P11">[['%.2f' %(l.buyer_price – l.obj_price)]]</para>
-        </td>
-        <td>
-          <para style="P11">[['%.2f' %l.buyer_price]]</para>
-        </td>
-        <td>
-          <para style="P11">[[(l.is_ok or l.paid_ach) and 'Paid' or 'Not paid']]</para>
-        </td>
-      </tr>
-    </blockTable>
-    <para style="P12">
-      <font color="white"> </font>
-    </para>
     <blockTable colWidths="167.0,123.0,99.0,143.0" style="Tableau1">
       <tr>
         <td>
-          <para style="P11">Total:</para>
+          <para style="P10">Total:</para>
         </td>
         <td>
-          <para style="P11">[[ '%.2f' %o.obj_price ]]</para>
+          <para style="P6">[[ <font face="Times-Roman">sum_obj_price(o) </font>]]</para>
         </td>
         <td>
-          <para style="P11">[['%.2f' %(o.buyer_price - o.obj_price)]]</para>
+          <para style="P6">[[<font face="Times-Roman"> sum_buyer_price_obj_price(o)</font>]]</para>
         </td>
         <td>
-          <para style="P11">[['%.2f' %o.buyer_price]]</para>
+          <para style="P6">[[<font face="Times-Roman"> sum_buyer_price(o)</font>]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P12">
+    <para style="P1">
       <font color="white"> </font>
     </para>
   </story>
