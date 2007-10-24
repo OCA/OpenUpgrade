@@ -49,52 +49,33 @@ class buyer_list(report_sxw.rml_parse):
 
 
 	def lines_lots_from_auction(self,objects):
-		print "*********in the function"
 
 
 		auc_lot_ids = []
-		print "OBJECTSS*********",objects
 		for lot_id  in objects:
-			print "LOTID",lot_id
 			auc_lot_ids.append(lot_id.id)
-		print "selected lots: ",auc_lot_ids
-		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id')
+		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id order by auction_id')
 		auc_date_ids = self.cr.fetchall()
-		print "AUCTION DATE IDS***************",auc_date_ids
 		auct_dat=[]
 		for ad_id in auc_date_ids:
-			print "s***********",ad_id[0]
 			auc_dates_fields = self.pool.get('auction.dates').read(self.cr,self.uid,ad_id[0],['name'])
-			print "AUCTION DATE FIELDS",auc_dates_fields
 			auct_dat.append(auc_dates_fields)
-		print "AUCT LIST",auct_dat
-		print "LIST ******FIELDS",auct_dat[0]['name']
 #		sql='#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');'
-		print "RETURN************"
 		return auct_dat
 
 
 	def lines_lots_auct_lot(self,objects):
-		print "*********in LOT FUNCTION"
 		auc_lot_ids = []
-		print "OBJECTSS*********",objects
 		for lot_id  in objects:
-			print "LOTID",lot_id
 			auc_lot_ids.append(lot_id.id)
-		print "selected lots: ",auc_lot_ids
-		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id')
+		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id order by auction_id')
 		auc_date_ids = self.cr.fetchall()
-		print "AUCTION DATE IDS***************",auc_date_ids
 
 		auct_dat=[]
 		for ad_id in auc_date_ids:
-			print "s***********",ad_id[0]
 			auc_lots_ids = self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',ad_id[0])]))
-			print "*********auction_lot id",auc_lots_ids
 			auc_lot_obj=self.pool.get('auction.lots').browse(self.cr,self.uid,auc_lots_ids)
-			print "********AUCTION_LOT _OBJECT",auc_lot_obj[0].name
 			for id in auc_lot_obj:
-				print "IDSSSSSSSSSSS",id
 				auct_dat.append(id)
 		return auct_dat
 
@@ -107,30 +88,21 @@ class buyer_list(report_sxw.rml_parse):
 
 
 	def sum_adj_price(self,objects):
-		print "*********in LOT FUNCTION"
 		auc_lot_ids = []
-		print "OBJECTSS*********",objects
 		for lot_id  in objects:
-			print "LOTID",lot_id
 			auc_lot_ids.append(lot_id.id)
-		print "selected lots: ",auc_lot_ids
-		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id')
+		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id order by auction_id')
 		auc_date_ids = self.cr.fetchall()
-		print "AUCTION DATE IDS***************",auc_date_ids
 
 		auct_dat=[]
 		for ad_id in auc_date_ids:
-			print "s***********",ad_id[0]
 			auc_lots_ids = self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',ad_id[0])]))
-			print "*********auction_lot id",auc_lots_ids
 			auc_lot_obj=self.pool.get('auction.lots').browse(self.cr,self.uid,auc_lots_ids)
-			print "********AUCTION_LOT _OBJECT",auc_lot_obj[0].name
 
 
 #		print "AUCT LIST",auct_dat
 #		print "LIST ******FIELDS",auct_dat[0]['name']
 #		sql='#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');'
-		print "RETURN************"
 		return auc_lot_obj
 
 
