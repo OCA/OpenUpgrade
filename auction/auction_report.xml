@@ -177,9 +177,10 @@
 
 		<report string="Buyer List"
 		model="auction.lots"
-		name="report.buyer.list"
+		name="buyer.list"
 		id="buy_id_list"
 	    rml="auction/report/buyer_list.rml"
+	    auto = "False"
 	    multi="1"/>
 
 
