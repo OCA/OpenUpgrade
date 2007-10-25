@@ -72,6 +72,7 @@ class buyer_list(report_sxw.rml_parse):
 			auct_dat.append(auc_dates_fields)
 		print "AUCT LIST",auct_dat
 		print "LIST ******FIELDS",auct_dat[0]['name']
+
 #		sql='#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');'
 		print "RETURN************"
 		return auct_dat
