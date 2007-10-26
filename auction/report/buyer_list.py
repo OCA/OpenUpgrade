@@ -68,9 +68,17 @@ class buyer_list(report_sxw.rml_parse):
 		for ad_id in auc_date_ids:
 			print "s***********",ad_id[0]
 			auc_dates_fields = self.pool.get('auction.dates').read(self.cr,self.uid,ad_id[0],['name'])
+
 			print "AUCTION DATE FIELDS",auc_dates_fields
+##			############new cdding for the buyer cost
+#			self.cr.execute('select abr.auction_id,abr.tax_id  from auction_buyer_taxes_rel abr,auction_dates ad where ad.id=abr.auction_id and ad.id=1;
+#			auc_buyer_rel_ids = self.pool.get('auction.buyer.taxes.rel').search(self.cr,self.uid,([('auction_id','=',auc_dates_fields['id'])]))
+
+#			print "VIRTULA TABLE IDS",auc_buyer_rel_ids
+
 			auct_dat.append(auc_dates_fields)
-#		print "AUCT LIST",auct_dat
+
+		print "AUCT LIST",auct_dat
 #		print "LIST ******FIELDS",auct_dat[0]['name']
 
 #		sql='#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');'
@@ -103,7 +111,7 @@ class buyer_list(report_sxw.rml_parse):
 
 
 	def lines_lots_auct_lot(self,obj):
-#		print "*********in LOT FUNCTION"
+		print "*********in LOT FUNCTION"
 		auc_lot_ids = []
 #		print "OBJECTSS*********",obj
 #		for lot_id  in objects:
@@ -117,15 +125,24 @@ class buyer_list(report_sxw.rml_parse):
 #		print 'select * from auction_lots where auction_id=%d'%(auc_date_ids[0])
 		self.cr.execute('select * from auction_lots where auction_id=%d'%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
+
 #		print "RESSSSSSSSSSSSSS",res
+		rec=[]
 		for r in res:
+			print "OBJPRICE*******", r['obj_price']
+			if not r['obj_price'] == 0:
+				print "OBJPRICEnot >0*******", r['obj_price']
+				rec.append(r)
+#				print "OBJ_PRICENOT  >0",r['obj_price']
 #			print "rrrrrrrrrrr////////",r,r['ach_uid']
+		for r in rec:
 			if r['ach_uid']:
 				tnm=self.pool.get('res.partner').read(self.cr,self.uid,[r['ach_uid']],['name'])
 #				print "tnm::::::::",tnm
 				r.__setitem__('ach_uid',tnm[0]['name'])
+
 #
-		return res
+		return rec
 
 
 
@@ -146,8 +163,13 @@ class buyer_list(report_sxw.rml_parse):
 		res = self.cr.dictfetchall()
 #		print "RESSSSSSSSSSSSSS",res
 		sum=0
+		rec=[]
 		for r in res:
-
+			print "OBJPRICE*******", r['obj_price']
+			if not r['obj_price'] == 0:
+				print "OBJPRICEnot >0*******", r['obj_price']
+				rec.append(r)
+		for r in rec:
 			sum = sum + r['obj_price']
 #		print "VALUE OF OBJ_SUM",sum
 		return sum
@@ -168,9 +190,13 @@ class buyer_list(report_sxw.rml_parse):
 		self.cr.execute('select * from auction_lots where auction_id=%d'%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
 #		print "RESSSSSSSSSSSSSS",res
+		rec=[]
 		sum=0
 		for r in res:
-
+			if not r['obj_price'] == 0:
+				print "OBJPRICEnot >0*******", r['obj_price']
+				rec.append(r)
+		for r in rec:
 			sum=sum + r['buyer_price']-r['obj_price']
 
 #		print "SUM OF BUYER PRICE -OBJPRICE",sum
@@ -194,10 +220,16 @@ class buyer_list(report_sxw.rml_parse):
 		res = self.cr.dictfetchall()
 #		print "RESSSSSSSSSSSSSS",res
 		sum=0
+		rec=[]
 		for r in res:
-
+			if not r['obj_price'] == 0:
+				print "OBJPRICEnot >0*******", r['obj_price']
+				rec.append(r)
+		print "REC***************",rec
+		for r in rec:
+			print "buyerprice********", r['buyer_price']
 			sum = sum + r['buyer_price']
-#		print "SUM OF BUYER PRICE -OBJPRICE",sum
+		print "SUM OF BUYER PRICE -OBJPRICE",sum
 #
 		return sum
 
