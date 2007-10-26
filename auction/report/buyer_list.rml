@@ -10,7 +10,7 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Table2">
+     <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
      <lineStyle kind="LINEBELOW" colorName="red" start="0,0" stop="-1,0"/>
       <blockValign value="TOP"/>
@@ -29,7 +29,12 @@
     <paraStyle name="P4" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P5" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P6" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+        <paraStyle name="P61" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P7" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Bold" fontSize="6.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Bold" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -56,7 +61,7 @@
       <para style="P2">
         <font color="white"> </font>
       </para>
-      <blockTable colWidths="131.0,123.0,99.0,97.0,70.0" style="Table2">
+     <blockTable colWidths="131.0,123.0,99.0,97.0,70.0" style="Table2">
         <tr>
           <td>
             <para style="P6">Buyer </para>
@@ -76,11 +81,11 @@
         </tr>
         <tr>
           <td>
-            <para style="P6">[[ repeatIn(lines_lots_auct_lot(o),'a') ]][[ a['ach_uid'] or False ]]</para>
+             <para style="P61">[[ repeatIn(lines_lots_auct_lot(o),'a') ]] </para>
+             <para style="P61">[[ a['ach_uid'] or False ]]</para>
           </td>
           <td>
-
-            <para style="P6">[[ a['obj_price']  ]]</para>
+                 <para style="P6">[[ a['obj_price']  ]]</para>
           </td>
           <td>
             <para style="P6">[[ a['buyer_price'] - a['obj_price'] ]]</para>
@@ -120,4 +125,3 @@
     </para>
   </story>
 </document>
-

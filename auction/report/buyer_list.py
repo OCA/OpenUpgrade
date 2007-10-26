@@ -140,8 +140,8 @@ class buyer_list(report_sxw.rml_parse):
 				tnm=self.pool.get('res.partner').read(self.cr,self.uid,[r['ach_uid']],['name'])
 #				print "tnm::::::::",tnm
 				r.__setitem__('ach_uid',tnm[0]['name'])
-
-#
+				print "BUYERNAMEACH_UID",r['ach_uid']
+#			print "BUYERNAMEACH_UID if NOT BUYER******",r['ach_uid']
 		return rec
 
 
