@@ -71,14 +71,29 @@ class buyer_list(report_sxw.rml_parse):
 
 			print "AUCTION DATE FIELDS",auc_dates_fields
 ##			############new cdding for the buyer cost
-#			self.cr.execute('select abr.auction_id,abr.tax_id  from auction_buyer_taxes_rel abr,auction_dates ad where ad.id=abr.auction_id and ad.id=1;
-#			auc_buyer_rel_ids = self.pool.get('auction.buyer.taxes.rel').search(self.cr,self.uid,([('auction_id','=',auc_dates_fields['id'])]))
-
-#			print "VIRTULA TABLE IDS",auc_buyer_rel_ids
-
+##			print 'select abr.auction_id,abr.tax_id  from auction_buyer_taxes_rel abr,auction_dates ad where ad.id=abr.auction_id and ad.id=%d'%(ad_id[0])'
+			print "AUCTION ID VALUE PRINT",ad_id[0]
+			print 'QUERY :: select * from auction_buyer_taxes_rel abr,auction_dates ad where ad.id=abr.auction_id and ad.id=%d'%(ad_id[0],)
+			self.cr.execute('select * from auction_buyer_taxes_rel abr,auction_dates ad where ad.id=abr.auction_id and ad.id=%d'%(ad_id[0],))
+			print "Befrore fetch"
+			res=self.cr.fetchall()
+			print "4444444444444444444444444444444444", res
+			res2=[]
+			for r in res:
+				print "rrrrrrrrrr",r[1]
+				buyer_rel_field = self.pool.get('account.tax').read(self.cr,self.uid,r[1],['amount'])
+				print "TAX NAMEl:********",buyer_rel_field
+				res2.append(buyer_rel_field)
+#				res2['buyer_cost']=buyer_rel_field
+#				print "res2 diction",res2['buyer_cost']
+			print"REC2222222222",res2
 			auct_dat.append(auc_dates_fields)
-
-		print "AUCT LIST",auct_dat
+			print "AUCTlIST BEFRE ADD A RESC2",auct_dat
+#			auc_dat.append(res2)
+#			print "AUCT LIST AFER ADD A RES2",auct_dat
+			res3=[]
+			res3 =  res2 + auct_dat
+			print"RESSSSSSSSSSSSS3",res3
 #		print "LIST ******FIELDS",auct_dat[0]['name']
 
 #		sql='#		 select id,name from auction_lots where auction_id in (select id from auction_dates where name = 'painting Exhibition');'
