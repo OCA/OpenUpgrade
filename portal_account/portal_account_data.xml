@@ -142,6 +142,21 @@
               id="portal_menu_move_line_unreconcilied" 
 			  action="portal_action_account_move"/>
 
+	<record model="ir.model.access" id="model_access_journal">
+		<field name="name">Journal Portal</field>
+		<field name="group_id" ref="portal_group"/>
+		<field name="model_id" search="[('model','=','account.journal')]"/>
+	</record>
+	<record model="ir.model.access" id="model_access_journal_user">
+		<field name="name">Journal Users</field>
+		<field name="group_id" ref="base.group_user"/>
+		<field name="model_id" search="[('model','=','account.journal')]"/>
+		<field name="perm_read" eval="True"/>
+		<field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/>
+	</record>
+
 
 </data>
 </terp>

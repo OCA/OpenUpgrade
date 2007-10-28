@@ -36,56 +36,6 @@
 		<field name="perm_create" eval="True"/>
 		<field name="perm_unlink" eval="True"/>
 	</record>
-
-	<record model="ir.model.access" id="model_access_journal">
-		<field name="name">Journal Portal</field>
-		<field name="group_id" ref="portal_group"/>
-		<field name="model_id" search="[('model','=','account.journal')]"/>
-	</record>
-	<record model="ir.model.access" id="model_access_journal_user">
-		<field name="name">Journal Users</field>
-		<field name="group_id" ref="base.group_user"/>
-		<field name="model_id" search="[('model','=','account.journal')]"/>
-		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="True"/>
-		<field name="perm_create" eval="True"/>
-		<field name="perm_unlink" eval="True"/>
-	</record>
-
-
-	<record model="ir.model.access" id="model_access_employee">
-		<field name="name">Employee Portal</field>
-		<field name="group_id" ref="portal_group"/>
-		<field name="model_id" search="[('model','=','hr.employee')]"/>
-	</record>
-	<record model="ir.model.access" id="model_access_employee_user">
-		<field name="name">Employee Users</field>
-		<field name="group_id" ref="base.group_user"/>
-		<field name="model_id" search="[('model','=','hr.employee')]"/>
-		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="True"/>
-		<field name="perm_create" eval="True"/>
-		<field name="perm_unlink" eval="True"/>
-	</record>
-
-
-	<record model="ir.model.access" id="model_access_case_category">
-		<field name="name">Case category Portal</field>
-		<field name="group_id" ref="portal_group"/>
-		<field name="model_id" search="[('model','=','crm.case.categ')]"/>
-		<field name="perm_read" eval="True"/>
-	</record>
-	<record model="ir.model.access" id="model_access_case_category_user">
-		<field name="name">Case category Users</field>
-		<field name="group_id" ref="base.group_user"/>
-		<field name="model_id" search="[('model','=','crm.case.categ')]"/>
-		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="True"/>
-		<field name="perm_create" eval="True"/>
-		<field name="perm_unlink" eval="True"/>
-	</record>
-
-
 	<record model="ir.model.access" id="model_access_partner_som">
 		<field name="name">Partner SOM Portal</field>
 		<field name="group_id" ref="portal_group"/>
@@ -119,38 +69,6 @@
 	</record>
 
 
-	<record model="ir.model.access" id="model_access_sale_shop">
-		<field name="name">Sale Shop Portal</field>
-		<field name="group_id" ref="portal_group"/>
-		<field name="model_id" search="[('model','=','sale.shop')]"/>
-		<field name="perm_read" eval="False"/>
-	</record>
-	<record model="ir.model.access" id="model_access_sale_shop_user">
-		<field name="name">Sale Shop Users</field>
-		<field name="group_id" ref="base.group_user"/>
-		<field name="model_id" search="[('model','=','sale.shop')]"/>
-		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="True"/>
-		<field name="perm_create" eval="True"/>
-		<field name="perm_unlink" eval="True"/>
-	</record>
-
-
-	<record model="ir.model.access" id="model_access_stock_picking">
-		<field name="name">Stock Picking Portal</field>
-		<field name="group_id" ref="portal_group"/>
-		<field name="model_id" search="[('model','=','stock.picking')]"/>
-		<field name="perm_read" eval="True"/>
-	</record>
-	<record model="ir.model.access" id="model_access_stock_picking_user">
-		<field name="name">Sale Shop Users</field>
-		<field name="group_id" ref="base.group_user"/>
-		<field name="model_id" search="[('model','=','stock.picking')]"/>
-		<field name="perm_read" eval="True"/>
-		<field name="perm_write" eval="True"/>
-		<field name="perm_create" eval="True"/>
-		<field name="perm_unlink" eval="True"/>
-	</record>
 
 
 	<record model="ir.model.access" id="model_access_res_currency">
