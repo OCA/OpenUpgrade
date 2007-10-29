@@ -12,7 +12,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-    database="latest_server"
+    database="test"
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -70,15 +70,18 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             self.getInverseFieldsRecord(1)
             fp_name = tempfile.mktemp('.'+"sxw")
             if not oDoc2.hasLocation():
-                oDoc2.storeAsURL("file://"+fp_name,Array())
+                oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             if docinfo.getUserFieldValue(2)=="":
                 id=self.getID()
                 docinfo.setUserFieldValue(2,id)
+                rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
+                res=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
             else:
-                id=docinfo.getUserFieldValue(2)
-            rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
-            res=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
+                id = docinfo.getUserFieldValue(2)
+                vId = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
+                rec = { 'name': self.win.getEditText("txtReportName")}
+                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
             oDoc2.store()
             url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
             fp = file(url, 'rb')
@@ -88,11 +91,15 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
             bHeader = True
+            res1 = {}
+            res1['name'] =self.win.getEditText("txtName")
+            res1['model'] =docinfo.getUserFieldValue(3)
+            res1['report_name'] =self.win.getEditText("txtReportName")
             if self.win.getCheckBoxState("chkHeader")==0:
                 bHeader = False
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),{"header":bHeader})
+            res1["header"] = bHeader
+            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),res1)
             self.win.endExecute()
-
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
