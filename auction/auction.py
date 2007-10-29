@@ -504,13 +504,14 @@ class auction_lots(osv.osv):
 	#	pt_tax=pool.get('account.tax')
 		for lot in lots:
 			taxes = lot.product_id.taxes_id
-			if lot.bord_vnd_id.tax_id:
+			if lot.author_right:
 				taxes.append(lot.author_right)
 			elif lot.auction_id:
 				taxes += lot.auction_id.buyer_costs
 			tax=self.pool.get('account.tax').compute(cr,uid,taxes,lot.obj_price,1)
 			for t in tax:
 				amount+=t['amount']
+			#amount+=lot.obj_price*0.2
 			#amount+=lot.obj_price
 		amount_total['value']= amount
 		amount_total['amount']= amount
