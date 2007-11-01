@@ -70,7 +70,7 @@
             <para style="P6">Adj(EUR)</para>
           </td>
           <td>
-            <para style="P6">Buyer costs</para>
+            <para style="P6">Buyer costs( [[ o['amount'] ]]%)</para>
           </td>
           <td>
             <para style="P6">To pay</para>
@@ -85,7 +85,7 @@
              <para style="P61">[[ a['ach_uid'] or False ]]</para>
           </td>
           <td>
-                 <para style="P6">[[ a['obj_price']  ]]</para>
+                 <para style="P6">[[ a['obj_price'] ]]</para>
           </td>
           <td>
             <para style="P6">[[ a['buyer_price'] - a['obj_price'] ]]</para>
@@ -105,13 +105,13 @@
           <para style="P6">Total:</para>
         </td>
         <td>
-          <para style="P6">[[ sum_adj_price(o)]]</para>
+          <para style="P6">[[ sum_adj_price(o) ]]</para>
         </td>
         <td>
-          <para style="P6">[[sum_buyer_obj_price(o)]]</para>
+          <para style="P6">[[ sum_buyer_obj_price(o) ]]</para>
         </td>
         <td>
-          <para style="P6">[[sum_buyer_price(o)]]</para>
+          <para style="P6">[[ sum_buyer_price(o) ]]</para>
         </td>
         <td>
           <para style="P6">
