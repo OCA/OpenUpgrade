@@ -41,6 +41,7 @@ class base_module_record(osv.osv):
 		super(base_module_record, self).__init__(pool)
 		self.recording = 0
 		self.recording_data = []
+		self.depends = {}
 
 	# To Be Improved
 	def _create_id(self, cr, uid, model, data):
@@ -61,6 +62,7 @@ class base_module_record(osv.osv):
 		if not dtids:
 			return None, None
 		obj = dt.browse(cr, uid, dtids[0])
+		self.depends[obj.module] = True
 		return obj.module+'.'+obj.name, obj.noupdate
 
 	def _create_record(self, cr, uid, doc, model, data, record_id, noupdate=False):
@@ -119,12 +121,14 @@ class base_module_record(osv.osv):
 
 	def _generate_object_xml(self, cr, uid, rec, recv, doc, result=None):
 		record_list = []
+		noupdate = False
 		if rec[4]=='write':
 			for id in rec[5]:
 				id,update = self._get_id(cr, uid, rec[3], id)
+				noupdate = noupdate or update
 				if not id:
 					continue
-				record,noupdate = self._create_record(cr, uid, doc, rec[3], rec[6], id)
+				record,update = self._create_record(cr, uid, doc, rec[3], rec[6], id)
 				noupdate = noupdate or update
 				record_list += record
 		elif rec[4]=='create':
@@ -147,15 +151,12 @@ class base_module_record(osv.osv):
 				data = doc.createElement("data")
 				if noupdate:
 					data.setAttribute("noupdate", "1")
-				terp.appendChild(data)
+				if res_list:
+					terp.appendChild(data)
 				for res in res_list:
 					data.appendChild(res)
 			elif rec[0]=='assert':
-				res = self._generate_assert_xml(rec[1], rec[2], doc)
-				data = doc.createElement("data")
-				terp.appendChild(data)
-				for res in res_list:
-					data.appendChild(res)
+				pass
 		return  doc.toprettyxml(indent="\t")
 base_module_record()
 

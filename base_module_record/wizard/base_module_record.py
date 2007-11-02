@@ -59,6 +59,7 @@ def _start_recording(self, cr, uid, data, context):
 	mod.recording = 1
 	if not data['form']['continue']:
 		mod.recording_data = []
+		mod.depends = {}
 	return {}
 
 def _check_recording(self, cr, uid, data, context):

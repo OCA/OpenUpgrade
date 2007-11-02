@@ -118,6 +118,7 @@ def _create_module(self, cr, uid, data, context):
 		data['form']['demo_name'] = '"%(directory_name)s_data.xml"' % data['form']
 	else:
 		data['form']['update_name'] = '"%(directory_name)s_data.xml"' % data['form']
+	data['form']['depends'] = ','.join(map(lambda x: '"'+x+'"',mod.depends.keys()))
 	_terp = """{
 		"name" : "%(name)s",
 		"version" : "%(version)s",
@@ -125,7 +126,7 @@ def _create_module(self, cr, uid, data, context):
 		"website" : "%(website)s",
 		"category" : "%(category)s",
 		"description": \"\"\"%(description)s\"\"\",
-		"depends" : ["base"],
+		"depends" : [%(depends)s],
 		"init_xml" : [ ],
 		"demo_xml" : [ %(demo_name)s],
 		"update_xml" : [%(update_name)s],
