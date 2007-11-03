@@ -26,16 +26,11 @@
 #
 ##############################################################################
 
+import xmlrpclib
+import sys
 
-{
-	"name":"Account CODA",
-	"version":"1.0",
-	"author":"Tiny",
-	"category":"Account Coda",
-	"depends":["base", "account","account_report","base_iban"],
-	"demo_xml":["coda_demo.xml"],
-	"init_xml":[],
-	"update_xml" : ["coda_wizard.xml","coda_view.xml"],
-	"active":False,
-	"installable":True,
-}
+sock = xmlrpclib.ServerProxy('http://%s:%s/xmlrpc/object' % (sys.argv[3],sys.argv[4]))
+
+ids = sock.execute(sys.argv[5], 3, 'admin', 'asterisk.phone', 'search', [('phoneid','=',sys.argv[1])])
+sock.execute(sys.argv[5], 3, 'admin', 'asterisk.phone', 'write', ids, {'current_callerid': sys.argv[2]})
+

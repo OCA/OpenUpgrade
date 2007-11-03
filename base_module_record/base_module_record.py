@@ -56,7 +56,7 @@ class base_module_record(osv.osv):
 
 	def _get_id(self, cr, uid, model, id):
 		if id in self.ids:
-			return self.ids[id]
+			return self.ids[id], False
 		dt = self.pool.get('ir.model.data')
 		dtids = dt.search(cr, uid, [('model','=',model), ('res_id','=',id)])
 		if not dtids:
@@ -146,8 +146,21 @@ class base_module_record(osv.osv):
 		terp = doc.createElement("terp")
 		doc.appendChild(terp)
 		for rec in self.recording_data:
+			if rec[0]=='workflow':
+				rec_id,noupdate = self._get_id(cr, uid, rec[1][3], rec[1][5])
+				if not rec_id:
+					continue
+				data = doc.createElement("data")
+				terp.appendChild(data)
+				wkf = doc.createElement('workflow')
+				data.appendChild(wkf)
+				wkf.setAttribute("model", rec[1][3])
+				wkf.setAttribute("action", rec[1][4])
+				if noupdate:
+					data.setAttribute("noupdate", "1")
+				wkf.setAttribute("ref", rec_id)
 			if rec[0]=='query':
-				res_list,noupdate = self._generate_object_xml(cr, uid, rec[1], rec[2], doc)
+				res_list,noupdate = self._generate_object_xml(cr, uid, rec[1], rec[2], doc, rec[3])
 				data = doc.createElement("data")
 				if noupdate:
 					data.setAttribute("noupdate", "1")
@@ -167,11 +180,23 @@ def fnct_call(fnct):
 		mod = pool.get('ir.module.record')
 		if mod and mod.recording:
 			if args[4] not in ('default_get','read','fields_view_get','fields_get','search','name_search','name_get','get','request_get'):
-				mod.recording_data.append(('query', args, argv))
+				mod.recording_data.append(('query', args, argv,res))
 		return res
 	return execute
+
+def fnct_call_workflow(fnct):
+	def exec_workflow(*args, **argv):
+		res = fnct(*args, **argv)
+		pool = pooler.get_pool(args[0])
+		mod = pool.get('ir.module.record')
+		if mod and mod.recording:
+			mod.recording_data.append(('workflow', args, argv))
+		return res
+	return exec_workflow
 
 obj  = netsvc._service['object']
 obj.execute = fnct_call(obj.execute)
 obj.exportMethod(obj.execute)
+obj.exec_workflow = fnct_call_workflow(obj.exec_workflow)
+obj.exportMethod(obj.exec_workflow)
 

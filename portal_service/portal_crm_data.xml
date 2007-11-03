@@ -123,7 +123,7 @@
 
 	<record model="ir.model.access" id="model_access_employee">
 		<field name="name">Employee Portal</field>
-		<field name="group_id" ref="portal_group"/>
+		<field name="group_id" ref="portal.portal_group"/>
 		<field name="model_id" search="[('model','=','hr.employee')]"/>
 	</record>
 	<record model="ir.model.access" id="model_access_employee_user">
@@ -139,7 +139,7 @@
 
 	<record model="ir.model.access" id="model_access_case_category">
 		<field name="name">Case category Portal</field>
-		<field name="group_id" ref="portal_group"/>
+		<field name="group_id" ref="portal.portal_group"/>
 		<field name="model_id" search="[('model','=','crm.case.categ')]"/>
 		<field name="perm_read" eval="True"/>
 	</record>

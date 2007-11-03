@@ -1,7 +1,8 @@
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+# Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
+# $Id: __init__.py 2102 2006-01-11 20:38:55Z pinky $
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -26,16 +27,5 @@
 #
 ##############################################################################
 
-
-{
-	"name":"Account CODA",
-	"version":"1.0",
-	"author":"Tiny",
-	"category":"Account Coda",
-	"depends":["base", "account","account_report","base_iban"],
-	"demo_xml":["coda_demo.xml"],
-	"init_xml":[],
-	"update_xml" : ["coda_wizard.xml","coda_view.xml"],
-	"active":False,
-	"installable":True,
-}
+import asterisk
+import wizard

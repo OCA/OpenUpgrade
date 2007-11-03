@@ -144,7 +144,7 @@
 
 	<record model="ir.model.access" id="model_access_journal">
 		<field name="name">Journal Portal</field>
-		<field name="group_id" ref="portal_group"/>
+		<field name="group_id" ref="portal.portal_group"/>
 		<field name="model_id" search="[('model','=','account.journal')]"/>
 	</record>
 	<record model="ir.model.access" id="model_access_journal_user">

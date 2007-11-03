@@ -1,6 +1,7 @@
 {
 	"name": "Tiny purchase",
 	"version": "0.1",
+	"description": "Very simple purchase module.",
 	"author" : "Tiny",
 	"depends": ['base',],
 	"category": "Generic Modules/Tiny Purchase",

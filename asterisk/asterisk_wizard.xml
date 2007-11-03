@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+		<wizard
+			string="Get Partner From Call"
+			model="asterisk.server"
+			name="asterisk.partner.get"
+			id="wizard_partner_get"
+			multi="True"/>
+
+		<menuitem
+			name="Sys Admin/Get Partner From Call"
+			action="wizard_partner_get"
+			type="wizard"
+			id="menu_wizard_partner_get"/>
+
+
+	</data>
+</terp>

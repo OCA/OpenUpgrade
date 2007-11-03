@@ -1248,7 +1248,7 @@
 		<field name="parent_id" eval="[(6,0,[resultats_002])]"/>
 		</record>
 		<record model="account.account" id="cmv_51000">
-			<field name="type">stock_expense</field>
+			<field name="type">asset</field>
 			<field name="code">50100</field>
 			<field name="name">Achat - Inventaire pour produits</field>
 
@@ -1342,49 +1342,49 @@
 			<field name="parent_id" eval="[(6,0,[frais_expl_61000])]"/>
 			</record>
 			<record model="account.account" id="fr_exp_61101">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">61101</field>
 				<field name="name">Fret à la vente (Transport / Livraison)</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_exp_61100])]"/>
 			</record>
 			<record model="account.account" id="fr_exp_61102">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">61102</field>
 				<field name="name">Frais d'emballage</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_exp_61100])]"/>
 			</record>
 			<record model="account.account" id="fr_exp_61103">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">61103</field>
 				<field name="name">Échange et arrondissement de devise</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_exp_61100])]"/>
 			</record>
 			<record model="account.account" id="fr_exp_61104">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">61104</field>
 				<field name="name">Créances irrécouvrables (douteuses)</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_exp_61100])]"/>
 			</record>
 			<record model="account.account" id="fr_exp_61105">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">61105</field>
 				<field name="name">Frais de publicité</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_exp_61100])]"/>
 			</record>
 			<record model="account.account" id="fr_exp_61106">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">61106</field>
 				<field name="name">Frais de représentation et de voyage</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_exp_61100])]"/>
 			</record>
 			<record model="account.account" id="fr_exp_61107">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">61107</field>
 				<field name="name">Promotions</field>
 
@@ -1410,28 +1410,28 @@
 				<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_sal_65105">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65105</field>
 				<field name="name">Salaires - Administration</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_salaires_65100])]"/>
 			</record>
 			<record model="account.account" id="fr_sal_65110">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65110</field>
 				<field name="name">Salaires - Personnel de bureau</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_salaires_65100])]"/>
 			</record>
 			<record model="account.account" id="fr_sal_65115">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65115</field>
 				<field name="name">Salaires - Employés</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_salaires_65100])]"/>
 			</record>
 			<record model="account.account" id="fr_sal_65120">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65120</field>
 				<field name="name">Salaires - Vendeurs</field>				
 
@@ -1445,56 +1445,56 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65205">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65205</field>
 				<field name="name">ARC - Impôt du Canada</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_das_65200])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65210">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65210</field>
 				<field name="name">MRQ - Impôt du Québec</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_das_65200])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65215">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65215</field>
 				<field name="name">RRQ - Régime de Rentes du Québec</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_das_65200])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65220">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65220</field>
 				<field name="name">RPC - Régime de Pensions du Canada</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_das_65200])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65225">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65225</field>
 				<field name="name">RHDCC - Assurance-emploi</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_das_65200])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65230">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65230</field>
 				<field name="name">Assurance collective - Cotisations employé</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_das_65200])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65235">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65235</field>
 				<field name="name">Régime de retraite - Cotisations employé</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_das_65200])]"/>
 			</record>
 			<record model="account.account" id="fr_das_65240">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65240</field>
 				<field name="name">Cotisations syndicales</field>
 
@@ -1508,35 +1508,35 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_bm_65305">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65305</field>
 				<field name="name">Vacances</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_bm_65300])]"/>
 			</record>
 			<record model="account.account" id="fr_bm_65310">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65310</field>
 				<field name="name">Congés sociaux</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_bm_65300])]"/>
 			</record>
 			<record model="account.account" id="fr_bm_65315">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65315</field>
 				<field name="name">Assurance collective - Primes employeur</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_bm_65300])]"/>
 			</record>
 			<record model="account.account" id="fr_bm_65320">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65320</field>
 				<field name="name">Régime de retraite - Cotisations employeur</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_bm_65300])]"/>
 			</record>
 			<record model="account.account" id="fr_bm_65325">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65325</field>
 				<field name="name">Autre(s) traitement(s)</field>				
 
@@ -1550,14 +1550,14 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_cs_65405">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65405</field>
 				<field name="name">FSSQ - Fonds des services de santé du Québec</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_cs_65400])]"/>
 			</record>
 			<record model="account.account" id="fr_cs_65410">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65410</field>
 				<field name="name">CSST - Commission de la Santé et de la Sécurité au Travail</field>				
 
@@ -1571,28 +1571,28 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_tx_imp_65501">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65501</field>
 				<field name="name">TPS - Taxe sur les Produits et Services</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_tx_imp_65500])]"/>
 			</record>
 			<record model="account.account" id="fr_tx_imp_65502">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65502</field>
 				<field name="name">TVQ - Taxe de Vente du Québec</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_tx_imp_65500])]"/>
 			</record>
 			<record model="account.account" id="fr_tx_imp_65503">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65503</field>
 				<field name="name">Impôt fédérale sur les sociétés</field>				
 
 				<field name="parent_id" eval="[(6,0,[frais_tx_imp_65500])]"/>
 			</record>
 			<record model="account.account" id="fr_tx_imp_65504">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65504</field>
 				<field name="name">Impôt provinciale sur les sociétés</field>				
 
@@ -1606,21 +1606,21 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_c_ct_65601">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65601</field>
 				<field name="name">Visa</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_carte_ct_65600])]"/>
 			</record>
 			<record model="account.account" id="fr_c_ct_65602">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65602</field>
 				<field name="name">Mastercard</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_carte_ct_65600])]"/>
 			</record>
 			<record model="account.account" id="fr_c_ct_65603">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65603</field>
 				<field name="name">Mastercard</field>
 
@@ -1634,35 +1634,35 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_amort_65701">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65701</field>
 				<field name="name">Amortissement BÂTIMENTS</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_amort_imm_65700])]"/>
 			</record>
 			<record model="account.account" id="fr_amort_65702">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65702</field>
 				<field name="name">Amortissement MATÉRIEL DE BUREAU</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_amort_imm_65700])]"/>
 			</record>
 			<record model="account.account" id="fr_amort_65703">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65703</field>
 				<field name="name">Amortissement MOBILIER DE BUREAU</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_amort_imm_65700])]"/>
 			</record>
 			<record model="account.account" id="fr_amort_65704">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65704</field>
 				<field name="name">Amortissement MATÉRIEL INFORMATIQUE</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_amort_imm_65700])]"/>
 			</record>
 			<record model="account.account" id="fr_amort_65705">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65705</field>
 				<field name="name">Amortissement MATÉRIEL ROULANT</field>
 
@@ -1676,35 +1676,35 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_tel_65801">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65801</field>
 				<field name="name">Service - Ligne(s) téléphonique(s)</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_telecom_65800])]"/>
 			</record>
 			<record model="account.account" id="fr_tel_65802">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65802</field>
 				<field name="name">Appels interurbains</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_telecom_65800])]"/>
 			</record>
 			<record model="account.account" id="fr_tel_65803">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65803</field>
 				<field name="name">Cellulaire(s)</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_telecom_65800])]"/>
 			</record>
 			<record model="account.account" id="fr_tel_65804">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65804</field>
 				<field name="name">Télé-avertisseur(s)</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_telecom_65800])]"/>
 			</record>
 			<record model="account.account" id="fr_tel_65805">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65805</field>
 				<field name="name">Service Internet</field>
 
@@ -1718,21 +1718,21 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_hon_65851">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65851</field>
 				<field name="name">Services comptables</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_honoraires_65850])]"/>
 			</record>
 			<record model="account.account" id="fr_hon_65852">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65852</field>
 				<field name="name">Frais juridiques</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_honoraires_65850])]"/>
 			</record>
 			<record model="account.account" id="fr_hon_65853">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">65853</field>
 				<field name="name">Notaire</field>
 
@@ -1746,28 +1746,28 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_local_66001">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66001</field>
 				<field name="name">Location Local # 1</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_location_66000])]"/>
 			</record>
 			<record model="account.account" id="fr_local_66002">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66002</field>
 				<field name="name">Frais communs # 1</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_location_66000])]"/>
 			</record>
 			<record model="account.account" id="fr_local_66003">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66003</field>
 				<field name="name">Entretien et Réparations # 1</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_location_66000])]"/>
 			</record>
 			<record model="account.account" id="fr_local_66004">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66004</field>
 				<field name="name">Impôts fonciers # 1</field>
 
@@ -1781,7 +1781,7 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_66501">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66501</field>
 				<field name="name">Hydro Québec</field>
 
@@ -1795,56 +1795,56 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66601">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66601</field>
 				<field name="name">Automobile - Location</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_deplacements_66600])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66602">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66602</field>
 				<field name="name">Automobile - Assurance</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_deplacements_66600])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66603">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66603</field>
 				<field name="name">Automobilie - Essence</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_deplacements_66600])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66604">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66604</field>
 				<field name="name">Automobile - Entretien et réparations</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_deplacements_66600])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66605">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66605</field>
 				<field name="name">Automobile - Immatriculation et Permis</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_deplacements_66600])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66606">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66606</field>
 				<field name="name">Autobus</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_deplacements_66600])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66607">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66607</field>
 				<field name="name">Avion</field>
 
 				<field name="parent_id" eval="[(6,0,[fr_deplacements_66600])]"/>
 			</record>
 			<record model="account.account" id="fr_depl_66608">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66608</field>
 				<field name="name">Train</field>
 
@@ -1858,7 +1858,7 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_66701">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">66701</field>
 				<field name="name">Fournitures de bureau utilisées</field>
 
@@ -1872,98 +1872,98 @@
 			<field name="parent_id" eval="[(6,0,[frais_adm_65000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69001">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69001</field>
 				<field name="name">Marque de commerce</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69002">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69002</field>
 				<field name="name">Frais de constitution  (inc./enr./...)</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69003">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69003</field>
 				<field name="name">Droits d'auteur</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69004">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69004</field>
 				<field name="name">Brevets d'invention</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69005">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69005</field>
 				<field name="name">Recherches et développement</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69006">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69006</field>
 				<field name="name">Licence et Permis</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69007">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69007</field>
 				<field name="name">Améliorations locatives</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69008">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69008</field>
 				<field name="name">Intérêts sur emprunts</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69009">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69009</field>
 				<field name="name">Frais d'intérêts (débiteurs)</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69010">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69010</field>
 				<field name="name">Frais bancaires</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69011">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69011</field>
 				<field name="name">Intérêts sur hypothèques</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69012">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69012</field>
 				<field name="name">Excédent ou Déficit de caisse</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69013">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69013</field>
 				<field name="name">Courrier et frais postaux</field>
 
 				<field name="parent_id" eval="[(6,0,[frais_adm_69000])]"/>
 			</record>
 			<record model="account.account" id="fr_adm_69014">
-				<field name="type">Expense</field>
+				<field name="type">expense</field>
 				<field name="code">69014</field>
 				<field name="name">Primes d'assurance (absorbées)</field>
 

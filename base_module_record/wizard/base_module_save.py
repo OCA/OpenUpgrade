@@ -70,10 +70,13 @@ intro_start_fields = {
 
 intro_save_form = '''<?xml version="1.0"?>
 <form string="Module Recording">
-	<separator string="Module successfully exported !" colspan="4"/>
+	<separator string="Module successfully created !" colspan="4"/>
 	<field name="module_filename"/>
 	<newline/>
 	<field name="module_file"/>
+	<separator string="Information" colspan="4"/>
+	<label string="If you think your module could interrest others people, we'd like you to publish it on TinyERP.com, in the 'Modules' section. You can do it through the website or using features of the 'base_module_publish' module." colspan="4" align="0.0"/>
+	<label string="Thanks in advance for your contribution." colspan="4" align="0.0"/>
 </form>'''
 
 intro_save_fields = {
