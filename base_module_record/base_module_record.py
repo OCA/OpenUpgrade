@@ -55,8 +55,8 @@ class base_module_record(osv.osv):
 		return val
 
 	def _get_id(self, cr, uid, model, id):
-		if id in self.ids:
-			return self.ids[id], False
+		if (model,id) in self.ids:
+			return self.ids[(model,id)], False
 		dt = self.pool.get('ir.model.data')
 		dtids = dt.search(cr, uid, [('model','=',model), ('res_id','=',id)])
 		if not dtids:
@@ -82,12 +82,17 @@ class base_module_record(osv.osv):
 			elif fields[key]['type'] in ('many2one',):
 				field = doc.createElement('field')
 				field.setAttribute("name", key)
-				if type(val)==type(''):
+				if type(val) in (type(''),type(u'')):
 					id = val
 				else:
 					id,update = self._get_id(cr, uid, fields[key]['relation'], val)
 					noupdate = noupdate or update
-				field.setAttribute("ref", id)
+				if not id:
+					field.setAttribute("model", fields[key]['relation'])
+					name = self.pool.get(fields[key]['relation']).browse(cr, uid, val).name
+					field.setAttribute("search", "[('name','=','"+name+"')]")
+				else:
+					field.setAttribute("ref", id)
 				record.appendChild(field)
 			elif fields[key]['type'] in ('one2many',):
 				for valitem in (val or []):
@@ -115,7 +120,12 @@ class base_module_record(osv.osv):
 			else:
 				field = doc.createElement('field')
 				field.setAttribute("name", key)
-				field.setAttribute("eval", val and ('"'+str(val).replace('\\','\\\\').replace('"','\"')+'"') or 'False' )
+				if type(val) not in (type(''),type(u'')):
+					val=str(val)
+				val  = val and ('"'+val.replace('\\','\\\\').replace('"','\"')+'"') or 'False'
+				if type(val)==type(''):
+					val = val.decode('utf8')
+				field.setAttribute(u"eval",  val)
 				record.appendChild(field)
 		return record_list, noupdate
 
@@ -134,7 +144,7 @@ class base_module_record(osv.osv):
 		elif rec[4]=='create':
 			id = self._create_id(cr, uid, rec[3],rec[5])
 			record,noupdate = self._create_record(cr, uid, doc, rec[3], rec[5], id)
-			self.ids[result] = id
+			self.ids[(rec[3],result)] = id
 			record_list += record
 		return record_list,noupdate
 	def _generate_assert_xml(self, rec, doc):
@@ -170,7 +180,10 @@ class base_module_record(osv.osv):
 					data.appendChild(res)
 			elif rec[0]=='assert':
 				pass
-		return  doc.toprettyxml(indent="\t")
+		res = doc.toprettyxml(indent="\t")
+		print type(res)
+		file('/tmp/debug.txt','wb').write(res.encode('utf8'))
+		return  doc.toprettyxml(indent="\t").encode('utf8')
 base_module_record()
 
 def fnct_call(fnct):
