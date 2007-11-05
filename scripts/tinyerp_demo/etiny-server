@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /opt/tinyerp/eTiny
+exec /usr/bin/python2.4 ./start-tinyerp.py tinyerp/config/prod.cfg

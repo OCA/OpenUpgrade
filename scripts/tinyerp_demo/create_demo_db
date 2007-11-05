@@ -1,0 +1,12 @@
+#!/bin/sh
+
+cd /opt/tinyerp
+
+./etiny-deamon stop
+./tinyerp-deamon restart
+
+/usr/bin/python2.4 create_demo_db.py
+
+./tinyerp-deamon restart
+./etiny-deamon start
+
