@@ -14,6 +14,7 @@ fi
 if test ! -d server
 then
     svn co https://svn.tinyerp.com/svn/terp/trunk/server server
+    svn co https://svn.tinyerp.com/svn/extra_addons/trunk/scripts/tinyerp_demo server/bin/addons/tinyerp_demo
 fi
 
 if test ! -f /etc/cron.d/terp-create-demo
