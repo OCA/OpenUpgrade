@@ -236,7 +236,7 @@ def convertToURL( cPathname ):
     if len( cPathname ) > 1:
         if cPathname[1:2] == ":":
             cPathname = "/" + cPathname[0] + "|" + cPathname[2:]
-    cPathname = string.replace( cPathname, "\\", "/" )
+    cPathname = cPathname.replace( "\\", "/" )
     cPathname = "file://" + cPathname
     return cPathname
 
