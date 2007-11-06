@@ -1,7 +1,7 @@
 '''Membership'''
 ##############################################################################
 #
-# Copyright (c) 2004-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
+# Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #
 #
 # WARNING: This program as such is intended to be used by professional
@@ -40,8 +40,22 @@ STATE = [
 	('free', 'Free Member'),
 ]
 
-class Line(osv.osv):
-	'''Member Line'''
+class Product(osv.osv):
+	'''Product'''
+
+	_inherit = 'product.product'
+	_columns = {
+			'membership': fields.boolean('Membership', help='Specify if this product is a membership product'),
+			'membership_date_from': fields.date('Date from'),
+			'membership_date_to': fields.date('Date to'),
+			}
+
+	_defaults = {
+			}
+Product()
+
+class Line:
+	'''Member line'''
 
 	def _state(self, cursor, uid, ids, name, args, context=None):
 		'''Compute the state lines'''
@@ -58,319 +72,13 @@ class Line(osv.osv):
 		return res
 
 	_description = __doc__
-	_name = 'partner_member.line'
+	_name = 'membership.line'
 	_columns = {
-		'partner': fields.many2one('res.partner', 'Partner'),
-		'date_from': fields.date('From'),
-		'date_to': fields.date('To'),
-		'sale_order_line': fields.many2one('sale.order.line', 'Sale order line',
-			required=True),
-		'state': fields.function(_state, method=True, string='State',
-			type="selection", selection=STATE),
-	}
+			'partner': fields.many2one('res.partner', 'Partner'),
+			'date_from': fields.date('From'),
+			'date_to': fields.date('To'),
+			'sale_order_line': fields.many2one('sale.order.line', 'Sale order line'),
+			'state': fields.function(_state, method=True, string='State', type='selection', selection=STATE),
+			}
 	_rec_name = 'partner'
 	_order = 'id desc'
-
-Line()
-
-
-class Partner(osv.osv):
-	'''Partner'''
-
-	def _membership_state(self, cursor, uid, ids, name, args, context=None):
-		'''Compute membership state of partners'''
-		res = {}
-		today = time.strftime('%Y-%m-%d')
-		for partner in self.browse(cursor, uid, ids):
-			res[partner.id] = 'none'
-			if partner.membership_cancel and \
-					partner.membership_cancel < time.strftime('%Y-%m-%d'):
-				res[partner.id] = 'canceled'
-			elif partner.free_member:
-				res[partner.id] = 'free'
-			elif partner.associate_member and partner.associate_member.id:
-				res[partner.id] = 'associated'
-			else:
-				for line in partner.member_lines:
-					if line.date_from <= today and line.date_to >= today:
-						res[partner.id] = line.state
-						break
-		return res
-
-	def _membership_state_search(self, cursor, uid, obj, name, args):
-		'''Search on membership state'''
-		if not len(args):
-			return []
-		today = time.strftime('%Y-%m-%d')
-		if str(args[0][2]) != 'none':
-			cursor.execute('SELECT p.id \
-				FROM res_partner AS p, partner_member_line AS l \
-				WHERE l.partner = p.id \
-					AND l.date_from <= %s \
-					AND l.date_to >= %s ',
-					(today, today))
-		else:
-			cursor.execute('SELECT p.id \
-				FROM res_partner AS p \
-				WHERE p.id NOT IN ( \
-					SELECT partner \
-					FROM partner_member_line )')
-		res = cursor.fetchall()
-		if not res:
-			return [('id', '=', '0')]
-		ids = [x[0] for x in res]
-		ids2 = []
-		for partner in self.browse(cursor, uid, ids):
-			if partner.membership_state == str(args[0][2]):
-				ids2.append(partner.id)
-		return [('id', 'in', ids2)]
-
-	def _membership_start(self, cursor, uid, ids, name, args, context=None):
-		'''Return the start date of membership'''
-		res = {}
-		line_obj = self.pool.get('partner_member.line')
-		for partner_id in ids:
-			line_id = line_obj.search(cursor, uid, [('partner', '=', partner_id)],
-					limit=1, order='date_from ASC')
-			if line_id:
-				res[partner_id] = line_obj.read(cursor, uid, line_id[0],
-						['date_from'])['date_from']
-			else:
-				res[partner_id] = False
-		return res
-
-	def _membership_start_search(self, cursor, uid, obj, name, args):
-		'''Search on membership start date'''
-		if not len(args):
-			return []
-		where = ' AND '.join(['date_from '+x[1]+' \''+str(x[2])+'\''
-			for x in args])
-		cursor.execute('SELECT partner, MIN(date_from) \
-				FROM ( \
-					SELECT partner, MIN(date_from) AS date_from \
-					FROM partner_member_line \
-					GROUP BY partner \
-				) AS foo \
-				WHERE '+where+' \
-				GROUP BY partner')
-		res = cursor.fetchall()
-		if not res:
-			return [('id', '=', '0')]
-		return [('id', 'in', [x[0] for x in res])]
-
-	_inherit = 'res.partner'
-	_columns = {
-		'member_lines': fields.one2many('partner_member.line', 'partner',
-			'Membership'),
-		'membership_amount': fields.float('Membership amount', digites=(16, 2),
-			help='The price negociated by the partner'),
-		'membership_state': fields.function(_membership_state, method=True,
-			string='Current membership state', type='selection', selection=STATE,
-			fnct_search=_membership_state_search),
-		'associate_member': fields.many2one('res.partner', 'Associate member'),
-		'free_member': fields.boolean('Free member'),
-		'membership_cancel': fields.date('Cancel membership date'),
-		'membership_start': fields.function(_membership_start, method=True,
-			string='Start membership date', type='date',
-			fnct_search=_membership_start_search),
-	}
-	_defaults = {
-		'free_member': lambda *a: False,
-	}
-
-Partner()
-
-
-class Product(osv.osv):
-	'''Product'''
-
-	_inherit = 'product.product'
-	_columns = {
-		'membership': fields.boolean('Membership',
-			help='Specify if the product will generate membership relation on sale'),
-		'membership_date_from': fields.date('Date from'),
-		'membership_date_to': fields.date('Date to'),
-	}
-
-Product()
-
-
-class Sale(osv.osv):
-	'''Sale'''
-
-	_inherit = 'sale.order'
-
-	def action_wait(self, cursor, uid, ids, context=None):
-		'''Create membership line if the product is for membership'''
-		if context is None:
-			context = {}
-		line_obj = self.pool.get('partner_member.line')
-		partner_obj = self.pool.get('res.partner')
-		for order in self.browse(cursor, uid, ids):
-			for line in order.order_line:
-				if line.product_id and line.product_id.membership:
-					date_from = line.product_id.membership_date_from
-					if order.date_order > date_from:
-						date_from = order.date_order
-					line_obj.create(cursor, uid, {
-						'partner': order.partner_id.id,
-						'date_from': date_from,
-						'date_to': line.product_id.membership_date_to,
-						'sale_order_line': line.id,
-						})
-					partner_obj.write(cursor, uid, order.partner_id.id, {
-						'membership_cancel': False,
-						})
-		return super(Sale, self).action_wait(cursor, uid, ids, context)
-
-Sale()
-
-
-class PriceList(osv.osv):
-	'''Price List'''
-
-	_inherit = 'product.pricelist'
-
-	def price_get(self, cursor, uid, ids, prod_id, qty, partner=None,
-			context=None):
-		'''Use the price on the partner if it is not null'''
-		if context is None:
-			context = {}
-
-		partner_obj = self.pool.get('res.partner')
-		product_obj = self.pool.get('product.product')
-
-		result = super(PriceList, self).price_get(cursor, uid, ids, prod_id, qty,
-				partner=partner, context=context)
-
-		product = product_obj.browse(cursor, uid, prod_id, context=context)
-
-		if product.membership and  context.get('partner_id', partner):
-			partner = partner_obj.browse(cursor, uid, context.get('partner_id', partner),
-					context=context)
-			if partner.membership_amount:
-				for pricelist_id in ids:
-					result[pricelist_id] = partner.membership_amount
-		return result
-
-PriceList()
-
-
-class ReportPartnerMemberYear(osv.osv):
-	'''Membership by Years'''
-
-	_name = 'report.partner_member.year'
-	_description = __doc__
-	_auto = False
-	_rec_name = 'year'
-	_columns = {
-		'year': fields.char('Year', size='4', readonly=True, select=1),
-		'state': fields.selection(STATE, 'State', readonly=True, select=1),
-		'number': fields.integer('Number', readonly=True),
-		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
-		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
-			select=2),
-	}
-
-	def init(self, cursor):
-		'''Create the view'''
-		cursor.execute("""
-			CREATE OR REPLACE VIEW report_partner_member_year AS (
-				SELECT
-					MIN(id) AS id,
-					year,
-					state,
-					SUM(number) AS number,
-					SUM(amount) AS amount,
-					currency
-				FROM
-					(SELECT
-						MIN(l.id) AS id,
-						TO_CHAR(l.date_from, 'YYYY') AS year,
-						CASE WHEN ((sol.state = 'cancel') OR
-							(p.membership_cancel IS NOT NULL
-								AND TO_CHAR(p.membership_cancel, 'YYYY')
-									= TO_CHAR(l.date_from, 'YYYY')))
-							THEN 'canceled'
-							ELSE CASE WHEN sol.invoiced
-								THEN CASE WHEN so.invoiced
-									THEN 'paid'
-									ELSE 'invoiced'
-									END
-								ELSE 'waiting'
-								END
-							END AS state,
-						COUNT(l.id) AS number,
-						SUM(sol.price_unit * sol.product_uom_qty * (1 - sol.discount / 100)) AS amount,
-						ppl.currency_id AS currency
-					FROM partner_member_line l
-						JOIN (sale_order_line sol
-							LEFT JOIN sale_order so
-								LEFT JOIN product_pricelist ppl
-									ON (ppl.id = so.pricelist_id)
-								ON (sol.order_id = so.id))
-							ON (l.sale_order_line = sol.id)
-						JOIN res_partner p
-							ON (l.partner = p.id)
-					GROUP BY TO_CHAR(l.date_from, 'YYYY'), sol.state,
-						sol.invoiced, so.invoiced, p.membership_cancel, ppl.currency_id
-				) AS foo
-				GROUP BY year, state, currency
-			)""")
-
-ReportPartnerMemberYear()
-
-
-class ReportPartnerMemberYearNew(osv.osv):
-	'''New Membership by Years'''
-
-	_name = 'report.partner_member.year_new'
-	_description = __doc__
-	_auto = False
-	_rec_name = 'year'
-	_columns = {
-		'year': fields.char('Year', size='4', readonly=True, select=1),
-		'number': fields.integer('Number', readonly=True),
-		'amount': fields.float('Amount', digits=(16, 2),
-			readonly=True),
-		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
-			select=2),
-	}
-
-	def init(self, cursor):
-		'''Create the view'''
-		cursor.execute("""
-			CREATE OR REPLACE VIEW report_partner_member_year_new AS (
-				SELECT
-					MIN(id) AS id,
-					TO_CHAR(date_from, 'YYYY') as year,
-					COUNT(id) AS number,
-					SUM(amount) AS amount,
-					currency
-				FROM (
-					SELECT
-						MIN(l1.id) AS id,
-						SUM(sol.price_unit * sol.product_uom_qty * ( 1 - sol.discount / 100)) AS amount,
-						l1.date_from,
-						ppl.currency_id AS currency
-					FROM
-						(SELECT
-							partner AS id,
-							MIN(date_from) AS date_from
-						FROM partner_member_line
-						GROUP BY partner
-					) AS l1
-						JOIN partner_member_line l2
-							JOIN sale_order_line sol
-								LEFT JOIN sale_order so
-									LEFT JOIN product_pricelist ppl
-										ON (ppl.id = so.pricelist_id)
-									ON (sol.order_id = so.id)
-								ON (l2.sale_order_line = sol.id)
-							ON (l1.id = l2.partner AND l1.date_from = l2.date_from)
-					GROUP BY ppl.currency_id, l1.id, l1.date_from
-				) AS foo
-				GROUP BY currency, TO_CHAR(date_from, 'YYYY')
-			)""")
-
-ReportPartnerMemberYearNew()
