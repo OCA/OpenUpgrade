@@ -57,27 +57,15 @@ class auction_total_rml(report_sxw.rml_parse):
 			'get_auc_detail': self.get_auc_detail
 		})
 	def get_auc_detail(self,objects):
-		print "INT HE get_auc_detail FUNCTION"
-
 		auc_lot_ids = []
-		print "OBJECTSS*********",objects
 		for lot_id  in objects:
-			print "LOTID",lot_id
 			auc_lot_ids.append(lot_id.id)
-		print "selected lots: ",auc_lot_ids
 		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id')
 		auc_date_ids = self.cr.fetchall()
-		print "AUCTION DATE IDS***************",auc_date_ids
-
 		auct_dat=[]
 		for ad_id in auc_date_ids:
-			print "s***********",ad_id[0]
 			auc_dates_fields = self.pool.get('auction.dates').read(self.cr,self.uid,ad_id[0],['name','auction1','id'])
-			print "auc_dates fields",auc_dates_fields
-
 			auct_dat.append(auc_dates_fields)
-			print "kkkkkkkkkkkkkkkkkkkkkkkkk",auct_dat
-		print "AUC_DATTTTTTTT",auct_dat
 		return auct_dat
 
 #
@@ -101,7 +89,6 @@ class auction_total_rml(report_sxw.rml_parse):
 		return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)])))
 
 	def sold_item(self, object_id):
-		print "****************object id",object_id
 		self.cr.execute("select count(1) from auction_lots where auction_id=%d and state in ('unsold','draft') "%(object_id))
 		res = self.cr.fetchone()
 		return str(res[0])
@@ -152,8 +139,6 @@ class auction_total_rml(report_sxw.rml_parse):
 		#self.cr.execute("select sum(seller_price) from auction_lots where auction_id=%d and paid_vnd='F'"%(auct_id))
 		self.cr.execute("select sum(seller_price) from auction_lots where auction_id=%d and (paid_vnd = false or paid_vnd is null)"%(object_id,))
 		res = self.cr.fetchone()
-		print "RESSSSSSSSSSSS",res
-		print "VALUES IF RESSUM_DEBIT",str(res[0])
 		return str(res[0] or 0)
 
 	def sum_credit_seller(self, object_id):
