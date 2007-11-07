@@ -297,7 +297,7 @@ Sale()
 class ReportPartnerMemberYear(osv.osv):
 	'''Membership by Years'''
 
-	_name = 'report.partner_member.year'
+	_name = 'report.membership.year'
 	_description = __doc__
 	_auto = False
 	_rec_name = 'year'
@@ -313,7 +313,7 @@ class ReportPartnerMemberYear(osv.osv):
 	def init(self, cursor):
 		'''Create the view'''
 		cursor.execute("""
-			CREATE OR REPLACE VIEW report_partner_member_year AS (
+			CREATE OR REPLACE VIEW report_membership_year AS (
 				SELECT
 					MIN(id) AS id,
 					year,
@@ -362,7 +362,7 @@ ReportPartnerMemberYear()
 class ReportPartnerMemberYearNew(osv.osv):
 	'''New Membership by Years'''
 
-	_name = 'report.partner_member.year_new'
+	_name = 'report.membership.year_new'
 	_description = __doc__
 	_auto = False
 	_rec_name = 'year'
@@ -378,7 +378,7 @@ class ReportPartnerMemberYearNew(osv.osv):
 	def init(self, cursor):
 		'''Create the view'''
 		cursor.execute("""
-			CREATE OR REPLACE VIEW report_partner_member_year_new AS (
+			CREATE OR REPLACE VIEW report_membership_year_new AS (
 				SELECT
 					MIN(id) AS id,
 					TO_CHAR(date_from, 'YYYY') as year,

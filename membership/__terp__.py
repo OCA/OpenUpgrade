@@ -4,7 +4,7 @@
 	"author" : "Tiny",
 	"category" : "Generic Modules/Association",
 	"depends" : [
-		"base", 'product', 'sale'
+		"base", "product", "sale"
 		],
 	"demo_xml" : [],
 	"update_xml" : [
