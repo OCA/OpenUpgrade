@@ -40,6 +40,213 @@ STATE = [
 	('free', 'Free Member'),
 ]
 
+class membership_line(osv.osv):
+	'''Member line'''
+
+	def _state(self, cursor, uid, ids, name, args, context=None):
+		'''Compute the state lines'''
+		res = {}
+		for line in self.browse(cursor, uid, ids):
+			state = 'waiting'
+			if not line.sale_order_line:
+				state = 'canceled'
+			elif line.sale_order_line.invoiced:
+				state = 'invoiced'
+			elif line.sale_order_line.order_id.invoiced:
+				state = 'paid'
+			elif line.sale_order_line.state == 'cancel':
+				state = 'canceled'
+			res[line.id] = state
+		return res
+
+	_description = __doc__
+	_name = 'membership.membership_line'
+	_columns = {
+			'partner': fields.many2one('res.partner', 'Partner'),
+			'date_from': fields.date('From'),
+			'date_to': fields.date('To'),
+			'sale_order_line': fields.many2one('sale.order.line', 'Sale order line'),
+			'state': fields.function(_state, method=True, string='State', type='selection', selection=STATE),
+			}
+	_rec_name = 'partner'
+	_order = 'id desc'
+
+membership_line()
+
+
+
+class Partner(osv.osv):
+	'''Partner'''
+
+	def _membership_state(self, cursor, uid, ids, name, args, context=None):
+		'''Compute membership state of partners'''
+		res = {}
+		today = time.strftime('%Y-%m-%d')
+		for partner in self.browse(cursor, uid, ids):
+			res[partner.id] = 'none'
+			if partner.membership_cancel and \
+					partner.membership_cancel < time.strftime('%Y-%m-%d'):
+				res[partner.id] = 'canceled'
+			elif partner.free_member:
+				res[partner.id] = 'free'
+			elif partner.associate_member and partner.associate_member.id:
+				res[partner.id] = 'associated'
+			else:
+				for line in partner.member_lines:
+					if line.date_from <= today and line.date_to >= today:
+						res[partner.id] = line.state
+						break
+		return res
+
+	def _membership_state_search(self, cursor, uid, obj, name, args):
+		'''Search on membership state'''
+		if not len(args):
+			return []
+		today = time.strftime('%Y-%m-%d')
+		clause = 'WHERE'
+		ids2 = []
+
+		for arg in args:
+
+			if arg[1] == '=':
+				if str(arg[2]) != 'none':
+					cursor.execute('SELECT p.id \
+							FROM res_partner AS p, membership_membership_line AS l \
+							WHERE l.partner = p.id \
+							AND l.date_from <= %s \
+							AND l.date_to >= %s ',
+							(today, today))
+				else:
+					cursor.execute('SELECT p.id \
+						FROM res_partner AS p \
+						WHERE p.id NOT IN ( \
+							SELECT partner \
+							FROM membership_membership_line )')
+				res = cursor.fetchall()
+				if not res:
+					return [('id', '=', '0')]
+				ids = [x[0] for x in res]
+				for partner in self.browse(cursor, uid, ids):
+					if partner.membership_state == str(arg[2]):
+						ids2.append(partner.id)
+
+			elif arg[1] == '!=':
+				if str(arg[2]) == 'none':
+					cursor.execute('SELECT p.id \
+							FROM res_partner AS p, membership_membership_line AS l \
+							WHERE l.partner = p.id \
+							AND l.date_from <= %s \
+							AND l.date_to >= %s ',
+							(today, today))
+				else:
+					cursor.execute('SELECT p.id \
+						FROM res_partner AS p \
+						WHERE p.id NOT IN ( \
+							SELECT partner \
+							FROM membership_membership_line )')
+				res = cursor.fetchall()
+				if not res:
+					return [('id', '=', '0')]
+				ids = [x[0] for x in res]
+				for partner in self.browse(cursor, uid, ids):
+					if partner.membership_state != str(arg[2]):
+						ids2.append(partner.id)
+
+			return [('id', 'in', ids2)]
+
+	def _membership_start(self, cursor, uid, ids, name, args, context=None):
+		'''Return the start date of membership'''
+		res = {}
+		line_obj = self.pool.get('membership.membership_line')
+		for partner_id in ids:
+			line_id = line_obj.search(cursor, uid, [('partner', '=', partner_id)],
+					limit=1, order='date_from ASC')
+			if line_id:
+				res[partner_id] = line_obj.read(cursor, uid, line_id[0],
+						['date_from'])['date_from']
+			else:
+				res[partner_id] = False
+		return res
+
+	def _membership_start_search(self, cursor, uid, obj, name, args):
+		'''Search on membership start date'''
+		if not len(args):
+			return []
+		where = ' AND '.join(['date_from '+x[1]+' \''+str(x[2])+'\''
+			for x in args])
+		cursor.execute('SELECT partner, MIN(date_from) \
+				FROM ( \
+					SELECT partner, MIN(date_from) AS date_from \
+					FROM membership_membership_line \
+					GROUP BY partner \
+				) AS foo \
+				WHERE '+where+' \
+				GROUP BY partner')
+		res = cursor.fetchall()
+		if not res:
+			return [('id', '=', '0')]
+		return [('id', 'in', [x[0] for x in res])]
+
+	def _membership_stop(self, cursor, uid, ids, name, args, context=None):
+		'''Return the stop date of membership'''
+		res = {}
+		line_obj = self.pool.get('membership.membership_line')
+		for partner_id in ids:
+			line_id = line_obj.search(cursor, uid, [('partner', '=', partner_id)],
+					limit=1, order='date_to ASC')
+			if line_id:
+				res[partner_id] = line_obj.read(cursor, uid, line_id[0],
+						['date_to'])['date_to']
+			else:
+				res[partner_id] = False
+		return res
+
+	def _membership_stop_search(self, cursor, uid, obj, name, args):
+		'''Search on membership stop date'''
+		if not len(args):
+			return []
+		where = ' AND '.join(['date_to '+x[1]+' \''+str(x[2])+'\''
+			for x in args])
+		cursor.execute('SELECT partner, MIN(date_to) \
+				FROM ( \
+					SELECT partner, MIN(date_to) AS date_to \
+					FROM membership_membership_line \
+					GROUP BY partner \
+				) AS foo \
+				WHERE '+where+' \
+				GROUP BY partner')
+		res = cursor.fetchall()
+		if not res:
+			return [('id', '=', '0')]
+		return [('id', 'in', [x[0] for x in res])]
+
+
+	_inherit = 'res.partner'
+	_columns = {
+		'member_lines': fields.one2many('membership.membership_line', 'partner',
+			'Membership'),
+		'membership_amount': fields.float('Membership amount', digites=(16, 2),
+			help='The price negociated by the partner'),
+		'membership_state': fields.function(_membership_state, method=True,
+			string='Current membership state', type='selection', selection=STATE,
+			fnct_search=_membership_state_search),
+		'associate_member': fields.many2one('res.partner', 'Associate member'),
+		'free_member': fields.boolean('Free member'),
+		'membership_cancel': fields.date('Cancel membership date'),
+		'membership_start': fields.function(_membership_start, method=True,
+			string='Start membership date', type='date',
+			fnct_search=_membership_start_search),
+		'membership_stop': fields.function(_membership_stop, method=True,
+			string='Stop membership date', type='date',
+			fnct_search=_membership_stop_search),
+	}
+	_defaults = {
+		'free_member': lambda *a: False,
+	}
+
+Partner()
+
+
 class Product(osv.osv):
 	'''Product'''
 
@@ -54,31 +261,34 @@ class Product(osv.osv):
 			}
 Product()
 
-class Line:
-	'''Member line'''
 
-	def _state(self, cursor, uid, ids, name, args, context=None):
-		'''Compute the state lines'''
-		res = {}
-		for line in self.browse(cursor, uid, ids):
-			state = 'waiting'
-			if line.sale_order_line.invoiced:
-				state = 'invoiced'
-			if line.sale_order_line.order_id.invoiced:
-				state = 'paid'
-			if line.sale_order_line.state == 'cancel':
-				state = 'canceled'
-			res[line.id] = state
-		return res
 
-	_description = __doc__
-	_name = 'membership.line'
-	_columns = {
-			'partner': fields.many2one('res.partner', 'Partner'),
-			'date_from': fields.date('From'),
-			'date_to': fields.date('To'),
-			'sale_order_line': fields.many2one('sale.order.line', 'Sale order line'),
-			'state': fields.function(_state, method=True, string='State', type='selection', selection=STATE),
-			}
-	_rec_name = 'partner'
-	_order = 'id desc'
+class Sale(osv.osv):
+	'''Sale'''
+
+	_inherit = 'sale.order'
+
+	def action_wait(self, cursor, uid, ids, context=None):
+		'''Create membership.membership_line if the product is for membership'''
+		if context is None:
+			context = {}
+		line_obj = self.pool.get('membership.membership_line')
+		partner_obj = self.pool.get('res.partner')
+		for order in self.browse(cursor, uid, ids):
+			for line in order.order_line:
+				if line.product_id and line.product_id.membership:
+					date_from = line.product_id.membership_date_from
+					if order.date_order > date_from:
+						date_from = order.date_order
+					line_obj.create(cursor, uid, {
+						'partner': order.partner_id.id,
+						'date_from': date_from,
+						'date_to': line.product_id.membership_date_to,
+						'sale_order_line': line.id,
+						})
+					partner_obj.write(cursor, uid, order.partner_id.id, {
+						'membership_cancel': False,
+						})
+		return super(Sale, self).action_wait(cursor, uid, ids, context)
+
+Sale()
