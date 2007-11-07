@@ -53,6 +53,7 @@ send_form = '''<?xml version="1.0"?>
 	<field name="objects"></field>
 	<field name="lang"></field>
 	<field name="numerotation"></field>
+	<field name="img_send"></field>
 	<newline/>
 	<field name="dates" colspan="3"></field>
 </form>'''
@@ -70,7 +71,8 @@ send_fields = {
 	'objects': {'string':'# of objects', 'type':'integer', 'readonly':True},
 	'lang': {'string':'Langage', 'type':'selection', 'selection':[('fr','fr'),('ned','ned'),('eng','eng'),('de','de')]},
 	'numerotation': {'string':'Numerotation', 'type':'selection', 'selection':[('prov','Provisoire'),('definite','Definitive (ordre catalogue)')]},
-	'dates': {'string':'Auction Date', 'type':'selection', 'selection':[]}
+	'dates': {'string':'Auction Date', 'type':'selection', 'selection':[]},
+	'img_send': {'string':'Send Image also ?', 'type':'boolean'}
 }
 
 def _catalog_send(uname, passwd, lang, did, catalog):
@@ -160,7 +162,8 @@ def _photos_send(db_name,uid, uname, passwd, did, ids):
 		if len(datas):
 			bin = base64.decodestring(datas[0]['datas'])
 			fname = datas[0]['datas_fname']
-
+#			if(send_fields['img_send']==True):
+#				print "SSSSSSSSSSSSSSSSSsss", send_fields['image']
 			_photo_bin_send(uname, passwd, ref, did, fname, bin)
 			print 'SENDING PHOTO...............', ref
 		print "***************COMPLETE**********"
@@ -213,12 +216,14 @@ def _send(self,db_name,uid, datas,context={}):
 				l[n]=''
 		del l['lot_num']
 		del l['obj_num']
-		del l['bord_vnd_id']
+		del l['bord_vnd_id'] 
 		l['aie_categ'] = vals.get(l['lot_type'], False)
 		ids.append((l['ref'], l['id']))
 	args = pickle.dumps(lots)
 	print thread.start_new_thread(_catalog_send, (datas['form']['uname'],datas['form']['password'],datas['form']['lang'],datas['form']['dates'], args))
-	print thread.start_new_thread(_photos_send, (cr.dbname,uid, datas['form']['uname'],datas['form']['password'],datas['form']['dates'], ids))
+	if(datas['form']['img_send']==True):
+		print "SSSSSSSSSSSSSSSSSsss"
+		print thread.start_new_thread(_photos_send, (cr.dbname,uid, datas['form']['uname'],datas['form']['password'],datas['form']['dates'], ids))
 	print "...................send function closed..................."
 	return {}
 
