@@ -293,122 +293,122 @@ class Sale(osv.osv):
 
 Sale()
 
-
-class ReportPartnerMemberYear(osv.osv):
-	'''Membership by Years'''
-
-	_name = 'report.membership.year'
-	_description = __doc__
-	_auto = False
-	_rec_name = 'year'
-	_columns = {
-		'year': fields.char('Year', size='4', readonly=True, select=1),
-		'state': fields.selection(STATE, 'State', readonly=True, select=1),
-		'number': fields.integer('Number', readonly=True),
-		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
-		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
-			select=2),
-	}
-
-	def init(self, cursor):
-		'''Create the view'''
-		cursor.execute("""
-			CREATE OR REPLACE VIEW report_membership_year AS (
-				SELECT
-					MIN(id) AS id,
-					year,
-					state,
-					SUM(number) AS number,
-					SUM(amount) AS amount,
-					currency
-				FROM
-					(SELECT
-						MIN(l.id) AS id,
-						TO_CHAR(l.date_from, 'YYYY') AS year,
-						CASE WHEN ((sol.state = 'cancel') OR
-							(p.membership_cancel IS NOT NULL
-								AND TO_CHAR(p.membership_cancel, 'YYYY')
-									= TO_CHAR(l.date_from, 'YYYY')))
-							THEN 'canceled'
-							ELSE CASE WHEN sol.invoiced
-								THEN CASE WHEN so.invoiced
-									THEN 'paid'
-									ELSE 'invoiced'
-									END
-								ELSE 'waiting'
-								END
-							END AS state,
-						COUNT(l.id) AS number,
-						SUM(sol.price_unit * sol.product_uom_qty * (1 - sol.discount / 100)) AS amount,
-						ppl.currency_id AS currency
-					FROM membership_membership_line l
-						JOIN (sale_order_line sol
-							LEFT JOIN sale_order so
-								LEFT JOIN product_pricelist ppl
-									ON (ppl.id = so.pricelist_id)
-								ON (sol.order_id = so.id))
-							ON (l.sale_order_line = sol.id)
-						JOIN res_partner p
-							ON (l.partner = p.id)
-					GROUP BY TO_CHAR(l.date_from, 'YYYY'), sol.state,
-						sol.invoiced, so.invoiced, p.membership_cancel, ppl.currency_id
-				) AS foo
-				GROUP BY year, state, currency
-			)""")
-
-ReportPartnerMemberYear()
-
-
-class ReportPartnerMemberYearNew(osv.osv):
-	'''New Membership by Years'''
-
-	_name = 'report.membership.year_new'
-	_description = __doc__
-	_auto = False
-	_rec_name = 'year'
-	_columns = {
-		'year': fields.char('Year', size='4', readonly=True, select=1),
-		'number': fields.integer('Number', readonly=True),
-		'amount': fields.float('Amount', digits=(16, 2),
-			readonly=True),
-		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
-			select=2),
-	}
-
-	def init(self, cursor):
-		'''Create the view'''
-		cursor.execute("""
-			CREATE OR REPLACE VIEW report_membership_year_new AS (
-				SELECT
-					MIN(id) AS id,
-					TO_CHAR(date_from, 'YYYY') as year,
-					COUNT(id) AS number,
-					SUM(amount) AS amount,
-					currency
-				FROM (
-					SELECT
-						MIN(l1.id) AS id,
-						SUM(sol.price_unit * sol.product_uom_qty * ( 1 - sol.discount / 100)) AS amount,
-						l1.date_from,
-						ppl.currency_id AS currency
-					FROM
-						(SELECT
-							partner AS id,
-							MIN(date_from) AS date_from
-						FROM membership_membership_line
-						GROUP BY partner
-					) AS l1
-						JOIN membership_membership_line l2
-							JOIN sale_order_line sol
-								LEFT JOIN sale_order so
-									LEFT JOIN product_pricelist ppl
-										ON (ppl.id = so.pricelist_id)
-									ON (sol.order_id = so.id)
-								ON (l2.sale_order_line = sol.id)
-							ON (l1.id = l2.partner AND l1.date_from = l2.date_from)
-					GROUP BY ppl.currency_id, l1.id, l1.date_from
-				) AS foo
-				GROUP BY currency, TO_CHAR(date_from, 'YYYY')
-			)""")
-
-ReportPartnerMemberYearNew()
+#
+#class ReportPartnerMemberYear(osv.osv):
+#	'''Membership by Years'''
+#
+#	_name = 'report.membership.year'
+#	_description = __doc__
+#	_auto = False
+#	_rec_name = 'year'
+#	_columns = {
+#		'year': fields.char('Year', size='4', readonly=True, select=1),
+#		'state': fields.selection(STATE, 'State', readonly=True, select=1),
+#		'number': fields.integer('Number', readonly=True),
+#		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
+#		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
+#			select=2),
+#	}
+#
+#	def init(self, cursor):
+#		'''Create the view'''
+#		cursor.execute("""
+#			CREATE OR REPLACE VIEW report_membership_year AS (
+#				SELECT
+#					MIN(id) AS id,
+#					year,
+#					state,
+#					SUM(number) AS number,
+#					SUM(amount) AS amount,
+#					currency
+#				FROM
+#					(SELECT
+#						MIN(l.id) AS id,
+#						TO_CHAR(l.date_from, 'YYYY') AS year,
+#						CASE WHEN ((sol.state = 'cancel') OR
+#							(p.membership_cancel IS NOT NULL
+#								AND TO_CHAR(p.membership_cancel, 'YYYY')
+#									= TO_CHAR(l.date_from, 'YYYY')))
+#							THEN 'canceled'
+#							ELSE CASE WHEN sol.invoiced
+#								THEN CASE WHEN so.invoiced
+#									THEN 'paid'
+#									ELSE 'invoiced'
+#									END
+#								ELSE 'waiting'
+#								END
+#							END AS state,
+#						COUNT(l.id) AS number,
+#						SUM(sol.price_unit * sol.product_uom_qty * (1 - sol.discount / 100)) AS amount,
+#						ppl.currency_id AS currency
+#					FROM membership_membership_line l
+#						JOIN (sale_order_line sol
+#							LEFT JOIN sale_order so
+#								LEFT JOIN product_pricelist ppl
+#									ON (ppl.id = so.pricelist_id)
+#								ON (sol.order_id = so.id))
+#							ON (l.sale_order_line = sol.id)
+#						JOIN res_partner p
+#							ON (l.partner = p.id)
+#					GROUP BY TO_CHAR(l.date_from, 'YYYY'), sol.state,
+#						sol.invoiced, so.invoiced, p.membership_cancel, ppl.currency_id
+#				) AS foo
+#				GROUP BY year, state, currency
+#			)""")
+#
+#ReportPartnerMemberYear()
+#
+#
+#class ReportPartnerMemberYearNew(osv.osv):
+#	'''New Membership by Years'''
+#
+#	_name = 'report.membership.year_new'
+#	_description = __doc__
+#	_auto = False
+#	_rec_name = 'year'
+#	_columns = {
+#		'year': fields.char('Year', size='4', readonly=True, select=1),
+#		'number': fields.integer('Number', readonly=True),
+#		'amount': fields.float('Amount', digits=(16, 2),
+#			readonly=True),
+#		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
+#			select=2),
+#	}
+#
+#	def init(self, cursor):
+#		'''Create the view'''
+#		cursor.execute("""
+#			CREATE OR REPLACE VIEW report_membership_year_new AS (
+#				SELECT
+#					MIN(id) AS id,
+#					TO_CHAR(date_from, 'YYYY') as year,
+#					COUNT(id) AS number,
+#					SUM(amount) AS amount,
+#					currency
+#				FROM (
+#					SELECT
+#						MIN(l1.id) AS id,
+#						SUM(sol.price_unit * sol.product_uom_qty * ( 1 - sol.discount / 100)) AS amount,
+#						l1.date_from,
+#						ppl.currency_id AS currency
+#					FROM
+#						(SELECT
+#							partner AS id,
+#							MIN(date_from) AS date_from
+#						FROM membership_membership_line
+#						GROUP BY partner
+#					) AS l1
+#						JOIN membership_membership_line l2
+#							JOIN sale_order_line sol
+#								LEFT JOIN sale_order so
+#									LEFT JOIN product_pricelist ppl
+#										ON (ppl.id = so.pricelist_id)
+#									ON (sol.order_id = so.id)
+#								ON (l2.sale_order_line = sol.id)
+#							ON (l1.id = l2.partner AND l1.date_from = l2.date_from)
+#					GROUP BY ppl.currency_id, l1.id, l1.date_from
+#				) AS foo
+#				GROUP BY currency, TO_CHAR(date_from, 'YYYY')
+#			)""")
+#
+#ReportPartnerMemberYearNew()
