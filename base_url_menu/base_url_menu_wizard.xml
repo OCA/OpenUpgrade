@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+		<wizard
+			id="wizard_url_menu"
+			string="Create url menus"
+			model="url.menu"
+			name="url.menu.menu"/>
+  		<menuitem 
+			id="menu_wizard_url_menu" 
+			name="Configure/Create Url Menus" 
+			action="wizard_url_menu"  
+			type="wizard"
+            groups="admin"/> 
+	</data>
+</terp>
