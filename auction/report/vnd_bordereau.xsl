@@ -10,12 +10,12 @@
 	<xsl:template name="stylesheet">
 		<paraStyle name="name" fontName="Helvetica-Bold" fontSize="16"/>
 		<blockTableStyle id="products">
-			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
+			 <blockFont name="Helvetica-Bold" size="12" start="0,0" stop="-1,0"/>
 			 <lineStyle kind="LINEBELOW" start="0,0" stop="-1,0"/>
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
 		</blockTableStyle>
-		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="RIGHT"/>
+		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="CENTER"/>
 		<blockTableStyle id="product-totals">
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT"/>
@@ -58,7 +58,7 @@
 			</para>
 		</xsl:if>
 
-		<spacer length="0.8cm"/>
+		<spacer length="0.8cm" width="1cm"/>
 
 		<xsl:apply-templates select="vente-products"/>
 
@@ -82,6 +82,10 @@
 			<xsl:value-of select="city"/>
 		</para>
 		<para style="style1"><xsl:value-of select="country"/></para>
+				<spacer length="1cm" width="1mm"/>
+	<spacer length="1cm" width="1mm"/>
+
+
 	</xsl:template>
 
 	<xsl:template match="vente-products">
@@ -97,7 +101,7 @@
 				<xsl:sort order="ascending" data-type="number" select="num_catalog"/>
 			</xsl:apply-templates>
 		</blockTable>
-		<condPageBreak height="3.2cm"/>
+		<condPageBreak height="1.2cm"/>
 		<blockTable colWidths="2.0cm,1.9cm,1.9cm,11.0cm,2.4cm" style="product-totals">
 			<tr>
 				<td/>

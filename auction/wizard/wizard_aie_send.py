@@ -151,9 +151,10 @@ def _photo_bin_send(uname, passwd, ref, did, photo_name, photo_data):
 	return post_multipart('auction-in-europe.com', "/bin/photo.cgi", (('uname',uname),('ref',ref),('passwd',passwd),('did',did)),(('file',photo_name,photo_data),))
 
 
-def _photos_send(db_name,uid, uname, passwd, did, ids):
+def _photos_send(cr,uid, uname, passwd, did, ids):
 	print '_photos_send'
 	print "********************START****************"
+	print "IDS"*10,ids
 	for (ref,id) in ids:
 		service = netsvc.LocalService("object_proxy")
 #		ids_attach = service.execute(db_name,uid, 'ir.attachment', 'search', [('res_model','=','auction.lots'), ('res_id', '=',id)])

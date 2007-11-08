@@ -89,7 +89,7 @@ class auction_total_rml(report_sxw.rml_parse):
 		return len(self.pool.get('auction.lots').search(self.cr,self.uid,([('auction_id','=',auction_id)])))
 
 	def sold_item(self, object_id):
-		self.cr.execute("select count(1) from auction_lots where auction_id=%d and state in ('unsold','draft') "%(object_id))
+		self.cr.execute("select count(1) from auction_lots where auction_id=%d and state in ('unsold') "%(object_id))
 		res = self.cr.fetchone()
 		return str(res[0])
 
@@ -97,7 +97,11 @@ class auction_total_rml(report_sxw.rml_parse):
 	def sum_buyer(self, auction_id):
 		self.cr.execute('select count(*) from auction_lots where auction_id=%d AND ach_uid is not null'%(auction_id))
 		res = self.cr.fetchone()
-		return str(res[0])
+		self.cr.execute('select count(*) from auction_lots where auction_id=%d AND ach_login is not null'%(auction_id))
+		res1 = self.cr.fetchone()
+		return str(res[0]+res1[0])
+
+
 	def sum_seller(self, auction_id):
 		self.cr.execute('select count(*) from auction_lots where auction_id=%d AND bord_vnd_id is not null'%(auction_id))
 		res = self.cr.fetchone()

@@ -10,7 +10,7 @@
 	<xsl:template name="stylesheet">
 		<paraStyle name="login-title" fontName="Helvetica" fontSize="12"/>
 		<paraStyle name="login" fontName="Helvetica-Bold" fontSize="16"/>
-		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="RIGHT"/>
+		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="CENTER"/>
 		<paraStyle name="cost-name" fontName="Helvetica-BoldOblique" fontSize="10" alignment="RIGHT"/>
 		<blockTableStyle id="objects">
 			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
@@ -51,12 +51,17 @@
 			<xsl:value-of select="city"/>
 		</para>
 		<para style="style1"><xsl:value-of select="country"/></para>
+	<spacer length="0.4cm" width="1mm"/>
+
+			<spacer length="0.8cm"/>
 	</xsl:template>
 
 	<xsl:template match="borderform">
 	<setNextTemplate name="other_pages"/>
 		<nextFrame/>
 		<xsl:apply-templates select="client_info"/>
+		<spacer length="0.8cm"/>
+
 
 <!--		<setNextTemplate name="other_pages"/>-->
 <!--		<nextFrame/>-->
@@ -102,7 +107,7 @@
 			</tr>
 			<xsl:apply-templates select="object"/>
 		</blockTable>
-		<condPageBreak height="3.2cm"/>
+		<condPageBreak height="1.2cm"/>
 		<blockTable colWidths="0.2cm,1.4cm,9.0cm,1.5cm,2.3cm,2.5cm,2.5cm" style="object-totals">
 			<tr>
 				<td/>

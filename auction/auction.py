@@ -441,7 +441,7 @@ class auction_lots(osv.osv):
 		'ach_inv_id': fields.many2one('account.invoice','Buyer Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'sel_inv_id': fields.many2one('account.invoice','Seller Invoice', readonly=True, states={'draft':[('readonly',False)]}),
 		'vnd_lim': fields.float('Seller limit'),
-		'vnd_lim_net': fields.boolean('Net limit ?'),
+		'vnd_lim_net': fields.boolean('Net limit ?',readonly=True),
 		'image': fields.binary('Image'),
 		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,type='boolean',store=True),
 		'paid_ach':fields.function(_is_paid_ach,string='Buyer invoice reconciled',method=True, type='boolean',store=True),
