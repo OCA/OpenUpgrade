@@ -1,4 +1,4 @@
-'''Events'''
+'''Event'''
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,4 +29,5 @@
 
 from osv import fields, osv
 
-
+class event_type(osv.sov):
+	_name = "event.
