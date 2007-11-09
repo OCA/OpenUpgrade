@@ -94,7 +94,8 @@ def _catalog_send(uname, passwd, lang, did, catalog):
 				L.append(value)
 			L.append('--' + BOUNDARY + '--')
 			L.append('')
-			body = CRLF.join(L)
+		#	body = CRLF.join(L)
+			body = CRLF.join(str(L))
 			content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
 			return content_type, body
 		content_type, body = encode_multipart_formdata(fields, files)
@@ -104,11 +105,7 @@ def _catalog_send(uname, passwd, lang, did, catalog):
 		conn = httplib.HTTPConnection(host)
 		conn.request("POST", '/bin/catalog.cgi', body, headers = headers)
 		response = conn.getresponse()
-		print '-'*60
-		print response, dir(response)
 		val = response.status
-		print val, response.reason
-		print response.read()
 		conn.close()
 		return val
 	print 'catalog_send !!'
@@ -154,11 +151,10 @@ def _photo_bin_send(uname, passwd, ref, did, photo_name, photo_data):
 def _photos_send(cr,uid, uname, passwd, did, ids):
 	print '_photos_send'
 	print "********************START****************"
-	print "IDS"*10,ids
 	for (ref,id) in ids:
 		service = netsvc.LocalService("object_proxy")
 #		ids_attach = service.execute(db_name,uid, 'ir.attachment', 'search', [('res_model','=','auction.lots'), ('res_id', '=',id)])
-		datas = service.execute(db_name,uid, 'auction.lots', 'read',[id])
+		datas = service.execute(cr.db_name,uid, 'auction.lots', 'read',[id], ['name','image'])
 		if len(datas):
 			bin = base64.decodestring(datas[0]['image'])
 			fname = datas[0]['name']
@@ -171,7 +167,9 @@ def _get_dates(self,cr,uid, datas,context={}):
 	import httplib
 	conn = httplib.HTTPConnection('www.auction-in-europe.com')
 	conn.request("GET", "/aie_upload/dates_get.php?uname=%s&passwd=%s" % (datas['form']['uname'], datas['form']['password']))
+	print "FET DATS"
 	response = conn.getresponse()
+	print response.status
 	if response.status == 200:
 		def _date_decode(x):
 			return (x.split(' - ')[0], (' - '.join(x.split(' - ')[1:]).decode('latin1','replace').encode('utf-8','replace')))
