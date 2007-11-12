@@ -42,12 +42,16 @@ first_fields = {
 
 second_form = '''<?xml version="1.0"?>
 <form string="Create menu : ">
-    <separator string="Name of the new menu :" colspan="4"/>
+	<separator string="Name of the new menu :" colspan="4"/>
 	<field name="menu"/>
-    <separator string="The new menu is located under:" colspan="4"/>
+	<separator string="The new menu is located under:" colspan="4"/>
 	<field name="parent_menu_id"/>
 	<separator string="Action triggered by the new menu :" colspan="4"/>
 	<field name="action_id"/>
+	<separator string="Views used to display the action :" colspan="4"/>
+	<field name="view_id_tree" colspan="4"/>
+	<field name="view_id_form" colspan="4"/>
+	<field name="view_type" colspan="4"/>
 </form>'''
 second_fields = {
 	'menu': {'string':'Name', 'type':'char', 'required':True, 'size':64},
@@ -55,6 +59,11 @@ second_fields = {
 				  'relation': 'ir.actions.act_window',},
 	'parent_menu_id': {'string':'Parent Menu', 'type':'many2one', 'required':True,
 				  'relation': 'ir.ui.menu',},
+	'view_id_tree': {'string':'Tree View', 'type':'many2one', 'required':False,
+				  'relation': 'ir.ui.view',},
+	'view_id_form': {'string':'Form View', 'type':'many2one', 'required':False,
+				  'relation': 'ir.ui.view',},
+	'view_type' :{'string': 'Use Form View By Default', 'type': 'boolean', 'required':False},
 }
 
 def _create_menu(self, cr, uid, data, context):
@@ -69,6 +78,8 @@ def _create_menu(self, cr, uid, data, context):
 		data['form']['menu'],
 		data['form']['action_id'],
 		data['form']['parent_menu_id'],
+		{'form':data['form']['view_id_form'],'tree':data['form']['view_id_tree']},
+		data['form']['view_type'],
 		context)
 	action=  pooler.get_pool(cr.dbname).get('ir.actions.act_window').read(cr,uid,[portal.menu_action_id.id])
 	print "action", action
@@ -82,6 +93,8 @@ def _add_domain(self, cr, uid, data, context):
 	portal= pooler.get_pool(cr.dbname).get('portal.portal').browse(cr,uid,data['form']['portal_id'])
 	second_fields['action_id']['domain']= [('res_model','=',model.model_id.model)]
 	second_fields['parent_menu_id']['domain']= [('parent_id','child_of',[portal.menu_id.id])]
+	second_fields['view_id_tree']['domain']= [('model','=',model.model_id.model)]
+	second_fields['view_id_form']['domain']= [('model','=',model.model_id.model)]
 	return {}
 
 

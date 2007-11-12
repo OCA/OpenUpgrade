@@ -62,13 +62,21 @@ class portal_portal(osv.osv):
 			vals['menu_action_id']= self.create_action_menu(cr,user,vals['menu_id'], vals['name'],context)
 		return super(portal_portal, self).create(cr, user, vals, context)
 
-	def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,context=None):
+	def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,view_ids=None,view_type=False,context=None):
 		"""
 		Create a menuitem for the given portal and model whith the given name and action.
 		"""
 		
 		assert portal_id and portal_model_id and menu_name and action_id, "Create_menu does not accept null values"
 		
+		v=[]
+		if view_type:
+			v.append('form')
+			v.append('tree')
+		else:
+			v.append('tree')
+			v.append('form')
+
 		portal= self.pool.get('portal.portal').browse(cr,uid,portal_id)
 		model= self.pool.get('portal.model').browse(cr,uid,portal_model_id)
 		action= self.pool.get('ir.actions.act_window').browse(cr,uid,action_id)
@@ -78,6 +86,7 @@ class portal_portal(osv.osv):
 			'parent_id': parent_menu_id or portal.menu_id.id,
 			'icon': 'STOCK_NEW'
 			})
+
 		available_view={}
 		for view in model.view_ids:
 			available_view[view.type]= view.id
@@ -92,10 +101,66 @@ class portal_portal(osv.osv):
 			}))
 			i+=1
 
+		(unused1, unused2, cur_first_view) = vids[0]
+
+		if view_ids['form'] != False:
+			if view_ids['tree'] != False:
+				vids[0]=(0,0, {
+				'sequence':0,
+				'view_id': view_ids[v[0]],
+				'view_mode': v[0],
+				})
+				vids[1]=(0,0, {
+				'sequence':1,
+				'view_id': view_ids[v[1]],
+				'view_mode': v[1],
+				})
+			else:
+				if view_type & (cur_first_view['view_mode']=='tree'):
+					temp=vids[0]
+					vids[0]=vids[1]
+					vids[1]=temp
+				if v[0] =='form':
+					vids[0]=(0,0, {
+					'sequence':0,
+					'view_id': view_ids['form'],
+					'view_mode': 'form',
+					})
+				else:
+					vids[1]=(0,0, {
+					'sequence':1,
+					'view_id': view_ids['form'],
+					'view_mode': 'form',
+					})
+		else:
+			if view_ids['tree'] != False:
+				if view_type & (cur_first_view['view_mode']=='tree'):
+					temp=vids[0]
+					vids[0]=vids[1]
+					vids[1]=temp
+				if v[0] =='tree':
+					vids[0]=(0,0, {
+					'sequence':0,
+					'view_id': view_ids['tree'],
+					'view_mode': 'tree',
+					})
+				else:
+					vids[1]=(0,0, {
+					'sequence':1,
+					'view_id': view_ids['tree'],
+					'view_mode': 'tree',
+					})
+			else:
+				if view_type & (cur_first_view['view_mode']=='tree'):
+					temp=vids[0]
+					vids[0]=vids[1]
+					vids[1]=temp
+
 		## Duplicate the action and give the fetched views to the new one:
 		action_id = action.copy(cr,uid, action.id,{
 			'name': menu_name,
-			'view_ids': vids
+			'view_ids': vids,
+			'view_type': v[0]
 			})
 
 		## Create the values:
