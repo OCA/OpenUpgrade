@@ -10,7 +10,8 @@
 	<xsl:template name="stylesheet">
 		<paraStyle name="login-title" fontName="Helvetica" fontSize="12"/>
 		<paraStyle name="login" fontName="Helvetica-Bold" fontSize="16"/>
-		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="CENTER"/>
+
+		<paraStyle name="style1" leftIndent="10cm" fontName="Helvetica-Bold" />
 		<paraStyle name="cost-name" fontName="Helvetica-BoldOblique" fontSize="10" alignment="RIGHT"/>
 		<blockTableStyle id="objects">
 			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
@@ -27,21 +28,29 @@
 
 
 </xsl:template>
+
 	<xsl:template name="story">
 		<xsl:apply-templates select="borderform-list"/>
 	</xsl:template>
+
 	<xsl:template match="borderform-list">
 		<xsl:apply-templates select="borderform">
 			<xsl:sort order="ascending" select="client_info/name"/>
 		</xsl:apply-templates>
 	</xsl:template>
-	<xsl:template match="client_info">
-		<para style="style1">
-			<b>
-				<xsl:value-of select="title"/>
+
+	<xsl:template match="client_info"><!--
+		<illustration>
+		    <drawRightString x="20cm" y="27.8cm">
+
+
+		    </drawRightString>
+		</illustration>
+		--><para style="style1">
+  				 <xsl:value-of select="title"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="name"/>
-			</b>
+
 		</para>
 		<para style="style1"><xsl:value-of select="street"/></para>
 		<para style="style1"><xsl:value-of select="street2"/></para>

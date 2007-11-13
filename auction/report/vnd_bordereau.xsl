@@ -15,7 +15,7 @@
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
 		</blockTableStyle>
-		<paraStyle name="style1" fontName="Helvetica" fontSize="12" alignment="CENTER"/>
+		<paraStyle name="style1" leftIndent="10cm" fontName="Helvetica-Bold"/>
 		<blockTableStyle id="product-totals">
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT"/>
