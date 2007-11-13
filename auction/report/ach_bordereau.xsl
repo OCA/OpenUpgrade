@@ -4,6 +4,18 @@
 	<xsl:import href="../../custom/corporate_defaults.xsl"/>
 	<xsl:import href="../../base/report/rml_template.xsl"/>
 
+
+
+<xsl:template name="first_page_frames">
+		<xsl:if test="$page_format='a4_normal'">
+			<frame id="main" x1="1cm" y1="2.5cm" width="19.0cm" height="22.0cm"/>
+		</xsl:if>
+
+		<xsl:if test="$page_format='a4_letter'">
+			<frame id="address" x1="11cm" y1="21.5cm" width="6cm" height="1cm"/>
+			<frame id="main" x1="1cm" y1="2.5cm" width="19.0cm" height="21.0cm"/>
+		</xsl:if>
+	</xsl:template>
 	<xsl:template match="/">
 		<xsl:call-template name="rml"/>
 	</xsl:template>
@@ -11,7 +23,7 @@
 		<paraStyle name="login-title" fontName="Helvetica" fontSize="12"/>
 		<paraStyle name="login" fontName="Helvetica-Bold" fontSize="16"/>
 
-		<paraStyle name="style1" leftIndent="10cm" fontName="Helvetica-Bold" />
+		<paraStyle name="style1"  leftIndent="10cm" fontName="Helvetica-Bold" />
 		<paraStyle name="cost-name" fontName="Helvetica-BoldOblique" fontSize="10" alignment="RIGHT"/>
 		<blockTableStyle id="objects">
 			 <blockFont name="Helvetica-BoldOblique" size="12" start="0,0" stop="-1,0"/>
@@ -25,8 +37,6 @@
 			 <lineStyle kind="LINEABOVE" start="-1,0" stop="-1,0"/>
 			 <lineStyle kind="LINEABOVE" start="-1,-1" stop="-1,-1"/>
 		</blockTableStyle>
-
-
 </xsl:template>
 
 	<xsl:template name="story">
@@ -38,15 +48,8 @@
 			<xsl:sort order="ascending" select="client_info/name"/>
 		</xsl:apply-templates>
 	</xsl:template>
-
-	<xsl:template match="client_info"><!--
-		<illustration>
-		    <drawRightString x="20cm" y="27.8cm">
-
-
-		    </drawRightString>
-		</illustration>
-		--><para style="style1">
+	<xsl:template match="client_info">
+			<para style="style1">
   				 <xsl:value-of select="title"/>
 				<xsl:text> </xsl:text>
 				<xsl:value-of select="name"/>
@@ -70,11 +73,8 @@
 		<nextFrame/>
 		<xsl:apply-templates select="client_info"/>
 		<spacer length="0.8cm"/>
-
-
 <!--		<setNextTemplate name="other_pages"/>-->
 <!--		<nextFrame/>-->
-
 		<para style="login-title" t="1">Plate Number:</para>
 		<para style="login"><xsl:value-of select="login"/></para>
 

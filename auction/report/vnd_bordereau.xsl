@@ -7,6 +7,17 @@
 		<xsl:call-template name="rml"/>
 	</xsl:template>
 
+
+<xsl:template name="first_page_frames">
+		<xsl:if test="$page_format='a4_normal'">
+			<frame id="main" x1="1cm" y1="2.5cm" width="19.0cm" height="22.0cm"/>
+		</xsl:if>
+
+		<xsl:if test="$page_format='a4_letter'">
+			<frame id="address" x1="11cm" y1="21.5cm" width="6cm" height="1cm"/>
+			<frame id="main" x1="1cm" y1="2.5cm" width="19.0cm" height="21.0cm"/>
+		</xsl:if>
+	</xsl:template>
 	<xsl:template name="stylesheet">
 		<paraStyle name="name" fontName="Helvetica-Bold" fontSize="16"/>
 		<blockTableStyle id="products">
@@ -15,7 +26,8 @@
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT" start="-1,0" stop="-1,-1"/>
 		</blockTableStyle>
-		<paraStyle name="style1" leftIndent="10cm" fontName="Helvetica-Bold"/>
+		<paraStyle name="style1" leftIndent="10cm" fontName="Helvetica-Bold" />
+
 		<blockTableStyle id="product-totals">
 			 <blockValign value="TOP"/>
 			 <blockAlignment value="RIGHT"/>
@@ -34,7 +46,7 @@
 		</xsl:apply-templates>
 	</xsl:template>
 	<xsl:template match="vente-bordereau">
-		<nextFrame/>
+	<nextFrame/>
 		<setNextTemplate name="other_pages"/>
 			<xsl:apply-templates select="client_info"/>
 			<spacer length="0.8cm"/>
@@ -46,10 +58,7 @@
 		</para>
 
 		<xsl:if test="client_info">
-			<para>
-<!--				<b t="1">Bank Account</b>: <xsl:value-of select="client_info/bank"/>-->
-			</para><para>
-<!--				<b t="1">Customer Contact</b>:-->
+		<para>
 				<xsl:value-of select="client_info/phone"/>
 				<xsl:if test="number(string-length(client_info/phone) &gt; 0) + number(string-length(client_info/mobile) &gt; 0) = 2">
 					<xsl:text> - </xsl:text>
@@ -57,11 +66,8 @@
 				<xsl:value-of select="client_info/mobile"/>
 			</para>
 		</xsl:if>
-
 		<spacer length="0.8cm" width="1cm"/>
-
 		<xsl:apply-templates select="vente-products"/>
-
 <!--		<setNextTemplate name="first_page"/>-->
 <!--		<pageBreak/>-->
 	</xsl:template>
@@ -84,8 +90,6 @@
 		<para style="style1"><xsl:value-of select="country"/></para>
 				<spacer length="1cm" width="1mm"/>
 	<spacer length="1cm" width="1mm"/>
-
-
 	</xsl:template>
 
 	<xsl:template match="vente-products">
