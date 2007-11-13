@@ -99,13 +99,6 @@
 			<field name="act_window_id" ref="action_membership_members"/>
 		</record>
 
-		<record model="ir.actions.act_window" id="action_members">
-			<field name="name">Members</field>
-			<field name="res_model">res.partner</field>
-			<field name="view_type">tree</field>
-			<field name="domain">[('membership_state','=', 'none')]</field>
-		</record>
-
 	<menuitem name="Membership/Members" 
 			id="menu_members" 
 			action="action_membership_members"/>

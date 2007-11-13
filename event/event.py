@@ -28,6 +28,51 @@
 ##############################################################################
 
 from osv import fields, osv
+import time
 
-class event_type(osv.sov):
-	_name = "event.
+class event_type(osv.osv):
+	_name = 'event.event_type'
+	_description= 'Event type'
+
+	_columns = {
+			'name': fields.char('Event type name', size=64, required=True),
+			'code': fields.char('Event type code', size=64, required=True),
+			}
+
+event_type()
+
+class event(osv.osv):
+	_name = 'event.event'
+	_description = 'Event'
+	_inherits = {'crm.case.section': 'section_id'}
+	_order = 'date_begin asc, date_end asc'
+	
+
+	def _get_type(self, cr, uid, context=None):
+
+		obj_event_type = self.pool.get('event.event_type')
+		ids = obj_event_type.search(cr, uid, [])
+		res = obj_event_type.read(cr, uid, ids, ['code', 'name'], context)
+		return [(r['code'], r['name']) for r in res]
+
+	def _get_register(self, cr, uid, context=None):
+		return 1
+
+	def _get_prospect(self, cr, uid, context=None):
+		return 1
+
+	_columns = {
+			'type': fields.many2one('event.event_type', 'Type', size=64, required=True),
+			'section_id': fields.many2one('crm.case.section', 'Case section', required=True),
+			'register_max': fields.integer('Maximum number of registrations'),
+			'register_min': fields.integer('Minimum number of registrations'),
+			'register_current': fields.function(_get_register, method=True, type="integer", string='Current number of registrations'),
+			'register_prospect': fields.function(_get_prospect, method=True, type="integer", string='Number of prospect registrations'),
+			'parent_event': fields.many2one('event.event', 'Parent event'),
+			'child_events': fields.one2many('event.event', 'parent_event', 'Childs events'),
+			'date_begin': fields.datetime('Beginning date', required=True),
+			'date_end': fields.datetime('Ending date', required=True),
+			}
+		
+
+event()

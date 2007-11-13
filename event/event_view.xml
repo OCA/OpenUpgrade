@@ -1,8 +1,138 @@
-
 <?xml version="1.0"?>
 <terp>
 	<data>
 
+		<!-- EVENTS  -->
+
+		<!-- EVENTS/CONFIGURATION/TYPE OF EVENTS  -->
+
+		<record model="ir.actions.act_window" id="action_event_type">
+			<field name="res_model">event.event_type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Events/Configuration/Types of events" id="menu_event_type" action="action_event_type" />
+
+		<record model="ir.ui.view" id="view_event_type_form">
+			<field name="name">Event type</field>
+			<field name="model">event.event_type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Event type">
+					<field name="name"/>
+					<field name="code"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_event_type_tree">
+			<field name="name">Event type</field>
+			<field name="model">event.event_type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Event type">
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+		</record>
+
+
+
+		<!-- EVENTS/CONFIGURATION/EVENTS  -->
+
+		<record model="ir.ui.view" id="view_event_form">
+			<field name="name">Events</field>
+			<field name="model">event.event</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Events">
+					<field name="name" string="Event"/>
+					<field name="code" string="Event code"/>
+					<field name="type" string="Event type"/>
+					<field name="active"/>
+					<field name="user_id"/>
+					<field name="reply_to"/>
+					<field name="register_min"/>
+					<field name="register_max"/>
+					<field name="parent_event"/>
+					<field name="date_begin"/>
+					<field name="date_end"/>
+					<button name="%(wizard_event_registration)d"
+							string="Event Registration" type="action"/>
+					<newline/>
+					<field name="child_events" colspan="4"/>
+			</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_event_tree">
+			<field name="name">Events</field>
+			<field name="model">event.event</field>
+			<field name="type">tree</field>
+			<field name="field_parent">child_events</field>
+			<field name="arch" type="xml">
+				<tree string="Events">
+					<field name="name" string="Event"/>
+					<field name="code" string="Event code"/>
+					<field name="type" string="Event type"/>
+					<field name="user_id"/>
+					<field name="reply_to"/>
+					<field name="date_begin"/>
+					<field name="date_end"/>
+					<field name="register_min" string="Min. regist."/>
+					<field name="register_max" string="Max. regist."/>
+				</tree>
+			</field>
+		</record>
+
+
+
+		<!-- EVENTS/CONFIGURATION/EVENTS  -->
+		<!--
+	<record model="ir.actions.act_window" id="action_event_form">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.event</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_event_tree"/>
+		</record>
+		-->
+		<record model="ir.actions.act_window" id="action_new_event_form">
+			<field name="name">New event</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.event</field>
+			<field name="domain">[('parent_event','=',False)]</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="view_event_form"/>
+		</record>
+
+
+		<menuitem name="Events/Configuration/New event" id="menu_event_new_event" action="action_new_event_form" />
+
+
+
+		<!-- EVENTS/REGISTRATIONS/EVENTS  -->
+		
+		<record model="ir.actions.act_window" id="action_event">
+			<field name="name">Events</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.event</field>
+			<field name="domain">[('parent_event','=',False)]</field>
+			<field name="view_type">tree</field>
+			<field name="view_id" ref="view_event_tree"/>
+		</record>
+		
+		<menuitem name="Events/Registrations/Events" id="menu_event" action="action_event" />
+
+		<record model="ir.values" id="ir_open_register_event">
+			<field name="key2">tree_but_open</field>
+			<field name="model">event.event</field>
+			<field name="name">Register</field>
+			<field name="value" eval="'ir.actions.wizard,%d'%wizard_event_registration"/>
+			<field name="object" eval="True"/>
+		</record>
 
 
 	</data>
