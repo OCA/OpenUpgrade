@@ -7,9 +7,12 @@
 		"base","crm"
 		],
 	"demo_xml" : [],
+
+	"init_xml" : [
+		"event_view.xml",
+		],
 	"update_xml" : [
 		"event_view.xml",
-		"event_wizard.xml",
 		],
 	"active" : False,
 	"installable" : True,

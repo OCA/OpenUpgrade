@@ -4,9 +4,12 @@
 	"author" : "Tiny",
 	"category" : "Generic Modules/Association",
 	"depends" : [
-		"base", "product", "sale"
+		"base", "product", "account"
 		],
 	"demo_xml" : [],
+	"init_xml" : [
+		"membership_view.xml",
+		],
 	"update_xml" : [
 		"membership_view.xml",
 		],

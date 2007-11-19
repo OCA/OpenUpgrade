@@ -46,7 +46,7 @@ class event(osv.osv):
 	_description = 'Event'
 	_inherits = {'crm.case.section': 'section_id'}
 	_order = 'date_begin asc, date_end asc'
-	
+
 
 	def _get_type(self, cr, uid, context=None):
 
@@ -55,8 +55,24 @@ class event(osv.osv):
 		res = obj_event_type.read(cr, uid, ids, ['code', 'name'], context)
 		return [(r['code'], r['name']) for r in res]
 
-	def _get_register(self, cr, uid, context=None):
-		return 1
+	def _get_register(self, cr, uid, ids, name, args, context=None):
+		cr.execute('''
+		SELECT r.section_id, sum(r.nb_register)
+		FROM event_registration r
+		WHERE r.section_id IN (%s)
+		GROUP BY r.section_id
+		''' % ','.join([str(i) for i in ids] )
+		)
+
+		nb_reg = dict(cr.fetchall())
+		res={}
+		for id in ids:
+			try:
+				res[id] = nb_reg[id]
+			except KeyError:
+				res[id] = 0
+		print res
+		return res
 
 	def _get_prospect(self, cr, uid, context=None):
 		return 1
@@ -73,6 +89,22 @@ class event(osv.osv):
 			'date_begin': fields.datetime('Beginning date', required=True),
 			'date_end': fields.datetime('Ending date', required=True),
 			}
-		
+
 
 event()
+
+class registration(osv.osv):
+	_name = 'event.registration'
+	_description = 'Registration'
+	_inherit = 'crm.case'
+
+	_columns = {
+			'nb_register': fields.integer('Number of Registration', required=True),
+			'section_id': fields.many2one('event.event', 'Event', required=True, select=True),
+			'name': fields.char('Description',size=64, required=False),
+			'partner_id': fields.many2one('res.partner', 'Partner', required=True),
+			}
+	_defaults = {
+			'nb_register': lambda *a: 1,
+			}
+registration()

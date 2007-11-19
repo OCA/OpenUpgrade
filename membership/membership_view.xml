@@ -30,10 +30,10 @@
 			<field name="arch" type="xml">
 				<page string="Information" position="after">
 					<page string="Membership">
-						<field name="membership" readonly="1"/>
+						<field name="membership"/>
 						<newline/>
-						<field name="membership_date_from" required="1"/>
-						<field name="membership_date_to" required="1"/>
+						<field name="membership_date_from"/>
+						<field name="membership_date_to"/>
 					</page>
 				</page>
 			</field>
@@ -43,6 +43,7 @@
 			<field name="name">Membership Products</field>
 			<field name="res_model">product.product</field>
 			<field name="domain">[('membership','=',True)]</field>
+			<field name="context">{'membership':True}</field>
 		</record>
 
 		<record model="ir.actions.act_window.view" id="action_membership_product_view_tree">
@@ -99,7 +100,7 @@
 			<field name="act_window_id" ref="action_membership_members"/>
 		</record>
 
-	<menuitem name="Membership/Members" 
+		<menuitem name="Membership/Members" 
 			id="menu_members" 
 			action="action_membership_members"/>
 
@@ -160,7 +161,15 @@
 
 
 
-<!-- PARTNERS -->
+		<!-- PARTNERS -->
+
+		<wizard
+			string="Invoice Membership"
+			model="res.partner"
+			name="wizard_invoice_membership"
+			id="wizard_invoice_membership"
+			/>
+
 
 		<record model="ir.ui.view" id="view_partner_form">
 			<field name="name">res.partner.form.inherit</field>
@@ -175,6 +184,12 @@
 						<field name="free_member" select="2"/>
 						<field name="membership_start" select="2"/>
 						<field name="membership_cancel" select="2"/>
+						<button 
+							name="%(wizard_invoice_membership)d"
+							string="Invoice membership"
+							type="action"
+							colspan="1"
+							/>
 						<field name="member_lines" nolabel="1" colspan="4" readonly="1">
 							<tree string="Membership">
 								<field name="date_from"/>
@@ -184,12 +199,13 @@
 							<form string="Membership">
 								<field name="date_from"/>
 								<field name="date_to"/>
-								<field name="sale_order_line"/>
+								<field name="account_invoice_line"/>
 								<field name="state"/>
 							</form>
 						</field>
 					</page>
 				</page>
+
 			</field>
 		</record>
 
