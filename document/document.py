@@ -34,6 +34,7 @@ import urlparse
 
 import webdav
 import webdav.DAV.errors
+import os
 
 import pooler
 
@@ -248,6 +249,55 @@ class document_directory_content(osv.osv):
 	}
 document_directory_content()
 
+class ir_action_report_xml(osv.osv):
+	_name="ir.actions.report.xml"
+	_inherit ="ir.actions.report.xml"
+
+	def _model_get(self, cr, uid, ids, name, arg, context):
+		res = {}
+		model_pool = self.pool.get('ir.model')
+		for data in self.read(cr,uid,ids,['model']):
+			model = data.get('model',False)
+			if model:
+				model_id =model_pool.search(cr,uid,[('model','=',model)])
+				if model_id:
+					res[(data.get('id'))] = model_id[0]
+				else:
+					res[(data.get('id'))]
+		return res
+
+	def _model_search(self, cr, uid, obj, name, args):
+		print args
+		if not len(args):
+			return []
+		model_id= args[0][2]
+		model = self.pool.get('ir.model').read(cr,uid,[model_id])[0]['model']
+		report_id = self.search(cr,uid,[('model','=',model)])
+		if not report_id:
+			return [('id','=','0')]
+		return [('id','in',report_id)]
+
+	_columns={
+		'model_id' : fields.function(_model_get,fnct_search=_model_search,method=True,string='Model Id',store=True),
+	}
+
+ir_action_report_xml()
+
+
+import random
+import string
+
+def random_name():
+	random.seed()
+	d = [random.choice(string.letters) for x in xrange(10) ]
+	name = "".join(d)
+	return name
+
+def create_directory(path):
+	dir_name = random_name()
+	path = path+"/"+dir_name
+	os.mkdir(path)
+	return path
 
 class document_file(osv.osv):
 	_inherit = 'ir.attachment'
@@ -263,7 +313,7 @@ class document_file(osv.osv):
 		'parent_id': fields.many2one('document.directory', 'Directory', select=1),
 		'file_size': fields.integer('File Size', required=True),
 		'file_type': fields.char('Content Type', size=32),
-		'index_content': fields.text('Indexed Content', select=1),
+		'index_content': fields.text('Indexed Content'),
 		'write_date': fields.datetime('Date Modified', readonly=True),
 		'write_uid':  fields.many2one('res.users', 'Last Modification User', readonly=True),
 		'create_date': fields.datetime('Date Created', readonly=True),
@@ -278,15 +328,46 @@ class document_file(osv.osv):
 	]
 
 	def create(self, cr, user, vals, context=None):
+		if not vals.has_key('datas'):
+			return super(ir_attachment,self).create(cr,user,vals,context)
+
+		path = os.getcwd()
+		if not "filestore" in os.listdir(path):
+			os.mkdir(path+"/filestore")
+		path = os.getcwd() + '/filestore'
+		flag = False
+		for root,dirs,files	in os.walk(path):
+			if root != path:
+				x = 0
+				for f in files:
+					x = x +1
+				if x < 4000:
+					flag = True
+					new_path = root
+		if not flag:
+			new_path = create_directory(path)
+		temp,ext = os.path.splitext(vals['datas_fname'])
+		filename = random_name() +ext
+		fname = new_path + "/" + filename
+		fp = file(fname,'wb')
+		fp.write(base64.decodestring(vals['datas']))
+		res = content_index(base64.decodestring(vals['datas']), fname, vals.get('content_type', None))
+		vals['index_content']=  res
 		vals['file_size']= len(vals['datas'])
-		if ('datas' in vals) and ('name' in vals):
-			res = content_index(base64.decodestring(vals['datas']), vals['name'], vals.get('content_type', None))
-			res = res.encode('ascii', 'replace').decode('ascii')
-			vals['index_content']=  res
+
+		vals['link'] = fname
+		vals['datas_fname']=filename
+		vals['name']=filename
 		vals['file_type']= vals['name'].split('.')[1] or False
+		vals['datas']=" "
 		return super(document_file,self).create(cr, user, vals, context)
 
+	def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
+		res =  super(document_file,self).read(cr, user, ids, fields, context, load)
+		for r in res:
+			if r.has_key('link'):
+				value = file(r['link'], 'rb').read()
+				r['datas'] = base64.encodestring(value)
+		return res
 
 document_file()
-
-
