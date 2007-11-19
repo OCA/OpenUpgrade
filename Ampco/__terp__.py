@@ -12,6 +12,5 @@
             "product_heatcode/product_heatcode_view.xml",
             "product_lot_foundary/product_lot_foundary.xml",
           ],
-    "active":True,
     "installable":True,
 }
