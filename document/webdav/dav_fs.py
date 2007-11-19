@@ -81,10 +81,11 @@ class tinyerp_handler(dav_interface):
 				})
 			else:
 				obj = pool.get(node.object.ressource_type_id.model)
-				obj.create(cr, 3, {
-					'name': objname,
-					obj._parent_name: node.object2.id
-				})
+				if node.object2:
+					value_dict = {'name': objname,obj._parent_name: node.object2.id}
+				else:
+					value_dict = {'name': objname}
+				obj.create(cr, 3, value_dict)
 
 		else:
 			print 'Type', node.object.type, 'not implemented !'
@@ -109,7 +110,6 @@ class tinyerp_handler(dav_interface):
 		if node.type=='file':
 			return base64.decodestring(node.object.datas or '')
 		elif node.type=='content':
-			print node.report_id
 			report = pool.get('ir.actions.report.xml').browse(cr, 3, node.report_id)
 			srv = netsvc.LocalService('report.'+report.report_name)
 			pdf,pdftype = srv.create(cr, 3, [node.object.id], {}, {})
@@ -210,7 +210,7 @@ class tinyerp_handler(dav_interface):
 			'datas_fname': objname,
 			'file_size': len(data),
 			'datas': base64.encodestring(data),
-			#'index_content': content_index(data, objname, content_type or None),
+			'index_content': content_index(data, objname, content_type or None),
 			'file_type': objname.split('.')[1] or False,
 			'parent_id': node.object and node.object.id or False,
 		}
@@ -428,4 +428,3 @@ class tinyerp_handler(dav_interface):
 			result = True
 		cr.close()
 		return result
-
