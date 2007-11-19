@@ -93,9 +93,12 @@ class Partner(osv.osv):
 				res[partner.id] = 'associated'
 			else:
 				for line in partner.member_lines:
+					prior = {'paid':1,'invoiced':2}
+					value = 'none'
 					if line.date_from <= today and line.date_to >= today:
-						res[partner.id] = line.state
-						break
+						if (value=='none') or (prior.get(line.state, 5)<prior.get(value, 4)):
+							value = line.state
+					res[partner.id] = value
 		return res
 
 	def _membership_state_search(self, cursor, uid, obj, name, args):
