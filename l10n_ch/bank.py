@@ -2,7 +2,7 @@
 #
 # Copyright (c) 2007-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #
-#                      Cédric Krier <ced@tinyerp.com>
+#                      Cedric Krier <ced@tinyerp.com>
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
