@@ -626,7 +626,7 @@ def convertToURL( cPathname ):
     if len( cPathname ) > 1:
         if cPathname[1:2] == ":":
             cPathname = "/" + cPathname[0] + "|" + cPathname[2:]
-    cPathname = string.replace( cPathname, "\\", "/" )
+    cPathname = cPathname.replace( "\\", "/" )
     cPathname = "file://" + cPathname
     return cPathname
 
@@ -2017,7 +2017,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
-    database="latest_server"
+    database="test"
 
 #
 
@@ -2083,7 +2083,6 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             fp_name = tempfile.mktemp('.'+"sxw")
             if res['report_sxw_content']:
                 data = base64.decodestring(res['report_sxw_content'])
-
                 fp = file(fp_name, 'wb')
                 fp.write(data)
                 fp.close()
@@ -2095,6 +2094,19 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
             docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
             docinfo2.setUserFieldValue(3,self.res_other[self.win.getListBoxSelectedItemPos("lstReport")]['model'])
+
+#            desktop=getDesktop()
+#            doc = desktop.getCurrentComponent()
+            #try:
+            oParEnum = oDoc2.getTextFields().createEnumeration()
+            while oParEnum.hasMoreElements():
+                oPar = oParEnum.nextElement()
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                    oPar.SelectedItem = oPar.Items[0]
+                    oPar.update()
+            #except:
+            #    pass
+
             if oDoc2.isModified():
                 if oDoc2.hasLocation() and not oDoc2.isReadonly():
                     oDoc2.store()
@@ -2128,7 +2140,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     from lib.functions import *
-    database="latest_server"
+    database="test"
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -2186,15 +2198,18 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             self.getInverseFieldsRecord(1)
             fp_name = tempfile.mktemp('.'+"sxw")
             if not oDoc2.hasLocation():
-                oDoc2.storeAsURL("file://"+fp_name,Array())
+                oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             if docinfo.getUserFieldValue(2)=="":
                 id=self.getID()
                 docinfo.setUserFieldValue(2,id)
+                rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
+                res=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
             else:
-                id=docinfo.getUserFieldValue(2)
-            rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
-            res=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
+                id = docinfo.getUserFieldValue(2)
+                vId = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
+                rec = { 'name': self.win.getEditText("txtReportName")}
+                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
             oDoc2.store()
             url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
             fp = file(url, 'rb')
@@ -2204,11 +2219,15 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
             bHeader = True
+            res1 = {}
+            res1['name'] =self.win.getEditText("txtName")
+            res1['model'] =docinfo.getUserFieldValue(3)
+            res1['report_name'] =self.win.getEditText("txtReportName")
             if self.win.getCheckBoxState("chkHeader")==0:
                 bHeader = False
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),{"header":bHeader})
+            res1["header"] = bHeader
+            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),res1)
             self.win.endExecute()
-
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -2236,7 +2255,6 @@ class SendtoServer(unohelper.Base, XJobExecutor):
     def getInverseFieldsRecord(self,nVal):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
-
         count=0
         try:
             oParEnum = doc.getTextFields().createEnumeration()

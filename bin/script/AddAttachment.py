@@ -17,18 +17,29 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
-        url = self.doc2pdf(oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__()))
-        if url <> None:
-            fp = file(url.__getslice__(7,url.__len__()), 'rb')
-            data=fp.read()
-            fp.close()
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'upload_attachment', url.__getslice__(url.rfind('/')+1,url.__len__()), base64.encodestring(data), docinfo.getUserFieldValue(3), docinfo.getUserFieldValue(2))
+        if docinfo.getUserFieldValue(2) <> "" and docinfo.getUserFieldValue(3) <> "":
+
+            url = self.doc2pdf(oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__()))
+            if url <> None:
+                fp = file(url.__getslice__(7,url.__len__()), 'rb')
+                data=fp.read()
+                fp.close()
+                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'upload_attachment', url.__getslice__(url.rfind('/')+1,url.__len__()), base64.encodestring(data), docinfo.getUserFieldValue(3), docinfo.getUserFieldValue(2))
+            else:
+                ErrorDialog("Problem in Creating PDF","","PDF ERROR")
         else:
-            ErrorDialog("Problem in Creating PDF","","PDF ERROR")
+            self.win = DBModalDialog(60, 50, 180, 225, "Add Attachment to Server")
+            self.win.addFixedText("lblModuleName",2 , 9, 176, 20, "Select Module:")
+            self.win.addComboListBox("lstFields", 2, 22, 176, 80, False,itemListenerProc=self.lstbox_selected)
+            #self.
+            #sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+            #res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'orm' , 'name_search', )
+            self.win.doModalDialog("",None)
 
-        #self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
-
+    def lstbox_selected(self, oItemEvent):
+        pass
+# Woman was created from the rib of man: Not from his head to be thought of only, nor from his hand to be owned, nor from his foot to be beneath, but from under his arm to be protected, from his side to be equal, and from his heart to be loved.."
     def doc2pdf(self, strFile):
        oDoc = None
        strFilterSubName = ''

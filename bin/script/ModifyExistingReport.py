@@ -13,7 +13,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
-    database="latest_server"
+    database="test"
 
 #
 
@@ -79,7 +79,6 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             fp_name = tempfile.mktemp('.'+"sxw")
             if res['report_sxw_content']:
                 data = base64.decodestring(res['report_sxw_content'])
-
                 fp = file(fp_name, 'wb')
                 fp.write(data)
                 fp.close()
@@ -91,6 +90,19 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
             docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
             docinfo2.setUserFieldValue(3,self.res_other[self.win.getListBoxSelectedItemPos("lstReport")]['model'])
+
+#            desktop=getDesktop()
+#            doc = desktop.getCurrentComponent()
+            #try:
+            oParEnum = oDoc2.getTextFields().createEnumeration()
+            while oParEnum.hasMoreElements():
+                oPar = oParEnum.nextElement()
+                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                    oPar.SelectedItem = oPar.Items[0]
+                    oPar.update()
+            #except:
+            #    pass
+
             if oDoc2.isModified():
                 if oDoc2.hasLocation() and not oDoc2.isReadonly():
                     oDoc2.store()

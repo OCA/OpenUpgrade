@@ -127,7 +127,6 @@ class SendtoServer(unohelper.Base, XJobExecutor):
     def getInverseFieldsRecord(self,nVal):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
-
         count=0
         try:
             oParEnum = doc.getTextFields().createEnumeration()
