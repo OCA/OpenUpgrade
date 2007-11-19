@@ -7,23 +7,15 @@
 			name="open_partner"
 			id="wizard_open_partner"/>
 
+
 		<record model="ir.actions.act_window" id="open_questions">
 		  <field name="name">Questions</field>
 		  <field name="res_model">segmentation.question</field>
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Segmentation/Questions" id="menu_segm_question" 
-				  action="open_questions" />
-
-		<record model="ir.actions.act_window" id="open_answers">
-		  <field name="name">Answers</field>
-		  <field name="res_model">segmentation.answer</field>
-		  <field name="view_type">form</field>
-		  <field name="view_mode">tree,form</field>
-		</record>
 		<menuitem name="Segmentation/Questions" id="menu_segm_answer" 
-				  action="open_answers" />
+				  action="open_questions" />
 
 		<record model="ir.actions.act_window" id="open_profiles">
 		  <field name="name">Profiles</field>
@@ -31,7 +23,7 @@
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Segmentation/Profiles" id="menu_segm_profile" 
+		<menuitem name="Segmentation/Profiles" id="menu_segm_profile"
 				  action="open_profiles" />
 
 	<record model="ir.ui.view" id="view_profile">
@@ -45,9 +37,9 @@
 			<newline/>
 			<field name="parent_id"/>
       		<separator string="Included Answers :" colspan="4"/>
-			<field name="answer_yes" />
+			<field name="answer_yes" nolabel="1" colspan="4"/>
        	 	<separator string="Excluded Answers :" colspan="4"/>
-			<field name="answer_no" />
+			<field name="answer_no" nolabel="1" colspan="4"/>
 		  </form>
 		</field>
 	</record>
@@ -58,11 +50,57 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 		  <tree string="Answers">
-			<field name="question" select="1"/>
 			<field name="name" select="1"/>
+			<field name="question" select="1"/>
 		  </tree>
 		</field>
 	</record>
+
+	<record model="ir.ui.view" id="view_answer_form">
+		<field name="name">Answers</field>
+		<field name="model">segmentation.answer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		  <form string="Answers">
+			<field name="name" select="1"/>
+			<field name="question" select="1"/>
+		  </form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_question_tree">
+		<field name="name">Questions</field>
+		<field name="model">segmentation.question</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		  <tree string="Questions">
+			<field name="name" select="1" colspan="4"/>
+			<field name="answers" colspan="4" nolabel="1"/>
+		  </tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_question_form">
+		<field name="name">Questions</field>
+		<field name="model">segmentation.question</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		  <form string="Questions">
+			<field name="name" select="1" />
+			<newline/>
+			<separator string="Avalaible answers" colspan="4"/>
+			<field name="answers" colspan="4" nolabel="1" editable="bottom">
+			  <tree string="Answers" editable="bottom">
+				<field name="name" select="1"/>
+			  </tree>
+			  <form string="Answers">
+				<field name="name" select="1"/>
+			  </form>
+			  </field>
+		  </form>
+		</field>
+	</record>
+
 
 	<record model="ir.ui.view" id="base.view_partner_form">
 		<field name="name">res.partner.form</field>

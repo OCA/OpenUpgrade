@@ -1,10 +1,11 @@
 from osv import fields,osv
-
+from osv import orm
 class question(osv.osv):
 	_name="segmentation.question"
 	_description= "Question"
 	_columns={
-		'name': fields.char("Question",size=128),
+		'name': fields.char("Question",size=128, required=True),
+		'answers': fields.one2many("segmentation.answer","question","Avalaible answers",),
 		}
 question()
 
@@ -13,21 +14,13 @@ class answer(osv.osv):
 	_description="Answer"
 	_columns={
 		"question": fields.many2one('segmentation.question',"Question"),
-		"name": fields.char("Answer",size=128),
+		"name": fields.char("Answer",size=128, required=True),
 		}
 answer()
 
 
 class profile(osv.osv):
-	def _check_recursion(self, cr, uid, ids):
-		level = 100
-		while len(ids):
-			cr.execute('select distinct parent_id from segmentation_profile where id in ('+','.join(map(str,ids))+')')
-			ids = filter(None, map(lambda x:x[0], cr.fetchall()))
-			if not level:
-				return False
-			level -= 1
-		return True
+
 	_name="segmentation.profile"
 	_description="Profile"
 	_columns={
@@ -38,12 +31,12 @@ class profile(osv.osv):
 		'child_ids': fields.one2many('segmentation.profile', 'parent_id', 'Childs Profile'),
 		}
 	_constraints = [
-		(_check_recursion, 'Error ! You can not create recursive profiles.', ['parent_id'])
+		(orm.orm.check_recursion, 'Error ! You can not create recursive profiles.', ['parent_id'])
 	]
 
 profile()
 
-class partner(osv.osv): 
+class partner(osv.osv):
 	_inherit="res.partner"
 	_columns={
 		"anwers": fields.many2many("segmentation.answer","partner_question_rel","partner","answer","Answers"),
