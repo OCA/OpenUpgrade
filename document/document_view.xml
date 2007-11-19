@@ -39,7 +39,7 @@
 		<field name="view_type">form</field>
 	</record>
 	<menuitem
-		name="Document Management/Configuration/Server repositories" 
+		name="Document Management/Configuration/Server repositories"
 		action="action_document_repository_form"
 		id="menu_document_repositories"/>
 
@@ -69,7 +69,7 @@
 							<field name="sequence"/>
 							<field name="suffix"/>
 							<field name="extension"/>
-							<field name="report_id" domain="[('model','=',parent.ressource_type_id)]"/>
+							<field name="report_id" domain="[('model_id','=',parent.ressource_type_id)]"/>
 						</form>
 						<tree string="Contents">
 							<field name="sequence"/>
@@ -109,7 +109,7 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 	<menuitem
-		name="Document Management/Configuration/Directories" 
+		name="Document Management/Configuration/Directories"
 		action="action_document_directory_form"
 		id="menu_document_directories"/>
 
@@ -120,7 +120,7 @@
 		<field name="domain">[('parent_id','=',False)]</field>
 	</record>
 	<menuitem
-		name="Document Management/Directorie's Structure" 
+		name="Document Management/Directorie's Structure"
 		action="action_document_directory_tree"
 		id="menu_document_directories_tree"/>
 
@@ -178,7 +178,7 @@
 		<field name="view_type">form</field>
 	</record>
 	<menuitem
-		name="Document Management/Search a File" 
+		name="Document Management/Search a File"
 		action="action_document_file_form"
 		id="menu_document_files"/>
 
@@ -196,10 +196,6 @@
 		<field name="value" eval="'ir.actions.act_window,%d'%action_document_file_directory_form"/>
 		<field name="object" eval="True"/>
 	</record>
-
-
-
-
 </data>
 </terp>
 
