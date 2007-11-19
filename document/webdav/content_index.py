@@ -1,31 +1,27 @@
 import time
 import os
-import commands
+import StringIO
 
 #
-# This should be the indexer, the result is a UNICODE string
+# This should be the indexer
 #
 def content_index(content, filename=None, content_type=None):
-	#
-	# Should add a try: except: here, but remove during development
-	#
+#	return ''
 	fname,ext = os.path.splitext(filename)
 	result = ''
-	if ext == '.doc':
-		(stdin,stdout) = os.popen2('antiword -')
+	if ext == '.doc': #or content_type ?
+		(stdin,stdout) = os.popen2('antiword -', 'b')
 		stdin.write(content)
 		stdin.close()
-		# The default antiword encoding output is latin1
-		result = stdout.read().decode('latin1','replace')
+		result = stdout.read()
 	elif ext == '.pdf':
+#		fileHandle = StringIO.StringIO("")
 		fname = os.tempnam(filename)+'.pdf'
 		fp = file(fname,'wb')
 		fp.write(content)
 		fp.close()
-		fp = os.popen('pdftotext  '+fname+' -', 'r')
+		fp = os.popen('pdftotext -enc UTF-8 -nopgbrk '+fname+' -', 'r')
 		result = fp.read()
-		# The default pdftotext encoding is latin1
-		result = result.decode('latin1', "replace")
 		fp.close()
 	elif ext == '.odt':
 		print "File name:",filename
@@ -33,9 +29,10 @@ def content_index(content, filename=None, content_type=None):
 		fp = file(fname,'wb')
 		fp.write(content)
 		fp.close()
-		(status,result) = commands.getstatusoutput("pwd")
-		static_path = result + "/addons/document/webdav/"
-		(status,result) = commands.getstatusoutput("python %sodt2txt.py %s"%(static_path,fname))
+		fp = os.popen('python %s/addons/document/webdav/odt2txt.py '%(os.getcwd())+fname+' -', 'r')
+		result = fp.read()
+	elif ext in ('.png','.jpg','.jpeg'):
+		result=''
 	else:
-		result = ''
+		result = content
 	return result
