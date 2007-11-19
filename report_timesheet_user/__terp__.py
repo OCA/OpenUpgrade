@@ -14,7 +14,6 @@
 	'update_xml': [
 		'report_timesheet_user_view.xml',
 	],
-	'active': True,
 	'installable': True
 }
 
