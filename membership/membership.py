@@ -142,18 +142,23 @@ class Partner(osv.osv):
 
 			if arg[1] == '=':
 				if str(arg[2]) != 'none':
-					cr.execute('SELECT p.id \
-							FROM res_partner AS p, membership_membership_line AS l \
-							WHERE l.partner = p.id \
-							AND l.date_from <= %s \
-							AND l.date_to >= %s ',
-							(today, today))
+					cr.execute('''
+						SELECT p.id
+						FROM res_partner AS p, membership_membership_line AS l
+						WHERE l.partner = p.id
+						AND l.date_from <= %s
+						AND l.date_to >= %s 
+						''' % (today, today)
+						)
 				else:
-					cr.execute('SELECT p.id \
-						FROM res_partner AS p \
-						WHERE p.id NOT IN ( \
-							SELECT partner \
-							FROM membership_membership_line )')
+					cr.execute('''
+						SELECT p.id
+						FROM res_partner AS p
+						WHERE p.id NOT IN (
+							SELECT partner
+							FROM membership_membership_line )
+						'''
+						)
 				res = cr.fetchall()
 				if not res:
 					return [('id', '=', '0')]
@@ -164,18 +169,22 @@ class Partner(osv.osv):
 
 			elif arg[1] == '!=':
 				if str(arg[2]) == 'none':
-					cr.execute('SELECT p.id \
-							FROM res_partner AS p, membership_membership_line AS l \
-							WHERE l.partner = p.id \
-							AND l.date_from <= %s \
-							AND l.date_to >= %s '
-							(today, today))
+					cr.execute('''
+						SELECT p.id
+						FROM res_partner AS p, membership_membership_line AS l
+						WHERE l.partner = p.id
+						AND l.date_from <= %s
+						AND l.date_to >= %s
+						''' % (today, today))
 				else:
-					cr.execute('SELECT p.id \
-						FROM res_partner AS p \
-						WHERE p.id NOT IN ( \
-							SELECT partner \
-							FROM membership_membership_line )')
+					cr.execute('''
+						SELECT p.id
+						FROM res_partner AS p
+						WHERE p.id NOT IN (
+							SELECT partner
+							FROM membership_membership_line )
+						'''
+						)
 				res = cr.fetchall()
 				if not res:
 					return [('id', '=', '0')]
@@ -258,10 +267,10 @@ class Partner(osv.osv):
 		member_line_obj = self.pool.get('membership.membership_line')
 		for partner_id in ids:
 			line_id = member_line_obj.search(cr, uid, [('partner', '=', partner_id)],
-					limit=1, order='date_to ASC')
+					limit=1, order='date_cancel ASC')
 			if line_id:
 				res[partner_id] = member_line_obj.read(cr, uid, line_id[0],
-						['date_to'])['date_to']
+						['date_cancel'])['date_cancel']
 			else:
 				res[partner_id] = False
 		return res
@@ -270,11 +279,11 @@ class Partner(osv.osv):
 		'''Search on membership cancel date'''
 		if not len(args):
 			return []
-		where = ' AND '.join(['date_to '+x[1]+' \''+str(x[2])+'\''
+		where = ' AND '.join(['date_cancel '+x[1]+' \''+str(x[2])+'\''
 			for x in args])
-		cr.execute('SELECT partner, MIN(date_to) \
+		cr.execute('SELECT partner, MIN(date_cancel) \
 				FROM ( \
-					SELECT partner, MIN(date_to) AS date_to \
+					SELECT partner, MIN(date_cancel) AS date_cancel \
 					FROM membership_membership_line \
 					GROUP BY partner \
 				) AS foo \
@@ -334,35 +343,6 @@ class Invoice(osv.osv):
 
 	_inherit = 'account.invoice'
 
-	def action_move(self, cr, uid, ids, context=None):
-		'''Update the membership state while changing the state of invoicing'''
-		if context is None:
-			context = {}
-		partner_obj = self.pool.get('res.partner')
-		member_line_obj = self.pool.get('membership.membership_line')
-		
-		for invoice in self.browse(cr, uid, ids):
-			
-			partner = partner_obj.search(cr, uid,
-					[('id', '=', invoice.partner_id.id)], context)
-			mlines = member_line_obj.search(cr, uid,
-					[('partner', '=', partner.id)], context)
-
-
-			for line in mlines:
-				if not state:
-					state = 'none'
-				else:
-					state = partner.membership_state
-
-				lstate = line.state
-				if comparator[lstate] > comparator[state]:
-					state = lstate
-
-				partner_obj.write(cr, uid, partner.id, {
-					'membership_state' : state
-					})
-
 
 	def action_move_create(self, cr, uid, ids, context=None):
 		'''Create membership.membership_line if the product is for membership'''
@@ -409,71 +389,70 @@ class Invoice(osv.osv):
 
 Invoice()
 
-#class ReportPartnerMemberYear(osv.osv):
-#	'''Membership by Years'''
-#
-#	_name = 'report.membership.year'
-#	_description = __doc__
-#	_auto = False
-#	_rec_name = 'year'
-#	_columns = {
-#		'year': fields.char('Year', size='4', readonly=True, select=1),
-#		'state': fields.selection(STATE, 'State', readonly=True, select=1),
-#		'number': fields.integer('Number', readonly=True),
+class ReportPartnerMemberProduct(osv.osv):
+	'''Membership by Products'''
+
+	_name = 'report.membership.product'
+	_description = __doc__
+	_auto = False
+	_rec_name = 'product'
+	_columns = {
+		'product': fields.many2one('product.product', 'Membeship product', readonly=True, select=1),
+		'state': fields.char('State', size='16', readonly=True, select=1),
+		'number': fields.integer('Number', readonly=True),
 #		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
 #		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
 #			select=2),
-#	}
-#
-#	def init(self, cr):
-#		'''Create the view'''
-#		cr.execute("""
-#			CREATE OR REPLACE VIEW report_membership_year AS (
-#				SELECT
-#					MIN(id) AS id,
-#					year,
-#					state,
-#					SUM(number) AS number,
-#					SUM(amount) AS amount,
-#					currency
-#				FROM
-#					(SELECT
-#						MIN(l.id) AS id,
-#						TO_CHAR(l.date_from, 'YYYY') AS year,
-#						CASE WHEN ((sol.state = 'cancel') OR
-#							(p.membership_cancel IS NOT NULL
-#								AND TO_CHAR(p.membership_cancel, 'YYYY')
-#									= TO_CHAR(l.date_from, 'YYYY')))
-#							THEN 'canceled'
-#							ELSE CASE WHEN sol.invoiced
-#								THEN CASE WHEN so.invoiced
-#									THEN 'paid'
-#									ELSE 'invoiced'
-#									END
-#								ELSE 'waiting'
-#								END
-#							END AS state,
-#						COUNT(l.id) AS number,
-#						SUM(sol.price_unit * sol.product_uom_qty * (1 - sol.discount / 100)) AS amount,
-#						ppl.currency_id AS currency
-#					FROM membership_membership_line l
-#						JOIN (sale_order_line sol
-#							LEFT JOIN sale_order so
-#								LEFT JOIN product_pricelist ppl
-#									ON (ppl.id = so.pricelist_id)
-#								ON (sol.order_id = so.id))
-#							ON (l.sale_order_line = sol.id)
-#						JOIN res_partner p
-#							ON (l.partner = p.id)
-#					GROUP BY TO_CHAR(l.date_from, 'YYYY'), sol.state,
-#						sol.invoiced, so.invoiced, p.membership_cancel, ppl.currency_id
-#				) AS foo
-#				GROUP BY year, state, currency
-#			)""")
-#
-#ReportPartnerMemberYear()
-#
-#
+	}
+
+	def init(self, cr):
+		'''Create the view'''
+		cr.execute("""
+			CREATE OR REPLACE VIEW report_membership_product AS (
+				SELECT
+					MIN(product_id) AS id,
+					product_id AS product,
+					ai.state AS state,
+					COUNT(ml.product_id) AS number
+				FROM account_invoice ai
+				JOIN (
+					SELECT
+						count(id),
+						p.product_id,
+						product_name,
+						SUM(price_unit*quantity) AS price,
+						ail.invoice_id
+					FROM account_invoice_line ail
+					JOIN (
+						SELECT
+							p.id AS product_id,
+							pt.name as product_name
+						FROM (
+							product_product p
+							JOIN product_template pt
+							ON product_tmpl_id=pt.id
+							)
+						WHERE p.membership = true
+						)
+					AS p ON (
+						ail.product_id = p.product_id
+						)
+					GROUP BY
+						p.product_id,
+						product_name,
+						invoice_id
+					)
+				AS ml ON (
+					ml.invoice_id=ai.id
+					)
+				GROUP BY
+					product_id,
+					state
+						)""")
+
+ReportPartnerMemberProduct()
+
+
 #class ReportPartnerMemberYearNew(osv.osv):
 #	'''New Membership by Years'''
 #

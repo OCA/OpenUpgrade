@@ -211,77 +211,57 @@
 
 
 		<!-- MEMBERSHIP/REPORTING -->
-		<!--
 
-		<record model="ir.ui.view" id="view_report_membership_year_tree">
-			<field name="name">report.membership.year.tree</field>
-			<field name="model">report.membership.year</field>
+		<record model="ir.ui.view" id="view_report_membership_product_tree">
+			<field name="name">report.membership.product.tree</field>
+			<field name="model">report.membership.product</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Membership by Years">
-					<field name="year"/>
+				<tree string="Membership by Products">
+					<field name="product"/>
 					<field name="state"/>
 					<field name="number" sum="Number"/>
-					<field name="amount" sum="Amount"/>
-					<field name="currency"/>
 				</tree>
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_report_membership_year_graph1">
-			<field name="name">report.membership.year.graph1</field>
-			<field name="model">report.membership.year</field>
+		<record model="ir.ui.view" id="view_report_membership_product_graph1">
+			<field name="name">report.membership.product.graph1</field>
+			<field name="model">report.membership.product</field>
 			<field name="type">graph</field>
 			<field name="arch" type="xml">
-				<graph string="Membership number by Years" type="bar">
-					<field name="year"/>
+				<graph string="Membership number by membership products by state" type="bar">
+					<field name="product"/>
 					<field name="state" group="1"/>
-					<field name="number"/>
+					<field name="number" operator="+"/>
 				</graph>
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_report_membership_year_graph2">
-			<field name="name">report.membership.year.graph2</field>
-			<field name="model">report.membership.year</field>
-			<field name="type">graph</field>
-			<field name="arch" type="xml">
-				<graph string="Membership amount by Years" type="bar">
-					<field name="year"/>
-					<field name="state" group="1"/>
-					<field name="amount"/>
-				</graph>
-			</field>
-		</record>
-
-		<record model="ir.actions.act_window" id="action_report_membership_year_tree">
-			<field name="res_model">report.membership.year</field>
+		<record model="ir.actions.act_window" id="action_report_membership_product_tree">
+			<field name="res_model">report.membership.product</field>
 			<field name="view_type">form</field>
 		</record>
 
-		<record model="ir.actions.act_window.view" id="action_report_membership_year_tree_view1">
+		<record model="ir.actions.act_window.view" id="action_report_membership_product_tree_view1">
 			<field name="sequence" eval="1"/>
 			<field name="view_mode">tree</field>
-			<field name="act_window_id" ref="action_report_membership_year_tree"/>
+			<field name="act_window_id" ref="action_report_membership_product_tree"/>
 		</record>
 
-		<record model="ir.actions.act_window.view" id="action_report_membership_year_tree_view2">
+		<record model="ir.actions.act_window.view" id="action_report_membership_product_tree_view2">
 			<field name="sequence" eval="2"/>
 			<field name="view_mode">graph</field>
-			<field name="view_id" ref="view_report_membership_year_graph1"/>
-			<field name="act_window_id" ref="action_report_membership_year_tree"/>
+			<field name="view_id" ref="view_report_membership_product_graph1"/>
+			<field name="act_window_id" ref="action_report_membership_product_tree"/>
 		</record>
 
-		<record model="ir.actions.act_window.view" id="action_report_membership_year_tree_view3">
-			<field name="sequence" eval="3"/>
-			<field name="view_mode">graph</field>
-			<field name="view_id" ref="view_report_membership_year_graph2"/>
-			<field name="act_window_id" ref="action_report_membership_year_tree"/>
-		</record>
+		<menuitem name="Membership/Reporting/Membership by Products"
+			action="action_report_membership_product_tree"
+			id="menu_report_membership_product"/>
 
-		<menuitem name="Membership/Reporting/Membership by Years"
-			action="action_report_membership_year_tree"
-			id="menu_report_membership_year"/>
+
+		<!--
 
 		<record model="ir.ui.view" id="view_report_membership_year_new_tree">
 			<field name="name">report.membership.year_new.tree</field>
@@ -351,8 +331,6 @@
 			id="menu_report_membership_year_new"/>
 
 		-->
-
-
 
 	</data>
 </terp>
