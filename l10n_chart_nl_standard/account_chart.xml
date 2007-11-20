@@ -18,7 +18,7 @@
 	<field name="name">Vaste Activa &amp; Eigen Vermogen</field>
 
 </record>
-<record id="account.a_cash" model="account.account">
+<record id="a_cash" model="account.account">
 	<field name="code">0010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
@@ -373,7 +373,7 @@
 	<field name="code">1000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('account.a_cash')])]"/>
+	<field name="parent_id" eval="[(6, 0, [ref('a_cash')])]"/>
 	<field name="type">view</field>
 	<field name="name">Financiele Rekeningen</field>
 
@@ -382,7 +382,7 @@
 	<field name="code">1001</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('account.a_cash')])]"/>
+	<field name="parent_id" eval="[(6, 0, [ref('a_cash')])]"/>
 	<field name="type">asset</field>
 	<field name="name">Kas</field>
 
@@ -391,7 +391,7 @@
 	<field name="code">1050</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('account.a_cash')])]"/>
+	<field name="parent_id" eval="[(6, 0, [ref('a_cash')])]"/>
 	<field name="type">asset</field>
 	<field name="name">Contante Verkopen</field>
 
@@ -513,7 +513,7 @@
 	<field name="name">Kruisposten</field>
 
 </record>
-<record id="chart1200" model="account.account">
+<record id="a_recv" model="account.account">
 	<field name="code">1200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
@@ -522,6 +522,11 @@
 	<field name="name">Debiteuren</field>
 
 </record>
+
+<record model="ir.property" id="account.property_account_receivable">
+	<field name="value" eval="'account.account,'+str(a_recv)"/>
+</record>
+
 <record id="chart1205" model="account.account">
 	<field name="code">1205</field>
 	<field name="reconcile" eval="False"/>
@@ -585,7 +590,7 @@
 	<field name="name">Te betalen Pensioenpremies</field>
 
 </record>
-<record id="chart1600" model="account.account">
+<record id="a_pay" model="account.account">
 	<field name="code">1600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
@@ -594,6 +599,11 @@
 	<field name="name">Crediteuren</field>
 
 </record>
+
+		<record model="ir.property" id="account.property_account_payable">
+			<field name="value" eval="'account.account,'+str(a_pay)"/>
+		</record>
+
 <record id="chart1605" model="account.account">
 	<field name="code">1605</field>
 	<field name="reconcile" eval="False"/>
@@ -1485,7 +1495,7 @@
 	<field name="name">Rekeningen tbv Verkoopresultaat</field>
 
 </record>
-<record id="account.a_expense" model="account.account">
+<record id="a_expense" model="account.account">
 	<field name="code">8010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
@@ -1494,6 +1504,11 @@
 	<field name="name">Inkoopkosten algemeen</field>
 
 </record>
+
+<record model="ir.property" id="account.property_account_expense_categ">
+	<field name="value" eval="'account.account,'+str(a_expense)"/>
+</record>
+
 <record id="chart8020" model="account.account">
 	<field name="code">8020</field>
 	<field name="reconcile" eval="False"/>
@@ -1548,7 +1563,7 @@
 	<field name="name">Kortingen bij Verkoop</field>
 
 </record>
-<record id="account.a_income" model="account.account">
+<record id="chart8520" model="account.account">
 	<field name="code">8520</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
@@ -1746,7 +1761,7 @@
 	<field name="name">Koersresultaat Effecten)</field>
 
 </record>
-<record id="account.a_pay" model="account.account">
+<record id="chart9220" model="account.account">
 	<field name="code">9220</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
@@ -1836,5 +1851,21 @@
 	<field name="name">Overboekingsrekening</field>
 
 </record>
-</data>
+
+		<record model="account.journal" id="account.sales_journal">
+			<field name="default_credit_account_id" ref="a_recv"/>
+			<field name="default_debit_account_id" ref="a_recv"/>
+		</record>
+
+		<record model="account.journal" id="account.expenses_journal">
+			<field name="default_credit_account_id" ref="a_pay"/>
+			<field name="default_debit_account_id" ref="a_pay"/>
+		</record>
+
+		<record model="account.journal" id="account.bank_journal">
+			<field name="default_credit_account_id" ref="cash"/>
+			<field name="default_debit_account_id" ref="cash"/>
+		</record>
+
+	</data>
 </terp>

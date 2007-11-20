@@ -18,7 +18,7 @@
 	<field name="name">HUIDIGE ACTIVA</field>
 
 </record>
-<record id="account.a_cash" model="account.account">
+<record id="a_cash" model="account.account">
 	<field name="code">1061</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
@@ -36,7 +36,7 @@
 	<field name="name">Kas</field>
 
 </record>
-<record id="chart1200" model="account.account">
+<record id="a_recv" model="account.account">
 	<field name="code">1200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
@@ -45,6 +45,11 @@
 	<field name="name">Debiteuren</field>
 
 </record>
+
+<record model="ir.property" id="account.property_account_receivable">
+	<field name="value" eval="'account.account,'+str(a_recv)"/>
+</record>
+
 <record id="chart1205" model="account.account">
 	<field name="code">1205</field>
 	<field name="reconcile" eval="False"/>
@@ -279,7 +284,7 @@
 	<field name="name">VERKOOP INKOMSTEN</field>
 
 </record>
-<record id="account.a_income" model="account.account">
+<record id="chart4020" model="account.account">
 	<field name="code">4020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
@@ -360,7 +365,7 @@
 	<field name="name">Rente</field>
 
 </record>
-<record id="account.a_recv" model="account.account">
+<record id="chart4450" model="account.account">
 	<field name="code">4450</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
@@ -378,7 +383,7 @@
 	<field name="name">INKOOPPRIJS VERKOPEN</field>
 
 </record>
-<record id="account.a_expense" model="account.account">
+<record id="a_expense" model="account.account">
 	<field name="code">5010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
@@ -387,6 +392,11 @@
 	<field name="name">Inkoopkosten algemeen</field>
 
 </record>
+
+<record model="ir.property" id="account.property_account_expense_categ">
+	<field name="value" eval="'account.account,'+str(a_expense)"/>
+</record>
+
 <record id="chart5020" model="account.account">
 	<field name="code">5020</field>
 	<field name="reconcile" eval="False"/>
@@ -630,7 +640,7 @@
 	<field name="name">Licenties</field>
 
 </record>
-<record id="account.a_pay" model="account.account">
+<record id="a_pay" model="account.account">
 	<field name="code">5810</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
@@ -639,5 +649,26 @@
 	<field name="name">Foreign Exchange Loss</field>
 
 </record>
-</data>
+
+		<record model="ir.property" id="account.property_account_payable">
+			<field name="value" eval="'account.account,'+str(a_pay)"/>
+		</record>
+
+		<record model="account.journal" id="account.sales_journal">
+			<field name="default_credit_account_id" ref="a_recv"/>
+			<field name="default_debit_account_id" ref="a_recv"/>
+		</record>
+
+		<record model="account.journal" id="account.expenses_journal">
+			<field name="default_credit_account_id" ref="a_pay"/>
+			<field name="default_debit_account_id" ref="a_pay"/>
+		</record>
+
+		<record model="account.journal" id="account.bank_journal">
+			<field name="default_credit_account_id" ref="cash"/>
+			<field name="default_debit_account_id" ref="cash"/>
+		</record>
+
+
+	</data>
 </terp>
