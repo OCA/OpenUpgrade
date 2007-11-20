@@ -24,7 +24,7 @@ class profile(osv.osv):
 	_name="segmentation.profile"
 	_description="Profile"
 	_columns={
-		"name": fields.char("Description",size=128),
+		"name": fields.char("Description",size=128, required=True),
 		"answer_yes": fields.many2many("segmentation.answer","profile_question_yes_rel","profile","answer","Inclued answers"),
 		"answer_no": fields.many2many("segmentation.answer","profile_question_no_rel","profile","answer","Excluded answers"),
 		'parent_id': fields.many2one('segmentation.profile', 'Inherits from'),
@@ -39,6 +39,6 @@ profile()
 class partner(osv.osv):
 	_inherit="res.partner"
 	_columns={
-		"anwers": fields.many2many("segmentation.answer","partner_question_rel","partner","answer","Answers"),
+		"answers": fields.many2many("segmentation.answer","partner_question_rel","partner","answer","Answers"),
 		}
 partner()

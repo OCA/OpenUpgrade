@@ -5,6 +5,7 @@
 			string="Select partners"
 			model="segmentation.profile"
 			name="open_partner"
+			menu="False"
 			id="wizard_open_partner"/>
 
 
@@ -14,7 +15,7 @@
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Segmentation/Questions" id="menu_segm_answer" 
+		<menuitem name="Partners/Configuration/Segmentation/Questions" id="menu_segm_answer" 
 				  action="open_questions" />
 
 		<record model="ir.actions.act_window" id="open_profiles">
@@ -23,7 +24,7 @@
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Segmentation/Profiles" id="menu_segm_profile"
+		<menuitem name="Partners/Configuration/Segmentation/Profiles" id="menu_segm_profile"
 				  action="open_profiles" />
 
 	<record model="ir.ui.view" id="view_profile">
@@ -31,15 +32,19 @@
 		<field name="model">segmentation.profile</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-		  <form string="Profiles">
+		  <form string="Profiles">	
+
+			<field name="name" />
+			<field name="parent_id" />
+
 			<newline/>
-			<field name="name" select="1"/>
+      		<separator string="Included Answers :" colspan="2" />
+			<separator string="Excluded Answers :" colspan="2"/>
 			<newline/>
-			<field name="parent_id"/>
-      		<separator string="Included Answers :" colspan="4"/>
-			<field name="answer_yes" nolabel="1" colspan="4"/>
-       	 	<separator string="Excluded Answers :" colspan="4"/>
-			<field name="answer_no" nolabel="1" colspan="4"/>
+			<field name="answer_yes" nolabel="1" colspan="2" />
+			<field name="answer_no" nolabel="1" colspan="2" />
+			<newline/>
+			<button string="Select partners" name="%(wizard_open_partner)d" type="action" colspan="4"/>
 		  </form>
 		</field>
 	</record>
@@ -50,8 +55,8 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 		  <tree string="Answers">
-			<field name="name" select="1"/>
 			<field name="question" select="1"/>
+			<field name="name" select="1"/>
 		  </tree>
 		</field>
 	</record>
@@ -62,8 +67,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 		  <form string="Answers">
-			<field name="name" select="1"/>
 			<field name="question" select="1"/>
+			<field name="name" select="1"/>
 		  </form>
 		</field>
 	</record>
@@ -159,18 +164,12 @@
 				</page>
 
 				<page string="Segmentation">
-				  <field name="anwers" colspan="4" />
+				  <field name="answers" colspan="4" nolabel="1"/>
 				</page>
 			</notebook>
 			</form>
 		</field>
 	</record>
-
-
-<!--
-pas suuuuuur
---> 
-
 
 	<record model="ir.ui.view" id="view_partner_profile_tree">
 		<field name="name">segmentation.profile.tree</field>

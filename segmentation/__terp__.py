@@ -13,5 +13,6 @@
 					"segmentation_view.xml",
 					"segmentation_wizard.xml",
 					],
-	"Installable": True
+	"active": False,
+	"installable": True
 }

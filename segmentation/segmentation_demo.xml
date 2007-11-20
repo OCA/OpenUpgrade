@@ -13,7 +13,7 @@
 		<field name="name">Number of employees?</field>
 	</record>
 	<record model="segmentation.question" id="partner_level">
-		<field name="name">Quality of partner?</field>
+		<field name="name">Partner Level?</field>
 	</record>
 
 	<!--
@@ -67,12 +67,10 @@
 	</record>	
 	<record model="segmentation.profile" id="profile2">
 		<field name="name">Silver partners</field>	
-		<field name="parent_id" ref="profile1"/>	
 		<field name="answer_yes" eval="[(6,0,[partner_quality2])]" />
 	</record>
 	<record model="segmentation.profile" id="profile3">
 		<field name="name">Gold partners</field>
-		<field name="parent_id" ref="profile2"/>
 		<field name="answer_yes" eval="[(6,0,[partner_quality3])]" />
 	</record>
 	<record model="segmentation.profile" id="profile4">
@@ -133,13 +131,55 @@
 		<field name="answer_no" eval="[(6,0,[partner_quality1])]" />
 	</record>
 
+	<record model="segmentation.profile" id="profile16">
+		<field name="name">not bronze partners</field>
+		<field name="answer_no" eval="[(6,0,[partner_quality1])]" />
+	</record>
+
 	<!--
 	Partners
 	-->
-	
-	<!--
-	...
-	-->
+		
+	<record model="res.partner" id="base.res_partner_asus">
+		<field name="answers" eval="[(6,0,[ref('partner_quality1'), ref('nb_employees2'), ref('sector2')])]" />
+	</record>
+	<record model="res.partner" id="base.res_partner_agrolait">
+		<field name="answers" eval="[(6,0,[ref('partner_quality1'), ref('nb_employees1'), ref('sector1')])]" />
+	</record>
+	<record model="res.partner" id="base.res_partner_c2c">
+		<field name="answers" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees3'), ref('sector3')])]" />
+	</record>
+	<record model="res.partner" id="base.res_partner_sednacom">
+		<field name="answers" eval="[(6,0,[ref('partner_quality2'), ref('nb_employees1'), ref('sector2')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_thymbra">
+		<field name="answers" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees3'), ref('sector3')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_desertic_hispafuentes">
+		<field name="answers" eval="[(6,0,[ref('partner_quality2'), ref('nb_employees2'), ref('sector2')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_tinyatwork">
+		<field name="answers" eval="[(6,0,[ref('partner_quality1'), ref('nb_employees1'), ref('sector1')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_2">
+		<field name="answers" eval="[(6,0,[ref('partner_quality1'), ref('nb_employees2'), ref('sector3')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_3">
+		<field name="answers" eval="[(6,0,[ref('partner_quality2'), ref('nb_employees1'), ref('sector3')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_4">
+		<field name="answers" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees1'), ref('sector2')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_5">
+		<field name="answers" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees2'), ref('sector1')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_6">
+		<field name="answers" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees3'), ref('sector2')])]" />
+	</record>	
+	<record model="res.partner" id="base.res_partner_maxtor">
+		<field name="answers" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees1'), ref('sector3')])]" />
+	</record>	
+
 </data>
 </terp>
 
