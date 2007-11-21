@@ -138,62 +138,24 @@ class Partner(osv.osv):
 		clause = 'WHERE'
 		ids2 = []
 
+		cr.execute('''
+			SELECT id FROM res_partner
+			''')
+		ids=[x[0] for x in cr.fetchall()]
+
 		for arg in args:
-
 			if arg[1] == '=':
-				if str(arg[2]) != 'none':
-					cr.execute('''
-						SELECT p.id
-						FROM res_partner AS p, membership_membership_line AS l
-						WHERE l.partner = p.id
-						AND l.date_from <= %s
-						AND l.date_to >= %s 
-						''' % (today, today)
-						)
-				else:
-					cr.execute('''
-						SELECT p.id
-						FROM res_partner AS p
-						WHERE p.id NOT IN (
-							SELECT partner
-							FROM membership_membership_line )
-						'''
-						)
-				res = cr.fetchall()
-				if not res:
-					return [('id', '=', '0')]
-				ids = [x[0] for x in res]
 				for partner in self.browse(cr, uid, ids):
-					if partner.membership_state == str(arg[2]):
+					if partner.membership_state == str(arg[2]) and not ids2.count(partner.id):
 						ids2.append(partner.id)
 
+				
 			elif arg[1] == '!=':
-				if str(arg[2]) == 'none':
-					cr.execute('''
-						SELECT p.id
-						FROM res_partner AS p, membership_membership_line AS l
-						WHERE l.partner = p.id
-						AND l.date_from <= %s
-						AND l.date_to >= %s
-						''' % (today, today))
-				else:
-					cr.execute('''
-						SELECT p.id
-						FROM res_partner AS p
-						WHERE p.id NOT IN (
-							SELECT partner
-							FROM membership_membership_line )
-						'''
-						)
-				res = cr.fetchall()
-				if not res:
-					return [('id', '=', '0')]
-				ids = [x[0] for x in res]
 				for partner in self.browse(cr, uid, ids):
-					if partner.membership_state != str(arg[2]):
+					if partner.membership_state != str(arg[2]) and not ids2.count(partner.id):
 						ids2.append(partner.id)
 
-			return [('id', 'in', ids2)]
+		return [('id', 'in', ids2)]
 
 	def _membership_start(self, cr, uid, ids, name, args, context=None):
 		'''Return the start date of membership'''
@@ -215,7 +177,7 @@ class Partner(osv.osv):
 			return []
 		where = ' AND '.join(['date_from '+x[1]+' \''+str(x[2])+'\''
 			for x in args])
-		cr.execute('SELECT partner, MINCancel flight(date_from) \
+		cr.execute('SELECT partner, MIN(date_from) \
 				FROM ( \
 					SELECT partner, MIN(date_from) AS date_from \
 					FROM membership_membership_line \
@@ -303,7 +265,7 @@ class Partner(osv.osv):
 		'membership_amount': fields.float('Membership amount', digites=(16, 2),
 			help='The price negociated by the partner'),
 		'membership_state': fields.function(_membership_state, method=True, String='Current membership state',
-			type='selection', selection=STATE),
+			type='selection', selection=STATE, fnct_search=_membership_state_search),
 		'associate_member': fields.many2one('res.partner', 'Associate member'),
 		'free_member': fields.boolean('Free member'),
 		'membership_start': fields.function(_membership_start, method=True,

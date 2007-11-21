@@ -130,6 +130,86 @@
 			action="action_membership_members_paid"/>
 
 
+		<!-- MEMBERSHIP/MEMBERS/FREE MEMBERS  -->
+
+		<record model="ir.actions.act_window" id="action_membership_members_free">
+			<field name="name">Free members</field>
+			<field name="res_model">res.partner</field>
+			<field name="domain">[('membership_state', '=', 'free')]</field>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_membership_members_free_view_tree">
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="membership_members_tree"/>
+			<field name="act_window_id" ref="action_membership_members_free"/>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_membership_members_free_view_form">
+			<field name="sequence" eval="2"/>
+			<field name="view_mode">form</field>
+			<field name="act_window_id" ref="action_membership_members_free"/>
+		</record>
+
+		<menuitem name="Membership/Members/Free members" 
+			id="menu_members_free" 
+			action="action_membership_members_free"/>
+
+
+
+
+		<!-- MEMBERSHIP/MEMBERS/ASSOCIATED MEMBERS  -->
+
+		<record model="ir.actions.act_window" id="action_membership_members_associated">
+			<field name="name">Associated members</field>
+			<field name="res_model">res.partner</field>
+			<field name="domain">[('membership_state', '=', 'associated')]</field>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_membership_members_associated_view_tree">
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="membership_members_tree"/>
+			<field name="act_window_id" ref="action_membership_members_associated"/>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_membership_members_associated_view_form">
+			<field name="sequence" eval="2"/>
+			<field name="view_mode">form</field>
+			<field name="act_window_id" ref="action_membership_members_associated"/>
+		</record>
+
+		<menuitem name="Membership/Members/Associated members" 
+			id="menu_members_associated" 
+			action="action_membership_members_associated"/>
+
+
+		<!-- MEMBERSHIP/MEMBERS/INVOICED MEMBERS  -->
+
+		<record model="ir.actions.act_window" id="action_membership_members_invoiced">
+			<field name="name">Invoiced members</field>
+			<field name="res_model">res.partner</field>
+			<field name="domain">[('membership_state', '=', 'invoiced')]</field>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_membership_members_invoiced_view_tree">
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="membership_members_tree"/>
+			<field name="act_window_id" ref="action_membership_members_invoiced"/>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_membership_members_invoiced_view_form">
+			<field name="sequence" eval="2"/>
+			<field name="view_mode">form</field>
+			<field name="act_window_id" ref="action_membership_members_invoiced"/>
+		</record>
+
+		<menuitem name="Membership/Members/Invoiced members" 
+			id="menu_members_invoiced" 
+			action="action_membership_members_invoiced"/>
+
+
 		<!-- MEMBERSHIP/MEMBERS/WAITING MEMBERS  -->
 
 		<record model="ir.actions.act_window" id="action_membership_members_waiting">
@@ -155,11 +235,31 @@
 			id="menu_members_waiting" 
 			action="action_membership_members_waiting"/>
 
+		
+		<!-- MEMBERSHIP/MEMBERS/CANCELED MEMBERS  -->
 
+		<record model="ir.actions.act_window" id="action_membership_members_canceled">
+			<field name="name">Canceled members</field>
+			<field name="res_model">res.partner</field>
+			<field name="domain">[('membership_state', '=', 'canceled')]</field>
+		</record>
 
+		<record model="ir.actions.act_window.view" id="action_membership_members_canceled_view_tree">
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="membership_members_tree"/>
+			<field name="act_window_id" ref="action_membership_members_canceled"/>
+		</record>
 
+		<record model="ir.actions.act_window.view" id="action_membership_members_canceled_view_form">
+			<field name="sequence" eval="2"/>
+			<field name="view_mode">form</field>
+			<field name="act_window_id" ref="action_membership_members_canceled"/>
+		</record>
 
-
+		<menuitem name="Membership/Members/Canceled members" 
+			id="menu_members_canceled" 
+			action="action_membership_members_canceled"/>
 
 		<!-- PARTNERS -->
 
