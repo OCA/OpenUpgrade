@@ -34,6 +34,7 @@ from report import report_sxw
 from osv import osv
 
 class buyer_list(report_sxw.rml_parse):
+	auc_lot_ids=[]
 	def __init__(self, cr, uid, name, context):
 		super(buyer_list, self).__init__(cr, uid, name, context)
 		self.localcontext.update({
@@ -54,29 +55,30 @@ class buyer_list(report_sxw.rml_parse):
 		for lot_id  in objects:
 #			print "LOTID",lot_id
 			auc_lot_ids.append(lot_id.id)
+		self.auc_lot_ids=auc_lot_ids
 #		print "selected lots: ",auc_lot_ids
 		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id')
 		auc_date_ids = self.cr.fetchall()
 #		print "AUCTION DATE IDS***************",auc_date_ids
 		auct_dat=[]
 		for ad_id in auc_date_ids:
-			print "s***********",ad_id[0]
+			#print "s***********",ad_id[0]
 			auc_dates_fields = self.pool.get('auction.dates').read(self.cr,self.uid,ad_id[0],['name'])
 
 			self.cr.execute('select * from auction_buyer_taxes_rel abr,auction_dates ad where ad.id=abr.auction_id and ad.id=%d'%(ad_id[0],))
-			print "Befrore fetch"
+			#print "Befrore fetch"
 			res=self.cr.fetchall()
-			print "4444444444444444444444444444444444", res
+			#print "4444444444444444444444444444444444", res
 			total=0
 			for r in res:
-				print "rrrrrrrrrr",r[1]
+				#print "rrrrrrrrrr",r[1]
 				buyer_rel_field = self.pool.get('account.tax').read(self.cr,self.uid,r[1],['amount'])
-				print "TAX NAMEl:********",buyer_rel_field
+				#print "TAX NAMEl:********",buyer_rel_field
 				total = total + buyer_rel_field['amount']
 
 			auc_dates_fields['amount']=total
 			auct_dat.append(auc_dates_fields)
-			print "kkkkkkkkkkkkkkkkkkkkkkkkk",auct_dat
+			#print "kkkkkkkkkkkkkkkkkkkkkkkkk",auct_dat
 		print "AUC_DATTTTTTTT",auct_dat
 		return auct_dat
 
@@ -90,7 +92,7 @@ class buyer_list(report_sxw.rml_parse):
 
 		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
 #
-		self.cr.execute('select * from auction_lots where auction_id=%d'%(auc_date_ids[0]))
+		self.cr.execute('select * from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and  auction_id=%d'%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
 
 #		print "RESSSSSSSSSSSSSS",res
@@ -118,7 +120,7 @@ class buyer_list(report_sxw.rml_parse):
 #
 		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
 
-		self.cr.execute('select * from auction_lots where auction_id=%d'%(auc_date_ids[0]))
+		self.cr.execute('select * from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and auction_id=%d'%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
 #		print "RESSSSSSSSSSSSSS",res
 		sum=0
@@ -139,7 +141,7 @@ class buyer_list(report_sxw.rml_parse):
 
 		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
 
-		self.cr.execute('select * from auction_lots where auction_id=%d'%(auc_date_ids[0]))
+		self.cr.execute('select * from auction_lots where  id in ('+','.join(map(str,self.auc_lot_ids))+') and auction_id=%d'%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
 #		print "RESSSSSSSSSSSSSS",res
 		rec=[]
@@ -157,7 +159,7 @@ class buyer_list(report_sxw.rml_parse):
 #		print "*********in LOT FUNCTION"
 		auc_lot_ids = []
 		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
-		self.cr.execute('select * from auction_lots where auction_id=%d'%(auc_date_ids[0]))
+		self.cr.execute('select * from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and auction_id=%d'%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
 #		print "RESSSSSSSSSSSSSS",res
 		sum=0
