@@ -107,16 +107,16 @@
           <para style="P6">Total:</para>
         </td>
         <td>
-          <para style="P4">[['%.2f' % sum_lots ]]</para>
+          <para style="P4">[[ '%.0f'%(sum_lots) ]]</para>
         </td>
         <td>
-          <para style="P6">[[ '%.2f' % sum_adj_price ]]</para>
+          <para style="P6">[[ '%.0f'%(sum_adj_price) ]]</para>
         </td>
         <td>
-          <para style="P6">[[ '%.2f' % sum_buyer_obj_price ]]</para>
+          <para style="P6">[[ '%.0f'%(sum_buyer_obj_price0 ]]</para>
         </td>
         <td>
-          <para style="P6">[[ '%.2f' % sum_buyer_price ]]</para>
+          <para style="P6">[[ '%.0f'%(sum_buyer_price) ]]</para>
         </td>
       </tr>
     </blockTable>
