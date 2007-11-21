@@ -114,9 +114,9 @@ class auction_total_rml(report_sxw.rml_parse):
 
 
 	def sum_seller(self, auction_id):
-	    self.cr.execute("select count(*) from auction_lots where auction_id=%d AND bord_vnd_id is not null  group by auction_id "%(auction_id))
+	    self.cr.execute("select count(distinct bord_vnd_id)  from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d AND bord_vnd_id is not null "%(auction_id))
 	    res = self.cr.fetchone()
-	    return str(res[0])
+	    return res[0]
 
 	def sum_adj(self, auction_id):
 	    self.cr.execute("select sum(obj_price) from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d "%(auction_id))
