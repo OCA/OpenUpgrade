@@ -108,6 +108,19 @@
 			name="auction.catalog.flagey"
 			keyword="client_print_multi"/>
 
+<wizard string="Mark as paid for buyer"
+			model="auction.lots"
+			name="auction.payer"
+			multi="1"
+			id="auction_wizard_payer"/>
+
+<wizard string="Mark as paid for seller"
+			model="auction.lots"
+			name="auction.payer.sel"
+			multi="1"
+			id="auction_wizard_payer_sel"/>
+
+
 
 	</data>
 </terp>

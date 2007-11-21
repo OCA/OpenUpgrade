@@ -26,22 +26,51 @@
 #
 ##############################################################################
 
-import wizard_aie_send
-import wizard_aie_send_result
-import wizard_lots_buyer_map
-import wizard_lots_cancel
-import wizard_lots_invoice
-import wizard_lots_numerotate
-import wizard_lots_pay
-import wizard_pay
-import wizard_lots_sms
-import wizard_lot_date_move
-import wizard_auction_journal
-import wizard_auction_invoice_buyer
-import wizard_transfer_unsold_object
-import auction_wizard_enable_taken
-import auction_wizard_able_taken
-import auction_catalog_flagey
-#import wizard_lots_barcode
-import wizard_emporte
-import wizard_payer
+import wizard
+import netsvc
+import netsvc
+import osv
+import time
+import pooler
+pay_form = '''<?xml version="1.0"?>
+<form string="Check payment of objects">
+</form>'''
+pay_fields = {
+}
+def _payer(self, cr, uid, data, context):
+	pool = pooler.get_pool(cr.dbname)
+	pool.get('auction.lots').write(cr,uid,data['ids'],{'is_ok':True})
+	return {}
+
+
+def _payer_sel(self, cr, uid, data, context):
+	pool = pooler.get_pool(cr.dbname)
+	pool.get('auction.lots').write(cr,uid,data['ids'],{'paid_vnd':True})
+	return {}
+
+
+class wiz_auc_pay(wizard.interface):
+	states = {
+		'init': {
+			'actions': [],
+			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('end','Cancel'),('pay','Pay')]}
+		},
+		'pay': {
+		'actions': [_payer],
+		'result': {'type': 'state', 'state':'end'}
+		}}
+wiz_auc_pay('auction.payer')
+
+
+class wiz_auc_pay_sel(wizard.interface):
+	states = {
+		'init': {
+			'actions': [],
+			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('end','Cancel'),('pay','Pay')]}
+		},
+		'pay': {
+		'actions': [_payer_sel],
+		'result': {'type': 'state', 'state':'end'}
+		}}
+wiz_auc_pay_sel('auction.payer.sel')
+
