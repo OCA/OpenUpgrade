@@ -30,6 +30,7 @@
 import time
 from osv import fields,osv
 import pooler
+import netsvc
 
 class stock_heatcode(osv.osv):
 	_name = 'product.lot.foundry.heatcode'
@@ -160,8 +161,63 @@ class product_product(osv.osv):
 		'size_x': fields.float('Width'),
 		'size_y': fields.float('Length'),
 		'size_z': fields.float('Thickness'),
-		'lot_ids': fields.one2many('stock.production.lot', 'product_id', 'Lots')
+		'lot_ids': fields.one2many('stock.production.lot', 'product_id', 'Lots'),
+		'cutting': fields.boolean('Can be Cutted'),
+		'auto_picking': fields.boolean('Auto Picking for Production')
 	}
 product_product()
+
+
+class stock_move(osv.osv):
+	_inherit = "stock.move"
+	def check_assign(self, cr, uid, ids, context={}):
+		done = []
+		count=0
+		pickings = {}
+		for move in self.browse(cr, uid, ids):
+			if move.product_id.type == 'consu':
+				if mode.state in ('confirmed', 'waiting'):
+					done.append(move.id)
+				pickings[move.picking_id.id] = 1
+				continue
+			if move.state in ('confirmed','waiting'):
+				if move.product_id.cutting:
+					# TODO Check for reservation
+					done.append(move.id)
+					pickings[move.picking_id.id] = 1
+					cr.execute('update stock_move set location_id=%d where id=%d', (move.product_id.property_stock_production.id, move.id))
+
+					move_id = self.copy(cr, uid, move.id, {
+						'product_uos_qty': move.product_uos_qty,
+						'product_qty': 0,
+						'location_id': move.location_id.id,
+						'location_dest_id': move.product_id.property_stock_production.id
+					})
+					done.append(move_id)
+
+				else:
+					res = self.pool.get('stock.location')._product_reserve(cr, uid, [move.location_id.id], move.product_id.id, move.product_qty, {'uom': move.product_uom.id})
+					if res:
+						done.append(move.id)
+						pickings[move.picking_id.id] = 1
+						r = res.pop(0)
+						cr.execute('update stock_move set location_id=%d, product_qty=%f where id=%d', (r[1],r[0], move.id))
+
+						while res:
+							r = res.pop(0)
+							move_id = self.copy(cr, uid, move.id, {'product_qty':r[0], 'location_id':r[1]})
+							done.append(move_id)
+							#cr.execute('insert into stock_move_history_ids values (%d,%d)', (move.id,move_id))
+		if done:
+			count += len(done)
+			self.write(cr, uid, done, {'state':'assigned'})
+
+		if count:
+			for pick_id in pickings:
+				wf_service = netsvc.LocalService("workflow")
+				wf_service.trg_write(uid, 'stock.picking', pick_id, cr)
+		return count
+
+stock_move()
 
 
