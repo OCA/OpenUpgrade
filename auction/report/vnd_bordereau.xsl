@@ -146,11 +146,11 @@
 			<td><para><b><xsl:value-of select="title"/></b></para></td>
 			<td>
 				<xsl:choose>
-					<xsl:when test="price!=''">
+					<xsl:when test="price!=0.0">
 						<xsl:value-of select="format-number(price, '#,##0.00')"/>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:text>/</xsl:text>
+						<xsl:text>-</xsl:text>
 					</xsl:otherwise>
 				</xsl:choose>
 			</td>
