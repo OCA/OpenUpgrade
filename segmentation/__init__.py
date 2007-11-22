@@ -1,2 +1,2 @@
-import segmentation
+import crm_profiling
 import wizard

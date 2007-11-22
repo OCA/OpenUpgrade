@@ -26,7 +26,7 @@ def _open_partner(self, cr, uid, data, context):
 		ids_to_check = ids
 		cr.execute("""
 		 select distinct(parent_id)
-		 from segmentation_profile
+		 from crm_profiling_profile
 		 where parent_id is not null
 		 and id in (%s)""" % ','.join([str(i) for i in ids ]))
 
