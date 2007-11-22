@@ -51,148 +51,53 @@ class buyer_list(report_sxw.rml_parse):
 			'sum_buyer_obj_price':self.sum_buyer_obj_price,
 			'sum_buyer_price':self.sum_buyer_price,
 			'sum_lots':self.sum_lots
-
 	})
 
 	def lines_lots_from_auction(self,objects):
 
 		auc_lot_ids = []
-#		print "OBJECTSS*********",objects
 		for lot_id  in objects:
-#			print "LOTID",lot_id
 			auc_lot_ids.append(lot_id.id)
 		self.auc_lot_ids=auc_lot_ids
-#		print "selected lots: ",auc_lot_ids
 		self.cr.execute('select auction_id from auction_lots where id in ('+','.join(map(str,auc_lot_ids))+') group by auction_id')
 		auc_date_ids = self.cr.fetchall()
-#		print "AUCTION DATE IDS***************",auc_date_ids
 		auct_dat=[]
 		for ad_id in auc_date_ids:
-			#print "s***********",ad_id[0]
 			auc_dates_fields = self.pool.get('auction.dates').read(self.cr,self.uid,ad_id[0],['name'])
-
 			self.cr.execute('select * from auction_buyer_taxes_rel abr,auction_dates ad where ad.id=abr.auction_id and ad.id=%d'%(ad_id[0],))
-			#print "Befrore fetch"
 			res=self.cr.fetchall()
-			#print "4444444444444444444444444444444444", res
 			total=0
 			for r in res:
-				#print "rrrrrrrrrr",r[1]
 				buyer_rel_field = self.pool.get('account.tax').read(self.cr,self.uid,r[1],['amount'])
-				#print "TAX NAMEl:********",buyer_rel_field
 				total = total + buyer_rel_field['amount']
-
 			auc_dates_fields['amount']=total
 			auct_dat.append(auc_dates_fields)
-			#print "kkkkkkkkkkkkkkkkkkkkkkkkk",auct_dat
-		print "AUC_DATTTTTTTT",auct_dat
 		return auct_dat
 
-
-
-
 	def lines_lots_auct_lot(self,obj):
-		print "*********in LOT FUNCTION"
 		auc_lot_ids = []
 
 		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
-#
+
 		self.cr.execute('select ach_uid,count(1) as no_lot, sum(obj_price) as adj_price, sum(buyer_price)-sum(obj_price) as buyer_cost ,sum(buyer_price) as to_pay from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and  auction_id=%d  and ach_uid is not null group by ach_uid '%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
-		print "Grousdjkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkp by buyer",res
-		for i in res:
-			print ">>>>>>>>>>>>>>>>>>>>>>>",i
-##		print "RESSSSSSSSSSSSSS",res
-#		rec=[]
-#		for r in res:
-#			print "OBJPRICE*******", r['obj_price']
-#			if not r['obj_price'] == 0:
-#				print "OBJPRICEnot >0*******", r['obj_price']
-#				rec.append(r)
-#
 		for r in res:
 			if r['ach_uid']:
-				tnm=self.pool.get('res.partner').read(self.cr,self.uid,[r['ach_uid']],['name'])
-#				print "tnm::::::::",tnm
+				tnm=self.pool.get('res.partner').read(self.cr,self.uid,[r['ach_uid']],['name'])#
 				r.__setitem__('ach_uid',tnm[0]['name'])
-				print "BUYERNAMEACH_UID",r['ach_uid']
-				print r['adj_price']
 				self.sum_adj_price_val = self.sum_adj_price_val + r['adj_price']
 				self.sum_buyer_obj_price_val = self.sum_buyer_obj_price_val + r['buyer_cost']
 				self.sum_buyer_price_val = self.sum_buyer_price_val + r['to_pay']
-				self.sum_lot_val = self.sum_lot_val + r['no_lot']
-#			print "BUYERNAMEACH_UID if NOT BUYER******",r['ach_uid']
-		print ">>>>>>>>>>>>>>>>>>>>",res
+				self.sum_lot_val = self.sum_lot_val + r['no_lot']#
 		return res
-
-
 	def sum_lots(self):
-		print "No of LOt",self.sum_lot_val
 		return self.sum_lot_val
 	def sum_adj_price(self):
-##		print "*********in LOT FUNCTION"
-#		auc_lot_ids = []
-##
-#		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
-#
-#		self.cr.execute('select * from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and auction_id=%d'%(auc_date_ids[0]))
-#		res = self.cr.dictfetchall()
-##		print "RESSSSSSSSSSSSSS",res
-#		sum=0
-#		rec=[]
-#		for r in res:
-#			print "OBJPRICE*******", r['obj_price']
-#			if not r['obj_price'] == 0:
-#				print "OBJPRICEnot >0*******", r['obj_price']
-#				rec.append(r)
-#		for r in rec:
-#			sum = sum + r['obj_price']
-##		print "VALUE OF OBJ_SUM",sum
-#		return sum
-		print "ADJJJJJJJJJJJJJJJ",self.sum_adj_price_val
 		return self.sum_adj_price_val
 
 	def sum_buyer_obj_price(self):
-#		print "*********in LOT FUNCTION"
-#		auc_lot_ids = []
-#
-#		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
-#
-#		self.cr.execute('select * from auction_lots where  id in ('+','.join(map(str,self.auc_lot_ids))+') and auction_id=%d'%(auc_date_ids[0]))
-#		res = self.cr.dictfetchall()
-##		print "RESSSSSSSSSSSSSS",res
-#		rec=[]
-#		sum=0
-#		for r in res:
-#			if not r['obj_price'] == 0:
-#				print "OBJPRICEnot >0*******", r['obj_price']
-#				rec.append(r)
-#		for r in rec:
-#			sum=sum + r['buyer_price']-r['obj_price']
-#		return sum
-		print "ADJJJJJJJJJJJJJJJ",self.sum_buyer_obj_price_val
 		return self.sum_buyer_obj_price_val
 
-
 	def sum_buyer_price(self):
-##		print "*********in LOT FUNCTION"
-#		auc_lot_ids = []
-#		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
-#		self.cr.execute('select * from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and auction_id=%d'%(auc_date_ids[0]))
-#		res = self.cr.dictfetchall()
-##		print "RESSSSSSSSSSSSSS",res
-#		sum=0
-#		rec=[]
-#		for r in res:
-#			if not r['obj_price'] == 0:
-#				print "OBJPRICEnot >0*******", r['obj_price']
-#				rec.append(r)
-#		print "REC***************",rec
-#		for r in rec:
-#			print "buyerprice********", r['buyer_price']
-#			sum = sum + r['buyer_price']
-#
-#		return sum
-		print "ADJJJJJJJJJJJJJJJ",self.sum_buyer_price_val
 		return self.sum_buyer_price_val
 report_sxw.report_sxw('report.buyer.list', 'auction.lots', 'addons/auction/report/buyer_list.rml', parser=buyer_list)
