@@ -67,7 +67,7 @@
             <para style="P6">Adj(EUR)</para>
           </td>
           <td>
-            <para style="P6">Buyer costs([[ o['buyer_costs' ] ]]</para>
+            <para style="P6">Buyer costs([[ o['amount' ] ]]%)</para>
           </td>
           <td>
             <para style="P6">To pay</para>
@@ -82,10 +82,8 @@
             <para style="P4">[[ a['no_lot'] ]]</para>
           </td>
           <td>
-            <para style="P6">[[ a['adj_price'] ]]</para>
-            <para style="P4">
-              <font color="white"> </font>
-            </para>
+            <para style="P6">[[ a['adj_price'] or 0.0 ]]</para>
+
           </td>
           <td>
             <para style="P6">[[ a['buyer_cost'] ]]</para>
@@ -107,16 +105,16 @@
           <para style="P6">Total:</para>
         </td>
         <td>
-          <para style="P4">[[ '%.0f'%(sum_lots) ]]</para>
+          <para style="P4">[[ '%.2f' % (sum_lots() or 0.0)  ]]</para>
         </td>
         <td>
-          <para style="P6">[[ '%.0f'%(sum_adj_price) ]]</para>
+          <para style="P6">[[  '%.2f' % (sum_adj_price() or 0.0)  ]]</para>
         </td>
         <td>
-          <para style="P6">[[ '%.0f'%(sum_buyer_obj_price) ]]</para>
+          <para style="P6">[[ '%.2f' % (sum_buyer_obj_price() or 0.0)  ]]</para>
         </td>
         <td>
-          <para style="P6">[[ '%.0f'%(sum_buyer_price) ]]</para>
+          <para style="P6">[[ '%.2f' % (sum_buyer_price() or 0.0)   ]]</para>
         </td>
       </tr>
     </blockTable>
