@@ -79,17 +79,17 @@
              <para style="P4">[[ a['ach_uid'] ]]</para>
           </td>
           <td>
-            <para style="P4">[[ a['no_lot'] ]]</para>
+            <para style="P4">[[ a['no_lot'] or '0.0' ]]</para>
           </td>
           <td>
-            <para style="P6">[[ a['adj_price'] or 0.0 ]]</para>
+            <para style="P6">[[ a['adj_price'] or '0.0' ]]</para>
 
           </td>
           <td>
-            <para style="P6">[[ a['buyer_cost'] ]]</para>
+            <para style="P6">[[ a['buyer_cost'] or '0.0' ]]</para>
           </td>
           <td>
-            <para style="P6">[[a['to_pay'] ]]</para>
+            <para style="P6">[[a['to_pay'] or '0.0' ]]</para>
           </td>
         </tr>
       </blockTable>
