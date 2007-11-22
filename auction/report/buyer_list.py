@@ -43,8 +43,6 @@ class buyer_list(report_sxw.rml_parse):
 		super(buyer_list, self).__init__(cr, uid, name, context)
 		self.localcontext.update({
 			'time': time,
-#			'sum_taxes': self.sum_taxes,
-#			'sum_debit_buyer': self.sum_debit_buyer,
 			'lines_lots_from_auction' : self.lines_lots_from_auction,
 			'lines_lots_auct_lot' : self.lines_lots_auct_lot,
 			'sum_adj_price':self.sum_adj_price,
