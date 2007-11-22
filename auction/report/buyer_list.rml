@@ -37,6 +37,7 @@
     <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="Addressee" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="3.0"/>
     <paraStyle name="Index" fontName="Times-Roman"/>
+      <paraStyle name="P61" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
   </stylesheet>
   <story>
     <para style="P3">
@@ -75,8 +76,8 @@
         </tr>
         <tr>
           <td>
-            <para style="P6">[[ repeatIn(lines_lots_auct_lot(o),'a') ]] </para>
-             <para style="P4">[[ a['ach_uid'] ]]</para>
+            <para style="P61">[[ repeatIn(lines_lots_auct_lot(o),'a') ]] </para>
+             <para style="P61">[[ a['ach_uid'] ]]</para>
           </td>
           <td>
             <para style="P4">[[ a['no_lot'] or '0.0' ]]</para>
