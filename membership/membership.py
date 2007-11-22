@@ -161,14 +161,18 @@ class Partner(osv.osv):
 		'''Return the start date of membership'''
 		res = {}
 		member_line_obj = self.pool.get('membership.membership_line')
-		for partner_id in ids:
+		for partner in self.browse(cr, uid, ids):
+			if partner.membership_state == 'associated':
+				partner_id = partner.associate_member.id
+			else:
+				partner_id = partner.id
 			line_id = member_line_obj.search(cr, uid, [('partner', '=', partner_id)],
 					limit=1, order='date_from ASC')
 			if line_id:
-				res[partner_id] = member_line_obj.read(cr, uid, line_id[0],
+				res[partner.id] = member_line_obj.read(cr, uid, line_id[0],
 						['date_from'])['date_from']
 			else:
-				res[partner_id] = False
+				res[partner.id] = False
 		return res
 
 	def _membership_start_search(self, cr, uid, obj, name, args):
@@ -194,29 +198,30 @@ class Partner(osv.osv):
 		'''Return the stop date of membership'''
 		res = {}
 		member_line_obj = self.pool.get('membership.membership_line')
-		for partner_id in ids:
+		for partner in self.browse(cr, uid, ids):
+			if partner.membership_state == 'associated':
+				partner_id = partner.associate_member.id
+			else:
+				partner_id = partner.id
 			line_id = member_line_obj.search(cr, uid, [('partner', '=', partner_id)],
-					limit=1, order='date_to ASC')
+					limit=1, order='date_to DESC')
 			if line_id:
-				res[partner_id] = member_line_obj.read(cr, uid, line_id[0],
+				res[partner.id] = member_line_obj.read(cr, uid, line_id[0],
 						['date_to'])['date_to']
 			else:
-				res[partner_id] = False
+				res[partner.id] = False
 		return res
 
 	def _membership_stop_search(self, cr, uid, obj, name, args):
 		'''Search on membership stop date'''
 		if not len(args):
 			return []
-		where = ' AND '.join(['date_to '+x[1]+' \''+str(x[2])+'\''
-			for x in args])
-		cr.execute('SELECT partner, MIN(date_to) \
+		cr.execute('SELECT partner, MAX(date_to) \
 				FROM ( \
-					SELECT partner, MIN(date_to) AS date_to \
+					SELECT partner, MAX(date_to) AS date_to \
 					FROM membership_membership_line \
 					GROUP BY partner \
 				) AS foo \
-				WHERE '+where+' \
 				GROUP BY partner')
 		res = cr.fetchall()
 		if not res:
@@ -264,7 +269,7 @@ class Partner(osv.osv):
 			'Membership'),
 		'membership_amount': fields.float('Membership amount', digites=(16, 2),
 			help='The price negociated by the partner'),
-		'membership_state': fields.function(_membership_state, method=True, String='Current membership state',
+		'membership_state': fields.function(_membership_state, method=True, string='Current membership state',
 			type='selection', selection=STATE, fnct_search=_membership_state_search),
 		'associate_member': fields.many2one('res.partner', 'Associate member'),
 		'free_member': fields.boolean('Free member'),
@@ -359,9 +364,16 @@ class ReportPartnerMemberProduct(osv.osv):
 	_auto = False
 	_rec_name = 'product'
 	_columns = {
-		'product': fields.many2one('product.product', 'Membeship product', readonly=True, select=1),
-		'state': fields.char('State', size='16', readonly=True, select=1),
+		'product': fields.many2one('product.product', 'Membership product', select=1),
+		'state': fields.selection([
+			('draft','Draft'),
+			('proforma','Pro-forma'),
+			('open','Open'),
+			('paid','Paid'),
+			('cancel','Canceled')
+		], 'State', readonly=True, select=1),
 		'number': fields.integer('Number', readonly=True),
+		'price' : fields.float('Price', readonly=True),
 #		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
 #		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
 #			select=2),
@@ -372,45 +384,23 @@ class ReportPartnerMemberProduct(osv.osv):
 		cr.execute("""
 			CREATE OR REPLACE VIEW report_membership_product AS (
 				SELECT
-					MIN(product_id) AS id,
-					product_id AS product,
-					ai.state AS state,
-					COUNT(ml.product_id) AS number
-				FROM account_invoice ai
-				JOIN (
-					SELECT
-						count(id),
-						p.product_id,
-						product_name,
-						SUM(price_unit*quantity) AS price,
-						ail.invoice_id
-					FROM account_invoice_line ail
-					JOIN (
-						SELECT
-							p.id AS product_id,
-							pt.name as product_name
-						FROM (
-							product_product p
-							JOIN product_template pt
-							ON product_tmpl_id=pt.id
-							)
-						WHERE p.membership = true
-						)
-					AS p ON (
-						ail.product_id = p.product_id
-						)
-					GROUP BY
-						p.product_id,
-						product_name,
-						invoice_id
+					MIN(l.id) AS id,
+					l.product_id AS product,
+					SUM(l.quantity) AS number,
+					SUM(l.quantity*l.price_unit*(1-l.discount)) AS price,
+					i.state
+				FROM account_invoice_line l
+				LEFT JOIN account_invoice i ON (
+					l.invoice_id=i.id
 					)
-				AS ml ON (
-					ml.invoice_id=ai.id
+				LEFT JOIN product_product p ON (
+					p.id=l.product_id
 					)
+				WHERE p.membership
 				GROUP BY
-					product_id,
-					state
-						)""")
+					l.product_id,
+					i.state
+				)""")
 
 ReportPartnerMemberProduct()
 

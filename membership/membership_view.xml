@@ -18,8 +18,26 @@
 					<field name="name"/>
 					<field name="membership_date_from"/>
 					<field name="membership_date_to"/>
-					<field name="standard_price"/>
+					<field name="lst_price"/>
 				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="membership_products_form">
+			<field name="name">Membership products</field>
+			<field name="model">product.product</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Membership products">
+					<field name="default_code"/>
+					<field name="name"/>
+					<field name="membership_date_from" required="1"/>
+					<field name="membership_date_to" required="1"/>
+					<field name="list_price"/>
+					<field name="type"/>
+					<field name="categ_id"/>
+					<field name="membership"/>
+				</form>
 			</field>
 		</record>
 
@@ -42,8 +60,6 @@
 		<record model="ir.actions.act_window" id="action_membership_products">
 			<field name="name">Membership Products</field>
 			<field name="res_model">product.product</field>
-			<field name="domain">[('membership','=',True)]</field>
-			<field name="context">{'membership':True}</field>
 		</record>
 
 		<record model="ir.actions.act_window.view" id="action_membership_product_view_tree">
@@ -56,6 +72,7 @@
 		<record model="ir.actions.act_window.view" id="action_membership_product_view_form">
 			<field name="sequence" eval="2"/>
 			<field name="view_mode">form</field>
+			<field name="view_id" ref="membership_products_form"/>
 			<field name="act_window_id" ref="action_membership_products"/>
 		</record>
 
@@ -84,7 +101,7 @@
 		<record model="ir.actions.act_window" id="action_membership_members">
 			<field name="name">Members</field>
 			<field name="res_model">res.partner</field>
-			<field name="domain">[('membership_state', '!=', 'none')]</field>
+			<field name="domain">[('membership_state', '=', 'paid'), ('membership_state', '=', 'free'), ('membership_state', '=', 'associated')]</field>
 		</record>
 
 		<record model="ir.actions.act_window.view" id="action_membership_members_view_tree">
@@ -284,12 +301,6 @@
 						<field name="free_member" select="2"/>
 						<field name="membership_start" select="2"/>
 						<field name="membership_cancel" select="2"/>
-						<button 
-							name="%(wizard_invoice_membership)d"
-							string="Invoice membership"
-							type="action"
-							colspan="1"
-							/>
 						<field name="member_lines" nolabel="1" colspan="4" readonly="1">
 							<tree string="Membership">
 								<field name="date_from"/>
@@ -317,10 +328,11 @@
 			<field name="model">report.membership.product</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Membership by Products">
+				<tree string="Invoices for membership products">
 					<field name="product"/>
 					<field name="state"/>
-					<field name="number" sum="Number"/>
+					<field name="number"/>
+					<field name="price"/>
 				</tree>
 			</field>
 		</record>
@@ -330,29 +342,49 @@
 			<field name="model">report.membership.product</field>
 			<field name="type">graph</field>
 			<field name="arch" type="xml">
-				<graph string="Membership number by membership products by state" type="bar">
+				<graph string="Invoices for membership products" type="bar">
 					<field name="product"/>
 					<field name="state" group="1"/>
-					<field name="number" operator="+"/>
+					<field name="number"/>
 				</graph>
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_report_membership_product_graph2">
+			<field name="name">report.membership.product.graph2</field>
+			<field name="model">report.membership.product</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Invoices for membership products" type="bar">
+					<field name="product"/>
+					<field name="state" group="1"/>
+					<field name="price"/>
+				</graph>
+			</field>
+		</record>
 		<record model="ir.actions.act_window" id="action_report_membership_product_tree">
 			<field name="res_model">report.membership.product</field>
 			<field name="view_type">form</field>
 		</record>
 
 		<record model="ir.actions.act_window.view" id="action_report_membership_product_tree_view1">
-			<field name="sequence" eval="1"/>
+			<field name="sequence" eval="3"/>
 			<field name="view_mode">tree</field>
 			<field name="act_window_id" ref="action_report_membership_product_tree"/>
 		</record>
 
 		<record model="ir.actions.act_window.view" id="action_report_membership_product_tree_view2">
-			<field name="sequence" eval="2"/>
+			<field name="sequence" eval="1"/>
 			<field name="view_mode">graph</field>
 			<field name="view_id" ref="view_report_membership_product_graph1"/>
+			<field name="act_window_id" ref="action_report_membership_product_tree"/>
+		</record>
+
+
+		<record model="ir.actions.act_window.view" id="action_report_membership_product_tree_view3">
+			<field name="sequence" eval="2"/>
+			<field name="view_mode">graph</field>
+			<field name="view_id" ref="view_report_membership_product_graph2"/>
 			<field name="act_window_id" ref="action_report_membership_product_tree"/>
 		</record>
 

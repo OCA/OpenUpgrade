@@ -3,20 +3,19 @@ import pooler
 
 def _event_registration(self, cr, uid, data, context):
 	event_id = data['id']
-	cr.execute('''
-	SELECT r.id FROM event_registration r WHERE r.section_id = %d
-		'''% (event_id))
+#	cr.execute('''
+#	SELECT r.id FROM event_registration r WHERE r.section_id = %d
+#		'''% (event_id))
 
-	ids = [x[0] for x in cr.fetchall()]
+#	ids = [x[0] for x in cr.fetchall()]
 
 	value = {
-			'domain': [('id', 'in', ids)],
+			'domain': [('section_id', '=', event_id)],
 			'name': 'Event registration',
 			'view_type': 'form',
 			'view_mode': 'tree,form',
 			'res_model': 'event.registration',
 			'context': {
-				'section_id': event_id,
 				},
 			'type': 'ir.actions.act_window'
 		}

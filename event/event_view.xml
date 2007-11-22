@@ -60,12 +60,33 @@
 					<field name="date_begin"/>
 					<field name="date_end"/>
 					<newline/>
-					<field name="child_events" colspan="4"/>
+					<field name="child_events" colspan="4" readonly="1"/>
 			</form>
 			</field>
 		</record>
 
 		<record model="ir.ui.view" id="view_event_tree">
+			<field name="name">Events</field>
+			<field name="model">event.event</field>
+			<field name="type">tree</field>
+			<field name="field_parent">child_events</field>
+			<field name="arch" type="xml">
+				<tree string="Events">
+					<field name="name" string="Event"/>
+					<field name="code" string="Event code"/>
+					<field name="type" string="Event type"/>
+					<field name="user_id"/>
+					<field name="reply_to"/>
+					<field name="date_begin"/>
+					<field name="date_end"/>
+					<field name="register_current" string="Cur. regist."/>
+					<field name="register_min" string="Min. regist."/>
+					<field name="register_max" string="Max. regist."/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_event_tree2">
 			<field name="name">Events</field>
 			<field name="model">event.event</field>
 			<field name="type">tree</field>
@@ -101,14 +122,54 @@
 			<field name="name">New event</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">event.event</field>
-			<field name="domain">[('parent_event','=',False)]</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">form</field>
 			<field name="view_id" ref="view_event_form"/>
 		</record>
 
+		<record model="ir.actions.act_window" id="action_event_view">
+			<field name="name">Events</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.event</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree, form</field>
+		</record>
+
+
 
 		<menuitem name="Events/Configuration/New event" id="menu_event_new_event" action="action_new_event_form" />
+
+		<menuitem name="Events/Configuration/Events" id="menu_event_event" action="action_event_view" />
+
+
+		<record model="ir.actions.act_window" id="action_event2">
+			<field name="name">Events</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.event</field>
+			<field name="domain">[('parent_event','=',False)]</field>
+			<field name="view_type">tree</field>
+			<field name="view_id" ref="view_event_tree2"/>
+		</record>
+
+
+		<menuitem name="Events/Configuration/Events" id="menu_configuration_event" action="action_event2" />
+
+		<wizard string="New child event"
+				model="event.event"
+				name="wizard_event_new"
+				keyword="client_action_multi"
+				menu="False"
+				id="wizard_event_new"
+				/>
+
+
+		<record model="ir.values" id="ir_open_new_event">
+			<field name="key2">tree_but_open</field>
+			<field name="model">event.event</field>
+			<field name="name">New child event</field>
+			<field name="value" eval="'ir.actions.wizard,%d'%wizard_event_new"/>
+			<field name="object" eval="True"/>
+		</record>
 
 
 
@@ -157,12 +218,10 @@
 			<field name="res_model">event.event</field>
 			<field name="domain">[('parent_event','=',False)]</field>
 			<field name="view_type">tree</field>
-			<field name="view_id" ref="view_event_tree"/>
+			<field name="view_id" ref="view_event_tree2"/>
 		</record>
 
-		<menuitem name="Events/Registrations/Events" id="menu_event" action="action_event" />
-
-
+		<menuitem name="Events/Registrations" id="menu_event_registration" action="action_event" />
 
 		<wizard string="Registration"
 				model="event.event"
@@ -180,6 +239,9 @@
 			<field name="value" eval="'ir.actions.wizard,%d'%wizard_event_registration"/>
 			<field name="object" eval="True"/>
 		</record>
+
+
+
 
 
 	</data>
