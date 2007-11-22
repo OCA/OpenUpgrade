@@ -76,8 +76,7 @@ class buyer_list(report_sxw.rml_parse):
 		auc_lot_ids = []
 
 		auc_date_ids = self.pool.get('auction.dates').search(self.cr,self.uid,([('name','like',obj['name'])]))
-
-		self.cr.execute('select ach_uid,count(1) as no_lot, sum(obj_price) as adj_price, sum(buyer_price)-sum(obj_price) as buyer_cost ,sum(buyer_price) as to_pay from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and  auction_id=%d  and ach_uid is not null group by ach_uid '%(auc_date_ids[0]))
+		self.cr.execute('select ach_uid,count(1) as no_lot, sum(obj_price) as adj_price, sum(buyer_price)-sum(obj_price) as buyer_cost ,sum(buyer_price) as to_pay from auction_lots where id in ('+','.join(map(str,self.auc_lot_ids))+') and  auction_id=%d  group by ach_uid '%(auc_date_ids[0]))
 		res = self.cr.dictfetchall()
 		for r in res:
 			if r['ach_uid']:
