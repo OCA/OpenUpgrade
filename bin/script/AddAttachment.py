@@ -1,3 +1,4 @@
+
 import uno
 import unohelper
 import xmlrpclib
@@ -10,36 +11,163 @@ if __name__<>"package":
     database="test"
 
 class AddAttachment(unohelper.Base, XJobExecutor ):
-    def __init__(self):
+    def __init__(self,ctx):
+        self.ctx     = ctx
+        self.module  = "tiny_report"
+        self.version = "0.1"
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
+        self.aSearchResult = []
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
         if docinfo.getUserFieldValue(2) <> "" and docinfo.getUserFieldValue(3) <> "":
+            self.win = DBModalDialog(60, 50, 180, 70, "Add Attachment to Server")
+            self.win.addFixedText("lblResourceType", 2 , 5, 100, 20, "Select Appropriate Resource Type:")
+            self.win.addComboListBox("lstResourceType", -2, 25, 176, 15,True,itemListenerProc=self.lstbox_selected)
+            self.lstResourceType = self.win.getControl( "lstResourceType" )
+            self.lstResourceType.addItem("pdf",0)
+            self.lstResourceType.addItem("sxw",1)
 
-            url = self.doc2pdf(oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__()))
-            if url <> None:
-                fp = file(url.__getslice__(7,url.__len__()), 'rb')
-                data=fp.read()
-                fp.close()
-                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'upload_attachment', url.__getslice__(url.rfind('/')+1,url.__len__()), base64.encodestring(data), docinfo.getUserFieldValue(3), docinfo.getUserFieldValue(2))
-            else:
-                ErrorDialog("Problem in Creating PDF","","PDF ERROR")
+            self.win.addButton('btnOk1', -2 , -5, 25 , 15,'OK'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+
+            self.win.doModalDialog("",None)
         else:
-            self.win = DBModalDialog(60, 50, 180, 225, "Add Attachment to Server")
-            self.win.addFixedText("lblModuleName",2 , 9, 176, 20, "Select Module:")
-            self.win.addComboListBox("lstFields", 2, 22, 176, 80, False,itemListenerProc=self.lstbox_selected)
-            #self.
-            #sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            #res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'orm' , 'name_search', )
+            self.win = DBModalDialog(60, 50, 180, 190, "Add Attachment to Server")
+            self.win.addFixedText("lblModuleName",2 , 9, 42, 20, "Select Module:")
+            self.win.addComboListBox("lstmodel", -2, 5, 134, 15,True,itemListenerProc=self.lstbox_selected)
+            self.lstModel = self.win.getControl( "lstmodel" )
+            self.dModel={"Parner":'res.partner',
+                         "Case":"crm.case",
+                         "Sale Order":"sale.order",
+                         "Purchase Order":"purchase.order",
+                         "Analytic Account":"account.analytic.account",
+                         "Project":"project.project",
+                         "Tasks":"project.task",
+                         "Employee":"hr.employee"
+                         }
+            self.lstModel.addItem("Parner",0)
+            self.lstModel.addItem("Case",1)
+            self.lstModel.addItem("Sale Order",2)
+            self.lstModel.addItem("Purchase Order",3)
+            self.lstModel.addItem("Analytic Account",4)
+            self.lstModel.addItem("Project",5)
+            self.lstModel.addItem("Tasks",6)
+            self.lstModel.addItem("Employee",7)
+
+            self.win.addFixedText("lblSearchName",2 , 25, 60, 10, "Enter Search String:")
+            self.win.addEdit("txtSearchName", 2, 35, 149, 15,)
+            self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+
+            self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 20, "Search Result:")
+            self.win.addComboListBox("lstResource", -2, 65, 176, 70, False, itemListenerProc=self.lstbox_selected)
+            self.lstResource = self.win.getControl( "lstResource" )
+
+            self.win.addFixedText("lblResourceType", 2 , 137, 100, 20, "Select Appropriate Resource Type:")
+            self.win.addComboListBox("lstResourceType", -2, 147, 176, 15,True,itemListenerProc=self.lstbox_selected)
+            self.lstResourceType = self.win.getControl( "lstResourceType" )
+            self.lstResourceType.addItem("pdf",0)
+            self.lstResourceType.addItem("sxw",1)
+
+            self.win.addButton('btnOk', -2 , -5, 25 , 15,'OK'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel'
+                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+
             self.win.doModalDialog("",None)
 
-    def lstbox_selected(self, oItemEvent):
+    def lstbox_selected(self,oItemEvent):
         pass
-# Woman was created from the rib of man: Not from his head to be thought of only, nor from his hand to be owned, nor from his foot to be beneath, but from under his arm to be protected, from his side to be equal, and from his heart to be loved.."
+
+    def btnOkOrCancel_clicked(self,oActionEvent):
+        desktop=getDesktop()
+        oDoc2 = desktop.getCurrentComponent()
+        docinfo=oDoc2.getDocumentInfo()
+        if oActionEvent.Source.getModel().Name == "btnSearch":
+            if self.win.getListBoxSelectedItem("lstmodel") <> "":
+                desktop=getDesktop()
+                oDoc2 = desktop.getCurrentComponent()
+                docinfo=oDoc2.getDocumentInfo()
+
+                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                res = sock.execute( database, 3, docinfo.getUserFieldValue(1), self.dModel[self.win.getListBoxSelectedItem("lstmodel")], 'name_search', self.win.getEditText("txtSearchName"))
+                self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
+                self.aSearchResult = res
+                if self.aSearchResult <> []:
+                    for result in self.aSearchResult:
+                        self.lstResource.addItem(result[1],result[0])
+                else:
+                    ErrorDialog("No Search Result Found !!!","","Search ERROR")
+        elif oActionEvent.Source.getModel().Name == "btnOk1":
+            if self.win.getListBoxSelectedItem("lstResourceType") <> "":
+                if oDoc2.getURL() <> "":
+                    if self.win.getListBoxSelectedItem("lstResourceType") == "pdf":
+                        url = self.doc2pdf(oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__()))
+                    else:
+                        url= oDoc2.getURL()
+                    if url <> None:
+                        fp = file(url.__getslice__(7,url.__len__()), 'rb')
+                        data=fp.read()
+                        fp.close()
+                        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                        value={
+                            'name': url.__getslice__(url.rfind('/')+1,url.__len__()),
+                            'datas': base64.encodestring(data),
+                            'res_model': docinfo.getUserFieldValue(3),
+                            'res_id': docinfo.getUserFieldValue(2)
+                            }
+                        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
+                        self.win.endExecute()
+                    else:
+                        ErrorDialog("Problem in Creating PDF","","PDF ERROR")
+                else:
+                    ErrorDialog("Please Save Your File","","Saving ERROR")
+            else:
+                ErrorDialog("Please Select Resource Type","","Selection ERROR")
+        elif oActionEvent.Source.getModel().Name == "btnOk":
+            if self.win.getListBoxSelectedItem("lstResourceType") <> "":
+                if self.win.getListBoxSelectedItem("lstResource") <> "" and self.win.getListBoxSelectedItem("lstmodel") <> "":
+                    if oDoc2.getURL() <> "":
+                        if self.win.getListBoxSelectedItem("lstResourceType") == "pdf":
+                            url = self.doc2pdf(oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__()))
+                        else:
+                            url= oDoc2.getURL()
+                        if url <> None:
+                            fp = file(url.__getslice__(7,url.__len__()), 'rb')
+                            data=fp.read()
+                            fp.close()
+                            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                            resourceid = None
+                            for s in self.aSearchResult:
+                                if s[1] == self.win.getListBoxSelectedItem("lstResource"):
+                                    resourceid = s[0]
+                            if resourceid <> None:
+                                value={
+                                    'name': url.__getslice__(url.rfind('/')+1,url.__len__()),
+                                    'datas': base64.encodestring(data),
+                                    'res_model': self.dModel[self.win.getListBoxSelectedItem("lstmodel")],
+                                    'res_id': resourceid
+                                    }
+                                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
+                                self.win.endExecute()
+                            else:
+                                ErrorDialog("No Resource Selected !!!","","Resource ERROR")
+                        else:
+                            ErrorDialog("Problem in Creating PDF","","PDF ERROR")
+                    else:
+                        ErrorDialog("Please Save Your File","","Saving ERROR")
+                else:
+                    ErrorDialog("Please select Model and Resource","","Selection ERROR")
+            else:
+                ErrorDialog("Please Select Resource Type","","Selection ERROR")
+        elif oActionEvent.Source.getModel().Name == "btnCancel":
+            self.win.endExecute()
+
     def doc2pdf(self, strFile):
        oDoc = None
        strFilterSubName = ''
@@ -92,11 +220,9 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
 
 if __name__<>"package" and __name__=="__main__":
-    AddAttachment()
+    AddAttachment(None)
 elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
             AddAttachment,
             "org.openoffice.tiny.report.addattachment",
             ("com.sun.star.task.Job",),)
-
-

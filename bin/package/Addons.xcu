@@ -170,6 +170,21 @@ oor:name="Addons" oor:package="org.openoffice.Office">
 						</prop>
 					</node>
 					<node oor:name="m34" oor:op="replace">
+						<prop oor:name="URL" oor:type="xs:string">
+							<value>service:org.openoffice.tiny.report.addattachment?execute</value>
+						</prop>
+						<prop oor:name="Title" oor:type="xs:string">
+							<value/>
+							<value xml:lang="en-US">Add Attachment</value>
+						</prop>
+						<prop oor:name="Target" oor:type="xs:string">
+							<value>_self</value>
+						</prop>
+						<prop oor:name="Context" oor:type="xs:string">
+							<value>com.sun.star.text.TextDocument</value>
+						</prop>
+					</node>
+					<node oor:name="m35" oor:op="replace">
  	            		<prop oor:name="Context" oor:type="xs:string">
  	                   		<value>com.sun.star.text.TextDocument</value>
 	 	                </prop>
@@ -433,6 +448,24 @@ oor:name="Addons" oor:package="org.openoffice.Office">
 					</prop>
 				</node>
 <!--				<node oor:name="m34" oor:op="replace">
+					<prop oor:name="URL" oor:type="xs:string">
+						<value>service:org.openoffice.tiny.report.addattachment?execute</value>
+					</prop>
+					<prop oor:name="ImageIdentifier" oor:type="xs:string">
+						<value/>
+					</prop>
+					<prop oor:name="Title" oor:type="xs:string">
+						<value/>
+						<value xml:lang="en-US">Add Attachment</value>
+					</prop>
+					<prop oor:name="Target" oor:type="xs:string">
+						<value>_self</value>
+					</prop>
+					<prop oor:name="Context" oor:type="xs:string">
+						<value>com.sun.star.text.TextDocument</value>
+					</prop>
+				</node>
+				<node oor:name="m35" oor:op="replace">
  	            	<prop oor:name="Context" oor:type="xs:string">
  	                   	<value>com.sun.star.text.TextDocument</value>
  	                </prop>
