@@ -49,6 +49,7 @@ def _makeInvoices(self, cr, uid, data, context):
 	newinv = []
 	pool = pooler.get_pool(cr.dbname)
 	lots= order_obj.browse(cr,uid,data['ids'])
+	invoice_number=data['form']['number']
 	for lot in lots:
 		up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'ach_uid':data['form']['buyer_id']})
 	ids = order_obj.lots_invoice(cr, uid, data['ids'],context)

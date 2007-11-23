@@ -735,7 +735,7 @@ class auction_lots(osv.osv):
 			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
 
-	def lots_invoice(self, cr, uid, ids, context):
+	def lots_invoice(self, cr, uid, ids, context,invoice_number=None):
 		"""(buyer invoice
 			Create an invoice for selected lots (IDS) to BUYER_ID.
 			Set created invoice to the ACTION state.
@@ -766,7 +766,8 @@ class auction_lots(osv.osv):
 					'reference': lot.ach_login,
 					'journal_id': lot.auction_id.journal_id.id,
 					'partner_id': lot.ach_uid.id,
-					'type': 'out_invoice'
+					'type': 'out_invoice',
+					'number':invoice_number
 				}
 				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', lot.ach_uid.id)['value'])
 				#inv['account_id'] = inv['account_id'] and inv['account_id'][0]
