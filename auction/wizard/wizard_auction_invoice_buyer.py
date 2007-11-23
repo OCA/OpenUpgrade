@@ -52,7 +52,7 @@ def _makeInvoices(self, cr, uid, data, context):
 	invoice_number=data['form']['number']
 	for lot in lots:
 		up_auction=pooler.get_pool(cr.dbname).get('auction.lots').write(cr,uid,[lot.id],{'ach_uid':data['form']['buyer_id']})
-	ids = order_obj.lots_invoice(cr, uid, data['ids'],context)
+	ids = order_obj.lots_invoice(cr, uid, data['ids'],context,invoice_number)
 	cr.commit()
 	return {
 		'domain': "[('id','in', ["+','.join(map(str,ids))+"])]",
