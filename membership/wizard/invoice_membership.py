@@ -34,7 +34,7 @@ def _invoice_membership(self, cr, uid, data, context):
 	invoice_line_obj = pool.get(('account.invoice.line'))
 	invoice_tax_obj = pool.get(('account.invoice.tax'))
 	product = product_obj.read(cr, uid, product_id, ['uom_id'])
-	print product
+	
 	for partner_id in partner_ids:
 		account_id = partner_obj.read(cr, uid, partner_id, ['property_account_receivable'])['property_account_receivable'][0]
 		invoice_id = invoice_obj.create(cr, uid, {
@@ -58,10 +58,8 @@ def _invoice_membership(self, cr, uid, data, context):
 		line_value['invoice_line_tax_id'] = tax_tab
 		invoice_line_id = invoice_line_obj.create(cr, uid, line_value)
 		invoice_list.append(invoice_id)
-		print line_value
 		invoice_obj.write(cr, uid, [invoice_id], {'tax_line':tax_tab})
 		tax_value = invoice_tax_obj.compute(cr, uid, invoice_id).values()[0]
-		print tax_value
 		invoice_tax_obj.create(cr, uid, tax_value)
 
 	value = {

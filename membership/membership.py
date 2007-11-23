@@ -38,6 +38,7 @@ STATE = [
 	('paid', 'Paid Member'),
 	('associated', 'Associated Member'),
 	('free', 'Free Member'),
+	('old', 'Old Member'),
 ]
 
 STATE_PRIOR = {
@@ -126,6 +127,14 @@ class Partner(osv.osv):
 						lstate = line.state
 						if STATE_PRIOR[lstate] > STATE_PRIOR[pstate]:
 							pstate = lstate
+			if pstate == 'none' or pstate =='cancel':
+				for line in partner.member_lines:
+					if (line.date_from <= today) and (line.date_to <= today):
+						if line.state == 'paid' and line.date_from < line.date_to:
+							pstate = 'old'
+							break
+
+
 			res[partner.id] = pstate
 
 		return res
@@ -330,12 +339,13 @@ class Invoice(osv.osv):
 			for line in invoice.invoice_line:
 				if line.product_id and line.product_id.membership:
 					date_from = line.product_id.membership_date_from
-					if invoice.date_invoice > date_from:
+					date_to  = line.product_id.membership_date_to
+					if invoice.date_invoice > date_from and invoice.date_invoice <= date_to:
 						date_from = invoice.date_invoice
 					member_line_obj.create(cr, uid, {
 						'partner': invoice.partner_id.id,
 						'date_from': date_from,
-						'date_to': line.product_id.membership_date_to,
+						'date_to': date_to,
 						'account_invoice_line': line.id,
 						})
 		return super(Invoice, self).action_move_create(cr, uid, ids, context)
@@ -404,57 +414,3 @@ class ReportPartnerMemberProduct(osv.osv):
 
 ReportPartnerMemberProduct()
 
-
-#class ReportPartnerMemberYearNew(osv.osv):
-#	'''New Membership by Years'''
-#
-#	_name = 'report.membership.year_new'
-#	_description = __doc__
-#	_auto = False
-#	_rec_name = 'year'
-#	_columns = {
-#		'year': fields.char('Year', size='4', readonly=True, select=1),
-#		'number': fields.integer('Number', readonly=True),
-#		'amount': fields.float('Amount', digits=(16, 2),
-#			readonly=True),
-#		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
-#			select=2),
-#	}
-#
-#	def init(self, cr):
-#		'''Create the view'''
-#		cr.execute("""
-#			CREATE OR REPLACE VIEW report_membership_year_new AS (
-#				SELECT
-#					MIN(id) AS id,
-#					TO_CHAR(date_from, 'YYYY') as year,
-#					COUNT(id) AS number,
-#					SUM(amount) AS amount,
-#					currency
-#				FROM (
-#					SELECT
-#						MIN(l1.id) AS id,
-#						SUM(sol.price_unit * sol.product_uom_qty * ( 1 - sol.discount / 100)) AS amount,
-#						l1.date_from,
-#						ppl.currency_id AS currency
-#					FROM
-#						(SELECT
-#							partner AS id,
-#							MIN(date_from) AS date_from
-#						FROM membership_membership_line
-#						GROUP BY partner
-#					) AS l1
-#						JOIN membership_membership_line l2
-#							JOIN sale_order_line sol
-#								LEFT JOIN sale_order so
-#									LEFT JOIN product_pricelist ppl
-#										ON (ppl.id = so.pricelist_id)
-#									ON (sol.order_id = so.id)
-#								ON (l2.sale_order_line = sol.id)
-#							ON (l1.id = l2.partner AND l1.date_from = l2.date_from)
-#					GROUP BY ppl.currency_id, l1.id, l1.date_from
-#				) AS foo
-#				GROUP BY currency, TO_CHAR(date_from, 'YYYY')
-#			)""")
-#
-#ReportPartnerMemberYearNew()

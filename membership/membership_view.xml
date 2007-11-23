@@ -37,6 +37,8 @@
 					<field name="type"/>
 					<field name="categ_id"/>
 					<field name="membership"/>
+					<newline/>
+					<field name="taxes_id" colspan="4"/>
 				</form>
 			</field>
 		</record>
@@ -48,10 +50,10 @@
 			<field name="arch" type="xml">
 				<page string="Information" position="after">
 					<page string="Membership">
-						<field name="membership"/>
+						<field name="membership" readonly="1"/>
 						<newline/>
-						<field name="membership_date_from"/>
-						<field name="membership_date_to"/>
+						<field name="membership_date_from" readonly="1"/>
+						<field name="membership_date_to" readonly="1"/>
 					</page>
 				</page>
 			</field>
@@ -60,6 +62,8 @@
 		<record model="ir.actions.act_window" id="action_membership_products">
 			<field name="name">Membership Products</field>
 			<field name="res_model">product.product</field>
+			<field name="domain">[('membership','=',True)]</field>
+			<field name="context">{'membership':True}</field>
 		</record>
 
 		<record model="ir.actions.act_window.view" id="action_membership_product_view_tree">
@@ -227,10 +231,10 @@
 			action="action_membership_members_invoiced"/>
 
 
-		<!-- MEMBERSHIP/MEMBERS/WAITING MEMBERS  -->
+		<!-- MEMBERSHIP/MEMBERS/FUTURE MEMBERS  -->
 
 		<record model="ir.actions.act_window" id="action_membership_members_waiting">
-			<field name="name">Waiting members</field>
+			<field name="name">Future members</field>
 			<field name="res_model">res.partner</field>
 			<field name="domain">[('membership_state', '=', 'waiting')]</field>
 		</record>
@@ -248,35 +252,35 @@
 			<field name="act_window_id" ref="action_membership_members_waiting"/>
 		</record>
 
-		<menuitem name="Membership/Members/Waiting members" 
+		<menuitem name="Membership/Members/Future members (invoice not confirmed)" 
 			id="menu_members_waiting" 
 			action="action_membership_members_waiting"/>
 
-		
-		<!-- MEMBERSHIP/MEMBERS/CANCELED MEMBERS  -->
+		<!-- MEMBERSHIP/MEMBERS/OLD MEMBERS  -->
 
-		<record model="ir.actions.act_window" id="action_membership_members_canceled">
-			<field name="name">Canceled members</field>
+		<record model="ir.actions.act_window" id="action_membership_members_old">
+			<field name="name">Old members</field>
 			<field name="res_model">res.partner</field>
-			<field name="domain">[('membership_state', '=', 'canceled')]</field>
+			<field name="domain">[('membership_state', '=', 'old')]</field>
 		</record>
 
-		<record model="ir.actions.act_window.view" id="action_membership_members_canceled_view_tree">
+		<record model="ir.actions.act_window.view" id="action_membership_members_old_view_tree">
 			<field name="sequence" eval="1"/>
 			<field name="view_mode">tree</field>
 			<field name="view_id" ref="membership_members_tree"/>
-			<field name="act_window_id" ref="action_membership_members_canceled"/>
+			<field name="act_window_id" ref="action_membership_members_old"/>
 		</record>
 
-		<record model="ir.actions.act_window.view" id="action_membership_members_canceled_view_form">
+		<record model="ir.actions.act_window.view" id="action_membership_members_old_view_form">
 			<field name="sequence" eval="2"/>
 			<field name="view_mode">form</field>
-			<field name="act_window_id" ref="action_membership_members_canceled"/>
+			<field name="act_window_id" ref="action_membership_members_old"/>
 		</record>
 
-		<menuitem name="Membership/Members/Canceled members" 
-			id="menu_members_canceled" 
-			action="action_membership_members_canceled"/>
+		<menuitem name="Membership/Members/Old members" 
+			id="menu_members_ol" 
+			action="action_membership_members_old"/>
+
 
 		<!-- PARTNERS -->
 
@@ -300,8 +304,8 @@
 						<field name="associate_member"/>
 						<field name="free_member" select="2"/>
 						<field name="membership_start" select="2"/>
-						<field name="membership_cancel" select="2"/>
-						<field name="member_lines" nolabel="1" colspan="4" readonly="1">
+						<field name="membership_stop" select="2"/>
+					<field name="member_lines" nolabel="1" colspan="4" readonly="1">
 							<tree string="Membership">
 								<field name="date_from"/>
 								<field name="date_to"/>
@@ -391,78 +395,6 @@
 		<menuitem name="Membership/Reporting/Membership by Products"
 			action="action_report_membership_product_tree"
 			id="menu_report_membership_product"/>
-
-
-		<!--
-
-		<record model="ir.ui.view" id="view_report_membership_year_new_tree">
-			<field name="name">report.membership.year_new.tree</field>
-			<field name="model">report.membership.year_new</field>
-			<field name="type">tree</field>
-			<field name="arch" type="xml">
-				<tree string="New Membership by Years">
-					<field name="year"/>
-					<field name="number" sum="Number"/>
-					<field name="amount" sum="Amount"/>
-					<field name="currency"/>
-				</tree>
-			</field>
-		</record>
-
-		<record model="ir.ui.view" id="view_report_membership_year_new_graph1">
-			<field name="name">report.membership.year_new.graph1</field>
-			<field name="model">report.membership.year_new</field>
-			<field name="type">graph</field>
-			<field name="arch" type="xml">
-				<graph string="New Membership number by Years" type="bar">
-					<field name="year"/>
-					<field name="number"/>
-				</graph>
-			</field>
-		</record>
-
-		<record model="ir.ui.view" id="view_report_membership_year_new_graph2">
-			<field name="name">report.membership.year_new.graph2</field>
-			<field name="model">report.membership.year_new</field>
-			<field name="type">graph</field>
-			<field name="arch" type="xml">
-				<graph string="New Membership number by Years" type="bar">
-					<field name="year"/>
-					<field name="amount"/>
-				</graph>
-			</field>
-		</record>
-
-		<record model="ir.actions.act_window" id="action_report_membership_year_new_tree">
-			<field name="res_model">report.membership.year_new</field>
-			<field name="view_type">form</field>
-		</record>
-
-		<record model="ir.actions.act_window.view" id="action_report_membership_year_new_tree_view1">
-			<field name="sequence" eval="1"/>
-			<field name="view_mode">tree</field>
-			<field name="act_window_id" ref="action_report_membership_year_new_tree"/>
-		</record>
-
-		<record model="ir.actions.act_window.view" id="action_report_membership_year_new_tree_view2">
-			<field name="sequence" eval="2"/>
-			<field name="view_mode">graph</field>
-			<field name="view_id" ref="view_report_membership_year_new_graph1"/>
-			<field name="act_window_id" ref="action_report_membership_year_new_tree"/>
-		</record>
-
-		<record model="ir.actions.act_window.view" id="action_report_membership_year_new_tree_view3">
-			<field name="sequence" eval="3"/>
-			<field name="view_mode">graph</field>
-			<field name="view_id" ref="view_report_membership_year_new_graph2"/>
-			<field name="act_window_id" ref="action_report_membership_year_new_tree"/>
-		</record>
-
-		<menuitem name="Membership/Reporting/New Membership by Years"
-			action="action_report_membership_year_new_tree"
-			id="menu_report_membership_year_new"/>
-
-		-->
 
 	</data>
 </terp>
