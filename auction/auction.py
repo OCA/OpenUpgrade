@@ -92,6 +92,7 @@ class auction_dates(osv.osv):
 	_order = "auction1 desc"
 
 	def close(self, cr, uid, ids, *args):
+		print "GGGGGGGGGGGGGGGggg"
 		"""
 		Close an auction date.
 
@@ -105,12 +106,14 @@ class auction_dates(osv.osv):
 		nbr = cr.fetchone()[0]
 		ach_uids = {}
 		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and state=%s and obj_price>0', ('draft',))
-		r=self.pool.get('auction.lots').lots_invoice(cr, uid, [x[0] for x in cr.fetchall()],{})
+		r=self.pool.get('auction.lots').lots_invoice(cr, uid, [x[0] for x in cr.fetchall()],{},None)
+		print "RRRRRRRRRRRRRRRRrrrr",r
 		cr.execute('select id from auction_lots where auction_id in ('+','.join(map(str,ids))+') and obj_price>0')
 		ids2 = [x[0] for x in cr.fetchall()]
 	#	for auction in auction_ids:
 		c=self.pool.get('auction.lots').seller_trans_create(cr, uid, ids2,{})
 		self.write(cr, uid, ids, {'state':'closed'}) #close the auction
+		print "jjjjjjjjjjjjjjjj"
 		return True
 auction_dates()
 
@@ -749,7 +752,9 @@ class auction_lots(osv.osv):
 		dt = time.strftime('%Y-%m-%d')
 		inv_ref=self.pool.get('account.invoice')
 		invoices={}
+		print "KKKKKKKKKKKKKKKKK"
 		for lot in self.browse(cr, uid, ids,context):
+			print "LLLLLLLLLLLLLLLL"
 		#	partner_ref = lot.ach_uid.id
 			if not lot.auction_id.id:
 				continue
@@ -772,6 +777,7 @@ class auction_lots(osv.osv):
 				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', lot.ach_uid.id)['value'])
 				#inv['account_id'] = inv['account_id'] and inv['account_id'][0]
 				inv_id = inv_ref.create(cr, uid, inv, context)
+				print "IN>>>>>>>>>>>>ID",inv_id
 				invoices[(lot.auction_id.id,lot.ach_uid.id)] = inv_id
 			self.write(cr,uid,[lot.id],{'ach_inv_id':inv_id,'state':'sold'})
 			#calcul des taxes
