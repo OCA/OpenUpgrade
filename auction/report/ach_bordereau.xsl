@@ -22,7 +22,6 @@
 	<xsl:template name="stylesheet">
 		<paraStyle name="login-title" fontName="Helvetica" fontSize="12"/>
 		<paraStyle name="login" fontName="Helvetica-Bold" fontSize="16"/>
-
 		<paraStyle name="style1"  leftIndent="10cm" fontName="Helvetica-Bold" />
 		<paraStyle name="cost-name" fontName="Helvetica-BoldOblique" fontSize="10" alignment="RIGHT"/>
 		<blockTableStyle id="objects">
@@ -56,15 +55,14 @@
 
 		</para>
 		<para style="style1"><xsl:value-of select="street"/></para>
-		<para style="style1"><xsl:value-of select="street2"/></para>
+		<para style="style1"><xsl:value-of select="street2" /></para>
 		<para style="style1">
 			<xsl:value-of select="zip"/>
 			<xsl:text> </xsl:text>
 			<xsl:value-of select="city"/>
 		</para>
 		<para style="style1"><xsl:value-of select="country"/></para>
-	<spacer length="0.4cm" width="1mm"/>
-
+			<spacer length="0.4cm" width="1mm"/>
 			<spacer length="0.8cm"/>
 	</xsl:template>
 
@@ -103,7 +101,7 @@
 <!--<pageBreak/>-->
 	</xsl:template>
 	<xsl:template match="objects">
-		<blockTable colWidths="0.2cm,1.4cm,9.0cm,1.5cm,2.3cm,2.5cm,2.5cm" style="objects">
+		<blockTable colWidths="0.2cm,1.4cm,9.0cm,1.5cm,2.3cm,2.0cm" style="objects">
 
 			<tr>
 				<td t="1"></td>
@@ -111,18 +109,17 @@
 				<td t="1">Description</td>
 				<td t="1">Paid</td>
 				<td t="1">Adj.(EUR)</td>
-				<td t="1">Costs</td>
 				<td t="1">Total</td>
 			</tr>
 			<xsl:apply-templates select="object"/>
 		</blockTable>
 		<condPageBreak height="1.2cm"/>
-		<blockTable colWidths="0.2cm,1.4cm,9.0cm,1.5cm,2.3cm,2.5cm,2.5cm" style="object-totals">
+		<blockTable colWidths="0.2cm,1.4cm,9.0cm,1.5cm,2.3cm,2.0cm" style="object-totals">
 			<tr>
 				<td/>
 				<td/>
 				<td/>
-				<td/>
+
 				<td/>
 				<td t="1">Subtotal:</td>
 				<td><xsl:value-of select="format-number(sum(object[price != '']/price), '#,##0.00')"/></td>
@@ -132,16 +129,16 @@
 				<td/>
 				<td/>
 				<td/>
+
 				<td/>
-				<td/>
-				<td t="1">Cost:</td>
+				<td t="1">Buyer Cost:</td>
 				<td><xsl:value-of select="format-number(sum(object/cost/amount), '#,##0.00')"/></td>
 			</tr>
 			<tr>
 				<td/>
 				<td/>
 				<td/>
-				<td/>
+
 				<td/>
 				<td t="1">Total:</td>
 				<td><xsl:value-of select="format-number(sum(object[price != '']/price) + sum(object/cost/amount), '#,##0.00')"/></td>
@@ -167,7 +164,7 @@
 					<xsl:value-of select="format-number(price, '#,##0.00')"/>
 				</xsl:if>
 			</td>
-			<td><xsl:value-of select="format-number(sum(cost/amount), '#,##0.00')"/></td>
+
 			<td>
 				<xsl:if test="price!=''">
 					<xsl:value-of select="format-number(price + sum(cost/amount), '#,##0.00')"/>
