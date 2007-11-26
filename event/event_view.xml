@@ -72,9 +72,10 @@
 						<separator string="Status" colspan="4"/>
 						<field name="state" select="1"/>
 						<group col="4" colspan="2">
-							<button string="Confirm Event" name="button_confirm"/>
-							<button string="Cancel Event" name="button_confirm"/>
-
+							<button string="Confirm Event" name="button_confirm" states="draft"/>
+							<button string="Cancel Event" name="button_cancel" states="draft,confirm"/>
+							<button string="Event Done" name="button_done" states="confirm"/>
+							<button string="Set To Draft" name="button_draft" states="confirm,cancel,done"/>
 						</group>
 					</page><page string="Statistics">
 						<separator string="Registrations" colspan="4"/>
@@ -123,7 +124,7 @@
 			<field name="name">Confirmed Events</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">event.event</field>
-			<field name="domain">[('state','=','confirmed')]</field>
+			<field name="domain">[('state','=','confirm')]</field>
 		</record>
 		<menuitem name="Events/All Events/Confirmed Events"
 			id="menu_event_event_confirm" 
@@ -215,26 +216,18 @@
 
 
 
-
-		<wizard string="Registration"
-				model="event.event"
-				name="wizard_event_registration"
-				keyword="client_action_multi"
-				menu="False"
-				id="wizard_event_registration"
-				/>
-
-
-		<record model="ir.values" id="ir_open_register_event">
-			<field name="key2">tree_but_open</field>
-			<field name="model">event.event</field>
-			<field name="name">Register</field>
-			<field name="value" eval="'ir.actions.wizard,%d'%wizard_event_registration"/>
-			<field name="object" eval="True"/>
-		</record>
-
-
-
+		<wizard
+			string="Tasks"
+			model="event.event"
+			name="wizard_event_task"
+			id="wizard_event_task"
+			/>
+		<wizard
+			string="Registrations"
+			model="event.event"
+			name="wizard_event_registration"
+			id="wizard_event_registration"
+			/>
 
 	</data>
 </terp>

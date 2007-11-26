@@ -43,33 +43,30 @@ class event(osv.osv):
 	_inherits = {'crm.case.section': 'section_id'}
 	_order = 'date_begin'
 
-	def _get_type(self, cr, uid, context=None):
-		obj_event_type = self.pool.get('event.type')
-		ids = obj_event_type.search(cr, uid, [])
-		res = obj_event_type.read(cr, uid, ids, ['name'], context)
-		return [(r['name'], r['name']) for r in res]
+	def button_draft(self, cr, uid, ids, context={}):
+		return self.write(cr, uid, ids, {'state':'draft'})
+	def button_cancel(self, cr, uid, ids, context={}):
+		return self.write(cr, uid, ids, {'state':'cancel'})
+	def button_done(self, cr, uid, ids, context={}):
+		return self.write(cr, uid, ids, {'state':'done'})
+	def button_confirm(self, cr, uid, ids, context={}):
+		return self.write(cr, uid, ids, {'state':'confirm'})
 
 	def _get_register(self, cr, uid, ids, name, args, context=None):
-		cr.execute('''
-		SELECT r.section_id, sum(r.nb_register)
-		FROM event_registration r
-		WHERE r.section_id IN (%s)
-		GROUP BY r.section_id
-		''' % ','.join([str(i) for i in ids] )
-		)
-
-		nb_reg = dict(cr.fetchall())
 		res={}
-		for id in ids:
-			try:
-				res[id] = nb_reg[id]
-			except KeyError:
-				res[id] = 0
-		print res
+		for event in self.browse(cr, uid, ids, context):
+			cr.execute('SELECT sum(nb_register) FROM crm_case WHERE section_id=%d and state in (\'open\',\'done\')',  (event.section_id.id,))
+			res2 = cr.fetchone()·
+			res[event.id] = res2 and res2[0] or 0
 		return res
 
 	def _get_prospect(self, cr, uid, context=None):
-		return 1
+		res={}
+		for event in self.browse(cr, uid, ids, context):
+			cr.execute('SELECT sum(nb_register) FROM crm_case WHERE section_id=%d and state in (\'draft\')',  (event.section_id.id,))
+			res2 = cr.fetchone()·
+			res[event.id] = res2 and res2[0] or 0
+		return res
 
 	_columns = {
 		'type': fields.many2one('event.type', 'Type'),
@@ -81,7 +78,7 @@ class event(osv.osv):
 		'project_id': fields.many2one('project.project', 'Project', readonly=True),
 		'date_begin': fields.datetime('Beginning date', required=True),
 		'date_end': fields.datetime('Ending date', required=True),
-		'state': fields.selection([('draft','Draft'),('confirmed','Confirmed'),('done','Done'),('cancel','Canceled')], 'State', readonly=True, required=True),
+		'state': fields.selection([('draft','Draft'),('confirm','Confirmed'),('done','Done'),('cancel','Canceled')], 'State', readonly=True, required=True),
 	}
 	_defaults = {
 		'state': lambda *args: 'draft',
