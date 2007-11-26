@@ -4,16 +4,13 @@
 	"author" : "Tiny",
 	"category" : "Generic Modules/Association",
 	"depends" : [
-		"base","crm"
-		],
+		"project","crm"
+	],
 	"demo_xml" : [],
-
-	"init_xml" : [
-		"event_view.xml",
-		],
+	"init_xml" : [],
 	"update_xml" : [
 		"event_view.xml",
-		],
+	],
 	"active" : False,
 	"installable" : True,
 }

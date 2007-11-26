@@ -5,39 +5,45 @@
 		<!-- EVENTS  -->
 
 		<!-- EVENTS/CONFIGURATION/TYPE OF EVENTS -->
-
-		<record model="ir.actions.act_window" id="action_event_type">
-		  <field name="res_model">event.event_type</field>
-		  <field name="view_type">form</field>
-		  <field name="view_mode">tree,form</field>
-		</record>
-
-		<menuitem name="Events/Configuration/Types of events" id="menu_event_type" action="action_event_type" />
-
 		<record model="ir.ui.view" id="view_event_type_form">
 		  <field name="name">Event type</field>
-		  <field name="model">event.event_type</field>
+		  <field name="model">event.type</field>
 		  <field name="type">form</field>
 		  <field name="arch" type="xml">
-			<form string="Event type">
-				<field name="name"/>
-				<field name="code"/>
+			<form string="Event Type">
+				<field name="name" select="1"/>
 			</form>
 		  </field>
 		</record>
-
 		<record model="ir.ui.view" id="view_event_type_tree">
 		  <field name="name">Event type</field>
-		  <field name="model">event.event_type</field>
+		  <field name="model">event.type</field>
 		  <field name="type">tree</field>
 		  <field name="arch" type="xml">
-			<tree string="Event type">
+			<tree string="Event Type">
 			  <field name="name"/>
-			  <field name="code"/>
 			</tree>
 		  </field>
 		</record>
+		<record model="ir.actions.act_window" id="action_event_type">
+		  <field name="res_model">event.type</field>
+		  <field name="view_type">form</field>
+		</record>
+		<menuitem name="Events/Configuration/Types of events" id="menu_event_type" action="action_event_type" />
 
+		<!-- The base section for all events -->
+
+		<record model="crm.case.section" id="case_section_event">
+			<field name="name">Events</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_event_categories">
+			<field name="name">Events by section</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.case.section</field>
+			<field name="domain">[('parent_id','=',ref('case_section_event'))]</field>
+			<field name="view_type">tree</field>
+		</record>
+		<menuitem name="Events/Events by categories" id="menu_action_event_categories" action="action_event_categories" />
 
 
 		<!-- EVENTS/CONFIGURATION/EVENTS  -->
@@ -48,111 +54,83 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Events">
-					<field name="name" string="Event"/>
-					<field name="code" string="Event code"/>
-					<field name="type" string="Event type"/>
-					<field name="active"/>
-					<field name="user_id"/>
-					<field name="reply_to"/>
-					<field name="register_min"/>
-					<field name="register_max"/>
-					<field name="parent_event"/>
-					<field name="date_begin"/>
-					<field name="date_end"/>
-					<newline/>
-					<field name="child_events" colspan="4" readonly="1"/>
+					<notebook>
+					<page string="Information">
+						<separator string="Event description" colspan="4"/>
+						<field name="name" string="Event" select="1" colspan="4"/>
+						<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
+						<field name="type"/>
+						<field name="user_id" select="1"/>
+						<field name="active"/>
+						<field name="date_begin" select="1"/>
+						<field name="date_end" select="2"/>
+						<field name="register_min" select="2"/>
+						<field name="register_max" select="2"/>
+						<separator string="Tasks management" colspan="4"/>
+						<field name="project_id"/>
+						<button colspan="2" string="Create Retro-Planning" name="button_project_create"/>
+						<separator string="Status" colspan="4"/>
+						<field name="state" select="1"/>
+						<group col="4" colspan="2">
+							<button string="Confirm Event" name="button_confirm"/>
+							<button string="Cancel Event" name="button_confirm"/>
+
+						</group>
+					</page><page string="Statistics">
+						<separator string="Registrations" colspan="4"/>
+						<field name="register_current"/>
+						<field name="register_prospect"/>
+						<separator string="Remaining Tasks" colspan="4"/>
+
+					</page>
+					</notebook>
+
 			</form>
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_event_tree">
-			<field name="name">Events</field>
-			<field name="model">event.event</field>
-			<field name="type">tree</field>
-			<field name="field_parent">child_events</field>
-			<field name="arch" type="xml">
-				<tree string="Events">
-					<field name="name" string="Event"/>
-					<field name="code" string="Event code"/>
-					<field name="type" string="Event type"/>
-					<field name="user_id"/>
-					<field name="reply_to"/>
-					<field name="date_begin"/>
-					<field name="date_end"/>
-					<field name="register_current" string="Cur. regist."/>
-					<field name="register_min" string="Min. regist."/>
-					<field name="register_max" string="Max. regist."/>
-				</tree>
-			</field>
-		</record>
-
-		<record model="ir.ui.view" id="view_event_tree2">
-			<field name="name">Events</field>
-			<field name="model">event.event</field>
-			<field name="type">tree</field>
-			<field name="field_parent">child_events</field>
-			<field name="arch" type="xml">
-				<tree string="Events">
-					<field name="name" string="Event"/>
-					<field name="code" string="Event code"/>
-					<field name="type" string="Event type"/>
-					<field name="user_id"/>
-					<field name="reply_to"/>
-					<field name="date_begin"/>
-					<field name="date_end"/>
-					<field name="register_current" string="Cur. regist."/>
-					<field name="register_min" string="Min. regist."/>
-					<field name="register_max" string="Max. regist."/>
-				</tree>
-			</field>
-		</record>
-
-
 
 		<!-- EVENTS/CONFIGURATION/EVENTS  -->
-		<!--
-	<record model="ir.actions.act_window" id="action_event_form">
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">event.event</field>
-			<field name="view_type">form</field>
-			<field name="view_id" ref="view_event_tree"/>
-		</record>
-		-->
 		<record model="ir.actions.act_window" id="action_new_event_form">
 			<field name="name">New event</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">event.event</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">form</field>
-			<field name="view_id" ref="view_event_form"/>
+			<field name="view_mode">form,tree</field>
 		</record>
+		<menuitem name="Events/Configuration/New Event" id="menu_event_new_event" action="action_new_event_form" />
 
 		<record model="ir.actions.act_window" id="action_event_view">
 			<field name="name">Events</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">event.event</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">tree, form</field>
+			<field name="view_mode">tree,form</field>
 		</record>
+		<menuitem name="Events/All Events" id="menu_event_event" action="action_event_view" />
 
-
-
-		<menuitem name="Events/Configuration/New event" id="menu_event_new_event" action="action_new_event_form" />
-
-		<menuitem name="Events/Configuration/Events" id="menu_event_event" action="action_event_view" />
-
-
-		<record model="ir.actions.act_window" id="action_event2">
-			<field name="name">Events</field>
+		<record model="ir.actions.act_window" id="action_event_view_draft">
+			<field name="name">Draft Events</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">event.event</field>
-			<field name="domain">[('parent_event','=',False)]</field>
-			<field name="view_type">tree</field>
-			<field name="view_id" ref="view_event_tree2"/>
+			<field name="domain">[('state','=','draft')]</field>
 		</record>
+		<menuitem
+			name="Events/All Events/Draft Events" 
+			id="menu_event_event_draft" 
+			action="action_event_view_draft" />
+		<record model="ir.actions.act_window" id="action_event_view_confirm">
+			<field name="name">Confirmed Events</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.event</field>
+			<field name="domain">[('state','=','confirmed')]</field>
+		</record>
+		<menuitem name="Events/All Events/Confirmed Events"
+			id="menu_event_event_confirm" 
+			action="action_event_view_confirm" />
 
 
-		<menuitem name="Events/Configuration/Events" id="menu_configuration_event" action="action_event2" />
+
 
 		<wizard string="New child event"
 				model="event.event"
@@ -175,16 +153,9 @@
 
 		<!-- EVENTS/REGISTRATIONS/EVENTS  -->
 
-		<record model="ir.actions.act_window" id="action_registration">
-		  <field name="res_model">event.registration</field>
-		  <field name="view_type">form</field>
-		  <field name="view_mode">tree,form</field>
-		</record>
-
-
 		<record model="ir.ui.view" id="view_registration_form">
 			<field name="name">Registrations</field>
-			<field name="model">event.registration</field>
+			<field name="model">crm.case</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Registrations">
@@ -209,19 +180,41 @@
 				</tree>
 			</field>
 		</record>
-
-		<menuitem name="Events/test/Registrations" id="menu_test_registration" action="action_registration"/>
-
-		<record model="ir.actions.act_window" id="action_event">
-			<field name="name">Events</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">event.event</field>
-			<field name="domain">[('parent_event','=',False)]</field>
-			<field name="view_type">tree</field>
-			<field name="view_id" ref="view_event_tree2"/>
+		<record model="ir.actions.act_window" id="action_registration">
+		  <field name="name">Registrations</field>
+		  <field name="res_model">crm.case</field>
+		  <field name="view_type">form</field>
+		  <field name="domain">[('section_id.code','=','Event')]</field>
+		  <field name="view_mode">tree,form</field>
 		</record>
+		<menuitem
+			name="Events/All Registrations" 
+			id="menu_action_registration" 
+			action="action_registration"/>
+		<record model="ir.actions.act_window" id="action_registration_draft">
+		  <field name="name">Unconfirmed Registrations</field>
+		  <field name="res_model">crm.case</field>
+		  <field name="view_type">form</field>
+		  <field name="domain">[('section_id.code','=','Event'),('state','=','draft')]</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+		<menuitem
+			name="Events/All Registrations/Unconfirmed Registrations" 
+			id="menu_action_registration_draft" 
+			action="action_registration_draft"/>
+		<record model="ir.actions.act_window" id="action_registration_confirm">
+		  <field name="name">Confirmed Registrations</field>
+		  <field name="res_model">crm.case</field>
+		  <field name="view_type">form</field>
+		  <field name="domain">[('section_id.code','=','Event'),('state','in',('open','done'))]</field>
+		</record>
+		<menuitem 
+			name="Events/All Registrations/Confirmed Registrations" 
+			id="menu_action_registration_confirm" 
+			action="action_registration_confirm"/>
 
-		<menuitem name="Events/Registrations" id="menu_event_registration" action="action_event" />
+
+
 
 		<wizard string="Registration"
 				model="event.event"
@@ -239,7 +232,6 @@
 			<field name="value" eval="'ir.actions.wizard,%d'%wizard_event_registration"/>
 			<field name="object" eval="True"/>
 		</record>
-
 
 
 

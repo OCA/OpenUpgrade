@@ -1,4 +1,3 @@
-'''Event'''
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -31,29 +30,24 @@ from osv import fields, osv
 import time
 
 class event_type(osv.osv):
-	_name = 'event.event_type'
+	_name = 'event.type'
 	_description= 'Event type'
-
 	_columns = {
-			'name': fields.char('Event type name', size=64, required=True),
-			'code': fields.char('Event type code', size=64, required=True),
-			}
-
+		'name': fields.char('Event type', size=64),
+	}
 event_type()
 
 class event(osv.osv):
 	_name = 'event.event'
 	_description = 'Event'
 	_inherits = {'crm.case.section': 'section_id'}
-	_order = 'date_begin asc, date_end asc'
-
+	_order = 'date_begin'
 
 	def _get_type(self, cr, uid, context=None):
-
-		obj_event_type = self.pool.get('event.event_type')
+		obj_event_type = self.pool.get('event.type')
 		ids = obj_event_type.search(cr, uid, [])
-		res = obj_event_type.read(cr, uid, ids, ['code', 'name'], context)
-		return [(r['code'], r['name']) for r in res]
+		res = obj_event_type.read(cr, uid, ids, ['name'], context)
+		return [(r['name'], r['name']) for r in res]
 
 	def _get_register(self, cr, uid, ids, name, args, context=None):
 		cr.execute('''
@@ -78,33 +72,30 @@ class event(osv.osv):
 		return 1
 
 	_columns = {
-			'type': fields.many2one('event.event_type', 'Type', size=64, required=True),
-			'section_id': fields.many2one('crm.case.section', 'Case section', required=True),
-			'register_max': fields.integer('Maximum number of registrations'),
-			'register_min': fields.integer('Minimum number of registrations'),
-			'register_current': fields.function(_get_register, method=True, type="integer", string='Current number of registrations'),
-			'register_prospect': fields.function(_get_prospect, method=True, type="integer", string='Number of prospect registrations'),
-			'parent_event': fields.many2one('event.event', 'Parent event'),
-			'child_events': fields.one2many('event.event', 'parent_event', 'Childs events'),
-			'date_begin': fields.datetime('Beginning date', required=True),
-			'date_end': fields.datetime('Ending date', required=True),
-			}
-
-
+		'type': fields.many2one('event.type', 'Type'),
+		'section_id': fields.many2one('crm.case.section', 'Case section', required=True),
+		'register_max': fields.integer('Maximum Registrations'),
+		'register_min': fields.integer('Minimum Registrations'),
+		'register_current': fields.function(_get_register, method=True, type="integer", string='Confirmed Registrations'),
+		'register_prospect': fields.function(_get_prospect, method=True, type="integer", string='Unconfirmed Registrations'),
+		'project_id': fields.many2one('project.project', 'Project', readonly=True),
+		'date_begin': fields.datetime('Beginning date', required=True),
+		'date_end': fields.datetime('Ending date', required=True),
+		'state': fields.selection([('draft','Draft'),('confirmed','Confirmed'),('done','Done'),('cancel','Canceled')], 'State', readonly=True, required=True),
+	}
+	_defaults = {
+		'state': lambda *args: 'draft',
+		'code': lambda *args: 'Event',
+		'user_id': lambda self,cr,uid,ctx: uid
+	}
 event()
 
 class registration(osv.osv):
-	_name = 'event.registration'
-	_description = 'Registration'
 	_inherit = 'crm.case'
-
 	_columns = {
-			'nb_register': fields.integer('Number of Registration', required=True),
-			'section_id': fields.many2one('event.event', 'Event', required=True, select=True),
-			'name': fields.char('Description',size=64, required=False),
-			'partner_id': fields.many2one('res.partner', 'Partner', required=True),
-			}
+		'nb_register': fields.integer('Number of Registration'),
+	}
 	_defaults = {
-			'nb_register': lambda *a: 1,
-			}
+		'nb_register': lambda *a: 1,
+	}
 registration()
