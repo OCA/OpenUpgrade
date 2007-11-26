@@ -14,6 +14,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     database="test"
+    uid = 3
 
 #
 
@@ -35,9 +36,9 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
+        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
         fields=['name','state']
-        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
+        self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
         bFlag = False
         if len(self.res_other) > 0:
             for r in self.res_other:
@@ -48,10 +49,10 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         if bFlag <> True:
             ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
             exit(1)
-        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
+        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
-        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
+        self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
 
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
@@ -75,7 +76,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
+            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
             fp_name = tempfile.mktemp('.'+"sxw")
             if res['report_sxw_content']:
                 data = base64.decodestring(res['report_sxw_content'])

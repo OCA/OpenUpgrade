@@ -4,12 +4,15 @@ import uno
 import unohelper
 import string
 import re
+import base64
+
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
 
     from lib.gui import *
     from LoginTest import *
-    database="db_rc2"
+    database="test"
+    uid = 3
 
 class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 
@@ -35,7 +38,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         count = 0
         regexes = [
                   ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
-                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"]
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'([a-zA-Z0-9%.]+)\' *\\]\\]',"Field"],
+                  ['\\[\\[ *([a-zA-Z0-9%]+) *or *([a-zA-Z0-9_\.]+) *\\]\\]',"Field"]
                   ]
         oFieldObject = []
         oRepeatInObjects = []
@@ -56,18 +61,21 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     for reg in regexes:
+                        #print reg[0]
                         res=re.findall(reg[0],oPar.Items[1])
                         if len(res) <> 0:
+                            print res
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
-                                sTemp = u"|-." + sTemp.__getslice__(sTemp.rfind(".")+1,len(sTemp)) + ".-|"
-                                oPar.Items=(sTemp,oPar.Items[1])
+                                sTemp = "|-." + sTemp.__getslice__(sTemp.rfind(".")+1,len(sTemp)) + ".-|"
+                                oPar.Items=(sTemp.encode("utf-8"),oPar.Items[1])
                                 oPar.update()
                             elif type(res[0]) <> type(u''):
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
                                 sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0].__getslice__(res[0][0].find(".")+1,len(res[0][0])).replace(".","/"))
-                                r = sock.execute(database, 3, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
-                                oPar.Items=(u"|-." + r[res[0][0].__getslice__(res[0][0].rfind(".")+1 ,len(res[0][0]))]["string"] + ".-|",oPar.Items[1])
+                                r = sock.execute(database, uid, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
+                                sExpr="|-." + r[res[0][0].__getslice__(res[0][0].rfind(".")+1 ,len(res[0][0]))]["string"] + ".-|"
+                                oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
                                 oPar.update()
                             else:
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
@@ -77,12 +85,17 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
-                                    r = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+                                    r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
                                 if len(r) <> 0:
                                     if r <> "TTT":
-                                        oPar.Items=(u"" + str(r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]) ,oPar.Items[1])
+                                        sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
+                                        if sExpr:
+                                            oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                        else:
+                                            oPar.Items=(str(sExpr) ,oPar.Items[1])
+
                                         oPar.update()
                                     else:
                                         oPar.Items=(u""+r,oPar.Items[1])
@@ -97,7 +110,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None

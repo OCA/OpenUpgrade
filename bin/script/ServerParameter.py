@@ -84,6 +84,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 loginstatus=True
                 global database
                 database=sDatabase
+                global uid
+                uid=UID
                 #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
                 #docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()

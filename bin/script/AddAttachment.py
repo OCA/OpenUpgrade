@@ -9,6 +9,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from LoginTest import *
     database="test"
+    uid = 3
 
 class AddAttachment(unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
@@ -95,7 +96,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                 docinfo=oDoc2.getDocumentInfo()
 
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                res = sock.execute( database, 3, docinfo.getUserFieldValue(1), self.dModel[self.win.getListBoxSelectedItem("lstmodel")], 'name_search', self.win.getEditText("txtSearchName"))
+                res = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[self.win.getListBoxSelectedItem("lstmodel")], 'name_search', self.win.getEditText("txtSearchName"))
                 self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
                 self.aSearchResult = res
                 if self.aSearchResult <> []:
@@ -121,7 +122,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                             'res_model': docinfo.getUserFieldValue(3),
                             'res_id': docinfo.getUserFieldValue(2)
                             }
-                        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
+                        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
                         self.win.endExecute()
                     else:
                         ErrorDialog("Problem in Creating PDF","","PDF ERROR")
@@ -153,7 +154,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                                     'res_model': self.dModel[self.win.getListBoxSelectedItem("lstmodel")],
                                     'res_id': resourceid
                                     }
-                                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
+                                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
                                 self.win.endExecute()
                             else:
                                 ErrorDialog("No Resource Selected !!!","","Resource ERROR")

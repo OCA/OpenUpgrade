@@ -8,7 +8,8 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from LoginTest import *
-    database="db_trunk"
+    database="test"
+    uid = 3
 #
 #
 #
@@ -35,9 +36,9 @@ class NewReport(unohelper.Base, XJobExecutor):
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
-        ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
+        ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
         fields = [ 'model','name']
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
         for i in range(res.__len__()):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])

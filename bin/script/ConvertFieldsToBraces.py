@@ -8,7 +8,8 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
-    database="db_rc2"
+    database="test"
+    uid = 3
 
 class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
 

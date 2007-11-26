@@ -10,7 +10,8 @@ if __name__<>"package":
     from Fields import Fields
     from Repeatln import RepeatIn
     from lib.error import *
-    database="trunk_1"
+    database="test"
+    uid = 3
 
 
 class modify(unohelper.Base, XJobExecutor ):

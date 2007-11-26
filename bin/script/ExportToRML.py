@@ -9,7 +9,8 @@ if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
     from lib.error import *
-    database="latest_server"
+    database="test"
+    uid = 3
 
 class ExportToRML( unohelper.Base, XJobExecutor ):
 
@@ -45,7 +46,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         tmprml = tmprml.__getslice__(7,len(tmprml))
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
         try:
             if res['report_rml_content']:
                 data = res['report_rml_content']

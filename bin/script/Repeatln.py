@@ -11,7 +11,8 @@ if __name__<>"package":
     from lib.functions import *
     from ServerParameter import *
     from LoginTest import *
-    database="trunk_1"
+    database="test"
+    uid = 3
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):

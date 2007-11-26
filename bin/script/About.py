@@ -1,18 +1,10 @@
 
 
 import uno
-#import string
-#import unohelper
-#import xmlrpclib
-#import base64, tempfile
 from com.sun.star.task import XJobExecutor
-#import os
-#import sys
+
 if __name__<>'package':
     from lib.gui import *
-#    from lib.error import *
-#    from LoginTest import *
-#    from lib.functions import *
 
 class About(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):

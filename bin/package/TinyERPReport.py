@@ -14,6 +14,7 @@ if __name__<>"package":
     os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
 passwd=""
 database=""
+uid=""
 loginstatus=False
 from com.sun.star.awt import XActionListener
 class ActionListenerProcAdapter( unohelper.Base, XActionListener ):
@@ -85,7 +86,8 @@ import marshal
 import tempfile
 if __name__<>"package":
     from gui import *
-    database="db_rc2"
+    database="test"
+    uid = 3
 
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
@@ -93,7 +95,7 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), object , 'fields_get')
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), object , 'fields_get')
         key = res.keys()
         key.sort()
         for k in key:
@@ -160,7 +162,7 @@ def getRelation(sRelName, sItem, sObjName, aObjectList, host ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sRelName , 'fields_get')
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sRelName , 'fields_get')
         key = res.keys()
         for k in key:
             if sItem.find(".") == -1:
@@ -1153,7 +1155,8 @@ if __name__<>"package":
     from lib.functions import *
     from ServerParameter import *
     from LoginTest import *
-    database="trunk_1"
+    database="test"
+    uid = 3
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
@@ -1396,7 +1399,8 @@ if __name__<>"package":
     from lib.functions import *
     from lib.error import ErrorDialog
     from LoginTest import *
-    database="trunk_1"
+    database="test"
+    uid = 3
 
 
 class Fields(unohelper.Base, XJobExecutor ):
@@ -1493,7 +1497,7 @@ class Fields(unohelper.Base, XJobExecutor ):
             sItem= self.win.getComboBoxText("cmbVariable")
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
             #import traceback;traceback.print_exc()
@@ -1505,7 +1509,7 @@ class Fields(unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None
@@ -1590,7 +1594,8 @@ if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
     from lib.functions import *
-    database="trunk_1"
+    database="test"
+    uid = 3
 
 
 
@@ -1669,7 +1674,8 @@ if __name__<>"package":
     from Fields import Fields
     from Repeatln import RepeatIn
     from lib.error import *
-    database="trunk_1"
+    database="test"
+    uid = 3
 
 
 class modify(unohelper.Base, XJobExecutor ):
@@ -1834,6 +1840,8 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 loginstatus=True
                 global database
                 database=sDatabase
+                global uid
+                uid=UID
                 #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
                 #docinfo.setUserFieldValue(3,"")
                 self.win.endExecute()
@@ -1935,7 +1943,8 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from LoginTest import *
-    database="db_trunk"
+    database="test"
+    uid = 3
 #
 #
 #
@@ -1962,9 +1971,9 @@ class NewReport(unohelper.Base, XJobExecutor):
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
-        ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
+        ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
         fields = [ 'model','name']
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
         for i in range(res.__len__()):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])
@@ -2018,6 +2027,7 @@ if __name__<>'package':
     from lib.error import *
     from LoginTest import *
     database="test"
+    uid = 3
 
 #
 
@@ -2039,9 +2049,9 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
+        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
         fields=['name','state']
-        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
+        self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
         bFlag = False
         if len(self.res_other) > 0:
             for r in self.res_other:
@@ -2052,10 +2062,10 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         if bFlag <> True:
             ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
             exit(1)
-        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
+        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('report_sxw_content','<>',False)])
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
-        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
+        self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
 
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
@@ -2079,7 +2089,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
+            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
             fp_name = tempfile.mktemp('.'+"sxw")
             if res['report_sxw_content']:
                 data = base64.decodestring(res['report_sxw_content'])
@@ -2141,6 +2151,7 @@ if __name__<>'package':
     from LoginTest import *
     from lib.functions import *
     database="test"
+    uid = 3
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
@@ -2155,9 +2166,9 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
+        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
         fields=['name','state']
-        self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
+        self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
         bFlag = False
         if len(self.res_other) > 0:
             for r in self.res_other:
@@ -2170,21 +2181,29 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             exit(1)
         report_name = ""
         name=""
-        if docinfo.getUserFieldValue(2)<>"":
+        if docinfo.getUserFieldValue(2)<>"" :
             #self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('id','=',int(docinfo.getUserFieldValue(2)))])
             #print ids
             fields=['name','report_name']
-            self.res_other = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+            self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
             name = self.res_other[0]['name']
             report_name = self.res_other[0]['report_name']
+        else:
+            name = ""
+            report_name = docinfo.getUserFieldValue(3)
+
         self.win = DBModalDialog(60, 50, 180, 85, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
         self.win.addEdit("txtName", -5, 5, 123, 15,name)
         self.win.addFixedText("lblReportName", 2, 30, 50, 15, "Technical Name :")
         self.win.addEdit("txtReportName", -5, 25, 123, 15,report_name)
         self.win.addCheckBox("chkHeader", 51, 45, 70 ,15, "Corporate Header")
-        self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
-                        actionListenerProc = self.btnOkOrCancel_clicked)
+        if docinfo.getUserFieldValue(3)<>"" and docinfo.getUserFieldValue(2)<>"":
+            self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
+                                actionListenerProc = self.btnOkOrCancel_clicked)
+        else:
+            self.win.addButton( "btnSend", -5, -5, 80, 15, "Save New Report ....",
+                                actionListenerProc = self.btnOkOrCancel_clicked)
         self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
                         actionListenerProc = self.btnOkOrCancel_clicked)
         self.win.doModalDialog("",None)
@@ -2192,42 +2211,45 @@ class SendtoServer(unohelper.Base, XJobExecutor):
     def btnOkOrCancel_clicked(self, oActionEvent):
 
         if oActionEvent.Source.getModel().Name == "btnSend":
-            desktop=getDesktop()
-            oDoc2 = desktop.getCurrentComponent()
-            docinfo=oDoc2.getDocumentInfo()
-            self.getInverseFieldsRecord(1)
-            fp_name = tempfile.mktemp('.'+"sxw")
-            if not oDoc2.hasLocation():
-                oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            if docinfo.getUserFieldValue(2)=="":
-                id=self.getID()
-                docinfo.setUserFieldValue(2,id)
-                rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
-                res=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
+            if self.win.getEditText("txtName") <> "" and self.win.getEditText("txtReportName") <> "":
+                desktop=getDesktop()
+                oDoc2 = desktop.getCurrentComponent()
+                docinfo=oDoc2.getDocumentInfo()
+                self.getInverseFieldsRecord(1)
+                fp_name = tempfile.mktemp('.'+"sxw")
+                if not oDoc2.hasLocation():
+                    oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
+                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                if docinfo.getUserFieldValue(2)=="":
+                    id=self.getID()
+                    docinfo.setUserFieldValue(2,id)
+                    rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
+                    res=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
+                else:
+                    id = docinfo.getUserFieldValue(2)
+                    vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
+                    rec = { 'name': self.win.getEditText("txtReportName")}
+                    res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
+                oDoc2.store()
+                url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
+                fp = file(url, 'rb')
+                data=fp.read()
+                fp.close()
+                self.getInverseFieldsRecord(0)
+                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
+                bHeader = True
+                res1 = {}
+                res1['name'] =self.win.getEditText("txtName")
+                res1['model'] =docinfo.getUserFieldValue(3)
+                res1['report_name'] =self.win.getEditText("txtReportName")
+                if self.win.getCheckBoxState("chkHeader")==0:
+                    bHeader = False
+                res1["header"] = bHeader
+                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),res1)
+                self.win.endExecute()
             else:
-                id = docinfo.getUserFieldValue(2)
-                vId = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
-                rec = { 'name': self.win.getEditText("txtReportName")}
-                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
-            oDoc2.store()
-            url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
-            fp = file(url, 'rb')
-            data=fp.read()
-            fp.close()
-            self.getInverseFieldsRecord(0)
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
-            bHeader = True
-            res1 = {}
-            res1['name'] =self.win.getEditText("txtName")
-            res1['model'] =docinfo.getUserFieldValue(3)
-            res1['report_name'] =self.win.getEditText("txtReportName")
-            if self.win.getCheckBoxState("chkHeader")==0:
-                bHeader = False
-            res1["header"] = bHeader
-            res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),res1)
-            self.win.endExecute()
+                ErrorDialog("Either Report Name or Technical Name is blank !!!\nPlease specify appropriate Name","","Blank Field ERROR")
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -2248,7 +2270,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
-        id=sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
+        id=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
 
         return id
 
@@ -2281,18 +2303,10 @@ elif __name__=="package":
 
 
 import uno
-#import string
-#import unohelper
-#import xmlrpclib
-#import base64, tempfile
 from com.sun.star.task import XJobExecutor
-#import os
-#import sys
+
 if __name__<>'package':
     from lib.gui import *
-#    from lib.error import *
-#    from LoginTest import *
-#    from lib.functions import *
 
 class About(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
@@ -2373,12 +2387,15 @@ import uno
 import unohelper
 import string
 import re
+import base64
+
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
 
     from lib.gui import *
     from LoginTest import *
-    database="db_rc2"
+    database="test"
+    uid = 3
 
 class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 
@@ -2404,7 +2421,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         count = 0
         regexes = [
                   ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
-                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"]
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\% *\'([a-zA-Z0-9%.]+)\' *\\]\\]',"Field"],
+                  ['\\[\\[ *([a-zA-Z0-9%]+) *or *([a-zA-Z0-9_\.]+) *\\]\\]',"Field"]
                   ]
         oFieldObject = []
         oRepeatInObjects = []
@@ -2429,14 +2448,15 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
-                                sTemp = u"|-." + sTemp.__getslice__(sTemp.rfind(".")+1,len(sTemp)) + ".-|"
-                                oPar.Items=(sTemp,oPar.Items[1])
+                                sTemp = "|-." + sTemp.__getslice__(sTemp.rfind(".")+1,len(sTemp)) + ".-|"
+                                oPar.Items=(sTemp.encode("utf-8"),oPar.Items[1])
                                 oPar.update()
                             elif type(res[0]) <> type(u''):
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
                                 sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0].__getslice__(res[0][0].find(".")+1,len(res[0][0])).replace(".","/"))
-                                r = sock.execute(database, 3, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
-                                oPar.Items=(u"|-." + r[res[0][0].__getslice__(res[0][0].rfind(".")+1 ,len(res[0][0]))]["string"] + ".-|",oPar.Items[1])
+                                r = sock.execute(database, uid, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
+                                sExpr="|-." + r[res[0][0].__getslice__(res[0][0].rfind(".")+1 ,len(res[0][0]))]["string"] + ".-|"
+                                oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
                                 oPar.update()
                             else:
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
@@ -2446,12 +2466,17 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
-                                    r = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+                                    r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
                                 if len(r) <> 0:
                                     if r <> "TTT":
-                                        oPar.Items=(u"" + str(r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]) ,oPar.Items[1])
+                                        sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
+                                        if sExpr:
+                                            oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                        else:
+                                            oPar.Items=(str(sExpr) ,oPar.Items[1])
+
                                         oPar.update()
                                     else:
                                         oPar.Items=(u""+r,oPar.Items[1])
@@ -2466,7 +2491,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None
@@ -2568,7 +2593,8 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
-    database="db_rc2"
+    database="test"
+    uid = 3
 
 class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
 
@@ -2623,7 +2649,8 @@ if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
     from lib.error import *
-    database="latest_server"
+    database="test"
+    uid = 3
 
 class ExportToRML( unohelper.Base, XJobExecutor ):
 
@@ -2659,7 +2686,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         tmprml = tmprml.__getslice__(7,len(tmprml))
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
+        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
         try:
             if res['report_rml_content']:
                 data = res['report_rml_content']
@@ -2718,6 +2745,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from LoginTest import *
     database="test"
+    uid = 3
 
 class AddAttachment(unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
@@ -2804,7 +2832,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                 docinfo=oDoc2.getDocumentInfo()
 
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                res = sock.execute( database, 3, docinfo.getUserFieldValue(1), self.dModel[self.win.getListBoxSelectedItem("lstmodel")], 'name_search', self.win.getEditText("txtSearchName"))
+                res = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[self.win.getListBoxSelectedItem("lstmodel")], 'name_search', self.win.getEditText("txtSearchName"))
                 self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
                 self.aSearchResult = res
                 if self.aSearchResult <> []:
@@ -2830,7 +2858,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                             'res_model': docinfo.getUserFieldValue(3),
                             'res_id': docinfo.getUserFieldValue(2)
                             }
-                        res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
+                        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
                         self.win.endExecute()
                     else:
                         ErrorDialog("Problem in Creating PDF","","PDF ERROR")
@@ -2862,7 +2890,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                                     'res_model': self.dModel[self.win.getListBoxSelectedItem("lstmodel")],
                                     'res_id': resourceid
                                     }
-                                res = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
+                                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
                                 self.win.endExecute()
                             else:
                                 ErrorDialog("No Resource Selected !!!","","Resource ERROR")

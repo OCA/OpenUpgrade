@@ -12,6 +12,7 @@ if __name__<>"package":
     os.system( "ooffice '-accept=socket,host=localhost,port=2002;urp;'" )
 passwd=""
 database=""
+uid=""
 loginstatus=False
 from com.sun.star.awt import XActionListener
 class ActionListenerProcAdapter( unohelper.Base, XActionListener ):
