@@ -247,7 +247,7 @@ def _inv_constraint(cr, ids):
 
 class auction_lots(osv.osv):
 	_name = "auction.lots"
-	_order = "obj_num,lot_num"
+	_order = "obj_num,lot_num,id"
 	_description="Object"
 
 	def button_not_bought(self,cr,uid,ids,*a):
@@ -267,10 +267,10 @@ class auction_lots(osv.osv):
 		pt_tax=self.pool.get('account.tax')
 		for lot in lots:
 			amount_total=0.0
-			if ((lot.obj_price==0) and (lot.state=='draft')):
-				montant=lot.lot_est1
-			else:
-				montant=lot.obj_price
+		#	if ((lot.obj_price==0) and (lot.state=='draft')):
+		#		montant=lot.lot_est1
+		#	else:
+			montant=lot.obj_price
 			taxes = []
 			if lot.author_right:
 				taxes.append(lot.author_right)
@@ -290,10 +290,10 @@ class auction_lots(osv.osv):
 		pt_tax=self.pool.get('account.tax')
 		for lot in lots:
 			amount_total=0.0
-			if ((lot.obj_price==0) and (lot.state=='draft')):
-				montant=lot.lot_est1
-			else:
-				montant=lot.obj_price
+		#	if ((lot.obj_price==0) and (lot.state=='draft')):
+		#		montant=lot.lot_est1
+		#	else:
+			montant=lot.obj_price
 			taxes = []
 			if lot.bord_vnd_id.tax_id:
 				taxes.append(lot.bord_vnd_id.tax_id)
@@ -738,7 +738,7 @@ class auction_lots(osv.osv):
 			wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_open', cr)
 		return invoices.values()
 
-	def lots_invoice(self, cr, uid, ids, context,invoice_number=None):
+	def lots_invoice(self, cr, uid, ids, context,invoice_number=False):
 		"""(buyer invoice
 			Create an invoice for selected lots (IDS) to BUYER_ID.
 			Set created invoice to the ACTION state.
@@ -772,8 +772,9 @@ class auction_lots(osv.osv):
 					'journal_id': lot.auction_id.journal_id.id,
 					'partner_id': lot.ach_uid.id,
 					'type': 'out_invoice',
-					'number':invoice_number
 				}
+				if invoice_number:
+					inv['number'] = invoice_number
 				inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', lot.ach_uid.id)['value'])
 				#inv['account_id'] = inv['account_id'] and inv['account_id'][0]
 				inv_id = inv_ref.create(cr, uid, inv, context)
@@ -797,12 +798,13 @@ class auction_lots(osv.osv):
 				'price_unit': lot.obj_price,
 			}
 			self.pool.get('account.invoice.line').create(cr, uid, inv_line,context)
-	#	inv_ref.button_compute(cr, uid, [inv_id])
+	#	inv_ref.button_compute(cr, uid, [inpq tu dis cav_id])
 	#		inv_ref.button_compute(cr, uid, [inv_id])
 			inv_ref.button_compute(cr, uid, [inv_id])
 		for l in  inv_ref.browse(cr, uid, invoices.values(), context):
 			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_proforma', cr)
+		#	wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_proforma', cr)
+			wf_service.trg_validate(uid, 'account.invoice',l.id, 'invoice_open', cr)
 		return invoices.values()
 
 
