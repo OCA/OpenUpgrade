@@ -72,7 +72,7 @@
 						<form string="Depreciation methods">
 							<field name="name" select="1" colspan="4"/>
 							<notebook string="Methods" tabpos="up" colspan="4">
-							<page string="Depreciation">
+							<page string="Depreciation" angle="0">
 								<separator string="Accounts information" colspan="4"/>
 								<field name="account_asset_id"/>
 								<field name="account_actif_id"/>
@@ -94,13 +94,13 @@
 									colspan="2"/>
 								<!-- <field name="method_end"/> -->
 							</page>
-							<page string="Depreciation entries">
+							<page string="Depreciation entries" angle="0">
 								<field name="entry_asset_ids" colspan="4" nolabel="1" readonly="1"/>
 							</page>
-							<page string="Change history">
+							<page string="Change history" angle="0">
 								<field name="history_ids" colspan="4" nolabel="1" readonly="1"/>
 							</page>
-							<page string="Depreciation board">
+							<page string="Depreciation board" angle="0">
 								<field name="value_total"/>
 								<field name="value_residual"/>
 							</page>
