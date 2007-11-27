@@ -56,7 +56,7 @@ class event(osv.osv):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
 			cr.execute('SELECT sum(nb_register) FROM crm_case WHERE section_id=%d and state in (\'open\',\'done\')',  (event.section_id.id,))
-			res2 = cr.fetchone()·
+			res2 = cr.fetchone()
 			res[event.id] = res2 and res2[0] or 0
 		return res
 
@@ -64,7 +64,7 @@ class event(osv.osv):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
 			cr.execute('SELECT sum(nb_register) FROM crm_case WHERE section_id=%d and state in (\'draft\')',  (event.section_id.id,))
-			res2 = cr.fetchone()·
+			res2 = cr.fetchone()
 			res[event.id] = res2 and res2[0] or 0
 		return res
 
