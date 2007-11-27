@@ -33,7 +33,6 @@ import time
 class account_invoice(osv.osv):
 	_inherit = 'account.invoice'
 	def line_get_convert(self, cr, uid, x, part, date, context={}):
-		print self
 		res = super(account_invoice, self).line_get_convert(cr, uid, x, part, date, context)
 		res['asset_id'] = x.get('asset_id', False)
 		return res

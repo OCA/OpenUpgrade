@@ -72,7 +72,6 @@ def _asset_open(self, cr, uid, data, context):
 		value['domain']= "[('id','in',["+','.join(map(str,self.move_ids))+"])]"
 	else:
 		value['domain']= "[('id','=', False)]"
-	print value
 	return value
 
 def _get_period(self, cr, uid, data, context={}):

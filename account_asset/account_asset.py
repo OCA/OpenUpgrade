@@ -54,7 +54,6 @@ class account_asset_asset(osv.osv):
 #			res[id] = round(res.get(id,0.0), 2)
 #		return res
 	def _get_period(self, cr, uid, context={}):
-		print context
 		periods = self.pool.get('account.period').find(cr, uid)
 		if periods:
 			return periods[0]
@@ -175,13 +174,9 @@ class account_asset_asset(osv.osv):
 	def _compute_entries(self, cr, uid, asset, period_id, context={}):
 		result = []
 		date_start = self.pool.get('account.period').browse(cr, uid, period_id, context).date_start
-		print 'compute entries', date_start
 		for property in asset.property_ids:
 			if property.state=='open':
-				print 'Property State Open'
 				period = self._compute_period(cr, uid, property, context)
-				print period
-				print period and period.date_start
 				if period and (period.date_start<=date_start):
 					result += self._compute_move(cr, uid, property, period, context)
 		return result

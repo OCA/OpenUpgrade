@@ -58,7 +58,6 @@ def _asset_default(self, cr, uid, data, context={}):
 def _asset_modif(self, cr, uid, data, context={}):
 	pool = pooler.get_pool(cr.dbname)
 	prop = pool.get('account.asset.property').browse(cr, uid, data['id'], context)
-	print prop
 	pool.get('account.asset.property.history').create(cr, uid, {
 		'asset_property_id': data['id'],
 		'name': prop.name,
