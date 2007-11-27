@@ -412,7 +412,7 @@ def _create_dta(obj, cr, uid, data, context):
 
 	seq= 1
 	amount_tot = 0
-	th_amount_tot= 0
+	amount_currency_tot = 0
 
 	for pline in payment.line_ids:
 		if not pline.bank_id:
@@ -591,10 +591,11 @@ def _create_dta(obj, cr, uid, data, context):
 
 		dta = dta + dta_line
 		amount_tot += pline.amount
+		amount_currency_tot += pline.amount_currency
 		seq += 1
 
 	# segment total
-	v['amount_total'] = str(amount_tot).replace('.',',')
+	v['amount_total'] = str(amount_currency_tot).replace('.',',')
 	v['sequence'] = str(seq).rjust(5).replace(' ','0')	
 	try:
 		if dta :
@@ -603,8 +604,8 @@ def _create_dta(obj, cr, uid, data, context):
 		log.add('\n'+ str(e) + 'CORRUPTED FILE !\n')
 		raise
 
-	log.add("\n--\nSummary :\nTotal amount paid : %.2f\nTotal amount expected : %.2f" \
-			%(amount_tot,th_amount_tot),error=False)
+	log.add("\n--\nSummary :\nTotal amount paid : %.2f" \
+			% (amount_tot,), error=False)
 
 	if not log.error:
 		dta_data= base64.encodestring(dta)
