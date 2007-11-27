@@ -58,8 +58,31 @@ class account_invoice(osv.osv):
 					return False
 		return True
 
+	def _check_reference_type(self, cursor, user, ids):
+		for invoice in self.browse(cursor, user, ids):
+			if invoice.type in 'in_invoice':
+				if invoice.partner_bank and \
+						invoice.partner_bank.state in \
+						('bvrbank', 'bvrpost') and \
+						invoice.reference_type != 'bvr':
+							return False
+		return True
+
 	_constraints = [
-		(_check_bvr, 'Error : Invalid Bvr Number (wrong checksum).', ['reference'])
+		(_check_bvr, 'Error: Invalid Bvr Number (wrong checksum).',
+			['reference']),
+		(_check_reference_type, 'Error: BVR reference is required.',
+			['reference_type']),
 	]
+
+	def onchange_partner_bank(self, cursor, user, ids, partner_bank_id):
+		res = super(account_invoice, self).onchange_partner_bank(cursor, user,
+				ids, partner_bank_id)
+		partner_bank_obj = self.pool.get('res.partner.bank')
+		if partner_bank_id:
+			partner_bank = partner_bank_obj.browse(cursor, user, partner_bank_id)
+			if partner_bank.state in ('bvrbank', 'bvrpost'):
+				res['value']['reference_type'] = 'bvr'
+		return res
 
 account_invoice()
