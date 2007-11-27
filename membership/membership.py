@@ -32,25 +32,115 @@ import time
 
 STATE = [
 	('none', 'Non Member'),
+	('canceled', 'Canceled Member'),
+	('old', 'Old Member'),
 	('waiting', 'Waiting Member'),
 	('invoiced', 'Invoiced Member'),
-	('canceled', 'Canceled Member'),
-	('paid', 'Paid Member'),
 	('associated', 'Associated Member'),
 	('free', 'Free Member'),
-	('old', 'Old Member'),
+	('paid', 'Paid Member'),
 ]
 
 STATE_PRIOR = {
 		'none' : 0,
 		'canceled' : 1,
-		'waiting' : 2,
-		'invoiced' : 3,
-		'associated' : 4,
-		'free' : 5,
-		'paid' : 6
+		'old' : 2,
+		'waiting' : 3,
+		'invoiced' : 4,
+		'associated' : 5,
+		'free' : 6,
+		'paid' : 7
 		}
-
+REQUETE = '''SELECT partner, state FROM (
+SELECT members.partner AS partner,
+CASE WHEN MAX(members.state) = 0 THEN 'none'
+ELSE CASE WHEN MAX(members.state) = 1 THEN 'canceled'
+ELSE CASE WHEN MAX(members.state) = 2 THEN 'old'
+ELSE CASE WHEN MAX(members.state) = 3 THEN 'waiting'
+ELSE CASE WHEN MAX(members.state) = 4 THEN 'invoiced'
+ELSE CASE WHEN MAX(members.state) = 5 THEN 'associated'
+ELSE CASE WHEN MAX(members.state) = 6 THEN 'free'
+ELSE CASE WHEN MAX(members.state) = 7 THEN 'paid'
+END END END END END END END END
+	AS state FROM (
+SELECT partner,
+	CASE WHEN MAX(inv_digit.state) = 4 THEN 7
+	ELSE CASE WHEN MAX(inv_digit.state) = 3 THEN 4
+	ELSE CASE WHEN MAX(inv_digit.state) = 2 THEN 3
+	ELSE CASE WHEN MAX(inv_digit.state) = 1 THEN 1
+END END END END
+AS state
+FROM (
+	SELECT p.id as partner,
+	CASE WHEN ai.state = 'paid' THEN 4
+	ELSE CASE WHEN ai.state = 'open' THEN 3
+	ELSE CASE WHEN ai.state = 'proforma' THEN 2
+	ELSE CASE WHEN ai.state = 'draft' THEN 2
+	ELSE CASE WHEN ai.state = 'cancel' THEN 1
+END END END END END
+AS state
+FROM res_partner p
+JOIN account_invoice ai ON (
+	p.id = ai.partner_id
+)
+JOIN account_invoice_line ail ON (
+	ail.invoice_id = ai.id
+)
+JOIN membership_membership_line ml ON (
+	ml.account_invoice_line  = ail.id
+)
+WHERE ml.date_from <= '%s'
+AND ml.date_to >= '%s'
+GROUP BY
+p.id,
+state
+	)
+	AS inv_digit
+	GROUP by partner
+UNION
+SELECT p.id AS partner,
+	CASE WHEN  p.free_member THEN 6
+	ELSE CASE WHEN p.associate_member IN (
+		SELECT ai.partner_id FROM account_invoice ai JOIN
+		account_invoice_line ail ON (ail.invoice_id = ai.id AND ai.state = 'paid')
+		JOIN membership_membership_line ml ON (ml.account_invoice_line = ail.id)
+		WHERE ml.date_from <= '%s'
+		AND ml.date_to >= '%s'
+	)
+	THEN 5
+END END
+AS state
+FROM res_partner p
+WHERE p.free_member
+OR p.associate_member > 0
+UNION
+SELECT p.id as partner,
+	MAX(CASE WHEN ai.state = 'paid' THEN 2
+	ELSE 0
+	END)
+AS state
+FROM res_partner p
+JOIN account_invoice ai ON (
+	p.id = ai.partner_id
+)
+JOIN account_invoice_line ail ON (
+	ail.invoice_id = ai.id
+)
+JOIN membership_membership_line ml ON (
+	ml.account_invoice_line  = ail.id
+)
+WHERE ml.date_from < '%s'
+AND ml.date_to < '%s'
+AND ml.date_from <= ml.date_to
+GROUP BY
+p.id
+)
+AS members
+GROUP BY members.partner
+)
+AS final
+%s
+'''
 
 class membership_line(osv.osv):
 	'''Member line'''
@@ -89,10 +179,11 @@ class membership_line(osv.osv):
 			res[line.id] = state
 		return res
 
+
 	_description = __doc__
 	_name = 'membership.membership_line'
 	_columns = {
-			'partner': fields.many2one('res.partner', 'Partner'),
+			'partner': fields.many2one('res.partner', 'Partner', ondelete='cascade', select=1),
 			'date_from': fields.date('From'),
 			'date_to': fields.date('To'),
 			'date_cancel' : fields.date('Cancel date'),
@@ -101,6 +192,7 @@ class membership_line(osv.osv):
 			}
 	_rec_name = 'partner'
 	_order = 'id desc'
+
 
 membership_line()
 
@@ -112,59 +204,31 @@ class Partner(osv.osv):
 	def _membership_state(self, cr, uid, ids, name, args, context=None):
 		'''Compute membership state of partners'''
 
-		res = {}
 		today = time.strftime('%Y-%m-%d')
-		
-		for partner in self.browse(cr, uid, ids):
-			pstate = 'none'
-			if partner.free_member:
-				pstate= 'free'
-			elif partner.associate_member and partner.associate_member.id:
-				pstate = 'associated'
-			if partner.member_lines:
-				for line in partner.member_lines:
-					if (line.date_from <= today) and (line.date_to >= today):
-						lstate = line.state
-						if STATE_PRIOR[lstate] > STATE_PRIOR[pstate]:
-							pstate = lstate
-			if pstate == 'none' or pstate =='cancel':
-				for line in partner.member_lines:
-					if (line.date_from <= today) and (line.date_to <= today):
-						if line.state == 'paid' and line.date_from < line.date_to:
-							pstate = 'old'
-							break
-
-
-			res[partner.id] = pstate
+		res = {}
+		for id in ids:
+			res[id] = 'none'
+		clause = 'WHERE partner IN (' + ','.join([str(id) for id in ids]) + ')'
+		cr.execute(REQUETE % (today, today, today, today, today, today, clause))
+		fetches = cr.fetchall()
+		for fetch in fetches:
+			res[fetch[0]] = fetch[1]
 
 		return res
 
 	def _membership_state_search(self, cr, uid, obj, name, args):
 		'''Search on membership state'''
-		if not len(args):
-			return []
-		today = time.strftime('%Y-%m-%d')
-		clause = 'WHERE'
-		ids2 = []
 
-		cr.execute('''
-			SELECT id FROM res_partner
-			''')
+		today = time.strftime('%Y-%m-%d')
+		clause = 'WHERE '
+		for i in range(len(args)):
+			if i!=0:
+				clause += 'OR '
+			clause += 'state '+args[i][1]+" '"+args[i][2]+"' "
+		cr.execute(REQUETE % (today, today, today, today, today, today, clause))
 		ids=[x[0] for x in cr.fetchall()]
 
-		for arg in args:
-			if arg[1] == '=':
-				for partner in self.browse(cr, uid, ids):
-					if partner.membership_state == str(arg[2]) and not ids2.count(partner.id):
-						ids2.append(partner.id)
-
-				
-			elif arg[1] == '!=':
-				for partner in self.browse(cr, uid, ids):
-					if partner.membership_state != str(arg[2]) and not ids2.count(partner.id):
-						ids2.append(partner.id)
-
-		return [('id', 'in', ids2)]
+		return [('id', 'in', ids)]
 
 	def _membership_start(self, cr, uid, ids, name, args, context=None):
 		'''Return the start date of membership'''
@@ -340,7 +404,7 @@ class Invoice(osv.osv):
 				if line.product_id and line.product_id.membership:
 					date_from = line.product_id.membership_date_from
 					date_to  = line.product_id.membership_date_to
-					if invoice.date_invoice > date_from and invoice.date_invoice <= date_to:
+					if invoice.date_invoice > date_from and invoice.date_invoice < date_to:
 						date_from = invoice.date_invoice
 					member_line_obj.create(cr, uid, {
 						'partner': invoice.partner_id.id,
@@ -398,7 +462,7 @@ class ReportPartnerMemberProduct(osv.osv):
 					l.product_id AS product,
 					SUM(l.quantity) AS number,
 					SUM(l.quantity*l.price_unit*(1-l.discount)) AS price,
-					i.state
+					i.state AS state
 				FROM account_invoice_line l
 				LEFT JOIN account_invoice i ON (
 					l.invoice_id=i.id
@@ -414,3 +478,112 @@ class ReportPartnerMemberProduct(osv.osv):
 
 ReportPartnerMemberProduct()
 
+class ReportPartnerMemberYear(osv.osv):
+	'''Membership by Years'''
+
+	_name = 'report.partner_member.year'
+	_description = __doc__
+	_auto = False
+	_rec_name = 'year'
+	_columns = {
+		'year': fields.char('Year', size='4', readonly=True, select=1),
+		'state': fields.selection(STATE, 'State', readonly=True, select=1),
+		'number': fields.integer('Number', readonly=True),
+		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
+		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
+			select=2),
+	}
+
+	def init(self, cr):
+		'''Create the view'''
+		cr.execute("""
+	CREATE OR REPLACE VIEW report_partner_member_year AS (
+	SELECT
+	MIN(id) AS id, year, state,
+	SUM(number) AS number,
+	SUM(amount) AS amount,
+	currency
+	FROM
+	(SELECT
+		MIN(ml.id) AS id,
+		TO_CHAR(ml.date_from, 'YYYY') AS year,
+		CASE WHEN ai.state = 'cancel'
+			THEN 'canceled'
+		ELSE CASE WHEN ai.state = 'open'
+			THEN 'invoiced'
+		ELSE CASE WHEN ai.state = 'paid'
+			THEN 'paid'
+		ELSE 'waiting'
+	END
+	END
+	END AS state,
+	COUNT(ml.id) AS number,
+	SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100)) AS amount,
+	ai.currency_id AS currency
+	FROM membership_membership_line ml
+	JOIN (account_invoice_line ail
+		LEFT JOIN account_invoice ai
+		ON (ail.invoice_id = ai.id))
+	ON (ml.account_invoice_line = ail.id)
+	JOIN res_partner p
+	ON (ml.partner = p.id)
+	GROUP BY TO_CHAR(ml.date_from, 'YYYY'), ai.state,
+	ai.currency_id
+	) AS foo
+	GROUP BY year, state, currency)
+				""")
+
+ReportPartnerMemberYear()
+
+class ReportPartnerMemberYearNew(osv.osv):
+	'''New Membership by Years'''
+
+	_name = 'report.partner_member.year_new'
+	_description = __doc__
+	_auto = False
+	_rec_name = 'year'
+	_columns = {
+		'year': fields.char('Year', size='4', readonly=True, select=1),
+		'number': fields.integer('Number', readonly=True),
+		'amount': fields.float('Amount', digits=(16, 2),
+			readonly=True),
+		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
+			select=2),
+	}
+
+	def init(self, cursor):
+		'''Create the view'''
+		cursor.execute("""
+		CREATE OR REPLACE VIEW report_partner_member_year_new AS (
+		SELECT
+		MIN(id) AS id,
+		TO_CHAR(date_from, 'YYYY') as year,
+		COUNT(id) AS number,
+		SUM(amount) AS amount,
+		currency
+		FROM (
+			SELECT
+			MIN(ml1.id) AS id,
+			SUM(ail.price_unit * ail.quantity * ( 1 - ail.discount / 100)) AS amount,
+			ml1.date_from,
+			ai.currency_id AS currency
+			FROM
+			(SELECT
+				partner AS id,
+				MIN(date_from) AS date_from
+				FROM membership_membership_line
+				GROUP BY partner
+			) AS ml1
+			JOIN membership_membership_line ml2
+			JOIN account_invoice_line ail
+			LEFT JOIN account_invoice ai
+			ON (ail.invoice_id = ai.id)
+			ON (ml2.account_invoice_line = ail.id)
+			ON (ml1.id = ml2.partner AND ml1.date_from = ml2.date_from)
+			GROUP BY ai.currency_id, ml1.id, ml1.date_from
+		) AS foo
+		GROUP BY currency, TO_CHAR(date_from, 'YYYY')
+		)
+	""")
+
+ReportPartnerMemberYearNew()
