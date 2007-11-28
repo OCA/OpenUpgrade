@@ -58,26 +58,16 @@ class node_class(object):
 			where.append( ('res_model','=',self.object2._name) )
 			where.append( ('res_id','=',self.object2.id) )
 			for content in self.object.content_ids:
-				if not self.object2.name:
-					object_name = 'dhms'+self.object.id
+				if content.suffix:
+					test_nodename = self.object2.name + content.suffix+content.extension
+					path = self.path+'/'+self.object2.name + content.suffix+content.extension
 				else:
-					object_name = self.object2.name
-
+					test_nodename = self.object2.name+content.extension
+					path = self.path+'/'+self.object2.name+content.extension
 				if not nodename:
-					if content.suffix:
-						path = self.path+'/'+self.object2.name + content.suffix+content.extension
-					else :
-						path = self.path+'/'+self.object2.name+content.extension
 					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content')
 					res2.append( n)
 				else:
-					if content.suffix:
-						test_nodename = self.object2.name + content.suffix+content.extension
-						path = self.path+'/'+self.object2.name + content.suffix
-					else:
-						test_nodename = self.object2.name+content.extension
-						path = self.path+'/'+self.object2.name
-
 					if nodename == test_nodename:
 						n = node_class(self.cr, self.uid, path, self.object2, False, content=content, type='content')
 						res2.append(n)
