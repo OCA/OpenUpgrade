@@ -145,6 +145,20 @@ AS final
 class membership_line(osv.osv):
 	'''Member line'''
 
+	def _check_membership_date(self, cr, uid, ids, context=None):
+		'''Check if membership product is not in the past'''
+
+		cr.execute('''
+		 SELECT (ml.date_to - ail.create_date)
+		 FROM membership_membership_line ml
+		 JOIN account_invoice_line ail ON (
+			ml.account_invoice_line = ail.id
+			)
+		WHERE ml.id in (%s)
+		''' % ','.join([str(id) for id in ids]))
+		res = cr.fetchall
+		print res
+
 	def _state(self, cr, uid, ids, name, args, context=None):
 		'''Compute the state lines'''
 		res = {}
@@ -192,7 +206,9 @@ class membership_line(osv.osv):
 			}
 	_rec_name = 'partner'
 	_order = 'id desc'
-
+	_constraints = [
+			(_check_membership_date, 'Error, this membership product is out of date', [])
+			]
 
 membership_line()
 
@@ -430,53 +446,53 @@ class Invoice(osv.osv):
 
 Invoice()
 
-class ReportPartnerMemberProduct(osv.osv):
-	'''Membership by Products'''
-
-	_name = 'report.membership.product'
-	_description = __doc__
-	_auto = False
-	_rec_name = 'product'
-	_columns = {
-		'product': fields.many2one('product.product', 'Membership product', select=1),
-		'state': fields.selection([
-			('draft','Draft'),
-			('proforma','Pro-forma'),
-			('open','Open'),
-			('paid','Paid'),
-			('cancel','Canceled')
-		], 'State', readonly=True, select=1),
-		'number': fields.integer('Number', readonly=True),
-		'price' : fields.float('Price', readonly=True),
-#		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
-#		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
-#			select=2),
-	}
-
-	def init(self, cr):
-		'''Create the view'''
-		cr.execute("""
-			CREATE OR REPLACE VIEW report_membership_product AS (
-				SELECT
-					MIN(l.id) AS id,
-					l.product_id AS product,
-					SUM(l.quantity) AS number,
-					SUM(l.quantity*l.price_unit*(1-l.discount)) AS price,
-					i.state AS state
-				FROM account_invoice_line l
-				LEFT JOIN account_invoice i ON (
-					l.invoice_id=i.id
-					)
-				LEFT JOIN product_product p ON (
-					p.id=l.product_id
-					)
-				WHERE p.membership
-				GROUP BY
-					l.product_id,
-					i.state
-				)""")
-
-ReportPartnerMemberProduct()
+#class ReportPartnerMemberProduct(osv.osv):
+#	'''Membership by Products'''
+#
+#	_name = 'report.membership.product'
+#	_description = __doc__
+#	_auto = False
+#	_rec_name = 'product'
+#	_columns = {
+#		'product': fields.many2one('product.product', 'Membership product', select=1),
+#		'state': fields.selection([
+#			('draft','Draft'),
+#			('proforma','Pro-forma'),
+#			('open','Open'),
+#			('paid','Paid'),
+#			('cancel','Canceled')
+#		], 'State', readonly=True, select=1),
+#		'number': fields.integer('Number', readonly=True),
+#		'price' : fields.float('Price', readonly=True),
+##		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
+##		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
+##			select=2),
+#	}
+#
+#	def init(self, cr):
+#		'''Create the view'''
+#		cr.execute("""
+#			CREATE OR REPLACE VIEW report_membership_product AS (
+#				SELECT
+#					MIN(l.id) AS id,
+#					l.product_id AS product,
+#					SUM(l.quantity) AS number,
+#					SUM(l.quantity*l.price_unit*(1-l.discount)) AS price,
+#					i.state AS state
+#				FROM account_invoice_line l
+#				LEFT JOIN account_invoice i ON (
+#					l.invoice_id=i.id
+#					)
+#				LEFT JOIN product_product p ON (
+#					p.id=l.product_id
+#					)
+#				WHERE p.membership
+#				GROUP BY
+#					l.product_id,
+#					i.state
+#				)""")
+#
+#ReportPartnerMemberProduct()
 
 class ReportPartnerMemberYear(osv.osv):
 	'''Membership by Years'''
@@ -487,9 +503,14 @@ class ReportPartnerMemberYear(osv.osv):
 	_rec_name = 'year'
 	_columns = {
 		'year': fields.char('Year', size='4', readonly=True, select=1),
-		'state': fields.selection(STATE, 'State', readonly=True, select=1),
-		'number': fields.integer('Number', readonly=True),
-		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
+		'canceled_number': fields.integer('Canceled', readonly=True),
+		'waiting_number': fields.integer('Waiting', readonly=True),
+		'invoiced_number': fields.integer('Invoiced', readonly=True),
+		'paid_number': fields.integer('Paid', readonly=True),
+		'canceled_amount': fields.float('Canceled', digits=(16, 2), readonly=True),
+		'waiting_amount': fields.float('Waiting', digits=(16, 2), readonly=True),
+		'invoiced_amount': fields.float('Invoiced', digits=(16, 2), readonly=True),
+		'paid_amount': fields.float('Paid', digits=(16, 2), readonly=True),
 		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
 			select=2),
 	}
@@ -498,39 +519,49 @@ class ReportPartnerMemberYear(osv.osv):
 		'''Create the view'''
 		cr.execute("""
 	CREATE OR REPLACE VIEW report_partner_member_year AS (
-	SELECT
-	MIN(id) AS id, year, state,
-	SUM(number) AS number,
-	SUM(amount) AS amount,
-	currency
-	FROM
-	(SELECT
-		MIN(ml.id) AS id,
-		TO_CHAR(ml.date_from, 'YYYY') AS year,
-		CASE WHEN ai.state = 'cancel'
-			THEN 'canceled'
-		ELSE CASE WHEN ai.state = 'open'
-			THEN 'invoiced'
-		ELSE CASE WHEN ai.state = 'paid'
-			THEN 'paid'
-		ELSE 'waiting'
-	END
-	END
-	END AS state,
-	COUNT(ml.id) AS number,
-	SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100)) AS amount,
-	ai.currency_id AS currency
-	FROM membership_membership_line ml
-	JOIN (account_invoice_line ail
-		LEFT JOIN account_invoice ai
-		ON (ail.invoice_id = ai.id))
-	ON (ml.account_invoice_line = ail.id)
-	JOIN res_partner p
-	ON (ml.partner = p.id)
-	GROUP BY TO_CHAR(ml.date_from, 'YYYY'), ai.state,
-	ai.currency_id
-	) AS foo
-	GROUP BY year, state, currency)
+		SELECT
+		MIN(id) AS id,
+		COUNT(ncanceled) as canceled_number,
+		COUNT(npaid) as paid_number,
+		COUNT(ninvoiced) as invoiced_number,
+		COUNT(nwaiting) as waiting_number,
+		SUM(acanceled) as canceled_amount,
+		SUM(apaid) as paid_amount,
+		SUM(ainvoiced) as invoiced_amount,
+		SUM(awaiting) as waiting_amount,
+		year,
+		currency
+		FROM (SELECT
+			CASE WHEN ai.state = 'cancel' THEN ml.id END AS ncanceled,
+			CASE WHEN ai.state = 'paid' THEN ml.id END AS npaid,
+			CASE WHEN ai.state = 'open' THEN ml.id END AS ninvoiced,
+			CASE WHEN (ai.state = 'draft' OR ai.state = 'proforma')
+				THEN ml.id END AS nwaiting,
+			CASE WHEN ai.state = 'cancel'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS acanceled,
+			CASE WHEN ai.state = 'paid'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS apaid,
+			CASE WHEN ai.state = 'open'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS ainvoiced,
+			CASE WHEN (ai.state = 'draft' OR ai.state = 'proforma')
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS awaiting,
+			TO_CHAR(ml.date_from, 'YYYY') AS year,
+			ai.currency_id AS currency,
+			MIN(ml.id) AS id
+			FROM membership_membership_line ml
+			JOIN (account_invoice_line ail
+				LEFT JOIN account_invoice ai
+				ON (ail.invoice_id = ai.id))
+			ON (ml.account_invoice_line = ail.id)
+			JOIN res_partner p
+			ON (ml.partner = p.id)
+			GROUP BY TO_CHAR(ml.date_from, 'YYYY'), ai.state,
+			ai.currency_id, ml.id) AS foo
+		GROUP BY year, currency)
 				""")
 
 ReportPartnerMemberYear()
@@ -542,11 +573,90 @@ class ReportPartnerMemberYearNew(osv.osv):
 	_description = __doc__
 	_auto = False
 	_rec_name = 'year'
+
 	_columns = {
 		'year': fields.char('Year', size='4', readonly=True, select=1),
-		'number': fields.integer('Number', readonly=True),
-		'amount': fields.float('Amount', digits=(16, 2),
-			readonly=True),
+		'canceled_number': fields.integer('Canceled', readonly=True),
+		'waiting_number': fields.integer('Waiting', readonly=True),
+		'invoiced_number': fields.integer('Invoiced', readonly=True),
+		'paid_number': fields.integer('Paid', readonly=True),
+		'canceled_amount': fields.float('Canceled', digits=(16, 2), readonly=True),
+		'waiting_amount': fields.float('Waiting', digits=(16, 2), readonly=True),
+		'invoiced_amount': fields.float('Invoiced', digits=(16, 2), readonly=True),
+		'paid_amount': fields.float('Paid', digits=(16, 2), readonly=True),
+		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
+			select=2),
+	}
+
+	def init(self, cr):
+		'''Create the view'''
+		cr.execute("""
+	CREATE OR REPLACE VIEW report_partner_member_year AS (
+		SELECT
+		MIN(id) AS id,
+		COUNT(ncanceled) as canceled_number,
+		COUNT(npaid) as paid_number,
+		COUNT(ninvoiced) as invoiced_number,
+		COUNT(nwaiting) as waiting_number,
+		SUM(acanceled) as canceled_amount,
+		SUM(apaid) as paid_amount,
+		SUM(ainvoiced) as invoiced_amount,
+		SUM(awaiting) as waiting_amount,
+		year,
+		currency
+		FROM (SELECT
+			CASE WHEN ai.state = 'cancel' THEN ml.id END AS ncanceled,
+			CASE WHEN ai.state = 'paid' THEN ml.id END AS npaid,
+			CASE WHEN ai.state = 'open' THEN ml.id END AS ninvoiced,
+			CASE WHEN (ai.state = 'draft' OR ai.state = 'proforma')
+				THEN ml.id END AS nwaiting,
+			CASE WHEN ai.state = 'cancel'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS acanceled,
+			CASE WHEN ai.state = 'paid'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS apaid,
+			CASE WHEN ai.state = 'open'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS ainvoiced,
+			CASE WHEN (ai.state = 'draft' OR ai.state = 'proforma')
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS awaiting,
+			TO_CHAR(ml.date_from, 'YYYY') AS year,
+			ai.currency_id AS currency,
+			MIN(ml.id) AS id
+			FROM membership_membership_line ml
+			JOIN (account_invoice_line ail
+				LEFT JOIN account_invoice ai
+				ON (ail.invoice_id = ai.id))
+			ON (ml.account_invoice_line = ail.id)
+			JOIN res_partner p
+			ON (ml.partner = p.id)
+			GROUP BY TO_CHAR(ml.date_from, 'YYYY'), ai.state,
+			ai.currency_id, ml.id) AS foo
+		GROUP BY year, currency)
+				""")
+
+ReportPartnerMemberYear()
+
+
+class ReportPartnerMemberYearNew(osv.osv):
+	'''New Membership by Years'''
+
+	_name = 'report.partner_member.year_new'
+	_description = __doc__
+	_auto = False
+	_rec_name = 'year'
+	_columns = {
+		'year': fields.char('Year', size='4', readonly=True, select=1),
+		'canceled_number': fields.integer('Canceled', readonly=True),
+		'waiting_number': fields.integer('Waiting', readonly=True),
+		'invoiced_number': fields.integer('Invoiced', readonly=True),
+		'paid_number': fields.integer('Paid', readonly=True),
+		'canceled_amount': fields.float('Canceled', digits=(16, 2), readonly=True),
+		'waiting_amount': fields.float('Waiting', digits=(16, 2), readonly=True),
+		'invoiced_amount': fields.float('Invoiced', digits=(16, 2), readonly=True),
+		'paid_amount': fields.float('Paid', digits=(16, 2), readonly=True),
 		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
 			select=2),
 	}
@@ -557,32 +667,54 @@ class ReportPartnerMemberYearNew(osv.osv):
 		CREATE OR REPLACE VIEW report_partner_member_year_new AS (
 		SELECT
 		MIN(id) AS id,
-		TO_CHAR(date_from, 'YYYY') as year,
-		COUNT(id) AS number,
-		SUM(amount) AS amount,
+		COUNT(ncanceled) AS canceled_number,
+		COUNT(npaid) AS paid_number,
+		COUNT(ninvoiced) AS invoiced_number,
+		COUNT(nwaiting) AS waiting_number,
+		SUM(acanceled) AS canceled_amount,
+		SUM(apaid) AS paid_amount,
+		SUM(ainvoiced) AS invoiced_amount,
+		SUM(awaiting) AS waiting_amount,
+		year,
 		currency
-		FROM (
-			SELECT
-			MIN(ml1.id) AS id,
-			SUM(ail.price_unit * ail.quantity * ( 1 - ail.discount / 100)) AS amount,
-			ml1.date_from,
-			ai.currency_id AS currency
-			FROM
-			(SELECT
-				partner AS id,
-				MIN(date_from) AS date_from
-				FROM membership_membership_line
-				GROUP BY partner
-			) AS ml1
-			JOIN membership_membership_line ml2
-			JOIN account_invoice_line ail
-			LEFT JOIN account_invoice ai
-			ON (ail.invoice_id = ai.id)
-			ON (ml2.account_invoice_line = ail.id)
-			ON (ml1.id = ml2.partner AND ml1.date_from = ml2.date_from)
-			GROUP BY ai.currency_id, ml1.id, ml1.date_from
-		) AS foo
-		GROUP BY currency, TO_CHAR(date_from, 'YYYY')
+		FROM (SELECT
+			CASE WHEN ai.state = 'cancel' THEN ml2.id END AS ncanceled,
+			CASE WHEN ai.state = 'paid' THEN ml2.id END AS npaid,
+			CASE WHEN ai.state = 'open' THEN ml2.id END AS ninvoiced,
+			CASE WHEN (ai.state = 'draft' OR ai.state = 'proforma')
+				THEN ml2.id END AS nwaiting,
+			CASE WHEN ai.state = 'cancel'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS acanceled,
+			CASE WHEN ai.state = 'paid'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS apaid,
+			CASE WHEN ai.state = 'open'
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS ainvoiced,
+			CASE WHEN (ai.state = 'draft' OR ai.state = 'proforma')
+				THEN SUM(ail.price_unit * ail.quantity * (1 - ail.discount / 100))
+			ELSE 0 END AS awaiting,
+			TO_CHAR(ml2.date_from, 'YYYY') AS year,
+			ai.currency_id AS currency,
+			MIN(ml2.id) AS id
+			FROM (SELECT
+					partner AS id,
+					MIN(date_from) AS date_from
+					FROM membership_membership_line
+					GROUP BY partner
+				) AS ml1
+				JOIN membership_membership_line ml2
+				JOIN (account_invoice_line ail
+					LEFT JOIN account_invoice ai
+					ON (ail.invoice_id = ai.id))
+				ON (ml2.account_invoice_line = ail.id)
+				ON (ml1.id = ml2.partner AND ml1.date_from = ml2.date_from)
+			JOIN res_partner p
+			ON (ml2.partner = p.id)
+			GROUP BY TO_CHAR(ml2.date_from, 'YYYY'), ai.state,
+			ai.currency_id, ml2.id) AS foo
+		GROUP BY year, currency
 		)
 	""")
 
