@@ -93,14 +93,6 @@ class node_class(object):
 			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
 		elif self.object.type=="ressource":
 			where = []
-			if nodename  and nodename.find('dhms') == 0  :
-				nodename = nodename.partition('.')[0]
-				id = int(nodename.replace('dhms',''))
-				where.append(('id','=',id))
-			elif nodename:
-				if nodename.find('__') :
-					nodename=nodename.replace('__','/')
-				where.append(('name','=',nodename))
 			if self.object.ressource_tree:
 				# Todo change False by selected parent
 				if obj._parent_name in obj.fields_get(self.cr,self.uid):
@@ -111,11 +103,20 @@ class node_class(object):
 			else:
 				if self.object2:
 					return []
+			name_for = obj._name.rpartition('.')[2]
+			if nodename  and nodename.find(name_for) == 0  :
+				nodename = nodename.partition('.')[0]
+				id = int(nodename.replace(name_for,''))
+				where.append(('id','=',id))
+			elif nodename:
+				if nodename.find('__') :
+					nodename=nodename.replace('__','/')
+				where.append(('name','=',nodename))
 			ids = obj.search(self.cr, self.uid, where, self.context)
 			res = obj.browse(self.cr, self.uid, ids,self.context)
 			for r in res:
 				if not r.name:
-					r.name = 'dhms%d'%r.id
+					r.name = name_for+'%d'%r.id
 			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x), res)
 		else:
 			print "*** Directory type", self.object.type, "not implemented !"
