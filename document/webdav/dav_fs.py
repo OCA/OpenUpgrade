@@ -110,7 +110,7 @@ class tinyerp_handler(dav_interface):
 		if node.type=='file':
 			return base64.decodestring(node.object.datas or '')
 		elif node.type=='content':
-			report = pool.get('ir.actions.report.xml').browse(cr, 3, node.report_id)
+			report = pool.get('ir.actions.report.xml').browse(cr, 3,node.content['report_id']['id'])
 			srv = netsvc.LocalService('report.'+report.report_name)
 			pdf,pdftype = srv.create(cr, 3, [node.object.id], {}, {})
 			return pdf
@@ -205,6 +205,13 @@ class tinyerp_handler(dav_interface):
 		node = self.uri2object(cr, 3, objuri)
 
 		fobj = pool.get('ir.attachment')
+
+
+#Temp solution to allows those file which do nt have any extension
+
+
+		if objname.find('.') :
+			objname = objname + '.txt'
 		val = {
 			'name': objname,
 			'datas_fname': objname,
