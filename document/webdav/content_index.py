@@ -15,7 +15,7 @@ def content_index(content, filename=None, content_type=None):
 		stdin.close()
 		result = stdout.read()
 	elif ext == '.pdf':
-#		fileHandle = StringIO.StringIO("")
+	#		fileHandle = StringIO.StringIO("")
 		fname = os.tempnam(filename)+'.pdf'
 		fp = file(fname,'wb')
 		fp.write(content)
@@ -31,8 +31,6 @@ def content_index(content, filename=None, content_type=None):
 		fp.close()
 		fp = os.popen('python %s/addons/document/webdav/odt2txt.py '%(os.getcwd())+fname+' -', 'r')
 		result = fp.read()
-	elif ext in ('.png','.jpg','.jpeg'):
-		result=''
-	else:
+	elif ext in ('.txt','.py','.patch','.html',) :
 		result = content
 	return result
