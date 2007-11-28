@@ -701,6 +701,10 @@ class DBModalDialog:
     def getTag( self, cCtrlName ):
         return self.getControlModelProperty( cCtrlName, "Tag" )
 
+    def setEchoChar(self, cCtrlName , cVal):
+        self.setControlModelProperty(cCtrlName, "EchoChar", cVal)
+    def getEchoChar(self, cCtrlName):
+        return self.setControlModelProperty(cCtrlName, "EchoChar")
 
     #--------------------------------------------------
     #   Add listeners to controls.

@@ -8,6 +8,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from Change import *
+    database="test"
 
 class ServerParameter( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
@@ -19,26 +20,27 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         docinfo=doc.getDocumentInfo()
         self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
 
-        self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Server URL")
+        self.win.addFixedText("lblVariable", 2, 12, 35, 15, "Server URL")
         if docinfo.getUserFieldValue(0)=="":
             docinfo.setUserFieldValue(0,"http://localhost:8069")
         self.win.addEdit("txtHost",-34,9,91,15,docinfo.getUserFieldValue(0))
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
                       ,actionListenerProc = self.btnChange_clicked )
 
-        self.win.addFixedText("lblDatabaseName", 6, 31, 60, 15, "Database")
+        self.win.addFixedText("lblDatabaseName", 6, 31, 31, 15, "Database")
         #self.win.addFixedText("lblMsg", -2,28,123,15)
         self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
         self.lstDatabase = self.win.getControl( "lstDatabase" )
-
         #self.win.selectListBoxItem( "lstDatabase", docinfo.getUserFieldValue(2), True )
         #self.win.setEnabled("lblMsg",False)
 
-        self.win.addFixedText("lblLoginName", 17, 51, 60, 15, "Login")
+        self.win.addFixedText("lblLoginName", 17, 51, 20, 15, "Login")
         self.win.addEdit("txtLoginName",-2,48,123,15,docinfo.getUserFieldValue(1))
 
-        self.win.addFixedText("lblPassword", 6, 70, 60, 15, "Password")
-        self.win.addEdit("txtPassword",-2,67,123,15)
+        self.win.addFixedText("lblPassword", 6, 70, 31, 15, "Password")
+        self.win.addEdit("txtPassword",-2,67,123,15,)
+        self.win.setEchoChar("txtPassword",42)
+
 
         self.win.addButton('btnOK',-2 ,-5, 60,15,'Connect'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
@@ -58,6 +60,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
                 for i in range(res.__len__()):
                     self.lstDatabase.addItem(res[i],i)
+                sValue = database
 
         self.win.doModalDialog("lstDatabase",sValue)
 

@@ -1093,6 +1093,10 @@ class DBModalDialog:
     def getTag( self, cCtrlName ):
         return self.getControlModelProperty( cCtrlName, "Tag" )
 
+    def setEchoChar(self, cCtrlName , cVal):
+        self.setControlModelProperty(cCtrlName, "EchoChar", cVal)
+    def getEchoChar(self, cCtrlName):
+        return self.setControlModelProperty(cCtrlName, "EchoChar")
 
     #--------------------------------------------------
     #   Add listeners to controls.
@@ -1764,6 +1768,7 @@ if __name__<>"package":
     from lib.error import ErrorDialog
     from lib.functions import *
     from Change import *
+    database="abc"
 
 class ServerParameter( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
@@ -1775,26 +1780,27 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         docinfo=doc.getDocumentInfo()
         self.win=DBModalDialog(60, 50, 160, 108, "Server Connection Parameter")
 
-        self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Server URL")
+        self.win.addFixedText("lblVariable", 2, 12, 35, 15, "Server URL")
         if docinfo.getUserFieldValue(0)=="":
             docinfo.setUserFieldValue(0,"http://localhost:8069")
         self.win.addEdit("txtHost",-34,9,91,15,docinfo.getUserFieldValue(0))
         self.win.addButton('btnChange',-2 ,9,30,15,'Change'
                       ,actionListenerProc = self.btnChange_clicked )
 
-        self.win.addFixedText("lblDatabaseName", 6, 31, 60, 15, "Database")
+        self.win.addFixedText("lblDatabaseName", 6, 31, 31, 15, "Database")
         #self.win.addFixedText("lblMsg", -2,28,123,15)
         self.win.addComboListBox("lstDatabase", -2,28,123,15, True)
         self.lstDatabase = self.win.getControl( "lstDatabase" )
-
         #self.win.selectListBoxItem( "lstDatabase", docinfo.getUserFieldValue(2), True )
         #self.win.setEnabled("lblMsg",False)
 
-        self.win.addFixedText("lblLoginName", 17, 51, 60, 15, "Login")
+        self.win.addFixedText("lblLoginName", 17, 51, 20, 15, "Login")
         self.win.addEdit("txtLoginName",-2,48,123,15,docinfo.getUserFieldValue(1))
 
-        self.win.addFixedText("lblPassword", 6, 70, 60, 15, "Password")
-        self.win.addEdit("txtPassword",-2,67,123,15)
+        self.win.addFixedText("lblPassword", 6, 70, 31, 15, "Password")
+        self.win.addEdit("txtPassword",-2,67,123,15,)
+        self.win.setEchoChar("txtPassword",42)
+
 
         self.win.addButton('btnOK',-2 ,-5, 60,15,'Connect'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
@@ -1814,6 +1820,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
                 for i in range(res.__len__()):
                     self.lstDatabase.addItem(res[i],i)
+                sValue = database
 
         self.win.doModalDialog("lstDatabase",sValue)
 
@@ -2422,8 +2429,13 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         regexes = [
                   ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                   ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\% *\'([a-zA-Z0-9%.]+)\' *\\]\\]',"Field"],
-                  ['\\[\\[ *([a-zA-Z0-9%]+) *or *([a-zA-Z0-9_\.]+) *\\]\\]',"Field"]
+                  #['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'\' *\\]\\]',"Field"]
+                  ['\\[\\[ *[a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or *.+? \\]\\]',"Field"],
+                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) and *.+? \\]\\]',"Field"],
+                  ['\\[\\[ *.+? or *([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                  ['\\[\\[ *(.+?) and *([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                  ['\\[\\[ *.+? % *([a-zA-Z0-9_\.]+) \\]\\]',"Field"]
                   ]
         oFieldObject = []
         oRepeatInObjects = []
@@ -2444,6 +2456,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     for reg in regexes:
+                        #print reg[0]
                         res=re.findall(reg[0],oPar.Items[1])
                         if len(res) <> 0:
                             if res[0][0] == "objects":
@@ -2466,18 +2479,23 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
+                                    print sObject,"++++++++"
                                     r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
                                 if len(r) <> 0:
                                     if r <> "TTT":
-                                        sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
-                                        if sExpr:
-                                            oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
-                                        else:
-                                            oPar.Items=(str(sExpr) ,oPar.Items[1])
+                                        try:
+                                            sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
+                                            print type(sExpr)
+                                            if type(sExpr) in ['str','unicode']:
+                                                oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                            else:
+                                                oPar.Items=(str(sExpr) ,oPar.Items[1])
 
-                                        oPar.update()
+                                            oPar.update()
+                                        except:
+                                            import traceback;traceback.print_exc()
                                     else:
                                         oPar.Items=(u""+r,oPar.Items[1])
                                         oPar.update()
@@ -2515,7 +2533,14 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             regexes = [
                 ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                 ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                ['\\[\\[ *.+? \\]\\]', "Expression"]
+                #['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'\' *\\]\\]',"Field"],
+                ['\\[\\[ *[a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or *.+? \\]\\]',"Field"],
+                ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+                ['\\[\\[ *([a-zA-Z0-9_\.]+) and *.+? \\]\\]',"Field"],
+                ['\\[\\[ *.+? or *([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                ['\\[\\[ *.+? and *([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                ['\\[\\[ *.+? % *([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                ['\\[\\[ *.+? *\\]\\]', "Expression"]
                 ]
 
             #regexes = [['\[\[ repeatIn\( (.+), \'([a-zA-Z0-9_]+)\' \) \]\]','RepeatIn'],['\[\[([a-zA-Z0-9_\.]+)\]\]','Field'],['\[\[.+?\]\]','Expression']]
@@ -2526,10 +2551,11 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             for reg in regexes:
                 search.SearchString = reg[0]
                 found = doc.findFirst( search )
-
+                print "++++++++++++++++++",reg
                 while found:
+                    print "*********************",found.String
                     res=re.findall(reg[0],found.String)
-
+                    print res
                     if found.String not in [r[0] for r in aReportSyntex] and len(res) == 1:
 
                         text=found.getText()
@@ -2554,7 +2580,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 for r in res[0]:
                     search.SearchString=r
                     found=doc.findFirst(search)
-
+                    print
                     while found:
 
                         text=found.getText()
@@ -2569,7 +2595,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         found.String =""
                         found = doc.findNext(found.End, search)
         except:
-            pass
+            import traceback;traceback.print_exc()
 
 
 
