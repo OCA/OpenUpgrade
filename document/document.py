@@ -1,4 +1,4 @@
-##############################################################################
+#############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #                    Fabien Pinckaers <fp@tiny.Be>
@@ -58,12 +58,28 @@ class node_class(object):
 			where.append( ('res_model','=',self.object2._name) )
 			where.append( ('res_id','=',self.object2.id) )
 			for content in self.object.content_ids:
+				if not self.object2.name:
+					object_name = 'dhms'+self.object.id
+				else:
+					object_name = self.object2.name
+
 				if not nodename:
-					n = node_class(self.cr, self.uid,  self.path+'/'+self.object2.name+content.suffix, self.object2, False, content=content, type='content')
+					if content.suffix:
+						path = self.path+'/'+self.object2.name + content.suffix+content.extension
+					else :
+						path = self.path+'/'+self.object2.name+content.extension
+					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content')
 					res2.append( n)
 				else:
-					if nodename == self.object2.name + content.suffix:
-						n = node_class(self.cr, self.uid,  self.path+'/'+self.object2.name+content.suffix, self.object2, False, content=content, type='content')
+					if content.suffix:
+						test_nodename = self.object2.name + content.suffix+content.extension
+						path = self.path+'/'+self.object2.name + content.suffix
+					else:
+						test_nodename = self.object2.name+content.extension
+						path = self.path+'/'+self.object2.name
+
+					if nodename == test_nodename:
+						n = node_class(self.cr, self.uid, path, self.object2, False, content=content, type='content')
 						res2.append(n)
 		else:
 			where.append( ('parent_id','=',self.object.id) )
@@ -72,7 +88,7 @@ class node_class(object):
 			where.append( (fobj._rec_name,'=',nodename) )
 		ids = fobj.search(self.cr, self.uid, where, context=self.context)
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
-		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','_'), x, False, type='file'), res) + res2
+		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file'), res) + res2
 
 	def _child_get(self, nodename=False):
 		if self.type<>'collection':
@@ -84,33 +100,36 @@ class node_class(object):
 			where.append(('parent_id','=',self.object.id))
 			ids = self.object.search(self.cr, self.uid, where, self.context)
 			res = self.object.browse(self.cr, self.uid, ids,self.context)
-			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','_'), x, False), res)
+			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
 		elif self.object.type=="ressource":
-
 			where = []
-			if nodename:
+			if nodename  and nodename.find('dhms') == 0  :
+				nodename = nodename.partition('.')[0]
+				id = int(nodename.replace('dhms',''))
+				where.append(('id','=',id))
+			elif nodename:
+				if nodename.find('__') :
+					nodename=nodename.replace('__','/')
 				where.append(('name','=',nodename))
-
-			obj = self.object2
+			if self.object.ressource_tree:
+				# Todo change False by selected parent
+				if obj._parent_name in obj.fields_get(self.cr,self.uid):
+					where.append((obj._parent_name,'=',self.object2 and self.object2.id or False))
 			if not self.object2:
 				pool = pooler.get_pool(self.cr.dbname)
 				obj = pool.get(self.object.ressource_type_id.model)
-
-			if self.object.ressource_tree:
-				# Todo change False by selected parent
-				where.append((obj._parent_name,'=',self.object2 and self.object2.id or False))
 			else:
 				if self.object2:
 					return []
-
 			ids = obj.search(self.cr, self.uid, where, self.context)
 			res = obj.browse(self.cr, self.uid, ids,self.context)
-			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','_'), self.object, x), res)
-
+			for r in res:
+				if not r.name:
+					r.name = 'dhms%d'%r.id
+			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x), res)
 		else:
 			print "*** Directory type", self.object.type, "not implemented !"
 			print self.type, nodename, self.object, self.object2
-
 
 	def children(self):
 		return self._child_get() + self._file_get()
@@ -165,6 +184,12 @@ class document_directory(osv.osv):
 	_sql_constraints = [
 		('filename_uniq', 'unique (name,parent_id)', 'The directory name must be unique !')
 	]
+
+	def onchange_content_id(self, cr, uid, ids, ressource_type_id):
+		content_ids=self.pool.get('document.directory.content').search(cr,uid,[('directory_id','=',ids[0])])
+		del_ids=self.pool.get('document.directory.content').unlink(cr,uid,content_ids)
+		return {}
+
 	def _get_childs(self, cr, uid, node, nodename=False, context={}):
 		where = []
 		if nodename:
@@ -261,13 +286,12 @@ class ir_action_report_xml(osv.osv):
 			if model:
 				model_id =model_pool.search(cr,uid,[('model','=',model)])
 				if model_id:
-					res[(data.get('id'))] = model_id[0]
+					res[data.get('id')] = model_id[0]
 				else:
-					res[(data.get('id'))]
+					res[data.get('id')] = False
 		return res
 
 	def _model_search(self, cr, uid, obj, name, args):
-		print args
 		if not len(args):
 			return []
 		model_id= args[0][2]
@@ -369,5 +393,4 @@ class document_file(osv.osv):
 				value = file(r['link'], 'rb').read()
 				r['datas'] = base64.encodestring(value)
 		return res
-
 document_file()
