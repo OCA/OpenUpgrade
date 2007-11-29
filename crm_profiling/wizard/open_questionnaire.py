@@ -8,13 +8,20 @@ _QUEST_FIELDS=UpdateableDict()
 class open_questionnaire(wizard.interface):
 
 	def _questionnaire_compute(self, cr, uid, data, context):
+		temp = []	
 		for x in data['form']:
 			if x[:len(x)-1] == "quest_form" and data['form'][x] != 0 :
-				query = """ 
-				INSERT INTO partner_question_rel 
-				VALUES (%d,%d);"""% (data['id'],data['form'][x])
+				
+				temp.append(data['form'][x])
 
-				cr.execute(query)
+		query = """ 
+		select answer from partner_question_rel 
+		where partner =%d"""% data['id']
+		cr.execute(query)
+		for x in cr.fetchall():
+			temp.append(x[0])
+
+		pooler.get_pool(cr.dbname).get('res.partner').write(cr, uid, [data['id']],{'answers_ids':[[6,0,temp]]}, context )
 		return {}
 
 
