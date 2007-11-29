@@ -149,15 +149,21 @@ class membership_line(osv.osv):
 		'''Check if membership product is not in the past'''
 
 		cr.execute('''
-		 SELECT (ml.date_to - ail.create_date)
+		 SELECT MIN(ml.date_to - ai.date_invoice)
 		 FROM membership_membership_line ml
 		 JOIN account_invoice_line ail ON (
 			ml.account_invoice_line = ail.id
 			)
+		JOIN account_invoice ai ON (
+			ai.id = ail.invoice_id)
 		WHERE ml.id in (%s)
 		''' % ','.join([str(id) for id in ids]))
-		res = cr.fetchall
-		print res
+
+		res = cr.fetchone()
+		for r in res:
+			if r[0] < 0:
+				return False
+		return True
 
 	def _state(self, cr, uid, ids, name, args, context=None):
 		'''Compute the state lines'''
