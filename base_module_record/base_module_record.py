@@ -69,6 +69,10 @@ class base_module_record(osv.osv):
 		record = doc.createElement('record')
 		record.setAttribute("id", record_id)
 		record.setAttribute("model", model)
+		lids  = self.pool.get('ir.model.data').search(cr, uid, [('model','=',model)])
+		res = self.pool.get('ir.model.data').read(cr, uid, lids[:1], ['module'])
+		if res:
+			self.depends[res[0]['module']]=True
 		record_list = [record]
 		fields = self.pool.get(model).fields_get(cr, uid)
 		for key,val in data.items():
