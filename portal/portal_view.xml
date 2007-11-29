@@ -42,8 +42,6 @@
 
 	<menuitem name="Portal/Configuration/Portals"  id="menu_portal_portal" action="action_portal_form"/>
 
-
-
 	<record model="ir.actions.act_window" id="action_portal_model_form">
 		<field name="name">Portal Model</field>
 		<field name="type">ir.actions.act_window</field>
@@ -74,6 +72,17 @@
 			</form>
 		</field>
 	</record>
+
+
+<!-- new features -->
+	<menuitem name="Portal/Bug tracker"  id="menu_portal_bugs" />
+
+	<menuitem
+		name="Portal/Bug tracker/Report a bug"
+		action="wizard_portal_create_bug"
+		type="wizard"
+		id="menu_wizard_create_bug"/>
+	<menuitem name="Portal/Bug tracker/All bugs"  id="menu_portal_bugs_all" action="action_portal_form"/>
 
 </data>
 </terp>
