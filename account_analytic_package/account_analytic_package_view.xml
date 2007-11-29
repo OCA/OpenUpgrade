@@ -2,6 +2,21 @@
 <terp>
 	<data>
 
+	<record model="ir.ui.view" id="view_account_analytic_package">
+		<field name="name">account.analytic.account.package.form</field>
+		<field name="model">account.analytic.account</field>
+		<field name="inherit_id" ref="account.view_account_analytic_account_form" />
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Package Weight">
+					<field name="package_ok"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+
 	<record model="ir.ui.view" id="view_crm_section_form_package">
 		<field name="name">crm.case.section.package.form</field>
 		<field name="model">crm.case.section</field>
@@ -64,6 +79,23 @@
 	</record>
 
 
+	<record model="ir.ui.view" id="view_account_analytic_line_package_form">
+		<field name="name">account.analytic.line.package.form</field>
+		<field name="model">account.analytic.line.package</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Service &amp; Activity Units">
+				<field name="date" select="1"/>
+				<field name="name" select="2"/>
+				<field name="partner_id" select="1"/>
+				<field name="account_id" select="1"/>
+				<field name="product_id" select="2"/>
+				<field name="unit_amount"/>
+				<field name="unit_weight"/>
+				<field name="total_weight" sum="Units"/>
+			</form>
+		</field>
+	</record>
 	<record model="ir.ui.view" id="view_account_analytic_line_package_tree">
 		<field name="name">account.analytic.line.package.tree</field>
 		<field name="model">account.analytic.line.package</field>

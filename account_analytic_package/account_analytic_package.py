@@ -29,6 +29,15 @@
 import operator
 from osv import osv, fields
 
+
+class account_analytic_account(osv.osv):
+	_inherit = "account.analytic.account"
+	_columns = {
+		'package_ok': fields.boolean('Used in Package'),
+	}
+account_analytic_account()
+
+
 class product_product(osv.osv):
 	_inherit = "product.product"
 	_columns = {
@@ -99,7 +108,8 @@ class account_analytic_line_package(osv.osv):
 					product_product p on (p.id=l.product_id) 
 				where 
 					l.product_id is not null and
-					p.package_weight<>0
+					p.package_weight<>0 and
+					a.package_ok
 			)
 		""")
 	_columns = {
@@ -136,7 +146,8 @@ class account_analytic_line_package_month(osv.osv):
 					product_product p on (p.id=l.product_id) 
 				where 
 					l.product_id is not null and
-					p.package_weight<>0
+					p.package_weight<>0 and
+					a.package_ok
 				group by
 					l.product_id,
 					a.partner_id,
