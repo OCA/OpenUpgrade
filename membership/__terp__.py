@@ -6,7 +6,9 @@
 	"depends" : [
 		"base", "product", "account"
 		],
-	"demo_xml" : [],
+	"demo_xml" : [
+		"demo_data.xml",
+		],
 	"init_xml" : [
 		"membership_view.xml",
 		],

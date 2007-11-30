@@ -142,6 +142,7 @@ AS final
 %s
 '''
 
+
 class membership_line(osv.osv):
 	'''Member line'''
 
@@ -159,7 +160,7 @@ class membership_line(osv.osv):
 		WHERE ml.id in (%s)
 		''' % ','.join([str(id) for id in ids]))
 
-		res = cr.fetchone()
+		res = cr.fetchall()
 		for r in res:
 			if r[0] < 0:
 				return False
@@ -217,7 +218,6 @@ class membership_line(osv.osv):
 			]
 
 membership_line()
-
 
 
 class Partner(osv.osv):
@@ -311,12 +311,15 @@ class Partner(osv.osv):
 		'''Search on membership stop date'''
 		if not len(args):
 			return []
+		where = ' AND '.join(['date_to '+x[1]+' \''+str(x[2])+'\''
+			for x in args])
 		cr.execute('SELECT partner, MAX(date_to) \
 				FROM ( \
 					SELECT partner, MAX(date_to) AS date_to \
 					FROM membership_membership_line \
 					GROUP BY partner \
 				) AS foo \
+				WHERE '+where+' \
 				GROUP BY partner')
 		res = cr.fetchall()
 		if not res:
@@ -400,6 +403,7 @@ class Product(osv.osv):
 			}
 Product()
 
+
 class Invoice(osv.osv):
 	'''Invoice'''
 
@@ -452,53 +456,6 @@ class Invoice(osv.osv):
 
 Invoice()
 
-#class ReportPartnerMemberProduct(osv.osv):
-#	'''Membership by Products'''
-#
-#	_name = 'report.membership.product'
-#	_description = __doc__
-#	_auto = False
-#	_rec_name = 'product'
-#	_columns = {
-#		'product': fields.many2one('product.product', 'Membership product', select=1),
-#		'state': fields.selection([
-#			('draft','Draft'),
-#			('proforma','Pro-forma'),
-#			('open','Open'),
-#			('paid','Paid'),
-#			('cancel','Canceled')
-#		], 'State', readonly=True, select=1),
-#		'number': fields.integer('Number', readonly=True),
-#		'price' : fields.float('Price', readonly=True),
-##		'amount': fields.float('Amount', digits=(16, 2), readonly=True),
-##		'currency': fields.many2one('res.currency', 'Currency', readonly=True,
-##			select=2),
-#	}
-#
-#	def init(self, cr):
-#		'''Create the view'''
-#		cr.execute("""
-#			CREATE OR REPLACE VIEW report_membership_product AS (
-#				SELECT
-#					MIN(l.id) AS id,
-#					l.product_id AS product,
-#					SUM(l.quantity) AS number,
-#					SUM(l.quantity*l.price_unit*(1-l.discount)) AS price,
-#					i.state AS state
-#				FROM account_invoice_line l
-#				LEFT JOIN account_invoice i ON (
-#					l.invoice_id=i.id
-#					)
-#				LEFT JOIN product_product p ON (
-#					p.id=l.product_id
-#					)
-#				WHERE p.membership
-#				GROUP BY
-#					l.product_id,
-#					i.state
-#				)""")
-#
-#ReportPartnerMemberProduct()
 
 class ReportPartnerMemberYear(osv.osv):
 	'''Membership by Years'''
@@ -571,6 +528,7 @@ class ReportPartnerMemberYear(osv.osv):
 				""")
 
 ReportPartnerMemberYear()
+
 
 class ReportPartnerMemberYearNew(osv.osv):
 	'''New Membership by Years'''

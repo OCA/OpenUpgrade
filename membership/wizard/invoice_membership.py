@@ -54,13 +54,17 @@ def _invoice_membership(self, cr, uid, data, context):
 		line_dict = invoice_line_obj.product_id_change(cr, uid, {}, product_id, product['uom_id'][0], quantity, '', 'out_invoice', partner_id, context=context)
 
 		line_value.update(line_dict['value'])
-		tax_tab = [(6, 0, line_value['invoice_line_tax_id'])]
-		line_value['invoice_line_tax_id'] = tax_tab
+		if line_value['invoice_line_tax_id']:
+			tax_tab = [(6, 0, line_value['invoice_line_tax_id'])]
+			line_value['invoice_line_tax_id'] = tax_tab
+		else:
+			print "no tax"
 		invoice_line_id = invoice_line_obj.create(cr, uid, line_value)
 		invoice_list.append(invoice_id)
-		invoice_obj.write(cr, uid, [invoice_id], {'tax_line':tax_tab})
-		tax_value = invoice_tax_obj.compute(cr, uid, invoice_id).values()[0]
-		invoice_tax_obj.create(cr, uid, tax_value)
+		if line_value['invoice_line_tax_id']:
+			invoice_obj.write(cr, uid, [invoice_id], {'tax_line':tax_tab})
+			tax_value = invoice_tax_obj.compute(cr, uid, invoice_id).values()[0]
+			invoice_tax_obj.create(cr, uid, tax_value)
 
 	value = {
 			'domain': [
