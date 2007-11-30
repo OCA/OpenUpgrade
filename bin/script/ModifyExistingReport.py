@@ -56,10 +56,16 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
 
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
-                self.lstReport.addItem(self.res_other[i]['name'],self.lstReport.getItemCount())
+                self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',self.res_other[i]['model'])])
+                fields=['name','model']
+                self.model_res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                if self.model_res_other <> []:
+                    self.lstReport.addItem(self.model_res_other[0]['name']+" - "+self.res_other[i]['name'],self.lstReport.getItemCount())
+                else:
+                    self.lstReport.addItem(self.res_other[i]['model']+" - "+self.res_other[i]['name'],self.lstReport.getItemCount())
 
         #self.win.addFixedText("lblModuleSelection1", 2, 98, 178, 15, "Module Selection")
-        self.win.addButton('btnSave',-2 ,-5,80,15,'Save to Temp Directory'
+        self.win.addButton('btnSave',-2 ,-5,80,15,'Open Report'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton('btnCancel',-2 -80 ,-5,45,15,'Cancel'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )

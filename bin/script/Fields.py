@@ -43,6 +43,7 @@ class Fields(unohelper.Base, XJobExecutor ):
         self.aComponentAdd=[]
         self.aObjectList=[]
         self.aListFields=[]
+        self.aVariableList=[]
         EnumDocument(self.aItemList,self.aComponentAdd)
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
@@ -62,13 +63,15 @@ class Fields(unohelper.Base, XJobExecutor ):
             tcur=text.createTextCursorByRange(cursor)
             for j in range(self.aObjectList.__len__()):
                 if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == "Objects":
-                    self.insVariable.addItem(self.aObjectList[j],1)
+                    self.aVariableList.append(self.aObjectList[j])
+                    #self.insVariable.addItem(self.aObjectList[j],1)
             for i in range(self.aItemList.__len__()):
                 if self.aComponentAdd[i]=="Document":
                     sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                     for j in range(self.aObjectList.__len__()):
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                            self.insVariable.addItem(self.aObjectList[j],1)
+                            self.aVariableList.append(self.aObjectList[j])
+                            #self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
                     #for k in range(self.aSectionList.__len__()):
@@ -76,10 +79,12 @@ class Fields(unohelper.Base, XJobExecutor ):
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
                         for j in range(self.aObjectList.__len__()):
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                                self.insVariable.addItem(self.aObjectList[j],1)
+                                self.aVariableList.append(self.aObjectList[j])
+                                #self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
+
             self.bModify=bFromModify
             if self.bModify==True:
                 sItem=""
@@ -91,6 +96,17 @@ class Fields(unohelper.Base, XJobExecutor ):
                 genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
 #                self.win.setEditText("txtUName",sDisplayName)
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
+            for var in self.aVariableList:
+                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+                self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
+                fields=['name','model']
+                self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                if self.model_res <> []:
+                    self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+                else:
+                    self.insVariable.addItem(var ,self.insVariable.getItemCount())
+                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
+
             self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
@@ -141,7 +157,10 @@ class Fields(unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             self.aListFields=[]
-            sItem=self.win.getComboBoxText("cmbVariable")
+            tempItem = self.win.getComboBoxText("cmbVariable")
+            for var in self.aVariableList:
+                if var.__getslice__(0,var.find("(")) == tempItem.__getslice__(0,tempItem.find("(")):
+                    sItem=var
             genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
 
     def btnOkOrCancel_clicked( self, oActionEvent ):

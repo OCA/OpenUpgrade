@@ -2,6 +2,7 @@
 import uno
 import string
 import unohelper
+import random
 import xmlrpclib
 import base64, tempfile
 from com.sun.star.task import XJobExecutor
@@ -50,9 +51,16 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
             name = self.res_other[0]['name']
             report_name = self.res_other[0]['report_name']
-        else:
+        elif docinfo.getUserFieldValue(3) <> "":
             name = ""
-            report_name = docinfo.getUserFieldValue(3)
+            result =  "rnd"
+            for i in range(5):
+                result =result + random.choice('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
+
+            report_name = docinfo.getUserFieldValue(3) + "." + result
+        else:
+            ErrorDialog("Please select appropriate module...","Note: use Tiny Report -> Open a new Report", "Module selection ERROR");
+            exit(1)
 
         self.win = DBModalDialog(60, 50, 180, 85, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
@@ -64,7 +72,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
                                 actionListenerProc = self.btnOkOrCancel_clicked)
         else:
-            self.win.addButton( "btnSend", -5, -5, 80, 15, "Save New Report ....",
+            self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
                                 actionListenerProc = self.btnOkOrCancel_clicked)
         self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
                         actionListenerProc = self.btnOkOrCancel_clicked)

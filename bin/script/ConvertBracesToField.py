@@ -67,8 +67,9 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     for reg in regexes:
-                        #print reg[0]
+                        print reg[0]
                         res=re.findall(reg[0],oPar.Items[1])
+                        print res
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
@@ -90,7 +91,6 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
-                                    print sObject,"++++++++"
                                     r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
@@ -103,9 +103,6 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         except Exception, e:
                                             oPar.Items=(str(sExpr) ,oPar.Items[1])
                                             oPar.update()
-                                            print e;
-
-
                                     else:
                                         oPar.Items=(u""+r,oPar.Items[1])
                                         oPar.update()
@@ -144,12 +141,12 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                 ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
                 #['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'\' *\\]\\]',"Field"],
-                ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-                ['\\[\\[ *([a-zA-Z0-9_\.]+) or *.+? \\]\\]',"Field"],
-                ['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
-                ['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                ['\\[\\[ .+? and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                ['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                #['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+                #['\\[\\[ *([a-zA-Z0-9_\.]+) or *.+? \\]\\]',"Field"],
+                #['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
+                #['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                #['\\[\\[ .+? and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+                #['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
                 ['\\[\\[ *.+? *\\]\\]', "Expression"]
                 ]
 
@@ -161,40 +158,31 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             for reg in regexes:
                 search.SearchString = reg[0]
                 found = doc.findFirst( search )
-                print "++++++++++++++++++",reg
                 while found:
                     res=re.findall(reg[0],found.String)
                     print len(res)
-                    if len(res) == 1:
-                        if found.String not in [r[0] for r in aReportSyntex]:
-                            print res
-                            text=found.getText()
-                            oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-                            if reg[1]<>"Expression":
-                                oInputList.Items=(u""+found.String,u""+found.String)
-                            else:
-                                oInputList.Items=(u"???????",u""+found.String)
-                            aReportSyntex.append([oInputList,reg[1]])
-                            text.insertTextContent(found,oInputList,False)
-                            found.String =""
 
+                    if found.String not in [r[0] for r in aReportSyntex] and len(res) == 1 :
+                        text=found.getText()
+                        oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
+                        if reg[1]<>"Expression":
+                            oInputList.Items=(u""+found.String,u""+found.String)
                         else:
-                            aRes.append([res,reg[1]])
-                            found = doc.findNext(found.End, search)
-                    elif len(res)>1:
-                        print res
-                        found = doc.findNext(found.End, search)
+                            oInputList.Items=(u"???????",u""+found.String)
+                        aReportSyntex.append([oInputList,reg[1]])
+                        text.insertTextContent(found,oInputList,False)
+                        found.String =""
+
                     else:
+                        aRes.append([res,reg[1]])
                         found = doc.findNext(found.End, search)
             search = doc.createSearchDescriptor()
             search.SearchRegularExpression = False
 
             for res in aRes:
-                print res,"$$$$$$$$$$$$$$$$$$$$"
                 for r in res[0]:
                     search.SearchString=r
                     found=doc.findFirst(search)
-                    print
                     while found:
 
                         text=found.getText()
