@@ -58,7 +58,6 @@
 	<field name="type" ref="payment_type_dta"/>
 	<field name="bank_id" ref="main_bank"/>
 	<field name="journal" model="account.journal" search="[('type','=','cash')]"/>
-	<field name="account">1</field> <!-- FIXME -->
   </record>
 
 </data>

@@ -37,8 +37,6 @@ FORM = """<?xml version="1.0"?>
 <form string="DTA file creation - Results">
 <separator colspan="4" string="Clic on 'Save as' to save the DTA file :" />
 	<field name="dta"/>
-	<separator string="Logs" colspan="4"/>
-	<field name="note" colspan="4" nolabel="1"/>
 </form>"""
 
 FIELDS = {
@@ -46,10 +44,6 @@ FIELDS = {
 		'string': 'DTA File',
 		'type': 'binary',
 		'readonly': True,
-	},
-	'note': {
-		'string': 'Log',
-		'type': 'text'
 	},
 }
 
@@ -351,23 +345,10 @@ def c_ljust(s, size):
 	s = s.decode('utf-8').encode('latin1','replace').ljust(size)
 	return s
 
-
-class Log:
-	def __init__(self):
-		self.content= ""
-		self.error= False
-	def add(self,s,error=True):
-		self.content= self.content + s
-		if error:
-			self.error= error
-	def __call__(self):
-		return self.content
-
 def _create_dta(obj, cr, uid, data, context):
 	v={}
 	v['uid'] = str(uid)
 	v['creation_date']= time.strftime('%y%m%d')
-	log=Log()
 	dta=''
 
 	pool = pooler.get_pool(cr.dbname)
@@ -377,17 +358,18 @@ def _create_dta(obj, cr, uid, data, context):
 	payment = payment_obj.browse(cr, uid, data['id'], context=context)
 
 	if not payment.mode or payment.mode.type.code != 'dta':
-		return {'note':'No payment mode or payment type code invalid.'}
+		raise wizard.except_wizard('Error',
+				'No payment mode or payment type code invalid.')
 	bank = payment.mode.bank_id
 	if not bank:
-		return {'note':'No bank account for the company.'}
+		raise wizard.except_wizard('Error', 'No bank account for the company.')
 
 	v['comp_bank_name']= bank.bank and bank.bank.name or False
 	v['comp_bank_clearing'] = bank.bank.clearing
 
 	if not v['comp_bank_clearing']:
-		return {'note':
-				'You must provide a Clearing Number for your bank account.'}
+		raise wizard.except_wizard('Error',
+				'You must provide a Clearing Number for your bank account.')
 
 	user = pool.get('res.users').browse(cr,uid,[uid])[0]
 	company= user.company_id
@@ -404,8 +386,9 @@ def _create_dta(obj, cr, uid, data, context):
 	v['comp_bank_number'] = bank.acc_number or ''
 
 	v['comp_bank_iban'] = bank.iban or ''
-	if not v['comp_bank_iban'] : 
-		return {'note':'No iban number for the company bank account.'}
+	if not v['comp_bank_iban']:
+		raise wizard.except_wizard('Error',
+				'No IBAN for the company bank account.')
 
 	dta_line_obj = pool.get('account.dta.line')
 	res_partner_bank_obj = pool.get('res.partner.bank')
@@ -416,29 +399,26 @@ def _create_dta(obj, cr, uid, data, context):
 
 	for pline in payment.line_ids:
 		if not pline.bank_id:
-			log.add('\nNo partner bank defined. (partner: ' + \
-					pline.partner_id.name + ', entry:' + \
-					pline.move_line_id.name + ').')
-			continue
+			raise wizard.except_wizard('Error', 'No bank account defined\n' \
+					'on line: ' + pline.name)
 		if not pline.bank_id.bank:
-			log.add('\nNo bank defined on the bank account. (partner: ' + \
-					pline.partner_id.name + ', entry:' + \
-					pline.move_line_id.name + ').')
+			raise wizard.except_wizard('Error', 'No bank defined\n' \
+					'for the bank account: ' + pline.bank_id.state + '\n' \
+					'on the partner: ' + pline.partner_id.name + '\n' \
+					'on line: ' + pline.name)
 
 		v['sequence'] = str(seq).rjust(5).replace(' ', '0')
 		v['amount_to_pay']= str(pline.amount_currency).replace('.', ',')
 		v['number'] = pline.name
 		v['currency'] = pline.currency.code
 
-		v['partner_bank_name'] =  pline.bank_id.bank and pline.bank_id.bank.name \
-				or False
+		v['partner_bank_name'] =  pline.bank_id.bank.name or False
 		v['partner_bank_clearing'] =  pline.bank_id.bank.clearing or False
 		if not v['partner_bank_name'] :
-			log.add('\nPartner bank account not well defined, please provide a name '
-			'for the associated bank (partner: ' + pline.partner_id.name + \
-					', bank:' + res_partner_bank_obj.name_get(cr, uid,
-						[pline.bank_id.id], context)[0][1] + ').')
-			continue
+			raise wizard.except_wizard('Error', 'No bank name defined\n' \
+					'for the bank account: ' + pline.bank_id.state + '\n' \
+					'on the partner: ' + pline.partner_id.name + '\n' \
+					'on line: ' + pline.name)
 
 		v['partner_bank_iban']=  pline.bank_id.iban or False
 		v['partner_bank_number']=  pline.bank_id.acc_number  \
@@ -484,8 +464,9 @@ def _create_dta(obj, cr, uid, data, context):
 			v['partner_city']= ''
 			v['partner_zip']= ''
 			v['partner_country']= ''
-			log.add('\nNo address for the partner: '+pline.partner_id.name)
-
+			raise wizard.except_wizard('Error', 'No address defined \n' \
+					'for the partner: ' + pline.partner_id.name + '\n' \
+					'on line: ' + pline.name)
 
 		date_value = mx.DateTime.strptime(pline.value_date, '%Y-%m-%d') \
 				or mx.DateTime.now()
@@ -500,11 +481,11 @@ def _create_dta(obj, cr, uid, data, context):
 			v['comp_country'] = co_addr.country_id and co_addr.country_id.code+'-' or ''
 			record_type = record_gt836
 			if not v['partner_bank_iban']:
-				log.add('\nNo iban number for the partner bank:' + \
+				raise wizard.except_wizard('Error', 'No IBAN defined \n' \
+						'for the bank account: ' + \
 						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
-							context)[0][1] + \
-									' (partner: ' + pline.partner_id.name + ').')
-				continue
+							context)[0][1] + '\n' \
+						'on line: ' + pline.name)
 
 			if v['partner_bank_code'] : # bank code is swift (BIC address)
 				v['option_id_bank']= 'A'
@@ -518,12 +499,11 @@ def _create_dta(obj, cr, uid, data, context):
 						+ ' ' + v['partner_bank_city'] \
 						+ ' ' + v['partner_bank_country']
 			else:
-				log.add("\nYou must provide the bank city "
-				"or the bic code for the partner bank:" + \
+				raise wizard.except_wizard('Error', 'You must provide the bank city '
+						'or the bic code for the partner bank: \n' + \
 						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
-							context)[0][1] + \
-									' (partner: ' + pline.partner_id.name + ').')
-				continue
+							context)[0][1] + '\n' \
+									'on line: ' + pline.name)
 
 		elif elec_pay == 'bvrbank' or elec_pay == 'bvrpost':
 			from tools import mod10r
@@ -532,62 +512,56 @@ def _create_dta(obj, cr, uid, data, context):
 						'').rjust(27).replace(' ', '0')
 			if not v['reference'] \
 					or mod10r(v['reference'][:-1]) != v['reference']:
-				log.add('\nYou must provide a valid BVR reference number.'
-				' (payment line ' + pline.name +')')
-				continue
+				raise wizard.except_wizard('Error', 'You must provide ' \
+						'a valid BVR reference number \n' +
+						'for the line: ' + pline.name)
 			if not v['partner_bvr']:
-				log.add("\nYou must provide a BVR number "
-				"on the partner bank:" + \
+				raise wizard.except_wizard('Error', 'You must provide a BVR number\n'
+					'for the bank account: ' + \
 						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
-							context)[0][1] + \
-									' (partner: ' + pline.partner_id.name + ').')
-				continue
+							context)[0][1] + '\n' \
+					'on line: ' + pline.name)
 			record_type = record_gt826
 
 		elif elec_pay == 'bvbank':
 			if not v['partner_bank_number'] :
-				if  v['partner_bank_iban'] :
+				if v['partner_bank_iban'] :
 					v['partner_bank_number']= v['partner_bank_iban'] 
 				else:
-					log.add('\nYou must provide a bank number in the partner bank.'
-					' (payment line '+ pline.name +')')
-					continue
-
+					raise wizard.except_wizard('Error', 'You must provide ' \
+							'a bank number \n' \
+							'for the partner bank: ' + \
+							res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
+								context)[0][1] + '\n' \
+							'on line: ' + pline.name)
 			if not  v['partner_bank_clearing']:
-				log.add('\nPartner bank must have a Clearing Number'
-				'for a BV Bank operation. (payment line '+ pline.name +')')
-				continue
+				raise wizard.except_wizard('Error', 'You must provide ' \
+						'a Clearing Number\n' \
+						'for the partner bank: ' + \
+						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
+							context)[0][1] + '\n' \
+						'on line '+ pline.name)
 			v['partner_bank_number'] = '/C/'+v['partner_bank_number']
 			record_type = record_gt827
 		elif elec_pay == 'bvpost':
 			if not v['partner_post_number']:
-				log.add('\nYou must provide a post number in the partner bank.'
-				' (payment line '+ pline.name +')')
-				continue
+				raise wizard.except_wizard('Error', 'You must provide ' \
+						'a post number \n' \
+						'for the partner bank: ' + \
+						res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
+							context)[0][1] + '\n' \
+						'on line: ' + pline.name)
 			v['partner_bank_clearing']= ''
 			v['partner_bank_number'] = '/C/'+v['partner_post_number']
 			record_type = record_gt827
 		else:
-			log.add('\nBank type not supported. (partner:'+ pline.partner_id.name + \
-					', bank:' + \
+			raise wizard.except_wizard('Error', 'The Bank type ' + elec_pay + \
+					'of the bank account: ' + \
 					res_partner_bank_obj.name_get(cr, uid, [pline.bank_id.id],
-						context)[0][1] + \
-						', type:' + elec_pay + ')')
-			continue
+						context)[0][1] + ' '\
+					'is not supported')
 
-
-		try:
-			dta_line = record_type(v).generate()
-		except Exception,e :
-			log.add('\nERROR:'+ str(e)+' (payment line '+ pline.name + ')')
-			raise
-			continue
-
-		#logging
-		log.add('Payment line : %s, Amount paid : %d %s, '
-				'Value date : %s, State : Paid.' % \
-				(pline.name, pline.amount, v['currency'], date_value and \
-				date_value.strftime("%Y-%m-%d") or 'Empty date'), error=False)
+		dta_line = record_type(v).generate()
 
 		dta = dta + dta_line
 		amount_tot += pline.amount
@@ -597,29 +571,19 @@ def _create_dta(obj, cr, uid, data, context):
 	# segment total
 	v['amount_total'] = str(amount_currency_tot).replace('.',',')
 	v['sequence'] = str(seq).rjust(5).replace(' ','0')	
-	try:
-		if dta :
-			dta = dta + record_gt890(v).generate()
-	except Exception,e :
-		log.add('\n'+ str(e) + 'CORRUPTED FILE !\n')
-		raise
+	if dta :
+		dta = dta + record_gt890(v).generate()
 
-	log.add("\n--\nSummary :\nTotal amount paid : %.2f" \
-			% (amount_tot,), error=False)
-
-	if not log.error:
-		dta_data= base64.encodestring(dta)
-		payment_obj.set_done(cr, uid, data['id'], context)
-		attachment_obj.create(cr, uid, {
-			'name': 'DTA',
-			'datas': dta_data,
-			'datas_fname': 'DTA.txt',
-			'res_model': 'payment.order',
-			'res_id': data['id'],
-			}, context=context)
-	else:
-		dta_data= False
-	return {'note':log(), 'dta': dta_data}
+	dta_data= base64.encodestring(dta)
+	payment_obj.set_done(cr, uid, data['id'], context)
+	attachment_obj.create(cr, uid, {
+		'name': 'DTA',
+		'datas': dta_data,
+		'datas_fname': 'DTA.txt',
+		'res_model': 'payment.order',
+		'res_id': data['id'],
+		}, context=context)
+	return {'dta': dta_data}
 
 
 class wizard_dta_create(wizard.interface):
