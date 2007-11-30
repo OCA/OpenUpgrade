@@ -87,13 +87,15 @@ class PartnerAddress(osv.osv):
 		partner_obj = self.pool.get('res.partner')
 
 		args = args[:]
-		for arg in args:
-			if arg[0] == 'partner_id' and arg[1] == '=':
-				partner = partner_obj.browse(cursor, user, arg[2],
+
+		i = 0
+		while i < len(args):
+			if args[i][0] == 'partner_id' and args[i][1] == '=':
+				partner = partner_obj.browse(cursor, user, args[i][2],
 						context=context)
-				arg[1] = 'in'
-				arg[2] = [arg[2]] + [ x.relation_id.id \
-						for x in partner.relation_ids ]
+				args[i] = ('partner_id', 'in', [args[i][2]] + [x.relation_id.id \
+						for x in partner.relation_ids])
+			i += 1
 		return super(PartnerAddress, self)._where_calc(cursor, user, args,
 				active_test=active_test, context=context)
 
