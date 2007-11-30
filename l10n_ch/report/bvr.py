@@ -28,6 +28,7 @@
 import time
 from report import report_sxw
 from tools import mod10r
+import re
 
 class account_invoice_bvr(report_sxw.rml_parse):
 	def __init__(self, cr, uid, name, context):
@@ -57,7 +58,10 @@ class account_invoice_bvr(report_sxw.rml_parse):
 		res = ''
 		if bank.bvr_adherent_num:
 			res = bank.bvr_adherent_num
-		return mod10r(res + o.number.rjust(26-len(res), '0'))
+		invoice_number = ''
+		if o.number:
+			invoice_number = re.sub('[^0-9]', '0', o.number)
+		return mod10r(res + invoice_number.rjust(26-len(res), '0'))
 
 report_sxw.report_sxw(
 	'report.l10n_ch.bvr',
