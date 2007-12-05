@@ -8,6 +8,21 @@
 			menu="False"
 			id="wizard_open_partner"/>
 
+		<wizard
+			string="Using a questionnaire"
+			model="segmentation.questionnaire"
+			name="open_questionnaire"
+			menu="False"
+			id="wizard_open_questionnaire"/>
+
+		<record model="ir.actions.act_window" id="open_questionnaires">
+		  <field name="name">Questionnaires</field>
+		  <field name="res_model">segmentation.questionnaire</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Partners/Configuration/Profiling/Questionnaires" id="menu_segm_questionnaire" 
+				  action="open_questionnaires" />
 
 		<record model="ir.actions.act_window" id="open_questions">
 		  <field name="name">Questions</field>
@@ -27,22 +42,50 @@
 		<menuitem name="Partners/Configuration/Profiling/Profiles" id="menu_segm_profile"
 				  action="open_profiles" />
 
+	<record model="ir.ui.view" id="view_questionnaire_tree">
+		<field name="name">Questionnaires</field>
+		<field name="model">segmentation.questionnaire</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		  <tree string="Questionnaires">
+			<field name="name" select="1" colspan="4"/>
+			<field name="description" select="1" colspan="4"/>
+			<field name="questions_ids" colspan="4" nolabel="1"/>
+		  </tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_questionnaire_form">
+		<field name="name">Questionnaires</field>
+		<field name="model">segmentation.questionnaire</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		  <form string="Questionnaires">
+			<field name="name" select="1" />
+			<newline/>
+			<field name="description" select="1" />
+			<newline/>
+			<field name="questions_ids" colspan="4"/>
+		  </form>
+		</field>
+	</record>
+
 	<record model="ir.ui.view" id="view_profile">
 		<field name="name">segmentation profiles</field>
 		<field name="model">segmentation.profile</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 		  <form string="Profiles">	
-			<field name="name" />
-			<field name="parent_id" />
+			<field name="name" colspan="2" />
+			<button string="View Partners" name="%(wizard_open_partner)d" type="action" colspan="2"/>
+			<field name="parent_id" colspan="2" />
+			<button string="Compute Segmentation" name="process_continue" type="object" colspan="2"/>
 			<newline/>
       		<separator string="Included Answers :" colspan="2" />
 			<separator string="Excluded Answers :" colspan="2"/>
 			<newline/>
 			<field name="answer_yes" nolabel="1" colspan="2" />
 			<field name="answer_no" nolabel="1" colspan="2" />
-			<newline/>
-			<button string="Select partners" name="%(wizard_open_partner)d" type="action" colspan="4"/>
 		  </form>
 		</field>
 	</record>
@@ -140,8 +183,10 @@
 							<field name="email" select="2" widget="email" />
 						</form>
 					</field>
-					<separator string="Categories" colspan="4"/>
-					<field name="category_id" colspan="4" select="2" nolabel="1"/>
+					<separator string="Categories" colspan="2"/>
+					<separator string="Matching Profiles" colspan="2"/>
+					<field name="category_id" colspan="2" select="2" nolabel="1"/>
+					<field name="profiles_ids" colspan="2" select="2" nolabel="1"/>
 				</page>
 				<page string="Extra Info">
 					<field name="active" select="2" />
@@ -162,6 +207,8 @@
 				</page>
 
 				<page string="Profiling">
+				  <button string="Use a questionnaire" name="%(wizard_open_questionnaire)d" type="action" colspan="1"/>
+				  <newline/>
 				  <field name="answers_ids" colspan="4" nolabel="1"/>
 				</page>
 			</notebook>

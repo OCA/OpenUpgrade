@@ -1,10 +1,13 @@
 {
 	"name" : "segmentation management",
-	"version" : "1.1",
+	"version" : "1.3",
 	"depends" : ["base"],
 	"author" : "Tiny",
 	"description": """
-	This module allow users to create profile and compute automatically which partners do fit the profile criteria
+	This module allow users to create profile and compute automatically which partners do fit the profile criteria. 
+
+	In this version the new concept of questionnaire allow you to regroup questions into a questionnaire and directly use it on a partner.
+
 	""",
 	"website" : "http://tinyerp.com/",
 	"category" : "Generic Modules/Project & Services",

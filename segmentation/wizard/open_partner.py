@@ -3,52 +3,12 @@ import wizard
 
 def _open_partner(self, cr, uid, data, context):
 
-	def _get_answers(self, cr, uid, ids):
-		query = """
-		select distinct(answer)
-		from profile_question_yes_rel
-		where profile in (%s)"""% ','.join([str(i) for i in ids ])
-
-		cr.execute(query)
-		ans_yes = [x[0] for x in cr.fetchall()]
-
-		query = """
-		select distinct(answer)
-		from profile_question_no_rel
-		where profile in (%s)"""% ','.join([str(i) for i in ids ])
-
-		cr.execute(query)
-		ans_no = [x[0] for x in cr.fetchall()]
-
-		return [ans_yes, ans_no]
-
-	def _get_parents(self, cr, uid, ids):
-		ids_to_check = ids
-		cr.execute("""
-		 select distinct(parent_id)
-		 from segmentation_profile
-		 where parent_id is not null
-		 and id in (%s)""" % ','.join([str(i) for i in ids ]))
-
-		parent_ids = [x[0] for x in cr.fetchall()]
-
-		trigger = False
-		for x in parent_ids:
-			if x not in ids_to_check:
-				ids_to_check.append(x)
-				trigger = True
-
-		if trigger:
-			ids_to_check = _get_parents(self, cr, uid, ids_to_check)
-
-		return ids_to_check
-
 	if (data['id'] in data['ids'])|(data['ids'] == []):
-		ids_to_check = _get_parents(self, cr, uid, data['ids'])	
+		ids_to_check = pooler.get_pool(cr.dbname).get('segmentation.profile').get_parents(cr, uid, data['ids'])	
 	else:		
-		ids_to_check = _get_parents(self, cr, uid, [data['id']])
+		ids_to_check = pooler.get_pool(cr.dbname).get('segmentation.profile').get_parents(cr, uid, [data['id']])
 
-	[yes_answers, no_answers] = _get_answers(self, cr, uid, ids_to_check)
+	[yes_answers, no_answers] = pooler.get_pool(cr.dbname).get('segmentation.profile').get_answers(cr, uid, ids_to_check)
 
 	query = "select partner from partner_question_rel "
 	query_end =	"group by partner"

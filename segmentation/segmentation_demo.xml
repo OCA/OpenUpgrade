@@ -18,6 +18,16 @@
 	</record>
 
 	<!--
+	Questionnaires
+	-->
+
+	<record model="segmentation.questionnaire" id="questionnaire1">
+		<field name="name">Base questionnaire</field>
+		<field name="description">First questionnaire.</field>
+		<field name="questions_ids" eval="[(6,0,[activity_sector,nb_employees,partner_level])]"/>
+	</record>
+
+	<!--
 	Answers
 	-->
 
@@ -143,23 +153,29 @@
 		
 	<record model="res.partner" id="base.res_partner_asus">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality1'), ref('nb_employees2'), ref('sector2')])]" />
+		<field name="profiles_ids" eval="[(6,0,[ref('profile1'), ref('profile10'),ref('profile11'), ref('profile5')])]" />
 	</record>
 	<record model="res.partner" id="base.res_partner_agrolait">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality1'), ref('nb_employees1'), ref('sector1')])]" />
+		<field name="profiles_ids" eval="[(6,0,[ref('profile1'), ref('profile8'), ref('profile4')])]" />	
 	</record>
 	<record model="res.partner" id="base.res_partner_c2c">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees3'), ref('sector3')])]" />
+		<field name="profiles_ids" eval="[(6,0,[ref('profile3'),ref('profile16'),ref('profile15'), ref('profile9'), ref('profile4')])]" />
 	</record>
 	<record model="res.partner" id="base.res_partner_sednacom">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality2'), ref('nb_employees1'), ref('sector2')])]" />
+		<field name="profiles_ids" eval="[(6,0,[ref('profile2'),ref('profile16'),ref('profile12'), ref('profile11'), ref('profile5')])]" />
 	</record>	
 	<record model="res.partner" id="base.res_partner_thymbra">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees3'), ref('sector3')])]" />
+		<field name="profiles_ids" eval="[(6,0,[ref('profile3'),ref('profile16'),ref('profile15'), ref('profile6')])]" />
 	</record>	
 	<record model="res.partner" id="base.res_partner_desertic_hispafuentes">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality2'), ref('nb_employees2'), ref('sector2')])]" />
+		<field name="profiles_ids" eval="[(6,0,[ref('profile2'),ref('profile16'),ref('profile10'),ref('profile11'), ref('profile11'), ref('profile5')])]" />
 	</record>	
-	<record model="res.partner" id="base.res_partner_tinyatwork">
+<!--	<record model="res.partner" id="base.res_partner_tinyatwork">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality1'), ref('nb_employees1'), ref('sector1')])]" />
 	</record>	
 	<record model="res.partner" id="base.res_partner_2">
@@ -180,7 +196,7 @@
 	<record model="res.partner" id="base.res_partner_maxtor">
 		<field name="answers_ids" eval="[(6,0,[ref('partner_quality3'), ref('nb_employees1'), ref('sector3')])]" />
 	</record>	
-
+-->
 </data>
 </terp>
 
