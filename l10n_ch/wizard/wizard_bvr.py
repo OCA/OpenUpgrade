@@ -29,58 +29,49 @@ import wizard
 import pooler
 import re
 
-def _bank_get(self, cr, uid, context={}):
-	pool = pooler.get_pool(cr.dbname)
-	partner_id = pool.get('res.users').browse(cr,uid,[uid])[0].company_id.partner_id
-	obj = pool.get('res.partner.bank')
-	ids = obj.search(cr, uid, [('partner_id','=',partner_id.id)])
-	res = obj.read(cr, uid, ids, ['active', 'name'], context)
-	res = [(r['id'], r['name']) for r in res]
-	return res 
-
-check_form = """<?xml version="1.0"?>
-<form string="BVR Print">
-	<separator colspan="4" string="BVR Infos" />
-	<field name="bank"/>
-</form>
-"""
-
-check_fields = {
-	'bank' : {
-		'string':'Bank Account',
-		'type':'selection',
-		'selection':_bank_get,
-		'required': True,
-	},
-}
-
 def _check(self, cr, uid, data, context):
-	for invoice in pooler.get_pool(cr.dbname).get('account.invoice').browse(cr, uid, data['ids'], context):
-		bank = pooler.get_pool(cr.dbname).get('res.partner.bank').browse(cr, uid, data['form']['bank'], context)
-		if not data['form']['bank']:
-			raise wizard.except_wizard('UserError','No bank specified !')
-		if not re.compile('[0-9][0-9]-[0-9]{3,6}-[0-9]').match(bank.bvr_number or ''):
-			raise wizard.except_wizard('UserError','Your bank BVR number should be of the form 0X-XXX-X !\nPlease check your company information.')
-		if bank.bvr_adherent_num and not re.compile('[0-9]*$').match(bank.bvr_adherent_num):
-			raise wizard.except_wizard('UserError','Your bank bvr adherent number must contain exactly seven digit !\nPlease check your company information.')
+	pool = pooler.get_pool(cr.dbname)
+	invoice_obj = pool.get('account.invoice')
+	for invoice in invoice_obj.browse(cr, uid, data['ids'], context):
+		if not invoice.partner_bank:
+			raise wizard.except_wizard('UserError',
+					'No bank specified on invoice:\n' + \
+							invoice_obj.name_get(cr, uid, [invoice.id],
+								context=context)[0][1])
+		if not re.compile('[0-9][0-9]-[0-9]{3,6}-[0-9]').match(
+				invoice.partner_bank.bvr_number or ''):
+			raise wizard.except_wizard('UserError',
+					'Your bank BVR number should be of the form 0X-XXX-X!\n' \
+							'Please check your company ' \
+							'information for the invoice:\n' + \
+							invoice_obj.name_get(cr, uid, [invoice.id],
+								context=context)[0][1])
+		if invoice.partner_bank.bvr_adherent_num \
+				and not re.compile('[0-9]*$').match(
+						invoice.partner_bank.bvr_adherent_num):
+			raise wizard.except_wizard('UserError',
+					'Your bank BVR adherent number must contain exactly seven' \
+							'digits!\nPlease check your company ' \
+							'information for the invoice:\n' + \
+							invoice_obj.name_get(cr, uid, [invoice.id],
+								context=context)[0][1])
 	return {}
 
 class wizard_report(wizard.interface):
 	states = {
-		'init':{
-			'actions' : [],
-			'result' : {
-				'type' : 'form',
-				'arch' : check_form,
-				'fields' : check_fields,
-				'state' : [('end', 'Cancel'),('bvr_print', 'Print') ]
-			}
-		},
-		'bvr_print': {
+		'init': {
 			'actions': [_check], 
 			'result': {'type':'print', 'report':'l10n_ch.bvr', 'state':'end'}
 		}
 	}
 wizard_report('l10n_ch.bvr.check')
 
+class ReportInvoiceBVRCheck(wizard.interface):
+	states = {
+		'init': {
+			'actions': [_check],
+			'result': {'type':'print', 'report':'l10n_ch.invoice.bvr', 'state':'end'}
+		}
+	}
+ReportInvoiceBVRCheck('l10n_ch.invoice.bvr.check')
 

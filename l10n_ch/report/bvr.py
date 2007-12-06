@@ -39,7 +39,6 @@ class account_invoice_bvr(report_sxw.rml_parse):
 			'mod10r': mod10r,
 			'_space': self._space,
 			'_get_ref': self._get_ref,
-			'_bank_get': self._bank_get,
 		})
 
 	def _space(self,nbr, nbrspc=5):
@@ -50,14 +49,10 @@ class account_invoice_bvr(report_sxw.rml_parse):
 				res = res + ' '
 		return res
 
-	def _bank_get(self, bid):
-		return self.pool.get("res.partner.bank").browse(self.cr,self.uid,bid)
-
-	def _get_ref(self, o, bid):
-		bank = self._bank_get(bid)
+	def _get_ref(self, o):
 		res = ''
-		if bank.bvr_adherent_num:
-			res = bank.bvr_adherent_num
+		if o.partner_bank.bvr_adherent_num:
+			res = o.partner_bank.bvr_adherent_num
 		invoice_number = ''
 		if o.number:
 			invoice_number = re.sub('[^0-9]', '0', o.number)
@@ -67,6 +62,13 @@ report_sxw.report_sxw(
 	'report.l10n_ch.bvr',
 	'account.invoice',
 	'addons/l10n_ch/report/bvr.rml',
+	parser=account_invoice_bvr,
+	header=False)
+
+report_sxw.report_sxw(
+	'report.l10n_ch.invoice.bvr',
+	'account.invoice',
+	'addons/l10n_ch/report/invoice.rml',
 	parser=account_invoice_bvr,
 	header=False)
 

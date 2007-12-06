@@ -3,10 +3,19 @@
 	<data>
 
 		<wizard
-			string="Print BVR"
+			string="BVR"
 			model="account.invoice"
 			name="l10n_ch.bvr.check"
- 			id="wizard_bvr_check_report"/>
+			id="wizard_bvr_check_report"
+			keyword="client_print_multi"/>
+
+		<wizard
+			string="Invoices BVR"
+			model="account.invoice"
+			name="l10n_ch.invoice.bvr.check"
+			id="wizard_invoice_bvr_check_report"
+			keyword="client_print_multi"/>
+
 
 	</data>
 </terp>

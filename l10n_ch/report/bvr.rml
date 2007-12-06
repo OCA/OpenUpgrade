@@ -3,7 +3,7 @@
   <docinit>
     <registerFont fontName="ocrb" fontFile="addons/l10n_ch/report/ocrbb.ttf"/>
   </docinit>
-  <template pageSize="(210mm,297mm)" title="Test" author="Martin Simon" allowSplitting="20">
+  <template pageSize="(210.0mm,297.0mm)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
 	  <pageGraphics>
 	  	<setFont name="Helvetica" size="30"/>
@@ -26,13 +26,13 @@
 
 	  </pageGraphics>
 
-      <frame id="first" x1="24.0" y1="110mm" width="537" height="142mm"/>
+      <frame id="first" x1="24.0" y1="111.5mm" width="190mm" height="142mm" last="1"/>
       <frame id="Frame1"
-	  	expr="{'height':str(111+(company.bvr_delta_vert or 0.0))+'mm', 'x1': str(2.5+(company.bvr_delta_horz or 0.0))+'mm'}"
-		x1="2.5mm"
-		y1="0.5mm"
-		width="200mm"
-		height="111mm"/>
+		expr="{'height':str(111+(company.bvr_delta_vert or 0.0))+'mm', 'x1': str((company.bvr_delta_horz or 0.0))+'mm'}"
+		x1="0mm"
+		y1="0mm"
+		width="210mm"
+		height="106mm"/>
 
 	  <!--
       <frame id="Frame1" x1="[[ '%.2f' % (14.5 + user.company_id.bvr_delta_horz or 0.0) ]]mm" y1="[[ '%.2f' % (4.5 + user.company_id.bvr_delta_vert or 0.0) ]]mm" width="200mm" height="111mm"/>
@@ -114,45 +114,43 @@
 		Width: 2.3inch, 5.9inch
 		Height: 4*1/6 inch
 	-->
-	<illustration width="200mm" height="106mm">
+	<illustration width="210mm" height="106mm">
 		<setFont name="Helvetica" size="11"/>
-		<drawString x="0.5mm" y="75mm">[[ user.company_id.partner_id.name ]]</drawString>
-		<drawString x="0.5mm" y="70mm">[[ user.company_id.partner_id.address[0].street ]]</drawString>
-		<drawString x="0.5mm" y="65mm">[[ (user.company_id.partner_id.address[0].street2 or '')]]</drawString>
-		<drawString x="0.5mm" y="60mm">[[ user.company_id.partner_id.address[0].zip ]] [[ user.company_id.partner_id.address[0].city ]]</drawString>
+		<drawString x="2mm" y="78mm">[[ user.company_id.partner_id.name ]]</drawString>
+		<drawString x="2mm" y="73mm">[[ user.company_id.partner_id.address[0].street ]]</drawString>
+		<drawString x="2mm" y="68mm">[[ (user.company_id.partner_id.address[0].street2 or '')]]</drawString>
+		<drawString x="2mm" y="63mm">[[ user.company_id.partner_id.address[0].zip ]] [[ user.company_id.partner_id.address[0].city ]]</drawString>
 
-		<drawString x="57mm" y="75mm">[[ user.company_id.partner_id.name ]]</drawString>
-		<drawString x="57mm" y="70mm">[[ user.company_id.partner_id.address[0].street ]]</drawString>
-		<drawString x="57mm" y="65mm">[[ (user.company_id.partner_id.address[0].street2 or '')]]</drawString>
-		<drawString x="57mm" y="60mm">[[ user.company_id.partner_id.address[0].zip ]] [[ user.company_id.partner_id.address[0].city ]]</drawString>
+		<drawString x="62mm" y="78mm">[[ user.company_id.partner_id.name ]]</drawString>
+		<drawString x="62mm" y="73mm">[[ user.company_id.partner_id.address[0].street ]]</drawString>
+		<drawString x="62mm" y="68mm">[[ (user.company_id.partner_id.address[0].street2 or '')]]</drawString>
+		<drawString x="62mm" y="63mm">[[ user.company_id.partner_id.address[0].zip ]] [[ user.company_id.partner_id.address[0].city ]]</drawString>
 
 		<setFont name="ocrb" size="9"/>
 
-		<drawString x="0.5mm" y="29mm">[[ o.partner_id.name ]]</drawString>
-		<drawString x="0.5mm" y="25mm">[[ o.address_invoice_id.street ]]</drawString>
-		<drawString x="0.5mm" y="21mm">[[ (o.address_invoice_id.street2 or '')]]</drawString>
-		<drawString x="0.5mm" y="17mm">[[ o.address_invoice_id.zip ]] [[ o.address_invoice_id.city ]]</drawString>
+		<drawString x="2mm" y="35mm">[[ o.partner_id.name ]]</drawString>
+		<drawString x="2mm" y="30mm">[[ o.address_invoice_id.street ]]</drawString>
+		<drawString x="2mm" y="25mm">[[ (o.address_invoice_id.street2 or '')]]</drawString>
+		<drawString x="2mm" y="20mm">[[ o.address_invoice_id.zip ]] [[ o.address_invoice_id.city ]]</drawString>
 
-		<drawString x="0.5mm" y="35mm">[[ _get_ref(o, data['form']['bank']) ]]</drawString>
+		<drawString x="2mm" y="40mm">[[ _get_ref(o) ]]</drawString>
 
-		<drawString x="121mm" y="46mm">[[ o.partner_id.name ]]</drawString>
-		<drawString x="121mm" y="42mm">[[ o.address_invoice_id.street ]]</drawString>
-		<drawString x="121mm" y="38mm">[[ (o.address_invoice_id.street2 or '')]]</drawString>
-		<drawString x="121mm" y="34mm">[[ o.address_invoice_id.zip ]] [[ o.address_invoice_id.city ]]</drawString>
+		<drawString x="126mm" y="50mm">[[ o.partner_id.name ]]</drawString>
+		<drawString x="126mm" y="45mm">[[ o.address_invoice_id.street ]]</drawString>
+		<drawString x="126mm" y="40mm">[[ (o.address_invoice_id.street2 or '')]]</drawString>
+		<drawString x="126mm" y="35mm">[[ o.address_invoice_id.zip ]] [[ o.address_invoice_id.city ]]</drawString>
 
-		<!--drawRightString x="46mm" y="54mm">[[ _bank_get(data['form']['bank']).acc_number ]]</drawRightString>
-		<drawRightString x="107mm" y="54mm">[[ _bank_get(data['form']['bank']).acc_number ]]</drawRightString-->
 
 		<setFont name="ocrb" size="11"/>
-		<drawString x="119mm" y="62.5mm">[[ _space(_get_ref(o, data['form']['bank'])) ]]</drawString>
+		<drawString x="124mm" y="67mm">[[ _space(_get_ref(o)) ]]</drawString>
 
 		<setFont name="ocrb" size="12"/>
 
-		<drawRightString x="36mm" y="45mm">[[ _space(('%.2f' % o.amount_total)[:-3], 1) ]]</drawRightString>
-		<drawRightString x="97mm" y="45mm">[[ _space(('%.2f' % o.amount_total)[:-3], 1) ]]</drawRightString>
+		<drawRightString x="42mm" y="50mm">[[ _space(('%.2f' % o.amount_total)[:-3], 1) + ' ' ]]</drawRightString>
+		<drawRightString x="104mm" y="50mm">[[ _space(('%.2f' % o.amount_total)[:-3], 1) + ' ' ]]</drawRightString>
 
-		<drawCentredString x="51mm" y="50mm">[[ ('%.2f' % o.amount_total)[-2:] ]]</drawCentredString>
-		<drawCentredString x="111mm" y="50mm">[[ ('%.2f' % o.amount_total)[-2:] ]]</drawCentredString>
+		<drawRightString x="58mm" y="50mm">[[ _space(('%.2f' % o.amount_total)[-2:], 1) + ' ' ]]</drawRightString>
+		<drawRightString x="119mm" y="50mm">[[ _space(('%.2f' % o.amount_total)[-2:], 1) + ' ' ]]</drawRightString>
 
 
 		<!--
@@ -160,10 +158,9 @@
 		-->
 
 		<setFont name="ocrb" size="11.5"/>
-		<drawString x="61.72mm" y="11.20mm">01[[mod10r('%.2f' % o.amount_total).rjust(12,'0').replace('.', '')]]&gt;[[ _get_ref(o, data['form']['bank']) ]]+ [[_bank_get(data['form']['bank']).bvr_number.split('-')[0]+(_bank_get(data['form']['bank']).bvr_number.split('-')[1]).rjust(6,'0')+_bank_get(data['form']['bank']).bvr_number.split('-')[2] ]]&gt;</drawString>
+		<drawRightString x="195mm" y="15mm">01[[mod10r('%.2f' % o.amount_total).rjust(12,'0').replace('.', '')]]&gt;[[ _get_ref(o) ]]+ [[o.partner_bank.bvr_number.split('-')[0]+(o.partner_bank.bvr_number.split('-')[1]).rjust(6,'0')+o.partner_bank.bvr_number.split('-')[2] ]]&gt;</drawRightString>
 
 	</illustration>
-    <frameEnd/>
   </story>
 </document>
 
