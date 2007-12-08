@@ -94,8 +94,7 @@ def _catalog_send(uname, passwd, lang, did, catalog):
 				L.append(value)
 			L.append('--' + BOUNDARY + '--')
 			L.append('')
-		#	body = CRLF.join(L)
-			body = CRLF.join(str(L))
+			body = CRLF.join(L)
 			content_type = 'multipart/form-data; boundary=%s' % BOUNDARY
 			return content_type, body
 		content_type, body = encode_multipart_formdata(fields, files)
@@ -105,6 +104,7 @@ def _catalog_send(uname, passwd, lang, did, catalog):
 		conn = httplib.HTTPConnection(host)
 		conn.request("POST", '/bin/catalog.cgi', body, headers = headers)
 		response = conn.getresponse()
+		print response.read()
 		val = response.status
 		conn.close()
 		return val
