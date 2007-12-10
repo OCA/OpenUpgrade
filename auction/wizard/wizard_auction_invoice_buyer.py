@@ -15,7 +15,7 @@ invoice_form = '''<?xml version="1.0"?>
 invoice_fields = {
 	'amount': {'string':'Invoiced Amount', 'type':'float', 'required':True, 'readonly':True},
 	'objects': {'string':'# of objects', 'type':'integer', 'required':True, 'readonly':True},
-	'number': {'string':'Invoice Number', 'type':'integer'},
+	'number': {'string':'Invoice Number', 'type':'char'},
 	'buyer_id':{'string': 'Buyer', 'type': 'many2one', 'relation':'res.partner'}
 
 }
@@ -79,9 +79,9 @@ class make_invoice(wizard.interface):
 				    'state' : [('end', 'Cancel'),('invoice', 'Create invoices')]}
 		},
 		'invoice' : {
-			'actions' : [_makeInvoices],
-			'result' : {'type' : 'state',
-				    'state' : 'end'}
+			'actions' : [],
+			'result' : {'type' : 'action',
+				    'action' : _makeInvoices}
 		},
 	}
 make_invoice("auction.lots.make_invoice_buyer")

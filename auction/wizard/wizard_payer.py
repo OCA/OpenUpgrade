@@ -32,14 +32,22 @@ import netsvc
 import osv
 import time
 import pooler
+
 pay_form = '''<?xml version="1.0"?>
-<form string="Check payment of objects">
+<form string="Check payment for buyer">
 </form>'''
 pay_fields = {
 }
+
+
+pay_form1 = '''<?xml version="1.0"?>
+<form string="Check payment for seller">
+</form>'''
+pay_fields1 = {
+}
 def _payer(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
-	pool.get('auction.lots').write(cr,uid,data['ids'],{'is_ok':True})
+	pool.get('auction.lots').write(cr,uid,data['ids'],{'is_ok':True, 'state':'paid'})
 	return {}
 
 
@@ -66,9 +74,9 @@ class wiz_auc_pay_sel(wizard.interface):
 	states = {
 		'init': {
 			'actions': [],
-			'result': {'type': 'form', 'arch':pay_form, 'fields': pay_fields, 'state':[('end','Cancel'),('pay','Pay')]}
+			'result': {'type': 'form', 'arch':pay_form1, 'fields': pay_fields1, 'state':[('end','Cancel'),('pay2','Pay')]}
 		},
-		'pay': {
+		'pay2': {
 		'actions': [_payer_sel],
 		'result': {'type': 'state', 'state':'end'}
 		}}

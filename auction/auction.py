@@ -147,7 +147,7 @@ class auction_deposit(osv.osv):
 		'total_neg': fields.boolean('Allow Negative Amount'),
 	}
 	_defaults = {
-		'date_dep': lambda *a: time.strftime('%Y-%m-%d'),
+#		'date_dep': lambda *a: time.strftime('%Y-%m-%d'),
 		'method': lambda *a: 'keep',
 		'total_neg': lambda *a: False,
 		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'auction.deposit'),
@@ -267,10 +267,10 @@ class auction_lots(osv.osv):
 		pt_tax=self.pool.get('account.tax')
 		for lot in lots:
 			amount_total=0.0
-		#	if ((lot.obj_price==0) and (lot.state=='draft')):
-		#		montant=lot.lot_est1
-		#	else:
-			montant=lot.obj_price
+	#		if ((lot.obj_price==0) and (lot.state=='draft')):
+	#			montant=lot.lot_est1
+	#		else:
+			montant=lot.obj_price or 0.0
 			taxes = []
 			if lot.author_right:
 				taxes.append(lot.author_right)
@@ -446,7 +446,8 @@ class auction_lots(osv.osv):
 		'vnd_lim': fields.float('Seller limit'),
 		'vnd_lim_net': fields.boolean('Net limit ?',readonly=True),
 		'image': fields.binary('Image'),
-		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,type='boolean',store=True),
+#		'paid_vnd':fields.function(_is_paid_vnd,string='Seller Paid',method=True,type='boolean',store=True),
+		'paid_vnd':fields.boolean('Seller Paid'),
 		'paid_ach':fields.function(_is_paid_ach,string='Buyer invoice reconciled',method=True, type='boolean',store=True),
 		'state': fields.selection((('draft','Draft'),('unsold','Unsold'),('paid','Paid'),('sold','Sold'),('taken_away','Taken away')),'State', required=True, readonly=True),
 		'buyer_price': fields.function(_buyerprice, method=True, string='Buyer price',store=True),
@@ -553,8 +554,8 @@ class auction_lots(osv.osv):
 			costs.extend(tax_costs)
 			for c in costs:
 				c.update({'type': 0})
-
-		if lot.vnd_lim_net and lot.obj_price>0:
+######
+		if lot.vnd_lim_net<0 and lot.obj_price>0:
 #FIXME: la string 'remise lot' devrait passer par le systeme de traductions
 			obj_price_wh_costs = reduce(lambda x, y: x + y['amount'], tax_costs, lot.obj_price)
 			if obj_price_wh_costs < lot.vnd_lim:

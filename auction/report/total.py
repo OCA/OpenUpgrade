@@ -77,9 +77,9 @@ class report_custom(report_rml):
 			if l['ach_emp']:
 				emp += 1
 
-#			if l['ach_pay_id']:
-#				paid_ids.append(l['id'])
-#				paid += l['obj_price']
+			if l['ach_pay_id']:
+				paid_ids.append(l['id'])
+				paid += l['obj_price']
 			else:
 				unpaid_ids.append(l['id'])
 				unpaid += l['obj_price']

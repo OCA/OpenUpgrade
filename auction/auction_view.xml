@@ -278,6 +278,8 @@ Auction Management/Auction Dates/Reporting
 					<field name="lot_type" select="2"/>
 					<field name="lot_local"/>
 
+					<field name="bord_vnd_id" select="1"/>
+					<field name="lot_num"/>
 
 					<separator string="Description" colspan="4"/>
 					<field name="obj_desc" colspan="4" nolabel="1" select="2"/>
@@ -293,8 +295,7 @@ Auction Management/Auction Dates/Reporting
 
 				<page string="Seller">
 					<separator string="Seller information" colspan="4"/>
-					<field name="bord_vnd_id" select="1"/>
-					<field name="lot_num"/>
+
 					<field name="vnd_lim"/>
 					<field name="vnd_lim_net"/>
 					<field name="sel_inv_id"/>
@@ -311,7 +312,7 @@ Auction Management/Auction Dates/Reporting
 				<page string="Buyer">
 					<separator string="Buyer information" colspan="4"/>
 					<field name="ach_uid"  select="2"/>
-					<field name="ach_login" select="1" comparator="="/>
+					<field name="ach_login" select="1" />
 					<field name="obj_price" select="2"/>
 					<field name="obj_comm" select="2"/>
 					<field name="obj_ret"/>

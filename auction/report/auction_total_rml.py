@@ -86,7 +86,6 @@ class auction_total_rml(report_sxw.rml_parse):
 #		print "***************get_auc_detail",res
 
 
-
 	def sum_taxes(self,auction_id):
 #         ids=self.pool.get('auction.lots').search(self.cr, self.uid, [('auction_id', '=', auction_id)])
 #         print "ddddddddddd",ids
@@ -106,11 +105,9 @@ class auction_total_rml(report_sxw.rml_parse):
 
 
 	def sum_buyer(self, auction_id):
-	    self.cr.execute("select count(*) from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d and ach_uid is not null "%(auction_id))
+	    self.cr.execute("select count(*) from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d and (ach_uid is not null or ach_login is not null) "%(auction_id))
 	    res = self.cr.fetchone()
-	    self.cr.execute("select count(*) from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d and ach_login is not null "%(auction_id))
-	    res1 = self.cr.fetchone()
-	    return str(res[0]+res1[0])
+	    return str(res[0])
 
 
 	def sum_seller(self, auction_id):
