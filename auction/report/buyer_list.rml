@@ -26,9 +26,9 @@
     <paraStyle name="P1" fontName="Courier-BoldOblique" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P2" fontName="Times-Roman" fontSize="7.0" leading="9"/>
     <paraStyle name="P3" fontName="Times-Bold" fontSize="7.0" leading="9" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="center" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P5" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P6" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="center" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -37,7 +37,7 @@
     <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="Addressee" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="3.0"/>
     <paraStyle name="Index" fontName="Times-Roman"/>
-      <paraStyle name="P61" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+      <paraStyle name="P61" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
   </stylesheet>
   <story>
     <para style="P3">
@@ -68,7 +68,7 @@
             <para style="P6">Adj(EUR)</para>
           </td>
           <td>
-            <para style="P6">Buyer costs([[ o['amount' ] ]]%)</para>
+            <para style="P6">Buyer costs([[ o['amount' ]*100 ]]%)</para>
           </td>
           <td>
             <para style="P6">To pay</para>
@@ -83,14 +83,14 @@
             <para style="P4">[[ a['no_lot'] or '0.0' ]]</para>
           </td>
           <td>
-            <para style="P6">[[ a['adj_price'] or '0.0' ]]</para>
+            <para style="P4">[[ a['adj_price'] or '0.0' ]]</para>
 
           </td>
           <td>
-            <para style="P6">[[ a['buyer_cost'] or '0.0' ]]</para>
+            <para style="P4">[[ a['buyer_cost'] or '0.0' ]]</para>
           </td>
           <td>
-            <para style="P6">[[a['to_pay'] or '0.0' ]]</para>
+            <para style="P4">[[a['to_pay'] or '0.0' ]]</para>
           </td>
         </tr>
       </blockTable>
@@ -106,7 +106,7 @@
           <para style="P6">Total:</para>
         </td>
         <td>
-          <para style="P4">[[ '%.2f' % (sum_lots() or 0.0)  ]]</para>
+          <para style="P4">[[ '%.0f' % (sum_lots() or 0.0)  ]]</para>
         </td>
         <td>
           <para style="P6">[[  '%.2f' % (sum_adj_price() or 0.0)  ]]</para>
