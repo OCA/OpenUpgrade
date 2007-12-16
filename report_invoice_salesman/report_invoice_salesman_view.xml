@@ -1,0 +1,308 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+		<record model="ir.ui.view" id="report_invoice_salesman_forecast_view_tree">
+			<field name="name">report_invoice_salesman_forecast.tree</field>
+			<field name="model">report_invoice_salesman.forecast</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Sales Forecast">
+					<field name="name"/>
+					<field name="user_id"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="report_invoice_salesman_forecast_view_form">
+			<field name="name">report_invoice_salesman_forecast.form</field>
+			<field name="model">report_invoice_salesman.forecast</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Sales Forecast">
+					<notebook>
+					<page string="Sales Forecast">
+						<field name="name" select="1"/>
+						<field name="user_id" select="1"/>
+						<field name="date_from" select="2"/>
+						<field name="date_to"/>
+						<field name="line_ids" colspan="4" nolabel="1">
+							<tree string="Forecast Lines" editable="bottom">
+								<field name="user_id"/>
+								<field name="category_id"/>
+								<field name="amount"/>
+								<field name="margin"/>
+								<field name="note"/>
+							</tree>
+						</field>
+					</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_report_invoice_salesman_forecast_view_form">
+			<field name="name">Sales Forecast</field>
+			<field name="res_model">report_invoice_salesman.forecast</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+		<menuitem
+			name="Sales Management/Sales Forecast"
+			id="menu_report_invoice_salesman_forecast_view_form"
+			action="action_report_invoice_salesman_forecast_view_form" />
+
+		<record model="ir.actions.act_window" id="action_invoice_salesman_forecast_view_form_my">
+			<field name="res_model">report_invoice_salesman.forecast</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('user_id','=',uid)]</field>
+		</record>
+		<menuitem
+			name="Sales Management/Sales Forecast/My Managing Sales Forecast"
+			id="menu_invoice_salesman_forecast_view_form_my"
+			action="action_invoice_salesman_forecast_view_form_my" />
+
+		<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_view_form_current">
+			<field name="name">Current Sales Forecast</field>
+			<field name="res_model">report_invoice_salesman.forecast</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+		</record>
+		<menuitem
+			name="Sales Management/Sales Forecast/Current Sales Forecast"
+			id="menu_report_invoice_salesman_forecast_view_form_current"
+			action="report_invoice_salesman_forecast_view_form_current" />
+
+	<!--
+		Forecast Analysis
+	-->
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_margin_graph">
+		<field name="name">report_invoice_salesman.forecast.stat.margin.graph</field>
+		<field name="model">report_invoice_salesman.forecast.stat</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Sales Forecasts" color="user_id" type="bar">
+				<field name="category_id"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_amount_graph">
+		<field name="name">report_invoice_salesman.forecast.stat.amount.graph</field>
+		<field name="model">report_invoice_salesman.forecast.stat</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Sales Forecasts" type="bar" color="user_id">
+				<field name="category_id"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+			</graph>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_form">
+		<field name="name">report_invoice_salesman.forecast.stat.form</field>
+		<field name="model">report_invoice_salesman.forecast.stat</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Sales Forecasts">
+				<field name="date_from" select="1"/>
+				<field name="date_to" select="2"/>
+				<field name="user_id" select="1"/>
+				<field name="manager_id" select="1"/>
+				<field name="category_id" select="2"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_tree">
+		<field name="name">report_invoice_salesman.forecast.stat.tree</field>
+		<field name="model">report_invoice_salesman.forecast.stat</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Sales Forecasts">
+				<field name="date_from"/>
+				<field name="date_to"/>
+				<field name="user_id"/>
+				<field name="manager_id"/>
+				<field name="category_id"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current">
+		<field name="name">My Current Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/My Current Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current"
+		action="report_invoice_salesman_forecast_stat_my_current" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_amount">
+		<field name="name">My Current Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/My Current Sales Forecast/My Current Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_my_current_amount"
+		action="report_invoice_salesman_forecast_stat_my_current_amount" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_margin">
+		<field name="name">My Current Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/My Current Sales Forecast/My Current Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_margin"
+		action="report_invoice_salesman_forecast_stat_my_current_margin" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current">
+		<field name="name">My Current Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/My Managing Current Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_current"
+		action="report_invoice_salesman_forecast_stat_man_current" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_amount">
+		<field name="name">My Current Managing Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/My Managing Current Sales Forecast/My Current Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_man_current_amount"
+		action="report_invoice_salesman_forecast_stat_man_current_amount" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_margin">
+		<field name="name">My Current Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/My Managing Current Sales Forecast/My Current Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_current_margin"
+		action="report_invoice_salesman_forecast_stat_man_current_margin" />
+
+	<!-- All Months -->
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_all">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/My Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_all"
+		action="report_invoice_salesman_forecast_stat_my_current_all" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_amount_all">
+		<field name="name">My Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('user_id','=',uid) ]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/My Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_my_amount_all"
+		action="report_invoice_salesman_forecast_stat_my_amount_all" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_margin_all">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('user_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/My Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_margin_all"
+		action="report_invoice_salesman_forecast_stat_my_margin_all" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_all">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/My Managing Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_all"
+		action="report_invoice_salesman_forecast_stat_man_all" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_amount_all">
+		<field name="name">My Managing Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('manager_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/My Managing Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_man_amount_all"
+		action="report_invoice_salesman_forecast_stat_man_amount_all" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_margin_all">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('manager_id','=',uid) ]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/My Managing Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_margin_all"
+		action="report_invoice_salesman_forecast_stat_margin_all" />
+
+
+	</data>
+</terp>
