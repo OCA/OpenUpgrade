@@ -113,11 +113,11 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Cases" link="0">
-				<field name="name" select="1" readonly="1"/>
-				<field name="section_id" readonly="1"/>
-				<field name="date" select="1" readonly="1"/>
-				<field name="priority" readonly="1"/>
-				<field name="state" select="1" readonly="1"/>
+				<field name="name" select="1" />
+				<field name="section_id" readonly="0"/>
+				<field name="date" select="1" readonly="0"/>
+				<field name="priority" readonly="0"/>
+				<field name="state" select="1" readonly="0"/>
 				<group col="2" colspan="2">
 					<button 
 						name="case_open"
@@ -134,6 +134,137 @@
 					string="The list of all your acquired cases are in your leads menu." 
 					align="0.0"
 					colspan="4"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="new_support_form">
+		<field name="name">new support form</field>
+		<field name="model">crm.case</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form link="0" string="Cases">
+				<notebook>
+				<page string="General Information">
+					<field name="name" select="1"/>
+					<field name="section_id" domain="[('id','=',6)]"/>
+					<field name="date" readonly="1" select="1"/>
+					<field name="priority"/>
+					<field string="Support Requester" name="user_id" select="1"/>
+
+
+					<field name="date_deadline" select="2"/>
+					<field colspan="4" name="description" nolabel="1" select="2"/>
+					<field colspan="4" name="history_line" nolabel="1">
+						<form string="Actions">
+							<separator colspan="4" string="Action Information"/>
+							<field colspan="4" name="name"/>
+							<field name="date" select="2"/>
+							<field name="user_id" select="2"/>
+							<field name="canal_id"/>
+							<field colspan="4" name="description"/>
+						</form>
+						<tree string="Actions">
+							<field name="date"/>
+							<field name="user_id"/>
+							<field name="description"/>
+						</tree>
+					</field>
+					<field name="state" select="1"/>
+				</page><page string="Other Info">
+					<field name="id" select="1"/>
+					<field name="date_closed"/>
+					<newline/>
+					<field name="date_action_last"/>
+					<field name="date_action_next"/>
+
+					<field colspan="4" name="email_cc"/>
+					<field colspan="4" name="email_last"/>
+				</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="new_bug_form">
+		<field name="name">New Bug Form</field>
+		<field name="model">crm.case</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Cases">
+				<notebook>
+				<page string="General">
+					<group col="8" colspan="4">
+						<field colspan="4" name="name" select="1"/>
+						<field colspan="3" name="section_id" domain="[('id','=',15)]" />
+						<field name="date" colspan="4" select="1"/>
+
+						<field colspan="3" name="priority"/>
+						<field colspan="4" name="partner_id" on_change="onchange_partner_id(partner_id, email_from)" select="1"/>
+						<field colspan="3" name="partner_address_id" on_change="onchange_partner_address_id(partner_address_id, email_from)" select="2"/>
+						<newline/>
+						<field colspan="3" name="email_from" select="2"/>
+						<button name="remind_partner" states="open,pending" string="Send Reminder" type="object"/>
+						<field string="Creating User" name="user_id" readonly="1" select="1"/>
+						<button name="remind_user" states="open,pending" string="Send Reminder" type="object"/>
+					</group>
+
+					<separator colspan="4"/>
+					<field colspan="2" mode="tree,form" name="history_line" nolabel="1">
+						<form string="Communication history">
+							<group col="6" colspan="4">
+								<field name="date" select="1"/>
+								<field name="email" select="1"/>
+								<field name="canal_id" select="2"/>
+							</group>
+							<newline/>
+							<field colspan="4" name="description" nolabel="1" select="2"/>
+						</form>
+						<tree string="Communication history">
+							<field name="description"/>
+							<field name="email"/>
+							<field name="date"/>
+						</tree>
+					</field>
+					<group col="2" colspan="2" expand="1">
+						<button colspan="2" name="add_reply" states="open" string="Add Last Mail for Replying" type="object"/>
+						<field colspan="2" name="description" nolabel="1" select="2"/>
+						<button name="case_log_reply" states="open" string="Send Partner &amp; Historize" type="object"/>
+						<button name="case_log" states="open" string="Historize" type="object"/>
+					</group>
+
+					<separator colspan="4"/>
+					<group col="8" colspan="4">
+						<field name="state" select="1"/>
+						<button name="case_close" states="open,draft,pending" string="Close" type="object"/>
+						<button name="case_open" states="draft,pending" string="Open" type="object"/>
+						<button name="case_cancel" states="draft,open,pending" string="Cancel" type="object"/>
+						<button name="case_pending" states="draft,open" string="Pending" type="object"/>
+						<button name="case_escalate" states="open,draft,pending" string="Escalate" type="object"/>
+						<button name="case_reset" states="done,cancel" string="Reset to Draft" type="object"/>
+					</group>
+				</page>
+				<page string="Extra Info">
+					<field name="id" select="1"/>
+					<field colspan="4" name="email_cc"/>
+					<field string="Version" name="categ_id" on_change="onchange_categ_id(categ_id)" select="2"/>
+					<separator colspan="4" string="Dates"/>
+					<field name="create_date"/>
+					<field name="date_closed"/>
+					<field name="date_action_last"/>
+					<field name="date_action_next"/>
+				</page>
+				<page string="History">
+					<field colspan="4" name="log_ids" nolabel="1">
+						<form string="Actions">
+							<separator colspan="4" string="Action Information"/>
+							<field colspan="4" name="name"/>
+							<field name="date" select="2"/>
+							<field name="user_id" select="2"/>
+						</form>
+					</field>
+				</page>
+				</notebook>
 			</form>
 		</field>
 	</record>
