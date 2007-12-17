@@ -42,7 +42,7 @@ _gtd_arch = """
 	<form string="Timebox tasks selection" width="780">
 		<field name="timebox_id" required="1"/>
 		<field name="timebox_to_id" required="1"/>
-		<field name="task_ids" nolabel="1" colspan="4" height="450" domain="[('timebox_id','=',timebox_id)]"/>
+		<field name="task_ids" nolabel="1" colspan="4" height="450" domain="[('timebox_id','=',timebox_id),('state','=','open')]"/>
 	</form>
 """
 
