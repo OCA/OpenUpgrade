@@ -65,7 +65,23 @@ def test_prof(cr, uid, seg_id, pid, answers_ids = []):
 
 def _recompute_categ(self, cr, uid, pid, answers_ids):
 	ok =  []
-	cr.execute('select id, categ_id from crm_segmentation where profiling_active = true order by id ')
+	cr.execute('''
+		select r.category_id 
+		from res_partner_category_rel r left join crm_segmentation s on (r.category_id = s.categ_id) 
+		where r.partner_id = %d and (s.exclusif = false or s.exclusif is null);
+		'''% pid)
+	for x in cr.fetchall():
+		ok.append(x[0])
+
+	query = '''
+		select id, categ_id 
+		from crm_segmentation 
+		where profiling_active = true''' 
+	if ok != []:
+		query = query +''' and categ_id not in(%s)'''% ','.join([str(i) for i in ok ])
+	query = query + ''' order by id '''
+
+	cr.execute(query)
 	segm_cat_ids = cr.fetchall()
 
 	for (segm_id, cat_id) in segm_cat_ids:
@@ -128,9 +144,9 @@ class crm_segmentation(osv.osv):
 	_columns={
 		"answer_yes": fields.many2many("crm_profiling.answer","profile_question_yes_rel","profile","answer","Inclued answers"),
 		"answer_no": fields.many2many("crm_profiling.answer","profile_question_no_rel","profile","answer","Excluded answers"),
-		'parent_id': fields.many2one('crm.segmentation', 'Parent profile'),
+		'parent_id': fields.many2one('crm.segmentation', 'Parent Profile'),
 		'child_ids': fields.one2many('crm.segmentation', 'parent_id', 'Childs profile'),
-		'profiling_active': fields.boolean('Optionnal tab active', help='Check if you want to use this tab as part of the segmentation rule. If not checked, the criteria beneath will be ignored')
+		'profiling_active': fields.boolean('Use The Profiling Rules', help='Check if you want to use this tab as part of the segmentation rule. If not checked, the criteria beneath will be ignored')
 		}
 	_constraints = [
 		(orm.orm.check_recursion, 'Error ! You can not create recursive profiles.', ['parent_id'])

@@ -1,6 +1,6 @@
 {
 	"name" : "crm_profiling management",
-	"version" : "1.1",
+	"version" : "1.3",
 	"depends" : ["base", "crm"],
 	"author" : "Tiny",
 	"description": """
