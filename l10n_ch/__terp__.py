@@ -8,7 +8,7 @@
 	"category" : "Localisation/Europe",
 	"website": "http://www.tinyerp.com",
 	"depends" : ["base", "account", "base_vat", "base_iban",
-				 "account_payment",
+				 "account_payment", 'account_4_2_l10n_ch',
 				 ],
 	"init_xml" : ["dta_data.xml", "vaudtax_data.xml", "zip_code_default.xml",],
 	"demo_xml" : ["vaudtax_data_demo.xml","dta_demo.xml"],
