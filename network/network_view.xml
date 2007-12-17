@@ -2,8 +2,8 @@
 <terp>
 	<data>
 		<menuitem name="Tools" id="menu_tools" icon="STOCK_PREFERENCES"/>
-		<menuitem name="Tools/Network" groups="admin" id="menu_network"/>
-		<menuitem name="Tools/Network/Configuration" id="menu_network_definition" groups="admin" sequence="1"/>
+		<menuitem name="Tools/Network" groups="base.group_admin" id="menu_network"/>
+		<menuitem name="Tools/Network/Configuration" id="menu_network_definition" groups="base.group_admin" sequence="1"/>
 
 		<record model="ir.ui.view" id="edit_network">
 			<field name="name">network.material.form</field>
@@ -57,7 +57,7 @@
 			<field name="view_type">form</field>
 			<field name="domain">[('parent_id','=',False)]</field>
 		</record>
-		<menuitem name="Tools/Network/All Materials" id="menu_action_material_tree" action="action_material_tree" groups="admin"/>
+		<menuitem name="Tools/Network/All Materials" id="menu_action_material_tree" action="action_material_tree" groups="base.group_admin"/>
 
 		<record model="ir.ui.view" id="material_view_by_network">
 			<field name="name">network.material.tree</field>
@@ -149,7 +149,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Tools/Network/Configuration/Hardware/Types" id="menu_action_hard_type" action="action_hard_type" groups="admin"/>
+		<menuitem name="Tools/Network/Configuration/Hardware/Types" id="menu_action_hard_type" action="action_hard_type" groups="base.group_admin"/>
 
 
 		<record model="ir.ui.view" id="password_form">
@@ -224,7 +224,7 @@
 			<field name="view_type">tree</field>
 		</record>
 		<menuitem name="Tools/Network/Network List"
-			id="menu_add_view_network" action="add_view_network" groups="admin"/>
+			id="menu_add_view_network" action="add_view_network" groups="base.group_admin"/>
 
 		<record model="ir.ui.view" id="add_network_view">
 			<field name="name">network.network.form</field>
@@ -267,7 +267,7 @@
 			<field name="res_model">network.network</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Tools/Network/Networks" id="menu_add_new_network" action="add_new_network" groups="admin"/>
+		<menuitem name="Tools/Network/Networks" id="menu_add_new_network" action="add_new_network" groups="base.group_admin"/>
 
 		<record model="ir.ui.view" id="add_diary_entry_form">
 			<field name="name">network.changes.form</field>
