@@ -2,6 +2,12 @@
 <terp>
 <data>
 
+	<wizard
+		string="Get this Case and Open It"
+		model="crm.case"
+		name="case_get_open"
+		menu="False"
+		id="wizard_case_get_open"/>
 
 	<record model="ir.ui.view" id="portal_crm_case_section_view_tree">
 		<field name="name">crm.case.section.tree</field>
@@ -125,6 +131,12 @@
 						string="Get this Case"
 						states="draft,pending"
 						type="object"/>
+				</group>
+				<group col="2" colspan="2">
+					<button name="%(wizard_case_get_open)d" 
+					states="draft,pending" 
+					string="Get this Case and Open It" 
+					type="action"/>
 				</group>
 				<separator string="Information" colspan="4"/>
 				<label 

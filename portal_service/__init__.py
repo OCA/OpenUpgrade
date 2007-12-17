@@ -1,1 +1,1 @@
-#import scrum
+import wizard
