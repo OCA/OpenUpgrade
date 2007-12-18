@@ -51,7 +51,7 @@ class auction_total_rml(report_sxw.rml_parse):
 			'sum_credit':self.sum_credit,
 			'sum_debit': self.sum_debit,
 			'chek_paid': self.chek_paid,
-			'check_paid_seller': self.chek_paid,
+			'check_paid_seller': self.check_paid_seller,
 			'count_take': self.count_take,
 			'sum_credit_seller':self.sum_credit_seller,
 			'sum_debit_buyer': self.sum_debit_buyer,
@@ -108,10 +108,12 @@ class auction_total_rml(report_sxw.rml_parse):
 		self.cr.execute("select count(1) from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d and ((paid_ach='T') or (is_ok='T')) "%(auction_id))
 		res = self.cr.fetchone()
 		return str(res[0])
-	def check_paid_seller(self, auction_id):
-		self.cr.execute("select count(1) from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d and paid_vnd=1 group by auction_id "%(auction_id))
+	def check_paid_seller(self,auction_id):
+		print "hhhhhhh"
+		self.cr.execute("select sum(seller_price) from auction_lots where id in ("+",".join(map(str,self.total_obj))+") and auction_id=%d and paid_vnd != 'T' "%(auction_id))
 		res = self.cr.fetchone()
-		return str(res[0])
+		print ">>>>>>>>>>>>>>",res
+		return str(res[0]) or 0.0
 
 	def sum_credit(self,auction_id):
 		print "object",auction_id
