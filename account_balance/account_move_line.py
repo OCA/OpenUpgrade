@@ -64,15 +64,18 @@ class account_move_line(osv.osv):
 					count=1
 					len_periods=len(p_id)
 
+
 					for period in periods:
 						strQuery += "("+obj+".create_date between to_date('" + period['date_start']  + "','yyyy-mm-dd') and to_date('" + period['date_stop']  + "','yyyy-mm-dd'))"
 						if len_periods!=1 and count!=len_periods:
 							strQuery+=" OR "
 							count=count+1
-					strQuery+=")"
+					if p_id==[]:
+						strQuery+=obj+".period_id in (SELECT id from account_period WHERE fiscalyear_id=%d))" % (context['fiscalyear'],)
+					else:
+						strQuery+=")"
 		else:
 			strQuery = obj+".active AND "+obj+".state<>'draft' AND "+obj+".period_id in (SELECT id from account_period WHERE fiscalyear_id=%d)" % (context['fiscalyear'],)
-
 
 		return strQuery
 account_move_line()
