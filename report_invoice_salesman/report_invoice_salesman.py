@@ -67,6 +67,84 @@ class report_invoice_salesman_forecast_line(osv.osv):
 report_invoice_salesman_forecast_line()
 
 
+class report_invoice_salesman_forecast_stat_global(osv.osv):
+	_name = "report_invoice_salesman.forecast.stat.global"
+	_description = "Forecasts by Salesman"
+	_rec_name = 'date_from'
+	_auto = False
+	_log_access = False
+	def _sum_margin_real(self, cr, uid, ids, name, args, context):
+		result = {}
+		for line in self.browse(cr, uid, ids, context):
+			query = '''select 
+					sum(l.price_unit * l.quantity * ((100-l.discount)/100.0) - l.quantity * t.standard_price) 
+				from account_invoice_line l 
+				left join account_invoice i on (l.invoice_id=i.id)
+				left join product_product p on (l.product_id=p.id)
+				left join product_template t on (p.product_tmpl_id=t.id)
+				where 
+					i.state in ('open','done') and
+					i.date_invoice>=%s and 
+					i.date_invoice<=%s'''
+			query2 = [line.date_from, line.date_to]
+			if line.user_id:
+				query += ' and i.user_id=%d'
+				query2.append(line.user_id.id)
+			cr.execute(query, query2)
+			result[line.id] = cr.fetchone()[0]
+		return result
+	def _sum_amount_real(self, cr, uid, ids, name, args, context):
+		result = {}
+		for line in self.browse(cr, uid, ids, context):
+			query = '''select 
+					sum(l.price_unit * l.quantity * ((100-l.discount)/100.0)) 
+				from account_invoice_line l 
+				left join account_invoice i on (l.invoice_id=i.id)
+				left join product_product p on (l.product_id=p.id)
+				left join product_template t on (p.product_tmpl_id=t.id)
+				where 
+					i.state in ('open','done') and
+					i.date_invoice>=%s and 
+					i.date_invoice<=%s'''
+			query2 = [line.date_from, line.date_to]
+			if line.user_id:
+				query += ' and i.user_id=%d'
+				query2.append(line.user_id.id)
+			cr.execute(query, query2)
+			result[line.id] = cr.fetchone()[0]
+		return result
+	_columns = {
+		'user_id': fields.many2one('res.users', 'Salesman'),
+		'amount': fields.float('Amount'),
+		'margin': fields.float('Margin'),
+		'forecast_id': fields.many2one('report_invoice_salesman.forecast', 'Forecast'),
+		'sum_amount': fields.function(_sum_amount_real, method=True, string='Amount Real'),
+		'sum_margin': fields.function(_sum_margin_real, method=True, string='Margin Real'),
+		'manager_id': fields.many2one('res.users', 'Responsible', required=True),
+		'date_from':fields.date('Start Period', required=True),
+		'date_to':fields.date('End Period', required=True),
+	}
+	def init(self, cr):
+		cr.execute("""create or replace view report_invoice_salesman_forecast_stat_global as (
+			select
+				min(l.id) as id,
+				f.date_from as date_from,
+				f.date_to as date_to,
+				f.id as forecast_id,
+				f.user_id as manager_id,
+				l.user_id as user_id,
+				sum(l.amount) as amount,
+				sum(l.margin) as margin
+			from
+				report_invoice_salesman_forecast f
+			left join
+				report_invoice_salesman_forecast_line l on (l.forecast_id=f.id)
+			group by 
+				f.id, f.user_id, 
+				l.user_id, f.date_from, f.date_to
+		) """)
+report_invoice_salesman_forecast_stat_global()
+
 class report_invoice_salesman_forecast_stat(osv.osv):
 	_name = "report_invoice_salesman.forecast.stat"
 	_description = "Sales Forecasts"
@@ -124,6 +202,7 @@ class report_invoice_salesman_forecast_stat(osv.osv):
 		'user_id': fields.many2one('res.users', 'Salesman'),
 		'amount': fields.float('Amount'),
 		'margin': fields.float('Margin'),
+		'forecast_id': fields.many2one('report_invoice_salesman.forecast', 'Forecast'),
 		'sum_amount': fields.function(_sum_amount_real, method=True, string='Amount Real'),
 		'sum_margin': fields.function(_sum_margin_real, method=True, string='Margin Real'),
 		'manager_id': fields.many2one('res.users', 'Responsible', required=True),
@@ -136,6 +215,7 @@ class report_invoice_salesman_forecast_stat(osv.osv):
 				l.id as id,
 				f.date_from as date_from,
 				f.date_to as date_to,
+				f.id as forecast_id,
 				f.user_id as manager_id,
 				l.user_id as user_id,
 				l.amount as amount,
