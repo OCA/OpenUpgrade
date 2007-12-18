@@ -1,13 +1,21 @@
 {
     "name" : "Accounting and financial management-Compare Accounts",
-    "version" : "1.0",
+    "version" : "1.1",
     "depends" : ["account"],
     "author" : "Tiny",
-    "description": """Improvement of the financial and accounting module. The new functionnalities are:
-comparison of accounts between at most 3 fiscal years
-TODO..
-overall improvement of the reporting layout
+    "description": """Account Balance Module is an added functionality to the Financial Management module.
 
+    This module gives you the various options for printing balance sheet.
+
+    1. You can compare the balance sheet for different years.
+
+    2. You can set the cash or percentage comparision between two years.
+
+    3. You can set the referencial account for the percentage comparision for particular years.
+
+    4. You can select periods as an actual date or periods as creation date.
+
+    5. You have an option to print the desired report in Landscape format.
     """,
     "website" : "http://tinyerp.com/account_balance.html",
     "category" : "Generic Modules/Accounting",
