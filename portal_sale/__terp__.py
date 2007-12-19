@@ -8,7 +8,7 @@
     "description": """
      """,
     "init_xml" : [],
-    "update_xml" : ["portal_sale_view.xml","portal_conf_data_.xml"],
+    "update_xml" : ["portal_sale_view.xml","portal_conf_data.xml"],
     "demo_xml" : ["portal_sale_data.xml"],
     "active": False,
     "installable": True
