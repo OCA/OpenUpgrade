@@ -120,11 +120,11 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Cases" link="0">
-				<field name="name" select="1" />
-				<field name="section_id" readonly="0"/>
-				<field name="date" select="1" readonly="0"/>
-				<field name="priority" readonly="0"/>
-				<field name="state" select="1" readonly="0"/>
+				<field name="name" select="1" readonly="1" />
+				<field name="section_id" readonly="1"/>
+				<field name="date" select="1" readonly="1"/>
+				<field name="priority" readonly="1"/>
+				<field name="state" select="1" readonly="1"/>
 				<group col="2" colspan="2">
 					<button 
 						name="case_open"
@@ -333,6 +333,8 @@
 			</form>
 		</field>
 	</record>
+
+
 
 </data>
 </terp>

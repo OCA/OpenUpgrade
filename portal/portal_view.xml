@@ -73,9 +73,63 @@
 		</field>
 	</record>
 
+<!--
+	Actions Views
+-->
+
+
+	<record model="ir.ui.view" id="portal_ir_actions_report_custom_form">
+		<field name="name">ir.actions.report.custom.form.inherit</field>
+		<field name="model">ir.actions.report.custom</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.act_report_custom_view"/>
+		<field name="arch" type="xml">
+			<form position="inside">
+				<field name="portal_visible" select="1"/>
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="portal_ir_actions_report_xml_form">
+		<field name="name">ir.actions.report_xml.form.inherit</field>
+		<field name="model">ir.actions.report.xml</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.act_report_xml_view"/>
+		<field name="arch" type="xml">
+			<form position="inside">
+				<field name="portal_visible" select="1"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="portal_ir_actions_wizards_form">
+		<field name="name">ir.actions.wizards.form.inherit</field>
+		<field name="model">ir.actions.wizard</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.act_wizard_view"/>
+		<field name="arch" type="xml">
+			<form position="inside">
+				<field name="portal_visible" select="1"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="portal_ir_actions_windows_form">
+		<field name="name">ir.actions.windows.form.inherit</field>
+		<field name="model">ir.actions.act_window</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.view_window_action_form"/>
+		<field name="arch" type="xml">
+			<form position="inside">
+				<field name="portal_visible" select="1"/>
+			</form>
+		</field>
+	</record>
+
 
 <!-- new features -->
-	<menuitem name="Portal/Bug tracker"  id="menu_portal_bugs" />
+<!--	<menuitem name="Portal/Bug tracker"  id="menu_portal_bugs" />
 
 	<menuitem
 		name="Portal/Bug tracker/Report a bug"
@@ -83,6 +137,6 @@
 		type="wizard"
 		id="menu_wizard_create_bug"/>
 	<menuitem name="Portal/Bug tracker/All bugs"  id="menu_portal_bugs_all" action="action_portal_form"/>
-
+-->
 </data>
 </terp>

@@ -191,4 +191,42 @@ class portal_model(osv.osv):
 		}
 portal_model()
 
+class ir_actions_act_report_xml(osv.osv):
+	_inherit="ir.actions.report.xml"
+	_columns={
+		"portal_visible": fields.boolean('Visible in Portal')
+		}
+	_defaults = {
+		'portal_visible': lambda *a: True,
+	}
+ir_actions_act_report_xml()
 
+class ir_actions_act_report_custom(osv.osv):
+	_inherit="ir.actions.report.custom"
+	_columns={
+		"portal_visible": fields.boolean('Visible in Portal')
+		}
+	_defaults = {
+		'portal_visible': lambda *a: True,
+	}
+ir_actions_act_report_custom()
+
+class ir_actions_act_wizard(osv.osv):
+	_inherit="ir.actions.wizard"
+	_columns={
+		"portal_visible": fields.boolean('Visible in Portal')
+		}
+	_defaults = {
+		'portal_visible': lambda *a: True,
+	}
+ir_actions_act_wizard()
+
+class ir_actions_act_window(osv.osv):
+	_inherit="ir.actions.act_window"
+	_columns={
+		"portal_visible": fields.boolean('Visible in Portal')
+		}
+	_defaults = {
+		'portal_visible': lambda *a: True,
+	}
+ir_actions_act_window()

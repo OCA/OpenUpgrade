@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<record id="account.wizard_invoice_pay" model="ir.actions.wizard" >
+			<field name="portal_visible" eval="False" />
+		</record> 
+	</data>
+	<data>
+		<record id="account.wizard_invoice_refund" model="ir.actions.wizard" >
+			<field name="portal_visible" eval="False" />
+		</record> 
+	</data>
+	<data>
+		<record id="account.account_invoices" model="ir.actions.report.xml" >
+			<field name="portal_visible" eval="False" />
+		</record> 
+	</data>
+	<data>
+		<record id="crm.crm_business_opportunities_report" model="ir.actions.report.xml">
+			<field name="portal_visible" eval="False" />
+		</record> 
+	</data>
+	<data>
+		<record id="ir_rule_group_dedicatedtotheportal0" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.report.custom')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_0" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal0"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_rule_group_dedicatedtotheportal1" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.report.xml')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_0" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal1"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_rule_group_dedicatedtotheportal2" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.act_window')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_0" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal2"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_rule_group_dedicatedtotheportal3" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.wizard')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_0" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal3"/>
+		</record>
+	</data>
+
+	<data noupdate="1">
+		<record id="portal.portal_group" model="res.groups">
+			<field eval="[(4,ref('ir_rule_group_dedicatedtotheportal0')),(4,ref('ir_rule_group_dedicatedtotheportal1')),(4,ref('ir_rule_group_dedicatedtotheportal2')),(4,ref('ir_rule_group_dedicatedtotheportal3'))]" name="rule_groups"/>
+		</record>
+	</data>
+</terp>
