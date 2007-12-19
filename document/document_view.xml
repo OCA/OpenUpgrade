@@ -59,7 +59,7 @@
 					<separator string="Directory Type" colspan="4"/>
 					<field name="type"/>
 					<newline/>
-					<field name="ressource_type_id"/>
+					<field name="ressource_type_id"  on_change="onchange_content_id(ressource_type_id)"/>
 					<field name="ressource_tree"/>
 
 					<separator string="Contents" colspan="4"/>
@@ -135,7 +135,6 @@
 				<notebook>
 				<page string="Definition">
 					<field name="name" select="1" colspan="4"/>
-					<field name="datas_fname"/>
 					<field name="datas"/>
 					<field name="file_size"/>
 					<field name="parent_id"/>
@@ -147,7 +146,7 @@
 					<field name="write_date"/>
 					<field name="write_uid"/>
 				</page><page string="Indexed Content">
-					<field name="index_content" nolabel="1" colspan="4"/>
+					<field name="index_content" nolabel="1" colspan="4" select="1"/>
 				</page><page string="Security">
 					<field name="group_ids" colspan="4" nolabel="1"/>
 				</page>
@@ -163,7 +162,6 @@
 		<field name="arch" type="xml">
 			<tree string="Files">
 				<field name="name"/>
-				<field name="datas_fname"/>
 				<field name="file_size"/>
 				<field name="user_id"/>
 				<field name="create_date"/>
@@ -196,6 +194,17 @@
 		<field name="value" eval="'ir.actions.act_window,%d'%action_document_file_directory_form"/>
 		<field name="object" eval="True"/>
 	</record>
+
+	<record model="ir.ui.view" id="view_attachment_form_inherit">
+		<field name="name">ir.attachment.view.inherit</field>
+		<field name="model">ir.attachment</field>
+		<field name="inherit_id" ref="base.view_attachment_form"/>
+		<field name="arch" type="xml">
+			<field name="datas_fname" position = "replace" >
+			</field>
+		</field>
+	</record>
+
 </data>
 </terp>
 
