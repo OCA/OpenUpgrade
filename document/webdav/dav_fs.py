@@ -85,7 +85,11 @@ class tinyerp_handler(dav_interface):
 					value_dict = {'name': objname,obj._parent_name: node.object2.id}
 				else:
 					value_dict = {'name': objname}
-				obj.create(cr, 3, value_dict)
+				try :
+					obj.create(cr, 3, value_dict)
+				except :
+#Will show error on command prompt
+					raise DAV_Error,999
 		else:
 			print 'Type', node.object.type, 'not implemented !'
 
