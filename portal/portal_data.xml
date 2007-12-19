@@ -4,6 +4,7 @@
 
 	<record model="res.groups" id="portal_group">
 		<field name="name">Portal group</field>
+		<field eval="[(4,ref('ir_rule_group_dedicatedtotheportal0')),(4,ref('ir_rule_group_dedicatedtotheportal1')),(4,ref('ir_rule_group_dedicatedtotheportal2')),(4,ref('ir_rule_group_dedicatedtotheportal3'))]" name="rule_groups"/>
 	</record>
 
 	<record model="ir.model.access" id="model_access_partner_address">
