@@ -1,6 +1,6 @@
 """
 
-status codes for DAV services 
+status codes for DAV services
 
 
 """
@@ -26,5 +26,6 @@ STATUS_CODES={
         423:    "Locked",
         424:    "Failed Dependency",
         502:    "Bad Gateway",
-        507:    "Insufficient Storage"
+        507:    "Insufficient Storage",
+        999:    "Some error in Create Method please check the data of create method"
 }
