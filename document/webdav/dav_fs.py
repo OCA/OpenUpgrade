@@ -86,7 +86,6 @@ class tinyerp_handler(dav_interface):
 				else:
 					value_dict = {'name': objname}
 				obj.create(cr, 3, value_dict)
-
 		else:
 			print 'Type', node.object.type, 'not implemented !'
 
@@ -205,20 +204,16 @@ class tinyerp_handler(dav_interface):
 		node = self.uri2object(cr, 3, objuri)
 
 		fobj = pool.get('ir.attachment')
-
-
-#Temp solution to allows those file which do nt have any extension
-
-
-		if objname.find('.') :
-			objname = objname + '.txt'
+		ext =False
+		if objname.find('.') >0 :
+			ext = objname.split('.')[1] or False
 		val = {
 			'name': objname,
 			'datas_fname': objname,
 			'file_size': len(data),
 			'datas': base64.encodestring(data),
 			'index_content': content_index(data, objname, content_type or None),
-			'file_type': objname.split('.')[1] or False,
+			'file_type': ext,
 			'parent_id': node.object and node.object.id or False,
 		}
 		if node.object2:
