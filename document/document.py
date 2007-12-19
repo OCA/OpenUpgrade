@@ -39,7 +39,7 @@ import os
 import pooler
 
 class node_class(object):
-	def __init__(self, cr, uid, path, object, object2=False, context={}, content=False, type='collection'):
+	def __init__(self, cr, uid, path,object,object2=False, context={}, content=False, type='collection'):
 		self.cr = cr
 		self.uid = uid
 		self.path = path
@@ -48,6 +48,7 @@ class node_class(object):
 		self.context = context
 		self.content = content
 		self.type=type
+
 
 	def _file_get(self, nodename=False):
 		pool = pooler.get_pool(self.cr.dbname)
@@ -58,12 +59,8 @@ class node_class(object):
 			where.append( ('res_model','=',self.object2._name) )
 			where.append( ('res_id','=',self.object2.id) )
 			for content in self.object.content_ids:
-				if content.suffix:
-					test_nodename = self.object2.name + content.suffix+content.extension
-					path = self.path+'/'+self.object2.name + content.suffix+content.extension
-				else:
-					test_nodename = self.object2.name+content.extension
-					path = self.path+'/'+self.object2.name+content.extension
+				test_nodename = self.object2.name + (content.suffix or '') + (content.extension or '')
+				path = self.path+'/'+self.object2.name + (content.suffix or '') + (content.extension or '')
 				if not nodename:
 					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content')
 					res2.append( n)
@@ -80,29 +77,40 @@ class node_class(object):
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
 		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file'), res) + res2
 
+
+	def directory_list_for_child(self,nodename,parent=False):
+		where = []
+		if nodename:
+			where.append(('name','=',nodename))
+		where.append(('parent_id','=',self.object.id))
+		ids = self.object.search(self.cr, self.uid, where, self.context)
+		res = self.object.browse(self.cr, self.uid, ids,self.context)
+		return res
+
 	def _child_get(self, nodename=False):
 		if self.type<>'collection':
 			return []
-		if self.object.type=='directory':
-			where = []
-			if nodename:
-				where.append(('name','=',nodename))
-			where.append(('parent_id','=',self.object.id))
-			ids = self.object.search(self.cr, self.uid, where, self.context)
-			res = self.object.browse(self.cr, self.uid, ids,self.context)
+		if self.object.type=='directory' :
+			res = self.directory_list_for_child(nodename)
 			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
 		elif self.object.type=="ressource":
 			where = []
-			if self.object.ressource_tree:
-				# Todo change False by selected parent
-				if obj._parent_name in obj.fields_get(self.cr,self.uid):
-					where.append((obj._parent_name,'=',self.object2 and self.object2.id or False))
+			obj = self.object2
+
 			if not self.object2:
 				pool = pooler.get_pool(self.cr.dbname)
 				obj = pool.get(self.object.ressource_type_id.model)
+
+			if self.object.ressource_tree:
+				if obj._parent_name in obj.fields_get(self.cr,self.uid):
+					where.append((obj._parent_name,'=',self.object2 and self.object2.id or False))
+				else :
+					if self.object2:
+						return []
 			else:
 				if self.object2:
 					return []
+
 			name_for = obj._name.rpartition('.')[2]
 			if nodename  and nodename.find(name_for) == 0  :
 				nodename = nodename.partition('.')[0]
@@ -112,11 +120,17 @@ class node_class(object):
 				if nodename.find('__') :
 					nodename=nodename.replace('__','/')
 				where.append(('name','=',nodename))
+
 			ids = obj.search(self.cr, self.uid, where, self.context)
 			res = obj.browse(self.cr, self.uid, ids,self.context)
+
 			for r in res:
 				if not r.name:
 					r.name = name_for+'%d'%r.id
+
+			res1 = self.directory_list_for_child(nodename)
+			if not self.object2:
+				res = res + res1
 			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x), res)
 		else:
 			print "*** Directory type", self.object.type, "not implemented !"
@@ -333,6 +347,8 @@ class document_file(osv.osv):
 		'write_uid':  fields.many2one('res.users', 'Last Modification User', readonly=True),
 		'create_date': fields.datetime('Date Created', readonly=True),
 		'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
+		'datas_fname': fields.char('Data Filename',size=64),
+
 	}
 	_defaults = {
 		'user_id': lambda self,cr,uid,ctx:uid,
@@ -372,7 +388,12 @@ class document_file(osv.osv):
 
 		vals['link'] = fname
 		vals['datas_fname']=filename
-		vals['name']=filename
+
+#		vals['name']=filename
+
+		ext = False
+		if vals['name'].find('.') >0 :
+			ext = vals['name'].split('.')[1] or False
 		vals['file_type']= vals['name'].split('.')[1] or False
 		vals['datas']=" "
 		return super(document_file,self).create(cr, user, vals, context)
