@@ -76,12 +76,17 @@ class base_module_record(osv.osv):
 		record_list = [record]
 		fields = self.pool.get(model).fields_get(cr, uid)
 		for key,val in data.items():
-			if not val:
+			if not (val or (fields[key]['type']=='boolean')):
 				continue
 			if fields[key]['type'] in ('integer','float'):
 				field = doc.createElement('field')
 				field.setAttribute("name", key)
 				field.setAttribute("eval", val and str(val) or 'False' )
+				record.appendChild(field)
+			elif fields[key]['type'] in ('boolean',):
+				field = doc.createElement('field')
+				field.setAttribute("name", key)
+				field.setAttribute("eval", val and '1' or '0' )
 				record.appendChild(field)
 			elif fields[key]['type'] in ('many2one',):
 				field = doc.createElement('field')
@@ -107,6 +112,7 @@ class base_module_record(osv.osv):
 						childrecord, update = self._create_record(cr, uid, doc, fields[key]['relation'],valitem[2], newid)
 						noupdate = noupdate or update
 						record_list += childrecord
+						self.ids[(fields[key]['relation'],newid)] = newid
 					else:
 						pass
 			elif fields[key]['type'] in ('many2many',):
@@ -115,6 +121,7 @@ class base_module_record(osv.osv):
 					if valitem[0]==6:
 						for id2 in valitem[2]:
 							id,update = self._get_id(cr, uid, fields[key]['relation'], id2)
+							self.ids[(fields[key]['relation'],id)] = id
 							noupdate = noupdate or update
 							res.append(id)
 						field = doc.createElement('field')
