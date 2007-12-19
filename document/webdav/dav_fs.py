@@ -225,7 +225,10 @@ class tinyerp_handler(dav_interface):
 				'res_model': node.object2._name,
 				'res_id': node.object2.id
 			})
-		fobj.create(cr, 3, val)
+		try :
+			fobj.create(cr, 3, val)
+		except:
+			raise DAV_Error,999
 
 		# Test Permissions
 		if False:
