@@ -105,7 +105,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                     self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                 else:
                     self.insVariable.addItem(var ,self.insVariable.getItemCount())
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
+                #res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
 
             self.win.doModalDialog("lstFields",self.sValue)
         else:
@@ -120,12 +120,16 @@ class Fields(unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
+            for var in self.aVariableList:
+                if var.__getslice__(0,var.find("(")+1)==sItem.__getslice__(0,sItem.find("(")+1):
+                    sItem = var
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
-            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+            ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject ,  'search', [])
+            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[ids[0]])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
-            #import traceback;traceback.print_exc()
+            import traceback;traceback.print_exc()
             self.win.setEditText("txtUName","TTT")
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
@@ -142,12 +146,22 @@ class Fields(unohelper.Base, XJobExecutor ):
             myval=sVar.__getslice__(0,sVar.find("/"))
         else:
             myval=sVar
-        for k in key:
-            if (res[k]['type'] in ['many2one']) and k==myval:
-                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
-                return res[myval]['relation']
-            elif k==myval:
+        if myval in key:
+            if (res[myval]['type'] in ['many2one']):
+                sObject = res[myval]['relation']
+                return self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+            else:
                 return sObject
+
+#        for k in key:
+#            if (res[k]['type'] in ['many2one']) and k==myval:
+#                print sVar.__getslice__(sVar.find("/")+1,sVar.__len__())
+#                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+#                return res[myval]['relation']
+#
+#            elif k==myval:
+#                return sObject
+
 
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :

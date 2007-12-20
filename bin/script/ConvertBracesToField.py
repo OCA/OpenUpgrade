@@ -1,5 +1,4 @@
 
-
 import uno
 import unohelper
 import string
@@ -40,13 +39,14 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         regexes = [
                   ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                   ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                  #['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'\' *\\]\\]',"Field"]
-                  ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-                  ['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
-                  ['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                  ['\\[\\[ (.+?) and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                  ['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"]
+                  ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"]
+#                  ['\\[\\[ ([a-zA-Z0-9_]+\.[a-zA-Z1-9]) \\]\\]',"Field"],
+#                  ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+#                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+#                  ['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
+#                  ['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+#                  ['\\[\\[ (.+?) and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+#                  ['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"]
                   ]
         oFieldObject = []
         oRepeatInObjects = []
@@ -67,9 +67,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     for reg in regexes:
-                        print reg[0]
                         res=re.findall(reg[0],oPar.Items[1])
-                        print res
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
@@ -96,13 +94,32 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                     r = "TTT"
                                 if len(r) <> 0:
                                     if r <> "TTT":
-                                        try:
+                                        if len(res)>1:
+                                            sExpr=""
+                                            print res
+                                            if reg[1] == 'Field':
+                                                for ires in res:
+                                                    try:
+                                                        sExpr=r[0][ires.__getslice__(ires.rfind(".")+1,len(ires))]
+                                                        print sExpr,ires
+                                                        break
+                                                    except:
+                                                        pass
+                                                try:
+                                                    oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                                    oPar.update()
+                                                except Exception, e:
+                                                    oPar.Items=(str(sExpr) ,oPar.Items[1])
+                                                    oPar.update()
+                                        else:
                                             sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
-                                            oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
-                                            oPar.update()
-                                        except Exception, e:
-                                            oPar.Items=(str(sExpr) ,oPar.Items[1])
-                                            oPar.update()
+                                            try:
+
+                                                oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                                oPar.update()
+                                            except Exception, e:
+                                                oPar.Items=(str(sExpr) ,oPar.Items[1])
+                                                oPar.update()
                                     else:
                                         oPar.Items=(u""+r,oPar.Items[1])
                                         oPar.update()
@@ -140,13 +157,6 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             regexes = [
                 ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                 ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                #['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'\' *\\]\\]',"Field"],
-                #['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-                #['\\[\\[ *([a-zA-Z0-9_\.]+) or *.+? \\]\\]',"Field"],
-                #['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
-                #['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                #['\\[\\[ .+? and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                #['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
                 ['\\[\\[ *.+? *\\]\\]', "Expression"]
                 ]
 
@@ -168,7 +178,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         if reg[1]<>"Expression":
                             oInputList.Items=(u""+found.String,u""+found.String)
                         else:
-                            oInputList.Items=(u"???????",u""+found.String)
+                            oInputList.Items=(u"?",u""+found.String)
                         aReportSyntex.append([oInputList,reg[1]])
                         text.insertTextContent(found,oInputList,False)
                         found.String =""
@@ -191,7 +201,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         if res[1]<>"Expression":
                             oInputList.Items=(u""+found.String,u""+found.String)
                         else:
-                            oInputList.Items=(u"???????",u""+found.String)
+                            oInputList.Items=(u"?",u""+found.String)
                         aReportSyntex.append([oInputList,res[1]])
                         text.insertTextContent(found,oInputList,False)
                         found.String =""

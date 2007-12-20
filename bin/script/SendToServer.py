@@ -47,10 +47,13 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         if docinfo.getUserFieldValue(2)<>"" :
             #self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('id','=',int(docinfo.getUserFieldValue(2)))])
             #print ids
-            fields=['name','report_name']
-            self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
-            name = self.res_other[0]['name']
-            report_name = self.res_other[0]['report_name']
+            try:
+                fields=['name','report_name']
+                self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+                name = self.res_other[0]['name']
+                report_name = self.res_other[0]['report_name']
+            except:
+                pass
         elif docinfo.getUserFieldValue(3) <> "":
             name = ""
             result =  "rnd"
@@ -62,12 +65,18 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             ErrorDialog("Please select appropriate module...","Note: use Tiny Report -> Open a new Report", "Module selection ERROR");
             exit(1)
 
-        self.win = DBModalDialog(60, 50, 180, 85, "Send To Server")
+        self.win = DBModalDialog(60, 50, 180, 100, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
         self.win.addEdit("txtName", -5, 5, 123, 15,name)
         self.win.addFixedText("lblReportName", 2, 30, 50, 15, "Technical Name :")
         self.win.addEdit("txtReportName", -5, 25, 123, 15,report_name)
         self.win.addCheckBox("chkHeader", 51, 45, 70 ,15, "Corporate Header")
+        self.win.addFixedText("lblResourceType", 2 , 60, 50, 15, "Select Rpt. Type :")
+        self.win.addComboListBox("lstResourceType", -5, 58, 123, 15,True,itemListenerProc=self.lstbox_selected)
+        self.lstResourceType = self.win.getControl( "lstResourceType" )
+        self.lstResourceType.addItem("pdf",0)
+        self.lstResourceType.addItem("sxw",1)
+        self.lstResourceType.addItem("html",3)
         if docinfo.getUserFieldValue(3)<>"" and docinfo.getUserFieldValue(2)<>"":
             self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
                                 actionListenerProc = self.btnOkOrCancel_clicked)
@@ -76,7 +85,10 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                                 actionListenerProc = self.btnOkOrCancel_clicked)
         self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
                         actionListenerProc = self.btnOkOrCancel_clicked)
-        self.win.doModalDialog("",None)
+        self.win.doModalDialog("lstResourceType","pdf")
+
+    def lstbox_selected(self,oItemEvent):
+        pass
 
     def btnOkOrCancel_clicked(self, oActionEvent):
 
@@ -113,9 +125,11 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 res1['name'] =self.win.getEditText("txtName")
                 res1['model'] =docinfo.getUserFieldValue(3)
                 res1['report_name'] =self.win.getEditText("txtReportName")
+
                 if self.win.getCheckBoxState("chkHeader")==0:
                     bHeader = False
                 res1["header"] = bHeader
+                res1["report_type"]=self.win.getListBoxSelectedItem("lstResourceType")
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),res1)
                 self.win.endExecute()
             else:

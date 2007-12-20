@@ -245,8 +245,10 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
 
                 if oCur.supportsService("com.sun.star.text.TextTable"):
                     if sTableName=="":
+                        print 2
                         getChildTable(oCur,aItemList,aComponentAdd,oPar.Name)
                     else:
+                        print 1
                         getChildTable(oCur,aItemList,aComponentAdd,sTableName+"."+oPar.Name)
                 else:
                     oSecEnum = oCur.createEnumeration()
@@ -1202,6 +1204,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.aComponentAdd=[]
         self.aObjectList=[]
         self.aListRepeatIn=[]
+        self.aVariableList=[]
         # Call method to perform Enumration on Report Document
         EnumDocument(self.aItemList,self.aComponentAdd)
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
@@ -1231,7 +1234,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             for j in range(self.aObjectList.__len__()):
 
                 if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find(" ")) == "List":
-                    self.insVariable.addItem(self.aObjectList[j],1)
+                    #self.insVariable.addItem(self.aObjectList[j],1)
+                    self.aVariableList.append(self.aObjectList[j])
             for i in range(self.aItemList.__len__()):
 
                 if self.aComponentAdd[i]=="Document":
@@ -1240,7 +1244,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     for j in range(self.aObjectList.__len__()):
 
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                            self.insVariable.addItem(self.aObjectList[j],1)
+                            #self.insVariable.addItem(self.aObjectList[j],1)
+                            self.aVariableList.append(self.aObjectList[j])
 
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
@@ -1250,9 +1255,9 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
 
                         for j in range(self.aObjectList.__len__()):
-
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                                self.insVariable.addItem(self.aObjectList[j],1)
+                                #self.insVariable.addItem(self.aObjectList[j],1)
+                                self.aVariableList.append(self.aObjectList[j])
 
                 if tcur.TextTable:
 
@@ -1274,7 +1279,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     i=0
 
                     for i in range(self.aObjectList.__len__()):
-
                         if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sObject:
                             sItem= self.aObjectList[i]
                             self.insVariable.setText(sItem)
@@ -1284,7 +1288,22 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 #                    self.win.setEditText("txtUName",sDisplayName)
 
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
-
+            print self.aVariableList
+            for var in self.aVariableList:
+                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+                if var.__getslice__(0,8)<>'List of ':
+                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
+                else:
+                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(8,len(var)))])
+                fields=['name','model']
+                self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                if self.model_res <> []:
+                    if var.__getslice__(0,8)<>'List of ':
+                        self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+                    else:
+                        self.insVariable.addItem('List of ' + self.model_res[0]['name'] ,self.insVariable.getItemCount())
+                else:
+                    self.insVariable.addItem(var ,self.insVariable.getItemCount())
             self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
@@ -1311,6 +1330,13 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxText("cmbVariable")
+            sItem= self.win.getComboBoxText("cmbVariable")
+            for var in self.aVariableList:
+                if var.__getslice__(0,8)=='List of ':
+                    if var.__getslice__(0,8)==sItem.__getslice__(0,8):
+                        sItem = var
+                elif var.__getslice__(0,var.find("(")+1)==sItem.__getslice__(0,sItem.find("(")+1):
+                    sItem = var
             self.aListRepeatIn=[]
 
             if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
@@ -1322,6 +1348,10 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
         else:
             sItem=self.win.getComboBoxText("cmbVariable")
+            for var in self.aVariableList:
+                if var.__getslice__(0,8)=='List of ':
+                    if var.__getslice__(0,8)==sItem.__getslice__(0,8):
+                        sItem = var
             self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))
             self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
@@ -1500,7 +1530,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                     self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                 else:
                     self.insVariable.addItem(var ,self.insVariable.getItemCount())
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
+                #res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
 
             self.win.doModalDialog("lstFields",self.sValue)
         else:
@@ -1515,12 +1545,16 @@ class Fields(unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
+            for var in self.aVariableList:
+                if var.__getslice__(0,var.find("(")+1)==sItem.__getslice__(0,sItem.find("(")+1):
+                    sItem = var
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
-            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+            ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject ,  'search', [])
+            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[ids[0]])
             self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
         except:
-            #import traceback;traceback.print_exc()
+            import traceback;traceback.print_exc()
             self.win.setEditText("txtUName","TTT")
         if self.bModify:
             self.win.setEditText("txtUName",self.sGDisplayName)
@@ -1537,12 +1571,22 @@ class Fields(unohelper.Base, XJobExecutor ):
             myval=sVar.__getslice__(0,sVar.find("/"))
         else:
             myval=sVar
-        for k in key:
-            if (res[k]['type'] in ['many2one']) and k==myval:
-                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
-                return res[myval]['relation']
-            elif k==myval:
+        if myval in key:
+            if (res[myval]['type'] in ['many2one']):
+                sObject = res[myval]['relation']
+                return self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+            else:
                 return sObject
+
+#        for k in key:
+#            if (res[k]['type'] in ['many2one']) and k==myval:
+#                print sVar.__getslice__(sVar.find("/")+1,sVar.__len__())
+#                self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+#                return res[myval]['relation']
+#
+#            elif k==myval:
+#                return sObject
+
 
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
@@ -2217,10 +2261,13 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         if docinfo.getUserFieldValue(2)<>"" :
             #self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('id','=',int(docinfo.getUserFieldValue(2)))])
             #print ids
-            fields=['name','report_name']
-            self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
-            name = self.res_other[0]['name']
-            report_name = self.res_other[0]['report_name']
+            try:
+                fields=['name','report_name']
+                self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+                name = self.res_other[0]['name']
+                report_name = self.res_other[0]['report_name']
+            except:
+                pass
         elif docinfo.getUserFieldValue(3) <> "":
             name = ""
             result =  "rnd"
@@ -2232,12 +2279,18 @@ class SendtoServer(unohelper.Base, XJobExecutor):
             ErrorDialog("Please select appropriate module...","Note: use Tiny Report -> Open a new Report", "Module selection ERROR");
             exit(1)
 
-        self.win = DBModalDialog(60, 50, 180, 85, "Send To Server")
+        self.win = DBModalDialog(60, 50, 180, 100, "Send To Server")
         self.win.addFixedText("lblName",10 , 9, 40, 15, "Report Name :")
         self.win.addEdit("txtName", -5, 5, 123, 15,name)
         self.win.addFixedText("lblReportName", 2, 30, 50, 15, "Technical Name :")
         self.win.addEdit("txtReportName", -5, 25, 123, 15,report_name)
         self.win.addCheckBox("chkHeader", 51, 45, 70 ,15, "Corporate Header")
+        self.win.addFixedText("lblResourceType", 2 , 60, 50, 15, "Select Rpt. Type :")
+        self.win.addComboListBox("lstResourceType", -5, 58, 123, 15,True,itemListenerProc=self.lstbox_selected)
+        self.lstResourceType = self.win.getControl( "lstResourceType" )
+        self.lstResourceType.addItem("pdf",0)
+        self.lstResourceType.addItem("sxw",1)
+        self.lstResourceType.addItem("html",3)
         if docinfo.getUserFieldValue(3)<>"" and docinfo.getUserFieldValue(2)<>"":
             self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
                                 actionListenerProc = self.btnOkOrCancel_clicked)
@@ -2246,7 +2299,10 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                                 actionListenerProc = self.btnOkOrCancel_clicked)
         self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
                         actionListenerProc = self.btnOkOrCancel_clicked)
-        self.win.doModalDialog("",None)
+        self.win.doModalDialog("lstResourceType","pdf")
+
+    def lstbox_selected(self,oItemEvent):
+        pass
 
     def btnOkOrCancel_clicked(self, oActionEvent):
 
@@ -2283,9 +2339,11 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 res1['name'] =self.win.getEditText("txtName")
                 res1['model'] =docinfo.getUserFieldValue(3)
                 res1['report_name'] =self.win.getEditText("txtReportName")
+
                 if self.win.getCheckBoxState("chkHeader")==0:
                     bHeader = False
                 res1["header"] = bHeader
+                res1["report_type"]=self.win.getListBoxSelectedItem("lstResourceType")
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),res1)
                 self.win.endExecute()
             else:
@@ -2422,7 +2480,6 @@ elif __name__=="package":
             ("com.sun.star.task.Job",),)
 
 
-
 import uno
 import unohelper
 import string
@@ -2463,13 +2520,14 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         regexes = [
                   ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                   ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                  #['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'\' *\\]\\]',"Field"]
-                  ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-                  ['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
-                  ['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                  ['\\[\\[ (.+?) and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                  ['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"]
+                  ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"]
+#                  ['\\[\\[ ([a-zA-Z0-9_]+\.[a-zA-Z1-9]) \\]\\]',"Field"],
+#                  ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+#                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+#                  ['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
+#                  ['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+#                  ['\\[\\[ (.+?) and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+#                  ['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"]
                   ]
         oFieldObject = []
         oRepeatInObjects = []
@@ -2490,9 +2548,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     for reg in regexes:
-                        print reg[0]
                         res=re.findall(reg[0],oPar.Items[1])
-                        print res
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
@@ -2519,13 +2575,32 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                     r = "TTT"
                                 if len(r) <> 0:
                                     if r <> "TTT":
-                                        try:
+                                        if len(res)>1:
+                                            sExpr=""
+                                            print res
+                                            if reg[1] == 'Field':
+                                                for ires in res:
+                                                    try:
+                                                        sExpr=r[0][ires.__getslice__(ires.rfind(".")+1,len(ires))]
+                                                        print sExpr,ires
+                                                        break
+                                                    except:
+                                                        pass
+                                                try:
+                                                    oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                                    oPar.update()
+                                                except Exception, e:
+                                                    oPar.Items=(str(sExpr) ,oPar.Items[1])
+                                                    oPar.update()
+                                        else:
                                             sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
-                                            oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
-                                            oPar.update()
-                                        except Exception, e:
-                                            oPar.Items=(str(sExpr) ,oPar.Items[1])
-                                            oPar.update()
+                                            try:
+
+                                                oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                                oPar.update()
+                                            except Exception, e:
+                                                oPar.Items=(str(sExpr) ,oPar.Items[1])
+                                                oPar.update()
                                     else:
                                         oPar.Items=(u""+r,oPar.Items[1])
                                         oPar.update()
@@ -2563,13 +2638,6 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
             regexes = [
                 ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                 ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                #['\\[\\[ *([a-zA-Z0-9_\.]+) *or *\'\' *\\]\\]',"Field"],
-                #['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-                #['\\[\\[ *([a-zA-Z0-9_\.]+) or *.+? \\]\\]',"Field"],
-                #['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
-                #['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                #['\\[\\[ .+? and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-                #['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
                 ['\\[\\[ *.+? *\\]\\]', "Expression"]
                 ]
 
@@ -2591,7 +2659,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         if reg[1]<>"Expression":
                             oInputList.Items=(u""+found.String,u""+found.String)
                         else:
-                            oInputList.Items=(u"???????",u""+found.String)
+                            oInputList.Items=(u"?",u""+found.String)
                         aReportSyntex.append([oInputList,reg[1]])
                         text.insertTextContent(found,oInputList,False)
                         found.String =""
@@ -2614,7 +2682,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         if res[1]<>"Expression":
                             oInputList.Items=(u""+found.String,u""+found.String)
                         else:
-                            oInputList.Items=(u"???????",u""+found.String)
+                            oInputList.Items=(u"?",u""+found.String)
                         aReportSyntex.append([oInputList,res[1]])
                         text.insertTextContent(found,oInputList,False)
                         found.String =""

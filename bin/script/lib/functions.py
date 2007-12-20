@@ -166,8 +166,10 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
 
                 if oCur.supportsService("com.sun.star.text.TextTable"):
                     if sTableName=="":
+                        print 2
                         getChildTable(oCur,aItemList,aComponentAdd,oPar.Name)
                     else:
+                        print 1
                         getChildTable(oCur,aItemList,aComponentAdd,sTableName+"."+oPar.Name)
                 else:
                     oSecEnum = oCur.createEnumeration()

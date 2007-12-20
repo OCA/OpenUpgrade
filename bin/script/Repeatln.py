@@ -54,6 +54,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.aComponentAdd=[]
         self.aObjectList=[]
         self.aListRepeatIn=[]
+        self.aVariableList=[]
         # Call method to perform Enumration on Report Document
         EnumDocument(self.aItemList,self.aComponentAdd)
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
@@ -83,7 +84,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             for j in range(self.aObjectList.__len__()):
 
                 if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find(" ")) == "List":
-                    self.insVariable.addItem(self.aObjectList[j],1)
+                    #self.insVariable.addItem(self.aObjectList[j],1)
+                    self.aVariableList.append(self.aObjectList[j])
             for i in range(self.aItemList.__len__()):
 
                 if self.aComponentAdd[i]=="Document":
@@ -92,7 +94,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     for j in range(self.aObjectList.__len__()):
 
                         if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                            self.insVariable.addItem(self.aObjectList[j],1)
+                            #self.insVariable.addItem(self.aObjectList[j],1)
+                            self.aVariableList.append(self.aObjectList[j])
 
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
@@ -102,9 +105,9 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
 
                         for j in range(self.aObjectList.__len__()):
-
                             if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                                self.insVariable.addItem(self.aObjectList[j],1)
+                                #self.insVariable.addItem(self.aObjectList[j],1)
+                                self.aVariableList.append(self.aObjectList[j])
 
                 if tcur.TextTable:
 
@@ -126,7 +129,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     i=0
 
                     for i in range(self.aObjectList.__len__()):
-
                         if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sObject:
                             sItem= self.aObjectList[i]
                             self.insVariable.setText(sItem)
@@ -136,7 +138,22 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 #                    self.win.setEditText("txtUName",sDisplayName)
 
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
-
+            print self.aVariableList
+            for var in self.aVariableList:
+                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+                if var.__getslice__(0,8)<>'List of ':
+                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
+                else:
+                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(8,len(var)))])
+                fields=['name','model']
+                self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                if self.model_res <> []:
+                    if var.__getslice__(0,8)<>'List of ':
+                        self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+                    else:
+                        self.insVariable.addItem('List of ' + self.model_res[0]['name'] ,self.insVariable.getItemCount())
+                else:
+                    self.insVariable.addItem(var ,self.insVariable.getItemCount())
             self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
@@ -163,6 +180,13 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxText("cmbVariable")
+            sItem= self.win.getComboBoxText("cmbVariable")
+            for var in self.aVariableList:
+                if var.__getslice__(0,8)=='List of ':
+                    if var.__getslice__(0,8)==sItem.__getslice__(0,8):
+                        sItem = var
+                elif var.__getslice__(0,var.find("(")+1)==sItem.__getslice__(0,sItem.find("(")+1):
+                    sItem = var
             self.aListRepeatIn=[]
 
             if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
@@ -174,6 +198,10 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
         else:
             sItem=self.win.getComboBoxText("cmbVariable")
+            for var in self.aVariableList:
+                if var.__getslice__(0,8)=='List of ':
+                    if var.__getslice__(0,8)==sItem.__getslice__(0,8):
+                        sItem = var
             self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))
             self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
