@@ -1,7 +1,7 @@
 {
 	"name" : "segmentation management",
 	"version" : "1.3",
-	"depends" : ["base"],
+	"depends" : ["base", 'crm_profiling'],
 	"author" : "Tiny",
 	"description": """
 	This module allow users to create profile and compute automatically which partners do fit the profile criteria. 
