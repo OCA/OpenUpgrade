@@ -41,7 +41,8 @@ class AccountInvoice(osv.osv):
 			if p.bank_ids:
 				bank_id = p.bank_ids[0].id
 
-		res['value']['partner_bank'] = bank_id
+		if type in ('in_invoice', 'in_refund'):
+			res['value']['partner_bank'] = bank_id
 
 		if partner_bank_id != bank_id:
 			to_update = self.onchange_partner_bank(cr, uid, ids, bank_id)
