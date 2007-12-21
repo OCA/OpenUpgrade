@@ -113,11 +113,11 @@
 				<button 
 					name="case_open"
 					string="Get this Case"
-					states="draft,pending"
+					states="draft,pending,open"
 					icon="STOCK_YES"
 					type="object"/>
 				<button name="%(wizard_case_get_open)d" 
-					states="draft,pending" 
+					states="draft,pending,open" 
 					string="Get this Case and Open It" 
 					icon="STOCK_OPEN"
 					type="action"/>

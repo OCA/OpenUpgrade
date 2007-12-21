@@ -16,6 +16,7 @@
 		<record id="stock.report_product_location" model="ir.actions.report.xml">
 			<field eval="0" name="portal_visible"/>
 		</record>
+
 		<record id="account.wizard_reconcile_select" model="ir.actions.wizard">
 			<field eval="0" name="portal_visible"/>
 		</record>
@@ -33,6 +34,22 @@
 		</record>
 
 		<record id="account.wizard_unreconcile_select" model="ir.actions.wizard">
+			<field eval="0" name="portal_visible"/>
+		</record>
+
+		<record id="account.wizard_invoice_state_cancel" model="ir.actions.wizard">
+			<field eval="0" name="portal_visible"/>
+		</record>
+
+		<record id="account.wizard_invoice_state_confirm" model="ir.actions.wizard">
+			<field eval="0" name="portal_visible"/>
+		</record>
+
+		<record id="account.wizard_invoice_pay" model="ir.actions.wizard">
+			<field eval="0" name="portal_visible"/>
+		</record>
+
+		<record id="account.wizard_invoice_refund" model="ir.actions.wizard">
 			<field eval="0" name="portal_visible"/>
 		</record>
 
