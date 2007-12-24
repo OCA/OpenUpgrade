@@ -6,6 +6,10 @@ import os
 import time
 from string import joinfields, split, lower
 
+from DAV import AuthServer
+from service import security
+import dav_auth
+
 import netsvc
 import urlparse
 from content_index import content_index
@@ -34,8 +38,8 @@ class tinyerp_handler(dav_interface):
 		cr = db.cursor()
 		dir = pool.get('document.directory')
 		result = []
-		root = dir.browse(cr, 3, self.directory_id)
-		for d in dir.get_childs(cr, 3, self.uri2local(uri),root):
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		for d in dir.get_childs(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri),root):
 			result.append(urlparse.urljoin(self.baseuri, d))
 		cr.close()
 		return result
@@ -51,7 +55,7 @@ class tinyerp_handler(dav_interface):
 		pool = pooler.get_pool(self.db_name)
 		reluri = self.uri2local(uri)
 		root = pool.get('document.directory').browse(cr, uid, self.directory_id)
-		node = pool.get('document.directory').get_object(cr, 3, reluri, root)
+		node = pool.get('document.directory').get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), reluri, root)
 		return node
 
 	def mkcol(self,uri):
@@ -61,21 +65,23 @@ class tinyerp_handler(dav_interface):
 		dir = pool.get('document.directory')
 
 		uri = self.uri2local(uri)
-
 		objname = uri.split('/')[-1]
 		objuri = '/'.join(uri.split('/')[:-1])
-		node = self.uri2object(cr, 3, objuri)
+		node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), objuri)
+		create_id = False
 		if not node:
 			raise DAV_Error, 409
 
+
 		if node.object.type=='directory':
-			dir.create(cr, 3, {
+			dir.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), {
 				'name': objname,
 				'parent_id': node.object.id
 			})
+
 		elif node.object.type=='ressource':
 			if not node.object.ressource_tree and node.object2:
-				dir.create(cr, 3, {
+				dir.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), {
 					'name': objname,
 					'parent_id': node.object.id
 				})
@@ -85,37 +91,41 @@ class tinyerp_handler(dav_interface):
 					value_dict = {'name': objname,obj._parent_name: node.object2.id}
 				else:
 					value_dict = {'name': objname}
-				try :
-					obj.create(cr, 3, value_dict)
+				try:
+					create_id = obj.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), value_dict)
 				except :
-#Will show error on command prompt
 					raise DAV_Error,999
+
 		else:
 			print 'Type', node.object.type, 'not implemented !'
-
 		# test if file already exists
 		if False:
 			raise DAV_Error,405
 		# Test Permissions
 		if False:
-			raise DAV_Forbidden
+			raise DAV_Forbidden()
 		cr.commit()
 		cr.close()
 		return 201
+
+	def get_userid(self,user,pw):
+		db,pool = pooler.get_db_and_pool(self.db_name)
+		res = security.login(self.db_name, user, pw)
+		return res
 
 	def get_data(self,uri):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		uri = self.uri2local(uri)
-		node = self.uri2object(cr, 3, uri)
+		node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), uri)
 		if not node:
 			raise DAV_NotFound
 		if node.type=='file':
 			return base64.decodestring(node.object.datas or '')
 		elif node.type=='content':
-			report = pool.get('ir.actions.report.xml').browse(cr, 3,node.content['report_id']['id'])
+			report = pool.get('ir.actions.report.xml').browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord),node.content['report_id']['id'])
 			srv = netsvc.LocalService('report.'+report.report_name)
-			pdf,pdftype = srv.create(cr, 3, [node.object.id], {}, {})
+			pdf,pdftype = srv.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), [node.object.id], {}, {})
 			return pdf
 		else:
 			raise DAV_Forbidden
@@ -125,8 +135,8 @@ class tinyerp_handler(dav_interface):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		cr.close()
 		if node.type=='collection':
 			return COLLECTION
@@ -140,8 +150,8 @@ class tinyerp_handler(dav_interface):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		result = 0
 		if node.type=='file':
 			result = node.object.file_size or 0
@@ -153,8 +163,8 @@ class tinyerp_handler(dav_interface):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		if node.type=='file':
 			result = node.object.write_date or node.object.create_date
 		else:
@@ -167,8 +177,8 @@ class tinyerp_handler(dav_interface):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		if node.type=='file':
 			result = node.object.write_date or node.object.create_date
 		else:
@@ -180,8 +190,8 @@ class tinyerp_handler(dav_interface):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		result = 'application/octet-stream'
 		if node.type=='collection':
 			result = 'httpd/unix-directory'
@@ -202,12 +212,11 @@ class tinyerp_handler(dav_interface):
 		## test if file already exists
 		#if node:
 		#	raise DAV_Error,405
-
 		objname = uri.split('/')[-1]
 		objuri = '/'.join(uri.split('/')[:-1])
-		node = self.uri2object(cr, 3, objuri)
-
+		node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), objuri.replace('%20',' '))
 		fobj = pool.get('ir.attachment')
+
 		ext =False
 		if objname.find('.') >0 :
 			ext = objname.split('.')[1] or False
@@ -225,8 +234,8 @@ class tinyerp_handler(dav_interface):
 				'res_model': node.object2._name,
 				'res_id': node.object2.id
 			})
-		try :
-			fobj.create(cr, 3, val)
+		try:
+			fobj.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), val)
 		except:
 			raise DAV_Error,999
 
@@ -235,21 +244,21 @@ class tinyerp_handler(dav_interface):
 			raise DAV_Forbidden
 		cr.commit()
 		cr.close()
+#		print abc
 		return 201
-
 	def rmcol(self,uri):
 		""" delete a collection """
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		if node.object._table_name=='document.directory':
 			if node.object.child_ids:
 				raise DAV_Forbidden # forbidden
 			if node.object.file_ids:
 				raise DAV_Forbidden # forbidden
-			res = pool.get('document.directory').unlink(cr, 3, node.object.id)
+			res = pool.get('document.directory').unlink(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), node.object.id)
 		cr.commit()
 		cr.close()
 		return 204
@@ -258,10 +267,10 @@ class tinyerp_handler(dav_interface):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		if node.object._table_name=='ir.attachment':
-			res = pool.get('ir.attachment').unlink(cr, 3, node.object.id)
+			res = pool.get('ir.attachment').unlink(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), node.object.id)
 		cr.commit()
 		cr.close()
 		return 204
@@ -390,13 +399,24 @@ class tinyerp_handler(dav_interface):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(src), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(src), root)
 		if not node.type=='file':
-			raise DAV_Error, Forbidden
+			raise DAV_Error,999
 		data = base64.decodestring(node.object.datas)
 		ct = node.object.file_type
+		create_dir = False
+		dir_dst="http://localhost:8008/"
+		for d in dst.partition("8008/")[2].split('/'):
+			dir_dst +=d+"/"
+			res_id = dir.search(cr,self.get_userid(AuthServer.UserName, AuthServer.PassWord),[('name','=',d)])
+			if not res_id and dir_dst.find('.')<0 :
+				create_dir = True
+				self.mkcol(dir_dst)
 		cr.close()
+		if create_dir:
+			file = src.rpartition('/')[2]
+			dst+="/"+file
 		self.put(dst, data, ct)
 		return 201
 
@@ -417,7 +437,7 @@ class tinyerp_handler(dav_interface):
 		result = False
 		cr = db.cursor()
 		try:
-			node = self.uri2object(cr, 3, uri)
+			node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), uri)
 		except:
 			return False
 		if node:
@@ -431,8 +451,8 @@ class tinyerp_handler(dav_interface):
 		result = False
 		cr = db.cursor()
 		dir = pool.get('document.directory')
-		root = dir.browse(cr, 3, self.directory_id)
-		node = dir.get_object(cr, 3, self.uri2local(uri), root)
+		root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
+		node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
 		if node.object._table_name=='document.directory':
 			result = True
 		cr.close()
