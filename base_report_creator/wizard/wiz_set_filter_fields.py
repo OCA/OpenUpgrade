@@ -189,20 +189,15 @@ class set_filter_fields(wizard.interface):
 	states = {
 		'init': {
 			'actions': [_set_field_domain],
-			'result': {'type':'form', 'arch':select_field_form, 'fields':select_field_fields, 'state':[('end','Cancle'),('set_value_select_field','Next>')]}			
+			'result': {'type':'form', 'arch':select_field_form, 'fields':select_field_fields, 'state':[('end','Cancel'),('set_value_select_field','Continue')]}			
 		},
-		
 		'set_value_select_field':{
-			 'actions' : [_set_form_value],
-			'result' : {'type' : 'form', 'arch' : set_value_form, 'fields' : set_value_fields, 'state' : [('end', 'Cancel'),('set_value', 'Set Vlaue') ]}
-			},
+			'actions': [_set_form_value],
+			'result': {'type' : 'form', 'arch' : set_value_form, 'fields' : set_value_fields, 'state' : [('end', 'Cancel'),('set_value', 'Confirm Filter') ]}
+		},
 		'set_value':{
-					 'actions' : [_set_filter_value],
-					'result' : {'type': 'state', 'state': 'init'}
-					 },
-		'last_state': {
-			'actions': [],
-			'result': {'type':'state', 'state':'end'}
+			'actions': [_set_filter_value],
+			'result': {'type': 'state', 'state': 'end'}
 		}
 	}
 set_filter_fields("base_report_creator.report_filter.fields")
