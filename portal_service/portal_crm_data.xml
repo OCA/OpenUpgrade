@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+	<record id="crm.crm_business_opportunities_report" model="ir.actions.report.xml">
+		<field name="portal_visible" eval="False" />
+	</record> 
 
 	<record model="ir.rule.group" id="case_rule_group">
 		<field name="name">Portal case rule</field>

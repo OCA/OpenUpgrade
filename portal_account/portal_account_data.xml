@@ -124,7 +124,7 @@
 	<record model="ir.actions.act_window" id="portal_action_account_move">
 		<field name="name">Payables &amp; Receivables</field>
 		<field name="res_model">account.move.line</field>
-		<field name="domain">[('reconcile_id','=',False),]</field> 
+		<field name="domain">[('reconcile_id','=',False),('account_id.type','in',('receivable','payable'))]</field> 
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_tree_move">
 		<field name="sequence" eval="1"/>
@@ -157,6 +157,19 @@
 		<field name="perm_unlink" eval="True"/>
 	</record>
 
+	#
+	# Desactive actions on invoices
+	#
+
+	<record id="account.wizard_invoice_pay" model="ir.actions.wizard" >
+		<field name="portal_visible" eval="False" />
+	</record> 
+	<record id="account.wizard_invoice_refund" model="ir.actions.wizard" >
+		<field name="portal_visible" eval="False" />
+	</record> 
+	<record id="account.account_invoices" model="ir.actions.report.xml" >
+		<field name="portal_visible" eval="False" />
+	</record> 
 
 </data>
 </terp>
