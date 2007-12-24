@@ -64,6 +64,9 @@
 							<field name="calendar_mode"/>
 						</tree>
 					</field>
+				</page><page string="Security">
+					<separator string="Authorized Groups (empty for all)" colspan="4"/>
+					<field name="group_ids" colspan="4" nolabel="1"/>
 				</page><page string="SQL Query">
 					<field name="sql_query" colspan="4" nolabel="1"/>
 				</page>

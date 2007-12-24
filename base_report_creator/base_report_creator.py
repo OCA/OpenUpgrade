@@ -173,6 +173,7 @@ from
 		'filter_ids': fields.one2many('base_report_creator.report.filter', 'report_id', 'Filters'),
 		'state': fields.selection([('draft','Draft'),('valid','Valid')], 'State', required=True),
 		'sql_query': fields.function(_sql_query_get, method=True, type="text", string='SQL Query', store=True),
+		'group_ids': fields.many2many('res.groups', 'base_report_creator_group_rel','report_id','group_id','Authorized Groups'),
 	}
 	_defaults = {
 		'type': lambda *args: 'list',
