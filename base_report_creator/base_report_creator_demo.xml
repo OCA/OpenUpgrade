@@ -2,7 +2,7 @@
 <terp>
 	<data>
 		<record id="base_report_creator_report_salesanalysis0" model="base_report_creator.report">
-			<field model="ir.model" search="[('model','in',('sale.order','sale.order.line','res_partner'))]" name="model_ids"/>
+			<field model="ir.model" search="[('model','in',('sale.order','sale.order.line','res.partner'))]" name="model_ids"/>
 			<field eval="&quot;Sales Analysis&quot;" name="name"/>
 			<field eval="&quot;bar&quot;" name="view_graph_type"/>
 			<field eval="&quot;graph&quot;" name="view_type2"/>
