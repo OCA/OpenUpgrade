@@ -114,10 +114,8 @@ class report_creator(osv.osv):
 
 		report = self._sql_query_get(cr, user, [context['report_id']], 'sql_query', None, ctx)
 		query = report[context['report_id']]
-		print query
 		cr.execute(query)
 		result = cr.fetchall()
-		print 'SEARCH', result
 		return map(lambda x: x[0], result)
 
 	# To be implemented
@@ -139,7 +137,6 @@ class report_creator(osv.osv):
 		result = {}
 		for obj in self.browse(cr, uid, ids):
 			fields = [ self._id_get(cr, uid, ids[0], context)+' as id' ]
-
 			groupby = []
 			i = 0
 			for f in obj.field_ids:
@@ -167,8 +164,8 @@ from
 		'type': fields.selection([('list','Rows And Columns Report'),('sum','Summation Report')], 'Report Type',required=True),
 		'active': fields.boolean('Active'),
 		'view_type1': fields.selection([('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'First View', required=True),
-		'view_type2': fields.selection([('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Second View'),
-		'view_type3': fields.selection([('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Third View'),
+		'view_type2': fields.selection([('','/'),('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Second View'),
+		'view_type3': fields.selection([('','/'),('tree','Tree'),('graph','Graph'),('calendar','Calendar')], 'Third View'),
 		'view_graph_type': fields.selection([('pie','Pie Chart'),('bar','Bar Chart')], 'Graph Type', required=True),
 		'view_graph_orientation': fields.selection([('horz','Horizontal'),('vert','Vertical')], 'Graph Orientation', required=True),
 		'model_ids': fields.many2many('ir.model', 'base_report_creator_report_model_rel', 'report_id','model_id', 'Reported Objects'),
@@ -182,6 +179,7 @@ from
 		'state': lambda *args: 'draft',
 		'active': lambda *args: True,
 		'view_type1': lambda *args: 'tree',
+		'view_type2': lambda *args: 'graph',
 		'view_graph_type': lambda *args: 'bar',
 		'view_graph_orientation': lambda *args: 'horz',
 	}
