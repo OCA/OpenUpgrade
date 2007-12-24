@@ -18,37 +18,28 @@ def strToDate(dt):
     return dt_date
 
 def emp_create_xml(self,cr,uid, empid, som, eom):
-    # Computing the attendence by analytical account
 
     cr.execute('select name from hr_employee where id=%d'%(empid))
     emp = cr.fetchall()
 
     p_id=pooler.get_pool(cr.dbname).get('hr.holidays').search(cr,uid,[('employee_id','=',empid)])
 
-    ids_date = pooler.get_pool(cr.dbname).get('hr.holidays').read(cr,uid,p_id,['date_from','date_to','holiday_status'])
+    ids_date = pooler.get_pool(cr.dbname).get('hr.holidays').read(cr,uid,p_id,['date_from','date_to','holiday_status','state'])
     display={}
     dayDiff=eom-som
 
     for index in range(1,dayDiff.days+2):
         diff=index-1
         current=som+datetime.timedelta(diff)
-#        print current,"current laga k",index
+
         for item in ids_date:
             if current >= strToDate(item['date_from']) and current < strToDate(item['date_to']):
-#                display["index"+str(index)]=index
                 display[index]=item['holiday_status'][0]
                 break
             else:
-#                display["index"+str(index)]=index
                 display[index]=' '
 
     month = {}
-
-    for presence in cr.dictfetchall():
-        day = int(presence['date'][-2:])
-        month[day] = month.get(day, 0.0) + presence['amount']
-
-
     xml = '''
     <time-element index="%d">
         <value>%s</value>
@@ -73,7 +64,6 @@ class report_custom(report_rml):
         cr.execute("select id,name from hr_holidays_status")
         legend=cr.fetchall()
 
-
         today=datetime.datetime.today()
 
         first_date=data['form']['date_from']
@@ -88,11 +78,9 @@ class report_custom(report_rml):
         for l in range(0,len(legend)):
             date_xml += ['<legend id="%d" name="%s" />' % (legend[l][0],legend[l][1])]
 
-
         date_xml += ['<date month="%s" year="%d" />' % (som.strftime('%B'), som.year),'<days>']
 
         cell=1
-
         date_xml += ['<dayy number="%d" name="%s" cell="%d"/>' % (x, som.replace(day=x).strftime('%a'),x-som.day+1) for x in range(som.day, lengthmonth(som.year, som.month)+1)]
         cell=x-som.day+1
         day_diff1=day_diff.days+som.day-lengthmonth(som.year, som.month)
@@ -174,7 +162,6 @@ class report_custom(report_rml):
 
         cr.execute("select id from hr_employee")
         emp = cr.fetchall()
-
 
         emp_xml=''
         for eid in range(1,len(emp)+1):
