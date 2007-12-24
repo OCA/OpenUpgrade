@@ -8,7 +8,7 @@
 	"depends" : ["hr"],
 	"init_xml" : [],
 	"demo_xml" : [],
-	"update_xml" : ["hr_workflow.xml","hr_view.xml"],
+	"update_xml" : ["hr_workflow.xml","hr_view.xml","hr_holidays_report.xml","hr_holidays_wizard.xml",],
 	"active": False,
 	"installable": True
 }

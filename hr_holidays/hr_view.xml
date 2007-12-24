@@ -3,10 +3,10 @@
 	<data>
 		<!-- Holidays -->
 		<record model="ir.ui.view" id="edit_holiday_inherit">
-			<field name="name">hr.holidays.form.inherit</field> 
-			<field name="model">hr.holidays</field> 
-			<field name="inherit_id" ref="hr.edit_holiday" /> 
-			<field name="type">form</field> 
+			<field name="name">hr.holidays.form.inherit</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.edit_holiday" />
+			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<field name="name" position="replace"/>
 			</field>
@@ -184,6 +184,6 @@
 			<field name="domain">[('state','=','confirm')]</field>
 		</record>
 		<menuitem name="Human Resources/Holidays Request/Request waiting validation" id="menu_action_holiday_waiting" action="action_holiday_waiting" />
-			
+
 	</data>
 </terp>
