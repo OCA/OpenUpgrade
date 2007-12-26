@@ -78,6 +78,22 @@ class report_creator(osv.osv):
 					if f.graph_mode==val:
 						arch += '<field name="%s" select="1"/>' % ('field'+str(i),)
 					i+=1
+		elif view_type=='calendar':
+			required_types = ['date_start','date_delay','color']
+			set_dict = {'view_type':view_type,'string':report.name}
+			temp_list = []
+			i=0
+			for f in report.field_ids:
+				if f.calendar_mode and f.calendar_mode in required_types:
+					set_dict[f.calendar_mode] = 'field'+str(i)
+					i+=1
+					del required_types[required_types.index(f.calendar_mode)]
+					
+				else:
+					temp_list.append('''<field name="%(name)s" select="1"/>''' % {'name':'field'+str(i)})
+					i+=1
+			arch += '''<%(view_type)s string="%(string)s" date_start="%(date_start)s" date_delay="%(date_delay)s" color="%(color)s">''' %set_dict
+			arch += ''.join(temp_list)
 		else:
 			arch += '<%s string="%s">\n' % (view_type, report.name)
 			i = 0
@@ -120,23 +136,73 @@ class report_creator(osv.osv):
 
 	# To be implemented
 	def _path_get(self,cr, uid, models, filter_ids=[]):
-		ret_str = """	sale_order_line
-	left join sale_order on (sale_order_line.order_id=sale_order.id)
-	left join res_partner on (res_partner.id=sale_order.partner_id)"""
+#		ret_str = """	sale_order_line
+#	left join sale_order on (sale_order_line.order_id=sale_order.id)
+#	left join res_partner on (res_partner.id=sale_order.partner_id)"""
+#		where_list = []
+#		for filter_id in filter_ids:
+#			where_list.append(filter_id.expression)
+#		if where_list:
+#			ret_str+="\nwhere\n\t"+" and\n\t".join(where_list)
+		self.model_set_id=False
+		model_dict = {}
+		from_list = []
 		where_list = []
+		for model in models:			
+			model_dict[model.model] = self.pool.get(model.model)._table
+		
+		model_list = model_dict.keys()
+		reference_model_dict = {}
+#		print "Model Dict :",model_dict 
+		for model in model_dict:
+			from_list.append(model_dict.get(model))
+			rest_list = model_dict.keys()
+			rest_list.remove(model)
+			model_pool = self.pool.get(model)
+			fields_get = model_pool.fields_get(cr,uid)
+			fields_filter = dict(filter(lambda x:x[1].get('relation',False) 
+									    and x[1].get('relation') in rest_list 
+									    and x[1].get('type')=='many2one',fields_get.items()))
+			if fields_filter:
+				model in model_list and model_list.remove(model)
+#			print "reference Model Dicr :",reference_model_dict
+#			print "Model :",model
+			model_count = reference_model_dict.get(model,False)
+			if model_count:
+				reference_model_dict[model] = model_count +1
+			else:
+				reference_model_dict[model] = 1				
+			
+			for k,v in fields_filter.items():
+				v.get('relation') in model_list and model_list.remove(v.get('relation'))
+				relation_count = reference_model_dict.get(v.get('relation'),False)
+				if relation_count:
+					reference_model_dict[v.get('relation')] = relation_count+1
+				else:
+					reference_model_dict[v.get('relation')]=1
+				str_where = model_dict.get(model)+"."+ k + "=" + model_dict.get(v.get('relation'))+'.id' 
+				where_list.append(str_where)		
+		if reference_model_dict:
+			self.model_set_id = model_dict.get(reference_model_dict.keys()[reference_model_dict.values().index(min(reference_model_dict.values()))])
+		if model_list and not len(model_dict.keys()) == 1:
+			raise osv.except_osv("No Related Models!!",'These is/are model(s) (%s) in selection which is/are not related to any other model'%','.join(model_list) )
+#		print "From :",".".join(from_list)
+#		print "Where :",".join(where_list)
 		for filter_id in filter_ids:
-			where_list.append(filter_id.expression)
+			where_list.append(filter_id.expression)				 
+		ret_str = ",\n".join(from_list)
 		if where_list:
-			ret_str+="\nwhere\n\t"+" and\n\t".join(where_list)
+			ret_str+="\n where \n"+" and \n".join(where_list)		
 		return ret_str
 
 	def _id_get(self, cr, uid, id, context):
-		return 'min(sale_order_line.id)'
+#		return 'min(sale_order_line.id)'
+		return self.model_set_id and 'min('+self.model_set_id+'.id)'
 
 	def _sql_query_get(self, cr, uid, ids, prop, unknow_none, context, where_plus=[]):
 		result = {}
 		for obj in self.browse(cr, uid, ids):
-			fields = [ self._id_get(cr, uid, ids[0], context)+' as id' ]
+			fields = []
 			groupby = []
 			i = 0
 			for f in obj.field_ids:
@@ -147,8 +213,9 @@ class report_creator(osv.osv):
 				else:
 					fields.append('\t'+f.group_method+'('+t+'.'+f.field_id.name+')'+' as field'+str(i))
 				i+=1
-
+			
 			models = self._path_get(cr, uid, obj.model_ids, obj.filter_ids)
+			fields.insert(0,(self._id_get(cr, uid, ids[0], context)+' as id'))
 			result[obj.id] = """select
 %s
 from
@@ -184,6 +251,49 @@ from
 		'view_graph_type': lambda *args: 'bar',
 		'view_graph_orientation': lambda *args: 'horz',
 	}
+	def _function_field(self, cr, uid, ids):
+		this_objs = self.browse(cr, uid, ids)
+		for obj in this_objs:
+			for fld in obj.field_ids:
+				model_column = self.pool.get(fld.field_id.model)._columns[fld.field_id.name]
+				if isinstance(model_column,fields.function) and not model_column.store:
+					return False 
+		return True
+	
+	def _aggregation_error(self, cr, uid, ids):
+		aggregate_columns = ('int','float')
+		apply_functions = ('sum','min','max','avg')
+		this_objs = self.browse(cr, uid, ids)
+		for obj in this_objs:
+			for fld in obj.field_ids:
+				model_column = self.pool.get(fld.field_id.model)._columns[fld.field_id.name]				
+				if model_column._type not in aggregate_columns and fld.group_method in apply_functions:
+					return False 
+		return True
+	
+	def _calander_view_error(self, cr, uid, ids):
+#		required_types = ['date_start','date_delay','color'] 
+		required_types = []
+		this_objs = self.browse(cr, uid, ids)
+		for obj in this_objs:
+			if obj.view_type1=='calendar' or obj.view_type2=='calendar' or obj.view_type3=='calendar': 
+				for fld in obj.field_ids:
+					model_column = self.pool.get(fld.field_id.model)._columns[fld.field_id.name]
+					if fld.calendar_mode in ('date_start','date_end') and model_column._type not in ('date','datetime'):
+						return False
+					elif fld.calendar_mode=='date_delay' and model_column._type not in ('int','float'):						
+						return False
+					else:
+						required_types.append(fld.calendar_mode)				
+				if 'date_start' not in required_types or 'date_delay' not in required_types or 'color' not in required_types:
+				 	return False 	 
+		return True
+	
+	_constraints = [
+		(_function_field, 'You can not display field which are not stored in Database.', ['field_ids']),
+		(_aggregation_error, 'You can apply agregate function to the non calculated field.', ['field_ids']),
+		(_calander_view_error, "You must have to give calander view's color,start date and delay.", ['field_ids']),
+	]
 report_creator()
 
 class report_creator_field(osv.osv):
