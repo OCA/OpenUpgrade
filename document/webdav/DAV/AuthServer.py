@@ -3,7 +3,7 @@
 """
     Authenticating HTTP Server
 
-    This module builds on BaseHTTPServer and implements 
+    This module builds on BaseHTTPServer and implements
     basic authentication
 
 """
@@ -40,7 +40,7 @@ the credentials required.<P>
 
 class AuthRequestHandler:
     """
-    Simple handler that use buffering and can check for auth headers 
+    Simple handler that use buffering and can check for auth headers
 
     In order to use it create a subclass of BufferedAuthRequestHandler
     or BasicAuthRequestHandler depending on if you want to send
@@ -51,7 +51,7 @@ class AuthRequestHandler:
     ok or not. None means that the user is not authorized.
     """
 
-    # False means no authentiation 
+    # False means no authentiation
     DO_AUTH=1
 
     AUTH_ERROR_MSG="""<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
@@ -76,7 +76,7 @@ class AuthRequestHandler:
         """
         Special handle method with buffering and authentication
         """
-        
+
         self.infp=open("/tmp/in.%s" %self.__class__, "a+")
 
         self.infp.write("------------------------------------------------------------------------------\n")
@@ -109,18 +109,20 @@ class AuthRequestHandler:
         else:
             self.send_error(400, "Bad request syntax (%s)" % `requestline`)
             return
-        
+
         self.command, self.path, self.request_version = command, path, version
         self.headers = self.MessageClass(self.rfile, 0)
         self.infp.write(str(self.headers))
 
         # test authentification
+        global UserName, PassWord
         if self.DO_AUTH:
             try:
                 a=self.headers["Authorization"]
                 m,up=string.split(a)
                 up2=base64.decodestring(up)
                 user,pw=string.split(up2,":")
+                UserName, PassWord = user,pw
                 if not self.get_userinfo(user,pw):
                     self.send_autherror(401,"Authorization Required"); return
             except:
@@ -147,7 +149,6 @@ class AuthRequestHandler:
     def send_response(self,code, message=None):
         """Override send_response to use the correct http version
            in the response."""
-
         self.log_request(code)
         if message is None:
             if self.responses.has_key(code):
@@ -204,16 +205,16 @@ class AuthRequestHandler:
         self.send_header("WWW-Authenticate","Basic realm=\"PyWebDAV\"")
         self.send_header("Content-Type", 'text/html')
         self.end_headers()
-        
+
         lines=split(emsg,"\n")
         for l in lines:
             self._append("%s\r\n" %l)
 
     def get_userinfo(self,user):
-        """ return the password of the user 
-        Override this class to return the right password 
+        """ return the password of the user
+        Override this class to return the right password
         """
-        
+
         # Always reject
         return None
 
@@ -229,4 +230,3 @@ class BasicAuthRequestHandler(BufferingHTTPServer.BufferedHTTPRequestHandler,Aut
     def _append(self,s):
         """ write the string to wfile """
         self.wfile.write(s)
-
