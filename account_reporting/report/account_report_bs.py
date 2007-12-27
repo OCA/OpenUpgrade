@@ -74,7 +74,6 @@ class account_report_bs(report_sxw.rml_parse):
 		ctx = self.context.copy()
 		ctx['fiscalyear'] = form['fiscalyear']
 		ctx['periods'] = form['periods'][0][2]
-		report_type = form['report_type']
 		report_objs = self.pool.get('account.report.bs').browse(self.cr, self.uid, ids)
 		title_name = False
 		if level==1:
@@ -97,7 +96,7 @@ class account_report_bs(report_sxw.rml_parse):
 				'font_style' : report_obj.font_style
 			}
 			result.append(res)
-
+			report_type = report_obj.report_type
 			if report_type != 'only_obj':
 				account_ids = self.pool.get('account.report.bs').read(self.cr,self.uid,[report_obj.id],['account_id'])[0]['account_id']
 				for account_id in account_ids:
@@ -137,4 +136,4 @@ class account_report_bs(report_sxw.rml_parse):
 #
 #	def _sum_debit(self):
 #		return self.sum_debit
-report_sxw.report_sxw('report.account.report.bs', 'account.report.bs', 'addons/account_report_bs/report/account_report_bs.rml', parser=account_report_bs)
+report_sxw.report_sxw('report.account.report.bs', 'account.report.bs', 'addons/account_reporting/report/account_report_bs.rml', parser=account_report_bs)
