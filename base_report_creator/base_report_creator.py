@@ -55,19 +55,37 @@ class report_creator(osv.osv):
 	_name = "base_report_creator.report"
 	_description = "Report"
 
+	#
+	# Should request only used fields
+	#
+	def fields_get(self, cr, user, fields=None, context=None):
+		if (not context) or 'report_id' not in context:
+			return super(report_creator, self).fields_get(cr, user, fields, context)
+		report = self.browse(cr, user, context['report_id'])
+		models = {}
+		for model in report.model_ids:
+			models[model.model] = self.pool.get(model.model).fields_get(cr, user, context=context)
+		fields = {}
+		i = 0
+		for f in report.field_ids:
+			fields['field'+str(i)] = models[f.field_id.model][f.field_id.name]
+			i+=1
+		return fields
+
+	#
+	# Should Call self.fields_get !
+	#
 	def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
 		if (not context) or 'report_id' not in context:
 			return super(report_creator, self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
 		report = self.browse(cr, user, context['report_id'])
+		models = {}
+		for model in report.model_ids:
+			models[model.model] = self.pool.get(model.model).fields_get(cr, user, context=context)
 		fields = {}
 		i = 0
 		for f in report.field_ids:
-			fields['field'+str(i)] = {
-				'string': f.field_id.field_description,
-				'type': f.field_id.ttype,
-				'select': 1,
-				'relation': f.field_id.relation,
-			}
+			fields['field'+str(i)] = models[f.field_id.model][f.field_id.name]
 			i+=1
 		arch = '<?xml version="1.0" encoding="utf-8"?>\n'
 		if view_type=='graph':
@@ -120,7 +138,11 @@ class report_creator(osv.osv):
 		report = self._sql_query_get(cr, user, [context['report_id']], 'sql_query', None, ctx, where_plus = wp)
 		sql_query = report[context['report_id']]
 		cr.execute(sql_query)
-		return cr.dictfetchall()
+		res = cr.dictfetchall()
+		for r in res:
+			for k in r:
+				r[k] = r[k] or False
+		return res
 
 	def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
 		if (not context) or 'report_id' not in context:
@@ -281,11 +303,11 @@ from
 					model_column = self.pool.get(fld.field_id.model)._columns[fld.field_id.name]
 					if fld.calendar_mode in ('date_start','date_end') and model_column._type not in ('date','datetime'):
 						return False
-					elif fld.calendar_mode=='date_delay' and model_column._type not in ('int','float'):						
+					elif fld.calendar_mode=='date_delay' and model_column._type not in ('int','float'):
 						return False
 					else:
-						required_types.append(fld.calendar_mode)				
-				if 'date_start' not in required_types or 'date_delay' not in required_types or 'color' not in required_types:
+						required_types.append(fld.calendar_mode)
+				if 'date_start' not in required_types:
 				 	return False 	 
 		return True
 	
