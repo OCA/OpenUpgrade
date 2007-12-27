@@ -59,7 +59,6 @@ class account_report_bs(osv.osv):
 			 ('Helvetica','Helvetica'),
 			 ('Helvetica-Bold','Helvetica-Bold'),
 			 ('Helvetica-Oblique','Helvetica-Oblique'),
-			 ('Symbol','Symbol'),
 			 ('Times-Bold','Times-Bold'),
 			 ('Times-BoldItalic','Times-BoldItalic'),
 			 ('Times-Italic','Times-Italic'),
@@ -104,6 +103,10 @@ class account_report_bs(osv.osv):
 		'font_style' : fields.selection(_font, 'Font'),
 		'parent_id': fields.many2one('account.report.bs', 'Parent'),
 		'child_id': fields.one2many('account.report.bs', 'parent_id', 'Childs'),
+		'report_type' : fields.selection([('only_obj', 'Report Objects Only'),('with_account', 'Report Objects With Accounts'),('acc_with_child', 'Report Objects With Accounts and child of Accounts')],"Report Type")
+	}
+	_defaults = {
+		'report_type': lambda *a :'only_obj'
 	}
 
 	def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=80):
