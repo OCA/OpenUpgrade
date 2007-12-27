@@ -115,7 +115,7 @@
 			<field name="view_id" ref="ask_holiday" />
 		</record>
 
-		<menuitem name="Human Resources/Holidays Request" id="menu_open_ask_holidays" action="open_ask_holidays" groups="admin"/>
+		<menuitem name="Human Resources/Holidays Request" id="menu_open_ask_holidays" action="open_ask_holidays" groups="base.group_admin"/>
 
 		<record model="ir.actions.act_window" id="action_all_holiday">
 			<field name="type">ir.actions.act_window</field>
