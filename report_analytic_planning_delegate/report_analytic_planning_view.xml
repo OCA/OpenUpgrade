@@ -8,7 +8,7 @@
 			<field name="inherit_id" ref="report_analytic_planning.account_analytic_planning_view_form"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="line_ids" position="after">
+				<xpath expr="/form/notebook/page/field[@name='line_ids']" position="after">
 					<field name="delegate_ids" colspan="4" nolabel="1">
 						<tree string="Assigned Planning" editable="bottom">
 							<field name="account_id"/>
@@ -17,7 +17,7 @@
 							<field name="note"/>
 						</tree>
 					</field>
-				</field>
+				</xpath>
 			</field>
 		</record>
 
