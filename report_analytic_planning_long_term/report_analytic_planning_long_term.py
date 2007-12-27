@@ -66,7 +66,7 @@ class report_account_analytic_planning_stat_product(osv.osv):
 	_log_access = False
 	_columns = {
 		'planning_id': fields.many2one('report_account_analytic.planning', 'Planning', required=True),
-		'product_id': fields.many2one('product.product', 'Job / Product', required=True),
+		'product_id': fields.many2one('product.product', 'Post / Product', required=True),
 		'quantity': fields.float('Planned', required=True),
 		'sum_amount_real': fields.function(_sum_amount_product, method=True, string='Timesheet'),
 	}
