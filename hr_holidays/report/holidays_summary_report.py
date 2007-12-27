@@ -47,13 +47,15 @@ def emp_create_xml(self,cr,uid, empid, som, eom):
     '''
 
     time_xml = ([xml % (index, value) for index,value in display.iteritems()])
+    data_xml=['<info id="%d" number="%d" val="%s" />' % (empid,x,display[x]) for x in range(1,len(display)+1) ]
 
     # Computing the xml
     xml = '''
+    %s
     <employee id="%d" name="%s">
     %s
     </employee>
-    ''' % (empid, toxml(emp[0][0]), '\n'.join(time_xml))
+    ''' % (data_xml,empid, toxml(emp[0][0]), '\n'.join(time_xml))
 
     return xml
 
