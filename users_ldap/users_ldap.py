@@ -47,6 +47,7 @@ class res_company(osv.osv):
 		'ldap_password': fields.char('LDAP password', size=64),
 		'ldap_filter': fields.char('LDAP filter', size=64),
 		'ldap_base': fields.char('LDAP base', size=64),
+		'ldap_user_id': fields.many2one('res.users', 'Template User', help="Provide a template user that will be used for default access rights when creating new users.")
 	}
 res_company()
 
@@ -58,7 +59,7 @@ def ldap_login(oldfnc):
 		if module_ids:
 			state = module_obj.read(cr, 1, module_ids, ['state'])[0]['state']
 			if state in ('installed', 'to upgrade', 'to remove'):
-				cr.execute("select id, name, ldap_server, ldap_binddn, ldap_password, ldap_filter, ldap_base from res_company where ldap_server != '' and ldap_binddn != ''")
+				cr.execute("select id, name, ldap_server, ldap_binddn, ldap_password, ldap_filter, ldap_base,ldap_user_id from res_company where ldap_server != '' and ldap_binddn != ''")
 				for res_company in cr.dictfetchall():
 					try:
 						l = ldap.open(res_company['ldap_server'])
@@ -85,13 +86,20 @@ def ldap_login(oldfnc):
 									users_obj = pooler.get_pool(cr.dbname).get('res.users')
 									action_obj = pooler.get_pool(cr.dbname).get('ir.actions.actions')
 									action_id = action_obj.search(cr, 1, [('usage', '=', 'menu')])[0]
-									res = users_obj.create(cr, 1, {
-										'name': name,
-										'login': login.encode('utf-8'),
-										'company_id': res_company['id'],
-										'action_id': action_id,
-										'menu_id': action_id,
-										})
+									if res_company['ldap_user_id']:
+										res = users_obj.copy(cr, 1, res_company['ldap_user_id'], {
+											'name': name,
+											'login': login.encode('utf-8'),
+											'company_id': res_company['id'],
+											})
+									else:
+										res = users_obj.create(cr, 1, {
+											'name': name,
+											'login': login.encode('utf-8'),
+											'company_id': res_company['id'],
+											'action_id': action_id,
+											'menu_id': action_id,
+											})
 									cr.commit()
 									cr.close()
 									return res
