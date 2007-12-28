@@ -139,9 +139,16 @@ class report_creator(osv.osv):
 		sql_query = report[context['report_id']]
 		cr.execute(sql_query)
 		res = cr.dictfetchall()
+		fields_get = self.fields_get(cr,user,None,context)
 		for r in res:
 			for k in r:
 				r[k] = r[k] or False
+				field_dict = fields_get.get(k)
+				field_type = field_dict and field_dict.get('type',False) or False 
+				if field_type and field_type == 'many2one':
+					related_name = self.pool.get(field_dict.get('relation')).name_get(cr,user,[r[k]],context)[0]
+					r[k] = related_name 
+		print "res :",res
 		return res
 
 	def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
@@ -235,7 +242,7 @@ class report_creator(osv.osv):
 				else:
 					fields.append('\t'+f.group_method+'('+t+'.'+f.field_id.name+')'+' as field'+str(i))
 				i+=1
-			
+				
 			models = self._path_get(cr, uid, obj.model_ids, obj.filter_ids)
 			fields.insert(0,(self._id_get(cr, uid, ids[0], context)+' as id'))
 			result[obj.id] = """select
