@@ -11,8 +11,8 @@
     "depends" : ["base"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ['cci_base_contact_view.xml'],
-    #"update_xml" : [],
+    #"update_xml" : ['cci_base_contact_view.xml'],
+    "update_xml" : [],
     "active": False,
     "installable": True
 }
