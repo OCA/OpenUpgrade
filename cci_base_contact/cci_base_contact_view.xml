@@ -12,70 +12,50 @@
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_partner_contact_form">
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_1">
 		<field name="name">res.partner.contact.form</field>
 		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Partner Contact">
-				<notebook>
-					<page string="General">
-							<field name="name" select="1"/>
-							<field name="surname"/>
-							<field name="mobile"/>
-							<field name="title" select="1" />
-							<field name="website" select="1" />
-							<field name="data_private"/>
-							<field name="active"/>
-							<field name="self_sufficent"/>
-							<!-- should be correct--><!--
-							<field name="fse_work_status"/>
-							<field name="fse_work_experience"/>
-							<field name="fse_studies"/> -->
-							<field name="contact_ids"/> <!-- should be corect -->
-							<field name="address_ids" select="1" colspan="4"/> <!-- should be corect -->
+			<notebook position="inside">
+				<page string="Who's Who">
+					<field name="who_date_accept"/>
+					<field name="who_date_last"/>
+					<field name="who_date_publication"/>
+					<field name="who_presence"/>
+					<field name="who_description" colspan="4"/>
+				</page>
+				<page string="Tags">
+				</page>
+				<page string="Related Articles">
+					<!--<field name="article_ids" /> -->
+				</page>
+				<page string="Known Countries">
+					<field name="country_ids" />
+				</page>
+				<page string="Personnal Links">
+				</page>
+			</notebook>
+		</field>
 
-					</page>
-					<page string="Who's Who">
-							<field name="who_date_accept"/>
-							<field name="who_date_last"/>
-							<field name="who_date_publication"/>
-							<field name="who_presence"/>
-							<field name="who_description" colspan="4"/>
-					</page>
-
-					<page string="Tags">
-
-					</page>
-
-					<page string="Related Articles">
-						<!-- field name="article_ids" / -->
-					</page>
-
-					<page string="Known Countries">
-							<field name="country_ids" /><!-- Many2Many field .... should be correct not in object -->
-					</page>
-
-					<page string="Personnal Links">
-
-					</page>
-					<page string="Extra Information">
-							<field name="birthdate" />
-							<field name="country_id"/>
-							<field name="origin" />
-					</page>
-				</notebook>
-			</form>
+	</record>
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_2">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="active" position="replace">
+			    <field name="data_private"/>
+				<field name="active" />
+				<field name="self_sufficent" select="1"/>
+				<newline/>
+				<field name="fse_work_status"/>
+				<field name="fse_work_experience"/>
+				<field name="fse_studies"/>
+			</field>
 		</field>
 	</record>
-
-	<record model="ir.actions.act_window" id="action_partner_contact_form">
-		<field name="name">Contacts</field>
-		<field name="res_model">res.partner.contact</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
-		<field name="view_id" ref="view_partner_contact_form"/>
-	</record>
-	<menuitem name="Partners/" id="menu_partner_contact_form" action="action_partner_contact_form"/>
 </data>
 </terp>
