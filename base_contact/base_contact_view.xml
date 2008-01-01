@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<terp>
+<data>
+	<record model="ir.ui.view" id="view_partner_contact_tree">
+		<field name="name">res.partner.contact.tree</field>
+		<field name="model">res.partner.contact</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Partner Contact">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_contact_form">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Partner Contact">
+				<notebook>
+					<page string="General">
+							<field name="name" select="1"/>
+							<field name="surname"/>
+							<field name="mobile"/>
+							<field name="title" select="1" />
+							<field name="website" select="1" />
+							<field name="lang_id" select="1"/>
+							<field name="active"/>
+							<field name="address_ids" select="1" colspan="4" nolabel="1">
+								<tree string="Address">
+									<field name="partner_id"/>
+									<field name="function"/>
+									<!-- field name="sequence_contact"/ --> <!-- will add -->
+								</tree>
+							</field>
+					</page>
+					<page string="Extra Information">
+							<field name="country_id"/>
+							<field name="birthdate" />
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_partner_contact_form">
+		<field name="name">Contacts</field>
+		<field name="res_model">res.partner.contact</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_partner_contact_form"/>
+	</record>
+	<menuitem name="Partners/" id="menu_partner_contact_form" action="action_partner_contact_form"/>
+</data>
+</terp>
