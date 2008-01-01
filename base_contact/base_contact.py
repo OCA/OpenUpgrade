@@ -48,6 +48,17 @@ class res_partner_contact(osv.osv):
     _defaults = {
         'active' : lambda *a: True,
     }
+    def name_get(self, cr, user, ids, context={}):
+        if not len(ids):
+            return []
+        res = []
+        for r in self.read(cr, user, ids, ['name','surname']):
+            addr = str(r['name'] or '')
+            if r['name'] and r['surname']:
+                addr += ' '
+            addr += str(r['surname'] or '')
+            res.append((r['id'], addr))
+        return res
 res_partner_contact()
 
 class res_partner_address(osv.osv):
