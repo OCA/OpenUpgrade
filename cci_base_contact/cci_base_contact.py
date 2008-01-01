@@ -39,9 +39,9 @@ class res_partner_contact(osv.osv):
         'who_presence':fields.boolean('In WsW'),
         'who_description':fields.text('WswW Description',transtale=True),
         'origin':fields.char('Origin',size=20,help='The DB from which the info is coming from'),
-        #'fse_work_status':fields.char('Fse Work status'), todo
-        #'fse_work_experience':fields.char('Fse Work Exp.'),todo
-        #'fse_studies':fields.char('Fse Studies'),todo
+        'fse_work_status':fields.char('Fse Work status',size=20), #should be corect....
+        'fse_work_experience':fields.char('Fse Work Exp.',size=20),#should be corect....
+        'fse_studies':fields.char('Fse Studies',size=20),#should be corect........
         'article_ids':fields.one2many('res.partner.article','','Articles'),#should be corect
         'country_ids': fields.many2many('res.country','res_country_rel','code','country_ids','Country'),
     }
