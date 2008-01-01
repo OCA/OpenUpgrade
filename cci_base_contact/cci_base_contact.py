@@ -39,7 +39,7 @@ class res_partner_contact(osv.osv):
         'who_presence':fields.boolean('In WsW'),
         'who_description':fields.text('WswW Description',transtale=True),
         'origin':fields.char('Origin',size=20,help='The DB from which the info is coming from'),
-        'fse_work_status':fields.char('Fse Work status',size=20), #should be corect....
+        'fse_work_status':fields.char('Fse Work status',size=20), #should be corect....chk
         'fse_work_experience':fields.char('Fse Work Exp.',size=20),#should be corect....
         'fse_studies':fields.char('Fse Studies',size=20),#should be corect........
         'article_ids':fields.one2many('res.partner.article','','Articles'),#should be corect
@@ -50,4 +50,26 @@ class res_partner_contact(osv.osv):
         'self_sufficent':lambda *a : False,
     }
 res_partner_contact()
+
+class res_contact_relation(osv.osv):
+    _name = "res.contact.relation"
+    _description ='res.contact.relation'
+    _columns = {
+        'contact_id': fields.char('Contact',size=50),#should be corect
+        'contact_relation_id':fields.char('Relation',size=50),#should be corect
+        'description':fields.text('Description'),
+        'type_id':fields.char('Type',size=20),#should be corect
+    }
+
+res_contact_relation()
+
+class res_contact_relation_type(osv.osv):
+    _name = "res.contact.relation.type"
+    _description ='res.contact.relation.type'
+    _columns = {
+        'name': fields.char('Contact',size=50),
+    }
+
+res_contact_relation_type()
+
 
