@@ -22,12 +22,15 @@
 					<page string="General">
 							<field name="name" select="1"/>
 							<field name="surname"/>
+							<newline/>
+							<separator string="General Information" colspan="4"/>
 							<field name="mobile"/>
 							<field name="title" select="1" />
 							<field name="website" select="1" />
 							<field name="lang_id" select="1"/>
 							<field name="active"/>
-							<field name="address_ids" select="1" colspan="4" nolabel="1">
+							<separator string="Functions" colspan="4"/>
+							<field name="address_ids" select="1" colspan="4">
 								<tree string="Address">
 									<field name="partner_id"/>
 									<field name="function"/>
@@ -48,7 +51,7 @@
 		<field name="name">Contacts</field>
 		<field name="res_model">res.partner.contact</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
+		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_partner_contact_form"/>
 	</record>
 	<menuitem name="Partners/" id="menu_partner_contact_form" action="action_partner_contact_form"/>
