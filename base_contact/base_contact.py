@@ -43,7 +43,7 @@ class res_partner_contact(osv.osv):
         'country_id':fields.many2one('res.country','Country'),#should be correct.....see view tag
         'birthdate':fields.date('Birthdate'),
         'active' : fields.boolean('Active'),
-        'contact_ids':fields.many2one('res.partner.contact','Contacts')
+        #'contact_ids':fields.many2one('res.partner.contact','Contacts') #should be corect
     }
     _defaults = {
         'active' : lambda *a: True,
@@ -62,10 +62,11 @@ class res_partner_contact(osv.osv):
 res_partner_contact()
 
 class res_partner_address(osv.osv):
-    _description ='Partner Contact'
     _name = 'res.partner.address'
     _inherit='res.partner.address'
+    _description ='Partner Contact'
     _columns = {
+        'contact_ids':fields.many2one('res.partner.contact','Contacts') ,#should be corect
         'partner_id1': fields.many2one('res.partner.contact', 'Partner', ondelete='cascade', select=True),
         }
 res_partner_address()
