@@ -60,7 +60,6 @@ class res_contact_relation(osv.osv):
         'description':fields.text('Description'),
         'type_id':fields.char('Type',size=20),#should be corect
     }
-
 res_contact_relation()
 
 class res_contact_relation_type(osv.osv):
@@ -69,7 +68,17 @@ class res_contact_relation_type(osv.osv):
     _columns = {
         'name': fields.char('Contact',size=50),
     }
-
 res_contact_relation_type()
 
+class res_partner_relation(osv.osv):
+    _name = "res.partner.relation"
+    _description = 'res.partner.relation'
+    _rec_name = 'partner_id'
+    _columns = {
+        'partner_id': fields.char('Partner',size=50),#should be correct
+        'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
+        'description':fields.text('Description'),
+        'type_id':fields.char('Type',size=20),#should be correct
+    }
+res_partner_relation()
 
