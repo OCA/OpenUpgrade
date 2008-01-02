@@ -38,16 +38,38 @@ except ImportError:
 	logger = netsvc.Logger()
 	logger.notifyChannel("init", netsvc.LOG_WARNING, "could not import ldap!")
 
+
+class CompanyLDAP(osv.osv):
+	_name = 'res.company.ldap'
+	_order = 'sequence'
+	_rec_name = 'ldap_server'
+	_columns = {
+		'sequence': fields.integer('Sequence'),
+		'company': fields.many2one('res.company', 'Company', required=True,
+			ondelete='cascade'),
+		'ldap_server': fields.char('LDAP Server address', size=64, required=True),
+		'ldap_binddn': fields.char('LDAP binddn', size=64, required=True),
+		'ldap_password': fields.char('LDAP password', size=64, required=True),
+		'ldap_filter': fields.char('LDAP filter', size=64, required=True),
+		'ldap_base': fields.char('LDAP base', size=64, required=True),
+		'user': fields.many2one('res.users', 'Model user',
+			help="Model used for user creation"),
+		'create_user': fields.boolean('Create user',
+			help="Create the user if not in database"),
+	}
+	_defaults = {
+		'sequence': lambda *a: 10,
+		'create_user': lambda *a: True,
+	}
+
+CompanyLDAP()
+
+
 class res_company(osv.osv):
 	_inherit = "res.company"
 
 	_columns = {
-		'ldap_server': fields.char('LDAP Server address', size=64),
-		'ldap_binddn': fields.char('LDAP binddn', size=64),
-		'ldap_password': fields.char('LDAP password', size=64),
-		'ldap_filter': fields.char('LDAP filter', size=64),
-		'ldap_base': fields.char('LDAP base', size=64),
-		'ldap_user_id': fields.many2one('res.users', 'Template User', help="Provide a template user that will be used for default access rights when creating new users.")
+		'ldaps': fields.one2many('res.company.ldap', 'company', 'LDAP Parameters'),
 	}
 res_company()
 
@@ -59,14 +81,14 @@ def ldap_login(oldfnc):
 		if module_ids:
 			state = module_obj.read(cr, 1, module_ids, ['state'])[0]['state']
 			if state in ('installed', 'to upgrade', 'to remove'):
-				cr.execute("select id, name, ldap_server, ldap_binddn, ldap_password, ldap_filter, ldap_base,ldap_user_id from res_company where ldap_server != '' and ldap_binddn != ''")
-				for res_company in cr.dictfetchall():
+				cr.execute("select id, company, ldap_server, ldap_binddn, ldap_password, ldap_filter, ldap_base, \"user\", create_user from res_company_ldap where ldap_server != '' and ldap_binddn != '' order by sequence")
+				for res_company_ldap in cr.dictfetchall():
 					try:
-						l = ldap.open(res_company['ldap_server'])
-						if l.simple_bind_s(res_company['ldap_binddn'], res_company['ldap_password']):
-							base = res_company['ldap_base']
+						l = ldap.open(res_company_ldap['ldap_server'])
+						if l.simple_bind_s(res_company_ldap['ldap_binddn'], res_company_ldap['ldap_password']):
+							base = res_company_ldap['ldap_base']
 							scope = ldap.SCOPE_SUBTREE
-							filter = res_company['ldap_filter']%(login,)
+							filter = res_company_ldap['ldap_filter']%(login,)
 							retrieve_attributes = None
 							result_id = l.search(base, scope, filter, retrieve_attributes)
 							timeout = 60
@@ -83,20 +105,24 @@ def ldap_login(oldfnc):
 									if res:
 										cr.close()
 										return res[0]
+									if not res_company_ldap['create_user']:
+										continue
 									users_obj = pooler.get_pool(cr.dbname).get('res.users')
 									action_obj = pooler.get_pool(cr.dbname).get('ir.actions.actions')
 									action_id = action_obj.search(cr, 1, [('usage', '=', 'menu')])[0]
-									if res_company['ldap_user_id']:
-										res = users_obj.copy(cr, 1, res_company['ldap_user_id'], {
+									if res_company_ldap['user']:
+										res = users_obj.copy(cr, 1, res_company_ldap['user'],
+												default={'active': True})
+										users_obj.write(cr, 1, res, {
 											'name': name,
 											'login': login.encode('utf-8'),
-											'company_id': res_company['id'],
+											'company_id': res_company_ldap['company'],
 											})
 									else:
 										res = users_obj.create(cr, 1, {
 											'name': name,
 											'login': login.encode('utf-8'),
-											'company_id': res_company['id'],
+											'company_id': res_company_ldap['company'],
 											'action_id': action_id,
 											'menu_id': action_id,
 											})
@@ -124,29 +150,30 @@ def ldap_check(oldfnc):
 			if state in ('installed', 'to upgrade', 'to remove'):
 				users_obj = pooler.get_pool(cr.dbname).get('res.users')
 				user = users_obj.browse(cr, 1, uid)
-				if user and user.company_id.ldap_server and user.company_id.ldap_binddn:
-					company = user.company_id
-					try:
-						l = ldap.open(company.ldap_server)
-						if l.simple_bind_s(company.ldap_binddn, company.ldap_password):
-							base = company['ldap_base']
-							scope = ldap.SCOPE_SUBTREE
-							filter = company['ldap_filter']%(user.login,)
-							retrieve_attributes = None
-							result_id = l.search(base, scope, filter, retrieve_attributes)
-							timeout = 60
-							result_type, result_data = l.result(result_id, timeout)
-							if result_data and result_type == ldap.RES_SEARCH_RESULT and len(result_data) == 1:
-								dn=result_data[0][0]
-								name=result_data[0][1]['cn']
-								if l.bind_s(dn, passwd):
-									l.unbind()
-									security._uid_cache[uid] = passwd
-									cr.close()
-									return True
-							l.unbind()
-					except Exception, e:
-						pass
+				if user and user.company_id.ldaps:
+					for res_company_ldap in user.company_id.ldaps:
+						try:
+							l = ldap.open(res_company_ldap.ldap_server)
+							if l.simple_bind_s(res_company_ldap.ldap_binddn,
+									res_company_ldap.ldap_password):
+								base = res_company_ldap.ldap_base
+								scope = ldap.SCOPE_SUBTREE
+								filter = res_company_ldap.ldap_filter % (user.login,)
+								retrieve_attributes = None
+								result_id = l.search(base, scope, filter, retrieve_attributes)
+								timeout = 60
+								result_type, result_data = l.result(result_id, timeout)
+								if result_data and result_type == ldap.RES_SEARCH_RESULT and len(result_data) == 1:
+									dn=result_data[0][0]
+									name=result_data[0][1]['cn']
+									if l.bind_s(dn, passwd):
+										l.unbind()
+										security._uid_cache[uid] = passwd
+										cr.close()
+										return True
+								l.unbind()
+						except Exception, e:
+							pass
 		cr.close()
 		return oldfnc(db, uid, passwd)
 	return _ldap_check
