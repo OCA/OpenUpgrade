@@ -28,7 +28,6 @@
 import netsvc
 from osv import fields, osv
 
-
 class res_partner_contact(osv.osv):
     _name = "res.partner.contact"
     _description = "res.partner.contact"
@@ -39,9 +38,9 @@ class res_partner_contact(osv.osv):
         'title':fields.char('Title',size=10,help='Courtesy'),
         'website':fields.char('Website',size=120),
         'lang_id':fields.many2one('res.lang','Language'),
-        'address_ids':fields.one2many('res.partner.address','partner_id1','Adresses'),#sholu be correct ,see view tag in partner.ods
-        'country_id':fields.many2one('res.country','Country'),#should be correct.....see view tag
-        'birthdate':fields.date('Birthdate'),
+        'address_ids':fields.one2many('res.partner.address','partner_id','Adresses'),
+        'country_id':fields.many2one('res.country','Country'),
+        'birthdate':fields.date('Birth Date'),
         'active' : fields.boolean('Active'),
         #'contact_ids':fields.many2one('res.partner.contact','Contacts') #should be corect
     }
@@ -49,6 +48,7 @@ class res_partner_contact(osv.osv):
         'active' : lambda *a: True,
     }
     def name_get(self, cr, user, ids, context={}):
+        #will return name and surname.......
         if not len(ids):
             return []
         res = []
@@ -67,7 +67,7 @@ class res_partner_address(osv.osv):
     _description ='Partner Contact'
     _columns = {
         'contact_ids':fields.many2one('res.partner.contact','Contacts') ,#should be corect
-        'partner_id1': fields.many2one('res.partner.contact', 'Partner', ondelete='cascade', select=True),
+        #'partner_id1': fields.many2one('res.partner.contact', 'Partner', ondelete='cascade', select=True),
         }
 res_partner_address()
 
