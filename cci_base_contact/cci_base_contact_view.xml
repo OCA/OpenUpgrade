@@ -34,11 +34,14 @@
 		<field name="arch" type="xml">
 			<notebook position="inside">
 				<page string="Who's Who">
+					<separator string="Who's who subscription" colspan="4"/>
 					<field name="who_date_accept"/>
 					<field name="who_date_last"/>
 					<field name="who_date_publication"/>
 					<field name="who_presence"/>
-					<field name="who_description" colspan="4"/>
+					<newline/>
+					<separator string="Who's who text" colspan="4"/>
+					<field name="who_description" colspan="4" />
 				</page>
 				<page string="Tags">
 				</page>
