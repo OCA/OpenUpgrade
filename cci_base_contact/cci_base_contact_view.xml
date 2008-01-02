@@ -1,6 +1,7 @@
 <?xml version="1.0" ?>
 <terp>
 <data>
+
 	<record model="ir.ui.view" id="view_partner_contact_tree">
 		<field name="name">res.partner.contact.tree</field>
 		<field name="model">res.partner.contact</field>
@@ -12,7 +13,20 @@
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_partner_contact_form_inherit_1">
+<!-- Remove page from parent view (make it blank) because here this page take different position... -->
+-	<record model="ir.ui.view" id="view_partner_contact_form_inherit_1">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<page string="Extra Information" position="replace">
+			</page>
+		</field>
+	</record>
+
+<!-- Add new page in parent notebook -->
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_2">
 		<field name="name">res.partner.contact.form</field>
 		<field name="model">res.partner.contact</field>
 		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
@@ -36,11 +50,16 @@
 				</page>
 				<page string="Personnal Links">
 				</page>
+				<page string="Extra Information">
+					<field name="country_id"/>
+					<field name="birthdate" />
+				</page>
 			</notebook>
 		</field>
-
 	</record>
-	<record model="ir.ui.view" id="view_partner_contact_form_inherit_2">
+
+<!--  Modify parent page by adding new field on it -->
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_3">
 		<field name="name">res.partner.contact.form</field>
 		<field name="model">res.partner.contact</field>
 		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
@@ -57,5 +76,19 @@
 			</field>
 		</field>
 	</record>
+
+<!-- modify parent page.... -->
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_4">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="birthdate" position="after">
+			    <field name="origin"/>
+			</field>
+		</field>
+	</record>
+
 </data>
 </terp>
