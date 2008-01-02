@@ -38,11 +38,10 @@ class res_partner_contact(osv.osv):
         'title':fields.char('Title',size=10,help='Courtesy'),
         'website':fields.char('Website',size=120),
         'lang_id':fields.many2one('res.lang','Language'),
-        'address_ids':fields.one2many('res.partner.address','partner_id','Adresses'),
+        'address_ids':fields.one2many('res.partner.address','contact_id','Adresses'),
         'country_id':fields.many2one('res.country','Country'),
         'birthdate':fields.date('Birth Date'),
         'active' : fields.boolean('Active'),
-        #'contact_ids':fields.many2one('res.partner.contact','Contacts') #should be corect
     }
     _defaults = {
         'active' : lambda *a: True,
@@ -66,8 +65,7 @@ class res_partner_address(osv.osv):
     _inherit='res.partner.address'
     _description ='Partner Contact'
     _columns = {
-        'contact_ids':fields.many2one('res.partner.contact','Contacts') ,#should be corect
-        #'partner_id1': fields.many2one('res.partner.contact', 'Partner', ondelete='cascade', select=True),
+        'contact_id':fields.many2one('res.partner.contact','Contacts'),
         }
 res_partner_address()
 
