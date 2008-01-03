@@ -148,22 +148,31 @@ class report_creator(osv.osv):
 				if field_type and field_type == 'many2one':
 					related_name = self.pool.get(field_dict.get('relation')).name_get(cr,user,[r[k]],context)[0]
 					r[k] = related_name 
-		print "res :",res
 		return res
 
 	def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
 		if (not context) or 'report_id' not in context:
 			return super(report_creator, self).search(cr, user, args, offset, limit, order, context, count)
+		report = self.browse(cr, user, context['report_id'])
+		i = 0
+		fields = {}
+		for f in report.field_ids:
+			fields['field'+str(i)] = (f.field_id.model, f.field_id.name)
+			i+=1
+		newargs = []
+		newargs2 = []
+		for a in args:
+			res =  self.pool.get(fields[a[0]][0])._where_calc(cr, user, [[fields[a[0]][1],a[1],a[2]]], active_test=False, context=context)
+			newargs+=res[0]
+			newargs2+=res[1]
 		ctx = context or {}
 		ctx['getid'] = True
-
-		report = self._sql_query_get(cr, user, [context['report_id']], 'sql_query', None, ctx)
+		report = self._sql_query_get(cr, user, [context['report_id']], 'sql_query', None, ctx, where_plus=newargs)
 		query = report[context['report_id']]
-		cr.execute(query)
+		cr.execute(query, newargs2)
 		result = cr.fetchall()
 		return map(lambda x: x[0], result)
 
-	# To be implemented
 	def _path_get(self,cr, uid, models, filter_ids=[]):
 #		ret_str = """	sale_order_line
 #	left join sale_order on (sale_order_line.order_id=sale_order.id)
@@ -182,7 +191,6 @@ class report_creator(osv.osv):
 		
 		model_list = model_dict.keys()
 		reference_model_dict = {}
-#		print "Model Dict :",model_dict 
 		for model in model_dict:
 			from_list.append(model_dict.get(model))
 			rest_list = model_dict.keys()
@@ -194,14 +202,11 @@ class report_creator(osv.osv):
 									    and x[1].get('type')=='many2one',fields_get.items()))
 			if fields_filter:
 				model in model_list and model_list.remove(model)
-#			print "reference Model Dicr :",reference_model_dict
-#			print "Model :",model
 			model_count = reference_model_dict.get(model,False)
 			if model_count:
 				reference_model_dict[model] = model_count +1
 			else:
-				reference_model_dict[model] = 1				
-			
+				reference_model_dict[model] = 1
 			for k,v in fields_filter.items():
 				v.get('relation') in model_list and model_list.remove(v.get('relation'))
 				relation_count = reference_model_dict.get(v.get('relation'),False)
@@ -210,18 +215,16 @@ class report_creator(osv.osv):
 				else:
 					reference_model_dict[v.get('relation')]=1
 				str_where = model_dict.get(model)+"."+ k + "=" + model_dict.get(v.get('relation'))+'.id' 
-				where_list.append(str_where)		
+				where_list.append(str_where)
 		if reference_model_dict:
 			self.model_set_id = model_dict.get(reference_model_dict.keys()[reference_model_dict.values().index(min(reference_model_dict.values()))])
 		if model_list and not len(model_dict.keys()) == 1:
 			raise osv.except_osv("No Related Models!!",'These is/are model(s) (%s) in selection which is/are not related to any other model'%','.join(model_list) )
-#		print "From :",".".join(from_list)
-#		print "Where :",".join(where_list)
 		for filter_id in filter_ids:
-			where_list.append(filter_id.expression)				 
+			where_list.append(filter_id.expression)
 		ret_str = ",\n".join(from_list)
 		if where_list:
-			ret_str+="\n where \n"+" and \n".join(where_list)		
+			ret_str+="\n where \n"+" and \n".join(where_list)
 		return ret_str
 
 	def _id_get(self, cr, uid, id, context):
