@@ -40,13 +40,13 @@ class res_partner(osv.osv):
         'state_id':fields.char('Partner State',size=20,help='status of activity of the partner'),#should be corect
         'state_id2':fields.char('Customer State',size=20,help='status of the partner as a customer'),#should be corect
         'activity_description':fields.text('Activity Description',traslate=True),
-        'export_procent':fields.char('Export(%)',size=20),#should be corect
+        'export_procent':fields.integer('Export(%)'),
         'export_year':fields.date('Export date',help='year of the export_procent value'),
-        'import_procent':fields.char('Import (%)',size=20),#should be corect
+        'import_procent':fields.integer('Import (%)'),
         'import_year':fields.date('Import Date',help='year of the import_procent value'),
-        'domiciliation':fields.char('Domiciliation',size=20),#should be corect
-        'domiciliation_cotisation':fields.char('Domiciliation (cotisation)',size=20,help='year of the import_procent value'),#should be corect
-        'invoice_nbr':fields.char('Nbr of invoice to print',size=20,help='number of additive invoices to be printed for this customer'),#should be corect
+        'domiciliation':fields.boolean('Domiciliation'),
+        'domiciliation_cotisation':fields.boolean('Domiciliation (cotisation)',help='year of the import_procent value'),
+        'invoice_nbr':fields.integer('Nbr of invoice to print',help='number of additive invoices to be printed for this customer'),
         'name_official':fields.char('Official Name',size=80),
         'name_old':fields.char('Former Name',size=80),
         'wall_exclusion':fields.boolean('In Walloon DB',help='exclusion of this partner from the walloon database'),
@@ -57,15 +57,15 @@ class res_partner(osv.osv):
         'alert_advertising':fields.boolean('Adv.Alert',help='Partners description to be shown when inserting new advertising sale'),
         'alert_events':fields.boolean('Event Alert',help='Partners description to be shown when inserting new subscription to a meeting'),
         'alert_legalisations':fields.boolean('Legal. Alert',help='Partners description to be shown when inserting new legalisation'),
-        'alert_membership':fields.boolean('Membership Alert',help='Partners description to be shown when inserting new membership sale'),
+        'alert_membership':fields.boolean('Membership Alert',help='Partners description to be shown when inserting new ship sale'),
         'alert_others':fields.boolean('Other alert',help='Partners description to be shown when inserting new sale not treated by _advertising, _events, _legalisations, _Membership'),
         'dir_name':fields.char('Name in Menber Dir.',size=250,help='Name under wich the partner will be inserted in the members directory'),
         'dir_name2':fields.char('1st Shortcut name ',size=250,help='First shortcut in the members directory, pointing to the dir_name field'),
         'dir_name3':fields.char('2nd Shortcut name ',size=250,help='Second shortcut'),
         'dir_date_last':fields.date('Partner Data Date',help='Date of latest update of the partner data by itself (via paper or Internet)'),
-        'dir_date_accept':fields.date('“Bon à tirer” Date',help='Date of last acceptation of Bon à Tirer'),
+        'dir_date_accept':fields.date("Good to shoot Date",help='Date of last acceptation of Bon à Tirer'),
         'dir_presence':fields.boolean('Dir. Presence',help='Présence dans le répertoire des entreprises'),
-        'dir_date_publication:':fields.date('Publication Date'),
+        'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
