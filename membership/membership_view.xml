@@ -81,12 +81,12 @@
 			<field name="act_window_id" ref="action_membership_products"/>
 		</record>
 
-		<menuitem name="Membership/Configuration/Membership products" 
-			id="menu_membership_products" 
+		<menuitem name="Membership/Configuration/Membership products"
+			id="menu_membership_products"
 			action="action_membership_products"/>
 
-		<menuitem name="Membership/Configuration" 
-			id="menu_conf" 
+		<menuitem name="Membership/Configuration"
+			id="menu_conf"
 			sequence="1"/>
 
 
@@ -127,8 +127,8 @@
 			<field name="act_window_id" ref="action_membership_members"/>
 		</record>
 
-		<menuitem name="Membership/Current members" 
-			id="menu_members" 
+		<menuitem name="Membership/Current members"
+			id="menu_members"
 			sequence="2"
 			action="action_membership_members"/>
 
@@ -153,7 +153,7 @@
 			<field name="act_window_id" ref="action_membership_members_paid"/>
 		</record>
 
-		<menuitem name="Membership/Current members/Paid members" 
+		<menuitem name="Membership/Current members/Paid members"
 			id="menu_members_paid"
 			action="action_membership_members_paid"/>
 
@@ -179,8 +179,8 @@
 			<field name="act_window_id" ref="action_membership_members_free"/>
 		</record>
 
-		<menuitem name="Membership/Current members/Free members" 
-			id="menu_members_free" 
+		<menuitem name="Membership/Current members/Free members"
+			id="menu_members_free"
 			action="action_membership_members_free"/>
 
 
@@ -207,8 +207,8 @@
 			<field name="act_window_id" ref="action_membership_members_associated"/>
 		</record>
 
-		<menuitem name="Membership/Current members/Associated members" 
-			id="menu_members_associated" 
+		<menuitem name="Membership/Current members/Associated members"
+			id="menu_members_associated"
 			action="action_membership_members_associated"/>
 
 
@@ -233,8 +233,8 @@
 			<field name="act_window_id" ref="action_membership_members_invoiced"/>
 		</record>
 
-		<menuitem name="Membership/Current members/Invoiced members" 
-			id="menu_members_invoiced" 
+		<menuitem name="Membership/Current members/Invoiced members"
+			id="menu_members_invoiced"
 			action="action_membership_members_invoiced"/>
 
 
@@ -259,8 +259,8 @@
 			<field name="act_window_id" ref="action_membership_members_waiting"/>
 		</record>
 
-		<menuitem name="Membership/Future members (invoice not confirmed)" 
-			id="menu_members_waiting" 
+		<menuitem name="Membership/Future members (invoice not confirmed)"
+			id="menu_members_waiting"
 			sequence="3"
 			action="action_membership_members_waiting"/>
 
@@ -285,8 +285,8 @@
 			<field name="act_window_id" ref="action_membership_members_old"/>
 		</record>
 
-		<menuitem name="Membership/Old members" 
-			id="menu_members_old" 
+		<menuitem name="Membership/Old members"
+			id="menu_members_old"
 			sequence="4"
 			action="action_membership_members_old"/>
 
@@ -560,8 +560,18 @@
 			action="action_report_partner_member_year_new_tree"
 			id="menu_report_partner_member_year_new"/>
 
-
-
+		<!-- Inherit res.partner view from base module and add one field member_state (cci) by mra-->
+		<record model="ir.ui.view" id="view_partner_form_inherit5">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="ref" position="after">
+			    	<field name="member_state"/>
+				</field>
+			</field>
+		</record>
 
 	</data>
 </terp>
