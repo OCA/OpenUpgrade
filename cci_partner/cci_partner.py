@@ -34,23 +34,23 @@ class res_partner(osv.osv):
     _columns = {
         'employee_nbr': fields.integer('Nbr of Employee (Area)',help="Nbr of Employee in the area of the CCI"),
         'employee_nbr_total':fields.integer('Nbr of Employee (Tot)',help="Nbr of Employee all around the world"),
-        'invoice_paper':fields.selection([('virement','virement'),('belge','belge'),('virement','virement'),('iban','iban')], 'Bank Transfer Type',required=True),
+        'invoice_paper':fields.selection([('transfer belgian','Transfer belgian'),('transfer iban ','Transfer iban')], 'Bank Transfer Type',required=True),
         'invoice_public':fields.boolean('Invoice Public'),
         'invoice_special':fields.boolean('Invoice Special'),
         'state_id':fields.char('Partner State',size=20,help='status of activity of the partner'),#should be corect
         'state_id2':fields.char('Customer State',size=20,help='status of the partner as a customer'),#should be corect
         'activity_description':fields.text('Activity Description',traslate=True),
         'export_procent':fields.char('Export(%)',size=20),#should be corect
-        'export_year':fields.date('Export date',help='year of the export_procent value'),#should be corect
+        'export_year':fields.date('Export date',help='year of the export_procent value'),
         'import_procent':fields.char('Import (%)',size=20),#should be corect
-        'import_year':fields.date('Import Date',help='year of the import_procent value'),#should be corect
+        'import_year':fields.date('Import Date',help='year of the import_procent value'),
         'domiciliation':fields.char('Domiciliation',size=20),#should be corect
         'domiciliation_cotisation':fields.char('Domiciliation (cotisation)',size=20,help='year of the import_procent value'),#should be corect
         'invoice_nbr':fields.char('Nbr of invoice to print',size=20,help='number of additive invoices to be printed for this customer'),#should be corect
         'name_official':fields.char('Official Name',size=80),
         'name_old':fields.char('Former Name',size=80),
         'wall_exclusion':fields.boolean('In Walloon DB',help='exclusion of this partner from the walloon database'),
-        'mag_send':fields.selection([('Never','Never'),('Always','Always'),('Managed_by_Poste','Managed_by_Poste'),('Prospect','Prospect')], 'Send mag.',required=True),
+        'mag_send':fields.selection([('never','Never'),('always','Always'),('managed_by_poste','Managed_by_Poste'),('prospect','Prospect')], 'Send mag.',required=True),
         'date_founded':fields.date('Founding Date',help='Date of foundation of this company'),
         'training_authorization':fields.char('Training Auth.',size=12,help='Formation Checks Authorization number'),
         'lang_authorization':fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number'),
