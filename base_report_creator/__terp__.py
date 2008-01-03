@@ -2,9 +2,15 @@
 	"name" : "Report Creator",
 	"version" : "1.0",
 	"author" : "Tiny",
-	"website" : "http://tinyerp.com/module_crm.html",
-	"category" : "Generic Modules/CRM & SRM",
-	"description": """ """,
+	"website" : "",
+	"category" : "Generic Modules/Base",
+	"description": """This modules allows you to create any statistic
+report on several object. It's a SQL query builder and browser
+for and users.
+
+After installing the module, it adds a menu to define custom report in
+the "Dashboard" menu.
+""",
 	"depends" : ["base"],
 	"init_xml" : [],
 	"demo_xml" : [],
