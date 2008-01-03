@@ -380,6 +380,9 @@ class Partner(osv.osv):
 		'membership_cancel': fields.function(_membership_cancel, method=True,
 			string='Cancel membership date', type='date',
 			fnct_search=_membership_cancel_search),
+
+		'member_state':fields.char('Member State',size=20) #should be correct today
+
 	}
 	_defaults = {
 		'free_member': lambda *a: False,
@@ -442,7 +445,7 @@ class Invoice(osv.osv):
 
 	def action_cancel(self, cr, uid, ids, context=None):
 		'''Create a cancel_date on the membership_line object'''
-		
+
 		if context is None:
 			context = {}
 		member_line_obj = self.pool.get('membership.membership_line')
