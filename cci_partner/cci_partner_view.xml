@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<record model="ir.ui.view" id="view_partner_form_inherit1">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="lang" position="after">
+			    	<field name="state_id"/>
+			    	<field name="employee_nbr"/>
+			    	<field name="state_id2"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_partner_form_inherit2">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Activities">
+						<field name="activity_description"/>
+						<!--<field name="activity_code_ids"/>-->
+					</page>
+					<page string="Tags">
+						<!-- should be correct -->
+					</page>
+					<page string="Pays">
+						<field name="export_procent"/>
+						<field name="export_year"/>
+						<field name="import_procent"/>
+						<field name="import_year"/>
+					</page>
+					<page string="Relations">
+					</page>
+					<page string="Articles">
+					</page>
+					<page string="Accounting Information">
+						<field name="domiciliation"/>
+						<field name="domiciliation_cotisation"/>
+						<field name="invoice_nbr"/>
+						<field name="invoice_paper"/>
+						<field name="invoice_public"/>
+						<field name="invoice_special"/>
+						<!-- use extra_info of tiny -->
+					</page>
+
+					<page string="Directory">
+						<field name="dir_name"/>
+						<field name="dir_name2"/>
+						<field name="dir_name3"/>
+						<field name="dir_date_last"/>
+						<field name="dir_date_accept"/>
+						<field name="dir_date_publication"/>
+						<field name="dir_presence"/>
+					</page>
+					<page string="Extra Information">
+						<separator string="Miscelleanous" colspan="4"/>
+						<field name="name_official"/>
+						<field name="name_old"/>
+						<field name="wall_exclusion"/>
+						<!--<field name="abonnement revue"/>-->
+						<!--<field name="id_unique"/>-->
+						<field name="date_founded"/>
+
+						<separator string="Events" colspan="4"/>
+						<field name="training_authorization"/>
+						<field name="lang_authorization"/>
+
+						<separator string="alerts" colspan="4"/>
+						<!--<field name="alert_note" colspan="4"/> not in object res.partner -->
+						<field name="alert_advertising"/>
+						<field name="alert_legalisations"/>
+						<field name="alert_events"/>
+						<field name="alert_membership"/>
+						<field name="alert_others"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+		<!--<record model="ir.actions.act_window" id="expense_all">
+			<field name="res_model">hr.expense.expense</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem
+			name="Human Resources/Expenses/All Expenses"
+			id="menu_expense_all"
+			action="expense_all"/>-->
+	</data>
+</terp>
