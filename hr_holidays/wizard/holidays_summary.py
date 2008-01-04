@@ -32,9 +32,9 @@ import datetime
 
 form='''<?xml version="1.0"?>
 <form string="Choose the timespan for the report">
-    <field name="date_from"/>
-    <field name="date_to"/>
-
+    <field name="date_from" colspan="1" />
+    <field name="date_to" colspan="1" />
+    <field name="depts" colspan="4" />
 </form>'''
 
 back_form='''<?xml version="1.0"?>
@@ -60,8 +60,8 @@ class wizard_report(wizard.interface):
         first_date=data['form']['date_from']
         last_date=data['form']['date_to']
 
-        som = datetime.date(int(first_date[:4]),int(first_date[5:7]),int(first_date[8:]))
-        eom = datetime.date(int(last_date[:4]),int(last_date[5:7]),int(last_date[8:]))
+        som = datetime.date(int(first_date[0:4]),int(first_date[5:7]),int(first_date[8:10]))
+        eom = datetime.date(int(last_date[0:4]),int(last_date[5:7]),int(last_date[8:10]))
 
         day_diff=eom-som
         if day_diff.days>90:
@@ -82,6 +82,7 @@ class wizard_report(wizard.interface):
             'required':True,
 
         },
+        'depts': {'string': 'Department(s)', 'type': 'many2many', 'relation': 'hr.department','required': True},
 
     }
 
