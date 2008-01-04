@@ -380,9 +380,6 @@ class Partner(osv.osv):
 		'membership_cancel': fields.function(_membership_cancel, method=True,
 			string='Cancel membership date', type='date',
 			fnct_search=_membership_cancel_search),
-
-		'member_state':fields.char('Member State',size=20) #should be correct today
-
 	}
 	_defaults = {
 		'free_member': lambda *a: False,
