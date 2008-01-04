@@ -560,18 +560,6 @@
 			action="action_report_partner_member_year_new_tree"
 			id="menu_report_partner_member_year_new"/>
 
-		<!-- Inherit res.partner view from base module and add one field member_state (cci) by mra-->
-		<record model="ir.ui.view" id="view_partner_form_inherit5">
-			<field name="name">res.partner.form</field>
-			<field name="type">form</field>
-			<field name="model">res.partner</field>
-			<field name="inherit_id" ref="base.view_partner_form"/>
-			<field name="arch" type="xml">
-				<field name="ref" position="after">
-			    	<field name="member_state"/>
-				</field>
-			</field>
-		</record>
 
 	</data>
 </terp>
