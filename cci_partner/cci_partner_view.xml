@@ -23,17 +23,24 @@
 			<field name="arch" type="xml">
 				<notebook position="inside">
 					<page string="Activities">
-						<field name="activity_description"/>
-						<!--<field name="activity_code_ids"/>-->
+						<field name="activity_description" colspan="4"/>
+						<field name="activity_code_ids" editable="bottom"/>
 					</page>
 					<page string="Tags">
-						<!-- should be correct -->
+						<!-- should be add -->
 					</page>
 					<page string="Pays">
 						<field name="export_procent"/>
 						<field name="export_year"/>
 						<field name="import_procent"/>
 						<field name="import_year"/>
+						<field name="country_relation" select="1" colspan="4" nolabel="1">
+								<tree string="Country Relation">
+									<field name="type"/>
+									<field name="frequency"/>
+									<field name="country_id"/>
+								</tree>
+						</field>
 					</page>
 					<page string="Relations">
 					</page>
@@ -63,7 +70,7 @@
 						<field name="name_official"/>
 						<field name="name_old"/>
 						<field name="wall_exclusion"/>
-						<!--<field name="abonnement revue"/>-->
+						<field name="magazine_subscription"/>
 						<!--<field name="id_unique"/>-->
 						<field name="date_founded"/>
 
@@ -79,6 +86,7 @@
 						<field name="alert_membership"/>
 						<field name="alert_others"/>
 					</page>
+
 				</notebook>
 			</field>
 		</record>
