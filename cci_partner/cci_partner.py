@@ -39,7 +39,10 @@ class res_partner(osv.osv):
         'invoice_special':fields.boolean('Invoice Special'),
         'state_id':fields.char('Partner State',size=20,help='status of activity of the partner'),#should be corect
         'state_id2':fields.char('Customer State',size=20,help='status of the partner as a customer'),#should be corect
+
         'activity_description':fields.text('Activity Description',traslate=True),
+        'activity_code_ids':fields.one2many('res.activity.code','','Activity Codes'),#should be corect
+
         'export_procent':fields.integer('Export(%)'),
         'export_year':fields.date('Export date',help='year of the export_procent value'),
         'import_procent':fields.integer('Import (%)'),
@@ -67,6 +70,9 @@ class res_partner(osv.osv):
         'dir_presence':fields.boolean('Dir. Presence',help='Présence dans le répertoire des entreprises'),
         'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
+
+        'magazine_subscription':fields.boolean('Magazine subscription'),
+        'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation') #add for view
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
@@ -76,3 +82,15 @@ class res_partner(osv.osv):
                  'dir_exclude':lambda *a: False,
                  }
 res_partner()
+
+class res_activity_code(osv.osv):
+    _name = "res.activity.code"
+    _description = 'res.activity.code'
+    _columns = {
+        'code': fields.char('Code',size=6),
+        'name':fields.char('Name',size=250,transtale=True),
+        'description':fields.text('Description'),
+        #'code_relations':fields.many2many('Related codes') #should be correct
+
+    }
+res_activity_code()
