@@ -34,12 +34,12 @@ class res_partner_contact(osv.osv):
         'data_private': fields.boolean('Private data'),
         'self_sufficent':fields.boolean('Keep contact',help='This contact will not be removed even if all this addresses are deleted'),
         'who_date_accept':fields.date('WsW Accept Date'),
-        'who_date_last':fields.date('WsW Last date'),
-        'who_date_publication':fields.date('WsW publication date'),
+        'who_date_last':fields.date('WsW Last Date'),
+        'who_date_publication':fields.date('WsW Publication Date'),
         'who_presence':fields.boolean('In WsW'),
         'who_description':fields.text('WswW Description',transtale=True),
         'origin':fields.char('Origin',size=20,help='The DB from which the info is coming from'),
-        'fse_work_status':fields.char('Fse Work status',size=20), #should be corect....chk
+        'fse_work_status':fields.char('Fse Work Status',size=20), #should be corect....
         'fse_work_experience':fields.char('Fse Work Exp.',size=20),#should be corect....
         'fse_studies':fields.char('Fse Studies',size=20),#should be corect........
         'article_ids':fields.one2many('res.partner.article','','Articles'),#should be corect
@@ -58,7 +58,7 @@ class res_contact_relation(osv.osv):
         'contact_id': fields.char('Contact',size=50),#should be corect
         'contact_relation_id':fields.char('Relation',size=50),#should be corect
         'description':fields.text('Description'),
-        'type_id':fields.char('Type',size=20),#should be corect
+        'type_id':fields.many2one('res.contact.relation.type','Type'),
     }
 res_contact_relation()
 
@@ -78,7 +78,17 @@ class res_partner_relation(osv.osv):
         'partner_id': fields.char('Partner',size=50),#should be correct
         'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
         'description':fields.text('Description'),
-        'type_id':fields.char('Type',size=20),#should be correct
+        'type_id':fields.many2one('res.contact.relation.type','Type'),
     }
 res_partner_relation()
+
+class res_partner_country_relation(osv.osv):
+    _name = "res.partner.country.relation"
+    _description = 'res.partner.country.relation'
+    _columns = {
+        'frequency': fields.integer('Frequency'),
+        'country_id':fields.many2one('res.country','Country'),
+        'type':fields.selection([('temp','Temp')],'Types'),#should be corect
+    }
+res_partner_country_relation()
 
