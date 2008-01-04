@@ -21,7 +21,7 @@ class report_account_analytic_planning_line(osv.osv):
 
 		cr.execute(query)
 		res = cr.dictfetchone()
-		print res
+
 		if res:
 			return {'value':{'product_id': res['id']}}
 		return {'value': {'product_id': False}}
