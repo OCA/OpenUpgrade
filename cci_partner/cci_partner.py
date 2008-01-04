@@ -83,6 +83,44 @@ class res_partner(osv.osv):
                  }
 res_partner()
 
+class res_partner_zip(osv.osv):
+    _name = "res.partner.zip"
+    _description = 'res.partner.zip'
+    _columns = {
+        'name':fields.char('Zip Code',size=4),
+        'city':fields.char('City',size=60),
+        'partner_id':fields.selection([('temp','temp')],'Master Cci'),
+        'post_center_id':fields.char('Post Center',size=40),
+        'post_center_special':fields.boolean('Post Center Special'),
+        'user_id':fields.many2one('res.users','User'),
+        'groups_id': fields.many2many('res.groups', 'partner_zip_group_rel', 'zip_id', 'group_id', 'Groups'),#should be corect
+        'distance':fields.integer('Distance',help='Distance (km) between zip location and the cci.')
+                }
+res_partner_zip()
+
+class res_partner_address(osv.osv):
+    _inherit = "res.partner.address"
+    _description = 'res.partner.address'
+    _columns = {
+        'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
+        'zip_id':fields.many2one('res.partner.zip','Zip'),#add res.partner.object ...
+        'function_code_id':fields.char('Function Code',size=20),#should be correct
+        'date_start':fields.date('date start'),
+        'date_end':fields.date('date end'),
+        'sequence_partner':fields.integer('Sequence (Partner)',help='order of importance of this address in the list of addresses of the linked partner'),
+        'sequence_contact':fields.integer('Sequence (Contact)',help='order of importance of this address in the list of addresses of the linked contact'),
+        'canal_id':fields.char('Canal',size=20,help='favorite chanel for communication'),#should be correct
+        'active':fields.boolean('active'),
+        'who_presence':fields.boolean('In Whos Who'),
+        'dir_presence':fields.boolean('In Directory'),
+    }
+    _defaults = {
+                 'state' : lambda *a: 'Correct',
+                 'who_presence' : lambda *a: True,
+                 'dir_presence' : lambda *a: True,
+               }
+res_partner_address()
+
 class res_activity_code(osv.osv):
     _name = "res.activity.code"
     _description = 'res.activity.code'
@@ -94,3 +132,4 @@ class res_activity_code(osv.osv):
 
     }
 res_activity_code()
+
