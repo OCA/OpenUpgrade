@@ -120,6 +120,5 @@ class hr_holidays_status(osv.osv):
 	_defaults = {
 		'color_name': lambda *args: 'red',
 	}
-
 hr_holidays_status()
 
