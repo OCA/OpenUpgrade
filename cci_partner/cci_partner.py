@@ -41,7 +41,7 @@ class res_partner(osv.osv):
         'state_id2':fields.char('Customer State',size=20,help='status of the partner as a customer'),#should be corect
 
         'activity_description':fields.text('Activity Description',traslate=True),
-        'activity_code_ids':fields.one2many('res.activity.code','','Activity Codes'),#should be corect
+        'activity_code_ids':fields.one2many('res.activity.code','partner_id','Activity Codes'),
 
         'export_procent':fields.integer('Export(%)'),
         'export_year':fields.date('Export date',help='year of the export_procent value'),
@@ -103,14 +103,14 @@ class res_partner_address(osv.osv):
     _description = 'res.partner.address'
     _columns = {
         'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
-        'zip_id':fields.many2one('res.partner.zip','Zip'),#add res.partner.object ...
-        'function_code_id':fields.char('Function Code',size=20),#should be correct
-        'date_start':fields.date('date start'),
-        'date_end':fields.date('date end'),
+        'zip_id':fields.many2one('res.partner.zip','Zip'),
+        'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be corect
+        'date_start':fields.date('Date start'),
+        'date_end':fields.date('Date end'),
         'sequence_partner':fields.integer('Sequence (Partner)',help='order of importance of this address in the list of addresses of the linked partner'),
         'sequence_contact':fields.integer('Sequence (Contact)',help='order of importance of this address in the list of addresses of the linked contact'),
-        'canal_id':fields.char('Canal',size=20,help='favorite chanel for communication'),#should be correct
-        'active':fields.boolean('active'),
+        'canal_id':fields.many2one('res.partner.canal','Canal',help='favorite chanel for communication'),
+        'active':fields.boolean('Active'),
         'who_presence':fields.boolean('In Whos Who'),
         'dir_presence':fields.boolean('In Directory'),
     }
@@ -122,14 +122,26 @@ class res_partner_address(osv.osv):
 res_partner_address()
 
 class res_activity_code(osv.osv):
+
     _name = "res.activity.code"
     _description = 'res.activity.code'
+
+    #def name_get(self, cr, uid, ids, context={}): #should be corect....
     _columns = {
         'code': fields.char('Code',size=6),
         'name':fields.char('Name',size=250,transtale=True),
         'description':fields.text('Description'),
-        #'code_relations':fields.many2many('Related codes') #should be correct
-
+        'code_relations':fields.many2many('res.activity.code','res_activity_code_rel','code_id1','code_id2','Related codes'), #should be correct
+        'partner_id':fields.many2one('res.partner','Partner'),
     }
+
 res_activity_code()
+
+class res_partner_function(osv.osv):
+    _inherit = 'res.partner.function'
+    _description = 'Function of the contact inherit'
+
+#    def name_get(self, cr, uid, ids, context={}): #should be corect.......
+
+res_partner_function()
 
