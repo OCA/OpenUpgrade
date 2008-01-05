@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
+
+<!-- View for res.partner object inherited from base module................ -->
 		<record model="ir.ui.view" id="view_partner_form_inherit1">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
@@ -24,7 +26,20 @@
 				<notebook position="inside">
 					<page string="Activities">
 						<field name="activity_description" colspan="4"/>
-						<field name="activity_code_ids" editable="bottom"/>
+						<field editable="bottom" name="activity_code_ids" mode="tree,form">
+                               <tree string="Activity">
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                        <field name="description"/>
+                              </tree>
+                              <form string="Activity">
+                                        <field name="code"/>
+                                        <field name="name"/>
+                                        <field name="description"/>
+                                        <field name="code_relations"/>
+                               </form>
+
+                         </field>
 					</page>
 					<page string="Tags">
 						<!-- should be add -->
@@ -91,13 +106,48 @@
 			</field>
 		</record>
 
-		<!--<record model="ir.actions.act_window" id="expense_all">
-			<field name="res_model">hr.expense.expense</field>
+<!-- View for res.partner.address object override from base module. -->
+
+		<record model="ir.ui.view" id="base.view_partner_address_form1">
+			<field name="name">res.partner.address.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.address</field>
+			<field name="arch" type="xml">
+				<form string="Partner contacts">
+					<field name="contact_id"/>
+					<field name="partner_id"/>
+					<field name="name"/>
+					<field name="function"/>
+					<!--<field name="function_code_id"/> should be correct -->
+					<field name="title"/>
+					<field name="type"/>
+					<field name="street"/>
+					<field name="street2"/>
+					<field name="zip"/>
+					<field name="city"/>
+					<field name="country_id"/>
+					<field name="state_id"/>
+					<field name="phone"/>
+					<field name="fax"/>
+					<field name="email"/>
+					<field name="active"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+					<field name="sequence_partner"/>
+					<field name="sequence_contact"/>
+					<field name="who_presence"/>
+					<field name="dir_presence"/>
+					<field name="state"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="base.action_partner_address_form">
+			<field name="name">Partner Address</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.address</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem
-			name="Human Resources/Expenses/All Expenses"
-			id="menu_expense_all"
-			action="expense_all"/>-->
+
 	</data>
 </terp>
