@@ -62,26 +62,6 @@ class res_contact_relation(osv.osv):
     }
 res_contact_relation()
 
-class res_contact_relation_type(osv.osv):
-    _name = "res.contact.relation.type"
-    _description ='res.contact.relation.type'
-    _columns = {
-        'name': fields.char('Contact',size=50),
-    }
-res_contact_relation_type()
-
-class res_partner_relation(osv.osv):
-    _name = "res.partner.relation"
-    _description = 'res.partner.relation'
-    _rec_name = 'partner_id'
-    _columns = {
-        'partner_id': fields.char('Partner',size=50),#should be correct
-        'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
-        'description':fields.text('Description'),
-        'type_id':fields.many2one('res.contact.relation.type','Type'),
-    }
-res_partner_relation()
-
 class res_partner_country_relation(osv.osv):
     _name = "res.partner.country.relation"
     _description = 'res.partner.country.relation'
