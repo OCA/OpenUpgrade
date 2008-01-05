@@ -88,7 +88,7 @@ class res_partner_zip(osv.osv):
     _description = 'res.partner.zip'
     _columns = {
         'name':fields.char('Zip Code',size=4),
-        'city':fields.char('City',size=60),
+        'city':fields.char('City',size=60,traslate=True),
         'partner_id':fields.selection([('temp','temp')],'Master Cci'),
         'post_center_id':fields.char('Post Center',size=40),
         'post_center_special':fields.boolean('Post Center Special'),
@@ -97,6 +97,23 @@ class res_partner_zip(osv.osv):
         'distance':fields.integer('Distance',help='Distance (km) between zip location and the cci.')
                 }
 res_partner_zip()
+
+class res_partner_zip_group_type(osv.osv):
+     _name = "res.partner.zip.group.type"
+     _description = 'res.partner.zip.group.type'
+     _columns = {
+         'name':fields.char('Name',size=50),
+                }
+res_partner_zip_group_type()
+
+class res_partner_zip_group(osv.osv):
+     _name = "res.partner.zip.group"
+     _description = 'res.partner.zip.group'
+     _columns = {
+         'type_id':fields.many2one('res.partner.zip.group.type','Type'),#should be correct
+         'name':fields.char('Name',size=50),
+                }
+res_partner_zip_group()
 
 class res_partner_address(osv.osv):
     _inherit = "res.partner.address"
@@ -122,26 +139,46 @@ class res_partner_address(osv.osv):
 res_partner_address()
 
 class res_activity_code(osv.osv):
-
     _name = "res.activity.code"
     _description = 'res.activity.code'
 
-    #def name_get(self, cr, uid, ids, context={}): #should be corect....
+    def name_get(self, cr, uid, ids, context={}):
+        print "hello world"
+        if not len(ids):
+            return []
+        reads = self.read(cr, uid, ids, ['code','name'], context)
+        res = []
+        str1=''
+        for record in reads:
+            if record['name']:
+                str1=record['name']+' '+'-'+' '+record['code']
+            res.append((record['id'], str1))
+        return res
+
     _columns = {
         'code': fields.char('Code',size=6),
-        'name':fields.char('Name',size=250,transtale=True),
+        'name':fields.char('Name',size=250,transtale=True,required=True),
         'description':fields.text('Description'),
         'code_relations':fields.many2many('res.activity.code','res_activity_code_rel','code_id1','code_id2','Related codes'), #should be correct
         'partner_id':fields.many2one('res.partner','Partner'),
     }
-
 res_activity_code()
 
 class res_partner_function(osv.osv):
     _inherit = 'res.partner.function'
     _description = 'Function of the contact inherit'
 
-#    def name_get(self, cr, uid, ids, context={}): #should be corect.......
-
+    def name_get(self, cr, uid, ids, context={}):
+        print "hello world"
+        if not len(ids):
+            return []
+        reads = self.read(cr, uid, ids, ['code','name'], context)
+        res = []
+        str1=''
+        for record in reads:
+            if record['name'] or record['code']:
+                str1=record['name']+'('+record['code']+')'
+            res.append((record['id'], str1))
+        return res
 res_partner_function()
 
