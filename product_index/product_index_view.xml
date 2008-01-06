@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+	#---------------------------------------------------------
+	# Indexes
+	#---------------------------------------------------------
+	<record model="ir.ui.view" id="view_index_tree">
+		<field name="name">product.index.tree</field>
+		<field name="model">product.index</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Indexes">
+				<field name="name"/>
+				<field name="code"/>
+				<field name="rate"/>
+				<field name="rounding"/>
+				<field name="active" />
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_index_form">
+		<field name="name">product.index.form</field>
+		<field name="model">product.index</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="index">
+				<field name="name" select="1" colspan="3"/>
+				<field name="code" select="1"/>
+				<field name="rate"/>
+				<field name="rounding"/>
+				<field name="active"  select="1"/>
+				<field name="rate_ids" colspan="4" nolabel="1" mode="tree,form">
+					<form string="Rates">
+						<field name="name"/>
+						<field name="rate"/>
+					</form>
+					<tree string="Rates">
+						<field name="name"/>
+						<field name="rate"/>
+					</tree>
+				</field>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_index_form">
+		<field name="name">product.index</field>
+		<field name="res_model">product.index</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_index_tree">
+		<field name="name">product.index</field>
+		<field name="res_model">product.index</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem 
+		name="Products/Configuration/Indexes" 
+		action="action_index_tree" 
+		sequence="11" 
+		id="menu_action_index_tree"/>
+
+	<menuitem 
+		name="Products/Configuration/Indexes/New index" 
+		action="action_index_form" 
+		sequence="1" 
+		id="menu_index_def"/>
+
+</data>
+</terp>

@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+
+		<record model="ir.ui.view" id="view_product_form_expiry">
+			<field name="name">product.normal.form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<page string="Descriptions" position="before">
+					<page string="Indexes">
+						<field name="buyer_price"/>
+						<field name="index_date" required="1"/>
+						<field name="list_price_index"/>
+						<field name="standard_price_index"/>
+						<field name="buyer_price_index"/>
+						<newline/>
+						<separator string="Sale indexes" colspan="2"/>
+						<separator string="Purchase indexes" colspan="2"/>
+						<field name="index_sale" colspan="2" nolabel="1"/>
+						<field name="index_purchase" colspan="2" nolabel="1"/>
+					</page>
+				</page>
+			</field>
+		</record>
+
+</data>
+</terp>

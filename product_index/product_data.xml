@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+	<record model="product.price.type" id="buyer_price">
+		<field name="name">Buyer price</field>
+		<field name="field">buyer_price</field>
+		<field name="currency_id" ref="base.EUR"/>
+	</record>
+
+	<record model="product.price.type" id="buyer_price_index">
+		<field name="name">Indexed buyer price</field>
+		<field name="field">buyer_price_index</field>
+		<field name="currency_id" ref="base.EUR"/>
+	</record>
+
+	<record model="product.price.type" id="list_price_index">
+		<field name="name">Indexed list price</field>
+		<field name="field">list_price_index</field>
+		<field name="currency_id" ref="base.EUR"/>
+	</record>
+
+	<record model="product.price.type" id="standard_price_index">
+		<field name="name">Indexed standard price</field>
+		<field name="field">standard_price_index</field>
+		<field name="currency_id" ref="base.EUR"/>
+	</record>
+
+</data>
+</terp>
