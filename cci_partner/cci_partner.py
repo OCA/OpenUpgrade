@@ -201,7 +201,7 @@ class res_partner_relation(osv.osv): # move from cci_base_contact to here
         'partner_id': fields.char('Partner',size=50),#should be correct
         'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
         'description':fields.text('Description'),
-        #'type_id':fields.many2one('res.contact.relation.type','Type'), #should be correct
+        'type_id':fields.many2one('res.contact.relation.type','Type'), #should be correct
     }
 res_partner_relation()
 
