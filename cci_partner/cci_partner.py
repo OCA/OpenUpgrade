@@ -136,6 +136,17 @@ class res_partner_address(osv.osv):
                  'who_presence' : lambda *a: True,
                  'dir_presence' : lambda *a: True,
                }
+
+    def unlink(self, cr, uid, ids, context={}):
+        #Unlink related contact if: no other Address AND not self_sufficient
+        data_address=self.pool.get('res.partner.address').browse(cr, uid, ids)
+        id_contact=data_address[0].contact_id.id
+        super(res_partner_address,self).unlink(cr, uid, ids,context=context)
+        data_contact=self.pool.get('res.partner.contact').browse(cr, uid,[id_contact])
+        if (not data_contact[0].self_sufficent)  and (not data_contact[0].address_ids):
+            self.pool.get('res.partner.contact').unlink(cr, uid,[data_contact[0].id], context)
+        return True
+
 res_partner_address()
 
 class res_activity_code(osv.osv):
