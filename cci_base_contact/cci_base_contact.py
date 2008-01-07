@@ -51,6 +51,15 @@ class res_partner_contact(osv.osv):
     }
 res_partner_contact()
 
+
+class res_contact_relation_type(osv.osv):
+    _name = "res.contact.relation.type"
+    _description ='res.contact.relation.type'
+    _columns = {
+        'name': fields.char('Contact',size=50),
+    }
+res_contact_relation_type()
+
 class res_contact_relation(osv.osv):
     _name = "res.contact.relation"
     _description ='res.contact.relation'
