@@ -188,5 +188,58 @@
 		</record>
 		<menuitem name="Partners/Configuration/States/Customer State" groups="admin" action="action_partner_state2" id="menu_partner_state2"/>
 
+<!-- view for res.activity.code ... -->
+		<record model="ir.ui.view" id="view_activity_code_form">
+			<field name="name">res.activity.code.form</field>
+			<field name="type">form</field>
+			<field name="model">res.activity.code</field>
+			<field name="arch" type="xml">
+				<form string="Activity Code">
+					<field name="code"/>
+					<field name="name"/>
+					<field name="description"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_activity_code_tree">
+			<field name="name">res.activity.code.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.activity.code</field>
+			<field name="arch" type="xml">
+				<tree string="Activity Code">
+					<field name="code"/>
+					<field name="name"/>
+					<field name="description"/>
+				</tree>
+			</field>
+		</record>
+		<!-- menu & action is not defined -->
+
+<!-- view for res..partner.activity.code ... -->
+		<record model="ir.ui.view" id="view_partner_activity_code_form">
+			<field name="name">res.partner.activity.code.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.activity.code</field>
+			<field name="arch" type="xml">
+				<form string="Partner Activity Code">
+					<field name="importance"/>
+					<field name="activity_id"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_activity_code_tree">
+			<field name="name">res.partner.activity.code.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.activity.code</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Activity Code">
+					<field name="importance"/>
+					<field name="activity_id"/>
+				</tree>
+			</field>
+		</record>
+		<!--  menu & action is not defined -->
+
 	</data>
 </terp>
+
