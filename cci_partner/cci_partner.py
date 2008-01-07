@@ -34,7 +34,7 @@ class res_partner(osv.osv):
     _columns = {
         'employee_nbr': fields.integer('Nbr of Employee (Area)',help="Nbr of Employee in the area of the CCI"),
         'employee_nbr_total':fields.integer('Nbr of Employee (Tot)',help="Nbr of Employee all around the world"),
-        'invoice_paper':fields.selection([('transfer belgian','Transfer belgian'),('transfer iban ','Transfer iban')], 'Bank Transfer Type',required=True),
+        'invoice_paper':fields.selection([('transfer belgian','Transfer belgian'),('transfer iban ','Transfer iban')], 'Bank Transfer Type'),
         'invoice_public':fields.boolean('Invoice Public'),
         'invoice_special':fields.boolean('Invoice Special'),
         'state_id':fields.char('Partner State',size=20,help='status of activity of the partner'),#should be corect
@@ -53,7 +53,7 @@ class res_partner(osv.osv):
         'name_official':fields.char('Official Name',size=80),
         'name_old':fields.char('Former Name',size=80),
         'wall_exclusion':fields.boolean('In Walloon DB',help='exclusion of this partner from the walloon database'),
-        'mag_send':fields.selection([('never','Never'),('always','Always'),('managed_by_poste','Managed_by_Poste'),('prospect','Prospect')], 'Send mag.',required=True),
+        'mag_send':fields.selection([('never','Never'),('always','Always'),('managed_by_poste','Managed_by_Poste'),('prospect','Prospect')], 'Send mag.'),
         'date_founded':fields.date('Founding Date',help='Date of foundation of this company'),
         'training_authorization':fields.char('Training Auth.',size=12,help='Formation Checks Authorization number'),
         'lang_authorization':fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number'),
@@ -93,7 +93,7 @@ class res_partner_zip(osv.osv):
         'post_center_id':fields.char('Post Center',size=40),
         'post_center_special':fields.boolean('Post Center Special'),
         'user_id':fields.many2one('res.users','User'),
-        'groups_id': fields.many2many('res.groups', 'partner_zip_group_rel', 'zip_id', 'group_id', 'Groups'),#should be corect
+        'groups_id': fields.many2many('res.groups', 'partner_zip_group_rel', 'zip_id', 'group_id', 'Groups'),#should be corect ,may be res.partner.zip.group
         'distance':fields.integer('Distance',help='Distance (km) between zip location and the cci.')
                 }
 res_partner_zip()
@@ -201,7 +201,22 @@ class res_partner_relation(osv.osv): # move from cci_base_contact to here
         'partner_id': fields.char('Partner',size=50),#should be correct
         'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
         'description':fields.text('Description'),
-        'type_id':fields.many2one('res.contact.relation.type','Type'),
+        #'type_id':fields.many2one('res.contact.relation.type','Type'), #should be correct
     }
 res_partner_relation()
 
+class res_partner_state(osv.osv):
+    _name = "res.partner.state"
+    _description = 'res.partner.state'
+    _columns = {
+        'name': fields.char('State',size=20),
+    }
+res_partner_state()
+
+class res_partner_state2(osv.osv):
+    _name = "res.partner.state2"
+    _description = 'res.partner.state2'
+    _columns = {
+        'name': fields.char('State2',size=20),
+    }
+res_partner_state2()
