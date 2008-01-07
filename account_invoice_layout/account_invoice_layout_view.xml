@@ -9,51 +9,38 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field[@name='name']" position="before">
-					<field name="state" select="1"/> <!--on_change="_onchange_invoice_line_view(type)" -->
+					<field name="state" select="1" on_change="_onchange_invoice_line_view(state)" />
 					<newline/>
 					<field name="sequence"/>
 				</xpath>
 			</field>
 		</record>
 
-<!--		<record model="ir.ui.view" id="view_invoice_line_form_inherit">
-			<field name="name">account.invoice.line.form.inherit_1</field>
-			<field name="model">account.invoice.line.abstract</field>
-			<field name="inherit_id" ref="account.view_invoice_line_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-				<xpath expr="/form/notebook/page/field[@name='name']" position="before">
-					<field name="state" select="1"/>--> <!--on_change="_onchange_invoice_line_view(type)" -->
-	<!--				<newline/>
-					<field name="sequence"/>
-				</xpath>
-			</field>
-		</record>
--->
 		<record model="ir.ui.view" id="view_invoice_line_tree_inherit">
 			<field name="name">account.invoice.line.tree.inherit_1</field>
-			<field name="model">account.invoice.line.abstract</field>
+			<field name="model">account.invoice.line</field>
 			<field name="inherit_id" ref="account.view_invoice_line_tree"/>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<xpath expr="/tree/field[@name='name']" position="before">
+					<field name="state" select="1"/>
 					<field name="sequence"/>
 				</xpath>
 			</field>
 		</record>
 
-<!--		<record model="ir.ui.view" id="account_invoice_form_inherit_1">
+		<record model="ir.ui.view" id="account_invoice_form_inherit_1">
 			<field name="name">account.invoice.form.inherit_1</field>
 			<field name="model">account.invoice</field>
 			<field name="inherit_id" ref="account.invoice_form"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<xpath expr="/form/notebook/page/field[@name='invoice_line']" position="before">
-					<field name="abstract_line_ids" colspan="4"/>
+				<xpath expr="/form/notebook/page/field[@name='invoice_line']" position="replace">
+					<field name="abstract_line_ids" colspan="4" nolabel="1"/>
 				</xpath>
 			</field>
 		</record>
--->
+
 
 	</data>
 </terp>
