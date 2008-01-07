@@ -171,10 +171,19 @@ class res_activity_code(osv.osv):
         'code': fields.char('Code',size=6),
         'name':fields.char('Name',size=250,transtale=True,required=True),
         'description':fields.text('Description'),
-        'code_relations':fields.many2many('res.activity.code','res_activity_code_rel','code_id1','code_id2','Related codes'), #should be correct
+        'code_relations':fields.many2many('res.activity.code','res_activity_code_rel','code_id1','code_id2','Related codes'),
         'partner_id':fields.many2one('res.partner','Partner'),
     }
 res_activity_code()
+
+class res_partner_activity_code(osv.osv):
+    _name = "res.partner.activity.code"
+    _description = 'res.partner.activity.code'
+    _columns = {
+        'importance': fields.char('Importance',size=10),
+        'activity_id':fields.many2one('res.activity.code','Activity'),#should be correct
+    }
+res_partner_activity_code()
 
 class res_partner_function(osv.osv):
     _inherit = 'res.partner.function'
