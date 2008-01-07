@@ -111,9 +111,8 @@ class node_class(object):
 				if self.object2:
 					return []
 
-			name_for = obj._name.rpartition('.')[2]
+			name_for = obj._name.split('.')[-1]
 			if nodename  and nodename.find(name_for) == 0  :
-				nodename = nodename.partition('.')[0]
 				id = int(nodename.replace(name_for,''))
 				where.append(('id','=',id))
 			elif nodename:
@@ -360,7 +359,7 @@ class document_file(osv.osv):
 
 	def create(self, cr, user, vals, context=None):
 		if not vals.has_key('datas'):
-			return super(ir_attachment,self).create(cr,user,vals,context)
+			return super(document_file,self).create(cr,user,vals,context)
 
 		path = os.getcwd()
 		if not "filestore" in os.listdir(path):
