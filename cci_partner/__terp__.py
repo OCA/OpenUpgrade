@@ -7,7 +7,7 @@
     "description": """
         specific module for cci project which will inherit partner module
     """,
-    "depends" : ["base"],
+    "depends" : ["base","cci_base_contact"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ['cci_partner_view.xml'],
