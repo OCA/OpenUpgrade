@@ -406,16 +406,16 @@ class tinyerp_handler(dav_interface):
 		data = base64.decodestring(node.object.datas)
 		ct = node.object.file_type
 		create_dir = False
-		dir_dst="http://localhost:8008/"
-		for d in dst.partition("8008/")[2].split('/'):
+		dir_dst=self.baseuri
+		for d in dst.replace(self.baseuri,'').split('/'):
 			dir_dst +=d+"/"
 			res_id = dir.search(cr,self.get_userid(AuthServer.UserName, AuthServer.PassWord),[('name','=',d)])
-			if not res_id and dir_dst.find('.')<0 :
+			if not res_id:
 				create_dir = True
 				self.mkcol(dir_dst)
 		cr.close()
 		if create_dir:
-			file = src.rpartition('/')[2]
+			file = src.split('/')[-1]
 			dst+="/"+file
 		self.put(dst, data, ct)
 		return 201
