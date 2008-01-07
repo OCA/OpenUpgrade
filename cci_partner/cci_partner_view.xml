@@ -149,5 +149,44 @@
 			<field name="view_type">form</field>
 		</record>
 
+
+<!-- view for res.partner.state -->
+		<record model="ir.ui.view" id="view_partner_state_form">
+			<field name="name">res.partner.state.form</field>
+			<field name="model">res.partner.state</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Activity State">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_state">
+			<field name="name">Activity State</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.state</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Partners/Configuration/States/Activity State" groups="admin" action="action_partner_state" id="menu_partner_state"/>
+
+<!-- view for res.partner.state2 -->
+		<record model="ir.ui.view" id="view_partner_state2_form">
+			<field name="name">res.partner.state2.form</field>
+			<field name="model">res.partner.state2</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Customer State">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_state2">
+			<field name="name">Customer State</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.state2</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Partners/Configuration/States/Customer State" groups="admin" action="action_partner_state2" id="menu_partner_state2"/>
+
 	</data>
 </terp>
