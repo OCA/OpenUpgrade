@@ -120,7 +120,7 @@ class res_partner_address(osv.osv):
     _description = 'res.partner.address'
     _columns = {
         'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
-        'zip_id':fields.many2one('res.partner.zip','Zip'),
+        'zip_id':fields.many2one('res.partner.zip','Zip'),#should be added to view ...
         'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be corect
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
@@ -139,12 +139,14 @@ class res_partner_address(osv.osv):
 
     def unlink(self, cr, uid, ids, context={}):
         #Unlink related contact if: no other Address AND not self_sufficient
-        data_address=self.pool.get('res.partner.address').browse(cr, uid, ids)
-        id_contact=data_address[0].contact_id.id
-        super(res_partner_address,self).unlink(cr, uid, ids,context=context)
-        data_contact=self.pool.get('res.partner.contact').browse(cr, uid,[id_contact])
-        if (not data_contact[0].self_sufficent)  and (not data_contact[0].address_ids):
-            self.pool.get('res.partner.contact').unlink(cr, uid,[data_contact[0].id], context)
+        data_addresses=self.pool.get('res.partner.address').browse(cr, uid, ids)
+        for address in data_addresses:
+            id_contact=address.contact_id.id
+            super(res_partner_address,self).unlink(cr, uid, ids,context=context)
+            data_contact=self.pool.get('res.partner.contact').browse(cr, uid,[id_contact])
+            for data in data_contact:
+                if (not data.self_sufficent)  and (not data.address_ids):
+                    self.pool.get('res.partner.contact').unlink(cr, uid,[data.id], context)
         return True
 
 res_partner_address()
@@ -154,7 +156,6 @@ class res_activity_code(osv.osv):
     _description = 'res.activity.code'
 
     def name_get(self, cr, uid, ids, context={}):
-        print "hello world"
         if not len(ids):
             return []
         reads = self.read(cr, uid, ids, ['code','name'], context)
@@ -180,7 +181,6 @@ class res_partner_function(osv.osv):
     _description = 'Function of the contact inherit'
 
     def name_get(self, cr, uid, ids, context={}):
-        print "hello world"
         if not len(ids):
             return []
         reads = self.read(cr, uid, ids, ['code','name'], context)
