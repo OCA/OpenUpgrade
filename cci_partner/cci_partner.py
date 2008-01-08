@@ -121,7 +121,8 @@ class res_partner_address(osv.osv):
     _columns = {
         'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
         'zip_id':fields.many2one('res.partner.zip','Zip'),#should be added to view ...
-        'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be corect
+        #'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be corect
+        'function_label':fields.char('Function Label',size=128),
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
         'sequence_partner':fields.integer('Sequence (Partner)',help='order of importance of this address in the list of addresses of the linked partner'),
