@@ -87,7 +87,7 @@ class res_partner_zip(osv.osv):
     _name = "res.partner.zip"
     _description = 'res.partner.zip'
     _columns = {
-        'name':fields.char('Zip Code',size=4),
+        'name':fields.char('Zip Code',size=4,required=True),
         'city':fields.char('City',size=60,traslate=True),
         'partner_id':fields.selection([('temp','temp')],'Master Cci'),
         'post_center_id':fields.char('Post Center',size=40),
@@ -102,7 +102,7 @@ class res_partner_zip_group_type(osv.osv):
      _name = "res.partner.zip.group.type"
      _description = 'res.partner.zip.group.type'
      _columns = {
-         'name':fields.char('Name',size=50),
+         'name':fields.char('Name',size=50,required=True),
                 }
 res_partner_zip_group_type()
 
@@ -111,7 +111,7 @@ class res_partner_zip_group(osv.osv):
      _description = 'res.partner.zip.group'
      _columns = {
          'type_id':fields.many2one('res.partner.zip.group.type','Type'),#should be correct
-         'name':fields.char('Name',size=50),
+         'name':fields.char('Name',size=50,required=True),
                 }
 res_partner_zip_group()
 
