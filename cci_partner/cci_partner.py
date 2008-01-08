@@ -110,7 +110,7 @@ class res_partner_zip_group(osv.osv):
      _name = "res.partner.zip.group"
      _description = 'res.partner.zip.group'
      _columns = {
-         'type_id':fields.many2one('res.partner.zip.group.type','Type'),#should be correct
+         'type_id':fields.many2one('res.partner.zip.group.type','Type'),
          'name':fields.char('Name',size=50,required=True),
                 }
 res_partner_zip_group()
@@ -230,3 +230,48 @@ class res_partner_state2(osv.osv):
         'name': fields.char('State2',size=20),
     }
 res_partner_state2()
+
+class res_partner_article(osv.osv):
+    _name = "res.partner.article"
+    _description = 'res.partner.article'
+    _columns = {
+        'article_id': fields.char('Article',size=20),#should be corect
+        'page':fields.char('Page',size=16),
+        'article_length':fields.float('Length'),
+        'picture':fields.boolean('Picture'),
+        'data':fields.boolean('Data'),
+        'graph':fields.boolean('Graph'),
+        'keywords_ids':fields.many2many('Keywords'),
+        'summary':fields.text('Summary'),
+        'partners_ids':fields.char('Partners',size=20),#should be corect
+        'contact_ids':fields.char('Contacts',size=20),#should be corect
+        'source_id':fields.char('Source',size=20),#should be corect
+        'date':fields.date('Date'),
+        'title':fields.char('Title',size=100),
+        'subtitle':fields.text('Subtitle'),
+        'press_review':fields.boolean('In the next press review',help='Must be inserted on the next press review'),
+        'canal_id':fields.char('Link',size=200,help='A text with or without a link incorporated'),
+    }
+    _defaults = {
+                 'press_review' : lambda *a: False,
+                 }
+res_partner_article()
+
+class res_partner_article_keywords(osv.osv):
+    _name = "res.partner.article.keywords"
+    _description = 'res.partner.article.keywords'
+    _columns = {
+        'name': fields.char('Name'),
+        'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles')
+    }
+res_partner_article_keywords()
+
+class res_partner_article_review(osv.osv):
+    _name = "res.partner.article.review"
+    _description = 'res.partner.article.review'
+    _columns = {
+        'name': fields.char('Name',size=50),
+        'date':fields.date('Date'),
+        'article_ids':fields.char('Articles',size=20),#should be corect
+    }
+res_partner_article_review()
