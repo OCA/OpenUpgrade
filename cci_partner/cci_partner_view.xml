@@ -271,7 +271,6 @@
 					<field name="name" select="1"/>
 					<field name="city"/>
 					<field name="post_center_id"/>
-					<field name="post_center_special"/>
 					<field name="distance"/>
 				</tree>
 			</field>
@@ -291,8 +290,8 @@
 			<field name="model">res.partner.zip.group</field>
 			<field name="arch" type="xml">
 				<form string="Zip Group">
-					<field name="type_id" select="1"/>
 					<field name="name"/>
+					<field name="type_id" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -302,8 +301,8 @@
 			<field name="model">res.partner.zip.group</field>
 			<field name="arch" type="xml">
 				<tree string="Zip Group">
-					<field name="type_id" select="1"/>
 					<field name="name"/>
+					<field name="type_id" select="1"/>
 				</tree>
 			</field>
 		</record>
