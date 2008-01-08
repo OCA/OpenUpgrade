@@ -72,7 +72,7 @@ class res_partner(osv.osv):
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
         'magazine_subscription':fields.boolean('Magazine subscription'),
-        'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation') #add for view
+        'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
@@ -93,7 +93,7 @@ class res_partner_zip(osv.osv):
         'post_center_id':fields.char('Post Center',size=40),
         'post_center_special':fields.boolean('Post Center Special'),
         'user_id':fields.many2one('res.users','User'),
-        'groups_id': fields.many2many('res.groups', 'partner_zip_group_rel', 'zip_id', 'group_id', 'Groups'),#should be corect ,may be res.partner.zip.group
+        'groups_id': fields.many2many('res.partner.zip.group', 'partner_zip_group_rel', 'zip_id', 'group_id', 'Groups'),
         'distance':fields.integer('Distance',help='Distance (km) between zip location and the cci.')
                 }
 res_partner_zip()
