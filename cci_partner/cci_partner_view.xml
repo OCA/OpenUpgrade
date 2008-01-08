@@ -243,6 +243,107 @@
 		</record>
 		<!--  menu & action is not defined -->
 
+
+<!-- view for res..partner.zip. ... -->
+		<record model="ir.ui.view" id="view_partner_zip_form">
+			<field name="name">res.partner.zip.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.zip</field>
+			<field name="arch" type="xml">
+				<form string="Partner Zip">
+					<field name="name" select="1"/>
+					<field name="city"/>
+					<field name="partner_id" select="2"/>
+					<field name="post_center_id"/>
+					<field name="post_center_special"/>
+					<field name="user_id"/>
+					<field name="groups_id"/>
+					<field name="distance"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_zip_tree">
+			<field name="name">res.partner.zip.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.zip</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Zip">
+					<field name="name" select="1"/>
+					<field name="city"/>
+					<field name="post_center_id"/>
+					<field name="post_center_special"/>
+					<field name="distance"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_zip">
+			<field name="name">Partner Zip</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.zip</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Partners/Configuration/Zip/Zip" action="action_partner_zip" id="menu_partner_zip"/>
+
+<!-- view for res.partner.zip.group -->
+		<record model="ir.ui.view" id="view_partner_zip_group_form">
+			<field name="name">res.partner.zip.group.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.zip.group</field>
+			<field name="arch" type="xml">
+				<form string="Zip Group">
+					<field name="type_id" select="1"/>
+					<field name="name"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_zip_group_tree">
+			<field name="name">res.partner.zip.group.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.zip.group</field>
+			<field name="arch" type="xml">
+				<tree string="Zip Group">
+					<field name="type_id" select="1"/>
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_zip_group">
+			<field name="name">Zip Group</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.zip.group</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Partners/Configuration/Zip/Zip Group" action="action_partner_zip_group" id="menu_partner_zip_group"/>
+
+<!-- view for res.partner.zip.group,type -->
+		<record model="ir.ui.view" id="view_partner_zip_group_type_form">
+			<field name="name">res.partner.zip.group.type.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.zip.group.type</field>
+			<field name="arch" type="xml">
+				<form string="Group Type">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_zip_group_type_tree">
+			<field name="name">res.partner.zip.group.type.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.zip.group.type</field>
+			<field name="arch" type="xml">
+				<tree string="Group Type">
+					<field name="name"  select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_zip_type_group">
+			<field name="name">Group Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.zip.group.type</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Partners/Configuration/Zip/Group Type" action="action_partner_zip_type_group" id="menu_partner_zip_group_type"/>
+
 	</data>
 </terp>
 
