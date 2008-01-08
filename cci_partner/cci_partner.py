@@ -231,6 +231,16 @@ class res_partner_state2(osv.osv):
     }
 res_partner_state2()
 
+
+class res_partner_article_keywords(osv.osv):
+    _name = "res.partner.article.keywords"
+    _description = 'res.partner.article.keywords'
+    _columns = {
+        'name': fields.char('Name',size=20),
+        'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles')
+    }
+res_partner_article_keywords()
+
 class res_partner_article(osv.osv):
     _name = "res.partner.article"
     _description = 'res.partner.article'
@@ -241,7 +251,7 @@ class res_partner_article(osv.osv):
         'picture':fields.boolean('Picture'),
         'data':fields.boolean('Data'),
         'graph':fields.boolean('Graph'),
-        'keywords_ids':fields.many2many('Keywords'),
+        'keywords_ids':fields.many2many('res.partner.article.keywords','article_id','keyword_id','Keywords'),
         'summary':fields.text('Summary'),
         'partners_ids':fields.char('Partners',size=20),#should be corect
         'contact_ids':fields.char('Contacts',size=20),#should be corect
@@ -256,15 +266,6 @@ class res_partner_article(osv.osv):
                  'press_review' : lambda *a: False,
                  }
 res_partner_article()
-
-class res_partner_article_keywords(osv.osv):
-    _name = "res.partner.article.keywords"
-    _description = 'res.partner.article.keywords'
-    _columns = {
-        'name': fields.char('Name'),
-        'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles')
-    }
-res_partner_article_keywords()
 
 class res_partner_article_review(osv.osv):
     _name = "res.partner.article.review"
