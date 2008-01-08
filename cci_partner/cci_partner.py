@@ -164,7 +164,7 @@ class res_activity_code(osv.osv):
         str1=''
         for record in reads:
             if record['name']:
-                str1=record['name']+' '+'-'+' '+record['code']
+                str1=record['name']+' '+'-'+' '+(record['code'] or '')
             res.append((record['id'], str1))
         return res
 
@@ -198,7 +198,7 @@ class res_partner_function(osv.osv):
         str1=''
         for record in reads:
             if record['name'] or record['code']:
-                str1=record['name']+'('+record['code']+')'
+                str1=record['name']+'('+(record['code'] or '')+')'
             res.append((record['id'], str1))
         return res
 res_partner_function()
