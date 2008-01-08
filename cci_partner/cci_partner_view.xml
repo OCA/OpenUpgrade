@@ -345,6 +345,104 @@
 		</record>
 		<menuitem name="Partners/Configuration/Zip/Group Type" action="action_partner_zip_type_group" id="menu_partner_zip_group_type"/>
 
+<!-- view for res.partner.article -->
+		<record model="ir.ui.view" id="view_partner_article_form">
+			<field name="name">res.partner.article.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.article</field>
+			<field name="arch" type="xml">
+				<form string="Partner Article">
+					<field name="article_id" select="1"/>
+					<field name="page" select="1"/>
+					<field name="article_length" select="1"/>
+					<field name="picture" select="1"/>
+					<field name="data" select="1"/>
+					<field name="graph" select="1"/>
+					<field name="keywords_ids" select="1"/>
+					<field name="summary" select="1"/>
+					<field name="partners_ids" />
+					<field name="contact_ids" />
+					<field name="source_id" />
+					<field name="date" />
+					<field name="title" select="1"/>
+					<field name="subtitle" select="1"/>
+					<field name="press_review"/>
+					<field name="canal_id"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_article_tree">
+			<field name="name">res.partner.article.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.article</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Article">
+					<field name="page" select="1"/>
+					<field name="article_length" select="1"/>
+					<field name="picture" select="1"/>
+					<field name="data" select="1"/>
+					<field name="graph" select="1"/>
+					<field name="summary" select="1"/>
+					<field name="date" />
+					<field name="title" select="1"/>
+					<field name="subtitle" select="1"/>
+					<field name="press_review"/>
+				</tree>
+			</field>
+		</record>
+		<!-- menu and action is not defined -->
+
+<!-- view for res.partner.article.keywords -->
+		<record model="ir.ui.view" id="view_partner_article_keywords_form">
+			<field name="name">res.partner.article.keywords.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.article.keywords</field>
+			<field name="arch" type="xml">
+				<form string="Partner Article Keywords">
+					<field name="name" select="1"/>
+					<field name="article_ids"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_article_keywords_tree">
+			<field name="name">res.partner.article.keywords.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.article.keywords</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Article Keywords">
+					<field name="name" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<!-- menu and action is not defined -->
+
+
+<!-- view for res.partner.article.review -->
+		<record model="ir.ui.view" id="view_partner_article_review_form">
+			<field name="name">res.partner.article.review.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.article.review</field>
+			<field name="arch" type="xml">
+				<form string="Article Review">
+					<field name="name" select="1"/>
+					<field name="date"/>
+					<field name="article_ids"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_article_review_tree">
+			<field name="name">res.partner.article.review.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.article.review</field>
+			<field name="arch" type="xml">
+				<tree string="Article Review">
+					<field name="name" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<!-- menu and action is not defined -->
+
+
 	</data>
 </terp>
 
