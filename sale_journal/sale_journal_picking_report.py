@@ -60,7 +60,7 @@ class report_sale_journal_invoice_type_stats(osv.osv):
 			create or replace view sale_journal_invoice_type_stats as (
 				select
 					min(l.id) as id,
-					substring(s.date for 7)||'-'||'01' as name,
+					to_char(s.date, 'YYYY-MM-01') as name,
 					s.state,
 					s.invoice_state,
 					s.invoice_type_id,
@@ -71,7 +71,7 @@ class report_sale_journal_invoice_type_stats(osv.osv):
 				from stock_picking s
 					right join stock_move l on (s.id=l.picking_id)
 					right join sale_order_line ol on (l.sale_line_id=ol.id)
-				group by s.invoice_type_id, substring(s.date for 7),s.state, s.invoice_state
+				group by s.invoice_type_id, to_char(s.date, 'YYYY-MM-01'),s.state, s.invoice_state
 				order by s.invoice_type_id, s.invoice_state, s.state
 			)
 		""")
@@ -103,7 +103,7 @@ class report_sale_journal_picking(osv.osv):
 			create or replace view sale_journal_picking_stats as (
 				select
 					min(l.id) as id,
-					substring(s.date for 7)||'-'||'01' as name,
+					to_char(s.date, 'YYYY-MM-01') as name,
 					s.state,
 					s.journal_id,
 					sum(l.product_qty) as quantity,
@@ -113,7 +113,7 @@ class report_sale_journal_picking(osv.osv):
 				from stock_picking s
 					right join stock_move l on (s.id=l.picking_id)
 					right join sale_order_line ol on (l.sale_line_id=ol.id)
-				group by s.journal_id, substring(s.date for 7),s.state
+				group by s.journal_id, to_char(s.date, 'YYYY-MM-01'),s.state
 			)
 		""")
 report_sale_journal_picking()

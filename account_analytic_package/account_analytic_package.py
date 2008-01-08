@@ -132,7 +132,7 @@ class account_analytic_line_package_month(osv.osv):
 			CREATE OR REPLACE VIEW account_analytic_line_package_month AS (
 				select
 					min(l.id) as id,
-					substring(l.date,0,8)||'-01' as name,
+					to_char(l.date, 'YYYY-MM-01') as name,
 					a.partner_id,
 					l.product_id,
 					sum(p.package_weight*l.unit_amount) as total_weight,
@@ -151,7 +151,7 @@ class account_analytic_line_package_month(osv.osv):
 				group by
 					l.product_id,
 					a.partner_id,
-					substring(l.date,0,8)
+					to_char(l.date, 'YYYY-MM-01')
 			)
 		""")
 	_columns ={

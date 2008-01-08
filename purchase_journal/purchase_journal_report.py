@@ -56,7 +56,7 @@ class report_purchase_journal_purchase(osv.osv):
 			create or replace view purchase_journal_purchase_stats as (
 				select
 					min(l.id) as id,
-					substring(s.date_order for 7)||'-'||'01' as name,
+					to_char(s.date_order, 'YYYY-MM-01') as name,
 					s.state,
 					s.journal_id,
 					sum(l.product_qty) as quantity,
@@ -65,7 +65,7 @@ class report_purchase_journal_purchase(osv.osv):
 					(sum(l.product_qty*l.price_unit)/sum(l.product_qty))::decimal(16,2) as price_average
 				from purchase_order s
 					right join purchase_order_line l on (s.id=l.order_id)
-				group by s.journal_id, substring(s.date_order for 7),s.state
+				group by s.journal_id, to_char(s.date_order, 'YYYY-MM-01'),s.state
 			)
 		""")
 report_purchase_journal_purchase()

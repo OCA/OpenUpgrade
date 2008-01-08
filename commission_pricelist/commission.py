@@ -23,7 +23,7 @@ class report_commission_month(osv.osv):
     def init(self, cr):
         print "In init of commision month ..";
         cr.execute(""" create or replace view report_commission_month as (select * from (select sg.id as id,sg.name as name,so.name as sono,ai.number as invno,
-    al.quantity as product_quantity,al.name as productname,(al.quantity * al.price_unit) as inv_total,substring(ai.date_invoice for 10) as in_date,
+    al.quantity as product_quantity,al.name as productname,(al.quantity * al.price_unit) as inv_total,to_char(ai.date_invoice, 'YYYY-MM-DD') as in_date,
     ((1-pi.price_discount)*100) as comrate,((al.quantity *al.price_unit)*(1-pi.price_discount))
               as commission,ai.state,'' as pdate
 from
@@ -46,7 +46,7 @@ UNION
 
 (
 select min(A.id) as id,A.name as name,S.name as sono,I.number as invno
-              ,L.quantity as product_quantity,L.name as productname,(L.quantity * L.price_unit) as inv_total,substring(I.date_invoice for 10) as in_date,
+              ,L.quantity as product_quantity,L.name as productname,(L.quantity * L.price_unit) as inv_total,to_char(I.date_invoice, 'YYYY-MM-DD') as in_date,
               ((1-R.price_discount)*100) as comrate,((L.quantity * L.price_unit)*(1-R.price_discount))
               as commission,I.state,AMR.name as pdate from
 

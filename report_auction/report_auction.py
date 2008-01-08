@@ -171,13 +171,13 @@ class report_auction_object_date(osv.osv):
             create or replace view report_auction_object_date as (
                 select
                    min(l.id) as id,
-                   substring(l.create_date for 10) as date,
+                   to_char(l.create_date, 'YYYY-MM-DD') as date,
                    sum(l.obj_num) as obj_num,
                    l.state as state
                 from
                     auction_lots l
                 group by
-                    substring(l.create_date for 10),l.id,l.state
+                    to_char(l.create_date, 'YYYY-MM-DD'),l.id,l.state
             )
         """)
 report_auction_object_date()
@@ -210,7 +210,7 @@ class report_auction_estimation_adj_category(osv.osv):
             create or replace view report_auction_estimation_adj_category as (
                 select
                     min(l.id) as id,
-                   substring(l.create_date for 7)||'-'||'01' as date,
+                   to_char(l.create_date, 'YYYY-MM-01') as date,
                    l.state as state,
                    l.lot_type as lot_type,
                    sum(l.lot_est1) as lot_est1,
@@ -220,7 +220,7 @@ class report_auction_estimation_adj_category(osv.osv):
                     auction_lots l,auction_dates m
                 where l.auction_id=m.id
                 group by
-                    substring(l.create_date for 7),l.state,lot_type
+                    to_char(l.create_date, 'YYYY-MM-01'),l.state,lot_type
             )
         """)
 report_auction_estimation_adj_category()

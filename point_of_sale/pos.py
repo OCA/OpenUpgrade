@@ -418,12 +418,12 @@ class report_transaction_pos(osv.osv):
   				  count(pp.id) as no_trans,
   				  sum(amount) as amount,
   				  pp.journal_id,
-  				  substring(pp.create_date for 10) as create_date,
+  				  to_char(pp.create_date, 'YYYY-MM-DD') as create_date,
   			      ps.user_id
  				from
   				  pos_payment pp left join pos_order ps on (ps.id = pp.order_id)
  				  group by
-  					pp.journal_id, pp.create_date, ps.user_id
+  					pp.journal_id, to_char(pp.create_date, 'YYYY-MM-DD'), ps.user_id
             )
         """)
 report_transaction_pos()

@@ -917,7 +917,7 @@ class report_buyer_auction(osv.osv):
 			select
 				min(al.id) as id,
 				al.ach_login as "buyer_login",
-				substring(al.create_date for 7) || '-01' as date,
+				to_char(al.create_date, 'YYYY-MM-01') as date,
 				al.ach_uid as "buyer",
 				ad.id as auction,
 				count(al.id) as "object",
@@ -929,7 +929,7 @@ class report_buyer_auction(osv.osv):
 			where
 				ad.id=al.auction_id
 			group by
-				substring(al.create_date for 7),
+				to_char(al.create_date, 'YYYY-MM-01'),
 				al.ach_uid,
 				ad.id,
 				al.ach_login
@@ -955,7 +955,7 @@ class report_buyer_auction2(osv.osv):
 			create or replace view report_buyer_auction2  as (
 				select
 					min(al.id) as id,
-					substring(al.create_date for 7) || '-01' as date,
+					to_char(al.create_date, 'YYYY-MM-01') as date,
 					al.ach_login as "buyer_login",
 					al.ach_uid as "buyer",
 					sum(al.obj_price) as sumadj,
@@ -972,7 +972,7 @@ class report_buyer_auction2(osv.osv):
 					al.ach_uid,
 					al.ach_login,
 					ad.id,
-					substring(al.create_date for 7)
+					to_char(al.create_date, 'YYYY-MM-01')
 			)''')
 report_buyer_auction2()
 
@@ -1143,15 +1143,15 @@ class report_auction_object_date(osv.osv):
 		cr.execute("""create or replace view report_auction_object_date as
 			(select
 			   min(l.id) as id,
-			   substring(l.create_date for 10) as name,
-			   substring(l.create_date for 7)|| '-01' as month,
+			   to_char(l.create_date, 'YYYY-MM-DD') as name,
+			   to_char(l.create_date, 'YYYY-MM-01') as month,
 			   count(l.obj_num) as obj_num,
 			   l.create_uid as user_id
 			from
 				auction_lots l
 			group by
-				substring(l.create_date for 10),
-				substring(l.create_date for 7),
+				to_char(l.create_date, 'YYYY-MM-DD'),
+				to_char(l.create_date, 'YYYY-MM-01'),
 				l.create_uid
 			)
 		""")
@@ -1177,7 +1177,7 @@ class report_auction_estimation_adj_category(osv.osv):
 			create or replace view report_auction_estimation_adj_category as (
 				select
 				   min(l.id) as id,
-				   substring(l.create_date for 7)||'-'||'01' as date,
+				   to_char(l.create_date, 'YYYY-MM-01') as date,
 				   l.lot_type as lot_type,
 				   sum(l.lot_est1) as lot_est1,
 				   sum(l.lot_est2) as lot_est2,
@@ -1188,7 +1188,7 @@ class report_auction_estimation_adj_category(osv.osv):
 				where
 					l.auction_id=m.id and l.obj_price >0
 				group by
-					 substring(l.create_date for 7),lot_type,l.create_uid
+					 to_char(l.create_date, 'YYYY-MM-01'),lot_type,l.create_uid
 			)
 		""")
 report_auction_estimation_adj_category()
@@ -1214,7 +1214,7 @@ class report_auction_adjudication(osv.osv):
 					l.id as id,
 					l.id as name,
 					sum(m.obj_price) as adj_total,
-				   	substring(l.create_date for 7)||'-'||'01' as date,
+				   	to_char(l.create_date, 'YYYY-MM-01') as date,
 					l.create_uid as user_id,
 					l.state
 				from
@@ -1222,7 +1222,7 @@ class report_auction_adjudication(osv.osv):
 					where
 						m.auction_id=l.id
 					group by
-						l.id,l.state,l.name,l.create_uid,substring(l.create_date for 7)
+						l.id,l.state,l.name,l.create_uid,to_char(l.create_date, 'YYYY-MM-01')
 
 			)
 		""")
@@ -1319,7 +1319,7 @@ class report_object_encoded(osv.osv):
 	def init(self, cr):
 		cr.execute('''create or replace view report_object_encoded  as
 			(select min(al.id) as id,
-				substring(al.create_date for 10) as date,
+				to_char(al.create_date, 'YYYY-MM-DD') as date,
 				al.state as state,
 				al.create_uid as user_id,
 				(SELECT count(1) FROM auction_lots WHERE obj_ret>0) as obj_ret,
@@ -1327,7 +1327,7 @@ class report_object_encoded(osv.osv):
 				COUNT(al.product_id) as obj_num
 			from auction_lots al
 			where al.obj_price>0 and state='draft'
-			group by substring(al.create_date for 10), al.state, al.create_uid)
+			group by to_char(al.create_date, 'YYYY-MM-DD'), al.state, al.create_uid)
 			 ''')
 report_object_encoded()
 
@@ -1351,7 +1351,7 @@ class report_object_encoded_manager(osv.osv):
 		cr.execute('''create or replace view report_object_encoded_manager  as
 			(select
 				min(al.id) as id,
-				substring(al.create_date for 10) as date,
+				to_char(al.create_date, 'YYYY-MM-DD') as date,
 				al.create_uid as user_id,
 				sum((100*lot_est1)/obj_price) as estimation,
 				(SELECT count(1) FROM auction_lots WHERE obj_ret>0) as obj_ret,
@@ -1362,7 +1362,7 @@ class report_object_encoded_manager(osv.osv):
 				SUM(al.obj_price) as "adj"
 			from auction_lots al
 			where al.obj_price>0
-			group by substring(al.create_date for 10), al.create_uid)
+			group by to_char(al.create_date, 'YYYY-MM-DD'), al.create_uid)
 			 ''')
 report_object_encoded_manager()
 

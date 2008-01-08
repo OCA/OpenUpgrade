@@ -125,7 +125,7 @@ class report_custom(report_int):
 
 		data = []
 		for date in dates_list:
-			cr.execute(("SELECT create_uid,count(*) FROM %s WHERE (substring(create_date,0,11) BETWEEN '%s' AND '%s') and id in ("+','.join(map(str,datas['users_id']))+") GROUP BY create_uid") % (datas['model'].replace('.','_'), dates[date]['start'], dates[date]['stop']))
+			cr.execute(("SELECT create_uid,count(*) FROM %s WHERE (to_char(create_date, 'YYYY-MM-DD') BETWEEN '%s' AND '%s') and id in ("+','.join(map(str,datas['users_id']))+") GROUP BY create_uid") % (datas['model'].replace('.','_'), dates[date]['start'], dates[date]['stop']))
 			res = dict(cr.fetchall())
 
 			vals = [dates[date]['name']]

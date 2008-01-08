@@ -46,7 +46,7 @@ class  report_timesheet_user_user(osv.osv):
 		create or replace view report_timesheet_user_user as (
 			select
 				min(l.id) as id,
-				substring(l.date for 7)||'-'||'01' as name,
+				to_char(l.date, 'YYYY-MM-01') as name,
 				u.company_id as user_company_id,
 				u.id as user_id,
 				a.company_id as company_id,
@@ -57,7 +57,7 @@ class  report_timesheet_user_user(osv.osv):
 				  left join account_analytic_line l on (t.line_id=l.id)
 				  left join res_users u on (l.user_id=u.id)
 				  left join account_analytic_account a on (l.account_id=a.id)
-				  group by substring(l.date for 7)||'-'||'01', u.company_id,a.company_id,u.id
+				  group by to_char(l.date, 'YYYY-MM-01'), u.company_id,a.company_id,u.id
 		)
 	   """)
 report_timesheet_user_user()
@@ -80,7 +80,7 @@ class  report_timesheet_user (osv.osv):
 		create or replace view report_timesheet_user as (
 			select
 				min(l.id) as id,
-				substring(l.date for 7)||'-'||'01' as name,
+				to_char(l.date, 'YYYY-MM-01') as name,
 				u.company_id as user_company_id,
 				a.company_id as company_id,
 				sum(amount) as total_cost,
@@ -90,7 +90,7 @@ class  report_timesheet_user (osv.osv):
 				  left join account_analytic_line l on (t.line_id=l.id)
 				  left join res_users u on (l.user_id=u.id)
 				  left join account_analytic_account a on (l.account_id=a.id)
-				  group by substring(l.date for 7)||'-'||'01', u.company_id,a.company_id
+				  group by to_char(l.date, 'YYYY-MM-01'), u.company_id,a.company_id
 		)
 	   """)
 report_timesheet_user()

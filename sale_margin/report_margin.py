@@ -64,7 +64,7 @@ class report_account_invoice_product(osv.osv):
 			create or replace view report_account_invoice_product as (
 				select
 					min(l.id) as id,
-					substring(i.date_invoice for 7) || '-' || '01' as name,
+					to_char(i.date_invoice, 'YYYY-MM-01') as name,
 					i.type,
 					i.state,
 					l.product_id,
@@ -74,7 +74,7 @@ class report_account_invoice_product(osv.osv):
 					sum(l.quantity) as quantity
 				from account_invoice i
 					left join account_invoice_line l on (i.id = l.invoice_id)
-				group by l.product_id, substring(i.date_invoice for 7), i.type, i.state
+				group by l.product_id, to_char(i.date_invoice, 'YYYY-MM-01'), i.type, i.state
 			)
 		""")
 report_account_invoice_product()
@@ -109,7 +109,7 @@ class report_account_invoice_category(osv.osv):
 			create or replace view report_account_invoice_category as (
 				select
 					min(l.id) as id,
-					substring(i.date_invoice for 7) || '-' || '01' as name,
+					to_char(i.date_invoice, 'YYYY-MM-01') as name,
 					i.type,
 					i.state,
 					t.categ_id,
@@ -121,7 +121,7 @@ class report_account_invoice_category(osv.osv):
 					left join account_invoice_line l on (i.id = l.invoice_id)
 					left join product_product p on (p.id = l.product_id)
 					left join product_template t on (t.id = p.product_tmpl_id)
-				group by t.categ_id, substring(i.date_invoice for 7), i.type, i.state
+				group by t.categ_id, to_char(i.date_invoice, 'YYYY-MM-01'), i.type, i.state
 			)
 		""")
 report_account_invoice_category()
@@ -156,7 +156,7 @@ class report_account_invoice_partner(osv.osv):
 			create or replace view report_account_invoice_partner as (
 				select
 					min(l.id) as id,
-					substring(i.date_invoice for 7) || '-' || '01' as name,
+					to_char(i.date_invoice, 'YYYY-MM-01') as name,
 					i.type,
 					i.state,
 					i.partner_id,
@@ -166,7 +166,7 @@ class report_account_invoice_partner(osv.osv):
 					sum(l.quantity) as quantity
 				from account_invoice i
 					left join account_invoice_line l on (i.id = l.invoice_id)
-				group by i.partner_id, substring(i.date_invoice for 7), i.type, i.state
+				group by i.partner_id, to_char(i.date_invoice, 'YYYY-MM-01'), i.type, i.state
 			)
 		""")
 report_account_invoice_partner()
@@ -202,7 +202,7 @@ class report_account_invoice_partner_product(osv.osv):
 			create or replace view report_account_invoice_partner_product as (
 				select
 					min(l.id) as id,
-					substring(i.date_invoice for 7) || '-' || '01' as name,
+					to_char(i.date_invoice, 'YYYY-MM-01') as name,
 					i.type,
 					i.state,
 					i.partner_id,
@@ -213,7 +213,7 @@ class report_account_invoice_partner_product(osv.osv):
 					sum(l.quantity) as quantity
 				from account_invoice i
 					left join account_invoice_line l on (i.id = l.invoice_id)
-				group by i.partner_id, l.product_id, substring(i.date_invoice for 7), i.type, i.state
+				group by i.partner_id, l.product_id, to_char(i.date_invoice, 'YYYY-MM-01'), i.type, i.state
 			)
 		""")
 report_account_invoice_partner_product()
@@ -248,7 +248,7 @@ class report_account_invoice(osv.osv):
 			create or replace view report_account_invoice as (
 				select
 					min(l.id) as id,
-					substring(i.date_invoice for 7) || '-' || '01' as name,
+					to_char(i.date_invoice, 'YYYY-MM-01') as name,
 					i.type,
 					i.state,
 					sum(l.quantity * l.price_unit * (1.0 - l.discount/100.0)) as amount,
@@ -257,7 +257,7 @@ class report_account_invoice(osv.osv):
 					sum(l.quantity) as quantity
 				from account_invoice i
 					left join account_invoice_line l on (i.id = l.invoice_id)
-				group by substring(i.date_invoice for 7), i.type, i.state
+				group by to_char(i.date_invoice, 'YYYY-MM-01'), i.type, i.state
 			)
 		""")
 report_account_invoice()
