@@ -17,6 +17,18 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_partner_form_inherit3">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="zip" position="replace"><!-- replace zip with zip_id -->
+			    	<field name="zip_id"/>
+				</field>
+			</field>
+		</record>
+
 		<record model="ir.ui.view" id="view_partner_form_inherit2">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
@@ -100,7 +112,6 @@
 						<field name="alert_membership"/>
 						<field name="alert_others"/>
 					</page>
-
 				</notebook>
 			</field>
 		</record>
@@ -124,7 +135,7 @@
 					<field name="type" select="1"/>
 					<field name="street" select="1"/>
 					<field name="street2" select="1"/>
-					<field name="zip" select="1"/>
+					<field name="zip_id" select="1"/> <!-- replace zip with zip_id -->
 					<field name="city" select="1"/>
 					<field name="country_id"/>
 					<field name="state_id"/>
