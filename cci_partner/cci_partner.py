@@ -41,7 +41,7 @@ class res_partner(osv.osv):
         'state_id2':fields.char('Customer State',size=20,help='status of the partner as a customer'),#should be corect
 
         'activity_description':fields.text('Activity Description',traslate=True),
-        'activity_code_ids':fields.one2many('res.activity.code','partner_id','Activity Codes'),
+        'activity_code_ids':fields.one2many('res.partner.activity','partner_id','Activity Codes'),
 
         'export_procent':fields.integer('Export(%)'),
         'export_year':fields.date('Export date',help='year of the export_procent value'),
@@ -152,39 +152,63 @@ class res_partner_address(osv.osv):
 
 res_partner_address()
 
-class res_activity_code(osv.osv):
-    _name = "res.activity.code"
-    _description = 'res.activity.code'
+class res_partner_activity_list(osv.osv):#new object added!
+    _name = "res.partner.activity.list"
+    _description = 'res.partner.activity.list'
+    _columns = {
+        'name': fields.char('Code list',size=256,required=True),
+        'abbreviation':fields.char('Abbreviation',size=16),
+    }
+res_partner_activity_list()
+
+class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.activity
+    _name = "res.partner.activity"
+    _description = 'res.partner.activity'
 
     def name_get(self, cr, uid, ids, context={}):
+        #return somethong like”list_id.abbreviation or list_id.name – code”
         if not len(ids):
             return []
-        reads = self.read(cr, uid, ids, ['code','name'], context)
+        data_activity = self.read(cr, uid, ids, ['list_id','code'], context)
         res = []
-        str1=''
-        for record in reads:
-            if record['name']:
-                str1=record['name']+' '+'-'+' '+(record['code'] or '')
-            res.append((record['id'], str1))
+        list_obj = self.pool.get('res.partner.activity.list')
+        for read in data_activity:
+            if read['list_id']:
+                data=list_obj.read(cr, uid, read['list_id'][0],['abbreviation','name'], context)
+                if data['abbreviation']:
+                    res.append((read['id'], data['abbreviation']))
+                else:
+                    str=data['name']+'-'+read['code']
+                    res.append((read['id'],str))
         return res
-
     _columns = {
         'code': fields.char('Code',size=6),
         'name':fields.char('Name',size=250,transtale=True,required=True),
         'description':fields.text('Description'),
-        'code_relations':fields.many2many('res.activity.code','res_activity_code_rel','code_id1','code_id2','Related codes'),
+        'code_relations':fields.many2many('res.partner.activity','res_activity_code_rel','code_id1','code_id2','Related codes'),
         'partner_id':fields.many2one('res.partner','Partner'),
+        'list_id':fields.many2one('res.partner.activity.list','List',required=True)
     }
-res_activity_code()
+res_partner_activity()
 
-class res_partner_activity_code(osv.osv):
-    _name = "res.partner.activity.code"
-    _description = 'res.partner.activity.code'
+#object removed ...
+#class res_partner_activity_code(osv.osv):
+#    _name = "res.partner.activity.code"
+#    _description = 'res.partner.activity.code'
+#    _columns = {
+#        'importance': fields.char('Importance',size=10),
+#        'activity_id':fields.many2one('res.activity.code','Activity'),#should be correct
+#    }
+#res_partner_activity_code()
+
+class res_partner_activity_relation(osv.osv):#new object added!
+    _name = "res.partner.activity.relation"
+    _description = 'res.partner.activity.relation'
     _columns = {
-        'importance': fields.char('Importance',size=10),
-        'activity_id':fields.many2one('res.activity.code','Activity'),#should be correct
+        'importance': fields.selection([('main','Main'),('primary','Primary'),('secondary','Secondary')],'Importance'),
+        'activity_id':fields.many2one('res.partner.activity','Activity'),
     }
-res_partner_activity_code()
+res_partner_activity_relation()
 
 class res_partner_function(osv.osv):
     _inherit = 'res.partner.function'
@@ -227,7 +251,7 @@ class res_partner_state2(osv.osv):
     _name = "res.partner.state2"
     _description = 'res.partner.state2'
     _columns = {
-        'name': fields.char('State2',size=20),
+        'name': fields.char('State2',size=20,required=True),
     }
 res_partner_state2()
 
@@ -236,7 +260,7 @@ class res_partner_article_keywords(osv.osv):
     _name = "res.partner.article.keywords"
     _description = 'res.partner.article.keywords'
     _columns = {
-        'name': fields.char('Name',size=20),
+        'name': fields.char('Name',size=20,required=True),
         'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles')
     }
 res_partner_article_keywords()
