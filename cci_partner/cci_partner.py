@@ -83,20 +83,6 @@ class res_partner(osv.osv):
                  }
 res_partner()
 
-class res_partner_zip(osv.osv):
-    _name = "res.partner.zip"
-    _description = 'res.partner.zip'
-    _columns = {
-        'name':fields.char('Zip Code',size=4,required=True),
-        'city':fields.char('City',size=60,traslate=True),
-        'partner_id':fields.selection([('temp','temp')],'Master Cci'),
-        'post_center_id':fields.char('Post Center',size=40),
-        'post_center_special':fields.boolean('Post Center Special'),
-        'user_id':fields.many2one('res.users','User'),
-        'groups_id': fields.many2many('res.partner.zip.group', 'partner_zip_group_rel', 'zip_id', 'group_id', 'Groups'),
-        'distance':fields.integer('Distance',help='Distance (km) between zip location and the cci.')
-                }
-res_partner_zip()
 
 class res_partner_zip_group_type(osv.osv):
      _name = "res.partner.zip.group.type"
@@ -114,6 +100,41 @@ class res_partner_zip_group(osv.osv):
          'name':fields.char('Name',size=50,required=True),
                 }
 res_partner_zip_group()
+
+class res_partner_zip(osv.osv):
+    _name = "res.partner.zip"
+    _description = 'res.partner.zip'
+    def check_group_type(self, cr, uid, ids):
+        data=self.browse(cr, uid, ids)
+        for id in ids:
+            sql = '''
+            select group_id from partner_zip_group_rel1 where zip_id=%d
+            ''' % (id)
+            cr.execute(sql)
+            groups = cr.fetchall()
+        list_group=[]
+        for group in groups:
+            list_group.append(group[0])
+        data_zip = self.pool.get('res.partner.zip.group').browse(cr, uid,list_group)
+        list_zip=[]
+        for data in data_zip:
+            if data.type_id.id in list_zip:
+                return False
+            list_zip.append(data.type_id.id)
+        return True
+
+    _constraints = [(check_group_type, 'Error: Only one group of the same group type is allowed!', [])]
+    _columns = {
+        'name':fields.char('Zip Code',size=4,required=True),
+        'city':fields.char('City',size=60,traslate=True),
+        'partner_id':fields.selection([('temp','temp')],'Master Cci'),
+        'post_center_id':fields.char('Post Center',size=40),
+        'post_center_special':fields.boolean('Post Center Special'),
+        'user_id':fields.many2one('res.users','User'),
+        'groups_id': fields.many2many('res.partner.zip.group', 'partner_zip_group_rel1', 'zip_id', 'group_id', 'Groups'),
+        'distance':fields.integer('Distance',help='Distance (km) between zip location and the cci.')
+                }
+res_partner_zip()
 
 class res_partner_address(osv.osv):
     _inherit = "res.partner.address"
@@ -190,16 +211,6 @@ class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.act
         'list_id':fields.many2one('res.partner.activity.list','List',required=True)
     }
 res_partner_activity()
-
-#object removed ...
-#class res_partner_activity_code(osv.osv):
-#    _name = "res.partner.activity.code"
-#    _description = 'res.partner.activity.code'
-#    _columns = {
-#        'importance': fields.char('Importance',size=10),
-#        'activity_id':fields.many2one('res.activity.code','Activity'),#should be correct
-#    }
-#res_partner_activity_code()
 
 class res_partner_activity_relation(osv.osv):#new object added!
     _name = "res.partner.activity.relation"
