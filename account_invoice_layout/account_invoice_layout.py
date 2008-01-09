@@ -4,75 +4,27 @@ from osv import fields,osv
 class account_invoice_line(osv.osv):
 
 	def fields_get(self, cr, uid, fields=None, context=None):
+		article = {
+			'article': [('readonly', False), ('invisible', False)],
+			'text': [('readonly', True), ('invisible', True), ('required', False)],
+			'subtotal': [('readonly', True), ('invisible', True), ('required', False)],
+			'title': [('readonly', True), ('invisible', True)],
+			'break': [('readonly', True), ('invisible', True)],
+			'line': [('readonly', True), ('invisible', True)],
+		}
 		states = {
 			'name': {
 				'break': [('readonly', True),('required', True)],
 				'line': [('readonly', True),('required', True)],
 				},
-			'product_id': {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True)],
-				'break': [('readonly', True)],
-				'line': [('readonly', True)],
-				},
-			'account_id': {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True), ('required', False)],
-				'break': [('readonly', True), ('required', False)],
-				'line': [('readonly', True), ('required', False)],
-				},
-			'quantity': {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True), ('required', False)],
-				'break': [('readonly', True), ('required', False)],
-				'line': [('readonly', True), ('required', False)],
-				},
-			'uos_id': {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True), ('required', False)],
-				'break': [('readonly', True), ('required', False)],
-				'line': [('readonly', True), ('required', False)],
-				},
-			'price_unit': {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True), ('required', False)],
-				'break': [('readonly', True), ('required', False)],
-				'line': [('readonly', True), ('required', False)],
-				},
-			'discount': {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True), ('required', False)],
-				'break': [('readonly', True), ('required', False)],
-				'line': [('readonly', True), ('required', False)],
-				},
-			'invoice_line_tax_id': {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True), ('required', False)],
-				'break': [('readonly', True), ('required', False)],
-				'line': [('readonly', True), ('required', False)],
-				},
-			'account_analytic_id':  {
-				'article': [('readonly', False)],
-				'text': [('readonly', True), ('required', False)],
-				'subtotal': [('readonly', True), ('required', False)],
-				'title': [('readonly', True), ('required', False)],
-				'break': [('readonly', True), ('required', False)],
-				'line': [('readonly', True), ('required', False)],
-				},
+			'product_id': article,
+			'account_id': article,
+			'quantity': article,
+			'uos_id': article,
+			'price_unit': article,
+			'discount': article,
+			'invoice_line_tax_id': article,
+			'account_analytic_id': article,
 		}
 		res = super(account_invoice_line, self).fields_get(cr, uid, fields, context)
 		for field in res:
@@ -109,37 +61,34 @@ class account_invoice_line(osv.osv):
 		return {}
 
 	def create(self, cr, user, vals, context=None):
-		if vals['state'] == 'line':
-			vals['name'] = '-----------------------------------------'
-		if vals['state'] == 'break':
-			vals['name'] = 'PAGE BREAK'
-		if vals['state'] != 'article':
-			vals['quantity']= 0
+		if vals.has_key('state'):
+			if vals['state'] == 'line':
+				vals['name'] = '-----------------------------------------'
+			if vals['state'] == 'break':
+				vals['name'] = 'PAGE BREAK'
+			if vals['state'] != 'article':
+				vals['quantity']= 0
 		return super(account_invoice_line, self).create(cr, user, vals, context)
 
 	def write(self, cr, user, ids, vals, context=None):
-		print vals
-		print ids
-		for id in ids:
-			if vals.has_key('state'):
-				if vals['state'] != 'article':
-					vals['product_id']= False
-					vals['uos_id']= False
-					vals['account_id']= self._default_account(cr, user, None)
-					vals['price_unit']= False
-					vals['price_subtotal']= False
-					vals['quantity']= 0
-					vals['discount']= False
-					vals['invoice_line_tax_id']= False
-					vals['account_analytic_id']= False
-				if vals['state'] == 'line':
-					vals['name'] = '-----------------------------------------'
-				if vals['state'] == 'break':
-					vals['name'] = 'PAGE BREAK'
-				if vals['state'] == 'subtotal':
-					vals['name'] = 'Sub Total'
-			return super(account_invoice_line, self).write(cr, user, id, vals, context)
-		return True
+		if vals.has_key('state'):
+			if vals['state'] != 'article':
+				vals['product_id']= False
+				vals['uos_id']= False
+				vals['account_id']= self._default_account(cr, user, None)
+				vals['price_unit']= False
+				vals['price_subtotal']= False
+				vals['quantity']= 0
+				vals['discount']= False
+				vals['invoice_line_tax_id']= False
+				vals['account_analytic_id']= False
+			if vals['state'] == 'line':
+				vals['name'] = '-----------------------------------------'
+			if vals['state'] == 'break':
+				vals['name'] = 'PAGE BREAK'
+			if vals['state'] == 'subtotal':
+				vals['name'] = 'Sub Total'
+		return super(account_invoice_line, self).write(cr, user, ids, vals, context)
 
 	_name = "account.invoice.line"
 	_order = "invoice_id, sequence asc"
@@ -154,17 +103,12 @@ class account_invoice_line(osv.osv):
 				('break','Page Break'),
 				('line','Line'),]
 			,'Type', select=True),
-
-
 		'sequence': fields.integer('Sequence Number'),
-
 	}
-
 	def _default_account(self, cr, uid, context=None):
 		cr.execute("select id from account_account where code = 0 LIMIT 1")
 		res=cr.fetchone()
 		return res[0]
-
 	_defaults = {
 		'state': lambda *a: 'article',
 		'account_id': _default_account
