@@ -57,6 +57,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.aVariableList=[]
         # Call method to perform Enumration on Report Document
         EnumDocument(self.aItemList,self.aComponentAdd)
+        print self.aItemList
+        print self.aComponentAdd
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
         # filled if condition is true
         desktop=getDesktop()
@@ -138,7 +140,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 #                    self.win.setEditText("txtUName",sDisplayName)
 
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
-            print self.aVariableList
             for var in self.aVariableList:
                 sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
                 if var.__getslice__(0,8)<>'List of ':

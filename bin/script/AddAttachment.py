@@ -25,7 +25,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         docinfo=oDoc2.getDocumentInfo()
         if docinfo.getUserFieldValue(2) <> "" and docinfo.getUserFieldValue(3) <> "":
             self.win = DBModalDialog(60, 50, 180, 70, "Add Attachment to Server")
-            self.win.addFixedText("lblResourceType", 2 , 5, 100, 20, "Select Appropriate Resource Type:")
+            self.win.addFixedText("lblResourceType", 2 , 5, 100, 10, "Select Appropriate Resource Type:")
             self.win.addComboListBox("lstResourceType", -2, 25, 176, 15,True,itemListenerProc=self.lstbox_selected)
             self.lstResourceType = self.win.getControl( "lstResourceType" )
             self.lstResourceType.addItem("pdf",0)
@@ -65,7 +65,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-            self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 20, "Search Result:")
+            self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 10, "Search Result:")
             self.win.addComboListBox("lstResource", -2, 65, 176, 70, False, itemListenerProc=self.lstbox_selected)
             self.lstResource = self.win.getControl( "lstResource" )
 

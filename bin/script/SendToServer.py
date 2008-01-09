@@ -102,11 +102,17 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 if not oDoc2.hasLocation():
                     oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                print 1
                 if docinfo.getUserFieldValue(2)=="":
+                    print 2
                     id=self.getID()
+                    print 3
                     docinfo.setUserFieldValue(2,id)
+                    print 4
                     rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
+                    print 5
                     res=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
+                    print 6
                 else:
                     id = docinfo.getUserFieldValue(2)
                     vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
@@ -142,20 +148,20 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-
+        print 11
         res = {}
-
+        print 12
         res['name'] =self.win.getEditText("txtName")
-
+        print 13
         res['model'] =docinfo.getUserFieldValue(3)
-
+        print 14
         res['report_name'] =self.win.getEditText("txtReportName")
-
+        print 15
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-
+        print 16,res
         id=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
-
+        print 17
         return id
 
     def getInverseFieldsRecord(self,nVal):

@@ -37,9 +37,10 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         docinfo=  doc.getDocumentInfo()
         count = 0
         regexes = [
+                  ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"],
                   ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
-                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                  ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"]
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"]
+
 #                  ['\\[\\[ ([a-zA-Z0-9_]+\.[a-zA-Z1-9]) \\]\\]',"Field"],
 #                  ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
 #                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],

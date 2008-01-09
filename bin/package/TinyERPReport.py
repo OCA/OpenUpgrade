@@ -212,26 +212,48 @@ def getPath(sPath,sMain):
 
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
+    parent=""
     Doc =desktop.getCurrentComponent()
     #oVC = Doc.CurrentController.getViewCursor()
-    oParEnum = Doc.getText().createEnumeration()
+    oParEnum = Doc.getTextFields().createEnumeration()
     while oParEnum.hasMoreElements():
         oPar = oParEnum.nextElement()
-        if oPar.supportsService("com.sun.star.text.TextTable"):
-            getChildTable(oPar,aItemList,aComponentAdd)
-        if oPar.supportsService("com.sun.star.text.Paragraph"):
-            oSecEnum = oPar.createEnumeration()
-            while oSecEnum.hasMoreElements():
-                oSubSection = oSecEnum.nextElement()
-                if oSubSection.TextSection:
-                    if oSubSection.TextField:
-                        aItemList.append( oSubSection.TextField.Items )
-                        aComponentAdd.append(oSubSection.TextSection.Name)
-                elif oPar.getAnchor().TextField:
-                    sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
-                    if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-                        aItemList.append(oSubSection.TextField.Items )
-                        aComponentAdd.append("Document")
+        if oPar.Anchor.TextTable:
+            #parent = oPar.Anchor.TextTable.Name
+            getChildTable(oPar.Anchor.TextTable,aItemList,aComponentAdd)
+        elif oPar.Anchor.TextSection:
+            parent = oPar.Anchor.TextSection.Name
+        elif oPar.Anchor.Text:
+            parent = "Document"
+        sItem=oPar.Items.__getitem__(1)
+        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+            aItemList.append(oPar.Items )
+            aComponentAdd.append(parent)
+            #getChildTable(oPar,aItemList,aComponentAdd)
+#    print dir(Doc)
+#    print dir(Doc.getText())
+#    print Doc.getTextTables().Types
+#    oParEnum = Doc.getText().createEnumeration()
+#    while oParEnum.hasMoreElements():
+#        oPar = oParEnum.nextElement()
+#        if oPar.supportsService("com.sun.star.text.TextTable"):
+#            getChildTable(oPar,aItemList,aComponentAdd)
+#        if oPar.supportsService("com.sun.star.text.Paragraph"):
+#            oSecEnum = oPar.createEnumeration()
+#            while oSecEnum.hasMoreElements():
+#                oSubSection = oSecEnum.nextElement()
+#                if oSubSection.TextSection:
+#                    if oSubSection.TextField:
+#                        aItemList.append( oSubSection.TextField.Items )
+#                        aComponentAdd.append(oSubSection.TextSection.Name)
+#                elif oSubSection.getAnchor().TextField:
+#                    print oSubSection.getAnchor().TextField.Items
+#                    if oSubSection.getAnchor().supportsService("com.sun.star.text.TextField.DropDown"):
+#                        #print oPar.getAnchor().TextField
+#                        sItem=oSubSection.getAnchor().TextField.Items.__getitem__(1)
+#                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+#                            aItemList.append(oSubSection.TextField.Items )
+#                            aComponentAdd.append("Document")
 
 def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     sNames = oPar.getCellNames()
@@ -1207,6 +1229,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.aVariableList=[]
         # Call method to perform Enumration on Report Document
         EnumDocument(self.aItemList,self.aComponentAdd)
+        print self.aItemList
+        print self.aComponentAdd
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
         # filled if condition is true
         desktop=getDesktop()
@@ -1288,7 +1312,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 #                    self.win.setEditText("txtUName",sDisplayName)
 
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
-            print self.aVariableList
             for var in self.aVariableList:
                 sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
                 if var.__getslice__(0,8)<>'List of ':
@@ -1914,6 +1937,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 uid=UID
                 #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
                 #docinfo.setUserFieldValue(3,"")
+                ErrorDialog(" You can start creating your report in \nthe current document.","Take care to save it as a .SXW file \nbefore sending to the server.")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -2316,11 +2340,17 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 if not oDoc2.hasLocation():
                     oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                print 1
                 if docinfo.getUserFieldValue(2)=="":
+                    print 2
                     id=self.getID()
+                    print 3
                     docinfo.setUserFieldValue(2,id)
+                    print 4
                     rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
+                    print 5
                     res=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
+                    print 6
                 else:
                     id = docinfo.getUserFieldValue(2)
                     vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
@@ -2356,20 +2386,20 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-
+        print 11
         res = {}
-
+        print 12
         res['name'] =self.win.getEditText("txtName")
-
+        print 13
         res['model'] =docinfo.getUserFieldValue(3)
-
+        print 14
         res['report_name'] =self.win.getEditText("txtReportName")
-
+        print 15
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-
+        print 16,res
         id=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
-
+        print 17
         return id
 
     def getInverseFieldsRecord(self,nVal):
@@ -2518,9 +2548,10 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         docinfo=  doc.getDocumentInfo()
         count = 0
         regexes = [
+                  ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"],
                   ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
-                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
-                  ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"]
+                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"]
+
 #                  ['\\[\\[ ([a-zA-Z0-9_]+\.[a-zA-Z1-9]) \\]\\]',"Field"],
 #                  ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
 #                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
@@ -2880,7 +2911,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         docinfo=oDoc2.getDocumentInfo()
         if docinfo.getUserFieldValue(2) <> "" and docinfo.getUserFieldValue(3) <> "":
             self.win = DBModalDialog(60, 50, 180, 70, "Add Attachment to Server")
-            self.win.addFixedText("lblResourceType", 2 , 5, 100, 20, "Select Appropriate Resource Type:")
+            self.win.addFixedText("lblResourceType", 2 , 5, 100, 10, "Select Appropriate Resource Type:")
             self.win.addComboListBox("lstResourceType", -2, 25, 176, 15,True,itemListenerProc=self.lstbox_selected)
             self.lstResourceType = self.win.getControl( "lstResourceType" )
             self.lstResourceType.addItem("pdf",0)
@@ -2920,7 +2951,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search'
                       ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-            self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 20, "Search Result:")
+            self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 10, "Search Result:")
             self.win.addComboListBox("lstResource", -2, 65, 176, 70, False, itemListenerProc=self.lstbox_selected)
             self.lstResource = self.win.getControl( "lstResource" )
 

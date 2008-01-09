@@ -133,26 +133,48 @@ def getPath(sPath,sMain):
 
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
+    parent=""
     Doc =desktop.getCurrentComponent()
     #oVC = Doc.CurrentController.getViewCursor()
-    oParEnum = Doc.getText().createEnumeration()
+    oParEnum = Doc.getTextFields().createEnumeration()
     while oParEnum.hasMoreElements():
         oPar = oParEnum.nextElement()
-        if oPar.supportsService("com.sun.star.text.TextTable"):
-            getChildTable(oPar,aItemList,aComponentAdd)
-        if oPar.supportsService("com.sun.star.text.Paragraph"):
-            oSecEnum = oPar.createEnumeration()
-            while oSecEnum.hasMoreElements():
-                oSubSection = oSecEnum.nextElement()
-                if oSubSection.TextSection:
-                    if oSubSection.TextField:
-                        aItemList.append( oSubSection.TextField.Items )
-                        aComponentAdd.append(oSubSection.TextSection.Name)
-                elif oPar.getAnchor().TextField:
-                    sItem=oPar.getAnchor().TextField.Items.__getitem__(1)
-                    if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-                        aItemList.append(oSubSection.TextField.Items )
-                        aComponentAdd.append("Document")
+        if oPar.Anchor.TextTable:
+            #parent = oPar.Anchor.TextTable.Name
+            getChildTable(oPar.Anchor.TextTable,aItemList,aComponentAdd)
+        elif oPar.Anchor.TextSection:
+            parent = oPar.Anchor.TextSection.Name
+        elif oPar.Anchor.Text:
+            parent = "Document"
+        sItem=oPar.Items.__getitem__(1)
+        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+            aItemList.append(oPar.Items )
+            aComponentAdd.append(parent)
+            #getChildTable(oPar,aItemList,aComponentAdd)
+#    print dir(Doc)
+#    print dir(Doc.getText())
+#    print Doc.getTextTables().Types
+#    oParEnum = Doc.getText().createEnumeration()
+#    while oParEnum.hasMoreElements():
+#        oPar = oParEnum.nextElement()
+#        if oPar.supportsService("com.sun.star.text.TextTable"):
+#            getChildTable(oPar,aItemList,aComponentAdd)
+#        if oPar.supportsService("com.sun.star.text.Paragraph"):
+#            oSecEnum = oPar.createEnumeration()
+#            while oSecEnum.hasMoreElements():
+#                oSubSection = oSecEnum.nextElement()
+#                if oSubSection.TextSection:
+#                    if oSubSection.TextField:
+#                        aItemList.append( oSubSection.TextField.Items )
+#                        aComponentAdd.append(oSubSection.TextSection.Name)
+#                elif oSubSection.getAnchor().TextField:
+#                    print oSubSection.getAnchor().TextField.Items
+#                    if oSubSection.getAnchor().supportsService("com.sun.star.text.TextField.DropDown"):
+#                        #print oPar.getAnchor().TextField
+#                        sItem=oSubSection.getAnchor().TextField.Items.__getitem__(1)
+#                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+#                            aItemList.append(oSubSection.TextField.Items )
+#                            aComponentAdd.append("Document")
 
 def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     sNames = oPar.getCellNames()
