@@ -38,7 +38,6 @@
                                         <field name="description"/>
                                         <field name="code_relations"/>
                                </form>
-
                          </field>
 					</page>
 					<page string="Tags">
@@ -116,17 +115,17 @@
 				<form string="Partner contacts">
 					<field name="contact_id"/>
 					<field name="partner_id"/>
-					<field name="name"/>
+					<field name="name" select="1"/>
 					<newline/>
 					<field name="function"/>
 					<field name="function_label"/>
 					<!--<field name="function_code_id"/> should be correct -->
-					<field name="title"/>
-					<field name="type"/>
-					<field name="street"/>
-					<field name="street2"/>
-					<field name="zip"/>
-					<field name="city"/>
+					<field name="title" select="1"/>
+					<field name="type" select="1"/>
+					<field name="street" select="1"/>
+					<field name="street2" select="1"/>
+					<field name="zip" select="1"/>
+					<field name="city" select="1"/>
 					<field name="country_id"/>
 					<field name="state_id"/>
 					<field name="phone"/>
@@ -139,8 +138,7 @@
 					<field name="sequence_contact"/>
 					<field name="who_presence"/>
 					<field name="dir_presence"/>
-					<field name="state"/>
-
+					<field name="state" />
 				</form>
 			</field>
 		</record>
@@ -191,25 +189,27 @@
 		</record>
 		<menuitem name="Partners/Configuration/States/Customer State" groups="admin" action="action_partner_state2" id="menu_partner_state2"/>
 
-<!-- view for res.activity.code ... -->
-		<record model="ir.ui.view" id="view_activity_code_form">
-			<field name="name">res.activity.code.form</field>
+<!-- view for res.partner.activity ... -->
+		<record model="ir.ui.view" id="view_partner_activity_form">
+			<field name="name">res.partner.activity.form</field>
 			<field name="type">form</field>
-			<field name="model">res.activity.code</field>
+			<field name="model">res.partner.activity</field>
 			<field name="arch" type="xml">
-				<form string="Activity Code">
+				<form string="Partner Activity">
 					<field name="code"/>
 					<field name="name"/>
 					<field name="description"/>
+					<field name="code_relations"/>
+					<field name="list_id"/>
 				</form>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_activity_code_tree">
-			<field name="name">res.activity.code.tree</field>
+		<record model="ir.ui.view" id="view_partner_activity_tree">
+			<field name="name">res.partner.activity.tree</field>
 			<field name="type">tree</field>
-			<field name="model">res.activity.code</field>
+			<field name="model">res.partner.activity</field>
 			<field name="arch" type="xml">
-				<tree string="Activity Code">
+				<tree string="Partner Activity">
 					<field name="code"/>
 					<field name="name"/>
 					<field name="description"/>
@@ -218,24 +218,24 @@
 		</record>
 		<!-- menu & action is not defined -->
 
-<!-- view for res..partner.activity.code ... -->
-		<record model="ir.ui.view" id="view_partner_activity_code_form">
-			<field name="name">res.partner.activity.code.form</field>
+<!-- view for res.partner.activity.relation replaced frm res.partner.activity.code -->
+		<record model="ir.ui.view" id="view_partner_activity_relation_form">
+			<field name="name">res.partner.activity.relation.form</field>
 			<field name="type">form</field>
-			<field name="model">res.partner.activity.code</field>
+			<field name="model">res.partner.activity.relation</field>
 			<field name="arch" type="xml">
-				<form string="Partner Activity Code">
+				<form string="Activity Relation">
 					<field name="importance"/>
 					<field name="activity_id"/>
 				</form>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_partner_activity_code_tree">
-			<field name="name">res.partner.activity.code.tree</field>
+		<record model="ir.ui.view" id="view_partner_activity_relation_tree">
+			<field name="name">res.partner.activity.relation.tree</field>
 			<field name="type">tree</field>
-			<field name="model">res.partner.activity.code</field>
+			<field name="model">res.partner.activity.relation</field>
 			<field name="arch" type="xml">
-				<tree string="Partner Activity Code">
+				<tree string="Activity Relation">
 					<field name="importance"/>
 					<field name="activity_id"/>
 				</tree>
@@ -243,6 +243,30 @@
 		</record>
 		<!--  menu & action is not defined -->
 
+<!-- view for res.partner.activity.list -->
+		<record model="ir.ui.view" id="view_partner_activity_list_form">
+			<field name="name">res.partner.activity.list.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.activity.list</field>
+			<field name="arch" type="xml">
+				<form string="Activity List">
+					<field name="name"/>
+					<field name="abbreviation"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_activity_list_tree">
+			<field name="name">res.partner.activity.list.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.activity.list</field>
+			<field name="arch" type="xml">
+				<tree string="Activity List">
+					<field name="name"/>
+					<field name="abbreviation"/>
+				</tree>
+			</field>
+		</record>
+		<!--  menu & action is not defined -->
 
 <!-- view for res..partner.zip. ... -->
 		<record model="ir.ui.view" id="view_partner_zip_form">
@@ -416,7 +440,6 @@
 		</record>
 		<!-- menu and action is not defined -->
 
-
 <!-- view for res.partner.article.review -->
 		<record model="ir.ui.view" id="view_partner_article_review_form">
 			<field name="name">res.partner.article.review.form</field>
@@ -441,7 +464,6 @@
 			</field>
 		</record>
 		<!-- menu and action is not defined -->
-
 
 	</data>
 </terp>
