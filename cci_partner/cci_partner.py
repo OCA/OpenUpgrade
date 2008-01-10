@@ -31,6 +31,15 @@ from osv import fields, osv
 class res_partner(osv.osv):
     _inherit = "res.partner"
     _description = "res.partner"
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+        #complete the user_id (salesman) automatically according to the zip code of the main address. Use res.partner.zip to select salesman according to zip code
+        for add in vals['address']:
+            if add[2]['type']=='default':
+                data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
+                vals['user_id']=data.user_id.id
+        return super(res_partner,self).create(cr, uid, vals, *args, **kwargs)
+
     _columns = {
         'employee_nbr': fields.integer('Nbr of Employee (Area)',help="Nbr of Employee in the area of the CCI"),
         'employee_nbr_total':fields.integer('Nbr of Employee (Tot)',help="Nbr of Employee all around the world"),
