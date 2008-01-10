@@ -56,8 +56,10 @@ class res_partner(osv.osv):
         'invoice_paper':fields.selection([('transfer belgian','Transfer belgian'),('transfer iban ','Transfer iban')], 'Bank Transfer Type'),
         'invoice_public':fields.boolean('Invoice Public'),
         'invoice_special':fields.boolean('Invoice Special'),
-        'state_id':fields.char('Partner State',size=20,help='status of activity of the partner'),#should be corect
-        'state_id2':fields.char('Customer State',size=20,help='status of the partner as a customer'),#should be corect
+
+        'state_id':fields.many2one('res.partner.state','Partner State',help='status of activity of the partner'),
+        'state_id2':fields.many2one('res.partner.state2','Customer State',help='status of the partner as a customer'),
+
 
         'activity_description':fields.text('Activity Description',traslate=True),
         'activity_code_ids':fields.one2many('res.partner.activity','partner_id','Activity Codes'),
@@ -100,9 +102,8 @@ class res_partner(osv.osv):
                  'dir_presence' : lambda *a: False,
                  'dir_exclude':lambda *a: False,
                  }
-    _constraints = [(check_address, 'Error: Only default address!', [])]
+    _constraints = [(check_address, 'Error: Only one default address is allowed!', [])]
 res_partner()
-
 
 class res_partner_zip_group_type(osv.osv):
      _name = "res.partner.zip.group.type"
@@ -161,7 +162,7 @@ class res_partner_address(osv.osv):
     _description = 'res.partner.address'
     _columns = {
         'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
-        'zip_id':fields.many2one('res.partner.zip','Zip'),#should be added to view ...
+        'zip_id':fields.many2one('res.partner.zip','Zip'),
         #'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be corect
         'function_label':fields.char('Function Label',size=128),
         'date_start':fields.date('Date start'),
@@ -274,7 +275,7 @@ class res_partner_state(osv.osv):
     _name = "res.partner.state"
     _description = 'res.partner.state'
     _columns = {
-        'name': fields.char('State',size=20),
+        'name': fields.char('State',size=20,required=True),
     }
 res_partner_state()
 
@@ -306,7 +307,7 @@ class res_partner_article(osv.osv):
         'picture':fields.boolean('Picture'),
         'data':fields.boolean('Data'),
         'graph':fields.boolean('Graph'),
-        'keywords_ids':fields.many2many('res.partner.article.keywords','article_id','keyword_id','Keywords'),
+        'keywords_ids':fields.many2many('res.partner.article.keywords','article_keyword_rel','article_id','keyword_id','Keywords'),
         'summary':fields.text('Summary'),
         'partners_ids':fields.char('Partners',size=20),#should be corect
         'contact_ids':fields.char('Contacts',size=20),#should be corect
