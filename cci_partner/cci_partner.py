@@ -35,10 +35,20 @@ class res_partner(osv.osv):
     def create(self, cr, uid, vals, *args, **kwargs):
         #complete the user_id (salesman) automatically according to the zip code of the main address. Use res.partner.zip to select salesman according to zip code
         for add in vals['address']:
-            if add[2]['type']=='default':
+            if add[2]['zip_id'] and add[2]['type']=='default':
                 data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
                 vals['user_id']=data.user_id.id
         return super(res_partner,self).create(cr, uid, vals, *args, **kwargs)
+
+    def check_address(self, cr, uid, ids):
+        #constraints to ensure that there is only one default address by partner.
+        data_address=self.browse(cr, uid, ids)
+        list=[]
+        for add in data_address[0].address:
+            if add.type in list:
+                return False
+            list.append(add.type)
+        return True
 
     _columns = {
         'employee_nbr': fields.integer('Nbr of Employee (Area)',help="Nbr of Employee in the area of the CCI"),
@@ -90,6 +100,7 @@ class res_partner(osv.osv):
                  'dir_presence' : lambda *a: False,
                  'dir_exclude':lambda *a: False,
                  }
+    _constraints = [(check_address, 'Error: Only default address!', [])]
 res_partner()
 
 
