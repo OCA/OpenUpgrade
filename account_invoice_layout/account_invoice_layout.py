@@ -3,19 +3,24 @@ from osv import fields,osv
 
 class account_invoice_line(osv.osv):
 
+	def move_line_get_item(self, cr, uid, line, context={}):
+		if line.state != 'article':
+			return None
+		return super(account_invoice_line, self).move_line_get_item(cr, uid, line, context)
+
 	def fields_get(self, cr, uid, fields=None, context=None):
 		article = {
 			'article': [('readonly', False), ('invisible', False)],
 			'text': [('readonly', True), ('invisible', True), ('required', False)],
 			'subtotal': [('readonly', True), ('invisible', True), ('required', False)],
-			'title': [('readonly', True), ('invisible', True)],
-			'break': [('readonly', True), ('invisible', True)],
-			'line': [('readonly', True), ('invisible', True)],
+			'title': [('readonly', True), ('invisible', True), ('required', False)],
+			'break': [('readonly', True), ('invisible', True), ('required', False)],
+			'line': [('readonly', True), ('invisible', True), ('required', False)],
 		}
 		states = {
 			'name': {
-				'break': [('readonly', True),('required', True)],
-				'line': [('readonly', True),('required', True)],
+				'break': [('readonly', True),('required', False),('invisible', True)],
+				'line': [('readonly', True),('required', False),('invisible', True)],
 				},
 			'product_id': article,
 			'account_id': article,
@@ -52,9 +57,9 @@ class account_invoice_line(osv.osv):
 					},
 				}
 			if type == 'line':
-				temp['value']['name'] = '-----------------------------------------'
+				temp['value']['name'] = ' '
 			if type == 'break':
-				temp['value']['name'] = 'PAGE BREAK'
+				temp['value']['name'] = ' '
 			if type == 'subtotal':
 				temp['value']['name'] = 'Sub Total'
 			return temp
@@ -63,14 +68,16 @@ class account_invoice_line(osv.osv):
 	def create(self, cr, user, vals, context=None):
 		if vals.has_key('state'):
 			if vals['state'] == 'line':
-				vals['name'] = '-----------------------------------------'
+				vals['name'] = ' '
 			if vals['state'] == 'break':
-				vals['name'] = 'PAGE BREAK'
+				vals['name'] = ' '
 			if vals['state'] != 'article':
 				vals['quantity']= 0
+				vals['account_id']= self._default_account(cr, user, None)
 		return super(account_invoice_line, self).create(cr, user, vals, context)
 
 	def write(self, cr, user, ids, vals, context=None):
+		print ids
 		if vals.has_key('state'):
 			if vals['state'] != 'article':
 				vals['product_id']= False
@@ -83,12 +90,31 @@ class account_invoice_line(osv.osv):
 				vals['invoice_line_tax_id']= False
 				vals['account_analytic_id']= False
 			if vals['state'] == 'line':
-				vals['name'] = '-----------------------------------------'
+				vals['name'] = ' '
 			if vals['state'] == 'break':
-				vals['name'] = 'PAGE BREAK'
-			if vals['state'] == 'subtotal':
-				vals['name'] = 'Sub Total'
+				vals['name'] = ' '
 		return super(account_invoice_line, self).write(cr, user, ids, vals, context)
+
+	def copy(self, cr, uid, id, default=None, context=None):
+		if default is None:
+			default = {}
+		default['state'] = self.browse(cr, uid, id).state 
+		return super(account_invoice_line, self).copy(cr, uid, id, default, context)
+
+	def _fnct(self, cr, uid, id, name, args, context):
+		res = {}
+		for m in self.browse(cr, uid, id):
+			if m.state != 'article':
+				if m.state == 'line':
+					res[m.id] = '-----------------------------------------'
+				elif m.state == 'break':
+					res[m.id] = 'PAGE BREAK'
+				else:
+					res[m.id] = ' '
+			else:
+				[(temp)] = self.pool.get('account.account').name_get(cr, uid, [m.account_id.id], context=context)
+				res[m.id] = temp[1]
+		return res
 
 	_name = "account.invoice.line"
 	_order = "invoice_id, sequence asc"
@@ -97,13 +123,14 @@ class account_invoice_line(osv.osv):
 	_columns = {
 		'state': fields.selection([
 				('article','Product'),
-				('text','Text'),
-				('subtotal','Sub Total'),
 				('title','Title'),
-				('break','Page Break'),
-				('line','Line'),]
-			,'Type', select=True),
+				('text','Note'),
+				('subtotal','Sub Total'),
+				('line','Separator Line'),
+				('break','Page Break'),]
+			,'Type', select=True, required=True),
 		'sequence': fields.integer('Sequence Number'),
+		'functional_field': fields.function(_fnct, arg=None, fnct_inv=None, fnct_inv_arg=None, type='char', fnct_search=None, obj=None, method=True, store=False, string="Source Account"),
 	}
 	def _default_account(self, cr, uid, context=None):
 		cr.execute("select id from account_account where code = 0 LIMIT 1")
@@ -111,7 +138,7 @@ class account_invoice_line(osv.osv):
 		return res[0]
 	_defaults = {
 		'state': lambda *a: 'article',
-		'account_id': _default_account
+#		'account_id': _default_account
 	}
 account_invoice_line()
 
@@ -125,17 +152,29 @@ class one2many_mod2(fields.one2many):
 		res = {}
 		for id in ids:
 			res[id] = []
-		print self.fields
 		ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',ids),('state','=','article')], limit=self._limit)
 		for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
 			res[r[self._fields_id]].append( r['id'] )
 		return res
 
+#	def copy(self, cr, uid, id, default=None, context=None):
+#		if default is None:
+#			default = {}
+#		default['line_ids'] = False
+#		return super(account_invoice, self).copy(cr, uid, id, default, context)
+
 
 class account_invoice(osv.osv):
+
+	def copy(self, cr, uid, id, default=None, context=None):
+		if default is None:
+			default = {}
+		default['invoice_line'] = False
+		return super(account_invoice, self).copy(cr, uid, id, default, context)
+
 	_inherit = "account.invoice"
 	_columns = {
-		'abstract_line_ids': fields.one2many('account.invoice.line', 'invoice_id', 'Invoice Lines', states={'draft':[('readonly',False)]}),
-		'line_ids': one2many_mod2('account.invoice.line', 'invoice_id', 'Invoice Lines', states={'draft':[('readonly',False)]}),
+		'abstract_line_ids': fields.one2many('account.invoice.line', 'invoice_id', 'Invoice Lines',readonly=True, states={'draft':[('readonly',False)]}),
+		'invoice_line': one2many_mod2('account.invoice.line', 'invoice_id', 'Invoice Lines',readonly=True, states={'draft':[('readonly',False)]}),
 	}
 account_invoice()

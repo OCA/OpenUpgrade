@@ -2,7 +2,7 @@
 <terp>
 	<data>
 
-		<record model="ir.ui.view" id="view_invoice_line_form_inherit">
+		<record model="ir.ui.view" id="view_invoice_line_form_inherit_1">
 			<field name="name">account.invoice.line.form.inherit_1</field>
 			<field name="model">account.invoice.line</field>
 			<field name="inherit_id" ref="account.view_invoice_line_form"/>
@@ -10,21 +10,32 @@
 			<field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field[@name='name']" position="before">
 					<field name="state" select="1" on_change="_onchange_invoice_line_view(state)" />
-					<newline/>
 					<field name="sequence"/>
 				</xpath>
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_invoice_line_tree_inherit">
+		<record model="ir.ui.view" id="view_invoice_line_tree_inherit_1">
 			<field name="name">account.invoice.line.tree.inherit_1</field>
 			<field name="model">account.invoice.line</field>
 			<field name="inherit_id" ref="account.view_invoice_line_tree"/>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<xpath expr="/tree/field[@name='name']" position="before">
-					<field name="state" select="1"/>
-					<field name="sequence"/>
+					<field name="sequence" string="Seq."/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_invoice_line_tree_inherit_2">
+			<field name="name">account.invoice.line.tree.inherit_2</field>
+			<field name="model">account.invoice.line</field>
+			<field name="inherit_id" ref="view_invoice_line_tree_inherit_1"/>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<xpath expr="/tree/field[@name='account_id']" position="replace">
+					<field name="functional_field"/>
+
 				</xpath>
 			</field>
 		</record>
