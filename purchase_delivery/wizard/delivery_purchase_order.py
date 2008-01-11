@@ -56,9 +56,9 @@ def _delivery_set(self, cr, uid, data, context):
     order_objs = order_obj.browse(cr, uid, data['ids'], context)
 
     for order in order_objs:
-        if not order.dest_address_id:
-            raise wizard.except_wizard('Destination Address is not selected', 'Please select Destination Address for the purchase order')
-        grid_id = pooler.get_pool(cr.dbname).get('delivery.carrier').grid_get(cr, uid, [data['form']['carrier_id']],order.dest_address_id.id)
+#        if not order.dest_address_id:
+#            raise wizard.except_wizard('Destination Address is not selected', 'Please select Destination Address for the purchase order')
+        grid_id = pooler.get_pool(cr.dbname).get('delivery.carrier').grid_get(cr, uid, [data['form']['carrier_id']],order.partner_address_id.id)
         if not grid_id:
             raise wizard.except_wizard('No grid avaible !', 'No grid matching for this carrier !')
         grid = pooler.get_pool(cr.dbname).get('delivery.grid').browse(cr, uid, [grid_id])[0]

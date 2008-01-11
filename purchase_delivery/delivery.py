@@ -38,7 +38,7 @@ class delivery_grid(osv.osv):
         total = 0
         weight = 0
         volume = 0
-        print "======================================"
+
         for line in order.order_line:
             if not line.product_id:
                 continue
