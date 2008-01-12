@@ -8,6 +8,9 @@
 		<field name="arch" type="xml">
 			<tree string="Partner Contact">
 				<field name="name"/>
+				<field name="surname"/>
+				<field name="mobile"/>
+				<field name="lang_id"/>
 			</tree>
 		</field>
 	</record>
@@ -52,7 +55,7 @@
 		<field name="res_model">res.partner.contact</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_partner_contact_form"/>
+		<field name="view_id" ref="view_partner_contact_tree"/>
 	</record>
 	<menuitem name="Partners/" id="menu_partner_contact_form" action="action_partner_contact_form"/>
 </data>
