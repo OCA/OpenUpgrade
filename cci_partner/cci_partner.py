@@ -313,6 +313,8 @@ class crm_press_article(osv.osv):
         'subtitle':fields.text('Subtitle'),
         'press_review':fields.boolean('In the next press review',help='Must be inserted on the next press review'),
         'canal_id':fields.char('Link',size=200,help='A text with or without a link incorporated'),
+
+        'review_id':fields.many2one('res.partner.article.review','Review')#add for one2many field,
     }
     _defaults = {
                  'press_review' : lambda *a: False,
@@ -336,7 +338,7 @@ class res_partner_article_review(osv.osv):
     _columns = {
         'name': fields.char('Name',size=50),
         'date':fields.date('Date'),
-        'article_ids':fields.char('Articles',size=20),#should be corect
+        'article_ids':fields.one2many('crm_press.article','review_id','Articles',size=20),
     }
 res_partner_article_review()
 
