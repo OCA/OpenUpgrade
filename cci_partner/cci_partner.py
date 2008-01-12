@@ -44,6 +44,53 @@ class res_partner_state2(osv.osv):
     }
 res_partner_state2()
 
+class res_partner_article_review(osv.osv):
+    _name = "res.partner.article.review"
+    _description = 'res.partner.article.review'
+    _columns = {
+        'name': fields.char('Name',size=50),
+        'date':fields.date('Date'),
+        'article_ids':fields.one2many('crm_press.article','review_id','Articles',size=20),
+    }
+res_partner_article_review()
+
+
+class res_partner_article_keywords(osv.osv):
+    _name = "res.partner.article.keywords"
+    _description = 'res.partner.article.keywords'
+    _columns = {
+        'name': fields.char('Name',size=20,required=True),
+        'article_ids':fields.many2many('crm_press.article','partner_article_keword_rel','keyword_id','article_id','Articles')
+    }
+res_partner_article_keywords()
+
+class crm_press_article(osv.osv):
+    _name = "crm_press.article"
+    _description = 'crm_press.article'
+    _rec_name = 'article_id'
+    _columns = {
+        'article_id': fields.char('Article',size=256),
+        'page':fields.integer('Page',size=16),
+        'article_length':fields.float('Length'),
+        'picture':fields.boolean('Picture'),
+        'data':fields.boolean('Data'),
+        'graph':fields.boolean('Graph'),
+        'keywords_ids':fields.many2many('res.partner.article.keywords','article_keyword_rel','article_id','keyword_id','Keywords'),
+        'summary':fields.text('Summary'),
+        'partners_ids':fields.one2many('res.partner','article_id','Partners'),
+        'contact_ids':fields.one2many('res.partner.contact','contact_id','Contacts'),
+        'source_id':fields.char('Source',size=256),
+        'date':fields.date('Date'),
+        'title':fields.char('Title',size=100),
+        'subtitle':fields.text('Subtitle'),
+        'press_review':fields.boolean('In the next press review',help='Must be inserted on the next press review'),
+        'canal_id':fields.char('Link',size=200,help='A text with or without a link incorporated'),
+        'review_id':fields.many2one('res.partner.article.review','Review')#add for one2many field,
+    }
+    _defaults = {
+                 'press_review' : lambda *a: False,
+                 }
+crm_press_article()
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
@@ -59,6 +106,19 @@ class res_partner(osv.osv):
                     saleman_id = data.user_id.id
                     self.write(cr,uid,[new_id],{'user_id':saleman_id})
         return new_id
+
+    def write(self, cr, uid, ids,vals, *args, **kwargs):
+        super(osv.osv,self).write(cr, uid, ids,vals, *args, **kwargs)
+        if 'address' in vals:
+            for add in vals['address']:
+                if add[2]['zip_id'] and add[2]['type']=='default':
+                    data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
+                    saleman_id = data.user_id.id
+                    self.write(cr,uid,ids,{'user_id':saleman_id})
+                else:
+                    self.write(cr,uid,ids,{'user_id':False})
+        return True
+
     def check_address(self, cr, uid, ids):
         #constraints to ensure that there is only one default address by partner.
         data_address=self.browse(cr, uid, ids)
@@ -75,14 +135,10 @@ class res_partner(osv.osv):
         'invoice_paper':fields.selection([('transfer belgian','Transfer belgian'),('transfer iban ','Transfer iban')], 'Bank Transfer Type'),
         'invoice_public':fields.boolean('Invoice Public'),
         'invoice_special':fields.boolean('Invoice Special'),
-
         'state_id':fields.many2one('res.partner.state','Partner State',help='status of activity of the partner'),
         'state_id2':fields.many2one('res.partner.state2','Customer State',help='status of the partner as a customer'),
-
-
         'activity_description':fields.text('Activity Description',traslate=True),
         'activity_code_ids':fields.one2many('res.partner.activity','partner_id','Activity Codes'),
-
         'export_procent':fields.integer('Export(%)'),
         'export_year':fields.date('Export date',help='year of the export_procent value'),
         'import_procent':fields.integer('Import (%)'),
@@ -291,56 +347,6 @@ class res_partner_relation(osv.osv): # move from cci_base_contact to here
         'type_id':fields.many2one('res.contact.relation.type','Type'), #should be correct
     }
 res_partner_relation()
-
-class crm_press_article(osv.osv):
-    _name = "crm_press.article"
-    _description = 'crm_press.article'
-    _rec_name = 'article_id'
-    _columns = {
-        'article_id': fields.char('Article',size=256),
-        'page':fields.integer('Page',size=16),
-        'article_length':fields.float('Length'),
-        'picture':fields.boolean('Picture'),
-        'data':fields.boolean('Data'),
-        'graph':fields.boolean('Graph'),
-        'keywords_ids':fields.many2many('res.partner.article.keywords','article_keyword_rel','article_id','keyword_id','Keywords'),
-        'summary':fields.text('Summary'),
-        'partners_ids':fields.one2many('res.partner','article_id','Partners'),
-        'contact_ids':fields.one2many('res.partner.contact','contact_id','Contacts'),
-        'source_id':fields.char('Source',size=256),
-        'date':fields.date('Date'),
-        'title':fields.char('Title',size=100),
-        'subtitle':fields.text('Subtitle'),
-        'press_review':fields.boolean('In the next press review',help='Must be inserted on the next press review'),
-        'canal_id':fields.char('Link',size=200,help='A text with or without a link incorporated'),
-
-        'review_id':fields.many2one('res.partner.article.review','Review')#add for one2many field,
-    }
-    _defaults = {
-                 'press_review' : lambda *a: False,
-                 }
-crm_press_article()
-
-
-class res_partner_article_keywords(osv.osv):
-    _name = "res.partner.article.keywords"
-    _description = 'res.partner.article.keywords'
-    _columns = {
-        'name': fields.char('Name',size=20,required=True),
-        'article_ids':fields.many2many('crm_press.article','partner_article_keword_rel','keyword_id','article_id','Articles')
-    }
-res_partner_article_keywords()
-
-
-class res_partner_article_review(osv.osv):
-    _name = "res.partner.article.review"
-    _description = 'res.partner.article.review'
-    _columns = {
-        'name': fields.char('Name',size=50),
-        'date':fields.date('Date'),
-        'article_ids':fields.one2many('crm_press.article','review_id','Articles',size=20),
-    }
-res_partner_article_review()
 
 class res_partner_contact(osv.osv):
     _inherit='res.partner.contact'
