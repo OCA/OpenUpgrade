@@ -170,7 +170,7 @@ class res_partner(osv.osv):
         'magazine_subscription':fields.boolean('Magazine subscription'),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'article_id':fields.many2one('crm_press.article','Partner'),#should be corect,add for one2many relation
-
+        'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
