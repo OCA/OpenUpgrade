@@ -380,13 +380,13 @@
 		</record>
 		<menuitem name="Partners/Configuration/Zip/Group Type" action="action_partner_zip_type_group" id="menu_partner_zip_group_type"/>
 
-<!-- view for res.partner.article ,should be corect-->
-		<record model="ir.ui.view" id="view_partner_article_form">
-			<field name="name">res.partner.article.form</field>
+<!-- view for crm_press.article-->
+		<record model="ir.ui.view" id="view_crm_press_article_form">
+			<field name="name">crm_press.article.form</field>
 			<field name="type">form</field>
-			<field name="model">res.partner.article</field>
+			<field name="model">crm_press.article</field>
 			<field name="arch" type="xml">
-				<form string="Partner Article">
+				<form string="Article">
 					<notebook>
 						<page string="General">
 							<field name="title" colspan="4"/>
@@ -413,12 +413,12 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_partner_article_tree">
-			<field name="name">res.partner.article.tree</field>
+		<record model="ir.ui.view" id="view_crm_press_article_tree">
+			<field name="name">crm_press.article.tree</field>
 			<field name="type">tree</field>
-			<field name="model">res.partner.article</field>
+			<field name="model">crm_press.article</field>
 			<field name="arch" type="xml">
-				<tree string="Partner Article">
+				<tree string="Article">
 					<field name="source_id"/>
 					<field name="date"/>
 					<field name="title"/>
@@ -426,15 +426,14 @@
 			</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="action_partner_article">
-			<field name="name">Partner Article</field>
+		<record model="ir.actions.act_window" id="action_crm_press_article">
+			<field name="name">Article</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">res.partner.article</field>
+			<field name="res_model">crm_press.article</field>
 			<field name="view_type">form</field>
+			<field name="view_id" ref="view_crm_press_article_form"/>
 		</record>
-		<menuitem name="Partners/Configuration/Article/Article" action="action_partner_article" id="menu_partner_article"/>
-
-
+		<menuitem name="Partners/Configuration/Article/Article" action="action_crm_press_article" id="menu_crm_press_article"/>
 
 <!-- view for res.partner.article.keywords ,should be corect -->
 		<record model="ir.ui.view" id="view_partner_article_keywords_form">
