@@ -124,7 +124,7 @@ class res_partner(osv.osv):
         data_address=self.browse(cr, uid, ids)
         list=[]
         for add in data_address[0].address:
-            if add.type in list:
+            if add.type in list and add.type=='default':
                 return False
             list.append(add.type)
         return True
