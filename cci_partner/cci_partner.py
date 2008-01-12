@@ -269,6 +269,12 @@ class res_partner_address(osv.osv):
                     self.pool.get('res.partner.contact').unlink(cr, uid,[data.id], context)
         return True
 
+    def onchange_contact_id(self, cr, uid, ids, contact_id):
+        #return name
+        if contact_id:
+            contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
+        return {'value':{'name' : contact_data.name}}
+
 res_partner_address()
 
 class res_partner_activity_list(osv.osv):#new object added!
