@@ -50,17 +50,16 @@ class res_partner_article_review(osv.osv):
     _columns = {
         'name': fields.char('Name',size=50),
         'date':fields.date('Date'),
-        'article_ids':fields.one2many('crm_press.article','review_id','Articles',size=20),
+        #'article_ids':fields.one2many('crm_press.article','review_id','Articles'),sholud be corect
     }
 res_partner_article_review()
-
 
 class res_partner_article_keywords(osv.osv):
     _name = "res.partner.article.keywords"
     _description = 'res.partner.article.keywords'
     _columns = {
         'name': fields.char('Name',size=20,required=True),
-        'article_ids':fields.many2many('crm_press.article','partner_article_keword_rel','keyword_id','article_id','Articles')
+        #'article_ids':fields.many2many('crm_press.article','partner_article_keword_rel','keyword_id','article_id','Articles') sholud be corect
     }
 res_partner_article_keywords()
 
