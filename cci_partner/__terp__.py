@@ -1,5 +1,5 @@
 {
-    "name" : "CCI Base Contact",
+    "name" : "CCI partner",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",
