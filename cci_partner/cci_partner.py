@@ -28,18 +28,37 @@
 import netsvc
 from osv import fields, osv
 
+class res_partner_state(osv.osv):
+    _name = "res.partner.state"
+    _description = 'res.partner.state'
+    _columns = {
+        'name': fields.char('State',size=20,required=True),
+    }
+res_partner_state()
+
+class res_partner_state2(osv.osv):
+    _name = "res.partner.state2"
+    _description = 'res.partner.state2'
+    _columns = {
+        'name': fields.char('State2',size=20,required=True),
+    }
+res_partner_state2()
+
+
 class res_partner(osv.osv):
     _inherit = "res.partner"
     _description = "res.partner"
 
     def create(self, cr, uid, vals, *args, **kwargs):
+        new_id = super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
         #complete the user_id (salesman) automatically according to the zip code of the main address. Use res.partner.zip to select salesman according to zip code
-        for add in vals['address']:
-            if add[2]['zip_id'] and add[2]['type']=='default':
-                data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
-                vals['user_id']=data.user_id.id
-        return super(res_partner,self).create(cr, uid, vals, *args, **kwargs)
-
+        if vals['address']:
+            for add in vals['address']:
+                if add[2]['zip_id'] and add[2]['type']=='default':
+                    data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
+                    saleman_id = data.user_id.id
+                    self.write(cr,uid,[new_id],{'user_id':saleman_id})
+        return new_id
     def check_address(self, cr, uid, ids):
         #constraints to ensure that there is only one default address by partner.
         data_address=self.browse(cr, uid, ids)
@@ -94,6 +113,8 @@ class res_partner(osv.osv):
 
         'magazine_subscription':fields.boolean('Magazine subscription'),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
+        'article_id':fields.many2one('crm_press.article','Partner'),#should be corect,add for one2many relation
+
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
@@ -271,47 +292,22 @@ class res_partner_relation(osv.osv): # move from cci_base_contact to here
     }
 res_partner_relation()
 
-class res_partner_state(osv.osv):
-    _name = "res.partner.state"
-    _description = 'res.partner.state'
+class crm_press_article(osv.osv):
+    _name = "crm_press.article"
+    _description = 'crm_press.article'
+    _rec_name = 'article_id'
     _columns = {
-        'name': fields.char('State',size=20,required=True),
-    }
-res_partner_state()
-
-class res_partner_state2(osv.osv):
-    _name = "res.partner.state2"
-    _description = 'res.partner.state2'
-    _columns = {
-        'name': fields.char('State2',size=20,required=True),
-    }
-res_partner_state2()
-
-
-class res_partner_article_keywords(osv.osv):
-    _name = "res.partner.article.keywords"
-    _description = 'res.partner.article.keywords'
-    _columns = {
-        'name': fields.char('Name',size=20,required=True),
-        'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles')
-    }
-res_partner_article_keywords()
-
-class res_partner_article(osv.osv):
-    _name = "res.partner.article"
-    _description = 'res.partner.article'
-    _columns = {
-        'article_id': fields.char('Article',size=20),#should be corect
-        'page':fields.char('Page',size=16),
+        'article_id': fields.char('Article',size=256),
+        'page':fields.integer('Page',size=16),
         'article_length':fields.float('Length'),
         'picture':fields.boolean('Picture'),
         'data':fields.boolean('Data'),
         'graph':fields.boolean('Graph'),
         'keywords_ids':fields.many2many('res.partner.article.keywords','article_keyword_rel','article_id','keyword_id','Keywords'),
         'summary':fields.text('Summary'),
-        'partners_ids':fields.char('Partners',size=20),#should be corect
-        'contact_ids':fields.char('Contacts',size=20),#should be corect
-        'source_id':fields.char('Source',size=20),#should be corect
+        'partners_ids':fields.one2many('res.partner','article_id','Partners'),
+        'contact_ids':fields.one2many('res.partner.contact','contact_id','Contacts'),
+        'source_id':fields.char('Source',size=256),
         'date':fields.date('Date'),
         'title':fields.char('Title',size=100),
         'subtitle':fields.text('Subtitle'),
@@ -321,7 +317,18 @@ class res_partner_article(osv.osv):
     _defaults = {
                  'press_review' : lambda *a: False,
                  }
-res_partner_article()
+crm_press_article()
+
+
+class res_partner_article_keywords(osv.osv):
+    _name = "res.partner.article.keywords"
+    _description = 'res.partner.article.keywords'
+    _columns = {
+        'name': fields.char('Name',size=20,required=True),
+        'article_ids':fields.many2many('crm_press.article','partner_article_keword_rel','keyword_id','article_id','Articles')
+    }
+res_partner_article_keywords()
+
 
 class res_partner_article_review(osv.osv):
     _name = "res.partner.article.review"
@@ -332,3 +339,11 @@ class res_partner_article_review(osv.osv):
         'article_ids':fields.char('Articles',size=20),#should be corect
     }
 res_partner_article_review()
+
+class res_partner_contact(osv.osv):
+    _inherit='res.partner.contact'
+    _columns = {
+        'contact_id':fields.many2one('crm_press.article','Contact')#add for one2many relation only,,,
+        }
+res_partner_contact()
+
