@@ -8,7 +8,7 @@
         specific module for cci project which will inherit
         base_contact module..
     """,
-    "depends" : ["base"],
+    "depends" : ["base", "base_contact"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ['cci_base_contact_view.xml'],
