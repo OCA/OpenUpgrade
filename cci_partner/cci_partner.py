@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -50,22 +51,14 @@ class res_partner_article_review(osv.osv):
     _columns = {
         'name': fields.char('Name',size=50),
         'date':fields.date('Date'),
-        #'article_ids':fields.one2many('crm_press.article','review_id','Articles'),sholud be corect
+        'article_ids':fields.one2many('res.partner.article','review_id','Articles'),
     }
 res_partner_article_review()
 
-class res_partner_article_keywords(osv.osv):
-    _name = "res.partner.article.keywords"
-    _description = 'res.partner.article.keywords'
-    _columns = {
-        'name': fields.char('Name',size=20,required=True),
-        #'article_ids':fields.many2many('crm_press.article','partner_article_keword_rel','keyword_id','article_id','Articles') sholud be corect
-    }
-res_partner_article_keywords()
 
-class crm_press_article(osv.osv):
-    _name = "crm_press.article"
-    _description = 'crm_press.article'
+class res_partner_article(osv.osv):
+    _name = "res.partner.article"
+    _description = 'res.partner.article'
     _rec_name = 'article_id'
     _columns = {
         'article_id': fields.char('Article',size=256),
@@ -74,10 +67,9 @@ class crm_press_article(osv.osv):
         'picture':fields.boolean('Picture'),
         'data':fields.boolean('Data'),
         'graph':fields.boolean('Graph'),
-        'keywords_ids':fields.many2many('res.partner.article.keywords','article_keyword_rel','article_id','keyword_id','Keywords'),
         'summary':fields.text('Summary'),
         'partners_ids':fields.one2many('res.partner','article_id','Partners'),
-        'contact_ids':fields.one2many('res.partner.contact','contact_id','Contacts'),
+        'contact_ids':fields.one2many('res.partner.contact','article_id','Contacts'),
         'source_id':fields.char('Source',size=256),
         'date':fields.date('Date'),
         'title':fields.char('Title',size=100),
@@ -89,7 +81,26 @@ class crm_press_article(osv.osv):
     _defaults = {
                  'press_review' : lambda *a: False,
                  }
-crm_press_article()
+res_partner_article()
+
+
+
+class res_partner_article_keywords(osv.osv):
+    _name = "res.partner.article.keywords"
+    _description = 'res.partner.article.keywords'
+    _columns = {
+        'name': fields.char('Name',size=20,required=True),
+        'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles'),
+    }
+res_partner_article_keywords()
+
+
+class res_partner_article(osv.osv):
+    _inherit = "res.partner.article"
+    _columns = {
+        'keywords_ids':fields.many2many('res.partner.article.keywords','article_keyword_rel','article_id','keyword_id','Keywords'),
+    }
+res_partner_article()
 
 class res_partner(osv.osv):
     _inherit = "res.partner"
@@ -168,7 +179,7 @@ class res_partner(osv.osv):
 
         'magazine_subscription':fields.boolean('Magazine subscription'),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
-        'article_id':fields.many2one('crm_press.article','Partner'),#should be corect,add for one2many relation
+        'article_id':fields.many2one('res.partner.article','Partner'),#should be corect,add for one2many relation
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
@@ -356,7 +367,7 @@ res_partner_relation()
 class res_partner_contact(osv.osv):
     _inherit='res.partner.contact'
     _columns = {
-        'contact_id':fields.many2one('crm_press.article','Contact')#add for one2many relation only,,,
+        'article_ids':fields.one2many('res.partner.article','contact_id','Articles'),#should be corect
         }
 res_partner_contact()
 

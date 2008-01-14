@@ -28,6 +28,8 @@
 import netsvc
 from osv import fields, osv
 
+
+
 class res_partner_contact(osv.osv):
     _inherit = "res.partner.contact"
     _columns = {
@@ -42,7 +44,6 @@ class res_partner_contact(osv.osv):
         'fse_work_status':fields.char('Fse Work Status',size=20), #should be corect....
         'fse_work_experience':fields.char('Fse Work Exp.',size=20),#should be corect....
         'fse_studies':fields.char('Fse Studies',size=20),#should be corect........
-        'article_ids':fields.one2many('res.partner.article','','Articles'),#should be corect
         'country_ids': fields.many2many('res.country','res_country_rel','code','country_ids','Country'),
     }
     defaults = {
@@ -50,7 +51,6 @@ class res_partner_contact(osv.osv):
         'self_sufficent':lambda *a : False,
     }
 res_partner_contact()
-
 
 class res_contact_relation_type(osv.osv):
     _name = "res.contact.relation.type"
