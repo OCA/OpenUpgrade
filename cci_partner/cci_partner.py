@@ -83,8 +83,6 @@ class res_partner_article(osv.osv):
                  }
 res_partner_article()
 
-
-
 class res_partner_article_keywords(osv.osv):
     _name = "res.partner.article.keywords"
     _description = 'res.partner.article.keywords'
@@ -235,7 +233,7 @@ class res_partner_zip(osv.osv):
     _columns = {
         'name':fields.char('Zip Code',size=4,required=True),
         'city':fields.char('City',size=60,traslate=True),
-        'partner_id':fields.selection([('temp','temp')],'Master Cci'),
+        'partner_id':fields.many2one('res.partner','Master Cci'),
         'post_center_id':fields.char('Post Center',size=40),
         'post_center_special':fields.boolean('Post Center Special'),
         'user_id':fields.many2one('res.users','User'),
@@ -299,7 +297,7 @@ res_partner_activity_list()
 class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.activity
     _name = "res.partner.activity"
     _description = 'res.partner.activity'
-
+    _rec_name = 'code'
     def name_get(self, cr, uid, ids, context={}):
         #return somethong like”list_id.abbreviation or list_id.name – code”
         if not len(ids):
@@ -318,7 +316,7 @@ class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.act
         return res
     _columns = {
         'code': fields.char('Code',size=6),
-        'name':fields.char('Name',size=250,transtale=True,required=True),
+        'label':fields.char('Name',size=250,transtale=True,required=True),
         'description':fields.text('Description'),
         'code_relations':fields.many2many('res.partner.activity','res_activity_code_rel','code_id1','code_id2','Related codes'),
         'partner_id':fields.many2one('res.partner','Partner'),
