@@ -380,11 +380,11 @@
 		</record>
 		<menuitem name="Partners/Configuration/Zip/Group Type" action="action_partner_zip_type_group" id="menu_partner_zip_group_type"/>
 
-<!-- view for crm_press.article-->
-		<record model="ir.ui.view" id="view_crm_press_article_form">
-			<field name="name">crm_press.article.form</field>
+<!-- view for res.partner.article-->
+		<record model="ir.ui.view" id="view_res_partner_article_form">
+			<field name="name">res.partner.article.form</field>
 			<field name="type">form</field>
-			<field name="model">crm_press.article</field>
+			<field name="model">res.partner.article</field>
 			<field name="arch" type="xml">
 				<form string="Article">
 					<notebook>
@@ -413,10 +413,10 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_crm_press_article_tree">
-			<field name="name">crm_press.article.tree</field>
+		<record model="ir.ui.view" id="view_res_partner_article_tree">
+			<field name="name">res.partner.article.tree</field>
 			<field name="type">tree</field>
-			<field name="model">crm_press.article</field>
+			<field name="model">res.partner.article</field>
 			<field name="arch" type="xml">
 				<tree string="Article">
 					<field name="source_id"/>
@@ -426,14 +426,14 @@
 			</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="action_crm_press_article">
+		<record model="ir.actions.act_window" id="action_res_partner_article">
 			<field name="name">Article</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">crm_press.article</field>
+			<field name="res_model">res.partner.article</field>
 			<field name="view_type">form</field>
-			<field name="view_id" ref="view_crm_press_article_form"/>
+			<field name="view_id" ref="view_res_partner_article_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Article/Article" action="action_crm_press_article" id="menu_crm_press_article"/>
+		<menuitem name="Partners/Configuration/Article/Article" action="action_res_partner_article" id="menu_res_partner_article"/>
 
 <!-- view for res.partner.article.keywords ,should be corect -->
 		<record model="ir.ui.view" id="view_partner_article_keywords_form">
