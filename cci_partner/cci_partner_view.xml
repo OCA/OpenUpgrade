@@ -208,7 +208,7 @@
 			<field name="arch" type="xml">
 				<form string="Partner Activity">
 					<field name="code"/>
-					<field name="name"/>
+					<field name="label"/>
 					<field name="description"/>
 					<field name="code_relations"/>
 					<field name="list_id"/>
@@ -222,7 +222,7 @@
 			<field name="arch" type="xml">
 				<tree string="Partner Activity">
 					<field name="code"/>
-					<field name="name"/>
+					<field name="label"/>
 					<field name="description"/>
 				</tree>
 			</field>
