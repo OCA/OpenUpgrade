@@ -76,7 +76,9 @@ class res_partner_article(osv.osv):
         'subtitle':fields.text('Subtitle'),
         'press_review':fields.boolean('In the next press review',help='Must be inserted on the next press review'),
         'canal_id':fields.char('Link',size=200,help='A text with or without a link incorporated'),
-        'review_id':fields.many2one('res.partner.article.review','Review')#add for one2many field,
+        'review_id':fields.many2one('res.partner.article.review','Review'),#add for one2many field,
+
+        'partner_id':fields.many2one('res.partner','Partner'),#added for one2many field on partner
     }
     _defaults = {
                  'press_review' : lambda *a: False,
@@ -177,9 +179,10 @@ class res_partner(osv.osv):
 
         'magazine_subscription':fields.boolean('Magazine subscription'),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
-        'article_id':fields.many2one('res.partner.article','Partner'),#should be corect,add for one2many relation
+        'article_id':fields.many2one('res.partner.article','Partner Article'),#should be corect,add for one2many relation
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','partner_id','Partner Relation'),
+        'article_ids' : fields.one2many('res.partner.article','partner_id','Articles')
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
