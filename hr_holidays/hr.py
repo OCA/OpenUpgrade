@@ -68,7 +68,7 @@ class hr_holidays(osv.osv):
 		wf_service = netsvc.LocalService("workflow")
 		wf_service.trg_create(uid, 'hr.holidays', ids[0], cr)
 		return True
-		 
+
 	def holidays_validate(self, cr, uid, ids, *args):
 		#for exp in self.browse(cr, uid, ids):
 		ids2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
@@ -100,7 +100,7 @@ class hr_holidays(osv.osv):
 			'state':'cancel'
 			})
 		return True
-	
+
 	def holidays_draft(self, cr, uid, ids, *args):
 		#for exp in self.browse(cr, uid, ids):
 		self.write(cr, uid, ids, {
@@ -109,3 +109,16 @@ class hr_holidays(osv.osv):
 		return True
 
 hr_holidays()
+
+class hr_holidays_status(osv.osv):
+	_name = "hr.holidays.status"
+	_inherit = 'hr.holidays.status'
+	_description = "Holidays Status"
+	_columns = {
+		'color_name' : fields.selection([('red', 'Red'), ('green', 'Green'), ('blue','Blue'), ('yellow', 'Yellow'), ('magenta', 'Magenta'),('cyan', 'Cyan'),('black', 'Black'),('pink', 'Pink'),('brown', 'Brown'),('indigo', 'Indigo'),('lightcoral', 'Light Coral'),('lightsteelblue', 'Light Steel Blue')],'Color of the status', required=True),
+	}
+	_defaults = {
+		'color_name': lambda *args: 'red',
+	}
+hr_holidays_status()
+
