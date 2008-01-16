@@ -417,10 +417,10 @@
 							<field name="summary" colspan="4"/>
 						</page>
 						<page string="Partners">
-							<field name="partners_ids"/>
+							<field name="partners_ids" nolabel="1"/>
 						</page>
 						<page string="Contacts">
-							<field name="contact_ids"/>
+							<field name="contact_ids" nolabel="1"/>
 						</page>
 					</notebook>
 				</form>
@@ -457,6 +457,8 @@
 			<field name="arch" type="xml">
 				<form string="Partner Article Keywords">
 					<field name="name" select="1"/>
+					<newline/>
+					<newline/>
 					<field name="article_ids"/>
 				</form>
 			</field>
@@ -471,7 +473,14 @@
 				</tree>
 			</field>
 		</record>
-		<!-- menu and action is not defined -->
+		<record model="ir.actions.act_window" id="action_res_partner_article_keyoword">
+			<field name="name">Article Keyword</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.article.keywords</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_article_keywords_tree"/>
+		</record>
+		<menuitem name="Partners/Configuration/Article/Article Keywords" action="action_res_partner_article_keyoword" id="menu_res_partner_article_keyword"/>
 
 <!-- view for res.partner.article.review ,should be corect -->
 		<record model="ir.ui.view" id="view_partner_article_review_form">
@@ -482,7 +491,8 @@
 				<form string="Article Review">
 					<field name="name" select="1"/>
 					<field name="date"/>
-					<field name="article_ids"/>
+					<newline/>
+					<field name="article_ids" colspan="4"/>
 				</form>
 			</field>
 		</record>
@@ -496,7 +506,14 @@
 				</tree>
 			</field>
 		</record>
-		<!-- menu and action is not defined -->
+		<record model="ir.actions.act_window" id="action_res_partner_article_review">
+			<field name="name">Article Review</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.article.review</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_article_review_tree"/>
+		</record>
+		<menuitem name="Partners/Configuration/Article/Article Reviews" action="action_res_partner_article_review" id="menu_res_partner_article_review"/>
 	</data>
 </terp>
 
