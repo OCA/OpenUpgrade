@@ -179,6 +179,7 @@ class res_partner(osv.osv):
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'article_id':fields.many2one('res.partner.article','Partner'),#should be corect,add for one2many relation
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
+        'relation_ids' : fields.one2many('res.partner.relation','partner_id','Partner Relation'),
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
@@ -356,7 +357,7 @@ class res_partner_relation(osv.osv): # move from cci_base_contact to here
     _description = 'res.partner.relation'
     _rec_name = 'partner_id'
     _columns = {
-        'partner_id': fields.char('Partner',size=50),#should be correct
+        'partner_id': fields.many2one('res.partner','Partner'),#should be check
         'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
         'description':fields.text('Description'),
         'type_id':fields.many2one('res.contact.relation.type','Type'), #should be correct
