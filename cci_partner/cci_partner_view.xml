@@ -69,6 +69,19 @@
 						</field>
 					</page>
 					<page string="Relations">
+						<field name="relation_ids" nolabel="1">
+                  		      <tree string="Partner Relation">
+                	               <field name="type_id"/>
+                                   <field name="partner_id"/>
+                                   <field name="description"/>
+                              </tree>
+                              <form string="Partner Relation">
+                	               <field name="type_id"/>
+                                   <field name="partner_id"/>
+                                   <field name="description"/>
+                               </form>
+                         </field>
+
 					</page>
 					<page string="Articles">
 					</page>
