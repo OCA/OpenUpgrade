@@ -279,8 +279,9 @@ class res_partner_address(osv.osv):
 
     def onchange_contact_id(self, cr, uid, ids, contact_id):
         #return name
-        if contact_id:
-            contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
+        if not contact_id:
+            return {'value':{'name' : False}}
+        contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
         return {'value':{'name' : contact_data.name}}
 
 res_partner_address()
