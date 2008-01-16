@@ -79,6 +79,7 @@ class res_partner_article(osv.osv):
         'review_id':fields.many2one('res.partner.article.review','Review'),#add for one2many field,
 
         'partner_id':fields.many2one('res.partner','Partner'),#added for one2many field on partner
+        'contact_id':fields.many2one('res.partner.contact','Contact'),#added for one2many field on contact
     }
     _defaults = {
                  'press_review' : lambda *a: False,
@@ -371,6 +372,7 @@ class res_partner_contact(osv.osv):
     _inherit='res.partner.contact'
     _columns = {
         'article_ids':fields.one2many('res.partner.article','contact_id','Articles'),#should be corect
+        'article_id':fields.many2one('res.partner.article','Article'),
         }
 res_partner_contact()
 
