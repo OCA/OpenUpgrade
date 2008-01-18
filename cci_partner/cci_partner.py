@@ -118,17 +118,17 @@ class res_partner(osv.osv):
                     self.write(cr,uid,[new_id],{'user_id':saleman_id})
         return new_id
 
-    def write(self, cr, uid, ids,vals, *args, **kwargs):
-        super(osv.osv,self).write(cr, uid, ids,vals, *args, **kwargs)
-        if 'address' in vals:
-            for add in vals['address']:
-                if add[2]['zip_id'] and add[2]['type']=='default':
-                    data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
-                    saleman_id = data.user_id.id
-                    self.write(cr,uid,ids,{'user_id':saleman_id})
-                else:
-                    self.write(cr,uid,ids,{'user_id':False})
-        return True
+#    def write(self, cr, uid, ids,vals, *args, **kwargs):
+#        super(osv.osv,self).write(cr, uid, ids,vals, *args, **kwargs)
+#        if 'address' in vals:
+#            for add in vals['address']:
+#                if add[2]['zip_id'] and add[2]['type']=='default':
+#                    data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
+#                    saleman_id = data.user_id.id
+#                    self.write(cr,uid,ids,{'user_id':saleman_id})
+#                else:
+#                    self.write(cr,uid,ids,{'user_id':False})
+#        return True
 
     def check_address(self, cr, uid, ids):
         #constraints to ensure that there is only one default address by partner.
@@ -269,6 +269,14 @@ class res_partner_address(osv.osv):
                  'who_presence' : lambda *a: True,
                  'dir_presence' : lambda *a: True,
                }
+    def onchange_user_id(self, cr, uid, ids,res,zip_id):
+        if zip_id:
+            data_zip=self.pool.get('res.partner.zip').browse(cr, uid,[zip_id])
+            for data in data_zip:
+                if data.user_id:
+                    self.pool.get('res.partner').write(cr, uid,res,{'user_id':data.user_id.id})
+        return {}
+
 
     def unlink(self, cr, uid, ids, context={}):
         #Unlink related contact if: no other Address AND not self_sufficient
@@ -276,10 +284,11 @@ class res_partner_address(osv.osv):
         for address in data_addresses:
             id_contact=address.contact_id.id
             super(res_partner_address,self).unlink(cr, uid, ids,context=context)
-            data_contact=self.pool.get('res.partner.contact').browse(cr, uid,[id_contact])
-            for data in data_contact:
-                if (not data.self_sufficent)  and (not data.address_ids):
-                    self.pool.get('res.partner.contact').unlink(cr, uid,[data.id], context)
+            if id_contact:
+                data_contact=self.pool.get('res.partner.contact').browse(cr, uid,[id_contact])
+                for data in data_contact:
+                    if (not data.self_sufficent)  and (not data.address_ids):
+                        self.pool.get('res.partner.contact').unlink(cr, uid,[data.id], context)
         return True
 
     def onchange_contact_id(self, cr, uid, ids, contact_id):
