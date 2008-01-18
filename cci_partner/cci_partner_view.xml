@@ -24,7 +24,7 @@
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
 				<field name="zip" position="replace"><!-- replace zip with zip_id -->
-			    	<field name="zip_id"/>
+			    	<field name="zip_id" on_change="onchange_user_id(parent.id,zip_id)"/>
 				</field>
 			</field>
 		</record>
@@ -85,9 +85,6 @@
 					</page>
 					<page string="Articles">
 						<field name="article_ids" nolabel="1"/>
-					</page>
-					<page string="Membership">
-						<!-- current module view should be added -->
 					</page>
 					<page string="Accounting Information">
 						<field name="domiciliation"/>
