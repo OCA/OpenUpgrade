@@ -28,8 +28,6 @@
 import netsvc
 from osv import fields, osv
 
-
-
 class res_partner_contact(osv.osv):
     _inherit = "res.partner.contact"
     _columns = {
@@ -45,12 +43,32 @@ class res_partner_contact(osv.osv):
         'fse_work_experience':fields.char('Fse Work Exp.',size=20),#should be corect....
         'fse_studies':fields.char('Fse Studies',size=20),#should be corect........
         'country_ids': fields.many2many('res.country','res_country_rel','code','country_ids','Country'),
+        'link_ids':fields.one2many('res.partner.contact.link','contact_id','Contact Link')
     }
     defaults = {
         'data_private' : lambda *a : False,
         'self_sufficent':lambda *a : False,
     }
 res_partner_contact()
+
+
+class res_partner_contact_link_type(osv.osv):
+    _name = "res.partner.contact.link.type"
+    _description = "res.partner.contact.link.type"
+    _columns = {
+        'name':fields.char('Name',size=20),
+   }
+res_partner_contact_link_type()
+
+class res_partner_contact_link(osv.osv):
+    _name = "res.partner.contact.link"
+    _description = "res.partner.contact.link"
+    _columns = {
+        'name':fields.char('Name',size=20),
+        'type_id' : fields.many2one('res.partner.contact.link.type','Type'),#should be check ,,,
+        'contact_id' : fields.many2one('res.partner.contact','Contact'),#should be check
+   }
+res_partner_contact_link()
 
 class res_contact_relation_type(osv.osv):
     _name = "res.contact.relation.type"
