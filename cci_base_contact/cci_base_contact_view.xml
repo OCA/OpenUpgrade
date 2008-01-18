@@ -52,6 +52,16 @@
 					<field name="country_ids" />
 				</page>
 				<page string="Personnal Links">
+					<field name="link_ids">
+						<form string="Contact Link">
+							<field name="type_id"/>
+							<field name="contact_id"/>
+						</form>
+						<tree string="Contact Link">
+							<field name="type_id"/>
+							<field name="contact_id"/>
+						</tree>
+					</field>
 				</page>
 				<page string="Extra Information">
 					<field name="country_id"/>
