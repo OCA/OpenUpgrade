@@ -1,0 +1,42 @@
+<terp>
+	<data>
+<!-- new object is added -->
+		<record model="ir.ui.view" id="view_cci_partner_answer_form">
+			<field name="name">cci_partner_profile.answer.form</field>
+			<field name="type">form</field>
+			<field name="model">cci_partner_profile.answer</field>
+			<field name="arch" type="xml">
+				<form string="Partner Answer">
+					<field name="partner_id"/>
+					<field name="address_id"/>
+					<field name="contact_id" />
+					<field name="question_id"/>
+					<field name="answer_id"/>
+					<field name="answer_text"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_cci_partner_answer_tree">
+			<field name="name">cci_partner_profile.answer.tree</field>
+			<field name="type">tree</field>
+			<field name="model">cci_partner_profile.answer</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Answer">
+					<field name="partner_id"/>
+					<field name="address_id"/>
+					<field name="contact_id" />
+					<field name="question_id"/>
+					<field name="answer_id"/>
+					<field name="answer_text"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_cci_partner_answer">
+			<field name="name">Partner Answer</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_partner_profile.answer</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Partners/Partner by Profiles" action="action_cci_partner_answer" id="menu_partner_answer"/>
+	</data>
+</terp>
