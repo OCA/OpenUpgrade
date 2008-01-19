@@ -23,12 +23,11 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
-				<field name="zip" position="replace"><!-- replace zip with zip_id -->
-			    	<field name="zip_id" on_change="onchange_user_id(parent.id,zip_id)"/>
+				<field name="zip" position="replace">
+			    	<field name="zip_id" on_change="onchange_user_id(zip_id)"/>
 				</field>
 			</field>
 		</record>
-
 		<record model="ir.ui.view" id="view_partner_form_inherit2">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
@@ -412,9 +411,8 @@
 							<!--<field name="press_review_id" /> not defined in field -->
 							<field name="page"/>
 							<field name="article_length" />
-							<!--<field name="group(picture, graph, date)" />-->
+							<!--<field name="group(picture, graph, date)" /> should be add(not cleared) -->
 							<field name="keywords_ids" colspan="4"/>
-							<field name="summary" colspan="4"/>
 						</page>
 						<page string="Partners">
 							<field name="partners_ids" nolabel="1"/>
