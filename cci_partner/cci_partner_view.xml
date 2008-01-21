@@ -44,12 +44,15 @@
                                         <field name="description"/>
                               </tree>
                               <form string="Activity">
-                                        <field name="code"/>
-                                        <field name="label"/>
-                                        <field name="description"/>
-                                        <field name="code_relations"/>
-                               </form>
-                         </field>
+								<field name="code" select="1"/>
+								<field name="label" select="1" />
+								<field name="list_id"/>
+								<newline/>
+								<field name="description" colspan="4"/>
+								<newline/>
+								<field name="code_relations" colspan="4"/>
+							</form>
+				         </field>
 					</page>
 					<page string="Tags">
 						<!-- should be add -->
@@ -117,7 +120,7 @@
 						<field name="training_authorization"/>
 						<field name="lang_authorization"/>
 
-						<separator string="alerts" colspan="4"/>
+						<separator string="Alerts" colspan="4"/>
 						<!--<field name="alert_note" colspan="4"/> not in object res.partner -->
 						<field name="alert_advertising"/>
 						<field name="alert_legalisations"/>
@@ -220,11 +223,14 @@
 			<field name="model">res.partner.activity</field>
 			<field name="arch" type="xml">
 				<form string="Partner Activity">
-					<field name="code"/>
-					<field name="label"/>
-					<field name="description"/>
-					<field name="code_relations"/>
+					<field name="code" select="1"/>
+					<field name="label" select="1" />
 					<field name="list_id"/>
+					<newline/>
+					<field name="description" colspan="4"/>
+					<newline/>
+					<field name="code_relations" colspan="4"/>
+
 				</form>
 			</field>
 		</record>
@@ -240,7 +246,14 @@
 				</tree>
 			</field>
 		</record>
-		<!-- menu & action is not defined -->
+		<record model="ir.actions.act_window" id="action_partner_activity">
+			<field name="name">Partner Activity</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.activity</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_activity_tree"/>
+		</record>
+		<menuitem name="Partners/Configuration/Partner Activity/Activity" action="action_partner_activity" id="menu_partner_activity"/>
 
 <!-- view for res.partner.activity.relation replaced frm res.partner.activity.code -->
 		<record model="ir.ui.view" id="view_partner_activity_relation_form">
@@ -265,7 +278,14 @@
 				</tree>
 			</field>
 		</record>
-		<!--  menu & action is not defined -->
+		<record model="ir.actions.act_window" id="action_partner_activity_relation">
+			<field name="name">Activity Relation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.activity.relation</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_activity_relation_tree"/>
+		</record>
+		<menuitem name="Partners/Configuration/Partner Activity/Activity Relation" action="action_partner_activity_relation" id="menu_partner_activity_relation"/>
 
 <!-- view for res.partner.activity.list -->
 		<record model="ir.ui.view" id="view_partner_activity_list_form">
@@ -274,8 +294,8 @@
 			<field name="model">res.partner.activity.list</field>
 			<field name="arch" type="xml">
 				<form string="Activity List">
-					<field name="name"/>
-					<field name="abbreviation"/>
+					<field name="name" select="1"/>
+					<field name="abbreviation" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -285,12 +305,19 @@
 			<field name="model">res.partner.activity.list</field>
 			<field name="arch" type="xml">
 				<tree string="Activity List">
-					<field name="name"/>
-					<field name="abbreviation"/>
+					<field name="name" select="1"/>
+					<field name="abbreviation" select="1"/>
 				</tree>
 			</field>
 		</record>
-		<!--  menu & action is not defined -->
+		<record model="ir.actions.act_window" id="action_partner_activity_list">
+			<field name="name">Activity List</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.activity.list</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_activity_list_tree"/>
+		</record>
+		<menuitem name="Partners/Configuration/Partner Activity/Activity List" action="action_partner_activity_list" id="menu_partner_activity_list"/>
 
 <!-- view for res..partner.zip. ... -->
 		<record model="ir.ui.view" id="view_partner_zip_form">
