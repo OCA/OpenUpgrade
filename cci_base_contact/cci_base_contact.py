@@ -82,7 +82,7 @@ class res_contact_relation(osv.osv):
     _name = "res.contact.relation"
     _description ='res.contact.relation'
     _columns = {
-        'contact_id': fields.char('Contact',size=50),#should be corect
+        'contact_id': fields.many2one('res.partner.contact','Contact'),
         'contact_relation_id':fields.char('Relation',size=50),#should be corect
         'description':fields.text('Description'),
         'type_id':fields.many2one('res.contact.relation.type','Type'),
