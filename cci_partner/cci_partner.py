@@ -126,8 +126,6 @@ class res_partner(osv.osv):
                     data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
                     saleman_id = data.user_id.id
                     self.write(cr,uid,ids,{'user_id':saleman_id})
-                else:
-                    self.write(cr,uid,ids,{'user_id':False})
         return True
 
     def check_address(self, cr, uid, ids):
@@ -253,7 +251,7 @@ class res_partner_address(osv.osv):
     _columns = {
         'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
         'zip_id':fields.many2one('res.partner.zip','Zip'),
-        #'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be corect
+        #'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be check
         'function_label':fields.char('Function Label',size=128),
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
@@ -375,10 +373,10 @@ class res_partner_relation(osv.osv): # move from cci_base_contact to here
     _description = 'res.partner.relation'
     _rec_name = 'partner_id'
     _columns = {
-        'partner_id': fields.many2one('res.partner','Partner'),#should be check
+        'partner_id': fields.many2one('res.partner','Partner'),
         'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
         'description':fields.text('Description'),
-        'type_id':fields.many2one('res.contact.relation.type','Type'), #should be correct
+        'type_id':fields.many2one('res.contact.relation.type','Type'),
     }
 res_partner_relation()
 
