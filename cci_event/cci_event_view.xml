@@ -34,7 +34,7 @@
 						<field name="fse_code"/>
 						<field name="fse_hours"/>
 						<field name="signet_type"/>
-						<field name="localisation"/>
+						<!--<field name="localisation"/>-->
 						<field name="account_analytic_id"/>
 						<field name="budget_id"/>
 						<field name="product_id"/>
@@ -45,11 +45,16 @@
 						<separator string="Tasks management" colspan="4"/>
 						<field name="project_id"/>
 						<button colspan="2" string="Create Retro-Planning" name="button_project_create"/>
-
 					</page>
 					<page string="Mailing">
-						<field name="mail_auto"/>
-						<field name="mail_text"/>
+						<field name="mail_auto_registr"/>
+						<newline/><newline/>
+						<field name="mail_registr"/>
+						<newline/>
+						<field name="mail_auto_confirm"/>
+						<newline/><newline/>
+						<field name="mail_confirm"/>
+						<newline/>
 					</page>
 					<page string="Statistics">
 						<separator string="Registrations" colspan="4"/>
