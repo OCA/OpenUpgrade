@@ -1,6 +1,7 @@
 <terp>
 	<data>
 
+<!-- event.event form view (inherited) -->
 		<record model="ir.ui.view" id="event.view_event_form">
 			<field name="name">Events</field>
 			<field name="model">event.event</field>
@@ -62,5 +63,23 @@
 				</form>
 			</field>
 		</record>
+
+<!-- event.event tree view -->
+	<record model="ir.ui.view" id="view_event_tree">
+		<field name="name">event.event.tree</field>
+		<field name="model">event.event</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Events">
+				<field name="name"/>
+				<field name="user_id"/>
+				<field name="date_begin"/>
+				<field name="register_min"/>
+				<field name="register_current"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
 	</data>
 </terp>
