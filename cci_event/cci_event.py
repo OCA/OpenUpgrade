@@ -29,30 +29,50 @@
 from osv import fields,osv
 from osv import orm
 
+class event_check_type(osv.osv):
+    _name="event.check.type"
+    _description="event.check.type"
+    _columns={
+          'name':fields.char('Name',size=20),
+        }
+event_check_type()
+
 class event(osv.osv):#added for partner.ods
     _inherit="event.event"
     _description="event.event"
     _columns={
-          #Fields present in 'Event Fields'
+          'state': fields.selection([('draft','Draft'),('open','Open'),('confirm','Confirmed'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),#override field to add some states on it.
           'agreement_nbr':fields.char('Agreement Nbr',size=16),
-          #'check_accept':fields.many2one('event.event.type.check','Allowed checks'),
+          'check_accept':fields.many2one('event.check.type','Allowed checks'),
           'mail_auto_registr':fields.boolean('Mail Auto Register',help='A mail is send when the registration is confirmed'),
           'mail_auto_confirm':fields.boolean('Mail Auto Confirm',help='A mail is send when the event is confimed'),
           'mail_registr':fields.text('Mail Register',help='Template for the mail'),
           'mail_confirm':fields.text('Mail Confirm',help='Template for the mail'),
-
-          #Fields present in 'Event Views,'
-          'note':fields.char('Note',size=256),#should be check
-          'fse_code':fields.char('fse code',size=20),#should be corect
-          'fse_hours':fields.char('fse hours',size=20),#should be corect
-          'signet_type':fields.char('Signet Type',size=20),#should be corect
+          'note':fields.char('Note',size=256),
+          'fse_code':fields.char('Fse code',size=64),
+          'fse_hours':fields.integer('Fse Hours'),
+          'signet_type':fields.selection([('temp','temp')], 'Signet type'),#type is defined so temp,
           'localisation':fields.char('Localisation',size=20),#should be corect
-          'account_analytic_id':fields.char('Analytic Account',size=20),#should be corect
-          'budget_id':fields.char('Budget',size=20),#should be corect
-          'product_id':fields.many2one('product.product','Product'),#should be check
-          'mail_auto':fields.char('mail auto',size=20),#should be corect
-          'mail_text':fields.char('mail text',size=20),#should be corect
+          'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
+          'budget_id':fields.many2one('account.budget.post','Budget'),
+          'product_id':fields.many2one('product.product','Product'),
           'sales_open':fields.char('Sales open',size=20),#should be corect
           'sales_draft':fields.char('Sales draft',size=20),#should be corect
         }
 event()
+
+class event_check(osv.osv):
+    _name="event.check"
+    _description="event.check"
+    _columns={
+        "name": fields.char('Name', size=128, required=True),
+        "code": fields.char('Code', size=64),
+        "case_id": fields.char('Inscriptions',size=20),#many2one to ?.....
+        "state": fields.selection([('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')], 'State', readonly=True, required=True),#should be check
+        "unit_nbr": fields.integer('Units'),
+        "type_id":fields.many2one('event.check.type','Type'),#should be check
+        "date_reception":fields.date("Reception Date"),
+        "date_limit":fields.date('Limit Date'),
+        "date_submission":fields.date("Submission Date"),
+        }
+event_check()
