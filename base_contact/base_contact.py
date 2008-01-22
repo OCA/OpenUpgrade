@@ -65,7 +65,7 @@ class res_partner_address(osv.osv):
     _inherit='res.partner.address'
     _description ='Partner Contact'
     _columns = {
-        'contact_id':fields.many2one('res.partner.contact','Contacts'),
+        'contact_id':fields.many2one('res.partner.contact','Contact'),
         }
 res_partner_address()
 

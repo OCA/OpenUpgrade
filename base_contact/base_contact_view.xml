@@ -58,5 +58,44 @@
 		<field name="view_id" ref="view_partner_contact_tree"/>
 	</record>
 	<menuitem name="Partners/" id="menu_partner_contact_form" action="action_partner_contact_form"/>
+	<menuitem name="Partners/Addresses"  id="base.menu_partner_address_form"/>
+
+	<record model="ir.ui.view" id="view_partner_address_form1">
+		<field name="name">Partner address form inherited</field>
+		<field name="model">res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="partner_id" position="replace">
+				<field name="partner_id" select="1"/>
+				<field name="contact_id" select="1"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_form">
+		<field name="name">Partner  form inherited</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="email" position="after">
+				<field name="contact_id" select="1" colspan="4"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_address_tree">
+		<field name="name">Partner address tree inherited</field>
+		<field name="model">res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_tree"/>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="partner_id" position="after">
+				<field name="contact_id"/>
+			</field>
+		</field>
+	</record>
+
 </data>
 </terp>
