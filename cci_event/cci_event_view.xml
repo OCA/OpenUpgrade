@@ -1,0 +1,66 @@
+<terp>
+	<data>
+
+		<record model="ir.ui.view" id="event.view_event_form">
+			<field name="name">Events</field>
+			<field name="model">event.event</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Events">
+					<notebook>
+					<page string="Information">
+						<separator string="Event Description" colspan="4"/>
+						<field name="name" string="Event" select="1" colspan="4"/>
+						<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
+						<field name="type"/>
+						<field name="user_id" select="1"/>
+						<field name="active"/>
+						<field name="date_begin" select="1"/>
+						<field name="date_end" select="2"/>
+						<field name="register_min" select="2"/>
+						<field name="register_max" select="2"/>
+						<field name="note"/> <!-- should be check -->
+						<separator string="Status" colspan="4"/>
+						<field name="state" select="1"/>
+						<group col="4" colspan="2">
+							<button string="Confirm Event" name="button_confirm" states="draft"/>
+							<button string="Cancel Event" name="button_cancel" states="draft,confirm"/>
+							<button string="Event Done" name="button_done" states="confirm"/>
+							<button string="Set To Draft" name="button_draft" states="confirm,cancel,done"/>
+						</group>
+					</page>
+					<page string="Extra Info">
+						<field name="fse_code"/>
+						<field name="fse_hours"/>
+						<field name="signet_type"/>
+						<field name="localisation"/>
+						<field name="account_analytic_id"/>
+						<field name="budget_id"/>
+						<field name="product_id"/>
+						<!--<field name="check_accept"/>-->
+						<newline/>
+						<field name="agreement_nbr"/>
+						<newline/>
+						<separator string="Tasks management" colspan="4"/>
+						<field name="project_id"/>
+						<button colspan="2" string="Create Retro-Planning" name="button_project_create"/>
+
+					</page>
+					<page string="Mailing">
+						<field name="mail_auto"/>
+						<field name="mail_text"/>
+					</page>
+					<page string="Statistics">
+						<separator string="Registrations" colspan="4"/>
+						<field name="register_current"/>
+						<field name="register_prospect"/>
+						<field name="sales_open"/>
+						<field name="sales_draft"/>
+						<separator string="Remaining Tasks" colspan="4"/>
+					</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+	</data>
+</terp>
