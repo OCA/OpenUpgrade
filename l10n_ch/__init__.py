@@ -34,5 +34,4 @@ import company
 import wizard
 import payment
 import report
-import v11
 import bank

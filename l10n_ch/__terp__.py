@@ -14,10 +14,8 @@
 	"demo_xml" : ["vaudtax_data_demo.xml","dta_demo.xml"],
 	"update_xml" : [
 		"dta_view.xml","dta_wizard.xml",
-		"v11_wizard.xml","v11_view.xml",
 		"account_vat.xml","base_config.xml","account_config.xml",
-		"bvr_report.xml",
-		"bvr_wizard.xml",
+		"bvr_report.xml", "bvr_wizard.xml", "bvr_view.xml",
 		"company_view.xml",
 		'bank_view.xml',
 	],
