@@ -86,6 +86,7 @@
 		</field>
 	</record>
 
+<!-- event.type view (inherit) -->
 	<record model="ir.ui.view" id="view_event_type_form_inherit">
 		  <field name="name">Event type</field>
 		  <field name="model">event.type</field>
@@ -97,6 +98,75 @@
 			</form>
 		  </field>
 		</record>
+
+<!-- view for event.group -->
+		<record model="ir.ui.view" id="view_event_group_form">
+			<field name="name">event.group.form</field>
+			<field name="type">form</field>
+			<field name="model">event.group</field>
+			<field name="arch" type="xml">
+				<form string="Event Group">
+					<field name="name"/>
+					<field name="type"/>
+<!--					<field name="cavalier" />-->
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_group_tree">
+			<field name="name">event.group.tree</field>
+			<field name="type">tree</field>
+			<field name="model">event.group</field>
+			<field name="arch" type="xml">
+				<tree string="Event Group">
+<!--					<field name="cavalier" />-->
+					<field name="name"/>
+					<field name="type"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_event_group">
+			<field name="name">Event Group</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.group</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Events/Configuration/Groups/Event Group" action="action_event_group" id="menu_event_group"/>
+
+<!-- view for event.subscription -->
+		<record model="ir.ui.view" id="view_event_subsciption_form">
+			<field name="name">event.subscription.form</field>
+			<field name="type">form</field>
+			<field name="model">event.subscription</field>
+			<field name="arch" type="xml">
+				<form string="Event Subsription">
+					<field name="unit_price"/>
+					<field name="group_id"/>
+					<field name="canal_id"/>
+					<newline/>
+					<field name="cavalier"/>
+					<field name="check_mode"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_subsciption_tree">
+			<field name="name">event.subscription.tree</field>
+			<field name="type">tree</field>
+			<field name="model">event.subscription</field>
+			<field name="arch" type="xml">
+				<tree string="Event Subsription">
+					<field name="unit_price"/>
+					<field name="cavalier"/>
+					<field name="check_mode"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_event_subscription">
+			<field name="name">Event Subscription</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.subscription</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Events/Configuration/Subsctiption/Event Subsctiption" action="action_event_subscription" id="menu_event_subscription"/>
 
 	</data>
 </terp>
