@@ -57,8 +57,6 @@ class wizard_report(wizard.interface):
 
     def _checkdepts(self, cr, uid, data, context):
 
-        print " DATA ::::: ",data
-
         if len(data['form']['depts'][0][2])==0:
             return 'notify'
         else:
