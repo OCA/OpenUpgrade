@@ -33,7 +33,7 @@ class event_check_type(osv.osv):
     _name="event.check.type"
     _description="event.check.type"
     _columns={
-          'name':fields.char('Name',size=20),
+          'name':fields.char('Name',size=20,required=True),
         }
 event_check_type()
 
@@ -68,7 +68,7 @@ class event_check(osv.osv):
         "name": fields.char('Name', size=128, required=True),
         "code": fields.char('Code', size=64),
         "case_id": fields.char('Inscriptions',size=20),#many2one to ?.....
-        "state": fields.selection([('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')], 'State', readonly=True, required=True),#should be check
+        "state": fields.selection([('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')], 'State', readonly=True),#should be check
         "unit_nbr": fields.integer('Units'),
         "type_id":fields.many2one('event.check.type','Type'),#should be check
         "date_reception":fields.date("Reception Date"),
@@ -105,4 +105,5 @@ class event_subscription(osv.osv):
         "canal_id" :fields.many2one('res.partner.canal',"Channel"),#should be check, res.chanel (default manual ?)
         "check_mode":fields.boolean('Check Mode'),
         }
+
 event_subscription()
