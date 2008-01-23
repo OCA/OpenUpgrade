@@ -77,8 +77,6 @@ class event_check(osv.osv):
         }
 event_check()
 
-
-
 class event_type(osv.osv):
     _inherit = 'event.type'
     _description= 'Event type'
@@ -86,3 +84,25 @@ class event_type(osv.osv):
         'check_type': fields.many2one('event.check.type','Check Type'),
     }
 event_type()
+
+class event_group(osv.osv):#should be corect (not complete)
+    _name= 'event.group'
+    _description = 'event.group'
+    _columns = {
+        "name":fields.char('Name',size=20,required=True),
+        "cavalier":fields.boolean('Cavalier',help="Check if we should print papers with participant name"),#should be check
+        "type":fields.selection([('image','Image'),('text','Text')], 'Type',)#image,text,none #should be corect
+                }
+event_group()
+
+class event_subscription(osv.osv):
+    _name="event.subscription"
+    _description="event.subscription"
+    _columns={
+        "unit_price": fields.float('Unit Price'),
+        "cavalier": fields.boolean('Cavalier'),
+        "group_id": fields.many2one('event.group','Event Group'),
+        "canal_id" :fields.many2one('res.partner.canal',"Channel"),#should be check, res.chanel (default manual ?)
+        "check_mode":fields.boolean('Check Mode'),
+        }
+event_subscription()
