@@ -30,13 +30,23 @@
 import wizard
 import datetime
 import time
+import pooler
 
 form='''<?xml version="1.0"?>
 <form string="Report Options">
     <field name="date_from" colspan="2" />
     <field name="holiday_type" colspan="2" />
     <field name="depts" colspan="4" />
+
 </form>'''
+
+zero_form='''<?xml version="1.0"?>
+<form string="Notification">
+<label string="You have to select atleast 1 Department. Try again." colspan="4"/>
+</form>'''
+
+zero_fields={
+}
 
 class wizard_report(wizard.interface):
     def _check(self, cr, uid, data, context):
@@ -45,13 +55,22 @@ class wizard_report(wizard.interface):
 
         return data['form']
 
+    def _checkdepts(self, cr, uid, data, context):
+
+        print " DATA ::::: ",data
+
+        if len(data['form']['depts'][0][2])==0:
+            return 'notify'
+        else:
+            return 'report'
+
     fields={
         'date_from':{
             'string':'From',
             'type':'date',
             'required':True,
         },
-        'depts': {'string': 'Department(s)', 'type': 'many2many', 'relation': 'hr.department','required': True},
+        'depts': {'string': 'Department(s)', 'type': 'many2many', 'relation': 'hr.department'},
         'holiday_type':{'string':"Select Holiday Type",'type':'selection','selection':[('Validated','Validated'),('Confirmed','Confirmed'),('both','Both')]},
 
     }
@@ -59,7 +78,15 @@ class wizard_report(wizard.interface):
     states={
         'init':{
             'actions':[_check],
-            'result':{'type':'form', 'arch':form, 'fields':fields, 'state':[('end', 'Cancel'), ('report', 'Print')]}
+            'result':{'type':'form', 'arch':form, 'fields':fields, 'state':[('end', 'Cancel'), ('checkdept', 'Print')]}
+        },
+        'checkdept': {
+            'actions': [],
+            'result': {'type':'choice','next_state':_checkdepts}
+        },
+        'notify': {
+            'actions': [],
+            'result': {'type':'form','arch':zero_form,'fields':zero_fields,'state':[('end','Ok')]}
         },
         'report':{
             'actions':[],
