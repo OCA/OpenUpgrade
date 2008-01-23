@@ -76,3 +76,13 @@ class event_check(osv.osv):
         "date_submission":fields.date("Submission Date"),
         }
 event_check()
+
+
+
+class event_type(osv.osv):
+    _inherit = 'event.type'
+    _description= 'Event type'
+    _columns = {
+        'check_type': fields.many2one('event.check.type','Check Type'),
+    }
+event_type()
