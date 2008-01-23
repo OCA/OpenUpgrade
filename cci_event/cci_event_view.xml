@@ -1,6 +1,5 @@
 <terp>
 	<data>
-
 <!-- event.event form view (inherited) -->
 		<record model="ir.ui.view" id="event.view_event_form">
 			<field name="name">Events</field>
@@ -167,6 +166,82 @@
 			<field name="view_type">form</field>
 		</record>
 		<menuitem name="Events/Configuration/Subsctiption/Event Subsctiption" action="action_event_subscription" id="menu_event_subscription"/>
+
+<!-- view for event.check -->
+		<record model="ir.ui.view" id="view_event_check_form">
+			<field name="name">event.check.form</field>
+			<field name="type">form</field>
+			<field name="model">event.check</field>
+			<field name="arch" type="xml">
+				<form string="Event Check">
+					<field name="name"/>
+					<field name="code"/>
+					<field name="unit_nbr"/>
+					<field name="type_id"/>
+					<field name="case_id"/>
+					<newline/>
+					<field name="date_reception"/>
+					<field name="date_limit"/>
+					<field name="date_submission"/>
+					<newline/>
+					<group col="4" colspan="13">
+						<field name="state" select="1"/>
+						<button string="Confirm" name="button_confirm"/>
+						<button string="Block" name="button_cancel"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_check_tree">
+			<field name="name">event.check.tree</field>
+			<field name="type">tree</field>
+			<field name="model">event.check</field>
+			<field name="arch" type="xml">
+				<tree string="Event Check">
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_event_check">
+			<field name="name">Event Check</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.check</field>
+			<field name="view_type">form</field>
+		</record>
+		<!-- menu should be check if it right place or not -->
+		<menuitem name="Events/Event Check" action="action_event_check" id="menu_event_check"/>
+
+<!-- view for event.check.type -->
+		<record model="ir.ui.view" id="view_event_check_type_form">
+			<field name="name">event.check.type.form</field>
+			<field name="type">form</field>
+			<field name="model">event.check.type</field>
+			<field name="arch" type="xml">
+				<form string="Check Type">
+					<field name="name"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_check_type_tree">
+			<field name="name">event.check.type.tree</field>
+			<field name="type">tree</field>
+			<field name="model">event.check.type</field>
+			<field name="arch" type="xml">
+				<tree string="Check Type">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_event_check_type">
+			<field name="name">Check Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.check.type</field>
+			<field name="view_type">form</field>
+		</record>
+		<!-- menu should be check if it right place or not -->
+		<menuitem name="Events/Configuration/Event Check/Check Type" action="action_event_check_type" id="menu_event_check_type"/>
+
 
 	</data>
 </terp>
