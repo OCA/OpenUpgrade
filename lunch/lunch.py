@@ -27,7 +27,12 @@ class lunch_product(osv.osv):
 		'category_id': fields.selection(_category_name_get, 'Category', size=32),
 		'description': fields.char('Description', size=128, required=False),
 		'price': fields.float('Price', digits=(16,2)),
+		'active': fields.boolean('Active'),
 	}
+
+	_defaults = {
+		'active': lambda *a : True,
+		}
 
 lunch_product()
 
