@@ -86,5 +86,17 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_event_type_form_inherit">
+		  <field name="name">Event type</field>
+		  <field name="model">event.type</field>
+		  <field name="type">form</field>
+		  <field name="inherit_id" ref="event.view_event_type_form"/>
+		  <field name="arch" type="xml">
+			<form string="Event Type">
+				<field name="check_type"/>
+			</form>
+		  </field>
+		</record>
+
 	</data>
 </terp>
