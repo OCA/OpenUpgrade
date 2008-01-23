@@ -92,5 +92,15 @@
 				</field>
 			</field>
 		</record>
+		<record model="ir.ui.view" id="invoice_form2">
+			<field name="name">account.invoice.form.inherit</field>
+			<field name="model">account.invoice</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+			<field name="arch" type="xml">
+				<field name="reference" position="replace">
+				</field>
+			</field>
+		</record>
 	</data>
 </terp>
