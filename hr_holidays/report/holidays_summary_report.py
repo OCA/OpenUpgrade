@@ -193,16 +193,15 @@ class report_custom(report_rml):
 
         print "data...",data
         if data['model']=='hr.employee':
-            print "ye hai employee ka part"
+
             for id in data['form']['emp'][0][2]:
-                 print "before items..."
                  items = pooler.get_pool(cr.dbname).get('hr.employee').read(cr,uid,id,['id','name'])
-                 print "after items,,,",items
+
                  emp_xml += emp_create_xml(self,cr,uid,0,holiday_type,row_id,items['id'],items['name'],som, eom)
                  row_id = row_id +1
 
         elif data['model']=='ir.ui.menu':
-            print "dept bolo dept,kya?"
+
             for id in data['form']['depts'][0][2]:
                 dept = pooler.get_pool(cr.dbname).get('hr.department').browse(cr, uid, id, context.copy())
                 depts.append(dept)
