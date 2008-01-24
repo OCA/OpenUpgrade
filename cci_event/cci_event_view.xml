@@ -74,7 +74,8 @@
 		<field name="model">event.event</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Events">
+			<tree string="Events" colors="red:register_min>register_current">
+<!--			<tree string="Events">-->
 				<field name="name"/>
 				<field name="user_id"/>
 				<field name="date_begin"/>
