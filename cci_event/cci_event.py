@@ -52,7 +52,7 @@ class event(osv.osv):#added for partner.ods
           'fse_code':fields.char('Fse code',size=64),
           'fse_hours':fields.integer('Fse Hours'),
           'signet_type':fields.selection([('temp','temp')], 'Signet type'),#type is defined so temp,
-          'localisation':fields.char('Localisation',size=20),#should be corect
+          #'localisation':fields.char('Localisation',size=20),#should be corect
           'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
           'budget_id':fields.many2one('account.budget.post','Budget'),
           'product_id':fields.many2one('product.product','Product'),
@@ -85,19 +85,21 @@ class event_type(osv.osv):
     }
 event_type()
 
-class event_group(osv.osv):#should be corect (not complete)
+class event_group(osv.osv):
     _name= 'event.group'
     _description = 'event.group'
     _columns = {
         "name":fields.char('Name',size=20,required=True),
+        "bookmark_name":fields.char('Bookmark Name',size=128),
+        "picture":fields.binary('Picture'),
         "cavalier":fields.boolean('Cavalier',help="Check if we should print papers with participant name"),#should be check
-        "type":fields.selection([('image','Image'),('text','Text')], 'Type',)#image,text,none #should be corect
+        "type":fields.selection([('none',''),('image','Image'),('text','Text')], 'Type',)#image,text,none #should be corect
                 }
 event_group()
 
-class event_subscription(osv.osv):
-    _name="event.subscription"
-    _description="event.subscription"
+class event_registration(osv.osv):
+    _inherit = 'crm.case'
+    _description="event.registration"
     _columns={
         "unit_price": fields.float('Unit Price'),
         "cavalier": fields.boolean('Cavalier'),
@@ -106,4 +108,4 @@ class event_subscription(osv.osv):
         "check_mode":fields.boolean('Check Mode'),
         }
 
-event_subscription()
+event_registration()
