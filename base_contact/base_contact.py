@@ -38,7 +38,7 @@ class res_partner_contact(osv.osv):
         'title':fields.char('Title',size=10,help='Courtesy'),
         'website':fields.char('Website',size=120),
         'lang_id':fields.many2one('res.lang','Language'),
-        'address_ids':fields.one2many('res.partner.address','contact_id','Adresses'),
+        'address_ids':fields.one2many('res.partner.address','contact_id','Addresses'),
         'country_id':fields.many2one('res.country','Country'),
         'birthdate':fields.date('Birth Date'),
         'active' : fields.boolean('Active'),
