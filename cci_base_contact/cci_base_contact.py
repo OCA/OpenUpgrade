@@ -37,12 +37,12 @@ class res_partner_contact(osv.osv):
         'who_date_last':fields.date('WsW Last Date'),
         'who_date_publication':fields.date('WsW Publication Date'),
         'who_presence':fields.boolean('In WsW'),
-        'who_description':fields.text('WswW Description',transtale=True),
+        'who_description':fields.text('WsW Description',transtale=True),
         'origin':fields.char('Origin',size=20,help='The DB from which the info is coming from'),
         'fse_work_status':fields.char('Fse Work Status',size=20), #should be corect....
         'fse_work_experience':fields.char('Fse Work Exp.',size=20),#should be corect....
         'fse_studies':fields.char('Fse Studies',size=20),#should be corect........
-        'country_ids': fields.many2many('res.country','res_country_rel','code','country_ids','Country'),
+        'country_ids': fields.many2many('res.country','res_country_rel','contact','country','Country'),
         'link_ids':fields.one2many('res.partner.contact.link','contact_id','Contact Link')
     }
     defaults = {
