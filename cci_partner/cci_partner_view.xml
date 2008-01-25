@@ -539,6 +539,23 @@
 			<field name="view_id" ref="view_partner_article_review_tree"/>
 		</record>
 		<menuitem name="Partners/Configuration/Article/Article Reviews" action="action_res_partner_article_review" id="menu_res_partner_article_review"/>
+
+
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_2">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Related Articles">
+					<field name="article_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+
 	</data>
 </terp>
 
