@@ -212,6 +212,68 @@
 		<!-- menu should be check if it right place or not -->
 		<menuitem name="Events/Configuration/Event Check/Check Type" action="action_event_check_type" id="menu_event_check_type"/>
 
+<!-- event.registratio form.. -->
+
+		<record model="ir.ui.view" id="view_event_registration_inherit2">
+			<field name="name">crm.case.form</field>
+			<field name="type">form</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="arch" type="xml">
+				<field name="history_line" position="before">
+			    	<field name="unit_price"/>
+			    	<field name="quantity"/>
+			    	<separator string="Badge" colspan="4"/>
+			    	<field name="badge_title"/>
+			    	<field name="badge_name"/>
+			    	<field name="badge_partner"/>
+			    	<newline/>
+			    	<separator colspan="4"/>
+			    	<field name="event_id"/>
+					<field name="group_id"/>
+					<field name="cavalier"/>
+					<separator colspan="4"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_event_registration_inherit3">
+			<field name="name">crm.case.form</field>
+			<field name="type">form</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="arch" type="xml">
+				<field name="partner_address_id" position="replace">
+					<newline/>
+			    	<field name="partner_invoice_id"/>
+			    	<field name="partner_address_id"/>
+			    	<newline/>
+			    	<field name="partner_order_id"/>
+			    	<field name="contact_order_id"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_event_registration_inherit">
+			<field name="name">crm.case.form</field>
+			<field name="type">form</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Payments">
+						<field name="invoice_label"/>
+						<field name="tobe_invoiced"/>
+						<field name="payment_mode"/>
+						<field name="invoice_id"/>
+						<field name="check_mode"/>
+						<field name="check_ids"/>
+						<field name="payment_ids"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
 
 	</data>
 </terp>
