@@ -116,7 +116,7 @@ class event_registration(osv.osv):
             "invoice_label":fields.char("Label Invoice",size=20),#should be corect
             "tobe_invoiced":fields.boolean("To be Invoice"),#should be corect
             "payment_mode":fields.char("Payment Mode",size=20),#should be corect
-            "invoice_id":fields.char("account.invoice","Invoice"),#should be corect
+            "invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
             "check_mode":fields.boolean('Check Mode'),
             "check_ids":fields.char("check",size=20),#should be corect
             "payment_ids":fields.char("Payments",size=20),#should be corect
