@@ -103,23 +103,23 @@ class event_registration(osv.osv):
     _columns={
             "event_id":fields.many2one('event.event','Event'),#shoud be check
             #"date_registration":fields.date('Date Registration'), available in crm.case as 'date' field
-            "partner_invoice_id":fields.many2one('res.partner.address', 'Invoice Address'),#should be corect
-            "partner_order_id":fields.char('Partner Order',size=20),#should be corect
-            "contact_order_id":fields.char('Conatact Order', size=20),#should be corect,contact_order_id (onchange_contact)
+            "partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
+            "partner_order_id":fields.many2one('res.partner','Partner Order'),
+            "contact_order_id":fields.many2one('res.partner.contact','Conatact Order'),#should be corect,contact_order_id (onchange_contact)
             "unit_price": fields.float('Unit Price'),
             "quantity":fields.integer('Quantity'),
-            "badge_title":fields.char('Badge Title',size=20),#should be corect
-            "badge_name":fields.char('Badge Name',size=20),#should be corect
-            "badge_partner":fields.char('Badge Partner',size=20),#should be corect
+            "badge_title":fields.char('Badge Title',size=128),
+            "badge_name":fields.char('Badge Name',size=128),
+            "badge_partner":fields.char('Badge Partner',size=128),
             "group_id": fields.many2one('event.group','Event Group'),
             "cavalier": fields.boolean('Cavalier'),
-            "invoice_label":fields.char("Label Invoice",size=20),#should be corect
-            "tobe_invoiced":fields.boolean("To be Invoice"),#should be corect
-            "payment_mode":fields.char("Payment Mode",size=20),#should be corect
+            "invoice_label":fields.char("Label Invoice",size=128),
+            "tobe_invoiced":fields.boolean("To be Invoice"),
+            "payment_mode":fields.many2one("payment.mode","Payment Mode"),#should be check (m2o ?)
             "invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
             "check_mode":fields.boolean('Check Mode'),
-            "check_ids":fields.char("check",size=20),#should be corect
-            "payment_ids":fields.char("Payments",size=20),#should be corect
+            "check_ids":fields.char("check",size=20),#should be corect (o2m ?)
+            "payment_ids":fields.char("Payments",size=20),#should be corect (o2m ?)
         }
 
 event_registration()
