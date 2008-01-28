@@ -121,5 +121,17 @@ class event_registration(osv.osv):
             "check_ids":fields.char("check",size=20),#should be corect (o2m ?)
             "payment_ids":fields.char("Payments",size=20),#should be corect (o2m ?)
         }
+    def onchange_contact_id(self, cr, uid, ids, contact_id):
+        #return name
+        if not contact_id:
+            return {}
+        contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
+        return {'value':{'badge_name' : contact_data.name,'badge_title' : contact_data.title}}
+    def onchange_partner_id(self, cr, uid, ids, partner_id):
+        #return name
+        if not partner_id:
+            return {}
+        partner_data=self.pool.get('res.partner').browse(cr, uid, partner_id)
+        return {'value':{'badge_partner' : partner_data.name}}
 
 event_registration()
