@@ -191,7 +191,6 @@ class report_custom(report_rml):
         emp_xml=''
         row_id=1
 
-        print "data...",data
         if data['model']=='hr.employee':
 
             for id in data['form']['emp'][0][2]:

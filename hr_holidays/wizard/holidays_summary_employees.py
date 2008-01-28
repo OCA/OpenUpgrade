@@ -9,12 +9,12 @@ form='''<?xml version="1.0"?>
 <form string="Report Options">
     <field name="date_from" colspan="2" />
     <field name="holiday_type" colspan="2" />
-    <field name="emp" colspan="4" />
+    <field name="emp" colspan="4" invisible="True"/>
 </form>'''
 
 zero_form='''<?xml version="1.0"?>
 <form string="Notification">
-<label string="You have to select atleast 1 Employee. Try again." colspan="4"/>
+<label string="You have to select at least 1 Employee. Try again." colspan="4"/>
 </form>'''
 
 zero_fields={
@@ -24,8 +24,9 @@ class wizard_report(wizard.interface):
     def _check(self, cr, uid, data, context):
         data['form']['date_from']=time.strftime('%Y-%m-%d')
         data['form']['holiday_type']='Validated'
-
+        data['form']['emp'] = data['ids']
         return data['form']
+
     def _checkemps(self, cr, uid, data, context):
 
         if len(data['form']['emp'][0][2])==0:
