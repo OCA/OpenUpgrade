@@ -2,30 +2,28 @@
 <terp>
 	<data>
 
-		<record model="ir.ui.view" id="user_product_ca_tree">
-			<field name="name">user_product_ca.tree</field>
-			<field name="model">user_product_ca</field>
+		<record model="ir.ui.view" id="analytic_user_funct_grid_tree">
+			<field name="name">analytic_user_funct_grid.tree</field>
+			<field name="model">analytic_user_funct_grid</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="User's Function and Invoicing Rate" editable="bottom">
+				<tree string="User's Function for this Analytic Account" editable="bottom">
 					<field name="user_id" required="1"/>
-					<field name="product_id" />
+					<field name="product_id" required="1" />
 				<!--	<field name="account_id"/>-->
-                    <field name="rate_id" />
 				</tree>
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="user_product_ca_form">
-			<field name="name">user_product_ca.tree</field>
-			<field name="model">user_product_ca</field>
+		<record model="ir.ui.view" id="analytic_user_funct_grid_form">
+			<field name="name">analytic_user_funct_grid.form</field>
+			<field name="model">analytic_user_funct_grid</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="User's Function and Invoicing Rate">
+				<form string="User's Function for this Analytic Account">
 					<field name="user_id" required="1"/>
-					<field name="product_id" />
+					<field name="product_id" required="1"/>
 				<!--	<field name="account_id"/>-->
-                    <field name="rate_id" />
 				</form>
 			</field>
 		</record>
@@ -36,9 +34,10 @@
 			<field name="type">form</field>
 			<field name="inherit_id" ref="account.view_account_analytic_account_form"/>
 			<field name="arch" type="xml">
-				<xpath expr="/form/notebook/page/field[@name='to_invoice']" position="replace">
-					<field name="to_invoice" string="Default Invoicing Percentage"/>
-					<field name="user_product" colspan="4"/>
+				<xpath expr="/form/notebook/page" position="after">
+					<page string="Users/Products Rel.">
+						<field name="user_product_ids" colspan="4" nolabel="1"/>
+					</page>
 				</xpath>
 			</field>
 		</record>

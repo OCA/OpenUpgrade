@@ -77,7 +77,6 @@ class account_invoice_line(osv.osv):
 		return super(account_invoice_line, self).create(cr, user, vals, context)
 
 	def write(self, cr, user, ids, vals, context=None):
-		print ids
 		if vals.has_key('state'):
 			if vals['state'] != 'article':
 				vals['product_id']= False
