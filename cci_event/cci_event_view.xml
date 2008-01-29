@@ -246,7 +246,7 @@
 				<field name="partner_address_id" position="replace">
 					<newline/>
 			    	<field name="partner_invoice_id"/>
-			    	<field name="partner_address_id"/>
+			    	<field name="partner_address_id" select="2" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="3"/>
 			    	<newline/>
 			    	<field name="partner_order_id"/>
 			    	<field name="contact_order_id" on_change="onchange_contact_id(contact_order_id)"/>
