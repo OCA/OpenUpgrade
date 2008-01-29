@@ -176,7 +176,9 @@ class res_partner(osv.osv):
         'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
-        'magazine_subscription':fields.boolean('Magazine subscription'),
+        'magazine_subscription':fields.selection(
+            [('never','Never'),('prospect','Prospect'),('personal','Personnal'),
+             ('postal','Postal')], "Magazine subscription"),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'article_id':fields.many2one('res.partner.article','Partner Article'),#should be corect,add for one2many relation
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
@@ -186,10 +188,11 @@ class res_partner(osv.osv):
         #virement belge,virement iban
         }
     _defaults = {
-                 'wall_exclusion' : lambda *a: False,
-                 'dir_presence' : lambda *a: False,
-                 'dir_exclude':lambda *a: False,
-                 }
+        'wall_exclusion' : lambda *a: False,
+        'dir_presence' : lambda *a: True,
+        'dir_exclude':lambda *a: False,
+        'magazine_subscription': lambda *a: 'prospect',
+        }
     _constraints = [(check_address, 'Error: Only one default address is allowed!', [])]
 res_partner()
 
