@@ -37,11 +37,11 @@ class event_check_type(osv.osv):
         }
 event_check_type()
 
-class event(osv.osv):#added for partner.ods
+class event(osv.osv):
     _inherit="event.event"
     _description="event.event"
     _columns={
-          'state': fields.selection([('draft','Draft'),('open','Open'),('confirm','Confirmed'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),#override field to add some states on it.
+          'state': fields.selection([('draft','Draft'),('open','Open'),('confirm','Confirmed'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),
           'agreement_nbr':fields.char('Agreement Nbr',size=16),
           'check_accept':fields.many2one('event.check.type','Allowed checks'),
           'mail_auto_registr':fields.boolean('Mail Auto Register',help='A mail is send when the registration is confirmed'),
@@ -52,7 +52,7 @@ class event(osv.osv):#added for partner.ods
           'fse_code':fields.char('Fse code',size=64),
           'fse_hours':fields.integer('Fse Hours'),
           'signet_type':fields.selection([('temp','temp')], 'Signet type'),#type is defined so temp,
-          #'localisation':fields.char('Localisation',size=20),#should be corect
+          'localisation':fields.char('Localisation',size=20),
           'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
           'budget_id':fields.many2one('account.budget.post','Budget'),
           'product_id':fields.many2one('product.product','Product'),
@@ -67,10 +67,10 @@ class event_check(osv.osv):
     _columns={
         "name": fields.char('Name', size=128, required=True),
         "code": fields.char('Code', size=64),
-        "case_id": fields.char('Inscriptions',size=20),#many2one to ?.....
+        "case_id": fields.many2one('crm.case','Inscriptions',size=20),
         "state": fields.selection([('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')], 'State', readonly=True),#should be check
         "unit_nbr": fields.integer('Units'),
-        "type_id":fields.many2one('event.check.type','Type'),#should be check
+        "type_id":fields.many2one('event.check.type','Type'),
         "date_reception":fields.date("Reception Date"),
         "date_limit":fields.date('Limit Date'),
         "date_submission":fields.date("Submission Date"),
@@ -92,8 +92,8 @@ class event_group(osv.osv):
         "name":fields.char('Name',size=20,required=True),
         "bookmark_name":fields.char('Bookmark Name',size=128),
         "picture":fields.binary('Picture'),
-        "cavalier":fields.boolean('Cavalier',help="Check if we should print papers with participant name"),#should be check
-        "type":fields.selection([('none',''),('image','Image'),('text','Text')], 'Type',)#image,text,none #should be corect
+        "cavalier":fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
+        "type":fields.selection([('none','None'),('image','Image'),('text','Text')], 'Type',)
                 }
 event_group()
 
@@ -115,11 +115,11 @@ class event_registration(osv.osv):
             "cavalier": fields.boolean('Cavalier'),
             "invoice_label":fields.char("Label Invoice",size=128),
             "tobe_invoiced":fields.boolean("To be Invoice"),
-            "payment_mode":fields.many2one("payment.mode","Payment Mode"),#should be check (m2o ?)
+            "payment_mode":fields.char("payment mode", size=20),#should be check (m2o ?)
             "invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
             "check_mode":fields.boolean('Check Mode'),
-            "check_ids":fields.char("check",size=20),#should be corect (o2m ?)
-            "payment_ids":fields.char("Payments",size=20),#should be corect (o2m ?)
+            "check_ids":fields.char("check ids",size=20),#should be corect (o2m ?)
+            "payment_ids":fields.char("Payment ids",size=20),#should be corect (o2m ?)
         }
     def onchange_contact_id(self, cr, uid, ids, contact_id):
         #return name
