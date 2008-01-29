@@ -48,6 +48,7 @@ class res_partner_contact(osv.osv):
     defaults = {
         'data_private' : lambda *a : False,
         'self_sufficent':lambda *a : False,
+        'who_presence':lambda *a : True,
     }
 res_partner_contact()
 
