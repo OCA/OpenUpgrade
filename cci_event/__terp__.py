@@ -7,7 +7,7 @@
     "description": """
         specific module for cci project which will use event module from extra addons.
     """,
-    "depends" : ["base","event","account_payment"],
+    "depends" : ["base","event"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["cci_event_view.xml"],
