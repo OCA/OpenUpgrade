@@ -127,11 +127,17 @@ class event_registration(osv.osv):
             return {}
         contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
         return {'value':{'badge_name' : contact_data.name,'badge_title' : contact_data.title}}
-    def onchange_partner_id(self, cr, uid, ids, partner_id):
-        #return name
-        if not partner_id:
-            return {}
-        partner_data=self.pool.get('res.partner').browse(cr, uid, partner_id)
-        return {'value':{'badge_partner' : partner_data.name}}
+
+    def onchange_partner_id(self, cr, uid, ids, part, email=False):#override function for partner name.
+        if not part:
+            return {'value':{'partner_address_id': False}}
+        addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
+        data = {'partner_address_id':addr['contact']}
+        if addr['contact'] and not email:
+            data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, addr['contact']).email
+
+        partner_data=self.pool.get('res.partner').browse(cr, uid, part)
+        data['badge_partner']=partner_data.name
+        return {'value':data}
 
 event_registration()
