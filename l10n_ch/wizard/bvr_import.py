@@ -47,8 +47,8 @@ def _import(obj, cursor, user, data, context):
 				if lines:
 					raise wizard.except_wizard('Error',
 							'Record found after total record!')
-				amount = float(line[39:50]) + (float(line[50:51]) / 100)
-				cost = float(line[69:77]) + (float(line[77:78]) / 100)
+				amount = float(line[39:49]) + (float(line[49:51]) / 100)
+				cost = float(line[69:76]) + (float(line[76:78]) / 100)
 				if line[2] == '5':
 					amount *= -1
 					cost *= -1
@@ -63,10 +63,10 @@ def _import(obj, cursor, user, data, context):
 			else:
 				record = {
 					'reference': line[12:39],
-					'amount': float(line[39:48]) + (float(line[48:49]) / 100),
+					'amount': float(line[39:47]) + (float(line[47:49]) / 100),
 					'date': time.strftime('%Y-%m-%d',
 						time.strptime(line[65:71], '%y%m%j')),
-					'cost': float(line[96:99]) + (float(line[99:100]) / 100),
+					'cost': float(line[96:98]) + (float(line[98:100]) / 100),
 				}
 
 				if record['reference'] != mod10r(record['reference'][:-1]):
