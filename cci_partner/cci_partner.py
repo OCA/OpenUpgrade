@@ -119,7 +119,7 @@ class res_partner(osv.osv):
         return new_id
 
     def write(self, cr, uid, ids,vals, *args, **kwargs):
-        super(osv.osv,self).write(cr, uid, ids,vals, *args, **kwargs)
+        super(res_partner,self).write(cr, uid, ids,vals, *args, **kwargs)
         if 'address' in vals:
             for add in vals['address']:
                 if add[2]['zip_id'] and add[2]['type']=='default':
