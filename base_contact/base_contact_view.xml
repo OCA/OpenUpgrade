@@ -97,5 +97,40 @@
 		</field>
 	</record>
 
+<!-- contact.title object view -->
+		<record model="ir.ui.view" id="view_contact_title_form">
+			<field name="name">contact.title.form</field>
+			<field name="type">form</field>
+			<field name="model">contact.title</field>
+			<field name="arch" type="xml">
+				<form string="Contact Title">
+					<field name="name" select="1"/>
+					<field name="code"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_contact_title_tree">
+			<field name="name">contact.title.tree</field>
+			<field name="type">tree</field>
+			<field name="model">contact.title</field>
+			<field name="arch" type="xml">
+				<tree string="Contact Title">
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_contact_title">
+			<field name="name">Contact Title</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">contact.title</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_contact_title_tree"/>
+		</record>
+		<menuitem name="Partners/Configuration/Contact Title" action="action_contact_title" id="menu_contact_title"/>
+
+
+
+
 </data>
 </terp>
