@@ -54,9 +54,6 @@
 							</form>
 				         </field>
 					</page>
-					<page string="Tags">
-						<!-- should be add -->
-					</page>
 					<page string="Pays">
 						<field name="export_procent"/>
 						<field name="export_year"/>
@@ -146,7 +143,7 @@
 					<newline/>
 					<field name="function"/>
 					<field name="function_label"/>
-					<!--<field name="function_code_id"/> should be correct -->
+					<field name="function_code_id"/>
 					<field name="title" select="1"/>
 					<field name="type" select="1"/>
 					<field name="street" select="1"/>
@@ -166,6 +163,7 @@
 					<field name="who_presence"/>
 					<field name="dir_presence"/>
 					<field name="state" />
+					<field name="department"/>
 				</form>
 			</field>
 		</record>
@@ -555,7 +553,18 @@
 		</field>
 	</record>
 
-
+	<record model="ir.ui.view" id="view_partner_form">
+		<field name="name">Partner form inherited</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="contact_id" position="replace">
+				<fiels name="contact_id"/>
+				<field name="department"/>
+			</field>
+		</field>
+	</record>
 	</data>
 </terp>
 
