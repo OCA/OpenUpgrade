@@ -76,10 +76,11 @@
 <paraStyle name="P20" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
 <paraStyle name="P21" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="P22" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+<paraStyle name="P23" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
 <paraStyle name="Standard" fontName="Times-Roman"/>
 <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
-<paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+<paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="2.0"/>
 <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
 <paraStyle name="Index" fontName="Times-Roman"/>
@@ -115,11 +116,14 @@
 <para style="P14">
 <font color="white"> </font>
 </para>
+<para style="P23">Invoice [[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+<para style="P23">PRO-FORMA [[ ((o.type == 'out_invoice' and o.state == 'proforma') or removeParentNode('para')) and '' ]]</para>
+<para style="P23">Draft Invoice [[ ((o.type == 'out_invoice' and o.state == 'draft') or removeParentNode('para')) and '' ]]</para>
+<para style="P23">Canceled Invoice [[ ((o.type == 'out_invoice' and o.state == 'cancel') or removeParentNode('para')) and '' ]]</para>
+<para style="P23">Refund [[ (o.type=='out_refund' or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
+<para style="P23">Supplier Refund [[ (o.type=='in_refund' or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
 <para style="P16">
-<font face="Times-Roman">Invoice [[ (o.type=='out_invoice' or removeParentNode('font')) and '' ]]</font>
-<font face="Times-Roman">Refund [[ (o.type=='out_refund' or removeParentNode('font')) and '' ]]</font>
-<font face="Times-Roman">Supplier Refund [[ (o.type=='in_refund' or removeParentNode('font')) and '' ]]</font>
-<font face="Times-Roman">Supplier Invoice [[ (o.type=='in_invoice' or removeParentNode('font')) and '' ]]</font>
+<font face="Times-Roman">Supplier Invoice [[ (o.type=='in_invoice' or removeParentNode('para')) and '' ]]</font>
 <font face="Times-Roman">[[ o.number ]]</font>
 </para>
 <para style="P15">
@@ -166,18 +170,28 @@
 <blockTable colWidths="0.0,216.0" style="Tableau7">
 <tr>
 <td>
-<para style="P8"> </para>
+<para style="P8">[[ a['type']=='text' and removeParentNode('tr')]]</para>
 </td>
 <td>
-<para style="Table Contents"><font> [[ a['type']=='title'  and ( setTag('font','font',{'size':'14'})) ]][[ a['type']=='title' and ( setTag('font','font',{'name':'Times-bold'})) ]][[ a['name'] ]] </font></para>
+<para style="Table Contents"><font>[[ a['type']=='title'  and ( setTag('font','font',{'size':'14'})) ]][[ a['type']=='title' and ( setTag('font','font',{'name':'Times-bold'})) ]][[ a['type']=='text' and removeParentNode('font') or a['name'] ]]</font></para>
 </td>
 </tr>
 </blockTable>
 <pageBreak>[[ a['type']!='break' and removeParentNode('pageBreak')]]</pageBreak>
+<blockTable colWidths="453.0,74.0" style="Tableau8">
+<tr>
+<td>
+<para style="Table Contents">[[ a['type']=='text' and a['name'] or removeParentNode('table') ]]</para>
+</td>
+<td>
+<para style="P8">[[ a['type']=='text' and '' or removeParentNode('table') ]]</para>
+</td>
+</tr>
+</blockTable>
 <blockTable colWidths="28.0,499.0" style="Tableau8">
 <tr>
 <td>
-<para style="P21">[[ repeatIn(( a['note'] and a['note'].splitlines()) or [], 'note') ]]</para>
+<para style="P21">[[ a['note']=='' and removeParentNode('table') ]][[ repeatIn(( a['note'] and a['note'].splitlines()) or [], 'note') ]]</para>
 </td>
 <td>
 <para style="P9">[[ note or removeParentNode('table') ]]</para>
