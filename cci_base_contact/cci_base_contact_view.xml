@@ -63,6 +63,9 @@
 				<page string="Extra Information">
 					<field name="country_id"/>
 					<field name="birthdate" />
+					<field name="fse_work_status"/>
+					<field name="fse_work_experience"/>
+					<field name="fse_studies"/>
 				</page>
 			</notebook>
 		</field>
@@ -80,9 +83,6 @@
 				<field name="active" />
 				<field name="self_sufficent" select="1"/>
 				<newline/>
-				<field name="fse_work_status"/>
-				<field name="fse_work_experience"/>
-				<field name="fse_studies"/>
 			</field>
 		</field>
 	</record>
