@@ -27,15 +27,32 @@
 
 import netsvc
 from osv import fields, osv
+class contact_title(osv.osv):
+    _name='contact.title'
+    _description='contact title'
+
+    _columns={
+          'name': fields.char('Title', required=True, size=46, translate=True),
+          'code': fields.char('Code', required=True, size=16),
+              }
+contact_title()
 
 class res_partner_contact(osv.osv):
     _name = "res.partner.contact"
     _description = "res.partner.contact"
+
+    def _title_get(self,cr, user, context={}):
+        obj = self.pool.get('contact.title')
+        ids = obj.search(cr, user, [])
+        res = obj.read(cr, user, ids, ['code', 'name'], context)
+        res = [(r['code'], r['name']) for r in res]
+        return res
+
     _columns = {
         'name': fields.char('First Name', size=30,required=True),
         'surname': fields.char('Last Name', size=30),
         'mobile':fields.char('Mobile',size=30),
-        'title':fields.char('Title',size=10,help='Courtesy'),
+        'title': fields.selection(_title_get, 'Title'),
         'website':fields.char('Website',size=120),
         'lang_id':fields.many2one('res.lang','Language'),
         'address_ids':fields.one2many('res.partner.address','contact_id','Addresses'),
