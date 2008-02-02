@@ -120,12 +120,22 @@ class res_partner(osv.osv):
 
     def write(self, cr, uid, ids,vals, *args, **kwargs):
         super(res_partner,self).write(cr, uid, ids,vals, *args, **kwargs)
+        list=[]
         if 'address' in vals:
             for add in vals['address']:
-                if add[2]['zip_id'] and add[2]['type']=='default':
+                if add[2] and (add[2]['zip_id'] and add[2]['type']=='default'):
                     data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
                     saleman_id = data.user_id.id
                     self.write(cr,uid,ids,{'user_id':saleman_id})
+                else:
+                    data_partner=self.browse(cr, uid,ids)
+                    for d in data_partner:
+                        for i in d.address:
+                            list.append(i.type)
+                            if i.type=='default' and (not i.zip_id):
+                                self.write(cr,uid,ids,{'user_id':False})
+                        if (not d.address) or (not 'default' in list):
+                            self.write(cr,uid,ids,{'user_id':False})
         return True
 
     def check_address(self, cr, uid, ids):
@@ -248,13 +258,33 @@ class res_partner_zip(osv.osv):
                 }
 res_partner_zip()
 
+class function_code(osv.osv):
+    _name='function.code'
+    _description = 'function.code'
+
+    _columns = {
+        'name' : fields.char('Name',size=20,required=True)
+                }
+function_code()
+
 class res_partner_address(osv.osv):
     _inherit = "res.partner.address"
     _description = 'res.partner.address'
+
+    def _get_name(self, cr, uid, ids, name, arg, context={}):
+        res={}
+        for add in self.browse(cr, uid, ids, context):
+              if add.contact_id:
+                  res[add.id] = (add.department or '') + ' ' + add.contact_id.name
+              else:
+                  res[add.id] = add.department
+        return res
+
     _columns = {
+        'name': fields.function(_get_name, method=True, string='Contact Name',type='char',size=64),#override parent field
         'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
         'zip_id':fields.many2one('res.partner.zip','Zip'),
-        #'function_code_id':fields.many2one('res.partner.function', 'Function Code'),#should be check
+        'function_code_id':fields.many2one('function.code','Function Code'),#should be check
         'function_label':fields.char('Function Label',size=128),
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
@@ -264,6 +294,7 @@ class res_partner_address(osv.osv):
         'active':fields.boolean('Active'),
         'who_presence':fields.boolean('In Whos Who'),
         'dir_presence':fields.boolean('In Directory'),
+        'department': fields.char('Department',size=20),
     }
     _defaults = {
                  'state' : lambda *a: 'Correct',
@@ -297,12 +328,13 @@ class res_partner_address(osv.osv):
                         self.pool.get('res.partner.contact').unlink(cr, uid,[data.id], context)
         return True
 
-    def onchange_contact_id(self, cr, uid, ids, contact_id):
-        #return name
-        if not contact_id:
-            return {'value':{'name' : False}}
-        contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
-        return {'value':{'name' : contact_data.name}}
+#    def onchange_contact_id(self, cr, uid, ids, contact_id):
+#        #return name
+#        if not contact_id:
+#            return {'value':{'name' : False}}
+#        contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
+#        return {'value':{'name' : contact_data.name}}
+
 
 res_partner_address()
 
