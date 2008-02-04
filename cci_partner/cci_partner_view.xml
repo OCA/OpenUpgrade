@@ -139,6 +139,7 @@
 				<form string="Partner contacts">
 					<!--<field name="contact_id" on_change="onchange_contact_id(contact_id)"/>-->
 					<field name="partner_id"/>
+					<field name="department"/>
 					<field name="name" select="1"/>
 					<newline/>
 					<field name="function"/>
@@ -163,7 +164,7 @@
 					<field name="who_presence"/>
 					<field name="dir_presence"/>
 					<field name="state" />
-					<field name="department"/>
+					<!--<field name="department"/>-->
 				</form>
 			</field>
 		</record>
@@ -565,6 +566,7 @@
 			</field>
 		</field>
 	</record>
+
 	</data>
 </terp>
 
