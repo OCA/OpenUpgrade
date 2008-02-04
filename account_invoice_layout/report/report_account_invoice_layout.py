@@ -178,6 +178,5 @@ class account_invoice_1(report_sxw.rml_parse):
                     res['currency']=invoice.currency_id.code
 
             result.append(res)
-
         return result
 report_sxw.report_sxw('report.account.invoice.layout', 'account.invoice', 'addons/account_invoice_layout/report/report_account_invoice_layout.rml', parser=account_invoice_1)
