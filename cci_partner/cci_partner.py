@@ -369,7 +369,7 @@ class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.act
         return res
     _columns = {
         'code': fields.char('Code',size=6),
-        'label':fields.char('Name',size=250,transtale=True,required=True),
+        'label':fields.char('Label',size=250,transtale=True,required=True),
         'description':fields.text('Description'),
         'code_relations':fields.many2many('res.partner.activity','res_activity_code_rel','code_id1','code_id2','Related codes'),
         'partner_id':fields.many2one('res.partner','Partner'),
