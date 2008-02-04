@@ -96,7 +96,7 @@ class res_partner_country_relation(osv.osv):
     _columns = {
         'frequency': fields.integer('Frequency'),
         'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('temp','Temp')],'Types'),#should be corect
+        'type':fields.selection([('none','')],'Types'),#should be corect
     }
 res_partner_country_relation()
 
