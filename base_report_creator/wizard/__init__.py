@@ -28,3 +28,4 @@
 
 import wiz_set_filter_fields
 import base_report_creator_open
+import report_menu_create

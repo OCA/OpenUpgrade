@@ -1,5 +1,5 @@
 {
-	"name":"Printbox specific devs",
+	"name":"Margins in Sale Orders",
 	"version":"1.0",
 	"author":"Tiny",
 	"category":"Custom",

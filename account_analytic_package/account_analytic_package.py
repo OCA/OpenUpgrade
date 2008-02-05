@@ -65,7 +65,7 @@ class crm_case(osv.osv):
 			section = case.section_id
 			if section.package_product_id and section.analytic_account_id and section.analytic_journal_id:
 				partner = self.pool.get('res.users').browse(cr, uid, uid).address_id.partner_id.id
-				aids = self.pool.get('account.analytic.account').search(cr, uid, [('partner_id','=',partner),('state','in',('open','draft')),('parent_id','child_of',[section.analytic_account_id.id])])
+				aids = self.pool.get('account.analytic.account').search(cr, uid, [('partner_id','=',partner),('state','in',('open','draft','pending')),('parent_id','child_of',[section.analytic_account_id.id])])
 				if not aids:
 					raise osv.except_osv('You can not open this case !', 'No valid analytic account defined for your user.\nPlease contact the administrator.')
 				self.pool.get('account.analytic.line').create(cr, uid, {
