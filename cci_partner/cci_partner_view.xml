@@ -434,11 +434,13 @@
 							<field name="date"/>
 							<field name="canal_id" colspan="4" /> <!-- link -->
 							<field name="press_review" />
+							<newline/>
 							<!--<field name="press_review_id" /> not defined in field -->
 							<field name="page"/>
 							<field name="article_length" />
 							<!--<field name="group(picture, graph, date)" /> should be add(not cleared) -->
 							<field name="keywords_ids" colspan="4"/>
+							<field name="summary" colspan="4"/>
 						</page>
 						<page string="Partners">
 							<field name="partners_ids" nolabel="1"/>
@@ -516,7 +518,7 @@
 					<field name="name" select="1"/>
 					<field name="date"/>
 					<newline/>
-					<field name="article_ids" colspan="4"/>
+					<field name="article_ids" colspan="4" nolabel="1"/>
 				</form>
 			</field>
 		</record>
