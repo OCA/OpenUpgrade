@@ -69,8 +69,8 @@ class report_sale_journal_invoice_type_stats(osv.osv):
 					sum(l.product_qty*ol.price_unit*(1.0-ol.discount/100.0)) as price_total,
 					(sum(l.product_qty*ol.price_unit*(1.0-ol.discount/100.0))/sum(l.product_qty))::decimal(16,2) as price_average
 				from stock_picking s
-					right join stock_move l on (s.id=l.picking_id)
-					right join sale_order_line ol on (l.sale_line_id=ol.id)
+					left join stock_move l on (s.id=l.picking_id)
+					left join sale_order_line ol on (l.sale_line_id=ol.id)
 				group by s.invoice_type_id, to_char(s.date, 'YYYY-MM-01'),s.state, s.invoice_state
 				order by s.invoice_type_id, s.invoice_state, s.state
 			)

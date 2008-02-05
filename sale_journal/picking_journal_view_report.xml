@@ -47,13 +47,6 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('invoice_state','=','2binvoiced'),('invoice_type_id','=',active_id)]</field>
 	</record>
-	<record model="ir.values" id="ir_open_invoice_type_stats">
-		<field name="key2">tree_but_open</field>
-		<field name="model">sale_journal.invoice.type</field>
-		<field name="name">Statistics on packings to invoice</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%action_invoice_type_picking_stats_open"/>
-		<field name="object" eval="True"/>
-	</record>
 
 	<record model="ir.actions.act_window" id="action_invoice_type_picking_stats_open_menu_month">
 		<field name="name">Packings by invoice method</field>
