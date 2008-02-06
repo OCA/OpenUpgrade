@@ -64,13 +64,21 @@ class wizard_report(wizard.interface):
 
     fields={
         'date_from':{
-            'string':'From',
-            'type':'date',
-            'required':True,
+                'string':'From',
+                'type':'date',
+                'required':True,
         },
-        'depts': {'string': 'Department(s)', 'type': 'many2many', 'relation': 'hr.department'},
-        'holiday_type':{'string':"Select Holiday Type",'type':'selection','selection':[('Validated','Validated'),('Confirmed','Confirmed'),('both','Both')]},
-
+        'depts': {
+                'string': 'Department(s)', 
+                'type': 'many2many', 
+                'relation': 'hr.department'
+        },
+        'holiday_type':{
+                'string':"Select Holiday Type",
+                'required':True,
+                'type':'selection',
+                'selection':[('Validated','Validated'),('Confirmed','Confirmed'),('both','Both Validated and Confirmed')]
+        },
     }
 
     states={
