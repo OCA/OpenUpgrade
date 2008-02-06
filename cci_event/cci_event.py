@@ -115,11 +115,11 @@ class event_registration(osv.osv):
             "cavalier": fields.boolean('Cavalier'),
             "invoice_label":fields.char("Label Invoice",size=128),
             "tobe_invoiced":fields.boolean("To be Invoice"),
-            "payment_mode":fields.char("payment mode", size=20),#should be check (m2o ?)
+            "payment_mode":fields.many2one('payment.mode',"payment mode"),#should be check (m2o ?)
             "invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
             "check_mode":fields.boolean('Check Mode'),
-            "check_ids":fields.char("check ids",size=20),#should be corect (o2m ?)
-            "payment_ids":fields.char("Payment ids",size=20),#should be corect (o2m ?)
+            "check_ids":fields.one2many('event.check','check_id',"check ids"),#should be corect (o2m ?)
+            "payment_ids":fields.one2many("payment.order","pay_id","payment"),#should be corect (o2m ?)
         }
     def onchange_contact_id(self, cr, uid, ids, contact_id):
         #return name
@@ -141,3 +141,19 @@ class event_registration(osv.osv):
         return {'value':data}
 
 event_registration()
+
+class event_check(osv.osv):
+    _inherit = 'event.check'
+    _columns={
+              "check_id" : fields.many2one('crm.case','Check Id'),
+
+     }
+event_check()
+
+class payment_order(osv.osv):
+    _inherit = 'payment.order'
+    _columns={
+              "pay_id" : fields.many2one('crm.case','Check Id'),
+     }
+payment_order()
+
