@@ -61,8 +61,8 @@
 <paraStyle name="P5" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="P6" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="P7" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-<paraStyle name="P8" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-<paraStyle name="P9" fontName="Times-Italic" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/>
+<paraStyle name="P8" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="3.0" leading="8"/>
+<paraStyle name="P9" fontName="Times-Italic" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="3.0"/>
 <paraStyle name="P10" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="P11" fontName="Times-Bold" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="P12" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -74,13 +74,13 @@
 <paraStyle name="P18" fontName="Times-Roman" fontSize="11.0" leading="14"/>
 <paraStyle name="P19" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
 <paraStyle name="P20" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
-<paraStyle name="P21" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+<paraStyle name="P21" fontName="Times-Bold" fontSize="8.0" leading="8" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="P22" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="P23" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
 <paraStyle name="Standard" fontName="Times-Roman"/>
 <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
-<paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="2.0"/>
+<paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="2.0" leading="8"/>
 <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
 <paraStyle name="Index" fontName="Times-Roman"/>
@@ -173,11 +173,10 @@
 <para style="P8">[[ a['type']=='text' and removeParentNode('tr')]]</para>
 </td>
 <td>
-<para style="Table Contents"><font>[[ a['type']=='title'  and ( setTag('font','font',{'size':'14'})) ]][[ a['type']=='title' and ( setTag('font','font',{'name':'Times-bold'})) ]][[ a['type']=='text' and removeParentNode('font') or a['name'] ]]</font></para>
+<para style="Table Contents"><font>[[ a['type']=='title'  and ( setTag('font','font',{'size':'14'})) ]][[ (a['type']=='title' or a['type']=='subtotal')  and ( setTag('font','font',{'name':'Times-bold'})) ]][[ a['type']=='text' and removeParentNode('font') or a['name'] ]]</font></para>
 </td>
 </tr>
 </blockTable>
-<pageBreak>[[ a['type']!='break' and removeParentNode('pageBreak')]]</pageBreak>
 <blockTable colWidths="453.0,74.0" style="Tableau8">
 <tr>
 <td>
@@ -195,6 +194,29 @@
 </td>
 <td>
 <para style="P9">[[ note or removeParentNode('table') ]]</para>
+</td>
+</tr>
+</blockTable>
+<pageBreak>[[ a['type']!='break' and removeParentNode('pageBreak')]]</pageBreak>
+<blockTable colWidths="216.0,62.0,62.0,62.0,51.0,74.0" style="Tableau6">
+<tr>
+<td>
+<para style="P3">Description [[ a['type']!='break' and removeParentNode('tr')]]</para>
+</td>
+<td>
+<para style="P4">Taxes</para>
+</td>
+<td>
+<para style="P4">Quantity</para>
+</td>
+<td>
+<para style="P4">Unit Price</para>
+</td>
+<td>
+<para style="P4">Disc. (%)</para>
+</td>
+<td>
+<para style="P4">Price</para>
 </td>
 </tr>
 </blockTable>

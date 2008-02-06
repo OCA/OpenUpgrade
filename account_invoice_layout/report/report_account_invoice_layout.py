@@ -61,9 +61,10 @@ class account_invoice_1(report_sxw.rml_parse):
                         for v in value:
                             t2="[[%s['type']=='text' and removeParentNode('tr')]]"%(name)
                             t1= "[[ %s['%s'] ]]"%(name,v)
-
+                            t3="[[ %s['type']=='subtotal' and ( setTag('para','para',{'fontName':'Times-bold'})) ]]"%name
                             newnode = lc.cloneNode(1)
-                            newnode.childNodes[1].lastChild.data = t1 + t2
+
+                            newnode.childNodes[1].lastChild.data = t1 + t2 +t3
 #                           newnode.childNodes[1].lastChild.data=[[ a['status']==1 and ( setTag('para','para',{'fontName':'Times-bold'})) ]]
                             child.appendChild(newnode)
                             newnode=False
