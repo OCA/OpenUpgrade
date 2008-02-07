@@ -571,6 +571,19 @@
 		</field>
 	</record>
 
+<!-- View for product.product object inherited from product module................ -->
+		<record model="ir.ui.view" id="view_product_form_inherit1">
+			<field name="name">product.normal.form</field>
+			<field name="type">form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<field name="list_price" position="after">
+			    	<field name="member_price"/>
+				</field>
+			</field>
+		</record>
+
 	</data>
 </terp>
 
