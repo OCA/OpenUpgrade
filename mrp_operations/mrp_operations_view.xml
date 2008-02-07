@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+	<record model="ir.ui.view" id="mrp_production_workcenter_tree_view_inherit">
+		<field name="name">mrp.production.workcenter.line.inherit.tree</field>
+		<field name="model">mrp.production.workcenter.line</field>
+		<field name="inherit_id" ref="mrp.mrp_production_workcenter_tree_view"/>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Production Workcenters">
+				<field name="hour" position="after"/>
+				<field name="state" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="mrp_production_workcenter_form_view_inherit">
+		<field name="name">mrp.production.workcenter.line.form.inherit</field>
+		<field name="model">mrp.production.workcenter.line</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view"/>
+		<field name="arch" type="xml">
+				<field name="hour" position="after">
+					<group colspan="4" col="6">
+							<field name="state" select="2"/>
+							<button name="button_draft" string="Set Draft" states="cancel"/>
+							<button name="button_confirm" string="Confirm" states="draft"/>
+							<button name="button_done" string="Done" states="confirm"/>
+							<button name="button_cancel" string="Cancel" states="draft,confirm"/>
+					</group>
+					<field name="date_finnished"/>
+					<field name="date_start"/>
+				</field>
+		</field>
+	</record>
+
+	<!-- Action for tree view of workcenter line   -->
+
+	<record model="ir.actions.act_window" id="mrp_production_wc_action_form">
+		<field name="name">Operations</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">mrp.production.workcenter.line</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('id','=',active_id)]</field>
+	</record>
+
+	<!-- Action for All Operations   -->
+
+	<record model="ir.actions.act_window" id="mrp_production_wc_action">
+		<field name="name">All Operations</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">mrp.production.workcenter.line</field>
+		<field name="view_type">tree</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<!-- Action for Confirm Operations   -->
+
+	<record model="ir.actions.act_window" id="mrp_production_wc_confirm_action">
+		<field name="name">Confirm Operations</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">mrp.production.workcenter.line</field>
+		<field name="view_type">tree</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','confirm')]</field>
+	</record>
+
+	<record model="ir.values" id="mrp_production_wc_action_open">
+		<field name="key2" eval="'tree_but_open'"/>
+		<field name="model" eval="'mrp.production.workcenter.line'"/>
+		<field name="name">Operations</field>
+		<field name="value" eval="'ir.actions.act_window,'+str(mrp_production_wc_action_form)"/>
+		<field name="object" eval="True"/>
+
+	</record>
+
+	<menuitem name="Production Management/All Operations" id="menu_mrp_production_wc_action" action="mrp_production_wc_action"/>
+
+
+
+	<menuitem name="Production Management/All Operations/Operations To Do" action="mrp_production_wc_confirm_action" id="menu_mrp_production_wc_confirm_action"/>
+
+
+
+</data>
+</terp>
