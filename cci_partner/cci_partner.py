@@ -423,3 +423,10 @@ class res_partner_contact(osv.osv):
         }
 res_partner_contact()
 
+class product(osv.osv):
+    _inherit = 'product.product'
+    _description = 'product.product'
+    _columns = {
+        'member_price':fields.float('Member Price'),
+                }
+product()
