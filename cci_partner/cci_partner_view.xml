@@ -9,9 +9,11 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
-				<field name="lang" position="after">
+				<field name="address" position="before">
+<!--					<field name="member_state"/> should be add....-->
 			    	<field name="state_id"/>
 			    	<field name="employee_nbr"/>
+			    	<field name="employee_nbr_total"/>
 			    	<field name="state_id2"/>
 				</field>
 			</field>
