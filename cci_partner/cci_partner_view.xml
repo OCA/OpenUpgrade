@@ -31,6 +31,16 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_partner_form_inherit6">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="title" domain="[('domain', '=', 'contact')]" position="replace"/>
+			</field>
+		</record>
+
 		<record model="ir.ui.view" id="view_partner_form_inherit2">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
