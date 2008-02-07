@@ -30,6 +30,7 @@
 				</field>
 			</field>
 		</record>
+
 		<record model="ir.ui.view" id="view_partner_form_inherit2">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
@@ -147,7 +148,7 @@
 					<field name="function"/>
 					<field name="function_label"/>
 					<field name="function_code_id"/>
-					<field name="title" select="1"/>
+					<!--<field name="title" select="1"/>-->
 					<field name="type" select="1"/>
 					<field name="street" select="1"/>
 					<field name="street2" select="1"/>
