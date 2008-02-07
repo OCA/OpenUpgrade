@@ -10,7 +10,8 @@
         "event",
         "cci_event",
         "cci_crm_profile",
-        "account_payment"
+        "account_payment",
+        "membership"
     ],
     "demo_xml":[],
     "update_xml":[],
