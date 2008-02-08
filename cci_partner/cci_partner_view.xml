@@ -41,7 +41,7 @@
 				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1" position="replace">
 					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
 						<form string="Partner Addresses">
-							<field name="name" select="2"/>
+							<field name="contact_id" select="2"/>
 							<!--<field name="title" domain="[('domain', '=', 'contact')]"/>-->
 							<field name="function"/>
 							<field name="type" select="2"/>
@@ -59,7 +59,6 @@
 							<newline/>
 							<field name="mobile"/>
 							<field name="email" select="2" widget="email" />
-							<field name="contact_id"/>
 							<field name="department"/>
 						</form>
 						<tree string="Partner contacts">
@@ -189,9 +188,10 @@
 			<field name="arch" type="xml">
 				<form string="Partner Address">
 					<!--<field name="contact_id" on_change="onchange_contact_id(contact_id)"/>-->
-					<field name="partner_id"/>
+					<field name="partner_id" select="1"/>
 					<field name="department"/>
-					<field name="name" select="1"/>
+					<field name="contact_id" select="1"/>
+					<field name="name" select="2"/>
 					<newline/>
 					<field name="function"/>
 					<field name="function_label"/>

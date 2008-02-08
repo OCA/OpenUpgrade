@@ -53,6 +53,9 @@ class res_partner_article_review(osv.osv):
         'date':fields.date('Date'),
         'article_ids':fields.one2many('res.partner.article','review_id','Articles'),
     }
+	_defaults = {
+		'date': lambda *args: time.strftime('%Y-%m-%d')
+	}
 res_partner_article_review()
 
 
@@ -76,10 +79,9 @@ class res_partner_article(osv.osv):
         'subtitle':fields.text('Subtitle'),
         'press_review':fields.boolean('In the next press review',help='Must be inserted on the next press review'),
         'canal_id':fields.char('Link',size=200,help='A text with or without a link incorporated'),
-        'review_id':fields.many2one('res.partner.article.review','Review'),#add for one2many field,
-
-        'partner_id':fields.many2one('res.partner','Partner'),#added for one2many field on partner
-        'contact_id':fields.many2one('res.partner.contact','Contact'),#added for one2many field on contact
+        'review_id':fields.many2one('res.partner.article.review','Review'),
+        'partner_ids':fields.many2many('res.partner','res_partner_article_rel','article_id','partner_id','Partners'),
+        'contact_ids':fields.many2many('res.partner.contact','res_partner_contact_article_rel', 'article_id','contact_id','Contacts'),
     }
     _defaults = {
                  'press_review' : lambda *a: False,
@@ -190,10 +192,9 @@ class res_partner(osv.osv):
             [('never','Never'),('prospect','Prospect'),('personal','Personnal'),
              ('postal','Postal')], "Magazine subscription"),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
-        'article_id':fields.many2one('res.partner.article','Partner Article'),#should be corect,add for one2many relation
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','partner_id','Partner Relation'),
-        'article_ids' : fields.one2many('res.partner.article','partner_id','Articles')
+        'article_ids' : fields.one2many('res.partner.article','res_partner_article_rel','partner_id','article_id','Articles')
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
@@ -422,9 +423,8 @@ res_partner_relation()
 class res_partner_contact(osv.osv):
     _inherit='res.partner.contact'
     _columns = {
-        'article_ids':fields.one2many('res.partner.article','contact_id','Articles'),#should be corect
-        'article_id':fields.many2one('res.partner.article','Article'),
-        }
+        'article_ids':fields.many2many('res.partner.article','res_partner_contact_article_rel','contact_id','article_id','Articles'),#should be corect
+    }
 res_partner_contact()
 
 class product(osv.osv):
