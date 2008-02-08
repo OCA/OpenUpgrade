@@ -49,14 +49,14 @@ class res_partner_contact(osv.osv):
         return res
 
     _columns = {
-        'name': fields.char('First Name', size=30,required=True),
-        'surname': fields.char('Last Name', size=30),
+        'name': fields.char('Last Name', size=30,required=True),
+        'first_name': fields.char('First Name', size=30),
         'mobile':fields.char('Mobile',size=30),
         'title': fields.selection(_title_get, 'Title'),
         'website':fields.char('Website',size=120),
         'lang_id':fields.many2one('res.lang','Language'),
         'address_ids':fields.one2many('res.partner.address','contact_id','Addresses'),
-        'country_id':fields.many2one('res.country','Country'),
+        'country_id':fields.many2one('res.country','Nationality'),
         'birthdate':fields.date('Birth Date'),
         'active' : fields.boolean('Active'),
     }
@@ -64,15 +64,15 @@ class res_partner_contact(osv.osv):
         'active' : lambda *a: True,
     }
     def name_get(self, cr, user, ids, context={}):
-        #will return name and surname.......
+        #will return name and first_name.......
         if not len(ids):
             return []
         res = []
-        for r in self.read(cr, user, ids, ['name','surname']):
+        for r in self.read(cr, user, ids, ['name','first_name']):
             addr = str(r['name'] or '')
-            if r['name'] and r['surname']:
+            if r['name'] and r['first_name']:
                 addr += ' '
-            addr += str(r['surname'] or '')
+            addr += str(r['first_name'] or '')
             res.append((r['id'], addr))
         return res
 res_partner_contact()

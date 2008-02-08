@@ -8,7 +8,7 @@
 		<field name="arch" type="xml">
 			<tree string="Partner Contact">
 				<field name="name"/>
-				<field name="surname"/>
+				<field name="first_name"/>
 				<field name="mobile"/>
 				<field name="lang_id"/>
 			</tree>
@@ -24,7 +24,7 @@
 				<notebook>
 					<page string="General">
 							<field name="name" select="1"/>
-							<field name="surname" select="1"/>
+							<field name="first_name" select="1"/>
 							<newline/>
 							<separator string="General Information" colspan="4"/>
 							<field name="mobile" select="2"/>
