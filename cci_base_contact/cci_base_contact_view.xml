@@ -35,10 +35,10 @@
 			<notebook position="inside">
 				<page string="Who's Who">
 					<separator string="Who's who subscription" colspan="4"/>
-					<field name="who_date_accept"/>
-					<field name="who_date_last"/>
-					<field name="who_date_publication"/>
-					<field name="who_presence"/>
+					<field name="who_date_accept" select="2"/>
+					<field name="who_date_last" select="2"/>
+					<field name="who_date_publication" select="2"/>
+					<field name="who_presence" select="2"/>
 					<newline/>
 					<separator string="Who's who text" colspan="4"/>
 					<field name="who_description" colspan="4" />
@@ -51,8 +51,8 @@
 				<page string="Personnal Links">
 					<field name="link_ids" nolabel="1">
 						<form string="Contact Link">
-							<field name="type_id"/>
-							<field name="contact_id"/>
+							<field name="type_id" select="1"/>
+							<field name="contact_id" select="1"/>
 						</form>
 						<tree string="Contact Link">
 							<field name="type_id"/>
@@ -61,11 +61,11 @@
 					</field>
 				</page>
 				<page string="Extra Information">
-					<field name="country_id"/>
-					<field name="birthdate" />
-					<field name="fse_work_status"/>
-					<field name="fse_work_experience"/>
-					<field name="fse_studies"/>
+					<field name="country_id" select="1"/>
+					<field name="birthdate" select="1"/>
+					<field name="fse_work_status" select="2"/>
+					<field name="fse_work_experience" select="2"/>
+					<field name="fse_studies" select="2" />
 				</page>
 			</notebook>
 		</field>
@@ -79,8 +79,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<field name="active" position="replace">
-			    <field name="data_private"/>
-				<field name="active" />
+			    <field name="data_private" select="2"/>
+				<field name="active"/>
 				<field name="self_sufficent" select="1"/>
 				<newline/>
 			</field>
@@ -95,7 +95,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<field name="birthdate" position="after">
-			    <field name="origin"/>
+			    <field name="origin" select="1"/>
 			</field>
 		</field>
 	</record>
