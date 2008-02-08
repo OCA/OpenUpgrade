@@ -2,6 +2,7 @@
 <terp>
 <data>
 
+<!-- unused?
 	<record model="ir.ui.view" id="view_partner_contact_tree">
 		<field name="name">res.partner.contact.tree</field>
 		<field name="model">res.partner.contact</field>
@@ -10,6 +11,21 @@
 			<tree string="Partner Contact">
 				<field name="name"/>
 			</tree>
+		</field>
+	</record>
+-->
+
+<!-- res.partner.contact -->
+
+	<record model="ir.ui.view" id="view_partner_contact_tree_inherit">
+		<field name="name">res.partner.contact.tree2</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_tree"/>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="lang_id" position="replace">
+			    <field name="adress_ids"/>
+			</field>
 		</field>
 	</record>
 
@@ -35,10 +51,10 @@
 			<notebook position="inside">
 				<page string="Who's Who">
 					<separator string="Who's who subscription" colspan="4"/>
-					<field name="who_date_accept" select="2"/>
-					<field name="who_date_last" select="2"/>
-					<field name="who_date_publication" select="2"/>
-					<field name="who_presence" select="2"/>
+					<field name="who_date_last"/>
+					<field name="who_date_accept"/>
+					<field name="who_date_publication"/>
+					<field name="who_presence"/>
 					<newline/>
 					<separator string="Who's who text" colspan="4"/>
 					<field name="who_description" colspan="4" />
@@ -71,7 +87,6 @@
 		</field>
 	</record>
 
-<!--  Modify parent page by adding new field on it -->
 	<record model="ir.ui.view" id="view_partner_contact_form_inherit_3">
 		<field name="name">res.partner.contact.form</field>
 		<field name="model">res.partner.contact</field>
@@ -87,7 +102,6 @@
 		</field>
 	</record>
 
-<!-- modify parent page.... -->
 	<record model="ir.ui.view" id="view_partner_contact_form_inherit_4">
 		<field name="name">res.partner.contact.form</field>
 		<field name="model">res.partner.contact</field>
@@ -99,6 +113,41 @@
 			</field>
 		</field>
 	</record>
+
+<!-- add a menu entry for contact link types -->
+		<record model="ir.ui.view" id="view_link_type_tree">
+			<field name="name">res.partner.contact.link.type.tree</field>
+			<field name="model">res.partner.contact.link.type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Link Type">
+					<field name="name" select="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_link_type_form">
+			<field name="name">res.partner.contact.link.type.form</field>
+			<field name="model">res.partner.contact.link.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Link Type">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_link_type">
+			<field name="name">Link Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.contact.link.type</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_link_type_tree"/>
+		</record>
+		<menuitem name="Partners/Configuration/Link Type/Contact Link Type" action="action_link_type" id="menu_link_type"/>
+
+
+
 
 </data>
 </terp>

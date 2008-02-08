@@ -33,22 +33,22 @@ class res_partner_contact(osv.osv):
     _columns = {
         'data_private': fields.boolean('Private data'),
         'self_sufficent':fields.boolean('Keep contact',help='This contact will not be removed even if all this addresses are deleted'),
-        'who_date_accept':fields.date('WsW Accept Date'),
-        'who_date_last':fields.date('WsW Last Date'),
-        'who_date_publication':fields.date('WsW Publication Date'),
+        'who_date_accept':fields.date('Accept Date'),
+        'who_date_last':fields.date('Last Modification'),
+        'who_date_publication':fields.date('Publication'),
         'who_presence':fields.boolean('In WsW'),
-        'who_description':fields.text('WsW Description',transtale=True),
+        'who_description':fields.text('WsW Description',translate=True),
         'origin':fields.char('Origin',size=20,help='The DB from which the info is coming from'),
-        'fse_work_status':fields.char('Fse Work Status',size=20), #should be corect....
-        'fse_work_experience':fields.char('Fse Work Exp.',size=20),#should be corect....
-        'fse_studies':fields.char('Fse Studies',size=20),#should be corect........
-        'country_ids': fields.many2many('res.country','res_country_rel','contact','country','Country'),
+        'fse_work_status':fields.char('FSE Work Status',size=20),
+        'fse_work_experience':fields.char('FSE Work Exp.',size=20),
+        'fse_studies':fields.char('FSE Studies',size=20),
+        'country_ids': fields.many2many('res.country','res_country_rel','contact','country',"Expertize's Countries"),
         'link_ids':fields.one2many('res.partner.contact.link','contact_id','Contact Link')
     }
-    defaults = {
+    _defaults = {
         'data_private' : lambda *a : False,
-        'self_sufficent':lambda *a : False,
-        'who_presence':lambda *a : True,
+        'self_sufficent': lambda *a : False,
+        'who_presence': lambda *a : True,
     }
 res_partner_contact()
 
@@ -57,7 +57,7 @@ class res_partner_contact_link_type(osv.osv):
     _name = "res.partner.contact.link.type"
     _description = "res.partner.contact.link.type"
     _columns = {
-        'name':fields.char('Name',size=20),
+        'name':fields.char('Name',size=20, required=True),
    }
 res_partner_contact_link_type()
 
@@ -65,9 +65,9 @@ class res_partner_contact_link(osv.osv):
     _name = "res.partner.contact.link"
     _description = "res.partner.contact.link"
     _columns = {
-        'name':fields.char('Name',size=20),
-        'type_id' : fields.many2one('res.partner.contact.link.type','Type'),#should be check ,,,
-        'contact_id' : fields.many2one('res.partner.contact','Contact'),#should be check
+        'name':fields.char('Name',size=20,required=True),
+        'type_id' : fields.many2one('res.partner.contact.link.type','Type',required=True),#should be check ,,,
+        'contact_id' : fields.many2one('res.partner.contact','Contact',required=True),#should be check
    }
 res_partner_contact_link()
 
@@ -94,9 +94,9 @@ class res_partner_country_relation(osv.osv):
     _name = "res.partner.country.relation"
     _description = 'res.partner.country.relation'
     _columns = {
-        'frequency': fields.integer('Frequency'),
+        'frequency': fields.selection([('Frequent','Occasionnel','Prospection')],'Frequency'),
         'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('none','')],'Types'),#should be corect
+        'type':fields.selection([('Export','Import','Salon')],'Types'),#should be corect
     }
 res_partner_country_relation()
 
