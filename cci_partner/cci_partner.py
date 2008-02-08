@@ -157,7 +157,7 @@ class res_partner(osv.osv):
         'state_id':fields.many2one('res.partner.state','Partner State',help='status of activity of the partner'),
         'state_id2':fields.many2one('res.partner.state2','Customer State',help='status of the partner as a customer'),
         'activity_description':fields.text('Activity Description',traslate=True),
-        'activity_code_ids':fields.one2many('res.partner.activity','partner_id','Activity Codes'),
+        'activity_code_ids':fields.one2many('res.partner.activity.relation','partner_id','Activity Codes'),
         'export_procent':fields.integer('Export(%)'),
         'export_year':fields.date('Export date',help='year of the export_procent value'),
         'import_procent':fields.integer('Import (%)'),
@@ -382,7 +382,11 @@ class res_partner_activity_relation(osv.osv):#new object added!
     _description = 'res.partner.activity.relation'
     _columns = {
         'importance': fields.selection([('main','Main'),('primary','Primary'),('secondary','Secondary')],'Importance'),
-        'activity_id':fields.many2one('res.partner.activity','Activity'),
+        'activity_id':fields.many2one('res.partner.activity','Activity', ondelete="cascade"),
+        'partner_id':fields.many2one('res.partner.activity','Activity', ondelete="cascade"),
+    }
+    _defaults = {
+        'importance': lambda *args: 'main'
     }
 res_partner_activity_relation()
 

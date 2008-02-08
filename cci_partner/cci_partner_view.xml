@@ -92,20 +92,14 @@
 				<notebook position="inside">
 					<page string="Activities">
 						<field name="activity_description" colspan="4"/>
-						<field editable="bottom" name="activity_code_ids" mode="tree,form">
-                               <tree string="Activity">
-                                        <field name="code"/>
-                                        <field name="label"/>
-                                        <field name="description"/>
+						<field name="activity_code_ids" mode="tree,form">
+                               <tree string="Activity" editable="bottom">
+									<field name="activity_id"/>
+									<field name="importance"/>
                               </tree>
                               <form string="Activity">
-								<field name="code" select="1"/>
-								<field name="label" select="1" />
-								<field name="list_id"/>
-								<newline/>
-								<field name="description" colspan="4"/>
-								<newline/>
-								<field name="code_relations" colspan="4"/>
+									<field name="activity_id"/>
+									<field name="importance"/>
 							</form>
 				         </field>
 					</page>
@@ -317,8 +311,9 @@
 			<field name="model">res.partner.activity.relation</field>
 			<field name="arch" type="xml">
 				<form string="Activity Relation">
-					<field name="importance"/>
-					<field name="activity_id"/>
+					<field name="partner_id" select="1"/>
+					<field name="activity_id" select="1"/>
+					<field name="importance" select="2"/>
 				</form>
 			</field>
 		</record>
@@ -328,8 +323,9 @@
 			<field name="model">res.partner.activity.relation</field>
 			<field name="arch" type="xml">
 				<tree string="Activity Relation">
-					<field name="importance"/>
+					<field name="partner_id"/>
 					<field name="activity_id"/>
+					<field name="importance"/>
 				</tree>
 			</field>
 		</record>
