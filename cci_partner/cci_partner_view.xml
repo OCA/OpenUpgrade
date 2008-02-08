@@ -19,7 +19,7 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_partner_form_inherit3">
+		<!--<record model="ir.ui.view" id="view_partner_form_inherit3">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
 			<field name="model">res.partner</field>
@@ -30,8 +30,50 @@
 				</field>
 			</field>
 		</record>
+-->
 
-		<record model="ir.ui.view" id="view_partner_form_inherit6">
+		<record model="ir.ui.view" id="view_partner_form_inherit3">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1" position="replace">
+					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
+						<form string="Partner Address">
+							<field name="name" select="2"/>
+							<!--<field name="title" domain="[('domain', '=', 'contact')]"/>-->
+							<field name="function"/>
+							<field name="type" select="2"/>
+							<field name="street" select="2"/>
+							<field name="street2"/>
+							<newline/>
+							<field name="zip_id" select="2"/>
+							<field name="city" select="2"/>
+							<newline/>
+							<field name="country_id" select="2" completion="1"/>
+							<field name="state_id" select="2"/>
+							<newline/>
+							<field name="phone"/>
+							<field name="fax"/>
+							<newline/>
+							<field name="mobile"/>
+							<field name="email" select="2" widget="email" />
+							<field name="contact_id"/>
+							<field name="department"/>
+						</form>
+						<tree string="Partner contacts">
+							<field name="name" />
+							<field name="zip"/>
+							<field name="city"/>
+							<field name="country_id"/>
+						</tree>
+					</field>
+				</field>
+			</field>
+		</record>
+
+	<!--	<record model="ir.ui.view" id="view_partner_form_inherit6">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
 			<field name="model">res.partner</field>
@@ -39,7 +81,7 @@
 			<field name="arch" type="xml">
 				<field name="title" domain="[('domain', '=', 'contact')]" position="replace"/>
 			</field>
-		</record>
+		</record>-->
 
 		<record model="ir.ui.view" id="view_partner_form_inherit2">
 			<field name="name">res.partner.form</field>
@@ -569,7 +611,7 @@
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="view_partner_form">
+<!--	<record model="ir.ui.view" id="view_partner_form">
 		<field name="name">Partner form inherited</field>
 		<field name="model">res.partner</field>
 		<field name="inherit_id" ref="base.view_partner_form"/>
@@ -581,7 +623,7 @@
 			</field>
 		</field>
 	</record>
-
+-->
 <!-- View for product.product object inherited from product module................ -->
 		<record model="ir.ui.view" id="view_product_form_inherit1">
 			<field name="name">product.normal.form</field>
