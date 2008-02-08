@@ -482,25 +482,25 @@
 				<form string="Article">
 					<notebook>
 						<page string="General">
-							<field name="title" colspan="4"/>
-							<field name="subtitle" colspan="4" />
-							<field name="source_id" />
-							<field name="date"/>
-							<field name="canal_id" colspan="4" /> <!-- link -->
-							<field name="press_review" />
+							<field name="title" colspan="4" select="1"/>
+							<field name="subtitle" colspan="4" select="1"/>
+							<field name="source_id" select="1" />
+							<field name="date" select="1"/>
+							<field name="canal_id" colspan="4" select="1"/> <!-- link -->
+							<field name="press_review" select="1"/>
 							<newline/>
 							<!--<field name="press_review_id" /> not defined in field -->
-							<field name="page"/>
-							<field name="article_length" />
+							<field name="page" select="1"/>
+							<field name="article_length" select="2"/>
 							<!--<field name="group(picture, graph, date)" /> should be add(not cleared) -->
-							<field name="keywords_ids" colspan="4"/>
-							<field name="summary" colspan="4"/>
+							<field name="keywords_ids" colspan="4" select="2"/>
+							<field name="summary" colspan="4" select="2"/>
 						</page>
 						<page string="Partners">
-							<field name="partners_ids" nolabel="1"/>
+							<field name="partners_ids" nolabel="1" select="2"/>
 						</page>
 						<page string="Contacts">
-							<field name="contact_ids" nolabel="1"/>
+							<field name="contact_ids" nolabel="1" select="2"/>
 						</page>
 					</notebook>
 				</form>
