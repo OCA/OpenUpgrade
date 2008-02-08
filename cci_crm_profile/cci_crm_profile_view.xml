@@ -7,12 +7,12 @@
 			<field name="model">cci_partner_profile.answer</field>
 			<field name="arch" type="xml">
 				<form string="Partner Answer">
-					<field name="partner_id"/>
-					<field name="address_id"/>
-					<field name="contact_id" />
-					<field name="question_id"/>
-					<field name="answer_id"/>
-					<field name="answer_text"/>
+					<field name="partner_id" select="1"/>
+					<field name="address_id" select="1"/>
+					<field name="contact_id" select="1"/>
+					<field name="question_id" select="2"/>
+					<field name="answer_id" select="2"/>
+					<field name="answer_text" select="2"/>
 				</form>
 			</field>
 		</record>
