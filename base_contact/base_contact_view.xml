@@ -24,16 +24,16 @@
 				<notebook>
 					<page string="General">
 							<field name="name" select="1"/>
-							<field name="surname"/>
+							<field name="surname" select="1"/>
 							<newline/>
 							<separator string="General Information" colspan="4"/>
-							<field name="mobile"/>
+							<field name="mobile" select="2"/>
 							<field name="title" select="1" />
-							<field name="website" select="1" />
-							<field name="lang_id" select="1"/>
+							<field name="website"/>
+							<field name="lang_id"/>
 							<field name="active"/>
 							<separator string="Functions" colspan="4"/>
-							<field name="address_ids" select="1" colspan="4" nolabel="1">
+							<field name="address_ids" colspan="4" nolabel="1">
 								<tree string="Address">
 									<field name="partner_id"/>
 									<field name="function"/>
@@ -43,7 +43,7 @@
 					</page>
 					<page string="Extra Information">
 							<field name="country_id"/>
-							<field name="birthdate" />
+							<field name="birthdate" select="1" />
 					</page>
 				</notebook>
 			</form>
@@ -93,7 +93,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<field name="partner_id" position="after">
-				<field name="contact_id"/>
+				<field name="contact_id" select="1"/>
 			</field>
 		</field>
 	</record>
@@ -106,7 +106,7 @@
 			<field name="arch" type="xml">
 				<form string=" Contact Courtesy">
 					<field name="name" select="1"/>
-					<field name="code"/>
+					<field name="code" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -116,8 +116,8 @@
 			<field name="model">contact.title</field>
 			<field name="arch" type="xml">
 				<tree string=" Contact Courtesy">
-					<field name="name" select="1"/>
-					<field name="code" select="1"/>
+					<field name="name"/>
+					<field name="code"/>
 				</tree>
 			</field>
 		</record>
