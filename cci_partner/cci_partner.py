@@ -381,9 +381,9 @@ class res_partner_activity_relation(osv.osv):#new object added!
     _name = "res.partner.activity.relation"
     _description = 'res.partner.activity.relation'
     _columns = {
-        'importance': fields.selection([('main','Main'),('primary','Primary'),('secondary','Secondary')],'Importance'),
+        'importance': fields.selection([('main','Main'),('primary','Primary'),('secondary','Secondary')],'Importance',required=True),
         'activity_id':fields.many2one('res.partner.activity','Activity', ondelete="cascade"),
-        'partner_id':fields.many2one('res.partner.activity','Activity', ondelete="cascade"),
+        'partner_id':fields.many2one('res.partner.activity','Partner', ondelete="cascade"),
     }
     _defaults = {
         'importance': lambda *args: 'main'

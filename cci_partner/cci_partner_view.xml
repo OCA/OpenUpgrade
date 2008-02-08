@@ -91,8 +91,8 @@
 			<field name="arch" type="xml">
 				<notebook position="inside">
 					<page string="Activities">
-						<field name="activity_description" colspan="4"/>
-						<field name="activity_code_ids" mode="tree,form">
+						<separator string="Activity Codes" colspan="4"/>
+						<field name="activity_code_ids" nolabel="1">
                                <tree string="Activity" editable="bottom">
 									<field name="activity_id"/>
 									<field name="importance"/>
@@ -102,6 +102,8 @@
 									<field name="importance"/>
 							</form>
 				         </field>
+						<separator string="Activity Description" colspan="4"/>
+						<field name="activity_description" colspan="4" nolabel="1"/>
 					</page>
 					<page string="Countries">
 						<field name="export_procent"/>
