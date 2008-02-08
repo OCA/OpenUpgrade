@@ -53,9 +53,9 @@ class res_partner_article_review(osv.osv):
         'date':fields.date('Date'),
         'article_ids':fields.one2many('res.partner.article','review_id','Articles'),
     }
-	_defaults = {
-		'date': lambda *args: time.strftime('%Y-%m-%d')
-	}
+    _defaults = {
+        'date': lambda *args: time.strftime('%Y-%m-%d')
+    }
 res_partner_article_review()
 
 
@@ -188,13 +188,11 @@ class res_partner(osv.osv):
         'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
-        'magazine_subscription':fields.selection(
-            [('never','Never'),('prospect','Prospect'),('personal','Personnal'),
-             ('postal','Postal')], "Magazine subscription"),
+        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','partner_id','Partner Relation'),
-        'article_ids' : fields.one2many('res.partner.article','res_partner_article_rel','partner_id','article_id','Articles')
+        'article_ids' : fields.many2many('res.partner.article','res_partner_article_rel','partner_id','article_id','Articles')
         #Never,Always,Managed_by_Poste,Prospect
         #virement belge,virement iban
         }
