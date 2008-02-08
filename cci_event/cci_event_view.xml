@@ -12,10 +12,10 @@
 						<separator string="Event Description" colspan="4"/>
 						<field name="name" string="Event" select="1" colspan="4"/>
 						<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
-						<field name="type"/>
+						<field name="type" select="1"/>
 						<field name="user_id" select="1"/>
-						<field name="active"/>
-						<field name="date_begin" select="1"/>
+						<field name="active" select="2"/>
+						<field name="date_begin" select="2"/>
 						<field name="date_end" select="2"/>
 						<field name="register_min" select="2"/>
 						<field name="register_max" select="2"/>
@@ -30,9 +30,9 @@
 						</group>
 					</page>
 					<page string="Extra Info">
-						<field name="fse_code"/>
-						<field name="fse_hours"/>
-						<field name="signet_type"/>
+						<field name="fse_code" />
+						<field name="fse_hours" />
+						<field name="signet_type" select="2"/>
 						<!--<field name="localisation"/>-->
 						<field name="account_analytic_id"/>
 						<field name="budget_id"/>
@@ -106,14 +106,14 @@
 			<field name="model">event.group</field>
 			<field name="arch" type="xml">
 				<form string="Event Group">
-					<field name="name"/>
+					<field name="name" select="1"/>
 					<newline/>
-					<field name="bookmark_name"/>
+					<field name="bookmark_name" select="1"/>
 					<newline/>
 					<field name="picture" widget="image" /><!-- should be corect -->
 					<newline/>
-					<field name="type"/>
-					<field name="cavalier" />
+					<field name="type" select="1"/>
+					<field name="cavalier" select="2"/>
 				</form>
 			</field>
 		</record>
@@ -144,15 +144,15 @@
 			<field name="model">event.check</field>
 			<field name="arch" type="xml">
 				<form string="Event Check">
-					<field name="name"/>
-					<field name="code"/>
-					<field name="unit_nbr"/>
-					<field name="type_id"/>
-					<field name="case_id"/>
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
+					<field name="unit_nbr" select="1"/>
+					<field name="type_id" select="1" />
+					<field name="case_id" select="2"/>
 					<newline/>
-					<field name="date_reception"/>
-					<field name="date_limit"/>
-					<field name="date_submission"/>
+					<field name="date_reception" select="2"/>
+					<field name="date_limit" select="2"/>
+					<field name="date_submission" select="2"/>
 					<newline/>
 					<group col="4" colspan="13">
 						<field name="state" select="1"/>
@@ -189,7 +189,7 @@
 			<field name="model">event.check.type</field>
 			<field name="arch" type="xml">
 				<form string="Check Type">
-					<field name="name"/>
+					<field name="name" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -221,12 +221,12 @@
 			<field name="inherit_id" ref="crm.crm_case-view"/>
 			<field name="arch" type="xml">
 				<field name="history_line" position="before">
-			    	<field name="unit_price"/>
+			    	<field name="unit_price" select="2"/>
 			    	<field name="quantity"/>
 			    	<separator string="Badge" colspan="4"/>
-			    	<field name="badge_title"/>
-			    	<field name="badge_name"/>
-			    	<field name="badge_partner"/>
+			    	<field name="badge_title" select="2"/>
+			    	<field name="badge_name" select="2"/>
+			    	<field name="badge_partner" select="2"/>
 			    	<newline/>
 			    	<separator colspan="4"/>
 			    	<field name="event_id"/>
@@ -248,8 +248,8 @@
 			    	<field name="partner_invoice_id"/>
 			    	<field name="partner_address_id" select="2" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="3"/>
 			    	<newline/>
-			    	<field name="partner_order_id"/>
-			    	<field name="contact_order_id" on_change="onchange_contact_id(contact_order_id)"/>
+			    	<field name="partner_order_id" select="1"/>
+			    	<field name="contact_order_id" on_change="onchange_contact_id(contact_order_id)" select="1"/>
 				</field>
 			</field>
 		</record>
@@ -262,14 +262,14 @@
 			<field name="arch" type="xml">
 				<notebook position="inside">
 					<page string="Payments">
-						<field name="invoice_label"/>
-						<field name="tobe_invoiced"/>
-						<field name="payment_mode"/>
+						<field name="invoice_label" select="1"/>
+						<field name="tobe_invoiced" select="1"/>
+						<field name="payment_mode" />
 						<field name="invoice_id"/>
 						<field name="check_mode"/>
 						<newline/>
-						<field name="check_ids" colspan="4"/>
-						<field name="payment_ids" colspan="4"/>
+						<field name="check_ids" colspan="4" select="2"/>
+						<field name="payment_ids" colspan="4" select="2"/>
 					</page>
 				</notebook>
 			</field>
