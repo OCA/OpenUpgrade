@@ -40,7 +40,7 @@
 			<field name="arch" type="xml">
 				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1" position="replace">
 					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
-						<form string="Partner Address">
+						<form string="Partner Addresses">
 							<field name="name" select="2"/>
 							<!--<field name="title" domain="[('domain', '=', 'contact')]"/>-->
 							<field name="function"/>
@@ -231,6 +231,7 @@
 			<field name="view_type">form</field>
 		</record>
 
+		<!--<menuitem name="Partners/Configuration/Partner Titles" groups="admin" action="base.action_partner_title" id="base.menu_partner_title"/>-->
 
 <!-- view for res.partner.state -->
 		<record model="ir.ui.view" id="view_partner_state_form">
