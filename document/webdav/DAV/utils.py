@@ -34,14 +34,14 @@ def gen_estring(ecode):
         return "HTTP/1.1 %s" %(ec)
 
 def parse_propfind(xml_doc):
-    """ parse an propfind xml file and return a list of props 
+    """ parse an propfind xml file and return a list of props
 
     returns:
-        
+
         request_type            -- ALLPROP, PROPNAME, PROP
         proplist            -- list of properties found
         namespaces            -- list of namespaces found
-    
+
     """
     doc = PyExpat.Reader().fromString(xml_doc)
     snit = doc.createNodeIterator(doc, NodeFilter.NodeFilter.SHOW_ELEMENT, None, None)
@@ -74,7 +74,7 @@ def parse_propfind(xml_doc):
 
 
 def create_treelist(dataclass,uri):
-    """ create a list of resources out of a tree 
+    """ create a list of resources out of a tree
 
     This function is used for the COPY, MOVE and DELETE methods
 

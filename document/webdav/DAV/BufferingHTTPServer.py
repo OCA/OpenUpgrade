@@ -42,14 +42,14 @@ class BufferedHTTPRequestHandler(BaseHTTPRequestHandler):
 
 
     def _init_buffer(self):
-        """initialize the buffer. 
-        
+        """initialize the buffer.
+
         If you override the handle() method remember to call
         this (see below)
         """
         self.__buffer=""
         self.__outfp=open("/tmp/out.%s" %self.__class__,"a+")
-    
+
     def _append(self,s):
         """ append a string to the buffer """
         self.__buffer=self.__buffer+s
@@ -64,7 +64,6 @@ class BufferedHTTPRequestHandler(BaseHTTPRequestHandler):
 
     def handle(self):
         """ Handle a HTTP request """
-
         self._init_buffer()
         BaseHTTPRequestHandler.handle(self)
         self._flush()
@@ -91,7 +90,7 @@ class BufferedHTTPRequestHandler(BaseHTTPRequestHandler):
         if self.request_version != 'HTTP/0.9':
             self._append("%s %s %s\r\n" %
                     (self.protocol_version, str(code), message))
-        
+
         self.send_header('Server', self.version_string())
         self.send_header('Connection', 'close')
         self.send_header('Date', self.date_time_string())

@@ -51,8 +51,8 @@ from status import STATUS_CODES
 from errors import *
 
 class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
-    """Simple DAV request handler with 
-    
+    """Simple DAV request handler with
+
     - GET
     - HEAD
     - PUT
@@ -63,7 +63,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
 
     It uses the resource/collection classes for serving and
     storing content.
-    
+
     """
 
     server_version = "DAV/" + __version__
@@ -78,23 +78,23 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         self.send_response(code,message=msg)
         self.send_header("Connection", "close")
         self.send_header("Accept-Ranges", "bytes")
-        
+
         for a,v in headers.items():
             self.send_header(a,v)
-        
+
         if DATA:
             self.send_header("Content-Length", str(len(DATA)))
             self.send_header("Content-Type", ctype)
         else:
             self.send_header("Content-Length", "0")
-        
+
         self.end_headers()
         if DATA:
             self._append(DATA)
 
     def send_body_chunks(self,DATA,code,msg,desc,ctype='text/xml; encoding="utf-8"'):
         """ send a body in chunks """
-        
+
         self.responses[207]=(msg,desc)
         self.send_response(code,message=msg)
         self.send_header("Content-type", ctype)
@@ -120,12 +120,22 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
     def do_PROPFIND(self):
 
         dc=self.IFACE_CLASS
-
         # read the body
         body=None
         if self.headers.has_key("Content-Length"):
             l=self.headers['Content-Length']
             body=self.rfile.read(atoi(l))
+        body = """<?xml version="1.0" encoding="utf-8"?>
+                    <propfind xmlns="DAV:"><prop>
+                    <getcontentlength xmlns="DAV:"/>
+                    <getlastmodified xmlns="DAV:"/>
+                    <getcreationdate xmlns="DAV:"/>
+                    <checked-in xmlns="DAV:"/>
+                    <executable xmlns="http://apache.org/dav/props/"/>
+                    <displayname xmlns="DAV:"/>
+                    <resourcetype xmlns="DAV:"/>
+                    <checked-out xmlns="DAV:"/>
+                    </prop></propfind>"""
         self.write_infp(body)
 
         # which Depth?
@@ -140,7 +150,7 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         pf=PROPFIND(uri,dc,d)
         print 'PROPFIND', pf
 
-        if body:    
+        if body:
             pf.read_propfind(body)
 
         try:
@@ -154,7 +164,6 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
 
     def do_GET(self):
         """Serve a GET request."""
-
         dc=self.IFACE_CLASS
         uri=urlparse.urljoin(dc.baseuri,self.path)
         uri=urllib.unquote(uri)
@@ -177,14 +186,13 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
             data=dc.get_data(uri)
         except DAV_Error, (ec,dd):
             self.send_status(ec)
-            return 
+            return
 
         # send the data
         self.send_body(data,"200","OK","OK",ct,headers)
 
     def do_HEAD(self):
         """ Send a HEAD response """
-
         dc=self.IFACE_CLASS
         uri=urlparse.urljoin(dc.baseuri,self.path)
         uri=urllib.unquote(uri)
@@ -305,12 +313,12 @@ class DAVRequestHandler(AuthServer.BufferedAuthRequestHandler):
         d="infinity"
         if self.headers.has_key("Depth"):
             d=self.headers['Depth']
-            
-            if d!="0" and d!="infinity": 
+
+            if d!="0" and d!="infinity":
                 self.send_status(400)
                 return
-            
-            if d=="0":  
+
+            if d=="0":
                 res=cp.single_action()
                 self.send_status(res)
                 return

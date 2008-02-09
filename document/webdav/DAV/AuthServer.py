@@ -76,7 +76,6 @@ class AuthRequestHandler:
         """
         Special handle method with buffering and authentication
         """
-
         self.infp=open("/tmp/in.%s" %self.__class__, "a+")
 
         self.infp.write("------------------------------------------------------------------------------\n")
@@ -87,7 +86,6 @@ class AuthRequestHandler:
 
         # needed by send_error
         self.command = requestline
-
         if requestline[-2:] == '\r\n':
             requestline = requestline[:-2]
         elif requestline[-1:] == '\n':
@@ -113,21 +111,24 @@ class AuthRequestHandler:
         self.command, self.path, self.request_version = command, path, version
         self.headers = self.MessageClass(self.rfile, 0)
         self.infp.write(str(self.headers))
-
         # test authentification
         global UserName, PassWord
-        if self.DO_AUTH:
-            try:
-                a=self.headers["Authorization"]
-                m,up=string.split(a)
-                up2=base64.decodestring(up)
-                user,pw=string.split(up2,":")
-                UserName, PassWord = user,pw
-                if not self.get_userinfo(user,pw):
-                    self.send_autherror(401,"Authorization Required"); return
-            except:
-                self.send_autherror(401,"Authorization Required")
-                return
+        self.db_name=self.path.split('/')[1]
+        UserName, PassWord = 'root',''
+        if self.db_name!='':
+            if self.DO_AUTH:
+                try:
+                    a=self.headers["Authorization"]
+                    m,up=string.split(a)
+                    up2=base64.decodestring(up)
+                    user,pw=string.split(up2,":")
+                    UserName, PassWord = user,pw
+                    if not self.get_userinfo(user,pw):
+                        self.send_autherror(401,"Authorization Required"); return
+                except Exception ,e:
+                    print e
+                    self.send_autherror(401,"Authorization Required")
+                    return
 
         # check for methods starting with do_
         mname = 'do_' + command

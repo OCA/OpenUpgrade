@@ -82,7 +82,8 @@ class node_class(object):
 		where = []
 		if nodename:
 			where.append(('name','=',nodename))
-		where.append(('parent_id','=',self.object.id))
+		if nodename!=self.cr.dbname:
+			where.append(('parent_id','=',self.object.id))
 		ids = self.object.search(self.cr, self.uid, where, self.context)
 		res = self.object.browse(self.cr, self.uid, ids,self.context)
 		return res
@@ -92,7 +93,8 @@ class node_class(object):
 			return []
 		if self.object.type=='directory' :
 			res = self.directory_list_for_child(nodename)
-			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
+			res= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
+			return res
 		elif self.object.type=="ressource":
 			where = []
 			obj = self.object2
@@ -189,6 +191,11 @@ class document_directory(osv.osv):
 		('filename_uniq', 'unique (name,parent_id)', 'The directory name must be unique !')
 	]
 
+	def root_create(self, cr, uid):
+		root_id=self.create(cr, uid, {'name':cr.dbname,'user_id':uid})
+		repository_id=self.pool.get('document.repository').create(cr, uid, {'name':'Main Repository','directory_id':root_id})
+		return root_id
+
 	def onchange_content_id(self, cr, uid, ids, ressource_type_id):
 		content_ids=self.pool.get('document.directory.content').search(cr,uid,[('directory_id','=',ids[0])])
 		del_ids=self.pool.get('document.directory.content').unlink(cr,uid,content_ids)
@@ -212,7 +219,7 @@ class document_directory(osv.osv):
 			object2: the other object linked (if object.directory.content)
 	"""
 	def get_object(self, cr, uid, uri, root, context={}):
-		node = node_class(cr, uid, '/', root)
+		node = node_class(cr, uid, root.name, root)
 		if not uri:
 			return node
 		uris = uri.split('/')
@@ -224,7 +231,10 @@ class document_directory(osv.osv):
 
 	def get_childs(self, cr, uid, uri, root, context={}):
 		node = self.get_object(cr, uid, uri, root, context)
-		children = node.children()
+		if uri:
+			children = node.children()
+		else:
+			children= [node]
 		result = map(lambda node: node.path_get(), children)
 		#childs,object2 = self._get_childs(cr, uid, object, False, context)
 		#result = map(lambda x: urlparse.urljoin(path+'/',x.name), childs)
@@ -383,13 +393,12 @@ class document_file(osv.osv):
 		fp.write(base64.decodestring(vals['datas']))
 		res = content_index(base64.decodestring(vals['datas']), fname, vals.get('content_type', None))
 		vals['index_content']=  res
-		vals['file_size']= len(vals['datas'])
-
 		vals['link'] = fname
 		vals['datas_fname']=filename
 
 #		vals['name']=filename
-
+		vals['file_size']=os.stat(new_path + "/" + filename).st_size
+		len(vals['datas'])
 		ext = False
 		if vals['name'].find('.') >0 :
 			ext = vals['name'].split('.')[1] or False
