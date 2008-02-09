@@ -21,6 +21,14 @@
 	* done (set state to done), set date_stop
 	* set to draft (set state to draft)
 	* cancel set state to cancel
+
+	When the production order becomes "ready to produce", operations must
+	become 'confirmed'. When the production order is done, all operations
+	must become done.
+
+	The field delay is the delay(stop date - start date).
+	So that we can compare the theoric delay and real delay.
+
 	""",
 	"init_xml" : [],
 	"demo_xml" : [],
