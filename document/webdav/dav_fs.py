@@ -58,17 +58,13 @@ class tinyerp_handler(dav_interface):
 		print 'GET Childs', uri
 		if self.is_db(uri):
 			s = netsvc.LocalService('db')
-			print '\tGET Childs DB'
 			return map(lambda x: urlparse.urljoin(self.baseuri, x), self.db_list())
-
 		result = []
 		cr, uid, pool, uri2 = self.get_cr(uri)
-		print '\turi2', uri2
 		node = self.uri2object(cr,uid,pool, uri2)
-		print '\tFound node', node
 		for d in node.children():
+			print 'XXX result',d, node
 			result.append( urlparse.urljoin(self.baseuri, d.path) )
-		print '\tGET Childs', result
 		return result
 
 	def uri2local(self, uri):
@@ -129,9 +125,9 @@ class tinyerp_handler(dav_interface):
 		if node.type=='file':
 			return base64.decodestring(node.object.datas or '')
 		elif node.type=='content':
-			report = pool.get('ir.actions.report.xml').browse(cr, self.get_userid('admin', 'admin'),node.content['report_id']['id'])
+			report = pool.get('ir.actions.report.xml').browse(cr, uid, node.content['report_id']['id'])
 			srv = netsvc.LocalService('report.'+report.report_name)
-			pdf,pdftype = srv.create(cr, self.get_userid('admin', 'admin'), [node.object.id], {}, {})
+			pdf,pdftype = srv.create(cr, uid, [node.object.id], {}, {})
 			return pdf
 		else:
 			raise DAV_Forbidden
@@ -167,7 +163,8 @@ class tinyerp_handler(dav_interface):
 	def get_lastmodified(self,uri):
 		""" return the last modified date of the object """
 		print 'Get DAV Mod', uri
-		today = int(time.time())
+		today = time.time()
+		return today
 		if self.is_db(uri):
 			return today
 
@@ -393,44 +390,10 @@ class tinyerp_handler(dav_interface):
 	###
 
 	def copy(self,src,dst):
-		print '**** COPY ****', src, dst
-		src_db = self.get_db(src)
-		dst_db = self.get_db(dst)
-		new=''
-		if dst.find('8008/')<0:
-			dst = src.split('8008/')[0]+'8008'+('/'.join(dst.split('/')[:-1]))
-		self.db_name=self.get_db(src)
-
-		if src_db and dst_db:
-			self.directory_id=self.get_directory(src_db)
-			db,pool = pooler.get_db_and_pool(src_db)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-
-			node = dir.get_object(cr, self.get_userid('admin', 'admin'), self.uri2local(src))
-			if not node.type=='file':
-				raise DAV_Error,999
-			data = base64.decodestring(node.object.datas)
-			ct = node.object.file_type
-			create_dir = False
-			dir_dst=self.baseuri
-			cr.close()
-			db,pool = pooler.get_db_and_pool(dst_db)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			for d in dst.replace(self.baseuri,'').split('/'):
-				dir_dst +=d+"/"
-				res_id = dir.search(cr,self.get_userid('admin', 'admin'),[('name','=',d)])
-				if not res_id:
-					create_dir = True
-					self.mkcol(dir_dst)
-			cr.close()
-			if create_dir:
-				file = src.split('/')[-1]
-				dst+="/"+file
-			self.put(dst, data, ct)
-			return 201
-		return False
+		ct = self._get_dav_getcontenttype(src)
+		data = self.get_data(src)
+		self.put(dst,data,ct)
+		return 201
 
 	def copycol(self,src,dst):
 		""" copy a collection.
@@ -445,21 +408,19 @@ class tinyerp_handler(dav_interface):
 
 	def exists(self,uri):
 		""" test if a resource exists """
-		print 'Get Exists', uri
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			result = False
-			cr = db.cursor()
-			try:
-				node = self.uri2object(cr, self.get_userid('admin', 'admin'), uri)
-			except:
-				return False
+		if self.is_db(uri):
+			return True
+		result = False
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		try:
+			node = self.uri2object(cr,uid,pool, uri2)
 			if node:
 				result = True
-			cr.close()
-			return result
-		return False
+		except:
+			pass
+		cr.close()
+		print 'Get Exists', uri, result
+		return result
 
 	def is_collection(self,uri):
 		""" test if the given uri is a collection """

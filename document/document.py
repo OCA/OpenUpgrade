@@ -38,16 +38,26 @@ import os
 
 import pooler
 
+# Unsupported WebDAV Commands:
+#     label
+#     search
+#     checkin
+#     checkout
+#     propget
+#     propset
+
 #
 # An object that represent an uri
 #   path: the uri of the object
-#   object: the directory it belongs to (not null)
-#   object2: the Tiny ERP
-#   content: the Content it belongs to
-#   type: collection, content, ressource, database
+#   content: the Content it belongs to (_print.pdf)
+#   type: content or collection
+#       content: objct = res.partner
+#       collection: object = directory, object2 = res.partner
+#       file: objct = ir.attachement
+#   root: if we are at the first directory of a ressource
 #
 class node_class(object):
-	def __init__(self, cr, uid, path,object,object2=False, context={}, content=False, type='collection'):
+	def __init__(self, cr, uid, path,object,object2=False, context={}, content=False, type='collection', root=False):
 		self.cr = cr
 		self.uid = uid
 		self.path = path
@@ -56,6 +66,7 @@ class node_class(object):
 		self.context = context
 		self.content = content
 		self.type=type
+		self.root=root
 
 	def _file_get(self, nodename=False):
 		if not self.object:
@@ -82,7 +93,9 @@ class node_class(object):
 			where.append( ('res_id','=',False) )
 		if nodename:
 			where.append( (fobj._rec_name,'=',nodename) )
-		ids = fobj.search(self.cr, self.uid, where, context=self.context)
+		ids = fobj.search(self.cr, self.uid, where+[ ('parent_id','=',self.object and self.object.id or False) ], context=self.context)
+		if self.object and self.root:
+			ids += fobj.search(self.cr, self.uid, where+[ ('parent_id','=',False) ], context=self.context)
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
 		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file'), res) + res2
 
@@ -92,20 +105,21 @@ class node_class(object):
 		where = []
 		if nodename:
 			where.append(('name','=',nodename))
-		if nodename!=self.cr.dbname:
-			where.append(('parent_id','=',self.object and self.object.id or False))
-		ids = pool.get('document.directory').search(self.cr, self.uid, where, self.context)
+		where.append(('parent_id','=',self.object and self.object.id or False))
+
+		ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',False)], self.context)
+		if self.object2:
+			ids += pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',self.object2.id)], self.context)
 		res = pool.get('document.directory').browse(self.cr, self.uid, ids,self.context)
 		return res
 
 	def _child_get(self, nodename=False):
 		if self.type not in ('collection','database'):
 			return []
-		if (self.type=='database') or (self.object.type=='directory'):
-			res = self.directory_list_for_child(nodename)
-			res= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
-			return res
-		elif self.object.type=="ressource":
+		res = self.directory_list_for_child(nodename)
+		result= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, self.object2), res)
+
+		if self.type=='collection' and self.object.type=="ressource":
 			where = []
 			obj = self.object2
 
@@ -118,10 +132,10 @@ class node_class(object):
 					where.append((obj._parent_name,'=',self.object2 and self.object2.id or False))
 				else :
 					if self.object2:
-						return []
+						return result
 			else:
 				if self.object2:
-					return []
+					return result
 
 			name_for = obj._name.split('.')[-1]
 			if nodename  and nodename.find(name_for) == 0  :
@@ -139,13 +153,10 @@ class node_class(object):
 				if not r.name:
 					r.name = name_for+'%d'%r.id
 
-			res1 = self.directory_list_for_child(nodename)
-			if not self.object2:
-				res = res + res1
-			return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x), res)
-		else:
-			print "*** Directory type", self.object.type, "not implemented !"
-			print self.type, nodename, self.object, self.object2
+			result2 = map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x, root=True), res)
+			if result2:
+				result = result2
+		return result
 
 	def children(self):
 		return self._child_get() + self._file_get()
@@ -158,9 +169,6 @@ class node_class(object):
 		if res:
 			return res[0]
 		raise webdav.DAV.errors.DAV_NotFound
-
-	def parent(self):
-		return node_class(True)
 
 	def path_get(self):
 		path = self.path

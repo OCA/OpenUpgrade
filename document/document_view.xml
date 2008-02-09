@@ -17,6 +17,7 @@
 					<field name="type"/>
 					<newline/>
 					<field name="ressource_type_id"  on_change="onchange_content_id(ressource_type_id)"/>
+					<field name="ressource_id" select="2"/>
 					<field name="ressource_tree"/>
 
 					<separator string="Contents" colspan="4"/>
