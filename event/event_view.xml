@@ -117,8 +117,8 @@
 			<field name="domain">[('state','=','draft')]</field>
 		</record>
 		<menuitem
-			name="Events/All Events/Draft Events" 
-			id="menu_event_event_draft" 
+			name="Events/All Events/Draft Events"
+			id="menu_event_event_draft"
 			action="action_event_view_draft" />
 		<record model="ir.actions.act_window" id="action_event_view_confirm">
 			<field name="name">Confirmed Events</field>
@@ -127,7 +127,7 @@
 			<field name="domain">[('state','=','confirm')]</field>
 		</record>
 		<menuitem name="Events/All Events/Confirmed Events"
-			id="menu_event_event_confirm" 
+			id="menu_event_event_confirm"
 			action="action_event_view_confirm" />
 
 
@@ -189,8 +189,8 @@
 		  <field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
-			name="Events/All Registrations" 
-			id="menu_action_registration" 
+			name="Events/All Registrations"
+			id="menu_action_registration"
 			action="action_registration"/>
 		<record model="ir.actions.act_window" id="action_registration_draft">
 		  <field name="name">Unconfirmed Registrations</field>
@@ -200,8 +200,8 @@
 		  <field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
-			name="Events/All Registrations/Unconfirmed Registrations" 
-			id="menu_action_registration_draft" 
+			name="Events/All Registrations/Unconfirmed Registrations"
+			id="menu_action_registration_draft"
 			action="action_registration_draft"/>
 		<record model="ir.actions.act_window" id="action_registration_confirm">
 		  <field name="name">Confirmed Registrations</field>
@@ -209,9 +209,9 @@
 		  <field name="view_type">form</field>
 		  <field name="domain">[('section_id.code','=','Event'),('state','in',('open','done'))]</field>
 		</record>
-		<menuitem 
-			name="Events/All Registrations/Confirmed Registrations" 
-			id="menu_action_registration_confirm" 
+		<menuitem
+			name="Events/All Registrations/Confirmed Registrations"
+			id="menu_action_registration_confirm"
 			action="action_registration_confirm"/>
 
 
@@ -228,6 +228,35 @@
 			name="wizard_event_registration"
 			id="wizard_event_registration"
 			/>
+
+
+<!-- report , event on registration... start -->
+	<record model="ir.ui.view" id="report_event_registration_tree">
+		<field name="name">report.event.registration.tree</field>
+		<field name="model">report.event.registration</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Event on Registration">
+				<field name="name" select="1"/>
+				<field name="date_begin" select="1"/>
+				<field name="date_end"/>
+				<field name="draft_state" select="2"/>
+				<field name="confirm_state" select="2"/>
+				<field name="register_max" select="2"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_event_registration">
+		<field name="name">Events On Registrations</field>
+		<field name="res_model">report.event.registration</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+	</record>
+	<menuitem name="Events/Reporting/Events on Registrations" action="action_event_registration" id="menu_report_event_registration"/>
+
+
+<!-- end... -->
 
 	</data>
 </terp>
