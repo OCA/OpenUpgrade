@@ -38,6 +38,14 @@ import os
 
 import pooler
 
+#
+# An object that represent an uri
+#   path: the uri of the object
+#   object: the directory it belongs to (not null)
+#   object2: the Tiny ERP
+#   content: the Content it belongs to
+#   type: collection, content, ressource, database
+#
 class node_class(object):
 	def __init__(self, cr, uid, path,object,object2=False, context={}, content=False, type='collection'):
 		self.cr = cr
@@ -49,8 +57,9 @@ class node_class(object):
 		self.content = content
 		self.type=type
 
-
 	def _file_get(self, nodename=False):
+		if not self.object:
+			return []
 		pool = pooler.get_pool(self.cr.dbname)
 		fobj = pool.get('ir.attachment')
 		res2 = []
@@ -79,19 +88,20 @@ class node_class(object):
 
 
 	def directory_list_for_child(self,nodename,parent=False):
+		pool = pooler.get_pool(self.cr.dbname)
 		where = []
 		if nodename:
 			where.append(('name','=',nodename))
 		if nodename!=self.cr.dbname:
-			where.append(('parent_id','=',self.object.id))
-		ids = self.object.search(self.cr, self.uid, where, self.context)
-		res = self.object.browse(self.cr, self.uid, ids,self.context)
+			where.append(('parent_id','=',self.object and self.object.id or False))
+		ids = pool.get('document.directory').search(self.cr, self.uid, where, self.context)
+		res = pool.get('document.directory').browse(self.cr, self.uid, ids,self.context)
 		return res
 
 	def _child_get(self, nodename=False):
-		if self.type<>'collection':
+		if self.type not in ('collection','database'):
 			return []
-		if self.object.type=='directory' :
+		if (self.type=='database') or (self.object.type=='directory'):
 			res = self.directory_list_for_child(nodename)
 			res= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False), res)
 			return res
@@ -152,11 +162,6 @@ class node_class(object):
 	def parent(self):
 		return node_class(True)
 
-	def name_get(self):
-		if self.object.parent_id:
-			return self.object.name
-		return '/'
-
 	def path_get(self):
 		path = self.path
 		if self.path[0]=='/':
@@ -181,6 +186,7 @@ class document_directory(osv.osv):
 		'content_ids': fields.one2many('document.directory.content', 'directory_id', 'Virtual Files'),
 		'type': fields.selection([('directory','Static Directory'),('link','Link to Another Directory'),('ressource','Other Ressources')], 'Type', required=True),
 		'ressource_type_id': fields.many2one('ir.model', 'Ressource Model'),
+		'ressource_id': fields.integer('Ressource ID'),
 		'ressource_tree': fields.boolean('Tree Structure'),
 	}
 	_defaults = {
@@ -188,13 +194,8 @@ class document_directory(osv.osv):
 		'type': lambda *args: 'directory'
 	}
 	_sql_constraints = [
-		('filename_uniq', 'unique (name,parent_id)', 'The directory name must be unique !')
+		('filename_uniq', 'unique (name,parent_id,ressource_id)', 'The directory name must be unique !')
 	]
-
-	def root_create(self, cr, uid):
-		root_id=self.create(cr, uid, {'name':cr.dbname,'user_id':uid})
-		repository_id=self.pool.get('document.repository').create(cr, uid, {'name':'Main Repository','directory_id':root_id})
-		return root_id
 
 	def onchange_content_id(self, cr, uid, ids, ressource_type_id):
 		content_ids=self.pool.get('document.directory.content').search(cr,uid,[('directory_id','=',ids[0])])
@@ -218,19 +219,19 @@ class document_directory(osv.osv):
 			object: the object.directory or object.directory.content
 			object2: the other object linked (if object.directory.content)
 	"""
-	def get_object(self, cr, uid, uri, root, context={}):
-		node = node_class(cr, uid, root.name, root)
+	def get_object(self, cr, uid, uri, context={}):
 		if not uri:
 			return node
-		uris = uri.split('/')
-		while len(uris):
-			path = uris.pop(0)
+		node = node_class(cr, uid, uri.pop(0), False, type='database')
+		print '\t', node, uri
+		while len(uri):
+			path = uri.pop(0)
 			if path:
 				node = node.child(path)
 		return node
 
-	def get_childs(self, cr, uid, uri, root, context={}):
-		node = self.get_object(cr, uid, uri, root, context)
+	def get_childs(self, cr, uid, uri, context={}):
+		node = self.get_object(cr, uid, uri, context)
 		if uri:
 			children = node.children()
 		else:
@@ -240,34 +241,12 @@ class document_directory(osv.osv):
 		#result = map(lambda x: urlparse.urljoin(path+'/',x.name), childs)
 		return result
 
-	def create(self, cr, user, vals, context=None):
+	def create(self, cr, uid, vals, context=None):
 		if vals.get('name',False) and (vals.get('name').find('/')+1 or vals.get('name').find('@')+1 or vals.get('name').find('$')+1 or vals.get('name').find('#')+1) :
 			raise webdav.DAV.errors.DAV_NotFound('Directory name must not contain special character...')
-		return super(document_directory,self).create(cr, user, vals, context)
+		return super(document_directory,self).create(cr, uid, vals, context)
 
 document_directory()
-
-class document_repository(osv.osv):
-	_name = 'document.repository'
-	_description = 'Document repository'
-	_columns = {
-		'name': fields.char('Name', size=64, required=True, select=1),
-		'note': fields.text('Notes'),
-		'active': fields.boolean('Active'),
-		'server_url': fields.char('Serveur Host', size=64, required=True, select=1),
-		'server_port': fields.integer('Serveur Port', required=True, select=1),
-		'directory_id': fields.many2one('document.directory', 'Root Directory', required=True),
-	}
-	_defaults = {
-		'server_url': lambda *args: 'localhost',
-		'active': lambda *args: True,
-		'server_port': lambda *args: 8008
-	}
-	_sql_constraints = [
-		('name_uniq', 'unique (name)', 'The repository name must be unique !'),
-		('server_port_uniq', 'unique (server_url,server_port)', 'You can not create two repositories on the same port !')
-	]
-document_repository()
 
 class document_directory_content(osv.osv):
 	_name = 'document.directory.content'
@@ -325,27 +304,59 @@ ir_action_report_xml()
 import random
 import string
 
+
 def random_name():
 	random.seed()
 	d = [random.choice(string.letters) for x in xrange(10) ]
 	name = "".join(d)
 	return name
 
+
 def create_directory(path):
 	dir_name = random_name()
-	path = path+"/"+dir_name
+	path = os.path.join(path,dir_name)
 	os.mkdir(path)
-	return path
+	return dir_name
 
 class document_file(osv.osv):
 	_inherit = 'ir.attachment'
-	_columns = {
-#		'name': fields.char('Name', size=64, required=True, select=1),
-#		'datas': fields.binary('Content'), # datas
-#		'datas_fname': fields.char('File Name', size=128, required=True), # datas_fname
-#		'res_model': fields.char('Attached Model', size=64), #res_model
-#		'res_id': fields.integer('Attached ID'), #res_id
+	def _data_get(self, cr, uid, ids, name, arg, context):
+		result = {}
+		cr.execute('select id,store_method,datas,store_fname,link from ir_attachment where id in ('+','.join(map(str,ids))+')')
+		for id,m,d,r,l in cr.fetchall():
+			if m=='db':
+				result[id] = d
+			elif m=='fs':
+				path = os.path.join(os.getcwd(),'filestore')
+				value = file(os.path.join(path,r), 'rb').read()
+				result[id] = base64.encodestring(value)
+			else:
+				result[id] = ''
+		return result
 
+	def _data_set(self, cr, obj, id, name, value, uid=None, context={}):
+		if not value:
+			return True
+		if (not context) or context.get('store_method','fs')=='fs':
+			path = os.path.join(os.getcwd(), "filestore")
+			if not os.path.isdir(path):
+				os.mkdir(path)
+			flag = None
+			for dirs in os.listdir(path):
+				if os.path.isdir(dirs) and len(os.listdir(dirs))<4000:
+					flag = dirs
+					break
+			flag = flag or create_directory(path)
+			filename = random_name()
+			fname = os.path.join(path, flag, filename)
+			fp = file(fname,'wb')
+			fp.write(base64.decodestring(value))
+			cr.execute('update ir_attachment set store_fname=%s,store_method=%s where id=%d', (os.path.join(flag,filename),'fs',id))
+		else:
+			cr.execute('update ir_attachment set datas=%s,store_method=%s where id=%d', (psycopg.Binary(value),'db',id))
+		return True
+
+	_columns = {
 		'user_id': fields.many2one('res.users', 'Owner', select=1),
 		'group_ids': fields.many2many('res.groups', 'document_directory_group_rel', 'item_id', 'group_id', 'Groups'),
 		'parent_id': fields.many2one('document.directory', 'Directory', select=1),
@@ -356,61 +367,35 @@ class document_file(osv.osv):
 		'write_uid':  fields.many2one('res.users', 'Last Modification User', readonly=True),
 		'create_date': fields.datetime('Date Created', readonly=True),
 		'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
-		'datas_fname': fields.char('Data Filename',size=64),
-
+		'store_method': fields.selection([('db','Database'),('fs','Filesystem'),('link','Link')], "Storing Method"),
+		'datas': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
+		'store_fname': fields.char('Stored Filename', size=200),
 	}
+
 	_defaults = {
 		'user_id': lambda self,cr,uid,ctx:uid,
-		'file_size': lambda self,cr,uid,ctx:0
+		'file_size': lambda self,cr,uid,ctx:0,
+		'store_method': lambda *args: 'db'
 	}
-	_sql_constraints = [
-		#('filename_uniq', 'unique (datas_fname,parent_id)', 'The filename must be unique !')
-	]
-
-	def create(self, cr, user, vals, context=None):
-		if not vals.has_key('datas'):
-			return super(document_file,self).create(cr,user,vals,context)
-
-		path = os.getcwd()
-		if not "filestore" in os.listdir(path):
-			os.mkdir(path+"/filestore")
-		path = os.getcwd() + '/filestore'
-		flag = False
-		for root,dirs,files	in os.walk(path):
-			if root != path:
-				x = 0
-				for f in files:
-					x = x +1
-				if x < 4000:
-					flag = True
-					new_path = root
-		if not flag:
-			new_path = create_directory(path)
-		temp,ext = os.path.splitext(vals['datas_fname'])
-		filename = random_name() +ext
-		fname = new_path + "/" + filename
-		fp = file(fname,'wb')
-		fp.write(base64.decodestring(vals['datas']))
-		res = content_index(base64.decodestring(vals['datas']), fname, vals.get('content_type', None))
-		vals['index_content']=  res
-		vals['link'] = fname
-		vals['datas_fname']=filename
-
-#		vals['name']=filename
-		vals['file_size']=os.stat(new_path + "/" + filename).st_size
-		len(vals['datas'])
-		ext = False
-		if vals['name'].find('.') >0 :
-			ext = vals['name'].split('.')[1] or False
-		vals['file_type']= vals['name'].split('.')[1] or False
-		vals['datas']=" "
-		return super(document_file,self).create(cr, user, vals, context)
-
-	def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
-		res =  super(document_file,self).read(cr, user, ids, fields, context, load)
-		for r in res:
-			if r.has_key('link'):
-				value = file(r['link'], 'rb').read()
-				r['datas'] = base64.encodestring(value)
-		return res
+	def create(self, cr, uid, vals, context=None):
+		if 'datas' not in vals:
+			return super(document_file,self).create(cr,uid,vals,context)
+		vals['file_size']= len(vals['datas'])
+		result = super(document_file,self).create(cr, uid, vals, context)
+		cr.commit()
+		try:
+			res = content_index(base64.decodestring(vals['datas']), vals['datas_fname'], vals.get('content_type', None))
+			super(document_file,self).write(cr, uid, [result], {
+				'index_content': res
+			})
+		except:
+			pass
+		return result
+	def unlink(self,cr, uid, ids, context={}):
+		print 'UNLINK', cr, uid, ids, context
+		for f in self.browse(cr, uid, ids, context):
+			if f.store_method=='fs':
+				path = os.path.join(os.getcwd(),'filestore',f.store_fname)
+				os.unlink(path)
+		return super(document_file, self).unlink(cr, uid, ids, context)
 document_file()

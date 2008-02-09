@@ -31,75 +31,45 @@ class tinyerp_handler(dav_interface):
 		self.port=port
 		self.baseuri = 'http://%s:%s/' % (self.host, self.port)
 		self.db_name_list=[]
+#
+#
+#	def get_db(self,uri):
+#		names=self.uri2local(uri).split('/')
+#		self.db_name=False
+#		if len(names) > 1:
+#			self.db_name=self.uri2local(uri).split('/')[1]
+#			if self.db_name=='':
+#				raise Exception,'Plese specify Database name in folder'
+#		return self.db_name
+#
 
+	def is_db(self, uri):
+		reluri = self.uri2local(uri)
+		return not len(reluri.split('/'))>1
 
-	def get_db(self,uri):
-		names=self.uri2local(uri).split('/')
-		self.db_name=False
-		if len(names) > 1:
-			self.db_name=self.uri2local(uri).split('/')[1]
-			if self.db_name=='':
-				raise Exception,'Plese specify Database name in folder'
-		return self.db_name
-
-	def get_db_list(self,uri):
-		names=self.uri2local(uri).split('/')
-		self.db_name=False
-		db_service = netsvc.LocalService("db")
-		if len(names) > 1:
-			exits_db_list=db_service.list()
-			self.db_name=self.uri2local(uri).split('/')[1]
-			if self.db_name in exits_db_list:
-				self.db_name_list=[self.db_name]
-			else:
-				self.db_name=False
-		else:
-			db_list=db_service.list()
-			for db_name in db_list:
-				try:
-
-					db = pooler.get_db_only(db_name)
-					cr = db.cursor()
-					cr.execute("select rep.directory_id from document_repository as rep,document_directory as doc   where rep.directory_id = doc.id and doc.name = %s and rep.active and rep.server_url = %s and rep.server_port = %d ",(db_name,self.host,self.port))
-					res=cr.fetchone()
-					if res:
-						for directory_id in res:
-							if db_name not in self.db_name_list:
-								self.db_name_list.append(db_name)
-					cr.close()
-				except Exception,e:
-					print e,'=== DB :',db_name
-		return self.db_name_list
-	def get_directory(self,db_name):
-		directory_id=False
-		try:
-			db = pooler.get_db_only(db_name)
-			cr = db.cursor()
-			cr.execute("select server_url,server_port,directory_id from document_repository where active")
-			host,port,directory_id = cr.fetchone()
-			cr.close()
-		except:
-			return False
-		return directory_id
-	def uri_local(self, uri):
-		return uri[len(self.baseuri)-1:]
+	def db_list(self):
+		s = netsvc.LocalService('db')
+		result = s.list()
+		result = ['trunk']
+		return result
 
 	def get_childs(self,uri):
 		""" return the child objects as self.baseuris for the given URI """
-		db_name_list=self.get_db_list(uri)
-		result = []
-		for db_name in db_name_list:
-			self.db_name=db_name
-			self.directory_id=self.get_directory(db_name)
-			db,pool = pooler.get_db_and_pool(db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			for d in dir.get_childs(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri),root):
-				result.append(urlparse.urljoin(self.baseuri, d))
-			cr.close()
-		return result
+		print 'GET Childs', uri
+		if self.is_db(uri):
+			s = netsvc.LocalService('db')
+			print '\tGET Childs DB'
+			return map(lambda x: urlparse.urljoin(self.baseuri, x), self.db_list())
 
+		result = []
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		print '\turi2', uri2
+		node = self.uri2object(cr,uid,pool, uri2)
+		print '\tFound node', node
+		for d in node.children():
+			result.append( urlparse.urljoin(self.baseuri, d.path) )
+		print '\tGET Childs', result
+		return result
 
 	def uri2local(self, uri):
 		uparts=urlparse.urlparse(uri)
@@ -108,276 +78,201 @@ class tinyerp_handler(dav_interface):
 			reluri=reluri[:-1]
 		return reluri
 
-	def uri2object(self,cr,uid,uri):
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			pool = pooler.get_pool(self.db_name)
-			reluri = self.uri2local(uri)
-			root = pool.get('document.directory').browse(cr, uid, self.directory_id)
-			node = pool.get('document.directory').get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), reluri, root)
-			return node
-		return False
+	#
+	# pos: -1 to get the parent of the uri
+	#
+	def get_cr(self, uri):
+		reluri = self.uri2local(uri)
+		dbname = reluri.split('/')[1]
+		uid = security.login(dbname, 'admin', 'admin')
+		db,pool = pooler.get_db_and_pool(dbname)
+		cr = db.cursor()
+		uri2 = reluri.split('/')[1:]
+		return cr, uid, pool, uri2
+
+	def uri2object(self, cr,uid, pool,uri):
+		node = pool.get('document.directory').get_object(cr, uid, uri)
+		return node
 
 	def mkcol(self,uri):
 		""" create a new collection """
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			uri = self.uri2local(uri)
-			objname = uri.split('/')[-1]
-			objuri = '/'.join(uri.split('/')[:-1])
-			node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), objuri)
-			create_id = False
-			if not node:
-				raise DAV_Error, 409
+		if self.is_db(uri):
+			raise DAV_Error, 409
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2[:-1])
 
+		# TODO: test if file already exists
+		if False:
+			raise DAV_Error,405
+		# TODO: Test Permissions
+		if False:
+			raise DAV_Forbidden()
 
-			if node.object.type=='directory':
-				dir.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), {
-					'name': objname,
-					'parent_id': node.object.id
-				})
-
-			elif node.object.type=='ressource':
-				if not node.object.ressource_tree and node.object2:
-					dir.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), {
-						'name': objname,
-						'parent_id': node.object.id
-					})
-				else:
-					obj = pool.get(node.object.ressource_type_id.model)
-					if node.object2:
-						value_dict = {'name': objname,obj._parent_name: node.object2.id}
-					else:
-						value_dict = {'name': objname}
-					try:
-						create_id = obj.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), value_dict)
-					except :
-						raise DAV_Error,999
-
-			else:
-				print 'Type', node.object.type, 'not implemented !'
-			# test if file already exists
-			if False:
-				raise DAV_Error,405
-			# Test Permissions
-			if False:
-				raise DAV_Forbidden()
-			cr.commit()
-			cr.close()
-			return 201
-		return False
-
-	def get_userid(self,user,pw):
-		if user=='root':
-			return 1
-		if self.db_name:
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			res = security.login(self.db_name, user, pw)
-			return res
-		return False
+		objname = uri2[-1]
+		pool.get('document.directory').create(cr, uid, {
+			'name': objname,
+			'parent_id': node.object.id,
+			'ressource_type_id': node.object.ressource_type_id.id,
+			'ressource_id': node.object2 and node.object2.id or False
+		})
+		cr.commit()
+		cr.close()
+		return 201
 
 	def get_data(self,uri):
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			uri = self.uri2local(uri)
-			node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), uri)
-			if not node:
-				raise DAV_NotFound
-			if node.type=='file':
-				return base64.decodestring(node.object.datas or '')
-			elif node.type=='content':
-				report = pool.get('ir.actions.report.xml').browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord),node.content['report_id']['id'])
-				srv = netsvc.LocalService('report.'+report.report_name)
-				pdf,pdftype = srv.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), [node.object.id], {}, {})
-				return pdf
-			else:
-				raise DAV_Forbidden
-		return False
+		if self.is_db(uri):
+			raise DAV_Error, 409
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			raise DAV_NotFound
+		if node.type=='file':
+			return base64.decodestring(node.object.datas or '')
+		elif node.type=='content':
+			report = pool.get('ir.actions.report.xml').browse(cr, self.get_userid('admin', 'admin'),node.content['report_id']['id'])
+			srv = netsvc.LocalService('report.'+report.report_name)
+			pdf,pdftype = srv.create(cr, self.get_userid('admin', 'admin'), [node.object.id], {}, {})
+			return pdf
+		else:
+			raise DAV_Forbidden
 
 	def _get_dav_resourcetype(self,uri):
 		""" return type of object """
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			cr.close()
-			if node.type=='collection':
-				return COLLECTION
-			return OBJECT
-		return COLLECTION
+		print 'RT', uri
+		if self.is_db(uri):
+			return COLLECTION
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2)
+		cr.close()
+		if node.type in ('collection','database'):
+			return COLLECTION
+		return OBJECT
 
 	def _get_dav_displayname(self,uri):
 		raise DAV_Secret
 
 	def _get_dav_getcontentlength(self,uri):
 		""" return the content length of an object """
+		print 'Get DAV CL', uri
+		if self.is_db(uri):
+			return '0'
 		result = 0
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			if node.type=='file':
-				result = node.object.file_size or 0
-			cr.close()
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr, uid, pool, uri2)
+		if node.type=='file':
+			result = node.object.file_size or 0
+		cr.close()
 		return str(result)
-
 
 	def get_lastmodified(self,uri):
 		""" return the last modified date of the object """
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			if node.type=='file':
-				result = node.object.write_date or node.object.create_date
-			else:
-				result = time.strftime('%Y-%m-%d %H:%M:%S')
-			cr.close()
-			return time.mktime(time.strptime(result,'%Y-%m-%d %H:%M:%S'))
-		return False
+		print 'Get DAV Mod', uri
+		today = int(time.time())
+		if self.is_db(uri):
+			return today
+
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2)
+		if node.type=='file':
+			dt = node.object.write_date or node.object.create_date
+			result = int(time.mktime(time.strptime(dt,'%Y-%m-%d %H:%M:%S')))
+		else:
+			result = today
+		cr.close()
+		return result
 
 	def get_creationdate(self,uri):
 		""" return the last modified date of the object """
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			if node.type=='file':
-				result = node.object.write_date or node.object.create_date
-			else:
-				result = time.strftime('%Y-%m-%d %H:%M:%S')
-			cr.close()
-			return time.mktime(time.strptime(result,'%Y-%m-%d %H:%M:%S'))
-		return False
+		print 'Get DAV Cre', uri
+		if self.is_db(uri):
+			raise DAV_Error, 409
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2)
+
+		if node.type=='file':
+			result = node.object.write_date or node.object.create_date
+		else:
+			result = time.strftime('%Y-%m-%d %H:%M:%S')
+		cr.close()
+		return time.mktime(time.strptime(result,'%Y-%m-%d %H:%M:%S'))
 
 	def _get_dav_getcontenttype(self,uri):
-		self.db_name=self.get_db(uri)
-		result = ''
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			result = 'application/octet-stream'
-			if node.type=='collection':
-				result = 'httpd/unix-directory'
-			cr.close()
-			return result
+		print 'Get DAV CT', uri
+		if self.is_db(uri):
+			return 'httpd/unix-directory'
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2)
+		result = 'application/octet-stream'
+		if node.type=='collection':
+			result = 'httpd/unix-directory'
+		cr.close()
 		return result
 		#raise DAV_NotFound, 'Could not find %s' % path
 
 	def put(self,uri,data,content_type=None):
 		""" put the object into the filesystem """
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			if not len(data):
-				return 201
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
+		if self.is_db(uri):
+			raise DAV_Forbidden
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2[:-1])
 
-			print '**** PUT', uri, len(data)
-			uri = self.uri2local(uri)
-			#node = self.uri2object(cr, 3, uri)
-			## test if file already exists
-			#if node:
-			#	raise DAV_Error,405
-			objname = uri.split('/')[-1]
-			objuri = '/'.join(uri.split('/')[:-1])
-			node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), objuri.replace('%20',' '))
-			fobj = pool.get('ir.attachment')
+		objname = uri2[-1]
+		fobj = pool.get('ir.attachment')
+		ext =False
+		if objname.find('.') >0 :
+			ext = objname.split('.')[1] or False
+		val = {
+			'name': objname,
+			'datas_fname': objname,
+			'file_size': len(data),
+			'datas': base64.encodestring(data),
+			'file_type': ext,
+			'parent_id': node.object and node.object.id or False,
+		}
+		if node.object2:
+			val.update( {
+				'res_model': node.object2._name,
+				'res_id': node.object2.id
+			})
+		cid = fobj.create(cr, uid, val)
+		cr.commit()
 
-			ext =False
-			if objname.find('.') >0 :
-				ext = objname.split('.')[1] or False
-			val = {
-				'name': objname,
-				'datas_fname': objname,
-				'file_size': len(data),
-				'datas': base64.encodestring(data),
-				'index_content': content_index(data, objname, content_type or None),
-				'file_type': ext,
-				'parent_id': node.object and node.object.id or False,
-			}
-			if node.object2:
-				val.update( {
-					'res_model': node.object2._name,
-					'res_id': node.object2.id
-				})
-			try:
-				fobj.create(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), val)
-			except:
-				raise DAV_Error,999
+		# TODO: Test Permissions
+		if False:
+			raise DAV_Forbidden
+		cr.close()
+		return 201
 
-			# Test Permissions
-			if False:
-				raise DAV_Forbidden
-			cr.commit()
-			cr.close()
-	#		print abc
-			return 201
-		return False
 	def rmcol(self,uri):
 		""" delete a collection """
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			if node.object._table_name=='document.directory':
-				if node.object.child_ids:
-					raise DAV_Forbidden # forbidden
-				if node.object.file_ids:
-					raise DAV_Forbidden # forbidden
-				res = pool.get('document.directory').unlink(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), node.object.id)
-			cr.commit()
-			cr.close()
-			return 204
-		return False
+		if self.is_db(uri):
+			raise DAV_Error, 409
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2)
+
+		if node.object._table_name=='document.directory':
+			if node.object.child_ids:
+				raise DAV_Forbidden # forbidden
+			if node.object.file_ids:
+				raise DAV_Forbidden # forbidden
+			res = pool.get('document.directory').unlink(cr, uid, [node.object.id])
+		cr.commit()
+		cr.close()
+		return 204
 
 	def rm(self,uri):
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			if node.object._table_name=='ir.attachment':
-				res = pool.get('ir.attachment').unlink(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), node.object.id)
-			cr.commit()
-			cr.close()
-			return 204
+		if self.is_db(uri):
+			raise DAV_Error, 409
+		cr, uid, pool, uri2 = self.get_cr(uri)
+		node = self.uri2object(cr,uid,pool, uri2)
+
+		if node.object._table_name=='ir.attachment':
+			res = pool.get('ir.attachment').unlink(cr, uid, [node.object.id])
+		else:
 			raise DAV_Forbidden # forbidden
-		return False
+		cr.commit()
+		cr.close()
+		return 204
 
 	### DELETE handlers (examples)
 	### (we use the predefined methods in davcmd instead of doing
@@ -512,8 +407,7 @@ class tinyerp_handler(dav_interface):
 			cr = db.cursor()
 			dir = pool.get('document.directory')
 
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(src), root)
+			node = dir.get_object(cr, self.get_userid('admin', 'admin'), self.uri2local(src))
 			if not node.type=='file':
 				raise DAV_Error,999
 			data = base64.decodestring(node.object.datas)
@@ -526,7 +420,7 @@ class tinyerp_handler(dav_interface):
 			dir = pool.get('document.directory')
 			for d in dst.replace(self.baseuri,'').split('/'):
 				dir_dst +=d+"/"
-				res_id = dir.search(cr,self.get_userid(AuthServer.UserName, AuthServer.PassWord),[('name','=',d)])
+				res_id = dir.search(cr,self.get_userid('admin', 'admin'),[('name','=',d)])
 				if not res_id:
 					create_dir = True
 					self.mkcol(dir_dst)
@@ -551,13 +445,14 @@ class tinyerp_handler(dav_interface):
 
 	def exists(self,uri):
 		""" test if a resource exists """
+		print 'Get Exists', uri
 		self.db_name=self.get_db(uri)
 		if self.db_name:
 			db,pool = pooler.get_db_and_pool(self.db_name)
 			result = False
 			cr = db.cursor()
 			try:
-				node = self.uri2object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), uri)
+				node = self.uri2object(cr, self.get_userid('admin', 'admin'), uri)
 			except:
 				return False
 			if node:
@@ -568,17 +463,4 @@ class tinyerp_handler(dav_interface):
 
 	def is_collection(self,uri):
 		""" test if the given uri is a collection """
-		self.db_name=self.get_db(uri)
-		if self.db_name:
-			self.directory_id=self.get_directory(self.db_name)
-			db,pool = pooler.get_db_and_pool(self.db_name)
-			result = False
-			cr = db.cursor()
-			dir = pool.get('document.directory')
-			root = dir.browse(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.directory_id)
-			node = dir.get_object(cr, self.get_userid(AuthServer.UserName, AuthServer.PassWord), self.uri2local(uri), root)
-			if node.object._table_name=='document.directory':
-				result = True
-			cr.close()
-			return result
-		return False
+		return self._get_dav_resourcetype(uri)==COLLECTION

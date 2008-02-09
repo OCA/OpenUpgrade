@@ -2,49 +2,6 @@
 <data>
 	<menuitem name="Document Management" icon="terp-stock" id="menu_document"/>
 
-	<record model="ir.ui.view" id="view_document_repository_form">
-		<field name="name">document.repository</field>
-		<field name="model">document.repository</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Repositories">
-				<field name="name" select="1"/>
-				<field name="active" select="2"/>
-				<field name="server_url"/>
-				<field name="server_port"/>
-				<field name="directory_id"/>
-				<separator string="Notes" colspan="4"/>
-				<field name="note" nolabel="1" colspan="4"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_document_repository_tree">
-		<field name="name">document.repository</field>
-		<field name="model">document.repository</field>
-		<field name="type">tree</field>
-		<field name="field_parent">child_ids</field>
-		<field name="arch" type="xml">
-			<tree string="Repositories">
-				<field name="name"/>
-				<field name="server_url"/>
-				<field name="server_port"/>
-				<field name="directory_id"/>
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_document_repository_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">document.repository</field>
-		<field name="view_type">form</field>
-	</record>
-	<menuitem
-		name="Document Management/Configuration/Server repositories"
-		action="action_document_repository_form"
-		id="menu_document_repositories"/>
-
-
-
 	<record model="ir.ui.view" id="view_document_directory_form">
 		<field name="name">document.directory</field>
 		<field name="model">document.directory</field>

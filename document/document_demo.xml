@@ -2,14 +2,9 @@
 <terp>
 <data noupdate="1">
 
-	<!--<record model="document.directory" id="dir_root">
+	<record model="document.directory" id="dir_root">
 		<field name="name">Main Repository</field>
 		<field name="user_id" ref="base.user_admin"/>
-	</record>
-
-	<record model="document.repository" id="main_rep">
-		<field name="name">Main Repository</field>
-		<field name="directory_id" ref="dir_root"/>
 	</record>
 
 	<record model="document.directory" id="dir_my_folder">
@@ -45,7 +40,7 @@
 		<field name="name">Projects</field>
 		<field name="user_id" ref="base.user_admin"/>
 		<field name="parent_id" ref="dir_root"/>
-	</record>-->
+	</record>
 
 </data>
 </terp>

@@ -16,6 +16,6 @@
 	"init_xml" : ["document_data.xml"],
 	"update_xml" : ["document_view.xml"],
 	"demo_xml" : ["document_demo.xml"],
-	"active": True,
+	"active": False,
 	"installable": True
 }
