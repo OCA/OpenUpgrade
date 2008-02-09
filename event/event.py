@@ -96,3 +96,35 @@ class registration(osv.osv):
 		'nb_register': lambda *a: 1,
 	}
 registration()
+
+
+class report_event_registration(osv.osv):
+    _name = "report.event.registration"
+    _description = "Events on registrations"
+    _auto = False
+    _columns = {
+        'name': fields.char('Event',size=20),
+        'date_begin': fields.datetime('Beginning date', required=True),
+        'date_end': fields.datetime('Ending date', required=True),
+        'draft_state': fields.integer('Draft Registration',size=20),
+        'confirm_state': fields.integer('Confirm Registration',size=20),
+        'register_max': fields.integer('Maximum Registrations'),
+    }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_event_registration as (
+                select
+                    e.id as id,
+                    (select c.name from event_event,crm_case_section c where e.section_id=c.id) as name,
+                    e.date_begin as date_begin,
+                    e.date_end as date_end,
+                    (select count(*) from crm_case where state='draft') as draft_state ,
+                    (select count(*) from crm_case where state='open') as  confirm_state,
+                    e.register_max as register_max
+                from
+                    event_event e
+            )""")
+report_event_registration()
+
+
+
