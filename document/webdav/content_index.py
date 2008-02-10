@@ -6,7 +6,6 @@ import StringIO
 # This should be the indexer
 #
 def content_index(content, filename=None, content_type=None):
-#	return ''
 	fname,ext = os.path.splitext(filename)
 	result = ''
 	if ext == '.doc': #or content_type ?
@@ -24,7 +23,6 @@ def content_index(content, filename=None, content_type=None):
 		result = fp.read()
 		fp.close()
 	elif ext == '.odt':
-		print "File name:",filename
 		fname = os.tempnam(filename)
 		fp = file(fname,'wb')
 		fp.write(content)

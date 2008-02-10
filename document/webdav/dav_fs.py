@@ -96,13 +96,12 @@ class tinyerp_handler(dav_interface):
 			raise DAV_Error, 409
 		cr, uid, pool, uri2 = self.get_cr(uri)
 		node = self.uri2object(cr,uid,pool, uri2[:-1])
+		print 'Found', node
 
-		# TODO: test if file already exists
-		if False:
-			raise DAV_Error,405
 		# TODO: Test Permissions
-		if False:
-			raise DAV_Forbidden()
+		if not node:
+			print 'ICI', 409
+			raise DAV_Error,409
 
 		objname = uri2[-1]
 		pool.get('document.directory').create(cr, uid, {
@@ -262,6 +261,8 @@ class tinyerp_handler(dav_interface):
 			raise DAV_Error, 409
 		cr, uid, pool, uri2 = self.get_cr(uri)
 		node = self.uri2object(cr,uid,pool, uri2)
+		if not node:
+			raise DAV_NotFound, 404
 
 		if node.object._table_name=='ir.attachment':
 			res = pool.get('ir.attachment').unlink(cr, uid, [node.object.id])
