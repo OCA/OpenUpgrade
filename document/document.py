@@ -229,7 +229,7 @@ class document_directory(osv.osv):
 	"""
 	def get_object(self, cr, uid, uri, context={}):
 		if not uri:
-			return node
+			return None
 		node = node_class(cr, uid, uri.pop(0), False, type='database')
 		print '\t', node, uri
 		while len(uri):
