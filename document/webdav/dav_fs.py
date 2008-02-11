@@ -50,8 +50,17 @@ class tinyerp_handler(dav_interface):
 	def db_list(self):
 		s = netsvc.LocalService('db')
 		result = s.list()
-		result = ['trunk']
-		return result
+		self.db_name_list=[]
+		for db_name in result:
+			db = pooler.get_db_only(db_name)
+			cr = db.cursor()
+			cr.execute("select id from ir_module_module where name = 'document'")
+			res=cr.fetchone()
+			if res and len(res):
+				self.db_name_list.append(db_name)
+				cr.close()
+		#result = ['trunk']
+		return self.db_name_list
 
 	def get_childs(self,uri):
 		""" return the child objects as self.baseuris for the given URI """
