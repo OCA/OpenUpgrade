@@ -87,15 +87,18 @@ class event(osv.osv):
 	}
 event()
 
-class registration(osv.osv):
-	_inherit = 'crm.case'
+class event_registration(osv.osv):
+	_name= 'event.registration'
+	_description = 'Event Registration'
+	_inherits = {'crm.case': 'case_id'}
 	_columns = {
+		'case_id':fields.many2one('crm.case','Case'),
 		'nb_register': fields.integer('Number of Registration'),
 	}
 	_defaults = {
 		'nb_register': lambda *a: 1,
 	}
-registration()
+event_registration()
 
 
 class report_event_registration(osv.osv):
