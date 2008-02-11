@@ -167,6 +167,7 @@ Auction Management/Auction Dates/Reporting
 					<field name="lot_est1"/>
 					<field name="lot_est2"/>
 					<field name="buyer_price"/>
+					<field name="is_ok"/>
 					<field name="seller_price"/>
 					<field name="gross_revenue"/>
 					<field name="net_revenue"/>
@@ -288,6 +289,7 @@ Auction Management/Auction Dates/Reporting
 						<button name="button_bought" string="Sold" states="draft" type="object"/>
 						<button name="button_not_bought" string="Not sold" states="draft" type="object"/>
 						<button name="button_draft" string="Set to draft" states="sold,unsold" type="object"/>
+						<button name="button_unpaid" string="Set to draft" states="paid" type="object"/>
 						<button name="button_taken_away" string="Taken away" states="sold" type="object"/>
 
 					</group>
@@ -683,6 +685,7 @@ Auction Management/Auction Dates/Reporting
 		<field name="arch" type="xml">
 			<tree string="Bids">
 				<field name="name"/>
+				<field name="auction_id"/>
 				<field name="partner_id"/>
 				<field name="contact_tel"/>
 			</tree>

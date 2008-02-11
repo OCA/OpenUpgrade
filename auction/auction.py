@@ -255,6 +255,9 @@ class auction_lots(osv.osv):
 	def button_taken_away(self,cr,uid,ids,*a):
 		return self.write(cr,uid,ids, {'state':'taken_away'})
 
+	def button_unpaid(self,cr,uid,ids,*a):
+		return self.write(cr,uid,ids, {'state':'draft'})
+
 	def button_draft(self,cr,uid,ids,*a):
 		return self.write(cr,uid,ids, {'state':'draft'})
 
@@ -415,7 +418,7 @@ class auction_lots(osv.osv):
 		return res
 	_columns = {
 		'bid_lines':fields.one2many('auction.bid_line','lot_id', 'Bids'),
-		'auction_id': fields.many2one('auction.dates', 'Auction Date'),
+		'auction_id': fields.many2one('auction.dates', 'Auction Date', select=1),
 		'bord_vnd_id': fields.many2one('auction.deposit', 'Depositer Inventory', required=True),
 		'name': fields.char('Short Description',size=64, required=True),
 		'name2': fields.char('Short Description (2)',size=64),
@@ -830,6 +833,7 @@ auction_lots()
 class auction_bid(osv.osv):
 	_name = "auction.bid"
 	_description="Bid auctions"
+	_order = 'id desc'
 	_columns = {
 		'partner_id': fields.many2one('res.partner', 'Buyer Name', required=True),
 		'contact_tel':fields.char('Contact',size=64),

@@ -35,11 +35,11 @@ import pooler
 pay_form = '''<?xml version="1.0"?>
 <form string="Pay objects">
 	<field name="amount"/>
-	<field name="statement_id1" />
+	<field name="statement_id1" domain="[('state','=','draft')]"/>
 	<field name="amount2"/>
-	<field name="statement_id2" />
+	<field name="statement_id2"  domain="[('state','=','draft')]"/>
 	<field name="amount3"/>
-	<field name="statement_id3" />
+	<field name="statement_id3"  domain="[('state','=','draft')]"/>
 	<newline/>
 	<field name="buyer_id"/>
 	<field name="total"/>
