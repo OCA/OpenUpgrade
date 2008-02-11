@@ -212,13 +212,13 @@
 		<!-- menu should be check if it right place or not -->
 		<menuitem name="Events/Configuration/Event Check/Check Type" action="action_event_check_type" id="menu_event_check_type"/>
 
-<!-- event.registratio form.. -->
+<!-- event.registration form.. change name crm.case to event.registration -->
 
 		<record model="ir.ui.view" id="view_event_registration_inherit2">
-			<field name="name">crm.case.form</field>
+			<field name="name">event.registration.form</field>
 			<field name="type">form</field>
-			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
 			<field name="arch" type="xml">
 				<field name="history_line" position="before">
 			    	<field name="unit_price" select="2"/>
@@ -238,10 +238,10 @@
 		</record>
 
 		<record model="ir.ui.view" id="view_event_registration_inherit3">
-			<field name="name">crm.case.form</field>
+			<field name="name">event.registration.form</field>
 			<field name="type">form</field>
-			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
 			<field name="arch" type="xml">
 				<field name="partner_address_id" position="replace">
 					<newline/>
@@ -255,10 +255,10 @@
 		</record>
 
 		<record model="ir.ui.view" id="view_event_registration_inherit">
-			<field name="name">crm.case.form</field>
+			<field name="name">event.registration.form</field>
 			<field name="type">form</field>
-			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
 			<field name="arch" type="xml">
 				<notebook position="inside">
 					<page string="Payments">
