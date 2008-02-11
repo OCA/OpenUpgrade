@@ -98,7 +98,7 @@ class event_group(osv.osv):
 event_group()
 
 class event_registration(osv.osv):
-    _inherit = 'crm.case'
+    _inherit = 'event.registration'
     _description="event.registration"
     _columns={
             "event_id":fields.many2one('event.event','Event'),#shoud be check
