@@ -1,21 +1,12 @@
 from DAV.WebDAVServer import DAVRequestHandler
 from DAV.BufferingHTTPServer import BufferedHTTPRequestHandler
-from DAV.AuthServer import AuthRequestHandler
+from DAV.AuthServer import AuthRequestHandler,BufferedAuthRequestHandler
 import sys
 import pooler
 from service import security
 import os
 import string
 
-class tinyerp_BufferedHTTPRequestHandler(BufferedHTTPRequestHandler):
-	def _init_buffer(self):
-		self.__buffer=""
-		self.__outfp=os.tmpfile()
-
-	def handle(self):
-		self._init_buffer()
-		BaseHTTPRequestHandler.handle(self)
-		self._flush()
 
 class tinyerp_AuthRequestHandler(AuthRequestHandler):
 	def handle(self):

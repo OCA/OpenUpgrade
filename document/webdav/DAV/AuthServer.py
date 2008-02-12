@@ -76,7 +76,7 @@ class AuthRequestHandler:
         """
         Special handle method with buffering and authentication
         """
-        self.infp=open("/tmp/in.%s" %self.__class__, "a+")
+        self.infp=os.tmpfile()
 
         self.infp.write("------------------------------------------------------------------------------\n")
         self.raw_requestline = self.rfile.readline()

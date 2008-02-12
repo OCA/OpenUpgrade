@@ -26,7 +26,7 @@ __version__ = VERSION
 __author__  = AUTHOR
 
 from BaseHTTPServer import BaseHTTPRequestHandler
-
+import os
 class BufferedHTTPRequestHandler(BaseHTTPRequestHandler):
     """
     Buffering HTTP Request Handler
@@ -48,7 +48,7 @@ class BufferedHTTPRequestHandler(BaseHTTPRequestHandler):
         this (see below)
         """
         self.__buffer=""
-        self.__outfp=open("/tmp/out.%s" %self.__class__,"a+")
+        self.__outfp=os.tmpfile()
 
     def _append(self,s):
         """ append a string to the buffer """
