@@ -132,6 +132,13 @@ class event_registration(osv.osv):
 	   return self._map_ids('case_pending',cr,uid,ids,*args,**argv)
 	def case_reset(self,cr, uid, ids, *args, **argv):
 	   return self._map_ids('case_reset',cr,uid,ids,*args,**argv)
+ 	def case_log(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_log',cr,uid,ids,*args,**argv)
+	def case_log_reply(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_log_reply',cr,uid,ids,*args,**argv)
+	def add_reply(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('add_reply',cr,uid,ids,*args,**argv)
+
 
 event_registration()
 
