@@ -113,8 +113,28 @@ class event_registration(osv.osv):
 			data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, part).email
 		return {'value':data}
 
+	def _map_ids(self,method,cr, uid, ids, *args, **argv):
+	   case_data = self.browse(cr,uid,ids)
+	   new_ids=[]
+	   for case in case_data:
+	   		new_ids.append(case.case_id.id)
+	   return getattr(self.pool.get('crm.case'),method)(cr, uid, new_ids, *args, **argv)
+
+	def case_close(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_close',cr,uid,ids,*args,**argv)
+ 	def case_escalate(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_escalate',cr,uid,ids,*args,**argv)
+	def case_open(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_open',cr,uid,ids,*args,**argv)
+	def case_cancel(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_cancel',cr,uid,ids,*args,**argv)
+	def case_pending(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_pending',cr,uid,ids,*args,**argv)
+	def case_reset(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('case_reset',cr,uid,ids,*args,**argv)
 
 event_registration()
+
 
 
 class report_event_registration(osv.osv):
