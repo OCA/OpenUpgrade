@@ -106,8 +106,8 @@ class node_class(object):
 		if nodename:
 			where.append(('name','=',nodename))
 		where.append(('parent_id','=',self.object and self.object.id or False))
-
-		ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',False)], self.context)
+		#ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',False)], self.context)
+		ids = pool.get('document.directory').search(self.cr, self.uid, where, self.context)
 		if self.object2:
 			ids += pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',self.object2.id)], self.context)
 		res = pool.get('document.directory').browse(self.cr, self.uid, ids,self.context)
@@ -199,7 +199,7 @@ class document_directory(osv.osv):
 	}
 	_defaults = {
 		'user_id': lambda self,cr,uid,ctx: uid,
-		'type': lambda *args: 'directory'
+		'type': lambda *args: 'directory',
 	}
 	_sql_constraints = [
 		('filename_uniq', 'unique (name,parent_id,ressource_id)', 'The directory name must be unique !')
@@ -378,6 +378,8 @@ class document_file(osv.osv):
 		'store_method': fields.selection([('db','Database'),('fs','Filesystem'),('link','Link')], "Storing Method"),
 		'datas': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
 		'store_fname': fields.char('Stored Filename', size=200),
+		'res_model': fields.char('Attached Model', size=64), #res_model
+		'res_id': fields.integer('Attached ID'), #res_id
 	}
 
 	_defaults = {
