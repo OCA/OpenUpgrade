@@ -138,6 +138,10 @@ class event_registration(osv.osv):
 	   return self._map_ids('case_log_reply',cr,uid,ids,*args,**argv)
 	def add_reply(self,cr, uid, ids, *args, **argv):
 	   return self._map_ids('add_reply',cr,uid,ids,*args,**argv)
+	def remind_partner(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('remind_partner',cr,uid,ids,*args,**argv)
+	def remind_user(self,cr, uid, ids, *args, **argv):
+	   return self._map_ids('remind_user',cr,uid,ids,*args,**argv)
 
 
 event_registration()
