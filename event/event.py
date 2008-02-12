@@ -98,6 +98,22 @@ class event_registration(osv.osv):
 	_defaults = {
 		'nb_register': lambda *a: 1,
 	}
+
+	def onchange_categ_id(self, cr, uid, ids, categ, context={}):
+		if not categ:
+			return {'value':{}}
+		cat = self.pool.get('crm.case.categ').browse(cr, uid, categ, context).probability
+		return {'value':{'probability':cat}}
+
+	def onchange_partner_address_id(self, cr, uid, ids, part, email=False):
+		if not part:
+			return {'value':{}}
+		data = {}
+		if not email:
+			data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, part).email
+		return {'value':data}
+
+
 event_registration()
 
 
