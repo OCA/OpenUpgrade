@@ -82,7 +82,7 @@ class event(osv.osv):
 	}
 	_defaults = {
 		'state': lambda *args: 'draft',
-		'code': lambda *args: 'Event',
+		'code': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'event.event'),
 		'user_id': lambda self,cr,uid,ctx: uid
 	}
 event()
@@ -119,6 +119,7 @@ class event_registration(osv.osv):
 	   for case in case_data:
 	   		new_ids.append(case.case_id.id)
 	   return getattr(self.pool.get('crm.case'),method)(cr, uid, new_ids, *args, **argv)
+
 
 	def case_close(self,cr, uid, ids, *args, **argv):
 	   return self._map_ids('case_close',cr,uid,ids,*args,**argv)
