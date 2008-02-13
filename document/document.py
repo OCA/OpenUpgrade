@@ -106,8 +106,8 @@ class node_class(object):
 		if nodename:
 			where.append(('name','=',nodename))
 		where.append(('parent_id','=',self.object and self.object.id or False))
-		#ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',False)], self.context)
-		ids = pool.get('document.directory').search(self.cr, self.uid, where, self.context)
+		ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',0)], self.context)
+		#ids = pool.get('document.directory').search(self.cr, self.uid, where, self.context)
 		if self.object2:
 			ids += pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',self.object2.id)], self.context)
 		res = pool.get('document.directory').browse(self.cr, self.uid, ids,self.context)
@@ -206,8 +206,9 @@ class document_directory(osv.osv):
 	]
 
 	def onchange_content_id(self, cr, uid, ids, ressource_type_id):
-		content_ids=self.pool.get('document.directory.content').search(cr,uid,[('directory_id','=',ids[0])])
-		del_ids=self.pool.get('document.directory.content').unlink(cr,uid,content_ids)
+		if ids and len(ids[0]):
+			content_ids=self.pool.get('document.directory.content').search(cr,uid,[('directory_id','=',ids[0])])
+			del_ids=self.pool.get('document.directory.content').unlink(cr,uid,content_ids)
 		return {}
 
 	def _get_childs(self, cr, uid, node, nodename=False, context={}):
