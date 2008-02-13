@@ -9,7 +9,7 @@
 	"demo_xml" : [],
 	"init_xml" : [],
 	"update_xml" : [
-		"event_view.xml",
+		"event_view.xml","event_sequence.xml"
 	],
 	"active" : False,
 	"installable" : True,
