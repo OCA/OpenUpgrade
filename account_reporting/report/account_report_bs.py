@@ -81,18 +81,25 @@ class account_report_bs(report_sxw.rml_parse):
 		def cmp_code(x, y):
 			return cmp(x.code, y.code)
 		report_objs.sort(cmp_code)
-
+		
 		for report_obj in report_objs:
 			if report_obj.id in done:
 				continue
 			done[report_obj.id] = 1
+			color_font = ''
+			color_back = ''
+			if report_obj.color_font:
+				color_font = report_obj.color_font.name
+			if report_obj.color_back:
+				color_back = report_obj.color_back.name
+				
 			res = {
 				'code': report_obj.code,
 				'name': report_obj.name,
 				'level': level,
 				'balance': self.line_total(report_obj.id,ctx),
-				'color_font':report_obj.color_font.name,
-				'color_back':report_obj.color_back.name,
+				'color_font':color_font,
+				'color_back':color_back,
 				'font_style' : report_obj.font_style
 			}
 			result.append(res)
