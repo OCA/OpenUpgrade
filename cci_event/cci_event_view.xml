@@ -1,6 +1,6 @@
 <terp>
 	<data>
-<!-- event.event form view (inherited) -->
+<!-- event.event form view (not inherited) -->
 		<record model="ir.ui.view" id="event.view_event_form">
 			<field name="name">Events</field>
 			<field name="model">event.event</field>
@@ -12,21 +12,24 @@
 						<separator string="Event Description" colspan="4"/>
 						<field name="name" string="Event" select="1" colspan="4"/>
 						<field name="parent_id" domain="[('parent_id','child_of','Event')]" string="Category"/>
-						<field name="type" select="1"/>
+						<field name="type" select="1" on_change="onchange_check_type(type)"/>
 						<field name="user_id" select="1"/>
 						<field name="active" select="2"/>
 						<field name="date_begin" select="2"/>
 						<field name="date_end" select="2"/>
 						<field name="register_min" select="2"/>
 						<field name="register_max" select="2"/>
-						<field name="note"/> <!-- should be check -->
+						<field name="note" colspan="4"/> 
 						<separator string="Status" colspan="4"/>
 						<field name="state" select="1"/>
 						<group col="4" colspan="2">
-							<button string="Confirm Event" name="button_confirm" states="draft"/>
-							<button string="Cancel Event" name="button_cancel" states="draft,confirm"/>
-							<button string="Event Done" name="button_done" states="confirm"/>
-							<button string="Set To Draft" name="button_draft" states="confirm,cancel,done"/>
+							<button string="Cancel Event" name="cancel" states="fixed,open"/>
+							<button string="Confirm Date" name="fixed" states="draft"/>
+							<button string="to be replaced by an automatic function" name="open" states="fixed"/>
+							<button string="Confirm Event" name="confirm" states="open"/>
+							<button string="Event is Running" name="running" states="confirm"/>
+							<button string="Event Done" name="done" states="running"/>
+							<button string="Close Event" name="closed" states="done"/>
 						</group>
 					</page>
 					<page string="Extra Info">
@@ -40,6 +43,7 @@
 						<!--<field name="check_accept"/>-->
 						<newline/>
 						<field name="agreement_nbr"/>
+						<field name="check_type"/>
 						<newline/>
 						<separator string="Tasks management" colspan="4"/>
 						<field name="project_id"/>
@@ -99,6 +103,18 @@
 		  </field>
 		</record>
 
+	<record model="ir.ui.view" id="view_event_type_tree_inherit">
+		  <field name="name">Event type</field>
+		  <field name="model">event.type</field>
+		  <field name="type">tree</field>
+		  <field name="inherit_id" ref="event.view_event_type_tree"/>
+		  <field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="check_type"/>
+			</field>
+		  </field>
+		</record>
+
 <!-- view for event.group -->
 		<record model="ir.ui.view" id="view_event_group_form">
 			<field name="name">event.group.form</field>
@@ -110,10 +126,10 @@
 					<newline/>
 					<field name="bookmark_name" select="1"/>
 					<newline/>
-					<field name="picture" widget="image" /><!-- should be corect -->
+					<field name="picture" widget="image" />
 					<newline/>
 					<field name="type" select="1"/>
-					<field name="cavalier" select="2"/>
+					<!--<field name="cavalier" select="2"/>-->
 				</form>
 			</field>
 		</record>
@@ -221,15 +237,15 @@
 			<field name="inherit_id" ref="event.event_registration_form"/>
 			<field name="arch" type="xml">
 				<field name="history_line" position="before">
-			    	<field name="unit_price" select="2"/>
-			    	<field name="quantity"/>
-			    	<separator string="Badge" colspan="4"/>
-			    	<field name="badge_title" select="2"/>
-			    	<field name="badge_name" select="2"/>
-			    	<field name="badge_partner" select="2"/>
-			    	<newline/>
-			    	<separator colspan="4"/>
-			    	<field name="event_id"/>
+					<field name="unit_price" select="2"/>
+					<!--<field name="quantity"/>-->
+					<separator string="Badge" colspan="4"/>
+					<field name="badge_title" select="2"/>
+					<field name="badge_name" select="2"/>
+					<field name="badge_partner" select="2"/>
+					<newline/>
+					<separator colspan="4"/>
+					<field name="event_id"/>
 					<field name="group_id"/>
 					<field name="cavalier"/>
 					<separator colspan="4"/>

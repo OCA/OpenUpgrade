@@ -38,26 +38,73 @@ class event_check_type(osv.osv):
 event_check_type()
 
 class event(osv.osv):
+
+    def cci_event_fixed(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'fixed',})
+        return True
+
+    def cci_event_open(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'open',})
+        return True
+
+    def cci_event_confirm(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'confirm',})
+        return True
+
+    def cci_event_running(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'running',})
+        return True
+
+    def cci_event_done(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'done',})
+        return True
+
+    def cci_event_closed(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'closed',})
+        return True
+
+    def cci_event_cancel(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'cancel',})
+        return True
+
+    def onchange_check_type(self, cr, uid, id, type):
+        if not type:
+            return {}
+        tmp=self.pool.get('event.type').browse(cr, uid, type)
+        return {'value':{'check_type' : tmp.check_type.id}}
+
+    def _group_names(self, cr, uid, ids):
+        cr.execute('''
+        SELECT distinct name
+        FROM event_group
+        ''')
+        res = cr.fetchall()
+        temp=[]
+        for r in res:
+            temp.append((r[0],r[0]))
+        return temp
+
     _inherit="event.event"
     _description="event.event"
     _columns={
-          'state': fields.selection([('draft','Draft'),('open','Open'),('confirm','Confirmed'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),
+          'state': fields.selection([('draft','Draft'),('fixed','Fixed'),('open','Open'),('confirm','Confirmed'),('running','Running'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),
           'agreement_nbr':fields.char('Agreement Nbr',size=16),
           'check_accept':fields.many2one('event.check.type','Allowed checks'),
           'mail_auto_registr':fields.boolean('Mail Auto Register',help='A mail is send when the registration is confirmed'),
           'mail_auto_confirm':fields.boolean('Mail Auto Confirm',help='A mail is send when the event is confimed'),
           'mail_registr':fields.text('Mail Register',help='Template for the mail'),
           'mail_confirm':fields.text('Mail Confirm',help='Template for the mail'),
-          'note':fields.char('Note',size=256),
-          'fse_code':fields.char('Fse code',size=64),
-          'fse_hours':fields.integer('Fse Hours'),
-          'signet_type':fields.selection([('temp','temp')], 'Signet type'),#type is defined so temp,
+          'note':fields.text('Note'),
+          'fse_code':fields.char('FSE code',size=64),
+          'fse_hours':fields.integer('FSE Hours'),
+          'signet_type':fields.selection(_group_names, 'Signet type'),
           'localisation':fields.char('Localisation',size=20),
           'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
           'budget_id':fields.many2one('account.budget.post','Budget'),
           'product_id':fields.many2one('product.product','Product'),
           'sales_open':fields.char('Sales open',size=20),#should be corect
           'sales_draft':fields.char('Sales draft',size=20),#should be corect
+          'check_type': fields.many2one('event.check.type','Check Type'),
         }
 event()
 
@@ -81,7 +128,7 @@ class event_type(osv.osv):
     _inherit = 'event.type'
     _description= 'Event type'
     _columns = {
-        'check_type': fields.many2one('event.check.type','Check Type'),
+        'check_type': fields.many2one('event.check.type','Default Check Type'),
     }
 event_type()
 
@@ -89,25 +136,29 @@ class event_group(osv.osv):
     _name= 'event.group'
     _description = 'event.group'
     _columns = {
-        "name":fields.char('Name',size=20,required=True),
-        "bookmark_name":fields.char('Bookmark Name',size=128),
+        "name":fields.char('Group Name',size=20,required=True),
+        "bookmark_name":fields.char('Value',size=128),
         "picture":fields.binary('Picture'),
-        "cavalier":fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
-        "type":fields.selection([('none','None'),('image','Image'),('text','Text')], 'Type',)
+#        "cavalier":fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
+        "type":fields.selection([('image','Image'),('text','Text')], 'Type',required=True)
                 }
+    _defaults = {
+        'type': lambda *args: 'text',
+    }
+
 event_group()
 
 class event_registration(osv.osv):
     _inherit = 'event.registration'
     _description="event.registration"
     _columns={
-            "event_id":fields.many2one('event.event','Event'),#shoud be check
+            "event_id":fields.many2one('event.event','Event',required=True),#shoud be check
             #"date_registration":fields.date('Date Registration'), available in crm.case as 'date' field
             "partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
             "partner_order_id":fields.many2one('res.partner','Partner Order'),
-            "contact_order_id":fields.many2one('res.partner.contact','Conatact Order'),#should be corect,contact_order_id (onchange_contact)
+            "contact_order_id":fields.many2one('res.partner.contact','Contact Order'),#should be corect,contact_order_id (onchange_contact)
             "unit_price": fields.float('Unit Price'),
-            "quantity":fields.integer('Quantity'),
+            #"quantity":fields.integer('Quantity'),
             "badge_title":fields.char('Badge Title',size=128),
             "badge_name":fields.char('Badge Name',size=128),
             "badge_partner":fields.char('Badge Partner',size=128),
