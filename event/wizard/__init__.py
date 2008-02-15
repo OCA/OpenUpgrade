@@ -1,1 +1,2 @@
 import event_registration
+import project_wizard
