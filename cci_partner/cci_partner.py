@@ -27,13 +27,14 @@
 ##############################################################################
 
 import netsvc
+import time
 from osv import fields, osv
 
 class res_partner_state(osv.osv):
     _name = "res.partner.state"
     _description = 'res.partner.state'
     _columns = {
-        'name': fields.char('State',size=20,required=True),
+        'name': fields.char('Partner Status',size=50,required=True),
     }
 res_partner_state()
 
@@ -41,7 +42,7 @@ class res_partner_state2(osv.osv):
     _name = "res.partner.state2"
     _description = 'res.partner.state2'
     _columns = {
-        'name': fields.char('State2',size=20,required=True),
+        'name': fields.char('Customer Status',size=50,required=True),
     }
 res_partner_state2()
 
@@ -49,13 +50,15 @@ class res_partner_article_review(osv.osv):
     _name = "res.partner.article.review"
     _description = 'res.partner.article.review'
     _columns = {
-        'name': fields.char('Name',size=50),
-        'date':fields.date('Date'),
+        'name': fields.char('Name',size=50, required=True),
+        'date':fields.date('Date', required=True),
         'article_ids':fields.one2many('res.partner.article','review_id','Articles'),
     }
+
     _defaults = {
         'date': lambda *args: time.strftime('%Y-%m-%d')
     }
+
 res_partner_article_review()
 
 
@@ -74,11 +77,11 @@ class res_partner_article(osv.osv):
         'partners_ids':fields.one2many('res.partner','article_id','Partners'),
         'contact_ids':fields.one2many('res.partner.contact','article_id','Contacts'),
         'source_id':fields.char('Source',size=256),
-        'date':fields.date('Date'),
-        'title':fields.char('Title',size=100),
+        'date':fields.date('Date', required=True),
+        'title':fields.char('Title',size=250, required=True),
         'subtitle':fields.text('Subtitle'),
         'press_review':fields.boolean('In the next press review',help='Must be inserted on the next press review'),
-        'canal_id':fields.char('Link',size=200,help='A text with or without a link incorporated'),
+        'canal_id':fields.char('Reference',size=200,help='A text with or without a link incorporated'),
         'review_id':fields.many2one('res.partner.article.review','Review'),
         'partner_ids':fields.many2many('res.partner','res_partner_article_rel','article_id','partner_id','Partners'),
         'contact_ids':fields.many2many('res.partner.contact','res_partner_contact_article_rel', 'article_id','contact_id','Contacts'),
@@ -150,6 +153,18 @@ class res_partner(osv.osv):
             list.append(add.type)
         return True
 
+    def _get_partner_state(self, cr, uid, ids):
+        ids = self.pool.get('res.partner.state').search(cr, uid, [('name','like', 'Imputable')])
+        if ids:
+            return ids[0]
+        return False
+
+    def _get_customer_state(self, cr, uid, ids):
+        ids = self.pool.get('res.partner.state2').search(cr, uid, [('name','like', 'En Activité')])
+        if ids:
+            return ids[0]
+        return False
+
     _columns = {
         'employee_nbr': fields.integer('Nbr of Employee (Area)',help="Nbr of Employee in the area of the CCI"),
         'employee_nbr_total':fields.integer('Nbr of Employee (Tot)',help="Nbr of Employee all around the world"),
@@ -158,19 +173,19 @@ class res_partner(osv.osv):
         'invoice_special':fields.boolean('Invoice Special'),
         'state_id':fields.many2one('res.partner.state','Partner State',help='status of activity of the partner'),
         'state_id2':fields.many2one('res.partner.state2','Customer State',help='status of the partner as a customer'),
-        'activity_description':fields.text('Activity Description',traslate=True),
+        'activity_description':fields.text('Activity Description',translate=True),
         'activity_code_ids':fields.one2many('res.partner.activity.relation','partner_id','Activity Codes'),
         'export_procent':fields.integer('Export(%)'),
         'export_year':fields.date('Export date',help='year of the export_procent value'),
         'import_procent':fields.integer('Import (%)'),
         'import_year':fields.date('Import Date',help='year of the import_procent value'),
         'domiciliation':fields.boolean('Domiciliation'),
-        'domiciliation_cotisation':fields.boolean('Domiciliation (cotisation)',help='year of the import_procent value'),
+        'domiciliation_cotisation':fields.boolean('Domiciliation (cotisation)'),
         'invoice_nbr':fields.integer('Nbr of invoice to print',help='number of additive invoices to be printed for this customer'),
         'name_official':fields.char('Official Name',size=80),
         'name_old':fields.char('Former Name',size=80),
-        'wall_exclusion':fields.boolean('In Walloon DB',help='exclusion of this partner from the walloon database'),
-        'mag_send':fields.selection([('never','Never'),('always','Always'),('managed_by_poste','Managed_by_Poste'),('prospect','Prospect')], 'Send mag.'),
+        'wall_exclusion':fields.boolean('Not in Walloon DB',help='exclusion of this partner from the walloon database'),
+        #'mag_send':fields.selection([('never','Never'),('always','Always'),('managed_by_poste','Managed_by_Poste'),('prospect','Prospect')], 'Send mag.'),
         'date_founded':fields.date('Founding Date',help='Date of foundation of this company'),
         'training_authorization':fields.char('Training Auth.',size=12,help='Formation Checks Authorization number'),
         'lang_authorization':fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number'),
@@ -179,12 +194,13 @@ class res_partner(osv.osv):
         'alert_legalisations':fields.boolean('Legal. Alert',help='Partners description to be shown when inserting new legalisation'),
         'alert_membership':fields.boolean('Membership Alert',help='Partners description to be shown when inserting new ship sale'),
         'alert_others':fields.boolean('Other alert',help='Partners description to be shown when inserting new sale not treated by _advertising, _events, _legalisations, _Membership'),
-        'dir_name':fields.char('Name in Menber Dir.',size=250,help='Name under wich the partner will be inserted in the members directory'),
+        'alert_explanation':fields.text('Warning'),
+        'dir_name':fields.char('Main Name',size=250,help='Name under wich the partner will be inserted in the members directory'),
         'dir_name2':fields.char('1st Shortcut name ',size=250,help='First shortcut in the members directory, pointing to the dir_name field'),
         'dir_name3':fields.char('2nd Shortcut name ',size=250,help='Second shortcut'),
         'dir_date_last':fields.date('Partner Data Date',help='Date of latest update of the partner data by itself (via paper or Internet)'),
         'dir_date_accept':fields.date("Good to shoot Date",help='Date of last acceptation of Bon à Tirer'),
-        'dir_presence':fields.boolean('Dir. Presence',help='Présence dans le répertoire des entreprises'),
+        'dir_presence':fields.boolean('Dir. Presence',help='Present in the directory of the members'),
         'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
@@ -192,8 +208,10 @@ class res_partner(osv.osv):
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','partner_id','Partner Relation'),
+
         'article_ids' : fields.many2many('res.partner.article','res_partner_article_rel','partner_id','article_id','Articles')
         #Never,Always,Managed_by_Poste,Prospect
+
         #virement belge,virement iban
         }
     _defaults = {
@@ -201,6 +219,8 @@ class res_partner(osv.osv):
         'dir_presence' : lambda *a: True,
         'dir_exclude':lambda *a: False,
         'magazine_subscription': lambda *a: 'prospect',
+        'state_id': _get_partner_state,
+        'state_id2': _get_customer_state,
         }
     _constraints = [(check_address, 'Error: Only one default address is allowed!', [])]
 res_partner()
@@ -246,13 +266,13 @@ class res_partner_zip(osv.osv):
 
     _constraints = [(check_group_type, 'Error: Only one group of the same group type is allowed!', [])]
     _columns = {
-        'name':fields.char('Zip Code',size=4,required=True),
-        'city':fields.char('City',size=60,traslate=True),
+        'name':fields.char('Zip Code',size=10,required=True, select=1),
+        'city':fields.char('City',size=60,translate=True),
         'partner_id':fields.many2one('res.partner','Master Cci'),
         'post_center_id':fields.char('Post Center',size=40),
         'post_center_special':fields.boolean('Post Center Special'),
-        'user_id':fields.many2one('res.users','User'),
-        'groups_id': fields.many2many('res.partner.zip.group', 'partner_zip_group_rel1', 'zip_id', 'group_id', 'Groups'),
+        'user_id':fields.many2one('res.users','Salesman Responsible'),
+        'groups_id': fields.many2many('res.partner.zip.group', 'partner_zip_group_rel1', 'zip_id', 'group_id', 'Areas'),
         'distance':fields.integer('Distance',help='Distance (km) between zip location and the cci.')
                 }
 res_partner_zip()
@@ -367,11 +387,11 @@ class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.act
                     res.append((read['id'],str))
         return res
     _columns = {
-        'code': fields.char('Code',size=6),
+        'code': fields.char('Code',size=6,required=True),
         'label':fields.char('Label',size=250,transtale=True,required=True),
         'description':fields.text('Description'),
         'code_relations':fields.many2many('res.partner.activity','res_activity_code_rel','code_id1','code_id2','Related codes'),
-        'partner_id':fields.many2one('res.partner','Partner'),
+        #'partner_id':fields.many2one('res.partner','Partner'),
         'list_id':fields.many2one('res.partner.activity.list','List',required=True)
     }
 res_partner_activity()
@@ -412,8 +432,9 @@ class res_partner_relation(osv.osv): # move from cci_base_contact to here
     _rec_name = 'partner_id'
     _columns = {
         'partner_id': fields.many2one('res.partner','Partner'),
-        'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct
+     #   'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct ?? never used?
         'description':fields.text('Description'),
+        'percent':fields.float('Ownership'),
         'type_id':fields.many2one('res.contact.relation.type','Type'),
     }
 res_partner_relation()
