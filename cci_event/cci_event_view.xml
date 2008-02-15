@@ -19,7 +19,7 @@
 						<field name="date_end" select="2"/>
 						<field name="register_min" select="2"/>
 						<field name="register_max" select="2"/>
-						<field name="note" colspan="4"/> 
+						<field name="note" colspan="4"/>
 						<separator string="Status" colspan="4"/>
 						<field name="state" select="1"/>
 						<group col="4" colspan="2">
@@ -47,7 +47,7 @@
 						<newline/>
 						<separator string="Tasks management" colspan="4"/>
 						<field name="project_id"/>
-						<button colspan="2" string="Create Retro-Planning" name="button_project_create"/>
+						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
 					</page>
 					<page string="Mailing">
 						<field name="mail_auto_registr"/>
