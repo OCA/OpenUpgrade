@@ -94,9 +94,10 @@ class res_partner_country_relation(osv.osv):
     _name = "res.partner.country.relation"
     _description = 'res.partner.country.relation'
     _columns = {
-        'frequency': fields.selection([('Frequent','Occasionnel','Prospection')],'Frequency'),
+        'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
         'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('Export','Import','Salon')],'Types'),#should be corect
+        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),#should be corect
     }
+
 res_partner_country_relation()
 

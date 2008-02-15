@@ -15,6 +15,34 @@
 	</record>
 -->
 
+<!-- res.partner.country.relation views -->
+	<record model="ir.ui.view" id="view_partner_country_relation_tree">
+		<field name="name">res.partner.country.relation.tree</field>
+		<field name="model">res.partner.country.relation</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Partner Country Relation">
+				<field name="type"/>
+				<field name="frequency"/>
+				<field name="country_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_country_relation_form">
+		<field name="name">res.partner.country.relation.form</field>
+		<field name="model">res.partner.country.relation</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Partner Country Relation">
+				<field name="type"/>
+				<field name="frequency"/>
+				<field name="country_id"/>
+			</form>
+		</field>
+	</record>
+
+
 <!-- res.partner.contact -->
 
 	<record model="ir.ui.view" id="view_partner_contact_tree_inherit">
