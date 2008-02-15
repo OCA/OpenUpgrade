@@ -102,8 +102,8 @@ class event(osv.osv):
           'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
           'budget_id':fields.many2one('account.budget.post','Budget'),
           'product_id':fields.many2one('product.product','Product'),
-          'sales_open':fields.char('Sales open',size=20),#should be corect
-          'sales_draft':fields.char('Sales draft',size=20),#should be corect
+          'sales_open':fields.char('Sales Open',size=20),#should be corect
+          'sales_draft':fields.char('Sales Draft',size=20),#should be corect
           'check_type': fields.many2one('event.check.type','Check Type'),
         }
 event()
