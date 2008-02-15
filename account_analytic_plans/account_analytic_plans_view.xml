@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+<!-- Add plan_id after user_id in account.journal many2one with account.analytic.plan -->
+
+	<record model="ir.ui.view" id="view_account_journal_form_inherit">
+		<field name="name">account.journal.form.inherit</field>
+		<field name="model">account.journal</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="account.view_account_journal_form"/>
+		<field name="arch" type="xml">
+			<field name="user_id" position="after">
+			<field name="plan_id" />
+			</field>
+		</field>
+	</record>
+
+<!-- Replace analytic_id with analytics_id in account.invoice.line -->
+
+	<record model="ir.ui.view" id="view_invoice_line_form_inherit">
+		<field name="name">account.invoice.line.form.inherit</field>
+		<field name="model">account.invoice.line</field>
+		<field name="inherit_id" ref="account.view_invoice_line_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="account_analytic_id" domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id)]" position="replace">
+			<field name="analytics_id" context="{'journal_id':parent.journal_id}"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="invoice_supplier_form_inherit">
+		<field name="name">account.invoice.supplier.form.inherit</field>
+		<field name="model">account.invoice</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="account.invoice_supplier_form"/>
+		<field name="priority">2</field>
+		<field name="arch" type="xml">
+			<field name="invoice_line" nolabel="1" colspan="4" default_get="{'check_total': check_total, 'invoice_line': invoice_line, 'address_invoice_id': address_invoice_id, 'partner_id': partner_id, 'price_type': 'price_type' in dir() and price_type or False}" position="replace">
+			<field name="invoice_line" nolabel="1" colspan="4" default_get="{'check_total': check_total, 'invoice_line': invoice_line, 'address_invoice_id': address_invoice_id, 'partner_id': partner_id, 'price_type': 'price_type' in dir() and price_type or False}">
+				<tree string="Invoice lines" editable="bottom">
+					<field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, price_unit, parent.address_invoice_id)"/>
+					<field name="account_id" on_change="onchange_account_id(parent.partner_id,account_id)" domain="[('company_id', '=', parent.company_id),('journal_id','=',parent.journal_id)]"/>
+					<field name="invoice_line_tax_id" view_mode="2"/>
+					<field name="analytics_id" />
+					<field name="quantity"/>
+					<field name="price_unit"/> <!-- Removed if subtotal is set -->
+					<field name="price_subtotal"/>
+					<field name="name"/>
+					<field name="uos_id" invisible="True"/>
+				</tree>
+			</field>
+			</field>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="account_analytic_plan_instance">
+		<field name="name">account.analytic.plan.instance</field>
+		<field name="model">account.analytic.plan.instance</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Analytic Plans">
+				<field name="account_ids"/>
+				<field name="account1_ids"/>
+				<field name="account2_ids"/>
+				<field name="account3_ids"/>
+				<field name="account4_ids"/>
+				<field name="account5_ids"/>
+				<field name="account6_ids"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="account_analytic_plan_instance_action">
+		<field name="name">Analytic Plans</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">account.analytic.plan.instance</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+	</record>
+
+	<menuitem name="Financial Management/Analytic Plan" id="menu_account_analytic_plan_instance_action" action="account_analytic_plan_instance_action"/>
+
+	<record model="ir.ui.view" id="account_analytic_plan_instance_line_form">
+		<field name="name">account.analytic.plan.instance.line.form</field>
+		<field name="model">account.analytic.plan.instance.line</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Analytic Plan line">
+				<field name="plan_id"/>
+				<field name="analytic_account_id"/>
+				<field name="rate"/>
+				<field name="generated_line_id"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="account_analytic_plan_instance_line_tree">
+		<field name="name">account.analytic.plan.instance.line.tree</field>
+		<field name="model">account.analytic.plan.instance.line</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Analytic Plan line">
+				<field name="plan_id"/>
+				<field name="analytic_account_id"/>
+				<field name="rate"/>
+				<field name="generated_line_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="account_analytic_plan_instance_line_action">
+		<field name="name">Analytic Plan line</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">account.analytic.plan.instance.line</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem name="Financial Management/Analytic Plan line" id="menu_account_analytic_plan_instance_line_action" action="account_analytic_plan_instance_line_action"/>
+
+	<record model="ir.ui.view" id="account_analytic_plan_form">
+		<field name="name">account.analytic.plan.form</field>
+		<field name="model">account.analytic.plan</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Analytic Plan">
+				<field name="name" colspan="4"/>
+				<field name="plan_ids"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="account_analytic_plan_tree">
+		<field name="name">account.analytic.plan.tree</field>
+		<field name="model">account.analytic.plan</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Analytic Plan">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.actions.act_window" id="account_analytic_plan_form_action">
+		<field name="name">Analytic Plan</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">account.analytic.plan</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem name="Financial Management/Plan/Analytic Plan" id="menu_account_analytic_plan_action" action="account_analytic_plan_form_action"/>
+
+	<record model="ir.ui.view" id="account_analytic_plan_line_form">
+		<field name="name">account.analytic.plan.line.form</field>
+		<field name="model">account.analytic.plan.line</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Analytic Plan line">
+				<field name="name"/>
+				<field name="sequence"/>
+				<field name="root_analytic_id"/>
+				<field name="default_analytic_id"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="account_analytic_plan_line_tree">
+		<field name="name">account.analytic.plan.line.tree</field>
+		<field name="model">account.analytic.plan.line</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Analytic Plan line">
+				<field name="name"/>
+				<field name="sequence"/>
+				<field name="root_analytic_id"/>
+				<field name="default_analytic_id"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.actions.act_window" id="account_analytic_plan_line_form_action">
+		<field name="name">Analytic Plan line</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">account.analytic.plan.line</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+	<menuitem name="Financial Management/Plan/Analytic Plan line" id="menu_account_analytic_plan_line_action" action="account_analytic_plan_line_form_action"/>
+
+</data>
+</terp>
