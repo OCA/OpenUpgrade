@@ -33,7 +33,7 @@ class event_type(osv.osv):
 	_name = 'event.type'
 	_description= 'Event type'
 	_columns = {
-		'name': fields.char('Event type', size=64),
+		'name': fields.char('Event type', size=64, required=True),
 	}
 event_type()
 
