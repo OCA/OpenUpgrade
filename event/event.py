@@ -55,7 +55,7 @@ class event(osv.osv):
 	def _get_register(self, cr, uid, ids, name, args, context=None):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
-			cr.execute('SELECT sum(nb_register) FROM event_registration , crm_case c WHERE c.section_id=%d and state in (\'open\',\'done\')',  (event.section_id.id,))
+			cr.execute('SELECT sum(nb_register) FROM event_registration e, crm_case c WHERE e.case_id=c.id and c.section_id=%d and state in (\'open\',\'done\')',  (event.section_id.id,))
 			res2 = cr.fetchone()
 			res[event.id] = res2 and res2[0] or 0
 		return res
@@ -63,7 +63,7 @@ class event(osv.osv):
 	def _get_prospect(self, cr, uid, ids, name, args, context=None):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
-			cr.execute('SELECT sum(nb_register) FROM event_registration , crm_case c  WHERE c.section_id=%d and state in (\'draft\')',  (event.section_id.id,))
+			cr.execute('SELECT sum(nb_register) FROM event_registration e , crm_case c  WHERE e.case_id=c.id and c.section_id=%d and state in (\'draft\')',  (event.section_id.id,))
 			res2 = cr.fetchone()
 			res[event.id] = res2 and res2[0] or 0
 		return res
@@ -166,16 +166,16 @@ class report_event_registration(osv.osv):
             create or replace view report_event_registration as (
                 select
                     e.id as id,
-                    (select c.name from event_event,crm_case_section c where e.section_id=c.id) as name,
+                    c.name as name,
                     e.date_begin as date_begin,
                     e.date_end as date_end,
-                    (select count(*) from crm_case where state='draft') as draft_state ,
-                    (select count(*) from crm_case where state='open') as  confirm_state,
+                    (SELECT count(*) FROM event_registration x , crm_case c  WHERE x.case_id=c.id and c.section_id=e.section_id and state in ('draft')) as draft_state,
+                    (SELECT count(*) FROM event_registration x , crm_case c  WHERE x.case_id=c.id and c.section_id=e.section_id and state in ('open')) as confirm_state,
                     e.register_max as register_max
                 from
-                    event_event e
+                    event_event e,crm_case_section c
+               where
+                	e.section_id=c.id
+
             )""")
 report_event_registration()
-
-
-
