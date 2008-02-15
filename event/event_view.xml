@@ -68,7 +68,8 @@
 						<field name="register_max" select="2"/>
 						<separator string="Tasks management" colspan="4"/>
 						<field name="project_id"/>
-						<button colspan="2" string="Create Retro-Planning" name="button_project_create"/>
+						<!--<button colspan="2" string="Create Retro-Planning" name="event.event_wiz"/>-->
+						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
 						<separator string="Status" colspan="4"/>
 						<field name="state" select="1"/>
 						<group col="4" colspan="2">
