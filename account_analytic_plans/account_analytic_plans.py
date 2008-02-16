@@ -34,8 +34,22 @@ from mx.DateTime import now
 import time
 
 import netsvc
-from osv import fields, osv
+from osv import fields, osv,orm
 import ir
+
+class one2many_mod2(fields.one2many):
+    def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
+        if not context:
+            context = {}
+        if not values:
+            values = {}
+        res = {}
+        for id in ids:
+            res[id] = []
+        ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',ids)], limit=self._limit)
+        for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
+            res[r[self._fields_id]].append( r['id'] )
+        return res
 
 class account_analytic_plan(osv.osv):
     _name = "account.analytic.plan"
@@ -65,14 +79,61 @@ class account_analytic_plan_instance(osv.osv):
     _name='account.analytic.plan.instance'
     _description = 'Object for create analytic entries from invoice lines'
     _columns={
+          'name':fields.char('Plan Name',size=64),
           'account_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account Id'),
-          'account1_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account1 Id'),
-          'account2_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account2 Id'),
-          'account3_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account3 Id'),
-          'account4_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account4 Id'),
-          'account5_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account5 Id'),
-          'account6_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account6 Id'),
+          'account1_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account1 Id'),
+          'account2_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account2 Id'),
+          'account3_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account3 Id'),
+          'account4_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account4 Id'),
+          'account5_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account5 Id'),
+          'account6_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account6 Id'),
               }
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        res = super(account_analytic_plan_instance,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+        if (res['type']=='form'):
+            if self.my_context.get('journal_id',False):
+                rec = self.pool.get('account.journal').browse(cr, uid, [int(self.my_context['journal_id'])], context)[0]
+                i=1
+                res['arch'] = """<form string="%s">/n<field name="name" colspan="4"/>/n"""%rec.plan_id.name
+
+                for line in rec.plan_id.plan_ids:
+                    res['arch']+="""<field name="account%d_ids" string="%s">
+                    <tree string="%s" editable="bottom">
+                        <field name="analytic_account_id" domain="[('parent_id','child_of','%d')]"/>
+                        <field name="rate"/>
+                    </tree>
+                </field>"""%(i,line.name,line.name,line.root_analytic_id)
+                    i+=1
+                res['arch']+="""</form>"""
+            else:
+                res['arch'] = """<form string="Analytic Entries">
+                    <field name="name" colspan="4"/>
+                    <field name="account_ids" string="Projects">
+                        <tree string="Projects" editable="bottom">
+                            <field name="analytic_account_id"/>
+                            <field name="rate"/>
+                        </tree>
+                    </field>
+                </form>"""
+
+            doc = dom.minidom.parseString(res['arch'])
+            xarch, xfields = self._orm__view_look_dom_arch(cr, uid, doc, context=context)
+            res['arch'] = xarch
+            res['fields'] = xfields
+            return res
+        else:
+            return res
+    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
+        if context.get('journal_id',False):
+            self.my_context = context.copy()
+        return super(account_analytic_plan_instance,self).read(cr, user, ids, fields, context, load)
+
+#    def name_get(self, cr, user, ids, context=None):
+#        print "CONTER :",context
+#        if context.get('journal_id',False):
+#            print "COPY CONTEXT :"
+#            self.my_context = context.copy()
+#        return super(account_analytic_plan_instance,self).name_get(cr, user, ids, context)
 
 account_analytic_plan_instance()
 
