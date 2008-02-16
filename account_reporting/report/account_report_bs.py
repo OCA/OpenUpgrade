@@ -56,7 +56,7 @@ class account_report_bs(report_sxw.rml_parse):
 		res =self.pool.get('account.report.bs').read(self.cr,self.uid,[line_id],['account_id','child_id'])[0]
 		for acc_id in res['account_id']:
 			acc = self.pool.get('account.account').browse(self.cr,self.uid,[acc_id],ctx)[0]
-			_total = acc.balance
+			_total += acc.balance
 		bsline_reportbs = res['child_id']
 
 		for report in bsline_reportbs:
