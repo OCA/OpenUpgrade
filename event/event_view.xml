@@ -408,7 +408,7 @@
 		</field>
 	</record>
 
-	<record model="ir.ui.view" id="report_event_registration_graph">
+	<record model ="ir.ui.view" id="report_event_registration_graph">
 		<field name="name">report.event.registration.graph</field>
 		<field name="model">report.event.registration</field>
 		<field name="type">graph</field>
@@ -430,9 +430,46 @@
 		<field name="view_mode">tree,graph</field>
 	</record>
 	<menuitem name="Events/Reporting/Events on Registrations" action="action_event_registration" id="menu_report_event_registration"/>
-
-
 <!-- end... -->
 
+
+<!-- report , event  type on registration... start -->
+	<record model="ir.ui.view" id="report_event_type_registration_tree">
+		<field name="name">report.event.type.registration.tree</field>
+		<field name="model">report.event.type.registration</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Registration By Event Types">
+				<field name="name" select="1"/>
+				<field name="nbevent"/>
+				<field name="draft_state" select="2"/>
+				<field name="confirm_state" select="2"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="report_event_type_registration_graph">
+		<field name="name">report.event.type.registration.graph</field>
+		<field name="model">report.event.type.registration</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Registration By Event Types" type="bar">
+				<field name="name"/>
+				<field name="draft_state" operator="+"/>
+				<field name="confirm_state" operator="+"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_event_type_registration">
+		<field name="name">Registration By Event Types</field>
+		<field name="res_model">report.event.type.registration</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+	</record>
+	<menuitem name="Events/Reporting/Registration By Event Types" action="action_event_type_registration" id="menu_report_event_type_registration"/>
+
+
+<!-- end...  -->
 	</data>
 </terp>
