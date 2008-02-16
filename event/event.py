@@ -179,3 +179,35 @@ class report_event_registration(osv.osv):
 
             )""")
 report_event_registration()
+
+class report_event_type_registration(osv.osv):
+    _name = "report.event.type.registration"
+    _description = "Event type on registration"
+    _auto = False
+    _columns = {
+        'name': fields.char('Event Type',size=20),
+        'nbevent':fields.integer('Number Of Events'),
+        'draft_state': fields.integer('Draft Registrations',size=20),
+        'confirm_state': fields.integer('Confirm Registrations',size=20),
+    }
+    def init(self, cr):
+        cr.execute("""
+            create or replace view report_event_type_registration as (
+               select
+               		count(t.id) as id,
+                	t.name as name,
+					(select count(*) from event_registration r , crm_case c , event_event e  where c.section_id=e.section_id and r.case_id=c.id and c.state='draft' and e.type=t.id ) as draft_state ,
+					(select count(*) from event_registration r , crm_case c , event_event e  where c.section_id=e.section_id and r.case_id=c.id and c.state='open' and e.type=t.id ) as  confirm_state,
+					count(t.id) as nbevent
+ 				from
+ 					event_event e
+				inner join
+					crm_case_section c1 on (e.section_id=c1.id)
+				inner join
+					event_type t on (e.type=t.id)
+				group by
+					t.name,t.id
+
+            )""")
+report_event_type_registration()
+
