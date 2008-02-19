@@ -360,7 +360,8 @@ class document_file(osv.osv):
 			fname = os.path.join(path, flag, filename)
 			fp = file(fname,'wb')
 			fp.write(base64.decodestring(value))
-			cr.execute('update ir_attachment set store_fname=%s,store_method=%s where id=%d', (os.path.join(flag,filename),'fs',id))
+			filesize = os.stat(fname).st_size
+			cr.execute('update ir_attachment set store_fname=%s,store_method=%s,file_size=%d where id=%d', (os.path.join(flag,filename),'fs',filesize,id))
 		else:
 			cr.execute('update ir_attachment set datas=%s,store_method=%s where id=%d', (psycopg.Binary(value),'db',id))
 		return True
