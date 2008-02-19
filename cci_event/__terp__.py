@@ -10,7 +10,7 @@
     "depends" : ["base","event","account_payment"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["cci_event_view.xml","cci_event_workflow.xml"],
+    "update_xml" : ["cci_event_view.xml","cci_event_workflow.xml","cci_event_wizard.xml"],
     "active": False,
     "installable": True
 }
