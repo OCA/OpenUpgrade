@@ -80,7 +80,6 @@ class account_invoice_1(report_sxw.rml_parse):
         info=[]
         invoice_list=[]
         res={}
-
         ids = self.pool.get('account.invoice.line').search(self.cr, self.uid, [('invoice_id', '=', invoice.id)])
         for id in range(0,len(ids)):
             info = self.pool.get('account.invoice.line').browse(self.cr, self.uid,ids[id], self.context.copy())
