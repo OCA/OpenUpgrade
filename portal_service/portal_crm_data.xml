@@ -67,7 +67,7 @@
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_case_a">
 		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">form</field>
 		<field name="view_id" ref="portal_crm_case_view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_all"/>
 	</record>
@@ -89,7 +89,7 @@
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_case_o">
 		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">form</field>
 		<field name="view_id" ref="portal_crm_case_view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_open"/>
 	</record>
@@ -112,7 +112,7 @@
 	</record>
 	<record model="ir.actions.act_window.view" id="window_view_form_case_c">
 		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
+		<field name="view_mode">form</field>
 		<field name="view_id" ref="portal_crm_case_view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
 	</record>
