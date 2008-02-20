@@ -31,6 +31,14 @@ import wizard
 import netsvc
 import pooler
 
+from osv import fields, osv
+form = """<?xml version="1.0"?>
+<form string="Create invoices">
+    <separator string="Invoice Created" />
+</form>
+"""
+
+fields = {}
 
 def _makeInvoices(self, cr, uid, data, context):
         invoices = {}
@@ -45,41 +53,49 @@ def _makeInvoices(self, cr, uid, data, context):
 
         obj_lines=pool_obj.get('account.invoice.line')
 
-        value=obj_lines.product_id_change(cr, uid, [], data_event_reg[0].event_id.product_id.id,uom =False, partner_id=data_event_reg[0].partner_invoice_id.id)
+        for reg in data_event_reg:
+            value=obj_lines.product_id_change(cr, uid, [], reg.event_id.product_id.id,uom =False, partner_id=reg.partner_invoice_id.id)
 
-        data_product=pool_obj.get('product.product').browse(cr,uid,[data_event_reg[0].event_id.product_id.id])
-        a = data_event_reg[0].partner_invoice_id.property_account_receivable.id
+            if not reg.event_id.product_id:
+                raise wizard.except_wizard('Warning !', 'No Product defined in the Event ')
+            if not reg.partner_address_id:
+                raise wizard.except_wizard('Warning !', 'No "Partner Contact" defined on Registration ')
+            if not reg.partner_invoice_id:
+                raise wizard.except_wizard('Warning !', 'No "Partner" defined on the Registration ')
 
-        for tax in data_product[0].taxes_id:
-            tax_ids.append(tax.id)
+            data_product=pool_obj.get('product.product').browse(cr,uid,[reg.event_id.product_id.id])
+            a = reg.partner_invoice_id.property_account_receivable.id
 
-        inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
-                'name': data_event_reg[0].name,
-                'account_id':value['value']['account_id'],
-                'price_unit': value['value']['price_unit'],
-                'quantity': data_event_reg[0].nb_register,
-                'discount': False,
-                'uos_id': value['value']['uos_id'],
-                'product_id':data_event_reg[0].event_id.product_id.id,
-                'invoice_line_tax_id': [(6,0,tax_ids)],
-                'note':False,
-        })
-        create_ids.append(inv_id)
+            for tax in data_product[0].taxes_id:
+                tax_ids.append(tax.id)
 
-        inv = {
-            'name': data_event_reg[0].name,
-            'origin': data_event_reg[0].name,
-            'type': 'out_invoice',
-            'reference': False,#"P%dSO%d"%(loan.partner_id.id,loan.id),
-            'account_id': data_event_reg[0].partner_invoice_id.property_account_receivable.id,
-            'partner_id': data_event_reg[0].partner_invoice_id.id,
-            'address_invoice_id': data_event_reg[0].partner_address_id.id,
-            'address_contact_id': data_event_reg[0].partner_address_id.id,
-            'invoice_line': [(6,0,create_ids)],
-            'currency_id' : data_event_reg[0].partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
-            'comment': "",
-            'payment_term': data_event_reg[0].partner_invoice_id.property_payment_term.id,
-        }
+            inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
+                    'name': reg.name,
+                    'account_id':value['value']['account_id'],
+                    'price_unit': value['value']['price_unit'],
+                    'quantity': reg.nb_register,
+                    'discount': False,
+                    'uos_id': value['value']['uos_id'],
+                    'product_id':reg.event_id.product_id.id,
+                    'invoice_line_tax_id': [(6,0,tax_ids)],
+                    'note':False,
+            })
+            create_ids.append(inv_id)
+
+            inv = {
+                'name': reg.name,
+                'origin': reg.name,
+                'type': 'out_invoice',
+                'reference': False,
+                'account_id': reg.partner_invoice_id.property_account_receivable.id,
+                'partner_id': reg.partner_invoice_id.id,
+                'address_invoice_id':reg.partner_address_id.id,
+                'address_contact_id':reg.partner_address_id.id,
+                'invoice_line': [(6,0,create_ids)],
+                'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
+                'comment': "",
+                'payment_term':reg.partner_invoice_id.property_payment_term.id,
+            }
 
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
@@ -90,8 +106,9 @@ class make_invoice(wizard.interface):
     states = {
         'init' : {
             'actions' : [_makeInvoices],
-            'result' : {'type' : 'state',
-                    'state' : 'end'}
+            'result' : {'type' : 'form' ,   'arch' : form,
+                    'fields' : fields,
+                    'state' : [('end','Ok')]}
         },
 
     }
