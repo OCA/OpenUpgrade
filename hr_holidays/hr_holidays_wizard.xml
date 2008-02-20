@@ -8,7 +8,8 @@
 	<menuitem name="Human Resources/Reporting/Print Summary of Holidays"
 		 action="holidays_summary"
 		 type="wizard"
-		 id="menu_holidays_summary"/>
+		 id="menu_holidays_summary"
+		 groups="hr.hr_id"/>
 
 	<wizard string="Print Summary of Employee's Holidays"
 		model="hr.employee" name="hr.holidays.summary.employee"
