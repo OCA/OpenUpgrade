@@ -30,7 +30,8 @@ class hr_analytic_timesheet(osv.osv):
 	_inherit = "hr.analytic.timesheet"
 
 
-	def on_change_account_id(self, cr, uid, ids,user_id, account_id):
+	def on_change_account_id(self, cr, uid, ids,user_id, account_id, unit_amount=0):
+		#{'value': {'to_invoice': False, 'amount': (-162.0,), 'product_id': 7, 'general_account_id': (5,)}}
 		res = {}
 		if not (account_id):
 			#avoid a useless call to super
@@ -51,11 +52,24 @@ class hr_analytic_timesheet(osv.osv):
 			res.setdefault('value',{})
 			res['value']= super(hr_analytic_timesheet, self).on_change_account_id(cr, uid, ids,account_id)['value']
 			res['value']['product_id'] = r.product_id.id
-	
+			res['value']['product_uom_id'] = r.product_id.product_tmpl_id.uom_id.id
+
+			#the change of product has to impact the amount, uom and general_account_id
+			a = r.product_id.product_tmpl_id.property_account_expense.id
+			if not a:
+				a = r.product_id.categ_id.property_account_expense_categ.id
+			if not a:
+				raise osv.except_osv('Error !',
+						'There is no expense account define ' \
+								'for this product: "%s" (id:%d)' % \
+								(r.product_id.name, r.product_id.id,))
+			amount = unit_amount * r.product_id.uom_id._compute_price(cr, uid,
+					r.product_id.uom_id.id, r.product_id.standard_price, False)
+			res ['value']['amount']= - round(amount, 2)
+			res ['value']['general_account_id']= a
 		return res
 
-
-	def on_change_user_id(self, cr, uid, ids,user_id, account_id):
+	def on_change_user_id(self, cr, uid, ids,user_id, account_id, unit_amount=0):
 		res = {}
 		if not (user_id):
 			#avoid a useless call to super
@@ -71,7 +85,20 @@ class hr_analytic_timesheet(osv.osv):
 				#add the value from the new relation analytic_user_funct_grid
 				r = self.pool.get('analytic_user_funct_grid').browse(cr, uid, temp)[0]
 				res['value']['product_id'] = r.product_id.id	
-	
+
+				#the change of product has to impact the amount, uom and general_account_id
+				a = r.product_id.product_tmpl_id.property_account_expense.id
+				if not a:
+					a = r.product_id.categ_id.property_account_expense_categ.id
+				if not a:
+					raise osv.except_osv('Error !',
+							'There is no expense account define ' \
+									'for this product: "%s" (id:%d)' % \
+									(r.product_id.name, r.product_id.id,))
+				amount = unit_amount * r.product_id.uom_id._compute_price(cr, uid,
+						r.product_id.uom_id.id, r.product_id.standard_price, False)
+				res ['value']['amount']= - round(amount, 2)
+				res ['value']['general_account_id']= a
 		return res
 
 hr_analytic_timesheet()
