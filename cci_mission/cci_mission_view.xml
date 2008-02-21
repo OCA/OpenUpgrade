@@ -94,6 +94,54 @@
 
 		<menuitem name="Missions/Configuration/Site" action="action_cci_missions_site" id="menu_action_cci_missions_site"/>
 
+<!-- view for cci_missions_dossier -->
+		<record model="ir.ui.view" id="cci_missions_dossier_form">
+			<field name="name">cci_missions.dossier.form</field>
+			<field name="model">cci_missions.dossier</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="dossier">
+					<field name="name" select="1"/>
+					<field name="date" select="2"/>
+					<field name="type_id"/>
+					<field name="order_partner_id" />
+					<field name="asker_name" select="1"/>
+					<field name="sender_name" select="1"/>
+					<field name="quantity_copies" />
+					<field name="to_bill" />
+					<field name="goods" select="2"/>
+					<newline/>
+					<field name="goods_value" select="2"/>
+					<field name="total"/>
+					<field name="destination_id" />
+					<field name="embassy_folder_id" />
+					<field name="state" />
+					<field name="sub_total"/>
+					<field name="text_on_invoice"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_dossier_tree">
+			<field name="name">cci_missions.dossier.tree</field>
+			<field name="model">cci_missions.dossier</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="dossier">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_dossier">
+			<field name="name">dossier</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.dossier</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Dossier" action="action_cci_missions_dossier" id="menu_action_cci_missions_dossier"/>
 
 	</data>
 </terp>
