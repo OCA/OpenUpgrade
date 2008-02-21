@@ -41,6 +41,7 @@ class one2many_mod2(fields.one2many):
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
         if not context:
             context = {}
+
         if not values:
             values = {}
         res = {}
@@ -91,8 +92,8 @@ class account_analytic_plan_instance(osv.osv):
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
         res = super(account_analytic_plan_instance,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
         if (res['type']=='form'):
-            if self.my_context.get('journal_id',False):
-                rec = self.pool.get('account.journal').browse(cr, uid, [int(self.my_context['journal_id'])], context)[0]
+            if context.get('journal_id',False):
+                rec = self.pool.get('account.journal').browse(cr, uid, [int(context['journal_id'])], context)[0]
                 i=1
                 res['arch'] = """<form string="%s">/n<field name="name" colspan="4"/>/n"""%rec.plan_id.name
 
@@ -123,10 +124,10 @@ class account_analytic_plan_instance(osv.osv):
             return res
         else:
             return res
-    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
-        if context.get('journal_id',False):
-            self.my_context = context.copy()
-        return super(account_analytic_plan_instance,self).read(cr, user, ids, fields, context, load)
+#    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
+#        if context.get('journal_id',False):
+#            self.my_context = context.copy()
+#        return super(account_analytic_plan_instance,self).read(cr, user, ids, fields, context, load)
 
 #    def name_get(self, cr, user, ids, context=None):
 #        print "CONTER :",context
@@ -179,5 +180,13 @@ class account_move_line(osv.osv):
     _columns = {
             'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Account'),
                 }
+
+    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+        result = super(account_move_line, self).write(cr, uid, ids, vals, context)
+        return result
+
+    def create(self, cr, uid, vals, context=None, check=True):
+        result = super(account_move_line, self).create(cr, uid, vals, context)
+        return result
 account_move_line()
 
