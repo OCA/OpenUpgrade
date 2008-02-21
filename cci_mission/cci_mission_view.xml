@@ -2,6 +2,7 @@
 <terp>
 	<data>
 
+		<menuitem name="Missions" id="menu_mission"/>
 		<record model="ir.ui.view" id="view_partner_form_inherit_mission">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
@@ -13,13 +14,86 @@
 						<separator string="Asker Info" colspan="4"/>
 						<field name="asker_name"/>
 						<field name="asker_address"/>
-						<field name="asker_zip_id"/>
+						<!--<field name="asker_zip_id"/>-->
 						<separator string="Sender Info" colspan="4"/>
 						<field name="sender_name"/>
 					</page>
 				</notebook>
 			</field>
 		</record>
+
+<!-- view for cci_missions_certificate_type -->
+		<record model="ir.ui.view" id="cci_missions_certificate_type_form">
+			<field name="name">cci_missions.certificate_type.form</field>
+			<field name="model">cci_missions.certificate_type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Certificate Type">
+					<field name="name" select="1"/>
+					<field name="code" select="1"/>
+					<field name="sequence_id"/>
+					<field name="site_id" />
+					<field name="original_product_id" />
+					<field name="copy_product_id" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_certificate_type_tree">
+			<field name="name">cci_missions.certificate_type.tree</field>
+			<field name="model">cci_missions.certificate_type</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Certificate Type">
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_certificate_type">
+			<field name="name">Certificate Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.certificate_type</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Configuration/Certificate Types" action="action_cci_missions_certificate_type" id="menu_cci_missions_certificate_type"/>
+
+<!-- view for cci_missions_site -->
+		<record model="ir.ui.view" id="cci_missions_site_form">
+			<field name="name">cci_missions.site.form</field>
+			<field name="model">cci_missions.site</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Site">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_certificate_type_tree">
+			<field name="name">cci_missions.site.tree</field>
+			<field name="model">cci_missions.site</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Site">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_site">
+			<field name="name">Site</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.site</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Configuration/Site" action="action_cci_missions_site" id="menu_action_cci_missions_site"/>
+
 
 	</data>
 </terp>
