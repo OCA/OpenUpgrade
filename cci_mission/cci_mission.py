@@ -65,3 +65,25 @@ class cci_missions_certificate_type(osv.osv):
 
 cci_missions_certificate_type()
 
+class cci_missions_dossier(osv.osv):
+    _name = 'cci_missions.dossier'
+    _description = 'cci_missions.dossier'
+    _columns = {
+        'name' : fields.char('Reference',size=20,required=True),#Default: '/'
+        'type_id' : fields.many2one('cci_missions.certificate_type','Certificate Type',required=True),
+        'date' : fields.date('Creation Date',required=True),#by default, current date
+        'order_partner_id': fields.many2one('res.partner','Billed Customer',required=True),
+        'asker_name':fields.char('Asker Name',size=50),#by default, res.partner->asker_name or, res_partner->name
+        'sender_name':fields.char('Sender Name',size=50),#by default, res.partner->sender_name or, res_partner.address[default]->name
+        'to_bill':fields.boolean('To Be Billed'),#by default: True
+        'state':fields.selection([('confirmed','confirmed'),('canceled','canceled'),('invoiced','invoiced')],'State',),#by default: confirmed
+        'goods':fields.char('Goods Description',size=100),
+        'goods_value':fields.float('Value of the Sold Goods'),#Monetary; must be greater than zero
+        'destination_id':fields.many2one('res.country','Destination Country'),
+        'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
+        'quantity_copies':fields.integer('Number of Copies'),
+        'total':fields.function('Total'),#readonly, sum of the price for copies, originals and extra_products
+        'sub_total':fields.function('Sub Total for Extra Products'),#readonly, sum of the extra_products
+        'text_on_invoice':fields.text('Text to Display on the Invoice')
+                }
+cci_missions_dossier()
