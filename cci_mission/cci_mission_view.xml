@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+
+		<record model="ir.ui.view" id="view_partner_form_inherit_mission">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Certificate Details">
+						<separator string="Asker Info" colspan="4"/>
+						<field name="asker_name"/>
+						<field name="asker_address"/>
+						<field name="asker_zip_id"/>
+						<separator string="Sender Info" colspan="4"/>
+						<field name="sender_name"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+	</data>
+</terp>
