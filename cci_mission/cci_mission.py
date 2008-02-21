@@ -26,8 +26,8 @@
 #
 ##############################################################################
 
+from osv import fields, osv
 
-from osv import fields,osv
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
@@ -38,5 +38,30 @@ class res_partner(osv.osv):
         'asker_zip_id': fields.many2one('res.partner.zip','Asker Zip Code'),
         'sender_name': fields.char('Sender Name',size=50),
     }
+
 res_partner()
+
+class cci_missions_site(osv.osv):
+    _name = 'cci_missions.site'
+    _description = 'cci_missions.site'
+    _columns = {
+        'name' : fields.char('Name of the Site',size=50,required=True)
+                }
+
+cci_missions_site()
+
+class cci_missions_certificate_type(osv.osv):
+    _name = 'cci_missions.certificate_type'
+    _description = 'cci_missions.certificate_type'
+    _columns = {
+        'code' : fields.char('Code',size=2,required=True),
+        'name' : fields.char('Description',size=30,required=True),
+        'original_product_id' : fields.many2one('product.product','Reference for Original Copies',required=True,help='for the association with a pricelist'),
+        'copy_product_id' : fields.many2one('product.product','Reference for Copies',required=True,help='for the association with a pricelist'),
+        'site_id' : fields.many2one('cci_missions.site','Site',required=True),
+        'sequence_id' : fields.many2one('ir.sequence','Sequence',required=True,help='for association with a sequence'),
+        'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA Carnet','ATA Carnet')],'Type',required=True),
+                }
+
+cci_missions_certificate_type()
 
