@@ -231,6 +231,84 @@
 		<menuitem name="Missions/Embassy Folder" action="action_cci_missions_embassy_folder" id="menu_action_cci_missions_embassy_folder"/>
 
 
+<!-- view for cci_missions_embassy_folder_line -->
+		<record model="ir.ui.view" id="cci_missions_embassy_folder_line_form">
+			<field name="name">cci_missions.embassy_folder_line.form</field>
+			<field name="model">cci_missions.embassy_folder_line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Embassy Folder Line">
+					<field name="name" />
+					<newline/>
+					<field name="folder_id" />
+					<field name="type" />
+					<newline/>
+					<field name="courier_cost" />
+					<newline/>
+					<field name="customer_amount" />
+					<newline/>
+					<field name="tax_rate" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_embassy_folder_line_tree">
+			<field name="name">cci_missions.embassy_folder_line.tree</field>
+			<field name="model">cci_missions.embassy_folder_line</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Embassy Folder Line">
+					<field name="name" />
+					<field name="folder_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_embassy_folder_line">
+			<field name="name">Embassy Folder Line</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.embassy_folder_line</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Missions/Embassy Folder Lines" action="action_cci_missions_embassy_folder_line" id="menu_action_cci_missions_embassy_folder_line"/>
+
+
+
+<!-- view for cci_missions_custom_code -->
+		<record model="ir.ui.view" id="cci_missions_custom_code_form">
+			<field name="name">cci_missions.custom_code.form</field>
+			<field name="model">cci_missions.custom_code</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Custome code">
+					<field name="name" />
+					<field name="official" />
+					<field name="meaning" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_custom_code_tree">
+			<field name="name">cci_missions.custom_code.tree</field>
+			<field name="model">cci_missions.custom_code</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Custome code">
+					<field name="name" />
+					<field name="meaning" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_dossier">
+			<field name="name">Custome code</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.custom_code</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Missions/Configuration/Custom Codes" action="action_cci_missions_dossier" id="menu_action_cci_missions_dossier"/>
 
 	</data>
 </terp>
