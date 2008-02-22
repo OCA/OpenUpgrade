@@ -169,7 +169,15 @@
 						<field name="member_price"/>
 						<field name="destination_id"/>
 						</group>
-						<field name="embassy_folder_line_ids"/>
+						<field name="embassy_folder_line_ids">
+							<tree string="Embassy Foder Lines">
+								<field name="name"/>
+								<field name="type"/>
+								<field name="courier_cost"/>
+								<field name="customer_amount"/>
+								<field name="tax_rate"/>
+							</tree>
+						</field>
 						<newline/>
 						<field name="invoice_note"/>
 						<newline/>
