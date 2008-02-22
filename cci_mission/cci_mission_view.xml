@@ -3,6 +3,7 @@
 	<data>
 
 		<menuitem name="Missions" id="menu_mission"/>
+
 		<record model="ir.ui.view" id="view_partner_form_inherit_mission">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
@@ -35,6 +36,7 @@
 					<field name="site_id" />
 					<field name="original_product_id" />
 					<field name="copy_product_id" />
+					<field name="section" /> <!-- should be check -->
 				</form>
 			</field>
 		</record>
@@ -116,7 +118,7 @@
 					<field name="destination_id" />
 					<field name="embassy_folder_id" />
 					<field name="state" />
-					<field name="sub_total"/>
+					<!--<field name="sub_total"/>-->
 					<field name="text_on_invoice"/>
 				</form>
 			</field>
@@ -142,6 +144,85 @@
 		</record>
 
 		<menuitem name="Missions/Dossier" action="action_cci_missions_dossier" id="menu_action_cci_missions_dossier"/>
+
+<!-- view for cci_missions_embassy_folder -->
+		<record model="ir.ui.view" id="cci_missions_embassy_folder_form">
+			<field name="name">cci_missions.embassy_folder.form</field>
+			<field name="model">cci_missions.embassy_folder</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="embassy folder">
+					<notebook>
+					<page string="General">
+						<field name="name" select="1"/>
+						<field name="section_id"/> <!-- section_id(default=embassy folder), reaondly = true  remain -->
+						<group col="6" colspan="3">
+						<field name="date" string=" Creation Date"/>
+						<field name="date" string="Invoice Date"/>
+						<field name="priority"/>
+						</group>
+						<field name="partner_id" string="Partner to Invoice"/>
+						<field name="partner_address_id"/>
+						<group col="8" colspan="6">
+						<field name="site_id"/>
+						<field name="customer_reference"/>
+						<field name="member_price"/>
+						<field name="destination_id"/>
+						</group>
+						<field name="embassy_folder_line_ids"/>
+						<newline/>
+						<field name="invoice_note"/>
+						<newline/>
+						<field name="state"/> <!-- buttons remain-->
+					</page>
+					<page string="Extra Info">
+						<field name="id" />
+						<field name="active" />
+						<field name="email_cc" />
+						<separator colspan="4" string="Dates"/>
+						<field name="create_date" />
+						<field name="date_closed" />
+						<field name="date_action_last" />
+						<field name="date_action_next" />
+						<separator colspan="4" string="Links"/>
+						<field name="link_ids" />
+					</page>
+					<page string="Notes">
+						<field name="internal_note" />
+						<newline/>
+						<field name="history_line" />
+					</page>
+					<page string="History">
+						<field name="log_ids"/>
+					</page>
+				</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_embassy_folder_tree">
+			<field name="name">cci_missions.embassy_folder.tree</field>
+			<field name="model">cci_missions.embassy_folder</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="embassy folder">
+					<field name="name"/>
+					<field name="section_id"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_embassy_folder">
+			<field name="name">embassy folder</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.embassy_folder</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Embassy Folder" action="action_cci_missions_embassy_folder" id="menu_action_cci_missions_embassy_folder"/>
+
+
 
 	</data>
 </terp>
