@@ -28,7 +28,6 @@
 
 from osv import fields, osv
 
-
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     _description = 'res.partner'
@@ -49,6 +48,37 @@ class cci_missions_site(osv.osv):
                 }
 
 cci_missions_site()
+
+class cci_missions_embassy_folder(osv.osv):
+    _name = 'cci_missions.embassy_folder'
+    _description = 'cci_missions.embassy_folder'
+    _inherits = {'crm.case': 'crm_case_id'}
+    _columns = {
+        'member_price' : fields.boolean('Apply the Member Price'),
+        'customer_reference' : fields.char('Folders Reference for the Customer',size=30),
+        'destination_id' : fields.many2one('res.country','Destination Country'),
+        'link_ids': fields.one2many('cci_missions.dossier','embassy_folder_id','Linked Documents'),
+        'internal_note': fields.text('Internal Note'),
+        'invoice_note':fields.text('Note to Display on the Invoice',help='to display as the last embassy_folder_line of this embassy_folder.'),
+        'embassy_folder_line_ids' : fields.one2many('cci_missions.embassy_folder_line','folder_id','Details'),
+        'site_id': fields.many2one('cci_missions.site','Site'),
+                }
+
+cci_missions_embassy_folder()
+
+class cci_missions_embassy_folder_line (osv.osv):
+    _name = 'cci_missions.embassy_folder_line'
+    _description = 'cci_missions.embassy_folder_line '
+    _columns = {
+        'name' : fields.char('Description',size=50,required=True),#CONSTRAINT: For each embassy Folder, it can only be one embassy_folder_line of each type.
+        'folder_id' : fields.many2one('cci_missions.embassy_folder','Related Embassy Folder',required=True),
+        'courier_cost' : fields.float('Couriers Costs'),
+        'customer_amount' : fields.float('Invoiced Amount'),
+        'tax_rate': fields.many2one('account.tax','Tax Rate'),#should be corect
+        'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy  Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
+                }
+
+cci_missions_embassy_folder_line()
 
 class cci_missions_certificate_type(osv.osv):
     _name = 'cci_missions.certificate_type'
@@ -86,4 +116,76 @@ class cci_missions_dossier(osv.osv):
         'sub_total':fields.function('Sub Total for Extra Products'),#readonly, sum of the extra_products
         'text_on_invoice':fields.text('Text to Display on the Invoice')
                 }
+
 cci_missions_dossier()
+
+class cci_missions_custom_code(osv.osv):
+    _name= 'cci_missions.custom_code'
+    _desctiption = 'cci_missions.custom_code'
+    _columns = {
+        'name' : fields.char('Name',size=8,required=True),
+        'meaning' : fields.char('Meaning',size=250,required=True),
+        'official' : fields.boolean('Official Code'),#Invisible, Default = False
+                }
+
+cci_missions_custom_code()
+
+class cci_missions_certificate(osv.osv):
+    _name = 'cci_missions.certificate'
+    _description = 'cci_missions.certificate'
+    _inherits = {'cci_missions.dossier': 'dossier_id' }
+    _columns = {
+        'asker_address' : fields.char('Asker Address',size=50),#by default, res.partner->asker_adress or, res_partner.address[default]->street
+        'asker_zip_id' : fields.many2one('res.partner.zip','Asker Zip Code'),#by default, res.partner->asker_zip_id or, res_partner.address[default]->zip_id
+        'special_reason' : fields.selection([('none','None'),('Commercial Reason','Commercial Reason'),('Substitution','Substitution')],'For special cases'),#by default : none
+        'legalization_ids' : fields.one2many('cci_missions.legalization','certificate_id','Related Legalizations'),
+        'customs_ids' : fields.many2many('cci_missions.custom_code','certificate_custome_code_rel','certificate_id','custom_id','Custom Codes'),
+        'sending_SPF': fields.date('SPF Sending Date',help='Date of the sending of this record to the external database'),
+        'origin_ids' : fields.many2many('res.country','certificate_country_rel','certificate_id','country_id','Origin Countries')
+                }
+
+cci_missions_certificate()
+
+class cci_missions_legalization(osv.osv):
+    _name = 'cci_missions.legalization'
+    _description = 'cci_missions.legalization'
+    _inherits = {'cci_missions.dossier': 'dossier_id'}
+    _columns = {
+        'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
+        'quantity_original' : fields.integer('Quantity of Originals',required=True),
+        'certificate_id' : fields.many2one('cci_missions.certificate','Related Certificate'),
+                }
+
+cci_missions_legalization()
+
+class cci_missions_courier_log(osv.osv):
+    _name = 'cci_missions.courier_log'
+    _description = 'cci_missions.courier_log'
+    _columns = {
+        'embassy_folder_id' : fields.many2one('cci_missions.embassy_folder','Related Embassy Folder',required=True),
+        'cba': fields.boolean('CBA'),
+        'ministry' :  fields.boolean('Ministry'),
+        'translation' : fields.boolean('Translation'),
+        'embassy_name' : fields.char('Embassy Name',size=30),
+        'consulate_name' : fields.char('Consulate Name',size=30),
+        'others' : fields.char('Others',size=200),
+        'copy_cba' : fields.boolean('Photocopy Before CBA'),
+        'copy_ministry' : fields.boolean('Photocopy Before Ministry'),
+        'copy_embassy_consulate' : fields.boolean('Photocopy Before Embassy or Consulate'),
+        'documents' : fields.integer('Number of Documents to Legalize'),
+        'documents_certificate' : fields.text('List of Certificates'),
+        'documents_invoice' : fields.text('List of Invoices'),
+        'documents_others' : fields.text('Others'),
+        'message' : fields.text('Message to the Courier'),
+        'return_address' : fields.selection([('A la CCI','A la CCI'),('Au clent','Au client')],'Address of Return',required=True),#onchange
+        'address_name_1' : fields.char('Company Name',size=80),
+        'address_name_2' : fields.char('Contact Name',size=80),
+        'address_street' : fields.char('Street',size=80),
+        'address_city' : fields.char('City',size=80),
+        'qtty_to_print' : fields.integer('Number of Sheets'),
+        'partner_address_id' : fields.many2one('res.partner.address','Courier'),
+                }
+
+cci_missions_courier_log()
+
+
