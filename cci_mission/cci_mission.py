@@ -54,6 +54,7 @@ class cci_missions_embassy_folder(osv.osv):
     _description = 'cci_missions.embassy_folder'
     _inherits = {'crm.case': 'crm_case_id'}
     _columns = {
+        'crm_case_id' : fields.many2one('crm.case','Case'),
         'member_price' : fields.boolean('Apply the Member Price'),
         'customer_reference' : fields.char('Folders Reference for the Customer',size=30),
         'destination_id' : fields.many2one('res.country','Destination Country'),
