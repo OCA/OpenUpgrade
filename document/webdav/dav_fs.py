@@ -56,7 +56,7 @@ class tinyerp_handler(dav_interface):
 		for db_name in result:
 			db = pooler.get_db_only(db_name)
 			cr = db.cursor()
-			cr.execute("select id from ir_module_module where name = 'document'")
+			cr.execute("select id from ir_module_module where name = 'document' and state='installed' ")
 			res=cr.fetchone()
 			if res and len(res):
 				self.db_name_list.append(db_name)
