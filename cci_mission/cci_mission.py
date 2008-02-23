@@ -54,6 +54,17 @@ class cci_missions_embassy_folder(osv.osv):
     _name = 'cci_missions.embassy_folder'
     _description = 'cci_missions.embassy_folder'
     _inherits = {'crm.case': 'crm_case_id'}
+
+    def check_folder_line(self, cr, uid, ids):
+        data_folder = self.browse(cr,uid,ids)
+        list = []
+        for folder in data_folder:
+            for line in folder.embassy_folder_line_ids:
+                if line.type and line.type in list:
+                    return False
+                list.append(line.type)
+        return True
+
     _columns = {
         'crm_case_id' : fields.many2one('crm.case','Case'),
         'member_price' : fields.boolean('Apply the Member Price'),
@@ -66,11 +77,14 @@ class cci_missions_embassy_folder(osv.osv):
         'site_id': fields.many2one('cci_missions.site','Site'),
                 }
 
+    _constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', [])]
+
 cci_missions_embassy_folder()
 
 class cci_missions_embassy_folder_line (osv.osv):
     _name = 'cci_missions.embassy_folder_line'
     _description = 'cci_missions.embassy_folder_line '
+
     _columns = {
         'name' : fields.char('Description',size=50,required=True),#CONSTRAINT: For each embassy Folder, it can only be one embassy_folder_line of each type.
         'folder_id' : fields.many2one('cci_missions.embassy_folder','Related Embassy Folder',required=True),
