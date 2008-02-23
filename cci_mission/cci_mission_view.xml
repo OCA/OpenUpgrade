@@ -323,7 +323,7 @@
 						<field name="date" />
 						<field name="type_id" />
 						<field name="destination_id" />
-						<field name="order_partner_id" />
+						<field name="order_partner_id" /> <!--  onchange=”get_legalization_details(partner_id) remain -->
 						<field name="asker_name" />
 						<field name="sender_name" />
 						<field name="goods" />
@@ -333,7 +333,7 @@
 						<field name="quantity_copies" />
 						<field name="state" />
 						<field name="total" />
-						<field name="text_on_invoice" />
+						<field name="text_on_invoice" colspan="4"/>
 					</page>
 					<page string="Extra Products">
 <!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
@@ -354,6 +354,7 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Legalization">
+					<field name="name"/>
 				</tree>
 			</field>
 		</record>
@@ -367,6 +368,74 @@
 		</record>
 
 		<menuitem name="Missions/Legalizations" action="action_cci_missions_legalization" id="menu_action_cci_missions_legalization"/>
+
+<!-- view for cci_missions_certificate -->
+		<record model="ir.ui.view" id="cci_missions_certificate_form">
+			<field name="name">cci_missions.certificate.form</field>
+			<field name="model">cci_missions.certificate</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Certificate">
+					<notebook>
+					<page string="Certificate Details">
+						<field name="name" />
+						<field name="date" />
+						<field name="type_id" />
+						<field name="destination_id" />
+						<field name="order_partner_id" /> <!--  onchange=”get_legalization_details(partner_id) remain -->
+						<newline/>
+						<field name="asker_name" />
+						<newline/>
+						<field name="asker_address"/>
+						<newline/>
+						<field name="asker_zip_id"/>
+						<newline/>
+						<field name="sender_name" />
+						<field name="goods" />
+						<field name="special_reason"/>
+						<field name="to_bill" />
+						<field name="goods_value" />
+						<field name="quantity_copies" />
+						<field name="state" />
+						<field name="total" />
+						<field name="text_on_invoice" colspan="4"/>
+					</page>
+					<page string="Extra Products">
+<!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
+<!--						<field name="" />--> <!-- sub_total -->
+					</page>
+					<page string="Links">
+						<field name="embassy_folder_id" />
+						<field name="sending_SPF" /> <!-- readonly -->
+						<field name="origin_ids" /> <!-- origin_ids(res.country.name) -->
+						<field name="customs_ids" /> <!-- customs_ids (name, meaning, official) -->
+						<field name="legalization_ids" />
+					</page>
+				</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_certificate_tree">
+			<field name="name">cci_missions.certificate.tree</field>
+			<field name="model">cci_missions.certificate</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Certificate">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_certificate">
+			<field name="name">Certificate</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.certificate</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Certificates" action="action_cci_missions_certificate" id="menu_action_cci_missions_certificate"/>
 
 
 
