@@ -27,6 +27,7 @@
 ##############################################################################
 
 from osv import fields, osv
+import time
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
@@ -100,13 +101,13 @@ class cci_missions_dossier(osv.osv):
     _name = 'cci_missions.dossier'
     _description = 'cci_missions.dossier'
     _columns = {
-        'name' : fields.char('Reference',size=20,required=True),#Default: '/'
+        'name' : fields.char('Reference',size=20,required=True),
         'type_id' : fields.many2one('cci_missions.certificate_type','Certificate Type',required=True),
-        'date' : fields.date('Creation Date',required=True),#by default, current date
+        'date' : fields.date('Creation Date',required=True),
         'order_partner_id': fields.many2one('res.partner','Billed Customer',required=True),
         'asker_name':fields.char('Asker Name',size=50),#by default, res.partner->asker_name or, res_partner->name
         'sender_name':fields.char('Sender Name',size=50),#by default, res.partner->sender_name or, res_partner.address[default]->name
-        'to_bill':fields.boolean('To Be Billed'),#by default: True
+        'to_bill':fields.boolean('To Be Billed'),
         'state':fields.selection([('confirmed','confirmed'),('canceled','canceled'),('invoiced','invoiced')],'State',),#by default: confirmed
         'goods':fields.char('Goods Description',size=100),
         'goods_value':fields.float('Value of the Sold Goods'),#Monetary; must be greater than zero
@@ -117,6 +118,12 @@ class cci_missions_dossier(osv.osv):
         'sub_total':fields.function('Sub Total for Extra Products'),#readonly, sum of the extra_products
         'text_on_invoice':fields.text('Text to Display on the Invoice')
                 }
+    _defaults = {
+        'name': lambda *args: '/',
+        'date': lambda *a: time.strftime('%Y-%m-%d'),
+        'to_bill' : lambda *b : True
+    }
+
 
 cci_missions_dossier()
 
@@ -126,8 +133,11 @@ class cci_missions_custom_code(osv.osv):
     _columns = {
         'name' : fields.char('Name',size=8,required=True),
         'meaning' : fields.char('Meaning',size=250,required=True),
-        'official' : fields.boolean('Official Code'),#Invisible, Default = False
+        'official' : fields.boolean('Official Code'),#Invisible ?
                 }
+    _defaults = {
+        'official': lambda *a: False,
+    }
 
 cci_missions_custom_code()
 
@@ -138,12 +148,15 @@ class cci_missions_certificate(osv.osv):
     _columns = {
         'asker_address' : fields.char('Asker Address',size=50),#by default, res.partner->asker_adress or, res_partner.address[default]->street
         'asker_zip_id' : fields.many2one('res.partner.zip','Asker Zip Code'),#by default, res.partner->asker_zip_id or, res_partner.address[default]->zip_id
-        'special_reason' : fields.selection([('none','None'),('Commercial Reason','Commercial Reason'),('Substitution','Substitution')],'For special cases'),#by default : none
+        'special_reason' : fields.selection([('none','None'),('Commercial Reason','Commercial Reason'),('Substitution','Substitution')],'For special cases'),
         'legalization_ids' : fields.one2many('cci_missions.legalization','certificate_id','Related Legalizations'),
         'customs_ids' : fields.many2many('cci_missions.custom_code','certificate_custome_code_rel','certificate_id','custom_id','Custom Codes'),
         'sending_SPF': fields.date('SPF Sending Date',help='Date of the sending of this record to the external database'),
         'origin_ids' : fields.many2many('res.country','certificate_country_rel','certificate_id','country_id','Origin Countries')
                 }
+    _defaults = {
+        'special_reason': lambda *a: 'none',
+    }
 
 cci_missions_certificate()
 
