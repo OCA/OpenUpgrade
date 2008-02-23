@@ -114,7 +114,7 @@
 					<field name="goods" select="2"/>
 					<newline/>
 					<field name="goods_value" select="2"/>
-					<field name="total"/>
+					<!--<field name="total"/>-->
 					<field name="destination_id" />
 					<field name="embassy_folder_id" />
 					<field name="state" />
@@ -301,14 +301,74 @@
 			</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_dossier">
+		<record model="ir.actions.act_window" id="action_cci_missions_custom_code">
 			<field name="name">Custome code</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">cci_missions.custom_code</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Missions/Configuration/Custom Codes" action="action_cci_missions_dossier" id="menu_action_cci_missions_dossier"/>
+		<menuitem name="Missions/Configuration/Custom Codes" action="action_cci_missions_custom_code" id="menu_action_action_cci_missions_custom_code"/>
+
+<!-- view for cci_missions_legalization -->
+		<record model="ir.ui.view" id="cci_missions_legalization_form">
+			<field name="name">cci_missions.legalization.form</field>
+			<field name="model">cci_missions.legalization</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Legalization">
+					<notebook>
+					<page string="Certificate Details">
+						<field name="name" />
+						<field name="date" />
+						<field name="type_id" />
+						<field name="destination_id" />
+						<field name="order_partner_id" />
+						<field name="asker_name" />
+						<field name="sender_name" />
+						<field name="goods" />
+						<field name="goods_value" />
+						<field name="to_bill" />
+						<field name="quantity_original" />
+						<field name="quantity_copies" />
+						<field name="state" />
+						<field name="total" />
+						<field name="text_on_invoice" />
+					</page>
+					<page string="Extra Products">
+<!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
+<!--						<field name="" />--> <!-- sub_total -->
+					</page>
+					<page string="Links">
+						<field name="embassy_folder_id" />
+						<field name="certificate_id" />
+					</page>
+				</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_legalization_tree">
+			<field name="name">cci_missions.legalization.tree</field>
+			<field name="model">cci_missions.legalization</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Legalization">
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_legalization">
+			<field name="name">Legalization</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.legalization</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Legalizations" action="action_cci_missions_legalization" id="menu_action_cci_missions_legalization"/>
+
+
 
 	</data>
 </terp>
