@@ -13,7 +13,7 @@
 				<notebook position="inside">
 					<page string="Certificate Details">
 						<separator string="Asker Info" colspan="4"/>
-						<field name="asker_name"/>
+						<field name="asker_name" select="2"/>
 						<field name="asker_address"/>
 						<!--<field name="asker_zip_id"/>-->
 						<separator string="Sender Info" colspan="4"/>
@@ -111,7 +111,7 @@
 					<field name="sender_name" select="1"/>
 					<field name="quantity_copies" />
 					<field name="to_bill" />
-					<field name="goods" select="2"/>
+					<field name="goods" />
 					<newline/>
 					<field name="goods_value" select="2"/>
 					<!--<field name="total"/>-->
@@ -238,14 +238,14 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Embassy Folder Line">
-					<field name="name" />
+					<field name="name" select="1"/>
 					<newline/>
-					<field name="folder_id" />
-					<field name="type" />
+					<field name="folder_id" select="2"/>
+					<field name="type" select="1"/>
 					<newline/>
-					<field name="courier_cost" />
+					<field name="courier_cost" select="2"/>
 					<newline/>
-					<field name="customer_amount" />
+					<field name="customer_amount" select="2" />
 					<newline/>
 					<field name="tax_rate" />
 				</form>
@@ -282,9 +282,9 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Custome code">
-					<field name="name" />
-					<field name="official" />
-					<field name="meaning" />
+					<field name="name" select="1" />
+					<field name="official"  select="1"/>
+					<field name="meaning" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -319,18 +319,18 @@
 				<form string="Legalization">
 					<notebook>
 					<page string="Certificate Details">
-						<field name="name" />
-						<field name="date" />
-						<field name="type_id" />
-						<field name="destination_id" />
+						<field name="name" select="1" />
+						<field name="date" select="2" />
+						<field name="type_id" select="1" />
+						<field name="destination_id" select="1"/>
 						<field name="order_partner_id" /> <!--  onchange=”get_legalization_details(partner_id) remain -->
-						<field name="asker_name" />
-						<field name="sender_name" />
-						<field name="goods" />
+						<field name="asker_name" select="1" />
+						<field name="sender_name" select="1"/>
+						<field name="goods" select="1" />
 						<field name="goods_value" />
 						<field name="to_bill" />
-						<field name="quantity_original" />
-						<field name="quantity_copies" />
+						<field name="quantity_original" select="2"/>
+						<field name="quantity_copies" select="2" />
 						<field name="state" />
 						<field name="total" />
 						<field name="text_on_invoice" colspan="4"/>
@@ -378,20 +378,20 @@
 				<form string="Certificate">
 					<notebook>
 					<page string="Certificate Details">
-						<field name="name" />
-						<field name="date" />
-						<field name="type_id" />
-						<field name="destination_id" />
+						<field name="name" select="1"/>
+						<field name="date" select="2"/>
+						<field name="type_id" select="1"/>
+						<field name="destination_id" select="1" />
 						<field name="order_partner_id" /> <!--  onchange=”get_legalization_details(partner_id) remain -->
 						<newline/>
-						<field name="asker_name" />
+						<field name="asker_name" select="1"/>
 						<newline/>
-						<field name="asker_address"/>
+						<field name="asker_address" select="1"/>
 						<newline/>
-						<field name="asker_zip_id"/>
+						<field name="asker_zip_id" select="2"/>
 						<newline/>
-						<field name="sender_name" />
-						<field name="goods" />
+						<field name="sender_name" select="1" />
+						<field name="goods" select="1"/>
 						<field name="special_reason"/>
 						<field name="to_bill" />
 						<field name="goods_value" />
