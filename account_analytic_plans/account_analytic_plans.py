@@ -41,7 +41,11 @@ class one2many_mod2(fields.one2many):
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
         if not context:
             context = {}
-
+        print "one2many_mod2:context:::",context
+        print "object::::",dir(obj)
+        print "ids::::",ids
+        print "name::::",name
+        print "values:::",values
         if not values:
             values = {}
         res = {}
@@ -88,34 +92,48 @@ class account_analytic_plan_instance(osv.osv):
           'account4_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account4 Id'),
           'account5_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account5 Id'),
           'account6_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account6 Id'),
+          'model':fields.boolean('Model', readonly=True),
               }
+    _defaults = {
+            'model': lambda *args: False,
+        }
     def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        wiz_id = self.pool.get('ir.actions.wizard').search(cr, uid, [("wiz_name","=","create.model")])
         res = super(account_analytic_plan_instance,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
         if (res['type']=='form'):
             if context.get('journal_id',False):
                 rec = self.pool.get('account.journal').browse(cr, uid, [int(context['journal_id'])], context)[0]
                 i=1
-                res['arch'] = """<form string="%s">/n<field name="name" colspan="4"/>/n"""%rec.plan_id.name
+                res['arch'] = """<form string="%s">/n<field name="name"/>/n<field name="model"/>/n"""%rec.plan_id.name
 
                 for line in rec.plan_id.plan_ids:
-                    res['arch']+="""<field name="account%d_ids" string="%s">
+                    res['arch']+="""
+                    <field name="account%d_ids" string="%s" colspan="4">
                     <tree string="%s" editable="bottom">
                         <field name="analytic_account_id" domain="[('parent_id','child_of','%d')]"/>
                         <field name="rate"/>
                     </tree>
-                </field>"""%(i,line.name,line.name,line.root_analytic_id)
+                </field>
+                <newline/>
+                """%(i,line.name,line.name,line.root_analytic_id)
                     i+=1
-                res['arch']+="""</form>"""
+                res['arch']+="""<button name="%d" string="Create a Model" type="action" colspan="4"/>/n
+                </form>"""%(wiz_id[0])
             else:
+
                 res['arch'] = """<form string="Analytic Entries">
-                    <field name="name" colspan="4"/>
-                    <field name="account_ids" string="Projects">
+                    <field name="name"/>
+                    <field name="model"/>
+                    <field name="account_ids" string="Projects" colspan="4">
                         <tree string="Projects" editable="bottom">
                             <field name="analytic_account_id"/>
                             <field name="rate"/>
                         </tree>
                     </field>
-                </form>"""
+                    <newline/>
+
+                    <button name="%d" string="Create a Model" type="action" colspan="4"/>
+                </form>"""%(wiz_id[0])
 
             doc = dom.minidom.parseString(res['arch'])
             xarch, xfields = self._orm__view_look_dom_arch(cr, uid, doc, context=context)
@@ -124,18 +142,11 @@ class account_analytic_plan_instance(osv.osv):
             return res
         else:
             return res
-#    def read(self, cr, user, ids, fields=None, context=None, load='_classic_read'):
-#        if context.get('journal_id',False):
-#            self.my_context = context.copy()
-#        return super(account_analytic_plan_instance,self).read(cr, user, ids, fields, context, load)
-
-#    def name_get(self, cr, user, ids, context=None):
-#        print "CONTER :",context
-#        if context.get('journal_id',False):
-#            print "COPY CONTEXT :"
-#            self.my_context = context.copy()
-#        return super(account_analytic_plan_instance,self).name_get(cr, user, ids, context)
-
+    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+        new_copy=self.copy(cr, uid, ids[0], context=context)
+        vals['model']=False
+        result = super(account_analytic_plan_instance, self).write(cr, uid, ids, vals, context)
+        return result
 account_analytic_plan_instance()
 
 class account_analytic_plan_instance_line(osv.osv):
@@ -182,10 +193,12 @@ class account_move_line(osv.osv):
                 }
 
     def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+        print "in account move line write:ids::::",ids
         result = super(account_move_line, self).write(cr, uid, ids, vals, context)
         return result
 
     def create(self, cr, uid, vals, context=None, check=True):
+        print "in account move line create:vals::::",vals
         result = super(account_move_line, self).create(cr, uid, vals, context)
         return result
 account_move_line()

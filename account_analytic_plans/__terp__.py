@@ -37,7 +37,7 @@
 	],
 	"demo_xml" : [
 	],
-	"update_xml" : ["account_analytic_plans_view.xml"
+	"update_xml" : ["model_wizard.xml","account_analytic_plans_view.xml"
 	],
 
 	"active": False,

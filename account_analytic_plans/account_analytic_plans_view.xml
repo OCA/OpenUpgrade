@@ -25,7 +25,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<field name="account_analytic_id" domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id)]" position="replace">
-			<field name="analytics_id" context="{'journal_id':parent.journal_id}"/>
+			<field name="analytics_id" context="{'journal_id':parent.journal_id}" domain="[('model','=',True)]"/>
 			</field>
 		</field>
 	</record>
@@ -43,7 +43,7 @@
 					<field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, price_unit, parent.address_invoice_id)"/>
 					<field name="account_id" on_change="onchange_account_id(parent.partner_id,account_id)" domain="[('company_id', '=', parent.company_id),('journal_id','=',parent.journal_id)]"/>
 					<field name="invoice_line_tax_id" view_mode="2"/>
-					<field name="analytics_id" />
+					<field name="analytics_id" domain="[('model','=',True)]" context="{'journal_id':parent.journal_id}" />
 					<field name="quantity"/>
 					<field name="price_unit"/> <!-- Removed if subtotal is set -->
 					<field name="price_subtotal"/>
