@@ -283,7 +283,7 @@
 			<field name="arch" type="xml">
 				<form string="Custome code">
 					<field name="name" select="1" />
-					<field name="official"  select="1"/>
+<!--					<field name="official"  select="1"/> remove because it should be invisible,-->
 					<field name="meaning" select="1"/>
 				</form>
 			</field>
