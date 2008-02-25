@@ -115,6 +115,17 @@ cci_missions_certificate_type()
 class cci_missions_dossier(osv.osv):
     _name = 'cci_missions.dossier'
     _description = 'cci_missions.dossier'
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+        #overwrite the create: if the text_on_invoice field is empty then fill it with name + destination_id.name + (quantity_original)
+        if not vals['text_on_invoice']:
+            invoice_text = vals['name']
+            if vals['destination_id']:
+                destination_data = self.pool.get('res.country').browse(cr,uid,vals['destination_id'])
+                invoice_text = vals['name'] + ' ' + destination_data.name
+            vals.update({'text_on_invoice': invoice_text})
+        return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
     _columns = {
         'name' : fields.char('Reference',size=20,required=True),
         'type_id' : fields.many2one('cci_missions.certificate_type','Certificate Type',required=True),
