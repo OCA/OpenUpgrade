@@ -56,6 +56,7 @@ class cci_missions_embassy_folder(osv.osv):
     _inherits = {'crm.case': 'crm_case_id'}
 
     def check_folder_line(self, cr, uid, ids):
+        #CONSTRAINT: For each embassy Folder, it can only be one embassy_folder_line of each type.
         data_folder = self.browse(cr,uid,ids)
         list = []
         for folder in data_folder:
@@ -86,7 +87,7 @@ class cci_missions_embassy_folder_line (osv.osv):
     _description = 'cci_missions.embassy_folder_line '
 
     _columns = {
-        'name' : fields.char('Description',size=50,required=True),#CONSTRAINT: For each embassy Folder, it can only be one embassy_folder_line of each type.
+        'name' : fields.char('Description',size=50,required=True),
         'folder_id' : fields.many2one('cci_missions.embassy_folder','Related Embassy Folder',required=True),
         'courier_cost' : fields.float('Couriers Costs'),
         'customer_amount' : fields.float('Invoiced Amount'),
@@ -160,6 +161,7 @@ class cci_missions_certificate(osv.osv):
     _description = 'cci_missions.certificate'
     _inherits = {'cci_missions.dossier': 'dossier_id' }
     _columns = {
+        'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),
         'asker_address' : fields.char('Asker Address',size=50),#by default, res.partner->asker_adress or, res_partner.address[default]->street
         'asker_zip_id' : fields.many2one('res.partner.zip','Asker Zip Code'),#by default, res.partner->asker_zip_id or, res_partner.address[default]->zip_id
         'special_reason' : fields.selection([('none','None'),('Commercial Reason','Commercial Reason'),('Substitution','Substitution')],'For special cases'),
