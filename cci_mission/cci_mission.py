@@ -147,7 +147,8 @@ class cci_missions_dossier(osv.osv):
     _defaults = {
         'name': lambda *args: '/',
         'date': lambda *a: time.strftime('%Y-%m-%d'),
-        'to_bill' : lambda *b : True
+        'to_bill' : lambda *b : True,
+        'state' : lambda *a : 'confirmed'
     }
 
 
