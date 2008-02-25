@@ -246,6 +246,7 @@
 
 		</blockTable>
 		<spacer length="1cm" />
+		<condPageBreak height="1in" />
 		<blockTable>
 			<xsl:attribute name="style">legend</xsl:attribute>
 			<xsl:attribute name="colWidths"><xsl:value-of select="$cols_legend"/></xsl:attribute>
