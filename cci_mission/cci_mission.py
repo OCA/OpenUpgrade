@@ -126,6 +126,17 @@ class cci_missions_dossier(osv.osv):
             vals.update({'text_on_invoice': invoice_text})
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
+    def _total(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for case in self.browse(cr,uid, ids):
+            res[case.id] = 0.00
+        return res
+    def _sub_total(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for case in self.browse(cr, uid, ids):
+            res[case.id] = 10.00
+        return res
+
     _columns = {
         'name' : fields.char('Reference',size=20,required=True),
         'type_id' : fields.many2one('cci_missions.certificate_type','Certificate Type',required=True),
@@ -172,6 +183,28 @@ class cci_missions_certificate(osv.osv):
     _name = 'cci_missions.certificate'
     _description = 'cci_missions.certificate'
     _inherits = {'cci_missions.dossier': 'dossier_id' }
+
+
+    def get_certificate_details(self, cr, uid, ids,order_partner_id):
+        partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
+
+        result = {'value': {
+            'asker_name': partner_info.asker_name,
+            'asker_address': partner_info.asker_address,
+            'asker_zip_id':partner_info.asker_zip_id.id,
+            'sender_name': partner_info.sender_name}
+        }
+        return result
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+#        Overwrite the name fields to set next sequence according to the sequence in the certification type (type_id)
+        if vals['type_id']:
+            data = self.pool.get('cci_missions.certificate_type').browse(cr, uid,vals['type_id'])
+            seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
+            if seq:
+                vals['name']=seq
+        return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
     _columns = {
         'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),
         'asker_address' : fields.char('Asker Address',size=50),#by default, res.partner->asker_adress or, res_partner.address[default]->street
@@ -192,6 +225,15 @@ class cci_missions_legalization(osv.osv):
     _name = 'cci_missions.legalization'
     _description = 'cci_missions.legalization'
     _inherits = {'cci_missions.dossier': 'dossier_id'}
+
+    def get_legalization_details(self, cr, uid, ids,order_partner_id):
+        partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
+
+        result = {'value': {
+            'asker_name': partner_info.asker_name,
+            'sender_name': partner_info.sender_name}
+        }
+        return result
     _columns = {
         'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
         'quantity_original' : fields.integer('Quantity of Originals',required=True),
