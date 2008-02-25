@@ -115,7 +115,7 @@ class hr_holidays_status(osv.osv):
 	_inherit = 'hr.holidays.status'
 	_description = "Holidays Status"
 	_columns = {
-		'color_name' : fields.selection([('red', 'Red'), ('green', 'Green'), ('blue','Blue'), ('yellow', 'Yellow'), ('magenta', 'Magenta'),('cyan', 'Cyan'),('black', 'Black'),('pink', 'Pink'),('brown', 'Brown'),('indigo', 'Indigo'),('lightcoral', 'Light Coral'),('lightsteelblue', 'Light Steel Blue')],'Color of the status', required=True),
+		'color_name' : fields.selection([('red', 'Red'), ('lightgreen', 'Light Green'), ('lightblue','Light Blue'), ('lightyellow', 'Light Yellow'), ('magenta', 'Magenta'),('lightcyan', 'Light Cyan'),('black', 'Black'),('lightpink', 'Light Pink'),('brown', 'Brown'),('violet', 'Violet'),('lightcoral', 'Light Coral'),('lightsalmon', 'Light Salmon'),('lavender', 'Lavender'),('wheat', 'Wheat'),('ivory', 'Ivory')],'Color of the status', required=True),
 	}
 	_defaults = {
 		'color_name': lambda *args: 'red',
