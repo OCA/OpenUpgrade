@@ -128,6 +128,27 @@ class cci_missions_dossier(osv.osv):
             vals.update({'text_on_invoice': invoice_text})
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
+    def get_partner_details(self, cr, uid, ids,order_partner_id):
+        partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
+
+        if partner_info.asker_name==False:
+            asker_name=partner_info.name
+        else:
+            asker_name=partner_info.asker_name
+
+        if partner_info.sender_name==False:
+            if partner_info.address==[]:
+                sender_name=''
+            else:
+                sender_name=partner_info.address[0].name
+        else:
+            sender_name=partner_info.sender_name
+        result = {'value': {
+            'asker_name': asker_name,
+            'sender_name': sender_name}
+        }
+        return result
+
     def _amount_total(self, cr, uid, ids, name, args, context=None):#today
         #should be check
         res ={}
@@ -154,10 +175,10 @@ class cci_missions_dossier(osv.osv):
         'type_id' : fields.many2one('cci_missions.certificate_type','Certificate Type',required=True),
         'date' : fields.date('Creation Date',required=True),
         'order_partner_id': fields.many2one('res.partner','Billed Customer',required=True),
-        'asker_name':fields.char('Asker Name',size=50),#by default, res.partner->asker_name or, res_partner->name
-        'sender_name':fields.char('Sender Name',size=50),#by default, res.partner->sender_name or, res_partner.address[default]->name
+        'asker_name':fields.char('Asker Name',size=50),
+        'sender_name':fields.char('Sender Name',size=50),
         'to_bill':fields.boolean('To Be Billed'),
-        'state':fields.selection([('confirmed','confirmed'),('canceled','canceled'),('invoiced','invoiced')],'State',),#by default: confirmed
+        'state':fields.selection([('confirmed','Confirmed'),('canceled','Canceled'),('invoiced','Invoiced')],'State',),
         'goods':fields.char('Goods Description',size=100),
         'goods_value':fields.float('Value of the Sold Goods'),#Monetary; must be greater than zero
         'destination_id':fields.many2one('res.country','Destination Country'),
@@ -202,11 +223,40 @@ class cci_missions_certificate(osv.osv):
     def get_certificate_details(self, cr, uid, ids,order_partner_id):
         partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 
+        if partner_info.asker_name==False:
+            asker_name=partner_info.name
+        else:
+            asker_name=partner_info.asker_name
+
+        if partner_info.sender_name==False:
+            if partner_info.address==[]:
+                sender_name=''
+            else:
+                sender_name=partner_info.address[0].name
+        else:
+            sender_name=partner_info.sender_name
+
+        if partner_info.asker_address==False:
+             if partner_info.address==[]:
+                 asker_address=''
+             else:
+                 asker_address=partner_info.address[0].street
+        else:
+            asker_address=partner_info.asker_address
+
+        if partner_info.asker_zip_id.id==False:
+             if partner_info.address==[]:
+                zip=False
+             else:
+                zip=partner_info.address[0].zip_id
+        else:
+            zip=partner_info.asker_zip_id.id
+
         result = {'value': {
-            'asker_name': partner_info.asker_name,
-            'asker_address': partner_info.asker_address,
-            'asker_zip_id':partner_info.asker_zip_id.id,
-            'sender_name': partner_info.sender_name}
+            'asker_name': asker_name,
+            'asker_address': asker_address,
+            'asker_zip_id': zip,
+            'sender_name': sender_name}
         }
         return result
 
@@ -215,8 +265,9 @@ class cci_missions_certificate(osv.osv):
         if vals['type_id']:
             data = self.pool.get('cci_missions.certificate_type').browse(cr, uid,vals['type_id'])
             seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
+
             if seq:
-                vals['name']=seq
+                vals.update({'name': seq})
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
     _columns = {
@@ -243,11 +294,25 @@ class cci_missions_legalization(osv.osv):
     def get_legalization_details(self, cr, uid, ids,order_partner_id):
         partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 
+        if partner_info.asker_name==False:
+            asker_name=partner_info.name
+        else:
+            asker_name=partner_info.asker_name
+
+        if partner_info.sender_name==False:
+            if partner_info.address==[]:
+                sender_name=''
+            else:
+                sender_name=partner_info.address[0].name
+
+        else:
+            sender_name=partner_info.sender_name
         result = {'value': {
-            'asker_name': partner_info.asker_name,
-            'sender_name': partner_info.sender_name}
+            'asker_name': asker_name,
+            'sender_name': sender_name}
         }
         return result
+
     _columns = {
         'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
         'quantity_original' : fields.integer('Quantity of Originals',required=True),
