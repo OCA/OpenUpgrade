@@ -37,17 +37,6 @@
 					<separator string="Graph View" colspan="4"/>
 					<field name="view_graph_type"/>
 					<field name="view_graph_orientation"/>
-				</page><page string="Filters on Fields">
-					<button string="Add filter" name="%(wizard_set_filter_fields)d" type="action"/>
-					<field name="filter_ids" nolabel="1" colspan="4">
-						<tree string="Filters">
-							<field name="name"/>
-						</tree>
-						<form string="Filters">
-							<field name="name" colspan="4"/>
-							<field name="expression" colspan="4"/>
-						</form>
-					</field>
 				</page><page string="Fields to Display">
 					<field name="field_ids" nolabel="1" colspan="4">
 						<form string="Fields">
@@ -64,6 +53,17 @@
 							<field name="graph_mode"/>
 							<field name="calendar_mode"/>
 						</tree>
+					</field>
+				</page><page string="Filters on Fields">
+					<button string="Add filter" name="%(wizard_set_filter_fields)d" type="action"/>
+					<field name="filter_ids" nolabel="1" colspan="4">
+						<tree string="Filters">
+							<field name="name"/>
+						</tree>
+						<form string="Filters">
+							<field name="name" colspan="4"/>
+							<field name="expression" colspan="4"/>
+						</form>
 					</field>
 				</page><page string="Security">
 					<separator string="Authorized Groups (empty for all)" colspan="4"/>
