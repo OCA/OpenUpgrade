@@ -77,7 +77,9 @@ class cci_missions_embassy_folder(osv.osv):
         'embassy_folder_line_ids' : fields.one2many('cci_missions.embassy_folder_line','folder_id','Details'),
         'site_id': fields.many2one('cci_missions.site','Site'),
                 }
-
+    _defaults = {
+         'section_id': lambda obj, cr, uid, context: obj.pool.get('crm.case.section').search(cr, uid, [('name','=','Embassy Folder')])[0],
+                }
     _constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', [])]
 
 cci_missions_embassy_folder()
