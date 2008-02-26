@@ -146,6 +146,10 @@
 
 		<menuitem name="Missions/Dossier" action="action_cci_missions_dossier" id="menu_action_cci_missions_dossier"/>
 
+		<record model="crm.case.section" id="case_section_embassy_folder">
+			<field name="name">Embassy Folder</field>
+		</record>
+
 <!-- view for cci_missions_embassy_folder -->
 		<record model="ir.ui.view" id="cci_missions_embassy_folder_form">
 			<field name="name">cci_missions.embassy_folder.form</field>
@@ -156,7 +160,7 @@
 					<notebook>
 					<page string="General">
 						<field name="name" select="1"/>
-						<field name="section_id"/> <!-- section_id(default=embassy folder), reaondly = true  remain -->
+						<field name="section_id"  readonly="1"/>
 						<group col="6" colspan="3">
 						<field name="date" string=" Creation Date"/>
 						<field name="date" string="Invoice Date"/>
