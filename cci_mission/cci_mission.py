@@ -143,7 +143,11 @@ class cci_missions_dossier(osv.osv):
 
             if not partner_info.sender_name:
                 if partner_info.address!=[]:
-                  sender_name=partner_info.address[0].name
+                    for add in partner_info.address:
+                        if add.type=='default':
+                           sender_name=add.name
+                           break
+
             else:
                 sender_name=partner_info.sender_name
         result = {'value': {
@@ -248,19 +252,29 @@ class cci_missions_certificate(osv.osv):
             if not partner_info.sender_name:
 
                 if partner_info.address!=[]:
-                   sender_name=partner_info.address[0].name
+                    for add in partner_info.address:
+                        if add.type=='default':
+                           sender_name=add.name
+                           break
             else:
                 sender_name=partner_info.sender_name
 
             if not partner_info.asker_address:
                  if partner_info.address!=[]:
-                    asker_address=partner_info.address[0].street
+                     for add in partner_info.address:
+                        if add.type=='default':
+                           asker_address=add.street
+                           break
+
             else:
                 asker_address=partner_info.asker_address
 
             if not partner_info.asker_zip_id.id:
                  if partner_info.address!=[]:
-                    zip=partner_info.address[0].zip_id.id
+                    for add in partner_info.address:
+                        if add.type=='default':
+                           zip=add.zip_id.id
+                           break
             else:
                 zip=partner_info.asker_zip_id.id
 
@@ -320,7 +334,10 @@ class cci_missions_legalization(osv.osv):
 
             if not partner_info.sender_name:
                 if partner_info.address!=[]:
-                   sender_name=partner_info.address[0].name
+                  for add in partner_info.address:
+                        if add.type=='default':
+                           sender_name=add.name
+                           break
 
             else:
                 sender_name=partner_info.sender_name
@@ -329,6 +346,7 @@ class cci_missions_legalization(osv.osv):
             'sender_name': sender_name}
         }
         return result
+
 
     _columns = {
         'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
