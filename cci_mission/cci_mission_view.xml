@@ -102,11 +102,11 @@
 			<field name="model">cci_missions.dossier</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="dossier">
+				<form string="Dossier">
 					<field name="name" select="1"/>
 					<field name="date" select="2"/>
 					<field name="type_id"/>
-					<field name="order_partner_id" />
+					<field name="order_partner_id" on_change="get_partner_details(order_partner_id)" />
 					<field name="asker_name" select="1"/>
 					<field name="sender_name" select="1"/>
 					<field name="quantity_copies" />
@@ -156,7 +156,7 @@
 			<field name="model">cci_missions.embassy_folder</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="embassy folder">
+				<form string="Embassy folder">
 					<notebook>
 					<page string="General">
 						<field name="name" select="1"/>
