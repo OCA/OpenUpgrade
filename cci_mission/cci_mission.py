@@ -184,10 +184,12 @@ class cci_missions_dossier(osv.osv):
         'destination_id':fields.many2one('res.country','Destination Country'),
         'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
         'quantity_copies':fields.integer('Number of Copies'),
-        'quantity_original' : fields.integer('Quantity of Originals'), #today
+        'quantity_original' : fields.integer('Quantity of Originals',required=True), #today
         'total':fields.function(_amount_total, method=True, string='Total', store=True),#readonly, sum of the price for copies, originals and extra_products
         'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),#readonly, sum of the extra_products
-        'text_on_invoice':fields.text('Text to Display on the Invoice')
+        'text_on_invoice':fields.text('Text to Display on the Invoice'),
+        'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products')
+
                 }
     _defaults = {
         'name': lambda *args: '/',
@@ -315,7 +317,7 @@ class cci_missions_legalization(osv.osv):
 
     _columns = {
         'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
-        'quantity_original' : fields.integer('Quantity of Originals',required=True),
+        #'quantity_original' : fields.integer('Quantity of Originals',required=True),
         'certificate_id' : fields.many2one('cci_missions.certificate','Related Certificate'),
                 }
 
