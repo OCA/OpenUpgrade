@@ -110,15 +110,16 @@
 					<field name="asker_name" select="1"/>
 					<field name="sender_name" select="1"/>
 					<field name="quantity_copies" />
+					<field name="quantity_original"/><!-- added -->
 					<field name="to_bill" />
 					<field name="goods" />
 					<newline/>
 					<field name="goods_value" select="2"/>
-					<!--<field name="total"/>-->
+					<field name="total"/><!-- added -->
 					<field name="destination_id" />
 					<field name="embassy_folder_id" />
 					<field name="state" />
-					<!--<field name="sub_total"/>-->
+					<field name="sub_total"/><!-- added -->
 					<field name="text_on_invoice"/>
 				</form>
 			</field>
@@ -337,7 +338,7 @@
 					</page>
 					<page string="Extra Products">
 <!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
-<!--						<field name="" />--> <!-- sub_total -->
+							<field name="sub_total" /> <!-- sub_total -->
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
@@ -402,7 +403,7 @@
 					</page>
 					<page string="Extra Products">
 <!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
-<!--						<field name="" />--> <!-- sub_total -->
+							<field name="sub_total" /> <!-- sub_total -->
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
