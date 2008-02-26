@@ -167,10 +167,14 @@ class cci_missions_dossier(osv.osv):
         return res
 
     def _amount_subtotal(self, cr, uid, ids, name, args, context=None):
-        #should be corect (not complete)
+        #should be check
+        sum = 0
         res = {}
-        for id in ids:
-            res[id] = 1
+        data_dosseir = self.browse(cr,uid,ids)
+        for data in data_dosseir:
+            for product in data.product_ids:
+                sum = sum + product.standard_price
+            res[data.id] = sum
         return res
 
     _columns = {
