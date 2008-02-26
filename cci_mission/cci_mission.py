@@ -131,12 +131,12 @@ class cci_missions_dossier(osv.osv):
     def get_partner_details(self, cr, uid, ids,order_partner_id):
         partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 
-        if partner_info.asker_name==False:
+        if not partner_info.asker_name:
             asker_name=partner_info.name
         else:
             asker_name=partner_info.asker_name
 
-        if partner_info.sender_name==False:
+        if not partner_info.sender_name:
             if partner_info.address==[]:
                 sender_name=''
             else:
@@ -220,15 +220,15 @@ class cci_missions_certificate(osv.osv):
     _inherits = {'cci_missions.dossier': 'dossier_id' }
 
 
-    def get_certificate_details(self, cr, uid, ids,order_partner_id):
+    def get_certification_details(self, cr, uid, ids,order_partner_id):
         partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 
-        if partner_info.asker_name==False:
+        if not partner_info.asker_name:
             asker_name=partner_info.name
         else:
             asker_name=partner_info.asker_name
 
-        if partner_info.sender_name==False:
+        if not partner_info.sender_name:
             if partner_info.address==[]:
                 sender_name=''
             else:
@@ -236,7 +236,7 @@ class cci_missions_certificate(osv.osv):
         else:
             sender_name=partner_info.sender_name
 
-        if partner_info.asker_address==False:
+        if not partner_info.asker_address:
              if partner_info.address==[]:
                  asker_address=''
              else:
@@ -244,7 +244,7 @@ class cci_missions_certificate(osv.osv):
         else:
             asker_address=partner_info.asker_address
 
-        if partner_info.asker_zip_id.id==False:
+        if not partner_info.asker_zip_id.id:
              if partner_info.address==[]:
                 zip=False
              else:
@@ -294,12 +294,12 @@ class cci_missions_legalization(osv.osv):
     def get_legalization_details(self, cr, uid, ids,order_partner_id):
         partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 
-        if partner_info.asker_name==False:
+        if not partner_info.asker_name:
             asker_name=partner_info.name
         else:
             asker_name=partner_info.asker_name
 
-        if partner_info.sender_name==False:
+        if not partner_info.sender_name:
             if partner_info.address==[]:
                 sender_name=''
             else:
