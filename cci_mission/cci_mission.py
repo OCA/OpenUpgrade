@@ -122,7 +122,7 @@ class cci_missions_dossier(osv.osv):
             invoice_text = vals['name']
             if vals['destination_id']:
                 destination_data = self.pool.get('res.country').browse(cr,uid,vals['destination_id'])
-                invoice_text = vals['name'] + ' ' + destination_data.name
+                invoice_text = vals['name'] + ' ' + destination_data.name + ' (' + str(vals['quantity_original'])  + ')'
             vals.update({'text_on_invoice': invoice_text})
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
