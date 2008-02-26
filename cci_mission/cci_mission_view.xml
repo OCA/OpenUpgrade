@@ -341,9 +341,8 @@
 						<field name="text_on_invoice" colspan="4"/>
 					</page>
 					<page string="Extra Products">
-<!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
-							<field name="product_ids" widget="one2many_list" />
-							<field name="sub_total" /> <!-- sub_total -->
+							<field name="product_ids" widget="one2many_list" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+							<field name="sub_total" />
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
@@ -407,15 +406,14 @@
 						<field name="text_on_invoice" colspan="4"/>
 					</page>
 					<page string="Extra Products">
-							<field name="product_ids" widget="one2many_list" />
-<!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
-							<field name="sub_total" /> <!-- sub_total -->
+							<field name="product_ids" widget="one2many_list" colspan="4" /> <!-- one2many (product_id, qty, uom, price) -->
+							<field name="sub_total" />
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
-						<field name="sending_SPF" /> <!-- readonly -->
+						<field name="sending_SPF" readonly="1"/>
 						<field name="origin_ids" /> <!-- origin_ids(res.country.name) -->
-						<field name="customs_ids" /> <!-- customs_ids (name, meaning, official) -->
+						<field name="customs_ids"/> <!-- customs_ids (name, meaning, official) -->
 						<field name="legalization_ids" />
 					</page>
 				</notebook>
