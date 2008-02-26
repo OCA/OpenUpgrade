@@ -7,7 +7,7 @@
     "description": """
         specific module for cci project.
     """,
-    "depends" : ["base",'cci_partner','product','crm'],
+    "depends" : ["base",'cci_partner','product'],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["cci_mission_view.xml"],
