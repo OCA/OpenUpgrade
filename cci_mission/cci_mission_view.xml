@@ -342,6 +342,7 @@
 					</page>
 					<page string="Extra Products">
 <!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
+							<field name="product_ids" widget="one2many_list" />
 							<field name="sub_total" /> <!-- sub_total -->
 					</page>
 					<page string="Links">
@@ -406,6 +407,7 @@
 						<field name="text_on_invoice" colspan="4"/>
 					</page>
 					<page string="Extra Products">
+							<field name="product_ids" widget="one2many_list" />
 <!--						<field name="" /--> <!-- one2many (product_id, qty, uom, price) -->
 							<field name="sub_total" /> <!-- sub_total -->
 					</page>
