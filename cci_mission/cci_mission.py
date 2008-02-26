@@ -126,15 +126,25 @@ class cci_missions_dossier(osv.osv):
             vals.update({'text_on_invoice': invoice_text})
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
-    def _total(self, cr, uid, ids, name, args, context=None):
-        res = {}
-        for case in self.browse(cr,uid, ids):
-            res[case.id] = 0.00
+    def _amount_total(self, cr, uid, ids, name, args, context=None):#today
+        #should be check
+        res ={}
+        data_dosseir = self.browse(cr,uid,ids)
+        for data in data_dosseir:
+            qty_org = data.quantity_original
+            qty_copy = data.quantity_copies
+            cost_org = data.type_id.original_product_id.standard_price
+            cost_copy = data.type_id.copy_product_id.standard_price
+            subtotal =  data.sub_total
+            total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
+            res[data.id] = total
         return res
-    def _sub_total(self, cr, uid, ids, name, args, context=None):
+
+    def _amount_subtotal(self, cr, uid, ids, name, args, context=None):
+        #should be corect (not complete)
         res = {}
-        for case in self.browse(cr, uid, ids):
-            res[case.id] = 10.00
+        for id in ids:
+            res[id] = 1
         return res
 
     _columns = {
@@ -151,15 +161,17 @@ class cci_missions_dossier(osv.osv):
         'destination_id':fields.many2one('res.country','Destination Country'),
         'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
         'quantity_copies':fields.integer('Number of Copies'),
-        'total':fields.function('Total'),#readonly, sum of the price for copies, originals and extra_products
-        'sub_total':fields.function('Sub Total for Extra Products'),#readonly, sum of the extra_products
+        'quantity_original' : fields.integer('Quantity of Originals'), #today
+        'total':fields.function(_amount_total, method=True, string='Total', store=True),#readonly, sum of the price for copies, originals and extra_products
+        'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),#readonly, sum of the extra_products
         'text_on_invoice':fields.text('Text to Display on the Invoice')
                 }
     _defaults = {
         'name': lambda *args: '/',
         'date': lambda *a: time.strftime('%Y-%m-%d'),
         'to_bill' : lambda *b : True,
-        'state' : lambda *a : 'confirmed'
+        'state' : lambda *a : 'confirmed',
+        'quantity_original' : lambda *a : 1
     }
 
 
