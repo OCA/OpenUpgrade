@@ -14,8 +14,11 @@
 					<page string="Certificate Details">
 						<separator string="Asker Info" colspan="4"/>
 						<field name="asker_name" select="2"/>
+						<newline/>
 						<field name="asker_address"/>
+						<newline/>
 						<field name="asker_zip_id"/>
+						<newline/>
 						<separator string="Sender Info" colspan="4"/>
 						<field name="sender_name"/>
 					</page>
@@ -112,15 +115,21 @@
 					<field name="quantity_copies" />
 					<field name="quantity_original"/><!-- added -->
 					<field name="to_bill" />
-					<field name="goods" />
+					<newline/>
+					<field name="goods" colspan="4" />
 					<newline/>
 					<field name="goods_value" select="2"/>
 					<field name="total"/><!-- added -->
-					<field name="destination_id" />
+					<newline/>
+					<field name="destination_id" select="1" />
+					<newline/>
 					<field name="embassy_folder_id" />
-					<field name="state" />
-					<field name="sub_total"/><!-- added -->
-					<field name="text_on_invoice"/>
+					<newline/>
+					<field name="state" select="1"/>
+					<newline/>
+					<!--<field name="sub_total"/>--><!-- today -->
+					<separator colspan="4" string="Note to Display on the Invoice"/>
+					<field name="text_on_invoice" colspan="4" nolabel="1"/>
 				</form>
 			</field>
 		</record>
@@ -137,7 +146,7 @@
 		</record>
 
 		<record model="ir.actions.act_window" id="action_cci_missions_dossier">
-			<field name="name">dossier</field>
+			<field name="name">Dossier</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">cci_missions.dossier</field>
 			<field name="view_type">form</field>
@@ -166,15 +175,18 @@
 						<field name="date" string="Invoice Date"/>
 						<field name="priority"/>
 						</group>
-						<field name="partner_id" string="Partner to Invoice"/>
-						<field name="partner_address_id"/>
+						<group col="8" colspan="3">
+							<field name="partner_id" string="Partner to Invoice"/>
+							<field name="partner_address_id"/>
+						</group>>
 						<group col="8" colspan="6">
-						<field name="site_id"/>
+						<field name="site_id" colspan="2"/>
 						<field name="customer_reference"/>
-						<field name="member_price"/>
-						<field name="destination_id"/>
 						</group>
-						<field name="embassy_folder_line_ids">
+						<newline/>
+						<field name="destination_id"/>
+						<field name="member_price"/>
+						<field name="embassy_folder_line_ids" nolabel="1" colspan="4">
 							<tree string="Embassy Foder Lines">
 								<field name="name"/>
 								<field name="type"/>
@@ -184,7 +196,8 @@
 							</tree>
 						</field>
 						<newline/>
-						<field name="invoice_note"/>
+						<separator colspan="4" string="Note to Display on the Invoice"/>
+						<field name="invoice_note" nolabel="1" colspan="4"/>
 						<newline/>
 						<field name="state"/> <!-- buttons remain-->
 					</page>
@@ -198,7 +211,7 @@
 						<field name="date_action_last" />
 						<field name="date_action_next" />
 						<separator colspan="4" string="Links"/>
-						<field name="link_ids" />
+						<field name="link_ids" colspan="4"/>
 					</page>
 					<page string="Notes">
 						<field name="internal_note" />
@@ -226,7 +239,7 @@
 		</record>
 
 		<record model="ir.actions.act_window" id="action_cci_missions_embassy_folder">
-			<field name="name">embassy folder</field>
+			<field name="name">Embassy Folder</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">cci_missions.embassy_folder</field>
 			<field name="view_type">form</field>
@@ -243,7 +256,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Embassy Folder Line">
-					<field name="name" select="1"/>
+					<field name="name" select="1" colspan="4"/>
 					<newline/>
 					<field name="folder_id" select="2"/>
 					<field name="type" select="1"/>
@@ -329,7 +342,9 @@
 						<field name="type_id" select="1" />
 						<field name="destination_id" select="1"/>
 						<field name="order_partner_id" on_change="get_legalization_details(order_partner_id)" />
-						<field name="asker_name" select="1" />
+						<newline/>
+						<field name="asker_name" select="1"/>
+						<newline/>
 						<field name="sender_name" select="1"/>
 						<field name="goods" select="1" />
 						<field name="goods_value" />
@@ -338,14 +353,16 @@
 						<field name="quantity_copies" select="2" />
 						<field name="state" />
 						<field name="total" />
-						<field name="text_on_invoice" colspan="4"/>
+						<separator colspan="4" string="Note to Display on the Invoice"/>
+						<field name="text_on_invoice" colspan="4" nolabel="1"/>
 					</page>
 					<page string="Extra Products">
-							<field name="product_ids" widget="one2many_list" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+							<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
 							<field name="sub_total" />
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
+						<newline/>
 						<field name="certificate_id" />
 					</page>
 				</notebook>
@@ -403,10 +420,11 @@
 						<field name="quantity_copies" />
 						<field name="state" />
 						<field name="total" />
-						<field name="text_on_invoice" colspan="4"/>
+						<separator colspan="4" string="Note to Display on the Invoice"/>
+						<field name="text_on_invoice" nolabel="1" colspan="4"/>
 					</page>
 					<page string="Extra Products">
-							<field name="product_ids" widget="one2many_list" colspan="4" /> <!-- one2many (product_id, qty, uom, price) -->
+							<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4" /> <!-- one2many (product_id, qty, uom, price) -->
 							<field name="sub_total" />
 					</page>
 					<page string="Links">
