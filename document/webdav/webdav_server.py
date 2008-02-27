@@ -11,7 +11,7 @@ import threading
 import pooler
 
 db_name = ''
-host='192.168.0.41'
+host=''
 port=8008
 
 class dav_server(threading.Thread):

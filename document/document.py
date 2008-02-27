@@ -192,7 +192,7 @@ class document_directory(osv.osv):
 		'child_ids': fields.one2many('document.directory', 'parent_id', 'Childs'),
 		'file_ids': fields.one2many('ir.attachment', 'parent_id', 'Files'),
 		'content_ids': fields.one2many('document.directory.content', 'directory_id', 'Virtual Files'),
-		'type': fields.selection([('directory','Static Directory'),('link','Link to Another Directory'),('ressource','Other Ressources')], 'Type', required=True),
+		'type': fields.selection([('directory','Static Directory'),('ressource','Other Ressources')], 'Type', required=True),
 		'ressource_type_id': fields.many2one('ir.model', 'Ressource Model'),
 		'ressource_id': fields.integer('Ressource ID'),
 		'ressource_tree': fields.boolean('Tree Structure'),
@@ -204,11 +204,12 @@ class document_directory(osv.osv):
 	_sql_constraints = [
 		('filename_uniq', 'unique (name,parent_id,ressource_id)', 'The directory name must be unique !')
 	]
+	def __init__(self, *args, **kwargs):
+		res = super(document_directory, self).__init__(*args, **kwargs)
+		self._cache = {}
+		return res
 
 	def onchange_content_id(self, cr, uid, ids, ressource_type_id):
-		if ids and len(ids[0]):
-			content_ids=self.pool.get('document.directory.content').search(cr,uid,[('directory_id','=',ids[0])])
-			del_ids=self.pool.get('document.directory.content').unlink(cr,uid,content_ids)
 		return {}
 
 	def _get_childs(self, cr, uid, node, nodename=False, context={}):
@@ -231,12 +232,28 @@ class document_directory(osv.osv):
 	def get_object(self, cr, uid, uri, context={}):
 		if not uri:
 			return None
-		node = node_class(cr, uid, uri.pop(0), False, type='database')
-		print '\t', node, uri
-		while len(uri):
-			path = uri.pop(0)
+		turi = tuple(uri)
+		if (turi in self._cache):
+			print '*'*50
+			(path, oo, oo2, content,type,root) = self._cache[turi]
+			if oo:
+				object = self.pool.get(oo[0]).browse(cr, uid, oo[1], context)
+			else:
+				object = False
+			if oo2:
+				object2 = self.pool.get(oo2[0]).browse(cr, uid, oo2[1], context)
+			else:
+				object2 = False
+			node = node_class(cr, uid, path, object,object2, context, content, type, root)
+			return node
+
+		node = node_class(cr, uid, uri[0], False, type='database')
+		for path in uri[1:]:
 			if path:
 				node = node.child(path)
+		oo = node.object and (node.object._name, node.object.id) or False
+		oo2 = node.object2 and (node.object2._name, node.object2.id) or False
+		self._cache[turi] = (node.path, oo, oo2, node.content,node.type,node.root)
 		return node
 
 	def get_childs(self, cr, uid, uri, context={}):
@@ -304,7 +321,7 @@ class ir_action_report_xml(osv.osv):
 		return [('id','in',report_id)]
 
 	_columns={
-		'model_id' : fields.function(_model_get,fnct_search=_model_search,method=True,string='Model Id',store=True),
+		'model_id' : fields.function(_model_get,fnct_search=_model_search,method=True,string='Model Id'),
 	}
 
 ir_action_report_xml()
@@ -343,6 +360,9 @@ class document_file(osv.osv):
 				result[id] = ''
 		return result
 
+	#
+	# This code can be improved
+	#
 	def _data_set(self, cr, obj, id, name, value, uid=None, context={}):
 		if not value:
 			return True
@@ -352,7 +372,7 @@ class document_file(osv.osv):
 				os.mkdir(path)
 			flag = None
 			for dirs in os.listdir(path):
-				if os.path.isdir(dirs) and len(os.listdir(dirs))<4000:
+				if os.path.isdir(os.path.join(path,dirs)) and len(os.listdir(os.path.join(path,dirs)))<4000:
 					flag = dirs
 					break
 			flag = flag or create_directory(path)
@@ -389,6 +409,23 @@ class document_file(osv.osv):
 		'file_size': lambda self,cr,uid,ctx:0,
 		'store_method': lambda *args: 'db'
 	}
+	def write(self, cr, uid, ids, vals, context=None):
+		result = super(document_file,self).write(cr,uid,ids,vals,context=context)
+		for f in self.browse(cr, uid, ids, context=context):
+			res = content_index(base64.decodestring(vals['datas']), f.datas_fname, f.file_type or None)
+			super(document_file,self).write(cr, uid, ids, {
+				'index_content': res
+			})
+		try:
+			for f in self.browse(cr, uid, ids, context=context):
+				res = content_index(base64.decodestring(vals['datas']), f.datas_fname, f.file_type or None)
+				super(document_file,self).write(cr, uid, ids, {
+					'index_content': res
+				})
+		except:
+			pass
+		return result
+
 	def create(self, cr, uid, vals, context=None):
 		if 'datas' not in vals:
 			return super(document_file,self).create(cr,uid,vals,context)
@@ -403,8 +440,8 @@ class document_file(osv.osv):
 		except:
 			pass
 		return result
+
 	def unlink(self,cr, uid, ids, context={}):
-		print 'UNLINK', cr, uid, ids, context
 		for f in self.browse(cr, uid, ids, context):
 			if f.store_method=='fs':
 				path = os.path.join(os.getcwd(),'filestore',f.store_fname)

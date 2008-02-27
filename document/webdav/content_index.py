@@ -1,6 +1,7 @@
 import time
 import os
 import StringIO
+import odt2txt
 
 #
 # This should be the indexer
@@ -12,23 +13,19 @@ def content_index(content, filename=None, content_type=None):
 		(stdin,stdout) = os.popen2('antiword -', 'b')
 		stdin.write(content)
 		stdin.close()
-		result = stdout.read()
+		result = stdout.read().decode('latin1','replace').encode('utf-8','replace')
 	elif ext == '.pdf':
-	#		fileHandle = StringIO.StringIO("")
-		#fname = os.tempnam(filename)+'.pdf'
-		fp = os.tmpfile()
+		fname = os.tempnam(filename)+'.pdf'
+		fp = file(fname,'wb')
 		fp.write(content)
 		fp.close()
-		fp = os.popen('pdftotext -enc UTF-8 -nopgbrk '+fp.name+' -', 'r')
+		fp = os.popen('pdftotext -enc UTF-8 -nopgbrk '+fname+' -', 'r')
 		result = fp.read()
 		fp.close()
 	elif ext == '.odt':
-		#fname = os.tempnam(filename)
-		fp = os.tmpfile()
-		fp.write(content)
-		fp.close()
-		fp = os.popen('python %s/addons/document/webdav/odt2txt.py '%(os.getcwd())+fp.name+' -', 'r')
-		result = fp.read()
+		s = StringIO.StringIO(content)
+		o = odt2txt.OpenDocumentTextFile(s)
+		result = o.toString().encode('ascii','replace')
 	elif ext in ('.txt','.py','.patch','.html',) :
 		result = content
 	return result
