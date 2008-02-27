@@ -69,7 +69,6 @@
 						<field name="register_max" select="2"/>
 						<separator string="Tasks management" colspan="4"/>
 						<field name="project_id"/>
-						<!--<button colspan="2" string="Create Retro-Planning" name="event.event_wiz"/>-->
 						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
 						<separator string="Status" colspan="4"/>
 						<field name="state" select="1"/>
@@ -135,22 +134,6 @@
 
 
 
-		<wizard string="New child event"
-				model="event.event"
-				name="wizard_event_new"
-				keyword="client_action_multi"
-				menu="False"
-				id="wizard_event_new"
-				/>
-
-
-		<record model="ir.values" id="ir_open_new_event">
-			<field name="key2">tree_but_open</field>
-			<field name="model">event.event</field>
-			<field name="name">New child event</field>
-			<field name="value" eval="'ir.actions.wizard,%d'%wizard_event_new"/>
-			<field name="object" eval="True"/>
-		</record>
 
 
 
@@ -218,18 +201,7 @@
 
 -->
 
-		<wizard
-			string="Tasks"
-			model="event.event"
-			name="wizard_event_task"
-			id="wizard_event_task"
-			/>
-		<wizard
-			string="Registrations"
-			model="event.event"
-			name="wizard_event_registration"
-			id="wizard_event_registration"
-			/>
+
 
 
 
@@ -265,8 +237,8 @@
 					<group col="8" colspan="4">
 						<field name="name" select="1" colspan="4"/>
 						<newline/>
-						<field name="nb_register"/><!-- new -->
-						<field name="section_id" colspan="3"/>
+						<field name="nb_register"/>
+						<field name="event_id" colspan="3"/>
 						<newline/>
 						<field name="date" select="1"/>
 						<field name="date_deadline" select="2"/>
@@ -313,12 +285,9 @@
 					<separator colspan="4"/>
 					<group col="8" colspan="4">
 						<field name="state" select="1"/>
-						<button name="case_close" string="Close" states="open,draft,pending" type="object"/>
-						<button name="case_open" string="Open" states="draft,pending" type="object"/>
-						<button name="case_cancel" string="Cancel" states="draft,open,pending" type="object"/>
-						<button name="case_pending" string="Pending" states="draft,open" type="object"/>
-						<button name="case_escalate" string="Escalate" states="open,draft,pending" type="object"/>
-						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
+						<button name="button_reg_close" string="Close" states="open" type="object"/>
+						<button name="button_reg_open" string="Open" states="draft" type="object"/>
+						<button name="button_reg_cancel" string="Cancel" states="draft,open" type="object"/>
 					</group>
 				</page>
 				<page string="Extra Info">
@@ -360,7 +329,7 @@
 		  <field name="name">Registrations</field>
 		  <field name="res_model">event.registration</field>
 		  <field name="view_type">form</field>
-		  <field name="domain">[('case_id.section_id.code','=','Event')]</field>
+		  <field name="domain"></field>
 		  <field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
@@ -371,7 +340,7 @@
 		  <field name="name">Unconfirmed Registrations</field>
 		  <field name="res_model">event.registration</field>
 		  <field name="view_type">form</field>
-		  <field name="domain">[('case_id.section_id.code','=','Event'),('state','=','draft')]</field>
+		  <field name="domain">[('state','=','draft')]</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
@@ -382,14 +351,12 @@
 		  <field name="name">Confirmed Registrations</field>
 		  <field name="res_model">event.registration</field>
 		  <field name="view_type">form</field>
-		  <field name="domain">[('case_id.section_id.code','=','Event'),('state','in',('open','done'))]</field>
+		  <field name="domain">[('state','in',('open','done'))]</field>
 		</record>
 		<menuitem
 			name="Events/All Registrations/Confirmed Registrations"
 			id="menu_action_registration_confirm"
 			action="action_registration_confirm"/>
-<!-- End ..... mra-->
-
 
 
 <!-- report , event on registration... start -->

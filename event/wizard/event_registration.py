@@ -10,7 +10,7 @@ def _event_registration(self, cr, uid, data, context):
 		'name': 'Event registration',
 		'view_type': 'form',
 		'view_mode': 'tree,form',
-		'res_model': 'crm.case',
+		'res_model': 'event.registration',
 		'context': { },
 		'type': 'ir.actions.act_window'
 	}
