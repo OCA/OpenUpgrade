@@ -7,13 +7,13 @@
 		"base", "product", "account"
 		],
 	"demo_xml" : [
-		"demo_data.xml",
+		#"demo_data.xml",
 		],
 	"init_xml" : [
 		"membership_view.xml",
 		],
 	"update_xml" : [
-		"membership_view.xml",
+		"membership_view.xml","membership_wizard.xml",
 		],
 	"active" : False,
 	"installable" : True,
