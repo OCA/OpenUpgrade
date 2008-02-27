@@ -6,6 +6,11 @@
 			name="cci_mission.create_embassy_folder"
 			keyword="client_print_multi"
 			id="create_embassy_folder"/>
-
+		<wizard string="Make Invoice"
+					model="cci_missions.certificate"
+					name="mission.create_invoice"
+					id="mission_invoice"
+					menu="True"
+		/>
 	</data>
 </terp>
