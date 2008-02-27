@@ -9,6 +9,10 @@
 	</record>
 -->
 
+	<!--
+	 Workflow on Event 
+	 -->
+
 	<!-- Workflow definition -->
 		<!-- activities -->
 	<record model="workflow" id="wkf_cci_event">
@@ -128,5 +132,76 @@
 		<field name="act_to" ref="act_cancel" />
 		<field name="signal">cancel</field>
 	</record>
+
+<!--
+| Workflow on registration |
+-->
+
+	<!-- Workflow definition -->
+	<record model="workflow" id="wkf_cci_event_reg">
+		<field name="name">cci_event.wkf.event.reg</field>
+		<field name="osv">event.registration</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_draft_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="flow_start">True</field>
+		<field name="name">draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_open_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="name">open</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_reg_open()</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_done_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="name">done</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_event_reg_done()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_cancel_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="name">cancel</field>
+		<field name="flow_stop">True</field>
+		<field name="kind">stopall</field>
+		<field name="action">cci_event_reg_cancel()</field>
+		<field name="join_mode">XOR</field>
+	</record>
+
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="t1_reg">
+		<field name="act_from" ref="act_draft_reg" />
+		<field name="act_to" ref="act_open_reg" />
+		<field name="signal">open</field>
+	<!--<field name="role_id" ref="HR_holidays"/>-->
+	</record>
+
+	<record model="workflow.transition" id="t2_reg">
+		<field name="act_from" ref="act_open_reg" />
+		<field name="act_to" ref="act_done_reg" />
+		<field name="signal">done</field>
+	</record>
+
+	<record model="workflow.transition" id="t3_reg">
+		<field name="act_from" ref="act_open_reg" />
+		<field name="act_to" ref="act_cancel_reg" />
+		<field name="signal">cancel</field>
+	</record>
+
+	<record model="workflow.transition" id="t4_reg">
+		<field name="act_from" ref="act_draft_reg" />
+		<field name="act_to" ref="act_cancel_reg" />
+		<field name="signal">cancel</field>
+	</record>
+
 </data>
 </terp>

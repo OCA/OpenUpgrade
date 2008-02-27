@@ -25,7 +25,7 @@
 						<group col="4" colspan="2">
 							<button string="Cancel Event" name="cancel" states="fixed,open"/>
 							<button string="Confirm Date" name="fixed" states="draft"/>
-							<button string="to be replaced by an automatic function" name="open" states="fixed"/>
+							<!--<button string="to be replaced by an automatic function" name="open" states="fixed"/>-->
 							<button string="Confirm Event" name="confirm" states="open"/>
 							<button string="Event is Running" name="running" states="confirm"/>
 							<button string="Event Done" name="done" states="running"/>
@@ -39,7 +39,7 @@
 						<!--<field name="localisation"/>-->
 						<field name="account_analytic_id"/>
 						<field name="budget_id"/>
-						<field name="product_id"/>
+						<field name="product_id" required="1"/>
 						<!--<field name="check_accept"/>-->
 						<newline/>
 						<field name="agreement_nbr"/>
@@ -66,6 +66,17 @@
 						<!--<field name="sales_open"/>
 						<field name="sales_draft"/>-->
 						<separator string="Remaining Tasks" colspan="4"/>
+						<field name="task_ids" colspan="4" nolabel="1" widget="one2many_list" >
+								<tree string="All tasks" colors="red:date_deadline&lt;current_date and state=='draft';blue:date_deadline==current_date and state=='draft';grey:state=='cancel' or state=='close'">
+									<field name="sequence"/>
+									<field name="name"/>
+									<field name="user_id" />
+									<field name="date_deadline" />
+									<field name="planned_hours" widget="float_time"/>
+									<field name="effective_hours" widget="float_time"/>
+									<field name="state" />
+								</tree>
+						</field>
 					</page>
 					</notebook>
 				</form>
@@ -229,7 +240,293 @@
 		<menuitem name="Events/Configuration/Event Check/Check Type" action="action_event_check_type" id="menu_event_check_type"/>
 
 <!-- event.registration form.. change name crm.case to event.registration -->
+<!--
+		<record model="ir.ui.view" id="view_event_registration_inherit">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<form>
+				</form>
+			</field>
+		</record>
+-->
+	<record model="ir.ui.view" id="event.event_registration_form">
+		<field name="name">cci.event.registration.form.1</field>
+		<field name="model">event.registration</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Registration">
+				<notebook>
+				<page string="General">
+					<group col="8" colspan="4">
+						<field name="name" select="1" colspan="4"/>
+						<newline/>
+						<field name="nb_register"/>
+						<field name="event_id" colspan="3"/>
+						<newline/>
+						<field name="date" select="1"/>
+						<field name="date_deadline" select="2"/>
+						<field name="priority" colspan="3"/>
+						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)" colspan="4"/>
+						<field name="partner_invoice_id"/>
+						<field name="partner_address_id" select="2" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="3"/>
+						<newline/>
+						<field name="partner_order_id" select="1"/>
+						<field name="contact_order_id" on_change="onchange_contact_id(contact_order_id)" select="1"/>						<newline/>
+						<field name="email_from" select="2" colspan="3"/>
+						<button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
+						<field name="user_id" select="1"/>
+						<button name="remind_user" string="Send Reminder" states="open,pending" type="object"/>
+					</group>
 
+					<separator colspan="4"/>
+					<field name="unit_price" select="2"/>
+
+					<separator string="Badge" colspan="4"/>
+					<field name="badge_title" select="2"/>
+					<field name="badge_name" select="2"/>
+					<field name="badge_partner" select="2"/>
+					<newline/>
+					<separator colspan="4"/>
+
+					<field name="group_id"/>
+					<field name="cavalier"/>
+					<separator colspan="4"/>
+
+					<group col="8" colspan="4">
+						<field name="state" select="1"/>
+						<button name="cci_event_reg_done" string="Close" states="open" type="object"/>
+						<button name="cci_event_reg_open" string="Open" states="draft" type="object"/>
+						<button name="cci_event_reg_cancel" string="Cancel" states="draft,open" type="object"/>
+					</group>
+				</page>
+				<page string="Communication">
+					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
+						<form string="Communication history">
+							<group col="6" colspan="4">
+								<field name="date" select="1"/>
+								<field name="email" select="1"/>
+								<field name="canal_id" select="2"/>
+							</group>
+							<newline/>
+							<field name="description" colspan="4" nolabel="1" select="2"/>
+						</form>
+						<tree string="Communication history">
+							<field name="description"/>
+							<field name="email"/>
+							<field name="date"/>
+						</tree>
+					</field>
+					<group col="2" colspan="2" expand="1">
+						<field name="canal_id"/>
+						<field name="som" select="2"/>
+						<button name="add_reply" string="Add Last Mail for Replying"
+							states="open" type="object" colspan="2"/>
+						<field name="description" colspan="2" select="2" nolabel="1"/>
+						<button name="case_log_reply"
+							string="Send Partner &amp; Historize" states="open"
+							type="object"/>
+						<button name="case_log" string="Historize" states="open"
+							type="object"/>
+					</group>
+				</page>
+				<page string="Extra Info">
+					<field name="id" select="1"/>
+					<field name="active" select="2"/>
+					<field name="email_cc" colspan="4"/>
+					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)"/>
+					<separator colspan="4" string="Dates"/>
+					<field name="create_date"/>
+					<field name="date_closed"/>
+					<field name="date_action_last"/>
+					<field name="date_action_next"/>
+					<separator colspan="4" string="Estimates"/>
+					<field name="planned_revenue"/>
+					<field name="planned_cost"/>
+					<field name="probability"/>
+					<separator colspan="4" string="References"/>
+					<field name="ref" colspan="4"/>
+					<field name="ref2" colspan="4"/>
+				</page>
+				<page string="History">
+					<field name="log_ids" nolabel="1" colspan="4">
+						<form string="Actions">
+							<separator string="Action Information" colspan="4"/>
+							<field name="name" colspan="4"/>
+							<field name="date" select="2"/>
+							<field name="user_id" select="2"/>
+							<field name="som" select="2"/>
+							<field name="canal_id"/>
+						</form>
+					</field>
+				</page>
+				<page string="Payments">
+					<field name="invoice_label" select="1"/>
+					<field name="tobe_invoiced" select="1"/>
+					<field name="payment_mode" />
+					<field name="invoice_id"/>
+					<field name="check_mode"/>
+					<newline/>
+					<field name="check_ids" colspan="4" select="2"/>
+					<field name="payment_ids" colspan="4" select="2"/>
+				</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+<!--
+	<record model="ir.ui.view" id="view_event_registration_inherit">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="arch" type="xml">
+			<form string="Registration">
+				<notebook>
+				<page string="General">
+					<group col="8" colspan="4">
+						<field name="name" select="1" colspan="4"/>
+						<newline/>
+						<field name="nb_register"/>
+						<field name="section_id" colspan="3"/>
+						<newline/>
+						<field name="date" select="1"/>
+						<field name="date_deadline" select="2"/>
+						<field name="priority" colspan="3"/>
+						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)" colspan="4"/>
+						<field name="partner_invoice_id"/>
+						<field name="partner_address_id" select="2" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="3"/>
+						<newline/>
+						<field name="partner_order_id" select="1"/>
+						<field name="contact_order_id" on_change="onchange_contact_id(contact_order_id)" select="1"/>
+	<record model="ir.ui.view" id="view_event_registration_inherit">
+		<field name="name">event.registration.form</field>
+		<field name="type">form</field>
+		<field name="model">event.registration</field>
+		<field name="arch" type="xml">
+			<form string="Registration">
+				<notebook>
+				<page string="General">
+					<group col="8" colspan="4">
+						<field name="name" select="1" colspan="4"/>
+						<newline/>
+						<field name="nb_register"/>
+						<field name="section_id" colspan="3"/>
+						<newline/>
+						<field name="date" select="1"/>
+						<field name="date_deadline" select="2"/>
+						<field name="priority" colspan="3"/>
+						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)" colspan="4"/>
+						<field name="partner_invoice_id"/>
+						<field name="partner_address_id" select="2" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="3"/>
+						<newline/>
+						<field name="partner_order_id" select="1"/>
+						<field name="contact_order_id" on_change="onchange_contact_id(contact_order_id)" select="1"/>						<newline/>
+						<field name="email_from" select="2" colspan="3"/>
+						<button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
+						<field name="user_id" select="1"/>
+						<button name="remind_user" string="Send Reminder" states="open,pending" type="object"/>
+					</group>
+
+					<separator colspan="4"/>
+					<field name="unit_price" select="2"/>
+
+					<separator string="Badge" colspan="4"/>
+					<field name="badge_title" select="2"/>
+					<field name="badge_name" select="2"/>
+					<field name="badge_partner" select="2"/>
+					<newline/>
+					<separator colspan="4"/>
+
+					<field name="group_id"/>
+					<field name="cavalier"/>
+					<separator colspan="4"/>
+
+					<group col="8" colspan="4">
+						<field name="state" select="1"/>
+						<button name="cci_event_reg_close" string="Close" states="open" type="object"/>
+						<button name="cci_event_reg_open" string="Open" states="draft" type="object"/>
+						<button name="cci_event_reg_cancel" string="Cancel" states="draft,open" type="object"/>
+					</group>
+				</page>
+				<page string="Communication">
+					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
+						<form string="Communication history">
+							<group col="6" colspan="4">
+								<field name="date" select="1"/>
+								<field name="email" select="1"/>
+								<field name="canal_id" select="2"/>
+							</group>
+							<newline/>
+							<field name="description" colspan="4" nolabel="1" select="2"/>
+						</form>
+						<tree string="Communication history">
+							<field name="description"/>
+							<field name="email"/>
+							<field name="date"/>
+						</tree>
+					</field>
+					<group col="2" colspan="2" expand="1">
+						<field name="canal_id"/>
+						<field name="som" select="2"/>
+						<button name="add_reply" string="Add Last Mail for Replying"
+							states="open" type="object" colspan="2"/>
+						<field name="description" colspan="2" select="2" nolabel="1"/>
+						<button name="case_log_reply"
+							string="Send Partner &amp; Historize" states="open"
+							type="object"/>
+						<button name="case_log" string="Historize" states="open"
+							type="object"/>
+					</group>
+				</page>
+				<page string="Extra Info">
+					<field name="id" select="1"/>
+					<field name="active" select="2"/>
+					<field name="email_cc" colspan="4"/>
+					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)"/>
+					<separator colspan="4" string="Dates"/>
+					<field name="create_date"/>
+					<field name="date_closed"/>
+					<field name="date_action_last"/>
+					<field name="date_action_next"/>
+					<separator colspan="4" string="Estimates"/>
+					<field name="planned_revenue"/>
+					<field name="planned_cost"/>
+					<field name="probability"/>
+					<separator colspan="4" string="References"/>
+					<field name="ref" colspan="4"/>
+					<field name="ref2" colspan="4"/>
+				</page>
+				<page string="History">
+					<field name="log_ids" nolabel="1" colspan="4">
+						<form string="Actions">
+							<separator string="Action Information" colspan="4"/>
+							<field name="name" colspan="4"/>
+							<field name="date" select="2"/>
+							<field name="user_id" select="2"/>
+							<field name="som" select="2"/>
+							<field name="canal_id"/>
+						</form>
+					</field>
+				</page>
+				<page string="Payments">
+					<field name="invoice_label" select="1"/>
+					<field name="tobe_invoiced" select="1"/>
+					<field name="payment_mode" />
+					<field name="invoice_id"/>
+					<field name="check_mode"/>
+					<newline/>
+					<field name="check_ids" colspan="4" select="2"/>
+					<field name="payment_ids" colspan="4" select="2"/>
+				</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+-->
+<!--
 		<record model="ir.ui.view" id="view_event_registration_inherit2">
 			<field name="name">event.registration.form</field>
 			<field name="type">form</field>
@@ -238,14 +535,14 @@
 			<field name="arch" type="xml">
 				<field name="history_line" position="before">
 					<field name="unit_price" select="2"/>
-					<!--<field name="quantity"/>-->
+
 					<separator string="Badge" colspan="4"/>
 					<field name="badge_title" select="2"/>
 					<field name="badge_name" select="2"/>
 					<field name="badge_partner" select="2"/>
 					<newline/>
 					<separator colspan="4"/>
-					<field name="event_id"/>
+
 					<field name="group_id"/>
 					<field name="cavalier"/>
 					<separator colspan="4"/>
@@ -291,6 +588,135 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_event_registration_inherit4">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+				<page string="History">
+					<field name="log_ids" nolabel="1" colspan="4">
+						<form string="Actions">
+							<separator string="Action Information" colspan="4"/>
+							<field name="name" colspan="4"/>
+							<field name="date" select="2"/>
+							<field name="user_id" select="2"/>
+							<field name="som" select="2"/>
+							<field name="canal_id"/>
+						</form>
+					</field>
+				</page>
+				</notebook>
+			</field>
+		</record>
 
+		<record model="ir.ui.view" id="view_event_registration_inherit5">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+				<page string="Communication">
+					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
+						<form string="Communication history">
+							<group col="6" colspan="4">
+								<field name="date" select="1"/>
+								<field name="email" select="1"/>
+								<field name="canal_id" select="2"/>
+							</group>
+							<newline/>
+							<field name="description" colspan="4" nolabel="1" select="2"/>
+						</form>
+						<tree string="Communication history">
+							<field name="description"/>
+							<field name="email"/>
+							<field name="date"/>
+						</tree>
+					</field>
+					<group col="2" colspan="2" expand="1">
+						<field name="canal_id"/>
+						<field name="som" select="2"/>
+						<button name="add_reply" string="Add Last Mail for Replying"
+							states="open" type="object" colspan="2"/>
+						<field name="description" colspan="2" select="2" nolabel="1"/>
+						<button name="case_log_reply"
+							string="Send Partner &amp; Historize" states="open"
+							type="object"/>
+						<button name="case_log" string="Historize" states="open"
+							type="object"/>
+					</group>
+				</page>
+				</notebook>
+			</field>
+		</record>
+
+-->
+<!--
+		<record model="ir.ui.view" id="view_event_registration_inherit4">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<button name="case_close" position="replace">
+					<button name="done" string="Close" states="open" type="object"/>
+				</button>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_registration_inherit5">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<button name="case_open" position="replace">
+					<button name="open" string="Open" states="draft" type="object"/>
+				</button>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_registration_inherit6">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<button name="case_cancel" position="replace">
+					<button name="cancel" string="Cancel" states="draft,open" type="object"/>
+				</button>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_registration_inherit7">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<button name="case_reset" position="replace">
+				</button>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_registration_inherit8">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<button name="case_escalate" position="replace">
+				</button>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_registration_inherit9">
+			<field name="name">event.registration.form</field>
+			<field name="type">form</field>
+			<field name="model">event.registration</field>
+			<field name="inherit_id" ref="event.event_registration_form"/>
+			<field name="arch" type="xml">
+				<button name="case_pending" position="replace">
+				</button>
+			</field>
+		</record>
+-->
 	</data>
 </terp>
