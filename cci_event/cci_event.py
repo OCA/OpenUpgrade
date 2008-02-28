@@ -188,7 +188,7 @@ class event_registration(osv.osv):
 
 #	def write(self, cr, user, ids, vals, context=None):
 #		print "here"
-#		print vals 
+#		print vals
 #		if 'state' in vals:
 #			print "write"
 #		return super(event_registration, self).write(cr, user, ids, vals, context=None)
@@ -200,7 +200,7 @@ class event_registration(osv.osv):
 	_inherit = 'event.registration'
 	_description="event.registration"
 	_columns={
-			
+
 			#"date_registration":fields.date('Date Registration'), available in crm.case as 'date' field
 			"partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
 			"contact_order_id":fields.many2one('res.partner.contact','Contact Order'),#should be corect,contact_order_id (onchange_contact)
@@ -238,6 +238,13 @@ class event_registration(osv.osv):
 		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
 		data['badge_partner']=partner_data.name
 		return {'value':data}
+	def onchange_event(self, cr, uid, ids, event_id):
+		if not event_id:
+			return {'value':{'unit_price' : False}}
+		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
+		if data_event.product_id:
+			return {'value':{'unit_price' : data_event.product_id.lst_price}}
+		return {'value':{'unit_price' : False}}
 
 event_registration()
 
