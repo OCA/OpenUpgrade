@@ -41,7 +41,6 @@ form = """<?xml version="1.0"?>
 fields = {}
 
 def _createInvoices(self, cr, uid, data, context):
-    print "make invoice....."
     invoices = {}
     invoice_ids = []
     create_ids = []
@@ -55,27 +54,30 @@ def _createInvoices(self, cr, uid, data, context):
 
     list = []
     value = []
+    dict = {}
     address_contact = False
     address_invoice = False
     for certificate in data_certificate:
         list.append(certificate.type_id.original_product_id.id)
+        dict['original'] = certificate.type_id.original_product_id.id
         list.append(certificate.type_id.copy_product_id.id)
-        print certificate.order_partner_id.address,"addressss....."
-
+        dict['copy'] = certificate.type_id.copy_product_id.id
         for add in certificate.order_partner_id.address:
-            if add.type == 'contact' or add.type == 'default':
+            if add.type == 'contact':
                 address_contact = add.id
-            if add.type == 'invoice' or add.type == 'default':
+            if add.type == 'invoice':
                 address_invoice = add.id
 
-        if not address_contact:
-            raise wizard.except_wizard('Warning !', 'Please Enter Partner Address (contact/default) on Billed Customer : %s'%(certificate.order_partner_id.name))
-        if not address_invoice:
-            raise wizard.except_wizard('Warning !', 'Please Enter Partner Address (invoice/default) on Billed Customer : %s'%(certificate.order_partner_id.name))
+        if not address_contact or not address_invoice:
+            raise wizard.except_wizard('Warning !', 'Please Enter Partner Address on Billed Customer : %s'%(certificate.order_partner_id.name))
 
         for prod_id in list:
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=certificate.order_partner_id.id)
             val['value'].update({'product_id' : prod_id })
+            if prod_id == dict['original']:
+                val['value'].update({'quantity' : 1 }) #by default 1
+            else:
+                val['value'].update({'quantity' : certificate.quantity_copies})
             data_product=pool_obj.get('product.product').browse(cr,uid,prod_id)
             for tax in data_product.taxes_id:
                 tax_ids.append(tax.id)
@@ -87,7 +89,7 @@ def _createInvoices(self, cr, uid, data, context):
                     'name': certificate.name,
                     'account_id':val['value']['account_id'],
                     'price_unit': val['value']['price_unit'],
-                    'quantity': 1,
+                    'quantity': val['value']['quantity'],
                     'discount': False,
                     'uos_id': val['value']['uos_id'],
                     'product_id':val['value']['product_id'],
