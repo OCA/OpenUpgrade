@@ -264,7 +264,7 @@
 						<field name="name" select="1" colspan="4"/>
 						<newline/>
 						<field name="nb_register"/>
-						<field name="event_id" colspan="3"/>
+						<field name="event_id" colspan="3" on_change="onchange_event(event_id)"/>
 						<newline/>
 						<field name="date" select="1"/>
 						<field name="date_deadline" select="2"/>
