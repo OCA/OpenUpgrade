@@ -77,7 +77,7 @@ class show_partners(wizard.interface):
         if data['form']['select']=='lines':
             cr.execute("select distinct(partner_id) from account_move_line where credit>=%f and (date between to_date(%s,'yyyy-mm-dd') and to_date(%s,'yyyy-mm-dd')) and (partner_id is not null)",(data['form']['amount'],data['form']['date_from'],data['form']['date_to']))
             entry_lines = cr.fetchall()
-            print entry_lines
+
             entry_ids=[x[0] for x in  entry_lines]
             a_id = pooler.get_pool(cr.dbname).get('res.partner').read(cr, uid, entry_ids, ['membership_state'])
 
