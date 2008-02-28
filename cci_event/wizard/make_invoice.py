@@ -106,6 +106,8 @@ def _makeInvoices(self, cr, uid, data, context):
 
                 inv_obj = pool_obj.get('account.invoice')
                 inv_id = inv_obj.create(cr, uid, inv)
+                print data['ids']
+                obj_event_reg.write(cr, uid,data['ids'], {'invoice_id' : inv_id})
                 return 'create'
             return 'cancel'
 
