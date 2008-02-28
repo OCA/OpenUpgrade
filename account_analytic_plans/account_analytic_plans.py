@@ -142,9 +142,10 @@ class account_analytic_plan_instance(osv.osv):
             return res
         else:
             return res
-    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True,flag=0):
         new_copy=self.copy(cr, uid, ids[0], context=context)
-        vals['model']=False
+        if not flag:
+            vals['model']=False
         result = super(account_analytic_plan_instance, self).write(cr, uid, ids, vals, context)
         return result
 account_analytic_plan_instance()

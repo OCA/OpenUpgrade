@@ -15,7 +15,7 @@ form1 = '''<?xml version="1.0"?>
 
 def activate(self, cr, uid, data, context):
         print "data:::",data
-        pooler.get_pool(cr.dbname).get('account.analytic.plan.instance').write(cr,uid,data['ids'],{'model':True})
+        pooler.get_pool(cr.dbname).get('account.analytic.plan.instance').write(cr,uid,data['ids'],{'model':True},flag=1)
         return 'info'
 
 
