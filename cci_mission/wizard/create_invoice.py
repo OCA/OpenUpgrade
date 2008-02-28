@@ -67,6 +67,10 @@ def _createInvoices(self, cr, uid, data, context):
                 address_contact = add.id
             if add.type == 'invoice':
                 address_invoice = add.id
+            if (not address_contact) and (add.type == 'default'):
+                address_contact = add.id
+            if (not address_invoice) and (add.type == 'default'):
+                address_invoice = add.id
 
         if not address_contact or not address_invoice:
             raise wizard.except_wizard('Warning !', 'Please Enter Partner Address on Billed Customer : %s'%(certificate.order_partner_id.name))
