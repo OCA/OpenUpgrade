@@ -60,7 +60,6 @@ def _makeInvoices(self, cr, uid, data, context):
 
         for reg in data_event_reg:
             if reg.tobe_invoiced and (not reg.invoice_id):
-                print "creating invoice...."
                 value=obj_lines.product_id_change(cr, uid, [], reg.event_id.product_id.id,uom =False, partner_id=reg.partner_invoice_id.id)
 
                 if not reg.event_id.product_id:
@@ -68,7 +67,7 @@ def _makeInvoices(self, cr, uid, data, context):
                 if not reg.partner_address_id:
                     raise wizard.except_wizard('Warning !', 'No "Partner Contact" defined on Registration ')
                 if not reg.partner_invoice_id:
-                    raise wizard.except_wizard('Warning !', 'No "Partner" defined on the Registration ')
+                    raise wizard.except_wizard('Warning !', 'No "Partner to Invoice" defined on the Registration ')
 
                 data_product=pool_obj.get('product.product').browse(cr,uid,[reg.event_id.product_id.id])
                 a = reg.partner_invoice_id.property_account_receivable.id
@@ -106,9 +105,13 @@ def _makeInvoices(self, cr, uid, data, context):
 
                 inv_obj = pool_obj.get('account.invoice')
                 inv_id = inv_obj.create(cr, uid, inv)
-                print data['ids']
                 obj_event_reg.write(cr, uid,data['ids'], {'invoice_id' : inv_id})
                 return 'create'
+            else:
+                if not reg.tobe_invoiced:
+                    raise wizard.except_wizard('Warning !', 'This registration should not be invoiced ')
+                if reg.invoice_id:
+                    raise wizard.except_wizard('Warning !', 'This registration already has an invoice linked ')
             return 'cancel'
 
 

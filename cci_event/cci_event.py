@@ -238,11 +238,31 @@ class event_registration(osv.osv):
 		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
 		data['badge_partner']=partner_data.name
 		return {'value':data}
-	def onchange_event(self, cr, uid, ids, event_id):
+
+	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
 		if not event_id:
 			return {'value':{'unit_price' : False}}
 		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
 		if data_event.product_id:
+			if not partner_invoice_id:
+				return {'value':{'unit_price' : data_event.product_id.lst_price}}
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
+			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
+				return {'value':{'unit_price' : data_event.product_id.member_price}}
+			return {'value':{'unit_price' : data_event.product_id.lst_price}}
+		return {'value':{'unit_price' : False}}
+
+	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
+		print "1"
+		if not event_id:
+			return {'value':{'unit_price' : False}}
+		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
+		if data_event.product_id:
+			if not partner_invoice_id:
+				return {'value':{'unit_price' : data_event.product_id.lst_price}}
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
+			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
+				return {'value':{'unit_price' : data_event.product_id.member_price}}
 			return {'value':{'unit_price' : data_event.product_id.lst_price}}
 		return {'value':{'unit_price' : False}}
 
