@@ -121,4 +121,4 @@ class show_partners(wizard.interface):
         }
 
     }
-show_partners("membership_show_partners")
+show_partners("show_partners")
