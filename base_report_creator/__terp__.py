@@ -1,7 +1,7 @@
 {
 	"name" : "Report Creator",
 	"version" : "1.0",
-	"author" : "Tiny",
+	"author" : "Tiny & Axelor",
 	"website" : "",
 	"category" : "Generic Modules/Base",
 	"description": """This modules allows you to create any statistic
