@@ -376,6 +376,41 @@
 			</form>
 		</field>
 	</record>
+<!-- view for  event.meeting.table -->
+		<record model="ir.ui.view" id="view_event_meeting_table_form">
+			<field name="name">event.meeting.table.form</field>
+			<field name="type">form</field>
+			<field name="model">event.meeting.table</field>
+			<field name="arch" type="xml">
+				<form string="Event Meeting">
+					<field name="partner_id1" select="2"/>
+					<field name="partner_id2" select="2"/>
+					<field name="contact_id1" select="2"/>
+					<field name="contact_id2" select="2"/>
+					<field name="event_id" select="1"/>
+					<field name="service" select="1"/>
+					<field name="table" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_event_meeting_table_tree">
+			<field name="name">event.meeting.table.tree</field>
+			<field name="type">tree</field>
+			<field name="model">event.meeting.table</field>
+			<field name="arch" type="xml">
+				<tree string="Event Meeting">
+					<field name="event_id" />
+					<field name="table" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_event_meeting_table">
+			<field name="name">Event Meeting</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">event.meeting.table</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Events/Event Meeting" action="action_event_meeting_table" id="menu_event_meeting_table"/>
 
 <!--
 	<record model="ir.ui.view" id="view_event_registration_inherit">
@@ -718,5 +753,7 @@
 			</field>
 		</record>
 -->
+
+
 	</data>
 </terp>
