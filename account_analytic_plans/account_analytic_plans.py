@@ -41,11 +41,6 @@ class one2many_mod2(fields.one2many):
     def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
         if not context:
             context = {}
-        print "one2many_mod2:context:::",context
-        print "object::::",dir(obj)
-        print "ids::::",ids
-        print "name::::",name
-        print "values:::",values
         if not values:
             values = {}
         res = {}
@@ -184,6 +179,10 @@ class account_invoice_line(osv.osv):
     _columns = {
             'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Account'),
                 }
+    def move_line_get_item(self, cr, uid, line, context={}):
+        res= super(account_invoice_line,self).move_line_get_item(cr, uid, line, context={})
+        res ['analytics_id']=line.analytics_id.id
+        return res
 account_invoice_line()
 
 class account_move_line(osv.osv):
@@ -194,13 +193,62 @@ class account_move_line(osv.osv):
                 }
 
     def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
-        print "in account move line write:ids::::",ids
-        result = super(account_move_line, self).write(cr, uid, ids, vals, context)
+        result = super(osv.osv, self).write(cr, uid, ids, vals, context)
+        if vals.get('analytics_id',False):
+            if vals['analytics_id']:
+                inst_obj=self.pool.get('account.analytic.plan.instance').browse(cr,uid,[vals['analytics_id']])[0]
+                for line in inst_obj.account_ids:
+                    if vals['credit']:
+                        amt=vals['credit'] * (line.rate/100)
+                        al_vals={
+                                'name':vals['name'],
+                                'date': vals['date'],
+                                'account_id': line.analytic_account_id.id,
+                                'amount': amt,
+                                'general_account_id': vals['account_id'],
+                                'move_id':result,
+                                'journal_id': vals['journal_id'],
+                                'ref': vals['ref'],
+                                }
+                        p_id=self.pool.get('product.product').search(cr,uid,[('name','=',vals['name'])])
+                        if p_id:
+                            al_vals['product_id']=p_id[0]
+                        ali_id=self.pool.get('account.analytic.line').write(cr,uid,al_vals)
+                        line.write(cr,uid,line.id,{'generated_line_id':ali_id})
         return result
 
     def create(self, cr, uid, vals, context=None, check=True):
-        print "in account move line create:vals::::",vals
-        result = super(account_move_line, self).create(cr, uid, vals, context)
+        al_vals={}
+        result = super(osv.osv, self).create(cr, uid, vals, context)
+        if vals.get('analytics_id',False):
+            if vals['analytics_id']:
+                inst_obj=self.pool.get('account.analytic.plan.instance').browse(cr,uid,[vals['analytics_id']])[0]
+                for line in inst_obj.account_ids:
+                    if vals['credit']:
+                        amt=vals['credit'] * (line.rate/100)
+                        al_vals={
+                                'name':vals['name'],
+                                'date': vals['date'],
+                                'account_id': line.analytic_account_id.id,
+                                'amount': amt,
+                                'general_account_id': vals['account_id'],
+                                'move_id':result,
+                                'journal_id': vals['journal_id'],
+                                'ref': vals['ref'],
+                                }
+                        p_id=self.pool.get('product.product').search(cr,uid,[('name','=',vals['name'])])
+                        if p_id:
+                            al_vals['product_id']=p_id[0]
+                        ali_id=self.pool.get('account.analytic.line').create(cr,uid,al_vals)
+                        line.write(cr,uid,line.id,{'generated_line_id':ali_id})
         return result
 account_move_line()
 
+class account_invoice(osv.osv):
+    _name = "account.invoice"
+    _inherit="account.invoice"
+    def line_get_convert(self, cr, uid, x, part, date, context={}):
+        res=super(account_invoice,self).line_get_convert(cr, uid, x, part, date, context)
+        res['analytics_id']=x.get('analytics_id',False)
+        return res
+account_invoice()
