@@ -1,1 +1,2 @@
 import audittrail
+import wizard
