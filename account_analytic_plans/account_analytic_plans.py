@@ -37,6 +37,8 @@ import netsvc
 from osv import fields, osv,orm
 import ir
 
+import tools
+
 class one2many_mod2(fields.one2many):
 	def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
 		if not context:
@@ -62,18 +64,16 @@ class account_analytic_plan(osv.osv):
 	_name = "account.analytic.plan"
 	_description = "Analytic Plans"
 	_columns = {
-		'name': fields.char('Plan Name', size=64, required=True, select=True,),
-		'default_instance_id': fields.many2one('account.analytic.plan.instance', 'Default Entries'),
+		'name': fields.char('Analytic Plan', size=64, required=True, select=True,),
 		'plan_ids': fields.one2many('account.analytic.plan.line','plan_id','Analytic Plans'),
 	}
-
 account_analytic_plan()
 
 class account_analytic_plan_line(osv.osv):
 	_name = "account.analytic.plan.line"
 	_description = "Analytic Plan Lines"
 	_columns = {
-		'plan_id':fields.many2one('account.analytic.plan','Plan Name'),
+		'plan_id':fields.many2one('account.analytic.plan','Analytic Plan'),
 		'name': fields.char('Plan Name', size=64, required=True, select=True),
 		'sequence':fields.integer('Sequence'),
 		'root_analytic_id': fields.many2one('account.analytic.account','Root Account',help="Root account of this plan.",required=True),
@@ -85,8 +85,8 @@ class account_analytic_plan_instance(osv.osv):
 	_name='account.analytic.plan.instance'
 	_description = 'Object for create analytic entries from invoice lines'
 	_columns={
-		'name':fields.char('Plan Name',size=64),
-		'code':fields.char('Plan Code',size=16),
+		'name':fields.char('Analytic Distribution',size=64),
+		'code':fields.char('Distribution Code',size=16),
 		'journal_id': fields.many2one('account.analytic.journal', 'Analytic Journal', required=True),
 		'account_ids':fields.one2many('account.analytic.plan.instance.line','plan_id','Account Id'),
 		'account1_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account1 Id'),
@@ -95,25 +95,55 @@ class account_analytic_plan_instance(osv.osv):
 		'account4_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account4 Id'),
 		'account5_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account5 Id'),
 		'account6_ids':one2many_mod2('account.analytic.plan.instance.line','plan_id','Account6 Id'),
-		'plan_id':fields.many2one('account.analytic.plan', "Model's Plan", readonly=True),
+		'plan_id':fields.many2one('account.analytic.plan', "Model's Plan"),
 	}
+	def copy(self, cr, uid, id, default=None, context=None):
+		if not default:
+			default = {}
+			default.update({'account1_ids':False, 'account2_ids':False, 'account3_ids':False, 
+				'account4_ids':False, 'account5_ids':False, 'account6_ids':False})
+		return super(account_analytic_plan_instance, self).copy(cr, uid, id, default, context)
+
 	_defaults = {
 		'plan_id': lambda *args: False,
 	}
+	def name_get(self, cr, uid, ids, context={}):
+		res = []
+		for inst in self.browse(cr, uid, ids, context):
+			name = inst.name or ''
+			if name and inst.code:
+				name=name+' ('+inst.code+')'
+			res.append((inst.id, name))
+		return res
+
+	def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
+		args= args or []
+		if name:
+			ids = self.search(cr, uid, [('code', '=', name)] + args, limit=limit, context=context or {})
+			if not ids:
+				ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context or {})
+		else:
+			ids = self.search(cr, uid, args, limit=limit, context=context or {})
+		return self.name_get(cr, uid, ids, context or {})
+
 	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
 		wiz_id = self.pool.get('ir.actions.wizard').search(cr, uid, [("wiz_name","=","create.model")])
 		res = super(account_analytic_plan_instance,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
 		if (res['type']=='form'):
+			plan_id = False
 			if context.get('journal_id',False):
-				rec = self.pool.get('account.journal').browse(cr, uid, [int(context['journal_id'])], context)[0]
+				plan_id = self.pool.get('account.journal').browse(cr, uid, int(context['journal_id']), context).plan_id
+			elif context.get('plan_id',False):
+				plan_id = self.pool.get('account.analytic.plan').browse(cr, uid, int(context['plan_id']), context).plan_id
+			if plan_id:
 				i=1
 				res['arch'] = """<form string="%s">
 	<field name="name"/>
 	<field name="code"/>
-	<field name="plan_id"/>
-	<field name="journal_id"/>"""%rec.plan_id.name
-
-				for line in rec.plan_id.plan_ids:
+	<field name="journal_id"/>
+	<button name="%d" string="Save This Distribution as a Model" type="action" colspan="2"/>
+	"""% (tools.to_xml(plan_id.name), wiz_id[0])
+				for line in plan_id.plan_ids:
 					res['arch']+="""
 					<field name="account%d_ids" string="%s" colspan="4">
 					<tree string="%s" editable="bottom">
@@ -121,11 +151,9 @@ class account_analytic_plan_instance(osv.osv):
 						<field name="analytic_account_id" domain="[('parent_id','child_of',[%d])]"/>
 					</tree>
 				</field>
-				<newline/>
-				"""%(i,line.name,line.name,line.root_analytic_id)
+				<newline/>"""%(i,tools.to_xml(line.name),tools.to_xml(line.name),line.root_analytic_id and line.root_analytic_id.id or 0)
 					i+=1
-				res['arch']+="""<button name="%d" string="Create a Model" type="action" colspan="4"/>/n
-				</form>"""%(wiz_id[0])
+				res['arch'] += "</form>"
 				doc = dom.minidom.parseString(res['arch'])
 				xarch, xfields = self._orm__view_look_dom_arch(cr, uid, doc, context=context)
 				res['arch'] = xarch
@@ -133,12 +161,11 @@ class account_analytic_plan_instance(osv.osv):
 			return res
 		else:
 			return res
-	def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True,flag=0):
-		new_copy=self.copy(cr, uid, ids[0], context=context)
-		if not flag:
+	def write(self, cr, uid, ids, vals, context={}, check=True, update_check=True):
+		if context.get('journal_id',False):
+			new_copy=self.copy(cr, uid, ids[0], context=context)
 			vals['plan_id']=False
-		result = super(account_analytic_plan_instance, self).write(cr, uid, ids, vals, context)
-		return result
+		return super(account_analytic_plan_instance, self).write(cr, uid, ids, vals, context)
 account_analytic_plan_instance()
 
 class account_analytic_plan_instance_line(osv.osv):
@@ -164,16 +191,16 @@ class account_journal(osv.osv):
 	_inherit='account.journal'
 	_name='account.journal'
 	_columns = {
-			'plan_id':fields.many2one('account.analytic.plan','Plan Name'),
-				}
+		'plan_id':fields.many2one('account.analytic.plan','Analytic Plans'),
+	}
 account_journal()
 
 class account_invoice_line(osv.osv):
 	_inherit='account.invoice.line'
 	_name='account.invoice.line'
 	_columns = {
-			'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Account'),
-				}
+		'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Distribution'),
+	}
 	def move_line_get_item(self, cr, uid, line, context={}):
 		res= super(account_invoice_line,self).move_line_get_item(cr, uid, line, context={})
 		res ['analytics_id']=line.analytics_id.id
@@ -184,7 +211,7 @@ class account_move_line(osv.osv):
 	_inherit='account.move.line'
 	_name='account.move.line'
 	_columns = {
-		'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Entries'),
+		'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Distribution'),
 	}
 	def _analytic_update(self, cr, uid, ids, context):
 		for line in self.browse(cr, uid, ids, context):
@@ -227,3 +254,12 @@ class account_invoice(osv.osv):
 		res['analytics_id']=x.get('analytics_id',False)
 		return res
 account_invoice()
+
+class account_analytic_plan(osv.osv):
+	_inherit = "account.analytic.plan"
+	_columns = {
+		'default_instance_id': fields.many2one('account.analytic.plan.instance', 'Default Entries'),
+	}
+account_analytic_plan()
+
+

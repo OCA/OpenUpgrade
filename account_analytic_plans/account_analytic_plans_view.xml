@@ -11,7 +11,7 @@
 		<field name="inherit_id" ref="account.view_account_journal_form"/>
 		<field name="arch" type="xml">
 			<field name="user_id" position="after">
-			<field name="plan_id" />
+				<field name="plan_id" />
 			</field>
 		</field>
 	</record>
@@ -24,7 +24,7 @@
 		<field name="inherit_id" ref="account.view_move_line_form"/>
 		<field name="arch" type="xml">
 			<field name="move_id" position="after">
-			<field name="analytics_id" />
+				<field name="analytics_id" />
 			</field>
 		</field>
 	</record>
@@ -36,7 +36,7 @@
 		<field name="inherit_id" ref="account.view_move_line_tree"/>
 		<field name="arch" type="xml">
 			<field name="move_id" position="after">
-			<field name="analytics_id" />
+				<field name="analytics_id" />
 			</field>
 		</field>
 	</record>
@@ -49,8 +49,8 @@
 		<field name="inherit_id" ref="account.view_invoice_line_form"/>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<field name="account_analytic_id" domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id)]" position="replace">
-			<field name="analytics_id" context="{'journal_id':parent.journal_id}" domain="[('plan_id','&lt;&gt;',False)]"/>
+			<field name="account_analytic_id" position="replace">
+				<field name="analytics_id" context="{'journal_id':parent.journal_id}" domain="[('plan_id','&lt;&gt;',False)]"/>
 			</field>
 		</field>
 	</record>
@@ -62,20 +62,8 @@
 		<field name="inherit_id" ref="account.invoice_supplier_form"/>
 		<field name="priority">2</field>
 		<field name="arch" type="xml">
-			<field name="invoice_line" nolabel="1" colspan="4" default_get="{'check_total': check_total, 'invoice_line': invoice_line, 'address_invoice_id': address_invoice_id, 'partner_id': partner_id, 'price_type': 'price_type' in dir() and price_type or False}" position="replace">
-			<field name="invoice_line" nolabel="1" colspan="4" default_get="{'check_total': check_total, 'invoice_line': invoice_line, 'address_invoice_id': address_invoice_id, 'partner_id': partner_id, 'price_type': 'price_type' in dir() and price_type or False}">
-				<tree string="Invoice lines" editable="bottom">
-					<field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, price_unit, parent.address_invoice_id)"/>
-					<field name="account_id" on_change="onchange_account_id(parent.partner_id,account_id)" domain="[('company_id', '=', parent.company_id),('journal_id','=',parent.journal_id)]"/>
-					<field name="invoice_line_tax_id" view_mode="2"/>
-					<field name="analytics_id" domain="[('plan_id','&lt;&gt;',False)]" context="{'journal_id':parent.journal_id}" />
-					<field name="quantity"/>
-					<field name="price_unit"/> <!-- Removed if subtotal is set -->
-					<field name="price_subtotal"/>
-					<field name="name"/>
-					<field name="uos_id" invisible="True"/>
-				</tree>
-			</field>
+			<field name="account_analytic_id" position="replace">
+				<field name="analytics_id" domain="[('plan_id','&lt;&gt;',False)]" context="{'journal_id':parent.journal_id}" />
 			</field>
 		</field>
 	</record>
@@ -85,13 +73,13 @@
 		<field name="model">account.analytic.plan.instance</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Analytic Plans">
-				<field name="name"/>
-				<field name="code"/>
-				<field name="plan_id"/>
-				<field name="journal_id"/>
-				<field name="account_ids" string="Projects" colspan="4">
-					<tree string="Projects" editable="bottom">
+			<form string="Analytic Distribution">
+				<field name="name" select="1"/>
+				<field name="code" select="1"/>
+				<field name="plan_id" select="2" required="True"/>
+				<field name="journal_id" select="2"/>
+				<field name="account_ids" string="Analytic Distribution" colspan="4">
+					<tree string="Analytic Distribution" editable="bottom">
 						<field name="rate"/>
 						<field name="analytic_account_id"/>
 					</tree>
@@ -106,7 +94,7 @@
 		<field name="model">account.analytic.plan.instance</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Analytic Plans">
+			<tree string="Analytic Distribution">
 				<field name="name"/>
 				<field name="code"/>
 				<field name="plan_id"/>
@@ -116,7 +104,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="account_analytic_plan_instance_action">
-		<field name="name">Analytic Repartition's Models</field>
+		<field name="name">Analytic Distribution's Models</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">account.analytic.plan.instance</field>
 		<field name="domain">[('plan_id','&lt;&gt;',False)]</field>
@@ -124,8 +112,15 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
+	<act_window name="Distribution Models"
+		domain="[('plan_id', '=', active_id),('plan_id','&lt;&gt;',False)]"
+		context="{'plan_id': active_id}"
+		res_model="account.analytic.instance"
+		src_model="account.analytic.plan"
+		id="account_analytic_instance_model_open"/>
+
 	<menuitem 
-		name="Financial Management/Configuration/Models/Analytic Repartition's models" 
+		name="Financial Management/Configuration/Models/Analytic Distribution's models" 
 		id="menu_account_analytic_plan_instance_action" 
 		action="account_analytic_plan_instance_action"/>
 
@@ -134,7 +129,7 @@
 		<field name="model">account.analytic.plan.instance.line</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Analytic Plan line">
+			<form string="Analytic Distribution Line">
 				<field name="plan_id"/>
 				<field name="analytic_account_id"/>
 				<field name="rate"/>
@@ -147,9 +142,9 @@
 		<field name="model">account.analytic.plan.instance.line</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Analytic Plan line">
-				<field name="plan_id"/>
-				<field name="analytic_account_id"/>
+			<tree string="Analytic Distribution Lines">
+				<field name="plan_id" select="1"/>
+				<field name="analytic_account_id" select="1"/>
 				<field name="rate"/>
 			</tree>
 		</field>
@@ -161,8 +156,9 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Analytic Plan">
-				<field name="name" colspan="4"/>
-				<field name="plan_ids"/>
+				<field name="name" select="1"/>
+				<field name="default_instance_id"/>
+				<field name="plan_ids" colspan="4"/>
 			</form>
 		</field>
 	</record>
@@ -172,7 +168,7 @@
 		<field name="model">account.analytic.plan</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Analytic Plan">
+			<tree string="Analytic Plans">
 				<field name="name"/>
 			</tree>
 		</field>
@@ -197,7 +193,7 @@
 		<field name="model">account.analytic.plan.line</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Analytic Plan line">
+			<form string="Analytic Plan Line">
 				<field name="name"/>
 				<field name="sequence"/>
 				<field name="root_analytic_id"/>
@@ -210,10 +206,10 @@
 		<field name="model">account.analytic.plan.line</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Analytic Plan line">
-				<field name="name"/>
+			<tree string="Analytic Plan Lines">
+				<field name="name" select="1"/>
 				<field name="sequence"/>
-				<field name="root_analytic_id"/>
+				<field name="root_analytic_id" select="2"/>
 			</tree>
 		</field>
 	</record>
