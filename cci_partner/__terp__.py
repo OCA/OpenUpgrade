@@ -9,7 +9,8 @@
     """,
     "depends" : ["base","cci_base_contact"],
     "init_xml" : [],
-    "demo_xml" : ["article_data.xml"],
+    "demo_xml" : [ "cci_data.xml", "user_data.xml","zip_data.xml", "courtesy_data.xml","links_data.xml", "activity_data.xml", "states_data.xml", "category_data.xml", "function_data.xml"],
+
     "update_xml" : ['cci_partner_view.xml','article_sequence.xml'],
     "active": False,
     "installable": True
