@@ -230,29 +230,21 @@
 		<field name="action">cci_event_check_block()</field>
 	</record>
 
-	<record model="workflow.activity" id="act_block_check1">
-		<field name="wkf_id" ref="wkf_cci_event_check" />
-		<field name="flow_start">True</field>
-		<field name="name">block</field>
-	</record>
 
 	<record model="workflow.activity" id="act_confirm_check">
 		<field name="wkf_id" ref="wkf_cci_event_check" />
 		<field name="name">confirm</field>
 		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
 		<field name="action">cci_event_check_confirm()</field>
 	</record>
 
-	<record model="workflow.activity" id="act_block_check2">
-		<field name="wkf_id" ref="wkf_cci_event_check" />
-		<field name="flow_start">True</field>
-		<field name="name">block</field>
-	</record>
 
 	<record model="workflow.activity" id="act_cancel_check">
 		<field name="wkf_id" ref="wkf_cci_event_check" />
 		<field name="name">cancel</field>
 		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
 		<field name="action">cci_event_check_cancel()</field>
 	</record>
 
@@ -264,13 +256,13 @@
 	</record>
 
 	<record model="workflow.transition" id="e2_check">
-		<field name="act_from" ref="act_block_check1" />
+		<field name="act_from" ref="act_block_check" />
 		<field name="act_to" ref="act_confirm_check" />
 		<field name="signal">button_confirm</field>
 	</record>
 
 	<record model="workflow.transition" id="e3_check">
-		<field name="act_from" ref="act_block_check1" />
+		<field name="act_from" ref="act_block_check" />
 		<field name="act_to" ref="act_cancel_check" />
 		<field name="signal">button_cancel</field>
 	</record>
