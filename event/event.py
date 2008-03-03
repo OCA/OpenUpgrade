@@ -74,8 +74,6 @@ class event(osv.osv):
 		return self.write(cr, uid, ids, {'state':'confirm'})
 
 	def _get_register(self, cr, uid, ids, name, args, context=None):
-		print name
-		print ids
 		res={}
 		for event in self.browse(cr, uid, ids, context):
 			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','close') group by c.state,s.name""" % event.section_id.id
