@@ -181,10 +181,11 @@
 					<field name="date_limit" select="2"/>
 					<field name="date_submission" select="2"/>
 					<newline/>
-					<group col="4" colspan="13">
+					<group col="8" colspan="4">
 						<field name="state" select="1"/>
-						<button string="Confirm" name="button_confirm"/>
-						<button string="Block" name="button_cancel"/>
+						<button string="Confirm" name="button_confirm" states="block"/>
+						<button string="Block" name="button_block" states="draft"/>
+						<button string="Cancel" name="button_cancel" states="block" />
 					</group>
 				</form>
 			</field>
