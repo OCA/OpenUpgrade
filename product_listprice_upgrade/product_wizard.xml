@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+
+		<wizard
+			string="Upgrade Product list price"
+			model="product.pricelist"
+			name="product.listprice"
+			menu="False"
+			id="wizard_product_listprice"/>
+		<menuitem
+			name="Products/Pricelists/Upgrade Product List price"
+			action="wizard_product_listprice"
+			type="wizard"
+			id="menu_wizard_product_listprice"/>
+
+	</data>
+</terp>
