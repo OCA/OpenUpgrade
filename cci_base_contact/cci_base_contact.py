@@ -43,7 +43,7 @@ class res_partner_contact(osv.osv):
         'fse_work_experience':fields.char('FSE Work Exp.',size=20),
         'fse_studies':fields.char('FSE Studies',size=20),
         'country_ids': fields.many2many('res.country','res_country_rel','contact','country',"Expertize's Countries"),
-        'link_ids':fields.one2many('res.partner.contact.link','contact_id','Contact Link')
+        'link_ids':fields.one2many('res.partner.contact.link','current_contact_id','Contact Link')
     }
     _defaults = {
         'data_private' : lambda *a : False,
@@ -66,38 +66,39 @@ class res_partner_contact_link(osv.osv):
     _description = "res.partner.contact.link"
     _columns = {
         'name':fields.char('Name',size=20,required=True),
-        'type_id' : fields.many2one('res.partner.contact.link.type','Type',required=True),#should be check ,,,
-        'contact_id' : fields.many2one('res.partner.contact','Contact',required=True),#should be check
+        'type_id' : fields.many2one('res.partner.contact.link.type','Type',required=True),
+        'contact_id' : fields.many2one('res.partner.contact','Contact',required=True),
+        'current_contact_id': fields.many2one('res.partner.contact','Current contact',required=True),
    }
 res_partner_contact_link()
 
-class res_contact_relation_type(osv.osv):
-    _name = "res.contact.relation.type"
-    _description ='res.contact.relation.type'
-    _columns = {
-        'name': fields.char('Contact',size=50),
-    }
-res_contact_relation_type()
+#class res_contact_relation_type(osv.osv):
+#    _name = "res.contact.relation.type"
+#    _description ='res.contact.relation.type'
+#    _columns = {
+#        'name': fields.char('Contact',size=50, required=True),
+#    }
+#res_contact_relation_type()
 
-class res_contact_relation(osv.osv):
-    _name = "res.contact.relation"
-    _description ='res.contact.relation'
-    _columns = {
-        'contact_id': fields.many2one('res.partner.contact','Contact'),
-        'contact_relation_id':fields.char('Relation',size=50),#should be corect
-        'description':fields.text('Description'),
-        'type_id':fields.many2one('res.contact.relation.type','Type'),
-    }
-res_contact_relation()
+#class res_contact_relation(osv.osv):
+#    _name = "res.contact.relation"
+#    _description ='res.contact.relation'
+#    _columns = {
+#        'contact_id': fields.many2one('res.partner.contact','Contact'),
+#        'contact_relation_id':fields.char('Relation',size=50),#should be corect
+#        'description':fields.text('Description'),
+#        'type_id':fields.many2one('res.contact.relation.type','Type'),
+#    }
+#res_contact_relation()
 
-class res_partner_country_relation(osv.osv):
-    _name = "res.partner.country.relation"
-    _description = 'res.partner.country.relation'
-    _columns = {
-        'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
-        'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),#should be corect
-    }
+#class res_partner_country_relation(osv.osv):
+#    _name = "res.partner.country.relation"
+#    _description = 'res.partner.country.relation'
+#    _columns = {
+#        'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
+#        'country_id':fields.many2one('res.country','Country'),
+#        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),#should be corect
+#    }
 
-res_partner_country_relation()
+#res_partner_country_relation()
 
