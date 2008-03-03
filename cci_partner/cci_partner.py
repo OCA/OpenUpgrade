@@ -116,7 +116,7 @@ class res_partner(osv.osv):
     def create(self, cr, uid, vals, *args, **kwargs):
         new_id = super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
         #complete the user_id (salesman) automatically according to the zip code of the main address. Use res.partner.zip to select salesman according to zip code
-        if vals['address']:
+        if vals.has_key('address') and vals['address']:
             for add in vals['address']:
                 if add[2]['zip_id'] and add[2]['type']=='default':
                     data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
@@ -397,13 +397,13 @@ class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.act
     }
 res_partner_activity()
 
-class res_partner_activity_relation(osv.osv):#new object added!
+class res_partner_activity_relation(osv.osv):
     _name = "res.partner.activity.relation"
     _description = 'res.partner.activity.relation'
     _columns = {
         'importance': fields.selection([('main','Main'),('primary','Primary'),('secondary','Secondary')],'Importance',required=True),
         'activity_id':fields.many2one('res.partner.activity','Activity', ondelete="cascade"),
-        'partner_id':fields.many2one('res.partner.activity','Partner', ondelete="cascade"),
+        'partner_id':fields.many2one('res.partner','Partner', ondelete="cascade"),
     }
     _defaults = {
         'importance': lambda *args: 'main'
