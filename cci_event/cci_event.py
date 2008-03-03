@@ -127,17 +127,34 @@ event()
 class event_check(osv.osv):
 	_name="event.check"
 	_description="event.check"
+
+	def cci_event_check_block(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'block',})
+		return True
+
+	def cci_event_check_confirm(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'confirm',})
+		return True
+
+	def cci_event_check_cancel(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'cancel',})
+		return True
+
 	_columns={
 		"name": fields.char('Name', size=128, required=True),
 		"code": fields.char('Code', size=64),
 		"case_id": fields.many2one('event.registration','Inscriptions',size=20),
-		"state": fields.selection([('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')], 'State', readonly=True),#should be check
+		"state": fields.selection([('draft','Draft'),('block','Blocked'),('confirm','Confirm'),('cancel','Cancel'),('asked','Asked')], 'State', readonly=True),#should be check (previous states :('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')])
 		"unit_nbr": fields.integer('Units'),
 		"type_id":fields.many2one('event.check.type','Type'),
 		"date_reception":fields.date("Reception Date"),
 		"date_limit":fields.date('Limit Date'),
 		"date_submission":fields.date("Submission Date"),
 		}
+	_defaults = {
+		'state': lambda *args: 'draft',
+	}
+
 event_check()
 
 class event_type(osv.osv):
