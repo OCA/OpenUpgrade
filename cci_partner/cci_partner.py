@@ -74,8 +74,8 @@ class res_partner_article(osv.osv):
         'data':fields.boolean('Data'),
         'graph':fields.boolean('Graph'),
         'summary':fields.text('Summary'),
-        'partners_ids':fields.one2many('res.partner','article_id','Partners'),
-        'contact_ids':fields.one2many('res.partner.contact','article_id','Contacts'),
+        #'partners_ids':fields.one2many('res.partner','article_id','Partners'),
+        #'contact_ids':fields.one2many('res.partner.contact','article_id','Contacts'),
         'source_id':fields.char('Source',size=256),
         'date':fields.date('Date', required=True),
         'title':fields.char('Title',size=250, required=True),
@@ -88,6 +88,7 @@ class res_partner_article(osv.osv):
     }
     _defaults = {
                  'press_review' : lambda *a: False,
+                 'article_id': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'res.partner.article'),
                  }
 res_partner_article()
 
@@ -207,7 +208,7 @@ class res_partner(osv.osv):
         'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
-        'relation_ids' : fields.one2many('res.partner.relation','partner_id','Partner Relation'),
+        'relation_ids' : fields.one2many('res.partner.relation','current_partner_id','Partner Relation'),
 
         'article_ids' : fields.many2many('res.partner.article','res_partner_article_rel','partner_id','article_id','Articles')
         #Never,Always,Managed_by_Poste,Prospect
@@ -426,18 +427,37 @@ class res_partner_function(osv.osv):
         return res
 res_partner_function()
 
-class res_partner_relation(osv.osv): # move from cci_base_contact to here
+class res_contact_relation_type(osv.osv):
+    _name = "res.contact.relation.type"
+    _description ='res.contact.relation.type'
+    _columns = {
+        'name': fields.char('Contact',size=50, required=True),
+    }
+res_contact_relation_type()
+
+class res_partner_relation(osv.osv): 
     _name = "res.partner.relation"
     _description = 'res.partner.relation'
     _rec_name = 'partner_id'
     _columns = {
-        'partner_id': fields.many2one('res.partner','Partner'),
+        'partner_id': fields.many2one('res.partner','Partner', required=True),
+        'current_partner_id':fields.many2one('res.partner','Partner', required=True),
      #   'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct ?? never used?
         'description':fields.text('Description'),
         'percent':fields.float('Ownership'),
-        'type_id':fields.many2one('res.contact.relation.type','Type'),
+        'type_id':fields.many2one('res.contact.relation.type','Type', required=True),
     }
 res_partner_relation()
+
+class res_partner_country_relation(osv.osv):
+    _name = "res.partner.country.relation"
+    _description = 'res.partner.country.relation'
+    _columns = {
+        'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
+        'country_id':fields.many2one('res.country','Country'),
+        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),#should be corect
+    }
+res_partner_country_relation()
 
 class res_partner_contact(osv.osv):
     _inherit='res.partner.contact'
