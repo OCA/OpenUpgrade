@@ -10,7 +10,7 @@
 -->
 
 	<!--
-	 Workflow on Event 
+	 Workflow on Event
 	 -->
 
 	<!-- Workflow definition -->
@@ -89,7 +89,7 @@
 		<field name="act_to" ref="act_fixed" />
 		<field name="signal">fixed</field>
 	</record>
-	
+
 	<record model="workflow.transition" id="t2">
 		<field name="act_from" ref="act_fixed" />
 		<field name="act_to" ref="act_open" />
@@ -201,6 +201,78 @@
 		<field name="act_from" ref="act_draft_reg" />
 		<field name="act_to" ref="act_cancel_reg" />
 		<field name="signal">cancel</field>
+	</record>
+
+
+
+<!--
+| Workflow on event check |
+-->
+
+	<!-- Workflow definition -->
+	<record model="workflow" id="wkf_cci_event_check">
+		<field name="name">cci_event.wkf.event.check</field>
+		<field name="osv">event.check</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_draft_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="flow_start">True</field>
+		<field name="name">draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_block_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="name">block</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_check_block()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_block_check1">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="flow_start">True</field>
+		<field name="name">block</field>
+	</record>
+
+	<record model="workflow.activity" id="act_confirm_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="name">confirm</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_check_confirm()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_block_check2">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="flow_start">True</field>
+		<field name="name">block</field>
+	</record>
+
+	<record model="workflow.activity" id="act_cancel_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="name">cancel</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_check_cancel()</field>
+	</record>
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="e1_check">
+		<field name="act_from" ref="act_draft_check" />
+		<field name="act_to" ref="act_block_check" />
+		<field name="signal">button_block</field>
+	</record>
+
+	<record model="workflow.transition" id="e2_check">
+		<field name="act_from" ref="act_block_check1" />
+		<field name="act_to" ref="act_confirm_check" />
+		<field name="signal">button_confirm</field>
+	</record>
+
+	<record model="workflow.transition" id="e3_check">
+		<field name="act_from" ref="act_block_check1" />
+		<field name="act_to" ref="act_cancel_check" />
+		<field name="signal">button_cancel</field>
 	</record>
 
 </data>
