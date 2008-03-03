@@ -16,6 +16,8 @@ def _invoice_membership(self, cr, uid, data, context):
 			''' % ','.join([str(id) for id in partner_ids])
 			)
 	fetchal = cr.fetchall()
+	if not fetchal:
+		raise wizard.except_wizard('Error !', 'No Address defined for this partner')
 	partner_address_ids = {}
 	for x in range(len(fetchal)):
 		pid = fetchal[x][0]
