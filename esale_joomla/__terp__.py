@@ -9,7 +9,7 @@
 Users can order on the website, orders are automatically imported in Tiny
 ERP.
 
-You can export products, stock level and create links between
+You can export products, product's categories, account taxes,  stock level and create links between
 categories of products, taxes and languages.
 
 If you product has an image attched, it send the image to the Joomla website.""",

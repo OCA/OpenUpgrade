@@ -33,6 +33,8 @@ import ir
 
 import time
 import xmlrpclib
+from tools import config
+
 
 from mx import DateTime
 
@@ -89,7 +91,7 @@ class esale_joomla_web(osv.osv):
 				value={
 					'web_id': website.id,
 					'esale_joomla_id': category[0],
-					'name': category[1]
+					'name': len(category[1]) > 64 and category[1][0:61]+'...' or category[1]
 				}
 				existing = category_pool.search(cr, uid, [('web_id','=',website.id), ('esale_joomla_id', '=', category[0])])
 				if len(existing)>0:
@@ -175,15 +177,20 @@ class esale_joomla_partner(osv.osv):
 			create_id = self.pool.get('res.partner').create(cr, uid, {
 				'name': adr.name,
 			})
-			create_id2 = self.pool.get('res.partner.address').create(cr, uid, {
+			list={
 					'street': adr.address,
 					'partner_id': create_id,
 					'zip': adr.zip,
 					'city': adr.city,
 					'email': adr.email,
-					'country_id': country and country[0][0] or False,
-					'state_id': state and state[0][0] or False,
-			})
+			}
+			if adr.country and len(country) == 1:
+				list['country_id'] = country and country[0][0]
+			if adr.state and len(state) == 1:
+				list['state_id'] = state and state[0][0]
+
+			create_id2 = self.pool.get('res.partner.address').create(cr, uid, list)
+
 			self.write(cr, uid, [adr.id], {'address_id': create_id2} )
 		return True
 esale_joomla_partner()
@@ -221,8 +228,8 @@ class esale_joomla_order(osv.osv):
 	def order_create(self, cr, uid, ids, context={}):
 		for order in self.browse(cr, uid, ids, context):
 			if not (order.partner_id and order.partner_invoice_id and order.partner_shipping_id):
-				raise osv.except_osv('No addresses !',
-						'You must assign addresses before creating the order.')
+				raise osv.except_osv('No addresses !', 'You must assign addresses before creating the order.')
+			#pricelist_id=order.partner_id.property_product_pricelist[0]
 			pricelist_id=order.partner_id.property_product_pricelist.id
 			order_lines = []
 			for line in order.order_lines:
@@ -233,14 +240,13 @@ class esale_joomla_order(osv.osv):
 					'product_uom': line.product_uom_id.id,
 					'price_unit': line.price_unit,
 				}
-				val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None,
-						pricelist_id, line.product_id.id, line.product_qty,
-						line.product_uom_id.id, name=line.name,
-						partner_id=order.partner_id.id)['value']
+				val_new = self.pool.get('sale.order.line').product_id_change(cr, uid, None, pricelist_id, line.product_id.id, line.product_qty, line.product_uom_id.id, name=line.name)['value']
 				del val_new['price_unit']
-				del val_new['weight']
+				#del val_new['weight']
+				del val_new['th_weight']
+				val_new['product_uos'] = 'product_uos' in val_new and val_new['product_uos'] and val_new['product_uos'][0] or False
 				val.update( val_new )
-				val['tax_id'] = [(6,0,val['tax_id'])]
+				val['tax_id'] = 'tax_id' in val and [(6,0,val['tax_id'])] or False
 				order_lines.append( (0,0,val) )
 			order_id = self.pool.get('sale.order').create(cr, uid, {
 				'name': order.name,
@@ -256,8 +262,8 @@ class esale_joomla_order(osv.osv):
 				'order_line': order_lines
 			})
 			self.write(cr, uid, [order.id], {'state':'done', 'order_id': order_id})
-			wf_service = netsvc.LocalService("workflow")
-			wf_service.trg_validate(uid, 'sale.order', order_id, 'order_confirm', cr)
+#			wf_service = netsvc.LocalService("workflow")
+#			wf_service.trg_validate(uid, 'sale.order', order_id, 'order_confirm', cr)
 		return True
 
 	def address_set(self, cr, uid, ids, *args):
@@ -271,6 +277,7 @@ class esale_joomla_order(osv.osv):
 				'partner_shipping_id': order.epartner_invoice_id.address_id.id,
 				'partner_id': order.epartner_invoice_id.address_id.partner_id.id,
 				'partner_invoice_id': order.epartner_shipping_id.address_id.id,
+
 			})
 		return True
 
@@ -287,11 +294,27 @@ class esale_joomla_order_line(osv.osv):
 		'order_id': fields.many2one('esale_joomla.order', 'eOrder Ref'),
 		'product_qty': fields.float('Quantity', digits=(16,2), required=True),
 		'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)], change_default=True),
-		'product_uom_id': fields.many2one('product.uom', 'Unit of Measure', required=True),
-		'price_unit': fields.float('Unit Price', required=True),
+		'product_uom_id': fields.many2one('product.uom', 'Unit of Measure',required=True),
+		'price_unit': fields.float('Unit Price',digits=(16, int(config['price_accuracy'])), required=True),
 	}
 	_defaults = {
 	}
 esale_joomla_order_line()
+
+class esale_joomla_web_exportlog(osv.osv):
+	_name = 'esale_joomla.web.exportlog'
+	_description = "eSale webshop Synchronisation log"
+	_columns = {
+		'name': fields.char('Synchronisation Log',size=64,required=True),
+		'web_id': fields.many2one('esale_joomla.web', 'Web Ref'),
+		'log_date':fields.datetime('Log date',required=True),
+		'log_type':fields.selection([('product','Product'), ('category','Category'),('lang','Language'),('tax','Tax')], 'Export type',readonly=True),
+		'user_id': fields.many2one('res.users', 'Exported By', required=True),
+	}
+	_defaults = {
+	 	'log_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+	 	'user_id' : lambda obj,cr,uid,context: uid,
+    }
+esale_joomla_web_exportlog()
 
 

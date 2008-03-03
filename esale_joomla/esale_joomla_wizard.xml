@@ -2,6 +2,34 @@
 <terp>
 	<data>
 		<wizard
+			string="Export product category"
+			model="esale_joomla.web"
+			name="esale_joomla.product.category"
+			menu="False"
+			id="wizard_esale_joomla_product_category"/>
+
+		<menuitem
+			name="Sales Management/eSale/Synchronisation/Export Product categories"
+			action="wizard_esale_joomla_product_category"
+			type="wizard"
+			sequence="1"
+			id="menu_esale_joomla_product_category"/>
+
+		<wizard
+			string="Export Taxes"
+			model="esale_joomla.web"
+			name="esale_joomla.tax"
+			menu="False"
+			id="wizard_esale_joomla_tax"/>
+
+		<menuitem
+			name="Sales Management/eSale/Synchronisation/Export Tax"
+			action="wizard_esale_joomla_tax"
+			type="wizard"
+			sequence="2"
+			id="menu_esale_joomla_tax"/>
+
+		<wizard
 			string="Export products"
 			model="esale_joomla.web"
 			name="esale_joomla.products"
@@ -9,9 +37,10 @@
 			id="wizard_esale_joomla_products"/>
 
 		<menuitem
-			name="Sales Management/Esale/Synchronisation/Export Products"
+			name="Sales Management/eSale/Synchronisation/Export Products"
 			action="wizard_esale_joomla_products"
 			type="wizard"
+			sequence="3"
 			id="menu_esale_joomla_products"/>
 
 		<wizard
@@ -21,7 +50,7 @@
 			menu="False"
 			id="wizard_esale_joomla_stocks"/>
 		<menuitem
-			name="Sales Management/Esale/Synchronisation/Export Inventory Level"
+			name="Sales Management/eSale/Synchronisation/Export Inventory Level"
 			action="wizard_esale_joomla_stocks"
 			type="wizard"
 			id="menu_wizard_esale_joomla_stocks"/>
@@ -33,7 +62,7 @@
 			menu="False"
 			id="wizard_esale_joomla_saleorders"/>
 		<menuitem
-			name="Sales Management/Esale/Synchronisation/Import Esales Orders"
+			name="Sales Management/eSale/Synchronisation/Import eSales Orders"
 			action="wizard_esale_joomla_saleorders"
 			type="wizard"
 			id="menu_esale_joomla_saleorders"/>

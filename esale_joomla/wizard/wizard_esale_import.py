@@ -57,12 +57,15 @@ def _do_import(self, cr, uid, data, context):
 			})
 
 			for orderline in so['lines']:
-				ids=self.pool.get('esale_joomla.product').search(cr, uid, [('esale_joomla_id', '=', orderline['product_id']), ('web_id', '=', website.id)])
+				ids=None
+				if 'product_id' in orderline:
+					ids=self.pool.get('esale_joomla.product').search(cr, uid, [('esale_joomla_id', '=', orderline['product_id']), ('web_id', '=', website.id)])
 
 				if ids:
 					osc_product_id=ids[0]
 					osc_product=self.pool.get('esale_joomla.product').browse(cr, uid, osc_product_id)
 					price=orderline['price']
+					price=float(price) - osc_product.product_id.contrib
 					taxes_included=[]
 					for taxe in osc_product.product_id.taxes_id:
 						for t in website.taxes_included_ids:
@@ -71,20 +74,22 @@ def _do_import(self, cr, uid, data, context):
 					for c in self.pool.get('account.tax').compute_inv(cr, uid, taxes_included, price, 1, product=osc_product.product_id):
 						price-=c['amount']
 
-					a = {
-						'product_id': osc_product.product_id.id,
-						'product_qty': orderline['product_qty'],
-						'name': osc_product.name,
-						'order_id': order_id,
-						'product_uom_id': osc_product.product_id.uom_id.id,
-						'price_unit': price,
-					}
+
 					self.pool.get('esale_joomla.order.line').create(cr, uid, {
 						'product_id': osc_product.product_id.id,
 						'product_qty': orderline['product_qty'],
 						'name': osc_product.name,
 						'order_id': order_id,
 						'product_uom_id': osc_product.product_id.uom_id.id,
+						'price_unit': price,
+					})
+				if 'product_name' in orderline:
+					price=orderline['price']
+					self.pool.get('esale_joomla.order.line').create(cr, uid, {
+						'name': orderline['product_name'],
+						'product_qty':1,
+						'order_id': order_id,
+						'product_uom_id':1,
 						'price_unit': price,
 					})
 		cr.commit()
