@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<terp>
+	<data>		
+		<record model="ir.actions.wizard" id="wizard_downlaod_file_for_contib">
+			<field name="name">Install language file for Contributor</field>
+			<field name="wiz_name">download.contib.file</field>
+		</record>
+		<menuitem
+			name="Administration/Translations/Translations Management/Contributors/Download New Version"
+			action="wizard_downlaod_file_for_contib"
+			id="menuwizard_downlaod_file_for_contib"
+			type="wizard"/>
+		<record model="ir.actions.wizard" id="wizard_downlaod_file_for_publish">
+			<field name="name">Install language file for Maintainer</field>
+			<field name="wiz_name">download.publish.file</field>
+		</record>
+		<menuitem
+			name="Administration/Translations/Translations Management/Maintainer/Download Contributor's Proposition"
+			action="wizard_downlaod_file_for_publish"
+			id="menuwizard_downlaod_file_for_publish"
+			type="wizard"/>
+		<record model="ir.actions.wizard" id="wizard_review_proposed_contributions">
+			<field name="name">Review Proposed Contributions</field>
+			<field name="wiz_name">review.proposed.contributions</field>
+		</record>
+		<menuitem
+			name="Administration/Translations/Translations Management/Contributors/Review Proposed Contributions"
+			action="wizard_review_proposed_contributions"
+			id="menuwizardwizard_review_proposed_contributions"
+			type="wizard"/>	
+	</data>
+</terp>
