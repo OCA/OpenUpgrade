@@ -196,7 +196,7 @@ class res_partner(osv.osv):
         'alert_membership':fields.boolean('Membership Alert',help='Partners description to be shown when inserting new ship sale'),
         'alert_others':fields.boolean('Other alert',help='Partners description to be shown when inserting new sale not treated by _advertising, _events, _legalisations, _Membership'),
         'alert_explanation':fields.text('Warning'),
-        'dir_name':fields.char('Main Name',size=250,help='Name under wich the partner will be inserted in the members directory'),
+        'dir_name':fields.char('Name in Menber Dir.',size=250,help='Name under wich the partner will be inserted in the members directory'),
         'dir_name2':fields.char('1st Shortcut name ',size=250,help='First shortcut in the members directory, pointing to the dir_name field'),
         'dir_name3':fields.char('2nd Shortcut name ',size=250,help='Second shortcut'),
         'dir_date_last':fields.date('Partner Data Date',help='Date of latest update of the partner data by itself (via paper or Internet)'),
@@ -435,7 +435,7 @@ class res_contact_relation_type(osv.osv):
     }
 res_contact_relation_type()
 
-class res_partner_relation(osv.osv): 
+class res_partner_relation(osv.osv):
     _name = "res.partner.relation"
     _description = 'res.partner.relation'
     _rec_name = 'partner_id'
