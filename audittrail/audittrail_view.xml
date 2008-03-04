@@ -13,7 +13,7 @@
 					<field name="log_write" />
 					<field name="log_unlink" />
 					<field name="log_create" />
-					<field name="action_id" colspan="4"/>
+					<field name="action_id" colspan="4" readonly="1"/>
 					<field name="user_id" select="1" colspan="4"/>
 					<field name="state" select="1" readonly="1" />
 					<group colspan="2" col="2">
@@ -30,7 +30,7 @@
 			<field name="arch" type="xml">
 				<tree string="AuditTrail Rules">
 					<field name="name" />
-					<field name="object_id" />
+					<field name="object_id"/>
 					<field name="user_id" />
 					<field name="log_read" />
 					<field name="log_write" />
@@ -116,7 +116,6 @@
 		<menuitem name="Administration/Audittrails/Logs" id="menu_action_audittrail_log_tree" action="action_audittrail_log_tree"/>
 
 
-		<wizard string="View log" menu="False" model="audittrail.log" name="audittrail.view.log" id="wizard_audittrail_log"/>
-		<menuitem name="Administration/Audittrails/View Logs" id="menu_action_log_tree2" action="wizard_audittrail_log" type="wizard"/>
+
 </data>
 </terp>
