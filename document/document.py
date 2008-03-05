@@ -313,7 +313,10 @@ class ir_action_report_xml(osv.osv):
 	def _model_search(self, cr, uid, obj, name, args):
 		if not len(args):
 			return []
+		print '*'*10,args
 		model_id= args[0][2]
+		if not model_id:
+			return []
 		model = self.pool.get('ir.model').read(cr,uid,[model_id])[0]['model']
 		report_id = self.search(cr,uid,[('model','=',model)])
 		if not report_id:
@@ -402,6 +405,8 @@ class document_file(osv.osv):
 		'store_fname': fields.char('Stored Filename', size=200),
 		'res_model': fields.char('Attached Model', size=64), #res_model
 		'res_id': fields.integer('Attached ID'), #res_id
+		'partner_id':fields.many2one('res.partner', 'Partner', select=1),
+		'title': fields.char('Resource Title',size=64),
 	}
 
 	_defaults = {
@@ -411,13 +416,10 @@ class document_file(osv.osv):
 	}
 	def write(self, cr, uid, ids, vals, context=None):
 		result = super(document_file,self).write(cr,uid,ids,vals,context=context)
-		for f in self.browse(cr, uid, ids, context=context):
-			res = content_index(base64.decodestring(vals['datas']), f.datas_fname, f.file_type or None)
-			super(document_file,self).write(cr, uid, ids, {
-				'index_content': res
-			})
 		try:
 			for f in self.browse(cr, uid, ids, context=context):
+				if 'datas' not in vals:
+					vals['datas']=f.datas
 				res = content_index(base64.decodestring(vals['datas']), f.datas_fname, f.file_type or None)
 				super(document_file,self).write(cr, uid, ids, {
 					'index_content': res
@@ -430,12 +432,13 @@ class document_file(osv.osv):
 		if 'datas' not in vals:
 			return super(document_file,self).create(cr,uid,vals,context)
 		vals['file_size']= len(vals['datas'])
+		vals['title']=vals['name']
 		result = super(document_file,self).create(cr, uid, vals, context)
 		cr.commit()
 		try:
 			res = content_index(base64.decodestring(vals['datas']), vals['datas_fname'], vals.get('content_type', None))
 			super(document_file,self).write(cr, uid, [result], {
-				'index_content': res
+				'index_content': res,
 			})
 		except:
 			pass

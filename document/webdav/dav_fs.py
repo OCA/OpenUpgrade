@@ -283,6 +283,7 @@ class tinyerp_handler(dav_interface):
 			if object2:
 				val.update( {
 					'res_model': object2._name,
+					'partner_id': object2.partner_id and object2.partner_id.id or False,
 					'res_id': object2.id
 				})
 			cid = fobj.create(cr, uid, val)

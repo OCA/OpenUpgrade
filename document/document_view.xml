@@ -92,12 +92,16 @@
 			<form string="Files">
 				<notebook>
 				<page string="Definition">
-					<field name="name" select="1" colspan="4"/>
+					<field name="name" select="1" />
+					<field name="title" select="1" />
+					<newline/>
 					<field name="datas"/>
 					<field name="file_size"/>
+					<newline/>
 					<field name="parent_id"/>
 					<newline/>
 					<field name="user_id"/>
+					<field name="partner_id"/>
 					<newline/>
 					<field name="create_date"/>
 					<field name="create_uid"/>
