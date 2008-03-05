@@ -8,7 +8,7 @@
 	"init_xml" : [],
 	"demo_xml" : [],
 	"description": """
-	The base module to manage analytic distribution in sales orders.
+	The base module to manage analytic distribution and sales orders.
 	""",
 	"update_xml" : [
 		"sale_analytic_plans_view.xml",
