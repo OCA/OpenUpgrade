@@ -8,7 +8,7 @@
 	"init_xml" : [],
 	"demo_xml" : [],
 	"description": """
-	The base module to manage analytic distribution in purchase orders.
+	The base module to manage analytic distribution and purchase orders.
 	""",
 	"update_xml" : [
 		"purchase_analytic_plans_view.xml",
