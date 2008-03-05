@@ -31,10 +31,10 @@ import netsvc
 import pooler
 
 relation_type=['one2many','many2one','many2many']
-char_type = ['char','text']
+char_type = ['char','text','selection']
 date_type = ['date','datetime']
 int_type = ['float','integer']
-remaining_type = ['binary','boolean','reference','selection']
+remaining_type = ['binary','boolean','reference']
 
 
 select_field_form = """<?xml version="1.0"?>
@@ -88,11 +88,13 @@ def _set_field_domain(self,cr,uid,data,context):
 #
 
 def set_field_operator(self,field_name,field_type,search_operator,search_value):
-		field_search = [field_name,search_operator,search_value]
+		field_search = [field_name,search_operator,search_value]		
 		if search_operator == '=':
 			if field_type=='many2one':
 				field_search[1]='in'
-				field_search[2] = "("+','.join([str(x) for x in search_value])+")"			
+				field_search[2] = "("+','.join([str(x) for x in search_value])+")"
+			elif field_type in char_type or field_type in date_type:
+				field_search[2] = "'"+field_search[2]+"'"
 		elif search_operator == '<>':
 			if field_type=='many2one':
 				field_search[1]='not in'
