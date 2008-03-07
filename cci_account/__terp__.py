@@ -10,7 +10,7 @@
     "depends" : ["base","account"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [],
+    "update_xml" : ["cci_account_wizard.xml"],
     "active": False,
     "installable": True
 }
