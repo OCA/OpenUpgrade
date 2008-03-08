@@ -48,7 +48,7 @@ _aged_trial_fields = {
     'fiscalyear': {'string': 'Fiscal year', 'type': 'many2one', 'relation': 'account.fiscalyear',
         'help': 'Keep empty for all open fiscal year'},
     'period_length': {'string': 'Period length (days)', 'type': 'integer', 'required': True, 'default': lambda *a:30},
-    'category' : {'string' : 'Category', 'type' : 'selection', 'selection' : [('customers','Customers'),('suppliers','Suppliers'),('both','Customers and Suppliers')], 'required':True },
+    'category' : {'string' : 'Category', 'type' : 'selection', 'selection' : [('Customer','Customers'),('Supplier','Suppliers'),('both','Customers and Suppliers')], 'required':True },
 }
 
 def _calc_dates(self, cr, uid, data, context):
