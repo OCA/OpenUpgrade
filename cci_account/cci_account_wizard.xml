@@ -25,5 +25,18 @@
 			type="wizard"
 			id="account.menu_partner_balance"/>
 
+	<wizard
+			string="Partner ledger"
+			model="res.partner"
+			name="third_party_ledger.report"
+			menu="False"
+			id="account.wizard_third_party_ledger"/>
+	<menuitem
+			name="Financial Management/Reporting/Partner Accounts/Partner Ledger"
+			action="account.wizard_third_party_ledger"
+			type="wizard"
+			id="account.menu_third_party_ledger"/>
+
+
 	</data>
 </terp>
