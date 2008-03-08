@@ -12,5 +12,18 @@
 			action="account.wizard_aged_trial_balance"
 			type="wizard"
 			id="account.menu_aged_trial_balance"/>
+
+	<wizard
+			string="Partner balance"
+			model="res.partner"
+			name="partner.balance.report"
+			menu="False"
+			id="account.wizard_partner_balance_report"/>
+	<menuitem
+			name="Financial Management/Reporting/Partner Accounts/Partner Balance"
+			action="account.wizard_partner_balance_report"
+			type="wizard"
+			id="account.menu_partner_balance"/>
+
 	</data>
 </terp>
