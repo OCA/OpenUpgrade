@@ -46,8 +46,20 @@ class aged_trial_report(report_sxw.rml_parse):
 		return True
 
 	def _get_lines(self, form):
-		print "cci account repoertttttttttttt....."
 		res = []
+
+		if form['category'] == 'Customer' or form['category'] == 'Supplier' :
+			cat_id=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('name','=',form['category'])])
+			cat_id+=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('parent_id','child_of',cat_id)])
+		else:
+			cat_id=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('name','in',['Customer','Supplier'])])
+			cat_id+=pooler.get_pool(self.cr.dbname).get('res.partner.category').search(self.cr,self.uid,[('parent_id','child_of',cat_id)])
+
+		self.cr.execute('SELECT partner_id from res_partner_category_rel where category_id in ('+','.join(map(str,cat_id))+')')
+		data=self.cr.fetchall()
+		self.partner_ids=[]
+		self.partner_ids=list(set([x[0] for x in data]))
+
 		account_move_line_obj = pooler.get_pool(self.cr.dbname).get('account.move.line')
 		line_query = account_move_line_obj._query_get(self.cr, self.uid, obj='line',
 				context={'fiscalyear': form['fiscalyear']})
@@ -60,9 +72,9 @@ class aged_trial_report(report_sxw.rml_parse):
 					"AND " + line_query + " " \
 					"AND (account_account.company_id = %d) " \
 					"AND account_account.active " \
+					"AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
 				"ORDER BY res_partner.name", (form['company_id'],))
 		partners = self.cr.dictfetchall()
-		print partners,"helo partner"
 		for partner in partners:
 			values = {}
 			self.cr.execute("SELECT SUM(debit-credit) " \
@@ -132,6 +144,7 @@ class aged_trial_report(report_sxw.rml_parse):
 					"AND partner_id is NOT NULL " \
 					"AND " + line_query + " " \
 					"AND (account_account.company_id = %d) " \
+					"AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
 					"AND account_account.active",
 					(company_id,))
 		total = self.cr.fetchone()
@@ -150,6 +163,7 @@ class aged_trial_report(report_sxw.rml_parse):
 					"AND partner_id IS NOT NULL " \
 					"AND " + line_query + " " \
 					"AND (account_account.company_id = %d) " \
+					"AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
 					"AND account_account.active",
 					(date, company_id))
 		before = self.cr.fetchone()
@@ -169,6 +183,7 @@ class aged_trial_report(report_sxw.rml_parse):
 					"AND partner_id IS NOT NULL " \
 					"AND " + line_query + " " \
 					"AND (account_account.company_id = %d) " \
+					"AND partner_id in ("+','.join(map(str,self.partner_ids))+")" \
 					"AND account_account.active",
 					(period['start'], period['stop'], company_id))
 		period = self.cr.fetchone()
