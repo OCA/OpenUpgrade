@@ -10,7 +10,7 @@ import zipfile
 class Klass :
 	def __init__ (self, name) :
 		self.name = name
-		self.attributes = {}
+		self.attributes = []
 		# a list, as java/c++ support multiple methods with the same name
 		self.stereotype = ""
 		self.operations = []
@@ -19,7 +19,7 @@ class Klass :
 		self.templates = []
 		self.inheritance_type = ""
 	def AddAttribute(self, name, type, visibility, value, comment) :
-		self.attributes[name] = (type, visibility, value, comment)
+		self.attributes.append((name, (type, visibility, value, comment)))
 	def AddOperation(self, name, type, visibility, params, inheritance_type, comment, class_scope) :
 		self.operations.append((name,(type, visibility, params, inheritance_type, comment, class_scope)))
 	def SetComment(self, s) :
@@ -98,7 +98,7 @@ class ObjRenderer :
 					
 	def end_render(self) :
 		# without this we would accumulate info from every pass
-		self.attributes = {}
+		self.attributes = []
 		self.operations = {}
 
 
@@ -125,8 +125,7 @@ class OpenERPRenderer(ObjRenderer) :
 		"demo_xml" : [ ],
 		"update_xml" : ['%(module)s_view.xml'],
 		"installable": True
-}
-		""" % self.data_get()
+}""" % self.data_get()
 		return terp
 
 	def init_get(self):
@@ -136,7 +135,7 @@ class OpenERPRenderer(ObjRenderer) :
 		data = self.data_get()
 		i = 1
 		fields_form = fields_tree = ""
-		for sa in cd.attributes.keys() :
+		for sa,attr in cd.attributes:
 			fields_form += "\t\t\t\t<field name=\"%s\" select=\"%d\"/>\n" % (sa,i)
 			fields_tree += "\t\t\t\t<field name=\"%s\"/>\n" % (sa,)
 			if (i==2) or not i:
@@ -171,7 +170,7 @@ class OpenERPRenderer(ObjRenderer) :
 			</tree>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="action_%(name_id)s_form">
+	<record model="ir.actions.act_window" id="action_%(name_id)s">
 		<field name="name">%(name)s</field>
 		<field name="res_model">%(name)s</field>
 		<field name="view_type">form</field>
@@ -190,8 +189,8 @@ class OpenERPRenderer(ObjRenderer) :
 		for sk in self.klasses.keys() :
 			result += self.view_class_get(sk, self.klasses[sk])
 		result += """
-</terp>
-</data>"""
+</data>
+</terp>"""
 		return result
 
 	def code_get(self):
@@ -244,10 +243,7 @@ from osv import osv, fields
 
 			default = {}
 			result += "\t_columns = {\n"
-			for sa in self.klasses[sk].attributes.keys() :
-				attr = self.klasses[sk].attributes[sa]
-				if not attr:
-					attr = ["char","'Unknown'"]
+			for sa,attr in self.klasses[sk].attributes :
 				value = attr[2]
 				if (not value) or (value[0]<>"'"):
 					value = "'"+str(value)+"'"
