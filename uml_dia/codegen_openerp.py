@@ -3,7 +3,104 @@
 
 import sys, dia, os
 import zipfile
-from codegen import ObjRenderer
+
+#
+# This code is inspired by codegen.py
+#
+class Klass :
+	def __init__ (self, name) :
+		self.name = name
+		self.attributes = {}
+		# a list, as java/c++ support multiple methods with the same name
+		self.stereotype = ""
+		self.operations = []
+		self.comment = ""
+		self.parents = []
+		self.templates = []
+		self.inheritance_type = ""
+	def AddAttribute(self, name, type, visibility, value, comment) :
+		self.attributes[name] = (type, visibility, value, comment)
+	def AddOperation(self, name, type, visibility, params, inheritance_type, comment, class_scope) :
+		self.operations.append((name,(type, visibility, params, inheritance_type, comment, class_scope)))
+	def SetComment(self, s) :
+		self.comment = s
+	def AddParrent(self, parrent):
+		self.parents.append(parrent)
+	def AddTemplate(self, template):
+		self.templates.append(template)
+	def SetInheritance_type(self, inheritance_type):
+		self.inheritance_type = inheritance_type
+
+class ObjRenderer :
+	"Implements the Object Renderer Interface and transforms diagram into its internal representation"
+	def __init__ (self) :
+		# an empty dictionary of classes
+		self.klasses = {}
+		self.arrows = []
+		self.filename = ""
+		
+	def begin_render (self, data, filename) :
+		self.filename = filename
+		for layer in data.layers :
+			# for the moment ignore layer info. But we could use this to spread accross different files
+			for o in layer.objects :
+				if o.type.name == "UML - Class" :
+					#print o.properties["name"].value
+					k = Klass (o.properties["name"].value)
+					k.SetComment(o.properties["comment"].value)
+					k.stereotype = o.properties["stereotype"].value
+					if o.properties["abstract"].value:
+						k.SetInheritance_type("abstract")
+					if o.properties["template"].value:
+						k.SetInheritance_type("template")
+					for op in o.properties["operations"].value :
+						# op : a tuple with fixed placing, see: objects/UML/umloperations.c:umloperation_props
+						# (name, type, comment, stereotype, visibility, inheritance_type, class_scope, params)
+						params = []
+						for par in op[8] :
+							# par : again fixed placement, see objects/UML/umlparameter.c:umlparameter_props
+							params.append((par[0], par[1]))
+						k.AddOperation (op[0], op[1], op[4], params, op[5], op[2], op[7])
+					#print o.properties["attributes"].value
+					for attr in o.properties["attributes"].value :
+						# see objects/UML/umlattributes.c:umlattribute_props
+						#print "\t", attr[0], attr[1], attr[4]
+						k.AddAttribute(attr[0], attr[1], attr[4], attr[2], attr[3])
+					self.klasses[o.properties["name"].value] = k
+					#Connections
+				elif o.type.name == "UML - Association" :
+					# should already have got attributes relation by names
+					pass
+				# other UML objects which may be interesting
+				# UML - Note, UML - LargePackage, UML - SmallPackage, UML - Dependency, ...
+		
+		edges = {}
+		for layer in data.layers :
+			for o in layer.objects :
+				for c in o.connections:
+					for n in c.connected:
+						if not n.type.name in ("UML - Generalization", "UML - Realizes"):
+							continue
+						if str(n) in edges:
+							continue
+						edges[str(n)] = None
+						if not (n.handles[0].connected_to and n.handles[1].connected_to):
+							continue
+						par = n.handles[0].connected_to.object
+						chi = n.handles[1].connected_to.object
+						if not par.type.name == "UML - Class" and chi.type.name == "UML - Class":
+							continue
+						par_name = par.properties["name"].value
+						chi_name = chi.properties["name"].value
+						if n.type.name == "UML - Generalization":
+							self.klasses[chi_name].AddParrent(par_name)
+						else: self.klasses[chi_name].AddTemplate(par_name)
+					
+	def end_render(self) :
+		# without this we would accumulate info from every pass
+		self.attributes = {}
+		self.operations = {}
+
 
 class OpenERPRenderer(ObjRenderer) : 
 	def __init__(self) :
@@ -18,7 +115,7 @@ class OpenERPRenderer(ObjRenderer) :
 	def terp_get(self):
 		terp = """{
 		"name" : "%(module)s",
-		"version" : "1.0",
+		"version" : "0.1",
 		"author" : "Tiny",
 		"website" : "http://openerp.com",
 		"category" : "Unknown",
@@ -49,7 +146,10 @@ class OpenERPRenderer(ObjRenderer) :
 		data['tree']= fields_tree
 		data['name']= cn
 		data['name_id']= cn.replace('.','_')
-		data['menu']= 'Unknown/'+cn.replace('.','_')
+		if not cd.stereotype:
+			data['menu']= 'Unknown/'+cn.replace('.','_')
+		else:
+			data['menu']= cd.stereotype
 		result = """
 	<record model="ir.ui.view" id="view_%(name_id)s_form">
 		<field name="name">%(name)s.form</field>
@@ -95,8 +195,7 @@ class OpenERPRenderer(ObjRenderer) :
 		return result
 
 	def code_get(self):
-		result = """
-##############################################################################
+		result = """##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #                    Fabien Pinckaers <fp@tiny.Be>
@@ -131,7 +230,7 @@ from osv import osv, fields
 			cname = sk.replace('.','_')
 			result += "class %s(osv.osv):\n" % (cname,)
 			if self.klasses[sk].comment:
-				result += '"""'+self.klasses[sk].comment+'"""\n'
+				result += "\t"+'"""'+self.klasses[sk].comment+'"""\n'
 			result += "\t_name = '%s'\n" % (sk,)
 
 
@@ -150,10 +249,12 @@ from osv import osv, fields
 				if not attr:
 					attr = ["char","'Unknown'"]
 				value = attr[2]
-				attr = attr[0]
 				if (not value) or (value[0]<>"'"):
 					value = "'"+str(value)+"'"
-				result += "\t\t'%s': fields.%s(%s),\n" % (sa, attr, value)
+				if attr[3]:
+					value += ", help='%s'" % (attr[3].replace("'"," "),)
+				attr_type = attr[0]
+				result += "\t\t'%s': fields.%s(%s),\n" % (sa, attr_type, value)
 			result += "\t}\n"
 
 			if default:
