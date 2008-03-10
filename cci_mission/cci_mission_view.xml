@@ -577,7 +577,9 @@
 		</record>
 
 		<menuitem name="Missions/Configuration/Letters Log" action="action_cci_missions_letters_log" id="menu_action_cci_missions_letters_log"/>
-	<!-- View for cci_missions.ata_carnet  -->
+
+
+<!-- View for cci_missions.ata_carnet  -->
 		<record model="ir.ui.view" id="cci_missions_ata_carnet_form">
 			<field name="name">cci_missions.ata_carnet.form</field>
 			<field name="model">cci_missions.ata_carnet</field>
@@ -616,6 +618,9 @@
 						<field name="insurer_agreement" />
 						<field name="own_risk" />
 						<newline/>
+						<field name="warranty" />
+						<field name="warranty_product_id" />
+						<newline/>
 						<field name="state" colspan="4" />
 					</page>
 					<page string="Follow-up">
@@ -625,8 +630,10 @@
 						<field name="federation_sending_date" />
 						<newline/>
 						<separator string="Letters" colspan="4"/>
+
 					</page>
 					<page string="Extra Prodcuts">
+						<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4" /> <!-- one2many (product_id, qty, uom, price) -->
 
 					</page>
 				</notebook>

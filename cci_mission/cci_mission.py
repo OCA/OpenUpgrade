@@ -410,11 +410,59 @@ class cci_missions_ata_usage(osv.osv):
 
 cci_missions_ata_usage()
 
+
+class cci_missions_letters_log(osv.osv):
+    _name = 'cci_missions.letters_log'
+    _description = 'cci_missions.letters_log'
+    _columns = {
+        'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
+        'letter_type' :  fields.selection([('Rappel avant echeance','Rappel avant echeance'),('Rappel apres echeance','Rappel apres echeance'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Demande de remboursement','Demande de remboursement'),('Rappel a remboursement','Rappel a remboursement'),('Mise en demeure','Mise en demeure')],'Type of Letter',required=True),
+        'date' : fields.date('Date of Sending',required=True),
+                }
+    _defaults = {
+        'date': lambda *args: time.strftime('%Y-%m-%d')
+    }
+
+cci_missions_letters_log()
+
 class cci_missions_ata_carnet(osv.osv):
     _name = 'cci_missions.ata_carnet'
     _description = 'cci_missions.ata_carnet'
+
+
+    def _get_insurer_id(self, cr, uid, ids, name, args, context=None):
+        res ={}
+        partner_ids = self.browse(cr,uid,ids)
+        print "partners-ins",partner_ids
+        for pid in partner_ids:
+            print "pid-ins",pid
+            res[pid.id]=pid.insurer_id
+            print "res-ins",res
+        return res
+
+    def _get_member_state(self, cr, uid, ids, name, args, context=None):
+        res={}
+        partner_ids = self.browse(cr,uid,ids)
+        print "partners",partner_ids
+        for pid in partner_ids:
+            print "pid",pid
+            res[pid.id]=pid.membership_state
+            print "rs",res
+        return res
+
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+#        Overwrite the name fields to set next sequence according to the sequence in the certification type (type_id)
+        if vals['type_id']:
+            data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
+            seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
+
+            if seq:
+                vals.update({'name': seq})
+        return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
     _columns = {
-        'type_id' : fields.many2one('cci_missions.dossier','Related Type of Carnet',required=True),
+        'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
         'creation_date' : fields.date('Emission Date',required=True),
         'validity_date' : fields.date('Validity Date',required=True),
         'partner_id': fields.many2one('res.partner','Partner',required=True),
@@ -440,9 +488,10 @@ class cci_missions_ata_carnet(osv.osv):
         'ok_state_date' : fields.date('Date of Closure'),
         'federation_sending_date' : fields.date('Date of Sending to the Federation'),
         'name' : fields.char('Name',size=50,required=True),
-        'partner_insurer_id': fields.integer('Insurer ID of the Partner'),
-        'partner_member_state': fields.char('Member State of the Partner',size=50),
+        'partner_insurer_id': fields.function(_get_insurer_id, method=True,string='Insurer ID of the Partner',readonly=True),
+        'partner_member_state': fields.function(_get_member_state, method=True,string='Member State of the Partner',readonly=True),
         'member_price' : fields.boolean('Apply the Member Price'),
+        'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products'),
             }
 
     _defaults = {
@@ -454,16 +503,3 @@ class cci_missions_ata_carnet(osv.osv):
    }
 cci_missions_ata_carnet()
 
-class cci_missions_letters_log(osv.osv):
-    _name = 'cci_missions.letters_log'
-    _description = 'cci_missions.letters_log'
-    _columns = {
-        'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
-        'letter_type' :  fields.selection([('Rappel avant echeance','Rappel avant echeance'),('Rappel apres echeance','Rappel apres echeance'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Demande de remboursement','Demande de remboursement'),('Rappel a remboursement','Rappel a remboursement'),('Mise en demeure','Mise en demeure')],'Type of Letter',required=True),
-        'date' : fields.date('Date of Sending',required=True),
-                }
-    _defaults = {
-        'date': lambda *args: time.strftime('%Y-%m-%d')
-    }
-
-cci_missions_letters_log()
