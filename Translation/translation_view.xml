@@ -15,7 +15,14 @@
 				<field name="value" select="1"/>
 				<!-- field name="translation_id" / -->
 				<field name="contributor_email" select="1"/>
-				<field name="state" select="1"/>
+				<group colspan="4" col="13">
+					<field name="state" select="2"/>
+					<button name="button_propose" string="Propose" states="draft"/>
+					<button name="button_unchange" string="Don't Change" states="draft"/>
+					<button name="button_accept" string="Accept" states="propose"/>
+					<button name="button_deny" string="Deny" states="propose"/>											
+					<button name="button_draft" string="Draft" states="deny,accept,propose,unchange"/>
+				</group>				
 			</form>
 		</field>
 	</record>

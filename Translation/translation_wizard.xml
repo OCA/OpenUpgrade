@@ -3,7 +3,7 @@
 	<data>		
 		<record model="ir.actions.wizard" id="wizard_downlaod_file_for_contib">
 			<field name="name">Install language file for Contributor</field>
-			<field name="wiz_name">download.contib.file</field>
+			<field name="wiz_name">download.contrib.file</field>
 		</record>
 		<menuitem
 			name="Administration/Translations/Translations Management/Contributors/Download New Version"
@@ -27,6 +27,15 @@
 			name="Administration/Translations/Translations Management/Contributors/Review Proposed Contributions"
 			action="wizard_review_proposed_contributions"
 			id="menuwizardwizard_review_proposed_contributions"
-			type="wizard"/>	
+			type="wizard"/>
+		<record model="ir.actions.wizard" id="wizard_upload_contrib">
+			<field name="name">Upload Contributions</field>
+			<field name="wiz_name">upload.contrib</field>
+		</record>
+		<menuitem
+			name="Administration/Translations/Translations Management/Contributors/Upload Contributions"
+			action="wizard_upload_contrib"
+			id="menuwizard_upload_contrib"
+			type="wizard"/>					
 	</data>
 </terp>
