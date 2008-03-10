@@ -28,6 +28,18 @@
 from osv import fields, osv
 import time
 
+
+STATE = [
+    ('none', 'Non Member'),
+    ('canceled', 'Canceled Member'),
+    ('old', 'Old Member'),
+    ('waiting', 'Waiting Member'),
+    ('invoiced', 'Invoiced Member'),
+    ('associated', 'Associated Member'),
+    ('free', 'Free Member'),
+    ('paid', 'Paid Member'),
+]
+
 class res_partner(osv.osv):
     _inherit = 'res.partner'
     _description = 'res.partner'
@@ -430,18 +442,19 @@ class cci_missions_ata_carnet(osv.osv):
     _description = 'cci_missions.ata_carnet'
 
 
+
     def _get_insurer_id(self, cr, uid, ids, name, args, context=None):
-        res ={}
+        res={}
         partner_ids = self.browse(cr,uid,ids)
-        for pid in partner_ids:
-            res[pid.id]=pid.insurer_id
+        for p_id in partner_ids:
+            res[p_id.id]=p_id.partner_id.insurer_id
         return res
 
     def _get_member_state(self, cr, uid, ids, name, args, context=None):
         res={}
         partner_ids = self.browse(cr,uid,ids)
-        for pid in partner_ids:
-            res[pid.id]=pid.membership_state
+        for p_id in partner_ids:
+            res[p_id.id]=p_id.partner_id.membership_state
         return res
 
 
@@ -491,7 +504,7 @@ class cci_missions_ata_carnet(osv.osv):
         'federation_sending_date' : fields.date('Date of Sending to the Federation'),
         'name' : fields.char('Name',size=50,required=True),
         'partner_insurer_id': fields.function(_get_insurer_id, method=True,string='Insurer ID of the Partner',readonly=True),
-        'partner_member_state': fields.function(_get_member_state, method=True,string='Member State of the Partner',readonly=True),
+        'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
         'member_price' : fields.boolean('Apply the Member Price'),
         'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products'),
         'letter_ids':fields.one2many('cci_missions.letters_log','ata_carnet_id','Letters'),
