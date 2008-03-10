@@ -28,13 +28,13 @@
 			</field>
 		</record>
 
-<!-- view for cci_missions_certificate_type -->
-		<record model="ir.ui.view" id="cci_missions_certificate_type_form">
-			<field name="name">cci_missions.certificate_type.form</field>
-			<field name="model">cci_missions.certificate_type</field>
+<!-- view for cci_missions_dosser_type -->
+		<record model="ir.ui.view" id="cci_missions_dossier_type_form">
+			<field name="name">cci_missions.dossier_type.form</field>
+			<field name="model">cci_missions.dossier_type</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Certificate Type">
+				<form string="Dossier Type">
 					<field name="name" select="1"/>
 					<field name="code" select="1"/>
 					<field name="sequence_id"/>
@@ -46,27 +46,27 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="cci_missions_certificate_type_tree">
-			<field name="name">cci_missions.certificate_type.tree</field>
-			<field name="model">cci_missions.certificate_type</field>
+		<record model="ir.ui.view" id="cci_missions_dossier_type_tree">
+			<field name="name">cci_missions.dossier_type.tree</field>
+			<field name="model">cci_missions.dossier_type</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Certificate Type">
+				<tree string="Dossier Type">
 					<field name="name"/>
 					<field name="code"/>
 				</tree>
 			</field>
 		</record>
 
-		<record model="ir.actions.act_window" id="action_cci_missions_certificate_type">
-			<field name="name">Certificate Type</field>
+		<record model="ir.actions.act_window" id="action_cci_missions_dossier_type">
+			<field name="name">Dossier Type</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_missions.certificate_type</field>
+			<field name="res_model">cci_missions.dossier_type</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
 
-		<menuitem name="Missions/Configuration/Certificate Types" action="action_cci_missions_certificate_type" id="menu_cci_missions_certificate_type"/>
+		<menuitem name="Missions/Configuration/Dossier Types" action="action_cci_missions_dossier_type" id="menu_cci_missions_dossier_type"/>
 
 <!-- view for cci_missions_site -->
 		<record model="ir.ui.view" id="cci_missions_site_form">
