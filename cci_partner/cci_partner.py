@@ -127,21 +127,22 @@ class res_partner(osv.osv):
     def write(self, cr, uid, ids,vals, *args, **kwargs):
         super(res_partner,self).write(cr, uid, ids,vals, *args, **kwargs)
         list=[]
-        if 'address' in vals:
-            for add in vals['address']:
-                if add[2] and (add[2]['zip_id'] and add[2]['type']=='default'):
-                    data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
-                    saleman_id = data.user_id.id
-                    self.write(cr,uid,ids,{'user_id':saleman_id})
-                else:
-                    data_partner=self.browse(cr, uid,ids)
-                    for d in data_partner:
-                        for i in d.address:
-                            list.append(i.type)
-                            if i.type=='default' and (not i.zip_id):
+        if self.pool.get('res.partner').browse(cr, uid, ids)[0].user_id.id == False:
+            if 'address' in vals:
+                for add in vals['address']:
+                    if add[2] and (add[2]['zip_id'] and add[2]['type']=='default'):
+                        data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
+                        saleman_id = data.user_id.id
+                        self.write(cr,uid,ids,{'user_id':saleman_id})
+                    else:
+                        data_partner=self.browse(cr, uid,ids)
+                        for d in data_partner:
+                            for i in d.address:
+                                list.append(i.type)
+                                if i.type=='default' and (not i.zip_id):
+                                    self.write(cr,uid,ids,{'user_id':False})
+                            if (not d.address) or (not 'default' in list):
                                 self.write(cr,uid,ids,{'user_id':False})
-                        if (not d.address) or (not 'default' in list):
-                            self.write(cr,uid,ids,{'user_id':False})
         return True
 
     def check_address(self, cr, uid, ids):
@@ -278,18 +279,37 @@ class res_partner_zip(osv.osv):
                 }
 res_partner_zip()
 
-class function_code(osv.osv):
-    _name='function.code'
-    _description = 'function.code'
-
-    _columns = {
-        'name' : fields.char('Name',size=20,required=True)
-                }
-function_code()
+#class function_code(osv.osv):
+#    _name='function.code'
+#    _description = 'function.code'
+#    _columns = {
+#        'name' : fields.char('Name',size=20,required=True)
+#                }
+#function_code()
 
 class res_partner_address(osv.osv):
     _inherit = "res.partner.address"
     _description = 'res.partner.address'
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+        if vals['function_code_label']:
+            temp = ''
+            for letter in vals['function_code_label']:
+                res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
+                if res:
+                    temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
+            vals['function_code_label'] = temp
+        return super(res_partner_address,self).create(cr, uid, vals, *args, **kwargs)
+
+    def write(self, cr, uid, ids,vals, *args, **kwargs):
+        if vals['function_code_label']:
+            temp = ''
+            for letter in vals['function_code_label']:
+                res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
+                if res:
+                    temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
+            vals['function_code_label'] = temp
+        return super(res_partner_address,self).write(cr, uid, ids,vals, *args, **kwargs)
 
     def _get_name(self, cr, uid, ids, name, arg, context={}):
         res={}
@@ -304,8 +324,9 @@ class res_partner_address(osv.osv):
         'name': fields.function(_get_name, method=True, string='Contact Name',type='char',size=64),#override parent field
         'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
         'zip_id':fields.many2one('res.partner.zip','Zip'),
-        'function_code_id':fields.many2one('function.code','Function Code'),#should be check
+        #'function_code_id':fields.many2one('function.code','Function Code'),
         'function_label':fields.char('Function Label',size=128),
+        'function_code_label':fields.char('Codes',size=128),
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
         'sequence_partner':fields.integer('Sequence (Partner)',help='order of importance of this address in the list of addresses of the linked partner'),
@@ -325,14 +346,15 @@ class res_partner_address(osv.osv):
     def onchange_user_id(self, cr, uid, ids,zip_id):
         if not ids:
             return {}
-        data_add=self.pool.get('res.partner.address').browse(cr, uid,ids)
-        if zip_id:
-            for data in data_add:
-                if data.type=='default':
-                    data_zip=self.pool.get('res.partner.zip').browse(cr, uid,[zip_id])
-                    for data1 in data_zip:
-                         if data1.user_id:
-                             self.pool.get('res.partner').write(cr, uid,data.partner_id.id,{'user_id':data1.user_id.id})
+        if self.pool.get('res.partner').user_id == False:
+            data_add=self.pool.get('res.partner.address').browse(cr, uid,ids)
+            if zip_id:
+                for data in data_add:
+                    if data.type=='default':
+                        data_zip=self.pool.get('res.partner.zip').browse(cr, uid,[zip_id])
+                        for data1 in data_zip:
+                             if data1.user_id:
+                                 self.pool.get('res.partner').write(cr, uid,data.partner_id.id,{'user_id':data1.user_id.id})
         return {}
 
     def unlink(self, cr, uid, ids, context={}):

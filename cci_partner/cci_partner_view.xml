@@ -51,7 +51,20 @@
 					</page>
 
 					<page string="Relations">
-						<field name="relation_ids" nolabel="1"/>
+						<field name="relation_ids" mode="tree, form" nolabel="1">
+							<form string="Partner Link">
+								<field name="type_id" select="1"/>
+								<field name="percent" />
+								<newline/>
+								<field name="partner_id" select="1" cospan="4"/>
+								<newline/>
+								<field name="description" cospan="4"/>
+							</form>
+							<tree string="Partner Link">
+								<field name="type_id" select="1"/>
+								<field name="partner_id" select="1"/>
+							</tree>
+						</field>
 					</page>
 
 					<page string="Articles">
@@ -102,7 +115,7 @@
 			</field>
 		</record>
 
-<!-- don't understand the use of this
+<!-- Changing the zip code can change the salesman -->
 		<record model="ir.ui.view" id="view_partner_form_inherit3">
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
@@ -110,11 +123,10 @@
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
 				<field name="zip" position="replace">
-			    	<field name="zip_id" on_change="onchange_user_id(zip_id)"/>
+					<field name="zip_id" on_change="onchange_user_id(zip_id)"/>
 				</field>
 			</field>
 		</record>
--->
 
 		<record model="ir.ui.view" id="view_partner_form_inherit3">
 			<field name="name">res.partner.form</field>
@@ -129,10 +141,12 @@
 
 							<!--<field name="name" select="2"/>-->
 							<!--<field name="title"/>-->
-
-							<field name="function"/>
-							<field name="type" select="2"/>
 							<field name="department"/>
+							<field name="function_label"/>
+							<field name="function_code_label"/>
+							<!--<field name="function"/>-->
+							<field name="type" select="2"/>
+							<newline/>
 							<field name="street" select="2"/>
 							<field name="street2"/>
 							<newline/>
@@ -173,11 +187,13 @@
 					<field name="contact_id" select="1"/>
 					<field name="name" select="2"/>
 					<newline/>
-					<field name="function"/>
+					<!--<field name="function"/>-->
 					<field name="function_label"/>
-					<field name="function_code_id"/>
+					<field name="function_code_label"/>
+					<newline/>
 					<!--<field name="title" select="1"/>-->
 					<field name="type" select="1"/>
+					<newline/>
 					<field name="street" select="1"/>
 					<field name="street2" select="1"/>
 					<field name="zip_id" select="1"/> <!-- replace zip with zip_id -->
@@ -612,6 +628,26 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_4">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="view_partner_contact_form_inherit_2"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="address_ids" position="replace">
+				<field name="address_ids" colspan="4" nolabel="1">
+					<tree string="Address">
+						<field name="partner_id"/>
+						<field name="function_code_label"/>
+						<field name="type"/>
+						<field name="phone"/>
+						<field name="email"/>
+					</tree>
+				</field>
+			</field>
+		</field>
+	</record>
+
 <!--	<record model="ir.ui.view" id="view_partner_form">
 		<field name="name">Partner form inherited</field>
 		<field name="model">res.partner</field>
@@ -638,13 +674,25 @@
 			</field>
 		</record>
 
-<!-- add a menu entry for link types -->
+<!-- add menu entries for link types and partner links-->
+		<record model="ir.ui.view" id="res_partner_relation_type_form">
+			<field name="name">res.partner.relation.type.form</field>
+			<field name="model">res.partner.relation.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Partner Link Type">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+
 		<record model="ir.ui.view" id="res_partner_relation_tree">
 			<field name="name">res.partner.relation.tree</field>
 			<field name="model">res.partner.relation</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Partner Link Type">
+				<tree string="Partner Link">
+					<field name="current_partner_id" select="1"/>
 					<field name="type_id" select="1"/>
 					<field name="partner_id" select="1"/>
 				</tree>
@@ -656,12 +704,15 @@
 			<field name="model">res.partner.relation</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Partner Link Type">
+				<form string="Partner Link">
+					<field name="current_partner_id" select="1" cospan="4"/>
+					<newline/>
 					<field name="type_id" select="1"/>
-					<field name="partner_id" select="1"/>
 					<field name="percent" />
 					<newline/>
-					<field name="description"/>
+					<field name="partner_id" select="1"  cospan="4"/>
+					<newline/>
+					<field name="description" cospan="4"/>
 				</form>
 			</field>
 		</record>
