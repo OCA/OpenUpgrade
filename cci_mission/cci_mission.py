@@ -37,6 +37,7 @@ class res_partner(osv.osv):
         'asker_address': fields.char('Asker Address',size=50),
         'asker_zip_id': fields.many2one('res.partner.zip','Asker Zip Code'),
         'sender_name': fields.char('Sender Name',size=50),
+        'insurer_id' : fields.integer('Insurer ID'),
     }
 
 res_partner()
