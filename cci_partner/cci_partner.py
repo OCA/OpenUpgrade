@@ -373,19 +373,20 @@ class res_partner_activity(osv.osv):#modfiy res.activity.code to res.partner.act
     _rec_name = 'code'
     def name_get(self, cr, uid, ids, context={}):
         #return somethong like”list_id.abbreviation or list_id.name – code”
-        if not len(ids):
-            return []
-        data_activity = self.read(cr, uid, ids, ['list_id','code'], context)
         res = []
-        list_obj = self.pool.get('res.partner.activity.list')
-        for read in data_activity:
-            if read['list_id']:
-                data=list_obj.read(cr, uid, read['list_id'][0],['abbreviation','name'], context)
-                if data['abbreviation']:
-                    res.append((read['id'], data['abbreviation']))
-                else:
-                    str=data['name']+'-'+read['code']
-                    res.append((read['id'],str))
+        for act in self.browse(cr, uid, ids, context):
+            res.append( (act.id, (act.code or '')+' - '+(act.label or '')))
+#        data_activity = self.read(cr, uid, ids, ['list_id','code'], context)
+#        res = []
+#        list_obj = self.pool.get('res.partner.activity.list')
+#        for read in data_activity:
+#            if read['list_id']:
+#                data=list_obj.read(cr, uid, read['list_id'][0],['abbreviation','name'], context)
+#                if data['abbreviation']:
+#                    res.append((read['id'], data['abbreviation']))
+#                else:
+#                    str=data['name']+'-'+read['code']
+#                    res.append((read['id'],str))
         return res
     _columns = {
         'code': fields.char('Code',size=6,required=True),
