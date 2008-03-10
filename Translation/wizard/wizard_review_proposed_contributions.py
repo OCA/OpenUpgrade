@@ -4,6 +4,7 @@ import xmlrpclib
 import base64
 import csv
 import pooler
+from translation.translation import get_language
 
 s = xmlrpclib.Server("http://192.168.0.4:8000")
 
@@ -32,34 +33,39 @@ class wizard_review_proposed_contributions(wizard.interface):
     def _review_difference(self, cr, uid, data, context):
         lang = data['form']['lang']
         ir_translation = pooler.get_pool(cr.dbname).get('ir.translation')
+        ir_translation_contrib = pooler.get_pool(cr.dbname).get('ir.translation.contribution')
         ids = ir_translation.search(cr,uid,[('lang','=',lang)])
-        res = ir_translation.read(cr,uid,ids,['res_id','type','name','value','src'])
+        res = ir_translation.read(cr,uid,ids,['type','name','value','src'])
+        new_res =map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},res)
         filename = tools.config["root_path"] + "/i18n/" + lang + ".csv"
         reader = csv.DictReader(open(filename,'r'),delimiter=',')
-        new_res = []     
-        new_res.append(map(lambda x:{'res_id':x['res_id'],'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},res))
-   
-#        for r in reader:
-#            print r
+        new_reader =map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},reader)
         diff = []
-        for r in new_res:
-            print r
-            if r in reader:
+        for l in new_res:
+            if l in new_reader:
                 continue
-            diff.append(r)
-#        print "=========",diff
-        return {}
-    
-#here res_id create problem to compare
-#{'res_id': '0', 'type': 'wizard_button', 'name': 'hr.timesheet.invoice.account.analytic.account.cost_ledger.report,init,report', 'value': '', 'src': 'Print'}
-#{'type': 'view', 'res_id': 0, 'name': 'hr.employee', 'value': 'Notities', 'src': 'Notes'}    
-    
-    def _get_language(sel, cr, uid, context):
-        f_list = []
-        file_list = s.get_publish_list()
-        for f in file_list : f_list.append(f.replace('.csv',''))
-        lang_dict = tools.get_languages()
-        return [(lang, lang_dict.get(lang, lang)) for lang in f_list]
+            diff.append(l)
+        print diff
+        for d in diff:
+            vals = {}
+            ids = ir_translation.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src'])])
+            res_id = ir_translation.read(cr,uid,ids,['res_id','lang'])[0]
+            ids = ir_translation_contrib.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src'])])
+            if ids:
+                ir_translation_contrib.write(cr,uid,ids,{'value':d['value'],'src':d['src']})
+            if not ids:
+                vals['type']=d['type']
+                vals['name']=d['name']
+                vals['src']=d['src']
+                vals['value']=d['value']
+                vals['res_id']=res_id['res_id']
+                vals['lang']=res_id['lang']            
+                vals['state']='draft'                            
+                ir_translation_contrib.create(cr,uid,vals)
+            
+        return {}    
+    def _get_language(sel, cr, uid,context):
+        return get_language(cr,uid,context)
     
     fields_form = {
         'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,

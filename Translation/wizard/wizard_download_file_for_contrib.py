@@ -1,8 +1,9 @@
 import wizard
 import tools
-import xmlrpclib
 import base64
 import csv
+import xmlrpclib
+from translation.translation import get_language
 
 s = xmlrpclib.Server("http://192.168.0.4:8000")
 
@@ -38,12 +39,8 @@ class wizard_download_file_for_contrib(wizard.interface):
             tools.trans_load(cr.dbname, filename, lang)
         return {}
 
-    def _get_language(sel, cr, uid, context):
-        f_list = []
-        file_list = s.get_publish_list()
-        for f in file_list : f_list.append(f.replace('.csv',''))
-        lang_dict = tools.get_languages()
-        return [(lang, lang_dict.get(lang, lang)) for lang in f_list]
+    def _get_language(sel, cr, uid,context):
+        return get_language(cr,uid,context,user='contributor')
 
     fields_form = {
         'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,
@@ -69,4 +66,4 @@ class wizard_download_file_for_contrib(wizard.interface):
             }
         },
     }
-wizard_download_file_for_contrib('download.contib.file')
+wizard_download_file_for_contrib('download.contrib.file')
