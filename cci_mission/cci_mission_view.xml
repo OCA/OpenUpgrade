@@ -630,7 +630,12 @@
 						<field name="federation_sending_date" />
 						<newline/>
 						<separator string="Letters" colspan="4"/>
-
+						<field name="letter_ids" nolabel="1" widget="one2many_list" colspan="4">
+							<tree string="Letters">
+							<field name="letter_type"/>
+							<field name="date" />
+							</tree>
+						</field>
 					</page>
 					<page string="Extra Prodcuts">
 						<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4" /> <!-- one2many (product_id, qty, uom, price) -->
