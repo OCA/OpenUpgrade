@@ -409,6 +409,22 @@ class cci_missions_ata_usage(osv.osv):
                 }
 
 cci_missions_ata_usage()
+
+
+class cci_missions_letters_log(osv.osv):
+    _name = 'cci_missions.letters_log'
+    _description = 'cci_missions.letters_log'
+    _columns = {
+        'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
+        'letter_type' :  fields.selection([('Rappel avant echeance','Rappel avant echeance'),('Rappel apres echeance','Rappel apres echeance'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Demande de remboursement','Demande de remboursement'),('Rappel a remboursement','Rappel a remboursement'),('Mise en demeure','Mise en demeure')],'Type of Letter',required=True),
+        'date' : fields.date('Date of Sending',required=True),
+                }
+    _defaults = {
+        'date': lambda *args: time.strftime('%Y-%m-%d')
+    }
+
+cci_missions_letters_log()
+
 class cci_missions_ata_carnet(osv.osv):
     _name = 'cci_missions.ata_carnet'
     _description = 'cci_missions.ata_carnet'
@@ -476,6 +492,7 @@ class cci_missions_ata_carnet(osv.osv):
         'partner_member_state': fields.function(_get_member_state, method=True,string='Member State of the Partner',readonly=True),
         'member_price' : fields.boolean('Apply the Member Price'),
         'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products'),
+        'letter_ids':fields.one2many('cci_missions.letters_log','ata_carnet_id','Letters'),
             }
 
     _defaults = {
@@ -486,20 +503,4 @@ class cci_missions_ata_carnet(osv.osv):
 
    }
 cci_missions_ata_carnet()
-
-
-
-class cci_missions_letters_log(osv.osv):
-    _name = 'cci_missions.letters_log'
-    _description = 'cci_missions.letters_log'
-    _columns = {
-        'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
-        'letter_type' :  fields.selection([('Rappel avant echeance','Rappel avant echeance'),('Rappel apres echeance','Rappel apres echeance'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Demande de remboursement','Demande de remboursement'),('Rappel a remboursement','Rappel a remboursement'),('Mise en demeure','Mise en demeure')],'Type of Letter',required=True),
-        'date' : fields.date('Date of Sending',required=True),
-                }
-    _defaults = {
-        'date': lambda *args: time.strftime('%Y-%m-%d')
-    }
-
-cci_missions_letters_log()
 
