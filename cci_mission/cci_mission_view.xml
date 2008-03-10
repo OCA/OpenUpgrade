@@ -474,7 +474,40 @@
 
 		<menuitem name="Missions/Certificates" action="action_cci_missions_certificate" id="menu_action_cci_missions_certificate"/>
 
+<!-- view for cci_missions_area -->
+		<record model="ir.ui.view" id="cci_missions_area_form">
+			<field name="name">cci_missions.area.form</field>
+			<field name="model">cci_missions.area</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Area">
+					<field name="name" select="1"/>
+					<newline />
+					<field name="country_ids" />
+				</form>
+			</field>
+		</record>
 
+		<record model="ir.ui.view" id="cci_missions_area_tree">
+			<field name="name">cci_missions.area.tree</field>
+			<field name="model">cci_missions.area</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Area">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_area">
+			<field name="name">Area</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.area</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Configuration/Area" action="action_cci_missions_area" id="menu_action_cci_missions_area"/>
 
 	</data>
 </terp>
