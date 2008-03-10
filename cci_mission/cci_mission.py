@@ -433,21 +433,15 @@ class cci_missions_ata_carnet(osv.osv):
     def _get_insurer_id(self, cr, uid, ids, name, args, context=None):
         res ={}
         partner_ids = self.browse(cr,uid,ids)
-        print "partners-ins",partner_ids
         for pid in partner_ids:
-            print "pid-ins",pid
             res[pid.id]=pid.insurer_id
-            print "res-ins",res
         return res
 
     def _get_member_state(self, cr, uid, ids, name, args, context=None):
         res={}
         partner_ids = self.browse(cr,uid,ids)
-        print "partners",partner_ids
         for pid in partner_ids:
-            print "pid",pid
             res[pid.id]=pid.membership_state
-            print "rs",res
         return res
 
 
@@ -460,6 +454,14 @@ class cci_missions_ata_carnet(osv.osv):
             if seq:
                 vals.update({'name': seq})
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
+    def check_ata_carnet(self,cr, uid, ids):
+        data_carnet=self.browse(cr, uid, ids)
+        for data in data_carnet:
+            if (data.own_risk) or (data.insurer_agreement > 0 and data.partner_id.insurer_id > 0):
+                return True
+        return False
+
 
     _columns = {
         'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
@@ -502,5 +504,7 @@ class cci_missions_ata_carnet(osv.osv):
         'state' : lambda *a : 'draft',
 
    }
+
+    _constraints = [(check_ata_carnet, 'Error: Please Make Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', [])]
 cci_missions_ata_carnet()
 
