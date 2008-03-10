@@ -577,6 +577,82 @@
 		</record>
 
 		<menuitem name="Missions/Configuration/Letters Log" action="action_cci_missions_letters_log" id="menu_action_cci_missions_letters_log"/>
+	<!-- View for cci_missions.ata_carnet  -->
+		<record model="ir.ui.view" id="cci_missions_ata_carnet_form">
+			<field name="name">cci_missions.ata_carnet.form</field>
+			<field name="model">cci_missions.ata_carnet</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="ATA Carnet">
+				<notebook>
+					<page string="General">
+						<field name="name" />
+						<field name="type_id" />
+						<field name="creation_date" on_change="" />
+						<field name="validity_date" />
+						<field name="partner_id" />
+						<field name="partner_insurer_id" />
+						<field name="partner_member_state" />
+						<field name="member_price" />
+						<newline/>
+						<separator string="Holder Information" colspan="4"/>
+						<field name="holder_name" select="2" />
+						<newline/>
+						<field name="holder_address" />
+						<field name="holder_city" />
+						<newline/>
+						<separator string="Representer Information" colspan="4"/>
+						<field name="representer_name" select="2" />
+						<newline/>
+						<field name="representer_address" />
+						<field name="representer_city" />
+						<newline/>
+						<field name="usage_id" />
+						<field name="goods" />
+						<field name="area_id" />
+						<field name="goods_value" />
+						<field name="double_signature" />
+						<field name="initial_pages" />
+						<field name="insurer_agreement" />
+						<field name="own_risk" />
+						<newline/>
+						<field name="state" colspan="4" />
+					</page>
+					<page string="Follow-up">
+						<field name="additional_pages" />
+						<field name="return_date" />
+						<field name="ok_state_date" />
+						<field name="federation_sending_date" />
+						<newline/>
+						<separator string="Letters" colspan="4"/>
+					</page>
+					<page string="Extra Prodcuts">
 
+					</page>
+				</notebook>
+				</form>
+
+			</field>
+	</record>
+	<record model="ir.ui.view" id="cci_missions_ata_carnet_tree">
+			<field name="name">cci_missions.ata_carnet.tree</field>
+			<field name="model">cci_missions.ata_carnet</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="ATA Carnet">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_ata_carnet">
+			<field name="name">ATA Carnet</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.ata_carnet</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<menuitem name="Missions/ATA Carnet" action="action_cci_missions_ata_carnet" id="menu_action_cci_missions_ata_carnet"/>
 	</data>
 </terp>
