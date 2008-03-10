@@ -10,7 +10,8 @@
     "description": """For better translation process""",
     "update_xml" : [
                     "translation_view.xml",
-                    "translation_wizard.xml"
+                    "translation_wizard.xml",
+                    "translation_workflow.xml",
                     ],
     "active": False,
     "installable": True
