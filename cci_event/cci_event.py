@@ -185,20 +185,13 @@ class event_registration(osv.osv):
 
 	def cci_event_reg_open(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'open',})
-		this = self.pool.get('event.registration').browse(cr, uid, ids)
-		nb = self.pool.get('event.event')._get_register( cr, uid, [this[0].event_id.id], 'register_current', args, None)
-		if nb[this[0].event_id.id] >= this[0].event_id.register_min:
-			wf_service = netsvc.LocalService('workflow')
-			wf_service.trg_validate(uid, 'event.event', this[0].event_id.id, 'open', cr)
 		return True
 
 	def cci_event_reg_done(self, cr, uid, ids, *args):
-		print 'done'
 		self.write(cr, uid, ids, {'state':'done',})
 		return True
 
 	def cci_event_reg_cancel(self, cr, uid, ids, *args):
-		print 'cancel'
 		self.write(cr, uid, ids, {'state':'cancel',})
 		return True
 
