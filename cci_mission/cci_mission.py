@@ -402,3 +402,26 @@ class cci_missions_area(osv.osv):
                 }
 
 cci_missions_area()
+
+class cci_missions_ata_usage(osv.osv):
+    _name = 'cci_missions.ata_usage'
+    _description = 'cci_missions.ata_usage'
+    _columns = {
+        'name' : fields.char('Usage',size=80,required=True),
+                }
+
+cci_missions_ata_usage()
+
+class cci_missions_letters_log(osv.osv):
+    _name = 'cci_missions.letters_log'
+    _description = 'cci_missions.letters_log'
+    _columns = {
+        'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
+        'letter_type' : fields.selection([('Reminder before deadline','Reminder before deadline'),('Reminder after deadline','Reminder after deadline'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Refund Request','Refund Request'),('Reminder to refund','Reminder to refund'),('Formal notice','Formal notice')],'Type of Letter',required=True),
+        'date' : fields.date('Date of Sending',required=True),
+                }
+    _defaults = {
+        'date': lambda *args: time.strftime('%Y-%m-%d')
+    }
+
+cci_missions_letters_log()
