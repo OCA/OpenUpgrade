@@ -1,4 +1,3 @@
-
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -16,7 +15,7 @@
 # of the License, or (at your option) any later version.
 #
 # This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# but WITHOUT ANY WARRANTY; without even the impli(ed warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
@@ -425,3 +424,47 @@ class cci_missions_letters_log(osv.osv):
     }
 
 cci_missions_letters_log()
+
+class cci_missions_ata_carnet(osv.osv):
+    _name = 'cci_missions.ata_carnet'
+    _description = 'cci_missions.ata_carnet'
+    _columns = {
+        'type_id' : fields.many2one('cci_missions.dossier','Related Type of Carnet',required=True),
+        'creation_date' : fields.date('Emission Date',required=True),
+        'validity_date' : fields.date('Validity Date',required=True),
+        'partner_id': fields.many2one('res.partner','Partner',required=True),
+        'holder_name' : fields.char('Holder Name',size=50),
+        'holder_address' : fields.char('Holder Address',size=50),
+        'holder_city' : fields.char('Holder City',size=50),
+        'representer_name' : fields.char('Representer Name',size=50),
+        'representer_address' : fields.char('Representer Address',size=50),
+        'representer_city' : fields.char('Representer City',size=50),
+        'usage_id': fields.many2one('cci_missions.ata_usage','Usage',required=True),
+        'goods': fields.char('Goods',size=80),
+        'area_id': fields.many2one('cci_missions.area','Area',required=True),
+        'insurer_agreement' : fields.integer('Insurer Agreement'),
+        'own_risk' : fields.boolean('Own Risks'),
+        'goods_value': fields.float('Goods Value',required=True),
+        'double_signature' : fields.boolean('Double Signature'),
+        'initial_pages' : fields.integer('Initial Number of Pages',required=True),
+        'additional_pages' : fields.integer('Additional Number of Pages'),
+        'warranty':fields.float('Warranty',required=True,readonly=True),
+        'warranty_product_id': fields.many2one('product.product','Related Warranty Product',required=True),
+        'return_date' : fields.date('Date of Return'),
+        'state':fields.selection([('draft','Draft'),('created','Created'),('pending','Pending'),('dispute','Dispute'),('correct','Correct'),('closed','Closed')],'State',required=True,readonly=True),
+        'ok_state_date' : fields.date('Date of Closure'),
+        'federation_sending_date' : fields.date('Date of Sending to the Federation'),
+        'name' : fields.char('Name',size=50,required=True),
+        'partner_insurer_id': fields.integer('Insurer ID of the Partner'),
+        'partner_member_state': fields.char('Member State of the Partner',size=50),
+        'member_price' : fields.boolean('Apply the Member Price'),
+            }
+
+    _defaults = {
+        'own_risk' : lambda *b : False,
+        'double_signature' : lambda *b : False,
+        'ok_state_date' : lambda *b : False,
+        'state' : lambda *a : 'draft',
+
+   }
+cci_missions_ata_carnet()
