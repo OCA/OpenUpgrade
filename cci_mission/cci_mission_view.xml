@@ -76,17 +76,29 @@
 			<field name="arch" type="xml">
 				<form string="Site">
 					<field name="name" select="1"/>
+					<separator string="ATA infos" colspan="4"/>
+					<field name="official_name_1" select="1" colspan="4"/>
+					<newline/>
+					<field name="official_name_2" colspan="4"/>
+					<newline/>
+					<field name="official_name_3" colspan="4"/>
+					<newline/>
+					<field name="official_name_4" />
+					<newline/>
+					<field name="code" select="2" />
+					<field name="prefix_ATA" select="2" />
 				</form>
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="cci_missions_certificate_type_tree">
+		<record model="ir.ui.view" id="cci_missions_site_tree">
 			<field name="name">cci_missions.site.tree</field>
 			<field name="model">cci_missions.site</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Site">
 					<field name="name"/>
+					<field name="official_name_1"/>
 				</tree>
 			</field>
 		</record>
