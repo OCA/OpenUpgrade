@@ -105,9 +105,9 @@ class cci_missions_embassy_folder_line (osv.osv):
 
 cci_missions_embassy_folder_line()
 
-class cci_missions_certificate_type(osv.osv):
-    _name = 'cci_missions.certificate_type'
-    _description = 'cci_missions.certificate_type'
+class cci_missions_dossier_type(osv.osv):
+    _name = 'cci_missions.dossier_type'
+    _description = 'cci_missions.dossier_type'
     _columns = {
         'code' : fields.char('Code',size=2,required=True),
         'name' : fields.char('Description',size=30,required=True),
@@ -117,8 +117,7 @@ class cci_missions_certificate_type(osv.osv):
         'sequence_id' : fields.many2one('ir.sequence','Sequence',required=True,help='for association with a sequence'),
         'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA Carnet','ATA Carnet')],'Type',required=True),
                 }
-
-cci_missions_certificate_type()
+cci_missions_dossier_type()
 
 class cci_missions_dossier(osv.osv):
     _name = 'cci_missions.dossier'
@@ -189,7 +188,7 @@ class cci_missions_dossier(osv.osv):
 
     _columns = {
         'name' : fields.char('Reference',size=20,required=True),
-        'type_id' : fields.many2one('cci_missions.certificate_type','Certificate Type',required=True),
+        'type_id' : fields.many2one('cci_missions.dossier_type','Dossier Type',required=True),
         'date' : fields.date('Creation Date',required=True),
         'order_partner_id': fields.many2one('res.partner','Billed Customer',required=True),
         'asker_name':fields.char('Asker Name',size=50),
@@ -297,7 +296,7 @@ class cci_missions_certificate(osv.osv):
     def create(self, cr, uid, vals, *args, **kwargs):
 #        Overwrite the name fields to set next sequence according to the sequence in the certification type (type_id)
         if vals['type_id']:
-            data = self.pool.get('cci_missions.certificate_type').browse(cr, uid,vals['type_id'])
+            data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
             seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
 
             if seq:
@@ -411,20 +410,6 @@ class cci_missions_ata_usage(osv.osv):
 
 cci_missions_ata_usage()
 
-class cci_missions_letters_log(osv.osv):
-    _name = 'cci_missions.letters_log'
-    _description = 'cci_missions.letters_log'
-    _columns = {
-        'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
-        'letter_type' : fields.selection([('Reminder before deadline','Reminder before deadline'),('Reminder after deadline','Reminder after deadline'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Refund Request','Refund Request'),('Reminder to refund','Reminder to refund'),('Formal notice','Formal notice')],'Type of Letter',required=True),
-        'date' : fields.date('Date of Sending',required=True),
-                }
-    _defaults = {
-        'date': lambda *args: time.strftime('%Y-%m-%d')
-    }
-
-cci_missions_letters_log()
-
 class cci_missions_ata_carnet(osv.osv):
     _name = 'cci_missions.ata_carnet'
     _description = 'cci_missions.ata_carnet'
@@ -468,3 +453,17 @@ class cci_missions_ata_carnet(osv.osv):
 
    }
 cci_missions_ata_carnet()
+
+class cci_missions_letters_log(osv.osv):
+    _name = 'cci_missions.letters_log'
+    _description = 'cci_missions.letters_log'
+    _columns = {
+        'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
+        'letter_type' :  fields.selection([('Rappel avant echeance','Rappel avant echeance'),('Rappel apres echeance','Rappel apres echeance'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Demande de remboursement','Demande de remboursement'),('Rappel a remboursement','Rappel a remboursement'),('Mise en demeure','Mise en demeure')],'Type of Letter',required=True),
+        'date' : fields.date('Date of Sending',required=True),
+                }
+    _defaults = {
+        'date': lambda *args: time.strftime('%Y-%m-%d')
+    }
+
+cci_missions_letters_log()
