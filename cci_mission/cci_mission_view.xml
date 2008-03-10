@@ -590,7 +590,7 @@
 					<page string="General">
 						<field name="name" />
 						<field name="type_id" />
-						<field name="creation_date" on_change="" />
+						<field name="creation_date" on_change="onchange_creation_date(creation_date)" />
 						<field name="validity_date" />
 						<field name="partner_id" />
 						<field name="partner_insurer_id" />
