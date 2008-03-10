@@ -509,5 +509,74 @@
 
 		<menuitem name="Missions/Configuration/Area" action="action_cci_missions_area" id="menu_action_cci_missions_area"/>
 
+<!-- view for cci_missions_ata_usage -->
+		<record model="ir.ui.view" id="cci_missions_ata_usage_form">
+			<field name="name">cci_missions.ata_usage.form</field>
+			<field name="model">cci_missions.ata_usage</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="ATA Usage">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_ata_usage_tree">
+			<field name="name">cci_missions.ata_usage.tree</field>
+			<field name="model">cci_missions.ata_usage</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="ATA Usage">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_ata_usage">
+			<field name="name">ATA Usage</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.ata_usage</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Configuration/ATA Usage" action="action_cci_missions_ata_usage" id="menu_action_cci_missions_ata_usage"/>
+
+<!-- view for cci_missions_letters_log -->
+		<record model="ir.ui.view" id="cci_missions_letters_log_form">
+			<field name="name">cci_missions.letters_log.form</field>
+			<field name="model">cci_missions.letters_log</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Letter Log">
+					<field name="ata_carnet_id" select="1" />
+					<field name="letter_type" select="1"/>
+					<field name="date" select="2" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_letters_log_tree">
+			<field name="name">cci_missions.letters_log.tree</field>
+			<field name="model">cci_missions.letters_log</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Letter Log">
+					<field name="ata_carnet_id" />
+					<field name="letter_type"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_cci_missions_letters_log">
+			<field name="name">Letter Log</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_missions.letters_log</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Missions/Configuration/Letters Log" action="action_cci_missions_letters_log" id="menu_action_cci_missions_letters_log"/>
+
 	</data>
 </terp>
