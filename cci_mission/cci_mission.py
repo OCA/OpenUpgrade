@@ -46,7 +46,13 @@ class cci_missions_site(osv.osv):
     _name = 'cci_missions.site'
     _description = 'cci_missions.site'
     _columns = {
-        'name' : fields.char('Name of the Site',size=50,required=True)
+        'name' : fields.char('Name of the Site',size=50,required=True),
+        'official_name_1' : fields.char('Official Name of the Site',size=50,required=True),
+        'official_name_2' : fields.char('Official Name of the Site',size=50),
+        'official_name_3' : fields.char('Official Name of the Site',size=50),
+        'official_name_4' : fields.char('Official Name of the Site',size=50),
+        'code' : fields.char('Code',size=1),
+        'prefix_ATA' : fields.char('Prefix ATA',size=3,required=True),
                 }
 
 cci_missions_site()
@@ -387,4 +393,12 @@ class cci_missions_courier_log(osv.osv):
 
 cci_missions_courier_log()
 
+class cci_missions_area(osv.osv):
+    _name = 'cci_missions.area'
+    _description = 'cci_missions.area'
+    _columns = {
+        'name' : fields.char('Description',size=50,required=True,transtale=True),
+        'country_ids': fields.many2many('res.country','area_country_rel','area','country',"Countries"),
+                }
 
+cci_missions_area()
