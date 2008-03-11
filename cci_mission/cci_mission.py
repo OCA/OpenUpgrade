@@ -132,7 +132,7 @@ class cci_missions_dossier_type(osv.osv):
 		'copy_product_id' : fields.many2one('product.product','Reference for Copies',required=True,help='for the association with a pricelist'),
 		'site_id' : fields.many2one('cci_missions.site','Site',required=True),
 		'sequence_id' : fields.many2one('ir.sequence','Sequence',required=True,help='for association with a sequence'),
-		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA Carnet','ATA Carnet')],'Type',required=True),
+#		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA Carnet','ATA Carnet')],'Type',required=True),
 	}
 
 cci_missions_dossier_type()
@@ -152,7 +152,6 @@ class cci_missions_dossier(osv.osv):
 		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
 	def get_partner_details(self, cr, uid, ids,order_partner_id):
-
 		result={}
 		asker_name=False
 		sender_name=False
@@ -303,6 +302,7 @@ class cci_missions_certificate(osv.osv):
 
 	def create(self, cr, uid, vals, *args, **kwargs):
 #		Overwrite the name fields to set next sequence according to the sequence in the certification type (type_id)
+		vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Certificate')])[0]
 		if vals['type_id']:
 			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
 			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
@@ -336,7 +336,6 @@ class cci_missions_legalization(osv.osv):
 		result={}
 		asker_name=False
 		sender_name=False
-
 		if order_partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 			if not partner_info.asker_name:
@@ -357,6 +356,15 @@ class cci_missions_legalization(osv.osv):
 		}
 		return result
 
+	def create(self, cr, uid, vals, *args, **kwargs):
+#		Overwrite the name fields to set next sequence according to the sequence in the legalization type (type_id)
+		vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Legalization')])[0]
+		if vals['type_id']:
+			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
+			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
+			if seq:
+				vals.update({'name': seq})
+		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
 	_columns = {
 		'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits

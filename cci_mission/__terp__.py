@@ -9,8 +9,8 @@
     """,
     "depends" : ["base",'cci_partner','product'],
     "init_xml" : [],
-    "demo_xml" : [],
-    "update_xml" : ["cci_mission_view.xml","cci_mission_wizard.xml"],
+    "demo_xml" : ["cci_mission_data.xml"],
+    "update_xml" : ["cci_mission_view.xml","cci_mission_wizard.xml", ],
     "active": False,
     "installable": True
 }

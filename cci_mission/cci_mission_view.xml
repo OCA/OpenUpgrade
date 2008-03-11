@@ -41,7 +41,7 @@
 					<field name="site_id" />
 					<field name="original_product_id" />
 					<field name="copy_product_id" />
-					<field name="section" /> <!-- should be check -->
+					<!--<field name="section" />--> <!-- should be check -->
 				</form>
 			</field>
 		</record>
@@ -350,10 +350,10 @@
 			<field name="arch" type="xml">
 				<form string="Legalization">
 					<notebook>
-					<page string="Certificate Details">
+					<page string="Legalization Details">
 						<field name="name" select="1" />
 						<field name="date" select="2" />
-						<field name="type_id" select="1" />
+						<field name="type_id" select="1" readonly="1"/>
 						<field name="destination_id" select="1"/>
 						<field name="order_partner_id" on_change="get_legalization_details(order_partner_id)" />
 						<newline/>
@@ -399,6 +399,7 @@
 			<field name="name">Legalization</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">cci_missions.legalization</field>
+			<field name="domain" eval="[('type_id','=',2)]"/>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
@@ -416,7 +417,7 @@
 					<page string="Certificate Details">
 						<field name="name" select="1"/>
 						<field name="date" select="2"/>
-						<field name="type_id" select="1"/>
+						<field name="type_id" select="1" readonly="1"/>
 						<field name="destination_id" select="1" />
 						<field name="order_partner_id" on_change="get_certification_details(order_partner_id)" />
 						<newline/>
@@ -468,6 +469,7 @@
 			<field name="name">Certificate</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">cci_missions.certificate</field>
+			<field name="domain" eval="[('type_id','=',1)]"/>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>

@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+<!-- Demo Data for Site -->
+	<record id="cci_missions_site_liegevervier0" model="cci_missions.site">
+		<field eval="&quot;Liege Vervier&quot;" name="name"/>
+		<field eval="&quot;ATA&quot;" name="prefix_ATA"/>
+		<field eval="&quot;Site de la Chambre de Commerce de Liege - Verviers&quot;" name="official_name_1"/>
+	</record>
+
+<!-- Sequences for name on dossier -->
+	<record model="ir.sequence.type" id="seq_certificate_cci">
+		<field name="name">Certificate Name</field>
+		<field name="code">cci_missions.certificate</field>
+	</record>
+	<record model="ir.sequence.type" id="seq_legalization_cci">
+		<field name="name">Legalization Name</field>
+		<field name="code">cci_missions.legalization</field>
+	</record>
+
+	<record id="ir_sequence_legalizationseq0" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq.&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;/LG&quot;" name="suffix"/>
+	</record>
+	<record id="ir_sequence_certificateseq0" model="ir.sequence">
+		<field eval="&quot;cci_missions.certificate&quot;" name="code"/>
+		<field eval="&quot;Certificate Seq.&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;/CERT&quot;" name="suffix"/>
+	</record>
+
+
+<!-- Demo Data for Product -->
+	<record id="cci_product_product_0" model="product.product">
+		<field name="list_price">50.0</field>
+		<field name="member_price">42.0</field>
+		<field name="standard_price">25.5</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">CO - original</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_1" model="product.product">
+		<field name="list_price">10.0</field>
+		<field name="member_price">6.5</field>
+		<field name="standard_price">5</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">CO - copy</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_2" model="product.product">
+		<field name="list_price">20.0</field>
+		<field name="member_price">16.5</field>
+		<field name="standard_price">10</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Legalization - original</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_3" model="product.product">
+		<field name="list_price">0.5</field>
+		<field name="member_price">0.35</field>
+		<field name="standard_price">0.3</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Legalization - copy</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+
+<!-- Demo Data for Dossier Type -->
+	<record id="cci_missions_dossier_type_certificate0" model="cci_missions.dossier_type">
+		<field eval="&quot;CO&quot;" name="code"/>
+		<field eval="&quot;Certificate&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_1"/>
+		<field eval="&quot;certificate&quot;" name="section"/>
+		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="ir_sequence_certificateseq0"/>
+		<field name="original_product_id" ref="cci_product_product_0"/>
+	</record>
+	<record id="cci_missions_dossier_type_legalization0" model="cci_missions.dossier_type">
+		<field eval="&quot;LG&quot;" name="code"/>
+		<field eval="&quot;Legalization&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3"/>
+		<field eval="&quot;legalization&quot;" name="section"/>
+		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq0"/>
+		<field name="original_product_id" ref="cci_product_product_2"/>
+	</record>
+
+</data>
+</terp>
