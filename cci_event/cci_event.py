@@ -251,16 +251,16 @@ class event_registration(osv.osv):
 
 	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
 		if not event_id:
-			return {'value':{'unit_price' : False}}
+			return {'value':{'unit_price' : False ,'invoice_label' : False }}
 		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
 		if data_event.product_id:
 			if not partner_invoice_id:
-				return {'value':{'unit_price' : data_event.product_id.lst_price}}
+				return {'value':{'unit_price' : data_event.product_id.lst_price , 'invoice_label' : data_event.product_id.name}}
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
 			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-				return {'value':{'unit_price' : data_event.product_id.member_price}}
-			return {'value':{'unit_price' : data_event.product_id.lst_price}}
-		return {'value':{'unit_price' : False}}
+				return {'value':{'unit_price' : data_event.product_id.member_price , 'invoice_label' : data_event.product_id.name}}
+			return {'value':{'unit_price' : data_event.product_id.lst_price , 'invoice_label' : data_event.product_id.name}}
+		return {'value':{'unit_price' : False,'invoice_label' : False}}
 
 	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
 		print "1"
