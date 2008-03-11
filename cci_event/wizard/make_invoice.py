@@ -74,9 +74,8 @@ def _makeInvoices(self, cr, uid, data, context):
 
                 for tax in data_product[0].taxes_id:
                     tax_ids.append(tax.id)
-
                 inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
-                        'name': reg.name,
+                        'name': reg.invoice_label,
                         'account_id':value['value']['account_id'],
                         'price_unit': reg.unit_price,# value['value']['price_unit'],
                         'quantity': reg.nb_register,
@@ -89,8 +88,8 @@ def _makeInvoices(self, cr, uid, data, context):
                 create_ids.append(inv_id)
 
                 inv = {
-                    'name': reg.name,
-                    'origin': reg.name,
+                    'name': reg.invoice_label,
+                    'origin': reg.invoice_label,
                     'type': 'out_invoice',
                     'reference': False,
                     'account_id': reg.partner_invoice_id.property_account_receivable.id,
