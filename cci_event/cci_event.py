@@ -229,7 +229,7 @@ class event_registration(osv.osv):
 			"check_ids":fields.one2many('event.check','check_id',"check ids"),#should be corect (o2m ?)
 			"payment_ids":fields.one2many("payment.order","pay_id","payment"),#should be corect (o2m ?)
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
-     	    "lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
+			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
 		}
 	_defaults = {
 		'tobe_invoiced' : lambda *a: True,
@@ -254,8 +254,9 @@ class event_registration(osv.osv):
 		if addr['contact'] and not email:
 			obj_addr=self.pool.get('res.partner.address').browse(cr, uid, addr['contact'])
 			data['email_from'] = obj_addr.email
-			data['badge_name']=obj_addr.contact_id.name
-			data['badge_title']=obj_addr.contact_id.title
+			if obj_addr.contact_id:
+				data['badge_name']=obj_addr.contact_id.name
+				data['badge_title']=obj_addr.contact_id.title
 		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
 		data['badge_partner']=partner_data.name
 
