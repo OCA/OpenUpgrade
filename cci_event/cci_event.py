@@ -229,6 +229,9 @@ class event_registration(osv.osv):
 			"check_ids":fields.one2many('event.check','check_id',"check ids"),#should be corect (o2m ?)
 			"payment_ids":fields.one2many("payment.order","pay_id","payment"),#should be corect (o2m ?)
 		}
+	_defaults = {
+		'tobe_invoiced' : lambda *a: True,
+				 }
 
 	def onchange_contact_id(self, cr, uid, ids, contact_id):
 		#return name
