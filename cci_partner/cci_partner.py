@@ -292,7 +292,7 @@ class res_partner_address(osv.osv):
     _description = 'res.partner.address'
 
     def create(self, cr, uid, vals, *args, **kwargs):
-        if vals['function_code_label']:
+        if vals.has_key('function_code_label') and vals['function_code_label']:
             temp = ''
             for letter in vals['function_code_label']:
                 res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
@@ -302,7 +302,7 @@ class res_partner_address(osv.osv):
         return super(res_partner_address,self).create(cr, uid, vals, *args, **kwargs)
 
     def write(self, cr, uid, ids,vals, *args, **kwargs):
-        if vals['function_code_label']:
+        if vals.has_key('function_code_label') and vals['function_code_label']:
             temp = ''
             for letter in vals['function_code_label']:
                 res = self.pool.get('res.partner.function').search(cr, uid, [('code','=', letter)])
