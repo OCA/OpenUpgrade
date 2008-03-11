@@ -221,52 +221,44 @@ class event_registration(osv.osv):
 			"badge_partner":fields.char('Badge Partner',size=128),
 			"group_id": fields.many2one('event.group','Event Group'),
 			"cavalier": fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
-			"invoice_label":fields.char("Label Invoice",size=128,required=True),
+			"invoice_label":fields.char("Label Invoice",size=128),
 			"tobe_invoiced":fields.boolean("To be Invoice"),
 			"payment_mode":fields.many2one('payment.mode',"payment mode"),#should be check (m2o ?)
 			"invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
 			"check_mode":fields.boolean('Check Mode'),
 			"check_ids":fields.one2many('event.check','check_id',"check ids"),#should be corect (o2m ?)
 			"payment_ids":fields.one2many("payment.order","pay_id","payment"),#should be corect (o2m ?)
+			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
+     	    "lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
 		}
-	_defaults = {
-		'tobe_invoiced' : lambda *a: True,
-				 }
 
-	def onchange_contact_id(self, cr, uid, ids, contact_id):
-		#return name
-		if not contact_id:
-			return {}
-		contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
-		return {'value':{'badge_name' : contact_data.name,'badge_title' : contact_data.title}}
+#	def onchange_contact_id(self, cr, uid, ids, contact_id):
+#		#return name
+#		if not contact_id:
+#			return {}
+#		contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
+#		return {'value':{'badge_name' : contact_data.name,'badge_title' : contact_data.title}}
 
 	def onchange_partner_id(self, cr, uid, ids, part, email=False):#override function for partner name.
+		data={}
+		data['badge_partner']=data['partner_address_id']=data['partner_invoice_id']=data['email_from']=data['badge_title']=data['badge_name']=False
 		if not part:
-			return {'value':{'partner_address_id': False}}
-		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
-		data = {'partner_address_id':addr['contact']}
-		if addr['contact'] and not email:
-			data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, addr['contact']).email
+			return {'value':data}
 
+		data['partner_invoice_id']=part
+		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
+		data['partner_address_id']=addr['contact']
+		if addr['contact'] and not email:
+			obj_addr=self.pool.get('res.partner.address').browse(cr, uid, addr['contact'])
+			data['email_from'] = obj_addr.email
+			data['badge_name']=obj_addr.contact_id.name
+			data['badge_title']=obj_addr.contact_id.title
 		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
 		data['badge_partner']=partner_data.name
+
 		return {'value':data}
 
 	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
-		if not event_id:
-			return {'value':{'unit_price' : False ,'invoice_label' : False }}
-		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
-		if data_event.product_id:
-			if not partner_invoice_id:
-				return {'value':{'unit_price' : data_event.product_id.lst_price , 'invoice_label' : data_event.product_id.name}}
-			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
-			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-				return {'value':{'unit_price' : data_event.product_id.member_price , 'invoice_label' : data_event.product_id.name}}
-			return {'value':{'unit_price' : data_event.product_id.lst_price , 'invoice_label' : data_event.product_id.name}}
-		return {'value':{'unit_price' : False,'invoice_label' : False}}
-
-	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
-		print "1"
 		if not event_id:
 			return {'value':{'unit_price' : False}}
 		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
@@ -278,6 +270,33 @@ class event_registration(osv.osv):
 				return {'value':{'unit_price' : data_event.product_id.member_price}}
 			return {'value':{'unit_price' : data_event.product_id.lst_price}}
 		return {'value':{'unit_price' : False}}
+
+	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
+
+		data={}
+		data['training_authorization']=data['lang_authorization']=data['unit_price']=False
+		if partner_invoice_id:
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
+			data['training_authorization']=data_partner.training_authorization
+			data['lang_authorization']=data_partner.lang_authorization
+		if not event_id:
+			return {'value':data}
+		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
+
+		if data_event.product_id:
+			if not partner_invoice_id:
+				data['training_authorization']=data['lang_authorization']=False
+				data['unit_price']= data_event.product_id.lst_price
+				return {'value':data}
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
+
+			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
+				data['unit_price']= data_event.product_id.member_price
+				return {'value':data}
+
+			data['unit_price']= data_event.product_id.lst_price
+			return {'value':data}
+		return {'value':data}
 
 event_registration()
 
