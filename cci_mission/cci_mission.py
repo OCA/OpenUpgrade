@@ -492,7 +492,7 @@ class cci_missions_ata_carnet(osv.osv):
         'partner_insurer_id': fields.function(_get_insurer_id, method=True,string='Insurer ID of the Partner',readonly=True),
         'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
         'member_price' : fields.boolean('Apply the Member Price'),
-        'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products'),
+        'product_ids' : fields.many2many('product.product','carnet_product_relation','carnet_id','product_id','Products'),
         'letter_ids':fields.one2many('cci_missions.letters_log','ata_carnet_id','Letters'),
     }
 
@@ -502,7 +502,7 @@ class cci_missions_ata_carnet(osv.osv):
         'state' : lambda *a : 'draft',
         'validity_date' : _default_validity_date,
         'name': lambda *args: '/',
-        'creation_date': lambda *a: time.strftime('%Y-%m-%d'),
+        'creation_date': lambda *a: time.strftime('%Y-%m-%d'), # should be check
     }
     _constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', [])]
 
