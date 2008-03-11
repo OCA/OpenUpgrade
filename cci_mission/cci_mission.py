@@ -436,7 +436,7 @@ class cci_missions_ata_carnet(osv.osv):
         return res
 
     def create(self, cr, uid, vals, *args, **kwargs):
-#        Overwrite the name fields to set next sequence according to the sequence in the certification type (type_id)
+
         if vals['type_id']:
             data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
             seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
@@ -464,7 +464,7 @@ class cci_missions_ata_carnet(osv.osv):
 
     _columns = {
         'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
-        'creation_date' : fields.date('Emission Date',required=True),
+        'creation_date' : fields.date('Emission Date',required=True,readonly=True),
         'validity_date' : fields.date('Validity Date',required=True),
         'partner_id': fields.many2one('res.partner','Partner',required=True),
         'holder_name' : fields.char('Holder Name',size=50),
@@ -482,7 +482,7 @@ class cci_missions_ata_carnet(osv.osv):
         'double_signature' : fields.boolean('Double Signature'),
         'initial_pages' : fields.integer('Initial Number of Pages',required=True),
         'additional_pages' : fields.integer('Additional Number of Pages'),
-        'warranty':fields.float('Warranty',required=True,readonly=True),
+        'warranty':fields.float('Warranty',required=True),
         'warranty_product_id': fields.many2one('product.product','Related Warranty Product',required=True),
         'return_date' : fields.date('Date of Return'),
         'state':fields.selection([('draft','Draft'),('created','Created'),('pending','Pending'),('dispute','Dispute'),('correct','Correct'),('closed','Closed')],'State',required=True,readonly=True),
@@ -499,11 +499,12 @@ class cci_missions_ata_carnet(osv.osv):
     _defaults = {
         'own_risk' : lambda *b : False,
         'double_signature' : lambda *b : False,
-        'ok_state_date' : lambda *b : False,
         'state' : lambda *a : 'draft',
-        'validity_date' : _default_validity_date
+        'validity_date' : _default_validity_date,
+        'name': lambda *args: '/',
+        'creation_date': lambda *a: time.strftime('%Y-%m-%d'),
     }
-    _constraints = [(check_ata_carnet, 'Error: Please Make Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', [])]
+    _constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', [])]
 
 cci_missions_ata_carnet()
 
