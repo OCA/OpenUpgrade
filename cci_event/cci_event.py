@@ -221,7 +221,7 @@ class event_registration(osv.osv):
 			"badge_partner":fields.char('Badge Partner',size=128),
 			"group_id": fields.many2one('event.group','Event Group'),
 			"cavalier": fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
-			"invoice_label":fields.char("Label Invoice",size=128),
+			"invoice_label":fields.char("Label Invoice",size=128,required=True),
 			"tobe_invoiced":fields.boolean("To be Invoice"),
 			"payment_mode":fields.many2one('payment.mode',"payment mode"),#should be check (m2o ?)
 			"invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
