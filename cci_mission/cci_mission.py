@@ -453,13 +453,9 @@ class cci_missions_ata_carnet(osv.osv):
         return False
 
     def _default_validity_date(self,cr,uid,context={}):
-        creation_date=time.strftime('%Y-%m-%d')
-        year = creation_date[:4]
-        month = creation_date[5:7]
-        day = creation_date[8:10]
-        year = int(year) + 1
-        dt = datetime.date(int(year),int(month),int(day))
-        validity_date = dt - timedelta(days=1)
+        creation_date=datetime.datetime.today()
+        year=datetime.date(creation_date.year + 1,creation_date.month,creation_date.day)
+        validity_date= year - timedelta(days=1)
         return validity_date.strftime('%Y-%m-%d')
 
     _columns = {
