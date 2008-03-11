@@ -299,7 +299,6 @@ class cci_missions_certificate(osv.osv):
 			'asker_zip_id': zip,
 			'sender_name': sender_name}
 		}
-
 		return result
 
 	def create(self, cr, uid, vals, *args, **kwargs):
@@ -307,7 +306,6 @@ class cci_missions_certificate(osv.osv):
 		if vals['type_id']:
 			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
 			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
-
 			if seq:
 				vals.update({'name': seq})
 		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
@@ -418,102 +416,100 @@ class cci_missions_ata_usage(osv.osv):
 cci_missions_ata_usage()
 
 class cci_missions_ata_carnet(osv.osv):
-    _name = 'cci_missions.ata_carnet'
-    _description = 'cci_missions.ata_carnet'
+	_name = 'cci_missions.ata_carnet'
+	_description = 'cci_missions.ata_carnet'
 
-    def _get_insurer_id(self, cr, uid, ids, name, args, context=None):
-        res={}
-        partner_ids = self.browse(cr,uid,ids)
-        for p_id in partner_ids:
-            res[p_id.id]=p_id.partner_id.insurer_id
-        return res
+	def _get_insurer_id(self, cr, uid, ids, name, args, context=None):
+		res={}
+		partner_ids = self.browse(cr,uid,ids)
+		for p_id in partner_ids:
+			res[p_id.id]=p_id.partner_id.insurer_id
+		return res
 
-    def _get_member_state(self, cr, uid, ids, name, args, context=None):
-        res={}
-        partner_ids = self.browse(cr,uid,ids)
-        for p_id in partner_ids:
-            res[p_id.id]=p_id.partner_id.membership_state
-        return res
+	def _get_member_state(self, cr, uid, ids, name, args, context=None):
+		res={}
+		partner_ids = self.browse(cr,uid,ids)
+		for p_id in partner_ids:
+			res[p_id.id]=p_id.partner_id.membership_state
+		return res
 
-    def create(self, cr, uid, vals, *args, **kwargs):
+	def create(self, cr, uid, vals, *args, **kwargs):
+		if vals['type_id']:
+			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
+			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
+			if seq:
+				vals.update({'name': seq})
+		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
-        if vals['type_id']:
-            data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
-            seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
+	def check_ata_carnet(self,cr, uid, ids):
+		data_carnet=self.browse(cr, uid, ids)
+		for data in data_carnet:
+			if (data.own_risk) or (data.insurer_agreement > 0 and data.partner_id.insurer_id > 0):
+				return True
+		return False
 
-            if seq:
-                vals.update({'name': seq})
-        return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+	def _default_validity_date(self,cr,uid,context={}):
+		creation_date=datetime.datetime.today()
+		year=datetime.date(creation_date.year + 1,creation_date.month,creation_date.day)
+		validity_date= year - timedelta(days=1)
+		return validity_date.strftime('%Y-%m-%d')
 
-    def check_ata_carnet(self,cr, uid, ids):
-        data_carnet=self.browse(cr, uid, ids)
-        for data in data_carnet:
-            if (data.own_risk) or (data.insurer_agreement > 0 and data.partner_id.insurer_id > 0):
-                return True
-        return False
+	_columns = {
+		'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
+		'creation_date' : fields.date('Emission Date',required=True,readonly=True),
+		'validity_date' : fields.date('Validity Date',required=True),
+		'partner_id': fields.many2one('res.partner','Partner',required=True),
+		'holder_name' : fields.char('Holder Name',size=50),
+		'holder_address' : fields.char('Holder Address',size=50),
+		'holder_city' : fields.char('Holder City',size=50),
+		'representer_name' : fields.char('Representer Name',size=50),
+		'representer_address' : fields.char('Representer Address',size=50),
+		'representer_city' : fields.char('Representer City',size=50),
+		'usage_id': fields.many2one('cci_missions.ata_usage','Usage',required=True),
+		'goods': fields.char('Goods',size=80),
+		'area_id': fields.many2one('cci_missions.area','Area',required=True),
+		'insurer_agreement' : fields.integer('Insurer Agreement'),
+		'own_risk' : fields.boolean('Own Risks'),
+		'goods_value': fields.float('Goods Value',required=True),
+		'double_signature' : fields.boolean('Double Signature'),
+		'initial_pages' : fields.integer('Initial Number of Pages',required=True),
+		'additional_pages' : fields.integer('Additional Number of Pages'),
+		'warranty':fields.float('Warranty',required=True),
+		'warranty_product_id': fields.many2one('product.product','Related Warranty Product',required=True),
+		'return_date' : fields.date('Date of Return'),
+		'state':fields.selection([('draft','Draft'),('created','Created'),('pending','Pending'),('dispute','Dispute'),('correct','Correct'),('closed','Closed')],'State',required=True,readonly=True),
+		'ok_state_date' : fields.date('Date of Closure'),
+		'federation_sending_date' : fields.date('Date of Sending to the Federation'),
+		'name' : fields.char('Name',size=50,required=True),
+		'partner_insurer_id': fields.function(_get_insurer_id, method=True,string='Insurer ID of the Partner',readonly=True),
+		'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
+		'member_price' : fields.boolean('Apply the Member Price'),
+		'product_ids' : fields.many2many('product.product','carnet_product_relation','carnet_id','product_id','Products'),
+		'letter_ids':fields.one2many('cci_missions.letters_log','ata_carnet_id','Letters'),
+	}
 
-    def _default_validity_date(self,cr,uid,context={}):
-        creation_date=datetime.datetime.today()
-        year=datetime.date(creation_date.year + 1,creation_date.month,creation_date.day)
-        validity_date= year - timedelta(days=1)
-        return validity_date.strftime('%Y-%m-%d')
-
-    _columns = {
-        'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
-        'creation_date' : fields.date('Emission Date',required=True,readonly=True),
-        'validity_date' : fields.date('Validity Date',required=True),
-        'partner_id': fields.many2one('res.partner','Partner',required=True),
-        'holder_name' : fields.char('Holder Name',size=50),
-        'holder_address' : fields.char('Holder Address',size=50),
-        'holder_city' : fields.char('Holder City',size=50),
-        'representer_name' : fields.char('Representer Name',size=50),
-        'representer_address' : fields.char('Representer Address',size=50),
-        'representer_city' : fields.char('Representer City',size=50),
-        'usage_id': fields.many2one('cci_missions.ata_usage','Usage',required=True),
-        'goods': fields.char('Goods',size=80),
-        'area_id': fields.many2one('cci_missions.area','Area',required=True),
-        'insurer_agreement' : fields.integer('Insurer Agreement'),
-        'own_risk' : fields.boolean('Own Risks'),
-        'goods_value': fields.float('Goods Value',required=True),
-        'double_signature' : fields.boolean('Double Signature'),
-        'initial_pages' : fields.integer('Initial Number of Pages',required=True),
-        'additional_pages' : fields.integer('Additional Number of Pages'),
-        'warranty':fields.float('Warranty',required=True),
-        'warranty_product_id': fields.many2one('product.product','Related Warranty Product',required=True),
-        'return_date' : fields.date('Date of Return'),
-        'state':fields.selection([('draft','Draft'),('created','Created'),('pending','Pending'),('dispute','Dispute'),('correct','Correct'),('closed','Closed')],'State',required=True,readonly=True),
-        'ok_state_date' : fields.date('Date of Closure'),
-        'federation_sending_date' : fields.date('Date of Sending to the Federation'),
-        'name' : fields.char('Name',size=50,required=True),
-        'partner_insurer_id': fields.function(_get_insurer_id, method=True,string='Insurer ID of the Partner',readonly=True),
-        'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
-        'member_price' : fields.boolean('Apply the Member Price'),
-        'product_ids' : fields.many2many('product.product','carnet_product_relation','carnet_id','product_id','Products'),
-        'letter_ids':fields.one2many('cci_missions.letters_log','ata_carnet_id','Letters'),
-    }
-
-    _defaults = {
-        'own_risk' : lambda *b : False,
-        'double_signature' : lambda *b : False,
-        'state' : lambda *a : 'draft',
-        'validity_date' : _default_validity_date,
-        'name': lambda *args: '/',
-        'creation_date': lambda *a: time.strftime('%Y-%m-%d'), # should be check
-    }
-    _constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', [])]
+	_defaults = {
+		'own_risk' : lambda *b : False,
+		'double_signature' : lambda *b : False,
+		'state' : lambda *a : 'draft',
+		'validity_date' : _default_validity_date,
+		'name': lambda *args: '/',
+		'creation_date': lambda *a: time.strftime('%Y-%m-%d'), # should be check
+	}
+	_constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', [])]
 
 cci_missions_ata_carnet()
 
 class cci_missions_letters_log(osv.osv):
-    _name = 'cci_missions.letters_log'
-    _description = 'cci_missions.letters_log'
-    _rec_name = 'date'
-    _columns = {
+	_name = 'cci_missions.letters_log'
+	_description = 'cci_missions.letters_log'
+	_rec_name = 'date'
+	_columns = {
 		'ata_carnet_id' : fields.many2one('cci_missions.ata_carnet','Related ATA Carnet',required=True),
 		'letter_type' :  fields.selection([('Rappel avant echeance','Rappel avant echeance'),('Rappel apres echeance','Rappel apres echeance'),('Suite lettre A','Suite lettre A'),('Suite lettre C','Suite lettre C'),('Suite lettre C1','Suite lettre C1'),('Suite lettre I','Suite lettre I'),('Demande de remboursement','Demande de remboursement'),('Rappel a remboursement','Rappel a remboursement'),('Mise en demeure','Mise en demeure')],'Type of Letter',required=True),
 		'date' : fields.date('Date of Sending',required=True),
 	}
-    _defaults = {
+	_defaults = {
 		'date': lambda *args: time.strftime('%Y-%m-%d')
 	}
 
