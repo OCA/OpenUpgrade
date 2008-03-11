@@ -221,7 +221,7 @@ class event_registration(osv.osv):
 			"badge_partner":fields.char('Badge Partner',size=128),
 			"group_id": fields.many2one('event.group','Event Group'),
 			"cavalier": fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
-			"invoice_label":fields.char("Label Invoice",size=128),
+			"invoice_label":fields.char("Label Invoice",size=128,required=True),
 			"tobe_invoiced":fields.boolean("To be Invoice"),
 			"payment_mode":fields.many2one('payment.mode',"payment mode"),#should be check (m2o ?)
 			"invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
@@ -231,6 +231,9 @@ class event_registration(osv.osv):
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
      	    "lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
 		}
+	_defaults = {
+		'tobe_invoiced' : lambda *a: True,
+				 }
 
 #	def onchange_contact_id(self, cr, uid, ids, contact_id):
 #		#return name
@@ -260,16 +263,16 @@ class event_registration(osv.osv):
 
 	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
 		if not event_id:
-			return {'value':{'unit_price' : False}}
+			return {'value':{'unit_price' : False ,'invoice_label' : False }}
 		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
 		if data_event.product_id:
 			if not partner_invoice_id:
-				return {'value':{'unit_price' : data_event.product_id.lst_price}}
+				return {'value':{'unit_price' : data_event.product_id.lst_price , 'invoice_label' : data_event.product_id.name}}
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
 			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-				return {'value':{'unit_price' : data_event.product_id.member_price}}
-			return {'value':{'unit_price' : data_event.product_id.lst_price}}
-		return {'value':{'unit_price' : False}}
+				return {'value':{'unit_price' : data_event.product_id.member_price , 'invoice_label' : data_event.product_id.name}}
+			return {'value':{'unit_price' : data_event.product_id.lst_price , 'invoice_label' : data_event.product_id.name}}
+		return {'value':{'unit_price' : False,'invoice_label' : False}}
 
 	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
 
