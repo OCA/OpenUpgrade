@@ -638,7 +638,14 @@
 						</field>
 					</page>
 					<page string="Extra Prodcuts">
-						<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4" /> <!-- one2many (product_id, qty, uom, price) -->
+						<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4" > <!-- one2many (product_id, qty, uom, price) -->
+						<tree string="Products">
+							<field name="name" />
+							<field name="qty_available" />
+							<field name="price" />
+							<field name="uom_id" />
+						</tree>
+						</field>
 
 					</page>
 				</notebook>
