@@ -104,7 +104,7 @@ class cci_missions_embassy_folder(osv.osv):
 		'invoice_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
 	}
 
-	_constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', [])]
+	_constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', ['embassy_folder_line_ids'])]
 
 cci_missions_embassy_folder()
 
@@ -506,7 +506,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'name': lambda *args: '/',
 		'creation_date': lambda *a: time.strftime('%Y-%m-%d'), # should be check
 	}
-	_constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', [])]
+	_constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', ['own_risk','insurer_agreement','partner_insurer_id'])]
 
 cci_missions_ata_carnet()
 
