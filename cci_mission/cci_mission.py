@@ -159,19 +159,16 @@ class cci_missions_dossier(osv.osv):
 		sender_name=False
 		if order_partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
-
 			if not partner_info.asker_name:
 				asker_name=partner_info.name
 			else:
 				asker_name=partner_info.asker_name
-
 			if not partner_info.sender_name:
 				if partner_info.address!=[]:
 					for add in partner_info.address:
 						if add.type=='default':
 							sender_name=add.name
 							break
-
 			else:
 				sender_name=partner_info.sender_name
 		result = {'value': {
@@ -180,15 +177,19 @@ class cci_missions_dossier(osv.osv):
 		}
 		return result
 
-	def _amount_total(self, cr, uid, ids, name, args, context=None):#today
-		#should be check
+	def _amount_total(self, cr, uid, ids, name, args, context=None):
 		res ={}
 		data_dosseir = self.browse(cr,uid,ids)
 		for data in data_dosseir:
+			data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
+			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
+				cost_org = data.type_id.original_product_id.member_price
+				cost_copy = data.type_id.copy_product_id.member_price
+			else:
+				cost_org = data.type_id.original_product_id.list_price
+				cost_copy = data.type_id.copy_product_id.list_price
 			qty_org = data.quantity_original
 			qty_copy = data.quantity_copies
-			cost_org = data.type_id.original_product_id.standard_price
-			cost_copy = data.type_id.copy_product_id.standard_price
 			subtotal =  data.sub_total
 			total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
 			res[data.id] = total
@@ -220,7 +221,7 @@ class cci_missions_dossier(osv.osv):
 		'destination_id':fields.many2one('res.country','Destination Country'),
 		'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
 		'quantity_copies':fields.integer('Number of Copies'),
-		'quantity_original' : fields.integer('Quantity of Originals',required=True), #today
+		'quantity_original' : fields.integer('Quantity of Originals',required=True), 
 		'total':fields.function(_amount_total, method=True, string='Total', store=True),#readonly, sum of the price for copies, originals and extra_products
 		'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),#readonly, sum of the extra_products
 		'text_on_invoice':fields.text('Text to Display on the Invoice'),
@@ -549,14 +550,17 @@ class product_lines(osv.osv):
 		return res
 
 	def product_id_change(self, cr, uid, ids, product_id):
-		price_unit=uos_id=False
+		price_unit=uos_id=prod_name=False
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
 			uos_id=data_product.uom_id.id
 			price_unit=data_product.list_price
+			prod_name=data_product.name
+
 		return {'value': {
 			'uos_id': uos_id,
-			'price_unit': price_unit}
+			'price_unit': price_unit,
+			'name':prod_name}
 		}
 
 	_columns = {
