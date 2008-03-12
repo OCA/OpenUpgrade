@@ -9,7 +9,12 @@
 					model="cci_missions.certificate"
 					name="mission.create_invoice"
 					id="mission_invoice"
-					menu="True"
-		/>
+					menu="True"/>
+		<wizard string="Make Invoice"
+					model="cci_missions.ata_carnet"
+					name="mission.create_invoice_carnet"
+					id="mission_invoice_carnet"
+					menu="True"/>
+
 	</data>
 </terp>
