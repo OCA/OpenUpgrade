@@ -34,104 +34,115 @@ import pooler
 from osv import fields, osv
 form = """<?xml version="1.0"?>
 <form string="Create invoices">
-    <separator string="Invoice Created" />
+    <newline />
+    <field name="inv_created"/>
+    <newline />
+    <field name="inv_rejected"/>
+
 </form>
 """
-form1 = """<?xml version="1.0"?>
-<form string="Create invoices">
-    <separator string="Can Not Create Invoice" />
-</form>
-"""
-fields = {}
-fields1 = {}
+fields = {
+      'inv_created': {'string':'Invoice Created', 'type':'char', 'readonly':True},
+      'inv_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
+          }
 
 def _makeInvoices(self, cr, uid, data, context):
         invoices = {}
         invoice_ids = []
         create_ids=[]
         tax_ids=[]
-
         pool_obj=pooler.get_pool(cr.dbname)
 
+        inv_create = 0
+        inv_reject = 0
+        list_inv = []
         obj_event_reg=pool_obj.get('event.registration')
         data_event_reg=obj_event_reg.browse(cr,uid,data['ids'])
-
         obj_lines=pool_obj.get('account.invoice.line')
 
         for reg in data_event_reg:
-            if reg.tobe_invoiced and (not reg.invoice_id) and (not reg.check_mode) and reg.check_ids:
-                value=obj_lines.product_id_change(cr, uid, [], reg.event_id.product_id.id,uom =False, partner_id=reg.partner_invoice_id.id)
+            if (not reg.tobe_invoiced) or (reg.invoice_id) or (reg.check_mode) or (not reg.check_ids):
+                inv_reject = inv_reject + 1
+                continue
+            inv_create = inv_create + 1
+            value=obj_lines.product_id_change(cr, uid, [], reg.event_id.product_id.id,uom =False, partner_id=reg.partner_invoice_id.id)
 
-                if not reg.event_id.product_id:
-                    raise wizard.except_wizard('Warning !', 'No Product defined in the Event ')
-                if not reg.partner_address_id:
-                    raise wizard.except_wizard('Warning !', 'No "Partner Contact" defined on Registration ')
-                if not reg.partner_invoice_id:
-                    raise wizard.except_wizard('Warning !', 'No "Partner to Invoice" defined on the Registration ')
+            if not reg.event_id.product_id:
+                raise wizard.except_wizard('Warning !', 'No Product defined in the Event ')
+            if not reg.partner_address_id:
+                raise wizard.except_wizard('Warning !', 'No "Partner Contact" defined on Registration ')
+            if not reg.partner_invoice_id:
+                raise wizard.except_wizard('Warning !', 'No "Partner to Invoice" defined on the Registration ')
 
-                data_product=pool_obj.get('product.product').browse(cr,uid,[reg.event_id.product_id.id])
-                a = reg.partner_invoice_id.property_account_receivable.id
+            data_product=pool_obj.get('product.product').browse(cr,uid,[reg.event_id.product_id.id])
+            a = reg.partner_invoice_id.property_account_receivable.id
 
-                for tax in data_product[0].taxes_id:
-                    tax_ids.append(tax.id)
-                inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
-                        'name': reg.invoice_label,
-                        'account_id':value['value']['account_id'],
-                        'price_unit': reg.unit_price,# value['value']['price_unit'],
-                        'quantity': reg.nb_register,
-                        'discount': False,
-                        'uos_id': value['value']['uos_id'],
-                        'product_id':reg.event_id.product_id.id,
-                        'invoice_line_tax_id': [(6,0,tax_ids)],
-                        'note':False,
-                })
-                create_ids.append(inv_id)
-
-                inv = {
+            for tax in data_product[0].taxes_id:
+                tax_ids.append(tax.id)
+            inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
                     'name': reg.invoice_label,
-                    'origin': reg.invoice_label,
-                    'type': 'out_invoice',
-                    'reference': False,
-                    'account_id': reg.partner_invoice_id.property_account_receivable.id,
-                    'partner_id': reg.partner_invoice_id.id,
-                    'address_invoice_id':reg.partner_address_id.id,
-                    'address_contact_id':reg.partner_address_id.id,
-                    'invoice_line': [(6,0,create_ids)],
-                    'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
-                    'comment': "",
-                    'payment_term':reg.partner_invoice_id.property_payment_term.id,
-                }
+                    'account_id':value['value']['account_id'],
+                    'price_unit': reg.unit_price,# value['value']['price_unit'],
+                    'quantity': reg.nb_register,
+                    'discount': False,
+                    'uos_id': value['value']['uos_id'],
+                    'product_id':reg.event_id.product_id.id,
+                    'invoice_line_tax_id': [(6,0,tax_ids)],
+                    'note':False,
+            })
+            create_ids.append(inv_id)
 
-                inv_obj = pool_obj.get('account.invoice')
-                inv_id = inv_obj.create(cr, uid, inv)
-                obj_event_reg.write(cr, uid,data['ids'], {'invoice_id' : inv_id})
-                return 'create'
-            else:
-                if (not reg.tobe_invoiced) or reg.check_mode or (not reg.check_ids):
-                    raise wizard.except_wizard('Warning !', 'This registration should not be invoiced ')
-                if reg.invoice_id:
-                    raise wizard.except_wizard('Warning !', 'This registration already has an invoice linked ')
-            return 'cancel'
+            inv = {
+                'name': reg.invoice_label,
+                'origin': reg.invoice_label,
+                'type': 'out_invoice',
+                'reference': False,
+                'account_id': reg.partner_invoice_id.property_account_receivable.id,
+                'partner_id': reg.partner_invoice_id.id,
+                'address_invoice_id':reg.partner_address_id.id,
+                'address_contact_id':reg.partner_address_id.id,
+                'invoice_line': [(6,0,create_ids)],
+                'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
+                'comment': "",
+                'payment_term':reg.partner_invoice_id.property_payment_term.id,
+            }
 
+            inv_obj = pool_obj.get('account.invoice')
+            inv_id = inv_obj.create(cr, uid, inv)
+            list_inv.append(inv_id)
+            obj_event_reg.write(cr, uid,data['ids'], {'invoice_id' : inv_id})
+
+            if (not reg.tobe_invoiced) or reg.check_mode or (not reg.check_ids):
+                pass
+                #raise wizard.except_wizard('Warning !', 'This registration should not be invoiced ')
+            if reg.invoice_id:
+                pass
+                #raise wizard.except_wizard('Warning !', 'This registration already has an invoice linked ')
+        return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv}
 
 class make_invoice(wizard.interface):
+    def _list_invoice(self, cr, uid, data, context):
+        return {
+            'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
+            'name': 'Invoices',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.invoice',
+            'view_id': False,
+            'context': "{'type':'out_invoice'}",
+            'type': 'ir.actions.act_window'
+        }
     states = {
         'init' : {
-            'actions' : [],
-            'result': {'type':'choice', 'next_state': _makeInvoices}
+               'actions' : [_makeInvoices],
+               'result': {'type': 'form', 'arch': form, 'fields': fields, 'state':[('end','Ok'),('open','Open')]}
             },
-        'create' : {
-            'actions' : [],
-            'result' : {'type' : 'form' ,   'arch' : form,
-                    'fields' : fields,
-                    'state' : [('end','Ok')]}
-        },
-        'cancel' : {
-            'actions' : [],
-            'result' : {'type' : 'form' ,   'arch' : form1,
-                    'fields' : fields1,
-                    'state' : [('end','Ok')]}
-        },
+
+        'open': {
+            'actions': [],
+            'result': {'type':'action', 'action':_list_invoice, 'state':'end'}
+        }
 
     }
+
 make_invoice("event.make_invoice")
