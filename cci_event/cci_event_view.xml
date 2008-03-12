@@ -63,8 +63,6 @@
 						<separator string="Registrations" colspan="4"/>
 						<field name="register_current"/>
 						<field name="register_prospect"/>
-						<!--<field name="sales_open"/>
-						<field name="sales_draft"/>-->
 						<separator string="Remaining Tasks" colspan="4"/>
 						<field name="task_ids" colspan="4" nolabel="1" widget="one2many_list" >
 								<tree string="All tasks" colors="red:date_deadline&lt;current_date and state=='draft';blue:date_deadline==current_date and state=='draft';grey:state=='cancel' or state=='close'">
@@ -90,7 +88,6 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Events" colors="red:register_min>register_current">
-<!--			<tree string="Events">-->
 				<field name="name" string="Name"/>
 				<field name="user_id"/>
 				<field name="date_begin"/>
@@ -370,7 +367,22 @@
 					<field name="training_authorization"/>
 					<field name="lang_authorization"/>
 					<newline/>
-					<field name="check_ids" colspan="4" select="2"/>
+					<field name="check_ids" colspan="4" mode="tree, form" select="2">
+						<tree string="Event Check">
+							<field name="name"/>
+							<field name="code"/>
+						</tree>
+						<form string="Event Check">
+							<field name="name" select="1"/>
+							<field name="code" select="1"/>
+							<field name="unit_nbr" select="1"/>
+							<field name="type_id" select="1" />
+							<newline/>
+							<field name="date_reception" select="2"/>
+							<field name="date_limit" select="2"/>
+							<field name="date_submission" select="2"/>
+						</form>
+					</field>
 					<field name="payment_ids" colspan="4" select="2"/>
 				</page>
 				</notebook>

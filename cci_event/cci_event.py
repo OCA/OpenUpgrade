@@ -118,8 +118,6 @@ class event(osv.osv):
 			'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
 			'budget_id':fields.many2one('account.budget.post','Budget'),
 			'product_id':fields.many2one('product.product','Product'),
-			'sales_open':fields.char('Sales Open',size=20),#should be corect
-			'sales_draft':fields.char('Sales Draft',size=20),#should be corect
 			'check_type': fields.many2one('event.check.type','Check Type'),
 			}
 event()
@@ -143,7 +141,7 @@ class event_check(osv.osv):
 	_columns={
 		"name": fields.char('Name', size=128, required=True),
 		"code": fields.char('Code', size=64),
-		"case_id": fields.many2one('event.registration','Inscriptions',size=20),
+		"case_id": fields.many2one('event.registration','Inscriptions',required=True, size=20),
 		"state": fields.selection([('draft','Draft'),('block','Blocked'),('confirm','Confirm'),('cancel','Cancel'),('asked','Asked')], 'State', readonly=True),#should be check (previous states :('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')])
 		"unit_nbr": fields.integer('Units'),
 		"type_id":fields.many2one('event.check.type','Type'),
@@ -153,6 +151,7 @@ class event_check(osv.osv):
 		}
 	_defaults = {
 		'state': lambda *args: 'draft',
+		'name': lambda *args: 'cheque',
 	}
 
 event_check()
@@ -195,27 +194,13 @@ class event_registration(osv.osv):
 		self.write(cr, uid, ids, {'state':'cancel',})
 		return True
 
-
-#	def write(self, cr, user, ids, vals, context=None):
-#		print "here"
-#		print vals
-#		if 'state' in vals:
-#			print "write"
-#		return super(event_registration, self).write(cr, user, ids, vals, context=None)
-
-#	def create(self, cr, user, vals, context=None):
-#		print "create"
-#		return super(event_registration, self).create(cr, user, vals, context=None)
-
 	_inherit = 'event.registration'
 	_description="event.registration"
 	_columns={
-
 			#"date_registration":fields.date('Date Registration'), available in crm.case as 'date' field
 			"partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
-			"contact_order_id":fields.many2one('res.partner.contact','Contact Order'),#should be corect,contact_order_id (onchange_contact)
+			"contact_order_id":fields.many2one('res.partner.contact','Contact Order'),
 			"unit_price": fields.float('Unit Price'),
-			#"quantity":fields.integer('Quantity'),
 			"badge_title":fields.char('Badge Title',size=128),
 			"badge_name":fields.char('Badge Name',size=128),
 			"badge_partner":fields.char('Badge Partner',size=128),
@@ -224,13 +209,13 @@ class event_registration(osv.osv):
 			"invoice_label":fields.char("Label Invoice",size=128,required=True),
 			"tobe_invoiced":fields.boolean("To be Invoice"),
 			"payment_mode":fields.many2one('payment.mode',"payment mode"),#should be check (m2o ?)
-			"invoice_id":fields.many2one("account.invoice","Invoice"),#should be corect
+			"invoice_id":fields.many2one("account.invoice","Invoice"),
 			"check_mode":fields.boolean('Check Mode'),
-			"check_ids":fields.one2many('event.check','check_id',"check ids"),#should be corect (o2m ?)
-			"payment_ids":fields.one2many("payment.order","pay_id","payment"),#should be corect (o2m ?)
+			"check_ids":fields.one2many('event.check','case_id',"check ids"),
+			"payment_ids":fields.one2many("payment.order","case_id","payment"),#should be corect (o2m ?)
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
 			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
-		}
+	}
 	_defaults = {
 		'tobe_invoiced' : lambda *a: True,
 				 }
@@ -308,17 +293,11 @@ class event_registration(osv.osv):
 
 event_registration()
 
-class event_check(osv.osv):
-	_inherit = 'event.check'
-	_columns={
-		"check_id" : fields.many2one('crm.case','Check Id'),
-		}
-event_check()
 
 class payment_order(osv.osv):
 	_inherit = 'payment.order'
 	_columns={
-		"pay_id" : fields.many2one('crm.case','Check Id'),
+		"case_id" : fields.many2one('crm.case','Registration'),
 		}
 payment_order()
 
