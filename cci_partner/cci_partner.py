@@ -277,7 +277,7 @@ class res_partner_zip(osv.osv):
             list_zip.append(data.type_id.id)
         return True
 
-    _constraints = [(check_group_type, 'Error: Only one group of the same group type is allowed!', [])]
+    _constraints = [(check_group_type, 'Error: Only one group of the same group type is allowed!', ['groups_id'])]
     _columns = {
         'name':fields.char('Zip Code',size=10,required=True, select=1),
         'city':fields.char('City',size=60,translate=True),
