@@ -155,6 +155,16 @@ class res_partner(osv.osv):
             list.append(add.type)
         return True
 
+    def _check_activity(self,cr,uid,ids):
+        list_type = []
+        data_partner=self.browse(cr, uid, ids)
+        for data in data_partner:
+            for activity in data.activity_code_ids:
+                if activity.importance in list_type and activity.importance == "main":
+                    return False
+                list_type.append(activity.importance)
+        return True
+
     def _get_partner_state(self, cr, uid, ids):
         ids = self.pool.get('res.partner.state').search(cr, uid, [('name','like', 'Imputable')])
         if ids:
@@ -224,7 +234,8 @@ class res_partner(osv.osv):
         'state_id': _get_partner_state,
         'state_id2': _get_customer_state,
         }
-    _constraints = [(check_address, 'Error: Only one default address is allowed!', [])]
+    _constraints = [(check_address, 'Only One default address is allowed!', ['address']),(_check_activity, 'Partner Should have only one Main Activity!', ['activity_code_ids'])]
+
 res_partner()
 
 class res_partner_zip_group_type(osv.osv):
