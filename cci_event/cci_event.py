@@ -249,6 +249,10 @@ class event_registration(osv.osv):
 			return {'value':data}
 
 		data['partner_invoice_id']=part
+		# this calls onchange_partner_invoice_id
+		d=self.onchange_partner_invoice_id(cr, uid, ids, False,part)
+		# this updates the dictionary
+		data.update(d['value'])
 		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
 		data['partner_address_id']=addr['contact']
 		if addr['contact'] and not email:
