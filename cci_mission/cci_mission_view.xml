@@ -370,9 +370,15 @@
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="text_on_invoice" colspan="4" nolabel="1"/>
 					</page>
-					<page string="Extra Products">
-							<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
-							<field name="sub_total" />
+					<page string="Extra Prodcuts">
+						<vpaned position="300">
+						<child1>
+							<field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+						</child1>
+						<child2>
+						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+						</child2>
+						</vpaned>
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
@@ -438,9 +444,15 @@
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="text_on_invoice" nolabel="1" colspan="4"/>
 					</page>
-					<page string="Extra Products">
-							<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4" /> <!-- one2many (product_id, qty, uom, price) -->
-							<field name="sub_total" />
+					<page string="Extra Prodcuts">
+						<vpaned position="300">
+						<child1>
+							<field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+						</child1>
+						<child2>
+						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+						</child2>
+						</vpaned>
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
@@ -640,15 +652,14 @@
 						</field>
 					</page>
 					<page string="Extra Prodcuts">
-						<field name="product_ids" nolabel="1" widget="one2many_list" colspan="4" > <!-- one2many (product_id, qty, uom, price) -->
-						<tree string="Products">
-							<field name="name" />
-							<field name="qty_available" />
-							<field name="price" />
-							<field name="uom_id" />
-						</tree>
-						</field>
-
+						<vpaned position="300">
+						<child1>
+							<field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+						</child1>
+						<child2>
+						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+						</child2>
+						</vpaned>
 					</page>
 				</notebook>
 				</form>
@@ -675,5 +686,38 @@
 		</record>
 
 		<menuitem name="Missions/ATA Carnet" action="action_cci_missions_ata_carnet" id="menu_action_cci_missions_ata_carnet"/>
+
+	<record model="ir.ui.view" id="view_product_line_tree">
+			<field name="name">product.lines.tree</field>
+			<field name="model">product.lines</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Product Line">
+					<field name="name"/>
+					<field name="product_id" />
+					<field name="quantity"/>
+					<field name="uos_id"/>
+					<field name="price_unit"/>
+					<field name="price_subtotal"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_product_line_form">
+			<field name="name">product.lines.form</field>
+			<field name="model">product.lines</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Product Line">
+							<field name="name" select="1" colspan="4"/>
+							<newline/>
+							<field name="product_id" select="1" on_change="product_id_change(product_id)"/>
+							<field name="quantity" select="1"/>
+							<field name="uos_id"/>
+							<field name="price_unit" select="1"/>
+							<newline/>
+							<field name="price_subtotal"/>
+				</form>
+			</field>
+		</record>
 	</data>
 </terp>
