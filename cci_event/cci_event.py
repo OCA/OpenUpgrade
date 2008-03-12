@@ -242,7 +242,7 @@ class event_registration(osv.osv):
 #		contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
 #		return {'value':{'badge_name' : contact_data.name,'badge_title' : contact_data.title}}
 
-	def onchange_partner_id(self, cr, uid, ids, part, email=False):#override function for partner name.
+	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
 		data={}
 		data['badge_partner']=data['partner_address_id']=data['partner_invoice_id']=data['email_from']=data['badge_title']=data['badge_name']=False
 		if not part:
@@ -250,7 +250,7 @@ class event_registration(osv.osv):
 
 		data['partner_invoice_id']=part
 		# this calls onchange_partner_invoice_id
-		d=self.onchange_partner_invoice_id(cr, uid, ids, False,part)
+		d=self.onchange_partner_invoice_id(cr, uid, ids, event_id,part)
 		# this updates the dictionary
 		data.update(d['value'])
 		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
