@@ -96,10 +96,12 @@ class cci_missions_embassy_folder(osv.osv):
 		'invoice_note':fields.text('Note to Display on the Invoice',help='to display as the last embassy_folder_line of this embassy_folder.'),
 		'embassy_folder_line_ids' : fields.one2many('cci_missions.embassy_folder_line','folder_id','Details'),
 		'site_id': fields.many2one('cci_missions.site','Site'),
+		'invoice_date' : fields.datetime('Invoice Date') #added to solve bug
 	}
 
 	_defaults = {
 		'section_id': lambda obj, cr, uid, context: obj.pool.get('crm.case.section').search(cr, uid, [('name','=','Embassy Folder')])[0],
+		'invoice_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
 	}
 
 	_constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', [])]
