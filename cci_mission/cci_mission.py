@@ -196,14 +196,15 @@ class cci_missions_dossier(osv.osv):
 
 	def _amount_subtotal(self, cr, uid, ids, name, args, context=None):
 		#should be check
-		sum = 0
-		res = {}
+		res={}
 		data_dosseir = self.browse(cr,uid,ids)
 		for data in data_dosseir:
+			sum=0.00
 			for product in data.product_ids:
-				sum = sum + product.standard_price
-			res[data.id] = sum
+				sum += product.price_subtotal
+			res[data.id]=sum
 		return res
+
 
 	_columns = {
 		'name' : fields.char('Reference',size=20,required=True),
@@ -223,7 +224,8 @@ class cci_missions_dossier(osv.osv):
 		'total':fields.function(_amount_total, method=True, string='Total', store=True),#readonly, sum of the price for copies, originals and extra_products
 		'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),#readonly, sum of the extra_products
 		'text_on_invoice':fields.text('Text to Display on the Invoice'),
-		'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products')
+#		'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products')
+		'product_ids': fields.one2many('product.lines', 'dossier_product_line_id', 'Products'),
 	}
 
 	_defaults = {
@@ -464,6 +466,16 @@ class cci_missions_ata_carnet(osv.osv):
 		validity_date= year - timedelta(days=1)
 		return validity_date.strftime('%Y-%m-%d')
 
+	def _tot_products(self, cr, uid, ids, name, args, context=None):
+		res={}
+		carnet_ids = self.browse(cr,uid,ids)
+		for p_id in carnet_ids:
+			sum=0.00
+			for line_id in p_id.product_ids:
+				sum += line_id.price_subtotal
+			res[p_id.id]=sum
+		return res
+
 	_columns = {
 		'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
 		'creation_date' : fields.date('Emission Date',required=True,readonly=True),
@@ -494,8 +506,9 @@ class cci_missions_ata_carnet(osv.osv):
 		'partner_insurer_id': fields.function(_get_insurer_id, method=True,string='Insurer ID of the Partner',readonly=True),
 		'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
 		'member_price' : fields.boolean('Apply the Member Price'),
-		'product_ids' : fields.many2many('product.product','carnet_product_relation','carnet_id','product_id','Products'),
+		'product_ids': fields.one2many('product.lines', 'product_line_id', 'Products'),
 		'letter_ids':fields.one2many('cci_missions.letters_log','ata_carnet_id','Letters'),
+		'sub_total': fields.function(_tot_products, method=True, string='Subtotal of Extra Products',type="float"),
 	}
 
 	_defaults = {
@@ -525,3 +538,38 @@ class cci_missions_letters_log(osv.osv):
 
 cci_missions_letters_log()
 
+class product_lines(osv.osv):
+	_name = "product.lines"
+	_description = "Product Lines"
+
+	def _product_subtotal(self, cr, uid, ids, name, args, context=None):
+		res = {}
+		for line in self.browse(cr, uid, ids):
+			res[line.id] = round(line.price_unit * line.quantity)
+		return res
+
+	def product_id_change(self, cr, uid, ids, product_id):
+		price_unit=uos_id=False
+		if product_id:
+			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
+			uos_id=data_product.uom_id.id
+			price_unit=data_product.list_price
+		return {'value': {
+			'uos_id': uos_id,
+			'price_unit': price_unit}
+		}
+
+	_columns = {
+		'name': fields.char('Description', size=256, required=True),
+		'product_line_id': fields.many2one('cci_missions.ata_carnet', 'Product Ref',select=True),
+		'dossier_product_line_id': fields.many2one('cci_missions.dossier', 'Product Ref',select=True),
+		'uos_id': fields.many2one('product.uom', 'Unit', ondelete='set null'),
+		'product_id': fields.many2one('product.product', 'Product', ondelete='set null'),
+		'price_unit': fields.float('Unit Price', required=True, digits=(16,2)),
+		'price_subtotal': fields.function(_product_subtotal, method=True, string='Subtotal'),
+		'quantity': fields.float('Quantity', required=True),
+	}
+	_defaults = {
+		'quantity': lambda *a: 1,
+	}
+product_lines()
