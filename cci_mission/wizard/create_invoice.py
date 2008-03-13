@@ -41,23 +41,25 @@ form = """<?xml version="1.0"?>
 fields = {}
 
 def _createInvoices(self, cr, uid, data, context):
-    invoices = {}
-    invoice_ids = []
-    create_ids = []
-    tax_ids = []
-
     pool_obj = pooler.get_pool(cr.dbname)
     obj_certificate = pool_obj.get('cci_missions.certificate')
     data_certificate = obj_certificate.browse(cr,uid,data['ids'])
-
     obj_lines=pool_obj.get('account.invoice.line')
 
-    list = []
-    value = []
-    dict = {}
-    address_contact = False
-    address_invoice = False
     for certificate in data_certificate:
+        list = []
+        value = []
+        dict = {}
+        address_contact = False
+        address_invoice = False
+        create_ids = []
+
+        for lines in certificate.product_ids :
+            val = obj_lines.product_id_change(cr, uid, [], lines.product_id.id,uom =False, partner_id=certificate.order_partner_id.id)
+            val['value'].update({'product_id' : lines.product_id.id })
+            val['value'].update({'quantity' : lines.quantity })
+            value.append(val)
+
         list.append(certificate.type_id.original_product_id.id)
         dict['original'] = certificate.type_id.original_product_id.id
         list.append(certificate.type_id.copy_product_id.id)
@@ -82,11 +84,6 @@ def _createInvoices(self, cr, uid, data, context):
                 val['value'].update({'quantity' : 1 }) #by default 1
             else:
                 val['value'].update({'quantity' : certificate.quantity_copies})
-            data_product=pool_obj.get('product.product').browse(cr,uid,prod_id)
-            for tax in data_product.taxes_id:
-                tax_ids.append(tax.id)
-            val['value'].update({'taxes_id' : tax_ids })
-            tax_ids = []
             value.append(val)
         for val in value:
             inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
@@ -97,7 +94,7 @@ def _createInvoices(self, cr, uid, data, context):
                     'discount': False,
                     'uos_id': val['value']['uos_id'],
                     'product_id':val['value']['product_id'],
-                    'invoice_line_tax_id': [(6,0,val['value']['taxes_id'])],
+                    'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
                     'note':certificate.text_on_invoice,
             })
             create_ids.append(inv_id)
@@ -118,9 +115,6 @@ def _createInvoices(self, cr, uid, data, context):
 
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
-        return {}
-
-
     return {}
 class create_invoice(wizard.interface):
     states = {
