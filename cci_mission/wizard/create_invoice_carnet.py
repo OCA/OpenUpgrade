@@ -41,29 +41,27 @@ form = """<?xml version="1.0"?>
 fields = {}
 
 def _createInvoices(self, cr, uid, data, context):
-    invoices = {}
-    invoice_ids = []
-    create_ids = []
-    tax_ids = []
-
     pool_obj = pooler.get_pool(cr.dbname)
     obj_carnet = pool_obj.get('cci_missions.ata_carnet')
     data_carnet = obj_carnet.browse(cr,uid,data['ids'])
-    print data_carnet,"data..."
     obj_lines=pool_obj.get('account.invoice.line')
-
-    list = []
-    value = []
-    dict = {}
-    address_contact = False
-    address_invoice = False
     for carnet in data_carnet:
+        list = []
+        value = []
+        address_contact = False
+        address_invoice = False
+        create_ids = []
+
         list.append(carnet.type_id.original_product_id.id)
-        dict['original'] = carnet.type_id.original_product_id.id
         list.append(carnet.type_id.copy_product_id.id)
-        dict['copy'] = carnet.type_id.copy_product_id.id
         list.append(carnet.warranty_product_id.id)
-        dict['warranty'] = carnet.warranty_product_id.id
+
+        for product_line in carnet.product_ids:#extra Products
+            val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id)
+            val['value'].update({'product_id' : product_line.product_id.id })
+            val['value'].update({'quantity' : product_line.quantity })
+            value.append(val)
+
         for add in carnet.partner_id.address:
             if add.type == 'contact':
                 address_contact = add.id
@@ -74,6 +72,7 @@ def _createInvoices(self, cr, uid, data, context):
             if (not address_invoice) and (add.type == 'default'):
                 address_invoice = add.id
 
+
         if not address_contact or not address_invoice:
             raise wizard.except_wizard('Warning !', 'Please Enter Partner Address in Partner')
 
@@ -82,9 +81,7 @@ def _createInvoices(self, cr, uid, data, context):
             val['value'].update({'product_id' : prod_id })
             val['value'].update({'quantity' : 1 })
             value.append(val)
-
         for val in value:
-            print val
             inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
                     'name': carnet.name,
                     'account_id':val['value']['account_id'],
