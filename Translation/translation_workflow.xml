@@ -54,13 +54,13 @@
 			<field name="kind">function</field>
 			<field name="action">write({'state': 'deny'})</field>
 		</record>		
-<!--		<record model="workflow.activity" id="act_done">
+		<record model="workflow.activity" id="act_done">
 			<field name="wkf_id" ref="wkf_translation"/>
 			<field name="name">done</field>
 			<field name="kind">function</field>
 			<field name="action">action_done()</field>
 			<field name="flow_stop">True</field>		
-		</record>-->
+		</record>
 		
 <!--transision -->
 		<record model="workflow.transition" id="trans_draft_propose">
