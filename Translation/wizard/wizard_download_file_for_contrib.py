@@ -1,7 +1,7 @@
 import wizard
 import tools
-import base64
 import csv
+import base64
 import xmlrpclib
 from translation.translation import get_language
 
@@ -31,14 +31,17 @@ view_form = """<?xml version="1.0"?>
 class wizard_download_file_for_contrib(wizard.interface):
     def _lang_install(self, cr, uid, data, context):
         lang = data['form']['lang']
-        if lang and lang != 'en_EN':
-            fname = lang + ".csv"
-            text = base64.decodestring(s.get_release(fname))
+        fname = lang + ".csv"
+        try :
+            text = s.get_release(fname)
             filename = tools.config["root_path"] + "/i18n/" + lang + ".csv"
-            fp = file(filename,'wb').write(text)
-            tools.trans_load(cr.dbname, filename, lang)
+            fp = file(filename,'wb').write(text.encode('utf8'))
+            tools.s(cr.dbname, filename, lang)                 
+        except Exception,e:
+            print e
+            raise wizard.except_wizard('Error !',"server is not properly configuraed")
         return {}
-
+    
     def _get_language(sel, cr, uid,context):
         return get_language(cr,uid,context,user='contributor')
 

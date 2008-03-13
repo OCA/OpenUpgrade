@@ -3,6 +3,7 @@ import tools
 import pooler
 import xmlrpclib
 import csv
+import re
 from translation.translation import get_language
 
 s = xmlrpclib.Server("http://192.168.0.4:8000")
@@ -35,21 +36,36 @@ class wizard_upload_contrib(wizard.interface):
     def _upload_contrib(self, cr, uid, data, context):
         lang = data['form']['lang']
         email_id =data['form']['email_id']
+        pattern = '^([a-zA-Z])[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$'
+        reg = re.compile(pattern)
+        reg.search(email_id)
+        if not reg.search(email_id):
+            raise wizard.except_wizard('Error !', 'Your Email Id is not well-formed')
         ir_translation_contrib = pooler.get_pool(cr.dbname).get('ir.translation.contribution')
+        ids = ir_translation_contrib.search(cr,uid,[('lang','=',lang),('state','=','propose'),('upload','=',True)])        
+        if ids:
+            contrib =ir_translation_contrib.read(cr,uid,ids)
+            title = ['type','name','res_id','src','value']
+            content = map(lambda x:[x['type'],x['name'],x['res_id'],x['src'].decode('utf8').encode('utf8'),x['value'].decode('utf8').encode('utf8')],contrib)
+            file_list = s.get_contrib_list()
+            n_file = filter(lambda x: not x.find(lang),file_list)
+            email_id = email_id.replace('@','_AT_')
+            email_id = email_id.replace('.','_DOT_')
+            filename = lang+'-'+email_id+'-'+str(len(n_file)+1)+'.csv'
+            content.insert(0,title)
+            for id in ids:
+                ir_translation_contrib.write(cr,uid,id,{'upload':True})
+            try :
+                s.publish_contrib(content,filename)
+            except Exception,e:
+                print e
+                raise wizard.except_wizard('Error !',"server is not properly configuraed")
         ids = ir_translation_contrib.search(cr,uid,[('lang','=',lang)])
         contrib =ir_translation_contrib.read(cr,uid,ids)
-        title = ['type','name','res_id','src','value']
-        content = map(lambda x:[x['type'],x['name'],x['res_id'],x['src'],x['value']],contrib)
-        filename = lang+'.csv'
-        s.publish_contrib(content.insert(0,title),filename)
-        
-        read_text = csv.reader(open('/home/tiny/contrib/fr_FR.csv','r'),delimiter=',')
-        for r in read_text:
-            print r
         return {'total':len(ids),'draft':len(filter(lambda x:x['state'] =='draft',contrib)),'propose':len(filter(lambda x:x['state'] =='propose',contrib))}
 
     def _get_language(sel, cr, uid, context):
-        return get_language(cr,uid,context)
+        return get_language(cr,uid,context,model='ir_translation_contribution')
 
     fields_form = {
         'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,'required':True},
@@ -60,7 +76,7 @@ class wizard_upload_contrib(wizard.interface):
     fields_form_end = {
         'draft': {'type': 'integer', 'string': 'Number of Draft Translation', 'readonly': True},
         'total': {'type': 'integer', 'string': 'Number of Translation', 'readonly': True},
-        'propose': {'type': 'integer', 'string': 'Number of Propose Translation', 'readonly': True},        
+        'propose': {'type': 'integer', 'string': 'Number of Translation Uploaded(Propose Translation)', 'readonly': True},        
     }    
 
     states = {
@@ -72,7 +88,7 @@ class wizard_upload_contrib(wizard.interface):
                     ('start', 'Download File', 'gtk-ok', True)
                 ]
             }
-        },
+        },        
         'start': {
             'actions': [_upload_contrib],
             'result': {'type': 'form', 'arch': view_form_end, 'fields': fields_form_end,

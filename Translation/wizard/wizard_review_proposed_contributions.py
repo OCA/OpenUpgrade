@@ -1,13 +1,8 @@
 import wizard
 import tools
-import xmlrpclib
-import base64
 import csv
 import pooler
 from translation.translation import get_language
-
-s = xmlrpclib.Server("http://192.168.0.4:8000")
-
 
 view_form_end = """<?xml version="1.0"?>
 <form string="Language file loaded.">
@@ -45,10 +40,9 @@ class wizard_review_proposed_contributions(wizard.interface):
             if l in new_reader:
                 continue
             diff.append(l)
-        print diff
         for d in diff:
             vals = {}
-            ids = ir_translation.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src'])])
+            ids = ir_translation.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src']),('lang','=',lang)])
             res_id = ir_translation.read(cr,uid,ids,['res_id','lang'])[0]
             ids = ir_translation_contrib.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src'])])
             if ids:
@@ -59,13 +53,12 @@ class wizard_review_proposed_contributions(wizard.interface):
                 vals['src']=d['src']
                 vals['value']=d['value']
                 vals['res_id']=res_id['res_id']
-                vals['lang']=res_id['lang']            
+                vals['lang'] = res_id['lang']
                 vals['state']='draft'                            
                 ir_translation_contrib.create(cr,uid,vals)
-            
         return {}    
     def _get_language(sel, cr, uid,context):
-        return get_language(cr,uid,context)
+        return get_language(cr,uid,context,model='ir_translation')
     
     fields_form = {
         'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,
