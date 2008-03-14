@@ -32,11 +32,9 @@ class wizard_view_log(wizard.interface):
         result = mod_obj._get_id(cr, uid, 'audittrail', 'action_audittrail_log_tree')
         id = mod_obj.read(cr, uid, [result], ['res_id'])[0]['res_id']
         result = act_obj.read(cr, uid, [id])[0]
-        print 'result',result['res_model']
         log_obj= pooler.get_pool(cr.dbname).get(result['res_model'])
         log_id = log_obj.search(cr, uid, [])
-        log_model=log_obj.read(cr, uid,log_id,['object_id'])
-        print 'log_model',log_model
+        log_model=log_obj.read(cr, uid,log_id,['object_id'])       
         if not data['form']['from']:
             if  data['form']['to'] <> time.strftime("%Y-%m-%d %H:%M:%S"):
                 result['domain'] = str([('timestamp', '<',data['form']['to'])])                

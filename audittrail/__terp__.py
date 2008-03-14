@@ -1,7 +1,7 @@
 {
 	"name" : "Audit Trail",
 	"version" : "1.0",
-	"depends" : ["base"],
+	"depends" : ["base","account","sale","purchase","mrp"],
 	"website" : "http://tinyerp.com",
 	"author" : "Tiny",
 	"init_xml" : [],
