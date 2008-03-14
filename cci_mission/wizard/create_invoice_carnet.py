@@ -34,24 +34,37 @@ import pooler
 from osv import fields, osv
 form = """<?xml version="1.0"?>
 <form string="Create invoices">
-    <separator string="Invoice Created" />
+    <field name="inv_created"/>
+    <newline />
+    <field name="inv_rejected"/>
+    <newline />
+    <field name="inv_rej_reason" width="400"/>
+
 </form>
 """
 
-fields = {}
+fields = {
+        'inv_created': {'string':'Invoice Created', 'type':'char', 'readonly':True},
+        'inv_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
+        'inv_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
+          }
 
 def _createInvoices(self, cr, uid, data, context):
     pool_obj = pooler.get_pool(cr.dbname)
     obj_carnet = pool_obj.get('cci_missions.ata_carnet')
     data_carnet = obj_carnet.browse(cr,uid,data['ids'])
     obj_lines=pool_obj.get('account.invoice.line')
+    inv_create = 0
+    inv_reject = 0
+    inv_rej_reason = ""
+    list_inv = []
     for carnet in data_carnet:
         list = []
         value = []
         address_contact = False
         address_invoice = False
         create_ids = []
-
+        inv_create = inv_create + 1
         list.append(carnet.type_id.original_product_id.id)
         list.append(carnet.type_id.copy_product_id.id)
         list.append(carnet.warranty_product_id.id)
@@ -60,6 +73,7 @@ def _createInvoices(self, cr, uid, data, context):
             val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id)
             val['value'].update({'product_id' : product_line.product_id.id })
             val['value'].update({'quantity' : product_line.quantity })
+            val['value'].update({'price_unit':product_line.price_unit})
             value.append(val)
 
         for add in carnet.partner_id.address:
@@ -111,16 +125,34 @@ def _createInvoices(self, cr, uid, data, context):
 
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
+        list_inv.append(inv_id)
 
-    return {}
+    return {'inv_created' : str(inv_create),'inv_rejected' : str(inv_reject)  ,'invoice_ids':  list_inv , 'inv_rej_reason': inv_rej_reason}
+
 class create_invoice(wizard.interface):
+
+    def _open_invoice(self, cr, uid, data, context):
+        return {
+            'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
+            'name': 'Invoices',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.invoice',
+            'view_id': False,
+            'context': "{'type':'out_invoice'}",
+            'type': 'ir.actions.act_window'
+        }
+
     states = {
         'init' : {
             'actions' : [_createInvoices],
             'result' : {'type' : 'form' ,   'arch' : form,
                     'fields' : fields,
-                    'state' : [('end','Ok')]}
-        },
-
-    }
+                    'state' : [('end','Ok'),('open','Open')]}
+                    },
+        'open': {
+            'actions': [],
+            'result': {'type':'action', 'action':_open_invoice, 'state':'end'}
+                }
+            }
 create_invoice("mission.create_invoice_carnet")
