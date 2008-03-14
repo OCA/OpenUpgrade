@@ -31,8 +31,51 @@ import pooler
 import netsvc
 
 class invoice_directly(wizard.interface):
+	def _test_action(obj, cr, uid, data, context):
+		pool = pooler.get_pool(cr.dbname)
+		pick = pool.get('stock.picking').browse(cr, uid, data['id'], context=context)
+		if not pick.invoice_state == '2binvoiced':
+			return 'end_final'
+		return 'invoice'
+
+	def _open_action(obj, cr, uid, data, context):
+		res = {
+			'name': 'stock.invoice_onshipping',
+			'type': 'ir.actions.wizard',
+			'wiz_name': 'stock.invoice_onshipping'
+		}
+		if data['form'].get('new_picking', False):
+			res['context'] = "{'new_picking':%d}" % (data['form']['new_picking'],)
+		return res
+
+	end_final = {
+		'actions':[],
+		'result': {
+			'type': 'state',
+			'state': 'end',
+		}
+	}
+
+	choice = {
+		'actions':[],
+		'result': {
+			'type': 'choice',
+			'next_state': _test_action,
+		}
+	}
+
+	call_invoice = {
+		'actions':[],
+		'result': {
+			'type': 'action',
+			'action': _open_action,
+			'state': 'end'
+		}
+	}
 	def __init__(self, *args):
-		print '__init__', *args
 		service = netsvc.LocalService("wizard.stock.partial_picking")
-		print service.states
+		service._service.states['split']['result']['state'] = 'test_choice'
+		service._service.states['invoice'] = self.call_invoice
+		service._service.states['test_choice'] = self.choice
+		service._service.states['end_final'] = self.end_final
 invoice_directly('stock.picking.invoice.directly')
