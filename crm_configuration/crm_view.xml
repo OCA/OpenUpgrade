@@ -1,224 +1,31 @@
 <?xml version="1.0"?>
 <terp>
 	<data>
-
-	# ------------------------------------------------------
-	# All Meetings
-	# ------------------------------------------------------
-
-	<record model="ir.ui.view" id="view_crm_meeting_tree">
-		<field name="name">Meetings</field>
-		<field name="model">crm.meeting</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Meetings">
-				<field name="name"/>
-				<field name="user_id11"/>
-				<field name="crm_id11"/>
-				<field name="creat_date"/>
-				<field name="date_action_next"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_crm_meeting_form">
-		<field name="name">Meetings</field>
-		<field name="model">crm.meeting</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Meetings">
-			<notebook>
-				<page string="General">
-					<field name="id"/>
-					<field name="name" select="1"/>
-					<newline/>
-					<field name="user_id11" on_change="onchange_user_id(user_id11)"/>
-					<field name="designation" domain="[('user_id11', '=', designation)"/>
-					<newline/>
-					<field name="crm_id11"/>
-					<field name="priority"/>
-					<separator string="Agenda Of The Meeting " colspan="4"/>
-					<field name="agenda" nolabel="1" colspan="4"/>
-					<separator string="What led to the call for a meeting ?" colspan="4"/>
-					<field name="question_yesterday" nolabel="1" colspan="4"/>
-					<separator string="What Suggestions Are Proposed ?" colspan="4"/>
-					<field name="question_today" nolabel="1" colspan="4"/>
-					<separator string="Conclusion Of The Meeting " colspan="4"/>
-					<field name="question_blocks" nolabel="1" colspan="4"/>
-					<newline/>
-					<group col="11" colspan="4">
-							<field name="state" select="2"/>
-							<button name="do_draft" string="Set to draft" states=",open,cancel" />
-							<button name="do_open"   string="Open Meeting" states="pending,draft" />
-							<button name="do_pending" states="open" string="Set pending" />
-							<button name="do_done"   states="open,pending" string="Done" />
-							<button name="do_cancel" states="draft,open,pending" string="Cancel" />
-
-					</group>
-				</page>
-				<page string="Optional Info">
-					<separator colspan="4" string="Dates"/>
-					<field name="creat_date"/>
-					<field name="date_deadline"/>
-					<field name="date_action_last"/>
-					<field name="date_action_next"/>
-					<field name="date_closed"/>
-					<newline/>
-					<separator colspan="4" string="References"/>
-					<field name="ref" colspan="4"/>
-					<field name="ref2" colspan="4"/>
-					<newline/>
-					<separator colspan="4" string="History"/>
-					<field name="work_ids" colspan="4" nolabel="1"/>
-				</page>
-			</notebook>
-			</form>
-		</field>
-	</record>
-<!--	<record model="ir.ui.view" id="view_crm_meeting_calendar">-->
-<!--		<field name="name">Meetings</field>-->
-<!--		<field name="model">crm.meeting</field>-->
-<!--		<field name="type">calendar</field>-->
-<!--		<field name="priority" eval="2"/>-->
-<!--		<field name="arch" type="xml">-->
-<!--			<calendar string="DATES" date_start="create_date" date_delay="date_action_next" color="user_id">-->
-<!--				<field name="name"/>-->
-<!--				<field name="crm_id"/>-->
-<!--			</calendar>-->
-<!--		</field>-->
-<!--	</record>-->
-
-	<record model="ir.actions.act_window" id="action_meeting_form">
-		<field name="name">All Meetings</field>
-		<field name="res_model">crm.meeting</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_crm_meeting_tree" />
-	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings" id="menu_action_meeting_form1" action="action_meeting_form"/>
-
-	# ------------------------------------------------------
-	# All Meetings --> Draft Meetings
-	# ------------------------------------------------------
-
-	<record model="ir.actions.act_window" id="action_meeting_form1">
-		<field name="name">Draft Meetings</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">crm.meeting</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('state','=','draft')]</field>
-	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/Draft Meetings" sequence="1" id="menu_action_meeting_form1a" action="action_meeting_form1"/>
+		<menuitem name="CRM &amp; SRM" icon="terp-crm" id="menu_crm1"/>
 	
 	# ------------------------------------------------------
-	# All Meetings --> Confirmed Meetings
+	# Bug Tracking
 	# ------------------------------------------------------
 
-	<record model="ir.actions.act_window" id="action_meeting_form2">
-		<field name="name">Confirmed Meetings</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">crm.meeting</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('state','=','done')]</field>
-	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/Confirmed Meetings" sequence="2" id="menu_action_meeting_form11a" action="action_meeting_form2"/>
 
-	# ------------------------------------------------------
-	# All Meetings --> Next DeadLines
-	# ------------------------------------------------------
-
-	<record model="ir.actions.act_window" id="action_meeting_form3">
-		<field name="name">Next DeadLines</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">crm.meeting</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('date_deadline','&gt;=',time.strftime('%Y-%m-%d')),('state','!=','done')]</field>
-	</record>
-
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/Next DeadLines" sequence="3" id="menu_action_meeting_form111a" action="action_meeting_form3"/>
-
-	# ------------------------------------------------------
-	# My Meetings
-	# ------------------------------------------------------
-
-	<record model="ir.actions.act_window" id="action_order_tree10">
-		<field name="name">My Meetings</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">crm.meeting</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('user_id11','=',uid)]</field>
-	</record>
-	<menuitem
-		name="CRM &amp; SRM/Meetings/My Meetings"
-		sequence="1"
-		id="menu_action_order_tree10" action="action_order_tree10"/>
-
-	# ------------------------------------------------------
-	# My Meetings --> Draft Meetings
-	# ------------------------------------------------------
-
-	<record model="ir.actions.act_window" id="action_order_tree11">
-		<field name="name">Draft Meetings</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">crm.meeting</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('state','=','draft'),('user_id11','=',uid)]</field>
-	</record>
-	<menuitem
-		name="CRM &amp; SRM/Meetings/My Meetings/Draft Meetings"
-		sequence="1"
-		id="menu_action_order_tree11" action="action_order_tree11"/>
+		<record model="ir.ui.view" id="crm_case_categ0-act_my111">
+			<field name="name">crm.case.view</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm.crm_case-view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+					<field name="planned_cost" position="replace"/>
+			</field>
+		</record>
 		
-	# ------------------------------------------------------
-	# My Meetings --> Confirmed Meetings
-	# ------------------------------------------------------
-
-	<record model="ir.actions.act_window" id="action_order_tree12">
-		<field name="name">Draft Meetings</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">crm.meeting</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('state','=','done'),('user_id11','=',uid)]</field>
-	</record>
-	<menuitem
-		name="CRM &amp; SRM/Meetings/My Meetings/Confirmed Meetings"
-		sequence="2"
-		id="menu_action_order_tree12" action="action_order_tree12"/>
-			
-	# ------------------------------------------------------
-	# History
-	# ------------------------------------------------------
-	
-	<record model="ir.ui.view" id="view_task_work_form">
-		<field name="name">history.type.form</field>
-		<field name="model">history.type</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="History">
-				<field name="name" select="1" colspan="4"/>
-				<field name="hours"  widget="float_time" select="1"/>
-				<field name="date" select="1"/>
-				<field name="user_id11" select="1"/>
-			</form>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_task_work_tree">
-		<field name="name">history.type.tree</field>
-		<field name="model">history.type</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="History" editable="top">
-				<field name="date"/>
-				<field name="name"/>
-				<field name="hours"  widget="float_time"/>
-				<field name="user_id11"/>
-			</tree>
-		</field>
-	</record>
+		<record model="ir.ui.view" id="crm_case_categ0-act_my112">
+			<field name="name">crm.case.view</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm.crm_case-view" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+					<field name="planned_revenue" position="replace"/>
+			</field>
+		</record>
 	</data>
 </terp>
