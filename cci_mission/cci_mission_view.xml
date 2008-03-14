@@ -41,7 +41,7 @@
 					<field name="site_id" />
 					<field name="original_product_id" />
 					<field name="copy_product_id" />
-					<!--<field name="section" />--> <!-- should be check -->
+					<field name="section" /> <!-- should be check -->
 				</form>
 			</field>
 		</record>
@@ -129,6 +129,7 @@
 					<field name="quantity_copies" />
 					<field name="quantity_original"/><!-- added -->
 					<field name="to_bill" />
+					<field name="invoice_id" />
 					<newline/>
 					<field name="goods" colspan="4" />
 					<newline/>
@@ -354,7 +355,7 @@
 					<page string="Legalization Details">
 						<field name="name" select="1" />
 						<field name="date" select="2" />
-						<field name="type_id" select="1" readonly="1"/>
+						<field name="type_id" select="1" domain="[('section','=','legalization')]"/>
 						<field name="destination_id" select="1"/>
 						<field name="order_partner_id" on_change="get_legalization_details(order_partner_id)" />
 						<newline/>
@@ -366,8 +367,15 @@
 						<field name="to_bill" />
 						<field name="quantity_original" select="2"/>
 						<field name="quantity_copies" select="2" />
-						<field name="state" />
+						<field name="state" readonly="1"/>
+						<group col="4" colspan="2">
+							<button string="Cancelled by the CCI" name="button_cancel_cci" states="invoiced" type="object"/>
+							<button string="Cancelled by the Customer" name="button_cancel_customer" states="invoiced" type="object"/>
+						</group>
+						<newline/>
+						<group colspan="2"/>
 						<field name="total" />
+						<newline/>
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="text_on_invoice" colspan="4" nolabel="1"/>
 					</page>
@@ -385,6 +393,8 @@
 						<field name="embassy_folder_id" />
 						<newline/>
 						<field name="certificate_id" />
+						<newline/>
+						<field name="invoice_id" />
 					</page>
 				</notebook>
 				</form>
@@ -406,7 +416,6 @@
 			<field name="name">Legalization</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">cci_missions.legalization</field>
-			<field name="domain" eval="[('type_id','=',2)]"/>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
@@ -424,7 +433,7 @@
 					<page string="Certificate Details">
 						<field name="name" select="1"/>
 						<field name="date" select="2"/>
-						<field name="type_id" select="1" readonly="1"/>
+						<field name="type_id" select="1" domain="[('section','=','certificate')]"/>
 						<field name="destination_id" select="1" />
 						<field name="order_partner_id" on_change="get_certification_details(order_partner_id)" />
 						<newline/>
@@ -440,7 +449,13 @@
 						<field name="to_bill" />
 						<field name="goods_value" />
 						<field name="quantity_copies" />
-						<field name="state" />
+						<field name="state" readonly="1"/>
+						<group col="4" colspan="2">
+							<button string="Cancelled by the CCI" name="button_cancel_cci" states="invoiced" type="object"/>
+							<button string="Cancelled by the Customer" name="button_cancel_customer" states="invoiced" type="object"/>
+						</group>
+						<newline/>
+						<group colspan="2"/>
 						<field name="total" />
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="text_on_invoice" nolabel="1" colspan="4"/>
@@ -457,10 +472,13 @@
 					</page>
 					<page string="Links">
 						<field name="embassy_folder_id" />
+						<field name="invoice_id" />
+						<newline/>
 						<field name="sending_SPF" readonly="1"/>
+						<newline/>
 						<field name="origin_ids" /> <!-- origin_ids(res.country.name) -->
 						<field name="customs_ids"/> <!-- customs_ids (name, meaning, official) -->
-						<field name="legalization_ids" />
+						<field name="legalization_ids" colspan="4"/>
 					</page>
 				</notebook>
 				</form>
@@ -482,7 +500,6 @@
 			<field name="name">Certificate</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">cci_missions.certificate</field>
-			<field name="domain" eval="[('type_id','=',1)]"/>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
@@ -604,7 +621,7 @@
 				<notebook>
 					<page string="General">
 						<field name="name" select="1"/>
-						<field name="type_id" />
+						<field name="type_id" domain="[('section','=','ATA')]"/>
 						<field name="creation_date" select="2"/>
 						<field name="validity_date" select="2"/>
 						<field name="partner_id" select="1"/>
@@ -636,7 +653,16 @@
 						<field name="warranty" />
 						<field name="warranty_product_id" />
 						<newline/>
-						<field name="state" colspan="4" select="2"/>
+						<field name="invoice_id"/>
+						<newline/>
+
+						<field name="state" colspan="2" select="2"/>
+						<group colspan="2">
+							<button string="Brought Uncertain" name="button_uncertain" states="created,dispute" type="object"/>
+							<button string="Brought Correct" name="button_correct" states="created,dispute" type="object"/>
+							<button string="Dispute Starting" name="button_dispute" states="pending,correct" type="object"/>
+							<button string="Close ATA Carnet" name="button_closed" states="correct" type="object"/>
+						</group>
 					</page>
 					<page string="Follow-up">
 						<field name="additional_pages" />

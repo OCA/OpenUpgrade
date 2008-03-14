@@ -134,7 +134,7 @@ class cci_missions_dossier_type(osv.osv):
 		'copy_product_id' : fields.many2one('product.product','Reference for Copies',required=True,help='for the association with a pricelist'),
 		'site_id' : fields.many2one('cci_missions.site','Site',required=True),
 		'sequence_id' : fields.many2one('ir.sequence','Sequence',required=True,help='for association with a sequence'),
-#		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA Carnet','ATA Carnet')],'Type',required=True),
+		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA','ATA Carnet')],'Type',required=True),
 	}
 
 cci_missions_dossier_type()
@@ -207,6 +207,14 @@ class cci_missions_dossier(osv.osv):
 		return res
 
 
+#	def cci_dossier_cancel_customer(self, cr, uid, ids, *args):
+#		self.write(cr, uid, ids, {'state':'cancel_customer',})
+#		return True
+
+#	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
+#		self.write(cr, uid, ids, {'state':'cancel_cci',})
+#		return True
+
 	_columns = {
 		'name' : fields.char('Reference',size=20,required=True),
 		'type_id' : fields.many2one('cci_missions.dossier_type','Dossier Type',required=True),
@@ -215,7 +223,7 @@ class cci_missions_dossier(osv.osv):
 		'asker_name':fields.char('Asker Name',size=50),
 		'sender_name':fields.char('Sender Name',size=50),
 		'to_bill':fields.boolean('To Be Billed'),
-		'state':fields.selection([('confirmed','Confirmed'),('canceled','Canceled'),('invoiced','Invoiced')],'State',),
+		'state':fields.selection([('draft','Confirmed'),('invoiced','Invoiced'),('cancel_customer','Canceled by Customer'),('cancel_cci','Canceled by the CCI')],'State',),
 		'goods':fields.char('Goods Description',size=100),
 		'goods_value':fields.float('Value of the Sold Goods'),#Monetary; must be greater than zero
 		'destination_id':fields.many2one('res.country','Destination Country'),
@@ -227,13 +235,14 @@ class cci_missions_dossier(osv.osv):
 		'text_on_invoice':fields.text('Text to Display on the Invoice'),
 #		'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products')
 		'product_ids': fields.one2many('product.lines', 'dossier_product_line_id', 'Products'),
+		"invoice_id":fields.many2one("account.invoice","Invoice"),
 	}
 
 	_defaults = {
 		'name': lambda *args: '/',
 		'date': lambda *a: time.strftime('%Y-%m-%d'),
 		'to_bill' : lambda *b : True,
-		'state' : lambda *a : 'confirmed',
+		'state' : lambda *a : 'draft',
 		'quantity_original' : lambda *a : 1
 	}
 
@@ -258,6 +267,14 @@ class cci_missions_certificate(osv.osv):
 	_name = 'cci_missions.certificate'
 	_description = 'cci_missions.certificate'
 	_inherits = {'cci_missions.dossier': 'dossier_id' }
+
+	def button_cancel_cci(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'cancel_cci',})
+		return True
+
+	def button_cancel_customer(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'cancel_customer',})
+		return True
 
 	def get_certification_details(self, cr, uid, ids,order_partner_id):
 		result={}
@@ -336,6 +353,14 @@ class cci_missions_legalization(osv.osv):
 	_name = 'cci_missions.legalization'
 	_description = 'cci_missions.legalization'
 	_inherits = {'cci_missions.dossier': 'dossier_id'}
+
+	def button_cancel_cci(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'cancel_cci',})
+		return True
+
+	def button_cancel_customer(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'cancel_customer',})
+		return True
 
 	def get_legalization_details(self, cr, uid, ids,order_partner_id):
 		result={}
@@ -432,6 +457,22 @@ class cci_missions_ata_carnet(osv.osv):
 	_name = 'cci_missions.ata_carnet'
 	_description = 'cci_missions.ata_carnet'
 
+	def button_uncertain(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'pending',})
+		return True
+
+	def button_correct(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'correct',})
+		return True
+
+	def button_dispute(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'dispute',})
+		return True
+
+	def button_closed(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'closed',})
+		return True
+
 	def _get_insurer_id(self, cr, uid, ids, name, args, context=None):
 		res={}
 		partner_ids = self.browse(cr,uid,ids)
@@ -510,6 +551,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'product_ids': fields.one2many('product.lines', 'product_line_id', 'Products'),
 		'letter_ids':fields.one2many('cci_missions.letters_log','ata_carnet_id','Letters'),
 		'sub_total': fields.function(_tot_products, method=True, string='Subtotal of Extra Products',type="float"),
+		"invoice_id":fields.many2one("account.invoice","Invoice"),
 	}
 
 	_defaults = {

@@ -86,6 +86,7 @@
 		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
 		<field name="sequence_id" ref="ir_sequence_certificateseq0"/>
 		<field name="original_product_id" ref="cci_product_product_0"/>
+		<field name="section">certificate</field>
 	</record>
 	<record id="cci_missions_dossier_type_legalization0" model="cci_missions.dossier_type">
 		<field eval="&quot;LG&quot;" name="code"/>
@@ -94,6 +95,7 @@
 		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
 		<field name="sequence_id" ref="ir_sequence_legalizationseq0"/>
 		<field name="original_product_id" ref="cci_product_product_2"/>
+		<field name="section">legalization</field>
 	</record>
 
 </data>

@@ -34,6 +34,7 @@ import pooler
 from osv import fields, osv
 form = """<?xml version="1.0"?>
 <form string="Create invoices">
+
     <field name="inv_created"/>
     <newline />
     <field name="inv_rejected"/>
@@ -46,10 +47,15 @@ fields = {
       'inv_created': {'string':'Invoice Created', 'type':'char', 'readonly':True},
       'inv_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
       'inv_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
-
-          }
+}
 
 def _createInvoices(self, cr, uid, data, context):
+    inv_create = 0
+    inv_reject = 0
+    inv_rej_reason = ""
+    list_inv = []
+    invoice_ids = []
+
     pool_obj = pooler.get_pool(cr.dbname)
     obj_certificate = pool_obj.get('cci_missions.certificate')
     data_certificate = obj_certificate.browse(cr,uid,data['ids'])
@@ -65,6 +71,23 @@ def _createInvoices(self, cr, uid, data, context):
         address_contact = False
         address_invoice = False
         create_ids = []
+        if certificate.invoice_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(certificate.id)+": Already Has an Invoice Linked \n"
+            continue
+        for add in certificate.order_partner_id.address:
+            if add.type == 'contact':
+                address_contact = add.id
+            if add.type == 'invoice':
+                address_invoice = add.id
+            if (not address_contact) and (add.type == 'default'):
+                address_contact = add.id
+            if (not address_invoice) and (add.type == 'default'):
+                address_invoice = add.id
+        if not address_contact or not address_invoice:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(certificate.id)+": No Partner Address Defined on Billed Customer \n"
+            continue
 
         inv_create = inv_create + 1
         for lines in certificate.product_ids :
@@ -78,18 +101,6 @@ def _createInvoices(self, cr, uid, data, context):
         dict['original'] = certificate.type_id.original_product_id.id
         list.append(certificate.type_id.copy_product_id.id)
         dict['copy'] = certificate.type_id.copy_product_id.id
-        for add in certificate.order_partner_id.address:
-            if add.type == 'contact':
-                address_contact = add.id
-            if add.type == 'invoice':
-                address_invoice = add.id
-            if (not address_contact) and (add.type == 'default'):
-                address_contact = add.id
-            if (not address_invoice) and (add.type == 'default'):
-                address_invoice = add.id
-
-        if not address_contact or not address_invoice:
-            raise wizard.except_wizard('Warning !', 'Please Enter Partner Address on Billed Customer : %s'%(certificate.order_partner_id.name))
 
         for prod_id in list:
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=certificate.order_partner_id.id)
@@ -130,10 +141,15 @@ def _createInvoices(self, cr, uid, data, context):
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
         list_inv.append(inv_id)
-    return {'inv_created' : str(inv_create),'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv ,    'inv_rej_reason': inv_rej_reason}
+
+        wf_service = netsvc.LocalService('workflow')
+        wf_service.trg_validate(uid, 'cci_missions.dossier', certificate.id, 'invoiced', cr)
+
+        obj_certificate.write(cr, uid,certificate.id, {'invoice_id' : inv_id})
+    return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
+
 
 class create_invoice(wizard.interface):
-
     def _open_invoice(self, cr, uid, data, context):
         return {
             'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
@@ -141,7 +157,7 @@ class create_invoice(wizard.interface):
             'view_type': 'form',
             'view_mode': 'tree,form',
             'res_model': 'account.invoice',
-            'view_id': False,
+            'view_id': False,#pooler.get_pool(cr.dbname).get('ir.ui.view').search(cr, uid, [('name', 'like', 'account.invoice.form')]),
             'context': "{'type':'out_invoice'}",
             'type': 'ir.actions.act_window'
         }

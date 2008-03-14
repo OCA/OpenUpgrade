@@ -10,7 +10,7 @@
     "depends" : ["base",'cci_partner','product'],
     "init_xml" : [],
     "demo_xml" : ["cci_mission_data.xml"],
-    "update_xml" : ["cci_mission_view.xml","cci_mission_wizard.xml","cci_mission_report.xml"],
+    "update_xml" : ["cci_mission_view.xml","cci_mission_wizard.xml","cci_mission_report.xml","cci_mission_workflow.xml" ],
     "active": False,
     "installable": True
 }

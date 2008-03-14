@@ -126,6 +126,9 @@ def _createInvoices(self, cr, uid, data, context):
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
         list_inv.append(inv_id)
+        wf_service = netsvc.LocalService('workflow')
+        wf_service.trg_validate(uid, 'cci_missions.ata_carnet', carnet.id, 'created', cr)
+        obj_carnet.write(cr, uid,carnet.id, {'invoice_id' : inv_id})
 
     return {'inv_created' : str(inv_create),'inv_rejected' : str(inv_reject)  ,'invoice_ids':  list_inv , 'inv_rej_reason': inv_rej_reason}
 
