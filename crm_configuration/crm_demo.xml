@@ -1,173 +1,41 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <terp>
-	<data noupdate="1">
-		<record id="dept_type_0" model="dept.type">
-			<field eval="1" name="deptid"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="&quot;IT - Development&quot;" name="dname"/>
-			<field eval="&quot;India&quot;" name="country"/>
-			<field eval="&quot;Gujarat&quot;" name="state"/>
-			<field eval="&quot;Gujarat College&quot;" name="street"/>
-		</record>
+<data noupdate="1">
 
-		<record id="employee_type_dharashah0" model="employee.type">
-			<field eval="&quot;Dhara Shah&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="1" name="eid"/>
-			<field name="dept_id" ref="dept_type_0"/>
-			<field eval="&quot;dsh@tinyerp.com&quot;" name="email"/>
-		</record>
+	<!--
+	Case Sections
+	-->
 
-		<record id="crm_meeting_transportaionfacility0" model="crm.meeting">
-			<field eval="&quot;Transportaion Facility&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="&quot;employees working in odd shifts should be provided cab facility by the Company&quot;" name="question_today"/>
-			<field eval="&quot;Providing cab facility to the employees&quot;" name="agenda"/>
-			<field name="date_deadline" eval="time.strftime('%Y-%m-15')"/>
-			<field name="user_id11" ref="employee_type_dharashah0"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field name="crm_id11" ref="base.res_partner_agrolait"/>
-			<field eval="&quot;4&quot;" name="priority"/>
-			<field eval="&quot;crm.case,0&quot;" name="ref"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="dept_type_1" model="dept.type">
-			<field eval="2" name="deptid"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="380063" name="zip"/>
-			<field eval="&quot;HR&quot;" name="dname"/>
-			<field eval="&quot;India&quot;" name="country"/>
-			<field eval="&quot;Gujarat&quot;" name="state"/>
-			<field eval="&quot;Gujarat College&quot;" name="street"/>
-		</record>
+	<record model="crm.case.section" id="section_support">
+		<field name="name">Bug Tracking</field>
+		<field name="code">BugSupp</field>
+	</record>
+
+	<!--
+	Case Categories
+	-->
+
+	<record model="crm.case.categ" id="categ1">
+		<field name="name">Bug</field>
+		<field name="section_id" ref="section_support"/>
+	</record>
+	<record model="crm.case.categ" id="categ2">
+		<field name="name">Feature Request</field>
+		<field name="section_id" ref="section_support"/>
+	</record>
+	<record model="crm.case.categ" id="categ3">
+		<field name="name">Support Question</field>
+		<field name="section_id" ref="section_support"/>
+	</record>
+	<record model="crm.case.categ" id="categ4">
+		<field name="name">Others</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
 	
-		<record id="employee_type_hardikjoshi0" model="employee.type">
-			<field eval="&quot;Hardik Joshi&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="2" name="eid"/>
-			<field name="dept_id" ref="dept_type_1"/>
-			<field eval="&quot;hjo@tinyerp.com&quot;" name="email"/>
-		</record>
-	
-		<record id="crm_meeting_appraisal0" model="crm.meeting">
-			<field eval="&quot;20% increase is finalized. Effective from 1st April onwards.....&quot;" name="question_blocks"/>
-			<field eval="&quot;No increment for the last 7 months have led to arise of this meeting&quot;" name="question_yesterday"/>
-			<field eval="&quot;Appraisal&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="&quot;30%increase in the salaries...&quot;" name="question_today"/>
-			<field eval="&quot;Appraisals for the new joinees&quot;" name="agenda"/>
-			<field name="user_id11" ref="employee_type_hardikjoshi0"/>
-			<field eval="time.strftime('%Y-%m-01')" name="creat_date"/>
-			<field name="date_deadline" eval="time.strftime('%Y-%m-12')"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field name="crm_id11" ref="base.res_partner_asus"/>
-			<field eval="&quot;3&quot;" name="priority"/>
-		</record>
-		<workflow action="do_open" model="crm.meeting" ref="crm_meeting_appraisal0"/>
-		<workflow action="do_done" model="crm.meeting" ref="crm_meeting_appraisal0"/>
-	</data>
-	
-	<data noupdate="1">
-		<record id="dept_type_2" model="dept.type">
-			<field eval="3" name="deptid"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="380063" name="zip"/>
-			<field eval="&quot;IT - Testing&quot;" name="dname"/>
-			<field eval="&quot;India&quot;" name="country"/>
-			<field eval="&quot;Gujarat&quot;" name="state"/>
-			<field eval="&quot;Gujarat College&quot;" name="street"/>
-		</record>
+<!--	<function-->
+<!--		model="crm.case.section"-->
+<!--		name="menu_create_bug" -->
+<!--		eval="([section_support], 'Bug Tracking', ref('menu_crm1'))"/>-->
 
-		<record id="employee_type_dhavalpatel0" model="employee.type">
-			<field eval="&quot;Dhaval Patel&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="3" name="eid"/>
-			<field name="dept_id" ref="dept_type_2"/>
-			<field eval="&quot;dpa@tinyerp.com&quot;" name="email"/>
-		</record>
-
-		<record id="crm_meeting_seminartimings0" model="crm.meeting">
-			<field eval="&quot;Seminar Timings&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="&quot;The seminar should be held on next Saturday&quot;" name="question_today"/>
-			<field eval="&quot;Seminar on Open Source&quot;" name="agenda"/>
-			<field name="user_id11" ref="employee_type_dhavalpatel0"/>
-			<field eval="time.strftime('%Y-%m-12')" name="creat_date"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field name="crm_id11" ref="base.res_partner_3"/>
-			<field eval="&quot;3&quot;" name="priority"/>
-			<field eval="time.strftime('%Y-%m-25')" name="date_deadline"/>
-		</record>
-		<workflow action="do_open" model="crm.meeting" ref="crm_meeting_seminartimings0"/>
-	</data>
-<!--  ################################################-->
-
-	<data noupdate="1">
-		<record id="dept_type_0" model="dept.type">
-			<field eval="4" name="deptid"/>
-			<field eval="&quot;Ahmedabad&quot;" name="city"/>
-			<field eval="380018" name="zip"/>
-			<field eval="&quot;Accounts&quot;" name="dname"/>
-			<field eval="&quot;India&quot;" name="country"/>
-			<field eval="&quot;Gujarat&quot;" name="state"/>
-			<field eval="&quot;Ellis Bridge&quot;" name="street"/>
-		</record>
-
-		<record id="employee_type_naresh0" model="employee.type">
-			<field eval="&quot;Naresh&quot;" name="name"/>
-			<field eval="&quot;Trainee&quot;" name="designation"/>
-			<field eval="4" name="eid"/>
-			<field name="dept_id" ref="dept_type_0"/>
-			<field eval="&quot;nch@tinyerp.com&quot;" name="email"/>
-		</record>
-
-		<record id="crm_meeting_saturdayofficialoff0" model="crm.meeting">
-			<field eval="&quot;Increase in the working hours......&quot;" name="question_yesterday"/>
-			<field eval="&quot;Saturday Official Off&quot;" name="name"/>
-			<field eval="&quot;Trainee&quot;" name="designation"/>
-			<field eval="&quot;5 days a week working&quot;" name="agenda"/>
-			<field eval="time.strftime('%Y-%m-18')" name="date_deadline"/>
-			<field name="user_id11" ref="employee_type_naresh0"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field name="crm_id11" ref="base.res_partner_5"/>
-			<field eval="&quot;3&quot;" name="priority"/>
-		</record>
-	</data>
-
-	<data noupdate="1">
-		<record id="crm_meeting_onlineleaveapplications0" model="crm.meeting">
-			<field eval="&quot;Approved!!! Effective from 1st April onwards...&quot;" name="question_blocks"/>
-			<field eval="&quot;Online Leave APplications&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="&quot;The leave forms may be submitted online....&quot;" name="question_today"/>
-			<field eval="&quot;Online Submission of Leave forms&quot;" name="agenda"/>
-			<field model="employee.type" name="user_id11" search="[('name','=','Dhaval Patel')]"/>
-			<field eval="time.strftime('%Y-%m-05')" name="creat_date"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field name="crm_id11" ref="base.res_partner_tinyatwork"/>
-			<field eval="&quot;1&quot;" name="priority"/>
-			<field eval="time.strftime('%Y-%m-28')" name="date_deadline"/>
-		</record>
-		<workflow action="do_open" model="crm.meeting" ref="crm_meeting_onlineleaveapplications0"/>
-		<workflow action="do_done" model="crm.meeting" ref="crm_meeting_onlineleaveapplications0"/>
-	</data>
-
-	<data noupdate="1">
-		<record id="crm_meeting_incentives0" model="crm.meeting">
-			<field eval="&quot;Fall in the quality of the service led to the meeting&quot;" name="question_yesterday"/>
-			<field eval="&quot;Incentives&quot;" name="name"/>
-			<field eval="&quot;Manager&quot;" name="designation"/>
-			<field eval="&quot;Motivation Incentive schemes be implemented......&quot;" name="question_today"/>
-			<field eval="&quot;Mew incentive schemes should be considered.... &quot;" name="agenda"/>
-			<field eval="time.strftime('%Y-%m-30')" name="date_deadline"/>
-			<field model="employee.type" name="user_id11" search="[('name','=','Dhaval Patel')]"/>
-			<field eval="time.strftime('%Y-%m-02')" name="creat_date"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field name="crm_id11" ref="base.res_partner_seagate"/>
-			<field eval="&quot;2&quot;" name="priority"/>
-			<field eval="time.strftime('%Y-%m-09')" name="date_action_next"/>
-		</record>
-	</data>
-
+</data>
 </terp>
