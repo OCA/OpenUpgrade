@@ -137,18 +137,23 @@ def _createInvoices(self, cr, uid, data, context):
         wf_service.trg_validate(uid, 'cci_missions.ata_carnet', carnet.id, 'created', cr)
         obj_carnet.write(cr, uid,carnet.id, {'invoice_id' : inv_id})
 
-    return {'inv_created' : str(inv_create),'inv_rejected' : str(inv_reject)  ,'invoice_ids':  list_inv , 'inv_rej_reason': inv_rej_reason}
+
+    return {'inv_created' : str(inv_create),'inv_rejected' : str(inv_reject)  ,'invoice_ids':  list_inv , 'inv_rej_reason': inv_rej_reason }
 
 class create_invoice(wizard.interface):
 
     def _open_invoice(self, cr, uid, data, context):
+        pool_obj = pooler.get_pool(cr.dbname)
+        model_data_ids = pool_obj.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','invoice_form')])
+        resource_id = pool_obj.get('ir.model.data').read(cr,uid,model_data_ids,fields=['res_id'])[0]['res_id']
+
         return {
             'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
             'name': 'Invoices',
             'view_type': 'form',
             'view_mode': 'tree,form',
             'res_model': 'account.invoice',
-            'view_id': False,
+            'views': [(False,'tree'),(resource_id,'form')],
             'context': "{'type':'out_invoice'}",
             'type': 'ir.actions.act_window'
         }
