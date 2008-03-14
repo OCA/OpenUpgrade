@@ -29,24 +29,25 @@ import wizard
 import pooler
 import netsvc
 
-def _get_default(obj, cursor, uid, data, context=None):
-	pool = pooler.get_pool(cursor.dbname)
-	product = pool.get('product.product').browse(cr, uid, data['form']['id'], context)
+import time
+
+def _get_default(obj, cr, uid, data, context=None):
+	pool = pooler.get_pool(cr.dbname)
+	product = pool.get('product.product').browse(cr, uid, data['id'], context)
 	return {'product_id': product.id, 'uom_id':product.uom_id.id, 'qty':1.0}
 
-def make_procurement(obj, cursor, uid, data, context=None):
+def make_procurement(obj, cr, uid, data, context=None):
 	'''Create procurement'''
-	pool = pooler.get_pool(cursor.dbname)
+	pool = pooler.get_pool(cr.dbname)
+	wh = pool.get('stock.warehouse').browse(cr, uid, data['form']['warehouse_id'], context)
 	user = pool.get('res.users').browse(cr, uid, uid, context)
 	procure_id = pool.get('mrp.procurement').create(cr, uid, {
 		'name':'INT:'+str(user.login),
-		'date_planned':time.strftime('%Y-%m-%d'),
-		'product_id':data['product_id'],
-		'product_qty':data['qty'],
-		'product_uom':data['product_uom'],
-		'product_uos':data['product_uom'],
-		'product_uos_qty':data['qty'],
-		'location_id':data['location_id'],
+		'date_planned':data['form']['date_planned'],
+		'product_id':data['form']['product_id'],
+		'product_qty':data['form']['qty'],
+		'product_uom':data['form']['uom_id'],
+		'location_id':wh.lot_stock_id.id,
 		'procure_method':'make_to_order',
 	}, context=context)
 	wf_service = netsvc.LocalService("workflow")
@@ -67,12 +68,14 @@ class MakeProcurement(wizard.interface):
 	<field name="warehouse_id"/>
 	<field name="qty"/>
 	<field name="uom_id"/>
+	<field name="date_planned"/>
 </form>"""
 	procurement_fields = {
 		'qty': {'string': 'Quantity', 'type': 'float', 'digits':(16,2), 'required': True},
-		'product_id': {'string': 'product', 'type': 'many2one', 'relation': 'product.product', 'required': True},
+		'product_id': {'string': 'product', 'type': 'many2one', 'relation': 'product.product', 'required': True, 'readonly':1},
 		'uom_id': {'string': 'Unit of Measure', 'type': 'many2one', 'relation': 'product.uom', 'required':True},
 		'warehouse_id': {'string': 'Location', 'type': 'many2one', 'relation':'stock.warehouse', 'required':True},
+		'date_planned': {'string': 'Planned Date', 'type': 'date', 'required':True, 'default': lambda *args: time.strftime('%Y-%m-%d')}
 	}
 
 	states = {
@@ -99,4 +102,4 @@ class MakeProcurement(wizard.interface):
 		}
 	}
 
-MakeProcurement('sale_crm.make_case')
+MakeProcurement('product.product.procurement')
