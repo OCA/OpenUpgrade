@@ -24,7 +24,7 @@
 		<field name="wkf_id" ref="wkf_cci_ata" />
 		<field name="name">created</field>
 		<field name="kind">function</field>
-		<field name="action">write({'state':'created'})</field>
+		<field name="action">cci_ata_created()</field>
 		<field name="split_mode">OR</field>
 	</record>
 

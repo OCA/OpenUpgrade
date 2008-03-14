@@ -164,11 +164,7 @@ class cci_missions_dossier(osv.osv):
 			else:
 				asker_name=partner_info.asker_name
 			if not partner_info.sender_name:
-				if partner_info.address!=[]:
-					for add in partner_info.address:
-						if add.type=='default':
-							sender_name=add.name
-							break
+				sender_name=partner_info.name
 			else:
 				sender_name=partner_info.sender_name
 		result = {'value': {
@@ -290,11 +286,7 @@ class cci_missions_certificate(osv.osv):
 			else:
 				asker_name=partner_info.asker_name
 			if not partner_info.sender_name:
-				if partner_info.address!=[]:
-					for add in partner_info.address:
-						if add.type=='default':
-						   sender_name=add.name
-						   break
+				sender_name=partner_info.name
 			else:
 				sender_name=partner_info.sender_name
 			if not partner_info.asker_address:
@@ -373,11 +365,7 @@ class cci_missions_legalization(osv.osv):
 			else:
 				asker_name=partner_info.asker_name
 			if not partner_info.sender_name:
-				if partner_info.address!=[]:
-					for add in partner_info.address:
-						if add.type=='default':
-							sender_name=add.name
-							break
+				sender_name=partner_info.name
 			else:
 				sender_name=partner_info.sender_name
 		result = {'value': {
@@ -462,7 +450,7 @@ class cci_missions_ata_carnet(osv.osv):
 		return True
 
 	def button_correct(self, cr, uid, ids, *args):
-		self.write(cr, uid, ids, {'state':'correct',})
+		self.write(cr, uid, ids, {'state':'correct','ok_state_date':time.strftime('%Y-%m-%d')})
 		return True
 
 	def button_dispute(self, cr, uid, ids, *args):
@@ -471,6 +459,10 @@ class cci_missions_ata_carnet(osv.osv):
 
 	def button_closed(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'closed',})
+		return True
+
+	def cci_ata_created(self, cr, uid, ids):
+		self.write(cr, uid, ids, {'state':'created','return_date':time.strftime('%Y-%m-%d')})
 		return True
 
 	def _get_insurer_id(self, cr, uid, ids, name, args, context=None):
@@ -560,7 +552,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'state' : lambda *a : 'draft',
 		'validity_date' : _default_validity_date,
 		'name': lambda *args: '/',
-		'creation_date': lambda *a: time.strftime('%Y-%m-%d'), # should be check
+		'creation_date': lambda *a: time.strftime('%Y-%m-%d'), 
 	}
 	_constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', ['own_risk','insurer_agreement','partner_insurer_id'])]
 
