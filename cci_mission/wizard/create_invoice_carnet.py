@@ -64,6 +64,11 @@ def _createInvoices(self, cr, uid, data, context):
         address_contact = False
         address_invoice = False
         create_ids = []
+        if carnet.invoice_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(carnet.id)+": Already Has an Invoice Linked \n"
+            continue
+
         inv_create = inv_create + 1
         list.append(carnet.type_id.original_product_id.id)
         list.append(carnet.type_id.copy_product_id.id)
@@ -88,7 +93,9 @@ def _createInvoices(self, cr, uid, data, context):
 
 
         if not address_contact or not address_invoice:
-            raise wizard.except_wizard('Warning !', 'Please Enter Partner Address in Partner')
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(carnet.id)+": No Partner Address Defined on Partner \n"
+            continue
 
         for prod_id in list:
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=carnet.partner_id.id)
