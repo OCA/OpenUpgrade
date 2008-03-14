@@ -220,6 +220,7 @@ class res_partner(osv.osv):
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','current_partner_id','Partner Relation'),
+        'canal_id': fields.many2one('res.partner.canal', 'Favourite Channel'),
 
         'article_ids' : fields.many2many('res.partner.article','res_partner_article_rel','partner_id','article_id','Articles')
         #Never,Always,Managed_by_Poste,Prospect
@@ -489,14 +490,14 @@ class res_partner_country_relation(osv.osv):
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
         'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),#should be corect
+        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),
     }
 res_partner_country_relation()
 
 class res_partner_contact(osv.osv):
     _inherit='res.partner.contact'
     _columns = {
-        'article_ids':fields.many2many('res.partner.article','res_partner_contact_article_rel','contact_id','article_id','Articles'),#should be corect
+        'article_ids':fields.many2many('res.partner.article','res_partner_contact_article_rel','contact_id','article_id','Articles'),
     }
 res_partner_contact()
 

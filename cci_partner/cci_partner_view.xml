@@ -98,6 +98,7 @@
 						<field name="magazine_subscription"/>
 						<!--<field name="id_unique"/>-->
 						<field name="date_founded"/>
+						<field name="canal_id"/>
 						<separator string="Events" colspan="4"/>
 						<field name="training_authorization"/>
 						<field name="lang_authorization"/>
@@ -167,6 +168,9 @@
 							<field name="zip"/>
 							<field name="city"/>
 							<field name="country_id"/>
+							<field name="type" />
+							<field name="mobile"/>
+							<field name="email" />
 						</tree>
 					</field>
 				</field>
