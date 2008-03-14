@@ -268,7 +268,7 @@
 						<field name="priority" colspan="3"/>
 						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" colspan="4"/>
 						<field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
-						<field name="partner_address_id" select="2" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="3"/>
+						<field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="3"/>
 						<newline/>
 						<field name="email_from" select="2" colspan="3"/>
 						<button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
@@ -281,7 +281,7 @@
 
 					<separator string="Badge" colspan="4"/>
 					<field name="badge_title" select="2"/>
-					<field name="badge_name" select="2"/>
+					<field name="badge_name" select="2" on_change="onchange_badge_name(badge_name)"/>
 					<field name="badge_partner" select="2"/>
 					<newline/>
 					<separator colspan="4"/>

@@ -197,7 +197,6 @@ class event_registration(osv.osv):
 	_inherit = 'event.registration'
 	_description="event.registration"
 	_columns={
-			#"date_registration":fields.date('Date Registration'), available in crm.case as 'date' field
 			"partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
 			"contact_order_id":fields.many2one('res.partner.contact','Contact Order'),
 			"unit_price": fields.float('Unit Price'),
@@ -218,14 +217,29 @@ class event_registration(osv.osv):
 	}
 	_defaults = {
 		'tobe_invoiced' : lambda *a: True,
+		'name': lambda *a: 'Registration',
 				 }
 
-#	def onchange_contact_id(self, cr, uid, ids, contact_id):
-#		#return name
-#		if not contact_id:
-#			return {}
-#		contact_data=self.pool.get('res.partner.contact').browse(cr, uid, contact_id)
-#		return {'value':{'badge_name' : contact_data.name,'badge_title' : contact_data.title}}
+	def onchange_badge_name(self, cr, uid, ids, badge_name):
+		data ={}
+		if not badge_name:
+			return data
+		data['name'] = 'Registration: ' + badge_name
+		return {'value':data}
+
+	def onchange_contact_id(self, cr, uid, ids, contact_id):
+		data ={}
+		if not contact_id:
+			return data
+		obj_addr=self.pool.get('res.partner.address').browse(cr, uid, contact_id)
+		data['email_from'] = obj_addr.email
+		if obj_addr.contact_id:
+			data['badge_name']=obj_addr.contact_id.name
+			data['badge_title']=obj_addr.contact_id.title
+			d=self.onchange_badge_name(cr, uid, ids,data['badge_name'])
+			data.update(d['value'])
+		return {'value':data}
+
 
 	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
 		data={}
@@ -240,12 +254,9 @@ class event_registration(osv.osv):
 		data.update(d['value'])
 		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
 		data['partner_address_id']=addr['contact']
-		if addr['contact'] and not email:
-			obj_addr=self.pool.get('res.partner.address').browse(cr, uid, addr['contact'])
-			data['email_from'] = obj_addr.email
-			if obj_addr.contact_id:
-				data['badge_name']=obj_addr.contact_id.name
-				data['badge_title']=obj_addr.contact_id.title
+		d=self.onchange_contact_id(cr, uid, ids,addr['contact'])
+		data.update(d['value'])
+
 		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
 		data['badge_partner']=partner_data.name
 
