@@ -50,12 +50,7 @@ fields = {
 }
 
 def _createInvoices(self, cr, uid, data, context):
-    inv_create = 0
-    inv_reject = 0
-    inv_rej_reason = ""
     list_inv = []
-    invoice_ids = []
-
     pool_obj = pooler.get_pool(cr.dbname)
     obj_certificate = pool_obj.get('cci_missions.certificate')
     data_certificate = obj_certificate.browse(cr,uid,data['ids'])
@@ -64,6 +59,7 @@ def _createInvoices(self, cr, uid, data, context):
     inv_reject = 0
     inv_rej_reason = ""
     list_inv = []
+
     for certificate in data_certificate:
         list = []
         value = []
