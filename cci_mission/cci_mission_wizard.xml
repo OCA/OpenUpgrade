@@ -15,10 +15,22 @@
 					name="mission.create_invoice_carnet"
 					id="mission_invoice_carnet"
 					menu="True"/>
+		<wizard string="Federation Sending"
+						model="cci_missions.ata_carnet"
+						name="mission.fed_send"
+						id="mission_fed_send"
+						menu="True"/>"
 		<wizard string="Make Invoice"
 					model="cci_missions.legalization"
 					name="mission.create_invoice_legalization"
 					id="mission_invoice_legalization"
 					menu="True"/>
+
+<!--
+	frst CSV : all the fields of ata_carnet where ok_state_date within period chosen and fed_send_date=False
+	secnd csv: all the fields of ata_carnet whr state is pending,return_date <= 12 march 2006 and fed_send_date=False ,  make the state to Correct.
+
+	set fed_send date=now()  and ok_state_date=last date of chosen mnth
+	mail to the email adress passed.-->
 	</data>
 </terp>
