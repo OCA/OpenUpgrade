@@ -36,6 +36,15 @@
 			name="Administration/Translations/Translations Management/Contributors/Upload Contributions"
 			action="wizard_upload_contrib"
 			id="menuwizard_upload_contrib"
-			type="wizard"/>					
+			type="wizard"/>			
+		<record model="ir.actions.wizard" id="wizard_publish_new_version">
+			<field name="name">Publish New Version</field>
+			<field name="wiz_name">publish.new.version</field>
+		</record>
+		<menuitem
+			name="Administration/Translations/Translations Management/Maintainer/Publish New Version"
+			action="wizard_publish_new_version"
+			id="menuwizard_publish_new_version"
+			type="wizard"/>							
 	</data>
 </terp>
