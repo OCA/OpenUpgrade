@@ -3,7 +3,7 @@ import tools
 import csv
 import base64
 import xmlrpclib
-from translation.translation import get_language
+from base_translation.translation import get_language
 
 s = xmlrpclib.Server("http://192.168.0.4:8000")
 
@@ -36,7 +36,7 @@ class wizard_download_file_for_contrib(wizard.interface):
             text = s.get_release(fname)
             filename = tools.config["root_path"] + "/i18n/" + lang + ".csv"
             fp = file(filename,'wb').write(text.encode('utf8'))
-            tools.s(cr.dbname, filename, lang)                 
+            tools.trans_load(cr.dbname, filename, lang)                
         except Exception,e:
             print e
             raise wizard.except_wizard('Error !',"server is not properly configuraed")
@@ -46,7 +46,7 @@ class wizard_download_file_for_contrib(wizard.interface):
         return get_language(cr,uid,context,user='contributor')
 
     fields_form = {
-        'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,
+        'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,'required':True
         },
     }
 

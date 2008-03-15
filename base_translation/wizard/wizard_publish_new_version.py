@@ -25,53 +25,34 @@ view_form = """<?xml version="1.0"?>
     <separator string="Language List" colspan="4"/>
         <label align="0.0" string="Choose a language to upload:" colspan="4"/>
         <field name="lang" colspan="4"/>
-        <field name="email_id" colspan="4"/>
-        <field name="note" colspan="4"/>        
+        <field name="password" colspan="4"/>
         <label align="0.0" string="Note that this operation may take a few minutes." colspan="4"/>
     </group>
 </form>"""
 
 
-class wizard_upload_contrib(wizard.interface):
-    def _upload_contrib(self, cr, uid, data, context):
+class wizard_publish_new_version(wizard.interface):
+    def _publish_new_version(self, cr, uid, data, context):
         lang = data['form']['lang']
-        email_id =data['form']['email_id']
-        pattern = '^([a-zA-Z])[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$'
-        reg = re.compile(pattern)
-        reg.search(email_id)
-        if not reg.search(email_id):
-            raise wizard.except_wizard('Error !', 'Your Email Id is not well-formed')
+        pwd = data['form']['password']
+        user = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
         ir_translation_contrib = pooler.get_pool(cr.dbname).get('ir.translation.contribution')
-        ids = ir_translation_contrib.search(cr,uid,[('lang','=',lang),('state','=','propose'),('upload','=',False)])
-        print ids        
+        ids = ir_translation_contrib.search(cr,uid,[('lang','=',lang),('state','=','accept')])        
         if ids:
-            contrib =ir_translation_contrib.read(cr,uid,ids)
-            title = ['type','name','res_id','src','value']
-            content = map(lambda x:[x['type'],x['name'],x['res_id'],x['src'].decode('utf8').encode('utf8'),x['value'].decode('utf8').encode('utf8')],contrib)
-            file_list = s.get_contrib_list()
-            n_file = filter(lambda x: not x.find(lang),file_list)
-            email_id = email_id.replace('@','_AT_')
-            email_id = email_id.replace('.','_DOT_')
-            filename = lang+'-'+email_id+'-'+str(len(n_file)+1)+'.csv'
-            content.insert(0,title)
-            for id in ids:
-                ir_translation_contrib.write(cr,uid,id,{'upload':True})
+            publish = ir_translation_contrib.read(cr,uid,ids,title)
             try :
-                s.publish_contrib(content,filename)
+                s.publish_release(user,pwd,publish,lang+'.csv')
             except Exception,e:
                 print e
                 raise wizard.except_wizard('Error !',"server is not properly configuraed")
-        ids = ir_translation_contrib.search(cr,uid,[('lang','=',lang)])
-        contrib =ir_translation_contrib.read(cr,uid,ids)
-        return {'total':len(ids),'draft':len(filter(lambda x:x['state'] =='draft',contrib)),'propose':len(filter(lambda x:x['state'] =='propose',contrib))}
+        return {'total':0,'draft':0,'propose':0}
 
     def _get_language(sel, cr, uid, context):
-        return get_language(cr,uid,context,model='ir_translation_contribution')
+        return get_language(cr,uid,context,user='maintainer_publish')
 
     fields_form = {
         'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,'required':True},
-        'note': {'string':'Note','type':'text'},
-        'email_id':{'string':"Contributor's Email-ID",'type':'char','size':64,'required':True},
+        'password':{'strin':'Password','type':'char','size':20}
     }
     
     fields_form_end = {
@@ -86,12 +67,12 @@ class wizard_upload_contrib(wizard.interface):
             'result': {'type': 'form', 'arch': view_form, 'fields': fields_form,
                 'state': [
                     ('end', 'Cancel', 'gtk-cancel'),
-                    ('start', 'Upload Contribution', 'gtk-ok', True)
+                    ('start', 'Publish File', 'gtk-ok', True)
                 ]
             }
         },        
         'start': {
-            'actions': [_upload_contrib],
+            'actions': [_publish_new_version],
             'result': {'type': 'form', 'arch': view_form_end, 'fields': fields_form_end,
                 'state': [
                     ('end', 'Ok', 'gtk-ok', True)
@@ -99,4 +80,4 @@ class wizard_upload_contrib(wizard.interface):
             }
         },
     }
-wizard_upload_contrib('upload.contrib')
+wizard_publish_new_version('publish.new.version')
