@@ -15,6 +15,10 @@
 					name="mission.create_invoice_carnet"
 					id="mission_invoice_carnet"
 					menu="True"/>
-
+		<wizard string="Make Invoice"
+					model="cci_missions.legalization"
+					name="mission.create_invoice_legalization"
+					id="mission_invoice_legalization"
+					menu="True"/>
 	</data>
 </terp>
