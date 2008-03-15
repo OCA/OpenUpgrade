@@ -58,7 +58,6 @@ def _createInvoices(self, cr, uid, data, context):
     inv_create = 0
     inv_reject = 0
     inv_rej_reason = ""
-    list_inv = []
 
     for certificate in data_certificate:
         list = []
@@ -139,7 +138,7 @@ def _createInvoices(self, cr, uid, data, context):
         list_inv.append(inv_id)
 
         wf_service = netsvc.LocalService('workflow')
-        wf_service.trg_validate(uid, 'cci_missions.dossier', certificate.id, 'invoiced', cr)
+        wf_service.trg_validate(uid, 'cci_missions.dossier', certificate.dossier_id.id, 'invoiced', cr)
 
         obj_certificate.write(cr, uid,certificate.id, {'invoice_id' : inv_id})
     return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
