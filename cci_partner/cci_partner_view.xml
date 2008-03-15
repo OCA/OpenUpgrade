@@ -501,9 +501,9 @@
 							<field name="page" select="1"/>
 							<field name="article_length" select="2"/>
 
-							<field name="picture" select="2"/> 
+							<field name="picture" select="2"/>
 							<field name="graph" select="2"/>
-							<field name="data" select="2"/> 
+							<field name="data" select="2"/>
 
 						</page>
 						<page string="Partners">
@@ -730,6 +730,10 @@
 		</record>
 		<menuitem name="Partners/Configuration/Link Type/Partner Link Type" action="action_partner_link_type" id="menu_partner_link_type"/>
 
+			<act_window name="Functions"
+				res_model="res.partner.function"
+				src_model="res.partner.address"
+				id="act_partner_address_2_function"/>
 	</data>
 </terp>
 
