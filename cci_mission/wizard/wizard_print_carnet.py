@@ -17,8 +17,8 @@ fields = {
 class wizard_report(wizard.interface):
     def _checkint(self, cr, uid, data, context):
 
-        if data['form']['pages_doc1'] <=0 or data['form']['pages_doc2']<=0:
-            raise wizard.except_wizard('Warning !', 'Please Enter Values More Than Zero!')
+        if data['form']['pages_doc1'] <0 or data['form']['pages_doc2']<0:
+            raise wizard.except_wizard('Warning !', 'Please Enter Positive Values!')
         return {}
 
     states = {
