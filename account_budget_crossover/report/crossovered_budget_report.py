@@ -63,7 +63,7 @@ class budget_report(report_sxw.rml_parse):
 		result=[]
 		res={}
 
-		budgets = self.pool.get('crossovered.budget').browse(self.cr, self.uid, [object.id], self.context.copy)
+		budgets = self.pool.get('crossovered.budget').browse(self.cr, self.uid, [object.id], self.context.copy())
 
 		if form['date_from']<=budgets[0].date_from< budgets[0].date_to<=form['date_to']:
 			go=1 # does nothing just carry on.
@@ -139,7 +139,7 @@ class budget_report(report_sxw.rml_parse):
 				tot['perc'] =0.00
 			else:
 				tot['perc']=float(tot['prac'] /tot['theo'])*100
-		print result		
+		print result
 		return result
 
 	def funct_total(self,form):
