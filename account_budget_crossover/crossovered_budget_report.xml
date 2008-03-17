@@ -5,7 +5,7 @@
 				string="Analytic account-wise budget"
 				model="crossovered.budget"
 				name="crossovered.budget.report"
-				rml="crossovered_budget/report/crossovered_budget_report.rml"
+				rml="account_budget_crossover/report/crossovered_budget_report.rml"
 				auto="False"
 				menu="False" />
 		<wizard	string="Print Budget"
@@ -18,7 +18,7 @@
 			string="Analytic Account-wise Budgets"
 			model="account.analytic.account"
 			name="account.analytic.account.budget"
-			rml="crossovered_budget/report/analytic_account_budget_report.rml"
+			rml="account_budget_crossover/report/analytic_account_budget_report.rml"
 			auto="False"
 			menu="False"/>
 

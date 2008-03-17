@@ -139,7 +139,7 @@ class budget_report(report_sxw.rml_parse):
 				tot['perc'] =0.00
 			else:
 				tot['perc']=float(tot['prac'] /tot['theo'])*100
-
+		print result		
 		return result
 
 	def funct_total(self,form):
@@ -157,5 +157,5 @@ class budget_report(report_sxw.rml_parse):
 
 		return result
 
-report_sxw.report_sxw('report.crossovered.budget.report', 'crossovered.budget', 'addons/crossovered_budget/report/crossovered_budget_report.rml',parser=budget_report,header=False)
+report_sxw.report_sxw('report.crossovered.budget.report', 'crossovered.budget', 'addons/account_budget_crossover/report/crossovered_budget_report.rml',parser=budget_report,header=False)
 
