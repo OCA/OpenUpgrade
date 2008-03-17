@@ -212,6 +212,7 @@ class cci_missions_dossier(osv.osv):
 #		return True
 
 	_columns = {
+		'id': fields.integer('ID', readonly=True),
 		'name' : fields.char('Reference',size=20,required=True),
 		'type_id' : fields.many2one('cci_missions.dossier_type','Dossier Type',required=True),
 		'date' : fields.date('Creation Date',required=True),
@@ -225,7 +226,7 @@ class cci_missions_dossier(osv.osv):
 		'destination_id':fields.many2one('res.country','Destination Country'),
 		'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
 		'quantity_copies':fields.integer('Number of Copies'),
-		'quantity_original' : fields.integer('Quantity of Originals',required=True), 
+		'quantity_original' : fields.integer('Quantity of Originals',required=True),
 		'total':fields.function(_amount_total, method=True, string='Total', store=True),#readonly, sum of the price for copies, originals and extra_products
 		'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),#readonly, sum of the extra_products
 		'text_on_invoice':fields.text('Text to Display on the Invoice'),
@@ -511,6 +512,7 @@ class cci_missions_ata_carnet(osv.osv):
 		return res
 
 	_columns = {
+		'id': fields.integer('ID', readonly=True),
 		'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
 		'creation_date' : fields.date('Emission Date',required=True,readonly=True),
 		'validity_date' : fields.date('Validity Date',required=True),
@@ -552,7 +554,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'state' : lambda *a : 'draft',
 		'validity_date' : _default_validity_date,
 		'name': lambda *args: '/',
-		'creation_date': lambda *a: time.strftime('%Y-%m-%d'), 
+		'creation_date': lambda *a: time.strftime('%Y-%m-%d'),
 	}
 	_constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', ['own_risk','insurer_agreement','partner_insurer_id'])]
 
