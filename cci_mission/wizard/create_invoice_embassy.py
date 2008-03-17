@@ -59,6 +59,11 @@ def _createInvoices(self, cr, uid, data, context):
         address_contact = False
         address_invoice = False
         create_ids = []
+
+        if embassy.invoice_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(embassy.id)+": Already Has an Invoice Linked \n"
+            continue
         if not embassy.partner_id:
                 inv_reject = inv_reject + 1
                 inv_rej_reason += "ID "+str(embassy.id)+": Embassy Folder Don't Have any Partner to Invoice \n"
@@ -82,7 +87,7 @@ def _createInvoices(self, cr, uid, data, context):
                 tax_ids.append(line.tax_rate.id)
             inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
                     'name': line.name,
-                    'account_id':1,
+                    'account_id':line.account_id.id,
                     'price_unit': line.customer_amount,
                     'quantity': 1,
                     'discount': False,
@@ -109,6 +114,7 @@ def _createInvoices(self, cr, uid, data, context):
         inv_create = inv_create + 1
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
+        obj_embassy.write(cr, uid,embassy.id, {'invoice_id' : inv_id})
         list_inv.append(inv_id)
 
     return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'inv_rej_reason': inv_rej_reason , 'invoice_ids':  list_inv}
