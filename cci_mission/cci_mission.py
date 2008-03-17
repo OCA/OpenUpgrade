@@ -75,6 +75,13 @@ class cci_missions_embassy_folder(osv.osv):
 	_description = 'cci_missions.embassy_folder'
 	_inherits = {'crm.case': 'crm_case_id'}
 
+	def onchange_partner_id(self, cr, uid, ids, part):
+		if not part:
+			return {'value':{'partner_address_id': False}}
+		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
+		data = {'partner_address_id':addr['contact']}
+		return {'value':data}
+
 	def check_folder_line(self, cr, uid, ids):
 			#CONSTRAINT: For each embassy Folder, it can only be one embassy_folder_line of each type.
 		data_folder = self.browse(cr,uid,ids)
@@ -96,7 +103,8 @@ class cci_missions_embassy_folder(osv.osv):
 		'invoice_note':fields.text('Note to Display on the Invoice',help='to display as the last embassy_folder_line of this embassy_folder.'),
 		'embassy_folder_line_ids' : fields.one2many('cci_missions.embassy_folder_line','folder_id','Details'),
 		'site_id': fields.many2one('cci_missions.site','Site'),
-		'invoice_date' : fields.datetime('Invoice Date') #added to solve bug
+		'invoice_date' : fields.datetime('Invoice Date') ,#added to solve bug
+		"invoice_id":fields.many2one("account.invoice","Invoice"),
 	}
 
 	_defaults = {
@@ -119,6 +127,7 @@ class cci_missions_embassy_folder_line (osv.osv):
 		'customer_amount' : fields.float('Invoiced Amount'),
 		'tax_rate': fields.many2one('account.tax','Tax Rate'),#should be corect
 		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy  Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
+		'account_id' : fields.many2one('account.account', 'Account', required=True),
 	}
 
 cci_missions_embassy_folder_line()
