@@ -5,3 +5,4 @@ import wizard_print_carnet
 import create_invoice_legalization
 import create_embassy_folder_legalization
 import wizard_federation_sending
+import create_invoice_embassy
