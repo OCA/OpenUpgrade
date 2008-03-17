@@ -192,7 +192,7 @@
 						</group>
 						<field name="priority"/>
 						<newline/>
-						<field name="partner_id" string="Partner to Invoice"/>
+						<field name="partner_id" string="Partner to Invoice" on_change="onchange_partner_id(partner_id)"/>
 						<field name="partner_address_id"/>
 						<newline/>
 						<field name="site_id" />
@@ -221,6 +221,7 @@
 						<field name="id" />
 						<field name="active" />
 						<field name="email_cc" />
+						<field name="invoice_id" />
 						<separator colspan="4" string="Dates"/>
 						<field name="create_date" />
 						<field name="date_closed" />
@@ -283,6 +284,7 @@
 					<field name="customer_amount" select="2" />
 					<newline/>
 					<field name="tax_rate" />
+					<field name="account_id" />
 				</form>
 			</field>
 		</record>
