@@ -1,6 +1,6 @@
 import wizard
 import pooler
-
+import netsvc
 form = """<?xml version="1.0"?>
 <form string="Create Embassy Folder">
     <field name="folder_created"/>
@@ -11,14 +11,15 @@ form = """<?xml version="1.0"?>
 </form>
 """
 fields = {
-    'folder_created': {'string':'Invoice Created', 'type':'char', 'readonly':True},
-    'folder_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
+    'folder_created': {'string':'Folder Created', 'type':'char', 'readonly':True},
+    'folder_rejected': {'string':'Folder Rejected', 'type':'char', 'readonly':True},
     'folder_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
           }
 def _create_embassy_folder(self, cr, uid, data, context):
     obj_pool = pooler.get_pool(cr.dbname)
     obj_certificate = obj_pool.get('cci_missions.certificate')
     data_certificate = obj_certificate.browse(cr,uid,data['ids'])
+    list_folders = []
     folder_create = 0
     folder_reject = 0
     folder_rej_reason = ""
@@ -35,8 +36,9 @@ def _create_embassy_folder(self, cr, uid, data, context):
                     'destination_id': certificate.destination_id.id,
                     'invoice_note' : certificate.text_on_invoice
             })
+        list_folders.append(folder_id)
         obj_certificate.write(cr, uid,certificate.id, {'embassy_folder_id' : folder_id})
-    return {'folder_created' : str(folder_create) , 'folder_rejected' : str(folder_reject) , 'folder_rej_reason': folder_rej_reason}
+    return {'folder_created' : str(folder_create) , 'folder_rejected' : str(folder_reject) , 'folder_rej_reason': folder_rej_reason }
 
 class create_embassy_folder(wizard.interface):
 
