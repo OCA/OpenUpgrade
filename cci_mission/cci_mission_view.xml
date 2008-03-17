@@ -407,6 +407,7 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Legalization">
+					<field name="id" />
 					<field name="name"/>
 				</tree>
 			</field>
@@ -491,6 +492,7 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Certificate">
+					<field name="id" />
 					<field name="name" />
 				</tree>
 			</field>
@@ -699,6 +701,7 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="ATA Carnet">
+					<field name="id" />
 					<field name="name"/>
 				</tree>
 			</field>
