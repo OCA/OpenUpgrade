@@ -105,7 +105,7 @@ class wizard_fed_send(wizard.interface):
         file.close()
 
     def _send_mail(self, cr, uid, data, context):
-        print "fd"
+
         ptrn = re.compile('(\w+@\w+(?:\.\w+)+)')
         result=ptrn.search(data['form']['email'])
         if result==None:
