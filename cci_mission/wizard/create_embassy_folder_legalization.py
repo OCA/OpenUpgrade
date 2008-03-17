@@ -11,8 +11,8 @@ form = """<?xml version="1.0"?>
 </form>
 """
 fields = {
-    'folder_created': {'string':'Invoice Created', 'type':'char', 'readonly':True},
-    'folder_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
+    'folder_created': {'string':'Folder Created', 'type':'char', 'readonly':True},
+    'folder_rejected': {'string':'Folder Rejected', 'type':'char', 'readonly':True},
     'folder_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
           }
 def _create_embassy_folder(self, cr, uid, data, context):
