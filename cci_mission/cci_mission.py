@@ -41,6 +41,14 @@ STATE = [
 	('paid', 'Paid Member'),
 ]
 
+class crm_case_log(osv.osv):
+	_inherit = 'crm.case.log'
+	_description = 'crm.case.log'
+	_defaults = {
+		'user_id': lambda self,cr,uid,context: uid,
+	}
+crm_case_log()
+
 class res_partner(osv.osv):
 	_inherit = 'res.partner'
 	_description = 'res.partner'
@@ -95,7 +103,7 @@ class cci_missions_embassy_folder(osv.osv):
 
 	_columns = {
 		'crm_case_id' : fields.many2one('crm.case','Case'),
-		'member_price' : fields.boolean('Apply the Member Price'),
+		'member_price' : fields.boolean('Member Price Allowed'),
 		'customer_reference' : fields.char('Folders Reference for the Customer',size=30),
 		'destination_id' : fields.many2one('res.country','Destination Country'),
 		'link_ids': fields.one2many('cci_missions.dossier','embassy_folder_id','Linked Documents'),
@@ -546,7 +554,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'return_date' : fields.date('Date of Return'),
 		'state':fields.selection([('draft','Draft'),('created','Created'),('pending','Pending'),('dispute','Dispute'),('correct','Correct'),('closed','Closed')],'State',required=True,readonly=True),
 		'ok_state_date' : fields.date('Date of Closure'),
-		'federation_sending_date' : fields.date('Date of Sending to the Federation'),
+		'federation_sending_date' : fields.date('Date of Sending to the Federation', readonly=True),
 		'name' : fields.char('Name',size=50,required=True),
 		'partner_insurer_id': fields.function(_get_insurer_id, method=True,string='Insurer ID of the Partner',readonly=True),
 		'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
