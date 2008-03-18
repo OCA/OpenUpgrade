@@ -79,14 +79,14 @@
 					<separator string="ATA infos" colspan="4"/>
 					<field name="official_name_1" select="1" colspan="4"/>
 					<newline/>
-					<field name="official_name_2" colspan="4"/>
+					<field name="official_name_2" select="2" colspan="4"/>
 					<newline/>
-					<field name="official_name_3" colspan="4"/>
+					<field name="official_name_3" select="2" colspan="4"/>
 					<newline/>
-					<field name="official_name_4" />
+					<field name="official_name_4" select="2" />
 					<newline/>
-					<field name="code" select="2" />
-					<field name="prefix_ATA" select="2" />
+					<field name="ata_sequence_id" />
+					<field name="embassy_sequence_id"/>
 				</form>
 			</field>
 		</record>
@@ -187,16 +187,16 @@
 						<field name="section_id"  readonly="1" />
 						<newline/>
 						<group colspan="2">
-							<field name="date" string=" Creation Date" />
+							<field name="date" string=" Creation Date" select="1"/>
 							<field name="invoice_date" />
 						</group>
-						<field name="priority"/>
+						<field name="priority" select="1"/>
 						<newline/>
 						<field name="partner_id" string="Partner to Invoice" on_change="onchange_partner_id(partner_id)"/>
 						<field name="partner_address_id"/>
 						<newline/>
-						<field name="site_id" />
-						<field name="customer_reference"/>
+						<field name="site_id" select="2"/>
+						<field name="customer_reference" select="2"/>
 						<newline/>
 						<field name="destination_id"/>
 						<field name="member_price"/>
@@ -210,6 +210,17 @@
 								<field name="customer_amount"/>
 								<field name="tax_rate"/>
 							</tree>
+							<form string="Embassy Foder Lines">
+								<field name="name" />
+								<newline/>
+								<field name="type" />
+								<newline/>
+								<field name="courier_cost"/>
+								<newline/>
+								<field name="customer_amount"/>
+								<newline/>
+								<field name="tax_rate" />
+							</form>
 						</field>
 						<newline/>
 						<separator colspan="4" string="Note to Display on the Invoice"/>
@@ -233,7 +244,23 @@
 					<page string="Notes">
 						<field name="internal_note" />
 						<newline/>
-						<field name="history_line" />
+						<field name="history_line">
+							<form string="Communication history">
+								<field name="date"/>
+								<field name="som"/>
+								<newline/>
+								<field name="canal_id"/>
+								<field name="email"/>
+								<newline/>
+								<field name="description" colspan="4"/>
+							</form>
+							<tree string="Communication history">
+								<field name="date"/>
+								<field name="description"/>
+								<field name="som"/>
+								<field name="user_id"/>
+							</tree>
+						</field>
 					</page>
 					<page string="History">
 						<field name="log_ids"/>
@@ -249,9 +276,11 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="embassy folder">
-					<field name="id" />
 					<field name="name"/>
-					<field name="section_id"/>
+					<field name="date" string=" Creation Date" />
+					<field name="invoice_date" />
+					<field name="priority" />
+					<field name="site_id" />
 				</tree>
 			</field>
 		</record>
@@ -363,9 +392,11 @@
 						<field name="order_partner_id" on_change="get_legalization_details(order_partner_id)" />
 						<newline/>
 						<field name="asker_name" select="1"/>
-						<newline/>
 						<field name="sender_name" select="1"/>
+						<field name="partner_member_state"/>
+						<field name="member_price"/>
 						<field name="goods" select="1" />
+						<newline/>
 						<field name="goods_value" />
 						<field name="to_bill" />
 						<field name="quantity_original" select="2"/>

@@ -2,31 +2,12 @@
 <terp>
 <data>
 
-<!-- Demo Data for Site -->
-	<record id="cci_missions_site_liegevervier0" model="cci_missions.site">
-		<field eval="&quot;Liege Vervier&quot;" name="name"/>
-		<field eval="&quot;ATA&quot;" name="prefix_ATA"/>
-		<field eval="&quot;Site de la Chambre de Commerce de Liege - Verviers&quot;" name="official_name_1"/>
-	</record>
+<!-- Sequences -->
 
-<!-- Sequences for name on dossier -->
+	<!-- Sequences for name on Certificates -->
 	<record model="ir.sequence.type" id="seq_certificate_cci">
 		<field name="name">Certificate Name</field>
 		<field name="code">cci_missions.certificate</field>
-	</record>
-	<record model="ir.sequence.type" id="seq_legalization_cci">
-		<field name="name">Legalization Name</field>
-		<field name="code">cci_missions.legalization</field>
-	</record>
-
-	<record id="ir_sequence_legalizationseq0" model="ir.sequence">
-		<field eval="&quot;cci_missions.legalization&quot;" name="code"/>
-		<field eval="&quot;Legalization Seq.&quot;" name="name"/>
-		<field eval="1" name="number_next"/>
-		<field eval="1" name="number_increment"/>
-		<field eval="&quot;%(year)s/&quot;" name="prefix"/>
-		<field eval="1" name="active"/>
-		<field eval="&quot;/LG&quot;" name="suffix"/>
 	</record>
 	<record id="ir_sequence_certificateseq0" model="ir.sequence">
 		<field eval="&quot;cci_missions.certificate&quot;" name="code"/>
@@ -36,6 +17,69 @@
 		<field eval="&quot;%(year)s/&quot;" name="prefix"/>
 		<field eval="1" name="active"/>
 		<field eval="&quot;/CERT&quot;" name="suffix"/>
+	</record>
+
+	<!-- Sequences for name on Legalizations -->
+	<record model="ir.sequence.type" id="seq_legalization_cci">
+		<field name="name">Legalization Name</field>
+		<field name="code">cci_missions.legalization</field>
+	</record>
+	<record id="ir_sequence_legalizationseq0" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq.&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;/LG&quot;" name="suffix"/>
+	</record>
+
+
+	<!-- Sequences for name on ATA Carnet -->
+	<record model="ir.sequence.type" id="seq_ata_carnet_cci">
+		<field name="name">Carnet ATA Name</field>
+		<field name="code">cci_missions.ata_carnet</field>
+	</record>
+	<record id="ir_sequence_atasequence0" model="ir.sequence">
+		<field eval="&quot;cci_missions.ata_carnet&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet Seq. (Liege)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;FLG/1/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record id="ir_sequence_atasequence1" model="ir.sequence">
+		<field eval="&quot;cci_missions.ata_carnet&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet Seq. (Verviers)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;FLG/2/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+	<!-- Sequences for name on Embassy Folder -->
+	<record model="ir.sequence.type" id="seq_embassy_folder_cci">
+		<field name="name">Embassy Folder Name</field>
+		<field name="code">cci_missions.embassy_folder</field>
+	</record>
+	<record id="ir_sequence_embassysequence0" model="ir.sequence">
+		<field eval="&quot;cci_missions.embassy_folder&quot;" name="code"/>
+		<field eval="&quot;Embassy Folder Seq.&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;Embassy/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+<!-- Demo Data for Site -->
+	<record id="cci_missions_site_liegevervier0" model="cci_missions.site">
+		<field eval="&quot;Liege&quot;" name="name"/>
+		<field eval="&quot;Site de la Chambre de Commerce de Liege - Verviers&quot;" name="official_name_1"/>
+		<field ref="ir_sequence_atasequence0" name="ata_sequence_id"/>
+		<field ref="ir_sequence_embassysequence0" name="embassy_sequence_id"/>
 	</record>
 
 

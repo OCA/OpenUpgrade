@@ -74,6 +74,11 @@ def _createInvoices(self, cr, uid, data, context):
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(data.id)+": Already Has an Invoice Linked \n"
             continue
+
+        if not data.to_bill:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(data.id)+": Cannot Be Billed \n"
+            continue
         for add in data.order_partner_id.address:
             if add.type == 'contact':
                 address_contact = add.id
@@ -145,15 +150,15 @@ def _createInvoices(self, cr, uid, data, context):
                 'comment': data.text_on_invoice,
                 'payment_term':data.order_partner_id.property_payment_term.id,
             }
-
+        price = certificate.total
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
         list_inv.append(inv_id)
-
         wf_service = netsvc.LocalService('workflow')
         wf_service.trg_validate(uid, 'cci_missions.dossier', data.dossier_id.id, 'invoiced', cr)
 
-        obj_dossier.write(cr, uid,data.id, {'invoice_id' : inv_id})
+        obj_dossier.write(cr, uid,data.id, {'invoice_id' : inv_id, 'invoiced_amount':price})
+
     return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
 
 

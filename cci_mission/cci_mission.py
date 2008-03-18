@@ -72,8 +72,8 @@ class cci_missions_site(osv.osv):
 		'official_name_2' : fields.char('Official Name of the Site',size=50),
 		'official_name_3' : fields.char('Official Name of the Site',size=50),
 		'official_name_4' : fields.char('Official Name of the Site',size=50),
-		'code' : fields.char('Code',size=1),
-		'prefix_ATA' : fields.char('Prefix ATA',size=3,required=True),
+		'ata_sequence_id' : fields.many2one('ir.sequence','Sequence for ATA Carnet'),
+		'embassy_sequence_id' : fields.many2one('ir.sequence','Sequence for Embassy Folder'),
 	}
 
 cci_missions_site()
@@ -82,6 +82,16 @@ class cci_missions_embassy_folder(osv.osv):
 	_name = 'cci_missions.embassy_folder'
 	_description = 'cci_missions.embassy_folder'
 	_inherits = {'crm.case': 'crm_case_id'}
+
+	def create(self, cr, uid, vals, *args, **kwargs):
+#		Overwrite the name field to set next sequence according to the sequence in for the embassy folder related in the site_id
+		if vals['site_id']:
+			data = self.pool.get('cci_missions.site').browse(cr, uid,vals['site_id'])
+			seq = self.pool.get('ir.sequence').get(cr, uid,data.embassy_sequence_id.code)
+			if seq:
+				vals.update({'name': seq})
+		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
 
 	def onchange_partner_id(self, cr, uid, ids, part):
 		if not part:
@@ -110,7 +120,7 @@ class cci_missions_embassy_folder(osv.osv):
 		'internal_note': fields.text('Internal Note'),
 		'invoice_note':fields.text('Note to Display on the Invoice',help='to display as the last embassy_folder_line of this embassy_folder.'),
 		'embassy_folder_line_ids' : fields.one2many('cci_missions.embassy_folder_line','folder_id','Details'),
-		'site_id': fields.many2one('cci_missions.site','Site'),
+		'site_id': fields.many2one('cci_missions.site','Site', required=True),
 		'invoice_date' : fields.datetime('Invoice Date') ,#added to solve bug
 		"invoice_id":fields.many2one("account.invoice","Invoice"),
 	}
@@ -118,6 +128,7 @@ class cci_missions_embassy_folder(osv.osv):
 	_defaults = {
 		'section_id': lambda obj, cr, uid, context: obj.pool.get('crm.case.section').search(cr, uid, [('name','=','Embassy Folder')])[0],
 		'invoice_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'name': lambda *args: '/',
 	}
 
 	_constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', ['embassy_folder_line_ids'])]
@@ -194,18 +205,22 @@ class cci_missions_dossier(osv.osv):
 		res ={}
 		data_dosseir = self.browse(cr,uid,ids)
 		for data in data_dosseir:
-			data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
-			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-				cost_org = data.type_id.original_product_id.member_price
-				cost_copy = data.type_id.copy_product_id.member_price
-			else:
-				cost_org = data.type_id.original_product_id.list_price
-				cost_copy = data.type_id.copy_product_id.list_price
-			qty_org = data.quantity_original
-			qty_copy = data.quantity_copies
-			subtotal =  data.sub_total
-			total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
-			res[data.id] = total
+			this = self.pool.get('cci_missions.dossier').browse(cr,uid,data.id)
+			if this.state =='draft':
+				data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
+				if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
+					cost_org = data.type_id.original_product_id.member_price
+					cost_copy = data.type_id.copy_product_id.member_price
+				else:
+					cost_org = data.type_id.original_product_id.list_price
+					cost_copy = data.type_id.copy_product_id.list_price
+				qty_org = data.quantity_original
+				qty_copy = data.quantity_copies
+				subtotal =  data.sub_total
+				total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
+				res[data.id] = total
+			else :
+				res[data.id]=this.invoiced_amount
 		return res
 
 	def _amount_subtotal(self, cr, uid, ids, name, args, context=None):
@@ -218,15 +233,6 @@ class cci_missions_dossier(osv.osv):
 				sum += product.price_subtotal
 			res[data.id]=sum
 		return res
-
-
-#	def cci_dossier_cancel_customer(self, cr, uid, ids, *args):
-#		self.write(cr, uid, ids, {'state':'cancel_customer',})
-#		return True
-
-#	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
-#		self.write(cr, uid, ids, {'state':'cancel_cci',})
-#		return True
 
 	_columns = {
 		'id': fields.integer('ID', readonly=True),
@@ -249,7 +255,8 @@ class cci_missions_dossier(osv.osv):
 		'text_on_invoice':fields.text('Text to Display on the Invoice'),
 #		'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products')
 		'product_ids': fields.one2many('product.lines', 'dossier_product_line_id', 'Products'),
-		"invoice_id":fields.many2one("account.invoice","Invoice"),
+		'invoice_id':fields.many2one("account.invoice","Invoice"),
+		'invoiced_amount': fields.float('Total'),
 	}
 
 	_defaults = {
@@ -402,10 +409,19 @@ class cci_missions_legalization(osv.osv):
 				vals.update({'name': seq})
 		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
+	def _get_member_state(self, cr, uid, ids, name, args, context=None):
+		res={}
+		leg_ids = self.browse(cr,uid,ids)
+		for p_id in leg_ids:
+			res[p_id.id]=p_id.dossier_id.order_partner_id.membership_state
+		return res
+
 	_columns = {
 		'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
 		#'quantity_original' : fields.integer('Quantity of Originals',required=True),
 		'certificate_id' : fields.many2one('cci_missions.certificate','Related Certificate'),
+		'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
+		'member_price' : fields.boolean('Apply the Member Price'),
 	}
 
 cci_missions_legalization()
