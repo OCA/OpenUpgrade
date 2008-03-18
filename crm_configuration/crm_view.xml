@@ -1,31 +1,279 @@
 <?xml version="1.0"?>
 <terp>
 	<data>
-		<menuitem name="CRM &amp; SRM" icon="terp-crm" id="menu_crm1"/>
-	
-	# ------------------------------------------------------
+	<menuitem name="CRM &amp; SRM" icon="terp-crm" id="menu_crm1"/>	
+
+	# ------------------------------------------------------ 
+	# Jobs
+	# ------------------------------------------------------ 
+<!--   
+	<record model="ir.ui.view" id="crm_case_tree-view11">
+		<field name="name">crm.cases.tree1</field>
+		<field name="model">crm.cases</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Jobs - Recruitment Tree"  colors="red:state=='open'">
+				<field name="id"/>
+				<field name="name" string="Jobs Description"/>
+				<field name="partner_name" string="Employee Name"/>
+				<field name="partner_phone"/>
+				<field name="categ_id" string="Applied Job" select="1"/>
+				<field name="category2_id" string="Degree" select="1"/>
+				<field name="stage_id"/>
+				<field name="user_id"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="crm_case_form-view11">
+		<field name="name">crm.cases.form1</field>
+		<field name="model">crm.cases</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Jobs - Recruitment Form">
+				<notebook>
+				<page string="Job Info">
+						<field name="name" string="Jobs Description" colspan="2"/>
+						<field name="section_id" colspan="1"/>
+						<newline/>
+						<field name="partner_name"/>
+						<field name="email_from"/>
+						<newline/>
+						<field name="partner_phone"/>
+						<field name="partner_mobile"/>
+						<newline/>
+						<field name="partner_id" on_change="onchange_partner_id(partner_id, email_from)" colspan="2"/>
+						<field name="partner_address_id" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="1"/>
+						<newline/>
+						<field name="categ_id" string="Applied Job" on_change="onchange_categ_id(categ_id)"/>
+						<field name="category2_id" string="Degree"/>
+						<field name="priority" string="Quality"/>
+						<field name="duration" string="Availability"/>
+						<field name="planned_cost" string="Expected Salary"/>
+						<field name="planned_revenue" string="Proposed Salary"/>
+						<field name="stage_id" string="Resolution" colspan="2"/>
+						<field name="user_id" string="Responsible"/>
+					<separator colspan="4"/>
+					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
+						<form string="Communication history">
+							<group col="6" colspan="4">
+								<field name="date"/>
+								<field name="email"/>
+								<field name="canal_id"/>
+							</group>
+							<newline/>
+							<field name="description" colspan="4" nolabel="1"/>
+						</form>
+						<tree string="Communication history">
+							<field name="description"/>
+							<field name="email"/>
+							<field name="date"/>
+						</tree>
+					</field>
+					<group col="2" colspan="2" expand="1">
+						<field name="canal_id"/>
+						<field name="som"/>
+						<button name="add_reply" string="Add Last Mail for Replying"
+							states="open" type="object" colspan="2"/>
+						<field name="description" colspan="2" nolabel="1"/>
+						<button name="case_log_reply"
+							string="Send Partner &amp; Historize" states="open"
+							type="object"/>
+						<button name="case_log" string="Historize" states="open"
+							type="object"/>
+					</group>
+
+					<separator colspan="4"/>
+					<group col="8" colspan="4">
+						<field name="state"/>
+						<button name="case_unreview" string="Proposition" states="draft" type="object"/>
+						<button name="case_close" string="Done" states="open,pending" type="object"/>
+						<button name="case_open" string="Open" states="unreviewed,draft,pending" type="object"/>
+						<button name="case_cancel" string="Refuse Job" states="unreviewed,draft,open,pending" type="object"/>
+						<button name="case_pending" string="Pending" states="unreviewed,draft,open" type="object"/>
+						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
+					</group>
+				</page>
+				<page string="Internal Notes">
+					<separator string= "Notes" colspan="4"/>
+					<field name="note" nolabel="1"/>
+				</page>
+				<page string="Extra Info">
+					<field name="id"/>
+					<field name="active"/>
+					<field name="email_cc" colspan="4"/>
+					<separator colspan="4" string="Dates"/>
+					<field name="create_date"/>
+					<field name="date_closed"/>
+					<field name="date_action_last"/>
+					<field name="date_action_next"/>
+					<separator colspan="4" string="Estimates"/>
+					<field name="planned_revenue"/>
+					<field name="planned_cost"/>
+					<field name="probability"/>
+					<separator colspan="4" string="References"/>
+					<field name="ref" colspan="4"/>
+					<field name="ref2" colspan="4"/>
+				</page>
+				<page string="History">
+					<field name="log_ids" nolabel="1" colspan="4">
+						<form string="Actions">
+							<separator string="Action Information" colspan="4"/>
+							<field name="name" colspan="4"/>
+							<field name="date"/>
+							<field name="user_id"/>
+							<field name="som"/>
+							<field name="canal_id"/>
+						</form>
+					</field>
+				</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act11">
+		<field name="res_model">crm.cases</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs" id="menu_crm_case_categ0-act11" action="crm_case_categ0-act11"/>
+-->
+
+	# ------------------------------------------------------ 
 	# Bug Tracking
-	# ------------------------------------------------------
+	# ------------------------------------------------------ 
 
 
-		<record model="ir.ui.view" id="crm_case_categ0-act_my111">
-			<field name="name">crm.case.view</field>
-			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm.crm_case-view" />
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-					<field name="planned_cost" position="replace"/>
-			</field>
-		</record>
-		
-		<record model="ir.ui.view" id="crm_case_categ0-act_my112">
-			<field name="name">crm.case.view</field>
-			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm.crm_case-view" />
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-					<field name="planned_revenue" position="replace"/>
-			</field>
-		</record>
+	<record model="ir.ui.view" id="crm_case_form-view">
+		<field name="name">crm.cases.form</field>
+		<field name="model">crm.cases</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Bug Tracker Form">
+				<notebook>
+				<page string="Bug">
+						<field name="name" select="1" string="Bug Title" colspan="2"/>
+						<field name="section_id" colspan="1"/>
+						<newline/>
+						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)" colspan="2"/>
+						<field name="partner_address_id" select="2" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="1"/>
+						<newline/>
+						<field name="email_from" select="2" colspan="2"/>
+						<field name="user_id" select="1"/>
+						<seperator colspan="4"/>
+						<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)"/>
+						<field name="priority" string="Severity"/>
+						<newline/>
+						<field name="stage_id" string="Resolution" colspan="2"/>
+						<field name="category2_id" string="Version"/>
+					
+					<separator colspan="4"/>
+					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
+						<form string="Communication history">
+							<group col="6" colspan="4">
+								<field name="date" select="1"/>
+								<field name="email" select="1"/>
+								<field name="canal_id" select="2"/>
+							</group>
+							<newline/>
+							<field name="description" colspan="4" nolabel="1" select="2"/>
+						</form>
+						<tree string="Communication history">
+							<field name="description"/>
+							<field name="email"/>
+							<field name="date"/>
+						</tree>
+					</field>
+					<group col="2" colspan="2" expand="1">
+						<field name="canal_id"/>
+						<field name="som" select="2"/>
+						<button name="add_reply" string="Add Last Mail for Replying"
+							states="open" type="object" colspan="2"/>
+						<field name="description" colspan="2" select="2" nolabel="1"/>
+						<button name="case_log_reply"
+							string="Send Partner &amp; Historize" states="open"
+							type="object"/>
+						<button name="case_log" string="Historize" states="open"
+							type="object"/>
+					</group>
+
+					<separator colspan="4"/>
+					<group col="8" colspan="4">
+						<field name="state" select="1"/>
+						<button name="case_unreview" string="Unreviewed" states="draft" type="object"/>
+						<button name="case_close" string="Done" states="open,pending" type="object"/>
+						<button name="case_open" string="Open" states="unreviewed,draft,pending" type="object"/>
+						<button name="case_cancel" string="Refuse Bug" states="unreviewed,draft,open,pending" type="object"/>
+						<button name="case_pending" string="Pending" states="unreviewed,draft,open" type="object"/>
+						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
+					</group>
+				</page>
+				<page string="Internal Notes">
+					<separator string= "Notes" colspan="4"/>
+					<field name="note" nolabel="1"/>
+				</page>
+				<page string="Extra Info">
+					<field name="id" select="1"/>
+					<field name="active" select="2"/>
+					<field name="email_cc" colspan="4"/>
+					<separator colspan="4" string="Dates"/>
+					<field name="create_date"/>
+					<field name="date_closed"/>
+					<field name="date_action_last"/>
+					<field name="date_action_next"/>
+					<separator colspan="4" string="Estimates"/>
+					<field name="planned_revenue"/>
+					<field name="planned_cost"/>
+					<field name="probability"/>
+					<separator colspan="4" string="References"/>
+					<field name="ref" colspan="4"/>
+					<field name="ref2" colspan="4"/>
+				</page>
+				<page string="History">
+					<field name="log_ids" nolabel="1" colspan="4">
+						<form string="Actions">
+							<separator string="Action Information" colspan="4"/>
+							<field name="name" colspan="4"/>
+							<field name="date" select="2"/>
+							<field name="user_id" select="2"/>
+							<field name="som" select="2"/>
+							<field name="canal_id"/>
+						</form>
+					</field>
+				</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="crm_case_tree-view">
+		<field name="name">crm.cases.tree</field>
+		<field name="model">crm.cases</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Bugs Tree"  colors="red:state=='open'">
+				<field name="id"/>
+				<field name="name" string="Bugs"/>
+				<field name="description" string="Description"/>
+				<field name="email_from"/>
+				<field name="priority"/>
+				<field name="stage_id"/>
+				<field name="categ_id"/>
+				<field name="category2_id"/>
+				<field name="user_id"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+
+<!--	<record model="ir.actions.act_window" id="crm_case_categ-act">-->
+<!--		<field name="res_model">crm.cases</field>-->
+<!--		<field name="view_type">form</field>-->
+<!--		<field name="view_id" ref="crm_case_tree-view"/>-->
+<!--	</record>-->
+<!--	<menuitem name="CRM &amp; SRM/Bug Tracking" id="menu_crm_case_categ-act" action="crm_case_categ-act"/>-->
+
 	</data>
 </terp>
