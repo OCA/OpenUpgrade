@@ -13,5 +13,5 @@
 	"init_xml" : [],
 	"update_xml" : ['hr_skill_report.xml','hr_skill_view.xml'],
 	"active": False,
-	"installable": False
+	"installable": True
 }

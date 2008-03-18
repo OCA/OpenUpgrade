@@ -192,8 +192,6 @@ class base_module_record(osv.osv):
 			elif rec[0]=='assert':
 				pass
 		res = doc.toprettyxml(indent="\t")
-		print type(res)
-		file('/tmp/debug.txt','wb').write(res.encode('utf8'))
 		return  doc.toprettyxml(indent="\t").encode('utf8')
 base_module_record()
 
