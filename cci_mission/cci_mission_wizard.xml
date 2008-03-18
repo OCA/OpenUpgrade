@@ -5,40 +5,44 @@
 			model="cci_missions.certificate"
 			name="cci_mission.create_embassy_folder"
 			id="create_embassy_folder"/>
+
 		<wizard string="Create Embassy Folder"
 			model="cci_missions.legalization"
 			name="cci_mission.create_embassy_folder"
 			id="create_embassy_folder_leg"/>
+
 		<wizard string="Make Invoice"
-					model="cci_missions.certificate"
-					name="mission.create_invoice"
-					id="mission_invoice"
-					menu="True"/>
+			model="cci_missions.certificate"
+			name="mission.create_invoice"
+			id="mission_invoice"
+			menu="True"/>
 		<wizard string="Make Invoice"
-					model="cci_missions.ata_carnet"
-					name="mission.create_invoice_carnet"
-					id="mission_invoice_carnet"
-					menu="True"/>
+			model="cci_missions.legalization"
+			name="mission.create_invoice"
+			id="mission_invoice_legalization"
+			menu="True"/>
+		<wizard string="Make Invoice"
+			model="cci_missions.ata_carnet"
+			name="mission.create_invoice_carnet"
+			id="mission_invoice_carnet"
+			menu="True"/>
+		<wizard string="Make Invoice"
+			model="cci_missions.embassy_folder"
+			name="mission.create_invoice_embassy"
+			id="mission_invoice_embassy"
+			menu="True"/>
+
 		<wizard string="Simulation"
-					model="cci_missions.ata_carnet"
-					name="mission.simulation_carnet"
-					id="mission_simulation_carnet"
-					menu="True"/>
+			model="cci_missions.ata_carnet"
+			name="mission.simulation_carnet"
+			id="mission_simulation_carnet"
+			menu="True"/>
 		<wizard string="Federation Sending"
-						model="cci_missions.ata_carnet"
-						name="mission.fed_send"
-						id="mission_fed_send"
-						menu="True"/>"
-		<wizard string="Make Invoice"
-					model="cci_missions.legalization"
-					name="mission.create_invoice"
-					id="mission_invoice_legalization"
-					menu="True"/>
-		<wizard string="Make Invoice"
-					model="cci_missions.embassy_folder"
-					name="mission.create_invoice_embassy"
-					id="mission_invoice_embassy"
-					menu="True"/>
+			model="cci_missions.ata_carnet"
+			name="mission.fed_send"
+			id="mission_fed_send"
+			menu="True"/>"
+
 
 	</data>
 </terp>
