@@ -21,8 +21,8 @@ form = """<?xml version="1.0"?>
 </form>
 """
 fields = {
-    'folder_created': {'string':'Folder Created', 'type':'char', 'readonly':True},
-    'folder_rejected': {'string':'Folder Rejected', 'type':'char', 'readonly':True},
+    'folder_created': {'string':'Embassy Folder Created', 'type':'char', 'readonly':True},
+    'folder_rejected': {'string':'Embassy Folder Rejected', 'type':'char', 'readonly':True},
     'folder_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
           }
 def _create_embassy_folder(self, cr, uid, data, context):
@@ -37,7 +37,7 @@ def _create_embassy_folder(self, cr, uid, data, context):
     for data in data_dossier:
         if data.embassy_folder_id:
             folder_reject = folder_reject + 1
-            folder_rej_reason += "ID "+str(data.id)+": Already Has an Folder Linked \n"
+            folder_rej_reason += "ID "+str(data.id)+": Already Has an Embassy Folder Linked \n"
             continue
         folder_create = folder_create + 1
         folder_id =obj_pool.get('cci_missions.embassy_folder').create(cr, uid, {
