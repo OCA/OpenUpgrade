@@ -34,7 +34,7 @@ class analytic_account_budget_report(report_sxw.rml_parse):
         result=[]
         res={}
 
-        accounts = self.pool.get('account.analytic.account').browse(self.cr, self.uid, [object.id], self.context.copy)
+        accounts = self.pool.get('account.analytic.account').browse(self.cr, self.uid, [object.id], self.context.copy())
 
         if form['date_from']<=accounts[0].date_start< accounts[0].date<=form['date_to']:
             go=1 # does nothing just carry on.
@@ -44,12 +44,12 @@ class analytic_account_budget_report(report_sxw.rml_parse):
         for account_id in accounts:
             res={}
             budget_lines = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('analytic_account_id', '=', account_id.id)])
-            print "account lines",budget_lines
+
             bd_lines_ids = ','.join([str(x) for x in budget_lines])
             self.cr.execute('select distinct(crossovered_budget_id) from crossovered_budget_lines where id in (%s)'%(bd_lines_ids))
             budget_ids=self.cr.fetchall()
 
-            print "budgets selctd are,",budget_ids
+
             for i in range(0,len(budget_ids)):
 
                 budget_name=self.pool.get('crossovered.budget').browse(self.cr, self.uid,[budget_ids[i][0]])
