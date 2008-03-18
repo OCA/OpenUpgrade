@@ -48,29 +48,29 @@ fields = {
       'inv_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
       'inv_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
 }
-
 def _createInvoices(self, cr, uid, data, context):
+    print "data::::::::::::::::::::",data
     list_inv = []
     pool_obj = pooler.get_pool(cr.dbname)
-    obj_certificate = pool_obj.get('cci_missions.certificate')
-    data_certificate = obj_certificate.browse(cr,uid,data['ids'])
+    obj_dossier = pool_obj.get(data['model'])
+    data_dossier = obj_dossier.browse(cr,uid,data['ids'])
     obj_lines=pool_obj.get('account.invoice.line')
     inv_create = 0
     inv_reject = 0
     inv_rej_reason = ""
 
-    for certificate in data_certificate:
+    for data in data_dossier:
         list = []
         value = []
         dict = {}
         address_contact = False
         address_invoice = False
         create_ids = []
-        if certificate.invoice_id:
+        if data.invoice_id:
             inv_reject = inv_reject + 1
-            inv_rej_reason += "ID "+str(certificate.id)+": Already Has an Invoice Linked \n"
+            inv_rej_reason += "ID "+str(data.id)+": Already Has an Invoice Linked \n"
             continue
-        for add in certificate.order_partner_id.address:
+        for add in data.order_partner_id.address:
             if add.type == 'contact':
                 address_contact = add.id
             if add.type == 'invoice':
@@ -81,33 +81,33 @@ def _createInvoices(self, cr, uid, data, context):
                 address_invoice = add.id
         if not address_contact or not address_invoice:
             inv_reject = inv_reject + 1
-            inv_rej_reason += "ID "+str(certificate.id)+": No Partner Address Defined on Billed Customer \n"
+            inv_rej_reason += "ID "+str(data.id)+": No Partner Address Defined on Billed Customer \n"
             continue
 
         inv_create = inv_create + 1
-        for lines in certificate.product_ids :
-            val = obj_lines.product_id_change(cr, uid, [], lines.product_id.id,uom =False, partner_id=certificate.order_partner_id.id)
+        for lines in data.product_ids :
+            val = obj_lines.product_id_change(cr, uid, [], lines.product_id.id,uom =False, partner_id=data.order_partner_id.id)
             val['value'].update({'product_id' : lines.product_id.id })
             val['value'].update({'quantity' : lines.quantity })
             val['value'].update({'price_unit':lines.price_unit})
             value.append(val)
 
-        list.append(certificate.type_id.original_product_id.id)
-        dict['original'] = certificate.type_id.original_product_id.id
-        list.append(certificate.type_id.copy_product_id.id)
-        dict['copy'] = certificate.type_id.copy_product_id.id
+        list.append(data.type_id.original_product_id.id)
+        dict['original'] = data.type_id.original_product_id.id
+        list.append(data.type_id.copy_product_id.id)
+        dict['copy'] = data.type_id.copy_product_id.id
 
         for prod_id in list:
-            val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=certificate.order_partner_id.id)
+            val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=data.order_partner_id.id)
             val['value'].update({'product_id' : prod_id })
             if prod_id == dict['original']:
-                val['value'].update({'quantity' : 1 }) #by default 1
+                val['value'].update({'quantity' : data.quantity_original })
             else:
-                val['value'].update({'quantity' : certificate.quantity_copies})
+                val['value'].update({'quantity' : data.quantity_copies})
             value.append(val)
         for val in value:
             inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
-                    'name': certificate.name,
+                    'name': data.name,
                     'account_id':val['value']['account_id'],
                     'price_unit': val['value']['price_unit'],
                     'quantity': val['value']['quantity'],
@@ -115,22 +115,22 @@ def _createInvoices(self, cr, uid, data, context):
                     'uos_id': val['value']['uos_id'],
                     'product_id':val['value']['product_id'],
                     'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
-                    'note':certificate.text_on_invoice,
+                    'note':data.text_on_invoice,
             })
             create_ids.append(inv_id)
         inv = {
-                'name': certificate.name,
-                'origin': certificate.name,
+                'name': data.name,
+                'origin': data.name,
                 'type': 'out_invoice',
                 'reference': False,
-                'account_id': certificate.order_partner_id.property_account_receivable.id,
-                'partner_id': certificate.order_partner_id.id,
+                'account_id': data.order_partner_id.property_account_receivable.id,
+                'partner_id': data.order_partner_id.id,
                 'address_invoice_id':address_invoice,
                 'address_contact_id':address_contact,
                 'invoice_line': [(6,0,create_ids)],
-                'currency_id' :certificate.order_partner_id.property_product_pricelist.currency_id.id,# 1,
-                'comment': certificate.text_on_invoice,
-                'payment_term':certificate.order_partner_id.property_payment_term.id,
+                'currency_id' :data.order_partner_id.property_product_pricelist.currency_id.id,# 1,
+                'comment': data.text_on_invoice,
+                'payment_term':data.order_partner_id.property_payment_term.id,
             }
 
         inv_obj = pool_obj.get('account.invoice')
@@ -138,9 +138,9 @@ def _createInvoices(self, cr, uid, data, context):
         list_inv.append(inv_id)
 
         wf_service = netsvc.LocalService('workflow')
-        wf_service.trg_validate(uid, 'cci_missions.dossier', certificate.dossier_id.id, 'invoiced', cr)
+        wf_service.trg_validate(uid, 'cci_missions.dossier', data.dossier_id.id, 'invoiced', cr)
 
-        obj_certificate.write(cr, uid,certificate.id, {'invoice_id' : inv_id})
+        obj_dossier.write(cr, uid,data.id, {'invoice_id' : inv_id})
     return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
 
 
