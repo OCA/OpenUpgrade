@@ -49,7 +49,7 @@ fields = {
       'inv_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
 }
 def _createInvoices(self, cr, uid, data, context):
-    print "data::::::::::::::::::::",data
+
     list_inv = []
     pool_obj = pooler.get_pool(cr.dbname)
     obj_dossier = pool_obj.get(data['model'])
@@ -60,6 +60,10 @@ def _createInvoices(self, cr, uid, data, context):
     inv_rej_reason = ""
 
     for data in data_dossier:
+        if data.order_partner_id.membership_state in ['waiting', 'associated', 'free', 'paid']:
+            isMember=True
+        else:
+            isMember=False
         list = []
         value = []
         dict = {}
@@ -88,8 +92,13 @@ def _createInvoices(self, cr, uid, data, context):
         for lines in data.product_ids :
             val = obj_lines.product_id_change(cr, uid, [], lines.product_id.id,uom =False, partner_id=data.order_partner_id.id)
             val['value'].update({'product_id' : lines.product_id.id })
+            if isMember:
+                val['value'].update({'price_unit':lines.product_id.member_price})
+            else:
+                val['value'].update({'price_unit':lines.price_unit})
             val['value'].update({'quantity' : lines.quantity })
-            val['value'].update({'price_unit':lines.price_unit})
+            val['value'].update({'name':lines.product_id.name})
+
             value.append(val)
 
         list.append(data.type_id.original_product_id.id)
@@ -100,24 +109,28 @@ def _createInvoices(self, cr, uid, data, context):
         for prod_id in list:
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=data.order_partner_id.id)
             val['value'].update({'product_id' : prod_id })
+            if isMember:
+                price=pool_obj.get('product.product').browse(cr,uid,prod_id).member_price
+                val['value'].update({'price_unit':price})
             if prod_id == dict['original']:
                 val['value'].update({'quantity' : data.quantity_original })
             else:
                 val['value'].update({'quantity' : data.quantity_copies})
             value.append(val)
         for val in value:
-            inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
-                    'name': data.name,
-                    'account_id':val['value']['account_id'],
-                    'price_unit': val['value']['price_unit'],
-                    'quantity': val['value']['quantity'],
-                    'discount': False,
-                    'uos_id': val['value']['uos_id'],
-                    'product_id':val['value']['product_id'],
-                    'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
-                    'note':data.text_on_invoice,
-            })
-            create_ids.append(inv_id)
+            if val['value']['quantity']>0.00:
+                inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
+                        'name': val['value']['name'],
+                        'account_id':val['value']['account_id'],
+                        'price_unit': val['value']['price_unit'],
+                        'quantity': val['value']['quantity'],
+                        'discount': False,
+                        'uos_id': val['value']['uos_id'],
+                        'product_id':val['value']['product_id'],
+                        'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
+                        'note':data.text_on_invoice,
+                })
+                create_ids.append(inv_id)
         inv = {
                 'name': data.name,
                 'origin': data.name,
