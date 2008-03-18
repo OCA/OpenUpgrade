@@ -1,121 +1,114 @@
-
 import time
-import netsvc
-from osv import fields, osv, orm
+import tools
+from osv import fields,osv,orm
 
-from mx import DateTime
-
+import mx.DateTime
+import base64
 AVAILABLE_STATES = [
     ('draft','Draft'),
+    ('unreviewed','Unreviewed'),
     ('open','Open'),
-    ('cancelled', 'Cancel'),
+    ('cancel', 'Cancel'),
     ('done', 'Close'),
     ('pending','Pending')
 ]
-
-AVAILABLE_PRIORITIES = [
-    ('5','Lowest'),
-    ('4','Low'),
-    ('3','Normal'),
-    ('2','High'),
-    ('1','Highest')
-]
-def _links_get(self, cr, uid, context={}):
-    obj = self.pool.get('res.request.link')
-    ids = obj.search(cr, uid, [])
-    res = obj.read(cr, uid, ids, ['object', 'name'], context)
-    return [(r['object'], r['name']) for r in res]
-
-class crm_meeting(osv.osv):
-    _name = 'crm.meeting'
-    _description = 'Daily Meetings'
+class crm_case_category2(osv.osv):
+    _name = "crm.case.category2"
+    _description = "Category2 of case"
     _rec_name = "name"
     _columns = {
-        'id': fields.integer('ID', readonly=True),
-        'name' : fields.char('Meeting Name(Title)', size=64, required=True),
-        'priority': fields.selection(AVAILABLE_PRIORITIES, 'Priority'),
-        'crm_id11': fields.many2one('res.partner', 'Partner', required=True),
-        'agenda': fields.text('Agenda'),
-#        'section_id': fields.many2one('crm.case.section', 'Department', required=True, select=True),
-        'creat_date': fields.datetime('Opened' ,readonly=True),
-        'date_deadline': fields.date('Deadline'),
-        'date_closed': fields.datetime('Closed', readonly=True),
-        'user_id11': fields.many2one('employee.type', 'Responsible Person', required=True),
-        'designation': fields.char('Designation', size=64),
-        'history_line': fields.one2many('crm.case.history', 'case_id', 'Communication'),
-        'state': fields.selection(AVAILABLE_STATES, 'State', size=16, readonly=True),
-        'date_action_last': fields.datetime('Last Action', readonly=1),
-        'date_action_next': fields.datetime('Next Action'),
-        'question_yesterday': fields.text('Problems in Detail'),
-        'question_today': fields.text('Suggestions'),
-        'question_blocks': fields.text('Conclusion'),
-        'ref' : fields.reference('Reference', selection=_links_get, size=128),
-        'ref2' : fields.reference('Reference 2', selection=_links_get, size=128),
-        'work_ids': fields.one2many('history.type', 'task_id', 'History'),
+        'name': fields.char('Case Category2 Name', size=64, required=True),
+        'section_id': fields.many2one('crm.case.section', 'Case Section'),
     }
-    _defaults = {
-#        'user_id11': lambda s,cr,uid,c={}: uid,
-        'state': lambda *a: 'draft',
-        'priority': lambda *a: AVAILABLE_PRIORITIES[2][0],
-      #  'creat_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-    }
-    
-    def onchange_user_id(self, cr, uid, ids, user_id11): 
-          res = {} 
-          print "ids::::name::::",ids,user_id11
-          if user_id11:
-              id = self.pool.get('employee.type').read(cr, uid, [user_id11])
-              if id:
-                  res = {'designation':id[0]['designation']}
-              print "id:::::::;",id,res
-          else:
-             res = {'designation':0}   
-          print "*************************************",res
-          return {'value': res}
-  #######################################33    
 
+crm_case_category2()
 
-    def do_done(self, cr, uid, ids, *args):
-        tasks= self.browse(cr,uid,ids)
-        for t in tasks:
-            self.write(cr, uid, [t.id], {'state': 'done', 'date_closed':time.strftime('%Y-%m-%d %H:%M:%S')})
-        return True
-    def do_cancel(self, cr, uid, ids, *args):
-        tasks= self.browse(cr,uid,ids)
-        for t in tasks:
-            self.write(cr, uid, [t.id], {'state': 'cancelled'})
-        return True
-    
-    def do_open(self, cr, uid, ids, *args):
-        tasks= self.browse(cr,uid,ids)
-        for t in tasks:
-            self.write(cr, uid, [t.id], {'state': 'open','date_start':time.strftime('%Y-%m-%d %H:%M:%S')})
-        return True
-
-    def do_draft(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state': 'draft'})
-        return True
-
-    def do_pending(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state': 'pending'})
-        return True
-
-crm_meeting()
-
-class history_type(osv.osv):
-   _name = "history.type"
-   _description = "History Details" 
-   _columns = {
-        'name': fields.char('Summary', size=128),
-        'date': fields.datetime('Date'),
-        'task_id': fields.many2one('crm.meeting', 'History', ondelete='cascade'),
-        'hours': fields.float('Hours spent'),
-        'user_id11': fields.many2one('employee.type', 'Done by', required=True),
+class crm_case_stage(osv.osv):
+    _name = "crm.case.stage"
+    _description = "Stage of case"
+    _rec_name = 'name'
+    _columns = {
+        'name': fields.char('Stage Name', size=64, required=True),
+        'section_id': fields.many2one('crm.case.section', 'Case Section'),
                 }
-   _defaults = {
-        'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S')
-    }
-   _order = "date desc"
-history_type()
 
+crm_case_stage()
+
+class crm_cases(osv.osv):
     
+    
+    
+    _name = "crm.cases"
+    _inherit = "crm.case"
+    def get_section(self, cr, uid, context={}):
+         user = self.pool.get('crm.case.section').search(cr, uid, [('name', '=', 'Bug Tracking')])
+         return user[0] 
+    _columns = {
+        'stage_id': fields.many2one ('crm.case.stage', 'Stage', domain="[('section_id','=',section_id)]"),
+        'category2_id': fields.many2one('crm.case.category2','Category Name', domain="[('section_id','=',section_id)]"),
+        'duration': fields.time ('Duration', type=float),
+        'note': fields.text('Note'),
+        'partner_name': fields.char('Employee Name', size=64),
+        'partner_name2': fields.char('Last Name', size=64),
+        'partner_phone': fields.char('Phone', size=16),
+        'partner_mobile': fields.char('Mobile', size=16),
+        'state': fields.selection(AVAILABLE_STATES, 'State', size=16, readonly=True),
+         
+        
+                }
+    _defaults = {
+             'section_id' :get_section,
+                 }
+    def menu_create1(self, cr, uid, ids, name, menu_parent_id=False, context={}):
+        menus = {}
+        menus[-1] = menu_parent_id
+        for section in self.browse(cr, uid, ids, context):
+            for (index, mname, mdomain, latest) in [
+                (0,'',"[('section_id','=',"+str(section.id)+")]", -1),
+                (1,'My ',"[('section_id','=',"+str(section.id)+"),('user_id','=',uid)]", 0),
+                (2,'My Unclosed ',"[('section_id','=',"+str(section.id)+"),('user_id','=',uid), ('state','<>','cancel'), ('state','<>','done')]", 1),
+                (3,'My Open ',"[('section_id','=',"+str(section.id)+"),('user_id','=',uid), ('state','=','open')]", 2),
+                (4,'My Pending ',"[('section_id','=',"+str(section.id)+"),('user_id','=',uid), ('state','=','pending')]", 2),
+                (5,'My Unreviewed ',"[('section_id','=',"+str(section.id)+"),('user_id','=',uid), ('state','=','draft'), ('state','=','unreviewed')]", 2),
+                (6,'All ',"[('section_id','=',"+str(section.id)+"),]", 0),
+                (7,'All Unclosed ',"[('section_id','=',"+str(section.id)+"),('state','<>','cancel'), ('state','<>','done')]", 6),
+                (8,'All Open ',"[('section_id','=',"+str(section.id)+"),('state','=','open')]", 7),
+                (9,'All Pending ',"[('section_id','=',"+str(section.id)+"),('state','=','pending')]", 7),
+                (10,'All Unreviewed ',"[('section_id','=',"+str(section.id)+"),('state','=','draft'), ('state','=','unreviewed')]", 7),
+                
+            ]:
+                view_mode = 'tree,form'
+                icon = 'STOCK_JUSTIFY_FILL'
+                if index==0:
+                    view_mode = 'form,tree'
+                    icon = 'STOCK_NEW'
+                menu_id=self.pool.get('ir.ui.menu').create(cr, uid, {
+                    'name': mname+name,
+                    'parent_id': menus[latest],
+                    'icon': icon
+                })
+                menus[index] = menu_id
+                action_id = self.pool.get('ir.actions.act_window').create(cr,uid, {
+                    'name': mname+name+' Cases',
+                    'res_model': 'crm.cases',
+                    'domain': mdomain,
+                    'view_type': 'form',
+                    'view_mode': view_mode,
+                })
+                self.pool.get('ir.values').create(cr, uid, {
+                    'name': 'Open Cases',
+                    'key2': 'tree_but_open',
+                    'model': 'ir.ui.menu',
+                    'res_id': menu_id,
+                    'value': 'ir.actions.act_window,%d'%action_id,
+                    'object': True
+                })
+        return True
+    #end def
+    def case_unreview(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state # to fill the browse record cache
+        self.write(cr, uid, ids, {'state':'unreviewed', 'active':True})
+        return True
+
+crm_cases()
