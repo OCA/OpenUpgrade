@@ -150,7 +150,7 @@ def _createInvoices(self, cr, uid, data, context):
                 'comment': data.text_on_invoice,
                 'payment_term':data.order_partner_id.property_payment_term.id,
             }
-        price = certificate.total
+        price = data.total
         inv_obj = pool_obj.get('account.invoice')
         inv_id = inv_obj.create(cr, uid, inv)
         list_inv.append(inv_id)
