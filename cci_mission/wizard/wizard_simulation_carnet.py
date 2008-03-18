@@ -64,6 +64,10 @@ def _createInvoices(self, cr, uid, data, context):
         list.append(carnet.type_id.copy_product_id.id)
         list.append(carnet.warranty_product_id.id)
 
+        if carnet.invoice_id:
+            message_total += "ID "+str(carnet.id)+ " : " + str(carnet.invoice_id.amount_total) + "\n"
+            continue
+
         for product_line in carnet.product_ids:#extra Products
             val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id)
             val['value'].update({'product_id' : product_line.product_id.id })
