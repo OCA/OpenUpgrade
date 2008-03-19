@@ -201,30 +201,43 @@
 
 	<record model="workflow.activity" id="act_send">
 		<field name="wkf_id" ref="wkf_cci_mission_folder" />
-		<field name="name">send</field>
+		<field name="name">pending</field>
 		<field name="kind">function</field>
-		<field name="action">cci_mission_send()</field>
+		<field name="action">_cci_mission_send()</field>
 	</record>
 
 	<record model="workflow.activity" id="act_got_back">
 		<field name="wkf_id" ref="wkf_cci_mission_folder" />
-		<field name="name">gotback</field>
+		<field name="name">open</field>
+		<field name="kind">function</field>
+		<field name="action">_cci_mission_got_back()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_done_folder">
+		<field name="wkf_id" ref="wkf_cci_mission_folder" />
+		<field name="name">done</field>
 		<field name="kind">function</field>
 		<field name="flow_stop">True</field>
-		<field name="action">cci_mission_got_back()</field>
+		<field name="action">_cci_mission_done_folder()</field>
 	</record>
 
 	<!-- transitions -->
 	<record model="workflow.transition" id="e1_folder">
 		<field name="act_from" ref="act_draft_folder" />
 		<field name="act_to" ref="act_send" />
-		<field name="signal">folder_send</field>
+		<field name="signal">pending</field>
 	</record>
 
 	<record model="workflow.transition" id="e2_folder">
 		<field name="act_from" ref="act_send" />
 		<field name="act_to" ref="act_got_back" />
-		<field name="signal">folder_got_back</field>
+		<field name="signal">open</field>
+	</record>
+
+	<record model="workflow.transition" id="e3_folder">
+		<field name="act_from" ref="act_got_back" />
+		<field name="act_to" ref="act_done_folder" />
+		<field name="signal">done</field>
 	</record>
 
 </data>

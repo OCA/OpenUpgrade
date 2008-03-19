@@ -29,6 +29,7 @@
 
 import wizard
 import pooler
+import netsvc
 
 from osv import fields, osv
 form = """<?xml version="1.0"?>
@@ -60,6 +61,10 @@ def _createInvoices(self, cr, uid, data, context):
         address_invoice = False
         create_ids = []
 
+        if embassy.state != 'open':
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(embassy.id)+": Check State \n"
+            continue
         if embassy.invoice_id:
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(embassy.id)+": Already Has an Invoice Linked \n"
@@ -116,6 +121,8 @@ def _createInvoices(self, cr, uid, data, context):
         inv_id = inv_obj.create(cr, uid, inv)
         obj_embassy.write(cr, uid,embassy.id, {'invoice_id' : inv_id})
         list_inv.append(inv_id)
+        wf_service = netsvc.LocalService('workflow')
+        wf_service.trg_validate(uid, 'cci_missions.embassy_folder', embassy.id, 'done', cr)
 
     return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'inv_rej_reason': inv_rej_reason , 'invoice_ids':  list_inv}
 

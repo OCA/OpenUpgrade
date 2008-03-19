@@ -220,6 +220,8 @@
 								<field name="customer_amount"/>
 								<newline/>
 								<field name="tax_rate" />
+								<newline/>
+								<field name="account_id" />
 							</form>
 						</field>
 						<newline/>
@@ -228,9 +230,9 @@
 						<newline/>
 <!--						<field name="state"/>-->
 						<field name="state" readonly="1" /> <!-- buttons remain-->
-						<group col="8" colspan="4">
-							<button name="folder_send" string="Send" states="draft"/>
-							<button name="folder_got_back" string="gotback" states="send" />
+						<group col="8" colspan="2">
+							<button name="pending" string="Send" states="draft"/>
+							<button name="open" string="gotback" states="pending"/>
 						</group>
 					</page>
 					<page string="Extra Info">
@@ -716,9 +718,13 @@
 						<separator string="Letters" colspan="4"/>
 						<field name="letter_ids" nolabel="1" widget="one2many_list" colspan="4">
 							<tree string="Letters">
-							<field name="letter_type"/>
-							<field name="date" />
+								<field name="letter_type"/>
+								<field name="date" />
 							</tree>
+							<form string="Letters">
+								<field name="letter_type"/>
+								<field name="date" />
+							</form>
 						</field>
 					</page>
 					<page string="Extra Prodcuts">

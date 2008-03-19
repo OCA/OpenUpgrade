@@ -45,7 +45,7 @@ def _create_embassy_folder(self, cr, uid, data, context):
                     'site_id': site_id,
                     'partner_id': data.order_partner_id.id,
                     'destination_id': data.destination_id.id,
-                    'invoice_note' : data.text_on_invoice
+                    #'invoice_note' : data.text_on_invoice
             })
         pooler.get_pool(cr.dbname).get('cci_missions.embassy_folder').write(cr,uid,folder_id,{'name' : data.name})
         list_folders.append(folder_id)
