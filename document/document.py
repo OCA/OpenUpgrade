@@ -120,7 +120,7 @@ class node_class(object):
 		result= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, self.object2), res)
 
 		if self.type=='collection' and self.object.type=="ressource":
-			where = []
+			where = eval(self.object.domain)
 			obj = self.object2
 
 			if not self.object2:
@@ -186,6 +186,7 @@ class document_directory(osv.osv):
 		'create_date': fields.datetime('Date Created', readonly=True),
 		'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
 		'file_type': fields.char('Content Type', size=32),
+		'domain': fields.char('Domain', size=128),
 		'user_id': fields.many2one('res.users', 'Owner'),
 		'group_ids': fields.many2many('res.groups', 'document_directory_group_rel', 'item_id', 'group_id', 'Groups'),
 		'parent_id': fields.many2one('document.directory', 'Parent Item'),
@@ -199,6 +200,7 @@ class document_directory(osv.osv):
 	}
 	_defaults = {
 		'user_id': lambda self,cr,uid,ctx: uid,
+		'domain': lambda self,cr,uid,ctx: '[]',
 		'type': lambda *args: 'directory',
 	}
 	_sql_constraints = [
@@ -433,6 +435,10 @@ class document_file(osv.osv):
 			return super(document_file,self).create(cr,uid,vals,context)
 		vals['file_size']= len(vals['datas'])
 		vals['title']=vals['name']
+		if vals.get('res_id', False) and vals.get('res_model',False):
+			result = self.pool.get(vals['res_model']).name_get(cr, uid, [vals['res_id']], context=context)
+			if result:
+				vals['title'] = (result[0][1] or '')[:60]
 		result = super(document_file,self).create(cr, uid, vals, context)
 		cr.commit()
 		try:
