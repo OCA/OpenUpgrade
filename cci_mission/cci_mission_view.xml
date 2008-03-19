@@ -226,7 +226,12 @@
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="invoice_note" nolabel="1" colspan="4"/>
 						<newline/>
-						<field name="state"/> <!-- buttons remain-->
+<!--						<field name="state"/>-->
+						<field name="state" readonly="1" /> <!-- buttons remain-->
+						<group col="8" colspan="4">
+							<button name="folder_send" string="Send" states="draft"/>
+							<button name="folder_got_back" string="gotback" states="send" />
+						</group>
 					</page>
 					<page string="Extra Info">
 						<field name="id" />
