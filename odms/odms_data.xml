@@ -1,0 +1,394 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+
+	<!--
+		Product category
+	-->
+
+        <record model="product.category" id="cat_od_bundle">
+                <field name="parent_id" ref="null"/>
+                <field name="name">On Demand Bundle</field>
+        </record>
+
+	<!--
+		Product
+	-->
+
+        <record id="product_od_bundle_1" model="product.product">
+                <field name="list_price">35</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Base Bundle</field>
+		<field name="default_code">ODBDL01</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_2" model="product.product">
+                <field name="list_price">15</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Account Bundle</field>
+		<field name="default_code">ODBDL02</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_3" model="product.product">
+                <field name="list_price">30</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Auction Bundle</field>
+		<field name="default_code">ODBDL03</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_4" model="product.product">
+                <field name="list_price">10</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand CRM Bundle</field>
+		<field name="default_code">ODBDL04</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_5" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Document Bundle</field>
+		<field name="default_code">ODBDL05</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+
+        <record id="product_od_bundle_6" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Email Bundle</field>
+		<field name="default_code">ODBDL06</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_7" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Event Bundle</field>
+		<field name="default_code">ODBDL07</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_8" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Holliday Bundle</field>
+		<field name="default_code">ODBDL08</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_9" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Expenses Bundle</field>
+                <field name="default_code">ODBDL09</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_10" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Reporting Bundle</field>
+                <field name="default_code">ODBDL10</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_11" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Location Bundle</field>
+                <field name="default_code">ODBDL11</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_12" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Membership Bundle</field>
+                <field name="default_code">ODBDL12</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_13" model="product.product">
+                <field name="list_price">15</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand MRP Bundle</field>
+                <field name="default_code">ODBDL13</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_14" model="product.product">
+                <field name="list_price">0</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Portal Bundle</field>
+                <field name="default_code">ODBDL14</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_15" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand POS Bundle</field>
+                <field name="default_code">ODBDL15</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_16" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Project Bundle</field>
+                <field name="default_code">ODBDL16</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_17" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Sale Bundle</field>
+                <field name="default_code">ODBDL17</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_18" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Purchase Bundle</field>
+                <field name="default_code">ODBDL18</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_19" model="product.product">
+                <field name="list_price">10</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Stock Bundle</field>
+                <field name="default_code">ODBDL19</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_20" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Timesheet Bundle</field>
+                <field name="default_code">ODBDL20</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+        <record id="product_od_bundle_21" model="product.product">
+                <field name="list_price">5</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand Office Interface Bundle</field>
+                <field name="default_code">ODBDL21</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
+
+	<!--
+		OD Bundled
+	-->
+
+	<record id="od_bundle_1" model="odms.bundle">
+                <field name="name">On Demand Base Bundle</field>
+		<field name="product_id" ref="product_od_bundle_1"/>
+        </record>
+
+        <record id="od_bundle_2" model="odms.bundle">
+                <field name="name">On Demand Account Bundle</field>
+		<field name="product_id" ref="product_od_bundle_2"/>
+        </record>
+
+        <record id="od_bundle_3" model="odms.bundle">
+                <field name="name">On Demand Auction Bundle</field>
+		<field name="product_id" ref="product_od_bundle_3"/>
+        </record>
+
+	<record id="od_bundle_4" model="odms.bundle">
+                <field name="name">On Demand CRM Bundle</field>
+		<field name="product_id" ref="product_od_bundle_4"/>
+        </record>
+
+        <record id="od_bundle_5" model="odms.bundle">
+                <field name="name">On Demand Document Bundle</field>
+		<field name="product_id" ref="product_od_bundle_5"/>
+        </record>
+
+        <record id="od_bundle_6" model="odms.bundle">
+                <field name="name">On Demand Email Bundle</field>
+		<field name="product_id" ref="product_od_bundle_6"/>
+        </record>
+
+        <record id="od_bundle_7" model="odms.bundle">
+                <field name="name">On Demand Event Bundle</field>
+		<field name="product_id" ref="product_od_bundle_7"/>
+        </record>
+
+	<record id="od_bundle_8" model="odms.bundle">
+                <field name="name">On Demand Holidays Bundle</field>
+		<field name="product_id" ref="product_od_bundle_8"/>
+        </record>
+
+        <record id="od_bundle_9" model="odms.bundle">
+                <field name="name">On Demand Expenses Bundle</field>
+		<field name="product_id" ref="product_od_bundle_9"/>
+        </record>
+
+        <record id="od_bundle_10" model="odms.bundle">
+                <field name="name">On Demand Reporting Bundle</field>
+		<field name="product_id" ref="product_od_bundle_10"/>
+        </record>
+
+        <record id="od_bundle_11" model="odms.bundle">
+                <field name="name">On Demand Location Bundle</field>
+		<field name="product_id" ref="product_od_bundle_11"/>
+        </record>
+
+        <record id="od_bundle_12" model="odms.bundle">
+                <field name="name">On Demand Membership Bundle</field>
+		<field name="product_id" ref="product_od_bundle_12"/>
+        </record>
+
+        <record id="od_bundle_13" model="odms.bundle">
+                <field name="name">On Demand MRP Bundle</field>
+		<field name="product_id" ref="product_od_bundle_13"/>
+        </record>
+
+        <record id="od_bundle_14" model="odms.bundle">
+                <field name="name">On Demand Portal Bundle</field>
+		<field name="product_id" ref="product_od_bundle_14"/>
+        </record>
+
+        <record id="od_bundle_15" model="odms.bundle">
+                <field name="name">On Demand POS Bundle</field>
+		<field name="product_id" ref="product_od_bundle_15"/>
+        </record>
+
+        <record id="od_bundle_16" model="odms.bundle">
+                <field name="name">On Demand Project Bundle</field>
+		<field name="product_id" ref="product_od_bundle_16"/>
+        </record>
+
+        <record id="od_bundle_17" model="odms.bundle">
+                <field name="name">On Demand Sale Bundle</field>
+		<field name="product_id" ref="product_od_bundle_17"/>
+        </record>
+
+        <record id="od_bundle_18" model="odms.bundle">
+                <field name="name">On Demand Purchase Bundle</field>
+		<field name="product_id" ref="product_od_bundle_18"/>
+        </record>
+
+        <record id="od_bundle_19" model="odms.bundle">
+                <field name="name">On Demand Stock Bundle</field>
+		<field name="product_id" ref="product_od_bundle_19"/>
+        </record>
+
+        <record id="od_bundle_20" model="odms.bundle">
+                <field name="name">On Demand Timesheet Bundle</field>
+		<field name="product_id" ref="product_od_bundle_20"/>
+        </record>
+
+        <record id="od_bundle_21" model="odms.bundle">
+                <field name="name">On Demand Office Interface Bundle</field>
+		<field name="product_id" ref="product_od_bundle_21"/>
+        </record>
+
+	<!--
+		OD Module
+	-->
+
+
+        <record id="od_module_01" model="odms.module">
+                <field name="name">account</field>
+                <field name="bundle_id" ref="od_bundle_2"/>
+                <field name="state">installed</field>
+        </record>
+
+        <record id="od_module_02" model="odms.module">
+                <field name="name">account_analytic_analysis</field>
+                <field name="bundle_id" ref="od_bundle_2"/>
+                <field name="state">notinstalled</field>
+        </record>
+
+        <record id="od_module_03" model="odms.module">
+                <field name="name">account_asset</field>
+                <field name="bundle_id" ref="od_bundle_2"/>
+                <field name="state">notinstalled</field>
+        </record>
+
+
+
+	<!--
+		Od Offer
+	-->
+
+        <record id="od_offer_1" model="odms.offer">
+                <field name="name">On Demand Project Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_16'),ref('od_bundle_20')])]"/>
+        </record>
+
+        <record id="od_offer_2" model="odms.offer">
+                <field name="name">On Demand ERP Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_2'),ref('od_bundle_3'),ref('od_bundle_4'),ref('od_bundle_5'),ref('od_bundle_6'),ref('od_bundle_7'),ref('od_bundle_8'),ref('od_bundle_9'),ref('od_bundle_10'),ref('od_bundle_11'),ref('od_bundle_12'),ref('od_bundle_13'),ref('od_bundle_14'),ref('od_bundle_15'),ref('od_bundle_16'),ref('od_bundle_17'),ref('od_bundle_18'),ref('od_bundle_19'),ref('od_bundle_20'),ref('od_bundle_21')])]"/>
+        </record>
+
+        <record id="od_offer_3" model="odms.offer">
+                <field name="name">On Demand Accounting Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_2')])]"/>
+        </record>
+
+        <record id="od_offer_4" model="odms.offer">
+                <field name="name">On Demand CRM Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_4')])]"/>
+        </record>
+
+        <record id="od_offer_5" model="odms.offer">
+                <field name="name">On Demand Industry Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_2'),ref('od_bundle_13'),ref('od_bundle_17'),ref('od_bundle_18'),ref('od_bundle_19')])]"/>
+        </record>
+
+        <record id="od_offer_6" model="odms.offer">
+                <field name="name">On Demand Service Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_2'),ref('od_bundle_13'),ref('od_bundle_17'),ref('od_bundle_18'),ref('od_bundle_20')])]"/>
+        </record>
+
+        <record id="od_offer_7" model="odms.offer">
+                <field name="name">On Demand Trading Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_2'),ref('od_bundle_17'),ref('od_bundle_18'),ref('od_bundle_19')])]"/>
+        </record>
+
+	<record id="od_offer_8" model="odms.offer">
+                <field name="name">On Demand Association Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_2'),ref('od_bundle_7'),ref('od_bundle_12'),ref('od_bundle_16')])]"/>
+        </record>
+
+        <record id="od_offer_9" model="odms.offer">
+                <field name="name">On Demand Auction Offer</field>
+		<field name="bundle_ids" eval="[(6, 0, [ref('od_bundle_1'),ref('od_bundle_14'),ref('od_bundle_2'),ref('od_bundle_3'),ref('od_bundle_8'),ref('od_bundle_16')])]"/>
+        </record>
+
+
+</data>
+</terp>
