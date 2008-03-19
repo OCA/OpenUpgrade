@@ -83,6 +83,14 @@ class cci_missions_embassy_folder(osv.osv):
 	_description = 'cci_missions.embassy_folder'
 	_inherits = {'crm.case': 'crm_case_id'}
 
+	def cci_mission_send(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state':'send',})
+		return True
+
+	def cci_mission_got_back(self,cr,uid,ids,*args):
+		self.write(cr, uid, ids, {'state':'gotback',})
+		return True
+
 	def create(self, cr, uid, vals, *args, **kwargs):
 #		Overwrite the name field to set next sequence according to the sequence in for the embassy folder related in the site_id
 		if vals['site_id']:
@@ -123,12 +131,14 @@ class cci_missions_embassy_folder(osv.osv):
 		'site_id': fields.many2one('cci_missions.site','Site', required=True),
 		'invoice_date' : fields.datetime('Invoice Date') ,#added to solve bug
 		"invoice_id":fields.many2one("account.invoice","Invoice"),
+		'state' : fields.selection([('draft','Draft'),('send','send'),('gotback','gotback'),('invoiced','Invoiced')], 'State', size=16)
 	}
 
 	_defaults = {
 		'section_id': lambda obj, cr, uid, context: obj.pool.get('crm.case.section').search(cr, uid, [('name','=','Embassy Folder')])[0],
 		'invoice_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
 		'name': lambda *args: '/',
+		'state' :  lambda *a : 'draft'
 	}
 
 	_constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', ['embassy_folder_line_ids'])]
