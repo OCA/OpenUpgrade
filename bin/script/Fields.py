@@ -1,3 +1,5 @@
+
+
 import uno
 import string
 import unohelper
@@ -8,7 +10,7 @@ if __name__<>"package":
     from lib.functions import *
     from lib.error import ErrorDialog
     from LoginTest import *
-    database="test"
+    database="db_test002"
     uid = 3
 
 
@@ -83,7 +85,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                                 #self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
-                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
+                        VariableScope(tcur,self.aVariableList,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
 
             self.bModify=bFromModify
             if self.bModify==True:
@@ -97,14 +99,18 @@ class Fields(unohelper.Base, XJobExecutor ):
 #                self.win.setEditText("txtUName",sDisplayName)
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
-                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-                self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
-                fields=['name','model']
-                self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
-                if self.model_res <> []:
-                    self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
-                else:
-                    self.insVariable.addItem(var ,self.insVariable.getItemCount())
+#                try:
+                    sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
+                    fields=['name','model']
+                    self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                    if self.model_res <> []:
+                        self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+                    else:
+                        self.insVariable.addItem(var ,self.insVariable.getItemCount())
+#                except:
+#                        ErrorDialog("Error")
+#                        pass
                 #res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
 
             self.win.doModalDialog("lstFields",self.sValue)
@@ -165,18 +171,20 @@ class Fields(unohelper.Base, XJobExecutor ):
 
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
-            sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-            desktop=getDesktop()
-            doc =desktop.getCurrentComponent()
-            docinfo=doc.getDocumentInfo()
-            self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
-            self.aListFields=[]
-            tempItem = self.win.getComboBoxText("cmbVariable")
-            for var in self.aVariableList:
-                if var.__getslice__(0,var.find("(")) == tempItem.__getslice__(0,tempItem.find("(")):
-                    sItem=var
-            genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-
+            try:
+                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+                desktop=getDesktop()
+                doc =desktop.getCurrentComponent()
+                docinfo=doc.getDocumentInfo()
+                self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
+                self.aListFields=[]
+                tempItem = self.win.getComboBoxText("cmbVariable")
+                for var in self.aVariableList:
+                    if var.__getslice__(0,var.find("(")) == tempItem.__getslice__(0,tempItem.find("(")):
+                        sItem=var
+                genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+            except:
+                import traceback;traceback.print_exc()
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -225,5 +233,4 @@ elif __name__=="package":
         Fields,
         "org.openoffice.tiny.report.fields",
         ("com.sun.star.task.Job",),)
-
 

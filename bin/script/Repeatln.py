@@ -11,7 +11,7 @@ if __name__<>"package":
     from lib.functions import *
     from ServerParameter import *
     from LoginTest import *
-    database="test"
+    database="db_test002"
     uid = 3
 
 #class RepeatIn:
@@ -114,7 +114,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 if tcur.TextTable:
 
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
-                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
+                        VariableScope(tcur,self.aVariableList,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
 
             self.bModify=bFromModify
 
@@ -148,6 +148,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(8,len(var)))])
                 fields=['name','model']
                 self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                print self.model_res
                 if self.model_res <> []:
                     if var.__getslice__(0,8)<>'List of ':
                         self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
@@ -181,7 +182,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxText("cmbVariable")
-            sItem= self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
                 if var.__getslice__(0,8)=='List of ':
                     if var.__getslice__(0,8)==sItem.__getslice__(0,8):
