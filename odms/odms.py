@@ -2,10 +2,52 @@
 from osv import fields, osv
 import time
 import xmlrpclib
+#import odmslib
 import pooler
 
-oduser = "admin"
-odpass = "o2aevl8w"
+
+def odms_send(cr, uid, ids, request, args={}, context={}):
+
+	subs_lst = pooler.get_pool(cr.dbname).get('odms.subscription').browse(cr, uid, ids, context)
+
+	for subs in subs_lst:
+        	srv_obj = pooler.get_pool(cr.dbname).get('odms.server')
+        	print "DEBUG - server obj",srv_obj
+	
+		# Get server objects
+		vsv_srv = srv_obj.browse(cr, uid, [subs.vserv_server_id.id])[0]
+		web_srv = srv_obj.browse(cr, uid, [subs.web_server_id.id])[0]
+		bck_srv = srv_obj.browse(cr, uid, [subs.bckup_server_id.id])[0]
+
+		# Define sockets
+        	vsv_srv_socket = "http://"+vsv_srv.ipaddress+":"+vsv_srv.port
+     #   	vsv_socket = "http://"+vsv.ipaddress+":"+vsv.port
+        	web_srv_socket = "http://"+web_srv.ipaddress+":"+web_srv.port
+        	bck_srv_socket = "http://"+bck_srv.ipaddress+":"+bck_srv.port
+
+                # Execute request
+                if request == 'debug':
+                        print "ODMS Debug - vserver socket :",vsv_srv_socket
+                        s = xmlrpclib.Server(vsv_srv_socket)
+                        print "ODMS Debug - s :",s
+                elif request == 'create_vserv':
+                        s = xmlrpclib.Server(vsv_srv_socket)
+                        res = s.create_vsv(vsv_srv.user,vsv_srv.password,subs.offer_id.id)
+                        print "ODMS Debug - vs_create :",res
+                elif request == 'create_web':
+                        # TODO : Define URL
+                        s = xmlrpclib.Server(web_srv_socket)
+                        res = s.create_web(web_srv.user,web_srv.password,'1','www.truc.be')
+                        print "ODMS Debug - web_create :",res
+                elif request == 'create_bck':
+                        s = xmlrpclib.Server(bck_srv_socket)
+                        res = s.create_bck(bck_srv.user,bck_srv.password,'1')
+                        print "ODMS Debug - bck_create :",res
+                else:
+                        raise osv.except_osv('Error !','Request:',request,' unknow')
+
+        return res 
+
 
 class odms_vserver(osv.osv):
 	_name = "odms.vserver"
@@ -145,7 +187,7 @@ class odms_partner(osv.osv):
                 'zip': fields.char('zip', size=24),
                 'city': fields.char('city', size=128),
                 'countrystate_id': fields.many2one('res.country.state','Country state'),
-                'country_id': fields.many2one('res.country','country'),
+                'country_id': fields.many2one('res.country','Country'),
                 'phone': fields.char('phone', size=64),
 		'website': fields.char('Website', size=64),
 		'notes': fields.text('Notes'),
@@ -208,7 +250,9 @@ class odms_subscription(osv.osv):
 
         def create_subs(self, cr, uid, ids, context={}):
 
-                s = xmlrpclib.Server('http://localhost:8000')
+
+         	""" 
+	        s = xmlrpclib.Server('http://localhost:8000')
                 print "DEBUG user : ",oduser
                 print "DEBUG password : ",odpass
 
@@ -223,40 +267,40 @@ class odms_subscription(osv.osv):
                 #       return False
 
                 self.write(cr, uid, ids, {'state':'active'})
-
+		"""
                 return res
 
-	def create_trial(self, cr, uid, vals, context=None):
+	def create_trial(self, cr, uid, ids, context=None):
 
 		return True
 
 
-        def suspend_subs(self, cr, uid, vals, context=None):
+        def suspend_subs(self, cr, uid, ids, context=None):
 
                 return True
 
-        def delete_subs(self, cr, uid, vals, context=None):
+        def delete_subs(self, cr, uid, ids, context=None):
 
                 return True
 
-	def settodraft(self, cr, uid, vals, context=None):
+	def settodraft(self, cr, uid, ids, context=None):
 		
 		return True
 
-	def startstop_vserv(self, cr, uid, vals, context=None):
+	def startstop_vserv(self, cr, uid, ids, context=None):
 
 		return True
 
-        def create_vserv(self, cr, uid, vals, context=None):
-
+        def create_vserv(self, cr, uid, ids, context=None):
+		res = odms_send(cr, uid, ids, 'create_vserv') 
                 return True
 
-        def create_web(self, cr, uid, vals, context=None):
-
+        def create_web(self, cr, uid, ids, context=None):
+		res = odms_send(cr, uid, ids, 'create_web') 
                 return True
 
-        def create_bckup(self, cr, uid, vals, context=None):
-
+        def create_bckup(self, cr, uid, ids, context=None):
+		res = odms_send(cr, uid, ids, 'create_bck') 
                 return True
 
         def create_partner(self, cr, uid, ids, context={}):
@@ -271,8 +315,9 @@ class odms_subscription(osv.osv):
 		print "DEBUG - odpart :",odpart
 
 		# Get OD pricelist id
-		# plist_obj = self.pool.get('product.pricelist')
-		# ...
+		# TODO : Get get pricelist from ?
+		plist_obj = self.pool.get('product.pricelist')
+		plist_id = plist_obj.browse(cr, uid, [2])[0].id
 
                 # Create new partner
                 partner_obj = self.pool.get('res.partner')
@@ -282,12 +327,12 @@ class odms_subscription(osv.osv):
                                         'comment':odpart.notes})
 
                 # Create new partner address
-                # TODO : Add country and state
                 paddr_obj = self.pool.get('res.partner.address')
                 paddr_id = paddr_obj.create(cr, uid,
                                 {'partner_id':part_id, 'name':odpart.contactname, 'street':odpart.address,
-                                         'zip':odpart.zip, 'city':odpart.city, 'email':odpart.email,
-                                                'phone': odpart.phone, 'type': 'contact'})
+                                        'zip':odpart.zip, 'city':odpart.city, 'email':odpart.email, 
+                                                'phone':odpart.phone, 'country_id':odpart.country_id.id, 
+							'state_id':odpart.countrystate_id.id, 'type':'contact'})
 
                 # Add partner to subscription
                 self.write(cr, uid, subs.id, {'partner_id':part_id})
@@ -296,10 +341,10 @@ class odms_subscription(osv.osv):
                 self.write(cr, uid, ids, {'partner_id':part_id})
 
 		# Set pricelist
-		#self.write(cr, uid, ids, {'pricelist_id':plist_id})
+		self.write(cr, uid, ids, {'pricelist_id':plist_id})
 		
-                # Change state
-                odpart_obj.write(cr, uid, subs.odpartner_id.id, {'state':'created'})
+                # Add partner and Change state
+                odpart_obj.write(cr, uid, subs.odpartner_id.id, {'partner_id':part_id, 'state':'created'})
 
                 return {'partner_id':part_id}
 
@@ -420,6 +465,7 @@ class odms_subscription(osv.osv):
                 if not part:
                         return {'value':{'pricelist':False}}                
                 pricelist = self.pool.get('res.partner').browse(cr, uid, part).property_product_pricelist.id
+		print "DEBUG - on_change on partner_id called"
                 return {'value':{'pricelist_id': pricelist}}
 	
 	
@@ -455,6 +501,7 @@ class odms_subscription(osv.osv):
 		'web_server_state' : lambda *a: 'notinstalled',
 		'vserv_server_state' : lambda *a: 'notinstalled',
 		'bckup_server_state' : lambda *a: 'notinstalled',
+		'max_users' : lambda *a: 1,
 	}
 	_order = "date desc"
 odms_subscription()

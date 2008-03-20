@@ -362,7 +362,7 @@
                                 <field name="name" select="1" />
 				<field name="date" select="2" />
 				<newline/>
-                                <field name="partner_id" on_change="onchange_partner_id(partner_id)" context="partner_id=parent.partner_id" select="2" />
+                                <field name="partner_id" on_change="onchange_partner_id(partner_id)" select="2" />
                                 <field name="odpartner_id" select="2" />
 				<field name="offer_id" select="1" />
 				<field name="pricelist_id" select="2" />
