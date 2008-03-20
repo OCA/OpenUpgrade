@@ -93,7 +93,7 @@ class cci_missions_embassy_folder(osv.osv):
 		return True
 
 	def _cci_mission_done_folder(self,cr,uid,ids,*args):
-		self.write(cr, uid, ids, {'state':'done',})
+		self.write(cr, uid, ids, {'state':'done','invoice_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 		return True
 
 	def create(self, cr, uid, vals, *args, **kwargs):
@@ -141,7 +141,7 @@ class cci_missions_embassy_folder(osv.osv):
 
 	_defaults = {
 		'section_id': lambda obj, cr, uid, context: obj.pool.get('crm.case.section').search(cr, uid, [('name','=','Embassy Folder')])[0],
-		'invoice_date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'invoice_date': lambda *a: False,
 		'name': lambda *args: '/',
 		'state' :  lambda *a : 'draft'
 	}

@@ -41,13 +41,11 @@ def _create_embassy_folder(self, cr, uid, data, context):
             continue
         folder_create = folder_create + 1
         folder_id =obj_pool.get('cci_missions.embassy_folder').create(cr, uid, {
-                    'date': data.date,
                     'site_id': site_id,
                     'partner_id': data.order_partner_id.id,
                     'destination_id': data.destination_id.id,
-                    #'invoice_note' : data.text_on_invoice
             })
-        pooler.get_pool(cr.dbname).get('cci_missions.embassy_folder').write(cr,uid,folder_id,{'name' : data.name})
+
         list_folders.append(folder_id)
         obj_dossier.write(cr, uid,data.id, {'embassy_folder_id' : folder_id})
     return {'folder_created' : str(folder_create) , 'folder_rejected' : str(folder_reject) , 'folder_rej_reason': folder_rej_reason , 'folder_ids' : list_folders }
