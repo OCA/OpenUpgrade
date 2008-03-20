@@ -30,12 +30,14 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
 
 def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableName=""):
     if sTableName.find(".") != -1:
+        print sTableName,1
         for i in range(aItemList.__len__()):
             if aComponentAdd[i]==sTableName:
                 sLVal=aItemList[i].__getitem__(1).__getslice__(aItemList[i].__getitem__(1).find(",'")+2,aItemList[i].__getitem__(1).find("')"))
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal:
-                        insVariable.addItem(aObjectList[j],1)
+                        print aObjectList[j]
+                        insVariable.append(aObjectList[j])
         VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList, sTableName.__getslice__(0,sTableName.rfind(".")))
     else:
         for i in range(aItemList.__len__()):
@@ -43,7 +45,8 @@ def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableNa
                 sLVal=aItemList[i].__getitem__(1).__getslice__(aItemList[i].__getitem__(1).find(",'")+2,aItemList[i].__getitem__(1).find("')"))
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal and sLVal!="":
-                        insVariable.addItem(aObjectList[j],1)
+                        print aObjectList[j]
+                        insVariable.append(aObjectList[j])
 
 def getList(aObjectList,host,count):
     desktop=getDesktop()
@@ -134,6 +137,7 @@ def getPath(sPath,sMain):
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
     parent=""
+    bFlag = False
     Doc =desktop.getCurrentComponent()
     #oVC = Doc.CurrentController.getViewCursor()
     oParEnum = Doc.getTextFields().createEnumeration()
@@ -148,8 +152,14 @@ def EnumDocument(aItemList,aComponentAdd):
             parent = "Document"
         sItem=oPar.Items.__getitem__(1)
         if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-            aItemList.append(oPar.Items )
-            aComponentAdd.append(parent)
+            for i in aItemList:
+                if i == oPar.Items:
+                    bFlag = True
+                else:
+                    bFlag = False
+            if not bFlag:
+                aItemList.append(oPar.Items)
+                aComponentAdd.append(parent)
             #getChildTable(oPar,aItemList,aComponentAdd)
 #    print dir(Doc)
 #    print dir(Doc.getText())
