@@ -6,10 +6,10 @@
 	# ------------------------------------------------------ 
 	# Jobs
 	# ------------------------------------------------------ 
-<!--   
+
 	<record model="ir.ui.view" id="crm_case_tree-view11">
 		<field name="name">crm.cases.tree1</field>
-		<field name="model">crm.cases</field>
+		<field name="model">crm.case</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Jobs - Recruitment Tree"  colors="red:state=='open'">
@@ -28,7 +28,7 @@
 
 	<record model="ir.ui.view" id="crm_case_form-view11">
 		<field name="name">crm.cases.form1</field>
-		<field name="model">crm.cases</field>
+		<field name="model">crm.case</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Jobs - Recruitment Form">
@@ -133,22 +133,37 @@
 		</field>
 	</record>
 
+
 	<record model="ir.actions.act_window" id="crm_case_categ0-act11">
-		<field name="res_model">crm.cases</field>
+		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="crm_case_tree-view11"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_sec_tree_view1">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="act_window_id" ref="crm_case_categ0-act11"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_sec_tree_view2">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm_case_form-view11"/>
+		<field name="act_window_id" ref="crm_case_categ0-act11"/>
+	</record>
+	
 	<menuitem name="CRM &amp; SRM/Jobs" id="menu_crm_case_categ0-act11" action="crm_case_categ0-act11"/>
--->
+
 
 	# ------------------------------------------------------ 
 	# Bug Tracking
 	# ------------------------------------------------------ 
 
 
-	<record model="ir.ui.view" id="crm_case_form-view">
+	<record model="ir.ui.view" id="crm_case_form_view">
 		<field name="name">crm.cases.form</field>
-		<field name="model">crm.cases</field>
+		<field name="model">crm.case</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Bug Tracker Form">
@@ -202,12 +217,12 @@
 					<separator colspan="4"/>
 					<group col="8" colspan="4">
 						<field name="state" select="1"/>
-						<button name="case_unreview" string="Unreviewed" states="draft" type="object"/>
-						<button name="case_close" string="Done" states="open,pending" type="object"/>
-						<button name="case_open" string="Open" states="unreviewed,draft,pending" type="object"/>
-						<button name="case_cancel" string="Refuse Bug" states="unreviewed,draft,open,pending" type="object"/>
-						<button name="case_pending" string="Pending" states="unreviewed,draft,open" type="object"/>
-						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
+						<button name="case_close" string="Done" states="open,pending,draft"/>
+						<button name="case_open" string="Open" states="draft,pending"/>
+						<button name="case_cancel" string="Refuse Bug" states="draft,open,pending"/>
+						<button name="case_pending" string="Pending" states="open"/>
+						<button name="case_escalate" string="Escalate" states="open,pending"/>
+					 
 					</group>
 				</page>
 				<page string="Internal Notes">
@@ -247,9 +262,9 @@
 			</form>
 		</field>
 	</record>
-	<record model="ir.ui.view" id="crm_case_tree-view">
+	<record model="ir.ui.view" id="crm_case_tree_view">
 		<field name="name">crm.cases.tree</field>
-		<field name="model">crm.cases</field>
+		<field name="model">crm.case</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Bugs Tree"  colors="red:state=='open'">
@@ -268,12 +283,25 @@
 	</record>
 
 
-<!--	<record model="ir.actions.act_window" id="crm_case_categ-act">-->
-<!--		<field name="res_model">crm.cases</field>-->
-<!--		<field name="view_type">form</field>-->
-<!--		<field name="view_id" ref="crm_case_tree-view"/>-->
-<!--	</record>-->
-<!--	<menuitem name="CRM &amp; SRM/Bug Tracking" id="menu_crm_case_categ-act" action="crm_case_categ-act"/>-->
+	<record model="ir.actions.act_window" id="crm_case_categ-act">
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="crm_case_tree_view"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view1">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree_view"/>
+		<field name="act_window_id" ref="crm_case_categ-act"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view2">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_categ-act"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Bug Tracking" id="menu_crm_case_categ-act" action="crm_case_categ-act"/>
 
 	</data>
 </terp>
