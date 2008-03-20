@@ -54,7 +54,7 @@
                 <field name="view_mode">form,tree</field>
         </record>
 
-        <menuitem name="On Demand/Configuration/Add an ODMS server" action="action_odms_server_form" id="menu_form_server" sequence="5"/>
+        <menuitem name="On Demand/Configuration/Add an ODMS server" action="action_odms_server_form" id="menu_form_server" sequence="8"/>
 
 
         <record model="ir.ui.view" id="view_odms_server_list">
@@ -86,6 +86,46 @@
         </record>
 
         <menuitem name="On Demand/Configuration/ODMS servers" action="action_odms_server_list" id="menu_list_servers" sequence="4"/>
+
+	<!--
+		OD VServer
+	-->	
+
+	<record model="ir.ui.view" id="view_odms_vserver_form">
+                <field name="name">odms.vserver.form</field>
+                <field name="model">odms.vserver</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                        <form string="ODMS Vserver">
+                                <field name="name" select="1"/>
+                                <field name="ipaddress" select="2"/>
+                                <field name="state" select="1"/>
+                        </form>
+                </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_odms_vserver_list">
+                <field name="name">odms.vserver.list</field>
+                <field name="model">odms.vserver</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                        <tree string="ODMS Vservers" >
+                                <field name="name"/>
+                                <field name="ipaddress"/>
+                                <field name="state"/>
+                        </tree>
+                </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_odms_vserver_list">
+                <field name="name">VServers</field>
+                <field name="res_model">odms.vserver</field>
+                <field name="type">ir.actions.act_window</field>
+                <field name="view_type">form</field>
+                <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="On Demand/Configuration/ODMS vservers" action="action_odms_vserver_list" id="menu_list_vservers" sequence="4"/>
 
 
 	<!--
@@ -374,6 +414,10 @@
 				<field name="deadline_date" select="2" />
 				</group>
                                 <separator string="Login information" colspan="4"/>
+				<group colspan="4">
+				<field name="url" colspan="3" select="2"/>
+				<label string=".od.openerp.com" colspan="1"/>
+				</group>
 				<group colspan="4">
 				<field name="email" select="2"/>
 				<field name="password" select="2"/>

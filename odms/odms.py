@@ -2,51 +2,60 @@
 from osv import fields, osv
 import time
 import xmlrpclib
+import threading
 #import odmslib
 import pooler
 
 
-def odms_send(cr, uid, ids, request, args={}, context={}):
+def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
+
+	class odms_request(threading.Thread):
+		"""Manage request to ODMS servers"""
+		def __init__(self, srv, request, args={}):
+			threading.Thread.__init__(self)
+			# Get ODMS Server socket
+			self.srv_socket = "http://"+srv.ipaddress+":"+srv.port
+			print "DEBUG thread :",self.srv_socket
+
+		def run(self):
+			print "DEBUG sending request at :",self.srv_socket
+			s = xmlrpclib.Server(self.srv_socket)
+
+			# Execute request
+        	        if request == 'debug':
+                	        print "ODMS Debug - vserver socket :",self.srv_socket
+           	            	print "ODMS Debug - s :",s
+                	elif request == 'create_vsv':
+                	        res = s.create_vsv(srv.user,srv.password,args['subs_id'],args['offer_id'])
+                        	print "ODMS Debug - vs_create :",res	
+        	        elif request == 'create_web':
+                        	res = s.create_web(srv.user,srv.password,args['subs_id'],args['url'])
+                	        print "ODMS Debug - web_create :",res
+                	elif request == 'create_bck':
+                       		res = s.create_bck(srv.user,srv.password,args['subs_id'])
+                        	print "ODMS Debug - bck_create :",res
+              		else:
+                        	raise osv.except_osv('Error !','Request:',request,' unknow')
 
 	subs_lst = pooler.get_pool(cr.dbname).get('odms.subscription').browse(cr, uid, ids, context)
 
+	nbr_thread=0
+
+	# For each subscription
 	for subs in subs_lst:
+		# Get server object
         	srv_obj = pooler.get_pool(cr.dbname).get('odms.server')
         	print "DEBUG - server obj",srv_obj
-	
-		# Get server objects
-		vsv_srv = srv_obj.browse(cr, uid, [subs.vserv_server_id.id])[0]
-		web_srv = srv_obj.browse(cr, uid, [subs.web_server_id.id])[0]
-		bck_srv = srv_obj.browse(cr, uid, [subs.bckup_server_id.id])[0]
-
-		# Define sockets
-        	vsv_srv_socket = "http://"+vsv_srv.ipaddress+":"+vsv_srv.port
-     #   	vsv_socket = "http://"+vsv.ipaddress+":"+vsv.port
-        	web_srv_socket = "http://"+web_srv.ipaddress+":"+web_srv.port
-        	bck_srv_socket = "http://"+bck_srv.ipaddress+":"+bck_srv.port
+		srv = srv_obj.browse(cr, uid, [server_id])[0]
+		print "DEBUG srv :",srv
 
                 # Execute request
-                if request == 'debug':
-                        print "ODMS Debug - vserver socket :",vsv_srv_socket
-                        s = xmlrpclib.Server(vsv_srv_socket)
-                        print "ODMS Debug - s :",s
-                elif request == 'create_vserv':
-                        s = xmlrpclib.Server(vsv_srv_socket)
-                        res = s.create_vsv(vsv_srv.user,vsv_srv.password,subs.offer_id.id)
-                        print "ODMS Debug - vs_create :",res
-                elif request == 'create_web':
-                        # TODO : Define URL
-                        s = xmlrpclib.Server(web_srv_socket)
-                        res = s.create_web(web_srv.user,web_srv.password,'1','www.truc.be')
-                        print "ODMS Debug - web_create :",res
-                elif request == 'create_bck':
-                        s = xmlrpclib.Server(bck_srv_socket)
-                        res = s.create_bck(bck_srv.user,bck_srv.password,'1')
-                        print "ODMS Debug - bck_create :",res
-                else:
-                        raise osv.except_osv('Error !','Request:',request,' unknow')
+		rqst = odms_request(srv, request, args)
+		rqst.start()
 
-        return res 
+		nbr_thread+=1
+
+        return nbr_thread
 
 
 class odms_vserver(osv.osv):
@@ -292,16 +301,28 @@ class odms_subscription(osv.osv):
 		return True
 
         def create_vserv(self, cr, uid, ids, context=None):
-		res = odms_send(cr, uid, ids, 'create_vserv') 
-                return True
+		subs = self.browse(cr, uid, ids)[0]
+		print "DEBUG create_vserv - server id", subs.vserv_server_id.id
+		self.write(cr, uid, subs.id, {'vserv_server_state':'installing'})
+		res = odms_send(cr, uid, ids, subs.vserv_server_id.id, 'create_vsv',
+			 {'subs_id':subs.id,'offer_id':subs.offer_id.id}) 
+                return res
 
         def create_web(self, cr, uid, ids, context=None):
-		res = odms_send(cr, uid, ids, 'create_web') 
-                return True
+		subs = self.browse(cr, uid, ids)[0]
+		if subs.url == False:
+			raise osv.except_osv('Error !','There is no url defined for this subscription')
+		url = subs.url+'.od.openerp.com'
+		print "DEBUG create_web - server id", subs.web_server_id.id
+		self.write(cr, uid, subs.id, {'web_server_state':'installing'})
+		res = odms_send(cr, uid, ids, subs.web_server_id.id, 'create_web',{'subs_id':subs.id,'url':url}) 
+                return res
 
         def create_bckup(self, cr, uid, ids, context=None):
-		res = odms_send(cr, uid, ids, 'create_bck') 
-                return True
+		subs = self.browse(cr, uid, ids)[0]
+		self.write(cr, uid, subs.id, {'bckup_server_state':'installing'})
+		res = odms_send(cr, uid, ids, subs.bckup_server_id.id, 'create_bck',{'subs_id':subs.id}) 
+                return res
 
         def create_partner(self, cr, uid, ids, context={}):
 		print "DEBUG - accessing create_partner"
@@ -475,6 +496,7 @@ class odms_subscription(osv.osv):
 		'odpartner_id': fields.many2one('odms.partner', 'ODMS Partner'),
 		'email': fields.char('Login', size=64, required=True),
 		'password': fields.char('Password', size=64, required=True),
+		'url': fields.char('OD Website URL', size=64),
 		'date' : fields.date('Subscription date', readonly=True),
 		'activ_date' : fields.date('Activation date'),
 		'deadline_date' : fields.date('Deadline date'),
