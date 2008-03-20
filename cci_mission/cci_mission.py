@@ -186,11 +186,6 @@ class cci_missions_dossier(osv.osv):
 	_name = 'cci_missions.dossier'
 	_description = 'cci_missions.dossier'
 
-#	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
-#		print "yo"
-#		self.write(cr, uid, ids, {'state':'cancel_cci',})
-#		return True
-
 	def create(self, cr, uid, vals, *args, **kwargs):
 		#overwrite the create: if the text_on_invoice field is empty then fill it with name + destination_id.name + (quantity_original)
 		if not vals['text_on_invoice']:
