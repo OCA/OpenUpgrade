@@ -124,63 +124,127 @@
 | Workflow on Dossier |
 -->
 
+	<!--
+	| Certificates |
+	-->
 	<!-- Workflow definition -->
-	<record model="workflow" id="wkf_cci_dossier">
-		<field name="name">cci_mission.wkf.dossier</field>
-		<field name="osv">cci_missions.dossier</field>
+	<record model="workflow" id="wkf_cci_certificate">
+		<field name="name">cci_mission.wkf.certificate</field>
+		<field name="osv">cci_missions.certificate</field>
 		<field name="on_create">True</field>
 	</record>
 
 	<!-- activities -->
-	<record model="workflow.activity" id="act_dossier_draft">
-		<field name="wkf_id" ref="wkf_cci_dossier" />
+	<record model="workflow.activity" id="act_certificate_draft">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
 		<field name="flow_start">True</field>
 		<field name="name">activity.draft</field>
 	</record>
 
-	<record model="workflow.activity" id="act_dossier_invoiced">
-		<field name="wkf_id" ref="wkf_cci_dossier" />
+	<record model="workflow.activity" id="act_certificate_invoiced">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
 		<field name="name">activity.invoiced</field>
 		<field name="kind">function</field>
 		<field name="action">write({'state':'invoiced'})</field>
 		<field name="split_mode">OR</field>
 	</record>
 
-	<record model="workflow.activity" id="act_dossier_cancel_cust">
-		<field name="wkf_id" ref="wkf_cci_dossier" />
+	<record model="workflow.activity" id="act_certificate_cancel_cust">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
 		<field name="name">activity.cancel_customer</field>
 		<field name="kind">function</field>
 		<field name="flow_stop">True</field>
 		<field name="action">write({'state':'cancel_customer'})</field>
 	</record>
 
-	<record model="workflow.activity" id="act_dossier_cancel_cci">
-		<field name="wkf_id" ref="wkf_cci_dossier" />
+	<record model="workflow.activity" id="act_certificate_cancel_cci">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
 		<field name="name">activity.cancel_cci</field>
 		<field name="kind">function</field>
 		<field name="flow_stop">True</field>
-		<field name="action">write({'state':'cancel_cci'})</field>
+		<field name="action">cci_dossier_cancel_cci()</field>
 	</record>
-
 
 	<!-- transitions -->
 	<record model="workflow.transition" id="t1_dos">
-		<field name="act_from" ref="act_dossier_draft" />
-		<field name="act_to" ref="act_dossier_invoiced" />
+		<field name="act_from" ref="act_certificate_draft" />
+		<field name="act_to" ref="act_certificate_invoiced" />
 		<field name="signal">invoiced</field>
 	</record>
 
 	<record model="workflow.transition" id="t2_dos">
-		<field name="act_from" ref="act_dossier_invoiced" />
-		<field name="act_to" ref="act_dossier_cancel_cust" />
-		<field name="signal">button_cancel_customer</field>
+		<field name="act_from" ref="act_certificate_invoiced" />
+		<field name="act_to" ref="act_certificate_cancel_cust" />
+		<field name="signal">cancel_customer</field>
 	</record>
 
 	<record model="workflow.transition" id="t3_dos">
-		<field name="act_from" ref="act_dossier_invoiced" />
-		<field name="act_to" ref="act_dossier_cancel_cci" />
-		<field name="signal">button_cancel_cci</field>
+		<field name="act_from" ref="act_certificate_invoiced" />
+		<field name="act_to" ref="act_certificate_cancel_cci" />
+		<field name="signal">cancel_cci</field>
 	</record>
+
+
+	<!--
+	| Legalizations |
+	-->
+	<record model="workflow" id="wkf_cci_legalization">
+		<field name="name">cci_mission.wkf.legalization</field>
+		<field name="osv">cci_missions.legalization</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_legalization_draft">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="flow_start">True</field>
+		<field name="name">activity.draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_legalization_invoiced">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="name">activity.invoiced</field>
+		<field name="kind">function</field>
+		<field name="action">write({'state':'invoiced'})</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_legalization_cancel_cust">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="name">activity.cancel_customer</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">write({'state':'cancel_customer'})</field>
+	</record>
+
+	<record model="workflow.activity" id="act_legalization_cancel_cci">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="name">activity.cancel_cci</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_dossier_cancel_cci()</field>
+	</record>
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="t1_leg">
+		<field name="act_from" ref="act_legalization_draft" />
+		<field name="act_to" ref="act_legalization_invoiced" />
+		<field name="signal">invoiced</field>
+	</record>
+
+	<record model="workflow.transition" id="t2_leg">
+		<field name="act_from" ref="act_legalization_invoiced" />
+		<field name="act_to" ref="act_legalization_cancel_cust" />
+		<field name="signal">cancel_customer</field>
+	</record>
+
+	<record model="workflow.transition" id="t3_leg">
+		<field name="act_from" ref="act_legalization_invoiced" />
+		<field name="act_to" ref="act_legalization_cancel_cci" />
+		<field name="signal">cancel_cci</field>
+	</record>
+
+
 <!--
 | Workflow on Embassy folder |
 -->

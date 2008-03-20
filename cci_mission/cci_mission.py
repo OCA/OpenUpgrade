@@ -146,7 +146,7 @@ class cci_missions_embassy_folder(osv.osv):
 		'state' :  lambda *a : 'draft'
 	}
 
-	_constraints = [(check_folder_line, 'Error: Only One Embessy Folder line allowed for each type!', ['embassy_folder_line_ids'])]
+	_constraints = [(check_folder_line, 'Error: Only One Embassy Folder line allowed for each type!', ['embassy_folder_line_ids'])]
 
 cci_missions_embassy_folder()
 
@@ -185,6 +185,11 @@ cci_missions_dossier_type()
 class cci_missions_dossier(osv.osv):
 	_name = 'cci_missions.dossier'
 	_description = 'cci_missions.dossier'
+
+#	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
+#		print "yo"
+#		self.write(cr, uid, ids, {'state':'cancel_cci',})
+#		return True
 
 	def create(self, cr, uid, vals, *args, **kwargs):
 		#overwrite the create: if the text_on_invoice field is empty then fill it with name + destination_id.name + (quantity_original)
@@ -304,12 +309,8 @@ class cci_missions_certificate(osv.osv):
 	_description = 'cci_missions.certificate'
 	_inherits = {'cci_missions.dossier': 'dossier_id' }
 
-	def button_cancel_cci(self, cr, uid, ids, *args):
+	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'cancel_cci',})
-		return True
-
-	def button_cancel_customer(self, cr, uid, ids, *args):
-		self.write(cr, uid, ids, {'state':'cancel_customer',})
 		return True
 
 	def get_certification_details(self, cr, uid, ids,order_partner_id):
@@ -386,12 +387,8 @@ class cci_missions_legalization(osv.osv):
 	_description = 'cci_missions.legalization'
 	_inherits = {'cci_missions.dossier': 'dossier_id'}
 
-	def button_cancel_cci(self, cr, uid, ids, *args):
+	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'cancel_cci',})
-		return True
-
-	def button_cancel_customer(self, cr, uid, ids, *args):
-		self.write(cr, uid, ids, {'state':'cancel_customer',})
 		return True
 
 	def get_legalization_details(self, cr, uid, ids,order_partner_id):

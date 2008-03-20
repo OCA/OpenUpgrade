@@ -410,8 +410,8 @@
 						<field name="quantity_copies" select="2" />
 						<field name="state" readonly="1"/>
 						<group col="4" colspan="2">
-							<button string="Cancelled by the CCI" name="button_cancel_cci" states="invoiced" type="object"/>
-							<button string="Cancelled by the Customer" name="button_cancel_customer" states="invoiced" type="object"/>
+							<button string="Cancelled by the CCI" name="cancel_cci" states="invoiced" />
+							<button string="Cancelled by the Customer" name="cancel_customer" states="invoiced" />
 						</group>
 						<newline/>
 						<group colspan="2"/>
@@ -495,8 +495,8 @@
 						<field name="quantity_copies" />
 						<field name="state" readonly="1"/>
 						<group col="4" colspan="2">
-							<button string="Cancelled by the CCI" name="button_cancel_cci" states="invoiced" type="object"/>
-							<button string="Cancelled by the Customer" name="button_cancel_customer" states="invoiced" type="object"/>
+							<button string="Cancelled by the CCI" name="cancel_cci" states="invoiced" />
+							<button string="Cancelled by the Customer" name="cancel_customer" states="invoiced" />
 						</group>
 						<newline/>
 						<group colspan="2"/>
