@@ -66,22 +66,34 @@
 	</record>
 	<record id="ir_sequence_embassysequence0" model="ir.sequence">
 		<field eval="&quot;cci_missions.embassy_folder&quot;" name="code"/>
-		<field eval="&quot;Embassy Folder Seq.&quot;" name="name"/>
+		<field eval="&quot;Embassy Folder Seq. (Liege)&quot;" name="name"/>
 		<field eval="1" name="number_next"/>
 		<field eval="1" name="number_increment"/>
 		<field eval="&quot;Embassy/%(year)s/&quot;" name="prefix"/>
 		<field eval="1" name="active"/>
-		<field eval="&quot;&quot;" name="suffix"/>
+		<field eval="&quot;Liege&quot;" name="suffix"/>
+	</record>
+	<record id="ir_sequence_embassysequence1" model="ir.sequence">
+		<field eval="&quot;cci_missions.embassy_folder&quot;" name="code"/>
+		<field eval="&quot;Embassy Folder Seq. (Verviers)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;Embassy/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;Verviers&quot;" name="suffix"/>
 	</record>
 
 <!-- Demo Data for Site -->
 	<record id="cci_missions_site_liegevervier0" model="cci_missions.site">
 		<field eval="&quot;Liege&quot;" name="name"/>
 		<field eval="&quot;Site de la Chambre de Commerce de Liege - Verviers&quot;" name="official_name_1"/>
-		<field ref="ir_sequence_atasequence0" name="ata_sequence_id"/>
 		<field ref="ir_sequence_embassysequence0" name="embassy_sequence_id"/>
 	</record>
-
+	<record id="cci_missions_site_verviers0" model="cci_missions.site">
+		<field eval="&quot;Verviers&quot;" name="name"/>
+		<field name="embassy_sequence_id" ref="cci_mission.ir_sequence_embassysequence1"/>
+		<field eval="&quot;Chambre de Commerce de Verviers - Liege&quot;" name="official_name_1"/>
+	</record>
 
 <!-- Demo Data for Product -->
 	<record id="cci_product_product_0" model="product.product">
@@ -120,7 +132,42 @@
 		<field name="name">Legalization - copy</field>
 		<field name="categ_id" ref="product.cat1"/>
 	</record>
-
+	<record id="cci_product_product_4" model="product.product">
+		<field name="list_price">50</field>
+		<field name="member_price">45</field>
+		<field name="standard_price">22.5</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - original</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_5" model="product.product">
+		<field name="list_price">10</field>
+		<field name="member_price">8</field>
+		<field name="standard_price">5</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - copy</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_6" model="product.product">
+		<field name="list_price">200</field>
+		<field name="member_price">200</field>
+		<field name="standard_price">200</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - Own Risk Warranty</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_7" model="product.product">
+		<field name="list_price">100</field>
+		<field name="member_price">100</field>
+		<field name="standard_price">100</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - Insurer Warranty</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
 
 <!-- Demo Data for Dossier Type -->
 	<record id="cci_missions_dossier_type_certificate0" model="cci_missions.dossier_type">
@@ -141,6 +188,59 @@
 		<field name="original_product_id" ref="cci_product_product_2"/>
 		<field name="section">legalization</field>
 	</record>
+	<record id="cci_missions_dossier_type_atacarnetliege0" model="cci_missions.dossier_type">
+		<field eval="&quot;AL&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet Liege&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_5"/>
+		<field eval="&quot;ATA&quot;" name="section"/>
+		<field name="site_id" ref="cci_mission.cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="cci_mission.ir_sequence_atasequence0"/>
+		<field name="original_product_id" ref="cci_product_product_4"/>
+	</record>
+	<record id="cci_missions_dossier_type_atacarnetverviers0" model="cci_missions.dossier_type">
+		<field eval="&quot;AV&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet - Verviers&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_5"/>
+		<field eval="&quot;ATA&quot;" name="section"/>
+		<field name="site_id" ref="cci_missions_site_verviers0"/>
+		<field name="sequence_id" ref="cci_mission.ir_sequence_atasequence1"/>
+		<field name="original_product_id" ref="cci_product_product_4"/>
+	</record>
 
+<!-- Demo Data for Custom Codes -->
+	<record id="cci_missions_custom_code_sx0" model="cci_missions.custom_code">
+		<field eval="&quot;SEX&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;SX205058&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_custom_code_drg0" model="cci_missions.custom_code">
+		<field eval="&quot;DROGUE&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;DRG05989&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_custom_code_rk0" model="cci_missions.custom_code">
+		<field eval="&quot;ROCK'n ROLL&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;RK780874&quot;" name="name"/>
+	</record>
+
+<!-- Demo Data for Area -->
+	<record id="cci_missions_area_benelux0" model="cci_missions.area">
+		<field eval="[(6,0,[ref('base.be'),ref('base.lu'),ref('base.nl')])]" name="country_ids"/>
+		<field eval="&quot;BENELUX&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_area_unioneuropeenne0" model="cci_missions.area">
+		<field eval="[(6,0,[ref('base.de'),ref('base.fr'),ref('base.it'),ref('base.be'),ref('base.lu'),ref('base.nl'),ref('base.fi'),ref('base.ch'),ref('base.dk'),ref('base.es'),ref('base.cz'),ref('base.ie'),ref('base.hu'),ref('base.pt'),ref('base.gr'),ref('base.ro'),ref('base.uk'),ref('base.se'),ref('base.at'),ref('base.bg'),ref('base.sk'),ref('base.lt'),ref('base.lv'),ref('base.si'),ref('base.cy'),ref('base.ee'),ref('base.mt')])]" name="country_ids"/>
+		<field eval="&quot;UNION EUROPEENNE&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_area_monde1" model="cci_missions.area">
+		<field eval="[(6,0,[ref('base.ad'),ref('base.ae'),ref('base.af'),ref('base.ag'),ref('base.ai'),ref('base.al'),ref('base.am'),ref('base.an'),ref('base.ao'),ref('base.aq'),ref('base.ar'),ref('base.as'),ref('base.at'),ref('base.au'),ref('base.aw'),ref('base.az'),ref('base.ba'),ref('base.bb'),ref('base.bd'),ref('base.be'),ref('base.bf'),ref('base.bg'),ref('base.bh'),ref('base.bi'),ref('base.bj'),ref('base.bm'),ref('base.bn'),ref('base.bo'),ref('base.br'),ref('base.bs'),ref('base.bt'),ref('base.bv'),ref('base.bw'),ref('base.by'),ref('base.bz'),ref('base.ca'),ref('base.cc'),ref('base.cd'),ref('base.cf'),ref('base.cg'),ref('base.ch'),ref('base.ci'),ref('base.ck'),ref('base.cl'),ref('base.cm'),ref('base.cn'),ref('base.co'),ref('base.cr'),ref('base.cs'),ref('base.cu'),ref('base.cv'),ref('base.cx'),ref('base.cy'),ref('base.cz'),ref('base.de'),ref('base.dj'),ref('base.dk'),ref('base.dm'),ref('base.do'),ref('base.dz'),ref('base.ec'),ref('base.ee'),ref('base.eg'),ref('base.eh'),ref('base.er'),ref('base.es'),ref('base.et'),ref('base.fi'),ref('base.fj'),ref('base.fk'),ref('base.fm'),ref('base.fo'),ref('base.fr'),ref('base.ga'),ref('base.gd'),ref('base.ge'),ref('base.gf'),ref('base.gh'),ref('base.gi'),ref('base.gl'),ref('base.gm'),ref('base.gn'),ref('base.gp'),ref('base.gq'),ref('base.gr'),ref('base.gs'),ref('base.gt'),ref('base.gu'),ref('base.gw'),ref('base.gy'),ref('base.hk'),ref('base.hm'),ref('base.hn'),ref('base.hr'),ref('base.ht'),ref('base.hu'),ref('base.id'),ref('base.ie'),ref('base.il'),ref('base.in'),ref('base.io'),ref('base.iq'),ref('base.ir'),ref('base.is'),ref('base.it'),ref('base.jm'),ref('base.jo'),ref('base.jp'),ref('base.ke'),ref('base.kg'),ref('base.kh'),ref('base.ki'),ref('base.km'),ref('base.kn'),ref('base.kp'),ref('base.kr'),ref('base.kw'),ref('base.ky'),ref('base.kz'),ref('base.la'),ref('base.lb'),ref('base.lc'),ref('base.li'),ref('base.lk'),ref('base.lr'),ref('base.ls'),ref('base.lt'),ref('base.lu'),ref('base.lv'),ref('base.ly'),ref('base.ma'),ref('base.mc'),ref('base.md'),ref('base.mg'),ref('base.mh'),ref('base.mk'),ref('base.ml'),ref('base.mm'),ref('base.mn'),ref('base.mo'),ref('base.mp'),ref('base.mq'),ref('base.mr'),ref('base.ms'),ref('base.mt'),ref('base.mu'),ref('base.mv'),ref('base.mw'),ref('base.mx'),ref('base.my'),ref('base.mz'),ref('base.na'),ref('base.nc'),ref('base.ne'),ref('base.nf'),ref('base.ng'),ref('base.ni'),ref('base.nl'),ref('base.no'),ref('base.np'),ref('base.nr'),ref('base.nt'),ref('base.nu'),ref('base.nz'),ref('base.om'),ref('base.pa'),ref('base.pe'),ref('base.pf'),ref('base.pg'),ref('base.ph'),ref('base.pk'),ref('base.pl'),ref('base.pm'),ref('base.pn'),ref('base.pr'),ref('base.pt'),ref('base.pw'),ref('base.py'),ref('base.qa'),ref('base.re'),ref('base.ro'),ref('base.ru'),ref('base.rw'),ref('base.sa'),ref('base.sb'),ref('base.sc'),ref('base.sd'),ref('base.se'),ref('base.sg'),ref('base.sh'),ref('base.si'),ref('base.sj'),ref('base.sk'),ref('base.sl'),ref('base.sm'),ref('base.sn'),ref('base.so'),ref('base.sr'),ref('base.st'),ref('base.sv'),ref('base.sy'),ref('base.sz'),ref('base.tc'),ref('base.td'),ref('base.tf'),ref('base.tg'),ref('base.th'),ref('base.tj'),ref('base.tk'),ref('base.tm'),ref('base.tn'),ref('base.to'),ref('base.tp'),ref('base.tr'),ref('base.tt'),ref('base.tv'),ref('base.tw'),ref('base.tz'),ref('base.ua'),ref('base.ug'),ref('base.uk'),ref('base.um'),ref('base.us'),ref('base.uy'),ref('base.uz'),ref('base.va'),ref('base.vc'),ref('base.ve'),ref('base.vg'),ref('base.vi'),ref('base.vn'),ref('base.vu'),ref('base.wf'),ref('base.ws'),ref('base.ye'),ref('base.yt'),ref('base.yu'),ref('base.za'),ref('base.zm'),ref('base.zr'),ref('base.zw')])]" name="country_ids"/>
+		<field eval="&quot;MONDE&quot;" name="name"/>
+	</record>
+
+<!-- Demo Data for ata_usage -->
+	<record id="cci_missions_ata_usage_exhibition0" model="cci_missions.ata_usage">
+		<field eval="&quot;Exhibition&quot;" name="name"/>
+	</record>
 </data>
 </terp>

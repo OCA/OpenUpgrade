@@ -72,7 +72,6 @@ class cci_missions_site(osv.osv):
 		'official_name_2' : fields.char('Official Name of the Site',size=50),
 		'official_name_3' : fields.char('Official Name of the Site',size=50),
 		'official_name_4' : fields.char('Official Name of the Site',size=50),
-		'ata_sequence_id' : fields.many2one('ir.sequence','Sequence for ATA Carnet'),
 		'embassy_sequence_id' : fields.many2one('ir.sequence','Sequence for Embassy Folder'),
 	}
 
@@ -626,7 +625,7 @@ class product_lines(osv.osv):
 		return res
 
 	def product_id_change(self, cr, uid, ids, product_id):
-		price_unit=uos_id=prod_name=False
+		price_unit=uos_id=prod_name=account_id=False
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
 			uos_id=data_product.uom_id.id
@@ -648,6 +647,7 @@ class product_lines(osv.osv):
 		'price_unit': fields.float('Unit Price', required=True, digits=(16,2)),
 		'price_subtotal': fields.function(_product_subtotal, method=True, string='Subtotal'),
 		'quantity': fields.float('Quantity', required=True),
+		'account_id' : fields.many2one('account.account', 'Account', required=True),
 	}
 	_defaults = {
 		'quantity': lambda *a: 1,

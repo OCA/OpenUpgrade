@@ -95,14 +95,15 @@ def _createInvoices(self, cr, uid, data, context):
 
         inv_create = inv_create + 1
         for lines in data.product_ids :
-            val = obj_lines.product_id_change(cr, uid, [], lines.product_id.id,uom =False, partner_id=data.order_partner_id.id)
+
+            val = {}
+            val['value']={}
+            val['value'].update({'name':lines.name})
+            val['value'].update({'account_id':lines.account_id.id})
             val['value'].update({'product_id' : lines.product_id.id })
-            if isMember:
-                val['value'].update({'price_unit':lines.product_id.member_price})
-            else:
-                val['value'].update({'price_unit':lines.price_unit})
             val['value'].update({'quantity' : lines.quantity })
-            val['value'].update({'name':lines.product_id.name})
+            val['value'].update({'uos_id':lines.uos_id.id})
+            val['value'].update({'price_unit':lines.price_unit})
 
             value.append(val)
 
@@ -122,8 +123,12 @@ def _createInvoices(self, cr, uid, data, context):
             else:
                 val['value'].update({'quantity' : data.quantity_copies})
             value.append(val)
+
         for val in value:
             if val['value']['quantity']>0.00:
+                tax_on_line = []
+                if val['value']['product_id'] != False:
+                    tax_on_line = pool_obj.get('product.product').browse(cr,uid,val['value']['product_id']).taxes_id
                 inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
                         'name': val['value']['name'],
                         'account_id':val['value']['account_id'],
@@ -132,7 +137,7 @@ def _createInvoices(self, cr, uid, data, context):
                         'discount': False,
                         'uos_id': val['value']['uos_id'],
                         'product_id':val['value']['product_id'],
-                        'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
+                        'invoice_line_tax_id': [(6,0,tax_on_line)],
                         'note':data.text_on_invoice,
                 })
                 create_ids.append(inv_id)
