@@ -416,7 +416,7 @@
                                 <separator string="Login information" colspan="4"/>
 				<group colspan="4">
 				<field name="url" colspan="3" select="2"/>
-				<label string=".od.openerp.com" colspan="1"/>
+				<label string=".od.openerp.com" align="0"/>
 				</group>
 				<group colspan="4">
 				<field name="email" select="2"/>
@@ -472,6 +472,7 @@
                                 <field name="date" />
 				<field name="offer_id"/> 
 				<field name="nbr_users"/>
+				<field name="vserver_state"/>
 				<field name="state"/>
                         </tree>
                 </field>

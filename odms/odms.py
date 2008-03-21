@@ -16,6 +16,9 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 			# Get ODMS Server socket
 			self.srv_socket = "http://"+srv.ipaddress+":"+srv.port
 			print "DEBUG thread :",self.srv_socket
+			self.srv = srv
+			self.request = request
+			self.args = args
 
 		def run(self):
 			print "DEBUG sending request at :",self.srv_socket
@@ -26,10 +29,10 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
                 	        print "ODMS Debug - vserver socket :",self.srv_socket
            	            	print "ODMS Debug - s :",s
                 	elif request == 'create_vsv':
-                	        res = s.create_vsv(srv.user,srv.password,args['subs_id'],args['offer_id'])
+                	        res = s.create_vsv(self.srv.user,self.srv.password,self.args['subs_id'],self.args['offer_id'])
                         	print "ODMS Debug - vs_create :",res	
         	        elif request == 'create_web':
-                        	res = s.create_web(srv.user,srv.password,args['subs_id'],args['url'])
+                        	res = s.create_web(self.srv.user,self.srv.password,self.args['subs_id'],self.args['url'])
                 	        print "ODMS Debug - web_create :",res
                 	elif request == 'create_bck':
                        		res = s.create_bck(srv.user,srv.password,args['subs_id'])
@@ -302,6 +305,8 @@ class odms_subscription(osv.osv):
 
         def create_vserv(self, cr, uid, ids, context=None):
 		subs = self.browse(cr, uid, ids)[0]
+		if not subs.vserv_server_id:
+			raise osv.except_osv('Error !','There is no vserver server defined for this subscription')
 		print "DEBUG create_vserv - server id", subs.vserv_server_id.id
 		self.write(cr, uid, subs.id, {'vserv_server_state':'installing'})
 		res = odms_send(cr, uid, ids, subs.vserv_server_id.id, 'create_vsv',
@@ -312,6 +317,11 @@ class odms_subscription(osv.osv):
 		subs = self.browse(cr, uid, ids)[0]
 		if subs.url == False:
 			raise osv.except_osv('Error !','There is no url defined for this subscription')
+		if not subs.web_server_id:
+			raise osv.except_osv('Error !','There is no web server defined for this subscription')
+		if not subs.vserver_id:
+			raise osv.except_osv('Error !','There is no vserver defined for this subscription')
+		print "DEBUG web_server_id :", subs.web_server_id
 		url = subs.url+'.od.openerp.com'
 		print "DEBUG create_web - server id", subs.web_server_id.id
 		self.write(cr, uid, subs.id, {'web_server_state':'installing'})
@@ -320,6 +330,8 @@ class odms_subscription(osv.osv):
 
         def create_bckup(self, cr, uid, ids, context=None):
 		subs = self.browse(cr, uid, ids)[0]
+		if not subs.bckup_server_id:
+			raise osv.except_osv('Error !','There is no backup server defined for this subscription')
 		self.write(cr, uid, subs.id, {'bckup_server_state':'installing'})
 		res = odms_send(cr, uid, ids, subs.bckup_server_id.id, 'create_bck',{'subs_id':subs.id}) 
                 return res
@@ -488,7 +500,21 @@ class odms_subscription(osv.osv):
                 pricelist = self.pool.get('res.partner').browse(cr, uid, part).property_product_pricelist.id
 		print "DEBUG - on_change on partner_id called"
                 return {'value':{'pricelist_id': pricelist}}
-	
+		
+	def _get_vserver_status(self, cr , uid, ids, prop, unknow_none, unknow_dict):
+		subs = self.browse(cr, uid, ids)
+		print "DEBUG - _get_vserver_status - subs",subs
+		res = []
+		for s in subs:
+			if s.vserver_id:
+				print "DEBUG - _get_vserver_status - s.id:",s.id
+				vserver_state = self.pool.get('odms.vserver').browse(cr, uid, [s.vserver_id.id])[0]
+				print "DEBUG - _get_vserver_status - vserver_state:",vserver_state.state
+				res.append((s.id,vserver_state.state))
+				print "DEBUG - _get_vserver_status - res:",res
+			else:
+				res.append((s.id,False))
+		return dict(res)
 	
 	_columns = {
 		'name' : fields.char('Subscription name', size=64, required=True),
@@ -506,7 +532,7 @@ class odms_subscription(osv.osv):
 		'pricelist_id':fields.many2one('product.pricelist', 'Pricelist', readonly=True, states={'draft':[('readonly',False)]}),
 		'bundle_ids' : fields.one2many('odms.subs_bundle', 'subscription_id', 'Bundles'),
 		'vserver_id': fields.many2one('odms.vserver', 'VServer ID', readonly=True),
-		'vserver_state': fields.selection([('noactive','Not active'),('active','Active')], 'VServer status', readonly=True),
+		'vserver_state': fields.function(_get_vserver_status, method=True, type='char',  string='Vserver status'),
 		'web_server_id': fields.many2one('odms.server', 'ODMS Web Server'),
 		'web_server_state' : fields.selection([('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'Web server state', readonly=True),
 		'vserv_server_id': fields.many2one('odms.server', 'ODMS VServer Server'),
