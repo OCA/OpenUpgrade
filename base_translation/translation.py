@@ -6,7 +6,9 @@ from mx import DateTime
 import tools 
 import xmlrpclib
 import pooler
-s = xmlrpclib.Server("http://192.168.0.4:8000")
+
+from wizard import SERVER,PORT
+s = xmlrpclib.Server("http://"+server+":"+str(PORT))
 
 def get_language(cr,uid,context,user=None,model=None):
     if user:

@@ -6,8 +6,8 @@ import csv
 import re
 from base_translation.translation import get_language
 
-
-s = xmlrpclib.Server("http://192.168.0.4:8000")
+import config
+s = xmlrpclib.Server("http://"config.SERVER+":"+str(config.PORT))
 
 view_form_end = """<?xml version="1.0"?>
     <form string="Information For Contribution">
