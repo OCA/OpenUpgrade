@@ -177,6 +177,8 @@ class cci_missions_dossier_type(osv.osv):
 		'site_id' : fields.many2one('cci_missions.site','Site',required=True),
 		'sequence_id' : fields.many2one('ir.sequence','Sequence',required=True,help='for association with a sequence'),
 		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA','ATA Carnet')],'Type',required=True),
+		'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk'),
+		'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk'),
 	}
 
 cci_missions_dossier_type()
@@ -512,6 +514,18 @@ class cci_missions_ata_carnet(osv.osv):
 			res[p_id.id]=p_id.partner_id.insurer_id
 		return res
 
+	def onchange_type_carnet(self, cr, uid, ids,type_id):
+		if not ids:
+			return {}
+		if not type_id:
+			return {}
+		data_carnet = self.browse(cr,uid,ids[0])
+		data_carnet_type = self.pool.get('cci_missions.dossier_type').browse(cr,uid,type_id)
+		if not data_carnet.own_risk:
+			return {'value': {'warranty_product_id' : data_carnet_type.warranty_product_2.id}}
+		else:
+			return {'value': {'warranty_product_id' : data_carnet_type.warranty_product_1.id}}
+		return {}
 	def _get_member_state(self, cr, uid, ids, name, args, context=None):
 		res={}
 		partner_ids = self.browse(cr,uid,ids)
@@ -595,7 +609,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'name': lambda *args: '/',
 		'creation_date': lambda *a: time.strftime('%Y-%m-%d'),
 	}
-	_constraints = [(check_ata_carnet, 'Error: Please Select Own Risk OR "Insurer Agreement" and "Parnters Insure id" should be greater than Zero', ['own_risk','insurer_agreement','partner_insurer_id'])]
+	_constraints = [(check_ata_carnet, 'Error: Please Select (Own Risk) OR ("Insurer Agreement" and "Parnters Insure id" should be greater than Zero)', ['own_risk','insurer_agreement','partner_insurer_id'])]
 
 cci_missions_ata_carnet()
 
