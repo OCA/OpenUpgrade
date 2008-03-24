@@ -500,7 +500,8 @@ class odms_subscription(osv.osv):
                 pricelist = self.pool.get('res.partner').browse(cr, uid, part).property_product_pricelist.id
 		print "DEBUG - on_change on partner_id called"
                 return {'value':{'pricelist_id': pricelist}}
-		
+
+	
 	def _get_vserver_status(self, cr , uid, ids, prop, unknow_none, unknow_dict):
 		subs = self.browse(cr, uid, ids)
 		print "DEBUG - _get_vserver_status - subs",subs

@@ -205,6 +205,15 @@
                 <field name="categ_id" ref="cat_od_bundle"/>
         </record>
 
+        <record id="product_od_bundle_22" model="product.product">
+                <field name="list_price">3</field>
+                <field name="standard_price">0</field>
+                <field name="type">service</field>
+                <field name="name">On Demand HR Bundle</field>
+                <field name="default_code">ODBDL22</field>
+                <field name="categ_id" ref="cat_od_bundle"/>
+        </record>
+
 
 	<!--
 		OD Bundled
@@ -313,6 +322,11 @@
         <record id="od_bundle_21" model="odms.bundle">
                 <field name="name">On Demand Office Interface Bundle</field>
 		<field name="product_id" ref="product_od_bundle_21"/>
+        </record>
+
+	<record id="od_bundle_22" model="odms.bundle">
+                <field name="name">On Demand HR Bundle</field>
+                <field name="product_id" ref="product_od_bundle_22"/>
         </record>
 
 	<!--
@@ -1006,43 +1020,43 @@
                 <field name="bundle_id" ref="od_bundle_9"/>
                 <field name="state">notinstalled</field>
         </record>
-<!--
+
         <record id="od_module_116" model="odms.module">
-                <field name="name">subscription</field>
-                <field name="bundle_id" ref="od_bundle_1"/>
+                <field name="name">hr</field>
+                <field name="bundle_id" ref="od_bundle_22"/>
                 <field name="state">notinstalled</field>
         </record>
 
         <record id="od_module_117" model="odms.module">
-                <field name="name">base_contact</field>
-                <field name="bundle_id" ref="od_bundle_4"/>
+                <field name="name">hr_contract</field>
+                <field name="bundle_id" ref="od_bundle_22"/>
                 <field name="state">notinstalled</field>
         </record>
 
         <record id="od_module_118" model="odms.module">
-                <field name="name">crm</field>
-                <field name="bundle_id" ref="od_bundle_4"/>
+                <field name="name">hr_contract_available</field>
+                <field name="bundle_id" ref="od_bundle_22"/>
                 <field name="state">notinstalled</field>
         </record>
 
         <record id="od_module_119" model="odms.module">
-                <field name="name">crm_profiling</field>
-                <field name="bundle_id" ref="od_bundle_4"/>
+                <field name="name">hr_contract_timesheet</field>
+                <field name="bundle_id" ref="od_bundle_22"/>
                 <field name="state">notinstalled</field>
         </record>
  
         <record id="od_module_120" model="odms.module">
-                <field name="name">report_crm</field>
-                <field name="bundle_id" ref="od_bundle_4"/>
+                <field name="name">hr_evaluation</field>
+                <field name="bundle_id" ref="od_bundle_22"/>
                 <field name="state">notinstalled</field>
         </record>
 
         <record id="od_module_121" model="odms.module">
-                <field name="name">segmentation</field>
-                <field name="bundle_id" ref="od_bundle_4"/>
+                <field name="name">hr_holidays</field>
+                <field name="bundle_id" ref="od_bundle_22"/>
                 <field name="state">notinstalled</field>
         </record>
--->
+
         <record id="od_module_122" model="odms.module">
                 <field name="name">location</field>
                 <field name="bundle_id" ref="od_bundle_11"/>
