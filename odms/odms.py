@@ -68,7 +68,7 @@ class odms_vserver(osv.osv):
 	_columns = {
 		'name': fields.char('Vserver ID', size=64, required=True),
 		'ipaddress': fields.char('IP address', size=16, required=True),
-		'state' : fields.selection([('notactive','Not active'),('active','Active')],'State', readonly=True),
+		'state' : fields.selection([('notactive','Not active'),('error','Error'),('active','Active')],'State', readonly=True),
 	}
 	_defaults = {
                 'state': lambda *a: 'notactive',
@@ -534,11 +534,11 @@ class odms_subscription(osv.osv):
 		'vserver_id': fields.many2one('odms.vserver', 'VServer ID', readonly=True),
 		'vserver_state': fields.function(_get_vserver_status, method=True, type='char',  string='Vserver status'),
 		'web_server_id': fields.many2one('odms.server', 'ODMS Web Server'),
-		'web_server_state' : fields.selection([('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'Web server state', readonly=True),
+		'web_server_state' : fields.selection([('error','Error'),('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'Web server state', readonly=True),
 		'vserv_server_id': fields.many2one('odms.server', 'ODMS VServer Server'),
-		'vserv_server_state' : fields.selection([('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'VServer server state', readonly=True),
+		'vserv_server_state' : fields.selection([('error','Error'),('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'VServer server state', readonly=True),
 		'bckup_server_id': fields.many2one('odms.server', 'ODMS Backup Server'),
-		'bckup_server_state' : fields.selection([('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'Backup server state', readonly=True),
+		'bckup_server_state' : fields.selection([('error','Error'),('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'Backup server state', readonly=True),
 		'notes' : fields.text('Notes'),
 		'state' : fields.selection([('draft','Draft'),('trial','Free trial'),('active','Active'),('suspended','Suspended'),('deleted','Deleted')],'State', readonly=True),
 	}
