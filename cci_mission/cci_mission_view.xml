@@ -41,6 +41,8 @@
 					<field name="site_id" />
 					<field name="original_product_id" />
 					<field name="copy_product_id" />
+					<field name="warranty_product_1" />
+					<field name="warranty_product_2" />
 					<field name="section" />
 				</form>
 			</field>
@@ -227,7 +229,7 @@
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="invoice_note" nolabel="1" colspan="4"/>
 						<newline/>
-						<field name="state" readonly="1" /> 
+						<field name="state" readonly="1" />
 						<group col="8" colspan="2">
 							<button name="pending" string="Send" states="draft"/>
 							<button name="open" string="gotback" states="pending"/>
@@ -421,7 +423,7 @@
 					<page string="Extra Prodcuts">
 						<vpaned position="300">
 						<child1>
-							<field name="product_ids" nolabel="1" colspan="4"/> 
+							<field name="product_ids" nolabel="1" colspan="4"/>
 						</child1>
 						<child2>
 						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
@@ -664,7 +666,7 @@
 				<notebook>
 					<page string="General">
 						<field name="name" select="1"/>
-						<field name="type_id" domain="[('section','=','ATA')]"/>
+						<field name="type_id" domain="[('section','=','ATA')]" on_change="onchange_type_carnet(type_id)"/>
 						<field name="creation_date" select="2"/>
 						<field name="validity_date" select="2"/>
 						<field name="partner_id" select="1"/>
