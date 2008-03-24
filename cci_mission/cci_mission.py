@@ -29,6 +29,7 @@ from osv import fields, osv
 import time
 from datetime import date,timedelta
 import datetime
+import pooler
 
 STATE = [
 	('none', 'Non Member'),
@@ -77,6 +78,15 @@ class cci_missions_site(osv.osv):
 
 cci_missions_site()
 
+class crm_case_log(osv.osv):
+	_name = "crm.case.log"
+	_inherit = "crm.case.log"
+	def create(self, cr, uid, vals, *args, **kwargs):
+			if not 'name' in vals:
+				vals['name']='Historize'
+			return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+crm_case_log()
+
 class cci_missions_embassy_folder(osv.osv):
 	_name = 'cci_missions.embassy_folder'
 	_description = 'cci_missions.embassy_folder'
@@ -85,14 +95,39 @@ class cci_missions_embassy_folder(osv.osv):
 
 	def _cci_mission_send(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'pending',})
+		cases = self.browse(cr, uid, ids)
+		self.__history(cr, uid, cases, 'Pending', history=True,)
 		return True
 
 	def _cci_mission_got_back(self,cr,uid,ids,*args):
 		self.write(cr, uid, ids, {'state':'open',})
+		cases = self.browse(cr, uid, ids)
+		self.__history(cr, uid, cases, 'Open', history=True)
 		return True
 
 	def _cci_mission_done_folder(self,cr,uid,ids,*args):
 		self.write(cr, uid, ids, {'state':'done','invoice_date': time.strftime('%Y-%m-%d %H:%M:%S')})
+		cases = self.browse(cr, uid, ids)
+		self.__history(cr, uid, cases, 'Done', history=True)
+		return True
+
+	def __history(self, cr, uid,ids,keyword, history=False, email=False, context={}):
+		for case in ids:
+			data = {
+				'name': keyword,
+				'som': case.som.id,
+				'canal_id': case.canal_id.id,
+				'user_id': uid,
+				'case_id': case.crm_case_id.id
+			}
+			obj = self.pool.get('crm.case.log')
+#			if history and case.description:
+#				obj = self.pool.get('crm.case.history')
+#				data['description'] = case.description
+#				data['email'] = email or \
+#						(case.user_id and case.user_id.address_id and \
+#							case.user_id.address_id.email) or False
+			obj.create(cr, uid, data, context)
 		return True
 
 	def create(self, cr, uid, vals, *args, **kwargs):
