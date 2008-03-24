@@ -518,7 +518,7 @@ class cci_missions_ata_carnet(osv.osv):
 		if not ids:
 			return {}
 		if not type_id:
-			return {}
+			return {'value': {'warranty_product_id' : False}}
 		data_carnet = self.browse(cr,uid,ids[0])
 		data_carnet_type = self.pool.get('cci_missions.dossier_type').browse(cr,uid,type_id)
 		if not data_carnet.own_risk:
