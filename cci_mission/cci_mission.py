@@ -30,6 +30,7 @@ import time
 from datetime import date,timedelta
 import datetime
 import pooler
+import netsvc
 
 STATE = [
 	('none', 'Non Member'),
@@ -341,6 +342,13 @@ class cci_missions_certificate(osv.osv):
 	_inherits = {'cci_missions.dossier': 'dossier_id' }
 
 	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
+		data=self.browse(cr,uid,ids[0])
+		if data.invoice_id.state == 'paid':
+			new_ids = self.pool.get('account.invoice').refund(cr, uid,[data.invoice_id.id])
+			self.write(cr, uid,ids, {'invoice_id' : new_ids[0]})
+		else:
+			wf_service = netsvc.LocalService('workflow')
+			wf_service.trg_validate(uid, 'account.invoice', data.invoice_id.id, 'invoice_cancel', cr)
 		self.write(cr, uid, ids, {'state':'cancel_cci',})
 		return True
 
@@ -419,6 +427,13 @@ class cci_missions_legalization(osv.osv):
 	_inherits = {'cci_missions.dossier': 'dossier_id'}
 
 	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
+		data=self.browse(cr,uid,ids[0])
+		if data.invoice_id.state == 'paid':
+			new_ids = self.pool.get('account.invoice').refund(cr, uid,[data.invoice_id.id])
+			self.write(cr, uid,ids, {'invoice_id' : new_ids[0]})
+		else:
+			wf_service = netsvc.LocalService('workflow')
+			wf_service.trg_validate(uid, 'account.invoice', data.invoice_id.id, 'invoice_cancel', cr)
 		self.write(cr, uid, ids, {'state':'cancel_cci',})
 		return True
 
