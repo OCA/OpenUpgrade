@@ -308,24 +308,9 @@ class odms_subscription(osv.osv):
 		if not subs.vserv_server_id:
 			raise osv.except_osv('Error !','There is no vserver server defined for this subscription')
 		print "DEBUG create_vserv - server id", subs.vserv_server_id.id
-
-		# Get modules to install
-		bndl_ids = subs.bundle_ids
-		
-		module_names = []	
-		for b in bndl_ids:
-			if (b.state == 'installed'):
-				module_ids = b.bundle_id.module_ids
-				print "DEBUG create_vserv - module_ids",module_ids
-
-				for m in module_ids:
-					module_names.append(m.name)	
-		print "DEBUG create_vserv - module_names",module_names
-			
 		self.write(cr, uid, subs.id, {'vserv_server_state':'installing'})
 		res = odms_send(cr, uid, ids, subs.vserv_server_id.id, 'create_vsv',
-			 {'subs_id':subs.id,'module_names':module_names}) 
-		
+			 {'subs_id':subs.id,'offer_id':subs.offer_id.id}) 
                 return res
 
         def create_web(self, cr, uid, ids, context=None):
