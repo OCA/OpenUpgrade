@@ -10,6 +10,7 @@ import odms_server
 user = "admin"
 password = "o2aevl8w"
 
+# Tiny Prod db
 username = 'oduser' #the user
 pwd = 'o2aevl8w' #the password of the user
 dbname = 'tiny' #the database
@@ -36,7 +37,7 @@ def _check_access(u,p):
                 return True
         return False
 
-def create_vsv(u,p,subs,module_names):
+def create_vsv(u,p,subs,module_names=[]):
         print "DEBUG - Accessing create_vsv"
         # Check access rights
         if not _check_access(u,p):
@@ -46,6 +47,7 @@ def create_vsv(u,p,subs,module_names):
 
         # Install New Vserver
         vsid = odms_server.newvs()
+#	vsid = 47
 
         print "DEBUG - vsid", vsid
 
@@ -56,6 +58,7 @@ def create_vsv(u,p,subs,module_names):
                 err = sock.execute(dbname, uid, pwd, 'odms.subscription', 'write', subs,
                         {'vserv_server_state':'error','vserver_id':False})
                 return False
+
 	vsip = vsnet+str(vsid)
         print "DEBUG - vsip", vsip
 
@@ -71,7 +74,9 @@ def create_vsv(u,p,subs,module_names):
 
         # Configure new vserver
         sock_vserv = xmlrpclib.ServerProxy('http://'+vsip+':8069/xmlrpc/object')
-
+        print "ODMS Server - DEBUG sock_vserv :",sock_vserv
+        print "ODMS Server - DEBUG module_names :",module_names
+	
         # Install modules
         mod_ids = sock_vserv.execute('oddb', 3, 'admin', 'ir.module.module', 'search', [('name','in',module_names)])
         print "ODMS Server - DEBUG module ids :",mod_ids
