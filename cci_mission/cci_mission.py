@@ -189,6 +189,14 @@ class cci_missions_embassy_folder_line (osv.osv):
 	_name = 'cci_missions.embassy_folder_line'
 	_description = 'cci_missions.embassy_folder_line '
 
+	def onchange_line_type(self,cr,uid,ids,type):
+		if not type:
+			return {'value' : {'account_id' : id_acnt[0]}}
+		id_acnt=self.pool.get('account.account').search(cr,uid,[('code','=','7010')])
+		if id_acnt:
+			return {'value' : {'name' : type,'account_id' : id_acnt[0]}}
+		return {'value' : {'name' : type,'account_id' : False}}
+
 	_columns = {
 		'name' : fields.char('Description',size=50,required=True),
 		'folder_id' : fields.many2one('cci_missions.embassy_folder','Related Embassy Folder',required=True),
