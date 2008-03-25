@@ -44,11 +44,6 @@ def newvs():
 		return vsid
 	return False
 
-def install_modules(vserv_id, mods=[])
-
-	
-	return True
-
 
 def newweb(vserv_id, url):
 

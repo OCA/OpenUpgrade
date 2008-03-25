@@ -56,18 +56,16 @@ def create_vsv(u,p,subs,module_names):
                 err = sock.execute(dbname, uid, pwd, 'odms.subscription', 'write', subs,
                         {'vserv_server_state':'error','vserver_id':False})
                 return False
-
-        vsip = vsnet+str(vsid)
+	vsip = vsnet+str(vsid)
         print "DEBUG - vsip", vsip
 
         res = sock.execute(dbname, uid, pwd, 'odms.vserver', 'create',
                  {'name':str(vsid),'ipaddress':vsip,'state':'active'})
         print "ODMS Server - DEBUG res vserver create :",res
 
- # Send installed state
+        # Send installed state
         print "ODMS Server - DEBUG subs :",subs
-        res1 = sock.execute(dbname, uid, pwd, 'odms.subscription', 'write', subs,{'vserv_server_state':'installed','vserver_i
-d':res})
+        res1 = sock.execute(dbname, uid, pwd, 'odms.subscription', 'write', subs,{'vserv_server_state':'installed','vserver_id':res})
         print "ODMS Server - DEBUG res subs write :",res1
         print "ODMS Server - New vserver created"
 
@@ -98,4 +96,7 @@ def create_web(u,p,subs,url):
 
         return True
 server.register_function(create_web)
+
+# Run the server's main loop
+server.serve_forever()
 
