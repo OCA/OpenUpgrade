@@ -287,7 +287,7 @@ class odms_subscription(osv.osv):
 		for sub in self.browse(cr, uid, ids, context=context):
 			tools.email_send(sub.user_id.address_id.email, sub.email, sub.offer_id.email_subject_trial, self._email_process(sub, 'email_subscription'))
 		self.write(cr, uid, ids, {'state':'active'})
-		return res
+		return True
 
 	def _email_process(self, sub2, select='email_trial'):
 		body = getattr(sub2.offer_id, select)

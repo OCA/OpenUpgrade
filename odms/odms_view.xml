@@ -427,12 +427,13 @@
 				<field name="offer_id" select="1" />
 				<field name="pricelist_id" select="2" />
 				<newline/>
-				<field name="nbr_users" colspan="1"/>
-				<field name="max_users" colspan="1"/>
+					<field name="max_users"/>
+					<button string="Update" name="user_send" type="object" colspan="2"/>
 				<newline/>
 				<field name="activ_date" select="2" />
 				<field name="deadline_date" select="2" />
 				<field name="user_id" select="2" />
+				<field name="nbr_users"/>
 				<separator string="Login information" colspan="4"/>
 				<field name="url" colspan="2" select="2"/>
 				<label string=".od.openerp.com" colspan="2" align="0"/>
@@ -442,27 +443,29 @@
 				<separator string="ODMS Servers" colspan="2"/>
 				<separator string="Status" colspan="1"/>
 				<separator string="Actions" colspan="1"/>
-				<field name="vserv_server_id" />
+				<field name="vserv_server_id"  domain="[('has_vserv','=',True)]"/>
 				<field name="vserv_server_state" nolabel="1" colspan="1"/>
 				<button name="create_vserv" string="Create VServer" type="object" col="3"/>
-				<field name="vserver_id" />
+				<field name="vserver_id"/>
 				<field name="vserver_state" nolabel="1" colspan="1"/>
 				<button name="startstop_vserv" string="Start/Stop Vserver" type="object"/>
-				<field name="web_server_id" />
+				<field name="web_server_id"  domain="[('has_web','=',True)]"/>
 				<field name="web_server_state" nolabel="1" colspan="1"/>
 				<button name="create_web" string="Create Web" type="object" col="3"/>
-				<field name="bckup_server_id" />
+				<field name="bckup_server_id"  domain="[('has_bckup','=',True)]"/>
 				<field name="bckup_server_state" nolabel="1" colspan="1"/>
 				<button name="create_bckup" string="Create backup" type="object" col="3"/>
-				<separator string="" colspan="4"/>
-				<group colspan="4">
-					<field name="state" select="2"/>
-					<button name="create_subs" string="Create Subscritption" states="draft" type="object" col="3"/>
-					<button name="create_trial" string="Create Free Trial" states="draft" type="object" col="3"/>
-					<button name="suspend_subs" string="Suspend" states="active" type="object" col="4"/>
-					<button name="delete_subs" string="Delete" states="active,suspended" type="object" col="4"/>
-					<button name="settodraft" string="Set to draft" states="deleted" type="object" col="4"/>
+				<group colspan="4" col="7">
+					<field name="state" select="1"/>
+					<button name="create_subs" string="Create Subscritption" states="draft,trial" type="object"/>
+					<button name="create_trial" string="Create Free Trial" states="draft" type="object" />
+					<button name="suspend_subs" string="Suspend" states="active,trial" type="object" />
+					<button name="delete_subs" string="Delete" states="active,suspended" type="object" />
+					<button name="settodraft" string="Set to draft" states="deleted" type="object" />
 				</group>
+			</page>
+			<page string="Notes">
+				<field name="notes" colspan="4" nolabel="1"/>
 			</page>
 			<page string="Bundles">
 				<field name="bundle_ids" colspan="4" nolabel="1">
@@ -485,11 +488,14 @@
 		<field name="arch" type="xml">
 			<tree string="OD Subscription">
 				<separator string="Customer subscription" colspan="4"/>
-				<field name="name"/>
 				<field name="date" />
+				<field name="name"/>
+				<field name="partner_id"/>
+				<field name="url"/>
 				<field name="offer_id"/> 
 				<field name="nbr_users"/>
-				<field name="vserver_state"/>
+				<field name="max_users"/>
+				<field name="deadline_date" />
 				<field name="state"/>
 			</tree>
 		</field>
