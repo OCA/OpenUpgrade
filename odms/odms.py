@@ -1,4 +1,5 @@
 
+
 from osv import fields, osv
 import time
 import xmlrpclib
@@ -19,6 +20,7 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 			self.srv = srv
 			self.request = request
 			self.args = args
+			print "DEBUG odms_request - module_names :",args['module_names']
 
 		def run(self):
 			print "DEBUG sending request at :",self.srv_socket
