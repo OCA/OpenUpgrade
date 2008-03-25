@@ -1,6 +1,6 @@
 #!/usr/bin/python2.5
 #
-# ODMS Vserver Creation script
+# ODMS server script
 #
 
 import os
@@ -9,7 +9,6 @@ import pickle
 def newvs():
 
 	#Get new vs id
-
 	vsid_file = open('/etc/vservers/nextvs','r')
 	vsid = pickle.load(vsid_file)
 	print "DEBUG - ODMS create vs - VSID type",type(vsid)
@@ -17,7 +16,6 @@ def newvs():
 	vsid_file.close()
 
 	# Create new vserver
-
 	cmd = "dupvserver --ip 10.1.0."+str(vsid)+" --from vs-base --to vs-customer-"+str(vsid)+" >> /var/log/openerp/odms.log 2>&1"
 	print "DEBUG - ODMS create vs - cmd",cmd
 	res = os.system(cmd)
@@ -30,7 +28,6 @@ def newvs():
 	vscontext_file.close()
 
 	# Set next vsid 
-
 	nextvsid = vsid+1
 	vsid_file = open('/etc/vservers/nextvs','w')
 	pickle.dump(nextvsid,vsid_file)
@@ -47,7 +44,14 @@ def newvs():
 		return vsid
 	return False
 
-def newweb(subs, url):
+def install_modules(vserv_id, mods=[])
+
+	
+	return True
+
+
+def newweb(vserv_id, url):
+
 
 
 	return True
