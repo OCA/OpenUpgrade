@@ -325,7 +325,7 @@ class odms_subscription(osv.osv):
 			
 		self.write(cr, uid, subs.id, {'vserv_server_state':'installing'})
 		res = odms_send(cr, uid, ids, subs.vserv_server_id.id, 'create_vsv',
-			 {'subs_id':subs.id,'module_ids':module_ids}) 
+			 {'subs_id':subs.id,'module_names':module_names}) 
 		
                 return res
 
