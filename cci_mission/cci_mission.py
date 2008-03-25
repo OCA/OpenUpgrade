@@ -221,8 +221,8 @@ class cci_missions_dossier_type(osv.osv):
 		'site_id' : fields.many2one('cci_missions.site','Site',required=True),
 		'sequence_id' : fields.many2one('ir.sequence','Sequence',required=True,help='for association with a sequence'),
 		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA','ATA Carnet')],'Type',required=True),
-		'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk'),
-		'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk'),
+		'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk',required=True),
+		'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk',required=True),
 	}
 
 cci_missions_dossier_type()
@@ -544,6 +544,17 @@ cci_missions_ata_usage()
 class cci_missions_ata_carnet(osv.osv):
 	_name = 'cci_missions.ata_carnet'
 	_description = 'cci_missions.ata_carnet'
+
+	def write(self, cr, uid, ids,vals, *args, **kwargs):
+		super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
+		if 'own_risk' in vals:
+			data_carnet = self.browse(cr,uid,ids[0])
+			if data_carnet.type_id:
+				if vals['own_risk']:
+					self.write(cr,uid,ids,{'warranty_product_id' : data_carnet.type_id.warranty_product_1.id})
+				else:
+					self.write(cr,uid,ids,{'warranty_product_id' : data_carnet.type_id.warranty_product_2.id})
+		return True
 
 	def button_uncertain(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'pending',})
