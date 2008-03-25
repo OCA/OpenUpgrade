@@ -36,13 +36,13 @@ def _check_access(u,p):
 		return True
 	return False
 
-def create_vsv(u,p,subs,offer):
+def create_vsv(u,p,subs,module_names):
 	print "DEBUG - Accessing create_vsv"
 	# Check access rights
 	if not _check_access(u,p):
 		print "DEBUG - Authentication Error"
 		return 1	
-	print "DEBUG : ODMS Server - Creating new Virtual Server for subscription",subs,"with offer",offer
+	print "DEBUG : ODMS Server - Creating new Virtual Server for subscription",subs
 
 	# Install New Vserver
 	vsid = odms_server.newvs()
@@ -69,7 +69,16 @@ def create_vsv(u,p,subs,offer):
 	res1 = sock.execute(dbname, uid, pwd, 'odms.subscription', 'write', subs,{'vserv_server_state':'installed','vserver_id':res})
 	print "ODMS Server - DEBUG res subs write :",res1
 	print "ODMS Server - New vserver created"
-		
+
+        # Configure new vserver
+        sock_vserv = xmlrpclib.ServerProxy('http://'+vsip+':8069/xmlrpc/object')
+	
+	# Install modules
+	mod_ids = sock_vserv.execute('oddb', 3, 'admin', 'ir.module.module', 'search', [('name','in',module_names)])
+	print "ODMS Server - DEBUG module ids :",mod_ids
+	res = sock_vserv.execute('oddb', 3, 'admin', 'ir.module.module', 'write', mod_ids ,{'state':'uninstalled'})
+	print "ODMS Server - DEBUG module res :",res
+
 	return True
 server.register_function(create_vsv)
 

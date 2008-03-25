@@ -18,7 +18,7 @@ def newvs():
 
 	# Create new vserver
 
-	cmd = "dupvserver --ip 10.1.0."+str(vsid)+" --from vs-minimal --to vs-customer-"+str(vsid)+" >> /var/log/openerp/odms.log 2>&1"
+	cmd = "dupvserver --ip 10.1.0."+str(vsid)+" --from vs-base --to vs-customer-"+str(vsid)+" >> /var/log/openerp/odms.log 2>&1"
 	print "DEBUG - ODMS create vs - cmd",cmd
 	res = os.system(cmd)
 	print "DEBUG - ODMS create vs - res",res
