@@ -11,6 +11,12 @@
                 <field name="name">On Demand Bundle</field>
         </record>
 
+		<record model="res.request.link" id="req_link_case">
+		<field name="name">ODMS Subscription</field>
+		<field name="object">odms.subscription</field>
+		</record>
+
+
 	<!--
 		Product
 	-->

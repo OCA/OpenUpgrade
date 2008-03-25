@@ -1,131 +1,131 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-        <menuitem name="On Demand" icon="terp-project" id="odms_menu"/>
-        <menuitem name="On Demand/Configuration" id="odms_config_menu" sequence="0"/>
-        <menuitem name="On Demand/Configuration/Offers" id="odms_offer_menu" sequence="1"/>
-        <menuitem name="On Demand/Configuration/Bundles" id="odms_bundle_menu" sequence="2"/>
-        <menuitem name="On Demand/Configuration/Modules" id="odms_module_menu" sequence="3"/>
+	<menuitem name="On Demand" icon="terp-project" id="odms_menu"/>
+	<menuitem name="On Demand/Configuration" id="odms_config_menu" sequence="0"/>
+	<menuitem name="On Demand/Configuration/Offers" id="odms_offer_menu" sequence="1"/>
+	<menuitem name="On Demand/Configuration/Bundles" id="odms_bundle_menu" sequence="2"/>
+	<menuitem name="On Demand/Configuration/Modules" id="odms_module_menu" sequence="3"/>
 
 
 	<!--
 		ODMS Server Configuration
 	-->
 
-        <record model="ir.ui.view" id="view_odms_server_form">
-                <field name="name">odms.server.form</field>
-                <field name="model">odms.server</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="ODMS Configuration">
-                                <separator string="ODMS Server information" colspan="4"/>
+	<record model="ir.ui.view" id="view_odms_server_form">
+		<field name="name">odms.server.form</field>
+		<field name="model">odms.server</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="ODMS Configuration">
+				<separator string="ODMS Server information" colspan="4"/>
 				<group colspan="4">
-                                	<field name="name" colspan="3" select="1"/>
+					<field name="name" colspan="3" select="1"/>
 					<newline/>
-                                	<field name="ipaddress" select="1"/>
-                                	<field name="port" select="1"/>
-                                	<field name="user"/>
-                                	<field name="password"/>
+					<field name="ipaddress" select="1"/>
+					<field name="port" select="1"/>
+					<field name="user"/>
+					<field name="password"/>
 				</group>
-                                <separator string="Services" colspan="4"/>
+				<separator string="Services" colspan="4"/>
 				<group colspan="2">
-                        	        <field name="has_vserv"/>
+					<field name="has_vserv"/>
 					<field name="nbr_vserv"/>
-                               		<field name="has_web"/>
+			       		<field name="has_web"/>
 					<newline/>
-                               		<field name="has_bckup"/>
+			       		<field name="has_bckup"/>
 				</group>
-                                <separator string="Notes" colspan="4"/>
+				<separator string="Notes" colspan="4"/>
 				<field name="notes" colspan="4" nolabel="1"/>
 				<group colspan="4">
 					<field name="state"/>	
 					<button name="srv_connect" string="Connect to server" states="notconnected" type="object"/>
 					<button name="srv_disconnect" string="Disconnect from server" states="connected" type="object"/>
 				</group>
-                        </form>
-                </field>
-        </record>
+			</form>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_server_form">
-                <field name="name">Configuration</field>
-                <field name="res_model">odms.server</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">form,tree</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_server_form">
+		<field name="name">Configuration</field>
+		<field name="res_model">odms.server</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/Add an ODMS server" action="action_odms_server_form" id="menu_form_server" sequence="8"/>
+	<menuitem name="On Demand/Configuration/Add an ODMS server" action="action_odms_server_form" id="menu_form_server" sequence="8"/>
 
 
-        <record model="ir.ui.view" id="view_odms_server_list">
-                <field name="name">odms.server.list</field>
-                <field name="model">odms.server</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                        <tree string="ODMS Configuration">
-                                <field name="ipaddress"/>
-                                <field name="port"/>
-                                <field name="user"/>
-                                <field name="password"/>
-                                <field name="name"/>
-                                <field name="has_web"/>
-                                <field name="has_bckup"/>
-                                <field name="has_vserv"/>
+	<record model="ir.ui.view" id="view_odms_server_list">
+		<field name="name">odms.server.list</field>
+		<field name="model">odms.server</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="ODMS Configuration">
+				<field name="ipaddress"/>
+				<field name="port"/>
+				<field name="user"/>
+				<field name="password"/>
+				<field name="name"/>
+				<field name="has_web"/>
+				<field name="has_bckup"/>
+				<field name="has_vserv"/>
 				<field name="nbr_vserv"/>
 				<field name="state"/>
-                        </tree>
-                </field>
-        </record>
+			</tree>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_server_list">
-                <field name="name">Configuration</field>
-                <field name="res_model">odms.server</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_server_list">
+		<field name="name">Configuration</field>
+		<field name="res_model">odms.server</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/ODMS servers" action="action_odms_server_list" id="menu_list_servers" sequence="4"/>
+	<menuitem name="On Demand/Configuration/ODMS servers" action="action_odms_server_list" id="menu_list_servers" sequence="4"/>
 
 	<!--
 		OD VServer
 	-->	
 
 	<record model="ir.ui.view" id="view_odms_vserver_form">
-                <field name="name">odms.vserver.form</field>
-                <field name="model">odms.vserver</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="ODMS Vserver">
-                                <field name="name" select="1"/>
-                                <field name="ipaddress" select="2"/>
-                                <field name="state" select="1"/>
-                        </form>
-                </field>
-        </record>
+		<field name="name">odms.vserver.form</field>
+		<field name="model">odms.vserver</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="ODMS Vserver">
+				<field name="name" select="1"/>
+				<field name="ipaddress" select="2"/>
+				<field name="state" select="1"/>
+			</form>
+		</field>
+	</record>
 
-        <record model="ir.ui.view" id="view_odms_vserver_list">
-                <field name="name">odms.vserver.list</field>
-                <field name="model">odms.vserver</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                        <tree string="ODMS Vservers" >
-                                <field name="name"/>
-                                <field name="ipaddress"/>
-                                <field name="state"/>
-                        </tree>
-                </field>
-        </record>
+	<record model="ir.ui.view" id="view_odms_vserver_list">
+		<field name="name">odms.vserver.list</field>
+		<field name="model">odms.vserver</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="ODMS Vservers" >
+				<field name="name"/>
+				<field name="ipaddress"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_vserver_list">
-                <field name="name">VServers</field>
-                <field name="res_model">odms.vserver</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_vserver_list">
+		<field name="name">VServers</field>
+		<field name="res_model">odms.vserver</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/ODMS vservers" action="action_odms_vserver_list" id="menu_list_vservers" sequence="4"/>
+	<menuitem name="On Demand/Configuration/ODMS vservers" action="action_odms_vserver_list" id="menu_list_vservers" sequence="4"/>
 
 
 	<!--
@@ -133,14 +133,14 @@
 	-->
 
 	<record model="ir.ui.view" id="view_odms_partner_form">
-                <field name="name">odms.partner.form</field>
-                <field name="model">odms.partner</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="OD Partner">
-                                <separator string="Company" colspan="4"/>
-                        	<field name="name" colspan="3" select="1"/>
-                        	<field name="partner_id" select="1"/>
+		<field name="name">odms.partner.form</field>
+		<field name="model">odms.partner</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="OD Partner">
+				<separator string="Company" colspan="4"/>
+				<field name="name" colspan="3" select="1"/>
+				<field name="partner_id" select="1"/>
 				<field name="vat" select="2"/>
 				<field name="address" select="2"/>
 				<field name="zip" select="2"/>
@@ -150,54 +150,54 @@
 				<field name="countrystate_id" select="2"/>
 				<field name="website" select="2"/>
 				<newline/>
-                                <separator string="Contact" colspan="4"/>
+				<separator string="Contact" colspan="4"/>
 				<field name="contactname" select="1"/>
 				<field name="phone" select="2"/>
 				<field name="email" select="1"/>
 				<newline/>
-                                <separator string="Notes" colspan="4"/>
+				<separator string="Notes" colspan="4"/>
 				<field name="notes" colspan="4" nolabel="1"/>
 				<group colspan="4">
 					<field name="state" select="1"/>
 				</group>
-                        </form>
-                </field>
-        </record>
+			</form>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_partner_form">
-                <field name="name">OD Partner</field>
-                <field name="res_model">odms.partner</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">form,tree</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_partner_form">
+		<field name="name">OD Partner</field>
+		<field name="res_model">odms.partner</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+	</record>
 
-        <menuitem name="On Demand/OD Partners/Add an OD partner" action="action_odms_partner_form" id="menu_form_partner" sequence="1"/>
+	<menuitem name="On Demand/OD Partners/Add an OD partner" action="action_odms_partner_form" id="menu_form_partner" sequence="1"/>
 
 	<record model="ir.ui.view" id="view_odms_partner_list">
-                <field name="name">odms.partner.list</field>
-                <field name="model">odms.partner</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                        <tree string="OD Partners">
-                                <field name="name"/>
-                                <field name="partner_id"/>
+		<field name="name">odms.partner.list</field>
+		<field name="model">odms.partner</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="OD Partners">
+				<field name="name"/>
+				<field name="partner_id"/>
 				<field name="contactname"/>
-                                <field name="country_id"/>
-                                <field name="state"/>
-                        </tree>
-                </field>
-        </record>
+				<field name="country_id"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_partner_list">
-                <field name="name">Partners</field>
-                <field name="res_model">odms.partner</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_partner_list">
+		<field name="name">Partners</field>
+		<field name="res_model">odms.partner</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
-        <menuitem name="On Demand/OD Partners/All OD partners" action="action_odms_partner_list" id="menu_list_partners" sequence="0"/>
+	<menuitem name="On Demand/OD Partners/All OD partners" action="action_odms_partner_list" id="menu_list_partners" sequence="0"/>
 
 
 	<!--
@@ -205,184 +205,205 @@
 	-->
 
   	<record model="ir.ui.view" id="view_odms_offer_form">
-                <field name="name">odms.offer.form</field>
-                <field name="model">odms.offer</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="OD Offer">
+		<field name="name">odms.offer.form</field>
+		<field name="model">odms.offer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="OD Offer">
 			<notebook>
 				<page string="Offer">
-                                	<field name="name" select="1"/>
+					<field name="name" select="1"/>
 					<field name="active" select="1"/>
-                                	<newline/>
-                                	<field name="description"/>
+					<field name="section_id" select="1"/>
+					<newline/>
+					<field name="description"/>
 				</page>
 				<page string="Bundles">
-                                	<separator string="Offer bundles" colspan="4"/>
+					<separator string="Offer bundles" colspan="4"/>
 					<field name="bundle_ids" nolabel="1"/>
 				</page>
+				<page string="Emails">
+					<notebook position="top" colspan="4">
+						<page string="Freetrial">
+							<field name="email_subject_trial" colspan="4" nolabel="1"/>
+							<field name="email_trial" colspan="4" nolabel="1"/>
+						</page>
+						<page string="Subscription">
+							<field name="email_subject_subscription" colspan="4" nolabel="1"/>
+							<field name="email_subscription" colspan="4" nolabel="1"/>
+						</page>
+						<page string="Close">
+							<field name="email_subject_close" colspan="4" nolabel="1"/>
+							<field name="email_close" colspan="4" nolabel="1"/>
+						</page>
+					</notebook>
+					<group string="Legend" colspan="4">
+						<label string="Brackets are evaluated, you can use the 'sub' object" colspan="4" align="0.0"/>
+						<label string="Exemple: [ sub.user_id.name ] or [ sub.email ]" colspan="4" align="0.0"/>
+					</group>
+				</page>
 			</notebook>
-                        </form>
-                </field>
-        </record>
+			</form>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_offer_form">
-                <field name="name">Offer</field>
-                <field name="res_model">odms.offer</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">form,tree</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_offer_form">
+		<field name="name">Offer</field>
+		<field name="res_model">odms.offer</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/Offers/Add an offer" action="action_odms_offer_form" id="menu_form_offer" sequence="1"/>
+	<menuitem name="On Demand/Configuration/Offers/Add an offer" action="action_odms_offer_form" id="menu_form_offer" sequence="1"/>
 
 
-        <record model="ir.ui.view" id="view_odms_offer_list">
-                <field name="name">odms.offer.list</field>
-                <field name="model">odms.offer</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                        <tree string="OD Offers">
-                                <field name="name"/>
-                                <field name="description"/>
-                        </tree>
-                </field>
-        </record>
+	<record model="ir.ui.view" id="view_odms_offer_list">
+		<field name="name">odms.offer.list</field>
+		<field name="model">odms.offer</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="OD Offers">
+				<field name="name"/>
+				<field name="description"/>
+			</tree>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_offer_list">
-                <field name="name">Offers</field>
-                <field name="res_model">odms.offer</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_offer_list">
+		<field name="name">Offers</field>
+		<field name="res_model">odms.offer</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/Offers/All offers" action="action_odms_offer_list" id="menu_list_offers" sequence="0"/>
+	<menuitem name="On Demand/Configuration/Offers/All offers" action="action_odms_offer_list" id="menu_list_offers" sequence="0"/>
 
 	<!--
 		OD Bundle
 	-->
 
 	<record model="ir.ui.view" id="view_odms_bundle_form">
-                <field name="name">odms.bundle.form</field>
-                <field name="model">odms.bundle</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="OD Bundle">
-                        <field name="name" colspan="2" select="1"/>
-                        <newline/>
-                        <field name="product_id"/>
+		<field name="name">odms.bundle.form</field>
+		<field name="model">odms.bundle</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="OD Bundle">
+			<field name="name" colspan="2" select="1"/>
+			<newline/>
+			<field name="product_id"/>
 			<field name="price_type"/>
 			<separator string="Modules" colspan="4"/>
 			<field name="module_ids" colspan="4" nolabel="1"/>
-                        </form>
-                </field>
-        </record>
+			</form>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_bundle_form">
-                <field name="name">Bundle</field>
-                <field name="res_model">odms.bundle</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">form,tree</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_bundle_form">
+		<field name="name">Bundle</field>
+		<field name="res_model">odms.bundle</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/Bundles/Add a bundle" action="action_odms_bundle_form" id="menu_form_bundle" sequence="3"/>
+	<menuitem name="On Demand/Configuration/Bundles/Add a bundle" action="action_odms_bundle_form" id="menu_form_bundle" sequence="3"/>
 
 	<record model="ir.ui.view" id="view_odms_bundle_list">
-                <field name="name">odms.bundle.list</field>
-                <field name="model">odms.bundle</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                        <tree string="OD Bundles">
-                                <field name="name"/>
-                                <field name="product_id"/>
+		<field name="name">odms.bundle.list</field>
+		<field name="model">odms.bundle</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="OD Bundles">
+				<field name="name"/>
+				<field name="product_id"/>
 				<field name="module_ids"/>
-                        </tree>
-                </field>
-        </record>
+			</tree>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_bundle_list">
-                <field name="name">Bundles</field>
-                <field name="res_model">odms.bundle</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_bundle_list">
+		<field name="name">Bundles</field>
+		<field name="res_model">odms.bundle</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/Bundles/All bundles" action="action_odms_bundle_list" id="menu_list_bundles" sequence="2"/>
+	<menuitem name="On Demand/Configuration/Bundles/All bundles" action="action_odms_bundle_list" id="menu_list_bundles" sequence="2"/>
 
-        <!--
-                OD Module
-        -->
+	<!--
+		OD Module
+	-->
 
-        <record model="ir.ui.view" id="view_odms_module_form">
-                <field name="name">odms.module.form</field>
-                <field name="model">odms.module</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="OD Module">
-                        <field name="name" colspan="2" select="1"/>
-                        <newline/>
-                        <field name="bundle_id" select="1"/>
-                        <field name="state" select="1"/>
-                        </form>
-                </field>
-        </record>
+	<record model="ir.ui.view" id="view_odms_module_form">
+		<field name="name">odms.module.form</field>
+		<field name="model">odms.module</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="OD Module">
+			<field name="name" colspan="2" select="1"/>
+			<newline/>
+			<field name="bundle_id" select="1"/>
+			<field name="state" select="1"/>
+			</form>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_module_form">
-                <field name="name">Module</field>
-                <field name="res_model">odms.module</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">form,tree</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_module_form">
+		<field name="name">Module</field>
+		<field name="res_model">odms.module</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/Modules/Add a module" action="action_odms_module_form" id="menu_form_module" sequence="3"/>
+	<menuitem name="On Demand/Configuration/Modules/Add a module" action="action_odms_module_form" id="menu_form_module" sequence="3"/>
 
 	<record model="ir.ui.view" id="view_odms_module_list">
-                <field name="name">odms.module.list</field>
-                <field name="model">odms.module</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                        <tree string="OD Module">
-                                <field name="name"/>
-                                <field name="bundle_id"/>
-                                <field name="state"/>
-                        </tree>
-                </field>
-        </record>
+		<field name="name">odms.module.list</field>
+		<field name="model">odms.module</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="OD Module">
+				<field name="name"/>
+				<field name="bundle_id"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
 
-        <record model="ir.actions.act_window" id="action_odms_module_list">
-                <field name="name">Modules</field>
-                <field name="res_model">odms.module</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_module_list">
+		<field name="name">Modules</field>
+		<field name="res_model">odms.module</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
 
-        <menuitem name="On Demand/Configuration/Modules/All modules" action="action_odms_module_list" id="menu_list_modules" sequence="2"/>
+	<menuitem name="On Demand/Configuration/Modules/All modules" action="action_odms_module_list" id="menu_list_modules" sequence="2"/>
 
 	<!--
 		OD Subs Bundle
 	-->
 
-        <record model="ir.ui.view" id="view_odms_subs_bundle_form">
-                <field name="name">odms.subs_bundle.form</field>
-                <field name="model">odms.subs_bundle</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="OD Subscription Bundle">
-                        	<field name="bundle_id"/>
-                        	<field name="state"/>
+	<record model="ir.ui.view" id="view_odms_subs_bundle_form">
+		<field name="name">odms.subs_bundle.form</field>
+		<field name="model">odms.subs_bundle</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="OD Subscription Bundle">
+				<field name="bundle_id"/>
+				<field name="state"/>
 				<group colspan="3"/>
 				<group colspan="1">
 				<button name="install_bundle" string="Install bundle" states="notinstalled" type="object"/>
 				<button name="uninstall_bundle" string="Uninstall bundle" states="installed" type="object"/>
 				</group>
-                        </form>
-                </field>
-        </record>
+			</form>
+		</field>
+	</record>
 
 
 	<!--
@@ -390,20 +411,19 @@
 	-->
 
 
-        <record model="ir.ui.view" id="view_odms_subscription_form">
-                <field name="name">odms.subscription.form</field>
-                <field name="model">odms.subscription</field>
-                <field name="type">form</field>
-                <field name="arch" type="xml">
-                        <form string="OD Subscription">
-                        <notebook>
-                            <page string="General">
-				<group colspan="4">
-                                <field name="name" select="1" />
+	<record model="ir.ui.view" id="view_odms_subscription_form">
+		<field name="name">odms.subscription.form</field>
+		<field name="model">odms.subscription</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="OD Subscription">
+			<notebook>
+			<page string="General">
+				<field name="name" select="1" />
 				<field name="date" select="2" />
 				<newline/>
-                                <field name="partner_id" on_change="onchange_partner_id(partner_id)" select="2" />
-                                <field name="odpartner_id" select="2" />
+				<field name="partner_id" on_change="onchange_partner_id(partner_id)" select="2" />
+				<field name="odpartner_id" select="2" />
 				<field name="offer_id" select="1" />
 				<field name="pricelist_id" select="2" />
 				<newline/>
@@ -412,19 +432,16 @@
 				<newline/>
 				<field name="activ_date" select="2" />
 				<field name="deadline_date" select="2" />
-				</group>
-                                <separator string="Login information" colspan="4"/>
-				<group colspan="4">
-				<field name="url" colspan="3" select="2"/>
-				<label string=".od.openerp.com" align="0"/>
-				</group>
-				<group colspan="4">
+				<field name="user_id" select="2" />
+				<separator string="Login information" colspan="4"/>
+				<field name="url" colspan="2" select="2"/>
+				<label string=".od.openerp.com" colspan="2" align="0"/>
+				<newline/>
 				<field name="email" select="2"/>
 				<field name="password" select="2"/>
-				</group>
-                                <separator string="ODMS Servers" colspan="2"/>
-                                <separator string="Status" colspan="1"/>
-                                <separator string="Actions" colspan="1"/>
+				<separator string="ODMS Servers" colspan="2"/>
+				<separator string="Status" colspan="1"/>
+				<separator string="Actions" colspan="1"/>
 				<field name="vserv_server_id" />
 				<field name="vserv_server_state" nolabel="1" colspan="1"/>
 				<button name="create_vserv" string="Create VServer" type="object" col="3"/>
@@ -437,57 +454,85 @@
 				<field name="bckup_server_id" />
 				<field name="bckup_server_state" nolabel="1" colspan="1"/>
 				<button name="create_bckup" string="Create backup" type="object" col="3"/>
-                                <separator string="" colspan="4"/>
-                                <group colspan="4">
-                                        <field name="state" select="2"/>
+				<separator string="" colspan="4"/>
+				<group colspan="4">
+					<field name="state" select="2"/>
 					<button name="create_subs" string="Create Subscritption" states="draft" type="object" col="3"/>
 					<button name="create_trial" string="Create Free Trial" states="draft" type="object" col="3"/>
-                                        <button name="suspend_subs" string="Suspend" states="active" type="object" col="4"/>
-                                        <button name="delete_subs" string="Delete" states="active,suspended" type="object" col="4"/>
+					<button name="suspend_subs" string="Suspend" states="active" type="object" col="4"/>
+					<button name="delete_subs" string="Delete" states="active,suspended" type="object" col="4"/>
 					<button name="settodraft" string="Set to draft" states="deleted" type="object" col="4"/>
-                                </group>
-                            </page>
-			    <page string="Bundles">
-				     	<field name="bundle_ids" colspan="4" nolabel="1">
+				</group>
+			</page>
+			<page string="Bundles">
+				<field name="bundle_ids" colspan="4" nolabel="1">
 					<tree>
 						<field name="bundle_id"/>
 						<field name="state"/>
 					</tree>
-					</field>
-			    </page>
-                        </notebook>
-                        </form>
-                </field>
-        </record>
+				</field>
+			</page>
+			</notebook>
+			</form>
+		</field>
+	</record>
 
 
-        <record model="ir.ui.view" id="view_odms_subscription_list">
-                <field name="name">odms.subscription.list</field>
-                <field name="model">odms.subscription</field>
-                <field name="type">tree</field>
-                <field name="arch" type="xml">
-                        <tree string="OD Subscription">
-                                <separator string="Customer subscription" colspan="4"/>
-                                <field name="name"/>
-                                <field name="date" />
+	<record model="ir.ui.view" id="view_odms_subscription_list">
+		<field name="name">odms.subscription.list</field>
+		<field name="model">odms.subscription</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="OD Subscription">
+				<separator string="Customer subscription" colspan="4"/>
+				<field name="name"/>
+				<field name="date" />
 				<field name="offer_id"/> 
 				<field name="nbr_users"/>
 				<field name="vserver_state"/>
 				<field name="state"/>
-                        </tree>
-                </field>
-        </record>
+			</tree>
+		</field>
+	</record>
 
 
-        <record model="ir.actions.act_window" id="action_odms_subscription_list">
-                <field name="name">Subscriptions</field>
-                <field name="res_model">odms.subscription</field>
-                <field name="type">ir.actions.act_window</field>
-                <field name="view_type">form</field>
-                <field name="view_mode">tree,form</field>
-        </record>
+	<record model="ir.actions.act_window" id="action_odms_subscription_list">
+		<field name="name">All Subscriptions</field>
+		<field name="res_model">odms.subscription</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="On Demand/All subscriptions" action="action_odms_subscription_list" id="menu_list_subscription" sequence="10"/>
 
-        <menuitem name="On Demand/All subscriptions" action="action_odms_subscription_list" id="menu_list_subscription" sequence="10"/>
+	<record model="ir.actions.act_window" id="action_odms_subscription_list_my">
+		<field name="name">My Subscriptions</field>
+		<field name="domain">[('user_id','=',uid')]</field>
+		<field name="res_model">odms.subscription</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="On Demand/All subscriptions/My Subscriptions" action="action_odms_subscription_list_my" id="menu_list_subscription_my" sequence="10"/>
+
+	<record model="ir.actions.act_window" id="action_odms_subscription_list_deadline">
+		<field name="name">Subscriptions</field>
+		<field name="domain">[('state','in',('trial','active')),('deadline_date','&lt;=',time.strftime('%Y-%m-%d'))]</field>
+		<field name="res_model">odms.subscription</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="On Demand/All subscriptions/Subscriptions To Close" action="action_odms_subscription_list_deadline" id="menu_list_subscription_deadline" sequence="10"/>
+
+
+	<act_window name="All Cases"
+		domain="[('ref', '=', 'odms.subscription,'+str(active_id))]"
+		res_model="crm.case"
+		src_model="odms.subscription"
+		view_type="form"
+		view_mode="tree,form,calendar"
+		id="act_odms_case_subscription"/>
 
 </data>
 </terp>
