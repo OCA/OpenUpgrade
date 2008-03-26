@@ -129,6 +129,31 @@ def _makeInvoices(self, cr, uid, data, context):
             list_inv.append(inv_id)
             obj_event_reg.write(cr, uid,reg.id, {'invoice_id' : inv_id})
 
+
+            #the below code wll checks for if registration has cheques on Payment tab if yes it wll make it reconcile accrodingly , it wll take trunk version of code
+            # should be test
+            if reg.check_ids:
+                total = 0
+                writeoff_account_id = False # should be check
+                writeoff_journal_id = False # should be check
+                data_inv = inv_obj.browse(cr,uid,inv_id)
+                journal_obj = pool_obj.get('account.journal')
+                wf_service = netsvc.LocalService('workflow')
+
+                for check in reg.check_ids:
+                    total = total + check.unit_nbr
+
+                ids = pool_obj.get('account.period').find(cr, uid, context=context)
+                period_id = False
+                if len(ids):
+                    period_id = ids[0]
+
+                cash_id = journal_obj.search(cr, uid, [('type', '=', 'cash')])
+                acc_id = journal_obj.browse(cr, uid, cash_id[0], context).default_credit_account_id.id
+                wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+                inv_obj.pay_and_reconcile(cr,uid,[inv_id],total, acc_id, period_id, cash_id[0], writeoff_account_id, period_id, writeoff_journal_id, context)
+                # end.........
+
         return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
 
 class make_invoice(wizard.interface):
