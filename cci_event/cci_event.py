@@ -254,12 +254,11 @@ class event_registration(osv.osv):
 		data.update(d['value'])
 		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
 		data['partner_address_id']=addr['contact']
-		d=self.onchange_contact_id(cr, uid, ids,addr['contact'])
-		data.update(d['value'])
-
+		if addr['contact']:
+			d=self.onchange_contact_id(cr, uid, ids,addr['contact'])
+			data.update(d['value'])
 		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
 		data['badge_partner']=partner_data.name
-
 		return {'value':data}
 
 	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
