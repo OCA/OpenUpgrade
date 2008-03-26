@@ -4,13 +4,13 @@ from osv import fields,osv,orm
 
 import mx.DateTime
 import base64
-AVAILABLE_STATES = [
-    ('draft','Unreviewed'),
-    ('open','Open'),
-    ('cancel', 'Refuse Bug'),
-    ('done', 'Done'),
-    ('pending','Pending')
-]
+#AVAILABLE_STATES = [
+#    ('draft','Unreviewed'),
+#    ('open','Open'),
+#    ('cancel', 'Refuse Bug'),
+#    ('done', 'Done'),
+#    ('pending','Pending')
+#]
 class crm_case_category2(osv.osv):
     _name = "crm.case.category2"
     _description = "Category2 of case"
@@ -43,13 +43,13 @@ class crm_cases(osv.osv):
     _columns = {
         'stage_id': fields.many2one ('crm.case.stage', 'Stage', domain="[('section_id','=',section_id)]"),
         'category2_id': fields.many2one('crm.case.category2','Category Name', domain="[('section_id','=',section_id)]"),
-        'duration': fields.float('Duration', size=16),
+        'duration': fields.time('Duration',size=16),
         'note': fields.text('Note'),
         'partner_name': fields.char('Employee Name', size=64),
-        'partner_name2': fields.char('Last Name', size=64),
+        'partner_name2': fields.char('Employee Email', size=64),
         'partner_phone': fields.char('Phone', size=16),
         'partner_mobile': fields.char('Mobile', size=16),
-        'state': fields.selection(AVAILABLE_STATES, 'State', size=16, readonly=True),
+#        'state': fields.selection(AVAILABLE_STATES, 'State', size=16, readonly=True),
          
         
                 }
@@ -57,16 +57,5 @@ class crm_cases(osv.osv):
 #             'section_id' :get_section,
 #                 }
 
-    def case_unreview(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state # to fill the browse record cache
-        self.write(cr, uid, ids, {'state':'unreviewed', 'active':True})
-        return True
-    
-    def case_draft(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state # to fill the browse record cache
-        self.write(cr, uid, ids, {'state':'cancel', 'active':True})
-        self._action(cr,uid, cases, 'cancel')
-        return True
+
 crm_cases()
