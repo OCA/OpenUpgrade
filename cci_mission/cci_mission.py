@@ -221,8 +221,8 @@ class cci_missions_dossier_type(osv.osv):
 		'site_id' : fields.many2one('cci_missions.site','Site',required=True),
 		'sequence_id' : fields.many2one('ir.sequence','Sequence',required=True,help='for association with a sequence'),
 		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA','ATA Carnet')],'Type',required=True),
-		'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk',required=True),
-		'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk',required=True),
+		'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk'),
+		'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk'),
 	}
 
 cci_missions_dossier_type()
