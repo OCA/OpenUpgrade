@@ -68,20 +68,6 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 	return nbr_thread
 
 
-class odms_vserver(osv.osv):
-	_name = "odms.vserver"
-	_description = "ODMS Virtual Server"
-
-	_columns = {
-		'name': fields.char('Vserver ID', size=64, required=True),
-		'ipaddress': fields.char('IP address', size=16, required=True),
-		'state' : fields.selection([('notactive','Not active'),('error','Error'),('active','Active')],'State', readonly=True),
-	}
-	_defaults = {
-		'state': lambda *a: 'notactive',
-	}
-odms_vserver()
-
 class odms_server(osv.osv):
 	_name = "odms.server"
 	_description = "ODMS Server Configuration"
@@ -105,6 +91,7 @@ class odms_server(osv.osv):
 		'has_vserv': fields.boolean('Vserver service'), 
 		'has_bckup': fields.boolean('Backup service'), 
 		'nbr_vserv': fields.integer('Number of Virtual Servers', readonly=True),
+		'vserver_ids': fields.one2many('odms.vserver', 'vserv_server_id', 'Vservers'),
 		'notes': fields.text('Notes'),
 		'state' : fields.selection([('notconnected','Not connected'),('connected','connected')],'State', readonly=True),
 	}
@@ -116,6 +103,21 @@ class odms_server(osv.osv):
 	}
 odms_server()
 
+
+class odms_vserver(osv.osv):
+	_name = "odms.vserver"
+	_description = "ODMS Virtual Server"
+
+	_columns = {
+		'name': fields.char('Vserver ID', size=64, required=True),
+		'ipaddress': fields.char('IP address', size=16, required=True),
+		'vserv_server_id' : fields.many2one('odms.server','Vserver Server', required=True),
+		'state' : fields.selection([('notactive','Not active'),('error','Error'),('active','Active')],'State', readonly=True),
+	}
+	_defaults = {
+		'state': lambda *a: 'notactive',
+	}
+odms_vserver()
 
 class odms_bundle(osv.osv):
 	_name = "odms.bundle"
@@ -368,7 +370,7 @@ class odms_subscription(osv.osv):
 		url = subs.url+'.od.openerp.com'
 		print "DEBUG create_web - server id", subs.web_server_id.id
 		self.write(cr, uid, subs.id, {'web_server_state':'installing'})
-		res = odms_send(cr, uid, ids, subs.web_server_id.id, 'create_web',{'subs_id':subs.id,'url':url}) 
+		res = odms_send(cr, uid, ids, subs.web_server_id.id, 'create_web',{'vserv_id':subs.vserver_id.name,'url':url}) 
 		return res
 
 	def user_create(self, cr, uid, ids, context={}):

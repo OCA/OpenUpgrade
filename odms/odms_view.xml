@@ -36,7 +36,7 @@
 			       		<field name="has_bckup"/>
 				</group>
 				<separator string="Notes" colspan="4"/>
-				<field name="notes" colspan="4" nolabel="1"/>
+				<field name="vserver_ids" colspan="4" nolabel="1"/>
 				<group colspan="4">
 					<field name="state"/>	
 					<button name="srv_connect" string="Connect to server" states="notconnected" type="object"/>
@@ -47,7 +47,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_odms_server_form">
-		<field name="name">Configuration</field>
+		<field name="name">OD Server</field>
 		<field name="res_model">odms.server</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="view_type">form</field>
@@ -100,6 +100,7 @@
 				<field name="name" select="1"/>
 				<field name="ipaddress" select="2"/>
 				<field name="state" select="1"/>
+				<field name="vserv_server_id" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -113,6 +114,7 @@
 				<field name="name"/>
 				<field name="ipaddress"/>
 				<field name="state"/>
+				<field name="vserv_server_id"/>
 			</tree>
 		</field>
 	</record>
