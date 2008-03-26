@@ -38,12 +38,12 @@
 					<field name="name" select="1"/>
 					<field name="code" select="1"/>
 					<field name="sequence_id"/>
-					<field name="site_id" />
+					<field name="site_id" select="1"/>
 					<field name="original_product_id" />
 					<field name="copy_product_id" />
+					<field name="section" select="2"/>
 					<field name="warranty_product_1" />
 					<field name="warranty_product_2" />
-					<field name="section" />
 				</form>
 			</field>
 		</record>
@@ -56,6 +56,7 @@
 				<tree string="Dossier Type">
 					<field name="name"/>
 					<field name="code"/>
+					<field name="site_id"/>
 				</tree>
 			</field>
 		</record>
@@ -122,28 +123,27 @@
 			<field name="arch" type="xml">
 				<form string="Dossier">
 					<field name="name" select="1"/>
-					<field name="date" select="2"/>
-					<field name="type_id"/>
-					<field name="order_partner_id" on_change="get_partner_details(order_partner_id)" />
-					<field name="asker_name" select="1"/>
-					<field name="sender_name" select="1"/>
+					<field name="date" select="1"/>
+					<field name="type_id" select="1"/>
+					<field name="order_partner_id" on_change="get_partner_details(order_partner_id)" select="1"/>
+					<field name="asker_name"/>
+					<field name="sender_name"/>
 					<field name="quantity_copies" />
-					<field name="quantity_original"/><!-- added -->
+					<field name="quantity_original"/>
 					<field name="to_bill" />
 					<field name="invoice_id" />
 					<newline/>
 					<field name="goods" colspan="4" />
 					<newline/>
 					<field name="goods_value" select="2"/>
-					<field name="total"/><!-- added -->
+					<field name="total"/>
 					<newline/>
 					<field name="destination_id" select="1" />
 					<newline/>
 					<field name="embassy_folder_id" />
 					<newline/>
-					<field name="state" select="1"/>
+					<field name="state" select="2"/>
 					<newline/>
-					<!--<field name="sub_total"/>--><!-- today -->
 					<separator colspan="4" string="Note to Display on the Invoice"/>
 					<field name="text_on_invoice" colspan="4" nolabel="1"/>
 				</form>
@@ -157,6 +157,9 @@
 			<field name="arch" type="xml">
 				<tree string="dossier">
 					<field name="name"/>
+					<field name="date"/>
+					<field name="type_id"/>
+					<field name="order_partner_id"/>
 				</tree>
 			</field>
 		</record>
@@ -188,7 +191,7 @@
 						<field name="section_id"  readonly="1" />
 						<newline/>
 						<group colspan="2">
-							<field name="date" string=" Creation Date" select="1"/>
+							<field name="date" string=" Creation Date" select="1" readonly="1"/>
 							<field name="invoice_date" />
 						</group>
 						<field name="priority" select="1"/>
@@ -206,15 +209,14 @@
 						<field name="embassy_folder_line_ids" nolabel="1" colspan="4">
 							<tree string="Embassy Foder Lines">
 								<field name="name"/>
-								<field name="type"/>
 								<field name="courier_cost"/>
 								<field name="customer_amount"/>
 								<field name="tax_rate"/>
 							</tree>
 							<form string="Embassy Foder Lines">
-								<field name="name" />
-								<newline/>
 								<field name="type" />
+								<newline/>
+								<field name="name" />
 								<newline/>
 								<field name="courier_cost"/>
 								<newline/>
@@ -240,11 +242,6 @@
 						<field name="active" />
 						<field name="email_cc" />
 						<field name="invoice_id" />
-						<separator colspan="4" string="Dates"/>
-						<field name="create_date" />
-						<field name="date_closed" />
-						<field name="date_action_last" />
-						<field name="date_action_next" />
 						<separator colspan="4" string="Links"/>
 						<field name="link_ids" colspan="4"/>
 					</page>
@@ -270,7 +267,7 @@
 						</field>
 					</page>
 					<page string="History">
-						<field name="log_ids"/>
+						<field name="log_ids" readonly="1"/>
 					</page>
 				</notebook>
 				</form>
@@ -333,6 +330,8 @@
 				<tree string="Embassy Folder Line">
 					<field name="name" />
 					<field name="folder_id" />
+					<field name="type" />
+					<field name="customer_amount" />
 				</tree>
 			</field>
 		</record>
@@ -369,7 +368,7 @@
 				<tree string="Custome code">
 					<field name="name" />
 					<field name="meaning" />
-					<field name="official" select="2"/>
+					<field name="official" select="2"/> <!-- select="2" doesn't work but it doesn't matter since official is a boolean and we can use the sort function -->
 				</tree>
 			</field>
 		</record>
@@ -396,7 +395,7 @@
 						<field name="date" select="2" />
 						<field name="type_id" select="1" domain="[('section','=','legalization')]"/>
 						<field name="destination_id" select="1"/>
-						<field name="order_partner_id" on_change="get_legalization_details(order_partner_id)" />
+						<field name="order_partner_id" select="1" on_change="get_legalization_details(order_partner_id)" />
 						<newline/>
 						<field name="asker_name" select="1"/>
 						<field name="sender_name" select="1"/>
@@ -420,7 +419,7 @@
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="text_on_invoice" colspan="4" nolabel="1"/>
 					</page>
-					<page string="Extra Prodcuts">
+					<page string="Extra Products">
 						<vpaned position="300">
 						<child1>
 							<field name="product_ids" nolabel="1" colspan="4"/>
@@ -448,8 +447,9 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Legalization">
-					<field name="id" />
 					<field name="name"/>
+					<field name="order_partner_id"/>
+					<field name="destination_id"/>
 				</tree>
 			</field>
 		</record>
@@ -479,13 +479,13 @@
 						<field name="destination_id" select="1" />
 						<field name="order_partner_id" on_change="get_certification_details(order_partner_id)" />
 						<newline/>
-						<field name="asker_name" select="1"/>
+						<field name="asker_name" />
 						<newline/>
-						<field name="asker_address" select="1"/>
+						<field name="asker_address"/>
 						<newline/>
-						<field name="asker_zip_id" select="2"/>
+						<field name="asker_zip_id"/>
 						<newline/>
-						<field name="sender_name" select="1" />
+						<field name="sender_name" />
 						<field name="special_reason"/>
 						<newline/>
 						<field name="goods" select="1"/>
@@ -504,13 +504,13 @@
 						<separator colspan="4" string="Note to Display on the Invoice"/>
 						<field name="text_on_invoice" nolabel="1" colspan="4"/>
 					</page>
-					<page string="Extra Prodcuts">
+					<page string="Extra Products">
 						<vpaned position="300">
 						<child1>
-							<field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
+							<field name="product_ids" nolabel="1" colspan="4"/> 
 						</child1>
 						<child2>
-						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
+						<label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
 						</child2>
 						</vpaned>
 					</page>
@@ -520,8 +520,8 @@
 						<newline/>
 						<field name="sending_SPF" readonly="1"/>
 						<newline/>
-						<field name="origin_ids" /> <!-- origin_ids(res.country.name) -->
-						<field name="customs_ids"/> <!-- customs_ids (name, meaning, official) -->
+						<field name="origin_ids" />
+						<field name="customs_ids"/> 
 						<field name="legalization_ids" colspan="4"/>
 					</page>
 				</notebook>
@@ -535,8 +535,10 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Certificate">
-					<field name="id" />
 					<field name="name" />
+					<field name="order_partner_id"/>
+					<field name="destination_id" />
+					<field name="type_id" />
 				</tree>
 			</field>
 		</record>
@@ -560,7 +562,7 @@
 				<form string="Area">
 					<field name="name" select="1"/>
 					<newline />
-					<field name="country_ids" />
+					<field name="country_ids" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -675,20 +677,20 @@
 						<field name="member_price" />
 						<newline/>
 						<separator string="Holder Information" colspan="4"/>
-						<field name="holder_name" select="2" />
+						<field name="holder_name" />
 						<newline/>
 						<field name="holder_address" />
 						<field name="holder_city" />
 						<newline/>
 						<separator string="Representer Information" colspan="4"/>
-						<field name="representer_name" select="2" />
+						<field name="representer_name" />
 						<newline/>
 						<field name="representer_address" />
 						<field name="representer_city" />
 						<newline/>
 						<field name="usage_id" />
-						<field name="goods" />
-						<field name="area_id" />
+						<field name="goods" select="2"/>
+						<field name="area_id" select="2"/>
 						<field name="goods_value" />
 						<field name="double_signature" />
 						<field name="initial_pages" />
@@ -700,7 +702,6 @@
 						<newline/>
 						<field name="invoice_id"/>
 						<newline/>
-
 						<field name="state" colspan="2" select="2"/>
 						<group colspan="2">
 							<button string="Brought Uncertain" name="button_uncertain" states="created,dispute" type="object"/>
@@ -727,7 +728,7 @@
 							</form>
 						</field>
 					</page>
-					<page string="Extra Prodcuts">
+					<page string="Extra Products">
 						<vpaned position="300">
 						<child1>
 							<field name="product_ids" nolabel="1" colspan="4"/> <!-- one2many (product_id, qty, uom, price) -->
@@ -748,8 +749,11 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="ATA Carnet">
-					<field name="id" />
 					<field name="name"/>
+					<field name="partner_id"/>
+					<field name="creation_date" />
+					<field name="type_id"/>
+					<field name="goods" />
 				</tree>
 			</field>
 		</record>

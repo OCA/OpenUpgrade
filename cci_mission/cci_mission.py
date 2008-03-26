@@ -93,23 +93,22 @@ class cci_missions_embassy_folder(osv.osv):
 	_description = 'cci_missions.embassy_folder'
 	_inherits = {'crm.case': 'crm_case_id'}
 
-
 	def _cci_mission_send(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'pending',})
 		cases = self.browse(cr, uid, ids)
-		self.__history(cr, uid, cases, 'Pending', history=True,)
+		self.__history(cr, uid, cases, 'Send', history=True,)
 		return True
 
 	def _cci_mission_got_back(self,cr,uid,ids,*args):
 		self.write(cr, uid, ids, {'state':'open',})
 		cases = self.browse(cr, uid, ids)
-		self.__history(cr, uid, cases, 'Open', history=True)
+		self.__history(cr, uid, cases, 'Got Back', history=True)
 		return True
 
 	def _cci_mission_done_folder(self,cr,uid,ids,*args):
 		self.write(cr, uid, ids, {'state':'done','invoice_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 		cases = self.browse(cr, uid, ids)
-		self.__history(cr, uid, cases, 'Done', history=True)
+		self.__history(cr, uid, cases, 'Invoiced', history=True)
 		return True
 
 	def __history(self, cr, uid,ids,keyword, history=False, email=False, context={}):
@@ -126,8 +125,8 @@ class cci_missions_embassy_folder(osv.osv):
 #				obj = self.pool.get('crm.case.history')
 #				data['description'] = case.description
 #				data['email'] = email or \
-#						(case.user_id and case.user_id.address_id and \
-#							case.user_id.address_id.email) or False
+#				(case.user_id and case.user_id.address_id and \
+#				case.user_id.address_id.email) or False
 			obj.create(cr, uid, data, context)
 		return True
 
@@ -138,7 +137,10 @@ class cci_missions_embassy_folder(osv.osv):
 			seq = self.pool.get('ir.sequence').get(cr, uid,data.embassy_sequence_id.code)
 			if seq:
 				vals.update({'name': seq})
-		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+		temp = super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+		self.__history(cr, uid,self.browse(cr, uid, [temp]), 'Created', history=True)
+		return temp 
+
 
 
 	def onchange_partner_id(self, cr, uid, ids, part):
@@ -169,9 +171,8 @@ class cci_missions_embassy_folder(osv.osv):
 		'invoice_note':fields.text('Note to Display on the Invoice',help='to display as the last embassy_folder_line of this embassy_folder.'),
 		'embassy_folder_line_ids' : fields.one2many('cci_missions.embassy_folder_line','folder_id','Details'),
 		'site_id': fields.many2one('cci_missions.site','Site', required=True),
-		'invoice_date' : fields.datetime('Invoice Date') ,#added to solve bug
+		'invoice_date' : fields.datetime('Invoice Date', readonly=True) ,
 		"invoice_id":fields.many2one("account.invoice","Invoice"),
-#		'state' : fields.selection([('draft','Draft'),('send','send'),('gotback','gotback'),('invoiced','Invoiced')], 'State', size=16)
 	}
 
 	_defaults = {
@@ -202,7 +203,7 @@ class cci_missions_embassy_folder_line (osv.osv):
 		'folder_id' : fields.many2one('cci_missions.embassy_folder','Related Embassy Folder',required=True),
 		'courier_cost' : fields.float('Couriers Costs'),
 		'customer_amount' : fields.float('Invoiced Amount'),
-		'tax_rate': fields.many2one('account.tax','Tax Rate'),#should be corect
+		'tax_rate': fields.many2one('account.tax','Tax Rate'),
 		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy  Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
 		'account_id' : fields.many2one('account.account', 'Account', required=True),
 	}
@@ -284,7 +285,6 @@ class cci_missions_dossier(osv.osv):
 		return res
 
 	def _amount_subtotal(self, cr, uid, ids, name, args, context=None):
-		#should be check
 		res={}
 		data_dosseir = self.browse(cr,uid,ids)
 		for data in data_dosseir:
@@ -310,10 +310,9 @@ class cci_missions_dossier(osv.osv):
 		'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
 		'quantity_copies':fields.integer('Number of Copies'),
 		'quantity_original' : fields.integer('Quantity of Originals',required=True),
-		'total':fields.function(_amount_total, method=True, string='Total', store=True),#readonly, sum of the price for copies, originals and extra_products
-		'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),#readonly, sum of the extra_products
+		'total':fields.function(_amount_total, method=True, string='Total', store=True),# sum of the price for copies, originals and extra_products
+		'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),
 		'text_on_invoice':fields.text('Text to Display on the Invoice'),
-#		'product_ids' : fields.many2many('product.product','dossier_product_rel','dossier_id','product_id','Products')
 		'product_ids': fields.one2many('product.lines', 'dossier_product_line_id', 'Products'),
 		'invoice_id':fields.many2one("account.invoice","Invoice"),
 		'invoiced_amount': fields.float('Total'),
@@ -335,7 +334,7 @@ class cci_missions_custom_code(osv.osv):
 	_columns = {
 		'name' : fields.char('Name',size=8,required=True),
 		'meaning' : fields.char('Meaning',size=250,required=True),
-		'official' : fields.boolean('Official Code'),#Invisible ?
+		'official' : fields.boolean('Official Code'),
 	}
 
 	_defaults = {
@@ -636,7 +635,7 @@ class cci_missions_ata_carnet(osv.osv):
 	_columns = {
 		'id': fields.integer('ID', readonly=True),
 		'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
-		'creation_date' : fields.date('Emission Date',required=True,readonly=True),
+		'creation_date' : fields.date('Emission Date',required=True),
 		'validity_date' : fields.date('Validity Date',required=True),
 		'partner_id': fields.many2one('res.partner','Partner',required=True),
 		'holder_name' : fields.char('Holder Name',size=50),
