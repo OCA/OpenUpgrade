@@ -38,7 +38,8 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 				res = s.create_vsv(self.srv.user,self.srv.password,self.args['subs_id'],self.args['module_names'])
 				print "ODMS Debug - vs_create :",res	
 			elif request == 'create_web':
-				res = s.create_web(self.srv.user,self.srv.password,self.args['vserv_id'],self.args['url'])
+				res = s.create_web(self.srv.user,self.srv.password,self.args['subs_id'],
+					self.args['vserv_id'],self.args['url'])
 				print "ODMS Debug - web_create :",res
 			elif request == 'create_bck':
 				res = s.create_bck(srv.user,srv.password,args['subs_id'])
@@ -354,7 +355,8 @@ class odms_subscription(osv.osv):
 		url = subs.url+'.od.openerp.com'
 		print "DEBUG create_web - server id", subs.web_server_id.id
 		self.write(cr, uid, subs.id, {'web_server_state':'installing'})
-		res = odms_send(cr, uid, ids, subs.web_server_id.id, 'create_web',{'vserv_id':subs.vserver_id.name,'url':url}) 
+		res = odms_send(cr, uid, ids, subs.web_server_id.id, 'create_web',
+			{'subs_id':subs.id,'vserv_id':subs.vserver_id.name,'url':url}) 
 		return res
 
 	def user_create(self, cr, uid, ids, context={}):
