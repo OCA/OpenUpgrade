@@ -38,7 +38,7 @@
 						<field name="section_id" colspan="1"/>
 						<newline/>
 						<field name="partner_name"/>
-						<field name="email_from"/>
+						<field name="partner_name2"/>
 						<newline/>
 						<field name="partner_phone"/>
 						<field name="partner_mobile"/>
@@ -46,54 +46,57 @@
 						<field name="partner_id" on_change="onchange_partner_id(partner_id, email_from)" colspan="2"/>
 						<field name="partner_address_id" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="1"/>
 						<newline/>
+						<separator colspan="4"/>
 						<field name="categ_id" string="Applied Job" on_change="onchange_categ_id(categ_id)"/>
 						<field name="category2_id" string="Degree"/>
 						<field name="priority" string="Quality"/>
-						<field name="duration" string="Availability"/>
+<!--						<field name="duration" string="Availability"/>-->
+						<newline/>
 						<field name="planned_cost" string="Expected Salary"/>
 						<field name="planned_revenue" string="Proposed Salary"/>
-						<field name="stage_id" string="Resolution" colspan="2"/>
+						<field name="stage_id" colspan="2"/>
 						<field name="user_id" string="Responsible"/>
-					<separator colspan="4"/>
-					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
-						<form string="Communication history">
-							<group col="6" colspan="4">
-								<field name="date"/>
+						<field name="date_deadline" string="Next Meeting"/>
+						<field name="duration" widget="float"/>
+						<separator colspan="4"/>
+						<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
+							<form string="Communication history">
+								<group col="6" colspan="4">
+									<field name="date"/>
+									<field name="email"/>
+									<field name="canal_id"/>
+								</group>
+								<newline/>
+								<field name="description" colspan="4" nolabel="1"/>
+							</form>
+							<tree string="Communication history">
+								<field name="description"/>
 								<field name="email"/>
-								<field name="canal_id"/>
-							</group>
-							<newline/>
-							<field name="description" colspan="4" nolabel="1"/>
-						</form>
-						<tree string="Communication history">
-							<field name="description"/>
-							<field name="email"/>
-							<field name="date"/>
-						</tree>
-					</field>
-					<group col="2" colspan="2" expand="1">
-						<field name="canal_id"/>
-						<field name="som"/>
-						<button name="add_reply" string="Add Last Mail for Replying"
-							states="open" type="object" colspan="2"/>
-						<field name="description" colspan="2" nolabel="1"/>
-						<button name="case_log_reply"
-							string="Send Partner &amp; Historize" states="open"
-							type="object"/>
-						<button name="case_log" string="Historize" states="open"
-							type="object"/>
-					</group>
+								<field name="date"/>
+							</tree>
+						</field>
+						<group col="2" colspan="2" expand="1">
+							<field name="canal_id"/>
+							<field name="som"/>
+							<button name="add_reply" string="Add Last Mail for Replying"
+								states="open" type="object" colspan="2"/>
+							<field name="description" colspan="2" nolabel="1"/>
+							<button name="case_log_reply"
+								string="Send Partner &amp; Historize" states="open"
+								type="object"/>
+							<button name="case_log" string="Historize" states="open"
+								type="object"/>
+						</group>
 
-					<separator colspan="4"/>
-					<group col="8" colspan="4">
-						<field name="state"/>
-						<button name="case_unreview" string="Proposition" states="draft" type="object"/>
-						<button name="case_close" string="Done" states="open,pending" type="object"/>
-						<button name="case_open" string="Open" states="unreviewed,draft,pending" type="object"/>
-						<button name="case_cancel" string="Refuse Job" states="unreviewed,draft,open,pending" type="object"/>
-						<button name="case_pending" string="Pending" states="unreviewed,draft,open" type="object"/>
-						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
-					</group>
+						<separator colspan="4"/>
+						<group col="8" colspan="4">
+							<field name="state"/> 
+					 		<button name="case_close" string="Done" states="open,draft,pending" type="object"/>
+							<button name="case_open" string="Open" states="draft,pending" type="object"/>
+							<button name="case_cancel" string="Refuse Job" states="draft,open,pending" type="object"/>
+							<button name="case_pending" string="Pending" states="draft,open" type="object"/>
+							<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
+						</group>
 				</page>
 				<page string="Internal Notes">
 					<separator string= "Notes" colspan="4"/>
@@ -153,7 +156,7 @@
 		<field name="act_window_id" ref="crm_case_categ0-act11"/>
 	</record>
 	
-	<menuitem name="CRM &amp; SRM/Jobs" id="menu_crm_case_categ0-act11" action="crm_case_categ0-act11"/>
+<!--	<menuitem name="CRM &amp; SRM/Jobs" id="menu_crm_case_categ0-act11" action="crm_case_categ0-act11"/>-->
 
 
 	# ------------------------------------------------------ 
@@ -216,13 +219,13 @@
 
 					<separator colspan="4"/>
 					<group col="8" colspan="4">
-						<field name="state" select="1"/>
-						<button name="case_close" string="Done" states="open,pending,draft"/>
-						<button name="case_open" string="Open" states="draft,pending"/>
-						<button name="case_cancel" string="Refuse Bug" states="draft,open,pending"/>
-						<button name="case_pending" string="Pending" states="open"/>
-						<button name="case_escalate" string="Escalate" states="open,pending"/>
-					 
+						<field name="state" select="1"/> 
+					 	<button name="case_close" string="Done" states="open,draft,pending" type="object"/>
+						<button name="case_open" string="Open" states="draft,pending" type="object"/>
+						<button name="case_cancel" string="Refuse Bug" states="draft,open,pending" type="object"/>
+						<button name="case_pending" string="Pending" states="draft,open" type="object"/>
+						<button name="case_escalate" string="Escalate" states="open,draft,pending" type="object"/>
+						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
 					</group>
 				</page>
 				<page string="Internal Notes">
@@ -286,22 +289,24 @@
 	<record model="ir.actions.act_window" id="crm_case_categ-act">
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="crm_case_tree_view"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view1">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="crm_case_tree_view"/>
-		<field name="act_window_id" ref="crm_case_categ-act"/>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="crm_case_form_view"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view2">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="1"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
 		<field name="act_window_id" ref="crm_case_categ-act"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Bug Tracking" id="menu_crm_case_categ-act" action="crm_case_categ-act"/>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view1">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree_view"/>
+		<field name="act_window_id" ref="crm_case_categ-act"/>
+	</record>
+
+<!--	<menuitem name="CRM &amp; SRM/Bug Tracking" id="menu_crm_case_categ-act" action="crm_case_categ-act"/>-->
+
 
 	</data>
 </terp>
