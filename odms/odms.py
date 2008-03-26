@@ -25,7 +25,6 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 			self.srv = srv
 			self.request = request
 			self.args = args
-			print "DEBUG odms_request - module_names :",args['module_names']
 
 		def run(self):
 			print "DEBUG sending request at :",self.srv_socket
@@ -39,7 +38,7 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 				res = s.create_vsv(self.srv.user,self.srv.password,self.args['subs_id'],self.args['module_names'])
 				print "ODMS Debug - vs_create :",res	
 			elif request == 'create_web':
-				res = s.create_web(self.srv.user,self.srv.password,self.args['subs_id'],self.args['url'])
+				res = s.create_web(self.srv.user,self.srv.password,self.args['vserv_id'],self.args['url'])
 				print "ODMS Debug - web_create :",res
 			elif request == 'create_bck':
 				res = s.create_bck(srv.user,srv.password,args['subs_id'])
@@ -270,22 +269,7 @@ class odms_subscription(osv.osv):
 		return res
 
 	def create_subs(self, cr, uid, ids, context={}):
-		""" 
-		s = xmlrpclib.Server('http://localhost:8000')
-		print "DEBUG user : ",oduser
-		print "DEBUG password : ",odpass
 
-		o = self.browse(cr, uid, ids)
-		offer = o[0].offer.id
-		print "DEBUG offer : ",offer
-
-		res = s.create_vs(oduser,odpass,offer)
-		print "DEBUG res : ",res
-
-		#if (res <= 10): 
-		#return False
-
-		"""
 		self._test_open(cr, uid, ids, context)
 		for sub in self.browse(cr, uid, ids, context=context):
 			tools.email_send(sub.user_id.address_id.email, sub.email, sub.offer_id.email_subject_trial, self._email_process(sub, 'email_subscription'))
