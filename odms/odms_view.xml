@@ -213,10 +213,11 @@
 			<notebook>
 				<page string="Offer">
 					<field name="name" select="1"/>
-					<field name="active" select="1"/>
-					<field name="section_id" select="1"/>
+					<field name="active" select="2"/>
+					<field name="section_id" select="2"/>
+					<field name="portal_id"/>
 					<newline/>
-					<field name="description"/>
+					<field name="description" colspan="4"/>
 				</page>
 				<page string="Bundles">
 					<separator string="Offer bundles" colspan="4"/>
@@ -433,13 +434,14 @@
 				<field name="activ_date" select="2" />
 				<field name="deadline_date" select="2" />
 				<field name="user_id" select="2" />
-				<field name="nbr_users"/>
 				<separator string="Login information" colspan="4"/>
 				<field name="url" colspan="2" select="2"/>
 				<label string=".od.openerp.com" colspan="2" align="0"/>
 				<newline/>
 				<field name="email" select="2"/>
 				<field name="password" select="2"/>
+				<field name="owner_id"/>
+				<button string="Create Portal User" name="user_create" type="object" colspan="2"/>
 				<separator string="ODMS Servers" colspan="2"/>
 				<separator string="Status" colspan="1"/>
 				<separator string="Actions" colspan="1"/>
@@ -474,6 +476,9 @@
 						<field name="state"/>
 					</tree>
 				</field>
+			</page>
+			<page string="Statistics">
+				<field name="nbr_users"/>
 			</page>
 			</notebook>
 			</form>

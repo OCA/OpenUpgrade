@@ -92,7 +92,6 @@ class odms_server(osv.osv):
 		return True	
 
 	def srv_disconnect(self, cr, uid, ids, context={}):
-		
 		self.write(cr, uid, ids, {'state':'notconnected'})
 		return True	
 
@@ -152,10 +151,11 @@ class odms_offer(osv.osv):
 	_description = "ODMS Offer"
 	_columns = {
 		'name': fields.char('Name', size=64, required=True),
-		'description': fields.char('Description', size=128),
+		'description': fields.text('Description'),
 		'bundle_ids': fields.many2many('odms.bundle', 'odms_offer_bundles_rel', 'offer', 'bundle', 'Bundles'),
 		'active': fields.boolean('Active'),
 		'section_id': fields.many2one('crm.case.section','Case Section'),
+		'portal_id': fields.many2one('portal.portal','User Portal'),
 		'email_subject_trial': fields.char('Subject Freetrial', size=64, translate=True),
 		'email_subject_subscription': fields.char('Subject Subscription',size=64,  translate=True),
 		'email_subject_close': fields.char('Subject Close', size=64, translate=True),
@@ -284,6 +284,7 @@ class odms_subscription(osv.osv):
 		#return False
 
 		"""
+		self._test_open(cr, uid, ids, context)
 		for sub in self.browse(cr, uid, ids, context=context):
 			tools.email_send(sub.user_id.address_id.email, sub.email, sub.offer_id.email_subject_trial, self._email_process(sub, 'email_subscription'))
 		self.write(cr, uid, ids, {'state':'active'})
@@ -295,6 +296,7 @@ class odms_subscription(osv.osv):
 		return re.sub('\\[(.*)\\]', rregex_replace, body)
 
 	def create_trial(self, cr, uid, ids, context=None):
+		self._test_open(cr, uid, ids, context)
 		for sub in self.browse(cr, uid, ids, context=context):
 			if (not sub.user_id) or (not sub.user_id.address_id) or (not sub.user_id.address_id.email):
 				raise osv.except_osv('Error !','No email defined for this user !')
@@ -368,6 +370,49 @@ class odms_subscription(osv.osv):
 		self.write(cr, uid, subs.id, {'web_server_state':'installing'})
 		res = odms_send(cr, uid, ids, subs.web_server_id.id, 'create_web',{'subs_id':subs.id,'url':url}) 
 		return res
+
+	def user_create(self, cr, uid, ids, context={}):
+		user_ref = self.pool.get('res.users')
+		for sub in self.browse(cr, uid, ids, context):
+			if not sub.partner_id:
+				raise osv.except_osv('Error !','No partner defined for this offer "%s" !' % (sub.offer_id.name,))
+			if not sub.partner_id.address:
+				raise osv.except_osv('Error !','No address defined for this partner !')
+			if not sub.offer_id.portal_id:
+				raise osv.except_osv('Error !','No portal defined for this offer "%s" !' % (sub.offer_id.name,))
+			portal = sub.offer_id.portal_id
+			user = user_ref.search(cr,uid,[('login',"=",sub.email)])
+			if user:
+				self.write(cr, uid, [sub.id], {'owner_id': user[0]})
+				continue
+			newuser_id = user_ref.create(cr,uid,{
+				'name': sub.partner_id.name,
+				'login': sub.email,
+				'password': sub.password,
+				'address_id': sub.partner_id.address[0].id,
+				'action_id': portal.home_action_id and portal.home_action_id.id or portal.menu_action_id.id, 
+				'menu_id': portal.menu_action_id.id, 
+				'groups_id': [(4,portal.group_id)],
+				'company_id': portal.company_id.id,
+			})
+			self.write(cr, uid, [sub.id], {'owner_id': newuser_id})
+		return True
+
+	def _test_open(self, cr, uid, ids, context={}):
+		for sub in self.browse(cr, uid, ids, context):
+			if not sub.partner_id:
+				raise osv.except_osv('Error !','No partner defined for this suscription "%s" !' % (sub.name,))
+			if not sub.owner_id:
+				raise osv.except_osv('Error !','No portal user defined for this suscription "%s" !' % (sub.name,))
+			if not sub.vserv_server_state=='installed':
+				raise osv.except_osv('Error !','Vserver Server is not installed !')
+			#if not sub.vserver_state=='installed':
+			#	raise osv.except_osv('Error !','VServer is not installed !')
+			if not sub.web_server_state=='installed':
+				raise osv.except_osv('Error !','Web server is not installed !')
+			if not sub.bckup_server_state=='installed':
+				raise osv.except_osv('Error !','Backup Server is not installed !')
+		return True
 
 	def create_bckup(self, cr, uid, ids, context=None):
 		subs = self.browse(cr, uid, ids)[0]
@@ -561,6 +606,7 @@ class odms_subscription(osv.osv):
 	_columns = {
 		'name' : fields.char('Subscription name', size=64, required=True),
 		'user_id': fields.many2one('res.users', 'Responsible'),
+		'owner_id': fields.many2one('res.users', 'Portal User'),
 		'partner_id': fields.many2one('res.partner', 'Partner'),
 		'odpartner_id': fields.many2one('odms.partner', 'ODMS Partner'),
 		'email': fields.char('Login', size=64, required=True),
