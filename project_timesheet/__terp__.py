@@ -5,7 +5,9 @@
     "website" : "http://tinyerp.com",
     "category" : "Generic Modules/CCI Project Timesheet",
     "description": """
-        specific module for cci project which will use project module and hr_timesheet_sheet.
+        This module lets you transfer the entries under tasks defined for Project Management to
+        the Timesheet line entries for particular date and particular user  with the effect of creating,editing and deleting either ways.
+
     """,
     "depends" : ["base","project"],
     "init_xml" : [],
