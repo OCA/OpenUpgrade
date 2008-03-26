@@ -7,118 +7,127 @@ import datetime
 
 
 def strToDate(dt):
-        dt_date=datetime.date(int(dt[0:4]),int(dt[5:7]),int(dt[8:10]))
-        return dt_date
+		dt_date=datetime.date(int(dt[0:4]),int(dt[5:7]),int(dt[8:10]))
+		return dt_date
 
 class crossovered_budget(osv.osv):
-    _name = "crossovered.budget"
-    _description = "Crossovered Budget"
-    _columns = {
-        'name': fields.char('Name', size=50, required=True,states={'done':[('readonly',True)]}),
-        'code': fields.char('Code', size=20, required=True,states={'done':[('readonly',True)]}),
-        'creating_user_id': fields.many2one('res.users','User'),
-        'validating_user_id': fields.many2one('res.users','Validate User'),
-        'date_from': fields.date('Start Date',required=True,states={'done':[('readonly',True)]}),
-        'date_to': fields.date('End Date',required=True,states={'done':[('readonly',True)]}),
-        'state' : fields.selection([('draft','Draft'),('confirm','Confirmed'),('validate','Validated'),('done','Done'),('cancel', 'Cancelled')], 'state', select=True, required=True, readonly=True),
-        'crossovered_budget_line': fields.one2many('crossovered.budget.lines', 'crossovered_budget_id', 'Budget Lines',states={'done':[('readonly',True)]} ),
-    }
-    _defaults = {
-        'state': lambda *a: 'draft',
-    }
+	_name = "crossovered.budget"
+	_description = "Crossovered Budget"
 
-    def action_set_to_draft(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state': 'draft'})
-        wf_service = netsvc.LocalService('workflow')
-        for id in ids:
-            wf_service.trg_create(uid, self._name, id, cr)
-        return True
+	_columns = {
+		'name': fields.char('Name', size=50, required=True,states={'done':[('readonly',True)]}),
+		'code': fields.char('Code', size=20, required=True,states={'done':[('readonly',True)]}),
+		'creating_user_id': fields.many2one('res.users','Responsible User'),
+		'validating_user_id': fields.many2one('res.users','Validate User', readonly=True),
+		'date_from': fields.date('Start Date',required=True,states={'done':[('readonly',True)]}),
+		'date_to': fields.date('End Date',required=True,states={'done':[('readonly',True)]}),
+		'state' : fields.selection([('draft','Draft'),('confirm','Confirmed'),('validate','Validated'),('done','Done'),('cancel', 'Cancelled')], 'state', select=True, required=True, readonly=True),
+		'crossovered_budget_line': fields.one2many('crossovered.budget.lines', 'crossovered_budget_id', 'Budget Lines',states={'done':[('readonly',True)]} ),
+	}
 
-    def budget_confirm(self, cr, uid, ids, *args):
+	_defaults = {
+		'state': lambda *a: 'draft',
+		'creating_user_id': lambda self,cr,uid,context: uid,
+	}
 
-        self.write(cr, uid, ids, {
-            'state':'confirm'
-        })
-        return True
+	def action_set_to_draft(self, cr, uid, ids, *args):
+		self.write(cr, uid, ids, {'state': 'draft'})
+		wf_service = netsvc.LocalService('workflow')
+		for id in ids:
+			wf_service.trg_create(uid, self._name, id, cr)
+		return True
 
-    def budget_validate(self, cr, uid, ids, *args):
+	def budget_confirm(self, cr, uid, ids, *args):
 
-        self.write(cr, uid, ids, {
-            'state':'validate'
-        })
-        return True
+		self.write(cr, uid, ids, {
+			'state':'confirm'
+		})
+		return True
 
-    def budget_cancel(self, cr, uid, ids, *args):
+	def budget_validate(self, cr, uid, ids, *args):
 
-        self.write(cr, uid, ids, {
-            'state':'cancel'
-        })
-        return True
+		self.write(cr, uid, ids, {
+			'state':'validate',
+			'validating_user_id': uid,
+		})
+		return True
 
-    def budget_done(self, cr, uid, ids, *args):
+	def budget_cancel(self, cr, uid, ids, *args):
 
-        self.write(cr, uid, ids, {
-            'state':'done'
-        })
-        return True
+		self.write(cr, uid, ids, {
+			'state':'cancel'
+		})
+		return True
+
+	def budget_done(self, cr, uid, ids, *args):
+
+		self.write(cr, uid, ids, {
+			'state':'done'
+		})
+		return True
 
 crossovered_budget()
 
 class crossovered_budget_lines(osv.osv):
 
-    def _pra_amt(self, cr, uid, ids,name,args,context):
-        res = {}
-        for line in self.browse(cr, uid, ids):
-            acc_ids = ','.join([str(x.id) for x in line.general_budget_id.account_ids])
+	def _pra_amt(self, cr, uid, ids,name,args,context):
+		res = {}
+		for line in self.browse(cr, uid, ids):
+			acc_ids = ','.join([str(x.id) for x in line.general_budget_id.account_ids])
 
-            cr.execute("select sum(amount) from account_analytic_line where account_id=%d and (date between to_date('%s','yyyy-mm-dd') and to_date('%s','yyyy-mm-dd')) and general_account_id in (%s)"%(line.analytic_account_id.id,line.date_from,line.date_to,acc_ids))
-            result=cr.fetchone()[0]
-            if result==None:
-                result=0.00
-            res[line.id]=result
-        return res
+			cr.execute("select sum(amount) from account_analytic_line where account_id=%d and (date between to_date('%s','yyyy-mm-dd') and to_date('%s','yyyy-mm-dd')) and general_account_id in (%s)"%(line.analytic_account_id.id,line.date_from,line.date_to,acc_ids))
+			result=cr.fetchone()[0]
+			if result==None:
+				result=0.00
+			res[line.id]=result
+		return res
 
-    def _theo_amt(self, cr, uid, ids,name,args,context):
-        res = {}
-        for line in self.browse(cr, uid, ids):
-            today=datetime.datetime.today()
-            td=today.strftime("%Y-%m-%d")
+	def _theo_amt(self, cr, uid, ids,name,args,context):
+		res = {}
+		for line in self.browse(cr, uid, ids):
+			today=datetime.datetime.today()
+			td=today.strftime("%Y-%m-%d")
 
-            if line.paid_date:
-                if strToDate(td)<=strToDate(line.paid_date):
-                    theo_amt=0.00
-                else:
-                    theo_amt=line.planned_amount
-            else:
-                total=strToDate(line.date_to) - strToDate(line.date_from)
-                elapsed=strToDate(td) -strToDate(line.date_from)
+			if line.paid_date:
+				if strToDate(td)<=strToDate(line.paid_date):
+					theo_amt=0.00
+				else:
+					theo_amt=line.planned_amount
+			else:
+				total=strToDate(line.date_to) - strToDate(line.date_from)
+				if strToDate(td) < strToDate(line.date_from):
+					elapsed = strToDate(td) - strToDate(td)
+				elif strToDate(line.date_to) < strToDate(td):
+					elapsed=total
+				else:
+					elapsed = strToDate(td) - strToDate(line.date_from)
 
-                theo_amt=float(elapsed.days/float(total.days))*line.planned_amount
+				theo_amt=float(elapsed.days/float(total.days))*line.planned_amount
 
-            res[line.id]=theo_amt
-        return res
+			res[line.id]=theo_amt
+		return res
 
-    def _perc(self, cr, uid, ids,name,args,context):
-        res = {}
-        for line in self.browse(cr, uid, ids):
-            if line.theoritical_amount<>0.00:
-                res[line.id]=float(line.practical_amount / line.theoritical_amount)*100
-            else:
-                res[line.id]=0.00
-        return res
-    _name="crossovered.budget.lines"
-    _description = "Crossovered Budget Lines"
-    _columns = {
-        'crossovered_budget_id': fields.many2one('crossovered.budget', 'Crossovered Budget Ref', ondelete='cascade', select=True),
-        'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account Ref',required=True),
-        'general_budget_id': fields.many2one('account.budget.post', 'General Budget Ref',required=True),
-        'date_from': fields.date('Start Date',required=True),
-        'date_to': fields.date('End Date',required=True),
-        'paid_date': fields.date('Paid Date'),
-        'planned_amount':fields.float('Planned Amount',required=True),
-        'practical_amount':fields.function(_pra_amt,method=True, string='Practical Amount',type='float',store=True),
-        'theoritical_amount':fields.function(_theo_amt,method=True, string='Theoritical Amount',type='float',store=True),
-        'percentage':fields.function(_perc,method=True, string='Percentage',type='float',store=True),
+	def _perc(self, cr, uid, ids,name,args,context):
+		res = {}
+		for line in self.browse(cr, uid, ids):
+			if line.theoritical_amount<>0.00:
+				res[line.id]=float(line.practical_amount / line.theoritical_amount)*100
+			else:
+				res[line.id]=0.00
+		return res
+	_name="crossovered.budget.lines"
+	_description = "Crossovered Budget Lines"
+	_columns = {
+		'crossovered_budget_id': fields.many2one('crossovered.budget', 'Crossovered Budget Ref', ondelete='cascade', select=True),
+		'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account Ref',required=True),
+		'general_budget_id': fields.many2one('account.budget.post', 'General Budget Ref',required=True),
+		'date_from': fields.date('Start Date',required=True),
+		'date_to': fields.date('End Date',required=True),
+		'paid_date': fields.date('Paid Date'),
+		'planned_amount':fields.float('Planned Amount',required=True),
+		'practical_amount':fields.function(_pra_amt,method=True, string='Practical Amount',type='float',store=True),
+		'theoritical_amount':fields.function(_theo_amt,method=True, string='Theoritical Amount',type='float',store=True),
+		'percentage':fields.function(_perc,method=True, string='Percentage',type='float',store=True),
 
-     }
+	 }
 crossovered_budget_lines()
