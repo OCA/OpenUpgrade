@@ -153,15 +153,16 @@
 		<field name="section_id" ref="section_support"/>
 	</record>	
 	
-	###################################################
+	######################## BUG TRACKING (menu) ###########################
 	
-	<record model="ir.actions.act_window" id="crm_case_category-act1">
+	<record model="ir.actions.act_window" id="crm_case_categ-act">
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
 		<field name="view_id" ref="crm_case_form_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/New Bug" id="menu_crm_case_categ-act1" action="crm_case_category-act1"/>
+	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/New Bug" id="menu_crm_case_categ-act1" action="crm_case_categ-act"/>
 	
 	
 	<record model="ir.actions.act_window" id="crm_case_category-act_all1">
@@ -243,16 +244,16 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',\'admin\'),(\'state\',\'=\',\'open\')]'"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',uid),(\'state\',\'=\',\'open\')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Bug Tracking/My Bugs/" id="menu_crm_case_categ0-act_my1" action="crm_case_category-act_my1"/>
+	<menuitem name="CRM &amp; SRM/Bug Tracking/My Bugs/My Open Bugs" id="menu_crm_case_categ0-act_my1" action="crm_case_category-act_my1"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category-act_my2">
 		<field name="name">My Bugs With Patches</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',\'admin\'),(\'categ_id\',\'=\','+str(categ2)+'), (\'stage_id\',\'=\','+str(stage5)+'),(\'state\',\'=\',\'open\')]'"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',uid),(\'categ_id\',\'=\','+str(categ2)+'), (\'stage_id\',\'=\','+str(stage5)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/My Bugs/My Open Bugs/My Bugs With Patches" id="menu_crm_case_categ0-act_my2" action="crm_case_category-act_my2"/>
 
@@ -261,7 +262,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',\'admin\'),(\'categ_id\',\'=\','+str(categ1)+'), (\'stage_id\',\'&lt;&gt;\','+str(stage2)+'),(\'state\',\'=\',\'open\')]'"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',uid),(\'categ_id\',\'=\','+str(categ1)+'), (\'stage_id\',\'&lt;&gt;\','+str(stage2)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/My Bugs/My Open Bugs/My Bugs Not Fixed" id="menu_crm_case_categ0-act_my3" action="crm_case_category-act_my3"/>
 
@@ -330,6 +331,105 @@
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'=\','+str(categ3)+'),(\'state\',\'&lt;&gt;\',\'draft\'),(\'state\',\'&lt;&gt;\',\'open\'),(\'state\',\'&lt;&gt;\',\'pending\')]'"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Feature Requests/Old Feature Requests" id="menu_crm_case_categ0-act_f7" action="crm_case_category-act_f7"/>
+	
+	######################## JOB OPPORTUNITIES (menu) ###########################
+
+	<!-- 
+		MY JOBS REQUESTS 
+	-->
+	<record model="ir.actions.act_window" id="crm_case_categ0-act11">
+		<field name="name">My Jobs Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+<!--		<field name="view_mode">tree,form</field>-->
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'user_id\',\'=\',uid)]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/My Jobs Requests" id="menu_crm_case_categ0-act11" action="crm_case_categ0-act11"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_my3">
+		<field name="name">My Unclosed Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'user_id\',\'=\',uid),(\'state\',\'&lt;&gt;\',\'done\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/My Jobs Requests/My Unclosed Requests" id="menu_crm_case_categ0-act_myjobs3" action="crm_case_categ0-act_my3"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_my2">
+		<field name="name">My Jobs Propositions to Review</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'user_id\',\'=\',uid),(\'state\',\'=\',\'draft\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/My Jobs Requests/My Unclosed Requests/My Jobs Propositions to Review" id="menu_crm_case_categ0-act_myjobs2" action="crm_case_categ0-act_my2"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_my1">
+		<field name="name">My Pending Jobs Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'user_id\',\'=\',uid),(\'state\',\'=\',\'pending\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/My Jobs Requests/My Unclosed Requests/My Pending Jobs Requests" id="menu_crm_case_categ0-act_myjobs1" action="crm_case_categ0-act_my1"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_my0">
+		<field name="name">My Open Jobs Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'user_id\',\'=\',uid),(\'state\',\'=\',\'open\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/My Jobs Requests/My Unclosed Requests/My Open Jobs Requests" id="menu_crm_case_categ0-act_myjobs0" action="crm_case_categ0-act_my0"/>	
+	
+	<!-- 
+		ALL JOBS REQUESTS 
+	-->
+	<record model="ir.actions.act_window" id="crm_case_categ0-act111">
+		<field name="name">All Jobs Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/All Jobs Requests" id="menu_crm_case_categ0-act111" action="crm_case_categ0-act111"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_all3">
+		<field name="name">All Unclosed Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'state\',\'&lt;&gt;\',\'done\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/All Jobs Requests/All Unclosed Requests" id="menu_crm_case_categ0-act_myjobs_all3" action="crm_case_categ0-act_all3"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_all2">
+		<field name="name">All Jobs Propositions</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'state\',\'=\',\'draft\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/All Jobs Requests/All Unclosed Requests/All Jobs Propositions" id="menu_crm_case_categ0-act_myjobs_all2" action="crm_case_categ0-act_all2"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_all1">
+		<field name="name">All Pending Jobs Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'state\',\'=\',\'pending\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/All Jobs Requests/All Unclosed Requests/All Pending Jobs Requests" id="menu_crm_case_categ0-act_myjobs_all1" action="crm_case_categ0-act_all1"/>	
+
+	<record model="ir.actions.act_window" id="crm_case_categ0-act_all0">
+		<field name="name">All Open Jobs Requests</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree-view11"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support0)+'),(\'state\',\'=\',\'open\')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Jobs Requests/All Jobs Requests/All Unclosed Requests/All Open Jobs Requests" id="menu_crm_case_categ0-act_myjobs_all0" action="crm_case_categ0-act_all0"/>	
 
 	<!-- 
 		Demo Cases 
