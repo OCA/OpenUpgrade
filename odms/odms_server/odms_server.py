@@ -47,7 +47,10 @@ def newvs():
 
 def newweb(vserv_id, url):
 
+	# TODO : Not limited to 100
+	ipt_rule = 'iptables -t nat -A PREROUTING -d 78.24.129.70 -p tcp -m tcp --dport 80'+vserv_id+'-j DNAT --to-destination 10.1.0.'+vserv_id+':8080'
 
+	os.system(ipt_rule)
 
 	return True
 

@@ -22,6 +22,7 @@ sock_common = xmlrpclib.ServerProxy('http://'+openerp_srv+':8069/xmlrpc/common')
 # Get the uid
 uid = sock_common.login(dbname, username, pwd)
 print "DEBUG : uid",uid
+print "DEBUG : uid",type(uid)
 
 #replace localhost with the address of the openerp server
 sock = xmlrpclib.ServerProxy('http://'+openerp_srv+':8069/xmlrpc/object')
@@ -37,8 +38,11 @@ def _check_access(u,p):
                 return True
         return False
 
-def create_vsv(u,p,subs,module_names=[]):
+def create_vsv(u,p,subs,module_names):
         print "DEBUG - Accessing create_vsv"
+
+        print "DEBUG - module_names :",module_names
+
         # Check access rights
         if not _check_access(u,p):
                 print "DEBUG - Authentication Error"
@@ -47,7 +51,6 @@ def create_vsv(u,p,subs,module_names=[]):
 
         # Install New Vserver
         vsid = odms_server.newvs()
-#	vsid = 47
 
         print "DEBUG - vsid", vsid
 
@@ -75,25 +78,29 @@ def create_vsv(u,p,subs,module_names=[]):
         # Configure new vserver
         sock_vserv = xmlrpclib.ServerProxy('http://'+vsip+':8069/xmlrpc/object')
         print "ODMS Server - DEBUG sock_vserv :",sock_vserv
-        print "ODMS Server - DEBUG module_names :",module_names
-	
+
+	time.sleep(10)
         # Install modules
+        print "ODMS Server - DEBUG module_names :",module_names
         mod_ids = sock_vserv.execute('oddb', 3, 'admin', 'ir.module.module', 'search', [('name','in',module_names)])
         print "ODMS Server - DEBUG module ids :",mod_ids
         res = sock_vserv.execute('oddb', 3, 'admin', 'ir.module.module', 'write', mod_ids ,{'state':'uninstalled'})
         print "ODMS Server - DEBUG module res :",res
+        base_id = sock_vserv.execute('oddb',3,'admin','ir.module.module','search',[('name','=','base')])
+        print "ODMS Server - DEBUG base id :",base_id
+        res = sock_vserv.execute('oddb', 3, 'admin', 'ir.module.module', 'write', base_id ,{'state':'installed'})
+        print "ODMS Server - DEBUG base res :",res
 
         return True
 server.register_function(create_vsv)
 
-def create_web(u,p,subs,url):
+def create_web(u,p,vsid,url):
         if not _check_access(u,p):
                 print "DEBUG - Authentication Error"
                 return 1
 
         # Install new web space
-        # ...
-        wid = odms_server.newweb(subs, url)
+        wid = odms_server.newweb(vsid, url)
 
         print "DEBUG : ODMS Server - Creating new Web space for subscription",subs,"at",url
         res = sock.execute(dbname, uid, pwd, 'odms.subscription', 'write', subs, {'web_server_state':'installed'})
