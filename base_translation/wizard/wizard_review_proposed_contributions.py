@@ -35,7 +35,7 @@ class wizard_review_proposed_contributions(wizard.interface):
         new_res =map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},res)
         filename = tools.config["root_path"] + "/i18n/" + lang + ".csv"
         reader = csv.DictReader(open(filename,'r'),delimiter=',')
-        new_reader =map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},reader)
+        new_reader = map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},reader)
         diff = []
         for l in new_res:
             if l in new_reader:
@@ -56,6 +56,7 @@ class wizard_review_proposed_contributions(wizard.interface):
                 vals['res_id']=res_id['res_id']
                 vals['lang'] = res_id['lang']
                 vals['state']='draft'
+                vals['upload']=False
                 ir_translation_contrib.create(cr,uid,vals)
         return {}    
     def _get_language(sel, cr, uid,context):
