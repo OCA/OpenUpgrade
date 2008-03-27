@@ -293,12 +293,18 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="OD Bundle">
-			<field name="name" colspan="2" select="1"/>
-			<newline/>
-			<field name="product_id"/>
-			<field name="price_type"/>
-			<separator string="Modules" colspan="4"/>
-			<field name="module_ids" colspan="4" nolabel="1"/>
+			<notebook>
+			<page string="General">
+				<field name="name" colspan="2" select="1"/>
+				<newline/>
+				<field name="product_id"/>
+				<field name="price_type"/>
+				<separator string="Description" colspan="4"/>
+				<field name="note" colspan="4" nolabel="1"/>
+			</page><page string="Modules">
+				<field name="module_ids" colspan="4" nolabel="1"/>
+			</page>
+			</notebook>
 			</form>
 		</field>
 	</record>
@@ -335,6 +341,90 @@
 	</record>
 
 	<menuitem name="On Demand/Configuration/Bundles/All bundles" action="action_odms_bundle_list" id="menu_list_bundles" sequence="2"/>
+
+
+	<record model="ir.actions.act_window" id="action_odms_subs_bundle_list">
+		<field name="name">Subscribed Bundles</field>
+		<field name="res_model">odms.subs_bundle</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem
+		name="On Demand/Configuration/Subscription Bundles/All Subscription Bundles"
+		action="action_odms_subs_bundle_list" 
+		id="menu_list_sucs_bundles" 
+		sequence="2"/>
+
+
+	<record model="ir.actions.act_window" id="action_odms_subs_bundle_list_installed">
+		<field name="name">Installed Subscribed Bundles</field>
+		<field name="res_model">odms.subs_bundle</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','installed')]</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem
+		name="On Demand/Configuration/Subscription Bundles/All Subscription Bundles/Installed Subscription Bundles"
+		action="action_odms_subs_bundle_list_installed" 
+		id="menu_list_sucs_bundles_installed" 
+		sequence="2"/>
+
+
+	<record model="ir.ui.view" id="view_odms_subs_bundle_tree">
+		<field name="name">odms.subs_bundle.tree</field>
+		<field name="model">odms.subs_bundle</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Subscribed Bundles">
+				<field name="bundle_id"/>
+				<field name="subscription_id"/>
+				<field name="price"/>
+				<field name="state"/>
+				<button name="%(odms_bundle_active_wizard)d" string="Activate This Service" states="notinstalled" type="action" icon="STOCK_APPLY"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_odms_subs_bundle_form">
+		<field name="name">odms.subs_bundle.form</field>
+		<field name="model">odms.subs_bundle</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Subscribed Bundles">
+				<field name="bundle_id" select="1"/>
+				<field name="subscription_id" select="2"/>
+				<field name="price"/>
+				<newline/>
+				<field name="note" colspan="4"/>
+				<separator string="Status" colspan="4"/>
+				<field name="state" select="1"/>
+				<group colspan="2">
+					<button name="%(odms_bundle_active_wizard)d" string="Activate This Service" states="notinstalled" type="action" icon="STOCK_APPLY"/>
+					<button name="uninstall_bundle" string="Uninstall Service" states="installed" type="object"/>
+				</group>
+			</form>
+		</field>
+	</record>
+
+
+
+	<record model="ir.actions.act_window" id="action_odms_subs_bundle_list_uninstalled">
+		<field name="name">Not Installed Subscribed Bundles</field>
+		<field name="res_model">odms.subs_bundle</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','notinstalled')]</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem
+		name="On Demand/Configuration/Subscription Bundles/All Subscription Bundles/Not Installed Subscription Bundles"
+		action="action_odms_subs_bundle_list_uninstalled" 
+		id="menu_list_sucs_bundles_uninstalled" 
+		sequence="2"/>
+
 
 	<!--
 		OD Module
@@ -386,28 +476,6 @@
 	</record>
 
 	<menuitem name="On Demand/Configuration/Modules/All modules" action="action_odms_module_list" id="menu_list_modules" sequence="2"/>
-
-	<!--
-		OD Subs Bundle
-	-->
-
-	<record model="ir.ui.view" id="view_odms_subs_bundle_form">
-		<field name="name">odms.subs_bundle.form</field>
-		<field name="model">odms.subs_bundle</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="OD Subscription Bundle">
-				<field name="bundle_id"/>
-				<newline/>
-				<field name="state"/>
-				<group colspan="2">
-					<button name="%(odms_bundle_active_wizard)d" string="Activate Service" states="notinstalled" type="action"/>
-					<button name="uninstall_bundle" string="Uninstall Service" states="installed" type="object"/>
-				</group>
-			</form>
-		</field>
-	</record>
-
 
 	<!--
 		OD Subscription
@@ -475,8 +543,22 @@
 				<field name="bundle_ids" colspan="4" nolabel="1">
 					<tree>
 						<field name="bundle_id"/>
+						<field name="price"/>
 						<field name="state"/>
 					</tree>
+					<form string="OD Subscription Bundle">
+						<separator string="General Information" colspan="4"/>
+						<field name="bundle_id"/>
+						<newline/>
+						<field name="price"/>
+						<field name="note"/>
+						<separator string="Status" colspan="4"/>
+						<field name="state"/>
+						<group colspan="2">
+							<button name="%(odms_bundle_active_wizard)d" string="Activate Service" states="notinstalled" type="action"/>
+							<button name="uninstall_bundle" string="Uninstall Service" states="installed" type="object"/>
+						</group>
+					</form>
 				</field>
 			</page>
 			<page string="Statistics">
@@ -494,7 +576,6 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="OD Subscription">
-				<separator string="Customer subscription" colspan="4"/>
 				<field name="date" />
 				<field name="name"/>
 				<field name="partner_id"/>

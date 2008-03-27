@@ -124,6 +124,7 @@ class odms_bundle(osv.osv):
 	_description = "ODMS bundle"
 	_columns = {
 		'name': fields.char('Name', size=64, required=True),
+		'note': fields.text('Description', translate=True),
 		'product_id': fields.many2one('product.product','Product', required=True),
 		'price_type': fields.selection([('fixed','Fixed'),('byusers','By users')],'Price type', required=True),
 		'module_ids': fields.one2many('odms.module', 'bundle_id', 'Modules'),
@@ -609,7 +610,7 @@ class odms_subscription(osv.osv):
 		'url': fields.char('OD Website URL', size=64),
 		'date' : fields.date('Subscription date', readonly=True),
 		'activ_date' : fields.date('Activation date'),
-		'deadline_date' : fields.date('Deadline date'),
+		'deadline_date' : fields.date('Validity Date'),
 		'nbr_users' : fields.integer('Number of users',readonly=True),
 		'max_users' : fields.integer('Maximum users'),
 		'offer_id' : fields.many2one('odms.offer', 'Offer', required=True),
@@ -747,10 +748,30 @@ class odms_subs_bundle(osv.osv):
 		print "DEBUG - inv_id :", inv_id
 		return inv_id
 
+	def _get_price(self, cr , uid, ids, prop, unknow_none, context):
+		if not context:
+			context = {}
+		result = {}
+		for sub in self.browse(cr, uid, ids, context):
+			context['pricelist'] = sub.subscription_id.pricelist_id.id
+			p = self.browse(cr, uid, sub.id,context).bundle_id.product_id.lst_price
+			bywhat = "/ month"
+			if sub.bundle_id.price_type=='byusers':
+				bywhat = "/ month*users"
+			result[sub.id] = '%.2f %s' % (p, bywhat)
+		return result
+
+	def _get_note(self, cr , uid, ids, prop, unknow_none, context):
+		result = {}
+		for sub in self.browse(cr, uid, ids, context):
+			result[sub.id] = sub.bundle_id.note
+		return result
 
 	_columns = {
 		'subscription_id': fields.many2one('odms.subscription', 'Subscription', required=True),
 		'bundle_id': fields.many2one('odms.bundle', 'Bundle', required=True),
+		'note': fields.function(_get_note, method=True, type='text',  string='Description'),
+		'price': fields.function(_get_price, method=True, type='char', size=32,  string='Price'),
 		'state' : fields.selection([('installed','Installed'),('notinstalled','Not installed')],'State', readonly=True),
 	}
 	_defaults = {
