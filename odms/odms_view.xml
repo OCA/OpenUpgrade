@@ -398,11 +398,11 @@
 		<field name="arch" type="xml">
 			<form string="OD Subscription Bundle">
 				<field name="bundle_id"/>
+				<newline/>
 				<field name="state"/>
-				<group colspan="3"/>
-				<group colspan="1">
-				<button name="install_bundle" string="Install bundle" states="notinstalled" type="object"/>
-				<button name="uninstall_bundle" string="Uninstall bundle" states="installed" type="object"/>
+				<group colspan="2">
+					<button name="%(odms_bundle_active_wizard)d" string="Activate Service" states="notinstalled" type="action"/>
+					<button name="uninstall_bundle" string="Uninstall Service" states="installed" type="object"/>
 				</group>
 			</form>
 		</field>

@@ -14,6 +14,12 @@
                         name="odms.create_partner" 
                         id="odms_create_partner_wizard"/>
 
+               <wizard string="Activate Service" 
+                        model="odms.subs_bundle" 
+                        multi="True" 
+                        name="odms.bundle.active" 
+                        id="odms_bundle_active_wizard"/>
+
                <wizard string="Make invoices" 
                         model="odms.subscription" 
                         name="odms.make_invoice" 

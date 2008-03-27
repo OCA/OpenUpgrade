@@ -33,11 +33,14 @@ import pooler
 
 invoice_form = """<?xml version="1.0"?>
 <form string="Create invoices">
-	<separator colspan="4" string="Do you really want to create the invoices ?" />
+	<separator colspan="4" string="How much months do you want to invoice ?" />
+	<field name="month"/>
 </form>
 """
 
-invoice_fields = {}
+invoice_fields = {
+	'month': {'type':'integer','string':'Number of Months', 'default':lambda *args: 12}
+}
 
 ack_form = """<?xml version="1.0"?>
 <form string="Create invoices">
@@ -50,7 +53,7 @@ def _makeInvoices(self, cr, uid, data, context):
 	subs_obj = pooler.get_pool(cr.dbname).get('odms.subscription')
 	newinv = []
 
-	subs_obj.make_invoice(cr, uid, data['ids'])
+	subs_obj.make_invoice(cr, uid, data['ids'], date['form']['month'], context)
 	"""
 	for o in subs_obj.browse(cr, uid, data['ids'], context):
 		for i in o.invoice_ids:

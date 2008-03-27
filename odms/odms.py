@@ -456,7 +456,7 @@ class odms_subscription(osv.osv):
 		return {'partner_id':part_id}
 
 
-	def make_invoice(self, cr, uid, ids, context={}):
+	def make_invoice(self, cr, uid, ids, month=12, context={}):
 		"""Create a new invoice for a subscription"""
 		# Get subscrition
 		subs_obj = self.browse(cr, uid, ids)
@@ -492,27 +492,28 @@ class odms_subscription(osv.osv):
 						raise osv.except_osv('Error !',
 							'There is no income account defined for this product: "%s" (id:%d)'% (b.bundle_id.product_id.name, b.bundle_id.product_id.id))
 					print "DEBUG - Line Account :", al
-	
-					# Get quantity
-					if b.bundle_id.price_type == 'fixed':
-						qty = 1
-					else:
-						qty = subs.max_users
-					print "DEBUG - qty :", qty
-		
+					qty = month
+
 					# get price_unit
+					name=b.bundle_id.name
 					pu = self.pool.get('product.pricelist').price_get(cr, uid, [subs.pricelist_id.id],
 						b.bundle_id.product_id.id, qty or 1.0, subs.partner_id)[subs.pricelist_id.id]
-					print "DEBUG - pu :",pu
-	
+					if not b.bundle_id.price_type == 'fixed':
+						pu = pu * subs.max_users
+						name += ', %d user(s)' % (subs.max_users,)
+
 					# get taxes
 					taxes = b.bundle_id.product_id.taxes_id
-					print "DEBUG - Taxes :", taxes
-					for t in taxes:
-						print "DEBUG - Tax :", t.name
-					# Create invoice lines	
+					taxep = subs.partner_id.property_account_tax
+					if taxep:
+						res5 = [taxep.id]
+						for t in taxes:
+							if not t.tax_group==taxep.tax_group:
+								res5.append(t.id)
+						taxes = res5
+
 					inv_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
-						'name': b.bundle_id.name,
+						'name': name,
 						'account_id': al,
 						'price_unit': pu,
 						'quantity': qty,
@@ -537,10 +538,10 @@ class odms_subscription(osv.osv):
 			print "DEBUG - contact_add_id :",  contact_add_id
 	
 			# Get user => get company => get currency
-			user = self.pool.get('res.users').browse(cr, uid, [uid])
-			print "DEBUG - user :", user[0]
-			print "DEBUG - company :", user[0].company_id.id
-			company = user[0].company_id
+			user = self.pool.get('res.users').browse(cr, uid, uid)
+			print "DEBUG - user :", user
+			print "DEBUG - company :", user.company_id.id
+			company = user.company_id
 			currency = company.currency_id
 			print "DEBUG - currency :",  currency.id
 	
@@ -563,7 +564,13 @@ class odms_subscription(osv.osv):
 			inv_obj = self.pool.get('account.invoice')
 			inv_id = inv_obj.create(cr, uid, inv)
 			inv_obj.button_compute(cr, uid, [inv_id])
-	
+
+			if subs.deadline_date:
+				dd = DateTime.now()
+			else:
+				dd = DateTime.strptime('%Y-%m-%d',subs.deadline)
+			self.write(cr, uid, [subs.id], {'deadline_date': (dd + DateTime.RelativeDateTime(months=month)).strftime('%Y-%m-%d')})
+
 		print "DEBUG - inv_id :", inv_id
 		return inv_id
 
