@@ -37,7 +37,7 @@ class base_module_record(osv.osv):
 	_columns = {
 
 	}
-	def __init__(self, pool):
+	def __init__(self, pool, cr=None):
 		super(base_module_record, self).__init__(pool)
 		self.recording = 0
 		self.recording_data = []
