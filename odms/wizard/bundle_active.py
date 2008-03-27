@@ -88,6 +88,7 @@ Please confirm you want to activate this service.
 
 	""" % (sub.bundle_id.name, price, sub.bundle_id.price_type=='byusers' and '* user' or '', sub.subscription_id.deadline_date or '???', price2,  sub.subscription_id.max_users)
 	else:
+		price = 0.0
 		note = """You are about to order a new service for your On Demand subscription:
 	Service: %s
 	Price: %.2f EUR / month %s
@@ -108,7 +109,8 @@ def _makeInvoices(self, cr, uid, data, context):
 	obj =  pooler.get_pool(cr.dbname).get('odms.subs_bundle')
 	sub = obj.browse(cr, uid, data['id'], context)
 	obj.install_bundle(cr, uid, [data['id']], context)
-	obj.invoice_bundle(cr, uid, [data['id']], data['form']['price'], context)
+	if  data['form']['price']:
+		obj.invoice_bundle(cr, uid, [data['id']], data['form']['price'], context)
 	return True
 
 class active_bundle(wizard.interface):
