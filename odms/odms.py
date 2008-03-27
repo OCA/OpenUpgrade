@@ -517,7 +517,7 @@ class odms_subscription(osv.osv):
 						'account_id': al,
 						'price_unit': pu,
 						'quantity': qty,
-						'uos_id': 1,
+						'uos_id': b.bundle_id.product_id.uom_id.id,
 						'product_id': b.bundle_id.product_id.id,
 						'invoice_line_tax_id': [(6,0,[t.id for t in taxes])],
 					})
@@ -654,6 +654,99 @@ class odms_subs_bundle(osv.osv):
 		# ...
 		self.write(cr, uid, ids, {'state':'notinstalled'})
 		return True
+
+	def invoice_bundle(self, cr, uid, ids, price=1, context={}):
+		"""Create a new invoice for a subscription"""
+		# Get subscrition
+		subs_obj = self.browse(cr, uid, ids, context)
+
+		for b in subs_obj:
+			subs = b.subscription_id
+			if not subs.partner_id:
+				raise osv.except_osv('Error !',
+							'There is no partner defined for this subscription')
+			if not subs.pricelist_id:
+				raise osv.except_osv('Error !',
+							'There is no pricelist defined for this subscription')
+
+			a = subs.partner_id.property_account_receivable.id
+			lines = []
+				
+			al =  b.bundle_id.product_id.product_tmpl_id.property_account_income.id
+			if not al: 
+				al = b.bundle_id.product_id.categ_id.property_account_income_categ.id
+			qty = 1
+
+			# get price_unit
+			name=b.bundle_id.name
+			pu = price
+
+			# get taxes
+			taxes = b.bundle_id.product_id.taxes_id
+			taxep = subs.partner_id.property_account_tax
+			if taxep:
+				res5 = [taxep.id]
+				for t in taxes:
+					if not t.tax_group==taxep.tax_group:
+						res5.append(t.id)
+				taxes = res5
+
+			inv_line_id = self.pool.get('account.invoice.line').create(cr, uid, {
+				'name': name,
+				'account_id': al,
+				'price_unit': pu,
+				'quantity': qty,
+				'uos_id':  b.bundle_id.product_id.uom_id.id,
+				'product_id': b.bundle_id.product_id.id,
+				'invoice_line_tax_id': [(6,0,[t.id for t in taxes])],
+			})
+			lines.append(inv_line_id)
+	
+			# Get payment term
+			if subs.partner_id and subs.partner_id.property_payment_term.id:
+				pay_term = subs.partner_id.property_payment_term.id
+			else:
+				pay_term = False
+	
+			# Get invoice address
+			invoice_add_id = subs.partner_id.address_get(cr, uid, [subs.partner_id.id], ['invoice'])
+			print "DEBUG - invoice_add_id :",  invoice_add_id
+	
+			# Get contact address
+			contact_add_id = subs.partner_id.address_get(cr, uid, [subs.partner_id.id], ['contact'])
+			print "DEBUG - contact_add_id :",  contact_add_id
+	
+			# Get user => get company => get currency
+			user = self.pool.get('res.users').browse(cr, uid, uid)
+			print "DEBUG - user :", user
+			print "DEBUG - company :", user.company_id.id
+			company = user.company_id
+			currency = company.currency_id
+			print "DEBUG - currency :",  currency.id
+	
+			# Set invoice
+			inv = {
+				'name': subs.name,
+				'origin': subs.name,
+				'type': 'out_invoice',
+				'reference': "P%dSO%d"%(subs.partner_id.id,subs.id),
+				'account_id': a,
+				'partner_id': subs.partner_id.id,
+				'address_invoice_id': invoice_add_id['invoice'],
+				'address_contact_id': contact_add_id['contact'],
+				'invoice_line': [(6,0,lines)],
+				'currency_id' : currency.id,
+				'comment': subs.notes,
+				'payment_term': pay_term,
+			}
+			# Create invoice
+			inv_obj = self.pool.get('account.invoice')
+			inv_id = inv_obj.create(cr, uid, inv)
+			inv_obj.button_compute(cr, uid, [inv_id])
+
+		print "DEBUG - inv_id :", inv_id
+		return inv_id
+
 
 	_columns = {
 		'subscription_id': fields.many2one('odms.subscription', 'Subscription', required=True),

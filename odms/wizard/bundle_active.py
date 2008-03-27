@@ -70,11 +70,9 @@ def _get_default(self, cr, uid, data, context):
 	price2 = price2 * month
 
 	if sub.subscription_id.state in ('active','suspended'):
-		print price, price2, sub.subscription_id.max_users
-		print sub.bundle_id.name, price, sub.bundle_id.price_type=='byusers' and '* user' or '', sub.subscription_id.deadline_date or '???', price2
 		note = """You are about to order a new service for your On Demand subscription:
 	Service: %s
-	Price: *.2f EUR / month %s
+	Price: %.2f EUR / month %s
 
 As usual, this fixed price includes:
   - Software
@@ -104,12 +102,13 @@ As you are in a free trial mode, this service will not be invoiced to you.
 
 Please confirm you want to activate this service.
 """ % (sub.bundle_id.name, price, sub.bundle_id.price_type=='byusers' and '* user' or '')
-	return {'note':note}
+	return {'note':note, 'price':price2}
 
 def _makeInvoices(self, cr, uid, data, context):
 	obj =  pooler.get_pool(cr.dbname).get('odms.subs_bundle')
 	sub = obj.browse(cr, uid, data['id'], context)
 	obj.install_bundle(cr, uid, [data['id']], context)
+	obj.invoice_bundle(cr, uid, [data['id']], data['form']['price'], context)
 	return True
 
 class active_bundle(wizard.interface):
