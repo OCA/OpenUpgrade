@@ -7,7 +7,7 @@ from service import security
 import os
 import string
 
-
+auth={'user':'root','pwd':''}
 class tinyerp_AuthRequestHandler(AuthRequestHandler):
 	def handle(self):
 		"""
@@ -91,4 +91,7 @@ class tinyerp_auth(DAVRequestHandler):
 		db,pool = pooler.get_db_and_pool(self.db_name)
 		res = security.login(self.db_name, user, pw)
 		print '\tAuth', user, pw, res
+		if res:
+			auth['user']=user
+			auth['pwd']=pw
 		return bool(res)

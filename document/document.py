@@ -80,7 +80,10 @@ class node_class(object):
 			where.append( ('res_id','=',self.object2.id) )
 			for content in self.object.content_ids:
 				test_nodename = self.object2.name + (content.suffix or '') + (content.extension or '')
-				path = self.path+'/'+self.object2.name + (content.suffix or '') + (content.extension or '')
+				if test_nodename.find('/'):
+					test_nodename=test_nodename.replace('/', '_')
+				path = self.path+'/'+test_nodename
+				#path = self.path+'/'+self.object2.name + (content.suffix or '') + (content.extension or '')
 				if not nodename:
 					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content')
 					res2.append( n)
@@ -205,6 +208,19 @@ class document_directory(osv.osv):
 	}
 	_sql_constraints = [
 		('filename_uniq', 'unique (name,parent_id,ressource_id)', 'The directory name must be unique !')
+	]
+	def _check_recursion(self, cr, uid, ids):
+		level = 100
+		while len(ids):
+			cr.execute('select distinct parent_id from document_directory where id in ('+','.join(map(str,ids))+')')
+			ids = filter(None, map(lambda x:x[0], cr.fetchall()))
+			if not level:
+				return False
+			level -= 1
+		return True
+
+	_constraints = [
+		(_check_recursion, 'Error! You can not create recursive Directories.', ['parent_id'])
 	]
 	def __init__(self, *args, **kwargs):
 		res = super(document_directory, self).__init__(*args, **kwargs)

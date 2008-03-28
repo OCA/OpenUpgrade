@@ -95,7 +95,7 @@ class tinyerp_handler(dav_interface):
 	def get_cr(self, uri):
 		reluri = self.uri2local(uri)
 		dbname = reluri.split('/')[1]
-		uid = security.login(dbname, 'admin', 'admin')
+		uid = security.login(dbname, dav_auth.auth['user'], dav_auth.auth['pwd'])
 		db,pool = pooler.get_db_and_pool(dbname)
 		cr = db.cursor()
 		uri2 = reluri.split('/')[1:]
