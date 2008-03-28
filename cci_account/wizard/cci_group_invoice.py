@@ -106,18 +106,9 @@ def _group_invoice(self, cr, uid, data, context):
                     else:
                         name = line.name
                     #pool_obj.get('account.invoice.line').write(cr,uid,line.id,{'name':name,'sequence':count})
-                    inv_line = pool_obj.get('account.invoice.line').create(cr, uid, {
-                    'name': name,
-                    'account_id':line.account_id.id,
-                    'price_unit': line.price_unit,
-                    'quantity': line.quantity,
-                    'discount': False,
-                    'uos_id': line.uos_id.id,
-                    'product_id':line.product_id.id,
-                    'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],
-                    'note':False,
-                        })
+                    inv_line = pool_obj.get('account.invoice.line').create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':False,'sequence' : count})
                     count=count+1
+                    print "*******************",inv_line
                     line_list.append(inv_line)
                     if m.comment:
                         notes = (notes + m.comment)
