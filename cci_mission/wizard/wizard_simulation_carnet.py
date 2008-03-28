@@ -88,6 +88,14 @@ def _createInvoices(self, cr, uid, data, context):
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=carnet.partner_id.id)
             val['value'].update({'product_id' : prod_id })
             val['value'].update({'quantity' : 1 })
+            force_member=force_non_member=False
+            if carnet.member_price==1:
+                force_non_member=True
+            else:
+                force_member=True
+            price=pool_obj.get('product.product').price_get(cr,uid,[prod_id],False,carnet.partner_id,force_non_member,force_member)
+
+            val['value'].update({'price_unit':price[prod_id]})
             value.append(val)
         for val in value:
             inv_id ={

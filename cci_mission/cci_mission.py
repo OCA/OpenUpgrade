@@ -139,7 +139,7 @@ class cci_missions_embassy_folder(osv.osv):
 				vals.update({'name': seq})
 		temp = super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 		self.__history(cr, uid,self.browse(cr, uid, [temp]), 'Created', history=True)
-		return temp 
+		return temp
 
 
 
@@ -265,19 +265,28 @@ class cci_missions_dossier(osv.osv):
 	def _amount_total(self, cr, uid, ids, name, args, context=None):
 		res ={}
 		data_dosseir = self.browse(cr,uid,ids)
+
 		for data in data_dosseir:
 			this = self.pool.get('cci_missions.dossier').browse(cr,uid,data.id)
 			if this.state =='draft':
 				data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
-				if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-					cost_org = data.type_id.original_product_id.member_price
-					cost_copy = data.type_id.copy_product_id.member_price
-				else:
-					cost_org = data.type_id.original_product_id.list_price
-					cost_copy = data.type_id.copy_product_id.list_price
+#				if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
+#					cost_org = data.type_id.original_product_id.member_price
+#					cost_copy = data.type_id.copy_product_id.member_price
+#				else:
+#					cost_org = data.type_id.original_product_id.list_price
+#					cost_copy = data.type_id.copy_product_id.list_price
+				price_org=self.pool.get('product.product').price_get(cr,uid,[data.type_id.original_product_id.id],False,data_partner)
+				price_copy=self.pool.get('product.product').price_get(cr,uid,[data.type_id.copy_product_id.id],False,data_partner)
+
+				cost_org=price_org[data.type_id.original_product_id.id]
+				cost_copy=price_copy[data.type_id.copy_product_id.id]
+
 				qty_org = data.quantity_original
 				qty_copy = data.quantity_copies
 				subtotal =  data.sub_total
+				if qty_org < 0 or qty_copy < 0:
+					raise osv.except_osv('Input Error!','No. of Copies and Quantity of Originals should be positive.')
 				total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
 				res[data.id] = total
 			else :
