@@ -57,5 +57,4 @@ class crm_cases(osv.osv):
 #             'section_id' :get_section,
 #                 }
 
-
 crm_cases()
