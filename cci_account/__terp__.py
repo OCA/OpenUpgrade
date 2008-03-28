@@ -7,7 +7,7 @@
     "description": """
         specific module for cci project which will use account module (Reports).
     """,
-    "depends" : ["base","account"],
+    "depends" : ["base","account","account_invoice_layout"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["cci_account_wizard.xml","cci_account_view.xml","cci_account_report.xml"],
