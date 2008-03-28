@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+ <terp>
+ 	<data>
+		<record model="board.note.type" id="note_document_type">
+			<field name="name">Document</field>
+ 		</record>
+
+		<record model="ir.ui.view" id="board_document_manager_form">
+			<field name="name">board.document.manager.form</field>
+ 			<field name="model">board.board</field>
+ 			<field name="type">form</field>
+ 			<field name="arch" type="xml">
+				<form string="Document board">
+ 					<hpaned position="100">
+						<child1>
+ 							<action
+								string="Files by me"
+								name="%(report_document.action_view_my_document_tree)d"
+								view_mode="graph,tree"/>
+							<action
+								string="Files by All users"
+								name="%(report_document.action_view_all_document_tree)d"
+								view_mode="graph,tree"/>
+						</child1>
+						<child2>
+							<action
+								string="Files by Directories"
+								name="%(report_document.action_view_all_directory_tree)d"
+								view_mode="graph,tree"/>
+
+
+						</child2>
+ 					</hpaned>
+ 				</form>
+ 			</field>
+ 		</record>
+
+
+		<record model="ir.actions.act_window" id="open_board_document_manager">
+			<field name="name">Document Dashboard</field>
+ 			<field name="res_model">board.board</field>
+ 			<field name="view_type">form</field>
+ 			<field name="view_mode">form</field>
+
+			<field name="view_id" ref="board_document_manager_form"/>
+ 		</record>
+
+ 		<menuitem
+			name="Dashboards/Document/Document Manager"
+			action="open_board_document_manager"
+ 			sequence="1"
+			id="menu_board_document_manager"
+ 			icon="terp-graph"/>
+
+
+ 	</data>
+ </terp>
