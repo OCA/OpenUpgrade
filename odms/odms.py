@@ -35,7 +35,7 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 				print "ODMS Debug - vserver socket :",self.srv_socket
 				print "ODMS Debug - s :",s
 			elif request == 'create_vsv':
-				res = s.create_vsv(self.srv.user,self.srv.password,self.args['subs_id'],self.args['module_names'])
+				res = s.create_vsv(self.srv.user,self.srv.password,self.args['subs_id'],self.args['admin_pass'],self.args['module_names'])
 				print "ODMS Debug - vs_create :",res	
 			elif request == 'create_web':
 				res = s.create_web(self.srv.user,self.srv.password,self.args['subs_id'],
@@ -341,7 +341,7 @@ class odms_subscription(osv.osv):
 			
 		self.write(cr, uid, subs.id, {'vserv_server_state':'installing'})
 		res = odms_send(cr, uid, ids, subs.vserv_server_id.id, 'create_vsv',
-			{'subs_id':subs.id,'module_names':module_names}) 
+			{'subs_id':subs.id,'admin_pass':subs.password,'module_names':module_names}) 
 		return res
 
 	def create_web(self, cr, uid, ids, context=None):
