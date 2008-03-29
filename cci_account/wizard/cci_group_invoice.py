@@ -142,13 +142,16 @@ def _group_invoice(self, cr, uid, data, context):
 
 class group_invoice(wizard.interface):
     def _list_invoice(self, cr, uid, data, context):
+        pool_obj = pooler.get_pool(cr.dbname)
+        model_data_ids = pool_obj.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','invoice_form')])
+        resource_id = pool_obj.get('ir.model.data').read(cr,uid,model_data_ids,fields=['res_id'])[0]['res_id']
         return {
             'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
             'name': 'Invoices',
             'view_type': 'form',
             'view_mode': 'tree,form',
             'res_model': 'account.invoice',
-            'views': False,
+            'views': [(False,'tree'),(resource_id,'form')],
             'context': "{'type':'out_invoice'}",
             'type': 'ir.actions.act_window'
         }
