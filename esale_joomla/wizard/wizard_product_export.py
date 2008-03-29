@@ -157,7 +157,7 @@ def _do_export(self,cr,uid,data,context):
           'esale_joomla_id': esale_joomla_id,
           'quantity': self.pool.get('product.product')._product_virtual_available(cr, uid, [product.id], '', False, {'shop':website.shop_id.id})[product.id],
           'model': product.code or '',
-          'price': product.list_price + product.contrib,
+          'price': price,
           'weight': float(0.0),
           'length': float(0.0),
           'width': float(0.0),

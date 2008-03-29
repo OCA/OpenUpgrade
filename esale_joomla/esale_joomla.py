@@ -317,4 +317,11 @@ class esale_joomla_web_exportlog(osv.osv):
     }
 esale_joomla_web_exportlog()
 
+class product_product(osv.osv):
+    _name = "product.product"
+    _inherit = "product.product"
+    _columns = {
+		'exportable':fields.boolean('Export to website'),
+	}
+product_product()
 

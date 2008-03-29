@@ -65,7 +65,7 @@ def _do_import(self, cr, uid, data, context):
 					osc_product_id=ids[0]
 					osc_product=self.pool.get('esale_joomla.product').browse(cr, uid, osc_product_id)
 					price=orderline['price']
-					price=float(price) - osc_product.product_id.contrib
+					price=float(price)
 					taxes_included=[]
 					for taxe in osc_product.product_id.taxes_id:
 						for t in website.taxes_included_ids:
