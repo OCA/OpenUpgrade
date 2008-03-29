@@ -142,10 +142,10 @@ class odms_module(osv.osv):
 	_columns = {
 		'name': fields.char('Name', size=64, required=True),
 		'bundle_id': fields.many2one('odms.bundle', 'Bundle', required=True),
-		'state' : fields.selection([('installed','Installed'),('notinstalled','Not installed')],'State'),
+		'state' : fields.selection([('installed','Installed'),('notinstalled','Not installed')],'State',required=True),
 	}
 	_defaults = {
-		'state': lambda *a: 'notinstalled',
+		'state': lambda *a: 'installed',
 	}
 odms_module()
 
@@ -159,7 +159,7 @@ class odms_offer(osv.osv):
 		'bundle_ids': fields.many2many('odms.bundle', 'odms_offer_bundles_rel', 'offer', 'bundle', 'Bundles'),
 		'active': fields.boolean('Active'),
 		'section_id': fields.many2one('crm.case.section','Case Section'),
-		'portal_id': fields.many2one('portal.portal','User Portal'),
+		'portal_id': fields.many2one('portal.portal','Customer Portal'),
 		'email_subject_trial': fields.char('Subject Freetrial', size=64, translate=True),
 		'email_subject_subscription': fields.char('Subject Subscription',size=64,  translate=True),
 		'email_subject_close': fields.char('Subject Close', size=64, translate=True),
@@ -169,6 +169,50 @@ class odms_offer(osv.osv):
 	}
 	_defaults = {
 		'active': lambda *a: True,
+		'email_subject_trial': lambda *a: "Your On Demand OpenERP Account",
+		'email_trial': lambda *a: """
+Hello,
+
+Thank you for testing OpenERP On Demand, the first ready to use management
+software.
+
+Your OpenERP account has been activated. You can connect to your OpenERP server
+online through the following url:
+	https://[ sub.url ].od.openerp.com
+We created the following administrator user:
+	Username: admin
+	Password: [sub.password ]
+
+We created two databases for you, with the same environment:
+	test: use it to test our solution
+	production: this will the database kept after the free trial period
+
+You are in a free trial mode. You can try whatever you want on the test database.
+The test database will be removed after the end of the one month free trial period.
+
+You can connect to our portal to track your subscription(s) and to activate
+or desactivate new services for your OpenERP server. To connect to our
+administration portal, use the following address:
+	https://terp.tinyerp.com
+	Username: [ sub.email ]
+	Password: [ sub.password ]
+
+The responsible of your offer is:
+	Name: [ sub.user_id.name ]
+	Phone: [ sub.user_id.address_id.phone ]
+	Email: [ sub.user_id.address_id.email ]
+Do not hesitate to contact him if you have any question.
+
+You subscription ID is '[sub.name]'. Please provide this reference when you
+contact us.
+
+Thank you for testing OpenERP On Demand,
+Enjoy the power of our solution,
+
+-- 
+The OpenERP On Demand Team
+Mail: info@ondemand.openerp.com
+""",
 	}
 odms_offer()
 
@@ -584,7 +628,23 @@ class odms_subscription(osv.osv):
 		print "DEBUG - on_change on partner_id called"
 		return {'value':{'pricelist_id': pricelist}}
 
-	
+	def _get_price(self, cr , uid, ids, prop, unknow_none, context):
+		result = {}
+		context = context or {}
+		for sub in self.browse(cr, uid, ids, context):
+			total = 0.0
+			if sub.pricelist_id:
+				context['pricelist'] = sub.pricelist_id.id
+			for line in sub.bundle_ids:
+				if not line.state=='installed':
+					continue
+				if line.bundle_id.price_type=='byusers':
+					total += line.bundle_id.product_id.lst_price
+				else:
+					total += line.bundle_id.product_id.lst_price * sub.max_users
+			result[sub.id] = total
+		return result
+
 	def _get_vserver_status(self, cr , uid, ids, prop, unknow_none, unknow_dict):
 		subs = self.browse(cr, uid, ids)
 		print "DEBUG - _get_vserver_status - subs",subs
@@ -603,7 +663,7 @@ class odms_subscription(osv.osv):
 	_columns = {
 		'name' : fields.char('Subscription name', size=64, required=True),
 		'user_id': fields.many2one('res.users', 'Responsible'),
-		'owner_id': fields.many2one('res.users', 'Portal User'),
+		'owner_id': fields.many2one('res.users', 'Customer Portal'),
 		'partner_id': fields.many2one('res.partner', 'Partner'),
 		'odpartner_id': fields.many2one('odms.partner', 'ODMS Partner'),
 		'email': fields.char('Login', size=64, required=True),
@@ -625,6 +685,7 @@ class odms_subscription(osv.osv):
 		'vserv_server_state' : fields.selection([('error','Error'),('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'VServer server state', readonly=True),
 		'bckup_server_id': fields.many2one('odms.server', 'ODMS Backup Server'),
 		'bckup_server_state' : fields.selection([('error','Error'),('notinstalled','Not installed'),('installing','Installing'),('installed','Installed')],'Backup server state', readonly=True),
+		'price': fields.function(_get_price, method=True, type='float',digits=(16,2),  string='Price'),
 		'notes' : fields.text('Notes'),
 		'state' : fields.selection([('draft','Draft'),('trial','Free trial'),('active','Active'),('suspended','Suspended'),('deleted','Deleted')],'State', readonly=True),
 	}
