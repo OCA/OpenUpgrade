@@ -715,14 +715,13 @@ class product_lines(osv.osv):
 			res[line.id] = round(line.price_unit * line.quantity)
 		return res
 
-	def product_id_change(self, cr, uid, ids, product_id):
+	def product_id_change(self, cr, uid, ids,product_id,partner_id=False,member_price=False):
 		price_unit=uos_id=prod_name=False
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
 			uos_id=data_product.uom_id.id
 			price_unit=data_product.list_price
 			prod_name=data_product.name
-
 		return {'value': {
 			'uos_id': uos_id,
 			'price_unit': price_unit,
