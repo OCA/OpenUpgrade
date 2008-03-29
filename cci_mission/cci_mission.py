@@ -716,16 +716,21 @@ class product_lines(osv.osv):
 		return res
 
 	def product_id_change(self, cr, uid, ids,product_id,partner_id=False,member_price=False):
-		price_unit=uos_id=prod_name=False
+		price_unit=uos_id=prod_name=a=False
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
+			a =  data_product.product_tmpl_id.property_account_income.id
+			if not a:
+				a = data_product.categ_id.property_account_income_categ.id
 			uos_id=data_product.uom_id.id
 			price_unit=data_product.list_price
 			prod_name=data_product.name
 		return {'value': {
 			'uos_id': uos_id,
 			'price_unit': price_unit,
-			'name':prod_name}
+			'name':prod_name,
+			'account_id' : a,
+			}
 		}
 
 	_columns = {
