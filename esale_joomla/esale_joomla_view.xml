@@ -1,6 +1,16 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+	<record model="ir.ui.view" id="product_normal_form_view">
+			<field name="name">product.normal.form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+			<field name="warranty" position="after">
+				<field name="exportable" />
+			</field>
+		</field>
+	</record>
 	<record model="ir.ui.view" id="view_esale_joomla_form">
 		<field name="name">esale_joomla.web.form</field>
 		<field name="model">esale_joomla.web</field>

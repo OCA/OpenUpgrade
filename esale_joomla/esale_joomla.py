@@ -323,5 +323,8 @@ class product_product(osv.osv):
     _columns = {
 		'exportable':fields.boolean('Export to website'),
 	}
+    _defaults = {
+         'exportable':lambda *a: True,
+    }
 product_product()
 
