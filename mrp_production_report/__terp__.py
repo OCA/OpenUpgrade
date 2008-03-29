@@ -3,7 +3,7 @@
     "version" : "1.0",
     "author" : "Tiny",
     "category" : "Generic Modules/Production",
-    "depends" : ["base","mrp"],
+    "depends" : ["base","mrp","sale"],
     "description": """
     On this module,
     ** Add partner on procurement form which set when Sale order confirm.
