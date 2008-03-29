@@ -422,7 +422,17 @@
 					<page string="Extra Products">
 						<vpaned position="300">
 						<child1>
-							<field name="product_ids" nolabel="1" colspan="4"/>
+							<field name="product_ids" nolabel="1" colspan="4" >
+								<form string="Product Line">
+										<field name="name" select="1" colspan="4"/>
+										<field name="account_id" colspan="4"/>
+										<newline/>
+										<field name="product_id" select="1" on_change="product_id_change(product_id,parent.order_partner_id,parent.member_price)"/>
+										<field name="quantity" select="1"/>
+										<field name="uos_id"/>
+										<field name="price_unit" select="1"/>
+								</form>
+							</field>
 						</child1>
 						<child2>
 						<label string="" colspan="2"/><field name="sub_total" coslapn="2"/>
@@ -507,7 +517,17 @@
 					<page string="Extra Products">
 						<vpaned position="300">
 						<child1>
-							<field name="product_ids" nolabel="1" colspan="4"/> 
+							<field name="product_ids" nolabel="1" colspan="4">
+								<form string="Product Line">
+									<field name="name" select="1" colspan="4"/>
+									<field name="account_id" colspan="4"/>
+									<newline/>
+									<field name="product_id" select="1" on_change="product_id_change(product_id,parent.order_partner_id)"/>
+									<field name="quantity" select="1"/>
+									<field name="uos_id"/>
+									<field name="price_unit" select="1"/>
+								</form>
+							</field>
 						</child1>
 						<child2>
 						<label string="" colspan="2"/><field name="sub_total" coslpan="2"/>
@@ -521,7 +541,7 @@
 						<field name="sending_SPF" readonly="1"/>
 						<newline/>
 						<field name="origin_ids" />
-						<field name="customs_ids"/> 
+						<field name="customs_ids"/>
 						<field name="legalization_ids" colspan="4"/>
 					</page>
 				</notebook>
