@@ -166,16 +166,6 @@
 		</field>
 	</record>
 
-	<record model="ir.actions.act_window" id="action_odms_partner_form">
-		<field name="name">OD Partner</field>
-		<field name="res_model">odms.partner</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
-	</record>
-
-	<menuitem name="On Demand/OD Partners/Add an OD partner" action="action_odms_partner_form" id="menu_form_partner" sequence="1"/>
-
 	<record model="ir.ui.view" id="view_odms_partner_list">
 		<field name="name">odms.partner.list</field>
 		<field name="model">odms.partner</field>
@@ -199,7 +189,7 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
-	<menuitem name="On Demand/OD Partners/All OD partners" action="action_odms_partner_list" id="menu_list_partners" sequence="0"/>
+	<menuitem name="On Demand/Configuration/OD Partners" action="action_odms_partner_list" id="menu_list_partners" sequence="30"/>
 
 
 	<!--
