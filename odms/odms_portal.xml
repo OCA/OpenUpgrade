@@ -31,17 +31,21 @@
 			<form string="Free Trial Request">
 			<notebook>
 			<page string="General">
+				<separator string="General Information" colspan="4"/>
 				<field name="name" select="1" colspan="2" readonly="1"/>
 				<field name="date" select="2" />
 				<field name="offer_id" select="1" />
 				<field name="max_users"/>
-				<field name="email"/>
-				<field name="password"/>
 				<separator string="Login information" colspan="4"/>
+				<field name="email"/>
+				<newline/>
 				<field name="url" colspan="2" select="2"/>
 				<label string=".od.openerp.com" colspan="2" align="0"/>
-
+				<separator string="Notes" colspan="4"/>
+				<field name="notes" colspan="4" nolabel="1">
+				<separator string="State" colspan="4"/>
 				<field name="state" select="1"/>
+				<button string="Request Free Trial" colspan="2" name="save" sur="Your request has been saved !"/>
 			</page>
 			<page string="Services">
 				<field name="bundle_ids" colspan="4" nolabel="1">

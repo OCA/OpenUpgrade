@@ -9,6 +9,7 @@ import threading
 #import odmslib
 import pooler
 
+import random
 import tools
 import re
 
@@ -661,7 +662,7 @@ class odms_subscription(osv.osv):
 		return dict(res)
 	
 	_columns = {
-		'name' : fields.char('Subscription name', size=64, required=True),
+		'name' : fields.char('Subscription name', size=64, required=True, readonly=True),
 		'user_id': fields.many2one('res.users', 'Responsible'),
 		'owner_id': fields.many2one('res.users', 'Customer Portal'),
 		'partner_id': fields.many2one('res.partner', 'Partner'),
@@ -690,15 +691,22 @@ class odms_subscription(osv.osv):
 		'state' : fields.selection([('draft','Draft'),('trial','Free trial'),('active','Active'),('suspended','Suspended'),('deleted','Deleted')],'State', readonly=True),
 	}
 
+	_constraints = [
+		('url_uniq', 'unique (url)', 'This url subsription already exists !\nPlease choose another one.')
+	]
 	_defaults = {
 		'date' : lambda *a: time.strftime('%Y-%m-%d'),
 		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'odms.subscription'),
 		'state' : lambda *a: 'draft',
-		'user_id' : lambda self,cr, uid,ctx: uid,
+		'user_id' : lambda self,cr, uid,ctx: (not (ctx and ctx.get('portal',False))) and uid or False,
+		'owner_id' : lambda self,cr, uid,ctx: (ctx and ctx.get('portal',False)) and uid or False,
+		'partner_id': lambda self,cr,uid,ctx: (ctx and ctx.get('portal',False)) and self.browse(cr,uid,uid,ctx or{}).partner_id.id or False,
+		'email': lambda self,cr,uid,ctx: (ctx and ctx.get('portal',False)) and self.browse(cr,uid,uid,ctx or{}).login or False,
+		'password': lambda *args: str(random.randint(1000000,9999999)),
 		'web_server_state' : lambda *a: 'notinstalled',
 		'vserv_server_state' : lambda *a: 'notinstalled',
 		'bckup_server_state' : lambda *a: 'notinstalled',
-		'max_users' : lambda *a: 1,
+		'max_users' : lambda *a: 5,
 	}
 	_order = "date desc"
 odms_subscription()
