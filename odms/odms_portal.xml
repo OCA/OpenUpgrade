@@ -22,6 +22,45 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_odms_subscription_form_new_portal">
+		<field name="name">odms.subscription.portal.new.form</field>
+		<field name="model">odms.subscription</field>
+		<field name="type">form</field>
+		<field name="priority" eval="20"/>
+		<field name="arch" type="xml">
+			<form string="Free Trial Request">
+			<notebook>
+			<page string="General">
+				<field name="name" select="1" colspan="2" readonly="1"/>
+				<field name="date" select="2" />
+				<field name="offer_id" select="1" />
+				<field name="max_users"/>
+				<field name="email"/>
+				<field name="password"/>
+				<separator string="Login information" colspan="4"/>
+				<field name="url" colspan="2" select="2"/>
+				<label string=".od.openerp.com" colspan="2" align="0"/>
+
+				<field name="state" select="1"/>
+			</page>
+			<page string="Services">
+				<field name="bundle_ids" colspan="4" nolabel="1">
+					<tree>
+						<field name="bundle_id"/>
+						<field name="state"/>
+					</tree>
+				</field>
+			</page>
+			<page string="Statistics">
+				<field name="nbr_users"/>
+				<field name="price"/>
+			</page>
+			</notebook>
+			</form>
+		</field>
+	</record>
+
+
 	<record model="ir.ui.view" id="view_odms_subscription_form_portal">
 		<field name="name">odms.subscription.portal.form</field>
 		<field name="model">odms.subscription</field>
@@ -60,6 +99,7 @@
 			</page>
 			<page string="Statistics">
 				<field name="nbr_users"/>
+				<field name="price"/>
 			</page>
 			</notebook>
 			</form>
@@ -105,6 +145,15 @@
 		</field>
 	</record>
 
+	<record model="ir.actions.act_window" id="action_odms_subscription_list">
+		<field name="name">New Free Trial Subscription</field>
+		<field name="res_model">odms.subscription</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_id" ref="view_odms_subscription_form_new_portal"/>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="domain">{'portal':True}</field>
+	</record>
 
 </data>
 </terp>

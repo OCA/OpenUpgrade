@@ -233,15 +233,12 @@
 					<field name="email_subject_subscription" colspan="2" nolabel="1"/>
 					<field name="email_trial" colspan="2" nolabel="1"/>
 					<field name="email_subscription" colspan="2" nolabel="1"/>
-					<group colspan="2" col="2">
-						<separator string="Close" colspan="2"/>
-						<field name="email_subject_close" colspan="2" nolabel="1"/>
-						<field name="email_close" colspan="2" nolabel="1"/>
-					</group>
-					<group string="Legend" colspan="2">
-						<label string="Brackets are evaluated, you can use the 'sub' object" colspan="4" align="0.0"/>
-						<label string="Exemple: [ sub.user_id.name ] or [ sub.email ]" colspan="4" align="0.0"/>
-					</group>
+					<separator string="Close" colspan="2"/>
+					<separator string="Legend" colspan="2"/>
+					<field name="email_subject_close" colspan="2" nolabel="1"/>
+					<label string="Brackets are evaluated, you can use the 'sub' object" colspan="2" align="0.0"/>
+					<field name="email_close" colspan="2" nolabel="1"/>
+					<label string="Exemple: [ sub.user_id.name ] or [ sub.email ]" colspan="2" align="0.0"/>
 				</page>
 			</notebook>
 			</form>
