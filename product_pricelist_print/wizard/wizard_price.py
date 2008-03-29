@@ -58,10 +58,8 @@ class wizard_qty(wizard.interface):
         },
         'price': {
             'actions': [],
-            'result': {'type':'print', 'report':'pricelist.pricelist', 'state':'end'}
+            'result': {'type':'print', 'report':'product.pricelist', 'state':'end'}
         }
 
     }
 wizard_qty('product.price_list')
-
-
