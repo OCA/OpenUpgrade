@@ -36,15 +36,24 @@ def odms_send(cr, uid, ids, server_id, request, args={}, context={}):
 				print "ODMS Debug - vserver socket :",self.srv_socket
 				print "ODMS Debug - s :",s
 			elif request == 'create_vsv':
-				res = s.create_vsv(self.srv.user,self.srv.password,self.args['subs_id'],self.args['admin_pass'],self.args['module_names'])
+				res = s.create_vsv(self.srv.user,self.srv.password,self.args['subs_id'],
+					self.args['admin_pass'],self.args['module_names'])
 				print "ODMS Debug - vs_create :",res	
 			elif request == 'create_web':
 				res = s.create_web(self.srv.user,self.srv.password,self.args['subs_id'],
 					self.args['vserv_id'],self.args['url'])
 				print "ODMS Debug - web_create :",res
 			elif request == 'create_bck':
-				res = s.create_bck(srv.user,srv.password,args['subs_id'])
+				res = s.create_bck(self.srv.user,self.srv.password,self.args['subs_id'])
 				print "ODMS Debug - bck_create :",res
+			elif request == 'install_bundle':
+				res = s.install_bundle(self.srv.user,self.srv.password,self.args['vserv_id'],
+					self.args['admin_pass'],self.args['module_names'])
+				print "ODMS Debug - install_bundle :",res
+			elif request == 'get_nbr_users':
+				res = s.get_nbr_users(self.srv.user,self.srv.password,self.args['vserv_id'],
+					self.args['admin_pass'])
+				print "ODMS Debug - get_nbr_users :",res
 			else:
 				raise osv.except_osv('Error !','Request:',request,' unknow')
 
@@ -182,6 +191,8 @@ online through the following url:
 We created the following administrator user:
 	Username: admin
 	Password: [sub.password ]
+
+Please do not rename that user and don't change the passorwd
 
 We created two databases for you, with the same environment:
 	test: use it to test our solution
@@ -645,6 +656,13 @@ class odms_subscription(osv.osv):
 			result[sub.id] = total
 		return result
 
+	def _get_nbr_users(self, cr, uid, ids):
+		subs = sel.browse(cr, uid , ids)
+		res = odms_send(cr, uid, ids, subs.vserv_server_id.id, 'get_nbr_users',
+			{'vserv_id':subs.vserver_id.name,'admin_pass':subs.password})
+
+		return True
+
 	def _get_vserver_status(self, cr , uid, ids, prop, unknow_none, unknow_dict):
 		subs = self.browse(cr, uid, ids)
 		print "DEBUG - _get_vserver_status - subs",subs
@@ -716,7 +734,21 @@ class odms_subs_bundle(osv.osv):
 	_description = "ODMS Subscription bundle"
 
 	def install_bundle(self, cr, uid, ids, context={}):
-		# ...
+		bndl = self.browse(cr, uid, ids)[0]
+		subs = bndl.subscription_id
+		print "DEBUG - install_bundle - subs :",subs
+		module_ids = bndl.bundle_id.module_ids
+		print "DEBUG - install_bundle - module_ids :",module_ids
+	
+		# Get modules name	
+		module_names = []
+		for m in module_ids:
+			module_names.append(m.name)
+		print "DEBUG - install_bundle - module_names :",module_names
+
+		res = odms_send(cr, uid, ids, subs.vserv_server_id.id, 'install_bundle',
+			{'vserv_id':subs.vserver_id.name,'admin_pass':subs.password,'module_names':mod_names})
+
 		self.write(cr, uid, ids, {'state':'installed'})
 		return True
 
