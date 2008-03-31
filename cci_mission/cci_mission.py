@@ -599,18 +599,27 @@ class cci_missions_ata_carnet(osv.osv):
 			res[p_id.id]=p_id.partner_id.insurer_id
 		return res
 
-	def onchange_type_carnet(self, cr, uid, ids,type_id):
-		if not ids:
-			return {}
+	def onchange_type_carnet(self, cr, uid, ids,type_id,own_risk):
 		if not type_id:
 			return {'value': {'warranty_product_id' : False}}
-		data_carnet = self.browse(cr,uid,ids[0])
 		data_carnet_type = self.pool.get('cci_missions.dossier_type').browse(cr,uid,type_id)
-		if not data_carnet.own_risk:
-			return {'value': {'warranty_product_id' : data_carnet_type.warranty_product_2.id}}
-		else:
+		if own_risk:
 			return {'value': {'warranty_product_id' : data_carnet_type.warranty_product_1.id}}
+		else:
+			return {'value': {'warranty_product_id' : data_carnet_type.warranty_product_2.id}}
 		return {}
+
+	def onchange_own_risk(self,cr,uid,ids,type_id,own_risk):
+		if not type_id:
+			return {'value': {'warranty_product_id' : False}}
+		warranty_prod = False
+		data_carnet_type = self.pool.get('cci_missions.dossier_type').browse(cr,uid,type_id)
+		if own_risk:
+			warranty_prod =data_carnet_type.warranty_product_1.id
+		else:
+			warranty_prod = data_carnet_type.warranty_product_2.id
+		return {'value':{'warranty_product_id':warranty_prod}}
+
 	def _get_member_state(self, cr, uid, ids, name, args, context=None):
 		res={}
 		partner_ids = self.browse(cr,uid,ids)
