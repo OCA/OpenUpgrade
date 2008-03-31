@@ -54,6 +54,7 @@ crm_case_log()
 class res_partner(osv.osv):
 	_inherit = 'res.partner'
 	_description = 'res.partner'
+
 	_columns = {
 		'asker_name': fields.char('Asker Name',size=50),
 		'asker_address': fields.char('Asker Address',size=50),
@@ -457,8 +458,13 @@ class cci_missions_legalization(osv.osv):
 		result={}
 		asker_name=False
 		sender_name=False
+		member_state=False
 		if order_partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
+			if partner_info.membership_state == 'none': #the boolean "Apply the member price" should be set to TRUE or FALSE when the partner is changed in regard of the membership state of him.
+				member_state = False
+			else:
+				member_state = True
 			if not partner_info.asker_name:
 				asker_name=partner_info.name
 			else:
@@ -469,7 +475,9 @@ class cci_missions_legalization(osv.osv):
 				sender_name=partner_info.sender_name
 		result = {'value': {
 			'asker_name': asker_name,
-			'sender_name': sender_name}
+			'sender_name': sender_name,
+			'member_price':member_state
+			}
 		}
 		return result
 
@@ -640,6 +648,17 @@ class cci_missions_ata_carnet(osv.osv):
 				sum += line_id.price_subtotal
 			res[p_id.id]=sum
 		return res
+
+	def onchange_partner_id(self,cr,uid,ids,partner_id):
+		#the boolean "Apply the member price" should be set to TRUE or FALSE when the partner is changed in regard of the membership state of him.
+		member_state = False
+		if partner_id:
+			partner_info = self.pool.get('res.partner').browse(cr, uid,partner_id)
+			if partner_info.membership_state == 'none':
+				member_state = False
+			else:
+				member_state = True
+		return {'value':{'member_price' : member_state}}
 
 	_columns = {
 		'id': fields.integer('ID', readonly=True),
