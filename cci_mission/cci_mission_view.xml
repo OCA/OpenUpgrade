@@ -688,7 +688,7 @@
 				<notebook>
 					<page string="General">
 						<field name="name" select="1"/>
-						<field name="type_id" domain="[('section','=','ATA')]" on_change="onchange_type_carnet(type_id)"/>
+						<field name="type_id" domain="[('section','=','ATA')]" on_change="onchange_type_carnet(type_id,own_risk)"/>
 						<field name="creation_date" select="2"/>
 						<field name="validity_date" select="2"/>
 						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)"/>
@@ -715,7 +715,7 @@
 						<field name="double_signature" />
 						<field name="initial_pages" />
 						<field name="insurer_agreement" />
-						<field name="own_risk" />
+						<field name="own_risk" on_change="onchange_own_risk(type_id,own_risk)"/>
 						<newline/>
 						<field name="warranty" />
 						<field name="warranty_product_id" />
