@@ -93,12 +93,18 @@ def _group_invoice(self, cr, uid, data, context):
         line_list =[]
         count = 0
         for data in l['invoices']:
-            id_note=pool_obj.get('account.invoice.line').create(cr,uid,{'name':'customer ref','state':'text','sequence':count}) # a new line of type 'note' with all the customer reference (if there is/are one/several on some invoices of this bloc)
+            customer_ref = ''
+            line_obj = pool_obj.get('account.invoice.line')
+            id_note=line_obj.create(cr,uid,{'name':customer_ref,'state':'text','sequence':count}) # a new line of type 'note' with all the customer reference (if there is/are one/several on some invoices of this bloc)
             count=count+1
             line_list.append(id_note)
             data_inv=obj_inv.browse(cr,uid,data['inv_id'])
             notes = ''
             for m in data_inv:
+                if m.reference:
+                    customer_ref = customer_ref +' ' + m.reference
+                if m.comment:
+                    notes = (notes + m.comment)
                 for line in m.invoice_line:
                     #all the lines copied and ordered by name (the new name)
                     if m.name:
@@ -108,18 +114,16 @@ def _group_invoice(self, cr, uid, data, context):
                     #pool_obj.get('account.invoice.line').write(cr,uid,line.id,{'name':name,'sequence':count})
                     inv_line = pool_obj.get('account.invoice.line').create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':False,'sequence' : count})
                     count=count+1
-                    print "*******************",inv_line
                     line_list.append(inv_line)
-                    if m.comment:
-                        notes = (notes + m.comment)
                 obj_inv.write(cr,uid,m.id,{'state':'cancel'})
-            id_note1=pool_obj.get('account.invoice.line').create(cr,uid,{'name':notes,'state':'text','sequence':count})# a new line of type 'note' with all the old invoice note
+            line_obj.write(cr,uid,id_note,{'name':customer_ref})
+            id_note1=line_obj.create(cr,uid,{'name':notes,'state':'text','sequence':count})# a new line of type 'note' with all the old invoice note
             count=count+1
             line_list.append(id_note1)
-            id_linee=pool_obj.get('account.invoice.line').create(cr,uid,{'state':'line','sequence':count}) #a new line of type 'line'
+            id_linee=line_obj.create(cr,uid,{'state':'line','sequence':count}) #a new line of type 'line'
             count=count+1
             line_list.append(id_linee)
-            id_stotal=pool_obj.get('account.invoice.line').create(cr,uid,{'name':'Subtotal','state':'subtotal','sequence':count})#a new line of type 'subtotal'
+            id_stotal=line_obj.create(cr,uid,{'name':'Subtotal','state':'subtotal','sequence':count})#a new line of type 'subtotal'
             count=count+1
             line_list.append(id_stotal)
         inv = {
