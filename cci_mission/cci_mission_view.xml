@@ -691,7 +691,7 @@
 						<field name="type_id" domain="[('section','=','ATA')]" on_change="onchange_type_carnet(type_id)"/>
 						<field name="creation_date" select="2"/>
 						<field name="validity_date" select="2"/>
-						<field name="partner_id" select="1"/>
+						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id)"/>
 						<field name="partner_insurer_id" />
 						<field name="partner_member_state" />
 						<field name="member_price" />
