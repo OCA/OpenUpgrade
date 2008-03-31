@@ -277,8 +277,8 @@ class cci_missions_dossier(osv.osv):
 #				else:
 #					cost_org = data.type_id.original_product_id.list_price
 #					cost_copy = data.type_id.copy_product_id.list_price
-				price_org=self.pool.get('product.product').price_get(cr,uid,[data.type_id.original_product_id.id],False,data_partner)
-				price_copy=self.pool.get('product.product').price_get(cr,uid,[data.type_id.copy_product_id.id],False,data_partner)
+				price_org=self.pool.get('product.product').price_get(cr,uid,[data.type_id.original_product_id.id],partner_id=data_partner)
+				price_copy=self.pool.get('product.product').price_get(cr,uid,[data.type_id.copy_product_id.id],partner_id=data_partner)
 
 				cost_org=price_org[data.type_id.original_product_id.id]
 				cost_copy=price_copy[data.type_id.copy_product_id.id]
@@ -736,13 +736,21 @@ class product_lines(osv.osv):
 
 	def product_id_change(self, cr, uid, ids,product_id,partner_id=False,member_price=False):
 		price_unit=uos_id=prod_name=a=False
+
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
 			a =  data_product.product_tmpl_id.property_account_income.id
 			if not a:
 				a = data_product.categ_id.property_account_income_categ.id
 			uos_id=data_product.uom_id.id
-			price_unit=data_product.list_price
+			force_member=force_non_member=False
+			if member_price:
+				force_member=True
+			else:
+				force_non_member=True
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
+			price=self.pool.get('product.product').price_get(cr,uid,[product_id],partner_id=data_partner,force_non_member=force_non_member,force_member=force_member)
+			price_unit=price[product_id]
 			prod_name=data_product.name
 		return {'value': {
 			'uos_id': uos_id,
