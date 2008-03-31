@@ -400,14 +400,14 @@ class Product(osv.osv):
 
 			if partner_id:
 				state = partner_id.membership_state
-				if (state in ['waiting','associated','free','paid','invoiced']) or force_non_member:
+				if (state in ['waiting','associated','free','paid','invoiced']) or force_member:
 					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).member_price
 				else:
 					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).lst_price
 #				if force_non_member:
 #					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).member_price
 
-				if force_member:
+				if force_non_member:
 					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).lst_price
 			else:
 
