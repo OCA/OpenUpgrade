@@ -106,7 +106,7 @@ def _createInvoices(self, cr, uid, data, context):
                 'name': embassy.name,
                 'origin': embassy.name,
                 'type': 'out_invoice',
-                'reference': False,
+                'reference': embassy.customer_reference,
                 'account_id': embassy.partner_id.property_account_receivable.id,
                 'partner_id': embassy.partner_id.id,
                 'address_invoice_id':address_invoice,
