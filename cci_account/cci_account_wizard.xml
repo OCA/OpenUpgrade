@@ -49,5 +49,17 @@
 			type="wizard"
 			id="account.group_invoice"/>
 
+	<wizard
+			string="Enlist Vat Details"
+			model="res.partner"
+			name="list.vat.detail"
+			menu="False"
+			id="partner.wizard_vat"/>
+	<menuitem
+			name="Partners/Amount and Vat Details"
+			action="partner.wizard_vat"
+			type="wizard"
+			id="partner.wizard_vat_menu"/>
+
 	</data>
 </terp>
