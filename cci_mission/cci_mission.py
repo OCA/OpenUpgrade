@@ -60,7 +60,7 @@ class res_partner(osv.osv):
 		'asker_address': fields.char('Asker Address',size=50),
 		'asker_zip_id': fields.many2one('res.partner.zip','Asker Zip Code'),
 		'sender_name': fields.char('Sender Name',size=50),
-		'insurer_id' : fields.integer('Insurer ID'),
+		'insurer_id' : fields.char('Insurer ID',size=50),
 	}
 
 res_partner()
@@ -675,7 +675,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'usage_id': fields.many2one('cci_missions.ata_usage','Usage',required=True),
 		'goods': fields.char('Goods',size=80),
 		'area_id': fields.many2one('cci_missions.area','Area',required=True),
-		'insurer_agreement' : fields.integer('Insurer Agreement'),
+		'insurer_agreement' : fields.char('Insurer Agreement',size=50),
 		'own_risk' : fields.boolean('Own Risks'),
 		'goods_value': fields.float('Goods Value',required=True),
 		'double_signature' : fields.boolean('Double Signature'),
