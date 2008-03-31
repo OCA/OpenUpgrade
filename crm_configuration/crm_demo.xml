@@ -13,7 +13,10 @@
 		<field name="name">Bug Tracking</field>
 		<field name="code">BugSup</field>
 	</record>
-
+	<record model="crm.case.section" id="section_support1">
+		<field name="name">Meetings</field>
+		<field name="code">Mtngs</field>
+	</record>
 	<!--
 	Case Categories
 	-->
@@ -43,6 +46,17 @@
 		<field name="name">Feature Requests</field>
 		<field name="section_id" ref="section_support"/>
 	</record>
+
+		<!--	For Meetings	-->
+	
+	<record model="crm.case.categ" id="categ_meet1">
+		<field name="name">HR</field>
+		<field name="section_id" ref="section_support1"/>
+	</record>
+	<record model="crm.case.categ" id="categ_meet2">
+		<field name="name">Technical</field>
+		<field name="section_id" ref="section_support1"/>
+	</record>	
 
 	<!--
 	Case Category2
@@ -120,6 +134,43 @@
          
 	<record model="crm.case.stage" id="stage1">
 		<field name="name">Accepted as Bug</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
+	
+	<record model="crm.case.stage" id="stage2">
+		<field name="name">Fixed</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
+
+	<record model="crm.case.stage" id="stage3">
+		<field name="name">Won't fix</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
+	
+	<record model="crm.case.stage" id="stage4">
+		<field name="name">Invalid</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
+
+	<record model="crm.case.stage" id="stage5">
+		<field name="name">Awaiting Response</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
+	
+	<record model="crm.case.stage" id="stage6">
+		<field name="name">Works For Me</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
+	
+	<record model="crm.case.stage" id="stage7">
+		<field name="name">Future</field>
+		<field name="section_id" ref="section_support"/>
+	</record>	
+	
+         <!--	For Meetings	-->
+         
+	<record model="crm.case.stage" id="stage1">
+		<field name="name">Proceed</field>
 		<field name="section_id" ref="section_support"/>
 	</record>	
 	
@@ -776,6 +827,50 @@
 		<field name="act_window_id" ref="crm_case_categ0-act_all0"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Jobs Requests/All Jobs Requests/All Unclosed Requests/All Open Jobs Requests" id="menu_crm_case_categ0-act_myjobs_all0" action="crm_case_categ0-act_all0"/>	
+
+	######################## MEETINGS (menu) ###########################
+	<record model="ir.actions.act_window" id="crm_case_categ_meet">
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+')]'"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_form__meet">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm_case_form_view_meet"/>
+		<field name="act_window_id" ref="crm_case_categ_meet"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_meet">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree_view_meet"/>
+		<field name="act_window_id" ref="crm_case_categ_meet"/>
+	</record>	
+	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/New Meeting" id="menu_crm_case_categ_meet" action="crm_case_categ_meet"/>
+
+	<record model="ir.actions.act_window" id="crm_case_category-act_meetall1">
+		<field name="name">Meetings Waiting Approval</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="crm_case_tree_view_meet"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'state\',\'=\',\'draft\')]'"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_meetall1">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree_view_meet"/>
+		<field name="act_window_id" ref="crm_case_category-act_meetall1"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_meetall1">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm_case_form_view_meet"/>
+		<field name="act_window_id" ref="crm_case_category-act_meetall1"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/Meetings Waiting Approval" id="menu_crm_case_categ0-act_meetall1" action="crm_case_category-act_meetall1"/>
+
 
 	<!-- 
 		((((((((((( Demo Cases ))))))))))) 
