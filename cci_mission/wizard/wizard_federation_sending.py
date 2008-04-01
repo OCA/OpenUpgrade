@@ -146,7 +146,6 @@ class wizard_fed_send(wizard.interface):
 
         if res_file1:
             file_csv1=tools.file_open(root_path+'/carnet_1.csv','rb',subdir=None)
-            print "file_csv1",file_csv1
             files_attached=[('Ata_carnet_csv_1.csv',file_csv1.read())]
         if res_file2:
             file_csv2=tools.file_open(root_path+'/carnet_2.csv','rb',subdir=None)
