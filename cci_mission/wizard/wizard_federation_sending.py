@@ -124,11 +124,12 @@ class wizard_fed_send(wizard.interface):
         cr.execute('select id from cci_missions_ata_carnet where federation_sending_date is  null and ok_state_date between %s'%(period))
         res_file1=cr.fetchall()
         lines=[]
+        root_path=tools.config.options['root_path']
         if res_file1:
             lines=self.make_csv(cr, uid,res_file1,file2=0)
-            self.write_csv('carnet_1.csv',fields,lines)
+            self.write_csv(root_path+'/carnet_1.csv',fields,lines)
         # First CSV created
-        # Process for secodn CSV -Start
+        # Process for second CSV -Start
         today=datetime.datetime.today()
         _date=datetime.date(today.year-2,today.month,today.day)
         comp_date=_date.strftime('%Y-%m-%d')
@@ -137,17 +138,18 @@ class wizard_fed_send(wizard.interface):
         lines=[]
         if res_file2:
             lines=self.make_csv(cr, uid,res_file2,file2=1)
-            self.write_csv('carnet_2.csv',fields,lines)
+            self.write_csv(root_path+'/carnet_2.csv',fields,lines)
         # Second CSV created.
         if res_file1==[] and res_file2==[]:
             raise wizard.except_wizard('Notification !', 'No Records Found to make the CSV files.Choose other criteria.')
         files_attached=[]
 
         if res_file1:
-            file_csv1=tools.file_open('carnet_1.csv','rb',subdir=None)
+            file_csv1=tools.file_open(root_path+'/carnet_1.csv','rb',subdir=None)
+            print "file_csv1",file_csv1
             files_attached=[('Ata_carnet_csv_1.csv',file_csv1.read())]
         if res_file2:
-            file_csv2=tools.file_open('carnet_2.csv','rb',subdir=None)
+            file_csv2=tools.file_open(root_path+'/carnet_2.csv','rb',subdir=None)
             files_attached.append(('Ata_carnet_csv_2.csv',file_csv2.read()))
 
         src=tools.config.options['smtp_user']
