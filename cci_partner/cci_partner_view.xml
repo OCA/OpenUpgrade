@@ -247,7 +247,7 @@
 			<field name="res_model">res.partner.state</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Partners/Configuration/States/Activity State" groups="admin" action="action_partner_state" id="menu_partner_state"/>
+		<menuitem name="Partners/Configuration/States/Activity State" groups="base.group_admin" action="action_partner_state" id="menu_partner_state"/>
 
 <!-- view for res.partner.state2 -->
 		<record model="ir.ui.view" id="view_partner_state2_form">
@@ -266,7 +266,7 @@
 			<field name="res_model">res.partner.state2</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Partners/Configuration/States/Customer State" groups="admin" action="action_partner_state2" id="menu_partner_state2"/>
+		<menuitem name="Partners/Configuration/States/Customer State" groups="base.group_admin" action="action_partner_state2" id="menu_partner_state2"/>
 
 <!-- view for res.partner.activity ... -->
 		<record model="ir.ui.view" id="view_partner_activity_form">
