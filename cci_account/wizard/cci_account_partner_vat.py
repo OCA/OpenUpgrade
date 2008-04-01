@@ -38,7 +38,10 @@ class wizard_vat(wizard.interface):
                 record.append('None')
             for ads in obj_partner.address:
                 if ads.type=='default':
-                    record.append(ads.country_id.name)
+                    if ads.country_id:
+                        record.append(ads.country_id.name)
+                    else:
+                        record.append('None')
             cr.execute('select id from account_invoice where partner_id=%d and date_invoice between %s and state='"'paid'"''%(p_id,period))
             invoice_ids=cr.fetchall()
             inv_list=[x[0] for x in invoice_ids]
@@ -49,14 +52,12 @@ class wizard_vat(wizard.interface):
             sum_tot=0.00
             for invoice in inv_list:
                 obj_invoice=pooler.get_pool(cr.dbname).get('account.invoice').browse(cr,uid,invoice)
-
                 sum_vat +=obj_invoice.amount_tax
                 sum_tot +=obj_invoice.amount_total
-
             record.append(sum_vat)
             record.append(sum_tot)
             datas.append(record)
-        file=open('case2.xml', 'w')
+        file=open('vat_amount_detail.xml', 'w')
         file.write('<?xml version="1.0"?>\n<header>\n\tWelcome To TinyERP.Thing Big, Use TinyERP.\n</header>\n')
 
         seq=0
