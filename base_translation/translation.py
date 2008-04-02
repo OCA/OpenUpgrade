@@ -8,7 +8,7 @@ import xmlrpclib
 import pooler
 
 from wizard import SERVER,PORT
-s = xmlrpclib.Server("http://"+server+":"+str(PORT))
+s = xmlrpclib.Server("http://"+SERVER+":"+str(PORT))
 
 def get_version(cr, uid,context):
     user = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
