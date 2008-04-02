@@ -10,8 +10,8 @@
                    identification, prioritization, assignment, resolution and notification.""",
     "depends" : ["base","crm"],
     "init_xml" : [],
-    "demo_xml" : ["crm_demo.xml"],
-    "update_xml" : ["crm_view.xml"],
+    "demo_xml" : [],
+    "update_xml" : ["crm_view.xml","crm_demo.xml","crm_data.xml"],
     "active": False,
     "installable": True
 }
