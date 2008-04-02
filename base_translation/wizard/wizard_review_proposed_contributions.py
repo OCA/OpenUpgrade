@@ -2,7 +2,7 @@ import wizard
 import tools
 import csv
 import pooler
-from base_translation.translation import get_language
+import base_translation.translation
 
 
 view_form_end = """<?xml version="1.0"?>
@@ -60,7 +60,7 @@ class wizard_review_proposed_contributions(wizard.interface):
                 ir_translation_contrib.create(cr,uid,vals)
         return {}    
     def _get_language(sel, cr, uid,context):
-        return get_language(cr,uid,context,model='ir_translation')
+        return base_translation.translation.get_language(cr,uid,context,model='ir_translation')
     
     fields_form = {
         'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,'required':True

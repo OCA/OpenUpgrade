@@ -3,21 +3,12 @@ import tools
 import csv
 import base64
 import xmlrpclib
-import config
-
-from base_translation.translation import get_language
-
-s = xmlrpclib.Server("http://"+config.SERVER+":"+str(config.PORT))
-
-import wizard
-import tools
-import csv
-import base64
-import xmlrpclib
 import pooler
+import config
 import base_translation.translation
 
-s = xmlrpclib.Server("http://192.168.0.4:8000")
+#s = xmlrpclib.Server("http://192.168.0.4:8000")
+s = xmlrpclib.Server("http://"+config.SERVER+":"+str(config.PORT))
 
 view_form_end = """<?xml version="1.0"?>
 <form string="Language file loaded.">

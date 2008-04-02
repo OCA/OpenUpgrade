@@ -7,8 +7,10 @@ import re
 import random
 import base_translation.translation
 
-import config
-s = xmlrpclib.Server("http://"+config.SERVER+":"+str(config.PORT))
+#import config
+#s = xmlrpclib.Server("http://"+config.SERVER+":"+str(config.PORT))
+
+s = xmlrpclib.Server("http://192.168.0.4:8000")
 
 view_form_end = """<?xml version="1.0"?>
     <form string="Information For Contribution">
@@ -27,7 +29,7 @@ view_form = """<?xml version="1.0"?>
         <label align="0.0" string="Choose a language to upload:" colspan="4"/>
         <field name="lang" colspan="4"/>
         <field name="email_id" colspan="4"/>
-        <field name="note" colspan="4"/>   
+        <field name="note" colspan="4"/>    
         <field name="version" colspan="4"/>
         <field name="profile" colspan="4"/>     
         <label align="0.0" string="Note that this operation may take a few minutes." colspan="4"/>
