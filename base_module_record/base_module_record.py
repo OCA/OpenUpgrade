@@ -27,7 +27,7 @@
 ##############################################################################
 
 from xml.dom import minidom
-from osv import osv
+from osv import fields,osv
 import netsvc
 import pooler
 import string
@@ -38,14 +38,17 @@ class base_module_record(osv.osv):
 
 	}
 	def __init__(self, pool, cr=None):
-		super(base_module_record, self).__init__(pool)
+		if super(base_module_record, self).__init__.func_code.co_argcount ==3:
+			super(base_module_record, self).__init__(pool,cr)
+		else:
+			super(base_module_record, self).__init__(pool)
 		self.recording = 0
 		self.recording_data = []
 		self.depends = {}
 
 	# To Be Improved
 	def _create_id(self, cr, uid, model, data):
-		i = 0 
+		i = 0
 		while True:
 			name = filter(lambda x: x in string.letters, (data.get('name','') or '').lower())
 			val = model.replace('.','_')+'_'+name+ str(i)
