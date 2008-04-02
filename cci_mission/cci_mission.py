@@ -744,7 +744,7 @@ class product_lines(osv.osv):
 		return res
 
 	def product_id_change(self, cr, uid, ids,product_id,partner_id=False,member_price=False):
-		price_unit=uos_id=prod_name=a=False
+		price_unit=uos_id=prod_name=a=data_partner=False
 
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
@@ -757,7 +757,8 @@ class product_lines(osv.osv):
 				force_member=True
 			else:
 				force_non_member=True
-			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
+			if partner_id:
+				data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
 			price=self.pool.get('product.product').price_get(cr,uid,[product_id],partner_id=data_partner,force_non_member=force_non_member,force_member=force_member)
 			price_unit=price[product_id]
 			prod_name=data_product.name
