@@ -1,7 +1,7 @@
 <terp>
 <data>
 
- 	<menuitem name="Human Resources/Configuration/Skills Management"/> 
+ 	<menuitem name="Human Resources/Configuration/Skills Management"/>
 
 <!-- defini le formulaire skill -->
 	<record model="ir.ui.view" id="view_skill_form">
@@ -22,7 +22,7 @@
 <!-- defini une action pr skill ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_skill_form">
 		<field name="res_model">hr_skill.skill</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree skill ds le menu principal -->
@@ -65,7 +65,7 @@
 		<field name="arch" type="xml">
 			<form string="Positions">
 				<field name="name" select="1" colspan="4"/>
-				<field name="profile_ids" colspan="4"> 
+				<field name="profile_ids" colspan="4">
 					<tree string="Profiles" editable="top">
 						<field name="profile_id" on_change="onchange_profile_id(profile_id)"/>
 						<field name="weight_id"/>
@@ -78,7 +78,7 @@
 <!-- defini une action pr position ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_position_form">
 		<field name="res_model">hr_skill.position</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree position ds le menu principal -->
@@ -94,7 +94,7 @@
 		<field name="arch" type="xml">
 			<form string="Profile">
 				<field name="name" select="1" colspan="4"/>
-				<field name="skill_ids" colspan="4"> 
+				<field name="skill_ids" colspan="4">
 					<tree string="Skills" editable="top">
 						<field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
 						<field name="weight_id"/>
@@ -114,7 +114,7 @@
 <!-- defini une action pr profile ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_profile_form">
 		<field name="res_model">hr_skill.profile</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree profiles ds le menu principal -->
@@ -136,7 +136,7 @@
 <!-- defini une action pr weight categories ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_weight_category_form">
 		<field name="res_model">hr_skill.weight.category</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree weight categories ds le menu principal -->
@@ -161,7 +161,7 @@
 <!-- defini une action pr weight categories ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_weight_form">
 		<field name="res_model">hr_skill.weight</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree weight categories ds le menu principal -->
@@ -187,7 +187,7 @@
 <!-- defini une action pr experience categories ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_experience_category_form">
 		<field name="res_model">hr_skill.experience.category</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree experience categories ds le menu principal -->
@@ -205,14 +205,14 @@
 			<form string="Experiences">
 				<field name="name" select="1" />
 				<field name="category_id" select="1" />
-				<field name="skill_ids" colspan="4"> 
+				<field name="skill_ids" colspan="4">
 					<tree string="Skills" editable="top">
-					        <field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
+					    <field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
 						<field name="weight_id"/>
 						<field name="name"/>
 					</tree>
 					<form string="Skills" editable="top">
-					        <field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
+					    <field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
 						<field name="weight_id"/>
 						<field name="name"/>
 					</form>
@@ -224,7 +224,7 @@
 <!-- defini une action pr position ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_experience_form">
 		<field name="res_model">hr_skill.experience</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree position ds le menu principal -->
@@ -263,6 +263,12 @@
 						 <field name="weight_id"/>
 						 <field name="name"/>
 					  </tree>
+					  <form string="Experiences"
+					editable="top" nolabel="1" >
+						 <field name="experience_id" on_change="onchange_experience_id(experience_id)"/>
+						 <field name="weight_id"/>
+						 <field name="name"/>
+					  </form>
 					</field>
 					<field name="skill_ids" colspan="4" nolanel="1">
 					  <tree string="Skills"
@@ -271,6 +277,12 @@
 						 <field name="weight_id"/>
 						 <field name="name"/>
 					  </tree>
+					  <form string="Skills"
+						 editable="top" nolabel="1" >
+						 <field name="skill_id" on_change="onchange_skill_id(skill_id)"/>
+						 <field name="weight_id"/>
+						 <field name="name"/>
+					  </form>
 					</field>
 
 			   </page>
@@ -302,7 +314,7 @@
 <!-- defini une action pr evaluation ds le menu principal -->
 	<record model="ir.actions.act_window" id="open_view_evaluation_form">
 		<field name="res_model">hr_skill.evaluation</field>
-		<field name="view_type">form</field> 
+		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree evaluations ds le menu principal -->

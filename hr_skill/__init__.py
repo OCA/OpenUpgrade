@@ -27,3 +27,6 @@
 ##############################################################################
 
 import hr_skill
+import report
+import wizard
+import hrskill
