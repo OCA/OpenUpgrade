@@ -113,7 +113,13 @@ class tinyerp_handler(dav_interface):
 		if not node:
 			raise DAV_NotFound
 		if node.type=='file':
-			return base64.decodestring(node.object.datas or '')
+			datas=False
+			if node.object.datas:
+				datas=node.object.datas
+			elif node.object.link:
+				import urllib
+				datas=base64.encodestring(urllib.urlopen(node.object.link).read())
+			return base64.decodestring(datas or '')
 		elif node.type=='content':
 			report = pool.get('ir.actions.report.xml').browse(cr, uid, node.content['report_id']['id'])
 			srv = netsvc.LocalService('report.'+report.report_name)

@@ -110,7 +110,6 @@ class node_class(object):
 			where.append(('name','=',nodename))
 		where.append(('parent_id','=',self.object and self.object.id or False))
 		ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',0)], self.context)
-		#ids = pool.get('document.directory').search(self.cr, self.uid, where, self.context)
 		if self.object2:
 			ids += pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',self.object2.id)], self.context)
 		res = pool.get('document.directory').browse(self.cr, self.uid, ids,self.context)
@@ -121,9 +120,14 @@ class node_class(object):
 			return []
 		res = self.directory_list_for_child(nodename)
 		result= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, self.object2), res)
-
+		if self.type=='database':
+			pool = pooler.get_pool(self.cr.dbname)
+			fobj = pool.get('ir.attachment')
+			file_ids=fobj.search(self.cr,self.uid,[('parent_id','=',False)])
+			res = fobj.browse(self.cr, self.uid, file_ids, context=self.context)
+			result +=map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file'), res)
 		if self.type=='collection' and self.object.type=="ressource":
-			where = eval(self.object.domain)
+			where = self.object.domain and eval(self.object.domain) or []
 			obj = self.object2
 
 			if not self.object2:
@@ -155,7 +159,6 @@ class node_class(object):
 			for r in res:
 				if not r.name:
 					r.name = name_for+'%d'%r.id
-
 			result2 = map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x, root=True), res)
 			if result2:
 				result = result2
@@ -419,7 +422,7 @@ class document_file(osv.osv):
 		'create_date': fields.datetime('Date Created', readonly=True),
 		'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
 		'store_method': fields.selection([('db','Database'),('fs','Filesystem'),('link','Link')], "Storing Method"),
-		'datas': fields.function(_data_get,method=True,fnct_inv=_data_set,string='File Content',type="binary"),
+		'datas': fields.function(_data_get,method=True,store=True,fnct_inv=_data_set,string='File Content',type="binary"),
 		'store_fname': fields.char('Stored Filename', size=200),
 		'res_model': fields.char('Attached Model', size=64), #res_model
 		'res_id': fields.integer('Attached ID'), #res_id
@@ -446,19 +449,36 @@ class document_file(osv.osv):
 			pass
 		return result
 
-	def create(self, cr, uid, vals, context=None):
-		if 'datas' not in vals:
-			return super(document_file,self).create(cr,uid,vals,context)
-		vals['file_size']= len(vals['datas'])
+	def create(self, cr, uid, vals, context={}):
 		vals['title']=vals['name']
 		if vals.get('res_id', False) and vals.get('res_model',False):
-			result = self.pool.get(vals['res_model']).name_get(cr, uid, [vals['res_id']], context=context)
-			if result:
-				vals['title'] = (result[0][1] or '')[:60]
+			obj_model=self.pool.get(vals['res_model'])
+			result = obj_model.browse(cr, uid, [vals['res_id']], context=context)
+			if len(result):
+				vals['title'] = (result[0].name or '')[:60]
+				if obj_model._name=='res.partner':
+					vals['partner_id']=result[0].id
+				elif 'address_id' in result[0]:
+					vals['partner_id']=result[0].address_id.partner_id.id or False
+				else:
+					vals['partner_id']='partner_id' in result[0] and result[0].partner_id.id or False
+
+			if 'parent_id' not in vals:
+				obj_directory=self.pool.get('document.directory')
+				directory_ids=obj_directory.search(cr,uid,[('ressource_type_id','=',vals['res_model'])])
+				if len(directory_ids):
+					vals['parent_id']=directory_ids[0]
+		datas=None
+		if 'datas' not in vals:
+			import urllib
+			datas=base64.encodestring(urllib.urlopen(vals['link']).read())
+		else:
+			datas=vals['datas']
+		vals['file_size']= len(datas)
 		result = super(document_file,self).create(cr, uid, vals, context)
 		cr.commit()
 		try:
-			res = content_index(base64.decodestring(vals['datas']), vals['datas_fname'], vals.get('content_type', None))
+			res = content_index(base64.decodestring(datas), vals['datas_fname'], vals.get('content_type', None))
 			super(document_file,self).write(cr, uid, [result], {
 				'index_content': res,
 			})
