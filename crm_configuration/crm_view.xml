@@ -136,6 +136,19 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="crm_case_calendar_view11">
+		<field name="name">crm.cases.calendar1</field>
+		<field name="model">crm.case</field>
+		<field name="type">calendar</field>
+		<field name="priority" eval="2"/>
+		<field name="arch" type="xml">
+			<calendar string="Meeting With Future Employees" date_start="date_deadline" color="user_id">
+				<field name="partner_name"/>
+				<field name="categ_id"/>
+			</calendar>
+		</field>
+	</record>
+
 	# ------------------------------------------------------ 
 	# Bug Tracking
 	# ------------------------------------------------------ 
