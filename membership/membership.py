@@ -28,6 +28,7 @@
 ##############################################################################
 
 from osv import fields, osv
+from tools import config
 import time
 
 STATE = [
@@ -387,46 +388,55 @@ class Partner(osv.osv):
 
 Partner()
 
+class product_template(osv.osv):
+	_inherit = 'product.template'
+	_columns = {
+			'member_price':fields.float('Member Price', digits=(16, int(config['price_accuracy']))),
+			}
+product_template()
 
 class Product(osv.osv):
 	'''Product'''
-
 	_inherit = 'product.product'
 	_description = 'product.product'
-	def price_get(self, cr, uid, ids, ptype='list_price',partner_id=False,force_non_member=False,force_member=False,context={}):
+
+	#res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).member_price
+	def price_get(self, cr, uid, ids, ptype='list_price',context={}):
+
 		res = {}
-		# force_non_member works for forcing member rpice if partner is nonmember,relavent for force_member
+		product_uom_obj = self.pool.get('product.uom')
+
+		# force_member works for forcing member price if partner is non member, same reasonning for force_non_member
 		for product in self.browse(cr, uid, ids, context=context):
+			if ptype == 'member_price':
+				res[product.id] = product['list_price']
+				if context and ('partner_id' in context):
+					state = context['partner_id'].membership_state
+					if (state in ['waiting','associated','free','paid','invoiced']):
+						res[product.id] = product['member_price']
+				if context and ('force_member' in context):
+					if context['force_member']:
+						res[product.id] = product['member_price'] 
+				if context and ('force_non_member' in context):
+					if context['force_non_member']:
+						res[product.id] = product['list_price']
 
-			if partner_id:
-				state = partner_id.membership_state
-				if (state in ['waiting','associated','free','paid','invoiced']) or force_member:
-					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).member_price
-				else:
-					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).lst_price
-#				if force_non_member:
-#					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).member_price
-
-				if force_non_member:
-					res[product.id] = self.pool.get('product.product').browse(cr,uid,product.id).lst_price
 			else:
-
-				product_uom_obj = self.pool.get('product.uom')
 				res[product.id] = product[ptype] or 0.0
 				if ptype == 'list_price':
 					res[product.id] = (res[product.id] * product.price_margin) + \
 							product.price_extra
-				if 'uom' in context:
-					uom = product.uos_id or product.uom_id
-					res[product.id] = product_uom_obj._compute_price(cr, uid,
-							uom.id, res[product.id], context['uom'])
+			if 'uom' in context:
+				uom = product.uos_id or product.uom_id
+				res[product.id] = product_uom_obj._compute_price(cr, uid,
+						uom.id, res[product.id], context['uom'])
 		return res
 
 	_columns = {
 			'membership': fields.boolean('Membership', help='Specify if this product is a membership product'),
 			'membership_date_from': fields.date('Date from'),
 			'membership_date_to': fields.date('Date to'),
-			'member_price':fields.float('Member Price'),
+#			'member_price':fields.float('Member Price'),
 			}
 
 	_defaults = {

@@ -10,7 +10,7 @@
 		#"demo_data.xml",
 		],
 	"init_xml" : [
-		"membership_view.xml",
+		"membership_data.xml",
 		],
 	"update_xml" : [
 		"membership_view.xml","membership_wizard.xml",
