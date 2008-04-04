@@ -11,31 +11,33 @@ finished_form = """<?xml version="1.0"?>
 
 def find_partner(self,cr,uid,ids,context=None):
         # partner id is denoted by address_id in stock.picking
-        cr.execute("select address_id from stock_picking where type='out' and state='confirmed' and address_id is not null group by address_id,state,type")
+        state = 'assigned'
+        type = 'out'
+        cr.execute("select address_id from stock_picking where type='%s' and state='%s' and address_id is not null group by address_id,state,type" % (type,state))
         partner_ids=cr.dictfetchall()
         for partner in partner_ids:            
-            find_max_invid(self,cr,uid,ids,partner['address_id'])            
+            find_max_invid(self,cr,uid,ids,partner['address_id'],state,type)            
         return {}
 
-def find_max_invid(self,cr,uid,ids,address_id,type='out',state='confirmed'):
+def find_max_invid(self,cr,uid,ids,address_id,state,type):
     
-    cr.execute("select max(id) from stock_picking where type='%s' and state='%s' and address_id=%d"%(type,state,address_id))
+    cr.execute("select max(id) from stock_picking where type='%s' and state='%s' and address_id=%d" % (type,state,address_id))
     max_picking_id=cr.fetchall()[0][0]
     
-    cr.execute("select * from stock_picking pc where type='out' and state='confirmed' and address_id=%d"%(address_id))
+    cr.execute("select * from stock_picking pc where type='%s' and state='%s' and address_id=%d" % (type,state,address_id))
     picking_info=cr.dictfetchall()
     
     for data in picking_info:
         copy_move_line(self,cr,uid,ids,data['id'],max_picking_id)        
         if data['id']<max_picking_id:
-            cr.execute("update stock_picking set state='cancel' where id=%d"%(data['id']))
+            cr.execute("update stock_picking set state='cancel' where id=%d" % (data['id']))
     return True
 
 def copy_move_line(self,cr,uid,ids,picking_id,max_picking_id):
     
     stk_move_obj = pooler.get_pool(cr.dbname).get('stock.move')   
     
-    cr.execute("select * from stock_move where picking_id=%d"%(picking_id))
+    cr.execute("select * from stock_move where picking_id=%d" % (picking_id))
     stock_move_info=cr.dictfetchall()
 
     for data in stock_move_info:
@@ -52,8 +54,7 @@ def copy_move_line(self,cr,uid,ids,picking_id,max_picking_id):
             
 class wiz_stock_picking_merge(wizard.interface):
     states = {
-        'init': {
-                 
+        'init': {                 
             'actions': [find_partner],
             'result': {'type': 'form', 'arch' : finished_form, 'fields' : {}, 'state' : [('end', 'Ok')]},
         }
