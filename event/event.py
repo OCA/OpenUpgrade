@@ -166,6 +166,7 @@ class event_registration(osv.osv):
 	}
 	_defaults = {
 		'nb_register': lambda *a: 1,
+		'name': lambda *a: 'Registration'
 	}
 
 	def onchange_categ_id(self, cr, uid, ids, categ, context={}):
@@ -174,13 +175,16 @@ class event_registration(osv.osv):
 		cat = self.pool.get('crm.case.categ').browse(cr, uid, categ, context).probability
 		return {'value':{'probability':cat}}
 
-	def onchange_partner_address_id(self, cr, uid, ids, part, email=False):
+	def onchange_partner_id(self, cr, uid, ids, part, email=False):
 		if not part:
 			return {'value':{}}
 		data = {}
 		if not email:
 			data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, part).email
 		return {'value':data}
+
+	def onchange_partner_id(self, cr, uid, ids, part, email=False):
+		return self.pool.get('crm.case').onchange_partner_id(cr, uid, ids,  part)
 
 	def _map_ids(self,method,cr, uid, ids, *args, **argv):
 		case_data = self.browse(cr,uid,ids)
