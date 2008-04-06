@@ -36,7 +36,7 @@ class portal_portal(osv.osv):
 		'group_id': fields.many2one('res.groups', 'Associated Group',required=True),
 		'menu_id': fields.many2one('ir.ui.menu','Main Menu', required=True),
 		'menu_action_id': fields.many2one('ir.actions.act_window', 'User Menu Action', readonly=True,
-										  help='''Default main menu for the users of the portal. This field is auto-completed at creation. '''),
+			help='''Default main menu for the users of the portal. This field is auto-completed at creation. '''),
 		'home_action_id': fields.many2one('ir.actions.act_window', 'User Home Action', help='Complete this field to provide a Home menu different from the Main menu.'),
 		'company_id': fields.many2one('res.company', 'Company', required=True),
 		}

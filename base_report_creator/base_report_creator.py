@@ -167,7 +167,7 @@ class report_creator(osv.osv):
 			newargs2+=res[1]
 		ctx = context or {}
 		ctx['getid'] = True
-		report = self._sql_query_get(cr, user, [context['report_id']], 'sql_query', None, ctx, where_plus=newargs)
+		report = self._sql_query_get(cr, user, [context['report_id']], 'sql_query', None, ctx, where_plus=newargs, limit=limit, offset=offset)
 		query = report[context['report_id']]
 		cr.execute(query, newargs2)
 		result = cr.fetchall()
@@ -231,7 +231,7 @@ class report_creator(osv.osv):
 #		return 'min(sale_order_line.id)'
 		return self.model_set_id and 'min('+self.model_set_id+'.id)'
 
-	def _sql_query_get(self, cr, uid, ids, prop, unknow_none, context, where_plus=[]):
+	def _sql_query_get(self, cr, uid, ids, prop, unknow_none, context, where_plus=[], limit=None, offset=None):
 		result = {}
 		for obj in self.browse(cr, uid, ids):
 			fields = []
@@ -257,6 +257,10 @@ from
 				result[obj.id] += "group by\n\t"+', '.join(groupby)
 			if where_plus:
 				result[obj.id] += "\nhaving \n\t"+"\n\t and ".join(where_plus)
+			if limit:
+				result[obj.id] += " limit "+str(limit)
+			if offset:
+				result[obj.id] += " offset "+str(offset)
 		return result
 	_columns = {
 		'name': fields.char('Report Name',size=64, required=True),
