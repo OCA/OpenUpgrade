@@ -46,9 +46,16 @@ STATE = [
 class crm_case_log(osv.osv):
 	_inherit = 'crm.case.log'
 	_description = 'crm.case.log'
+
+	def create(self, cr, uid, vals, *args, **kwargs):
+			if not 'name' in vals:
+				vals['name']='Historize'
+			return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
 	_defaults = {
 		'user_id': lambda self,cr,uid,context: uid,
 	}
+
 crm_case_log()
 
 class res_partner(osv.osv):
@@ -79,15 +86,6 @@ class cci_missions_site(osv.osv):
 	}
 
 cci_missions_site()
-
-class crm_case_log(osv.osv):
-	_name = "crm.case.log"
-	_inherit = "crm.case.log"
-	def create(self, cr, uid, vals, *args, **kwargs):
-			if not 'name' in vals:
-				vals['name']='Historize'
-			return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
-crm_case_log()
 
 class cci_missions_embassy_folder(osv.osv):
 	_name = 'cci_missions.embassy_folder'
@@ -263,36 +261,15 @@ class cci_missions_dossier(osv.osv):
 		}
 		return result
 
-	def _amount_total(self, cr, uid, ids, name, args, context=None):
-		res ={}
-		data_dosseir = self.browse(cr,uid,ids)
-
-		for data in data_dosseir:
-			this = self.pool.get('cci_missions.dossier').browse(cr,uid,data.id)
-			if this.state =='draft':
-				data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
-#				if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-#					cost_org = data.type_id.original_product_id.member_price
-#					cost_copy = data.type_id.copy_product_id.member_price
-#				else:
-#					cost_org = data.type_id.original_product_id.list_price
-#					cost_copy = data.type_id.copy_product_id.list_price
-				price_org=self.pool.get('product.product').price_get(cr,uid,[data.type_id.original_product_id.id],partner_id=data_partner)
-				price_copy=self.pool.get('product.product').price_get(cr,uid,[data.type_id.copy_product_id.id],partner_id=data_partner)
-
-				cost_org=price_org[data.type_id.original_product_id.id]
-				cost_copy=price_copy[data.type_id.copy_product_id.id]
-
-				qty_org = data.quantity_original
-				qty_copy = data.quantity_copies
-				subtotal =  data.sub_total
-				if qty_org < 0 or qty_copy < 0:
-					raise osv.except_osv('Input Error!','No. of Copies and Quantity of Originals should be positive.')
-				total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
-				res[data.id] = total
-			else :
-				res[data.id]=this.invoiced_amount
-		return res
+#	def _amount_total(self, cr, uid, ids, name, args, context=None):
+#		res ={}
+#		data_dosseir = self.browse(cr,uid,ids)
+#		for data in data_dosseir:
+#			if data.state =='draft':
+#				res[data.id] = 0.0
+#			else :
+#				res[data.id]=data.invoiced_amount
+#		return res
 
 	def _amount_subtotal(self, cr, uid, ids, name, args, context=None):
 		res={}
@@ -320,7 +297,6 @@ class cci_missions_dossier(osv.osv):
 		'embassy_folder_id':fields.many2one('cci_missions.embassy_folder','Related Embassy Folder'),
 		'quantity_copies':fields.integer('Number of Copies'),
 		'quantity_original' : fields.integer('Quantity of Originals',required=True),
-		'total':fields.function(_amount_total, method=True, string='Total', store=True),# sum of the price for copies, originals and extra_products
 		'sub_total':fields.function(_amount_subtotal, method=True, string='Sub Total for Extra Products', store=True),
 		'text_on_invoice':fields.text('Text to Display on the Invoice'),
 		'product_ids': fields.one2many('product.lines', 'dossier_product_line_id', 'Products'),
@@ -357,6 +333,37 @@ class cci_missions_certificate(osv.osv):
 	_name = 'cci_missions.certificate'
 	_description = 'cci_missions.certificate'
 	_inherits = {'cci_missions.dossier': 'dossier_id' }
+
+	def _amount_total(self, cr, uid, ids, name, args, context=None):
+		res ={}
+		data_dosseir = self.browse(cr,uid,ids)
+
+		for data in data_dosseir:
+			if data.state =='draft':
+				data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
+
+				context.update({'partner_id':data_partner})
+				context.update({'force_member':False})
+				context.update({'force_non_member':False})
+				context.update({'date':data.date})
+				context.update({'value_goods':data.goods_value})
+				context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for Certificates')])[0]})
+
+				price_org = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.original_product_id.id], False, False, context)
+				price_copy = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.copy_product_id.id], False, False, context)
+				cost_org=price_org[data.type_id.original_product_id.id]
+				cost_copy=price_copy[data.type_id.copy_product_id.id]
+				qty_org = data.quantity_original
+				qty_copy = data.quantity_copies
+				subtotal =  data.sub_total
+
+				if qty_org < 0 or qty_copy < 0:
+					raise osv.except_osv('Input Error!','No. of Copies and Quantity of Originals should be positive.')
+				total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
+				res[data.id] = total
+			else :
+				res[data.id]=data.invoiced_amount
+		return res
 
 	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
 		data=self.browse(cr,uid,ids[0])
@@ -423,6 +430,7 @@ class cci_missions_certificate(osv.osv):
 
 	_columns = {
 		'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),
+		'total':fields.function(_amount_total, method=True, string='Total', store=True),# sum of the price for copies, originals and extra_products
 		'asker_address' : fields.char('Asker Address',size=50),#by default, res.partner->asker_adress or, res_partner.address[default]->street
 		'asker_zip_id' : fields.many2one('res.partner.zip','Asker Zip Code'),#by default, res.partner->asker_zip_id or, res_partner.address[default]->zip_id
 		'special_reason' : fields.selection([('none','None'),('Commercial Reason','Commercial Reason'),('Substitution','Substitution')],'For special cases'),
@@ -442,6 +450,42 @@ class cci_missions_legalization(osv.osv):
 	_name = 'cci_missions.legalization'
 	_description = 'cci_missions.legalization'
 	_inherits = {'cci_missions.dossier': 'dossier_id'}
+
+	def _amount_total(self, cr, uid, ids, name, args, context=None):
+		res ={}
+		data_dosseir = self.browse(cr,uid,ids)
+
+		for data in data_dosseir:
+			if data.state =='draft':
+				data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
+
+				force_member=force_non_member=False
+				if data.member_price==1:
+					force_member=True
+				else:
+					force_non_member=True
+				context.update({'partner_id':data_partner})
+				context.update({'force_member':force_member})
+				context.update({'force_non_member':force_non_member})
+				context.update({'date':data.date})
+				context.update({'value_goods':data.goods_value})
+				context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for Legalizations')])[0]})
+
+				price_org = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.original_product_id.id], False, False, context)
+				price_copy = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.copy_product_id.id], False, False, context)
+				cost_org=price_org[data.type_id.original_product_id.id]
+				cost_copy=price_copy[data.type_id.copy_product_id.id]
+				qty_org = data.quantity_original
+				qty_copy = data.quantity_copies
+				subtotal =  data.sub_total
+
+				if qty_org < 0 or qty_copy < 0:
+					raise osv.except_osv('Input Error!','No. of Copies and Quantity of Originals should be positive.')
+				total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
+				res[data.id] = total
+			else :
+				res[data.id]=data.invoiced_amount
+		return res
 
 	def cci_dossier_cancel_cci(self, cr, uid, ids, *args):
 		data=self.browse(cr,uid,ids[0])
@@ -501,6 +545,7 @@ class cci_missions_legalization(osv.osv):
 	_columns = {
 		'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
 		#'quantity_original' : fields.integer('Quantity of Originals',required=True),
+		'total':fields.function(_amount_total, method=True, string='Total', store=True),# sum of the price for copies, originals and extra_products
 		'certificate_id' : fields.many2one('cci_missions.certificate','Related Certificate'),
 		'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
 		'member_price' : fields.boolean('Apply the Member Price'),
@@ -785,3 +830,23 @@ class product_lines(osv.osv):
 		'quantity': lambda *a: 1,
 	}
 product_lines()
+
+
+class Product(osv.osv):
+	'''Product'''
+	_inherit = 'product.product'
+
+	def price_get(self, cr, uid, ids, ptype='list_price',context={}):
+		res = super(Product, self).price_get(cr, uid, ids, ptype, context)
+		for product in self.browse(cr, uid, ids, context=context):
+			if context and ('value_goods' in context):
+				if context['value_goods'] < 500:
+					res[product.id] = 100.0
+				elif 500 < context['value_goods'] < 1000 :
+					res[product.id] = 200.0
+				else:
+					res[product.id] = 300.0
+		return res
+
+Product()
+
