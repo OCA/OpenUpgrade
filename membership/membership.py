@@ -94,7 +94,7 @@ WHERE ml.date_from <= '%s'
 AND ml.date_to >= '%s'
 GROUP BY
 p.id,
-state
+ai.state
 	)
 	AS inv_digit
 	GROUP by partner
@@ -416,7 +416,7 @@ class Product(osv.osv):
 						res[product.id] = product['member_price']
 				if context and ('force_member' in context):
 					if context['force_member']:
-						res[product.id] = product['member_price'] 
+						res[product.id] = product['member_price']
 				if context and ('force_non_member' in context):
 					if context['force_non_member']:
 						res[product.id] = product['list_price']
