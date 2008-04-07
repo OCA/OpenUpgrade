@@ -836,16 +836,20 @@ class Product(osv.osv):
 	'''Product'''
 	_inherit = 'product.product'
 
+	#this function will have to be corrected in order to match the criteria grid of the CCI
 	def price_get(self, cr, uid, ids, ptype='list_price',context={}):
+		#get the price from the pricelist
 		res = super(Product, self).price_get(cr, uid, ids, ptype, context)
 		for product in self.browse(cr, uid, ids, context=context):
-			if context and ('value_goods' in context):
-				if context['value_goods'] < 500:
-					res[product.id] = 100.0
-				elif 500 < context['value_goods'] < 1000 :
-					res[product.id] = 200.0
-				else:
-					res[product.id] = 300.0
+			#change the price only for originals
+			if product.name.find('original') != -1:
+				if context and ('value_goods' in context):
+					if context['value_goods'] < 500:
+						res[product.id] = 100.0
+					elif 500 < context['value_goods'] < 1000 :
+						res[product.id] = 200.0
+					else:
+						res[product.id] = 300.0
 		return res
 
 Product()
