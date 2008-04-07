@@ -1,7 +1,6 @@
 import wizard
 import netsvc
 import pooler
-
 from osv import osv
 
 finished_form = """<?xml version="1.0"?>
