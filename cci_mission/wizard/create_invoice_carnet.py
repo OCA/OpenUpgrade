@@ -58,6 +58,8 @@ def _createInvoices(self, cr, uid, data, context):
     inv_reject = 0
     inv_rej_reason = ""
     list_inv = []
+
+    context.update({'pricelist': pool_obj.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for ATA Carnet')])[0]})
     for carnet in data_carnet:
         list = []
         value = []
@@ -69,6 +71,7 @@ def _createInvoices(self, cr, uid, data, context):
             inv_rej_reason += "ID "+str(carnet.id)+": Already Has an Invoice Linked \n"
             continue
 
+        context.update({'date':carnet.creation_date})
         inv_create = inv_create + 1
         list.append(carnet.type_id.original_product_id.id)
         list.append(carnet.type_id.copy_product_id.id)
@@ -106,7 +109,11 @@ def _createInvoices(self, cr, uid, data, context):
                 force_member=True
             else:
                 force_non_member=True
-            price=pool_obj.get('product.product').price_get(cr,uid,[prod_id],partner_id=carnet.partner_id,force_non_member=force_non_member,force_member=force_member)
+            context.update({'partner_id':carnet.partner_id})
+            context.update({'force_member':force_member})
+            context.update({'force_non_member':force_non_member})
+
+            price=pool_obj.get('product.product')._product_price(cr, uid, [prod_id], False, False, context)
             val['value'].update({'price_unit':price[prod_id]})
 
             value.append(val)

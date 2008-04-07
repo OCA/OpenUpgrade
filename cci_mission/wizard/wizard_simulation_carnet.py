@@ -49,6 +49,7 @@ def _createInvoices(self, cr, uid, data, context):
     obj_lines=pool_obj.get('account.invoice.line')
     list_inv = []
     message_total = ""
+    context.update({'pricelist': pool_obj.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for ATA Carnet')])[0]})
     for carnet in data_carnet:
         list = []
         value = []
@@ -67,6 +68,7 @@ def _createInvoices(self, cr, uid, data, context):
         if carnet.invoice_id:
             message_total += "ID "+str(carnet.id)+ " : " + str(carnet.invoice_id.amount_total) + "\n"
             continue
+        context.update({'date':carnet.creation_date})
 
         for product_line in carnet.product_ids:#extra Products
             val = obj_lines.product_id_change(cr, uid, [], product_line.product_id.id,uom =False, partner_id=carnet.partner_id.id)
@@ -93,8 +95,11 @@ def _createInvoices(self, cr, uid, data, context):
                 force_member=True
             else:
                 force_non_member=True
-            price=pool_obj.get('product.product').price_get(cr,uid,[prod_id],partner_id=carnet.partner_id,force_non_member=force_non_member,force_member=force_member)
-
+            context.update({'partner_id':carnet.partner_id})
+            context.update({'force_member':force_member})
+            context.update({'force_non_member':force_non_member})
+            
+            price=pool_obj.get('product.product')._product_price(cr, uid, [prod_id], False, False, context)
             val['value'].update({'price_unit':price[prod_id]})
             value.append(val)
         for val in value:

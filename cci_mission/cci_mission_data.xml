@@ -32,6 +32,20 @@
 		<field name="name">Default Legalizations Pricelist Line</field>
 	</record>
 
+	<record model="product.pricelist" id="cci_list2">
+		<field name="name">Default Pricelist for ATA Carnet</field>
+		<field name="type">sale</field>
+	</record>
+	<record model="product.pricelist.version" id="cci_ver2">
+		<field name="pricelist_id" ref="cci_list2"/>
+		<field name="name">Default ATA Carnet Pricelist Version</field>
+	</record>
+	<record model="product.pricelist.item" id="cci_item2">
+		<field name="price_version_id" ref="cci_ver2"/>
+		<field name="base" model="product.price.type" search="[('field','like','member_price')]" />
+		<field name="name">Default ATA Carnet Pricelist Line</field>
+	</record>
+
 
 <!-- Sequences -->
 
