@@ -718,7 +718,7 @@
 						<field name="own_risk" on_change="onchange_own_risk(type_id,own_risk)"/>
 						<newline/>
 						<field name="warranty" />
-						<field name="warranty_product_id" />
+						<field name="warranty_product_id" on_change="onchange_warranty_product_id(warranty_product_id)" />
 						<newline/>
 						<field name="invoice_id"/>
 						<newline/>

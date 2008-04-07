@@ -645,25 +645,36 @@ class cci_missions_ata_carnet(osv.osv):
 		return res
 
 	def onchange_type_carnet(self, cr, uid, ids,type_id,own_risk):
+
+		data={'warranty_product_id' : False,'warranty':False}
 		if not type_id:
-			return {'value': {'warranty_product_id' : False}}
+			return {'value':data}
 		data_carnet_type = self.pool.get('cci_missions.dossier_type').browse(cr,uid,type_id)
 		if own_risk:
-			return {'value': {'warranty_product_id' : data_carnet_type.warranty_product_1.id}}
+			warranty_prod=data_carnet_type.warranty_product_1.id
 		else:
-			return {'value': {'warranty_product_id' : data_carnet_type.warranty_product_2.id}}
-		return {}
+			warranty_prod=data_carnet_type.warranty_product_2.id
+		data['warranty_product_id']	=warranty_prod
+		dict1=self.onchange_warranty_product_id(cr,uid,ids,warranty_prod)
+		data.update(dict1['value'])
+		return {'value':data}
 
 	def onchange_own_risk(self,cr,uid,ids,type_id,own_risk):
+
+		data={'warranty_product_id' : False,'warranty':False}
 		if not type_id:
-			return {'value': {'warranty_product_id' : False}}
+			return {'value': data}
 		warranty_prod = False
 		data_carnet_type = self.pool.get('cci_missions.dossier_type').browse(cr,uid,type_id)
 		if own_risk:
 			warranty_prod =data_carnet_type.warranty_product_1.id
 		else:
 			warranty_prod = data_carnet_type.warranty_product_2.id
-		return {'value':{'warranty_product_id':warranty_prod}}
+		data['warranty_product_id']	=warranty_prod
+		dict1=self.onchange_warranty_product_id(cr,uid,ids,warranty_prod)
+		data.update(dict1['value'])
+
+		return {'value':data}
 
 	def _get_member_state(self, cr, uid, ids, name, args, context=None):
 		res={}
@@ -714,6 +725,13 @@ class cci_missions_ata_carnet(osv.osv):
 				member_state = True
 		return {'value':{'member_price' : member_state}}
 
+	def onchange_warranty_product_id(self,cr,uid,ids,prod_id):
+		warranty_price= False
+		if prod_id:
+			prod_info = self.pool.get('product.product').browse(cr, uid,prod_id)
+			warranty_price=prod_info.list_price
+		return {'value':{'warranty' : warranty_price}}
+
 	_columns = {
 		'id': fields.integer('ID', readonly=True),
 		'type_id' : fields.many2one('cci_missions.dossier_type','Related Type of Carnet',required=True),
@@ -735,7 +753,7 @@ class cci_missions_ata_carnet(osv.osv):
 		'double_signature' : fields.boolean('Double Signature'),
 		'initial_pages' : fields.integer('Initial Number of Pages',required=True),
 		'additional_pages' : fields.integer('Additional Number of Pages'),
-		'warranty':fields.float('Warranty',required=True),
+		'warranty':fields.float('Warranty',readonly=True),
 		'warranty_product_id': fields.many2one('product.product','Related Warranty Product',required=True),
 		'return_date' : fields.date('Date of Return'),
 		'state':fields.selection([('draft','Draft'),('created','Created'),('pending','Pending'),('dispute','Dispute'),('correct','Correct'),('closed','Closed')],'State',required=True,readonly=True),
