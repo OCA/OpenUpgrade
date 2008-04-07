@@ -234,6 +234,8 @@
 		<field name="site_id" ref="cci_mission.cci_missions_site_liegevervier0"/>
 		<field name="sequence_id" ref="cci_mission.ir_sequence_atasequence0"/>
 		<field name="original_product_id" ref="cci_product_product_4"/>
+		<field name="warranty_product_1" ref="cci_product_product_6"/>
+		<field name="warranty_product_2" ref="cci_product_product_7"/>
 	</record>
 	<record id="cci_missions_dossier_type_atacarnetverviers0" model="cci_missions.dossier_type">
 		<field eval="&quot;AV&quot;" name="code"/>
@@ -243,6 +245,8 @@
 		<field name="site_id" ref="cci_missions_site_verviers0"/>
 		<field name="sequence_id" ref="cci_mission.ir_sequence_atasequence1"/>
 		<field name="original_product_id" ref="cci_product_product_4"/>
+		<field name="warranty_product_1" ref="cci_product_product_6"/>
+		<field name="warranty_product_2" ref="cci_product_product_7"/>
 	</record>
 
 <!-- Demo Data for Custom Codes -->
