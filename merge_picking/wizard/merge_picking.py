@@ -58,8 +58,7 @@ def find_max_invid(self,cr,uid,ids,address_id,state,type):
         wf_service = netsvc.LocalService("workflow")
         wf_service.trg_validate(uid, 'stock.picking', cr_id, 'button_confirm', cr)
     
-        stk_move_obj.action_assign(cr,uid,[cr_id])
-    
+        stk_move_obj.action_assign(cr,uid,[cr_id])    
     return True    
 
 
