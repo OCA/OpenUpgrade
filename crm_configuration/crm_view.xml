@@ -8,7 +8,7 @@
 	# ------------------------------------------------------ 
 
 	<record model="ir.ui.view" id="crm_case_tree_view11">
-		<field name="name">crm.cases.tree1</field>
+		<field name="name">crm.cases.jobs.tree1</field>
 		<field name="model">crm.case</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -27,7 +27,7 @@
 	</record>
 
 	<record model="ir.ui.view" id="crm_case_form_view11">
-		<field name="name">crm.cases.form1</field>
+		<field name="name">crm.cases.jobs.form1</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -137,7 +137,7 @@
 	</record>
 
 	<record model="ir.ui.view" id="crm_case_calendar_view11">
-		<field name="name">crm.cases.calendar1</field>
+		<field name="name">crm.cases.jobs.calendar1</field>
 		<field name="model">crm.case</field>
 		<field name="type">calendar</field>
 		<field name="priority" eval="2"/>
@@ -155,7 +155,7 @@
 
 
 	<record model="ir.ui.view" id="crm_case_form_view">
-		<field name="name">crm.cases.form</field>
+		<field name="name">crm.cases.bug.form</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -257,7 +257,7 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="crm_case_tree_view">
-		<field name="name">crm.cases.tree</field>
+		<field name="name">crm.cases.bug.tree</field>
 		<field name="model">crm.case</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -281,7 +281,7 @@
 	# ------------------------------------------------------ 
 
 	<record model="ir.ui.view" id="crm_case_form_view_meet">
-		<field name="name">crm.cases.form</field>
+		<field name="name">crm.cases.meeting.form</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -391,7 +391,7 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="crm_case_tree_view_meet">
-		<field name="name">crm.cases.tree</field>
+		<field name="name">crm.cases.meeting.tree</field>
 		<field name="model">crm.case</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
@@ -410,7 +410,7 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="crm_case_calendar_view_meet">
-		<field name="name">crm.cases.calendar</field>
+		<field name="name">crm.cases.meeting.calendar</field>
 		<field name="model">crm.case</field>
 		<field name="type">calendar</field>
 		<field name="priority" eval="2"/>
