@@ -74,34 +74,37 @@ class wizard_cost_account_synchro(wizard.interface):
 				{'action':'u'}
 			)
 		ids.sort()
+		iii = 0
 		for dt, id, action in ids:
+			print 'Process', dt, id, action
+			iii +=1
 			if action=='u':
 				pool_src = pool2
 				pool_dest = pool1
 			else:
 				pool_src = pool1
 				pool_dest = pool2
-			value = pool_src.get(object.model_id.model).read(cr, uid, [id])[0]
+			print 'Read', object.model_id.model, id
+			fields = False
+			if object.model_id.model=='crm.case.history':
+				fields = ['email','description','log_id']
+			value = pool_src.get(object.model_id.model).read(cr, uid, [id], fields)[0]
 			value = self._data_transform(cr, uid, pool_src, pool_dest, object.model_id.model, value, action)
 			id2 = self.get_id(cr, uid, object.id, id, action, context)
 			#
 			# Transform value
 			#
 			#tid=pool_dest.get(object.model_id.model).name_search(cr, uid, value['name'],[],'=',)
+			if not (iii%50):
+				print 'Record', iii
 			if id2:
-				try:
-					pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
-					print 'Write', value
-				except Exception, e:
-					self.report.append('ERROR: Unable to update record ['+str(id2)+']:'+str(value.get('name', '?')))
+				#try:
+				pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
+				#except Exception, e:
+				#self.report.append('ERROR: Unable to update record ['+str(id2)+']:'+str(value.get('name', '?')))
 				self.report_total+=1
 				self.report_write+=1
 			else:
-				try:
-					pool_dest.get(object.model_id.model).write(cr, uid, [id2], value)
-					print 'Create', value
-				except Exception, e:
-					self.report.append('ERROR: Unable to create record:'+str(value.get('name', '?')))
 				idnew = pool_dest.get(object.model_id.model).create(cr, uid, value)
 				synid = pool.get('base.synchro.obj.line').create(cr, uid, {
 					'obj_id': object.id,
@@ -123,7 +126,6 @@ class wizard_cost_account_synchro(wizard.interface):
 		pool = pooler.get_pool(cr.dbname)
 		field_src = (action=='u') and 'local_id' or 'remote_id'
 		field_dest = (action=='d') and 'local_id' or 'remote_id'
-		print object_id, id
 		rid = pool.get('base.synchro.obj.line').search(cr, uid, [('obj_id','=',object_id), (field_src,'=',id)], context=context)
 		result = False
 		if rid:
@@ -164,13 +166,16 @@ class wizard_cost_account_synchro(wizard.interface):
 		fields = self.meta[pool_src][object]
 
 		for f in fields:
+			if f not in data:
+				continue
 			ftype = fields[f]['type']
 
 			if ftype in ('function', 'one2many', 'one2one'):
 				del data[f]
 			elif ftype == 'many2one':
 				if data[f]:
-					data[f] = self._relation_transform(cr, uid, pool_src, pool_dest, fields[f]['relation'], data[f][0], action, context)
+					df = self._relation_transform(cr, uid, pool_src, pool_dest, fields[f]['relation'], data[f][0], action, context)
+					data[f] = df
 					if not data[f]:
 						del data[f]
 			elif ftype == 'many2many':

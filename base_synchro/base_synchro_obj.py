@@ -3,7 +3,6 @@ import tools
 import re
 import time
 
-
 class base_synchro_server(osv.osv):
 	'''Class to store the information regarding server'''
 	_name = "base.synchro.server"
@@ -20,9 +19,7 @@ class base_synchro_server(osv.osv):
 	_defaults = {
 		'server_port': lambda *args: 8069
 	}
-
 base_synchro_server()
-
 
 class base_synchro_obj(osv.osv):
 	'''Class to store the operations done by wizart'''
