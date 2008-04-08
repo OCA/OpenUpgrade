@@ -6,7 +6,7 @@
 	"depends":["base", "membership", "event"
 		],
 	"demo_xml":[],
-	"update_xml":["association_menu.xml"],
+	"update_xml":[],
 	"active":False,
 	"installable":True,
 	}
