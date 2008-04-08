@@ -196,30 +196,6 @@
 
 
 
-	<!-- Gift voucher-->	
-	<record id="product_uom_categ_unit" model="product.uom.categ">
-		<field name="name">PCE</field>
-	</record>
-
-
-	<record id="product_category_voucher" model="product.category">
-		<field name="name">Bon</field>
-	</record>
-
-	<record id="product_product_giftvoucher" model="product.product">
-		<field name="default_code">GIFT</field>
-		<field name="supply_method">produce</field>
-		<field name="list_price">1.0</field>
-		<field name="standard_price">1.0</field>
-		<field name="uom_id" ref="product.product_uom_unit"/>
-		<field name="uom_po_id" ref="product.product_uom_unit"/>
-		<field name="sale_delay">0.0</field>
-		<field name="name">Cheque cadeau</field>
-		<field name="categ_id" ref="product_category_voucher"/>
-	</record>
-
-
-
 	<!--Fiscal year	-->	
 
 	<record model="account.fiscalyear" id="data_fiscalyear">

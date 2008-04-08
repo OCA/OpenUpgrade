@@ -8,6 +8,6 @@
 	"update_xml": ["bookstore_view.xml","lot_sequence.xml",
 				   "bookstore_report.xml","bookstore_access.xml",
 				],
-  	"demo_xml" : [],
+  	"demo_xml" : ['book_data.xml'],
 	"installable": True,
 }
