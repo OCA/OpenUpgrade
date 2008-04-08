@@ -1,0 +1,280 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="34.0" y1="28.0" width="527" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau6">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#e6e6e6" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#e6e6e6" start="4,0" stop="4,0"/>
+      <blockBackground colorName="#e6e6e6" start="5,0" stop="5,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="9.0" leading="11"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="9.0" leading="11"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="9.0" leading="14" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="14" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="4.0" leading="5" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="9.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="9.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="9.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P13" fontName="Times-BoldItalic" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="9.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P15" fontName="Times-Roman" fontSize="9.0" leading="14" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P16" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P17" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P18" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P19" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P20" fontName="Times-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P21" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P22" fontName="Times-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P23" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P24" fontName="Times-Roman" fontSize="9.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P25" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P26" fontName="Courier-Bold" fontSize="9.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P27" fontName="Courier-Bold" fontSize="9.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P28" fontName="Courier-Bold" fontSize="9.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P1">[[ setLang(o.partner_id.lang) ]]</para>
+    <blockTable colWidths="295.0,232.0" style="Tableau2">
+      <tr>
+        <td>
+          <para style="P2">
+            <font face="Times-Roman">ORDER N° :</font>
+            <font face="Times-Roman">[[o.name]]</font>
+          </para>
+          <para style="P3">
+            <font face="Times-Roman">Date :</font>
+            <font face="Times-Roman" size="10.0">[[ time.strftime('%d/%m/%Y',time.strptime(o.date_order, '%Y-%m-%d')) ]]</font>
+          </para>
+          <para style="P3">
+            <font face="Times-Roman">Customer n</font>
+            <font face="Times-Bold">°</font>
+            <font face="Times-Roman"> :</font>
+            <font face="Times-Roman"> [[ o.partner_id.number or '/' ]]</font>
+          </para>
+          <para style="P3">
+            <font face="Times-Roman">Your reference</font>
+            <font face="Times-Roman"> :</font>
+            <font face="Times-Roman"> [[ o.client_order_ref or '/' ]]</font>
+          </para>
+        </td>
+        <td>
+          <para style="P6">[[ o.partner_id.title or '' ]] [[ o.partner_id.name ]]</para>
+          <para style="P7">[[ o.partner_order_id.title or '' ]] [[ o.partner_order_id.name ]]</para>
+          <para style="P7">[[ o.partner_order_id.street ]]</para>
+          <para style="P7">[[ o.partner_order_id.street2 or '' ]]</para>
+          <para style="P7">[[ o.partner_order_id.zip or '' ]] [[ o.partner_order_id.city or '' ]]</para>
+          <para style="P7">[[ o.partner_order_id.state_id and o.partner_order_id.state_id.name or '' ]]</para>
+          <para style="P7">[[ o.partner_order_id.country_id and o.partner_order_id.country_id.name or '' ]]</para>
+          <para style="P8">
+            <font color="white"> </font>
+          </para>
+          <para style="P9">Tél. : [[ o.partner_order_id.phone or '' ]]</para>
+          <para style="P9">Fax : [[ o.partner_order_id.fax or '' ]]</para>
+          <para style="P9">TVA : [[ o.partner_id.vat or '' ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P10">
+      <font color="white"> </font>
+    </para>
+    <para style="P3">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="242.0,39.0,86.0,58.0,42.0,60.0" style="Tableau6">
+      <tr>
+        <td>
+          <para style="P11">Description</para>
+        </td>
+        <td>
+          <para style="P12">Qty</para>
+        </td>
+        <td>
+          <para style="P12">Un.p.excl.VAT</para>
+        </td>
+        <td>
+          <para style="P12">Disc%</para>
+        </td>
+        <td>
+          <para style="P12">VAT</para>
+        </td>
+        <td>
+          <para style="P12">Price excl. VAT</para>
+        </td>
+      </tr>
+    </blockTable>
+    <section>
+      <para style="P13">[[ repeatIn(o.order_line,'line') ]]</para>
+      <blockTable colWidths="241.0,41.0,86.0,57.0,41.0,61.0" style="Tableau7">
+        <tr>
+          <td>
+            <para style="P14">
+              <font face="Times-Roman" size="12.0">[[ line.product_id.product_tmpl_id.name ]]</font>
+            </para>
+            <para style="P15">[[(author(line.product_id.id)) and ("Author(s) : " + author(line.product_id.id))]]</para>
+            <para style="P15">[[(line.product_id.ean13 and("EAN : "+ line.product_id.ean13)) or (line.product_id.isbn and("ISBN : "+ line.product_id.isbn)) ]]</para>
+            <para style="P15">  [[line.customer_ref and ("Your Reference : " + line.customer_ref)]]</para>
+            <para style="P15">  [[ line.production_lot_id and ("Our Reference : " + line.production_lot_id.name)]]</para>
+
+          </td>
+          <td>
+            <para style="P16">
+              <font face="Times-Roman">[[  '%0.f' %line.product_uos_qty or line.product_uom_qty ]]</font>
+            </para>
+          </td>
+          <td>
+            <para style="P17">[[ '%.2f' % line.price_unit ]]</para>
+          </td>
+          <td>
+            <para style="P18">[[ (line.discount and str(line.discount)+'%')or '' ]]</para>
+          </td>
+          <td>
+            <para style="P18">[[ ', '.join(map(lambda x: x.name, line.tax_id))]]</para>
+          </td>
+          <td>
+            <para style="P19">[[ '%.2f' % line.price_subtotal ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+    </section>
+    <blockTable colWidths="215.0,313.0" style="Tableau3">
+      <tr>
+        <td>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <blockTable colWidths="214.0,95.0" style="Tableau5">
+            <tr>
+              <td>
+                <para style="P17">Total Quantity:</para>
+              </td>
+              <td>
+                <para style="P20">[['%0.f' % qty(o) ]]</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P17">Total excl. VAT:</para>
+              </td>
+              <td>
+                <para style="P21">[[ '%.2f' % o.amount_untaxed ]] <font face="Times-Bold">[[ o.pricelist_id.currency_id.name ]]</font></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P17"><font face="Times-Roman">Total </font>(incl. taxes):</para>
+              </td>
+              <td>
+                <para style="P22">[[ '%.2f' % o.amount_total ]] <font face="Times-Roman">[[ o.pricelist_id.currency_id.name ]]</font></para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P17">Total Vat:</para>
+              </td>
+              <td>
+                <para style="P23">[[ '%.2f' % o.amount_tax ]] <font face="Times-Bold">[[ o.pricelist_id.currency_id.name ]]</font></para>
+              </td>
+            </tr>
+          </blockTable>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P24">
+      <font color="white"> </font>
+    </para>
+    <para style="P24">
+          <para style="P18">[[ o.note or '' ]] [[ setTag('para','xpre') ]]</para>
+    </para>
+    <para style="P24">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="527.0" repeatRows="1" style="Table1">
+      <tr>
+        <td>
+          <para style="P25">CERTIFIE SINCERE ET VERITABLE POUR LA SOMME DE :[[(convert(o.amount_total)['french'])]]</para>
+          <para style="P25">CERTIFIED SINCERE AND TRUE FOR THE SUM OF:[[(convert(o.amount_total)['english'])]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P24">
+      <font color="white"> </font>
+    </para>
+    <para style="P26">
+      <font color="white"> </font>
+    </para>
+    <para style="P26">
+      <font color="white"> </font>
+    </para>
+    <para style="P27">
+      <font color="white"> </font>
+    </para>
+    <para style="P28">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+
