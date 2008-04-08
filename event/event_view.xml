@@ -3,6 +3,7 @@
 	<data>
 
 		<!-- EVENTS  -->
+		<menuitem name="Events Organisation" id="menu_event_main" icon="terp-calendar" />
 
 		<!-- EVENTS/CONFIGURATION/TYPE OF EVENTS -->
 		<record model="ir.ui.view" id="view_event_type_form">
@@ -31,7 +32,7 @@
 			<field name="res_model">event.type</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Events/Configuration/Types of events" id="menu_event_type" action="action_event_type" />
+		<menuitem name="Events Organisation/Configuration/Types of events" id="menu_event_type" action="action_event_type" />
 
 		<!-- The base section for all events -->
 
@@ -46,10 +47,10 @@
 			<field name="domain" eval="[('parent_id','=',ref('case_section_event'))]" />
 			<field name="view_type">tree</field>
 		</record>
-		<menuitem name="Events/Events by categories" id="menu_action_event_categories" action="action_event_categories" />
+		<menuitem name="Events Organisation/Events by categories" id="menu_action_event_categories" action="action_event_categories" />
 
 
-		<!-- EVENTS/CONFIGURATION/EVENTS  -->
+		<!-- Events Organisation/CONFIGURATION/EVENTS  -->
 
 		<record model="ir.ui.view" id="view_event_form">
 			<field name="name">Events</field>
@@ -119,7 +120,7 @@
 			</field>
 		</record>
 
-		<!-- EVENTS/CONFIGURATION/EVENTS  -->
+		<!-- Events Organisation/CONFIGURATION/EVENTS  -->
 		<record model="ir.actions.act_window" id="action_new_event_form">
 			<field name="name">New event</field>
 			<field name="type">ir.actions.act_window</field>
@@ -127,7 +128,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record>
-		<menuitem name="Events/Configuration/New Event" id="menu_event_new_event" action="action_new_event_form" />
+		<menuitem name="Events Organisation/Configuration/New Event" id="menu_event_new_event" action="action_new_event_form" />
 
 		<record model="ir.actions.act_window" id="action_event_view">
 			<field name="name">Events</field>
@@ -136,7 +137,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Events/All Events" id="menu_event_event" action="action_event_view" />
+		<menuitem name="Events Organisation/All Events" id="menu_event_event" action="action_event_view" />
 
 		<record model="ir.actions.act_window" id="action_event_view_draft">
 			<field name="name">Draft Events</field>
@@ -145,7 +146,7 @@
 			<field name="domain">[('state','=','draft')]</field>
 		</record>
 		<menuitem
-			name="Events/All Events/Draft Events"
+			name="Events Organisation/All Events/Draft Events"
 			id="menu_event_event_draft"
 			action="action_event_view_draft" />
 		<record model="ir.actions.act_window" id="action_event_view_confirm">
@@ -154,7 +155,7 @@
 			<field name="res_model">event.event</field>
 			<field name="domain">[('state','=','confirm')]</field>
 		</record>
-		<menuitem name="Events/All Events/Confirmed Events"
+		<menuitem name="Events Organisation/All Events/Confirmed Events"
 			id="menu_event_event_confi.rm"
 			action="action_event_view_confirm" />
 
@@ -338,7 +339,7 @@
 		  <field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
-			name="Events/All Registrations"
+			name="Events Organisation/All Registrations"
 			id="menu_action_registration"
 			action="action_registration"/>
 		<record model="ir.actions.act_window" id="action_registration_draft">
@@ -349,7 +350,7 @@
 		  <field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
-			name="Events/All Registrations/Unconfirmed Registrations"
+			name="Events Organisation/All Registrations/Unconfirmed Registrations"
 			id="menu_action_registration_draft"
 			action="action_registration_draft"/>
 		<record model="ir.actions.act_window" id="action_registration_confirm">
@@ -359,7 +360,7 @@
 		  <field name="domain">[('state','in',('open','done'))]</field>
 		</record>
 		<menuitem
-			name="Events/All Registrations/Confirmed Registrations"
+			name="Events Organisation/All Registrations/Confirmed Registrations"
 			id="menu_action_registration_confirm"
 			action="action_registration_confirm"/>
 
@@ -402,7 +403,7 @@
 <!--		<field name="view_mode">tree</field>-->
 		<field name="view_mode">tree,graph</field>
 	</record>
-	<menuitem name="Events/Reporting/Events on Registrations" action="action_event_registration" id="menu_report_event_registration"/>
+	<menuitem name="Events Organisation/Reporting/Events on Registrations" action="action_event_registration" id="menu_report_event_registration"/>
 <!-- end... -->
 
 
@@ -440,7 +441,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 	</record>
-	<menuitem name="Events/Reporting/Registration By Event Types" action="action_event_type_registration" id="menu_report_event_type_registration"/>
+	<menuitem name="Events Organisation/Reporting/Registration By Event Types" action="action_event_type_registration" id="menu_report_event_type_registration"/>
 
 
 <!-- end...  -->

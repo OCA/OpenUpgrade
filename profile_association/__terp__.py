@@ -3,8 +3,7 @@
 	"version":"0.1",
 	"author":"Tiny",
 	"category":"Profile",
-	"depends":["base", "membership", "event"
-		],
+	"depends":["membership", "event", "association_vertical"],
 	"demo_xml":[],
 	"update_xml":[],
 	"active":False,

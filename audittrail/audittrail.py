@@ -29,12 +29,12 @@ class audittrail_rule(osv.osv):
 	]
 	__functions = {}
 
-	def __init__(self,pool):
+	def __init__(self,pool,cr=None):
 		for obj_name in pool.obj_list():
 			obj=pool.get(obj_name)
 			for field in ('read','write','create','unlink'):
 				 setattr(obj, field, self.logging_fct(getattr(obj,field), obj))			
-		super(audittrail_rule, self).__init__(pool)
+		super(audittrail_rule, self).__init__(pool,cr)
 		
 
 		
