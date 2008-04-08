@@ -10,8 +10,8 @@
                    identification, prioritization, assignment, resolution and notification.""",
     "depends" : ["base","crm"],
     "init_xml" : [],
-    "demo_xml" : ["crm_bugs_demo.xml","crm_jobs_demo.xml","crm_lead_demo.xml","crm_meeting_demo.xml"],
-    "update_xml" : ["crm_bugs_view.xml","crm_jobs_view.xml","crm_lead_view.xml","crm_meeting_view.xml"],
+    "demo_xml" : ["crm_bugs_demo.xml","crm_jobs_demo.xml","crm_lead_demo.xml","crm_meeting_demo.xml","crm_opportunity_demo.xml"],
+    "update_xml" : ["crm_bugs_view.xml","crm_jobs_view.xml","crm_lead_view.xml","crm_meeting_view.xml","crm_opportunity_view.xml"],
     "active": False,
     "installable": True
 }
