@@ -61,7 +61,9 @@ def _refunding(self, cr, uid, data, context):
 	clone_list= order_ref.refund(cr, uid, data['ids'], context)
 
 	if data['form']['date_validity']:
-		order_ref.write(cr,uid,clone_list,{'date_validity':data['form']['date_validity'] })
+		order_ref.write(cr,uid,clone_list,{
+			'date_validity':data['form']['date_validity']
+			})
 			
 	return {
 		'domain': "[('id','in',["+','.join(map(str,clone_list))+"])]",

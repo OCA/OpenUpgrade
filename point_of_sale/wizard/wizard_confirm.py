@@ -1,7 +1,7 @@
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -26,9 +26,27 @@
 #
 ##############################################################################
 
-import wizard_pos_payment
-import wizard_refund_order
-import wizard_add_product
-import wizard_confirm
-import wizard_discount
-import wizard_get_sale
+
+import pooler
+
+import wizard
+from osv import osv
+import netsvc
+
+def _confirm(self, cr, uid, data, context):
+	wf_service = netsvc.LocalService("workflow")
+
+	for i in data['ids']:
+		wf_service.trg_validate(uid, 'pos.order', i, 'done', cr)
+	return {}
+
+class pos_confirm(wizard.interface):
+
+	states = {
+		'init' : {'actions' : [_confirm],
+				  'result' : {'type' : 'state',
+							  'state': 'end',
+							  }
+				  },
+		}
+pos_confirm('pos.confirm')

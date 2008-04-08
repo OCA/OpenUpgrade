@@ -31,15 +31,17 @@
     <paraStyle name="P1" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="LEFT"/>
     <paraStyle name="P2" fontName="Times-Bold" fontSize="9.0" leading="11" alignment="CENTER"/>
     <paraStyle name="P3" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
+    <paraStyle name="P30" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT"/>
+    <paraStyle name="P31" fontName="Times-Bold" fontSize="8.0" leading="9" alignment="CENTER" backColor="#dddddd"/>
     <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT"/>
     <paraStyle name="P5" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
-    <paraStyle name="P6" rightIndent="0.0" leftIndent="-3.0" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="CENTER"/>
-    <paraStyle name="P7" rightIndent="0.0" leftIndent="-2.0" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="RIGHT"/>
+    <paraStyle name="P7" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="RIGHT"/>
     <paraStyle name="P8" fontName="Times-BoldItalic" fontSize="6.0" leading="8" alignment="LEFT"/>
     <paraStyle name="P9" fontName="Times-Roman" fontSize="6.0" leading="8" alignment="LEFT"/>
-    <paraStyle name="P10" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
-    <paraStyle name="P11" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="RIGHT"/>
-    <paraStyle name="P12" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="RIGHT"/>
+    <paraStyle name="P11" rightIndent="0.0" leftIndent="-3.0" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P12" rightIndent="0.0" leftIndent="-2.0" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="CENTER"/>
     <paraStyle name="P13" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="RIGHT"/>
     <paraStyle name="P14" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="LEFT"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
@@ -58,6 +60,8 @@
     <para style="P3">[[ address and address.country_id.name ]]</para>
     <para style="P3">Tel : [[ address and address.phone ]]</para>
     <para style="P3">E-mail : [[ address and address.email ]]</para>
+    <para style="P3">User : [[ o.user_id.name ]]</para>
+    <para style="P3">Date : [[ time.strftime('%d/%m/%Y %H:%M') ]]</para>
     <para style="P4">
       <font color="white"> </font>
     </para>
@@ -71,15 +75,15 @@
           <para style="P5">Description</para>
         </td>
         <td>
-          <para style="P6">Qty</para>
+          <para style="P11">Qty</para>
         </td>
         <td>
-          <para style="P7">Price</para>
+          <para style="P12">Price</para>
         </td>
       </tr>
     </blockTable>
     <section>
-      <para style="P8">[[ repeatIn(o.order_line,'line') ]]</para>
+      <para style="P8">[[ repeatIn(o.lines,'line') ]]</para>
       <blockTable colWidths="95.0,23.0,27.0" style="Tableau3">
         <tr>
           <td>
@@ -94,27 +98,36 @@
         </tr>
       </blockTable>
     </section>
-    <blockTable colWidths="119.0,27.0" style="Table1">
+    <blockTable colWidths="109.0,37.0" style="Table1">
       <tr>
         <td>
-          <para style="P11">Disc : </para>
+          <para style="P13">Disc : </para>
         </td>
         <td>
-          <para style="P12">[[ disc(o.id) ]] [[ o.pricelist_id.currency_id.name ]]</para>
+          <para style="P10">[[ '%.2f' % (disc(o.id) or 0.0,) ]] </para>
         </td>
       </tr>
       <tr>
         <td>
-          <para style="P13">Total :</para>
+          <para style="P6">Total :</para>
         </td>
         <td>
-          <para style="P14">[[ '%.2f' % o.amount_total ]] [[ o.pricelist_id.currency_id.name ]]</para>
+          <para style="P7">[[ '%.2f' % o.amount_total ]] [[ o.pricelist_id.currency_id.name ]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P3">
-      <font color="white"> </font>
-    </para>
+	<section>
+		[[ repeatIn((o.amount_total&gt;0) and o.payments or [], 'p') ]]
+		<para style="P30">
+			[[ p.journal_id.name ]] : [[ '%.2f' % (p.amount,) ]]
+		</para>
+	</section>
+	<section>
+		[[ repeatIn((o.amount_total&lt;0) and [1] or [], 'p') ]]
+		<para style="P31">
+			Ce bon est valide jusqu'au [[ time.strftime('%d/%m/%Y', time.strptime(o.date_validity,'%Y-%m-%d')) ]].
+		</para>
+	</section>
   </story>
 </document>
 

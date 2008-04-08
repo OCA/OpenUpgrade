@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau8">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#dddddd" start="0,0" stop="-1,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau6">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="grey"/>
+      <blockBackground colorName="#e6e6e6" start="0,-1" stop="-1,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P13" fontName="Times-BoldItalic" fontSize="10.0" leading="13" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P12">
+      <font face="Times-Roman" size="11.0">Company: [[ company.name ]]</font>
+    </para>
+    <para style="P12">
+      <font face="Times-Roman" size="11.0">Print Date: [[time.strftime('%d/%m/%Y')]]</font>
+    </para>
+
+	<blockTable colWidths="97.0,57.0,130,57.0,57.0,57.0,67.0" style="Tableau8">
+      <tr>
+        <td>
+          <para style="P2">Date</para>
+        </td>
+        <td>
+          <para style="P3">Code</para>
+        </td>
+        <td>
+          <para style="P3">Product</para>
+        </td>
+        <td>
+          <para style="P3">Price</para>
+        </td>
+        <td>
+          <para style="P3">Qty</para>
+        </td>
+        <td>
+          <para style="P3">Taxes</para>
+        </td>
+        <td>
+          <para style="P3">Invoiced</para>
+        </td>
+      </tr>
+	  </blockTable>
+	<section>
+		[[ repeatIn(objects,'o') ]]
+	<blockTable colWidths="97.0,57.0,130,57.0,57.0,57.0,67.0" style="Tableau6">
+		<tr>
+			<td>[[ repeatIn(o.lines,'line') ]]<para>[[line.create_date ]]</para> </td>
+			<td> </td>
+			<td> [[line.product_id.name[:30] ]] </td>
+			<td> [[ '%.2f' % (line.price_subtotal,) ]]</td>
+			<td> [[ line.qty ]]</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td>[[ o.date_order ]] </td>
+			<td>[[ o.name ]] </td>
+			<td></td>
+			<td><para><b>[[ '%.2f' % (o.amount_total,) ]]</b></para></td>
+			<td></td>
+			<td>[[ o.amount_tax ]] </td>
+			<td>[[ o.invoice_id and o.invoice_id.number or '']]</td>
+		</tr>
+    </blockTable>
+    </section>
+	<para></para>
+	<section>
+		[[ repeatIn(getpayments(objects).items(), 'p') ]]
+		<para>
+			[[ p[0] ]] : [[ '%.2f' % (p[1],) ]]
+		</para>
+	</section>
+  </story>
+</document>
+

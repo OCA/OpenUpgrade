@@ -27,5 +27,6 @@
 ##############################################################################
 
 import pos
+import stock
 import wizard
 import report

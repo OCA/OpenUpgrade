@@ -1,7 +1,7 @@
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -26,9 +26,58 @@
 #
 ##############################################################################
 
-import wizard_pos_payment
-import wizard_refund_order
-import wizard_add_product
-import wizard_confirm
-import wizard_discount
-import wizard_get_sale
+
+import pooler
+
+import wizard
+from osv import osv
+
+
+
+
+_form = """<?xml version="1.0"?>
+<form string="Discount :">
+<field name="discount"/>
+</form>
+"""
+
+_fields = {
+	'discount': {'string':'Discount percentage', 'type':'integer','required': True,},
+	}
+
+def apply_discount(self, cr, uid, data, context):
+	pool = pooler.get_pool(cr.dbname)
+	order_ref = pool.get('pos.order')
+	order_line_ref = pool.get('pos.order.line')
+	for order in order_ref.browse(cr, uid, data['ids'], context=context):
+		order_line_ref.write(cr, uid, [line.id for line in order.lines],
+							 {'discount': data['form']['discount']},
+							 context=context,)
+	return {}
+
+
+class discount_wizard(wizard.interface):
+
+
+	states = {
+
+		'init' : {'actions' : [],
+				 'result' : {'type' : 'form',
+							 'arch': _form,
+							 'fields': _fields,
+							 'state' : (('end', 'Cancel'),
+										('apply_discount', 'Apply Discount',
+										 'gtk-ok', True)
+										)
+							 }
+				 },
+
+		'apply_discount': {'actions' : [],
+					 		'result' : {'type' : 'action',
+										'action': apply_discount,
+									 	'state': "end",
+							  }
+				  },
+	}
+
+discount_wizard('pos.discount')

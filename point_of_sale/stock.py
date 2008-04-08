@@ -1,6 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
+# Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #                    Fabien Pinckaers <fp@tiny.Be>
 #
 # WARNING: This program as such is intended to be used by professional
@@ -26,9 +26,15 @@
 #
 ##############################################################################
 
-import wizard_pos_payment
-import wizard_refund_order
-import wizard_add_product
-import wizard_confirm
-import wizard_discount
-import wizard_get_sale
+from osv import osv, fields
+import time
+import netsvc
+
+class stock_picking(osv.osv):
+
+	_inherit = 'stock.picking'
+	_columns = {
+		'pos_order': fields.many2one('pos.order', 'Pos order'),
+		}
+
+stock_picking()

@@ -27,6 +27,7 @@
 
 import time
 from report import report_sxw
+from osv import osv
 
 class pos_invoice(report_sxw.rml_parse):
 	def __init__(self, cr, uid, name, context):
@@ -39,13 +40,16 @@ class pos_invoice(report_sxw.rml_parse):
 		super(pos_invoice, self).preprocess(objects, data, ids)
 		iids = []
 		nids = []
+		
 		for order in objects:	
 			order.write(self.cr,self.uid,[order.id],{'nb_print':order.nb_print + 1  })
-			self.cr.commit() # XXX : seems necessary here, why ?
+			
 			if order.invoice_id and order.invoice_id not in iids:
+				if not order.invoice_id:
+					raise osv.except_osv('Error !','Please create an invoice for this sale.')
 				iids.append(order.invoice_id)
 				nids.append(order.invoice_id.id)
-
+		self.cr.commit()
 		data['ids'] = nids
 		self.datas = data
 		self.ids = nids
@@ -54,4 +58,4 @@ class pos_invoice(report_sxw.rml_parse):
 		self.localcontext['objects'] = iids
 
 report_sxw.report_sxw('report.pos.invoice', 'pos.order', 'addons/account/report/invoice.rml', parser= pos_invoice)
-
+#report_sxw.report_sxw('report.pos.invoice', 'pos.order', 'addons/libeurop/report/invoice.rml', parser= pos_invoice)
