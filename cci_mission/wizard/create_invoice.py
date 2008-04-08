@@ -120,7 +120,6 @@ def _createInvoices(self, cr, uid, data, context={}):
 			val['value'].update({'product_id' : prod_id })
 
 			force_member=force_non_member=False
-
 			if current_model=='cci_missions.legalization':
 				if data.member_price==1:
 					force_member=True
@@ -129,6 +128,7 @@ def _createInvoices(self, cr, uid, data, context={}):
 			context.update({'partner_id':data.order_partner_id})
 			context.update({'force_member':force_member})
 			context.update({'force_non_member':force_non_member})
+			context.update({'value_goods':data.goods_value})
 
 			price=pool_obj.get('product.product')._product_price(cr, uid, [prod_id], False, False, context)
 			val['value'].update({'price_unit':price[prod_id]})
@@ -154,7 +154,9 @@ def _createInvoices(self, cr, uid, data, context={}):
 						'product_id':val['value']['product_id'],
 						'invoice_line_tax_id': [(6,0,tax_on_line)],
 						#'note':data.text_on_invoice,
-				})
+					})
+				else:
+					raise osv.except_osv('Input Error!','No Product Chosen')
 				create_ids.append(inv_id)
 		inv = {
 			'name': data.name,

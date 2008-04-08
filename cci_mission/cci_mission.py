@@ -214,8 +214,8 @@ class cci_missions_dossier_type(osv.osv):
 	_description = 'cci_missions.dossier_type'
 
 	_columns = {
-		'code' : fields.char('Code',size=2,required=True),
-		'name' : fields.char('Description',size=30,required=True),
+		'code' : fields.char('Code',size=3,required=True),
+		'name' : fields.char('Description',size=50,required=True),
 		'original_product_id' : fields.many2one('product.product','Reference for Original Copies',required=True,help='for the association with a pricelist'),
 		'copy_product_id' : fields.many2one('product.product','Reference for Copies',required=True,help='for the association with a pricelist'),
 		'site_id' : fields.many2one('cci_missions.site','Site',required=True),
@@ -420,7 +420,7 @@ class cci_missions_certificate(osv.osv):
 
 	def create(self, cr, uid, vals, *args, **kwargs):
 #		Overwrite the name fields to set next sequence according to the sequence in the certification type (type_id)
-		vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Certificate')])[0]
+		#vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Certificate')])[0]
 		if vals['type_id']:
 			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
 			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
@@ -527,7 +527,7 @@ class cci_missions_legalization(osv.osv):
 
 	def create(self, cr, uid, vals, *args, **kwargs):
 #		Overwrite the name fields to set next sequence according to the sequence in the legalization type (type_id)
-		vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Legalization')])[0]
+		#vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Legalization')])[0]
 		if vals['type_id']:
 			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
 			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
@@ -606,15 +606,91 @@ class cci_missions_ata_carnet(osv.osv):
 	_name = 'cci_missions.ata_carnet'
 	_description = 'cci_missions.ata_carnet'
 
+	def create(self, cr, uid, vals, *args, **kwargs):
+
+		context = {}
+		context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for ATA Carnet')])[0]})
+		if 'creation_date' in vals:
+			context.update({'date':vals['creation_date']})
+		if 'partner_id' in vals:
+			context.update({'partner_id':vals['partner_id']})
+		if 'goods_value' in vals:
+			print "plop", vals['goods_value']
+			context.update({'value_goods':vals['goods_value']})
+		if 'double_signature' in vals:
+			context.update({'double_signature':vals['double_signature']})
+		force_member=force_non_member=False
+		if 'member_price' in vals and vals['member_price']==1:
+			force_member=True
+		else:
+			force_non_member=True
+		context.update({'force_member':force_member})
+		context.update({'force_non_member':force_non_member})
+
+		data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
+		if 'own_risk' in vals and vals['own_risk']:
+			warranty_product = data.warranty_product_1.id
+		else:
+			warranty_product = data.warranty_product_2.id
+
+		warranty= self.pool.get('product.product').price_get(cr,uid,[warranty_product],'list_price', context)[warranty_product]
+		vals.update({'warranty_product_id' : warranty_product, 'warranty': warranty})
+
+		seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
+		if seq:
+			vals.update({'name': seq})
+		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
 	def write(self, cr, uid, ids,vals, *args, **kwargs):
-		super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
+		#super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
+		data_carnet = self.browse(cr,uid,ids[0])
+		context = {}
+		context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for ATA Carnet')])[0]})
+
+		if 'creation_date' in vals:
+			context.update({'date':vals['creation_date']})
+		else:
+			context.update({'date':data_carnet.creation_date})
+		if 'partner_id' in vals:
+			context.update({'partner_id':vals['partner_id']})
+		else:
+			context.update({'partner_id':data_carnet.partner_id})
+		if 'goods_value' in vals:
+			context.update({'value_goods':vals['goods_value']})
+		else:
+			context.update({'value_goods':data_carnet.goods_value})
+		if 'double_signature' in vals:
+			context.update({'double_signature':vals['double_signature']})
+		else:
+			context.update({'double_signature':data_carnet.double_signature})
+		force_member=force_non_member=False
+		if 'member_price' in vals:
+			if vals['member_price']==1:
+				force_member=True
+			else:
+				force_non_member=True
+		else:
+			if data_carnet.member_price==1:
+				force_member=True
+			else:
+				force_non_member=True
+		context.update({'force_member':force_member})
+		context.update({'force_non_member':force_non_member})
+
 		if 'own_risk' in vals:
-			data_carnet = self.browse(cr,uid,ids[0])
-			if data_carnet.type_id:
-				if vals['own_risk']:
-					self.write(cr,uid,ids,{'warranty_product_id' : data_carnet.type_id.warranty_product_1.id})
-				else:
-					self.write(cr,uid,ids,{'warranty_product_id' : data_carnet.type_id.warranty_product_2.id})
+			if vals['own_risk']:
+				warranty_product = data_carnet.type_id.warranty_product_1.id
+			else:
+				warranty_product = data_carnet.type_id.warranty_product_2.id
+		else:
+			if data_carnet.own_risk:
+				warranty_product = data_carnet.type_id.warranty_product_1.id
+			else:
+				warranty_product = data_carnet.type_id.warranty_product_2.id
+		warranty= self.pool.get('product.product').price_get(cr,uid,[warranty_product],'list_price', context)[warranty_product]
+
+		vals.update({'warranty_product_id' : warranty_product, 'warranty': warranty})
+		super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
 		return True
 
 	def button_uncertain(self, cr, uid, ids, *args):
@@ -682,14 +758,6 @@ class cci_missions_ata_carnet(osv.osv):
 		for p_id in partner_ids:
 			res[p_id.id]=p_id.partner_id.membership_state
 		return res
-
-	def create(self, cr, uid, vals, *args, **kwargs):
-		if vals['type_id']:
-			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
-			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
-			if seq:
-				vals.update({'name': seq})
-		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
 	def check_ata_carnet(self,cr, uid, ids):
 		data_carnet=self.browse(cr, uid, ids)
@@ -806,23 +874,15 @@ class product_lines(osv.osv):
 			res[line.id] = round(line.price_unit * line.quantity)
 		return res
 
-	def product_id_change(self, cr, uid, ids,product_id,partner_id=False,member_price=False):
+	def product_id_change(self, cr, uid, ids,product_id,):
 		price_unit=uos_id=prod_name=a=data_partner=False
-
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
 			a =  data_product.product_tmpl_id.property_account_income.id
 			if not a:
 				a = data_product.categ_id.property_account_income_categ.id
 			uos_id=data_product.uom_id.id
-			force_member=force_non_member=False
-			if member_price:
-				force_member=True
-			else:
-				force_non_member=True
-			if partner_id:
-				data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
-			price=self.pool.get('product.product').price_get(cr,uid,[product_id],partner_id=data_partner,force_non_member=force_non_member,force_member=force_member)
+			price=self.pool.get('product.product').price_get(cr,uid,[product_id])
 			price_unit=price[product_id]
 			prod_name=data_product.name
 		return {'value': {
@@ -859,15 +919,28 @@ class Product(osv.osv):
 		#get the price from the pricelist
 		res = super(Product, self).price_get(cr, uid, ids, ptype, context)
 		for product in self.browse(cr, uid, ids, context=context):
-			#change the price only for originals
-			if product.name.find('original') != -1:
+
+			#change the price only for ATA originals
+			if product.name.find('ATA - original') != -1:
 				if context and ('value_goods' in context):
-					if context['value_goods'] < 500:
-						res[product.id] = 100.0
-					elif 500 < context['value_goods'] < 1000 :
-						res[product.id] = 200.0
+					if context['value_goods'] < 25000:
+						res[product.id] = res[product.id] + context['value_goods']*0.008903875
+					elif 25000 <= context['value_goods'] < 75000 :
+						res[product.id] = res[product.id] + context['value_goods']*0.006937375
+					elif 75000 <= context['value_goods'] < 250000 :
+						res[product.id] = res[product.id] + context['value_goods']*0.004446475
 					else:
-						res[product.id] = 300.0
+						res[product.id] = res[product.id] + context['value_goods']*0.002764025
+				if context and ('double_signature' in context):
+					if context['double_signature'] == False:
+						res[product.id] = res[product.id] + 5.45
+
+			#change the price only for warranty own risk on ATA carnet
+			if product.name.find('ATA - Own Risk Warranty') != -1:
+				if context and ('value_goods' in context):
+					if context['value_goods'] > 15000:
+						res[product.id] = round(context['value_goods']*0.03)
+
 		return res
 
 Product()

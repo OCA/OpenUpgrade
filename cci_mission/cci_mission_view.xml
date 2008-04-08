@@ -427,7 +427,7 @@
 										<field name="name" select="1" colspan="4"/>
 										<field name="account_id" colspan="4"/>
 										<newline/>
-										<field name="product_id" select="1" on_change="product_id_change(product_id,parent.order_partner_id,parent.member_price)"/>
+										<field name="product_id" select="1" on_change="product_id_change(product_id)"/>
 										<field name="quantity" select="1"/>
 										<field name="uos_id"/>
 										<field name="price_unit" select="1"/>
@@ -522,7 +522,7 @@
 									<field name="name" select="1" colspan="4"/>
 									<field name="account_id" colspan="4"/>
 									<newline/>
-									<field name="product_id" select="1" on_change="product_id_change(product_id,parent.order_partner_id)"/>
+									<field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
 									<field name="quantity" select="1"/>
 									<field name="uos_id"/>
 									<field name="price_unit" select="1"/>
@@ -718,9 +718,7 @@
 						<field name="own_risk" on_change="onchange_own_risk(type_id,own_risk)"/>
 						<newline/>
 						<field name="warranty" />
-						<field name="warranty_product_id" on_change="onchange_warranty_product_id(warranty_product_id)" />
-						<newline/>
-						<field name="invoice_id"/>
+						<!--<field name="warranty_product_id" on_change="onchange_warranty_product_id(warranty_product_id)" />-->
 						<newline/>
 						<field name="state" colspan="2" select="2"/>
 						<group colspan="2">
@@ -735,6 +733,8 @@
 						<field name="return_date" />
 						<field name="ok_state_date" />
 						<field name="federation_sending_date" />
+						<newline/>
+						<field name="invoice_id" colspan="2"/>
 						<newline/>
 						<separator string="Letters" colspan="4"/>
 						<field name="letter_ids" nolabel="1" widget="one2many_list" colspan="4">
@@ -812,7 +812,7 @@
 							<field name="name" select="1" colspan="4"/>
 							<field name="account_id" colspan="4"/>
 							<newline/>
-							<field name="product_id" select="1" on_change="product_id_change(product_id)"/>
+							<field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
 							<field name="quantity" select="1"/>
 							<field name="uos_id"/>
 							<field name="price_unit" select="1"/>

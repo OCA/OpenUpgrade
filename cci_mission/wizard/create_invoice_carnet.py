@@ -94,7 +94,6 @@ def _createInvoices(self, cr, uid, data, context):
             if (not address_invoice) and (add.type == 'default'):
                 address_invoice = add.id
 
-
         if not address_contact or not address_invoice:
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(carnet.id)+": No Partner Address Defined on Partner \n"
@@ -112,6 +111,8 @@ def _createInvoices(self, cr, uid, data, context):
             context.update({'partner_id':carnet.partner_id})
             context.update({'force_member':force_member})
             context.update({'force_non_member':force_non_member})
+            context.update({'value_goods':carnet.goods_value})
+            context.update({'double_signature':carnet.double_signature})
 
             price=pool_obj.get('product.product')._product_price(cr, uid, [prod_id], False, False, context)
             val['value'].update({'price_unit':price[prod_id]})
@@ -151,8 +152,7 @@ def _createInvoices(self, cr, uid, data, context):
         list_inv.append(inv_id)
         wf_service = netsvc.LocalService('workflow')
         wf_service.trg_validate(uid, 'cci_missions.ata_carnet', carnet.id, 'created', cr)
-        obj_carnet.write(cr, uid,carnet.id, {'invoice_id' : inv_id})
-
+        obj_carnet.write(cr, uid,[carnet.id], {'invoice_id' : inv_id})
 
     return {'inv_created' : str(inv_create),'inv_rejected' : str(inv_reject)  ,'invoice_ids':  list_inv , 'inv_rej_reason': inv_rej_reason }
 
