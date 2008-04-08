@@ -13,7 +13,7 @@
 		<field name="arch" type="xml">
 			<form string="Leads Form">
 				<notebook>
-				<page string="Leads">
+				 <page string="Leads">
 					<field name="name" select="1" string="Lead Source Description" colspan="2"/>
 					<field name="section_id" colspan="1"/>
 					<newline/>
@@ -44,12 +44,13 @@
 						<button name="case_escalate" string="Escalate" states="open,draft,pending" type="object"/>
 						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
 					</group>
-				</page>
+				 </page>
 
-				<page string="Extra Info">
+				 <page string="Extra Info">
 					<field name="id" select="1"/>
 					<field name="active" select="2"/>
-					<field name="email_cc" colspan="4"/>
+					<field name="email_cc" colspan="2"/>
+					<field name="probability" string="Probability ('%')"/>
 					<separator colspan="4" string="Dates"/>
 					<field name="create_date"/>
 					<field name="date_closed"/>
@@ -88,8 +89,8 @@
 					<separator colspan="4" string="References"/>
 					<field name="ref" colspan="4"/>
 					<field name="ref2" colspan="4"/>
-				</page>
-				<page string="History">
+				 </page>
+				 <page string="History">
 					<field name="log_ids" nolabel="1" colspan="4">
 						<form string="Actions">
 							<separator string="Action Information" colspan="4"/>
@@ -100,7 +101,7 @@
 							<field name="canal_id"/>
 						</form>
 					</field>
-				</page>
+				 </page>
 				</notebook>
 			</form>
 		</field>
