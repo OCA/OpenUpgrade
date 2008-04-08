@@ -38,13 +38,6 @@
 			<field name="icon">terp-product</field>
 		</record>
 
-<!-- 		<menuitem groups="admin,Acces livre admin" name="Configuration" id="product.menu_config_product" parent_id="product.menu_main_product"/> -->
-		<record model="ir.ui.menu" id="product.menu_config_product">
-			<field name="name">Configuration</field>
-			<field name="parent_id" ref="product.menu_main_product"/>
-			<field name="groups_id" eval="[(6,0,[ref('base.group_admin'), ref('product_admin'),])]"/>
-		</record>
-
 <!-- 		<menuitem id="menu_products" groups="Groupe vide" /> -->
 
 		<record model="ir.ui.menu" id="product.menu_products">

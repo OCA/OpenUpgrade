@@ -2,6 +2,9 @@
 <terp>
 <data>
 
+	<record model="res.groups" id="grnoone">
+		<field name="name">grnoone</field>
+	</record>
 
 	<menuitem name="Production" icon="terp-mrp" id="mrp.menu_mrp_root" groups="grnoone"/>
 	<menuitem name="Inventory Control/Procurement Orders" id="menu_mrp_procurement_action" action="mrp.mrp_procurement_action"/>

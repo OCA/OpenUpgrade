@@ -14,7 +14,7 @@
 	as possible. In that case, you can not use priorities anymore on the different
 	pickings.
 	""",
-    "depends":["mrp"],
+    "depends":["mrp","sale"],
     "demo_xml":[],
     "update_xml":["mrp_jit.xml"],
     "active":False,
