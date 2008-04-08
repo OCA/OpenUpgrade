@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+	<!-- View for res.partner object inherited from base module................ -->
+		<record model="ir.ui.view" id="purchase_order_form_inherit">
+			<field name="name">purchase.order.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+					<button name="purchase_confirm" states="draft" string="Confirm Purchase Order" position="after">
+						<button name="purchase_temp" states="temp" string="Special button"/>
+					<!--	<button name="purchase_bypass" states="confirmed" string="By Pass Approve"/>-->
+					</button>
+			</field>
+		</record>
+
+	</data>
+</terp>
