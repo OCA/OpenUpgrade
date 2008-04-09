@@ -28,6 +28,8 @@
 
 from osv import fields, osv
 import time
+import netsvc
+import pooler
 
 class crm_case_log(osv.osv):
 	_inherit = 'crm.case.log'
@@ -84,7 +86,8 @@ class event(osv.osv):
 	def _get_register(self, cr, uid, ids, name, args, context=None):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
-			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','close') group by c.state,s.name""" % event.section_id.id
+#			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','close') group by c.state,s.name""" % event.section_id.id
+			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','done') group by c.state,s.name""" % event.section_id.id
 			cr.execute(query)
 			res2 = cr.fetchone()
 			if res2 and res2[0]:
@@ -117,6 +120,12 @@ class event(osv.osv):
 		'date_begin': fields.datetime('Beginning date', required=True),
 		'date_end': fields.datetime('Ending date', required=True),
 		'state': fields.selection([('draft','Draft'),('confirm','Confirmed'),('done','Done'),('cancel','Canceled')], 'State', readonly=True, required=True),
+		'mail_auto_registr':fields.boolean('Mail Auto Register',help='A mail is send when the registration is confirmed'),
+		'mail_auto_confirm':fields.boolean('Mail Auto Confirm',help='A mail is send when the event is confimed'),
+		'mail_registr':fields.text('Mail Register',help='Template for the mail'),
+		'mail_confirm':fields.text('Mail Confirm',help='Template for the mail'),
+		'budget_id':fields.many2one('account.budget.post','Budget'),
+		'product_id':fields.many2one('product.product','Product'),
 	}
 	_defaults = {
 		'state': lambda *args: 'draft',
@@ -139,7 +148,7 @@ class event_registration(osv.osv):
 		self.write(cr, uid, ids, {'state':'cancel',})
 		return True
 
-#	def _get_section(self, cr, uid, context=None): 
+#	def _get_section(self, cr, uid, context=None):
 #		event_id2 =  self.pool.get('event.event').browse(cr, uid, 'event_id', context).section_id
 #		print 'event_id2: ', event_id2
 #		print self.pool.get('crm.case.section').search(cr, uid, [('id','=',event_id2)])
@@ -163,28 +172,123 @@ class event_registration(osv.osv):
 		'nb_register': fields.integer('Number of Registration', readonly=True, states={'draft':[('readonly',False)]}),
 		"partner_order_id":fields.many2one('res.partner','Partner Order'),
 		'event_id':fields.many2one('event.event', 'Event Related', required=True),
+		"partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
+		"unit_price": fields.float('Unit Price'),
+		"badge_title":fields.char('Badge Title',size=128),
+		"badge_name":fields.char('Badge Name',size=128),
+		"badge_partner":fields.char('Badge Partner',size=128),
+		"invoice_label":fields.char("Label Invoice",size=128,required=True),
+		"tobe_invoiced":fields.boolean("To be Invoice"),
+		"invoice_id":fields.many2one("account.invoice","Invoice"),
 	}
 	_defaults = {
 		'nb_register': lambda *a: 1,
+		'tobe_invoiced' : lambda *a: True,
 		'name': lambda *a: 'Registration'
 	}
 
+	def onchange_badge_name(self, cr, uid, ids, badge_name):
+		data ={}
+		if not badge_name:
+			return data
+		data['name'] = 'Registration: ' + badge_name
+		return {'value':data}
+
+	def onchange_contact_id(self, cr, uid, ids, contact_id):
+		data ={}
+		if not contact_id:
+			return data
+		obj_addr=self.pool.get('res.partner.address').browse(cr, uid, contact_id)
+		data['email_from'] = obj_addr.email
+
+		if obj_addr.contact_id:
+			data['badge_name']=obj_addr.contact_id.name
+			data['badge_title']=obj_addr.contact_id.title
+			d=self.onchange_badge_name(cr, uid, ids,data['badge_name'])
+			data.update(d['value'])
+		else:
+			print "obj_addr.contact_id",obj_addr.contact_id
+		return {'value':data}
+
+
+	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
+		context={}
+		if not event_id:
+			return {'value':{'unit_price' : False ,'invoice_label' : False }}
+		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
+		if data_event.product_id:
+			if not partner_invoice_id:
+				unit_price=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
+				return {'value':{'unit_price' : unit_price , 'invoice_label' : data_event.product_id.name}}
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
+			context.update({'partner_id':data_partner})
+			unit_price=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
+
+			return {'value':{'unit_price' :unit_price , 'invoice_label' : data_event.product_id.name}}
+		return {'value':{'unit_price' : False,'invoice_label' : False}}
+
+
+	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
+		data={}
+		data['badge_partner']=data['partner_address_id']=data['partner_invoice_id']=data['email_from']=data['badge_title']=data['badge_name']=False
+		if not part:
+			return {'value':data}
+
+		data['partner_invoice_id']=part
+		# this calls onchange_partner_invoice_id
+		d=self.onchange_partner_invoice_id(cr, uid, ids, event_id,part)
+		# this updates the dictionary
+		data.update(d['value'])
+		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
+		data['partner_address_id']=addr['contact']
+		if addr['contact']:
+			d=self.onchange_contact_id(cr, uid, ids,addr['contact'])
+			data.update(d['value'])
+		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
+		data['badge_partner']=partner_data.name
+		return {'value':data}
+
+	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
+		data={}
+		context={}
+		data['unit_price']=False
+		if not event_id:
+			return {'value':data}
+		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
+
+		if data_event.product_id:
+			if not partner_invoice_id:
+				data['unit_price']=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
+				return {'value':data}
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
+			context.update({'partner_id':data_partner})
+			data['unit_price']=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
+			return {'value':data}
+		return {'value':data}
+
+		return{}
 	def onchange_categ_id(self, cr, uid, ids, categ, context={}):
 		if not categ:
 			return {'value':{}}
 		cat = self.pool.get('crm.case.categ').browse(cr, uid, categ, context).probability
 		return {'value':{'probability':cat}}
 
-	def onchange_partner_id(self, cr, uid, ids, part, email=False):
-		if not part:
-			return {'value':{}}
-		data = {}
-		if not email:
-			data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, part).email
-		return {'value':data}
+#	def onchange_partner_id(self, cr, uid, ids, part, email=False):
+#		if not part:
+#			return {'value':{}}
+#		data = {}
+#		if not email:
+#			data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, part).email
+#		return {'value':data}
 
-	def onchange_partner_id(self, cr, uid, ids, part, email=False):
-		return self.pool.get('crm.case').onchange_partner_id(cr, uid, ids,  part)
+#	def onchange_partner_id(self, cr, uid, ids, part,event_id, email=False):
+#		print "this"
+#		return self.pool.get('crm.case').onchange_partner_id(cr, uid, ids,  part)
+
+	def pay_and_recon(self,cr,uid,reg,inv_obj,inv_id,context={}):
+		# this dummy function is used to minimize the code for make_invoice
+		# if this object has chieck_ids field,it will pay and reconcile the invocie
+		return {}
 
 	def _map_ids(self,method,cr, uid, ids, *args, **argv):
 		case_data = self.browse(cr,uid,ids)

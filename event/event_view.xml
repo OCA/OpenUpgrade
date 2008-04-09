@@ -70,6 +70,8 @@
 						<field name="date_end" select="2"/>
 						<field name="register_min" select="2"/>
 						<field name="register_max" select="2"/>
+						<field name="budget_id"/>
+						<field name="product_id" required="1"/>
 						<separator string="Tasks management" colspan="4"/>
 						<field name="project_id"/>
 						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
@@ -81,7 +83,18 @@
 							<button string="Event Done" name="button_done" states="confirm" type="object"/>
 							<button string="Set To Draft" name="button_draft" states="confirm,cancel,done" type="object"/>
 						</group>
-					</page><page string="Statistics">
+					</page>
+					<page string="Mailing">
+						<field name="mail_auto_registr"/>
+						<newline/><newline/>
+						<field name="mail_registr"/>
+						<newline/>
+						<field name="mail_auto_confirm"/>
+						<newline/><newline/>
+						<field name="mail_confirm"/>
+						<newline/>
+					</page>
+					<page string="Statistics">
 						<separator string="Registrations" colspan="4"/>
 						<field name="register_current"/>
 						<field name="register_prospect"/>
@@ -258,16 +271,24 @@
 			<form string="Registration">
 				<notebook>
 				<page string="General">
-					<field name="partner_id" required="1" select="1" on_change="onchange_partner_id(partner_id, email_from)"/>
-					<field name="partner_address_id" select="2"/>
-					<field name="event_id" select="1"/>
+					<field name="partner_id" required="1" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" />
+					<field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
+					<field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="3"/>
+					<field name="event_id" select="1" on_change="onchange_event(event_id, partner_invoice_id)" colsap="1"/>
 					<field name="nb_register"/>
 					<newline/>
 					<field name="email_from" select="2"/>
 					<button name="remind_partner" string="Send Reminder" states="open,pending" type="object" colspan="2"/>
 					<field name="user_id" select="1"/>
 					<button name="remind_user" string="Send Reminder" states="open,pending" type="object" colspan="2"/>
-
+					<newline/>
+					<separator colspan="4"/>
+					<field name="unit_price" select="2"/>
+					<separator string="Badge" colspan="4"/>
+					<field name="badge_title" select="2"/>
+					<field name="badge_name" select="2" on_change="onchange_badge_name(badge_name)"/>
+					<field name="badge_partner" select="2"/>
+					<newline/>
 					<separator colspan="4" string="Notes"/>
 					<field name="description" colspan="4" select="2" nolabel="1"/>
 					<group col="3" colspan="4" expand="1">
@@ -325,6 +346,11 @@
 							<field name="canal_id"/>
 						</form>
 					</field>
+				</page>
+				<page string="Payments">
+					<field name="invoice_label" select="1"/>
+					<field name="tobe_invoiced" select="1"/>
+					<field name="invoice_id"/>
 				</page>
 				</notebook>
 			</form>

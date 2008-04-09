@@ -19,7 +19,7 @@
 			name="wizard_event_registration"
 			id="wizard_event_registration"/>
 
-		<wizard 
+		<wizard
 			string="New child event"
 			model="event.event"
 			name="wizard_event_new"
@@ -27,7 +27,12 @@
 			menu="False"
 			id="wizard_event_new"/>
 
-
+		<wizard string="Make Invoice"
+					model="event.registration"
+					name="event.reg_make_invoice"
+					id="event_reg_invoice"
+					menu="True"
+		/>
 		<record model="ir.values" id="ir_open_new_event">
 			<field name="key2">tree_but_open</field>
 			<field name="model">event.event</field>

@@ -4,7 +4,7 @@
 	"author" : "Tiny",
 	"category" : "Generic Modules/Association",
 	"depends" : [
-		"project","crm"
+		"project","crm","base_contact","sale"
 	],
 	"demo_xml" : [],
 	"init_xml" : [],

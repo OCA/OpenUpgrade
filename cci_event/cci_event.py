@@ -29,6 +29,7 @@
 from osv import fields,osv
 from osv import orm
 import netsvc
+import pooler
 
 class event_meeting_table(osv.osv):
 	_name="event.meeting.table"
@@ -106,18 +107,18 @@ class event(osv.osv):
 			'state': fields.selection([('draft','Draft'),('fixed','Fixed'),('open','Open'),('confirm','Confirmed'),('running','Running'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),
 			'agreement_nbr':fields.char('Agreement Nbr',size=16),
 			'check_accept':fields.many2one('event.check.type','Allowed checks'),
-			'mail_auto_registr':fields.boolean('Mail Auto Register',help='A mail is send when the registration is confirmed'),
-			'mail_auto_confirm':fields.boolean('Mail Auto Confirm',help='A mail is send when the event is confimed'),
-			'mail_registr':fields.text('Mail Register',help='Template for the mail'),
-			'mail_confirm':fields.text('Mail Confirm',help='Template for the mail'),
+#			'mail_auto_registr':fields.boolean('Mail Auto Register',help='A mail is send when the registration is confirmed'),
+#			'mail_auto_confirm':fields.boolean('Mail Auto Confirm',help='A mail is send when the event is confimed'),
+#			'mail_registr':fields.text('Mail Register',help='Template for the mail'),
+#			'mail_confirm':fields.text('Mail Confirm',help='Template for the mail'),
 			'note':fields.text('Note'),
 			'fse_code':fields.char('FSE code',size=64),
 			'fse_hours':fields.integer('FSE Hours'),
 			'signet_type':fields.selection(_group_names, 'Signet type'),
 			'localisation':fields.char('Localisation',size=20),
 			'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
-			'budget_id':fields.many2one('account.budget.post','Budget'),
-			'product_id':fields.many2one('product.product','Product'),
+#			'budget_id':fields.many2one('account.budget.post','Budget'),
+#			'product_id':fields.many2one('product.product','Product'),
 			'check_type': fields.many2one('event.check.type','Check Type'),
 			}
 event()
@@ -197,89 +198,89 @@ class event_registration(osv.osv):
 	_inherit = 'event.registration'
 	_description="event.registration"
 	_columns={
-			"partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
+#			"partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
 			"contact_order_id":fields.many2one('res.partner.contact','Contact Order'),
-			"unit_price": fields.float('Unit Price'),
-			"badge_title":fields.char('Badge Title',size=128),
-			"badge_name":fields.char('Badge Name',size=128),
-			"badge_partner":fields.char('Badge Partner',size=128),
+#			"unit_price": fields.float('Unit Price'),
+#			"badge_title":fields.char('Badge Title',size=128),
+#			"badge_name":fields.char('Badge Name',size=128),
+#			"badge_partner":fields.char('Badge Partner',size=128),
 			"group_id": fields.many2one('event.group','Event Group'),
 			"cavalier": fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
-			"invoice_label":fields.char("Label Invoice",size=128,required=True),
-			"tobe_invoiced":fields.boolean("To be Invoice"),
-			"payment_mode":fields.many2one('payment.mode',"payment mode"),#should be check (m2o ?)
-			"invoice_id":fields.many2one("account.invoice","Invoice"),
+#			"invoice_label":fields.char("Label Invoice",size=128,required=True),
+#			"tobe_invoiced":fields.boolean("To be Invoice"),
+			"payment_mode":fields.many2one('payment.mode',"Payment Mode"),#should be check (m2o ?)
+#			"invoice_id":fields.many2one("account.invoice","Invoice"),
 			"check_mode":fields.boolean('Check Mode'),
-			"check_ids":fields.one2many('event.check','case_id',"check ids"),
-			"payment_ids":fields.one2many("payment.order","case_id","payment"),#should be corect (o2m ?)
+			"check_ids":fields.one2many('event.check','case_id',"Check ids"),
+			"payment_ids":fields.one2many("payment.order","case_id","Payment"),#should be corect (o2m ?)
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
 			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
 	}
 	_defaults = {
-		'tobe_invoiced' : lambda *a: True,
+#		'tobe_invoiced' : lambda *a: True,
 		'name': lambda *a: 'Registration',
 				 }
 
-	def onchange_badge_name(self, cr, uid, ids, badge_name):
-		data ={}
-		if not badge_name:
-			return data
-		data['name'] = 'Registration: ' + badge_name
-		return {'value':data}
+#	def onchange_badge_name(self, cr, uid, ids, badge_name):
+#		data ={}
+#		if not badge_name:
+#			return data
+#		data['name'] = 'Registration: ' + badge_name
+#		return {'value':data}
 
-	def onchange_contact_id(self, cr, uid, ids, contact_id):
-		data ={}
-		if not contact_id:
-			return data
-		obj_addr=self.pool.get('res.partner.address').browse(cr, uid, contact_id)
-		data['email_from'] = obj_addr.email
-		if obj_addr.contact_id:
-			data['badge_name']=obj_addr.contact_id.name
-			data['badge_title']=obj_addr.contact_id.title
-			d=self.onchange_badge_name(cr, uid, ids,data['badge_name'])
-			data.update(d['value'])
-		return {'value':data}
+#	def onchange_contact_id(self, cr, uid, ids, contact_id):
+#		data ={}
+#		if not contact_id:
+#			return data
+#		obj_addr=self.pool.get('res.partner.address').browse(cr, uid, contact_id)
+#		data['email_from'] = obj_addr.email
+#		if obj_addr.contact_id:
+#			data['badge_name']=obj_addr.contact_id.name
+#			data['badge_title']=obj_addr.contact_id.title
+#			d=self.onchange_badge_name(cr, uid, ids,data['badge_name'])
+#			data.update(d['value'])
+#		return {'value':data}
 
 
-	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
-		data={}
-		data['badge_partner']=data['partner_address_id']=data['partner_invoice_id']=data['email_from']=data['badge_title']=data['badge_name']=False
-		if not part:
-			return {'value':data}
+#	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
+#		data={}
+#		data['badge_partner']=data['partner_address_id']=data['partner_invoice_id']=data['email_from']=data['badge_title']=data['badge_name']=False
+#		if not part:
+#			return {'value':data}
+#
+#		data['partner_invoice_id']=part
+#		# this calls onchange_partner_invoice_id
+#		d=self.onchange_partner_invoice_id(cr, uid, ids, event_id,part)
+#		# this updates the dictionary
+#		data.update(d['value'])
+#		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
+#		data['partner_address_id']=addr['contact']
+#		if addr['contact']:
+#			d=self.onchange_contact_id(cr, uid, ids,addr['contact'])
+#			data.update(d['value'])
+#		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
+#		data['badge_partner']=partner_data.name
+#		return {'value':data}
 
-		data['partner_invoice_id']=part
-		# this calls onchange_partner_invoice_id
-		d=self.onchange_partner_invoice_id(cr, uid, ids, event_id,part)
-		# this updates the dictionary
-		data.update(d['value'])
-		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
-		data['partner_address_id']=addr['contact']
-		if addr['contact']:
-			d=self.onchange_contact_id(cr, uid, ids,addr['contact'])
-			data.update(d['value'])
-		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
-		data['badge_partner']=partner_data.name
-		return {'value':data}
-
-	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
-		if not event_id:
-			return {'value':{'unit_price' : False ,'invoice_label' : False }}
-		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
-		if data_event.product_id:
-
-			if not partner_invoice_id:
-				unit_price=self.pool.get('product.product').price_get(cr,uid,[data_event.product_id.id])
-				return {'value':{'unit_price' : unit_price[data_event.product_id.id] , 'invoice_label' : data_event.product_id.name}}
-			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
-			unit_price=self.pool.get('product.product').price_get(cr,uid,[data_event.product_id.id],partner_id=data_partner)
-#			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-#				return {'value':{'unit_price' : data_event.product_id.member_price , 'invoice_label' : data_event.product_id.name}}
-			return {'value':{'unit_price' :unit_price[data_event.product_id.id] , 'invoice_label' : data_event.product_id.name}}
-		return {'value':{'unit_price' : False,'invoice_label' : False}}
+#	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
+#		context={}
+#		if not event_id:
+#			return {'value':{'unit_price' : False ,'invoice_label' : False }}
+#		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
+#		if data_event.product_id:
+#			if not partner_invoice_id:
+#				unit_price=self.pool.get('product.product')._product_price(cr, uid, [data_event.product_id.id], False, False, context)
+#				return {'value':{'unit_price' : unit_price[data_event.product_id.id] , 'invoice_label' : data_event.product_id.name}}
+#			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
+#			context.update({'partner_id':data_partner})
+#			unit_price=self.pool.get('product.product')._product_price(cr, uid, [data_event.product_id.id], False, False, context)
+#
+#			return {'value':{'unit_price' :unit_price[data_event.product_id.id] , 'invoice_label' : data_event.product_id.name}}
+#		return {'value':{'unit_price' : False,'invoice_label' : False}}
 
 	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
-
 		data={}
+		context={}
 		data['training_authorization']=data['lang_authorization']=data['unit_price']=False
 		if partner_invoice_id:
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
@@ -292,17 +293,37 @@ class event_registration(osv.osv):
 		if data_event.product_id:
 			if not partner_invoice_id:
 				data['training_authorization']=data['lang_authorization']=False
-#				data['unit_price']= data_event.product_id.lst_price
-				data['unit_price']=self.pool.get('product.product').price_get(cr,uid,[data_event.product_id.id])[data_event.product_id.id]
+				data['unit_price']=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
 				return {'value':data}
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
-#			if data_partner.membership_state in ['waiting', 'associated', 'free', 'paid']:
-#				data['unit_price']= data_event.product_id.member_price
-#				return {'value':data}
-#			data['unit_price']= data_event.product_id.lst_price
-			data['unit_price']=self.pool.get('product.product').price_get(cr,uid,[data_event.product_id.id],partner_id=data_partner)[data_event.product_id.id]
+			context.update({'partner_id':data_partner})
+			data['unit_price']=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
 			return {'value':data}
 		return {'value':data}
+
+	def pay_and_recon(self,cr,uid,reg,inv_obj,inv_id,context={}):
+
+		if reg.check_ids:
+			total = 0
+			writeoff_account_id = False # should be check
+			writeoff_journal_id = False # should be check
+			data_inv = inv_obj.browse(cr,uid,inv_id)
+			journal_obj = self.pool.get('account.journal')
+			wf_service = netsvc.LocalService('workflow')
+
+			for check in reg.check_ids:
+			    total = total + check.unit_nbr
+
+			ids = self.pool.get('account.period').find(cr, uid, context=context)
+			period_id = False
+			if len(ids):
+			    period_id = ids[0]
+
+			cash_id = journal_obj.search(cr, uid, [('type', '=', 'cash')])
+			acc_id = journal_obj.browse(cr, uid, cash_id[0], context).default_credit_account_id.id
+			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+			inv_obj.pay_and_reconcile(cr,uid,[inv_id],total, acc_id, period_id, cash_id[0], writeoff_account_id, period_id, writeoff_journal_id, context)
+
 
 event_registration()
 
