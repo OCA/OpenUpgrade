@@ -38,23 +38,23 @@
 	
          <!--	CASE STAGE(stage_id)	-->
          
-	<record model="crm.case.stage" id="stage1">
+	<record model="crm.case.stage" id="stage_meet1">
 		<field name="name">Fixed</field>
 		<field name="section_id" ref="section_support1"/>
 	</record>	
-	<record model="crm.case.stage" id="stage2">
+	<record model="crm.case.stage" id="stage_meet2">
 		<field name="name">Not fixed</field>
 		<field name="section_id" ref="section_support1"/>
 	</record>	
-	<record model="crm.case.stage" id="stage3">
+	<record model="crm.case.stage" id="stage_meet3">
 		<field name="name">Invalid</field>
 		<field name="section_id" ref="section_support1"/>
 	</record>	
-	<record model="crm.case.stage" id="stage4">
+	<record model="crm.case.stage" id="stage_meet4">
 		<field name="name">Awaiting Response</field>
 		<field name="section_id" ref="section_support1"/>
 	</record>	
-	<record model="crm.case.stage" id="stage6">
+	<record model="crm.case.stage" id="stage_meet5">
 		<field name="name">Future</field>
 		<field name="section_id" ref="section_support1"/>
 	</record>	
@@ -137,7 +137,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="crm_case_tree_view_meet"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'user_id\',\'=\',uid),(\'stage_id\',\'=\','+str(stage1)+'),(\'state\',\'=\',\'done\')]'"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'user_id\',\'=\',uid),(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_meetmy2">
 		<field name="sequence" eval="1"/>
@@ -202,7 +202,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="crm_case_tree_view_meet"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'stage_id\',\'=\','+str(stage1)+'),(\'state\',\'=\',\'done\')]'"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_meetall2">
 		<field name="sequence" eval="1"/>
