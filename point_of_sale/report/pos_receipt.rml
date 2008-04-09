@@ -125,7 +125,7 @@
 	<section>
 		[[ repeatIn((o.amount_total&lt;0) and [1] or [], 'p') ]]
 		<para style="P31">
-			Ce bon est valide jusqu'au [[ time.strftime('%d/%m/%Y', time.strptime(o.date_validity,'%Y-%m-%d')) ]].
+			This receipt is valid up to the [[ time.strftime('%d/%m/%Y', time.strptime(o.date_validity,'%Y-%m-%d')) ]].
 		</para>
 	</section>
   </story>

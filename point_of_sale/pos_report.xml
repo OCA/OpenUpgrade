@@ -6,7 +6,7 @@
 		string="Receipt"
 		model="pos.order"
 		name="pos.receipt"
-		rml="pos/report/pos_receipt.rml"
+		rml="point_of_sale/report/pos_receipt.rml"
 		auto="False"/>
 
 
@@ -26,7 +26,7 @@
 		name="pos.details"
 		auto="False"
 		multi="True"
-		rml="pos/report/pos_details.rml"
+		rml="point_of_sale/report/pos_details.rml"
 	   />
 
 	<report
@@ -35,7 +35,7 @@
 		model="pos.order"
 		name="pos.lines"
 		auto="False"
-		rml="pos/report/pos_lines.rml"
+		rml="point_of_sale/report/pos_lines.rml"
 	   />
 
 
