@@ -159,7 +159,7 @@
 			<field name="res_model">event.group</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Events/Configuration/Groups/Event Group" action="action_event_group" id="menu_event_group"/>
+		<menuitem name="Events Organisation/Configuration/Groups/Event Group" action="action_event_group" id="menu_event_group"/>
 
 <!-- view for event.check -->
 		<record model="ir.ui.view" id="view_event_check_form">
@@ -205,7 +205,7 @@
 			<field name="view_type">form</field>
 		</record>
 		<!-- menu should be check if it right place or not -->
-		<menuitem name="Events/Event Check" action="action_event_check" id="menu_event_check"/>
+		<menuitem name="Events Organisation/Event Check" action="action_event_check" id="menu_event_check"/>
 
 <!-- view for event.check.type -->
 		<record model="ir.ui.view" id="view_event_check_type_form">
@@ -235,7 +235,7 @@
 			<field name="view_type">form</field>
 		</record>
 		<!-- menu should be check if it right place or not -->
-		<menuitem name="Events/Configuration/Event Check/Check Type" action="action_event_check_type" id="menu_event_check_type"/>
+		<menuitem name="Events Organisation/Configuration/Event Check/Check Type" action="action_event_check_type" id="menu_event_check_type"/>
 
 <!-- event.registration form.. change name crm.case to event.registration -->
 <!--
@@ -423,7 +423,7 @@
 			<field name="res_model">event.meeting.table</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Events/Event Meeting" action="action_event_meeting_table" id="menu_event_meeting_table"/>
+		<menuitem name="Events Organisation/Event Meeting" action="action_event_meeting_table" id="menu_event_meeting_table"/>
 
 <!--
 	<record model="ir.ui.view" id="view_event_registration_inherit">
