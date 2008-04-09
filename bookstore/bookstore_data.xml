@@ -4,51 +4,6 @@
 
 	<!-- Company -->
 
-	<record model="res.partner" id="base.main_partner">
-		<field name="name">La Librairie Europeenne</field>
-		<field name="ref">le</field>
-		<field name="vat">123.123.123</field>
-		<field name="website">http://libeurop.be</field>
-		<field name="comment"> </field>
-	</record>
-	<record model="res.partner.address" id="base.main_address">
-		<field name="partner_id" ref="base.main_partner"/>
-		<field name="name">  </field>
-		<field name="street">1 rue de l'Orme</field>
-		<field name="zip">1040</field>
-		<field name="city">Bruxelles</field>
-		<field name="phone">+ 32/(0)2/231.04.35</field>
-		<field name="fax">+ 32/(0)2/735.08.60 </field>
-		<field name="mobile"></field>
-		<field name="email">mail@libeurop.be</field>
-		<field name="type">default</field>
-		<field name="country_id" model="res.country" ref="base.be"/>
-	</record>
-
-	<record model="res.company" id="base.main_company">
-		<field name="name">La Librairie Europeenne</field>
-		<field name="partner_id" ref="base.main_partner"/>
-		<field name="rml_header1">The European Bookshop</field>
-		<field name="rml_footer1">Web: http://libeurop.be - Tel: + 32/(0)2/231.04.35</field>
-		<field name="rml_footer2">IBAN: BE74 1262 0132 6907 - SWIFT: GKCCBEBB - VAT: BE0477.472.701</field>
-		<field name="currency_id" ref="base.EUR"/>
-	</record>
-
-	#
-	# Resource: res.partner.title
-	#
-
-<record id="res_partner_title_madam" model="res.partner.title">
-	<field name="domain">contact</field>
-	<field name="name">Madame</field>
-	<field name="shortcut">Mme</field>
-</record>
-<record id="res_partner_title_miss" model="res.partner.title">
-	<field name="domain">contact</field>
-	<field name="name">Monsieur</field>
-	<field name="shortcut">M.</field>
-</record>
-
 
 <!-- Inventory -->
 
@@ -66,26 +21,26 @@
 <!-- stock.location -->
 
 	<record id="stock.stock_location_input" model="stock.location">
-		<field name="name">Bureau</field>
+		<field name="name">Office</field>
 		<field name="usage">internal</field>
 		<field name="location_id" ref="stock.stock_location_company"/>
 	</record>
 
 	<record id="stock.stock_location_stock" model="stock.location">
-		<field name="name">Magasin</field>
+		<field name="name">Shop</field>
 		<field name="usage">internal</field>
 		<field name="location_id" ref="stock.stock_location_input"/>
 	</record>
 
 	<record id="stock.stock_location_output" model="stock.location">
-		<field name="name">Envois en attente</field>
+		<field name="name">Products to be delivered</field>
 		<field name="usage">internal</field>
 		<field name="location_id" ref="stock.stock_location_company"/>
 	</record>
 
 <!-- stock.warehouse -->
 	<record model="stock.warehouse" id="stock.warehouse0">
-		<field name="name">Magasin</field>
+		<field name="name">Shop</field>
 		<field name="lot_input_id" ref="stock.stock_location_stock"/>
 		<field name="lot_stock_id" ref="stock.stock_location_stock"/>
 		<field name="lot_output_id" ref="stock.stock_location_output"/>
@@ -93,7 +48,7 @@
 
 <!-- stock.warehouse -->
 	<record model="stock.warehouse" id="warehouse1">
-		<field name="name">Bureau</field>
+		<field name="name">Office</field>
 		<field name="lot_input_id" ref="stock.stock_location_input"/>
 		<field name="lot_stock_id" ref="stock.stock_location_input"/>
 		<field name="lot_output_id" ref="stock.stock_location_output"/>
@@ -101,56 +56,28 @@
 
 
 	<record model="sale.shop" id="shop_comptoir">
-		<field name="name">Comptoir</field>
-		<field name="warehouse_id" search="[('name','=','Magasin')]" />
+		<field name="name">Shop</field>
+		<field name="warehouse_id" ref="stock.warehouse0" />
 		<field name="payment_default_id" search="[]" model="account.payment.term"/>
 	</record>
 
 	<record model="sale.shop" id="sale.shop">
-		<field name="name">Bureau</field>
-		<field name="warehouse_id" search="[('name','=','Bureau')]" />
+		<field name="name">Office</field>
+		<field name="warehouse_id" ref="warehouse1" />
 		<field name="payment_default_id" search="[]" model="account.payment.term"/>
 	</record>
 
-<!-- 	<record model="sale.shop" id="shop_web"> -->
-<!-- 		<field name="name">Internet</field> -->
-<!-- 		<field name="warehouse_id" search="[]" model="warehouse_librairie"/> -->
-<!-- 		<field name="payment_default_id" search="[]" model="account.payment.term"/> -->
-<!-- 	</record> -->
-
-
-<!-- journal des bons + sequence -->
-
 	<record model="ir.sequence.type" id="sequence_bons_type">
-		<field name="name">Journal des bons</field>
+		<field name="name">Journal of Gifts</field>
 		<field name="code">account.journal.bons</field>
 	</record>
 	<record model="ir.sequence" id="sequence_bons">
-		<field name="name">Journal des bons</field>
+		<field name="name">Journal of Gifts</field>
 		<field name="code">account.journal.bons</field>
 		<field name="prefix">%(month)s/%(day)s</field>
 		<field name="number_next" eval="1"/>
 		<field name="number_increment" eval="1"/>
 	</record>
-
-<!-- 	<record model="account.account" id="account_bon"> -->
-<!-- 		<field name="name">Bons a payer</field> -->
-<!-- 		<field name="code">440002</field> -->
-<!-- 		<field name="type">payable</field> -->
-<!-- 		<field name="currency_id" ref="base.EUR"/> -->
-<!-- 		<field name="parent_id" eval="[(6,0,[ref('l10n_simple.a6')])]"/> -->
-<!-- 	</record> -->
-
-<!-- 	<record model="account.journal" id="bank_journal"> -->
-<!-- 		<field name="name">Journal des bons</field> -->
-<!-- 		<field name="code">BON</field> -->
-<!-- 		<field name="type">cash</field> -->
-<!-- 		<field name="view_id" ref="account.account_journal_bank_view"/> -->
-<!-- 		<field name="sequence_id" ref="sequence_bons"/> -->
-<!-- 		<field name="default_debit_account_id" ref="account_bon"/> -->
-<!-- 		<field name="default_credit_account_id" ref="account_bon"/> -->
-<!-- 	</record> -->
-
 
 <!-- sequence production lot -->
 	<record model="ir.sequence" id="sequence_prodlot">
@@ -174,27 +101,6 @@
 		<field name="number_next" eval="1"/>
 		<field name="number_increment" eval="1"/>
 	</record>
-
-<!-- 	<record model="account.account" id="account_cash"> -->
-<!-- 		<field name="name">Caisse magasin</field> -->
-<!-- 		<field name="code">440003</field> -->
-<!-- 		<field name="type">payable</field> -->
-<!-- 		<field name="currency_id" ref="base.EUR"/> -->
-<!-- 		<field name="parent_id" eval="[(6,0,[ref('l10n_simple.a6')])]"/> -->
-<!-- 	</record> -->
-
-
-<!-- 	<record model="account.journal" id="bank_journal_cash"> -->
-<!-- 		<field name="name">Journal de Caisse</field> -->
-<!-- 		<field name="code">CASH</field> -->
-<!-- 		<field name="type">cash</field> -->
-<!-- 		<field name="view_id" ref="account.account_journal_bank_view"/> -->
-<!--  		<field name="sequence_id" ref="sequence_cash"/>  -->
-<!-- 		<field name="default_debit_account_id" ref="account_cash"/> -->
-<!-- 		<field name="default_credit_account_id" ref="account_cash"/> -->
-<!-- 	</record> -->
-
-
 
 	<!--Fiscal year	-->	
 
@@ -280,20 +186,6 @@
 		<field name="date_stop" eval="time.strftime('%Y')+'-12-31'"/>
 	</record>
 
-<!-- 	<record model="account.bank" id="fs"> -->
-<!-- 		<field name="name">Fortis</field> -->
-<!-- 		<field name="code">FSB</field> -->
-<!-- 	</record> -->
-
-<!-- 	<record model="account.bank.account"> -->
-<!-- 		<field name="name">001-123456789-73</field> -->
-<!-- 		<field name="journal_id" ref="account.bank_journal"/> -->
-<!-- 		<field name="bank_id" ref="fs"/> -->
-<!-- 		<field name="currency_id" ref="base.EUR"/> -->
-<!-- 		<field name="account_id" ref="account.cash"/> -->
-<!-- 	</record> -->
-
-
 	<record id="res_partner_lib" model="res.partner">
 		<field name="name">Customer POS</field>
 	</record>
@@ -304,14 +196,6 @@
 		<field name="partner_id" ref="res_partner_lib"/>
 	</record>
 
-
-
-
-
-
-	
-
-	
 	<!-- Users -->
 
 
@@ -325,45 +209,10 @@
 		<field name="company_id" ref="base.main_company"/>
 	</record>
 
-
-
-	<record model="product.pricelist" id="sale.list0">
-		<field name="name">Prix de vente normal</field>
-	</record>
-	<record model="product.pricelist.version" id="sale.ver0">
-		<field name="name">Version de liste de prix normale</field>
-	</record>
-	<record model="product.pricelist.item" id="sale.item0">
-		<field name="name">Ligne de liste de prix vente normale</field>
-	</record>
-
-
-
-	<record model="product.pricelist" id="purchase.list0">
-		<field name="name">Prix d'achat normal</field>
-	</record>
-	<record model="product.pricelist.version" id="purchase.ver0">
-		<field name="name">Version de liste de prix d'achat normale</field>
-	</record>
-	<record model="product.pricelist.item" id="purchase.item0">
-		<field name="name">Ligne de liste de prix d'achat normale</field>
-	</record>
-
-
-
 <!-- Journaux de caisse -->
-	<record model="account.journal" id="account.sales_journal">
-		<field name="name">Journal des ventes</field>
-		<field name="code">JVE</field>
-	</record>
-	<record model="account.journal" id="account.expenses_journal">
-		<field name="name">Journal des d&#233;penses</field>
-		<field name="code">JDE</field>
-	</record>
-
 
 	<record model="account.journal" id="bancontact">
-		<field name="name">Payement Bancontact</field>
+		<field name="name">Payment Bancontact</field>
 		<field name="code">BCT</field>
 		<field name="type">cash</field>
 		<field name="view_id" ref="account.account_journal_bank_view"/>
@@ -373,7 +222,7 @@
 	</record>
 
 	<record model="account.journal" id="cash_journal">
-		<field name="name">Journal de cash</field>
+		<field name="name">Cash</field>
 		<field name="code">CASH</field>
 		<field name="type">cash</field>
 		<field name="view_id" ref="account.account_journal_bank_view"/>
