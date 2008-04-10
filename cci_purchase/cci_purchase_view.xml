@@ -15,5 +15,20 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="purchase_order_form_inherit_note">
+			<field name="name">purchase.order.form.inherit.note</field>
+			<field name="type">form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<field name="notes" colspan="4" nolabel="1" position="replace">
+					<separator string="Notes to display on Purchase Order Report" colspan="4"/>
+					<field name="notes" colspan="4" nolabel="1"/>
+					<separator string="Internal Note" colspan="4"/>
+					<field name="internal_notes" colspan="4" nolabel="1"/>
+				</field>
+			</field>
+		</record>
+
 	</data>
 </terp>
