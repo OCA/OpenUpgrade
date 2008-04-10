@@ -33,19 +33,25 @@ from osv import fields, osv
 class purchase_order(osv.osv):
     _inherit = 'purchase.order'
     _decription = 'purchase order'
+
     def wkf_temp_order(self ,cr, uid, ids,context={}):
-        print "wkf_temp_order::::::::"
-        super(purchase_order,self).wkf_confirm_order(cr, uid, ids, context)
+        for id in ids:
+            self.write(cr, uid, [id], {'state' : 'confirmed', 'validator' : uid})
         return True
+
+    def wkf_temp_pass(self,cr, uid, ids,context={}):
+        for id in ids:
+            self.write(cr, uid, [id], {'state': 'approved', 'date_approve': time.strftime('%Y-%m-%d')})
 
     def wkf_confirm_order(self, cr, uid, ids, context={}):
         for po in self.browse(cr, uid, ids):
             if po.amount_total > 10000:
                 self.write(cr, uid, [po.id], {'state' : 'temp', 'validator' : uid})
             else:
-                super(purchase_order,self).wkf_confirm_order(cr, uid, ids, context)
+                self.write(cr, uid, [po.id], {'state' : 'confirmed', 'validator' : uid})
         return True
+
     _columns = {
-        'state': fields.selection([('draft', 'Request for Quotation'), ('wait', 'Waiting'), ('pass', 'pass'), ('confirmed', 'Confirmed'),('temp','Temp'), ('approved', 'Approved'),('except_picking', 'Shipping Exception'), ('except_invoice', 'Invoice Exception'), ('done', 'Done'), ('cancel', 'Cancelled')], 'Order State', readonly=True, help="The state of the purchase order or the quotation request. A quotation is a purchase order in a 'Draft' state. Then the order has to be confirmed by the user, the state switch to 'Confirmed'. Then the supplier must confirm the order to change the state to 'Approved'. When the purchase order is paid and received, the state becomes 'Done'. If a cancel action occurs in the invoice or in the reception of goods, the state becomes in exception.", select=True),
+        'state': fields.selection([('draft', 'Request for Quotation'), ('wait', 'Waiting'), ('confirmed', 'Confirmed'),('temp','Temp'), ('approved', 'Approved'),('except_picking', 'Shipping Exception'), ('except_invoice', 'Invoice Exception'), ('done', 'Done'), ('cancel', 'Cancelled')], 'Order State', readonly=True, help="The state of the purchase order or the quotation request. A quotation is a purchase order in a 'Draft' state. Then the order has to be confirmed by the user, the state switch to 'Confirmed'. Then the supplier must confirm the order to change the state to 'Approved'. When the purchase order is paid and received, the state becomes 'Done'. If a cancel action occurs in the invoice or in the reception of goods, the state becomes in exception.", select=True),
                 }
 purchase_order()
