@@ -47,18 +47,17 @@
 						<separator colspan="4"/>
 						<field name="categ_id" string="Applied Job" on_change="onchange_categ_id(categ_id)"/>
 						<field name="category2_id" string="Degree"/>
-						
-<!--						<field name="duration" string="Availability"/>-->
+						<field name="priority" string="Quality"/>
+						<field name="duration" string="Availability (weeks)"/>
 						<newline/>
 						<field name="planned_cost" string="Expected Salary"/>
 						<field name="planned_revenue" string="Proposed Salary"/>
 						<field name="stage_id" colspan="2"/>
 						<field name="user_id" string="Responsible"/>
-						<group col="8" colspan="4">
-							<field name="date_deadline" string="Next Meeting"/>
-							<field name="duration" widget="float" string="Duration (Hours)"/>
-							<field name="priority" string="Quality"/>
-						</group>
+						<field name="date_deadline" string="Next Meeting"/>
+						<field name="duration" widget="float" string="Duration (Hours)"/>
+						
+						<newline/>
 						<separator colspan="4"/>
 						<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
 							<form string="Communication history">
