@@ -12,7 +12,7 @@
 
 		<record model="workflow.activity" id="act_temp">
 			<field name="wkf_id" ref="purchase.purchase_order"/>
-			<field name="name">temp</field>
+			<field name="name">wait_approve</field>
 			<field name="kind">function</field>
 			<field name="action">wkf_temp_order()</field>
 		</record>
