@@ -211,6 +211,7 @@ class event_registration(osv.osv):
 
 	def cci_event_reg_open(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'open',})
+		self.pool.get('event.registration').mail_user(cr,uid,ids)
 		cases = self.browse(cr, uid, ids)
 		self._history(cr, uid, cases, 'Open', history=True)
 		return True

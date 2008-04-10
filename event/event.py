@@ -30,6 +30,7 @@ from osv import fields, osv
 import time
 import netsvc
 import pooler
+import tools
 
 class crm_case_log(osv.osv):
 	_inherit = 'crm.case.log'
@@ -138,6 +139,7 @@ class event_registration(osv.osv):
 
 	def button_reg_open(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'open',})
+		self.mail_user(cr,uid,ids)
 		return True
 
 	def button_reg_close(self, cr, uid, ids, *args):
@@ -163,6 +165,20 @@ class event_registration(osv.osv):
 		if 'event_id' in args[1]:
 			args[1]['section_id']= self.pool.get('event.event').browse(cr, uid, args[1]['event_id'], None).section_id.id
 		return super(event_registration, self).write(cr, uid, *args, **argv)
+
+	def mail_user(self,cr,uid,ids):
+		src=tools.config.options['smtp_user']
+		reg_ids=self.browse(cr,uid,ids)
+		for reg_id in reg_ids:
+			dest=reg_id.email_from
+			if (reg_id.event_id.state in ['confirm','running']) and reg_id.event_id.mail_auto_confirm:
+				if dest:
+					tools.email_send(src,[dest],'Auto Confirmation: '+'['+str(reg_id.id)+']'+' '+reg_id.name,reg_id.event_id.mail_confirm)
+			# Sending another mail
+			if reg_id.event_id.state in ['draft', 'fixed', 'open','confirm','running'] and reg_id.event_id.mail_auto_registr:
+				if dest:
+					tools.email_send(src,[dest],'Auto Registration: '+'['+str(reg_id.id)+']'+' '+reg_id.name,reg_id.event_id.mail_registr)
+		return True
 
 	_name= 'event.registration'
 	_description = 'Event Registration'
@@ -265,7 +281,6 @@ class event_registration(osv.osv):
 			return {'value':data}
 		return {'value':data}
 
-		return{}
 	def onchange_categ_id(self, cr, uid, ids, categ, context={}):
 		if not categ:
 			return {'value':{}}
