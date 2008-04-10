@@ -46,12 +46,12 @@ class purchase_order(osv.osv):
     def wkf_confirm_order(self, cr, uid, ids, context={}):
         for po in self.browse(cr, uid, ids):
             if po.amount_total > 10000:
-                self.write(cr, uid, [po.id], {'state' : 'temp', 'validator' : uid})
+                self.write(cr, uid, [po.id], {'state' : 'wait_approve', 'validator' : uid})
             else:
                 self.write(cr, uid, [po.id], {'state' : 'confirmed', 'validator' : uid})
         return True
 
     _columns = {
-        'state': fields.selection([('draft', 'Request for Quotation'), ('wait', 'Waiting'), ('confirmed', 'Confirmed'),('temp','Temp'), ('approved', 'Approved'),('except_picking', 'Shipping Exception'), ('except_invoice', 'Invoice Exception'), ('done', 'Done'), ('cancel', 'Cancelled')], 'Order State', readonly=True, help="The state of the purchase order or the quotation request. A quotation is a purchase order in a 'Draft' state. Then the order has to be confirmed by the user, the state switch to 'Confirmed'. Then the supplier must confirm the order to change the state to 'Approved'. When the purchase order is paid and received, the state becomes 'Done'. If a cancel action occurs in the invoice or in the reception of goods, the state becomes in exception.", select=True),
+        'state': fields.selection([('draft', 'Request for Quotation'), ('wait', 'Waiting'), ('confirmed', 'Confirmed'),('wait_approve','Waiting For Approve'), ('approved', 'Approved'),('except_picking', 'Shipping Exception'), ('except_invoice', 'Invoice Exception'), ('done', 'Done'), ('cancel', 'Cancelled')], 'Order State', readonly=True, help="The state of the purchase order or the quotation request. A quotation is a purchase order in a 'Draft' state. Then the order has to be confirmed by the user, the state switch to 'Confirmed'. Then the supplier must confirm the order to change the state to 'Approved'. When the purchase order is paid and received, the state becomes 'Done'. If a cancel action occurs in the invoice or in the reception of goods, the state becomes in exception.", select=True),
                 }
 purchase_order()
