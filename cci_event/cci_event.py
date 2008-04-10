@@ -181,51 +181,25 @@ class event_group(osv.osv):
 
 event_group()
 
-class crm_case_log(osv.osv):
-	_inherit = 'crm.case.log'
-	_description = 'crm.case.log'
-	def create(self, cr, uid, vals, *args, **kwargs):
-			if not 'name' in vals:
-				vals['name']='Historize'
-			return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
-	_defaults = {
-		'user_id': lambda self,cr,uid,context: uid,
-	}
-crm_case_log()
-
 class event_registration(osv.osv):
-
-	def _history(self, cr, uid,ids,keyword, history=False, email=False, context={}):
-		for case in ids:
-			data = {
-				'name': keyword,
-				'som': case.som.id,
-				'canal_id': case.canal_id.id,
-				'user_id': uid,
-				'case_id': case.case_id.id
-			}
-
-			obj = self.pool.get('crm.case.log')
-			obj.create(cr, uid, data, context)
-		return True
 
 	def cci_event_reg_open(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'open',})
 		self.pool.get('event.registration').mail_user(cr,uid,ids)
 		cases = self.browse(cr, uid, ids)
-		self._history(cr, uid, cases, 'Open', history=True)
+		self.pool.get('event.registration')._history(cr, uid, cases, 'Open', history=True)
 		return True
 
 	def cci_event_reg_done(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'done',})
 		cases = self.browse(cr, uid, ids)
-		self._history(cr, uid, cases, 'Done', history=True)
+		self.pool.get('event.registration')._history(cr, uid, cases, 'Done', history=True)
 		return True
 
 	def cci_event_reg_cancel(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'cancel',})
 		cases = self.browse(cr, uid, ids)
-		self._history(cr, uid, cases, 'Cancel', history=True)
+		self.pool.get('event.registration')._history(cr, uid, cases, 'Cancel', history=True)
 		return True
 
 	_inherit = 'event.registration'
@@ -254,10 +228,9 @@ class event_registration(osv.osv):
 		'name': lambda *a: 'Registration',
 				 }
 
-	def create(self, cr, uid, vals, *args, **kwargs):
-		temp = super(event_registration,self).create(cr, uid, vals, *args, **kwargs)
-		self._history(cr, uid,self.browse(cr, uid, [temp]), 'Created', history=True)
-		return temp
+#	def create(self, cr, uid, vals, *args, **kwargs):
+#		temp = super(event_registration,self).create(cr, uid, vals, *args, **kwargs)
+#		return temp
 #	def onchange_badge_name(self, cr, uid, ids, badge_name):
 #		data ={}
 #		if not badge_name:
@@ -361,6 +334,10 @@ class event_registration(osv.osv):
 			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
 			inv_obj.pay_and_reconcile(cr,uid,[inv_id],total, acc_id, period_id, cash_id[0], writeoff_account_id, period_id, writeoff_journal_id, context)
 
+	def check_special_condition(self,cr,uid,reg):
+		if  (reg.check_mode and not reg.check_ids):
+			return (True, 'No Checks')
+		return (False, False)
 
 event_registration()
 

@@ -76,10 +76,14 @@ def _makeInvoices(self, cr, uid, data, context):
                 inv_reject = inv_reject + 1
                 inv_rej_reason += "ID "+str(reg.id)+": Registration Already Has an Invoice Linked \n"
                 continue
+
+            (condition,reason)=reg.check_special_condition(cr,uid,reg)
+            if condition:
+                inv_reject = inv_reject + 1
+                inv_rej_reason += "ID "+str(reg.id)+": "+ reason +" \n"
+                continue
 #            if  (reg.check_mode and not reg.check_ids):
-#                inv_reject = inv_reject + 1
-#                inv_rej_reason += "ID "+str(reg.id)+": No Checks \n"
-#                continue
+
             if not reg.event_id.product_id:
                 inv_reject = inv_reject + 1
                 inv_rej_reason += "ID "+str(reg.id)+": Event Related Don't Have any Product \n"

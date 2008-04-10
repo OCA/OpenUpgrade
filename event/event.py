@@ -35,6 +35,10 @@ import tools
 class crm_case_log(osv.osv):
 	_inherit = 'crm.case.log'
 	_description = 'crm.case.log'
+	def create(self, cr, uid, vals, *args, **kwargs):
+			if not 'name' in vals:
+				vals['name']='Historize'
+			return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 	_defaults = {
 		'user_id': lambda self,cr,uid,context: uid,
 	}
@@ -323,6 +327,9 @@ class event_registration(osv.osv):
 		# this dummy function is used to minimize the code for make_invoice
 		# if this object has chieck_ids field,it will pay and reconcile the invocie
 		return {}
+	def check_special_condition(self,cr,uid,reg):
+		# same as pay_and_recon,will be used if check_ids field exists
+		return False
 
 	def _map_ids(self,method,cr, uid, ids, *args, **argv):
 		case_data = self.browse(cr,uid,ids)
