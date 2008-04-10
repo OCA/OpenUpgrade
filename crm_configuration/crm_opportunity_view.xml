@@ -14,7 +14,7 @@
 			<form string="Opportunities Form">
 				<notebook>
 				<page string="Opportunities">
-					<field name="name" select="1" string="Opportunity Name" colspan="2"/>
+					<field name="name" select="1" string="Name" colspan="2"/>
 					<field name="section_id" colspan="1"/>
 					<newline/>
 					<field name="date" select="1"/>
@@ -23,7 +23,7 @@
 					<field name="partner_address_id" select="2" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="1"/>
 					<newline/>
 					<field name="email_from" select="2" colspan="2"/>
-					<field name="user_id" select="1"/>
+					<field name="user_id" select="1" string="Responsible"/>
 					<seperator colspan="4"/>
 					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)" string="Lead Source"/>
 					<field name="stage_id" string="Sales Stage"/>
