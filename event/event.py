@@ -137,17 +137,36 @@ event()
 
 class event_registration(osv.osv):
 
+	def _history(self, cr, uid,ids,keyword, history=False, email=False, context={}):
+		for case in ids:
+			data = {
+				'name': keyword,
+				'som': case.som.id,
+				'canal_id': case.canal_id.id,
+				'user_id': uid,
+				'case_id': case.case_id.id
+			}
+			obj = self.pool.get('crm.case.log')
+			obj.create(cr, uid, data, context)
+		return True
+
 	def button_reg_open(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'open',})
+		cases = self.browse(cr, uid, ids)
+		self._history(cr, uid, cases, 'Open', history=True)
 		self.mail_user(cr,uid,ids)
 		return True
 
 	def button_reg_close(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'done',})
+		cases = self.browse(cr, uid, ids)
+		self._history(cr, uid, cases, 'Done', history=True)
 		return True
 
 	def button_reg_cancel(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'cancel',})
+		cases = self.browse(cr, uid, ids)
+		self._history(cr, uid, cases, 'Cancel', history=True)
 		return True
 
 #	def _get_section(self, cr, uid, context=None):
@@ -159,6 +178,7 @@ class event_registration(osv.osv):
 	def create(self, cr, uid, *args, **argv):
 		args[0]['section_id']= self.pool.get('event.event').browse(cr, uid, args[0]['event_id'], None).section_id.id
 		res = super(event_registration, self).create(cr, uid, *args, **argv)
+		self._history(cr, uid,self.browse(cr, uid, [res]), 'Created', history=True)
 		return res
 
 	def write(self, cr, uid, *args, **argv):

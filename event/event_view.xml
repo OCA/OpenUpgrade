@@ -271,12 +271,12 @@
 			<form string="Registration">
 				<notebook>
 				<page string="General">
-					<field name="partner_id" required="1" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" />
-					<field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
-					<field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="3"/>
 					<field name="event_id" select="1" on_change="onchange_event(event_id, partner_invoice_id)" colsap="1"/>
 					<field name="nb_register"/>
 					<newline/>
+					<field name="partner_id" required="1" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" />
+					<field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
+					<field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="3"/>
 					<field name="email_from" select="2"/>
 					<button name="remind_partner" string="Send Reminder" states="open,pending" type="object" colspan="2"/>
 					<field name="user_id" select="1"/>
@@ -320,20 +320,20 @@
 					<field name="ref2" colspan="4"/>
 				</page>
 				<page string="History">
-					<field name="history_line" colspan="4" nolabel="1" mode="tree,form">
-						<form string="Communication history">
-							<group col="6" colspan="4">
-								<field name="date" select="1"/>
-								<field name="email" select="1"/>
-								<field name="canal_id" select="2"/>
-							</group>
+					<field name="history_line" colspan="4" nolabel="1" mode="tree,form">						<form string="Communication history">
+							<field name="date"/>
+							<field name="som"/>
 							<newline/>
-							<field name="description" colspan="4" nolabel="1" select="2"/>
+							<field name="canal_id"/>
+							<field name="email"/>
+							<newline/>
+							<field name="description" colspan="4"/>
 						</form>
 						<tree string="Communication history">
-							<field name="description"/>
-							<field name="email"/>
 							<field name="date"/>
+							<field name="description"/>
+							<field name="som"/>
+							<field name="user_id"/>
 						</tree>
 					</field>
 					<field name="log_ids" nolabel="1" colspan="4">
