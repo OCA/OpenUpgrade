@@ -198,11 +198,13 @@ class event_registration(osv.osv):
 			if (reg_id.event_id.state in ['confirm','running']) and reg_id.event_id.mail_auto_confirm:
 				if dest:
 					tools.email_send(src,[dest],'Auto Confirmation: '+'['+str(reg_id.id)+']'+' '+reg_id.name,reg_id.event_id.mail_confirm)
+					return True
 			# Sending another mail
 			if reg_id.event_id.state in ['draft', 'fixed', 'open','confirm','running'] and reg_id.event_id.mail_auto_registr:
 				if dest:
 					tools.email_send(src,[dest],'Auto Registration: '+'['+str(reg_id.id)+']'+' '+reg_id.name,reg_id.event_id.mail_registr)
-		return True
+					return True
+		return False
 
 	_name= 'event.registration'
 	_description = 'Event Registration'
