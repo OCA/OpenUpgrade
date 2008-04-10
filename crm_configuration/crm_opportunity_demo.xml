@@ -6,6 +6,40 @@
 		<field name="code">oppor</field>
 	</record>
 
+<!--		CASE CATEGORY(categ_id)		-->	
+	<record model="crm.case.categ" id="categ_oppor1">
+		<field name="name">Existing Customer</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>
+	<record model="crm.case.categ" id="categ_oppor2">
+		<field name="name">Self Generated</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>	
+	<record model="crm.case.categ" id="categ_oppor3">
+		<field name="name">Employee</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>
+	<record model="crm.case.categ" id="categ_oppor4">
+		<field name="name">Partner</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>
+	<record model="crm.case.categ" id="categ_oppor5">
+		<field name="name">Campaign</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>	
+	<record model="crm.case.categ" id="categ_oppor6">
+		<field name="name">Website</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>	
+	<record model="crm.case.categ" id="categ_oppor7">
+		<field name="name">Word of mouth</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>	
+	<record model="crm.case.categ" id="categ_oppor8">
+		<field name="name">Other</field>
+		<field name="section_id" ref="section_support3"/>
+	</record>	
+
 <!--		CASE STATUS(stage_id)		-->
 	<record model="crm.case.stage" id="stage_oppor1">
 		<field name="name">Prospecting</field>
