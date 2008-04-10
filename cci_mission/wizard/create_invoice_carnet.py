@@ -98,11 +98,15 @@ def _createInvoices(self, cr, uid, data, context):
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(carnet.id)+": No Partner Address Defined on Partner \n"
             continue
-
+        count=0
         for prod_id in list:
+            count += 1
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=carnet.partner_id.id)
             val['value'].update({'product_id' : prod_id })
-            val['value'].update({'quantity' : 1 })
+            if count==2:
+                val['value'].update({'quantity' : 0 })
+            else:
+                val['value'].update({'quantity' : 1 })
             force_member=force_non_member=False
             if carnet.member_price==1:
                 force_member=True
