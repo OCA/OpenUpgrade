@@ -206,8 +206,7 @@ class event_registration(osv.osv):
 			data['badge_title']=obj_addr.contact_id.title
 			d=self.onchange_badge_name(cr, uid, ids,data['badge_name'])
 			data.update(d['value'])
-		else:
-			print "obj_addr.contact_id",obj_addr.contact_id
+
 		return {'value':data}
 
 
@@ -387,4 +386,5 @@ class report_event_type_registration(osv.osv):
 
 			)""")
 report_event_type_registration()
+
 

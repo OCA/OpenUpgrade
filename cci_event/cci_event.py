@@ -181,18 +181,50 @@ class event_group(osv.osv):
 
 event_group()
 
+class crm_case_log(osv.osv):
+	_inherit = 'crm.case.log'
+	_description = 'crm.case.log'
+	def create(self, cr, uid, vals, *args, **kwargs):
+			if not 'name' in vals:
+				vals['name']='Historize'
+			return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+	_defaults = {
+		'user_id': lambda self,cr,uid,context: uid,
+	}
+crm_case_log()
+
 class event_registration(osv.osv):
+
+	def _history(self, cr, uid,ids,keyword, history=False, email=False, context={}):
+		for case in ids:
+			data = {
+				'name': keyword,
+				'som': case.som.id,
+				'canal_id': case.canal_id.id,
+				'user_id': uid,
+				'case_id': case.case_id.id
+			}
+
+			obj = self.pool.get('crm.case.log')
+			obj.create(cr, uid, data, context)
+		return True
 
 	def cci_event_reg_open(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'open',})
+		cases = self.browse(cr, uid, ids)
+		self._history(cr, uid, cases, 'Open', history=True)
 		return True
 
 	def cci_event_reg_done(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'done',})
+		cases = self.browse(cr, uid, ids)
+		self._history(cr, uid, cases, 'Done', history=True)
 		return True
 
 	def cci_event_reg_cancel(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'cancel',})
+		cases = self.browse(cr, uid, ids)
+		self._history(cr, uid, cases, 'Cancel', history=True)
 		return True
 
 	_inherit = 'event.registration'
@@ -221,6 +253,10 @@ class event_registration(osv.osv):
 		'name': lambda *a: 'Registration',
 				 }
 
+	def create(self, cr, uid, vals, *args, **kwargs):
+		temp = super(event_registration,self).create(cr, uid, vals, *args, **kwargs)
+		self._history(cr, uid,self.browse(cr, uid, [temp]), 'Created', history=True)
+		return temp
 #	def onchange_badge_name(self, cr, uid, ids, badge_name):
 #		data ={}
 #		if not badge_name:
@@ -334,4 +370,3 @@ class payment_order(osv.osv):
 		"case_id" : fields.many2one('crm.case','Registration'),
 		}
 payment_order()
-

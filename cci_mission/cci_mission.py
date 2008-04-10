@@ -43,21 +43,6 @@ STATE = [
 	('paid', 'Paid Member'),
 ]
 
-class crm_case_log(osv.osv):
-	_inherit = 'crm.case.log'
-	_description = 'crm.case.log'
-
-	def create(self, cr, uid, vals, *args, **kwargs):
-			if not 'name' in vals:
-				vals['name']='Historize'
-			return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
-
-	_defaults = {
-		'user_id': lambda self,cr,uid,context: uid,
-	}
-
-crm_case_log()
-
 class res_partner(osv.osv):
 	_inherit = 'res.partner'
 	_description = 'res.partner'
