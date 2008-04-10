@@ -425,7 +425,6 @@
 							<field name="product_ids" nolabel="1" colspan="4" >
 								<form string="Product Line">
 										<field name="name" select="1" colspan="4"/>
-										<field name="account_id" colspan="4"/>
 										<newline/>
 										<field name="product_id" select="1" on_change="product_id_change(product_id)"/>
 										<field name="quantity" select="1"/>
@@ -520,7 +519,6 @@
 							<field name="product_ids" nolabel="1" colspan="4">
 								<form string="Product Line">
 									<field name="name" select="1" colspan="4"/>
-									<field name="account_id" colspan="4"/>
 									<newline/>
 									<field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
 									<field name="quantity" select="1"/>
@@ -810,7 +808,6 @@
 			<field name="arch" type="xml">
 				<form string="Product Line">
 							<field name="name" select="1" colspan="4"/>
-							<field name="account_id" colspan="4"/>
 							<newline/>
 							<field name="product_id" required="1" select="1" on_change="product_id_change(product_id)"/>
 							<field name="quantity" select="1"/>
