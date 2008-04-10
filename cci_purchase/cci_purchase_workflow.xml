@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <terp>
-<data>
+	<data>
+
 		<record model="res.roles" id="Purchase">
 			<field name="name">Purchase - confirm</field>
+		</record>
+
+		<record model="res.roles" id="Purchase_bypass">
+			<field name="name">Purchase By Pass Approve</field>
 		</record>
 
 		<record model="workflow.activity" id="act_temp">
@@ -11,64 +16,52 @@
 			<field name="kind">function</field>
 			<field name="action">wkf_temp_order()</field>
 		</record>
-		<!--<record model="workflow.activity" id="act_pass">
+
+		<record model="workflow.activity" id="act_pass">
 			<field name="wkf_id" ref="purchase.purchase_order"/>
 			<field name="name">pass</field>
-			<field name="split_mode">OR</field>
 			<field name="kind">function</field>
-			<field name="action">wkf_bypass()</field>
-		</record>-->
+			<field name="action">wkf_approve_order()</field>
+		</record>
+
 		<record model="workflow.transition" id="trans_confirmed_temp">
 			<field name="act_from" ref="purchase.act_confirmed"/>
 			<field name="act_to" ref="act_temp"/>
 			<field name="signal">purchase_temp</field>
+			<field name="role_id" ref="Purchase"/>
 		</record>
+
 		<record model="workflow.transition" id="trans_confirmed_router22">
 			<field name="act_from" ref="act_temp"/>
 			<field name="act_to" ref="purchase.act_router"/>
 			<field name="signal">purchase_approve</field>
-			<!--<field name="role_id" ref="Purchase"/>-->
 		</record>
+
+		<record model="workflow.transition" id="trans_confirmed_router221">
+			<field name="act_from" ref="act_temp"/>
+			<field name="act_to" ref="act_pass"/>
+			<field name="signal">purchase_bypass</field>
+			<field name="role_id" ref="Purchase_bypass"/>
+		</record>
+
 		<record model="workflow.transition" id="trans_confirmed_cancel2">
 			<field name="act_from" ref="act_temp"/>
 			<field name="act_to" ref="purchase.act_cancel"/>
 			<field name="signal">purchase_cancel</field>
 		</record>
-		<!--<record model="workflow.transition" id="trans_confirmed_cancel">
-			<field name="act_from" ref="act_temp"/>
-			<field name="act_to" ref="act_pass"/>
-			<field name="signal">purchase_bypass</field>
+
+		<record model="workflow.transition" id="trans_pass_approve">
+			<field name="act_from" ref="act_pass"/>
+			<field name="act_to" ref="purchase.act_router"/>
+			<field name="signal">purchase_approve</field>
 		</record>
--->
-		<!-- <start/> -->
-<!--		<record model="workflow.transition" id="trans_confirmed_temp">
+
+		<record model="workflow.transition" id="trans_confirm_pass">
 			<field name="act_from" ref="purchase.act_confirmed"/>
 			<field name="act_to" ref="act_pass"/>
 			<field name="signal">purchase_bypass</field>
+			<field name="role_id" ref="Purchase_bypass"/>
 		</record>
 
-		<record model="workflow.transition" id="trans_router_picking2">
-			<field name="act_from" ref="act_pass"/>
-			<field name="act_to" ref="purchase.act_picking"/>
-			<field name="condition">has_stockable_product()</field>
-		</record>
-		<record model="workflow.transition" id="trans_router_picking_done2">
-			<field name="act_from" ref="act_pass"/>
-			<field name="act_to" ref="purchase.act_picking_done"/>
-			<field name="condition">not has_stockable_product()</field>
-		</record>
-		<record model="workflow.transition" id="trans_router_invoice2">
-			<field name="act_from" ref="act_pass"/>
-			<field name="act_to" ref="purchase.act_invoice"/>
-			<field name="condition">invoice_method=='order'</field>
-		</record>
-		<record model="workflow.transition" id="trans_router_invoice_no_order2">
-			<field name="act_from" ref="act_pass"/>
-			<field name="act_to" ref="purchase.act_invoice_end"/>
-			<field name="condition">invoice_method&lt;&gt;'order'</field>
-		</record>
--->
-
-
-</data>
+	</data>
 </terp>
