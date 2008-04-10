@@ -853,6 +853,29 @@ class product_lines(osv.osv):
 	_name = "product.lines"
 	_description = "Product Lines"
 
+	def create(self, cr, uid, vals, *args, **kwargs):
+		if vals['product_id']:
+			accnt_dict = {}
+			data_product = self.pool.get('product.product').browse(cr,uid,vals['product_id'])
+			a =  data_product.product_tmpl_id.property_account_income.id
+			if not a:
+				a = data_product.categ_id.property_account_income_categ.id
+			accnt_dict['account_id']=a
+			vals.update(accnt_dict)
+		return super(product_lines,self).create(cr, uid, vals, *args, **kwargs)
+
+	def write(self, cr, uid, ids,vals, *args, **kwargs):
+		data_product_line= self.pool.get('product.lines').browse(cr,uid,ids[0])
+		if (not data_product_line.product_id.id == vals['product_id']):
+			accnt_dict = {}
+			data_product = self.pool.get('product.product').browse(cr,uid,vals['product_id'])
+			a =  data_product.product_tmpl_id.property_account_income.id
+			if not a:
+				a = data_product.categ_id.property_account_income_categ.id
+			accnt_dict['account_id']=a
+			vals.update(accnt_dict)
+		return super(product_lines,self).write( cr, uid, ids,vals, *args, **kwargs)
+
 	def _product_subtotal(self, cr, uid, ids, name, args, context=None):
 		res = {}
 		for line in self.browse(cr, uid, ids):
@@ -860,12 +883,9 @@ class product_lines(osv.osv):
 		return res
 
 	def product_id_change(self, cr, uid, ids,product_id,):
-		price_unit=uos_id=prod_name=a=data_partner=False
+		price_unit=uos_id=prod_name=data_partner=False
 		if product_id:
 			data_product = self.pool.get('product.product').browse(cr,uid,product_id)
-			a =  data_product.product_tmpl_id.property_account_income.id
-			if not a:
-				a = data_product.categ_id.property_account_income_categ.id
 			uos_id=data_product.uom_id.id
 			price=self.pool.get('product.product').price_get(cr,uid,[product_id])
 			price_unit=price[product_id]
@@ -874,7 +894,6 @@ class product_lines(osv.osv):
 			'uos_id': uos_id,
 			'price_unit': price_unit,
 			'name':prod_name,
-			'account_id' : a,
 			}
 		}
 
