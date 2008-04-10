@@ -17,20 +17,16 @@
 					<field name="name" select="1" string="Lead Source Description" colspan="2"/>
 					<field name="section_id" colspan="1"/>
 					<newline/>
-					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)" colspan="2"/>
-					<field name="partner_address_id" select="2" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)" colspan="1"/>
-					<newline/>
-					<field name="email_from" select="2" colspan="2"/>
 					<field name="user_id" select="1"/>
-					<seperator colspan="4"/>
-					<group col="6" colspan="4">
-						<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)" string="Lead Source"/>
-						<field name="stage_id" string="Status"/>
-						<field name="priority" string="Priority"/>
-					</group>
+					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)"/>
 					<newline/>
-<!--					<field name="category2_id" string="Category2"/>-->
-					
+					<field name="partner_address_id" select="2" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)"/>
+					<field name="email_from" select="2"/>
+					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)" string="Lead Source"/>
+					<field name="stage_id" string="Status"/>
+					<field name="category2_id" string="Type"/>
+					<field name="priority" string="Priority"/>
+					<newline/>
 					<separator colspan="4" string="Description Information"/>
 						<field name="note" nolabel="1" colspan="4"/>
 
