@@ -36,10 +36,6 @@
 
 		<!-- The base section for all events -->
 
-		<record model="crm.case.section" id="case_section_event">
-			<field name="name">Events</field>
-		</record>
-
 		<record model="ir.actions.act_window" id="action_event_categories">
 			<field name="name">Events by section</field>
 			<field name="type">ir.actions.act_window</field>
