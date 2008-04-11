@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+<!-- Demo Data for Product -->
+	<record id="event_product_0" model="product.product">
+		<field name="list_price">11.36</field>
+		<field name="member_price">11.36</field>
+		<field name="standard_price">5.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Product for Concert</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+	<record id="event_product_1" model="product.product">
+		<field name="list_price">1.70</field>
+		<field name="member_price">1.70</field>
+		<field name="standard_price">1.0</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Product for Opera</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+	<record id="event_product_2" model="product.product">
+		<field name="list_price">52.39</field>
+		<field name="member_price">36.67</field>
+		<field name="standard_price">5.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Product for Conference</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+
+<!-- Demo Data for Event Type -->
+	<record id="event_type_0" model="event.type">
+		<field name="name">seminar</field>
+	</record>
+
+	<record id="event_type_1" model="event.type">
+		<field name="name">exhibition</field>
+	</record>
+
+	<record id="event_type_2" model="event.type">
+		<field name="name">conference</field>
+	</record>
+
+	<record id="event_type_3" model="event.type">
+		<field name="name">saloon</field>
+	</record>
+
+	<record id="event_type_4" model="event.type">
+		<field name="name">training</field>
+	</record>
+
+<!-- Demo data for Event -->
+	<record id="event_0" model="event.event">
+		<field name="name">concert of 'your favorite singer'</field>
+		<field name="date_begin">2007-01-01 13:42:43</field>
+		<field name="date_begin">2007-05-01 13:42:43</field>
+		<field name="product_id" ref="event_product_0"/>
+		<field name="type" ref="event_type_4"/>
+	</record>
+
+	<record id="event_1" model="event.event">
+		<field name="name">opera of Verdi</field>
+		<field name="date_begin">2007-01-01 13:42:43</field>
+		<field name="date_begin">2007-04-01 13:42:43</field>
+		<field name="product_id" ref="event_product_1"/>
+		<field name="type" ref="event_type_1"/>
+	</record>
+
+	<record id="event_2" model="event.event">
+		<field name="name">conference on environment</field>
+		<field name="date_begin">2007-05-01 13:42:43</field>
+		<field name="date_begin">2007-06-01 13:42:43</field>
+		<field name="product_id" ref="event_product_2"/>
+		<field name="type" ref="event_type_2"/>
+	</record>
+
+<!-- Demo data for Registration -->
+	<record id="event_registration_0" model="event.registration">
+		<field name="name">Registration for "conference on environment"</field>
+		<field name="partner_id" ref="base.res_partner_asus"/>
+		<field name="event_id" ref="event_2"/>
+		<field name="invoice_label">Product for Conference</field>
+	</record>
+	<record id="event_registration_1" model="event.registration">
+		<field name="name">Registration for "opera of Verdi"</field>
+		<field name="partner_id" ref="base.res_partner_agrolait"/>
+		<field name="event_id" ref="event_1"/>
+		<field name="invoice_label">Product for Opera</field>
+	</record>
+	<record id="event_registration_2" model="event.registration">
+		<field name="name">Registration for "concert of 'your favorite singer' "</field>
+		<field name="partner_id" ref="base.res_partner_c2c"/>
+		<field name="event_id" ref="event_0"/>
+		<field name="invoice_label">Product for Concert</field>
+	</record>
+
+	</data>
+</terp>
