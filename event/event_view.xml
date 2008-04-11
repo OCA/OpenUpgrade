@@ -289,16 +289,16 @@
 					<field name="badge_name" select="2" on_change="onchange_badge_name(badge_name)"/>
 					<field name="badge_partner" select="2"/>
 					<newline/>
-					<separator colspan="4" string="Notes"/>
+					<!--<separator colspan="4" string="Notes"/>
 					<field name="description" colspan="4" select="2" nolabel="1"/>
 					<group col="3" colspan="4" expand="1">
 						<button name="add_reply" string="Add Last Mail for Replying" states="draft,open" type="object"/>
 						<button name="case_log_reply" string="Send Partner &amp; Historize" states="draft,open" type="object"/>
 						<button name="case_log" string="Historize" states="draft,open" type="object"/>
-					</group>
+					</group>-->
 					<separator colspan="4"/>
 					<group col="8" colspan="4">
-						<field name="state" select="1"/>
+						<field name="state" select="1" colspan="2"/>
 						<button name="button_reg_close" string="Registration Invoiced" states="open" type="object"/>
 						<button name="button_reg_open" string="Confirm Registration" states="draft" type="object"/>
 						<button name="button_reg_cancel" string="Cancel Registration" states="draft,open" type="object"/>
@@ -334,16 +334,23 @@
 							<field name="description"/>
 							<field name="som"/>
 							<field name="user_id"/>
+							<field name="canal_id"/>
 						</tree>
 					</field>
-					<field name="log_ids" nolabel="1" colspan="4">
+					<field name="log_ids" nolabel="1" colspan="4" mode="tree,form" readonly="1">
+						<tree string="Actions">
+							<separator string="Action Information" colspan="4"/>
+							<field name="name"/>
+							<field name="date"/>
+							<field name="user_id"/>
+						</tree>
 						<form string="Actions">
 							<separator string="Action Information" colspan="4"/>
 							<field name="name" colspan="4"/>
 							<field name="date" select="2"/>
 							<field name="user_id" select="2"/>
-							<field name="som" select="2"/>
-							<field name="canal_id"/>
+							<!--<field name="som" select="2"/>
+							<field name="canal_id"/>-->
 						</form>
 					</field>
 				</page>

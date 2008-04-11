@@ -92,7 +92,7 @@ class event(osv.osv):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
 #			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','close') group by c.state,s.name""" % event.section_id.id
-			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','done') group by c.state,s.name""" % event.section_id.id
+			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','done')""" % event.section_id.id
 			cr.execute(query)
 			res2 = cr.fetchone()
 			if res2 and res2[0]:
@@ -104,7 +104,7 @@ class event(osv.osv):
 	def _get_prospect(self, cr, uid, ids, name, args, context=None):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
-			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state = 'draft' group by c.state,s.name""" % event.section_id.id
+			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state = 'draft'""" % event.section_id.id
 			cr.execute(query)
 			res2 = cr.fetchone()
 			if res2 and res2[0]:
@@ -331,7 +331,7 @@ class event_registration(osv.osv):
 		return {}
 	def check_special_condition(self,cr,uid,reg):
 		# same as pay_and_recon,will be used if check_ids field exists
-		return False
+		return (False,False)
 
 	def _map_ids(self,method,cr, uid, ids, *args, **argv):
 		case_data = self.browse(cr,uid,ids)
