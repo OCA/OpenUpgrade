@@ -600,7 +600,6 @@ class cci_missions_ata_carnet(osv.osv):
 		if 'partner_id' in vals:
 			context.update({'partner_id':vals['partner_id']})
 		if 'goods_value' in vals:
-			print "plop", vals['goods_value']
 			context.update({'value_goods':vals['goods_value']})
 		if 'double_signature' in vals:
 			context.update({'double_signature':vals['double_signature']})
