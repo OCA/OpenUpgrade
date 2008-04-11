@@ -902,7 +902,7 @@ class product_lines(osv.osv):
 		'product_line_id': fields.many2one('cci_missions.ata_carnet', 'Product Ref',select=True),
 		'dossier_product_line_id': fields.many2one('cci_missions.dossier', 'Product Ref',select=True),
 		'uos_id': fields.many2one('product.uom', 'Unit', ondelete='set null'),
-		'product_id': fields.many2one('product.product', 'Product', ondelete='set null'),
+		'product_id': fields.many2one('product.product', 'Product', ondelete='set null',required=True),
 		'price_unit': fields.float('Unit Price', required=True, digits=(16,2)),
 		'price_subtotal': fields.function(_product_subtotal, method=True, string='Subtotal'),
 		'quantity': fields.float('Quantity', required=True),
