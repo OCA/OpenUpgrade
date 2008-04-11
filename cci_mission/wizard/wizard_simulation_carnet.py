@@ -86,10 +86,15 @@ def _createInvoices(self, cr, uid, data, context):
             if (not address_invoice) and (add.type == 'default'):
                 address_invoice = add.id
 
+        count=0
         for prod_id in list:
+            count +=1
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=carnet.partner_id.id)
             val['value'].update({'product_id' : prod_id })
-            val['value'].update({'quantity' : 1 })
+            if count==2:
+                val['value'].update({'quantity' : carnet.initial_pages })
+            else:
+                val['value'].update({'quantity' : 1 })
             force_member=force_non_member=False
             if carnet.member_price==1:
                 force_member=True
@@ -101,7 +106,7 @@ def _createInvoices(self, cr, uid, data, context):
             context.update({'value_goods':carnet.goods_value})
             context.update({'double_signature':carnet.double_signature})
 
-            
+
             price=pool_obj.get('product.product')._product_price(cr, uid, [prod_id], False, False, context)
             val['value'].update({'price_unit':price[prod_id]})
             value.append(val)

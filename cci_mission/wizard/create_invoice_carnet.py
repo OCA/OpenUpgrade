@@ -104,7 +104,7 @@ def _createInvoices(self, cr, uid, data, context):
             val = obj_lines.product_id_change(cr, uid, [], prod_id,uom =False, partner_id=carnet.partner_id.id)
             val['value'].update({'product_id' : prod_id })
             if count==2:
-                val['value'].update({'quantity' : 0 })
+                val['value'].update({'quantity' : carnet.initial_pages })
             else:
                 val['value'].update({'quantity' : 1 })
             force_member=force_non_member=False
