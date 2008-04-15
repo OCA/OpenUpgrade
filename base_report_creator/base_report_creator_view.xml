@@ -1,6 +1,20 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+
+	<record model="ir.ui.view" id="base.view_model_fields_tree">
+		<field name="name">ir.model.fields.tree</field>
+		<field name="model">ir.model.fields</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Fields">
+				<field name="model_id"/>
+				<field name="name"/>
+				<field name="field_description"/>
+			</tree>
+		</field>
+	</record>
+	
 	<record model="ir.ui.view" id="base_report_creator_tree">
 		<field name="name">base_report_creator.report.tree</field>
 		<field name="model">base_report_creator.report</field>
@@ -41,7 +55,13 @@
 					<field name="field_ids" nolabel="1" colspan="4">
 						<form string="Fields">
 							<field name="sequence"/>
-							<field name="field_id" domain="parent.model_ids and [('model_id','in',parent.model_ids[0][2])] or []"/>
+							<field name="field_id" domain="parent.model_ids and [('model_id','in',parent.model_ids[0][2])] or []">
+								<tree string="Field List">
+									<field name="model_id"/>
+									<field name="name"/>
+									<field name="field_description"/>
+								</tree>
+							</field>
 							<field name="group_method"/>
 							<field name="graph_mode"/>
 							<field name="calendar_mode"/>
