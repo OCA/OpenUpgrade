@@ -49,8 +49,8 @@ def _createInvoices(self, cr, uid, data, context):
     obj_lines=pool_obj.get('account.invoice.line')
     list_inv = []
     message_total = ""
-    context.update({'pricelist': pool_obj.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for ATA Carnet')])[0]})
     for carnet in data_carnet:
+        context.update({'pricelist': carnet.partner_id.property_product_pricelist.id})
         list = []
         value = []
         address_contact = False
