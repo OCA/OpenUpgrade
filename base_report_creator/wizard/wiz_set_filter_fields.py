@@ -52,6 +52,7 @@ set_value_form = """<?xml version="1.0"?>
 	<field name="field_id" />
 	<field name="operator" />
 	<field name="value" colspan="4"/>
+	<field name="condition" />
 </form>
 """
 
@@ -72,8 +73,8 @@ set_value_fields = {
 											 ('>','Bigger')
 											 ],'string':'Operator'},
 					'value':{'type':'char','string':'Values','size':256},
-					}
-
+					'condition' : {'type':'selection','string':'Condition', 'selection':[('and','AND'),('or','OR')]}
+				}
 def _set_field_domain(self,cr,uid,data,context):
 	this_model = data.get('model')
 	this_pooler = pooler.get_pool(cr.dbname).get(this_model)
@@ -154,14 +155,13 @@ def _set_filter_value(self, cr, uid, data, context):
 			fields_list = set_field_operator(self,table_name+"."+field_data['name'],field_data['ttype'],form_data['operator'],value_data[0][2])
 		else:
 			fields_list = set_field_operator(self,table_name+"."+field_data['name'],field_data['ttype'],form_data['operator'],value_data)
-		
-		print ':: i am inner of the condition', field_type, value_data, fields_list
-		
+			
 		if fields_list and value_data:
 			create_dict = {
 						   'name':model_name + "/" +field_data['field_description'] +" "+ mapping_fields[form_data['operator']] + " " + fields_list[2],
 						   'expression':' '.join(fields_list),
-						   'report_id':data['id']
+						   'report_id':data['id'],
+						   'condition' : form_data['condition']
 						   }
 			pooler.get_pool(cr.dbname).get('base_report_creator.report.filter').create(cr,uid,create_dict)
 		#end if field_type == 'many2many' and value_data and len(value_data):
@@ -188,7 +188,7 @@ def _set_form_value(self, cr, uid, data, context):
 		if field_type == 'selection':
 			selection_data = pooler.get_pool(cr.dbname).get(field_data['model']).fields_get(cr,uid,[field_data['name']])
 			value_field['selection'] = selection_data.get(field_data['name']).get('selection')
-	ret_dict={'field_id':field_id,'operator':'=','value':False}	
+	ret_dict={'field_id':field_id,'operator':'=', 'condition':'and','value':False}	
 	return ret_dict
 
 
