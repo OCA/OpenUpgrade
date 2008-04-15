@@ -326,14 +326,12 @@ class cci_missions_certificate(osv.osv):
 		for data in data_dosseir:
 			if data.state =='draft':
 				data_partner = self.pool.get('res.partner').browse(cr,uid,data.order_partner_id.id)
-
 				context.update({'partner_id':data_partner})
 				context.update({'force_member':False})
 				context.update({'force_non_member':False})
 				context.update({'date':data.date})
 				context.update({'value_goods':data.goods_value})
-				context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for Certificates')])[0]})
-
+				context.update({'pricelist':data_partner.property_product_pricelist.id})
 				price_org = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.original_product_id.id], False, False, context)
 				price_copy = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.copy_product_id.id], False, False, context)
 				cost_org=price_org[data.type_id.original_product_id.id]
@@ -341,7 +339,6 @@ class cci_missions_certificate(osv.osv):
 				qty_org = data.quantity_original
 				qty_copy = data.quantity_copies
 				subtotal =  data.sub_total
-
 				if qty_org < 0 or qty_copy < 0:
 					raise osv.except_osv('Input Error!','No. of Copies and Quantity of Originals should be positive.')
 				total = ((cost_org * qty_org ) + (cost_copy * qty_copy) + subtotal)
@@ -454,8 +451,7 @@ class cci_missions_legalization(osv.osv):
 				context.update({'force_non_member':force_non_member})
 				context.update({'date':data.date})
 				context.update({'value_goods':data.goods_value})
-				context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for Legalizations')])[0]})
-
+				context.update({'pricelist':data_partner.property_product_pricelist.id})
 				price_org = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.original_product_id.id], False, False, context)
 				price_copy = self.pool.get('product.product')._product_price(cr, uid, [data.type_id.copy_product_id.id], False, False, context)
 				cost_org=price_org[data.type_id.original_product_id.id]
@@ -592,9 +588,10 @@ class cci_missions_ata_carnet(osv.osv):
 	_description = 'cci_missions.ata_carnet'
 
 	def create(self, cr, uid, vals, *args, **kwargs):
-
 		context = {}
-		context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for ATA Carnet')])[0]})
+		data_partner=self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])
+		context.update({'pricelist':data_partner.property_product_pricelist.id})
+
 		if 'creation_date' in vals:
 			context.update({'date':vals['creation_date']})
 		if 'partner_id' in vals:
@@ -629,7 +626,6 @@ class cci_missions_ata_carnet(osv.osv):
 		#super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
 		data_carnet = self.browse(cr,uid,ids[0])
 		context = {}
-		context.update({'pricelist': self.pool.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for ATA Carnet')])[0]})
 
 		if 'creation_date' in vals:
 			context.update({'date':vals['creation_date']})
@@ -637,8 +633,10 @@ class cci_missions_ata_carnet(osv.osv):
 			context.update({'date':data_carnet.creation_date})
 		if 'partner_id' in vals:
 			context.update({'partner_id':vals['partner_id']})
+			data_partner=self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])
 		else:
 			context.update({'partner_id':data_carnet.partner_id})
+			data_partner=self.pool.get('res.partner').browse(cr,uid,data_carnet.partner_id)
 		if 'goods_value' in vals:
 			context.update({'value_goods':vals['goods_value']})
 		else:
@@ -648,6 +646,7 @@ class cci_missions_ata_carnet(osv.osv):
 		else:
 			context.update({'double_signature':data_carnet.double_signature})
 		force_member=force_non_member=False
+		context.update({'pricelist':data_partner.property_product_pricelist.id})
 		if 'member_price' in vals:
 			if vals['member_price']==1:
 				force_member=True
