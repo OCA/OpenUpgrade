@@ -60,12 +60,8 @@ def _createInvoices(self, cr, uid, data, context={}):
 	inv_reject = 0
 	inv_rej_reason = ""
 
-	if current_model=='cci_missions.certificate':
-		context.update({'pricelist': pool_obj.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for Certificates')])[0]})
-	else:
-		context.update({'pricelist': pool_obj.get('product.pricelist').search(cr, uid, [('name','like', 'Default Pricelist for Legalizations')])[0]})
-
 	for data in data_dossier:
+		context.update({'pricelist': data.order_partner_id.property_product_pricelist.id})
 		list = []
 		value = []
 		dict = {}
