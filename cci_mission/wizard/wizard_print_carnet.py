@@ -4,7 +4,7 @@ import pooler
 
 
 form = """<?xml version="1.0"?>
-<form string="Select Message">
+<form string="Select No. of Pages For Documents">
     <field name="pages_doc1"/>
     <field name="pages_doc2"/>
 </form>"""
