@@ -132,7 +132,9 @@ def set_field_operator(self,field_name,field_type,search_operator,search_value):
 		elif search_operator in ('is','is not'):
 			field_search[2]=False
 		elif search_operator in ('<','>'):
-			if field_type not in int_type:
+			if field_type in date_type:
+				field_search[2] = "'"+field_search[2]+"'"
+			elif field_type not in int_type:
 				return False
 			#end if field_type not in int_type:
 		return field_search
@@ -152,6 +154,9 @@ def _set_filter_value(self, cr, uid, data, context):
 			fields_list = set_field_operator(self,table_name+"."+field_data['name'],field_data['ttype'],form_data['operator'],value_data[0][2])
 		else:
 			fields_list = set_field_operator(self,table_name+"."+field_data['name'],field_data['ttype'],form_data['operator'],value_data)
+		
+		print ':: i am inner of the condition', field_type, value_data, fields_list
+		
 		if fields_list and value_data:
 			create_dict = {
 						   'name':model_name + "/" +field_data['field_description'] +" "+ mapping_fields[form_data['operator']] + " " + fields_list[2],
