@@ -2,8 +2,7 @@ import wizard
 import time
 import datetime
 import pooler
-import xml.dom.ext
-import xml.dom.minidom
+import tools
 
 form = """<?xml version="1.0"?>
 <form string="Select Fiscal Year">
@@ -15,6 +14,15 @@ form = """<?xml version="1.0"?>
 fields = {
     'fyear': {'string': 'Fiscal Year', 'type': 'many2one', 'relation': 'account.fiscalyear', 'required': True},
    }
+msg_form = """<?xml version="1.0"?>
+<form string="Notification">
+     <separator string="XML File has been Created."  colspan="4"/>
+     <field name="msg" colspan="4" nolabel="1"/>
+</form>"""
+
+msg_fields = {
+  'msg': {'string':'File created', 'type':'text', 'size':'100','readonly':True},
+}
 
 class wizard_vat(wizard.interface):
 
@@ -57,15 +65,16 @@ class wizard_vat(wizard.interface):
             record.append(sum_vat)
             record.append(sum_tot)
             datas.append(record)
-        file=open('vat_amount_detail.xml', 'w')
-        file.write('<?xml version="1.0"?>\n<header>\n\tWelcome To TinyERP.Thing Big, Use TinyERP.\n</header>\n')
+        root_path=tools.config.options['root_path']
+        file=open(root_path+'/vat_amount_detail.xml', 'w')
+        file.write('<?xml version="1.0"?>\n<header>\n\tWelcome To TinyERP.Think Big, Use TinyERP.\n</header>\n')
 
         seq=0
         for line in datas:
             seq +=1
-            file.write('<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>"'+line[0] +'"</VATNum>\n\t\t<Country>"'+line[1] +'"</Country>\n\t</CompanyInfo>\n\t<Amount>"'+str(line[2]) +'"</Amount>\n\t<TurnOver>"'+str(line[3]) +'"</TurnOver>\n</ClientList>\n')
+            file.write('<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>'+line[0] +'</VATNum>\n\t\t<Country>'+line[1] +'</Country>\n\t</CompanyInfo>\n\t<Amount>'+str(line[2]) +'</Amount>\n\t<TurnOver>'+str(line[3]) +'</TurnOver>\n</ClientList>\n')
         file.close()
-        return data['form']
+        return {'msg':'vat_amount_detail.xml file has been created at '+root_path+'.' }
 
     states = {
         'init': {
@@ -73,9 +82,10 @@ class wizard_vat(wizard.interface):
             'result': {'type':'form', 'arch':form, 'fields':fields, 'state':[('end','Cancel'),('go','Create XML')]},
         },
         'go': {
-            'actions': [],
-            'result': {'type':'action', 'action':_create_xml, 'state':'end'},
-        },
+            'actions': [_create_xml],
+            'result': {'type':'form', 'arch':msg_form, 'fields':msg_fields, 'state':[('end','Ok')]},
+        }
+
     }
 
 wizard_vat('list.vat.detail')
