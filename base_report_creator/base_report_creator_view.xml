@@ -79,10 +79,12 @@
 					<field name="filter_ids" nolabel="1" colspan="4">
 						<tree string="Filters">
 							<field name="name"/>
+							<field name="condition"/>
 						</tree>
 						<form string="Filters">
 							<field name="name" colspan="4"/>
 							<field name="expression" colspan="4"/>
+							<field name="condition"/>
 						</form>
 					</field>
 				</page><page string="Security">
