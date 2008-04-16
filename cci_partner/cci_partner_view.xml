@@ -640,6 +640,38 @@
 		<field name="arch" type="xml">
 			<field name="address_ids" position="replace">
 				<field name="address_ids" colspan="4" nolabel="1">
+				<form string="Partner Address"> <!-- remove contact and contact name on partner->contact->address -->
+					<field name="partner_id" select="1"/>
+					<field name="department"/>
+<!--					<field name="contact_id" select="1"/>-->
+					<!--<field name="name" select="2"/>-->
+					<newline/>
+					<!--<field name="function"/>-->
+					<field name="function_label"/>
+					<field name="function_code_label"/>
+					<newline/>
+					<!--<field name="title" select="1"/>-->
+					<field name="type" select="1"/>
+					<newline/>
+					<field name="street" select="1"/>
+					<field name="street2" select="1"/>
+					<field name="zip_id" select="1"/> <!-- replace zip with zip_id -->
+					<field name="city" select="1"/>
+					<field name="country_id"/>
+					<field name="state_id"/>
+					<field name="phone"/>
+					<field name="fax"/>
+					<field name="email"/>
+					<field name="active"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+					<field name="sequence_partner"/>
+					<field name="sequence_contact"/>
+					<field name="who_presence"/>
+					<field name="dir_presence"/>
+					<field name="state" />
+					<!--<field name="department"/>-->
+				</form>
 					<tree string="Address">
 						<field name="partner_id"/>
 						<field name="function_code_label"/>
