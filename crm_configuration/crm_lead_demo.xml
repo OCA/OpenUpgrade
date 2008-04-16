@@ -134,6 +134,14 @@
 
 
 <!--		REPORTS		-->	
+	<record model="ir.actions.act_window" id="action_report_crm_case_lead_user">
+		<field name="res_model">report.crm.case.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Leads and User" action="action_report_crm_case_lead_user" id="menu_action_report_crm_case_lead_user"/>
+
 	<record model="ir.actions.act_window" id="action_report_crm_case_lead_categ">
 		<field name="res_model">report.crm.case.section.categ2</field>
 		<field name="view_type">form</field>
@@ -150,13 +158,21 @@
 	</record>
 	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Leads and Stage" action="action_report_crm_case_lead_stage" id="menu_action_report_crm_case_lead_stage"/>
 
-	<record model="ir.actions.act_window" id="action_report_crm_case_lead_user">
-		<field name="res_model">report.crm.case.user</field>
+	<record model="ir.actions.act_window" id="action_report_crm_case_lead_categ_stage">
+		<field name="res_model">report.crm.case.section.categ.stage</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,graph</field>
+		<field name="view_mode">tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Leads and User" action="action_report_crm_case_lead_user" id="menu_action_report_crm_case_lead_user"/>
+	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Section, Category and Stage" action="action_report_crm_case_lead_categ_stage" id="menu_action_report_crm_case_lead_categ_stage"/>
+
+	<record model="ir.actions.act_window" id="action_report_crm_case_lead_categ_categ2">
+		<field name="res_model">report.crm.case.section.categ.categ2</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Section, Category and Category2" action="action_report_crm_case_lead_categ_categ2" id="menu_action_report_crm_case_lead_categ_categ2"/>
 
 </data>
 </terp>
