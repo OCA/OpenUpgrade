@@ -19,7 +19,12 @@
 						<field name="date_end" select="2"/>
 						<field name="register_min" select="2"/>
 						<field name="register_max" select="2"/>
-						<field name="note" colspan="4"/>
+						<field name="budget_id"/>
+						<field name="product_id" required="1"/>
+						<!--<field name="note" colspan="4"/>-->
+						<separator string="Tasks management" colspan="4"/>
+						<field name="project_id"/>
+						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
 						<separator string="Status" colspan="4"/>
 						<field name="state" select="1"/>
 						<group col="4" colspan="2">
@@ -38,16 +43,17 @@
 						<field name="signet_type" select="2"/>
 						<!--<field name="localisation"/>-->
 						<field name="account_analytic_id"/>
-						<field name="budget_id"/>
-						<field name="product_id" required="1"/>
+						<!--<field name="budget_id"/>
+						<field name="product_id" required="1"/>-->
 						<!--<field name="check_accept"/>-->
 						<newline/>
 						<field name="agreement_nbr"/>
 						<field name="check_type"/>
 						<newline/>
-						<separator string="Tasks management" colspan="4"/>
+						<field name="note" colspan="4"/>
+						<!--<separator string="Tasks management" colspan="4"/>
 						<field name="project_id"/>
-						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>
+						<button string="Create Retro-Planning" name="%(event.event_wiz)d" type="action"/>-->
 					</page>
 					<page string="Mailing">
 						<field name="mail_auto_registr"/>
