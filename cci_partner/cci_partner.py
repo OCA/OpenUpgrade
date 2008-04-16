@@ -278,6 +278,19 @@ class res_partner_zip(osv.osv):
             list_zip.append(data.type_id.id)
         return True
 
+    def name_get(self, cr, user, ids, context={}):
+        #will return zip code and city......
+        if not len(ids):
+            return []
+        res = []
+        for r in self.read(cr, user, ids, ['name','city']):
+            zip_city = str(r['name'] or '')
+            if r['name'] and r['city']:
+                zip_city += ' '
+            zip_city += str(r['city'] or '')
+            res.append((r['id'], zip_city))
+        return res
+
     _constraints = [(check_group_type, 'Error: Only one group of the same group type is allowed!', ['groups_id'])]
     _columns = {
         'name':fields.char('Zip Code',size=10,required=True, select=1),
