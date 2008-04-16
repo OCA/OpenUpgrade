@@ -145,5 +145,30 @@
 	</record>
 	<menuitem name="CRM &amp; SRM/Opportunities/My Opportunities/Open Opportunities" id="menu_crm_case_categ0_act_oppor2" action="crm_case_category_act_oppor2"/>
 
+<!--		REPORTS			-->
+	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_categ">
+		<field name="res_model">report.crm.case.section.categ2</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and Category2" action="action_report_crm_case_oppor_categ" id="menu_action_report_crm_case_oppor_categ"/>
+
+	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_stage">
+		<field name="res_model">report.crm.case.section.stage</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and Stage" action="action_report_crm_case_oppor_stage" id="menu_action_report_crm_case_oppor_stage"/>
+
+	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_user">
+		<field name="res_model">report.crm.case.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and User" action="action_report_crm_case_oppor_user" id="menu_action_report_crm_case_oppor_user"/>
+
 </data>
 </terp>
