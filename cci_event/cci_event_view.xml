@@ -28,13 +28,13 @@
 						<separator string="Status" colspan="4"/>
 						<field name="state" select="1"/>
 						<group col="4" colspan="2">
-							<button string="Cancel Event" name="cancel" states="fixed,open"/>
-							<button string="Confirm Date" name="fixed" states="draft"/>
-							<button string="Open Event" name="open" states="fixed"/>
-							<button string="Confirm Event" name="confirm" states="open"/>
-							<button string="Event is Running" name="running" states="confirm"/>
-							<button string="Event Done" name="done" states="running"/>
-							<button string="Close Event" name="closed" states="done"/>
+							<button string="Cancel Event" name="cci_event_cancel" states="fixed,open" type="object"/>
+							<button string="Confirm Date" name="cci_event_fixed" states="draft" type="object"/>
+							<button string="Open Event" name="cci_event_open" states="fixed" type="object"/>
+							<button string="Confirm Event" name="cci_event_confirm" states="open" type="object"/>
+							<button string="Event is Running" name="cci_event_running" states="confirm" type="object"/>
+							<button string="Event Done" name="cci_event_done" states="running" type="object"/>
+							<button string="Close Event" name="cci_event_closed" states="done" type="object"/>
 						</group>
 					</page>
 					<page string="Extra Info">
