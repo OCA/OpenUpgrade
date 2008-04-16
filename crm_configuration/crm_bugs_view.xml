@@ -129,5 +129,17 @@
 			</tree>
 		</field>
 	</record>
+	<record model="ir.ui.view" id="crm_case_calendar_view">
+		<field name="name">crm.cases.calendar</field>
+		<field name="model">crm.case</field>
+		<field name="type">calendar</field>
+		<field name="priority" eval="2"/>
+		<field name="arch" type="xml">
+			<calendar string="Bugs" date_start="create_date" color="user_id" delay="probability">
+				<field name="name"/>
+				<field name="partner_id"/>
+			</calendar>
+		</field>
+	</record>
 	</data>
 </terp>
