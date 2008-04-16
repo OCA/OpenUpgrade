@@ -104,6 +104,7 @@
 		<field name="name">Bugs Waiting Approval</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'state\',\'=\',\'draft\')]'"/>
 	</record>
@@ -114,9 +115,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all1"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all1">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all1"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all1">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all1"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Bugs Waiting Approval" id="menu_crm_case_categ0_act_all1" action="crm_case_category_act_all1"/>
@@ -125,6 +132,7 @@
 		<field name="name">Open Bugs</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'stage_id\',\'&lt;&gt;\','+str(stage7)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -135,9 +143,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all2"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all2">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all2">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all2"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Open Bugs" id="menu_crm_case_categ0_act_all2" action="crm_case_category_act_all2"/>
@@ -146,6 +160,7 @@
 		<field name="name">Bugs With Patches Waiting Approval</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'categ_id\',\'=\','+str(categ2)+'), (\'stage_id\',\'=\','+str(stage5)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -156,9 +171,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all3"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all3">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all3">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all3"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Open Bugs/Bugs With Patches Waiting Approval" id="menu_crm_case_categ0_act_all3" action="crm_case_category_act_all3"/>
@@ -167,6 +188,7 @@
 		<field name="name">Bugs Not Fixed</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'), (\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'categ_id\',\'=\','+str(categ1)+'), (\'stage_id\',\'&lt;&gt;\','+str(stage2)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -177,9 +199,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all4"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all4">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all4"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all4">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all4"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Open Bugs/Bugs Not Fixed" id="menu_crm_case_categ0_act_all4" action="crm_case_category_act_all4"/>
@@ -188,6 +216,7 @@
 		<field name="name">Pending Bugs</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'state\',\'=\',\'pending\')]'"/>
 	</record>
@@ -198,9 +227,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all5"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all5">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all5"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all5">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all5"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Pending Bugs" id="menu_crm_case_categ0_act_all5" action="crm_case_category_act_all5"/>
@@ -209,6 +244,7 @@
 		<field name="name">Planned For Future Release</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'stage_id\',\'=\','+str(stage7)+'),(\'state\',\'=\',\'pending\')]'"/>
 	</record>
@@ -219,9 +255,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all6"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all6">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all6"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all6">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all6"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Pending Bugs/Planned For Future Release" id="menu_crm_case_categ0_act_all6" action="crm_case_category_act_all6"/>
@@ -230,6 +272,7 @@
 		<field name="name">Waiting For Reporter Response</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'stage_id\',\'=\','+str(stage5)+'),(\'state\',\'=\',\'pending\')]'"/>
 	</record>
@@ -240,9 +283,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all7"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all7">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all7"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all7">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all7"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Pending Bugs/Waiting For Reporter Response" id="menu_crm_case_categ0_act_all7" action="crm_case_category_act_all7"/>
@@ -251,6 +300,7 @@
 		<field name="name">Old Bugs</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'&lt;&gt;\','+str(categ3)+'),(\'state\',\'&lt;&gt;\',\'draft\'),(\'state\',\'&lt;&gt;\',\'open\'),(\'state\',\'&lt;&gt;\',\'pending\')]'"/>
 	</record>
@@ -261,9 +311,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_all8"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_all8">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_all8"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_all8">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_all8"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Bugs/Old Bugs" id="menu_crm_case_categ0_act_all8" action="crm_case_category_act_all8"/>
@@ -274,6 +330,7 @@
 		<field name="name">My Open Bugs</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',uid),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -284,9 +341,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_my1"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_my1">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_my1"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_my1">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_my1"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/My Bugs/My Open Bugs" id="menu_crm_case_categ0_act_my1" action="crm_case_category_act_my1"/>
@@ -295,6 +358,7 @@
 		<field name="name">My Bugs With Patches</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',uid),(\'categ_id\',\'=\','+str(categ2)+'), (\'stage_id\',\'=\','+str(stage5)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -305,9 +369,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_my2"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_my2">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_my2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_my2">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_my2"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/My Bugs/My Open Bugs/My Bugs With Patches" id="menu_crm_case_categ0_act_my2" action="crm_case_category_act_my2"/>
@@ -316,6 +386,7 @@
 		<field name="name">My Bugs Not Fixed</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'user_id\',\'=\',uid),(\'categ_id\',\'=\','+str(categ1)+'), (\'stage_id\',\'&lt;&gt;\','+str(stage2)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -326,9 +397,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_my3"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_my3">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_my3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_my3">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_my3"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/My Bugs/My Open Bugs/My Bugs Not Fixed" id="menu_crm_case_categ0_act_my3" action="crm_case_category_act_my3"/>
@@ -362,6 +439,7 @@
 		<field name="name">Feature Requests Waiting Approval</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'), (\'categ_id\',\'=\','+str(categ3)+'), (\'state\',\'=\',\'draft\')]'"/>
 	</record>
@@ -372,9 +450,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_f2"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_f2">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_f2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_f2">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_f2"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Feature Requests/Feature Requests Waiting Approval" id="menu_crm_case_categ0_act_f2" action="crm_case_category_act_f2"/>
@@ -383,6 +467,7 @@
 		<field name="name">Open Feature Requests</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'=\','+str(categ3)+'),(\'stage_id\',\'&lt;&gt;\','+str(stage7)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -393,9 +478,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_f3"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_f3">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_f3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_f3">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_f3"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Feature Requests/Open Feature Requests" id="menu_crm_case_categ0_act_f3" action="crm_case_category_act_f3"/>
@@ -404,6 +495,7 @@
 		<field name="name">Pending Feature Requests</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'=\','+str(categ3)+'),(\'state\',\'=\',\'pending\')]'"/>
 	</record>
@@ -414,9 +506,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_f4"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_f4">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_f4"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_f4">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_f4"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Feature Requests/Pending Feature Requests" id="menu_crm_case_categ0_act_f4" action="crm_case_category_act_f4"/>
@@ -425,6 +523,7 @@
 		<field name="name">Planned For Future Release</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'=\','+str(categ3)+'),(\'state\',\'=\',\'pending\'),(\'stage_id\',\'=\','+str(stage7)+')]'"/>
 	</record>
@@ -435,9 +534,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_f5"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_f5">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_f5"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_f5">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_f5"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Feature Requests/Pending Feature Requests/Planned For Future Release" id="menu_crm_case_categ0_act_f5" action="crm_case_category_act_f5"/>
@@ -446,6 +551,7 @@
 		<field name="name">Waiting For Reporter Response</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'=\','+str(categ3)+'),(\'state\',\'=\',\'pending\'),(\'stage_id\',\'=\','+str(stage5)+')]'"/>
 	</record>
@@ -456,9 +562,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_f6"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_f6">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_f6"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_f6">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_f6"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Feature Requests/Pending Feature Requests/Waiting For Reporter Response" id="menu_crm_case_categ0_act_f6" action="crm_case_category_act_f6"/>
@@ -467,6 +579,7 @@
 		<field name="name">Old Feature Requests</field>
 		<field name="res_model">crm.case</field>
 		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar</field>
 		<field name="view_id" ref="crm_case_tree_view"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support)+'),(\'categ_id\',\'=\','+str(categ3)+'),(\'state\',\'&lt;&gt;\',\'draft\'),(\'state\',\'&lt;&gt;\',\'open\'),(\'state\',\'&lt;&gt;\',\'pending\')]'"/>
 	</record>
@@ -477,9 +590,15 @@
 		<field name="act_window_id" ref="crm_case_category_act_f7"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_f7">
-		<field name="sequence" eval="2"/>
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view"/>
+		<field name="act_window_id" ref="crm_case_category_act_f7"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_f7">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view"/>
 		<field name="act_window_id" ref="crm_case_category_act_f7"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Bug Tracking/All Feature Requests/Old Feature Requests" id="menu_crm_case_categ0_act_f7" action="crm_case_category_act_f7"/>
