@@ -73,7 +73,47 @@
 		</field>
 	</record>
 -->
-	<record model="ir.ui.view" id="view_partner_form">
+
+	<record model="ir.ui.view" id="view_partner_form_inherit">
+		<field name="name">Partner  form inherited</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1" position="replace">
+				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
+						<form string="Partner contacts">
+							<field name="contact_id" select="1" colspan="4"/> <!-- replced by name (contact name) -->
+							<field name="title" domain="[('domain', '=', 'contact')]"/>
+							<field name="function"/>
+							<field name="type" select="2"/>
+							<field name="street" select="2"/>
+							<field name="street2"/>
+							<newline/>
+							<field name="zip" select="2"/>
+							<field name="city" select="2"/>
+							<newline/>
+							<field name="country_id" select="2" completion="1"/>
+							<field name="state_id" select="2"/>
+							<newline/>
+							<field name="phone"/>
+							<field name="fax"/>
+							<newline/>
+							<field name="mobile"/>
+							<field name="email" select="2" widget="email" />
+						</form>
+						<tree string="Partner contacts">
+							<field name="contact_id"/>
+							<field name="zip"/>
+							<field name="city"/>
+							<field name="country_id"/>
+						</tree>
+					</field>
+				</field>
+		</field>
+	</record>
+
+<!--	<record model="ir.ui.view" id="view_partner_form">
 		<field name="name">Partner  form inherited</field>
 		<field name="model">res.partner</field>
 		<field name="inherit_id" ref="base.view_partner_form"/>
@@ -84,6 +124,7 @@
 			</field>
 		</field>
 	</record>
+-->
 
 	<record model="ir.ui.view" id="view_partner_address_tree">
 		<field name="name">Partner address tree inherited</field>
