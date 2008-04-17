@@ -482,7 +482,7 @@ class Invoice(osv.osv):
 		return super(Invoice, self).action_move_create(cr, uid, ids, context)
 
 	def action_cancel(self, cr, uid, ids, context=None):
-		'''Create a cancel_date on the membership_line object'''
+		'''Create a 'date_cancel' on the membership_line object'''
 
 		if context is None:
 			context = {}
@@ -493,7 +493,7 @@ class Invoice(osv.osv):
 			mlines = member_line_obj.search(cr,uid,
 					[('account_invoice_line','in',
 						[ l.id for l in invoice.invoice_line])], context)
-			member_line_obj.write(cr,uid,mlines, {'cancel_date':today}, context)
+			member_line_obj.write(cr,uid,mlines, {'date_cancel':today}, context)
 
 Invoice()
 
