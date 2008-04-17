@@ -96,5 +96,23 @@
 		<field eval="&quot;Marketing Job&quot;" name="name"/>
 		<field eval="&quot;33968745&quot;" name="partner_phone"/>
 	</record>
+	<record id="crm_case_financejob0" model="crm.case">
+		<field eval="time.strftime('%Y-%m-26')" name="date"/>
+		<field eval="time.strftime('%Y-%m-29')" name="date_deadline"/>
+		<field name="category2_id" ref="crm_configuration.category_job2"/>
+		<field name="partner_id" ref="base.res_partner_11"/>
+		<field eval="&quot;4&quot;" name="priority"/>
+		<field name="user_id" ref="base.user_admin"/>
+		<field eval="&quot;David Armstrong&quot;" name="partner_name"/>
+		<field eval="&quot;done&quot;" name="state"/>
+		<field name="section_id" ref="crm_configuration.section_support0"/>
+		<field eval="&quot;david@market.edu&quot;" name="partner_name2"/>
+		<field eval="&quot;9966332214&quot;" name="partner_mobile"/>
+		<field eval="1" name="active"/>
+		<field name="categ_id" ref="crm_configuration.categ_job1"/>
+		<field name="stage_id" ref="crm_configuration.stage_job5"/>
+		<field eval="&quot;Finance Job&quot;" name="name"/>
+		<field eval="&quot;33968745&quot;" name="partner_phone"/>
+	</record>	
 </data>
 </terp>
