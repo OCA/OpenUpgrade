@@ -127,7 +127,7 @@ def _group_invoice(self, cr, uid, data, context):
             count=count+1
             line_list.append(id_stotal)
         inv = {
-                'name': 'Group invocie',
+                'name': 'Grouped Invoice',
                 'origin': 'Group invocie',
                 'type': 'out_invoice',
                 'reference': False,
