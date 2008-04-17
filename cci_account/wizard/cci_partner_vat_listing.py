@@ -2,7 +2,7 @@ import wizard
 import time
 import datetime
 import pooler
-import tools
+import base64
 
 form = """<?xml version="1.0"?>
 <form string="Select Fiscal Year">
@@ -18,10 +18,14 @@ msg_form = """<?xml version="1.0"?>
 <form string="Notification">
      <separator string="XML File has been Created."  colspan="4"/>
      <field name="msg" colspan="4" nolabel="1"/>
+     <field name="file_save" />
 </form>"""
 
 msg_fields = {
   'msg': {'string':'File created', 'type':'text', 'size':'100','readonly':True},
+  'file_save':{'string': 'Save File',
+        'type': 'binary',
+        'readonly': True,},
 }
 
 class wizard_vat(wizard.interface):
@@ -64,16 +68,17 @@ class wizard_vat(wizard.interface):
                 for item in line_info:
                     record.append(item[1])
             datas.append(record)
-        root_path=tools.config.options['root_path']
-        file=open(root_path+'/partners_vat_listing.xml', 'w')
-        file.write('<?xml version="1.0"?>\n<header>\n\tWelcome To TinyERP.Think Big, Use TinyERP.\n</header>\n')
+
+        data_file='<?xml version="1.0"?>\n<header>\n\tWelcome To TinyERP.Think Big, Use TinyERP.\n</header>\n'
 
         seq=0
         for line in datas:
             seq +=1
-            file.write('<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>'+line[0] +'</VATNum>\n\t\t<Country>'+line[1] +'</Country>\n\t</CompanyInfo>\n\t<Amount>'+str(line[2]) +'</Amount>\n\t<TurnOver>'+str(line[3]) +'</TurnOver>\n</ClientList>\n')
-        file.close()
-        return {'msg':'partners_vat_listing.xml file has been created at '+root_path+'.' }
+            data_file +='<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>'+line[0] +'</VATNum>\n\t\t<Country>'+line[1] +'</Country>\n\t</CompanyInfo>\n\t<Amount>'+str(line[2]) +'</Amount>\n\t<TurnOver>'+str(line[3]) +'</TurnOver>\n</ClientList>\n'
+
+        data['form']['msg']='Save the File with '".xml"' extension.'
+        data['form']['file_save']=base64.encodestring(data_file)
+        return data['form']
 
     states = {
         'init': {
