@@ -7,24 +7,30 @@
 	# ------------------------------------------------------ 
 
 	<record model="ir.ui.view" id="crm_case_form_view_leads">
-		<field name="name">crm.cases.form</field>
+		<field name="name">CRM - Leads Form</field>
 		<field name="model">crm.case</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Leads Form">
 				<notebook>
 				 <page string="Leads">
-					<field name="name" select="1" string="Description" colspan="2"/>
+				 	<field name="partner_name" string="Name"/>
+					<field name="partner_name2" string="Email"/>
+					<newline/>
+					<field name="partner_phone"/>
+					<field name="partner_mobile"/>
+					<newline/>
+					<field name="name" select="1" string="Title"/>
+					<field name="user_id" select="2" string="Responsible"/>
+					<newline/>
 					<field name="section_id" colspan="1"/>
+					<field name="categ_id" select="1" on_change="onchange_categ_id(categ_id)" string="Lead Source"/>
 					<newline/>
-					<field name="user_id" select="1" string="Responsible"/>
 					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)"/>
-					<newline/>
-					<field name="partner_address_id" select="2" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)"/>
-					<field name="email_from" select="2"/>
-					<field name="categ_id" select="2" on_change="onchange_categ_id(categ_id)" string="Lead Source"/>
-					<field name="stage_id" string="Status"/>
-					<field name="category2_id" string="Type"/>
+					<field name="partner_address_id" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)"/>
+					<field name="stage_id" string="Status" select="1"/>
+					<field name="email_from"/>
+					<field name="category2_id" string="Campaign Type" select="1"/>
 					<field name="priority" string="Priority"/>
 					<newline/>
 					<separator colspan="4" string="Description Information"/>
@@ -32,7 +38,7 @@
 
 					<separator colspan="4"/>
 					<group col="8" colspan="4">
-						<field name="state" select="1"/> 
+						<field name="state" select="2"/> 
 					 	<button name="case_close" string="Done" states="open,draft,pending" type="object"/>
 						<button name="case_open" string="Open" states="draft,pending" type="object"/>
 						<button name="case_cancel" string="Cancel" states="draft,open,pending" type="object"/>
@@ -43,7 +49,7 @@
 				 </page>
 
 				 <page string="Extra Info">
-					<field name="id" select="1"/>
+					<field name="id"/>
 					<field name="active" select="2"/>
 					<field name="email_cc" colspan="2"/>
 					<field name="probability"/>
@@ -56,12 +62,12 @@
 					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
 						<form string="Communication history">
 							<group col="6" colspan="4">
-								<field name="date" select="1"/>
-								<field name="email" select="1"/>
-								<field name="canal_id" select="2"/>
+								<field name="date"/>
+								<field name="email"/>
+								<field name="canal_id"/>
 							</group>
 							<newline/>
-							<field name="description" colspan="4" nolabel="1" select="2"/>
+							<field name="description" colspan="4" nolabel="1"/>
 						</form>
 						<tree string="Communication history">
 							<field name="description"/>
@@ -71,10 +77,10 @@
 					</field>
 					<group col="2" colspan="2" expand="1">
 						<field name="canal_id"/>
-						<field name="som" select="2"/>
+						<field name="som"/>
 						<button name="add_reply" string="Add Last Mail for Replying"
 							states="open" type="object" colspan="2"/>
-						<field name="description" colspan="2" select="2" nolabel="1"/>
+						<field name="description" colspan="2" nolabel="1"/>
 						<button name="case_log_reply"
 							string="Send Partner &amp; Historize" states="open"
 							type="object"/>
@@ -91,9 +97,9 @@
 						<form string="Actions">
 							<separator string="Action Information" colspan="4"/>
 							<field name="name" colspan="4"/>
-							<field name="date" select="2"/>
-							<field name="user_id" select="2"/>
-							<field name="som" select="2"/>
+							<field name="date"/>
+							<field name="user_id"/>
+							<field name="som"/>
 							<field name="canal_id"/>
 						</form>
 					</field>
@@ -103,18 +109,18 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="crm_case_tree_view_leads">
-		<field name="name">crm.cases.tree</field>
+		<field name="name">CRM - Leads Tree</field>
 		<field name="model">crm.case</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Leads Tree"  colors="red:state=='open'">
 				<field name="id"/>
-				<field name="name" string="Leads"/>
-				<field name="description" string="Description"/>
-				<field name="email_from"/>
+				<field name="partner_name" string="Name"/>
+				<field name="partner_phone"/>
+				<field name="partner_name2" string="Email"/>
 				<field name="stage_id"  string="Status"/>
 				<field name="categ_id" string="Lead Source"/>
-<!--				<field name="category2_id"/>-->
+				<field name="category2_id" string="Campaign Type"/>
 				<field name="user_id"/>
 				<field name="state"/>
 			</tree>
