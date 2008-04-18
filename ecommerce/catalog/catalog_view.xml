@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+	
+	<!-- Display Product Attribute -->
+	<record model="ir.ui.view" id="product_attribute_name_form_view">
+		<field name="name">products.attribute.name.form</field>
+		<field name="model">products.attribute.name</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Products Attributes">
+				<field name="name" select="1"/>
+				<field name="code" select="1"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="product_attribute_name_tree_view">
+		<field name="name">products.attribute.name.tree</field>
+		<field name="model">products.attribute.name</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Products Attributes">
+				<field name="name"/>
+				<field name="code"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="attribute_name_action_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">products.attribute.name</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="product_attribute_name_tree_view"/>
+	</record>
+	<menuitem name="ecommerce/Catalog/Attributes" id="menu_product_attribute_name_form" action="attribute_name_action_form"/>
+	<!-- Display Product Attribute Value -->
+	<record model="ir.ui.view" id="view_attribute_value_form">
+		<field name="name">products.attribute.value.form</field>
+		<field name="model">products.attribute.value</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Attribute Value">
+				<field name="attribute_id" select="1"/>
+				<field name="name" select="1"/>
+				<!--field name="product_id"/-->
+				<field name="price_extra" select="1"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_attribute_value_tree">
+		<field name="name">products.attribute.value.tree</field>
+		<field name="model">products.attribute.value</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Attribute Value">
+				<field name="attribute_id"/>
+				<field name="name"/>
+			    <field name="price_extra"/>
+			</tree>
+		</field>
+	</record>
+	<!-- Add Product Images,Attribute to product.product -->
+	<record model="ir.ui.view" id="view_product">
+		<field name="name">product.form</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<page string="Properties" position="after">
+				<page string="Extra Info">
+					<field name="product_logo" widget="image"/>
+					<newline/>
+					<separator string="Attributes" colspan="4"/>
+					<field name="attribute_ids" colspan="4" nolabel="1"/>
+					<newline/>
+					
+					
+				</page>
+			</page>
+		</field>
+	</record>
+	
+	
+	<!-- Display Special Products -->
+	<record model="ir.ui.view" id="catalog_specials_view_form">
+			<field name="name">catalog.specials.form</field>
+			<field name="model">product.special</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Specials">
+				   
+				    <field name="offername" select="1"></field>
+				    <field name="shop_id" select="1"/>
+				    <field name="product" select="1" on_change="onchange_product_id(product)"></field>
+				    <field name="list_price"/>
+				    <field name="new_price"/>
+				    <field name="expiry_date"/> 
+				</form>
+				
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="catalog_specials_view_tree">
+		 <field name="name">catalog.specials.tree</field>
+		 <field name="model">product.special</field>
+		 <field name="type">tree</field>
+		 <field name="arch" type="xml">
+			<tree string="Specials">
+                    <field name="offername" select="1"></field>
+                    <field name="shop_id" select="1"/>
+				    <field name="product" select="1"></field>
+				    <field name="list_price"/>
+				    <field name="new_price"/>
+				    <field name="expiry_date"/> 
+			</tree>
+		 </field>
+	    </record>
+	    
+	     <record model="ir.actions.act_window" id="action_catalog_specials_view_form">
+			<field name="res_model">product.special</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="catalog_specials_view_form"/>
+		</record>
+		<menuitem name="ecommerce/Catalog/Special" id="menu_action_catalog_specials_view_form" action="action_catalog_specials_view_form"/>
+		
+		<record model="ir.ui.view" id="ecommerce_reviews_view_form">
+			<field name="name">ecommerce.reviews.form</field>
+			<field name="model">product.reviews</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Product Reviews">
+				   
+				    <field name="product" select="1"></field>
+				    <field name="customer" select="1"></field>
+				    <field name="reviewdate"></field>
+				    <field name="rating"></field>
+				    <field name="review" colspan="4"/>
+				</form>
+				
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="ecommerce_reviews_view_tree">
+		 <field name="name">ecommerce.reviews.tree</field>
+		 <field name="model">product.reviews</field>
+		 <field name="type">tree</field>
+		 <field name="arch" type="xml">
+			<tree string="Reviews Tree">
+                     <field name="product" select="1"></field>
+				    <field name="customer" select="1"></field>
+				    <field name="reviewdate"></field>
+				    <field name="rating"></field>
+				    <field name="review"/>
+                   
+			</tree>
+		 </field>
+	    </record>
+	    
+	     <record model="ir.actions.act_window" id="action_ecommerce_reviews_view_form">
+			<field name="res_model">product.reviews</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="ecommerce_reviews_view_form"/>
+		</record>
+	    <menuitem name="ecommerce/Catalog/Reviews" id="menu_action_ecommerce_reviews_view_form" action="action_ecommerce_reviews_view_form"/>
+		
+	</data>
+</terp>

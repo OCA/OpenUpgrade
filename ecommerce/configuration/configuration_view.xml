@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+	<record model="ir.ui.view" id="view_image_display_form">
+		<field name="name">view.image.display.config.form</field>
+		<field name="model">image.display.config</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="IMMAGE ATTRIBUTE">
+				<separator string="Image Attribute" colspan="4"/>
+				<newline/>
+				<field name="name" select="1"/>
+				<field name="height" select="1"/>
+				<field name="width" select="1"/>
+				<field name="scale"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_image_display_tree">
+		<field name="name">view.image.display.config.tree</field>
+		<field name="model">image.display.config</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Image Attribute">
+				<field name="name"/>
+				<field name="height"/>
+				<field name="width"/>
+				<field name="scale"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_view_image_display_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">image.display.config</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_image_display_form"/>
+	</record>
+	<menuitem name="ecommerce/Configuration/Image Attributes" id="menu_pview_image_display_form" action="action_view_image_display_form"/>
+	<!-- SMTP SERVER -->
+	
+	<record model="ir.ui.view" id="view_smtp_connect_tree">
+		<field name="name">smtp.connect.tree</field>
+		<field name="model">smtp.mail.config</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="SMTP Server Configuration">
+				<field name="name"/>
+				<field name="server_name"/>
+				<field name="port"/>
+				<field name="from_add"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_smtp_connect_form">
+		<field name="name">smtp.connect.form</field>
+		<field name="model">smtp.mail.config</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="SMTP Server Configuration">
+				<separator string="SMTP Server Configuration" colspan="4"/>
+				<newline/>
+				<field name="name" select="1"/>
+				<field name="server_name" select="1"/>
+				<field name="port" select="1"/>
+				<field name="from_add"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_smtp_connect_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">smtp.mail.config</field>
+		<field name="view_type">form</field>
+	</record>
+	<menuitem name="Administration/Configuration/Base/SMTP Servers" action="action_smtp_connect_form" id="menu_smtp_connect_form"/>
+	<menuitem name="ecommerce/Configuration/SMTP Servers" action="action_smtp_connect_form" id="menu_smtp_connect_form2"/>
+	
+	<!-- SHOP CONFIGURATION -->
+	<record model="ir.ui.view" id="view_shop_basic_tree">
+		<field name="name">shop.basic.tree</field>
+		<field name="model">shop.basic</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Basic Store">
+				<field name="name"/>
+				<field name="company_id"/>
+				<field name="partner_id"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_shop_basic_form">
+		<field name="name">Shop Basic Info</field>
+		<field name="model">shop.basic</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="General Information">
+				<notebook>
+					<page string="Basic Information">
+						<separator string="Shop Information" colspan="4"/>
+						<newline/>
+						<field name="name" select="1"/>
+						<field name="company_id" select="1"/>
+						<field name="partner_id" select="1"/>
+			 	  		<field name="currency_id" select="1"/> 
+						<separator string="Region Information" colspan="4" />
+						<newline/>
+						<field name="country_id" select="1"/>
+						<field name="state_id" select="1"/>
+						<separator string="Email Information" colspan="4"/>
+						<newline/>
+						<field name="smtpreply_id"/>
+						<field name="smtpnews_id"/>
+						<separator string="Display Configuration" colspan="4"/>
+						<newline/>
+						<field name="tax_decimal_place"/>
+						<field name="page_link"/>
+						<field name="simages_id"/>
+						<field name="limages_id"/>
+						<separator string="Other Information" colspan="4"/>
+						<newline/>
+						<field name="display_search_keyword"/>
+						<field name="display_cart"/>
+						<field name="display_category_cnt"/>
+						<field name="price_with_tax"/>
+						<field name="tell_to_friend"/>
+						<field name="display_partner_logo"/>
+						<field name="display_product_name_new"/>
+						<field name="display_manufacturer_name_new"/>
+						<field name="display_product_image"/>
+						<field name="display_product_price"/>
+						<field name="display_product_quantity"/>
+						<field name="display_product_weight"/>
+						<field name="display_category_context"/>
+						<field name="display_page_offset"/>
+					</page>
+					<page string="Categories">
+					<seperator string="Category" colspan="4"/>
+					<field name="category" colspan="4" nolabel="1"/>
+					</page>
+					<page string="Products">
+					<seperator string="Products" colspan="4"/>
+					<field name="products" colspan="4" nolabel="1"/>
+					</page>
+					<page string="Special Offers">
+					<seperator string="Special Offers" colspan="4"/>
+					<field name="special" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
+			</form>
+		</field>	
+	</record>
+	<record model="ir.actions.act_window" id="action_shop_basic_form">
+		<field name="name">Shop Basic Info</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">shop.basic</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_shop_basic_form"/>
+	</record>
+	<menuitem name="ecommerce/Configuration/WebShop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
+	<record model="ir.actions.act_window" id="country_action_form1">
+		<field name="name">res.country</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.country</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="ecommerce/Configuration/Countries" id="menu_country_form" action="country_action_form1"/>
+	
+	
+	<record model="ir.actions.act_window" id="action_shop_basic_form">
+		<field name="name">Shop Basic Info</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">shop.basic</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_shop_basic_form"/>
+	</record>
+	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
+	<!-- END SHOP -->
+	
+	<record model="ir.actions.act_window" id="state_action_form1">
+		<field name="name">res.country.state</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.country.state</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="ecommerce/Configuration/States" id="menu_state_form" action="state_action_form1"/>
+		
+		<record model="ir.ui.view" id="view_product_category_list2">
+		<field name="name">product.category.form</field>
+		<field name="model">product.category</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Product Categories">
+				<field name="name"/>
+				<field name="shop_id"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_product_category_new">
+		<field name="name">product.category.form</field>
+		<field name="model">product.category</field>
+		<field name="inherit_id" ref="product.product_category_form_view"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="sequence" position="after">
+				<field name="category_image" widget="image" colspan="4"/>
+				<field name="shop_id"/>
+			</field>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_category_config_form_new">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">product.category</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_product_category_list2"/>
+	</record>
+	<menuitem name="ecommerce/Configuration/Categories" action="action_category_config_form_new" id="menu_action_category_config_form_new"/>
+		
+		
+	 
+	<record model="ir.ui.view" id="sale_order_form">
+		<field name="name">saleorder.form</field>
+		<field name="model">eshop.saleorder</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Sale Order">
+				
+				<notebook>
+				<separator string="Sale Order" colspan="4"/>
+					<page string="Order Line">
+							<field name="name" select="1"/>
+							<field name="date_order" select="1"/>
+							<field name="epartner_shipping_id" select="1"/>
+							<field name="epartner_invoice_id" select="1"/>
+							<field name="partner_id" select="1"/>
+							<field name="partner_shipping_id" select="1"/>
+							<field name="partner_invoice_id" select="1"/>
+							<field name="web_id"/>
+							<field name="web_ref"/>
+							<field name="order_lines" widget="one2many_list" colspan="4" nolabel="1"/>
+							<separator string="States" colspan="4"/>
+							<field name="state"/>
+							<button  name="order_draft" states="cancel" string="Set To Draft"/>
+							<button  name="order_create" states="draft" string="Create Order"/>
+							<button  name="order_cancel" states="draft" string="Cancel Order"/>
+					
+					</page>
+					<page string="Others data">
+						<field name="order_id" colspan="3"/>
+						<field name="note" colspan="3"/>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="sale_order_tree">
+		<field name="name">saleorder.tree</field>
+		<field name="model">eshop.saleorder</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Sale Order">
+				<field name="name"/>
+				<field name="date_order"/>
+				<field name="state"/>
+				
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_sale_order_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">eshop.saleorder</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="sale_order_form"/>
+	</record>
+	<menuitem name="ecommerce/Sale Order/sale order" id="menu_sale_order_form" action="action_sale_order_form"/>  
+	
+	
+	  
+	<record model="ir.ui.view" id="order_line_form">
+		<field name="name">orderline.form</field>
+		<field name="model">eshop.order.line</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Sale Order">
+				<separator string="Sale Order" colspan="4"/>
+				<newline/>
+				<field name="name"/>
+				<field name="order_id"/>
+				<field name="product_qty"/>
+				<field name="product_id"/>
+				<field name="product_uom_id"/>
+				<field name="price_unit"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="order_line_tree">
+		<field name="name">orderline.tree</field>
+		<field name="model">eshop.order.line</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Sale Order">
+				<field name="name"/>
+				<field name="order_id"/>
+				<field name="product_qty"/>
+				<field name="product_id"/>
+				<field name="product_uom_id"/>
+				<field name="price_unit"/>
+			</tree>
+		</field>
+	</record>
+	
+	</data>
+</terp>	
