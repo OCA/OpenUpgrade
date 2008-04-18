@@ -14,10 +14,10 @@ class account_move_line(osv.osv):
     _description = "account.move.line"
 
     def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=80):
-        if not args:
-            args=[]
-        if not context:
-            context={}
+#        if not args:
+#            args=[]
+#        if not context:
+#            context={}
         # will check if the partner exists in statement lines if not then display all partner's account.move.line
         if not context['partner_id']:
             args.pop(0)
@@ -28,7 +28,8 @@ class account_move_line(osv.osv):
         else:
             if not context['account_id']:
                 args.pop(2)
-
+            else:
+                return super(account_move_line,self).name_search(cr, user, name, args, operator, context, limit)
         args=args[:]
         if name:
             args += [(self._rec_name,operator,name)]
