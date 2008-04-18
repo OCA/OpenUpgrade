@@ -30,6 +30,6 @@
                     "crm_opportunity_demo.xml",
                     "crm_report_view.xml"
                     ],
-    "active": True,
+    "active": False,
     "installable": True
 }
