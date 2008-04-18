@@ -15,6 +15,10 @@ class crm_livechat_jabber(osv.osv):
 crm_livechat_jabber()
 
 
+#
+# When a visitor wants to talk, he has to call start_session
+# Then close_session when it's finnished
+#
 class crm_livechat_livechat(osv.osv):
 	_name="crm_livechat.livechat"
 	_description= "LiveChat Account"
@@ -22,6 +26,7 @@ class crm_livechat_livechat(osv.osv):
 		'name': fields.char("Livechat Account", size=128, required=True),
 		'state': fields.selection([('active','Active'),('notactive','Not Active')], "State"),
 		'max_per_user': fields.integer('Maximum Customer per User'),
+		'session_delay': fields.integer('Minutes to Close a session', help="Put here to number of minutes after which a session is considered as closed"),
 		'user_ids': fields.one2many('crm_livechat.livechat.user', 'livechat_id', 'Users Accounts'),
 		'partner_ids': fields.one2many('crm_livechat.livechat.partner', 'livechat_id', 'Visitors Accounts'),
 	}
