@@ -184,8 +184,8 @@
 					<field name="date_limit" select="2"/>
 					<field name="date_submission" select="2"/>
 					<newline/>
-					<group col="8" colspan="4">
-						<field name="state" select="1"/>
+					<field name="state" select="1"/>
+					<group col="8" colspan="2">
 						<button string="Confirm" name="button_confirm" states="block"/>
 						<button string="Block" name="button_block" states="draft"/>
 						<button string="Cancel" name="button_cancel" states="block" />
@@ -264,29 +264,27 @@
 			<form string="Registration">
 				<notebook>
 				<page string="General">
-					<group col="8" colspan="4">
-						<field name="name" select="1" colspan="4"/>
-						<newline/>
-						<field name="event_id" colspan="2" on_change="onchange_event(event_id, partner_invoice_id)"/>
-						<field name="nb_register"/>
-						<newline/>
-						<field name="date" select="1"/>
-						<field name="priority" colspan="2"/>
-						<newline/>
-						<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" colspan="2"/>
-						<field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
-						<newline/>
+					<field name="name" select="1" colspan="4"/>
+					<newline/>
+					<field name="event_id" colspan="2" on_change="onchange_event(event_id, partner_invoice_id)"/>
+					<field name="nb_register"/>
+					<newline/>
+					<field name="date" select="1"/>
+					<field name="priority"/>
+					<newline/>
+					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" colspan="2"/>
+					<field name="partner_invoice_id" on_change="onchange_partner_invoice_id(event_id, partner_invoice_id)"/>
+					<newline/>
 
-						<field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="2"/>
-						<newline/>
-						<field name="email_from" select="2" colspan="2"/>
-						<button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
-						<newline/>
-						<field name="user_id" select="1" colspan="2"/>
-						<button name="remind_user" string="Send Reminder" states="open,pending" type="object"/>
-					</group>
+					<field name="partner_address_id" select="2" on_change="onchange_contact_id(partner_address_id)" colspan="2"/>
+					<newline/>
+					<field name="email_from" select="2" colspan="2"/>
+					<button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
+					<newline/>
+					<field name="user_id" select="1" colspan="2"/>
+					<button name="remind_user" string="Send Reminder" states="open,pending" type="object"/>
 
-					<separator colspan="4"/>
+					<separator colspan="6"/>
 					<field name="unit_price" select="2"/>
 
 					<separator string="Badge" colspan="4"/>
