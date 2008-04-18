@@ -34,7 +34,7 @@ class wizard_vat_declaration(wizard.interface):
                 if item['code'] == '71-72':
                     item['code']='71'
                 if item['code'] in list_of_tags:
-                    data_of_file +='\n\t\t<D'+str(item['code']) +'>' + str(item['sum_period'])+  '</D'+str(item['code']) +'>'
+                    data_of_file +='\n\t\t<D'+str(int(item['code'])) +'>' + str(int(item['sum_period']*100)) +  '</D'+str(int(item['code'])) +'>'
 
         data_of_file +='\n\t</DATA_ELEM>\n</DATA>'
         data['form']['msg']='Save the File with '".xml"' extension.'
