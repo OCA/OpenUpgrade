@@ -57,6 +57,9 @@ class wizard_vat(wizard.interface):
             cr.execute('select a.type,sum(debit)-sum(credit) from account_move_line l left join account_account a on (l.account_id=a.id) where a.type in ('"'income'"','"'tax'"') and l.partner_id=%d and l.date between %s group by a.type'%(p_id,period))
             line_info=cr.fetchall()
 
+            if not line_info:
+                continue
+
             if len(line_info)==1:
                 if line_info[0][0]=='income':
                        record.append(0.00)
