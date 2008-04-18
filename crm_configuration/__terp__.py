@@ -18,7 +18,9 @@
                   ],
     "demo_xml" : [
                     "crm_bugs_data.xml",
-                    "crm_jobs_data.xml"
+                    "crm_jobs_data.xml",
+                    "crm_meeting_data.xml",
+                    "crm_lead_data.xml"
                   ],
     "update_xml" : [
                     "crm_bugs_demo.xml",
@@ -28,6 +30,6 @@
                     "crm_opportunity_demo.xml",
                     "crm_report_view.xml"
                     ],
-    "active": False,
+    "active": True,
     "installable": True
 }
