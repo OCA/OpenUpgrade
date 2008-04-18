@@ -26,10 +26,18 @@ When a visitor wants to talk, the system:
 * calls the server to get:
 ** an available user jabber account
 ** an available visitor jabber account
+** a session ID
 
 He gets ID's of jabber accounts. He can call get_configuration on a session to 
 get information about jabber accounts corresponding to these id's.
 
+When the visitors stop the communication, he has to close the session using the session_id.
+
+Status
+------
+
+The tiny erp module is nearly finnished. (written but untested)
+The web application has not started yet.
 
 Example
 -------
