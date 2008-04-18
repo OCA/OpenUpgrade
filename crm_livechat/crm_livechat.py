@@ -17,6 +17,7 @@ crm_livechat_jabber()
 
 #
 # When a visitor wants to talk, he has to call start_session
+# To know is there is a user available, you can call get_user
 # Then close_session when it's finnished
 #
 class crm_livechat_livechat(osv.osv):
@@ -41,6 +42,8 @@ class crm_livechat_livechat(osv.osv):
 
 	#
 	# return { jabber_id, {jabber_connection_data} }
+	# This is used by the web application to get information about jabber accounts
+	# The web application put this in his session to now download it at each time
 	#
 	def get_configuration(self, cr, uid, ids, context={}):
 		result = {}
@@ -122,14 +125,17 @@ class crm_livechat_livechat(osv.osv):
 
 crm_livechat_livechat()
 
+#
+# The available jabber accounts for the visitors of the website
+#
 class crm_livechat_livechat_partner(osv.osv):
 	_name="crm_livechat.livechat.partner"
-	_description= "LiveChat Partners"
+	_description= "LiveChat Visitors"
 	_columns={
 		'name': fields.char("Account Name", size=128, required=True),
 		'jabber_id': fields.many2one('crm_livechat.jabber', "Jabber Account", required=True),
 		'livechat_id': fields.many2one("crm_livechat.livechat", "Livechat", required=True),
-		'available': fields.char('Available IP', size=64),
+		'available': fields.char('Available IP', size=64, help="If empty, the acount is available/not used"),
 		'available_date': fields.datetime('Available Date'),
 		'state': fields.selection([('active','Active'),('notactive','Not Active')], "State", required=True),
 	}
