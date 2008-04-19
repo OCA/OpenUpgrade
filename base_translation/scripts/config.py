@@ -29,6 +29,11 @@ list_lang={
 	'ro_RO': [],
 	'ru_RU': [],
 	'sv_SE': [],
+	'fr_BE': ['admin','dhara'],
+	'fr_XX': ['admin','dhara'],
+}
+dependent_language = {
+	'fr_FR' : ['fr_BE','fr_XX']
 }
 
 
