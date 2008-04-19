@@ -45,7 +45,7 @@
 			<field name="partner_address_id" ref="base.res_partner_address_zen"/>
 			<field eval="1" name="active"/>
 			<field name="category2_id" ref="crm_configuration.category_meet3"/>
-			<field eval="0.3" name="duration"/>
+			<field eval="3.0" name="duration"/>
 			<field name="partner_id" ref="base.res_partner_3"/>
 			<field eval="&quot;1&quot;" name="priority"/>
 			<field name="user_id" ref="base.user_admin"/>
@@ -107,6 +107,7 @@
 			<field name="categ_id" ref="crm_configuration.categ_meet2"/>
 			<field name="stage_id" ref="crm_configuration.stage_meet1"/>
 			<field eval="&quot;Update the data&quot;" name="name"/>
+			<field eval="3.3" name="duration"/>
 			<field eval="time.strftime('%Y-%m-28')" name="date_deadline"/>
 		</record>
 	</data>
