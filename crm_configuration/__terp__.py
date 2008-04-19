@@ -20,7 +20,8 @@
                     "crm_bugs_data.xml",
                     "crm_jobs_data.xml",
                     "crm_meeting_data.xml",
-                    "crm_lead_data.xml"
+                    "crm_lead_data.xml",
+                    "crm_opportunity_data.xml"
                   ],
     "update_xml" : [
                     "crm_bugs_demo.xml",
