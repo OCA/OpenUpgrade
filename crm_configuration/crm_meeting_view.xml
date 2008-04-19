@@ -16,8 +16,8 @@
 					<field name="name" select="1" string="Title"/>
 					<field name="section_id"/>
 					<newline/>
-					<field name="date"/>
-					<field name="date_deadline" select="2"/>
+					<field name="date" string="Next Meeting"/>
+					<field name="duration" colspan="1" string="Meeting Duration"/>
 					<newline/>
 					<field name="partner_id" on_change="onchange_partner_id(partner_id, email_from)" />
 					<field name="partner_address_id" on_change="onchange_partner_address_id(partner_address_id, email_from)"/>
@@ -51,7 +51,7 @@
 						<field name="active" select="2"/>
 						<newline/>
 						<field name="email_cc" colspan="1"/>
-						<field name="duration" colspan="1" string="Duration (Hours)"/>
+						<field name="date_deadline" select="2" string="Deadlines"/>
 						<newline/>
 						<separator colspan="4" string="Dates"/>
 						<field name="create_date"/>
@@ -117,12 +117,12 @@
 			<tree string="Meetings Tree"  colors="red:state=='open'">
 				<field name="id"/>
 				<field name="name" string="Title"/>
-				<field name="note" string="Description"/>
-				<field name="date_deadline"/>
+				<field name="date" string="Next Meeting"/>
+				<field name="section_id"/>
 				<field name="priority"/>
 				<field name="stage_id"/>
 				<field name="categ_id"/>
-				<field name="category2_id" string="Location"/>
+				<field name="category2_id" string="Type"/>
 				<field name="user_id"/>
 				<field name="state"/>
 			</tree>
@@ -134,7 +134,7 @@
 		<field name="type">calendar</field>
 		<field name="priority" eval="2"/>
 		<field name="arch" type="xml">
-			<calendar string="Meetings" date_start="date_deadline" color="user_id" delay="duration">
+			<calendar string="Meetings" date_start="date" color="user_id" delay="duration">
 				<field name="name"/>
 				<field name="partner_id"/>
 			</calendar>
