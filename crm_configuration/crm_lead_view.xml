@@ -30,8 +30,8 @@
 					<field name="partner_address_id" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)"/>
 					<field name="stage_id" string="Status" select="1"/>
 					<field name="email_from"/>
-					<field name="category2_id" string="Campaign Type" select="1"/>
 					<field name="priority" string="Priority"/>
+					<field name="category2_id" string="Campaign Type" select="1"/>
 					<newline/>
 					<separator colspan="4" string="Description Information"/>
 						<field name="note" nolabel="1" colspan="4"/>
