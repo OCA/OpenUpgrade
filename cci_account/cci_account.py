@@ -7,33 +7,23 @@ class cci_account_message(osv.osv):
     _columns = {
         'name' : fields.char('Special Message',size=125,required=True,help='This notification will appear at the bottom of the Invoices when printed.')
     }
+
 cci_account_message()
 
 class account_move_line(osv.osv):
+
+    def search(self, cr, user, args, offset=0, limit=None, order=None,
+            context=None, count=False):
+        # will check if the partner/account exists in statement lines if not then display all partner's account.move.line
+        list_value=map(lambda x:x==['partner_id', '=', False] or x==['account_id', '=', False],args)
+        for i in range(0,list_value.count(True)):
+            list_value=map(lambda x:x==['partner_id', '=', False] or x==['account_id', '=', False],args)
+            args.pop(list_value.index(True))
+            list_value[list_value.index(True)]=False
+        return super(account_move_line,self).search(cr, user, args, offset, limit, order,
+            context, count)
+
     _inherit = "account.move.line"
     _description = "account.move.line"
-
-    def name_search(self, cr, user, name='', args=None, operator='ilike', context=None, limit=80):
-#        if not args:
-#            args=[]
-#        if not context:
-#            context={}
-        # will check if the partner exists in statement lines if not then display all partner's account.move.line
-        if not context['partner_id']:
-            args.pop(0)
-            if not context['account_id']:
-                args=[]
-                args.append(['reconcile_id', '=', False])
-                args.append(['state', '=', 'valid'])
-        else:
-            if not context['account_id']:
-                args.pop(2)
-            else:
-                return super(account_move_line,self).name_search(cr, user, name, args, operator, context, limit)
-        args=args[:]
-        if name:
-            args += [(self._rec_name,operator,name)]
-        ids = self.search(cr, user, args, limit=limit, context=context)
-        return self.name_get(cr, user, ids, context)
 
 account_move_line()
