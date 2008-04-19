@@ -33,7 +33,7 @@
 					
 					<separator colspan="4"/>
 					<field name="history_line" colspan="2" nolabel="1" mode="tree,form">
-						<form string="Communication history">
+						<form string="Resolution history">
 							<group col="6" colspan="4">
 								<field name="date"/>
 								<field name="email" />
@@ -42,15 +42,15 @@
 							<newline/>
 							<field name="description" colspan="4" nolabel="1" />
 						</form>
-						<tree string="Communication history">
+						<tree string="Resolution history">
 							<field name="description"/>
 							<field name="email"/>
 							<field name="date"/>
 						</tree>
 					</field>
 					<group col="2" colspan="2" expand="1">
-						<field name="canal_id"/>
-						<field name="som" />
+						<field name="date" string="Next Meeting"/>
+						<field name="duration" string="Meeting Duration"/>
 						<button name="add_reply" string="Add Last Mail for Replying"
 							states="open" type="object" colspan="2"/>
 						<field name="description" colspan="2" nolabel="1"/>
@@ -64,7 +64,6 @@
 					<separator colspan="4"/>
 					<group col="8" colspan="4">
 						<field name="state" /> 
-<!--						<button name="case_unreviewed" string="Unreviewed" type="object"/>-->
 					 	<button name="case_close" string="Done" states="open,draft,pending" type="object"/>
 						<button name="case_open" string="Open" states="draft,pending" type="object"/>
 						<button name="case_cancel" string="Refuse Bug" states="draft,open,pending" type="object"/>
@@ -80,8 +79,7 @@
 				<page string="Extra Info">
 					<field name="id" />
 					<field name="active" />
-					<field name="email_cc"/>
-					<field name="duration"/>
+					<field name="email_cc" colspan="4"/>
 					<separator colspan="4" string="Dates"/>
 					<field name="create_date"/>
 					<field name="date_closed"/>
