@@ -8,6 +8,7 @@ import netsvc
 import base_translation.translation 
 
 import config
+
 s = xmlrpclib.Server("http://"+config.SERVER+":"+str(config.PORT))
 
 view_form_end = """<?xml version="1.0"?>
@@ -18,6 +19,15 @@ view_form_end = """<?xml version="1.0"?>
         <label align="0.0" string="Csv file for the selected language has been successfully installed in i18n" colspan="4"/>
     </group>
 </form>"""
+
+warning_message = """<?xml version="1.0"?> 
+    <form string="!!! Warning"> 
+        <image name="gtk-dialog-info" colspan="2"/> 
+        <group colspan="2" col="4"> 
+            <separator string="%s" colspan="4"/> 
+            <label align="0.0" string="%s" colspan="4"/> 
+        </group> 
+    </form>"""
 
 view_form = """<?xml version="1.0"?>
 <form string="Language Selection">
@@ -47,7 +57,6 @@ view_file_form = """<?xml version="1.0"?>
 class wizard_download_file_for_publish(wizard.interface):
     def _lang_install(self, cr, uid, data, context):
         fname = data['form']['contrib']
-        ir_translation = pooler.get_pool(cr.dbname).get('ir.translation')
         ir_translation_contrib = pooler.get_pool(cr.dbname).get('ir.translation.contribution')        
         try :
             contrib = s.get_contrib(self.user,self.password,self.lang,self.version,self.profile,fname)
@@ -82,7 +91,7 @@ class wizard_download_file_for_publish(wizard.interface):
                 raise wizard.except_wizard('Error !',"server is not properly configuraed")
         return {}
     
-    def _set_param(self, cr, uid, data, context):
+    def lang_checking(self,cr,uid,data,context):
         self.password =data['form']['password']
         self.lang =data['form']['lang']
         self.user = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
@@ -90,16 +99,27 @@ class wizard_download_file_for_publish(wizard.interface):
             raise wizard.except_wizard('Error !!', 'Bad User name or Passsword or you are not authorised for this language')
         self.version = data['form']['version']
         self.profile = data['form']['profile']        
-        return {}
- 
-#        return [('test','test')]    
+        cr.execute('select distinct(lang) from ir_translation_contribution')
+        lang = cr.fetchall()
+        if filter(lambda x : self.lang==x[0],lang):
+            return 'same_lang_loaded'
+        else:
+            return 'version_check'
+        
+    def _checking(self,cr,uid,data,context):
+        file_list = s.get_contrib_revision(self.user,self.password,self.lang,self.version,self.profile)
+        if file_list:
+            lang_dict = tools.get_languages()
+            self.file_list = [(lang[0], lang_dict.get(lang[1], lang[1])+' by '+lang[2]+' at R '+lang[3]) for lang in file_list]    
+            return 'file_selection'
+        return 'version_not_found'
 
     def _get_language(sel, cr, uid, context):
         return base_translation.translation.get_language(cr,uid,context,user='maintainer')
     
     def _get_version(self, cr, uid,context):
-        return base_translation.translation.get_version(cr,uid,context)
-    
+        return base_translation.translation.get_version(cr,uid,context) 
+              
     def _get_profile(self,cr,uid,context):
         return base_translation.translation.get_profile(cr,uid,context)
     
@@ -111,11 +131,7 @@ class wizard_download_file_for_publish(wizard.interface):
     }
     
     def _get_contrib(self,cr, uid,context):
-        file_list = s.get_contrib_revision(self.user,self.password,self.lang,self.version,self.profile)
-        if not file_list:
-            raise wizard.except_wizard('Info !!', 'No Contribution Found')
-        lang_dict = tools.get_languages()
-        return [(lang[0], lang_dict.get(lang[1], lang[1])+' by '+lang[2]+' at R '+lang[3]) for lang in file_list]    
+        return self.file_list    
     
     fields_file_form = {
         'contrib': {'string':'Contribution', 'type':'selection', 'selection':_get_contrib,'required':True},
@@ -126,12 +142,48 @@ class wizard_download_file_for_publish(wizard.interface):
             'result': {'type': 'form', 'arch': view_form, 'fields': fields_form,
                 'state': [
                     ('end', 'Cancel', 'gtk-cancel'),
-                    ('file_selection', 'Select Contribution Version', 'gtk-ok', True)
-                ]
-            }
-        },
+                    ('language_check', 'Select Version', 'gtk-ok', True)
+                    ]
+                    }
+                },
+            'language_check': {
+                'actions': [],
+                'result' : {'type': 'choice', 'next_state': lang_checking }
+                } , 
+                
+            'version_check': {
+                'actions': [],
+                'result' : {'type': 'choice', 'next_state': _checking }
+                } , 
+
+            'same_lang_loaded' : {
+                'actions':[],
+                'result' :{'type':'form',
+                        'arch':warning_message % 
+                                  ('One Version is loaded',
+                                   "One version of this language is already loaded ,If you will load other than that it may create problem."),
+                        'fields':{},
+                        'state':[
+                                 ('end','Cancel','gtk-cancel'),
+                                 ('version_check','Continue....', 'gtk-ok', True)
+                                 ]
+                        }
+                },
+            'version_not_found' : {
+                'actions':[],
+                'result' :{'type':'form',
+                       'arch':warning_message % 
+                           ('Revision Not Found',
+                            "Revision for the selected language is not found either in version or in profile ")
+                      ,'fields':{},
+                      'state':[
+                             ('end','Cancel','gtk-cancel'),
+                             ('init','Select Again', 'gtk-ok', True)
+                             ]
+                    }
+            },            
         'file_selection': {
-            'actions': [_set_param], 
+            'actions': [], 
             'result': {'type': 'form', 'arch': view_file_form, 'fields': fields_file_form,
                 'state': [
                     ('end', 'Cancel', 'gtk-cancel'),
