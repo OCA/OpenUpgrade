@@ -35,7 +35,10 @@ class wizard_review_proposed_contributions(wizard.interface):
         new_res =map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},res)
         filename = tools.config["root_path"] + "/i18n/" + lang + ".csv"
         reader = csv.DictReader(open(filename,'r'),delimiter=',')
-        new_reader = map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src']},reader)
+        new_reader = map(lambda x:{'type':x['type'],'name':x['name'],'value':x['value'],'src':x['src'].replace('\n','')},reader)
+        diff = filter(lambda x : x not in new_reader,new_res)
+        fp = open("/home/tiny/Desktop/test.txt",'w').write(str(new_reader))
+#        diff = filter(lambda x:x not in new_res,new_reader)    
         diff = []
         for l in new_res:
             if l in new_reader:
@@ -45,7 +48,7 @@ class wizard_review_proposed_contributions(wizard.interface):
             vals = {}
             ids = ir_translation.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src']),('lang','=',lang)])
             res_id = ir_translation.read(cr,uid,ids,['res_id','lang'])[0]
-            ids = ir_translation_contrib.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src']),('lang','=',lang)])
+            ids = ir_translation_contrib.search(cr,uid,[('type','=',d['type']),('name','=',d['name']),('src','=',d['src']),('lang','=',lang)])            
             if ids:
                 ir_translation_contrib.write(cr,uid,ids,{'value':d['value'],'src':d['src']})
             if not ids:

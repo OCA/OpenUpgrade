@@ -6,11 +6,9 @@ import csv
 import re
 import random
 import base_translation.translation
+import config
 
-#import config
-#s = xmlrpclib.Server("http://"+config.SERVER+":"+str(config.PORT))
-
-s = xmlrpclib.Server("http://192.168.0.4:8000")
+s = xmlrpclib.Server("http://"+config.SERVER+":"+str(config.PORT))
 
 view_form_end = """<?xml version="1.0"?>
     <form string="Information For Contribution">
@@ -38,36 +36,41 @@ view_form = """<?xml version="1.0"?>
 
 
 class wizard_upload_contrib(wizard.interface):
+    
+    def email_check(self,email):
+        pattern = '^([a-zA-Z])[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$'
+        reg = re.compile(pattern)
+        return reg.search(email)
+        
     def _upload_contrib(self, cr, uid, data, context):
         lang = data['form']['lang']
         email_id =data['form']['email_id']
         version = data['form']['version']
         profile = data['form']['profile']
-        pattern = '^([a-zA-Z])[a-zA-Z0-9_\.]+@[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$'
-        reg = re.compile(pattern)
-        reg.search(email_id)
-        if not reg.search(email_id):
+        if not self.email_check(email_id):
             raise wizard.except_wizard('Error !', 'Your Email Id is not well-formed')
         ir_translation_contrib = pooler.get_pool(cr.dbname).get('ir.translation.contribution')
         sql = "select id from ir_translation_contribution where lang='%s' and state='propose' and upload=False"%lang
         cr.execute(sql)
         ids = map(lambda x:x[0],cr.fetchall())
-        print ids
-        if ids:
-            contrib =ir_translation_contrib.read(cr,uid,ids)
-            title = ['type','name','res_id','src','value']
-            content = map(lambda x:[x['type'],x['name'],x['res_id'],x['src'].decode('utf8').encode('utf8'),x['value'].decode('utf8').encode('utf8')],contrib)
-            email_id = email_id.replace('@','_AT_')
-            email_id = email_id.replace('.','_DOT_')
-            filename = lang+'-'+email_id+'-'+str(random.randint(0,100))+'.csv'
-            content.insert(0,title)
-            try :
-                s.publish_contrib(lang,version,profile,filename,content)
-            except Exception,e:
-                print e
-                raise wizard.except_wizard('Error !',"server is not properly configuraed")
-            sql = "UPDATE ir_translation_contribution SET upload=True where id in %s"%str(tuple(ids))
-            cr.execute(sql)
+        if not ids:
+            raise wizard.except_wizard('Error !', 'There are no contributions to upload in repository')
+        contrib =ir_translation_contrib.read(cr,uid,ids)
+        content = map(lambda x:{'type':x['type'],'name':x['name'],'res_id':x['res_id'],'src':x['src'].decode('utf8').encode('utf8'),'value':x['value'].decode('utf8').encode('utf8')},contrib)
+        email_id = email_id.replace('@','_AT_')
+        email_id = email_id.replace('.','_DOT_')
+        filename = lang+'-'+email_id+'-'#+str(random.randint(0,100))+'.csv'
+        try :
+            s.publish_contrib(lang,version,profile,filename,content)
+        except Exception,e:
+            print e
+            raise wizard.except_wizard('Error !',"server is not properly configuraed")
+        if len(ids)>1:
+            ids = str(tuple(ids))
+        else :
+            ids = "("+str(ids[0])+")"
+        sql = "UPDATE ir_translation_contribution SET upload=True where id in %s"%ids
+        cr.execute(sql)
         ids = ir_translation_contrib.search(cr,uid,[('lang','=',lang)])
         contrib =ir_translation_contrib.read(cr,uid,ids)
         return {'total':len(ids),'draft':len(filter(lambda x:x['state'] =='draft',contrib)),'propose':len(filter(lambda x:x['state'] =='propose',contrib))}

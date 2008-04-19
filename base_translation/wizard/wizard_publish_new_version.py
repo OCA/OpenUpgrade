@@ -32,66 +32,35 @@ view_form = """<?xml version="1.0"?>
     </group>
 </form>"""
 
-view_file_form = """<?xml version="1.0"?>
-<form string="Contribution Selection">
-    <image name="gtk-dialog-info" colspan="2"/>
-    <group colspan="2" col="4">
-    <separator string="Contribution List" colspan="4"/>
-        <label align="0.0" string="Choose a Contribution to install:" colspan="4"/>
-        <field name="file" colspan="4"/>
-        <label align="0.0" string="Note that this operation may take a few minutes." colspan="4"/>
-    </group>
-</form>"""
-
 class wizard_publish_new_version(wizard.interface):
     def _lang_install(self, cr, uid, data, context):
-        file_re= data['form']['file']
-        print self.lang,self.user,self.password
-        ir_translation = pooler.get_pool(cr.dbname).get('ir.translation')
+        password =data['form']['password']
+        lang =data['form']['lang']
+        user = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
+        if not s.verify_user(user,password,lang):
+            raise wizard.except_wizard('Error !!', 'Bad User name or Passsword or you are not authorised for this language')
+        version = data['form']['version']
+        profile = data['form']['profile']         
         ir_translation_contrib = pooler.get_pool(cr.dbname).get('ir.translation.contribution')        
-        try :
-            fname = self.lang+'-'+file_re+'.csv'
-            content = s.get_contrib(self.user,self.password,self.lang,self.version,self.profile,fname,True)
-            if not content :
-                raise wizard.except_wizard('Error !!', 'Bad User name or Passsword or you are not authorised for this language')
-            new_content = map(lambda x:x,content)
-            ids = ir_translation_contrib.search(cr,uid,[('lang','=',self.lang),('state','=','accept')])
-            if ids:
-                contrib = ir_translation_contrib.read(cr,uid,ids)
-                new_contrib =map(lambda x:{'type':x['type'],'name':x['name'],'res_id':x['res_id'],'src':x['src'],'value':x['value']},contrib)
+        ids = ir_translation_contrib.search(cr,uid,[('lang','=',lang),('state','=','accept')])
+        if not ids:
+            raise wizard.except_wizard('Error !!', 'No contributions are find to upload in main revision')
+        contrib = ir_translation_contrib.read(cr,uid,ids,['type','name','res_id','src','value'])
+        new_contrib =map(lambda x:{'type':x['type'],'name':x['name'],'res_id':x['res_id'],'src':x['src'],'value':x['value']},contrib)
                 
-#It is assumed that except value nothing is changed
-
-            for c in new_contrib :
-                for n in new_content:
-                    if c['type']==n['type'] and c['src']==n['src'] and c['name']==n['name']:
-                        n['value']=c['value']
-            result = s.publish_release(self.user,self.password,self.lang,self.version,self.profile,fname,new_content)
-            if not result: 
-                raise wizard.except_wizard('Error !!', 'Bad User name or Passsword or you are not authorised for this language')
-            ir_translation_contrib.write(cr,uid,ids,{'state':'done'})
+        try :
+            result = s.publish_release(user,password,lang,version,profile,new_contrib)
+     #still working to show correct error message when server is not responding properly
             
-         #still working to show correct error message when server is not responding properly
-         
         except Exception,e:
             if e.__dict__.has_key('name'):
                 raise wizard.except_wizard('Error !',e.value)
             else:
                 print e
                 raise wizard.except_wizard('Error !',"server is not properly configuraed")
+            ir_translation_contrib.write(cr,uid,ids,{'state':'done'})
         return {}
     
-    def _set_param(self, cr, uid, data, context):
-        self.password =data['form']['password']
-        self.lang =data['form']['lang']
-        self.user = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
-        if not s.verify_user(self.user,self.password,self.lang):
-            raise wizard.except_wizard('Error !!', 'Bad User name or Passsword or you are not authorised for this language')
-        self.version = data['form']['version']
-        self.profile = data['form']['profile']        
-        return {}
- 
-#        return [('test','test')]    
 
     def _get_language(sel, cr, uid, context):
         return base_translation.translation.get_language(cr,uid,context,user='maintainer')
@@ -106,39 +75,19 @@ class wizard_publish_new_version(wizard.interface):
         'lang': {'string':'Language', 'type':'selection', 'selection':_get_language,'required':True},
         'password': {'string':'Password', 'type':'char', 'size':32, 'required':True,'invisible':True},
         'version': {'string':'Version', 'type':'selection', 'selection':_get_version,'required':True},        
-        'profile': {'string':'Profile', 'type':'selection', 'selection':_get_profile,'required':True},         
+        'profile': {'string':'Profile', 'type':'selection', 'selection':_get_profile,'required':True},  
     }
     
-    def _get_file(self,cr, uid,context):
-        if not s.verify_user(self.user,self.password,self.lang):
-            raise wizard.except_wizard('Error !!', 'Bad User name or Passsword or you are not authorised for this language')
-        file_list = s.get_publish_revision(self.lang,self.version,self.profile)
-        if not file_list:
-            raise wizard.except_wizard('Info !!', 'No File Found')
-        return file_list    
-    
-    fields_file_form = {
-        'file': {'string':'Contribution', 'type':'selection', 'selection':_get_file,'required':True},
-    }
     states = {
         'init': {
             'actions': [], 
             'result': {'type': 'form', 'arch': view_form, 'fields': fields_form,
                 'state': [
                     ('end', 'Cancel', 'gtk-cancel'),
-                    ('file_selection', 'Select Version', 'gtk-ok', True)
-                ]
-            }
-        },
-        'file_selection': {
-            'actions': [_set_param], 
-            'result': {'type': 'form', 'arch': view_file_form, 'fields': fields_file_form,
-                'state': [
-                    ('end', 'Cancel', 'gtk-cancel'),
                     ('start', 'Download File', 'gtk-ok', True)
                 ]
             }
-        },        
+        },
         'start': {
             'actions': [_lang_install],
             'result': {'type': 'form', 'arch': view_form_end, 'fields': {},
