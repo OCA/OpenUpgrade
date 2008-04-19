@@ -83,6 +83,33 @@
 	<menuitem name="CRM &amp; SRM/Opportunities" id="menu_crm_case_opp"/>
 
 <!--		MENU		-->
+	<record model="ir.actions.act_window" id="crm_case_category_act_oppor11">
+		<field name="name">All Opportunities</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_mode">calendar,tree,form</field>
+		<field name="view_id" ref="crm_case_tree_view_oppor"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_oppor11">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor11"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_oppor11">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor11"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor11">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm_case_form_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor11"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Opportunities/All Opportunities" id="menu_crm_case_categ0_act_oppor11" action="crm_case_category_act_oppor11"/>
+
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor">
 		<field name="name">Opportunity</field>
 		<field name="res_model">crm.case</field>
@@ -91,24 +118,24 @@
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_oppor">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="crm_case_tree_view_oppor"/>
-		<field name="act_window_id" ref="crm_case_category_act_oppor"/>
-	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_oppor">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor"/>
+	</record>
 	<menuitem name="CRM &amp; SRM/Opportunities/All Opportunities/New Opportunity" id="menu_crm_case_categ0_act_oppor" action="crm_case_category_act_oppor"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor1">
-		<field name="name">Opportunity</field>
+		<field name="name">Open Opportunities</field>
 		<field name="res_model">crm.case</field>
-		<field name="view_type">form</field>
+		<field name="view_mode">tree,calendar,form</field>
 		<field name="view_id" ref="crm_case_tree_view_oppor"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+'),(\'state\',\'=\',\'open\')]'"/>
 	</record>
@@ -118,18 +145,51 @@
 		<field name="view_id" ref="crm_case_tree_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor1"/>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor1">
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_oppor1">
 		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor1"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor1">
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor1"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Opportunities/All Opportunities/Open Opportunities" id="menu_crm_case_categ0_act_oppor1" action="crm_case_category_act_oppor1"/>
 
-	<record model="ir.actions.act_window" id="crm_case_category_act_oppor2">
-		<field name="name">Opportunity</field>
+	<record model="ir.actions.act_window" id="crm_case_category_act_oppor22">
+		<field name="name">My Opportunities</field>
 		<field name="res_model">crm.case</field>
-		<field name="view_type">form</field>
+		<field name="view_mode">calendar,tree,form</field>
+		<field name="view_id" ref="crm_case_calendar_view_oppor"/>
+		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+'),(\'user_id\',\'=\',uid)]'"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_oppor22">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor22"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_tree_view_oppor22">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="crm_case_tree_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor22"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor22">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="crm_case_form_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor22"/>
+	</record>
+	<menuitem name="CRM &amp; SRM/Opportunities/My Opportunities" id="menu_crm_case_categ0_act_oppor22" action="crm_case_category_act_oppor22"/>
+
+	<record model="ir.actions.act_window" id="crm_case_category_act_oppor2">
+		<field name="name">Open Opportunities</field>
+		<field name="res_model">crm.case</field>
+		<field name="view_mode">tree,calendar,form</field>
 		<field name="view_id" ref="crm_case_tree_view_oppor"/>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+'),(\'state\',\'=\',\'open\'),(\'user_id\',\'=\',uid)]'"/>
 	</record>
@@ -139,8 +199,14 @@
 		<field name="view_id" ref="crm_case_tree_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor2"/>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor2">
+	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_oppor2">
 		<field name="sequence" eval="2"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="crm_case_calendar_view_oppor"/>
+		<field name="act_window_id" ref="crm_case_category_act_oppor2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_oppor2">
+		<field name="sequence" eval="3"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor2"/>
@@ -151,7 +217,7 @@
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_user">
 		<field name="res_model">report.crm.case.user</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,graph</field>
+		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and User" action="action_report_crm_case_oppor_user" id="menu_action_report_crm_case_oppor_user"/>
@@ -159,7 +225,7 @@
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_categ">
 		<field name="res_model">report.crm.case.section.categ2</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,graph</field>
+		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and Category2" action="action_report_crm_case_oppor_categ" id="menu_action_report_crm_case_oppor_categ"/>
@@ -167,7 +233,7 @@
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_stage">
 		<field name="res_model">report.crm.case.section.stage</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,graph</field>
+		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
 	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and Stage" action="action_report_crm_case_oppor_stage" id="menu_action_report_crm_case_oppor_stage"/>
