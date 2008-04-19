@@ -31,7 +31,9 @@
 					<field name="stage_id" string="Status" select="1"/>
 					<field name="email_from"/>
 					<field name="priority" string="Priority"/>
-					<field name="category2_id" string="Campaign Type" select="1"/>
+					<field name="category2_id" string="Campaign Type" select="1"/>'
+					<field name="date" string="Next Meeting"/>
+					<field name="duration" string="Meeting Duration" widget="float_time"/>
 					<newline/>
 					<separator colspan="4" string="Description Information"/>
 						<field name="note" nolabel="1" colspan="4"/>
@@ -124,6 +126,18 @@
 				<field name="user_id"/>
 				<field name="state"/>
 			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="crm_case_calendar_view_leads">
+		<field name="name">CRM - Leads Calendar</field>
+		<field name="model">crm.case</field>
+		<field name="type">calendar</field>
+		<field name="priority" eval="2"/>
+		<field name="arch" type="xml">
+			<calendar string="Meeting For Leads Generation" date_start="date" color="user_id" delay="duration">
+				<field name="partner_name"/>
+				<field name="categ_id"/>
+			</calendar>
 		</field>
 	</record>
 </data>
