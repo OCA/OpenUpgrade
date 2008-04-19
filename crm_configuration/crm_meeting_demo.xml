@@ -66,7 +66,6 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">form,tree</field>
 		<field name="view_id" ref="crm_case_form_view_meet"/>
-		<field name="domain" eval="[('section_id','=',section_support1)]"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_form_view_meetings">
 		<field name="sequence" eval="1"/>
@@ -89,7 +88,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'user_id\',\'=\',uid)]'"/>
+		<field name="domain" eval="'[(\'user_id\',\'=\',uid)]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_meet_my">
 		<field name="sequence" eval="1"/>
@@ -116,7 +115,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'user_id\',\'=\',uid),(\'state\',\'=\',\'draft\')]'"/>
+		<field name="domain" eval="'[(\'user_id\',\'=\',uid),(\'state\',\'=\',\'draft\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_meet_my1">
 		<field name="sequence" eval="1"/>
@@ -143,7 +142,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'user_id\',\'=\',uid),(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
+		<field name="domain" eval="'[(\'user_id\',\'=\',uid),(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_meetmy2">
 		<field name="sequence" eval="1"/>
@@ -172,7 +171,6 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_meet">
 		<field name="sequence" eval="1"/>
@@ -199,7 +197,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'state\',\'=\',\'draft\')]'"/>
+		<field name="domain" eval="'[(\'state\',\'=\',\'draft\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_meetall1">
 		<field name="sequence" eval="1"/>
@@ -226,7 +224,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support1)+'),(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
+		<field name="domain" eval="'[(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_meetall2">
 		<field name="sequence" eval="1"/>
@@ -254,7 +252,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="[('section_id','=',section_support1),('state','!=','done'),('date_deadline','>=',time.strftime('%Y-%m-%d'))]"/>
+		<field name="domain" eval="[('state','!=','done'),('date_deadline','>=',time.strftime('%Y-%m-%d'))]"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_meetall3">
 		<field name="sequence" eval="1"/>
