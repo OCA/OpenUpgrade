@@ -11,6 +11,7 @@
 			<field eval="0.6" name="probability"/>
 			<field name="partner_address_id" ref="base.res_partner_address_zen"/>
 			<field eval="1" name="active"/>
+			<field eval="3.0" name="duration"/>
 			<field name="category2_id" ref="crm_configuration.category_oppor1"/>
 			<field name="partner_id" ref="base.res_partner_3"/>
 			<field eval="&quot;3&quot;" name="priority"/>
@@ -19,10 +20,8 @@
 			<field eval="75000.0" name="planned_cost"/>
 			<field name="section_id" ref="crm_configuration.section_support3"/>
 			<field eval="time.strftime('%Y-%m-02')" name="date"/>
-			<field eval="&quot;2008-05-24&quot;" name="date_deadline"/>
 			<field name="categ_id" ref="crm_configuration.categ_oppor1"/>
 			<field name="stage_id" ref="crm_configuration.stage_oppor3"/>
-			<field eval="&quot;2008-04-21&quot;" name="date_deadline"/>
 			<field eval="&quot;CONS TRUST (AZ) 529701 - 1000 units&quot;" name="name"/>
 		</record>
 		<record id="crm_case_rdroundfundingunits0" model="crm.case">
@@ -35,12 +34,12 @@
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field eval="30000.0" name="planned_cost"/>
 			<field eval="0.5" name="probability"/>
+			<field eval="3.45" name="duration"/>
 			<field name="section_id" ref="crm_configuration.section_support3"/>
 			<field eval="time.strftime('%Y-%m-05')" name="date"/>
 			<field name="categ_id" ref="crm_configuration.categ_oppor5"/>
 			<field name="stage_id" ref="crm_configuration.stage_oppor1"/>
 			<field eval="&quot;3rd Round Funding - 1000 units &quot;" name="name"/>
-			<field eval="&quot;2008-06-24&quot;" name="date_deadline"/>
 		</record>
 		<record id="crm_case_mediapoleunits0" model="crm.case">
 			<field eval="0.1" name="probability"/>
@@ -53,6 +52,7 @@
 			<field eval="&quot;pending&quot;" name="state"/>
 			<field eval="50000.0" name="planned_cost"/>
 			<field eval="0.75" name="probability"/>
+			<field eval="1.1" name="duration"/>
 			<field name="section_id" ref="crm_configuration.section_support3"/>
 			<field eval="time.strftime('%Y-%m-15')" name="date"/>
 			<field name="categ_id" ref="crm_configuration.categ_oppor7"/>
@@ -70,18 +70,19 @@
 			<field name="user_id" ref="base.user_demo"/>
 			<field eval="&quot;open&quot;" name="state"/>
 			<field eval="50000.0" name="planned_cost"/>
+			<field eval="3.0" name="duration"/>
 			<field name="section_id" ref="crm_configuration.section_support3"/>
 			<field eval="time.strftime('%Y-%m-20')" name="date"/>
 			<field name="categ_id" ref="crm_configuration.categ_oppor5"/>
 			<field name="stage_id" ref="crm_configuration.stage_oppor4"/>
 			<field eval="&quot;ABC FUEL CO 829264 - 1000 units &quot;" name="name"/>
-			<field eval="&quot;2008-08-20&quot;" name="date_deadline"/>
 			<field eval="&quot;info@opensides.be&quot;" name="email_from"/>
 		</record>
 		<record id="crm_case_dirtminingltdunits0" model="crm.case">
 			<field eval="0.8" name="probability"/>
 			<field name="partner_address_id" ref="base.res_partner_address_wong"/>
 			<field eval="1" name="active"/>
+			<field eval="2.25" name="duration"/>
 			<field name="partner_id" ref="base.res_partner_maxtor"/>
 			<field eval="&quot;3&quot;" name="priority"/>
 			<field name="user_id" ref="base.user_admin"/>
@@ -92,7 +93,6 @@
 			<field name="categ_id" ref="crm_configuration.categ_oppor2"/>
 			<field name="stage_id" ref="crm_configuration.stage_oppor6"/>
 			<field eval="&quot;Dirt Mining Ltd 271742 - 1000 units&quot;" name="name"/>
-			<field eval="&quot;2008-10-04&quot;" name="date_deadline"/>
 		</record>
 	</data>
 </terp>
