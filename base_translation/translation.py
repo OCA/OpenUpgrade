@@ -10,6 +10,15 @@ import pooler
 from wizard import SERVER,PORT
 s = xmlrpclib.Server("http://"+SERVER+":"+str(PORT))
 
+warning_message ="""<?xml version="1.0"?> 
+    <form string="!!! Warning"> 
+        <image name="gtk-dialog-info" colspan="2"/> 
+        <group colspan="2" col="4"> 
+            <separator string="%s" colspan="4"/> 
+            <label align="0.0" string="%s" colspan="4"/> 
+        </group> 
+    </form>"""
+
 def get_version(cr, uid,context):
     user = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
     return s.version_list(user)
@@ -17,6 +26,7 @@ def get_version(cr, uid,context):
 def get_profile(cr,uid,context):
     user = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
     return s.profile_list(user)
+
 
 def get_language(cr,uid,context,user=None,model=None,lang=None):
     if user:
@@ -26,27 +36,20 @@ def get_language(cr,uid,context,user=None,model=None,lang=None):
             login = pooler.get_pool(cr.dbname).get('res.users').read(cr,uid,uid,['login'])['login']
             list = s.get_lang_list(login)
     elif model:
-        if model=='ir_translation_contrib':
+        if model=='ir_translation_contribution':
             sql = "select distinct lang from ir_translation_contribution where state='propose'"
         else:
             sql = "select distinct lang from ir_translation"
+        print sql
         cr.execute(sql)
         list = map(lambda x: x[0],cr.fetchall())
+        print list
     else :
         sql = "select distinct lang from ir_translation_contribution where state='accept'"
         cr.execute(sql)
         list = map(lambda x: x[0],cr.fetchall())        
     lang_dict = tools.get_languages()
     return [(lang, lang_dict.get(lang, lang)) for lang in list]
-
-#
-#class ir_translation(osv.osv):
-#    _inherit = 'ir.translation'
-#    _columns = {
-#                'version':fields.char('Version',size=64),
-#                'profile':fields.char('profile',size=64),
-#            }
-#ir_translation()
 
 class ir_translation_contribution(osv.osv):
     _name = "ir.translation.contribution"
@@ -63,7 +66,6 @@ class ir_translation_contribution(osv.osv):
                      ('deny','Deny'),
                      ],
                      'Translation State', readonly=True, select=True),
-#            so same contribution doesnt upload more than once
             'upload':fields.boolean('upload') 
                 }
     _sql = ''    
