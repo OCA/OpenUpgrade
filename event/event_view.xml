@@ -248,7 +248,7 @@
 		<field name="model">event.registration</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Registration"  colors="red:date_deadline&lt;current_date and state=='open'">
+			<tree string="Registration">
 				<field name="id"/>
 				<field name="date"/>
 				<field name="event_id"/>
