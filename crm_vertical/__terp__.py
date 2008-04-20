@@ -8,6 +8,6 @@
 		"depends" : ["crm_configuration"],
 		"init_xml" : [ ],
 		"demo_xml" : [ ],
-		"update_xml" : ["crm_vertical_view.xml"],
+		"update_xml" : ["crm_vertical_view.xml","crm_vertical_shortcuts.xml"],
 		"installable": True
 } 
