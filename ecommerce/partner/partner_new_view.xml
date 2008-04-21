@@ -1,73 +1,60 @@
-<?xml version="1.0"?>
-<terp>
-<data>
-	
-<!--
-	=======================
-	Partner
-	=======================
-	-->
-	<record model="ir.ui.view" id="view_partner_ecommerce_tree">
-		<field name="name">res.partner.ecommerce.tree</field>
-		<field name="model">res.partner.ecommerce</field>
-		<field name="type">tree</field>
-		<field name="priority" eval="8"/>
-		<field name="arch" type="xml">
-			<tree string="Partners">
-				<field name="name"/>
-				<field name="lang"/>
-				<field name="category_id"/>
-				<field name="country_id"/>
-			</tree>
-		</field>
-	</record>
-	<record model="ir.ui.view" id="view_partner_ecommerce_form">
-		<field name="name">res.partner.ecommerce.form</field>
-		<field name="model">res.partner.ecommerce</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Partners">
-			<notebook>
-				<page string="General">
-					<field name="name" select="1"/>
-					<field name="last_name" select="2"/>
-					<field name="lang" select="2"/>
-					<field name="gender" />
-					<field name="birthdate" />
-					<newline/>
-					<separator string="Partner Address" colspan="4"/>
-							<field name="street" select="2"/>
-							<field name="street2"/>
-							<newline/>
-							<field name="zip" select="2"/>
-							<field name="city" select="2"/>
-							<newline/>
-							<field name="country_id" select="2" completion="1"/>
-							<field name="state_id" select="2"/>
-							<newline/>
-							<field name="phone"/>
-							<field name="fax"/>
-							<newline/>
-							<field name="mobile"/>
-							<field name="email" select="2" widget="email" />
-					<separator string="Categories" colspan="4"/>
-					<field name="category_id" colspan="4" select="2" nolabel="1"/>
-				</page>
-			</notebook>
-			</form>
-		</field>
-	</record>
-	
+from osv import osv, fields
+import pooler
 
-	<record model="ir.actions.act_window" id="action_partner_ecommerce_form">
-		<field name="name">Partner</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">res.partner.ecommerce</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_partner_ecommerce_form"/>
-	</record>
-	<menuitem name="ecommerce/Partner/partners" action="action_partner_ecommerce_form" id="menu_partner_ecommerce_form"/>
-	
-	
-	</data>
-</terp>
+
+def _lang_get(self, cr, uid, context={}):
+    obj = self.pool.get('res.lang')
+    ids = obj.search(cr, uid, [])
+    res = obj.read(cr, uid, ids, ['code', 'name'], context)
+    res = [(r['code'], r['name']) for r in res]
+    return res + [(False, '')]
+
+class ecommerce_partner(osv.osv):
+    _description='Partner Ecommerce'
+    _name = "ecommerce.partner"
+    _order = "name"
+    _columns = {
+        'name': fields.char('Name', size=128, required=True, select=True),
+        'contact_name': fields.char('Contact Name', size=128, required=True, select=True),
+        'lang': fields.selection(_lang_get, 'Language', size=5),
+        'street': fields.char('Street', size=128),
+        'street2': fields.char('Street2', size=128),
+        'zip': fields.char('Zip', change_default=True, size=24),
+        'city': fields.char('City', size=128),
+        'state_id': fields.many2one("res.country.state", 'State', domain="[('country_id','=',country_id)]"),
+        'country_id': fields.many2one('res.country', 'Country'),
+        'email': fields.char('E-Mail', size=64),
+        'phone': fields.char('Phone', size=64),
+        'fax': fields.char('Fax', size=64),
+        'mobile': fields.char('Mobile', size=64),
+        'active': fields.boolean('Active'),
+        'category_id': fields.many2many('res.partner.category', 'ecommerce_partner_category_rel', 'partner_id', 'category_id', 'Categories'),
+       
+    }
+    _defaults = {
+        'active': lambda *a: 1,
+    }
+    _sql_constraints = [
+        ('name_uniq', 'unique (name)', 'The name of the partner must be unique !')
+    ]
+
+    def copy(self, cr, uid, id, default=None, context={}):
+        name = self.read(cr, uid, [id], ['name'])[0]['name']
+        default.update({'name': name+' (copy)'})
+        return super(res_partner, self).copy(cr, uid, id, default, context)
+    
+       
+    def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
+        if not args:
+            args=[]
+        if not context:
+            context={}
+        if name:
+            ids = self.search(cr, uid, [('ref', '=', name)] + args, limit=limit, context=context)
+            if not ids:
+                ids = self.search(cr, uid, [('name', operator, name)] + args, limit=limit, context=context)
+        else:
+            ids = self.search(cr, uid, args, limit=limit, context=context)
+        return self.name_get(cr, uid, ids, context)
+
+ecommerce_partner()
