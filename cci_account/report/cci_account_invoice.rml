@@ -77,7 +77,6 @@
     <paraStyle name="P21" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P22" fontName="Times-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P23" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P24" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -271,7 +270,7 @@
     <para style="P20">
       <font color="white"> </font>
     </para>
-    <para style="P20"><b>Special Message</b> : [[ spcl_msg(data['form']) or removeParentNode('para') ]]</para>
+    <para style="P20">[[ spcl_msg(data['form']) ]]</para>
   </story>
 </document>
 
