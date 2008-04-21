@@ -216,6 +216,8 @@
 							<form string="Embassy Foder Lines">
 								<field name="type" />
 								<newline/>
+								<field name="product_id" on_change="onchange_product(product_id)" />
+								<newline/>
 								<field name="name" />
 								<newline/>
 								<field name="courier_cost"/>
@@ -308,7 +310,8 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Embassy Folder Line">
-					<field name="name" select="1" colspan="4"/>
+					<field name="product_id" on_change="onchange_product(product_id)" />
+					<field name="name" select="1" />
 					<newline/>
 					<field name="folder_id" select="2"/>
 					<field name="type" select="1" on_change="onchange_line_type(type)"/>

@@ -182,6 +182,21 @@ class cci_missions_embassy_folder_line (osv.osv):
 			return {'value' : {'name' : type,'account_id' : id_acnt[0]}}
 		return {'value' : {'name' : type,'account_id' : False}}
 
+	def onchange_product(self,cr,uid,ids,product_id):
+		data={}
+		data['courier_cost']=data['customer_amount']=data['account_id']=data['name']=False
+		if not product_id:
+			return {'value' : data }
+		prod_info = self.pool.get('product.product').browse(cr, uid,product_id)
+		data['courier_cost']=prod_info.standard_price
+		data['customer_amount']=prod_info.list_price
+		data['name']=prod_info.name
+		account =  prod_info.product_tmpl_id.property_account_income.id
+		if not account:
+			account = prod_info.categ_id.property_account_income_categ.id
+		data['account_id']=account
+		return {'value' : data }
+
 	_columns = {
 		'name' : fields.char('Description',size=50,required=True),
 		'folder_id' : fields.many2one('cci_missions.embassy_folder','Related Embassy Folder',required=True),
@@ -190,6 +205,7 @@ class cci_missions_embassy_folder_line (osv.osv):
 		'tax_rate': fields.many2one('account.tax','Tax Rate'),
 		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy  Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
 		'account_id' : fields.many2one('account.account', 'Account', required=True),
+		'product_id' : fields.many2one('product.product','Product',required=True,),
 	}
 
 cci_missions_embassy_folder_line()
