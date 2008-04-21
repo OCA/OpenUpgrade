@@ -16,11 +16,10 @@ class account_move_line(osv.osv):
     def search(self, cr, user, args, offset=0, limit=None, order=None,
             context=None, count=False):
         # will check if the partner/account exists in statement lines if not then display all partner's account.move.line
-        list_value=map(lambda x:x==['partner_id', '=', False] or x==['account_id', '=', False],args)
-        for i in range(0,list_value.count(True)):
-            list_value=map(lambda x:x==['partner_id', '=', False] or x==['account_id', '=', False],args)
-            args.pop(list_value.index(True))
-            list_value[list_value.index(True)]=False
+        for item in args:
+            if (item[0] in ('partner_id','account_id')) and (not item[2]):
+                args.pop(args.index(item))
+
         return super(account_move_line,self).search(cr, user, args, offset, limit, order,
             context, count)
 
