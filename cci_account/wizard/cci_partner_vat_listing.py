@@ -13,9 +13,13 @@ form = """<?xml version="1.0"?>
     <field name="mand_id" />
 </form>"""
 
+def _create(self, cr, uid, data, context):
+    print "jay"
+    jay="jayaa"
+    return jay
 fields = {
-    'fyear': {'string': 'Fiscal Year', 'type': 'many2one', 'relation': 'account.fiscalyear', 'required': True},
-    'mand_id':{'string':'MandatarieId','type':'char','size':'30','required': True},
+    'fyear': {'string': 'Fiscal Year', 'type': 'many2one', 'relation': 'account.fiscalyear', 'required': True,},
+    'mand_id':{'string':'MandatarieId','type':'char','size':'30','required': True,},
    }
 msg_form = """<?xml version="1.0"?>
 <form string="Notification">
@@ -48,6 +52,31 @@ class wizard_vat(wizard.interface):
         obj_year=pooler.get_pool(cr.dbname).get('account.fiscalyear').browse(cr,uid,data['form']['fyear'])
         period="to_date('" + str(obj_year.date_start) + "','yyyy-mm-dd') and to_date('" + str(obj_year.date_stop) +"','yyyy-mm-dd')"
 
+        street=zip_city=country=''
+        if not obj_company.partner_id.address:
+                street=zip_city=country=''
+
+        for ads in obj_company.partner_id.address:
+                if ads.type=='default':
+                    if ads.zip_id:
+                        zip_city=ads.zip.id.name
+                    if ads.city:
+                        zip_city =str(zip_city) + ads.city
+                    if ads.street:
+                        street=ads.street
+                    if ads.street2:
+                        street +=ads.street2
+                    if ads.country_id:
+                        country=ads.country_id.code
+
+        sender_date=time.strftime('%Y-%m-%d')
+        data_file='<?xml version="1.0"?>\n<VatList xmlns="http://www.minfin.fgov.be/VatList" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.minfin.fgov.be/VatList VatList.xml" RecipientId="VAT-ADMIN" SenderId="'+ str(vat_company) + '"'
+        data_file +=' ControlRef="" MandataireId="'+ data['form']['mand_id'] + '" SenderDate="'+ str(sender_date)+'" VersionTech="1.2">'
+        data_file +='\n<AgentRepr DecNumber="1">\n\t<CompanyInfo>\n\t\t<VATNum>'+str(vat_company)+'</VATNum>\n\t\t<Name>'+str(obj_company.name)+'</Name>\n\t\t<Street>'+ str(street) +'</Street>\n\t\t<CityAndZipCode>'+ str(zip_city) +'</CityAndZipCode>'
+        data_file +='\n\t\t<Country>'+ str(country) +'</Country>\n\t</CompanyInfo>\n</AgentRepr>'
+        data_comp ='\n<CompanyInfo>\n\t<VATNum>'+str(vat_company)+'</VATNum>\n\t<Name>'+str(obj_company.name)+'</Name>\n\t<Street>'+ str(street) +'</Street>\n\t<CityAndZipCode>'+ str(zip_city) +'</CityAndZipCode>\n\t<Country>'+ str(country) +'</Country>\n</CompanyInfo>'
+        data_period ='\n<Period>'+ str(obj_year.name[-4:]) +'</Period>'
+
         for p_id in p_id_list:
             record=[] # this holds record per partner
             obj_partner=pooler.get_pool(cr.dbname).get('res.partner').browse(cr,uid,p_id)
@@ -79,13 +108,20 @@ class wizard_vat(wizard.interface):
                 for item in line_info:
                     record.append(item[1])
             datas.append(record)
-        sender_date=time.strftime('%Y-%m-%d')
-        data_file='<?xml version="1.0"?>\n<VatList SenderId="'+ str(vat_company) + '" MandataireId="'+ data['form']['mand_id'] + '" SenderDate="'+ str(sender_date)+'" />\n'
 
         seq=0
+        data_clientinfo=''
+        sum_tax=0.00
+        sum_turnover=0.00
         for line in datas:
             seq +=1
-            data_file +='<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>'+line[0] +'</VATNum>\n\t\t<Country>'+line[1] +'</Country>\n\t</CompanyInfo>\n\t<Amount>'+str(line[2]) +'</Amount>\n\t<TurnOver>'+str(line[3]) +'</TurnOver>\n</ClientList>\n'
+            sum_tax +=line[2]
+            sum_turnover +=line[3]
+            data_clientinfo +='\n<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>'+line[0] +'</VATNum>\n\t\t<Country>'+line[1] +'</Country>\n\t</CompanyInfo>\n\t<Amount>'+str(line[2]) +'</Amount>\n\t<TurnOver>'+str(line[3]) +'</TurnOver>\n</ClientList>\n'
+
+        data_decl ='\n<DeclarantList SequenceNum="1" DeclarantNum="" ClientNbr="'+ str(seq) +'" TurnOverSum="'+ str(sum_turnover) +'" TaxSum="'+ str(sum_tax) +'" />'
+        data_file += str(data_decl) + str(data_comp) + str(data_period) + str(data_clientinfo) + '</VatList>'
+
         data['form']['msg']='Save the File with '".xml"' extension.'
         data['form']['file_save']=base64.encodestring(data_file)
         return data['form']
