@@ -13,10 +13,6 @@ form = """<?xml version="1.0"?>
     <field name="mand_id" />
 </form>"""
 
-def _create(self, cr, uid, data, context):
-    print "jay"
-    jay="jayaa"
-    return jay
 fields = {
     'fyear': {'string': 'Fiscal Year', 'type': 'many2one', 'relation': 'account.fiscalyear', 'required': True,},
     'mand_id':{'string':'MandatarieId','type':'char','size':'30','required': True,},
