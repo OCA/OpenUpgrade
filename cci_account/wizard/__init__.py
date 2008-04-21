@@ -1,5 +1,5 @@
 import cci_wizard_aged_trial_balance
-import cci_account_invoice
+import cci_account_special_message
 import cci_wizard_partner_balance_report
 import cci_wizard_third_party_ledger
 import cci_group_invoice
