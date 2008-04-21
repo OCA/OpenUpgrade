@@ -48,6 +48,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Messages">
+				<field name="title"/>
 				<field name="name"/>
 			</tree>
 		</field>
@@ -59,6 +60,7 @@
 		<field name="arch" type="xml">
 			<form string="Messages">
 				<separator string="Write a notification or a wishful message." colspan="4"/>
+				<field name="title" select="1"/>
 				<field name="name" select="1"/>
 			</form>
 		</field>
@@ -67,9 +69,9 @@
 		<field name="name">Write Messages</field>
 		<field name="res_model">cci_account.message</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">form,tree</field>
+		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Financial Management/Configuration/Notification Messages" id="menu_cci_account_mesage_tree_form" action="cci_account_mesage_tree_form"/>
+	<menuitem name="Financial Management/Configuration/Notification Message/All Notification Messages" id="menu_cci_account_mesage_tree_form" action="cci_account_mesage_tree_form"/>
 
 </data>
 </terp>
