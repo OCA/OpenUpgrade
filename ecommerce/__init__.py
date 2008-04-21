@@ -1,3 +1,0 @@
-import catalog
-import partner
-import configuration
