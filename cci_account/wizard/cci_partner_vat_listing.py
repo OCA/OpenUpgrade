@@ -55,7 +55,7 @@ class wizard_vat(wizard.interface):
         for ads in obj_company.partner_id.address:
                 if ads.type=='default':
                     if ads.zip_id:
-                        zip_city=ads.zip.id.name
+                        zip_city=ads.zip_id.name
                     if ads.city:
                         zip_city =str(zip_city) + ads.city
                     if ads.street:
