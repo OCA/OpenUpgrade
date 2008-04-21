@@ -38,6 +38,8 @@ class account_invoice_with_message(report_sxw.rml_parse):
 		})
 
 	def spcl_msg(self, form):
-		return pooler.get_pool(self.cr.dbname).get('cci_account.message').browse(self.cr, self.uid, form['message']).name
+		account_msg_data = pooler.get_pool(self.cr.dbname).get('cci_account.message').browse(self.cr, self.uid, form['message'])
+		msg = account_msg_data.title + ':' + account_msg_data.name
+		return msg
 
 report_sxw.report_sxw('report.cci_account.invoice', 'account.invoice', 'addons/cci_account/report/cci_account_invoice.rml', parser=account_invoice_with_message)
