@@ -6,18 +6,6 @@ import ir
 from ecommerce import smtp_server
 from smtp_server import smtp_connect 
 
-class image_display_config(osv.osv):
-    _name = 'image.display.config'
-    _description = 'Image Size'
-    _columns = {
-                'name': fields.char('Name',size=128,required=True),
-                'height': fields.float('Width',digits=(16,2)),
-                'width': fields.float('Height',digits=(16,2)),
-                'scale': fields.selection([('px','Pixel'),('in','Inch')],'Scale'),
-    }
-image_display_config()
-
-
 class shop_basic(osv.osv):
     
     def _email_send(self, cr, uid, ids, email_from, subject, body, on_error=None):
@@ -68,20 +56,16 @@ class shop_basic(osv.osv):
 shop_basic()
 
 class ecommerce_category(osv.osv):
-    
-    def create(self,cr,uid,vals,context={}):
-        ecom_id = super(ecommerce_category,self).create(cr,uid,vals,context)
-        self.write(cr,uid,ecom_id,{'ecommerce_id':ecom_id})
-        return ecom_id
-
     _name = "ecommerce.category"
     _description = "ecommerce category"
     _columns = {
-        'name': fields.char('Name', size=64, required=True),
+        'name': fields.char('E-commerce Category', size=64, required=True),
         'ecommerce_id': fields.integer('Web ID', readonly=True),
-        'webid': fields.many2one('shop.basic', 'Website'),
-        'category_id': fields.many2one('product.category', 'Category'),
+        'webid': fields.many2one('shop.basic', 'Webshop'),
+        'category_id': fields.many2one('product.category', 'Tiny Category'),
         'include_childs': fields.boolean('Include Childs'),
+        'parent_category':fields.many2one('ecommerce.category','Parent Category'),
+        'child_id': fields.one2many('ecommerce.category', 'parent_category', string='Childs Categories'),
     }
 ecommerce_category()
 
