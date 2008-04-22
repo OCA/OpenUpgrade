@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+	
+	<record model="ir.ui.view" id="view_webmail_server_tree">
+		<field name="name">webmail.server.tree</field>
+		<field name="model">webmail.server</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Server Configuration">
+				<field name="name"/>				
+				<field name="iserver_name"/>
+				<field name="iconn_type"/>
+				<field name="iconn_port"/>
+				<field name="iuser_name"/>				
+				<field name="ipassword"/>				
+				<field name="oserver_name"/>
+				<field name="oconn_type"/>
+				<field name="oconn_port"/>
+				<field name="ouser_name"/>				
+				<field name="opassword"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_webmail_server_form">
+		<field name="name">webmail.server.form</field>
+		<field name="model">webmail.server</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Server Configuration">
+				<field name="name"/>
+				<separator string="Incoming Server Setting" colspan="4"/>
+				<field name="iserver_name"/>
+				<field name="iconn_type"/>
+				<field name="iconn_port"/>
+				<field name="iuser_name"/>				
+				<field name="ipassword"/>
+				<separator string="Outgoing Server Setting" colspan="4"/>
+				<field name="oserver_name"/>
+				<field name="oconn_type"/>
+				<field name="oconn_port"/>
+				<field name="ouser_name"/>				
+				<field name="opassword"/>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_webmail_server_form">
+		<field name="name">webmail.tiny.user.form</field>
+		<field name="model">webmail.tiny.user</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Mail Account Configuration">
+				<field name="user_id"/>
+				<separator string="Server Configuration " colspan="4"/>
+				<field name="server_conf_id" nolabel="1"/>				
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_tiny_user">		
+		<field name="res_model">webmail.tiny.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_webmail_server_form"/>
+		<field name="domain">[('user_id','=',uid)]</field>		
+	</record>
+	
+	<menuitem name="Webmail/Server Configuration" id="menu_action_webmail_tiny_user" action="action_webmail_tiny_user"/>		
+	
+</data>
+</terp>
