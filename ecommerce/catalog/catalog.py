@@ -29,7 +29,7 @@ class reviews(osv.osv):
     _description="Reviews about product"
     _columns={
               'product':fields.many2one('product.product','Product', required=True, ondelete='cascade'),
-              'customer':fields.many2one('res.partner','Customer', required=True, ondelete='cascade'),
+              'customer':fields.many2one('ecommerce.partner','Customer', required=True, ondelete='cascade'),
               'reviewdate':fields.date('Review Date'),
               'rating':fields.integer('Rating'),
               'review':fields.text('Review')
