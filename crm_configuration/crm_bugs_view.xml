@@ -66,7 +66,7 @@
 						<field name="state" /> 
 					 	<button name="case_close" string="Done" states="open,draft,pending" type="object"/>
 						<button name="case_open" string="Open" states="draft,pending" type="object"/>
-						<button name="case_cancel" string="Refuse Bug" states="draft,open,pending" type="object"/>
+						<button name="case_cancel" string="Cancel" states="draft,open,pending" type="object"/>
 						<button name="case_pending" string="Pending" states="draft,open" type="object"/>
 						<button name="case_escalate" string="Escalate" states="open,draft,pending" type="object"/>
 						<button name="case_reset" string="Reset to Draft" states="done,cancel" type="object"/>
