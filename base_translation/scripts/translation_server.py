@@ -1,10 +1,12 @@
+#!/usr/bin/python
+
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 import os
 import csv
 from config import *
 
 server = SimpleXMLRPCServer((SERVER,PORT),allow_none=True)
-server.register_introspection_functions()
+#server.register_introspection_functions()
 
 version_user={
         '4-2-0':['4.2.0',['admin','demo','dhara'] ],
@@ -18,6 +20,7 @@ profile_user={
         'main' : ['Main',['admin','demo'] ],
         'service_companies' : ['Service Companies',['admin','dhara'] ],
     }
+
 
 #contrib = "/home/tiny/translation/contrib"
 #publish = "/home/tiny/translation/pu"
