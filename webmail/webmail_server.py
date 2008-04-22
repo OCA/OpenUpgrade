@@ -36,3 +36,16 @@ class webmail_server(osv.osv):
         'oconn_port': lambda *a: 25,
     }
 webmail_server()
+
+class webmail_mailbox(osv.osv):
+    _name="webmail.mailbox"
+    _description="User Mailbox"
+    _columns={
+        'user_id' : fields.many2one('res.users', 'User'),
+        'name' : fields.char('Name', size=256),
+        'account_id' : fields.many2one('webmail.server', 'User'),
+    }
+    _default={
+        'user_id': lambda obj, cr, uid, context: uid,
+    }
+webmail_mailbox()
