@@ -31,7 +31,7 @@ def verify_user(user,pwd,lang):
     if user in list_lang[lang] and user in user_info and pwd==user_info[user]:
         return True
     else:
-        return False   
+        return False
 
 def directory_check(dir_list):
     dir = dir_list[0]
@@ -54,9 +54,8 @@ def file_dict_writer(filename,content):
         row['src'] = row['src'].encode('utf8')
         row['value'] = row['value'].encode('utf8')
         outwriter.writerow(row)
-    
                             ############# Need to improve
-    
+
 def file_merger(fname_revision,fname_main=None,content=None):# content will be used when 3 or more files needs to b merged
     if not content:
         main = file_dict_reader(fname_main)
