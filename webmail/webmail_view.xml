@@ -69,5 +69,37 @@
 	
 	<menuitem name="Webmail/Server Configuration" id="menu_action_webmail_tiny_user" action="action_webmail_tiny_user"/>		
 	
+	<record model="ir.ui.view" id="view_webmail_mailacc_form">
+		<field name="name">webmail.mailacc.form</field>
+		<field name="model">webmail.server</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Mail Account">
+				<field name="name"/>				
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_webmail_mailacc_tree">
+		<field name="name">webmail.mailacc.tree</field>
+		<field name="model">webmail.server</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Mail Account">
+				<field name="name"/>				
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_mailacc">		
+		<field name="res_model">webmail.server</field>
+		<field name="view_type">tree</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_webmail_mailacc_tree"/>
+		<field name="domain">[('user_id','=',uid)]</field>		
+	</record>
+	
+	<menuitem name="Webmail/Mail Account" id="menu_action_webmail_mailacc" action="action_webmail_mailacc"/>
+	
 </data>
 </terp>
