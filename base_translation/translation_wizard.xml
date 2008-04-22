@@ -18,6 +18,7 @@
 			name="Administration/Translations/Translations Management/Maintainer/Download Contributor's Proposition"
 			action="wizard_downlaod_file_for_publish"
 			id="menuwizard_downlaod_file_for_publish"
+			sequence="5"
 			type="wizard"/>
 		<record model="ir.actions.wizard" id="wizard_review_proposed_contributions">
 			<field name="name">Review Proposed Contributions</field>
@@ -45,6 +46,7 @@
 			name="Administration/Translations/Translations Management/Maintainer/Publish New Version"
 			action="wizard_publish_new_version"
 			id="menuwizard_publish_new_version"
+			sequence="10"			
 			type="wizard"/>							
 	</data>
 </terp>
