@@ -56,6 +56,27 @@ class shop_basic(osv.osv):
 shop_basic()
 
 class ecommerce_category(osv.osv):
+    def create(self,cr,uid,vals,context=None):
+        print "::::::::::::::",vals
+        
+        if vals:
+            cat_id = self.pool.get('product.category').create(cr,uid,{'name':vals['name']})
+            vals.update({'tiny_cat_id':cat_id})
+            print "iddd",cat_id
+        print "==============================",vals
+        return super(ecommerce_category,self).create(cr,uid,vals)
+    
+    def write(self,cr,uid,ids,vals,context=None):
+        print "::::::::::::::",ids,vals,context
+        
+        if vals['name']:
+           
+            print "int(vals['tiny_cat_id'])",int(vals['tiny_cat_id'])
+            cat_id = self.pool.get('product.category').write(cr,uid,[int(vals['tiny_cat_id'])],{'name':vals['name']})
+            print "iddd",cat_id
+        return super(ecommerce_category,self).write(cr,uid,ids,vals,context)
+        
+    
     _name = "ecommerce.category"
     _description = "ecommerce category"
     _columns = {
@@ -66,6 +87,8 @@ class ecommerce_category(osv.osv):
         'include_childs': fields.boolean('Include Childs'),
         'parent_category':fields.many2one('ecommerce.category','Parent Category'),
         'child_id': fields.one2many('ecommerce.category', 'parent_category', string='Childs Categories'),
+        'tiny_cat_id':fields.char('Tinyid',size=64)
+        
     }
 ecommerce_category()
 
