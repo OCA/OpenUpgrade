@@ -48,7 +48,7 @@
 					</page>
 					<page string="Categories">
 					<seperator string="Category" colspan="4"/>
-					<field colspan="4" name="category_ids" nolabel="1">
+					<field colspan="4" name="category_ids" nolabel="1" >
 							<tree editable="bottom">
 								<field name="name"/>
 								<field name="ecommerce_id" readonly="1"/>
@@ -77,6 +77,23 @@
 	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
 	
 	<!-- TREE VIEW OF THE CATEGORY -->
+	
+	<record model="ir.ui.view" id="product_category_form_view">
+			<field name="name">ecommerce.product.category.form</field>
+			<field name="model">ecommerce.category</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Product Categories">
+					<field name="name" select="1"/>
+					<field name="ecommerce_id" readonly="1"/>
+					<field name="category_id"/>
+					<field name="include_childs"/>
+					<field name="parent_category"/>
+					<field name="tiny_cat_id" readonly="1"/>
+				</form>
+			</field>
+	</record>
+	
 	<record model="ir.ui.view" id="ecommerce_product_category_tree_view">
 		<field name="name">ecommerce.product.category.tree</field>
 		<field name="model">ecommerce.category</field>
