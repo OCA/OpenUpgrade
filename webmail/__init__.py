@@ -1,1 +1,2 @@
-import webmail_server
+import webmail
+import wizard
