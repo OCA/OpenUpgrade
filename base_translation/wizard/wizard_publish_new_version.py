@@ -16,6 +16,7 @@ view_form_end = """<?xml version="1.0"?>
         <separator string="Installation done" colspan="4"/>
         <label align="0.0" string="Csv file for the selected language has been successfully installed in i18n" colspan="4"/>
     </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
 </form>"""
 
 view_form = """<?xml version="1.0"?>
@@ -30,6 +31,7 @@ view_form = """<?xml version="1.0"?>
         <field name="profile" colspan="4" />
         <label align="0.0" string="Note that this operation may take a few minutes." colspan="4"/>
     </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
 </form>"""
 
 class wizard_publish_new_version(wizard.interface):

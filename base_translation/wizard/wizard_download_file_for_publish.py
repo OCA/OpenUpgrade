@@ -18,6 +18,7 @@ view_form_end = """<?xml version="1.0"?>
         <separator string="Installation done" colspan="4"/>
         <label align="0.0" string="Csv file for the selected language has been successfully installed in i18n" colspan="4"/>
     </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
 </form>"""
 
 warning_message = """<?xml version="1.0"?> 
@@ -26,7 +27,8 @@ warning_message = """<?xml version="1.0"?>
         <group colspan="2" col="4"> 
             <separator string="%s" colspan="4"/> 
             <label align="0.0" string="%s" colspan="4"/> 
-        </group> 
+        </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
     </form>"""
 
 view_form = """<?xml version="1.0"?>
@@ -41,6 +43,7 @@ view_form = """<?xml version="1.0"?>
         <field name="profile" colspan="4" />
         <label align="0.0" string="Note that this operation may take a few minutes." colspan="4"/>
     </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
 </form>"""
 
 view_file_form = """<?xml version="1.0"?>
@@ -52,6 +55,7 @@ view_file_form = """<?xml version="1.0"?>
         <field name="contrib" colspan="4"/>
         <label align="0.0" string="Note that this operation may take a few minutes." colspan="4"/>
     </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
 </form>"""
 
 class wizard_download_file_for_publish(wizard.interface):

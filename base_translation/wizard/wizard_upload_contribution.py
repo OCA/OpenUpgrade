@@ -17,6 +17,7 @@ view_form_end = """<?xml version="1.0"?>
             <field name="total" colspan="4"/>
             <field name="propose" colspan="4"/>
         </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
 </form>"""
 
 view_form = """<?xml version="1.0"?>
@@ -32,6 +33,7 @@ view_form = """<?xml version="1.0"?>
         <field name="profile" colspan="4"/>     
         <label align="0.0" string="Note that this operation may take a few minutes." colspan="4"/>
     </group>
+    <label align="0.5" string="For more information about translation process ,you can consult : http://openerp.com/wiki/index.php/Translation_Process" colspan="4"/>
 </form>"""
 
 
