@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+		<record model="board.note.type" id="note_crm_type">
+			<field name="name">CRM Configuration</field>
+		</record>	
+		
+		<act_window name="Sales Pipeline"
+			domain="[('section_id','=','Sales opportunities')]"
+			res_model="report.crm.case.user"
+			view_type="form"
+			view_mode="graph,tree"
+			id="act_sales_pipeline"/>
+			
+		<act_window name="Jobs Requests"
+			domain="[('section_id','=','Jobs')]"
+			res_model="report.crm.case.user"
+			view_type="form"
+			view_mode="graph,tree"
+			id="act_jobs_requests"/>
+			
+		<record model="ir.ui.view" id="board_crm_form">
+			<field name="name">CRM - Dashboard Form</field>
+			<field name="model">board.board</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Connecting Dashboard">
+					<hpaned>
+
+						<child1>
+
+							<action
+								string="My Leads"
+								name="%(crm_configuration.crm_case_category_act_leads_my)d"
+								colspan="4"
+								height="150"
+								width="510"/>
+
+							<action
+								string="My Meetings"
+								name="%(crm_configuration.action_crm_tag_calendar_meet_my)d"
+								height="150"
+								colspan="4"/>
+
+							<action
+								string="My Cases"
+								name="%(crm.crm_case_categ0-act_my)d"
+								colspan="4"
+								height="220"/>
+
+						</child1>
+
+						<child2>
+							<action
+								string="Leads By Stage"
+								name="%(crm_configuration.action_report_crm_case_lead_stage)d"
+								colspan="4"/>
+
+							<action
+								string="Sales Pipeline"
+								name="%(act_sales_pipeline)d"
+								colspan="4"/>
+
+							<action
+								string="Jobs Requests"
+								name="%(act_jobs_requests)d"
+								colspan="4"/>
+
+						</child2>
+					</hpaned>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_board_crm">
+			<field name="name">CRM Dashboard</field>
+			<field name="res_model">board.board</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form</field>
+			<field name="usage">menu</field>
+			<field name="view_id" ref="board_crm_form"/>
+		</record>
+
+		<menuitem
+			name="Dashboards/CRM Configuration/Connecting Dashboard"
+			action="open_board_crm"
+			sequence="1"
+			id="menu_board_crm" icon="terp-graph"/>
+
+	</data>
+</terp>
