@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+	<!-- start shop Basic -->
+	<!-- shop list view -->
+	<record model="ir.ui.view" id="view_shop_basic_tree">
+		<field name="name">shop.basic.tree</field>
+		<field name="model">shop.basic</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Basic Store">
+				<field name="name"/>
+				<field name="company_id"/>
+				<field name="partner_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<!-- shop form view -->
+	<record model="ir.ui.view" id="view_shop_basic_form">
+		<field name="name">Shop Basic Info</field>
+		<field name="model">shop.basic</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="General Information">
+				<notebook>
+					<page string="Basic Information">
+						<separator string="Shop Information" colspan="4"/>
+						<newline/>
+						<field name="name" select="1"/>
+						<field name="company_id" select="1"/>
+						<field name="partner_id" select="1"/>
+			 	  		<field name="shop_id" select="1"></field>
+						<separator string="Other Information" colspan="4"/>
+						<newline/>
+						<field name="display_search_keyword"/>
+						<field name="display_cart"/>
+						<field name="price_with_tax"/>
+						<field name="tell_to_friend"/>
+						<field name="display_partner_logo"/>
+						<field name="display_product_name_new"/>
+						<field name="display_manufacturer_name_new"/>
+						<field name="display_product_image"/>
+						<field name="display_product_price"/>
+						<field name="display_product_quantity"/>
+						<field name="display_product_weight"/>
+						<field name="display_category_context"/>
+					</page>
+					<page string="Categories">
+					<seperator string="Category" colspan="4"/>
+					<field colspan="4" name="category_ids" nolabel="1">
+							<tree editable="bottom">
+								<field name="name"/>
+								<field name="ecommerce_id" readonly="1"/>
+								<field name="category_id"/>
+								<field name="include_childs"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Products">
+					<seperator string="Products" colspan="4"/>
+					<field name="products" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
+			</form>
+		</field>	
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_shop_basic_form">
+		<field name="name">Shop Basic Info</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">shop.basic</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_shop_basic_form"/>
+	</record>
+	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
+
+</data>
+</terp>
+
