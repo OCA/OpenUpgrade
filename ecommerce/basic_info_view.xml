@@ -54,6 +54,7 @@
 								<field name="ecommerce_id" readonly="1"/>
 								<field name="category_id"/>
 								<field name="include_childs"/>
+								<field name="parent_category"/>
 							</tree>
 						</field>
 					</page>
@@ -74,6 +75,27 @@
 		<field name="view_id" ref="view_shop_basic_form"/>
 	</record>
 	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
+	
+	<!-- TREE VIEW OF THE CATEGORY -->
+	<record model="ir.ui.view" id="ecommerce_product_category_tree_view">
+		<field name="name">ecommerce.product.category.tree</field>
+		<field name="model">ecommerce.category</field>
+		<field name="type">tree</field>
+		<field name="field_parent">child_id</field>
+		<field name="arch" type="xml">
+			<tree string="Products Categories">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="ecommerce_product_category_action">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">ecommerce.category</field>
+		<field name="domain">[('parent_category','=',False)]</field>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="ecommerce_product_category_tree_view"/>
+	</record>
+	<menuitem name="ecommerce/Products/Products by Category" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
 
 </data>
 </terp>
