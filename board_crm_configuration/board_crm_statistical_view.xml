@@ -4,7 +4,6 @@
 		<!--
 		 Board for statistical view of the sections
 		 -->
-		 
 		<record model="ir.ui.view" id="view_crm_lead_stage_graph1">
 			<field name="name">Leads By Stage - Graph</field>
 			<field name="model">report.crm.case.section.stage</field>
@@ -12,7 +11,7 @@
 			<field name="arch" type="xml">
 				<graph string="Leads By Stage" type="bar" orientation="horizontal">
 					<field name="stage_id"/>
-<!--					<field name="nbr" operator="+"/>-->
+					<field name="nbr" operator="+"/>
 					<field name="state" group="True"/>
 				</graph>
 			</field>
@@ -48,7 +47,7 @@
 			id="act_leads_state"/>
 		
 		<act_window name="Jobs Requests Of The Month by Applied Job"
-			domain="[('section_id', '=', 'Jobs'),('name','=',time.strftime('%Y-%m-01'))]"
+			domain="[('section_id', '=', 'Jobs'),('name','=',time.strftime('%Y-%m-01')),('state','!=','done'),('state','!=','cancel')]"
 			res_model="report.crm.case.categ"
 			view_type="form"
 			view_mode="graph,tree,form"
@@ -56,7 +55,7 @@
 			id="act_jobs_categ"/>
 			
 		<act_window name="Leads Of The Month By User"
-			domain="[('section_id', '=', 'Leads'),('name','=',time.strftime('%Y-%m-01'))]"
+			domain="[('section_id', '=', 'Leads'),('name','=',time.strftime('%Y-%m-01')),('state','!=','cancel')]"
 			res_model="report.crm.case.user"
 			view_type="form"
 			view_mode="graph,tree,form"
