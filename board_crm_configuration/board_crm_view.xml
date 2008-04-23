@@ -6,18 +6,47 @@
 			<field name="name">CRM Configuration</field>
 		</record>	
 		
-		<act_window name="Sales Pipeline"
-			domain="[('section_id','=','Sales opportunities')]"
+		<act_window name="My Leads"
+			domain="[('section_id','=','Leads'),('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]"
+			res_model="crm.case"
+			view_type="form"
+			view_mode="tree,form"
+			id="act_my_leads"/>	
+			
+		<act_window name="My Meetings"
+				domain="[('section_id','=','Meetings'),('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]"
+				res_model="crm.case"
+				view_type="form"
+				view_mode="tree,form"
+				id="act_my_meetings"/>
+			
+		<act_window name="My Cases"
+				domain="[('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]"
+				res_model="crm.case"
+				view_type="form"
+				view_mode="tree,form"
+				id="act_my_cases"/>	
+							
+		<act_window name="My Leads By Stage"
+			domain="[('section_id','=','Leads'),('user_id','=',uid)]"
+			res_model="report.crm.case.section.stage"
+			view_type="form"
+			view_mode="graph,tree,form"
+			view_id="view_crm_mylead_stage_graph1"
+			id="act_my_leads_stage"/>
+			
+		<act_window name="My Sales Pipeline"
+			domain="[('section_id','=','Opportunities'),('user_id','=',uid),('state','!=','cancel'),('state','!=','pending')]"
 			res_model="report.crm.case.user"
 			view_type="form"
-			view_mode="graph,tree"
+			view_mode="graph,tree,form"
 			id="act_sales_pipeline"/>
 			
-		<act_window name="Jobs Requests"
-			domain="[('section_id','=','Jobs')]"
+		<act_window name="My Jobs Requests"
+			domain="[('section_id','=','Jobs'),('user_id','=',uid),('state','!=','cancel')]"
 			res_model="report.crm.case.user"
 			view_type="form"
-			view_mode="graph,tree"
+			view_mode="graph,tree,form"
 			id="act_jobs_requests"/>
 			
 		<record model="ir.ui.view" id="board_crm_form">
@@ -32,20 +61,20 @@
 
 							<action
 								string="My Leads"
-								name="%(crm_configuration.crm_case_category_act_leads_my)d"
+								name="%(act_my_leads)d"
 								colspan="4"
 								height="150"
 								width="510"/>
 
 							<action
 								string="My Meetings"
-								name="%(crm_configuration.action_crm_tag_calendar_meet_my)d"
+								name="%(act_my_meetings)d"
 								height="150"
 								colspan="4"/>
 
 							<action
 								string="My Cases"
-								name="%(crm.crm_case_categ0-act_my)d"
+								name="%(act_my_cases)d"
 								colspan="4"
 								height="220"/>
 
@@ -53,17 +82,17 @@
 
 						<child2>
 							<action
-								string="Leads By Stage"
-								name="%(crm_configuration.action_report_crm_case_lead_stage)d"
+								string="My Leads By Stage"
+								name="%(act_my_leads_stage)d"
 								colspan="4"/>
 
 							<action
-								string="Sales Pipeline"
+								string="My Sales Pipeline"
 								name="%(act_sales_pipeline)d"
 								colspan="4"/>
 
 							<action
-								string="Jobs Requests"
+								string="My Jobs Requests"
 								name="%(act_jobs_requests)d"
 								colspan="4"/>
 
