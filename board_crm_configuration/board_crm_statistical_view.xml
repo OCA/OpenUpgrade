@@ -9,7 +9,7 @@
 			<field name="model">report.crm.case.section.stage</field>
 			<field name="type">graph</field>
 			<field name="arch" type="xml">
-				<graph string="Leads By Stage" type="bar" orientation="horizontal">
+				<graph string="Leads By Stage" type="pie">
 					<field name="stage_id"/>
 					<field name="nbr" operator="+"/>
 					<field name="state" group="True"/>
