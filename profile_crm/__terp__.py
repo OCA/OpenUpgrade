@@ -4,7 +4,7 @@
 	"author":"Tiny",
 	"category":"Profile",
 	"depends":[
-		"crm_vertical", 
+		"crm_vertical", "board_crm_configuration",
 	], 
 	"demo_xml":[],
 	"update_xml":[],
