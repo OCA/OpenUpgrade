@@ -105,14 +105,14 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="view_crm_case_section_stage_graph">
-		<field name="name">CRM Report - Sections and Stage(Tree)</field>
+		<field name="name">CRM Report - Sections and Stage(Graph)</field>
 		<field name="model">report.crm.case.section.stage</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Cases by Section and Stage" type="bar" orientation="horizontal">
 				<field name="stage_id"/>
 				<field name="nbr" operator="+"/>
-				<field name="section_id"  group="True"/>
+				<field name="section_id" group="True"/>
 			</graph>
 		</field>
 	</record>
