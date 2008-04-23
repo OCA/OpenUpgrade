@@ -55,9 +55,7 @@ class wizard_vat(wizard.interface):
         for ads in obj_company.partner_id.address:
                 if ads.type=='default':
                     if ads.zip_id:
-                        zip_city=ads.zip_id.name
-                    if ads.city:
-                        zip_city =str(zip_city) + ads.city
+                        zip_city=pooler.get_pool(cr.dbname).get('res.partner.zip').name_get(cr,uid,[ads.zip_id.id])[0][1]
                     if ads.street:
                         street=ads.street
                     if ads.street2:
@@ -87,7 +85,7 @@ class wizard_vat(wizard.interface):
                         record.append(ads.country_id.code)
                     else:
                         record.append('None')
-            cr.execute('select a.type,sum(debit)-sum(credit) from account_move_line l left join account_account a on (l.account_id=a.id) where a.type in ('"'income'"','"'tax'"') and l.partner_id=%d and l.date between %s group by a.type'%(p_id,period))
+            cr.execute('select a.type,sum(credit)-sum(debit) from account_move_line l left join account_account a on (l.account_id=a.id) where a.type in ('"'income'"','"'tax'"') and l.partner_id=%d and l.date between %s group by a.type'%(p_id,period))
             line_info=cr.fetchall()
 
             if not line_info:

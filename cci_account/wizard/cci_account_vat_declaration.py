@@ -38,10 +38,9 @@ class wizard_vat_declaration(wizard.interface):
 
         for ads in obj_company.partner_id.address:
                 if ads.type=='default':
-                    if ads.city:
-                        city=ads.city
                     if ads.zip_id:
-                        post_code=ads.zip.id.name
+                        city=ads.zip_id.city
+                        post_code=ads.zip_id.name
                     if ads.street:
                         address=ads.street
                     if ads.street2:
@@ -49,11 +48,12 @@ class wizard_vat_declaration(wizard.interface):
 
         year_id=pooler.get_pool(cr.dbname).get('account.fiscalyear').find(cr, uid)
         current_year=pooler.get_pool(cr.dbname).get('account.fiscalyear').browse(cr,uid,year_id).name
+        month=time.strftime('%m')
 
         data_of_file='<?xml version="1.0"?>\n<VATSENDING xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="MultiDeclarationTVA-NoSignature-14.xml">'
         data_of_file +='\n\t<DECLARER>\n\t\t<VATNUMBER>'+str(vat_no)+'</VATNUMBER>\n\t\t<NAME>'+str(obj_company.name)+'</NAME>\n\t\t<ADDRESS>'+str(address)+'</ADDRESS>'
         data_of_file +='\n\t\t<POSTCODE>'+str(post_code)+'</POSTCODE>\n\t\t<CITY>'+str(city)+'</CITY>\n\t\t<SENDINGREFERENCE></SENDINGREFERENCE>\n\t</DECLARER>'
-        data_of_file +='\n\t<VATRECORD>\n\t\t<RECNUM>1</RECNUM>\n\t\t<VATNUMBER>'+str(vat_no)+'</VATNUMBER>\n\t\t<DPERIODE>\n\t\t\t<MONTH>12</MONTH>\n\t\t\t<YEAR>'+str(current_year[-4:])+'</YEAR>\n\t\t</DPERIODE>\n\t\t<ASK RESTITUTION="NO" PAYMENT="NO"/>'
+        data_of_file +='\n\t<VATRECORD>\n\t\t<RECNUM>1</RECNUM>\n\t\t<VATNUMBER>'+str(vat_no)+'</VATNUMBER>\n\t\t<DPERIODE>\n\t\t\t<MONTH>'+str(month)+'</MONTH>\n\t\t\t<YEAR>'+str(current_year[-4:])+'</YEAR>\n\t\t</DPERIODE>\n\t\t<ASK RESTITUTION="NO" PAYMENT="NO"/>'
         data_of_file +='\n\t\t<DATA>\n\t\t\t<DATA_ELEM>'
 
         for item in tax_info:
