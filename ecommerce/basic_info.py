@@ -53,24 +53,7 @@ class ecommerce_shop(osv.osv):
 ecommerce_shop()
 
 class ecommerce_category(osv.osv):
-    def create(self,cr,uid,vals,context=None):
-        ecom_id = super(ecommerce_category,self).create(cr,uid,vals)
-        if vals:
-            cat_id = self.pool.get('product.category').create(cr,uid,{'name':vals['name']})
-            self.pool.get('product.category').write(cr,uid,cat_id,{'ecommerce_cat_id':ecom_id})
-            vals.update({'tiny_cat_id':cat_id})
-            print "iddd",cat_id
-        return ecom_id
-#    
-    def write(self,cr,uid,ids,vals,context=None):
-        print "::::::::::::::",ids,vals,context
-        
-        if vals['name']:
-            cat_id = self.pool.get('product.category').search(cr,uid,[('ecommerce_cat_id','in',ids)])
-            self.pool.get('product.category').write(cr,uid,cat_id,{'name':vals['name']})
-            
-        return super(ecommerce_category,self).write(cr,uid,ids,vals,context)        
-    
+  
     _name = "ecommerce.category"
     _description = "ecommerce category"
     _columns = {
@@ -86,8 +69,7 @@ ecommerce_category()
 class product_category(osv.osv):
     _inherit = "product.category"
     _columns = {
-        'category_image': fields.binary('Category Image'),
-        'ecommerce_cat_id':fields.char('Ecommerce id',size=64)
+        'category_image': fields.binary('Category Image')
     }
 
 product_category()
