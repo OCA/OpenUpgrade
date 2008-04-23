@@ -1,32 +1,5 @@
 <?xml version="1.0" ?>
 <terp>
-	<data noupdate="1">
-		<record id="project.project_task_193" model="project.task">
-			<field eval="&quot;2007-11-03&quot;" name="date_start"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="project.project_task_184" model="project.task">
-			<field eval="&quot;2007-11-03&quot;" name="date_start"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="project.project_task_116" model="project.task">
-			<field eval="&quot;2007-11-03&quot;" name="date_start"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="project.project_task_130" model="project.task">
-			<field eval="4.0" name="planned_hours"/>
-			<field eval="&quot;2007-11-03&quot;" name="date_start"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="project.project_task_201" model="project.task">
-			<field eval="2.0" name="planned_hours"/>
-			<field eval="&quot;2007-11-03&quot;" name="date_start"/>
-		</record>
-	</data>
 	<data>
 		<record id="res_groups_noone0" model="res.groups">
 			<field eval="&quot;No One&quot;" name="name"/>
@@ -57,56 +30,6 @@
 			<field ref="base.menu_partner_form" name="res_id"/>
 			<field name="user_id" ref="base.user_admin"/>
 			<field eval="&quot;Partners&quot;" name="name"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="ir_ui_view_sc_products0" model="ir.ui.view_sc">
-			<field eval="&quot;ir.ui.menu&quot;" name="resource"/>
-			<field ref="product.menu_products" name="res_id"/>
-			<field name="user_id" ref="base.user_admin"/>
-			<field eval="&quot;Products&quot;" name="name"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="ir_ui_view_sc_alltasks1" model="ir.ui.view_sc">
-			<field eval="&quot;ir.ui.menu&quot;" name="resource"/>
-			<field ref="project.menu_action_view_task" name="res_id"/>
-			<field name="user_id" ref="base.user_demo"/>
-			<field eval="&quot;Calendar of Tasks&quot;" name="name"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="ir_ui_view_sc_alltasks0" model="ir.ui.view_sc">
-			<field eval="&quot;ir.ui.menu&quot;" name="resource"/>
-			<field ref="project.menu_action_view_task" name="res_id"/>
-			<field name="user_id" ref="base.user_admin"/>
-			<field eval="&quot;Calendar of Tasks&quot;" name="name"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="ir_ui_view_sc_mysalesorder0" model="ir.ui.view_sc">
-			<field eval="&quot;ir.ui.menu&quot;" name="resource"/>
-			<field ref="sale.menu_action_order_tree" name="res_id"/>
-			<field name="user_id" ref="base.user_admin"/>
-			<field eval="&quot;My Sales Order&quot;" name="name"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="ir_ui_view_sc_analyticchartsofaccounts0" model="ir.ui.view_sc">
-			<field eval="&quot;ir.ui.menu&quot;" name="resource"/>
-			<field ref="account.account_analytic_chart" name="res_id"/>
-			<field name="user_id" ref="base.user_admin"/>
-			<field eval="&quot;Analytic Accounts&quot;" name="name"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="base.user_demo" model="res.users">
-			<field model="ir.actions.actions" name="action_id" search="[('name','=','Project Dashboard')]"/>
-		</record>
-	</data>
-	<data noupdate="1">
-		<record id="base.user_admin" model="res.users">
-			<field model="ir.actions.actions" name="action_id" search="[('name','=','Project Manager Dashboard')]"/>
 		</record>
 	</data>
 </terp>
