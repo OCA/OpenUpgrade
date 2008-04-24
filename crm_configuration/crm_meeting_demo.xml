@@ -142,7 +142,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="'[(\'user_id\',\'=\',uid),(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
+		<field name="domain" eval="'[(\'user_id\',\'=\',uid),(\'state\',\'=\',\'done\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_meetmy2">
 		<field name="sequence" eval="1"/>
@@ -224,7 +224,7 @@
 		<field name="res_model">crm.case</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="'[(\'stage_id\',\'=\','+str(stage_meet1)+'),(\'state\',\'=\',\'done\')]'"/>
+		<field name="domain" eval="'[(\'state\',\'=\',\'done\')]'"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_meetall2">
 		<field name="sequence" eval="1"/>
@@ -252,7 +252,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">calendar,tree,form</field>
 		<field name="view_id" ref="crm_case_calendar_view_meet"/>
-		<field name="domain" eval="[('state','!=','done'),('date_deadline','>=',time.strftime('%Y-%m-%d'))]"/>
+		<field name="domain" eval="[('state','!=','done'),('date','>=',time.strftime('%Y-%m-%d'))]"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_crm_tag_calendar_view_meetall3">
 		<field name="sequence" eval="1"/>
