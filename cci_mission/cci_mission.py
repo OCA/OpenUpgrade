@@ -643,7 +643,7 @@ class cci_missions_ata_carnet(osv.osv):
 		#super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
 		data_carnet = self.browse(cr,uid,ids[0])
 		context = {}
-
+		print vals
 		if 'creation_date' in vals:
 			context.update({'date':vals['creation_date']})
 		else:
@@ -652,8 +652,9 @@ class cci_missions_ata_carnet(osv.osv):
 			context.update({'partner_id':vals['partner_id']})
 			data_partner=self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])
 		else:
-			context.update({'partner_id':data_carnet.partner_id})
-			data_partner=self.pool.get('res.partner').browse(cr,uid,data_carnet.partner_id)
+			context.update({'partner_id':data_carnet.partner_id.id})
+			data_partner=self.pool.get('res.partner').browse(cr,uid,data_carnet.partner_id.id)
+
 		if 'goods_value' in vals:
 			context.update({'value_goods':vals['goods_value']})
 		else:
@@ -663,6 +664,7 @@ class cci_missions_ata_carnet(osv.osv):
 		else:
 			context.update({'double_signature':data_carnet.double_signature})
 		force_member=force_non_member=False
+
 		context.update({'pricelist':data_partner.property_product_pricelist.id})
 		if 'member_price' in vals:
 			if vals['member_price']==1:
