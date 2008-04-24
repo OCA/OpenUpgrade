@@ -75,22 +75,22 @@ class wizard_vat(wizard.interface):
             record=[] # this holds record per partner
             obj_partner=pooler.get_pool(cr.dbname).get('res.partner').browse(cr,uid,p_id)
 
-            record.append(obj_partner.vat)
 
-            if not obj_partner.address:
-                record.append('None')
-            for ads in obj_partner.address:
-                if ads.type=='default':
-                    if ads.country_id:
-                        record.append(ads.country_id.code)
-                    else:
-                        record.append('None')
             cr.execute('select a.type,sum(credit)-sum(debit) from account_move_line l left join account_account a on (l.account_id=a.id) where a.type in ('"'income'"','"'tax'"') and l.partner_id=%d and l.date between %s group by a.type'%(p_id,period))
             line_info=cr.fetchall()
 
             if not line_info:
                 continue
 
+            record.append(obj_partner.vat)
+            for ads in obj_partner.address:
+                if ads.type=='default':
+                    if ads.country_id:
+                        record.append(ads.country_id.code)
+                    else:
+                        raise wizard.except_wizard('Data Insufficient!', 'The Partner "'+obj_partner.name + '"'' has no country associated with its default type address!')
+                else:
+                    raise wizard.except_wizard('Data Insufficient!', 'The Partner "'+obj_partner.name + '"'' has no default type address!')
             if len(line_info)==1:
                 if line_info[0][0]=='income':
                        record.append(0.00)
@@ -108,12 +108,14 @@ class wizard_vat(wizard.interface):
         sum_tax=0.00
         sum_turnover=0.00
         for line in datas:
+            if line[3]< 250.00:
+                continue
             seq +=1
             sum_tax +=line[2]
             sum_turnover +=line[3]
-            data_clientinfo +='\n<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>'+line[0] +'</VATNum>\n\t\t<Country>'+line[1] +'</Country>\n\t</CompanyInfo>\n\t<Amount>'+str(line[2]) +'</Amount>\n\t<TurnOver>'+str(line[3]) +'</TurnOver>\n</ClientList>\n'
+            data_clientinfo +='\n<ClientList SequenceNum="'+str(seq)+'">\n\t<CompanyInfo>\n\t\t<VATNum>'+line[0] +'</VATNum>\n\t\t<Country>'+line[1] +'</Country>\n\t</CompanyInfo>\n\t<Amount>'+str(int(line[2] * 100)) +'</Amount>\n\t<TurnOver>'+str(int(line[3] * 100)) +'</TurnOver>\n</ClientList>\n'
 
-        data_decl ='\n<DeclarantList SequenceNum="1" DeclarantNum="" ClientNbr="'+ str(seq) +'" TurnOverSum="'+ str(sum_turnover) +'" TaxSum="'+ str(sum_tax) +'" />'
+        data_decl ='\n<DeclarantList SequenceNum="1" DeclarantNum="" ClientNbr="'+ str(seq) +'" TurnOverSum="'+ str(int(sum_turnover * 100)) +'" TaxSum="'+ str(int(sum_tax * 100)) +'" />'
         data_file += str(data_decl) + str(data_comp) + str(data_period) + str(data_clientinfo) + '</VatList>'
 
         data['form']['msg']='Save the File with '".xml"' extension.'
