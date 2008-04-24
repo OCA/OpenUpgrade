@@ -4,19 +4,19 @@
 		<record model="board.note.type" id="note_crm_type">
 			<field name="name">CRM Configuration</field>
 		</record>	
+		
 		<record model="ir.ui.view" id="view_crm_case_user_graph1">
 			<field name="name">crm.case.user.graph1</field>
 			<field name="model">report.crm.case.user</field>
 			<field name="type">graph</field>
 			<field name="arch" type="xml">
-				<graph string="Cases by User and Section" type="bar" orientation="horizontal">
-					<field name="user_id"/>
+				<graph string="Cases by User and Section" type="pie">
+					<field name="state"/>
 					<field name="nbr" operator="+"/>
-					<field name="state" group="True"/>
 				</graph>
 			</field>
 		</record>	
-		
+
 		<act_window name="My Leads"
 			domain="[('section_id','=','Leads'),('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]"
 			res_model="crm.case"
