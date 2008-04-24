@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+			<wizard
+				string="Send Varification Code"
+				model="email.smtpclient"
+				name="email.sendcode"
+				id="wizard_email_sendcode"/>
+				
+			<wizard
+				string="Varify Server"
+				model="email.smtpclient"
+				name="email.varifycode"
+				id="wizard_email_varifycode"/>
+			
+			<wizard
+				string="Send Test Email"
+				model="email.smtpclient"
+				name="email.testemail"
+				id="wizard_email_testemail"/>
+	</data>
+</terp>

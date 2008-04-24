@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+		<record model="ir.ui.view" id="email_smtpclient_form">
+			<field name="name">email.smtpclient.form</field>
+			<field name="model">email.smtpclient</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="SMTP Server">
+					<notebook>
+						<page string="Configuration">
+							<separator string="General Information" colspan="4"/>
+							<field name="name" select="1"/>
+							<field name="date_create" select="1"/>
+							<newline/>
+							<separator string="User Information" colspan="4"/>
+							<field name="from" select="1"/>
+							<field name="email" select="1" on_change="change_email(email)"/>
+							<newline/>
+							<field name="user" select="1"/>
+							<field name="password" select="1"/>
+							<newline/>
+							<separator string="Server Information" colspan="4"/>
+							<field name="server" select="1"/>
+							<field name="port" select="1"/>
+							<field name="ssl" select="1"/>
+							<separator string="Varification Information" colspan="4"/>
+							<field name="state" select="1"/>
+							<field name="active" select="1"/>
+						</page>
+						<page string="Messagess">
+							<vpaned>
+								<child1>
+									<separator string="Varification Message" colspan="4"/>
+									<field name="verify_email" select="1" colspan="4" nolabel="1"/>
+								</child1>
+								<child2>
+									<separator string="Test Message" colspan="4"/>
+									<field name="test_email" select="1" colspan="4" nolabel="1"/>
+								</child2>
+							</vpaned>
+						</page>
+						<page string="Permission">
+							<separator string="Access Permission" colspan="4"/>
+							<field name="users_id" select="1" colspan="4" nolabel="1"/>
+						</page>
+						<page string="Statestic">
+						</page>
+						<page string="History">
+							<field name="history_line" select="1" colspan="4" nolabel="1">
+								<tree string="Server History">
+									<field name="user_id"/>
+									<field name="date_create"/>
+									<field name="name"/>
+								</tree>
+								<form string="Server History">
+									<field name="user_id"/>
+									<field name="date_create"/>
+									<field name="name" colspan="4"/>
+								</form>
+							</field>
+						</page>
+					</notebook>
+					<newline/>
+					
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="email_smtpclient_tree">
+			<field name="name">email.smtpclient.form</field>
+			<field name="model">email.smtpclient</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="SMTP Server">
+					<field name="name"/>
+					<field name="from"/>
+					<field name="user"/>
+					<field name="password"/>
+					<field name="server"/>
+					<field name="port"/>
+					<field name="ssl"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_email_smtpclient_tree">
+			<field name="name">Email Server</field>
+			<field name="res_model">email.smtpclient</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="email_smtpclient_tree"/>
+		</record>
+		<menuitem name="Administration/Configuration/Servers/SMTP Server" id="menu_action_email_smtpclient_tree" action="action_email_smtpclient_tree"/>
+		
+		<record model="ir.ui.view" id="email_smtpclient_history_tree">
+			<field name="name">email.smtpclient.history.tree</field>
+			<field name="model">email.smtpclient.history</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Server History">
+					<field name="server_id"/>
+					<field name="user_id"/>
+					<field name="date_create"/>
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="email_smtpclient_history_form">
+			<field name="name">email.smtpclient.history.form</field>
+			<field name="model">email.smtpclient.history</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Server History">
+					<field name="server_id" domain="[('id','=',parent.id)]"/>
+					<field name="date_create"/>
+					<field name="name" colspan="4"/>
+				</form>
+			</field>
+		</record>
+	</data>
+</terp>
