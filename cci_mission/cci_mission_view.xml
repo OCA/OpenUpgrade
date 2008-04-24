@@ -214,9 +214,7 @@
 								<field name="tax_rate"/>
 							</tree>
 							<form string="Embassy Foder Lines">
-								<field name="type" />
-								<newline/>
-								<field name="product_id" on_change="onchange_product(product_id)" />
+								<field name="type" on_change="onchange_line_type(type)" />
 								<newline/>
 								<field name="name" />
 								<newline/>
@@ -310,7 +308,6 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Embassy Folder Line">
-					<field name="product_id" on_change="onchange_product(product_id)" />
 					<field name="name" select="1" />
 					<newline/>
 					<field name="folder_id" select="2"/>

@@ -302,6 +302,69 @@
 		<field name="name">ATA - Insurer Warranty</field>
 		<field name="categ_id" ref="product.cat1"/>
 	</record>
+	<record id="cci_product_product_embassy_lines_1" model="product.product">
+		<field name="list_price">35.00</field>
+		<field name="member_price">65.00</field>
+		<field name="standard_price">10.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">CBA Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_2" model="product.product">
+		<field name="list_price">25.00</field>
+		<field name="member_price">30.00</field>
+		<field name="standard_price">05.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Ministry Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_3" model="product.product">
+		<field name="list_price">18.00</field>
+		<field name="member_price">26.00</field>
+		<field name="standard_price">0.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Embassy Consulate Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_4" model="product.product">
+		<field name="list_price">38.00</field>
+		<field name="member_price">48.00</field>
+		<field name="standard_price">04.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Translation Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_5" model="product.product">
+		<field name="list_price">56.00</field>
+		<field name="member_price">72.00</field>
+		<field name="standard_price">21.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Administrative Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_6" model="product.product">
+		<field name="list_price">30.00</field>
+		<field name="member_price">48.00</field>
+		<field name="standard_price">03.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Travel Costs Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_7" model="product.product">
+		<field name="list_price">70.00</field>
+		<field name="member_price">92.00</field>
+		<field name="standard_price">19.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Others Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
 
 <!-- Demo Data for Dossier Type -->
 	<record id="cci_missions_dossier_type_certificate0" model="cci_missions.dossier_type">

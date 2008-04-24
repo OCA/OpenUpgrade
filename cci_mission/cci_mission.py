@@ -175,22 +175,24 @@ class cci_missions_embassy_folder_line (osv.osv):
 	_description = 'cci_missions.embassy_folder_line '
 
 	def onchange_line_type(self,cr,uid,ids,type):
-		if not type:
-			return {'value' : {'account_id' : id_acnt[0]}}
-		id_acnt=self.pool.get('account.account').search(cr,uid,[('code','=','7010')])
-		if id_acnt:
-			return {'value' : {'name' : type,'account_id' : id_acnt[0]}}
-		return {'value' : {'name' : type,'account_id' : False}}
-
-	def onchange_product(self,cr,uid,ids,product_id):
 		data={}
 		data['courier_cost']=data['customer_amount']=data['account_id']=data['name']=False
-		if not product_id:
+
+		if not type:
 			return {'value' : data }
+
+		data['name']=type
+		prod_name= str(type) + str(' Product')
+		cr.execute('select id from product_template where name='"'%s'"''%str(prod_name))
+		prod=cr.fetchone()
+
+		if not prod:
+			return {'value' : data }
+
+		product_id=prod[0]
 		prod_info = self.pool.get('product.product').browse(cr, uid,product_id)
 		data['courier_cost']=prod_info.standard_price
 		data['customer_amount']=prod_info.list_price
-		data['name']=prod_info.name
 		account =  prod_info.product_tmpl_id.property_account_income.id
 		if not account:
 			account = prod_info.categ_id.property_account_income_categ.id
@@ -203,9 +205,8 @@ class cci_missions_embassy_folder_line (osv.osv):
 		'courier_cost' : fields.float('Couriers Costs'),
 		'customer_amount' : fields.float('Invoiced Amount'),
 		'tax_rate': fields.many2one('account.tax','Tax Rate'),
-		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy  Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
+		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
 		'account_id' : fields.many2one('account.account', 'Account', required=True),
-		'product_id' : fields.many2one('product.product','Product',required=True,),
 	}
 
 cci_missions_embassy_folder_line()
