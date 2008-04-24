@@ -1,7 +1,7 @@
 {
     "name" : "HR Holiday Request",
     "version" : "1.0",
-    "author" : "Axelor",
+    "author" : "Tiny & Axelor",
     "category" : "Generic Modules/Human Resources",
     "website": "http://www.axelor.com",
     "depends" : ["base","hr"],
