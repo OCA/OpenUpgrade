@@ -67,7 +67,7 @@
 		<field name="domain">[('user_id','=',uid)]</field>		
 	</record>
 	
-	<menuitem name="Webmail/Server Configuration" id="menu_action_webmail_tiny_user" action="action_webmail_tiny_user"/>		
+	<menuitem name="Webmail/Configuration/Server" id="menu_action_webmail_tiny_user" action="action_webmail_tiny_user"/>		
 	
 	<record model="ir.ui.view" id="view_webmail_mailacc_form">
 		<field name="name">webmail.mailacc.form</field>
@@ -80,6 +80,7 @@
 		</field>
 	</record>
 	
+	<!-- 
 	<record model="ir.ui.view" id="view_webmail_mailacc_tree">
 		<field name="name">webmail.mailacc.tree</field>
 		<field name="model">webmail.server</field>
@@ -100,6 +101,79 @@
 	</record>
 	
 	<menuitem name="Webmail/Mail Account" id="menu_action_webmail_mailacc" action="action_webmail_mailacc"/>
+	-->
+	
+	<record model="ir.ui.view" id="webmail_mailbox_tree_view">
+		<field name="name">webmail.mailbox.tree</field>
+		<field name="model">webmail.mailbox</field>
+		<field name="type">tree</field>
+		<field name="field_parent">child_id</field>
+		<field name="arch" type="xml">
+			<tree string="Mail Account">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_mailbox">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">webmail.mailbox</field>
+		<field name="domain">[('parent_id','=',False)]</field>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="webmail_mailbox_tree_view"/>
+	</record>
+		
+	<record model="ir.ui.view" id="view_webmail_email_read_form">
+		<field name="name">webmail.email.read.form</field>
+		<field name="model">webmail.email</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Compose Mail">
+				<field name="from" colspan="4"/>
+				<field name="cc" colspan="4"/>
+				<field name="bcc" colspan="4"/>				
+				<field name="subject" colspan="4"/>
+				<field name="attachment_id" nolabel="1" colspan="4"/>
+				<separator string="Message" colspan="4"/>
+				<field name="body" nolabel="1" colspan="4"/>
+				<group col="4" colspan="4">
+					<button type="action" name="%(view_webmail_email_compose_form)d"  string="Reply"/>
+					<button type="action" name="%(view_webmail_email_compose_form)d"  string="Reply to All" />
+					<button type="action" name="%(view_webmail_email_compose_form)d"  string="Forward Mail" />					
+				</group>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_webmail_email_compose_form">
+		<field name="name">webmail.email.compose.form</field>
+		<field name="model">webmail.email</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Compose Mail">
+				<field name="to" colspan="4"/>
+				<field name="cc" colspan="4"/>
+				<field name="bcc" colspan="4"/>				
+				<field name="subject" colspan="4"/>
+				<field name="attachment_id" nolabel="1" colspan="4"/>
+				<separator string="Message" colspan="4"/>
+				<field name="body" nolabel="1" colspan="4"/>
+				<group col="3" colspan="4">
+					<button name="_send_mail" string="Send Mail"/>					
+				</group>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_compose_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>
+		<field name="context">{'account_id':account_id}</field>
+	</record>
+	
+	<menuitem name="Webmail/Compose Mail" id="menu_action_webmail_compose_mail" action="action_webmail_compose_mail"/>
 	
 </data>
 </terp>
