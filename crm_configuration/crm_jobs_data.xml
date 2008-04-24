@@ -121,5 +121,28 @@
 		<field eval="&quot;Finance Job&quot;" name="name"/>
 		<field eval="&quot;33968745&quot;" name="partner_phone"/>
 	</record>	
+	<record id="crm_case_traineemca1" model="crm.case">
+		<field model="res.partner.canal" name="canal_id" search="[('name','=','E-mail')]"/>
+		<field name="partner_address_id" ref="base.res_partner_address_14"/>
+		<field name="som" ref="base.som_fury"/>
+		<field eval="time.strftime('%Y-%m-12')" name="date"/>
+		<field name="category2_id" ref="crm_configuration.category_job3"/>
+		<field name="partner_id" ref="base.res_partner_15"/>
+		<field eval="&quot;3&quot;" name="priority"/>
+		<field name="user_id" ref="base.user_admin"/>
+		<field eval="&quot;Tina Augustie&quot;" name="partner_name"/>
+		<field eval="&quot;open&quot;" name="state"/>
+		<field eval="1.15" name="duration"/>
+		<field name="section_id" ref="crm_configuration.section_support0"/>
+		<field eval="&quot;tina_augustie@example.com&quot;" name="partner_name2"/>
+		<field eval="&quot;9898745745&quot;" name="partner_mobile"/>
+		<field eval="1" name="active"/>
+		<field name="categ_id" ref="crm_configuration.categ_job2"/>
+		<field name="stage_id" ref="crm_configuration.stage_job4"/>
+		<field eval="&quot;Trainee - MCA&quot;" name="name"/>
+		<field eval="time.strftime('%Y-%m-15')" name="date_deadline"/>
+		<field eval="&quot;6630125&quot;" name="partner_phone"/>
+	</record>
+	
 </data>
 </terp>
