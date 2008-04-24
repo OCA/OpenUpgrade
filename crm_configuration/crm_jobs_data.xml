@@ -7,7 +7,7 @@
 
 	<!--For Jobs Requests-->
 	<record id="crm_case_salesman0" model="crm.case">
-		<field eval="time.strftime('%Y-%m-01')" name="date"/>
+		<field eval="time.strftime('%Y-%m-01 10:35:50')" name="date"/>
 		<field eval="time.strftime('%Y-%m-03')" name="date_deadline"/>
 		<field name="category2_id" ref="crm_configuration.category_job1"/>
 		<field name="partner_id" ref="base.res_partner_asus"/>
@@ -19,7 +19,7 @@
 		<field eval="&quot;enrique@rediff.com&quot;" name="partner_name2"/>
 		<field eval="&quot;9963214587&quot;" name="partner_mobile"/>
 		<field eval="1" name="active"/>
-		<field eval="1.0" name="duration"/>
+		<field eval="9.0" name="duration"/>
 		<field name="categ_id" ref="crm_configuration.categ_job1"/>
 		<field name="stage_id" ref="crm_configuration.stage_job1"/>
 		<field eval="&quot;Salesman&quot;" name="name"/>
@@ -29,14 +29,14 @@
 		<field model="res.partner.canal" name="canal_id" search="[('name','=','E-mail')]"/>
 		<field name="partner_address_id" ref="base.res_partner_address_14"/>
 		<field name="som" ref="base.som_fury"/>
-		<field eval="time.strftime('%Y-%m-10')" name="date"/>
+		<field eval="time.strftime('%Y-%m-10 18:15:00')" name="date"/>
 		<field name="category2_id" ref="crm_configuration.category_job3"/>
 		<field name="partner_id" ref="base.res_partner_15"/>
 		<field eval="&quot;3&quot;" name="priority"/>
 		<field name="user_id" ref="base.user_admin"/>
 		<field eval="&quot;Marie Justine&quot;" name="partner_name"/>
 		<field eval="&quot;open&quot;" name="state"/>
-		<field eval="1.15" name="duration"/>
+		<field eval="5.15" name="duration"/>
 		<field name="section_id" ref="crm_configuration.section_support0"/>
 		<field eval="&quot;marie@gmail.com&quot;" name="partner_name2"/>
 		<field eval="&quot;9988774455&quot;" name="partner_mobile"/>
@@ -50,13 +50,13 @@
 	<record id="crm_case_fresher0" model="crm.case">
 		<field model="res.partner.canal" name="canal_id" search="[('name','=','direct')]"/>
 		<field name="som" ref="base.som_happy"/>
-		<field eval="time.strftime('%Y-%m-15')" name="date"/>
+		<field eval="time.strftime('%Y-%m-15 16:10:00')" name="date"/>
 		<field eval="time.strftime('%Y-%m-18')" name="date_deadline"/>
 		<field name="category2_id" ref="crm_configuration.category_job2"/>
 		<field name="partner_id" ref="base.res_partner_5"/>
 		<field eval="&quot;1&quot;" name="priority"/>
 		<field name="user_id" ref="base.user_admin"/>
-		<field eval="0.45" name="duration"/>
+		<field eval="1.45" name="duration"/>
 		<field eval="&quot;Jose&quot;" name="partner_name"/>
 		<field eval="&quot;pending&quot;" name="state"/>
 		<field name="section_id" ref="crm_configuration.section_support0"/>
@@ -68,7 +68,7 @@
 		<field eval="&quot;999666735&quot;" name="partner_phone"/>
 	</record>
 	<record id="crm_case_yrsexperienceinphp0" model="crm.case">
-		<field eval="time.strftime('%Y-%m-25')" name="date"/>
+		<field eval="time.strftime('%Y-%m-25 16:25:52')" name="date"/>
 		<field eval="time.strftime('%Y-%m-28')" name="date_deadline"/>
 		<field name="categ_id" ref="crm_configuration.categ_job2"/>
 		<field name="category2_id" ref="crm_configuration.category_job3"/>
@@ -84,7 +84,7 @@
 		<field eval="&quot;&gt; 5 yrs Experience in PHP&quot;" name="name"/>
 	</record>
 	<record id="crm_case_marketingjob0" model="crm.case">
-		<field eval="time.strftime('%Y-%m-28')" name="date"/>
+		<field eval="time.strftime('%Y-%m-28 17:15:32')" name="date"/>
 		<field eval="time.strftime('%Y-%m-30')" name="date_deadline"/>
 		<field name="category2_id" ref="crm_configuration.category_job2"/>
 		<field name="partner_id" ref="base.res_partner_11"/>
@@ -103,7 +103,7 @@
 		<field eval="&quot;33968745&quot;" name="partner_phone"/>
 	</record>
 	<record id="crm_case_financejob0" model="crm.case">
-		<field eval="time.strftime('%Y-%m-26')" name="date"/>
+		<field eval="time.strftime('%Y-%m-26 17:39:42')" name="date"/>
 		<field eval="time.strftime('%Y-%m-29')" name="date_deadline"/>
 		<field name="category2_id" ref="crm_configuration.category_job2"/>
 		<field name="partner_id" ref="base.res_partner_11"/>
@@ -125,7 +125,7 @@
 		<field model="res.partner.canal" name="canal_id" search="[('name','=','E-mail')]"/>
 		<field name="partner_address_id" ref="base.res_partner_address_14"/>
 		<field name="som" ref="base.som_fury"/>
-		<field eval="time.strftime('%Y-%m-12')" name="date"/>
+		<field eval="time.strftime('%Y-%m-12 17:49:19')" name="date"/>
 		<field name="category2_id" ref="crm_configuration.category_job3"/>
 		<field name="partner_id" ref="base.res_partner_15"/>
 		<field eval="&quot;3&quot;" name="priority"/>
