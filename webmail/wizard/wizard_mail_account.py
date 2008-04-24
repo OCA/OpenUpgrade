@@ -1,10 +1,11 @@
 import wizard
 import pooler
 
-def _action_open_mail_account(self, cr, uid, data, context):    
-    if data['ids'].__len__()>1:
+def _action_open_mail_account(self, cr, uid, data, context):
+    if data['form']['ids'].__len__()>1:
         raise wizard.except_wizard('Error!', 'Please select only one mail account')    
-    mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')    
+    mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')
+    folder_id = mailbox_obj.search(cr, uid,[('user_id','=',uid)])
     
     return {
         'domain': "[('user_id','=',%d)]" % (uid),
