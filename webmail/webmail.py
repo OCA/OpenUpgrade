@@ -37,7 +37,10 @@ class webmail_server(osv.osv):
         'oconn_port': lambda *a: 25,
     }
     
-    def _login(self, cr, uid, context, host, port, user, password, ssl, type):
+    def _login(self, cr, uid, ids, context, host, port, user, password, ssl, type):
+        pass
+    
+    def _test_connection(self, cr, uid, ids, context):
         pass
     
 webmail_server()
@@ -56,13 +59,13 @@ class webmail_mailbox(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
     }
     
-    def _rename(self, cr, uid, context, old, new):
+    def _rename(self, cr, uid, ids, context, old, new):
         pass
     
-    def _new(self, cr, uid, context, name):
+    def _new(self, cr, uid, ids, context, name):
         pass
     
-    def _delete(self, cr, uid, context, name):
+    def _delete(self, cr, uid, ids, context, name):
         pass
     
 webmail_mailbox()
@@ -104,7 +107,7 @@ class webmail_email(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
     }
     
-    def _send_mail(self, cr, uid, context):
+    def _send_mail(self, cr, uid, ids, context):
         pass
     
 webmail_email()
