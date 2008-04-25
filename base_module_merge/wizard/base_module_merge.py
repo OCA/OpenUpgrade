@@ -87,12 +87,17 @@ from zipfile import PyZipFile, ZIP_DEFLATED
 import StringIO
 import base64
 
-#dependencies=[]
-
 class base_module_merge(wizard.interface):
 
+	def _zip_writestr(self,file_name,data):
+		info = zipfile.ZipInfo(file_name)
+		info.compress_type = zipfile.ZIP_DEFLATED
+		info.external_attr = 2175008768
+		self.archive.writestr(info,data)
+		return True
+
 	def _remove_prefix_ref(self,fromurl,path):
-		infile=open(os.path.join(fromurl,path),'r')
+		infile=tools.file_open(os.path.join(fromurl,path))
 		xml=infile.read()
 		mydom = minidom.parseString(xml)
 		for child in mydom.getElementsByTagName("field"):
@@ -104,14 +109,6 @@ class base_module_merge(wizard.interface):
 		                    child.setAttribute(attr,old.split('.')[1])
 		return mydom.toxml()
 
-	def write_xml(self,path,xml_doc):
-		xml_doc = xml_doc.encode("utf-8")
-		info = zipfile.ZipInfo(path)
-		info.compress_type = zipfile.ZIP_DEFLATED
-		info.external_attr = 2175008768
-		self.archive.writestr(info, xml_doc)
-		return True
-
 	def _parse_init(self,path,filename):
 		res=[]
 		path=os.path.join(path,filename)
@@ -119,13 +116,16 @@ class base_module_merge(wizard.interface):
 		for i in infile:
 			i=i.strip()
 			if len(i)>0:
-				if i[0]!="#" and i[0:6]=='import':
+				if i[0]!="#":
 					res.append( i.strip().split('\n')[0])
 		infile.close()
 		return res
 
 	def _zippy(self,archive, fromurl, path, src=True):
-		url = os.path.join(fromurl, path)
+		if path!='':
+			url = os.path.join(fromurl, path)
+		else:
+			url=fromurl
 		if os.path.isdir(url):
 			if path.split('/')[-1].startswith('.'):
 				return False
@@ -156,9 +156,11 @@ class base_module_merge(wizard.interface):
 				except KeyError:
 					if path.split('.')[-1] == 'xml':
 						xml_doc=self._remove_prefix_ref(fromurl,path)
-						self.write_xml(path, xml_doc)
+						xml_doc = xml_doc.encode("utf-8")
+						self._zip_writestr(path, xml_doc)
 					else:
-						self.archive.write(os.path.join(fromurl, path), path)
+						file_data=tools.file_open(os.path.join(fromurl, path)).read()
+						self._zip_writestr(path, file_data)
 				else:
 					path2=os.path.split(fromurl)[-1]
 					new_path=path2+'_'+os.path.split(path)[-1]
@@ -166,9 +168,23 @@ class base_module_merge(wizard.interface):
 						new_path=os.path.join(os.path.split(path)[0],new_path)
 					if path.split('.')[-1] == 'xml':
 						xml_doc=self._remove_prefix_ref(fromurl,path)
-						self.write_xml(new_path, xml_doc)
+						xml_doc = xml_doc.encode("utf-8")
+						self._zip_writestr(new_path, xml_doc)
+						if len(os.path.split(path))>1:
+							terp_file=os.path.join(fromurl,'__terp__.py')
+							terp_info=eval(tools.file_open(terp_file).read())
+							if os.path.basename(path) in terp_info['init_xml']:
+								print "in init_xml",new_path
+								self.init_xml+=[os.path.basename(new_path)]
+							elif os.path.basename(path) in terp_info['demo_xml']:
+								print "in demo_xml",new_path
+								self.demo_xml+=[os.path.basename(new_path)]
+							elif os.path.basename(path) in terp_info['update_xml']:
+								print "in update_xml",new_path
+								self.update_xml+=[os.path.basename(new_path)]
 					else:
-						self.archive.write(os.path.join(fromurl, path), new_path)
+						file_data=tools.file_open(os.path.join(fromurl, path)).read()
+						self._zip_writestr(new_path, file_data)
 					if new_path.split('.')[-1] == 'py':
 						new_import='import '+os.path.basename(new_path).split('.')[0]
 						if os.path.dirname(path)=='':
@@ -205,13 +221,6 @@ class base_module_merge(wizard.interface):
 		pool = pooler.get_pool(cr.dbname)
 		return {}
 
-	def _zip_writestr(self,file_name,data):
-		info = zipfile.ZipInfo(file_name)
-		info.compress_type = zipfile.ZIP_DEFLATED
-		info.external_attr = 2175008768
-		self.archive.writestr(info,data)
-		return True
-
 	def _create_module(self, cr, uid, data, context):
 		self.dict_init={}
 		self.init_xml=[]
@@ -222,12 +231,15 @@ class base_module_merge(wizard.interface):
 		for module in self.dependencies:
 			ad = tools.config['addons_path']
 			url = os.path.join(ad, module)
+			if not os.path.isdir(url):
+			    url=url+'.zip'
 			self._zippy(self.archive, url, '', src=True)
 		dname = data['form']['directory_name']
 		data['form']['depen']=self.dependencies
-		data['form']['init_xml']=self.init_xml
-		data['form']['demo_xml']=self.demo_xml
-		data['form']['update_xml']=self.update_xml
+
+		data['form']['init_xml']=reduce(lambda l, x: x not in l and l.append(x) or l, self.init_xml, [])
+		data['form']['demo_xml']=reduce(lambda l, x: x not in l and l.append(x) or l, self.demo_xml, [])
+		data['form']['update_xml']=reduce(lambda l, x: x not in l and l.append(x) or l, self.update_xml, [])
 		_terp = """{
 			"name" : "%(name)s",
 			"version" : "%(version)s",
@@ -241,7 +253,6 @@ class base_module_merge(wizard.interface):
 			"update_xml" : %(update_xml)s,
 			"installable": True
 	} """ % data['form']
-		print self.dict_init
 		for name,datastr in self.dict_init.items():
 			self.dict_init[name]=reduce(lambda l, x: x not in l and l.append(x) or l, self.dict_init[name], [])
 			init_data='\n'.join(self.dict_init[name])
@@ -291,4 +302,3 @@ class base_module_merge(wizard.interface):
 		}
 	}
 base_module_merge('base_module_merge.module_merge')
-
