@@ -85,7 +85,7 @@ class webmail_email(osv.osv):
     _description="User Email"
     _columns={
         'user_id': fields.many2one('res.users', 'User'),
-        'account_id': fields.many2one('webmail.server', 'User'),
+        'account_id': fields.many2one('webmail.server', 'Server'),
         'folder_id': fields.many2one('webmail.mailbox', 'Folder'),
         'message_id': fields.char('Message Id',size=256),
         'active': fields.boolean('Active'),
