@@ -17,19 +17,21 @@
 			</field>
 		</record>	
 
-		<act_window name="My Leads"
-			domain="[('section_id','=','Leads'),('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]"
-			res_model="crm.case"
-			view_type="form"
-			view_mode="tree,form"
-			id="act_my_leads"/>	
-			
-		<act_window name="My Meetings"
-				domain="[('section_id','=','Meetings'),('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]"
-				res_model="crm.case"
-				view_type="form"
-				view_mode="tree,form"
-				id="act_my_meetings"/>
+		<record model="ir.actions.act_window" id="act_my_leads">
+			<field name="res_model">crm.case</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="crm_configuration.crm_case_tree_view_leads"/>
+			<field name="domain">[('section_id', '=', 'Leads'),('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="act_my_meetings">
+			<field name="res_model">crm.case</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="crm_configuration.crm_case_tree_view_meet"/>
+			<field name="domain">[('section_id', '=', 'Meetings'),('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]</field>
+		</record>
 			
 		<act_window name="My Cases"
 				domain="[('user_id','=',uid),('state','!=','pending'),('state','!=','cancel')]"
