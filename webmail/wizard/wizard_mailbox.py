@@ -52,8 +52,7 @@ def _delete(self, cr, uid, data, context):
     if mailbox.parent_id:
         raise wizard.except_wizard('Error!', 'You can not delete parent folder')
     
-    mailbox_obj._delete(cr, uid, data['ids'] , mailbox.name)
-    mailbox_obj.unlink(cr, uid, data['form']['ids'])
+    mailbox_obj._delete(cr, uid, data['form']['ids'], context)    
     return {}
 
 def _fill_name(self, cr, uid, data, context):
@@ -67,11 +66,9 @@ def _fill_name(self, cr, uid, data, context):
 def _create_process(self, cr, uid, data, context):
     name = data['form']['folder_name']
     if not name:
-        raise wizard.except_wizard('Error!', 'Please enter folder name')
-    
-    mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')    
-    mailbox_obj._create(cr, uid, data['form']['ids'] , name)
-    mailbox_obj.write(cr, uid,{'name': name })
+        raise wizard.except_wizard('Error!', 'Please enter folder name')    
+    mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')        
+    mailbox_obj._create(cr, uid, data['form']['ids'], context, name)    
     return {}
 
 def _rename_process(self, cr, uid, data, context):
@@ -80,10 +77,8 @@ def _rename_process(self, cr, uid, data, context):
     if not old_name:
         raise wizard.except_wizard('Error!', 'Please enter old folder name')
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')    
-    mailbox_obj._rename(cr, uid, data['form']['ids'] , old_name, new_name)
-    mailbox_obj.write(cr, uid,{'name': new_name })
+    mailbox_obj._rename(cr, uid, data['form']['ids'] , context, old_name, new_name)    
     return {}
-
 
 class wizard_mailbox(wizard.interface):
             
