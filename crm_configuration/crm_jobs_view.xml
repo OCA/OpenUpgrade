@@ -140,9 +140,9 @@
 		<field name="type">calendar</field>
 		<field name="priority" eval="2"/>
 		<field name="arch" type="xml">
-			<calendar string="Meeting With Future Employees" date_start="date" color="user_id" delay="duration">
+			<calendar string="Meeting With Future Employees" date_start="date" color="categ_id" date_delay="duration">
 				<field name="partner_name"/>
-				<field name="categ_id"/>
+				<field name="partner_name2"/>
 			</calendar>
 		</field>
 	</record>
