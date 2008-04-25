@@ -70,8 +70,7 @@ class webmail_server(osv.osv):
         else:
             raise osv.except_osv(
                         'Connection!',
-                        'Connection done successfully.')
-        
+                        'Connection done successfully.')        
         return True
         
 webmail_server()
