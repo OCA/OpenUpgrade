@@ -83,7 +83,7 @@ class webmail_email(osv.osv):
         'bcc': fields.char('Bcc', size=256),
         'body': fields.text('Body'),
         'attachment_id': fields.one2many('webmail.email.attachment', 'email_id', string='Attachment'),
-        'tag_id': fields.many2one('webmail.tags', 'Tags',domain=[('user_id','=',uid)]),
+        'tag_id': fields.many2one('webmail.tags', 'Tags'),
     }
     _default={
         'user_id': lambda obj, cr, uid, context: uid,
