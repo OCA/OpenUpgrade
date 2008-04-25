@@ -197,6 +197,9 @@
 				<field name="name"/>
 				<field name="sequence"/>
 				<field name="root_analytic_id"/>
+				<newline/>
+				<field name="min_required"/>
+				<field name="max_required"/>
 			</form>
 		</field>
 	</record>
@@ -210,6 +213,8 @@
 				<field name="name" select="1"/>
 				<field name="sequence"/>
 				<field name="root_analytic_id" select="2"/>
+				<field name="min_required"/>
+				<field name="max_required"/>
 			</tree>
 		</field>
 	</record>

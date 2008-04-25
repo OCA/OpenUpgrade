@@ -77,6 +77,12 @@ class account_analytic_plan_line(osv.osv):
 		'name': fields.char('Plan Name', size=64, required=True, select=True),
 		'sequence':fields.integer('Sequence'),
 		'root_analytic_id': fields.many2one('account.analytic.account','Root Account',help="Root account of this plan.",required=True),
+		'min_required': fields.float('Minimum Allowed (%)'),
+		'max_required': fields.float('Maximum Allowed (%)'),
+	}
+	_defaults = {
+		'min_required': lambda *args: 100.0,
+		'max_required': lambda *args: 100.0,
 	}
 	_order = "sequence,id"
 account_analytic_plan_line()
@@ -161,10 +167,54 @@ class account_analytic_plan_instance(osv.osv):
 			return res
 		else:
 			return res
+
+	def create(self, cr, uid, vals, context=None):
+		if context and context['journal_id']:
+			journal= self.pool.get('account.journal').browse(cr,uid,context['journal_id'])
+			vals.update({'plan_id': journal.plan_id.id})
+
+			res = self.pool.get('account.analytic.plan.line').search(cr,uid,[('plan_id','=',journal.plan_id.id)])
+			for i in res:
+				total_per_plan = 0
+				item = self.pool.get('account.analytic.plan.line').browse(cr,uid,i)
+				temp_list=['account1_ids','account2_ids','account3_ids','account4_ids','account5_ids','account6_ids']
+				for l in temp_list:
+					if vals.has_key(l):
+						for tempo in vals[l]:
+							if self.pool.get('account.analytic.account').search(cr,uid,[('parent_id','child_of',[item.root_analytic_id.id]),('id','=',tempo[2]['analytic_account_id'])]):
+								total_per_plan += tempo[2]['rate']
+				if total_per_plan < item.min_required or total_per_plan > item.max_required:
+					raise osv.except_osv("Value Error" ,"The Total Should be Between " + str(item.min_required) + " and " + str(item.max_required))
+
+		return super(account_analytic_plan_instance, self).create(cr, uid, vals, context)
+
 	def write(self, cr, uid, ids, vals, context={}, check=True, update_check=True):
+		this = self.browse(cr,uid,ids[0])
+		res = self.pool.get('account.analytic.plan.line').search(cr,uid,[('plan_id','=',this.plan_id.id)])
+		for i in res:
+			item = self.pool.get('account.analytic.plan.line').browse(cr,uid,i)
+			total_per_plan = 0
+			for j in self.pool.get('account.analytic.plan.instance.line').search(cr,uid,[('plan_id','=',this.id),('analytic_account_id','child_of',[item.root_analytic_id.id])]):
+				plan_line = self.pool.get('account.analytic.plan.instance.line').browse(cr,uid,j)
+				unchanged = True
+				temp_list=['account1_ids','account2_ids','account3_ids','account4_ids','account5_ids','account6_ids']
+				for l in temp_list:
+					if vals.has_key(l):
+						for tempo in vals[l]:
+							if tempo[1] == plan_line.id:
+								unchanged = False
+								if tempo[2] != False:
+									total_per_plan += tempo[2]['rate']
+							if tempo[1] == 0:
+								if self.pool.get('account.analytic.account').search(cr,uid,[('parent_id','child_of',[item.root_analytic_id.id]),('id','=',tempo[2]['analytic_account_id'])]):
+									total_per_plan += tempo[2]['rate']
+				if unchanged:
+					total_per_plan += plan_line.rate
+			if total_per_plan < item.min_required or total_per_plan > item.max_required:
+				raise osv.except_osv("Value Error" ,"The Total Should be Between " + str(item.min_required) + " and " + str(item.max_required))
 		if context.get('journal_id',False):
 			new_copy=self.copy(cr, uid, ids[0], context=context)
-			vals['plan_id']=False
+			vals['plan_id']=this.plan_id.id
 		return super(account_analytic_plan_instance, self).write(cr, uid, ids, vals, context)
 account_analytic_plan_instance()
 
@@ -173,8 +223,8 @@ class account_analytic_plan_instance_line(osv.osv):
 	_description = 'Object for create analytic entries from invoice lines'
 	_columns={
 		'plan_id':fields.many2one('account.analytic.plan.instance','Plan Id'),
-		'analytic_account_id':fields.many2one('account.analytic.account','Analytic Account'),
-		'rate':fields.float('Rate (%)'),
+		'analytic_account_id':fields.many2one('account.analytic.account','Analytic Account', required=True),
+		'rate':fields.float('Rate (%)', required=True),
 	}
 	def name_get(self, cr, uid, ids, context={}):
 		if not len(ids):
