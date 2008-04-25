@@ -53,15 +53,14 @@ class webmail_server(osv.osv):
                 if ssl:
                     obj = poplib.POP3_SSL(server, port)
                 else:
-                    obj = poplib.POP3(server, port)
-                    
+                    obj = poplib.POP3(server, port)                    
             obj.login(server.iuser_name, server.ipassword)            
         except Exception,e:
             pass
         return obj
         
     def _test_connection(self, cr, uid, ids, context):
-        server = self.browse(cr, uid, ids[0])        
+        server = self.browse(cr, uid, ids[0])
         obj = self._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
         if not obj:
            raise osv.except_osv(
@@ -89,13 +88,48 @@ class webmail_mailbox(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
     }
     
-    def _rename(self, cr, uid, ids, context, old, new):
-        pass
-    
+    def _select(self, cr, uid, ids, context, mail_acc):
+        server_obj = pooler.get_pool(cr.dbname).get('webmail.server')
+        obj = server_obj._login(cr, uid, ids, context, mail_acc.iserver_name, mail_acc.iconn_port, mail_acc.iconn_type, mail_acc.iserver_type, mail_acc.iuser_name, mail_acc.ipassword)
+        return obj.select()[1]
+        
     def _new(self, cr, uid, ids, context, name):
-        pass
+         mailbox_obj = self.pool.get('webmail.mailbox')
+         server_obj = self.pool.get('webmail.server')
+         
+         mailbox = mailbox_obj.browse(cr, uid, ids[0])
+         server = server_obj.browse(cr, uid, mailbox.account_id.id)
+         if server.iserver_type=='imap':
+             obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
+             if obj:
+                obj.create(name)
+                mailbox_obj.create(cr, uid, {'name':name, 'parent_id':mailbox.parent_id})
     
-    def _delete(self, cr, uid, ids, context, name):
+    def _rename(self, cr, uid, ids, context, old, new):
+        mailbox_obj = self.pool.get('webmail.mailbox')
+        server_obj = self.pool.get('webmail.server')
+        
+        mailbox = mailbox_obj.browse(cr, uid, ids[0])
+        server = server_obj.browse(cr, uid, mailbox.account_id.id)
+        if server.iserver_type=='imap':
+            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
+            if obj:
+                obj.rename(old, new)
+                mailbox_obj.write(cr, uid, ids, {'name': new_name })    
+    
+    def _delete(self, cr, uid, ids, context):
+        mailbox_obj = self.pool.get('webmail.mailbox')
+        server_obj = self.pool.get('webmail.server')
+        
+        mailbox = mailbox_obj.browse(cr, uid, ids[0])
+        server = server_obj.browse(cr, uid, mailbox.account_id.id)
+        if server.iserver_type=='imap':
+            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
+            if obj:
+                obj.delete(mailbox.name)
+                mailbox_obj.unlink(cr, uid, ids)
+                
+    def _fetch_mail(self, cr, uid, ids, context):
         pass
     
 webmail_mailbox()
