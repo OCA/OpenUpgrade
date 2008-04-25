@@ -43,6 +43,18 @@
 			id="mission_fed_send"
 			menu="True"/>"
 
+		<wizard
+			string="Make Invoice"
+			name="cci_missions.make_invoice_common"
+			menu="False"
+			id="missions_invoice_common"/>
+
+		<menuitem
+			name="Missions/Make Invoice"
+			action="missions_invoice_common"
+			type="wizard"
+			id="cci_missions_invoice_common"/>
+
 
 	</data>
 </terp>

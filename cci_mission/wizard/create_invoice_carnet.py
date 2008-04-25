@@ -50,6 +50,7 @@ fields = {
           }
 
 def _createInvoices(self, cr, uid, data, context):
+    print "data",data
     pool_obj = pooler.get_pool(cr.dbname)
     obj_carnet = pool_obj.get('cci_missions.ata_carnet')
     data_carnet = obj_carnet.browse(cr,uid,data['ids'])

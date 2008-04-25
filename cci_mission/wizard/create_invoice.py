@@ -173,10 +173,7 @@ def _createInvoices(self, cr, uid, data, context={}):
 		inv_id = inv_obj.create(cr, uid, inv)
 		list_inv.append(inv_id)
 		wf_service = netsvc.LocalService('workflow')
-		if current_model=='cci_missions.certificate':
-			wf_service.trg_validate(uid, 'cci_missions.certificate', data.id, 'invoiced', cr)
-		else:
-			wf_service.trg_validate(uid, 'cci_missions.legalization', data.id, 'invoiced', cr)
+		wf_service.trg_validate(uid, current_model, data.id, 'invoiced', cr)
 
 		obj_dossier.write(cr, uid,data.id, {'invoice_id' : inv_id, 'invoiced_amount':price})
 

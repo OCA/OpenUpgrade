@@ -80,22 +80,22 @@ class cci_missions_embassy_folder(osv.osv):
 	def _cci_mission_send(self, cr, uid, ids, *args):
 		self.write(cr, uid, ids, {'state':'pending',})
 		cases = self.browse(cr, uid, ids)
-		self.__history(cr, uid, cases, 'Send', history=True,)
+		self._history(cr, uid, cases, 'Send', history=True,)
 		return True
 
 	def _cci_mission_got_back(self,cr,uid,ids,*args):
 		self.write(cr, uid, ids, {'state':'open',})
 		cases = self.browse(cr, uid, ids)
-		self.__history(cr, uid, cases, 'Got Back', history=True)
+		self._history(cr, uid, cases, 'Got Back', history=True)
 		return True
 
 	def _cci_mission_done_folder(self,cr,uid,ids,*args):
 		self.write(cr, uid, ids, {'state':'done','invoice_date': time.strftime('%Y-%m-%d %H:%M:%S')})
 		cases = self.browse(cr, uid, ids)
-		self.__history(cr, uid, cases, 'Invoiced', history=True)
+		self._history(cr, uid, cases, 'Invoiced', history=True)
 		return True
 
-	def __history(self, cr, uid,ids,keyword, history=False, email=False, context={}):
+	def _history(self, cr, uid,ids,keyword, history=False, email=False, context={}):
 		for case in ids:
 			data = {
 				'name': keyword,
@@ -122,7 +122,7 @@ class cci_missions_embassy_folder(osv.osv):
 			if seq:
 				vals.update({'name': seq})
 		temp = super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
-		self.__history(cr, uid,self.browse(cr, uid, [temp]), 'Created', history=True)
+		self._history(cr, uid,self.browse(cr, uid, [temp]), 'Created', history=True)
 		return temp
 
 
