@@ -31,17 +31,21 @@
 			<form string="Server Configuration">
 				<field name="name" colspan="4"/>
 				<separator string="Incoming Server Setting" colspan="4"/>
-				<field name="iserver_name"/>
-				<field name="iconn_type"/>
-				<field name="iconn_port"/>
-				<field name="iuser_name"/>				
-				<field name="ipassword"/>
+				<group col="5" colspan="2">
+					<field name="iserver_name"/>
+					<field name="iconn_type"/>
+					<field name="iconn_port"/>
+					<field name="iuser_name"/>				
+					<field name="ipassword"/>
+				</group>
 				<separator string="Outgoing Server Setting" colspan="4"/>
-				<field name="oserver_name"/>
-				<field name="oconn_type"/>
-				<field name="oconn_port"/>
-				<field name="ouser_name"/>				
-				<field name="opassword"/>
+				<group col="5" colspan="2">
+					<field name="oserver_name"/>
+					<field name="oconn_type"/>
+					<field name="oconn_port"/>
+					<field name="ouser_name"/>				
+					<field name="opassword"/>
+				</group>
 			</form>
 		</field>
 	</record>
