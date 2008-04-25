@@ -29,7 +29,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Server Configuration">
-				<field name="name"/>
+				<field name="name" colspan="4"/>
 				<separator string="Incoming Server Setting" colspan="4"/>
 				<field name="iserver_name"/>
 				<field name="iconn_type"/>
@@ -52,7 +52,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Mail Account Configuration">
-				<field name="user_id"/>
+				<field name="user_id" colspan="4"/>
 				<separator string="Server Configuration " colspan="4"/>
 				<field name="server_conf_id" nolabel="1"/>				
 			</form>
