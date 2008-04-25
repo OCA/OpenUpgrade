@@ -66,6 +66,20 @@ class webmail_mailbox(osv.osv):
     
 webmail_mailbox()
 
+class webmail_tags(osv.osv):
+    _name="webmail.tags"
+    _description="Email Tag"
+    _columns={
+        'user_id': fields.many2one('res.users', 'User'),
+        'name': fields.char('Tag Name', size=128),        
+        'account_id': fields.many2one('webmail.server', 'Server'),
+    }
+    _default={
+        'user_id': lambda obj, cr, uid, context: uid,
+        'account_id': lambda obj, cr, uid, context: context.get('account_id',False),
+    }
+webmail_tags()
+
 class webmail_email(osv.osv):
     _name="webmail.email"
     _description="User Email"
@@ -107,17 +121,3 @@ class webmail_email_attachment(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
     }
 webmail_email_attachment()
-
-class webmail_tags(osv.osv):
-    _name="webmail.tags"
-    _description="Email Tag"
-    _columns={
-        'user_id': fields.many2one('res.users', 'User'),
-        'name': fields.char('Tag Name', size=128),        
-        'account_id': fields.many2one('webmail.server', 'Server'),
-    }
-    _default={
-        'user_id': lambda obj, cr, uid, context: uid,
-        'account_id': lambda obj, cr, uid, context: context.get('account_id',False),
-    }
-webmail_tags()
