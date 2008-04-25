@@ -29,9 +29,9 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Server Configuration">
-				<field name="name" colspan="4"/>
+				<field name="name" colspan="2"/>
 				<separator string="Incoming Server Setting" colspan="4"/>
-				<group col="5" colspan="2">
+				<group col="5" colspan="4">
 					<field name="iserver_name"/>
 					<field name="iconn_type"/>
 					<field name="iconn_port"/>
@@ -39,7 +39,7 @@
 					<field name="ipassword"/>
 				</group>
 				<separator string="Outgoing Server Setting" colspan="4"/>
-				<group col="5" colspan="2">
+				<group col="5" colspan="4">
 					<field name="oserver_name"/>
 					<field name="oconn_type"/>
 					<field name="oconn_port"/>
