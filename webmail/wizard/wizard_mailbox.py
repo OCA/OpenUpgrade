@@ -3,10 +3,11 @@ import pooler
 
 #msg = ''
 #
-#mailbox_form = """<?xml version="1.0"?>
-#<form string="Select period">
-#    <label string="Mail Account Operation" colspan="4"/>  
-#</form>"""
+mailbox_form = """<?xml version="1.0"?>
+<form string="Select period">
+    <label string="Mail Account Operation" colspan="4"/>  
+</form>"""
+
 #
 #mailbox_msg = """<?xml version="1.0"?>
 #<form string="Select period">
