@@ -67,6 +67,12 @@ class webmail_server(osv.osv):
            raise osv.except_osv(
                         'Connection Error !',
                         'Please enter valid server information.')
+        else:
+            raise osv.except_osv(
+                        'Connection!',
+                        'Connection done successfully.')
+        
+        return True
         
 webmail_server()
 
