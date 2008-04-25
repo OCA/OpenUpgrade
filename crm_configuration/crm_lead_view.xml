@@ -14,17 +14,17 @@
 			<form string="Leads Form">
 				<notebook>
 				 <page string="Leads">
-				 	<field name="partner_name" string="Name"/>
+				 	<field name="name" select="1" string="Name"/>
+				 	<field name="section_id" colspan="1"/>
+				 	<newline/>
+				 	<field name="partner_name" string="Designation"/>
 					<field name="partner_name2" string="Email"/>
 					<newline/>
 					<field name="partner_phone"/>
 					<field name="partner_mobile"/>
 					<newline/>
-					<field name="name" select="1" string="Title"/>
-					<field name="user_id" select="2" string="Responsible"/>
-					<newline/>
-					<field name="section_id" colspan="1"/>
 					<field name="categ_id" select="1" on_change="onchange_categ_id(categ_id)" string="Lead Source"/>
+					<field name="user_id" select="2" string="Responsible"/>
 					<newline/>
 					<field name="partner_id" select="1" on_change="onchange_partner_id(partner_id, email_from)"/>
 					<field name="partner_address_id" string="Contact" on_change="onchange_partner_address_id(partner_address_id, email_from)"/>
@@ -117,7 +117,7 @@
 		<field name="arch" type="xml">
 			<tree string="Leads Tree"  colors="red:state=='open'">
 				<field name="id"/>
-				<field name="partner_name" string="Name"/>
+				<field name="name" string="Name"/>
 				<field name="partner_phone"/>
 				<field name="partner_name2" string="Email"/>
 				<field name="stage_id"  string="Status"/>
@@ -134,9 +134,10 @@
 		<field name="type">calendar</field>
 		<field name="priority" eval="2"/>
 		<field name="arch" type="xml">
-			<calendar string="Meeting For Leads Generation" date_start="date" color="user_id" delay="duration">
+			<calendar string="Meeting For Leads Generation" date_start="date" color="stage_id" date_delay="duration">
+				<field name="name"/>
 				<field name="partner_name"/>
-				<field name="categ_id"/>
+				<field name="partner_name2"/>
 			</calendar>
 		</field>
 	</record>
