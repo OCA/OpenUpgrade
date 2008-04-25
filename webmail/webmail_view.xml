@@ -170,8 +170,7 @@
 		<field name="res_model">webmail.email</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_webmail_email_compose_form"/>
-		<field name="context">{'account_id':account_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
 	</record>
 	
 	<menuitem name="Webmail/Compose Mail" id="menu_action_webmail_compose_mail" action="action_webmail_compose_mail"/>
