@@ -5,6 +5,7 @@ import pooler
 class webmail_tiny_user(osv.osv):
     _name="webmail.tiny.user"
     _description="User Configuration"
+    _rec_name="user_id"
     _columns={
         'user_id' : fields.many2one('res.users', 'User'),
         'server_conf_id':fields.one2many('webmail.server','server_id','Configuration')
