@@ -2,6 +2,9 @@ import netsvc
 from osv import fields, osv
 import pooler
 
+import imaplib
+import poplib
+
 class webmail_tiny_user(osv.osv):
     _name="webmail.tiny.user"
     _description="User Configuration"
@@ -24,12 +27,12 @@ class webmail_server(osv.osv):
         'iserver_type': fields.selection([('imap','IMAP'),('pop3','POP3')], 'Server Type'),
         'iuser_name':fields.char('User Name', size=64, required=True),
         'ipassword':fields.char('Password', size=64, required=True),
-        'iconn_type':fields.selection([('tls','TLS'),('ssl','SSL')],'Connection Type'),
+        'iconn_type':fields.boolean('SSL'),        
         'iconn_port':fields.integer('Port'),
         'oserver_name': fields.char('Server Name', size=64, required=True),
         'ouser_name':fields.char('User Name', size=64, required=True),
         'opassword':fields.char('Password', size=64, required=True),
-        'oconn_type':fields.selection([('tls','TLS'),('ssl','SSL')],'Connection Type'),
+        'oconn_type':fields.boolean('SSL'),
         'oconn_port':fields.integer('Port'),
         'server_id':fields.many2one('webmail.tiny.user',"Mail Client"),
     }
@@ -37,12 +40,34 @@ class webmail_server(osv.osv):
         'oconn_port': lambda *a: 25,
     }
     
-    def _login(self, cr, uid, ids, context, host, port, user, password, ssl, type):
-        pass
-    
+    def _login(self, cr, uid, ids, context, server, port, ssl, type, user, password):
+        server = self.browse(cr, uid, ids[0])
+        obj = None
+        try:
+            if type=='imap':
+                if ssl:
+                    obj = poplib.IMAP4_SSL(server, port)
+                else:
+                    obj = poplib.IMAP4(server, port)
+            else:
+                if ssl:
+                    obj = poplib.POP3_SSL(server, port)
+                else:
+                    obj = poplib.POP3(server, port)
+                    
+            obj.login(server.iuser_name, server.ipassword)            
+        except Exception,e:
+            pass
+        return obj
+        
     def _test_connection(self, cr, uid, ids, context):
-        pass
-    
+        server = self.browse(cr, uid, ids[0])        
+        obj = self._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
+        if not obj:
+           raise osv.except_osv(
+                        'Connection Error !',
+                        'Please enter valid server information.')
+        
 webmail_server()
 
 class webmail_mailbox(osv.osv):

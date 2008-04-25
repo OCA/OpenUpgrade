@@ -7,7 +7,7 @@ def _action_open_mail_account(self, cr, uid, data, context):
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')
     folder_id = mailbox_obj.search(cr, uid,[('user_id','=',uid)])
     
-    return {
+    return {    
         'domain': "[('user_id','=',%d)]" % (uid),
         'name': 'Mail Account',
         'view_type': 'form',
