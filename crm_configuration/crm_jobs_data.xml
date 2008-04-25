@@ -77,11 +77,12 @@
 		<field name="user_id" ref="base.user_admin"/>
 		<field eval="1.35" name="duration"/>
 		<field eval="&quot;Sandra Elvis&quot;" name="partner_name"/>
+		<field eval="&quot;sandra@example.com&quot;" name="partner_name2"/>
 		<field eval="&quot;cancel&quot;" name="state"/>
 		<field name="section_id" ref="crm_configuration.section_support0"/>
 		<field eval="1" name="active"/>
 		<field name="stage_id" ref="crm_configuration.stage_job6"/>
-		<field eval="&quot;&gt; 5 yrs Experience in PHP&quot;" name="name"/>
+		<field eval="&quot;More than 5 yrs Experience in PHP&quot;" name="name"/>
 	</record>
 	<record id="crm_case_marketingjob0" model="crm.case">
 		<field eval="time.strftime('%Y-%m-28 17:15:32')" name="date"/>
