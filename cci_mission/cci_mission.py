@@ -643,7 +643,6 @@ class cci_missions_ata_carnet(osv.osv):
 		#super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
 		data_carnet = self.browse(cr,uid,ids[0])
 		context = {}
-		print vals
 		if 'creation_date' in vals:
 			context.update({'date':vals['creation_date']})
 		else:
