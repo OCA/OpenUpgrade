@@ -30,8 +30,7 @@ def _action_open_mail_account(self, cr, uid, data, context):
     return {    
         'domain': "[('user_id','=',%d)]" % (uid),
         'name': 'Mail Account',
-        'view_type': 'form',
-        'view_mode': 'tree,form',
+        'view_type': 'tree',
         'res_model': 'webmail.mailbox',
         'view_id': False,
         'context': "{}",
