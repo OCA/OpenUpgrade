@@ -31,22 +31,21 @@
 		<field name="arch" type="xml">
 			<form string="Server Configuration">
 				<field name="name" colspan="2"/>
+				<newline/>
+				<field name="user_name"/>				
+				<field name="password"/>
 				<separator string="Incoming Server Setting" colspan="4"/>
-				<group col="5" colspan="4">
+				<group col="4" colspan="4">
 					<field name="iserver_name"/>
 					<field name="iserver_type"/>
 					<field name="iconn_type"/>
-					<field name="iconn_port"/>
-					<field name="iuser_name"/>				
-					<field name="ipassword"/>
+					<field name="iconn_port"/>				
 				</group>
 				<separator string="Outgoing Server Setting" colspan="4"/>
-				<group col="5" colspan="4">
+				<group col="3" colspan="4">
 					<field name="oserver_name"/>					
 					<field name="oconn_type"/>
-					<field name="oconn_port"/>
-					<field name="ouser_name"/>				
-					<field name="opassword"/>
+					<field name="oconn_port"/>					
 				</group>
 				<group colspan="2" col="2">
 					<button string="Test Connection" name="_test_connection" type="object"/>

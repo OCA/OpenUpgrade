@@ -4,6 +4,7 @@ import pooler
 
 import imaplib
 import poplib
+import smtplib
 
 class webmail_tiny_user(osv.osv):
     _name="webmail.tiny.user"
@@ -25,13 +26,11 @@ class webmail_server(osv.osv):
         'name': fields.char("Name", size=64, required=True),
         'iserver_name': fields.char('Server Name', size=64, required=True),
         'iserver_type': fields.selection([('imap','IMAP'),('pop3','POP3')], 'Server Type'),
-        'iuser_name':fields.char('User Name', size=64, required=True),
-        'ipassword':fields.char('Password', size=64, required=True, invisible=True),
+        'user_name':fields.char('User Name', size=64, required=True),
+        'password':fields.char('Password', size=64, required=True, invisible=True),
         'iconn_type':fields.boolean('SSL'),        
         'iconn_port':fields.integer('Port'),
-        'oserver_name': fields.char('Server Name', size=64, required=True),
-        'ouser_name':fields.char('User Name', size=64, required=True),
-        'opassword':fields.char('Password', size=64, required=True, invisible=True),
+        'oserver_name': fields.char('Server Name', size=64, required=True),        
         'oconn_type':fields.boolean('SSL'),
         'oconn_port':fields.integer('Port'),
         'server_id':fields.many2one('webmail.tiny.user',"Mail Client"),
@@ -40,8 +39,7 @@ class webmail_server(osv.osv):
         'oconn_port': lambda *a: 25,
     }
     
-    def _login(self, cr, uid, ids, context, server, port, ssl, type, user, password):
-        server = self.browse(cr, uid, ids[0])
+    def _login(self, cr, uid, ids, context, server, port, ssl, type, user, password):        
         obj = None
         try:
             if type=='imap':
@@ -49,23 +47,37 @@ class webmail_server(osv.osv):
                     obj = imaplib.IMAP4_SSL(server, port)
                 else:
                     obj = imaplib.IMAP4(server, port)
-            else:
+            elif type=='pop3':
                 if ssl:
                     obj = poplib.POP3_SSL(server, port)
                 else:
-                    obj = poplib.POP3(server, port)                    
-            obj.login(server.iuser_name, server.ipassword)            
+                    obj = poplib.POP3(server, port)
+            elif type=='smtp':
+                if ssl:
+                    obj = smtplib.SMTP(server, port)
+                else:
+                    obj = smtplib.SMTP(server, port)
+            obj.login(user, password)            
         except Exception,e:
             pass
         return obj
         
     def _test_connection(self, cr, uid, ids, context):
         server = self.browse(cr, uid, ids[0])
-        obj = self._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
-        if not obj:
+        iobj = self._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
+        oobj = self._login(cr, uid, ids, context, server.oserver_name, server.oconn_port, server.oconn_type, 'smtp', server.user_name, server.password)
+        if not iobj and not oobj:
+            raise osv.except_osv(
+                        'Connection Error !',
+                     'Please enter valid server information.')
+        elif not iobj:
            raise osv.except_osv(
                         'Connection Error !',
-                        'Please enter valid server information.')
+                     'Please enter valid incoming server information.')
+        elif not oobj:
+            raise osv.except_osv(
+                        'Connection Error !',
+                     'Please enter valid outgoing server information.')
         else:
             raise osv.except_osv(
                         'Connection!',
