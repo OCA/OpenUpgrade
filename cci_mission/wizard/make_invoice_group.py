@@ -54,7 +54,7 @@ def _group_invoice(self, cr, uid, data, context):
     partner_ids.sort()
     disp_msg=''
 
-
+    list_invoice=[]
     for partner_id in partner_ids:
 
         partner=pool_obj.get('res.partner').browse(cr, uid,partner_id)
@@ -117,10 +117,9 @@ def _group_invoice(self, cr, uid, data, context):
                 inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':False,'sequence' : count})
                 count=count+1
                 list_inv_lines.append(inv_line)
-#            If we want to cancel
-#            obj_inv.write(cr,uid,invoice.id,{'state':'cancel'})
-#            If we want to delete
-            obj_inv.unlink()
+#            If we want to cancel ==> obj_inv.write(cr,uid,invoice.id,{'state':'cancel'}) here
+#            If we want to delete ==> obj_inv.unlink(cr,uid,list_invoice_ids) after new invoice creation.
+
 
         line_obj.write(cr,uid,id_note,{'name':customer_ref})
         id_note1=line_obj.create(cr,uid,{'name':notes,'state':'text','sequence':count})# a new line of type 'note' with all the old invoice note
@@ -149,8 +148,10 @@ def _group_invoice(self, cr, uid, data, context):
         inv_id = obj_inv.create(cr, uid, inv)
         disp_msg +='\n'+ partner.name + ': '+ str(len(data_inv)) +' Invoice(s) Grouped.'
         list_invoice.append(inv_id)
+        obj_inv.unlink(cr,uid,list_invoice_ids)
     data['form']['invoice_ids']=list_invoice
     data['form']['message']=disp_msg
+
     return data['form']
 
 class mission_group_invoice(wizard.interface):
