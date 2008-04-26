@@ -39,12 +39,12 @@
 					<field name="iconn_type"/>
 					<field name="iconn_port"/>				
 				</group>
-				<separator string="Outgoing Server Setting" colspan="4"/>
-				<group col="3" colspan="4">
-					<field name="oserver_name" colspan="2"/>					
-					<field name="oconn_type" colspan="2"/>
-					<field name="oconn_port" colspan="2"/>					
-				</group>
+				<separator string="Outgoing Server Setting" colspan="4"/>				
+				<field name="oserver_name"/>
+				<field name="oconn_type"/>
+				<field name="oconn_port"/>
+				<newline/>
+				<separator colspan="4"/>
 				<group colspan="2" col="2">
 					<button string="Test Connection" name="_test_connection" type="object"/>
 				</group>
