@@ -2,3 +2,4 @@ import aged_trial_balance
 import cci_account_invoice
 import partner_balance
 import third_party_ledger
+import cci_draft_invoice_info

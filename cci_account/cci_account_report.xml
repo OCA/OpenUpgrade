@@ -7,6 +7,14 @@
 			id="wizard_cci_account_message"
 			keyword="client_print_multi" />
 
+		<report
+			string="Draft Invoices"
+			model="res.partner"
+			name="partner.draft_invoices"
+			auto="False"
+			rml="cci_account/report/cci_draft_invoice_info.rml"
+			id="partner_draft_invoices"/>
+
 	</data>
 </terp>
 
