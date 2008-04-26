@@ -363,7 +363,7 @@ class res_partner_address(osv.osv):
         'department': fields.char('Department',size=20),
     }
     _defaults = {
-                 'state' : lambda *a: 'Correct',
+                 'state' : lambda *a: 'correct',
                  'who_presence' : lambda *a: True,
                  'dir_presence' : lambda *a: True,
                }
