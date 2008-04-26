@@ -146,10 +146,10 @@
 				</group>
 				<group col="1" colspan="2">
 					<field name="attachment_id" nolabel="1">
-						<form>
+						<form string="Attachment">
 							<field name="attachment"/>
 						</form>
-						<tree>							
+						<tree string="Attachment">							
 							<field name="attachment"/>
 						</tree>
 					</field>
@@ -199,11 +199,11 @@
 				</group>
 				<group col="1" colspan="2">
 					<field name="attachment_id" nolabel="1">
-						<form>
+						<form string="Attachment">
 							<field name="name"/>
 							<field name="attachment"/>
 						</form>
-						<tree>
+						<tree string="Attachment">
 							<field name="name"/>
 							<field name="attachment"/>
 						</tree>
