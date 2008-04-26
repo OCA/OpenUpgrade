@@ -139,7 +139,7 @@
 		<field name="arch" type="xml">
 			<form string="Compose Mail">
 				<group col="4" colspan="2">
-					<field name="from" />
+					<field name="from_user" />
 					<field name="cc" />
 					<field name="bcc"/>				
 					<field name="subject"/>
@@ -164,7 +164,7 @@
 		<field name="arch" type="xml">
 			<form string="Compose Mail">
 				<group col="4" colspan="2">
-					<field name="from" />
+					<field name="from_user" />
 					<field name="cc" />
 					<field name="bcc"/>				
 					<field name="subject"/>

@@ -157,7 +157,7 @@ class webmail_email(osv.osv):
         'folder_id': fields.many2one('webmail.mailbox', 'Folder'),
         'message_id': fields.char('Message Id',size=256),
         'active': fields.boolean('Active'),
-        'from': fields.char('From', size=256),
+        'from_user': fields.char('From', size=256),
         'to': fields.char('To', size=256),
         'subject': fields.char('Subject', size=256),
         'date': fields.datetime('Date'),
@@ -179,13 +179,13 @@ class webmail_email(osv.osv):
             if id and action:
                 mail = self.browse(cr, uid, id)
                 if action=='reply':
-                    data['to']=mail.from
+                    data['to']=mail.from_user
                 elif action=='replyall':
-                    data['to']=mail.from
+                    data['to']=mail.from_user
                     if mail.cc:
                         data['cc']=mail.cc
                     if mail.bcc:
-                        data['bcc']=mail.bcc                                        
+                        data['bcc']=mail.bcc
         return data
      
     def _send_mail(self, cr, uid, ids, context):
