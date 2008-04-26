@@ -31,7 +31,7 @@ class ecommerce_shop(osv.osv):
     _columns = {
         'name': fields.char('Name', size=256),
         'company_id': fields.many2one('res.company', 'Company'),
-        'shop_id': fields.many2one('sale.shop', 'Sale Shop', required=True),     
+        'shop_id': fields.many2one('sale.shop', 'Sale Shop'),     
         'display_search_keyword':fields.boolean('Display  Quick Search'),
         'display_category_cnt': fields.boolean('Display Category Count'),
         'price_with_tax': fields.boolean('Price with Tax'),
@@ -47,12 +47,43 @@ class ecommerce_shop(osv.osv):
         'display_category_context':fields.boolean('Require Category Context'),
         'display_page_offset':fields.boolean('Require Page Offset'),
         'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories'),
-        'products':fields.many2many('product.product','ecommerce_new_product_rel','product','ecommerce_product','Products'),
+        'products':fields.many2many('product.product','ecommerce_new_product_rel','product','ecommerce_product','Products',readonly=True),
      
     }   
 ecommerce_shop()
 
 class ecommerce_category(osv.osv):
+    def create(self,cr,uid,vals,context=None):
+       
+        w_id = vals['web_id']
+        cat_id = vals['category_id']
+        obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
+        obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
+        temp=[]
+        for i in obj_prd:
+            temp+=[i['id']]
+            
+        rec = self.pool.get('ecommerce.shop').write(cr,uid,w_id,{'products':[(6,0,temp)]})
+        result = super(osv.osv, self).create(cr, uid, vals, context)
+        return result
+    
+    def write(self,cr,uid,ids,vals,context=None):
+        
+        obj=self.browse(cr,uid,ids[0])
+        curr_id =self.pool.get('ecommerce.shop').browse(cr, uid, ids,context=context)
+        web_id = obj.web_id.id
+        cat_id = vals['category_id']
+        if web_id:
+            if vals['category_id']:
+                    obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
+                    obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
+                    temp=[]
+                    for i in obj_prd:
+                        temp+=[i['id']]
+                    rec = self.pool.get('ecommerce.shop').write(cr,uid,[web_id],{'products':[(6,0,temp)]})
+            
+        return super(ecommerce_category,self).write(cr,uid,ids,vals,context)
+    
   
     _name = "ecommerce.category"
     _description = "ecommerce category"
