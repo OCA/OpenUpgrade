@@ -195,12 +195,13 @@ webmail_email()
 
 class webmail_email_attachment(osv.osv):
     _name="webmail.email.attachment"
-    _description="Email Attachment"
+    _description="Attachment"
     _rec_name="attachment"
     _columns={
         'user_id': fields.many2one('res.users', 'User'),
         'email_id': fields.many2one('webmail.email', 'Email'),
         'attachment': fields.binary('Attachment'),
+        'name': fields.char('File Name',size=128)
     }
     _default={
         'user_id': lambda obj, cr, uid, context: uid,

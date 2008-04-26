@@ -131,7 +131,7 @@
 		<field name="view_type">tree</field>
 		<field name="view_id" ref="webmail_mailbox_tree_view"/>
 	</record>
-	
+		
 	<record model="ir.ui.view" id="view_webmail_email_compose_form">
 		<field name="name">webmail.email.compose.form</field>
 		<field name="model">webmail.email</field>
@@ -145,7 +145,14 @@
 					<field name="subject"/>
 				</group>
 				<group col="1" colspan="2">
-					<field name="attachment_id" nolabel="1"/>
+					<field name="attachment_id" nolabel="1">
+						<form>
+							<field name="attachment"/>
+						</form>
+						<tree>							
+							<field name="attachment"/>
+						</tree>
+					</field>
 				</group>
 				<newline/>
 				<separator string="Message" colspan="4"/>
@@ -157,14 +164,14 @@
 		</field>
 	</record>
 	
-	<record model="ir.actions.act_window" id="action_webmail_reply_mail">		
+	<record model="ir.actions.act_window" id="action_webmail_reply_mail">
 		<field name="res_model">webmail.email</field>
 		<field name="view_type">form</field>		
 		<field name="context">{'action':'reply','mailid': active_id}</field>
 		<field name="view_id" ref="view_webmail_email_compose_form"/>		
 	</record>
 	
-	<record model="ir.actions.act_window" id="action_webmail_replyall_mail">		
+	<record model="ir.actions.act_window" id="action_webmail_replyall_mail">	
 		<field name="res_model">webmail.email</field>
 		<field name="view_type">form</field>		
 		<field name="context">{'action':'replyall','mailid': active_id}</field>
@@ -191,7 +198,16 @@
 					<field name="subject"/>
 				</group>
 				<group col="1" colspan="2">
-					<field name="attachment_id" nolabel="1"/>
+					<field name="attachment_id" nolabel="1">
+						<form>
+							<field name="name"/>
+							<field name="attachment"/>
+						</form>
+						<tree>
+							<field name="name"/>
+							<field name="attachment"/>
+						</tree>
+					</field>
 				</group>
 				<newline/>
 				<separator string="Message" colspan="4"/>
