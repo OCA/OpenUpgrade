@@ -18,7 +18,12 @@ def _action_open_mail_account(self, cr, uid, data, context):
         if mail_acc.iserver_type=='imap':        
                 folders = mailbox_obj._select(cr, uid, data['ids'], context, mail_acc)
                 for folder in folders:
-                    mailbox_obj.create(cr, uid, {'name':folder, 'parent_id':parent_accid, 'user_id':uid })
+                    name = folder.split('/')
+                    if name.__len__()>0:
+                        name = name[1]
+                    else:
+                        name = folder
+                    mailbox_obj.create(cr, uid, {'name':name, 'parent_id':parent_accid, 'user_id':uid })
         elif mail_acc.iconn_type=='smtp':
             mailbox_obj.create(cr, uid, {'name':'Inbox', 'parent_id':parent_accid, 'user_id':uid })         
         
