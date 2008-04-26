@@ -46,9 +46,9 @@ class webmail_server(osv.osv):
         try:
             if type=='imap':
                 if ssl:
-                    obj = poplib.IMAP4_SSL(server, port)
+                    obj = imaplib.IMAP4_SSL(server, port)
                 else:
-                    obj = poplib.IMAP4(server, port)
+                    obj = imaplib.IMAP4(server, port)
             else:
                 if ssl:
                     obj = poplib.POP3_SSL(server, port)
