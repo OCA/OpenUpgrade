@@ -235,7 +235,7 @@ class base_module_merge(wizard.interface):
 			    url=url+'.zip'
 			self._zippy(self.archive, url, '', src=True)
 		dname = data['form']['directory_name']
-		data['form']['depen']=self.dependencies
+		data['form']['depen']=[]
 
 		data['form']['init_xml']=reduce(lambda l, x: x not in l and l.append(x) or l, self.init_xml, [])
 		data['form']['demo_xml']=reduce(lambda l, x: x not in l and l.append(x) or l, self.demo_xml, [])
@@ -251,6 +251,7 @@ class base_module_merge(wizard.interface):
 			"init_xml" : %(init_xml)s,
 			"demo_xml" : %(demo_xml)s,
 			"update_xml" : %(update_xml)s,
+			"active": True,
 			"installable": True
 	} """ % data['form']
 		for name,datastr in self.dict_init.items():
