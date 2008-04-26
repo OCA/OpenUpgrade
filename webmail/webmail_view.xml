@@ -138,11 +138,16 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Compose Mail">
-				<field name="to" colspan="4"/>
-				<field name="cc" colspan="4"/>
-				<field name="bcc" colspan="4"/>				
-				<field name="subject" colspan="4"/>
-				<field name="attachment_id" nolabel="1" colspan="4"/>
+				<group col="4" colspan="2">
+					<field name="from" />
+					<field name="cc" />
+					<field name="bcc"/>				
+					<field name="subject"/>
+				</group>
+				<group col="1" colspan="2">
+					<field name="attachment_id" nolabel="1"/>
+				</group>
+				<newline/>
 				<separator string="Message" colspan="4"/>
 				<field name="body" nolabel="1" colspan="4"/>
 				<group col="3" colspan="4">
@@ -158,27 +163,51 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Compose Mail">
-				<field name="from" colspan="4"/>
-				<field name="cc" colspan="4"/>
-				<field name="bcc" colspan="4"/>				
-				<field name="subject" colspan="4"/>
-				<field name="attachment_id" nolabel="1" colspan="4"/>
+				<group col="4" colspan="2">
+					<field name="from" />
+					<field name="cc" />
+					<field name="bcc"/>				
+					<field name="subject"/>
+				</group>
+				<group col="1" colspan="2">
+					<field name="attachment_id" nolabel="1"/>
+				</group>
+				<newline/>
 				<separator string="Message" colspan="4"/>
 				<field name="body" nolabel="1" colspan="4"/>
 				<group col="4" colspan="4">
-					<button type="action" name="%(view_webmail_email_compose_form)d"  string="Reply"/>
-					<button type="action" name="%(view_webmail_email_compose_form)d"  string="Reply to All" />
-					<button type="action" name="%(view_webmail_email_compose_form)d"  string="Forward Mail" />					
+					<button type="action" name="%(action_webmail_reply_mail)d"  string="Reply"/>
+					<button type="action" name="%(action_webmail_replyall_mail)d"  string="Reply to All" />
+					<button type="action" name="%(action_webmail_forward_mail)d"  string="Forward Mail" />					
 				</group>
 			</form>
 		</field>
 	</record>
 	
+	<record model="ir.actions.act_window" id="action_webmail_reply_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action':'reply','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
 	
+	<record model="ir.actions.act_window" id="action_webmail_replyall_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action':'replyall','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_forward_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action': 'forward','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+		
 	<record model="ir.actions.act_window" id="action_webmail_compose_mail">		
 		<field name="res_model">webmail.email</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">form</field>
+		<field name="view_type">form</field>		
 		<field name="view_id" ref="view_webmail_email_compose_form"/>		
 	</record>
 	

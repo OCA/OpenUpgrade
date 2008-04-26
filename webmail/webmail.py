@@ -171,6 +171,23 @@ class webmail_email(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
     }
     
+    def default_get(self, cr, uid, fields, context={}):
+        data = super(webmail_email,self).default_get(cr, uid, fields, context)
+        if context.has_key('mailid') and context.has_key('action'):
+            id = context.get('mailid',False)
+            action = context.get('action',False)
+            if id and action:
+                mail = self.browse(cr, uid, id)
+                if action=='reply':
+                    data['to']=mail.from
+                elif action=='replyall':
+                    data['to']=mail.from
+                    if mail.cc:
+                        data['cc']=mail.cc
+                    if mail.bcc:
+                        data['bcc']=mail.bcc                                        
+        return data
+     
     def _send_mail(self, cr, uid, ids, context):
         pass
     
