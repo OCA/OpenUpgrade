@@ -36,28 +36,28 @@ create_fields = {
 
 def _create_check(self, cr, uid, data, context):
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')
-    mailbox = mailbox_obj.browse(cr, uid, data['form']['ids'][0])
+    mailbox = mailbox_obj.browse(cr, uid, data['ids'][0])
     if mailbox.parent_id:
         raise wizard.except_wizard('Error!', 'Please select Parent Folder')
     return {}
 
 def _check_acc(self, cr, uid, data, context):
-    if data['form']['ids'].__len()>1:
+    if data['ids'].__len()>1:
         raise wizard.except_wizard('Error!', 'Please select only one folder')
     return {}
 
 def _delete(self, cr, uid, data, context):
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')
-    mailbox = mailbox_obj.browse(cr, uid, data['form']['ids'][0])
+    mailbox = mailbox_obj.browse(cr, uid, data['ids'][0])
     if mailbox.parent_id:
         raise wizard.except_wizard('Error!', 'You can not delete parent folder')
     
-    mailbox_obj._delete(cr, uid, data['form']['ids'], context)    
+    mailbox_obj._delete(cr, uid, data['ids'], context)    
     return {}
 
 def _fill_name(self, cr, uid, data, context):
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')
-    mailbox = mailbox_obj.browse(cr, uid, data['form']['ids'][0])
+    mailbox = mailbox_obj.browse(cr, uid, data['ids'][0])
     res = {}
     if mailbox.name:
         res['old_name'] = mailbox.name
@@ -68,7 +68,7 @@ def _create_process(self, cr, uid, data, context):
     if not name:
         raise wizard.except_wizard('Error!', 'Please enter folder name')    
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')        
-    mailbox_obj._create(cr, uid, data['form']['ids'], context, name)    
+    mailbox_obj._create(cr, uid, data['ids'], context, name)    
     return {}
 
 def _rename_process(self, cr, uid, data, context):
@@ -77,7 +77,7 @@ def _rename_process(self, cr, uid, data, context):
     if not old_name:
         raise wizard.except_wizard('Error!', 'Please enter old folder name')
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')    
-    mailbox_obj._rename(cr, uid, data['form']['ids'] , context, old_name, new_name)    
+    mailbox_obj._rename(cr, uid, data['ids'] , context, old_name, new_name)    
     return {}
 
 class wizard_mailbox(wizard.interface):

@@ -102,7 +102,7 @@ class webmail_mailbox(osv.osv):
     
     def _select(self, cr, uid, ids, context, mail_acc):
         server_obj = pooler.get_pool(cr.dbname).get('webmail.server')
-        obj = server_obj._login(cr, uid, ids, context, mail_acc.iserver_name, mail_acc.iconn_port, mail_acc.iconn_type, mail_acc.iserver_type, mail_acc.iuser_name, mail_acc.ipassword)
+        obj = server_obj._login(cr, uid, ids, context, mail_acc.iserver_name, mail_acc.iconn_port, mail_acc.iconn_type, mail_acc.iserver_type, mail_acc.user_name, mail_acc.password)
         return obj.select()[1]
         
     def _new(self, cr, uid, ids, context, name):
@@ -112,7 +112,7 @@ class webmail_mailbox(osv.osv):
          mailbox = mailbox_obj.browse(cr, uid, ids[0])
          server = server_obj.browse(cr, uid, mailbox.account_id.id)
          if server.iserver_type=='imap':
-             obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
+             obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
              if obj:
                 obj.create(name)
                 mailbox_obj.create(cr, uid, {'name':name, 'parent_id':mailbox.parent_id})
@@ -124,7 +124,7 @@ class webmail_mailbox(osv.osv):
         mailbox = mailbox_obj.browse(cr, uid, ids[0])
         server = server_obj.browse(cr, uid, mailbox.account_id.id)
         if server.iserver_type=='imap':
-            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
+            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
             if obj:
                 obj.rename(old, new)
                 mailbox_obj.write(cr, uid, ids, {'name': new_name })    
@@ -136,7 +136,7 @@ class webmail_mailbox(osv.osv):
         mailbox = mailbox_obj.browse(cr, uid, ids[0])
         server = server_obj.browse(cr, uid, mailbox.account_id.id)
         if server.iserver_type=='imap':
-            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.iuser_name, server.ipassword)
+            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
             if obj:
                 obj.delete(mailbox.name)
                 mailbox_obj.unlink(cr, uid, ids)
