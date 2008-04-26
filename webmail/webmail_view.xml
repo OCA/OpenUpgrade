@@ -8,18 +8,16 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Server Configuration">
-				<field name="name"/>				
+				<field name="name"/>
+				<field name="user_name"/>
+				<field name="password"/>				
 				<field name="iserver_name"/>
 				<field name="iserver_type"/>
 				<field name="iconn_type"/>
-				<field name="iconn_port"/>
-				<field name="iuser_name"/>				
-				<field name="ipassword"/>				
+				<field name="iconn_port"/>				
 				<field name="oserver_name"/>				
 				<field name="oconn_type"/>
-				<field name="oconn_port"/>
-				<field name="ouser_name"/>				
-				<field name="opassword"/>
+				<field name="oconn_port"/>				
 			</tree>
 		</field>
 	</record>
