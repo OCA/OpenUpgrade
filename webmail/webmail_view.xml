@@ -157,6 +157,27 @@
 		</field>
 	</record>
 	
+	<record model="ir.actions.act_window" id="action_webmail_reply_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action':'reply','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_replyall_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action':'replyall','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_forward_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action': 'forward','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
 	<record model="ir.ui.view" id="view_webmail_email_read_form">
 		<field name="name">webmail.email.read.form</field>
 		<field name="model">webmail.email</field>
@@ -183,28 +204,7 @@
 			</form>
 		</field>
 	</record>
-	
-	<record model="ir.actions.act_window" id="action_webmail_reply_mail">		
-		<field name="res_model">webmail.email</field>
-		<field name="view_type">form</field>		
-		<field name="context">{'action':'reply','mailid': active_id}</field>
-		<field name="view_id" ref="view_webmail_email_compose_form"/>		
-	</record>
-	
-	<record model="ir.actions.act_window" id="action_webmail_replyall_mail">		
-		<field name="res_model">webmail.email</field>
-		<field name="view_type">form</field>		
-		<field name="context">{'action':'replyall','mailid': active_id}</field>
-		<field name="view_id" ref="view_webmail_email_compose_form"/>		
-	</record>
-	
-	<record model="ir.actions.act_window" id="action_webmail_forward_mail">		
-		<field name="res_model">webmail.email</field>
-		<field name="view_type">form</field>		
-		<field name="context">{'action': 'forward','mailid': active_id}</field>
-		<field name="view_id" ref="view_webmail_email_compose_form"/>		
-	</record>
-		
+				
 	<record model="ir.actions.act_window" id="action_webmail_compose_mail">		
 		<field name="res_model">webmail.email</field>
 		<field name="view_type">form</field>		
