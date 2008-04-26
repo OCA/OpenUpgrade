@@ -103,7 +103,7 @@ class webmail_mailbox(osv.osv):
     def _select(self, cr, uid, ids, context, mail_acc):
         server_obj = pooler.get_pool(cr.dbname).get('webmail.server')
         obj = server_obj._login(cr, uid, ids, context, mail_acc.iserver_name, mail_acc.iconn_port, mail_acc.iconn_type, mail_acc.iserver_type, mail_acc.user_name, mail_acc.password)
-        return obj.select()[1]
+        return obj.list()[1]
         
     def _new(self, cr, uid, ids, context, name):
          mailbox_obj = self.pool.get('webmail.mailbox')
