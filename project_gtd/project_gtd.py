@@ -179,6 +179,6 @@ class project_task(osv.osv):
 		'context_id': _get_context
 	}
 	# Override read for using this method if context set !!!
-	_order = "((55-ascii(coalesce(priority,'2')))*2 +  coalesce((date_start::date-current_date)/2,8))"
+	#_order = "((55-ascii(coalesce(priority,'2')))*2 +  coalesce((date_start::date-current_date)/2,8))"
 project_task()
 
