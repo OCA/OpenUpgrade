@@ -33,7 +33,6 @@ class account_invoice_draft(report_sxw.rml_parse):
 
     def partner_info(self, object):
 
-        list_fileds=['title','name','street','street2']
         address_info=''
         if object.address:
             for ads in object.address:
@@ -91,8 +90,6 @@ class account_invoice_draft(report_sxw.rml_parse):
         for invoice in invoices:
             res={}
             res['name']=invoice.name
-            #invoice no. - a confusing character
-            res['invoice_no']=invoice.number
             res['date']=invoice.date_invoice
             res['amt_untaxed']=invoice.amount_untaxed
             self.sum_untaxed +=invoice.amount_untaxed
@@ -104,8 +101,6 @@ class account_invoice_draft(report_sxw.rml_parse):
             self.sum_tot +=invoice.amount_total
 
             res['gen_acc']=invoice.account_id.name
-            # analytic account -- Is it related to invoice?
-            res['analytic_acc']=''
             result.append(res)
 
         return result
