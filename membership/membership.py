@@ -52,6 +52,14 @@ STATE_PRIOR = {
 		'free' : 6,
 		'paid' : 7
 		}
+
+class res_partner(osv.osv):
+	_inherit = 'res.partner'
+	_columns = {
+		'associate_member': fields.many2one('res.partner', 'Associate member'),
+			    }
+res_partner()
+
 REQUETE = '''SELECT partner, state FROM (
 SELECT members.partner AS partner,
 CASE WHEN MAX(members.state) = 0 THEN 'none'
@@ -226,7 +234,6 @@ class Partner(osv.osv):
 
 	def _membership_state(self, cr, uid, ids, name, args, context=None):
 		'''Compute membership state of partners'''
-
 		today = time.strftime('%Y-%m-%d')
 		res = {}
 		for id in ids:
@@ -239,19 +246,20 @@ class Partner(osv.osv):
 
 		return res
 
-	def _membership_state_search(self, cr, uid, obj, name, args):
-		'''Search on membership state'''
-
-		today = time.strftime('%Y-%m-%d')
-		clause = 'WHERE '
-		for i in range(len(args)):
-			if i!=0:
-				clause += 'OR '
-			clause += 'state '+args[i][1]+" '"+args[i][2]+"' "
-		cr.execute(REQUETE % (today, today, today, today, today, today, clause))
-		ids=[x[0] for x in cr.fetchall()]
-
-		return [('id', 'in', ids)]
+#no more need becaz of new functionality store attribut on function field
+#	def _membership_state_search(self, cr, uid, obj, name, args):
+#		'''Search on membership state'''
+#
+#		today = time.strftime('%Y-%m-%d')
+#		clause = 'WHERE '
+#		for i in range(len(args)):
+#			if i!=0:
+#				clause += 'OR '
+#			clause += 'state '+args[i][1]+" '"+args[i][2]+"' "
+#		cr.execute(REQUETE % (today, today, today, today, today, today, clause))
+#		ids=[x[0] for x in cr.fetchall()]
+#
+#		return [('id', 'in', ids)]
 
 	def _membership_start(self, cr, uid, ids, name, args, context=None):
 		'''Return the start date of membership'''
@@ -368,9 +376,11 @@ class Partner(osv.osv):
 			'Membership'),
 		'membership_amount': fields.float('Membership amount', digites=(16, 2),
 			help='The price negociated by the partner'),
+#		'membership_state': fields.function(_membership_state, method=True, string='Current membership state',
+#			type='selection', selection=STATE, fnct_search=_membership_state_search),
 		'membership_state': fields.function(_membership_state, method=True, string='Current membership state',
-			type='selection', selection=STATE, fnct_search=_membership_state_search),
-		'associate_member': fields.many2one('res.partner', 'Associate member'),
+			type='selection',selection=STATE,store={'account.invoice':(['state'],'_membership_state_search_inv')}),
+#		'associate_member': fields.many2one('res.partner', 'Associate member'),
 		'free_member': fields.boolean('Free member'),
 		'membership_start': fields.function(_membership_start, method=True,
 			string='Start membership date', type='date',
@@ -463,6 +473,12 @@ class Invoice(osv.osv):
 						[ l.id for l in invoice.invoice_line])], context)
 			member_line_obj.write(cr,uid,mlines, {'date_cancel':today}, context)
 
+	def _membership_state_search_inv(self,cr,uid,ids):
+		data_inv = self.browse(cr,uid,ids)
+		list_partner = []
+		for data in data_inv:
+			list_partner.append(data.partner_id.id)
+		return list_partner
 Invoice()
 
 
