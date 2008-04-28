@@ -84,7 +84,7 @@ class account_invoice_draft(report_sxw.rml_parse):
     def lines(self, object):
         result=[]
         obj_inv=pooler.get_pool(self.cr.dbname).get('account.invoice')
-        list_ids=obj_inv.search(self.cr,self.uid,[('state','=','draft'),('partner_id','=',object.id)])
+        list_ids=obj_inv.search(self.cr,self.uid,[('state','=','draft'),('partner_id','=',object.id),('type','=','out_invoice')])
         invoices=obj_inv.browse(self.cr,self.uid,list_ids)
 
         for invoice in invoices:
