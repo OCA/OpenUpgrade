@@ -130,7 +130,11 @@ class cci_missions_embassy_folder(osv.osv):
 	def onchange_partner_id(self, cr, uid, ids, part):
 		if not part:
 			return {'value':{'partner_address_id': False}}
-		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
+		part_obj = self.pool.get('res.partner')
+		data_partner = part_obj.browse(cr,uid,part)
+		if data_partner.alert_legalisations:
+				raise osv.except_osv('Error!',data_partner.alert_explanation)
+		addr = part_obj.address_get(cr, uid, [part], ['contact'])
 		data = {'partner_address_id':addr['contact']}
 		return {'value':data}
 
@@ -384,6 +388,8 @@ class cci_missions_certificate(osv.osv):
 
 		if order_partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
+			if partner_info.alert_legalisations:
+				raise osv.except_osv('Error!',partner_info.alert_explanation)
 			if not partner_info.asker_name:
 				asker_name=partner_info.name
 			else:
@@ -503,6 +509,8 @@ class cci_missions_legalization(osv.osv):
 		member_state=False
 		if order_partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
+			if partner_info.alert_legalisations:
+				raise osv.except_osv('Error!',partner_info.alert_explanation)
 			if partner_info.membership_state == 'none': #the boolean "Apply the member price" should be set to TRUE or FALSE when the partner is changed in regard of the membership state of him.
 				member_state = False
 			else:
@@ -788,6 +796,8 @@ class cci_missions_ata_carnet(osv.osv):
 		member_state = False
 		if partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,partner_id)
+			if partner_info.alert_legalisations:
+				raise osv.except_osv('Error!',partner_info.alert_explanation)
 			if partner_info.membership_state == 'none':
 				member_state = False
 			else:
