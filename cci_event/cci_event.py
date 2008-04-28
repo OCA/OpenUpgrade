@@ -252,26 +252,12 @@ class event_registration(osv.osv):
 #		return {'value':data}
 
 
-#	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
-#		data={}
-#		data['badge_partner']=data['partner_address_id']=data['partner_invoice_id']=data['email_from']=data['badge_title']=data['badge_name']=False
-#		if not part:
-#			return {'value':data}
-#
-#		data['partner_invoice_id']=part
-#		# this calls onchange_partner_invoice_id
-#		d=self.onchange_partner_invoice_id(cr, uid, ids, event_id,part)
-#		# this updates the dictionary
-#		data.update(d['value'])
-#		addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
-#		data['partner_address_id']=addr['contact']
-#		if addr['contact']:
-#			d=self.onchange_contact_id(cr, uid, ids,addr['contact'])
-#			data.update(d['value'])
-#		partner_data=self.pool.get('res.partner').browse(cr, uid, part)
-#		data['badge_partner']=partner_data.name
-#		return {'value':data}
-
+	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
+		if part:
+			data_partner = self.pool.get('res.partner').browse(cr,uid,part)
+			if data_partner.alert_events:
+				raise osv.except_osv('Error!',data_partner.alert_explanation)
+		return super(event_registration,self).onchange_partner_id(cr, uid, ids, part, event_id, email)
 #	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
 #		context={}
 #		if not event_id:
