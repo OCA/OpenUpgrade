@@ -27,3 +27,15 @@ class account_move_line(osv.osv):
     _description = "account.move.line"
 
 account_move_line()
+
+class account_invoice(osv.osv):
+
+    _inherit = 'account.invoice'
+    def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
+        if partner_id:
+            data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
+            if data_partner.alert_others:
+                raise osv.except_osv('Error!',data_partner.alert_explanation)
+        return super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
+
+account_invoice()
