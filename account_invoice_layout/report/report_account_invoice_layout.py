@@ -80,13 +80,17 @@ class account_invoice_1(report_sxw.rml_parse):
         info=[]
         invoice_list=[]
         res={}
+        list_in_seq={}
         ids = self.pool.get('account.invoice.line').search(self.cr, self.uid, [('invoice_id', '=', invoice.id)])
         ids.sort()
         for id in range(0,len(ids)):
             info = self.pool.get('account.invoice.line').browse(self.cr, self.uid,ids[id], self.context.copy())
-            invoice_list +=[info]
+            list_in_seq[info]=info.sequence
+#            invoice_list +=[info]
         i=1
         j=0
+        final=sorted(list_in_seq.items(), lambda x, y: cmp(x[1], y[1]))
+        invoice_list=[x[0] for x in final]
         sum_flag={}
         sum_flag[j]=-1
         for entry in invoice_list:
