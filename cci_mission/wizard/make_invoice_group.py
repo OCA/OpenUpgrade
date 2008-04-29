@@ -25,7 +25,10 @@ def _group_invoice(self, cr, uid, data, context):
     models=['cci_missions.certificate','cci_missions.legalization','cci_missions.embassy_folder','cci_missions.ata_carnet']
 
     for model in models:
-        model_ids=pool_obj.get(model).search(cr,uid,[('state','=','draft')])
+        if model=='cci_missions.embassy_folder':
+            model_ids=pool_obj.get(model).search(cr,uid,[('state','=','open')])
+        else:
+            model_ids=pool_obj.get(model).search(cr,uid,[('state','=','draft')])
 
         if model_ids:
             read_ids=pool_obj.get(model).read(cr,uid,model_ids,['partner_id','order_partner_id'])
@@ -75,8 +78,7 @@ def _group_invoice(self, cr, uid, data, context):
                         list_invoice_ids.append(result['invoice_ids'][0])
 
                 if element['model']=='cci_missions.embassy_folder':
-                    pool_obj.get(element['model']).write(cr, uid, [element['id']], {'state':'open',})
-#                    pool_obj.get(element['model'])._history(cr, uid, [pool_obj.get(element['model']).browse(cr, uid,element['id'])], 'Got Back', history=True)
+
                     result=create_invoice_embassy._createInvoices(self,cr,uid,data,context)
 
                     if result['inv_rejected']>0 and result['inv_rej_reason']:
@@ -94,9 +96,9 @@ def _group_invoice(self, cr, uid, data, context):
 
         count=0
         list_inv_lines=[]
-        customer_ref = ''
+        customer_ref = partner.name
         line_obj = pool_obj.get('account.invoice.line')
-        id_note=line_obj.create(cr,uid,{'name':customer_ref,'state':'text','sequence':count})
+        id_note=line_obj.create(cr,uid,{'name':customer_ref,'state':'title','sequence':count})
         count=count+1
         list_inv_lines.append(id_note)
         data_inv=obj_inv.browse(cr,uid,list_invoice_ids)
@@ -119,7 +121,6 @@ def _group_invoice(self, cr, uid, data, context):
                 list_inv_lines.append(inv_line)
 #            If we want to cancel ==> obj_inv.write(cr,uid,invoice.id,{'state':'cancel'}) here
 #            If we want to delete ==> obj_inv.unlink(cr,uid,list_invoice_ids) after new invoice creation.
-
 
         line_obj.write(cr,uid,id_note,{'name':customer_ref})
         id_note1=line_obj.create(cr,uid,{'name':notes,'state':'text','sequence':count})# a new line of type 'note' with all the old invoice note
