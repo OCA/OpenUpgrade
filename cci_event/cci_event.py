@@ -256,7 +256,7 @@ class event_registration(osv.osv):
 		if part:
 			data_partner = self.pool.get('res.partner').browse(cr,uid,part)
 			if data_partner.alert_events:
-				raise osv.except_osv('Error!',data_partner.alert_explanation)
+				raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
 		return super(event_registration,self).onchange_partner_id(cr, uid, ids, part, event_id, email)
 #	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
 #		context={}
