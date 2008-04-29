@@ -270,7 +270,17 @@
     <para style="P20">
       <font color="white"> </font>
     </para>
-    <para style="P20">[[ spcl_msg(data['form']) ]]</para>
+    <blockTable colWidths="15.0,512.0" style="Tableau8">
+        <tr>
+          <td>
+            <para style="P22">[[ repeatIn((spcl_msg(data['form']) and spcl_msg(data['form']).splitlines()) or [], 'note') ]]</para>
+          </td>
+          <td>
+            <para style="P20">[[ note or removeParentNode('table') ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+
   </story>
 </document>
 
