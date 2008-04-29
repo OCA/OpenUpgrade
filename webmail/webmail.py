@@ -141,7 +141,7 @@ class webmail_mailbox(osv.osv):
                 obj.delete(mailbox.name)
                 mailbox_obj.unlink(cr, uid, ids)
                 
-    def _fetch_mail(self, cr, uid, ids, context):
+    def fetch_mail(self, cr, uid, ids, context):
         pass
     
 webmail_mailbox()
