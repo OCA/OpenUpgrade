@@ -68,7 +68,7 @@ def _create_process(self, cr, uid, data, context):
     if not name:
         raise wizard.except_wizard('Error!', 'Please enter folder name')    
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')        
-    mailbox_obj._create(cr, uid, data['ids'], context, name)    
+    mailbox_obj.create(cr, uid, data['ids'], context, name)    
     return {}
 
 def _rename_process(self, cr, uid, data, context):
@@ -77,7 +77,7 @@ def _rename_process(self, cr, uid, data, context):
     if not old_name:
         raise wizard.except_wizard('Error!', 'Please enter old folder name')
     mailbox_obj = pooler.get_pool(cr.dbname).get('webmail.mailbox')    
-    mailbox_obj._rename(cr, uid, data['ids'] , context, old_name, new_name)    
+    mailbox_obj.rename(cr, uid, data['ids'] , context, old_name, new_name)    
     return {}
 
 class wizard_mailbox(wizard.interface):

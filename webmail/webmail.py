@@ -39,7 +39,7 @@ class webmail_server(osv.osv):
         'oconn_port': lambda *a: 25,
     }
     
-    def _login(self, cr, uid, ids, context, server, port, ssl, type, user, password):        
+    def login(self, cr, uid, ids, context, server, port, ssl, type, user, password):        
         obj = None
         try:
             if type=='imap':
@@ -62,10 +62,10 @@ class webmail_server(osv.osv):
             pass
         return obj
         
-    def _test_connection(self, cr, uid, ids, context):
+    def test_connection(self, cr, uid, ids, context):
         server = self.browse(cr, uid, ids[0])
-        iobj = self._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
-        oobj = self._login(cr, uid, ids, context, server.oserver_name, server.oconn_port, server.oconn_type, 'smtp', server.user_name, server.password)
+        iobj = self.login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
+        oobj = self.login(cr, uid, ids, context, server.oserver_name, server.oconn_port, server.oconn_type, 'smtp', server.user_name, server.password)
         if not iobj and not oobj:
             raise osv.except_osv(
                         'Connection Error !',
@@ -100,43 +100,43 @@ class webmail_mailbox(osv.osv):
         'user_id': lambda obj, cr, uid, context: uid,
     }
     
-    def _select(self, cr, uid, ids, context, mail_acc):
+    def select(self, cr, uid, ids, context, mail_acc):
         server_obj = pooler.get_pool(cr.dbname).get('webmail.server')
-        obj = server_obj._login(cr, uid, ids, context, mail_acc.iserver_name, mail_acc.iconn_port, mail_acc.iconn_type, mail_acc.iserver_type, mail_acc.user_name, mail_acc.password)
+        obj = server_obj.login(cr, uid, ids, context, mail_acc.iserver_name, mail_acc.iconn_port, mail_acc.iconn_type, mail_acc.iserver_type, mail_acc.user_name, mail_acc.password)
         return obj.list()[1]
         
-    def _new(self, cr, uid, ids, context, name):
+    def new(self, cr, uid, ids, context, name):
          mailbox_obj = self.pool.get('webmail.mailbox')
          server_obj = self.pool.get('webmail.server')
          
          mailbox = mailbox_obj.browse(cr, uid, ids[0])
          server = server_obj.browse(cr, uid, mailbox.account_id.id)
          if server.iserver_type=='imap':
-             obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
+             obj = server.login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
              if obj:
                 obj.create(name)
                 mailbox_obj.create(cr, uid, {'name':name, 'parent_id':mailbox.parent_id})
     
-    def _rename(self, cr, uid, ids, context, old, new):
+    def rename(self, cr, uid, ids, context, old, new):
         mailbox_obj = self.pool.get('webmail.mailbox')
         server_obj = self.pool.get('webmail.server')
         
         mailbox = mailbox_obj.browse(cr, uid, ids[0])
         server = server_obj.browse(cr, uid, mailbox.account_id.id)
         if server.iserver_type=='imap':
-            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
+            obj = server.login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
             if obj:
                 obj.rename(old, new)
                 mailbox_obj.write(cr, uid, ids, {'name': new_name })    
     
-    def _delete(self, cr, uid, ids, context):
+    def delete(self, cr, uid, ids, context):
         mailbox_obj = self.pool.get('webmail.mailbox')
         server_obj = self.pool.get('webmail.server')
         
         mailbox = mailbox_obj.browse(cr, uid, ids[0])
         server = server_obj.browse(cr, uid, mailbox.account_id.id)
         if server.iserver_type=='imap':
-            obj = server._login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
+            obj = server.login(cr, uid, ids, context, server.iserver_name, server.iconn_port, server.iconn_type, server.iserver_type, server.user_name, server.password)
             if obj:
                 obj.delete(mailbox.name)
                 mailbox_obj.unlink(cr, uid, ids)
@@ -175,8 +175,7 @@ class webmail_email(osv.osv):
         'date': fields.datetime('Date'),
         'cc': fields.char('Cc', size=256),
         'bcc': fields.char('Bcc', size=256),
-        'body': fields.text('Body'),
-        'attachment_id': fields.one2many('webmail.email.attachment', 'email_id', string='Attachment'),
+        'body': fields.text('Body'),        
         'tag_id': fields.many2one('webmail.tags', 'Tags'),
     }
     _default={
@@ -200,22 +199,7 @@ class webmail_email(osv.osv):
                         data['bcc']=mail.bcc
         return data
      
-    def _send_mail(self, cr, uid, ids, context):
+    def send_mail(self, cr, uid, ids, context):
         pass
     
 webmail_email()
-
-class webmail_email_attachment(osv.osv):
-    _name="webmail.email.attachment"
-    _description="Attachment"
-    _rec_name="attachment"
-    _columns={
-        'user_id': fields.many2one('res.users', 'User'),
-        'email_id': fields.many2one('webmail.email', 'Email'),
-        'attachment': fields.binary('Attachment'),
-        'name': fields.char('File Name',size=128)
-    }
-    _default={
-        'user_id': lambda obj, cr, uid, context: uid,
-    }
-webmail_email_attachment()

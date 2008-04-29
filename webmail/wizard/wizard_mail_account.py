@@ -10,25 +10,23 @@ def _action_open_mail_account(self, cr, uid, data, context):
     
     mailbox_ids = mailbox_obj.search(cr, uid,[('user_id','=',uid)])
     mailbox_obj.unlink(cr, uid, mailbox_ids)
-
+    
     for server in user_obj.browse(cr, uid, data['ids'][0]).server_conf_id:
         mail_acc = server_obj.browse(cr, uid, server.id)
         parent_accid = mailbox_obj.create(cr, uid, {'name':mail_acc.name, 'user_id':uid })
-        
-        if mail_acc.iserver_type=='imap':        
-                folders = mailbox_obj._select(cr, uid, data['ids'], context, mail_acc)
+        if mail_acc.iserver_type=='imap':
+                folders = mailbox_obj.select(cr, uid, data['ids'], context, mail_acc)
                 for folder in folders:
-                    name = folder.split('/')
-                    if name.__len__()>0:
-                        name = name[1]
+                    value = folder.split("\"")
+                    if value.__len__()>0:
+                        name = value[3]
                     else:
                         name = folder
                     mailbox_obj.create(cr, uid, {'name':name, 'parent_id':parent_accid, 'user_id':uid })
-        elif mail_acc.iconn_type=='smtp':
-            mailbox_obj.create(cr, uid, {'name':'Inbox', 'parent_id':parent_accid, 'user_id':uid })         
-        
-    return {    
-        'domain': "[('user_id','=',%d)]" % (uid),
+        elif mail_acc.iconn_type=='pop3':
+            mailbox_obj.create(cr, uid, {'name':'Inbox', 'parent_id':parent_accid, 'user_id':uid })
+    return  {
+        'domain': "[('parent_id','=',False),('user_id','=',%d)]" % (uid),
         'name': 'Mail Account',
         'view_type': 'tree',
         'res_model': 'webmail.mailbox',

@@ -46,7 +46,7 @@
 				<newline/>
 				<separator colspan="4"/>
 				<group colspan="2" col="2">
-					<button string="Test Connection" name="_test_connection" type="object"/>
+					<button string="Test Connection" name="test_connection" type="object"/>
 				</group>
 			</form>
 		</field>
@@ -137,27 +137,17 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Compose Mail">
-				<group col="4" colspan="2">
+				<group col="4" colspan="4">
 					<field name="from_user" />
 					<field name="cc" />
-					<field name="bcc"/>				
+					<field name="bcc"/>
 					<field name="subject"/>
-				</group>
-				<group col="1" colspan="2">
-					<field name="attachment_id" nolabel="1">
-						<form string="Attachment">
-							<field name="attachment"/>
-						</form>
-						<tree string="Attachment">							
-							<field name="attachment"/>
-						</tree>
-					</field>
 				</group>
 				<newline/>
 				<separator string="Message" colspan="4"/>
 				<field name="body" nolabel="1" colspan="4"/>
 				<group col="3" colspan="4">
-					<button name="_send_mail" string="Send Mail"/>					
+					<button name="send_mail" string="Send Mail"/>					
 				</group>
 			</form>
 		</field>
@@ -190,24 +180,12 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Compose Mail">
-				<group col="4" colspan="2">
+				<group col="4" colspan="4">
 					<field name="from_user" />
 					<field name="cc" />
 					<field name="bcc"/>				
 					<field name="subject"/>
-				</group>
-				<group col="1" colspan="2">
-					<field name="attachment_id" nolabel="1">
-						<form string="Attachment">
-							<field name="name"/>
-							<field name="attachment"/>
-						</form>
-						<tree string="Attachment">
-							<field name="name"/>
-							<field name="attachment"/>
-						</tree>
-					</field>
-				</group>
+				</group>				
 				<newline/>
 				<separator string="Message" colspan="4"/>
 				<field name="body" nolabel="1" colspan="4"/>
