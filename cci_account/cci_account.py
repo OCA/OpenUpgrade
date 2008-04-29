@@ -42,7 +42,8 @@ class account_invoice(osv.osv):
         product_ids = []
         flag = False
         for lines in vals['abstract_line_ids']:
-            product_ids.append(lines[2]['product_id'])
+            if lines[2]['product_id']:
+                product_ids.append(lines[2]['product_id'])
         if product_ids:
             data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
             for product in data_product:
@@ -60,7 +61,8 @@ class account_invoice(osv.osv):
         flag = False
         data_inv = self.browse(cr,uid,ids[0])
         for lines in data_inv.abstract_line_ids:
-            product_ids.append(lines.product_id.id)
+            if lines.product_id:
+                product_ids.append(lines.product_id.id)
         if product_ids:
             data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
             for product in data_product:
