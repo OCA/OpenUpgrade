@@ -133,7 +133,7 @@ class cci_missions_embassy_folder(osv.osv):
 		part_obj = self.pool.get('res.partner')
 		data_partner = part_obj.browse(cr,uid,part)
 		if data_partner.alert_legalisations:
-				raise osv.except_osv('Error!',data_partner.alert_explanation)
+				raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
 		addr = part_obj.address_get(cr, uid, [part], ['contact'])
 		data = {'partner_address_id':addr['contact']}
 		return {'value':data}
@@ -389,7 +389,7 @@ class cci_missions_certificate(osv.osv):
 		if order_partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 			if partner_info.alert_legalisations:
-				raise osv.except_osv('Error!',partner_info.alert_explanation)
+				raise osv.except_osv('Error!',partner_info.alert_explanation or 'Partner is not valid')
 			if not partner_info.asker_name:
 				asker_name=partner_info.name
 			else:
@@ -510,7 +510,7 @@ class cci_missions_legalization(osv.osv):
 		if order_partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,order_partner_id)
 			if partner_info.alert_legalisations:
-				raise osv.except_osv('Error!',partner_info.alert_explanation)
+				raise osv.except_osv('Error!',partner_info.alert_explanation or 'Partner is not valid')
 			if partner_info.membership_state == 'none': #the boolean "Apply the member price" should be set to TRUE or FALSE when the partner is changed in regard of the membership state of him.
 				member_state = False
 			else:
@@ -797,7 +797,7 @@ class cci_missions_ata_carnet(osv.osv):
 		if partner_id:
 			partner_info = self.pool.get('res.partner').browse(cr, uid,partner_id)
 			if partner_info.alert_legalisations:
-				raise osv.except_osv('Error!',partner_info.alert_explanation)
+				raise osv.except_osv('Error!',partner_info.alert_explanation or 'Partner is not valid')
 			if partner_info.membership_state == 'none':
 				member_state = False
 			else:
