@@ -42,7 +42,7 @@ def _create_check(self, cr, uid, data, context):
     return {}
 
 def _check_acc(self, cr, uid, data, context):
-    if data['ids'].__len()>1:
+    if data['ids'].__len__()>1:
         raise wizard.except_wizard('Error!', 'Please select only one folder')
     return {}
 
