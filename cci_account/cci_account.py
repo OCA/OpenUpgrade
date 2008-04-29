@@ -41,9 +41,11 @@ class account_invoice(osv.osv):
     def create(self, cr, uid, vals, *args, **kwargs):
         product_ids = []
         flag = False
-        for lines in vals['abstract_line_ids']:
-            if lines[2]['product_id']:
-                product_ids.append(lines[2]['product_id'])
+        print "valsss",vals
+        if 'abstract_line_ids' in vals:
+            for lines in vals['abstract_line_ids']:
+                if lines[2]['product_id']:
+                    product_ids.append(lines[2]['product_id'])
         if product_ids:
             data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
             for product in data_product:
