@@ -60,8 +60,8 @@
 		<field name="arch" type="xml">
 			<form string="Messages">
 				<separator string="Write a notification or a wishful message." colspan="4"/>
-				<field name="title" select="1"/>
-				<field name="name" select="1"/>
+				<field name="title" select="1" colspan="2"/>
+				<field name="name" select="1" colspan="2" />
 			</form>
 		</field>
 	</record>
