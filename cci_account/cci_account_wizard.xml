@@ -71,5 +71,11 @@
 			action="account.wizard_vat_declaration"
 			type="wizard"
 			id="account_wizard_vat_declaration"/>
+	<wizard
+			string="Display Reverted Debit-Credit"
+			model="account.move"
+			name="cci_debit_credit_switch"
+			id="cci_switch_debit_credit"/>
+
 	</data>
 </terp>
