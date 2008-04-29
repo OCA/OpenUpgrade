@@ -35,7 +35,7 @@ class account_invoice(osv.osv):
         if partner_id:
             data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
             if data_partner.alert_others:
-                raise osv.except_osv('Error!',data_partner.alert_explanation)
+                raise osv.except_osv('Error!',data_partner.alert_explanation or '')
         return super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
 
 account_invoice()
