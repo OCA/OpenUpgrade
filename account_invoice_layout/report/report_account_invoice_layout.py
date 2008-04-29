@@ -81,10 +81,12 @@ class account_invoice_1(report_sxw.rml_parse):
         invoice_list=[]
         res={}
         ids = self.pool.get('account.invoice.line').search(self.cr, self.uid, [('invoice_id', '=', invoice.id)])
-        for id in range(0,len(ids)):
-            info = self.pool.get('account.invoice.line').browse(self.cr, self.uid,ids[id], self.context.copy())
-            invoice_list.append(info)
-        i=0
+        list_ids = list(set([x for x in ids]))
+
+        for id in range(0,len(list_ids)):
+            info = self.pool.get('account.invoice.line').browse(self.cr, self.uid,list_ids[id], self.context.copy())
+            invoice_list +=[info]
+        i=1
         j=0
         sum_flag={}
         sum_flag[j]=-1
@@ -134,11 +136,13 @@ class account_invoice_1(report_sxw.rml_parse):
                 if entry.state=='subtotal':
                     res['name']=entry.name
                     sum=0
+                    sum_id=0
                     if sum_flag[j]==-1:
-                        temp=0
+                        temp=1
                     else:
                         temp=sum_flag[j]
-                    for sum_id in range(temp,len(sub_total)):
+
+                    for sum_id in range(temp,len(sub_total)+1):
                         sum+=sub_total[sum_id]
                     sum_flag[j+1]= sum_id +1
 
