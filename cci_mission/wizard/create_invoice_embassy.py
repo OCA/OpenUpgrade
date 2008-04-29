@@ -64,15 +64,15 @@ def _createInvoices(self, cr, uid, data, context):
 
         if embassy.state != 'open':
             inv_reject = inv_reject + 1
-            inv_rej_reason += "ID "+str(embassy.id)+": Check State \n"
+            inv_rej_reason += "ID "+str(embassy.id)+": Check State.Folder should be Open for Invoicing. \n"
             continue
         if embassy.invoice_id:
             inv_reject = inv_reject + 1
-            inv_rej_reason += "ID "+str(embassy.id)+": Already Has an Invoice Linked \n"
+            inv_rej_reason += "ID "+str(embassy.id)+": Already Has an Invoice Linked. \n"
             continue
         if not embassy.partner_id:
                 inv_reject = inv_reject + 1
-                inv_rej_reason += "ID "+str(embassy.id)+": Embassy Folder Don't Have any Partner to Invoice \n"
+                inv_rej_reason += "ID "+str(embassy.id)+": Embassy Folder Does not Have any Partner to Invoice. \n"
                 continue
         for add in embassy.partner_id.address:
             if add.type == 'contact':
