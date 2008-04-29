@@ -123,9 +123,8 @@ def _createInvoices(self, cr, uid, data, context):
         obj_embassy.write(cr, uid,embassy.id, {'invoice_id' : inv_id})
         list_inv.append(inv_id)
         obj_embassy.write(cr, uid,[embassy.id], {'state':'done','invoice_date': time.strftime('%Y-%m-%d %H:%M:%S')})
-#        obj_embassy._history(cr, uid, [embassy], 'Invoiced', history=True)
-#        wf_service = netsvc.LocalService('workflow')
-#        wf_service.trg_validate(uid, 'cci_missions.embassy_folder', embassy.id, 'done', cr)
+        wf_service = netsvc.LocalService('workflow')
+        wf_service.trg_validate(uid, 'cci_missions.embassy_folder', embassy.id, 'done', cr)
 
     return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'inv_rej_reason': inv_rej_reason , 'invoice_ids':  list_inv}
 
