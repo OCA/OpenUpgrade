@@ -81,10 +81,9 @@ class account_invoice_1(report_sxw.rml_parse):
         invoice_list=[]
         res={}
         ids = self.pool.get('account.invoice.line').search(self.cr, self.uid, [('invoice_id', '=', invoice.id)])
-        list_ids = list(set([x for x in ids]))
-
-        for id in range(0,len(list_ids)):
-            info = self.pool.get('account.invoice.line').browse(self.cr, self.uid,list_ids[id], self.context.copy())
+        ids.sort()
+        for id in range(0,len(ids)):
+            info = self.pool.get('account.invoice.line').browse(self.cr, self.uid,ids[id], self.context.copy())
             invoice_list +=[info]
         i=1
         j=0
@@ -163,12 +162,12 @@ class account_invoice_1(report_sxw.rml_parse):
                     res['price_subtotal']=''
                     res['currency']=''
                 elif entry.state=='line':
-                    res['quantity']='__________'
-                    res['price_unit']='_____________'
+                    res['quantity']='____________'
+                    res['price_unit']='______________'
                     res['discount']='____________'
                     res['tax_types']='_________________'
                     res['uos']='_____'
-                    res['name']='____________________________________'
+                    res['name']='________________________________________'
                     res['price_subtotal']='_______________________'
                     res['currency']='_______'
                 elif entry.state=='break':
