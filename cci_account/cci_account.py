@@ -35,7 +35,39 @@ class account_invoice(osv.osv):
         if partner_id:
             data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
             if data_partner.alert_others:
-                raise osv.except_osv('Error!',data_partner.alert_explanation or '')
+                raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
         return super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+        product_ids = []
+        flag = False
+        for lines in vals['abstract_line_ids']:
+            product_ids.append(lines[2]['product_id'])
+        if product_ids:
+            data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
+            for product in data_product:
+                if product.membership:
+                    flag = True
+        if vals['partner_id']:
+            data_partner = self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])
+            if data_partner.alert_membership and flag:
+                raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
+        return super(account_invoice,self).create(cr, uid, vals, *args, **kwargs)
+
+    def write(self, cr, uid, ids,vals, *args, **kwargs):
+        product_ids = []
+        a = super(account_invoice,self).write(cr, uid, ids,vals, *args, **kwargs)
+        flag = False
+        data_inv = self.browse(cr,uid,ids[0])
+        for lines in data_inv.abstract_line_ids:
+            product_ids.append(lines.product_id.id)
+        if product_ids:
+            data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
+            for product in data_product:
+                if product.membership:
+                    flag = True
+        if data_inv.partner_id.alert_membership and flag:
+            raise osv.except_osv('Error!',data_inv.partner_id.alert_explanation or 'Partner is not valid')
+        return a
 
 account_invoice()
