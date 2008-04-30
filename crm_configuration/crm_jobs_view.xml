@@ -48,7 +48,7 @@
 						<field name="categ_id" string="Applied Job" select="1" on_change="onchange_categ_id(categ_id)"/>
 						<field name="category2_id" string="Degree" select="1"/>
 						<field name="priority" string="Quality"/>
-						<field name="duration" string="Availability (weeks)"/>
+						<field name="probability" string="Availability (weeks)"/>
 						<newline/>
 						<field name="planned_cost" string="Expected Salary"/>
 						<field name="planned_revenue" string="Proposed Salary"/>
@@ -111,8 +111,6 @@
 					<field name="date_closed"/>
 					<field name="date_action_last"/>
 					<field name="date_action_next"/>
-					<separator colspan="4" string="Estimates"/>
-					<field name="probability"/>
 					<separator colspan="4" string="References"/>
 					<field name="ref" colspan="4"/>
 					<field name="ref2" colspan="4"/>
