@@ -87,6 +87,9 @@ class account_invoice_draft(report_sxw.rml_parse):
         list_ids=obj_inv.search(self.cr,self.uid,[('state','=','draft'),('partner_id','=',object.id),('type','=','out_invoice')])
         invoices=obj_inv.browse(self.cr,self.uid,list_ids)
 
+        self.sum_untaxed=0.00
+        self.sum_tax=0.00
+        self.sum_tot=0.00
         for invoice in invoices:
             res={}
             res['name']=invoice.name
