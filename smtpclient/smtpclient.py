@@ -45,25 +45,6 @@ from email.MIMEText import MIMEText
 import random
 import hashlib
 
-class HistoryLine(osv.osv):
-    _name = 'email.smtpclient.history'
-    _description = 'Email Client History'
-    _columns = {
-        'name' : fields.text('Description',required=True),
-        'date_create': fields.datetime('Date'),
-        'user_id':fields.many2one('res.users', 'Username', readonly=True, select=True),
-        'server_id' : fields.many2one('email.smtpclient', 'Smtp Server', ondelete='set null', required=True),
-    }
-    
-    _defaults = {
-        'date_create': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
-        'user_id': lambda obj, cr, uid, context: uid,
-    }
-    
-    def create(self, cr, uid, vals, context=None):
-        super(HistoryLine,self).create(cr, uid, vals, context)
-        cr.commit()
-HistoryLine()
 
 class SmtpClient(osv.osv):
     _name = 'email.smtpclient'
@@ -79,9 +60,9 @@ class SmtpClient(osv.osv):
         'ssl' : fields.boolean("Use SSL?", readonly=True, states={'new':[('readonly',False)]}),
         'users_id': fields.many2many('res.users', 'res_smtpserver_group_rel', 'sid', 'uid', 'Users Allowed'),
         'state': fields.selection([
-            ('new','Not Varified'),
-            ('waiting','Waiting for Varification'),
-            ('confirm','Varified'),
+            ('new','Not Verified'),
+            ('waiting','Waiting for Verification'),
+            ('confirm','Verified'),
         ],'Server Status', select=True, readonly=True),
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),
@@ -99,6 +80,10 @@ class SmtpClient(osv.osv):
     def init(self, cr):
         self.server = None
         self.smtpServer = None
+        
+    def search_count(self, cr, user, args, context=None):
+        print args;
+        super(SmtpClient, self).search(cr, uid, args, context)
         
     def change_email(self, cr, uid, ids, email):
         if email.index('@'):
@@ -184,7 +169,28 @@ class SmtpClient(osv.osv):
             
         return True
     
-    def send_email(self, cr, uid, ids, emailto, filelist):
+    def send_email(self, cr, uid, ids, emailto, filelist = None):
         pass
         
 SmtpClient()
+
+class HistoryLine(osv.osv):
+    _name = 'email.smtpclient.history'
+    _description = 'Email Client History'
+    _columns = {
+        'name' : fields.text('Description',required=True),
+        'date_create': fields.datetime('Date'),
+        'user_id':fields.many2one('res.users', 'Username', readonly=True, select=True),
+        'server_id' : fields.many2one('email.smtpclient', 'Smtp Server', ondelete='set null', required=True),
+    }
+    
+    _defaults = {
+        'date_create': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'user_id': lambda obj, cr, uid, context: uid,
+    }
+    
+    def create(self, cr, uid, vals, context=None):
+        super(HistoryLine,self).create(cr, uid, vals, context)
+        cr.commit()
+
+HistoryLine()
