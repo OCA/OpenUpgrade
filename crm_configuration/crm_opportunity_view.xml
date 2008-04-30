@@ -116,10 +116,11 @@
 			<tree string="Opportunities Tree"  colors="red:state=='open'">
 				<field name="id"/>
 				<field name="name" string="Opportunities"/>
-				<field name="description" string="Description"/>
 				<field name="stage_id"  string="Sales Stage"/>
 				<field name="categ_id" string="Lead Source"/>
 				<field name="category2_id" string="Type"/>
+				<field name="planned_cost" string="Amount"/>
+				<field name="probability"/>
 				<field name="user_id"/>
 				<field name="state"/>
 			</tree>
