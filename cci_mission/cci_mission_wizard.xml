@@ -55,6 +55,31 @@
 			type="wizard"
 			id="cci_missions_invoice_common"/>
 
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.certificate"
+			menu="True"
+			id="missions_rec_enc_cash_cert"/>
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.legalization"
+			menu="True"
+			id="missions_rec_enc_cash_legal"/>
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.embassy_folder"
+			menu="True"
+			id="missions_rec_enc_cash_folder"/>
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.ata_carnet"
+			menu="True"
+			id="missions_rec_enc_cash_carnet"/>
+
 
 	</data>
 </terp>
