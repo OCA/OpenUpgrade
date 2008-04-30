@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<record id="crm_configuration.menu_crm_case_category_act_meetings" model="ir.ui.menu">
+			<field eval="&quot;Calendar of Meetings&quot;" name="name"/>
+			<field eval="&quot;terp-calendar&quot;" name="icon"/>
+			<field eval="False" name="parent_id"/>
+		</record>
+		
+		<record id="product.menu_main_product" model="ir.ui.menu">
+			<field model="ir.ui.menu" name="parent_id" search="[('name','=','Configuration'),('parent_id.name','=','Financial Management')]"/>
+		</record>
+	</data>
+</terp>
