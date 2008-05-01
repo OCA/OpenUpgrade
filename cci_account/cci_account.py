@@ -50,10 +50,15 @@ class account_invoice(osv.osv):
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
         if partner_id:
             data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
-            
             if data_partner.alert_others:
                 raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
-        return super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
+            data=super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
+            data['value']['invoice_special']=data_partner.invoice_special
+            return data
+        else:
+            data=super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
+            data['value']['invoice_special']=False
+            return data
 
     def create(self, cr, uid, vals, *args, **kwargs):
         product_ids = []
