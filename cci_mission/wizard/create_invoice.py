@@ -149,7 +149,7 @@ def _createInvoices(self, cr, uid, data, context={}):
 						'uos_id': val['value']['uos_id'],
 						'product_id':val['value']['product_id'],
 						'invoice_line_tax_id': [(6,0,tax_on_line)],
-						#'note':data.text_on_invoice,
+						'note':data.text_on_invoice,
 					})
 				else:
 					raise osv.except_osv('Input Error!','No Product Chosen')

@@ -31,7 +31,7 @@ def _group_invoice(self, cr, uid, data, context):
             model_ids=pool_obj.get(model).search(cr,uid,[('state','=','draft')])
 
         if model_ids:
-            read_ids=pool_obj.get(model).read(cr,uid,model_ids,['partner_id','order_partner_id'])
+            read_ids=pool_obj.get(model).read(cr,uid,model_ids,['partner_id','order_partner_id','date','creation_date'])
 
             for element in read_ids:
                 part_info={}
@@ -40,10 +40,17 @@ def _group_invoice(self, cr, uid, data, context):
                     part_info['partner_id']=element['partner_id'][0]
                     part_info['id']=element['id']
                     part_info['model']=model
+
                 if ('order_partner_id' in element) and element['order_partner_id']:
                     part_info['partner_id']=element['order_partner_id'][0]
                     part_info['id']=element['id']
                     part_info['model']=model
+
+                if 'date' in element:
+                    part_info['date']=element['date']
+
+                if 'creation_date' in element:
+                    part_info['date']=element['creation_date']
 
                 if part_info:
                     dict_info.append(part_info)
@@ -61,13 +68,19 @@ def _group_invoice(self, cr, uid, data, context):
     for partner_id in partner_ids:
 
         partner=pool_obj.get('res.partner').browse(cr, uid,partner_id)
-        models=[]
+        final_info={}
+        list_info=[]
         list_invoice_ids=[]
+
 
         for element in dict_info:
 
+            final_info={}
             if element['partner_id']==partner_id:
                 data={'model':element['model'],'form':{},'id':element['id'],'ids':[element['id']],'report_type': 'pdf'}
+                final_info['ids']=[]
+                final_info['date']=element['date'][0:10]
+
 
                 if element['model']=='cci_missions.ata_carnet':
                     result=create_invoice_carnet._createInvoices(self,cr,uid,data,context)
@@ -76,15 +89,18 @@ def _group_invoice(self, cr, uid, data, context):
                         disp_msg +='\nFor Partner '+ partner.name +' On ATA Carnet with ' + result['inv_rej_reason']
                     if result['invoice_ids']:
                         list_invoice_ids.append(result['invoice_ids'][0])
+                        final_info['ids'].append(result['invoice_ids'][0])
+                        list_info.append(final_info)
 
                 if element['model']=='cci_missions.embassy_folder':
-
                     result=create_invoice_embassy._createInvoices(self,cr,uid,data,context)
 
                     if result['inv_rejected']>0 and result['inv_rej_reason']:
                         disp_msg +='\nFor Partner '+ partner.name +' On Embassy Folder with ' + result['inv_rej_reason']
                     if result['invoice_ids']:
                         list_invoice_ids.append(result['invoice_ids'][0])
+                        final_info['ids'].append(result['invoice_ids'][0])
+                        list_info.append(final_info)
 
                 if element['model'] in ('cci_missions.certificate','cci_missions.legalization'):
                     result=create_invoice._createInvoices(self,cr,uid,data,context)
@@ -93,45 +109,66 @@ def _group_invoice(self, cr, uid, data, context):
                         disp_msg +='\nFor Partner '+ partner.name +' On Certificate or Legalization with ' + result['inv_rej_reason']
                     if result['invoice_ids']:
                         list_invoice_ids.append(result['invoice_ids'][0])
+                        final_info['ids'].append(result['invoice_ids'][0])
+                        list_info.append(final_info)
+
+        done_date=[]
+        date_id_dict={}
+        done_date=list(set([x['date'] for x in list_info]))
+
+        final_list=[]
+        for date in done_date:
+            date_id_dict={}
+            date_id_dict['date']=date
+            date_id_dict['ids']=[]
+            for item in list_info:
+                if date==item['date']:
+                    date_id_dict['ids'] +=item['ids']
+            final_list.append(date_id_dict)
 
         count=0
         list_inv_lines=[]
-        customer_ref = partner.name
-        line_obj = pool_obj.get('account.invoice.line')
-        id_note=line_obj.create(cr,uid,{'name':customer_ref,'state':'title','sequence':count})
-        count=count+1
-        list_inv_lines.append(id_note)
-        data_inv=obj_inv.browse(cr,uid,list_invoice_ids)
-        notes = ''
-        for invoice in data_inv:
+        #marked
+        for record in final_list:
+            customer_ref = partner.name + " - " + record['date']
+            line_obj = pool_obj.get('account.invoice.line')
+            id_note=line_obj.create(cr,uid,{'name':customer_ref,'state':'title','sequence':count})
+            count=count+1
+            list_inv_lines.append(id_note)
+            data_inv=obj_inv.browse(cr,uid,record['ids'])
 
-            if invoice.reference:
-                customer_ref = customer_ref +' ' + invoice.reference
-            if invoice.comment:
-                notes = (notes + invoice.comment)
+            notes = ''
+            for invoice in data_inv:
 
-            for line in invoice.invoice_line:
-                if invoice.name:
-                    name = invoice.name +' '+ line.name
-                else:
-                    name = line.name
-                #pool_obj.get('account.invoice.line').write(cr,uid,line.id,{'name':name,'sequence':count})
-                inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':False,'sequence' : count})
-                count=count+1
-                list_inv_lines.append(inv_line)
-#            If we want to cancel ==> obj_inv.write(cr,uid,invoice.id,{'state':'cancel'}) here
-#            If we want to delete ==> obj_inv.unlink(cr,uid,list_invoice_ids) after new invoice creation.
+                if invoice.reference:
+                    customer_ref = customer_ref +' ' + invoice.reference
+                if invoice.comment:
+                    notes = (notes + ' ' + invoice.comment)
 
-        line_obj.write(cr,uid,id_note,{'name':customer_ref})
-        id_note1=line_obj.create(cr,uid,{'name':notes,'state':'text','sequence':count})# a new line of type 'note' with all the old invoice note
-        count=count+1
-        list_inv_lines.append(id_note1)
-        id_linee=line_obj.create(cr,uid,{'state':'line','sequence':count}) #a new line of type 'line'
-        count=count+1
-        list_inv_lines.append(id_linee)
-        id_stotal=line_obj.create(cr,uid,{'name':'Subtotal','state':'subtotal','sequence':count})#a new line of type 'subtotal'
-        count=count+1
-        list_inv_lines.append(id_stotal)
+                for line in invoice.invoice_line:
+                    if invoice.name:
+                        name = invoice.name +' '+ line.name
+                    else:
+                        name = line.name
+                    #pool_obj.get('account.invoice.line').write(cr,uid,line.id,{'name':name,'sequence':count})
+                    inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':line.note,'sequence' : count})
+                    count=count+1
+                    list_inv_lines.append(inv_line)
+    #            If we want to cancel ==> obj_inv.write(cr,uid,invoice.id,{'state':'cancel'}) here
+    #            If we want to delete ==> obj_inv.unlink(cr,uid,list_invoice_ids) after new invoice creation.
+
+            line_obj.write(cr,uid,id_note,{'name':customer_ref})
+            id_note1=line_obj.create(cr,uid,{'name':notes,'state':'text','sequence':count})# a new line of type 'note' with all the old invoice note
+            count=count+1
+            list_inv_lines.append(id_note1)
+            id_linee=line_obj.create(cr,uid,{'state':'line','sequence':count}) #a new line of type 'line'
+            count=count+1
+            list_inv_lines.append(id_linee)
+            id_stotal=line_obj.create(cr,uid,{'name':'Subtotal','state':'subtotal','sequence':count})#a new line of type 'subtotal'
+            count=count+1
+            list_inv_lines.append(id_stotal)
+
+        #end-marked
         inv = {
                 'name': 'Grouped Invoice - ' + partner.name,
                 'origin': 'Grouped Invoice',
