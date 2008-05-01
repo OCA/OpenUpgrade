@@ -169,7 +169,7 @@ class SmtpClient(osv.osv):
             
         return True
     
-    def send_email(self, cr, uid, ids,emailto,resource_id,report_name,file_name):
+    def send_email(self, cr, uid, ids,emailto,subject,resource_id,report_name,file_name,body):
 
         self.open_connection(cr, uid, ids, ids[0])
         
@@ -180,7 +180,7 @@ class SmtpClient(osv.osv):
 
             try:
                 service = netsvc.LocalService("report."+report_name);
-                (result,format) = service.create(cr,uid,res_ids,{},{})
+                (result,format) = service.create(cr,uid,[res_ids],{},{})
                 fp = open(ret_file_name,'wb+');
                 fp.write(result);
                 fp.close();
@@ -191,16 +191,14 @@ class SmtpClient(osv.osv):
         
             return (True,ret_file_name)
     
-        ret_file_name=create_report(self,cr,uid,resource_id,report_name,file_name)
+        file=create_report(self,cr,uid,resource_id,report_name,file_name)[1]
         try:
             if self.server['state'] == 'confirm':
-                body = str(self.server['test_email'])
                 msg = MIMEMultipart()
-                msg['Subject'] = 'TinyERP Test Email!!!'
+                msg['Subject'] = subject
                 msg['To'] = emailto
                 msg['From'] = str(self.server['from'])
                 msg.attach(MIMEText(body or '', _charset='utf-8'))
-                file =ret_file_name[1]
                 part = MIMEBase('application', "octet-stream")               
                 part.set_payload( open(file,"rb").read())
                

@@ -16,4 +16,3 @@ class res_company(osv.osv):
         'addresses': fields.one2many('res.company.address', 'company_id', 'Email Addresses'),
     }
 res_company()
-

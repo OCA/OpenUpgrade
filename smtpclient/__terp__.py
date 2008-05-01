@@ -1,7 +1,7 @@
 {
     "name" : "Email Client",
     "version" : "1.0",
-    "depends" : ["base"],
+    "depends" : ["base","sale"],
     "author" : "Tiny",
     "description": """Email Client module that provides:
     Sending Email

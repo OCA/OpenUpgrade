@@ -207,8 +207,8 @@ def send_mail(self, cr, uid, data, context):
 	
 	smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [], context)[0]
 	smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, smtpserver_id, context)
-	
-	state = smtpserver.send_email(cr, uid, [smtpserver_id], email,data['id'],'sale.shipping','Delivery_order')
+	body= "Your picking is validated. \n Please See the attachment."
+	state = smtpserver.send_email(cr, uid, [smtpserver_id], email,"Tiny ERP : Picking Validated",data['id'],'sale.shipping','Delivery_order',body)
 	if not state:
 		raise Exception, 'Varification Failed, Please check the Server Configuration!!!'
 	return {}
