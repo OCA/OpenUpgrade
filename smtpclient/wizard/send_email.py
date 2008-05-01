@@ -39,11 +39,9 @@ fields = {
 
 class sendemail(wizard.interface):
     
-    def send_mail(self, cr, uid, data, context):
-        print 'in Send mail' 
+    def send_mail(self, cr, uid, data, context): 
         smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, data['id'], context)
-        print 'send mail',smtpserver
-        state = smtpserver.send_email(cr, uid, [data['id']], data['form']['emailto'])
+        state = smtpserver.send_email(cr, uid, [data['id']], data['form']['emailto'],[])
         print state
         if not state:
             raise Exception, 'Varification Failed, Please check the Server Configuration!!!'
