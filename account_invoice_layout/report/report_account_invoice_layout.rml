@@ -80,7 +80,7 @@
 <paraStyle name="Standard" fontName="Times-Roman"/>
 <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
-<paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="2.0" leading="8"/>
+<paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="2.0" spaceAfter="3.0" leading="10"/>
 <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
 <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
 <paraStyle name="Index" fontName="Times-Roman"/>
@@ -173,7 +173,7 @@
 <para style="P8">[[ a['type']=='text' and removeParentNode('tr')]]</para>
 </td>
 <td>
-<para style="Table Contents"><font>[[ a['type']=='title'  and ( setTag('font','font',{'size':'14'})) ]][[ (a['type']=='title' or a['type']=='subtotal')  and ( setTag('font','font',{'name':'Times-bold'})) ]][[ a['type']=='text' and removeParentNode('font') or a['name'] ]]</font></para>
+<para style="Table Contents"><font>[[ a['type']=='title'  and ( setTag('font','font',{'size':'11.5'})) ]][[ (a['type']=='title' or a['type']=='subtotal')  and ( setTag('font','font',{'name':'Times-bold'})) ]][[ a['type']=='text' and removeParentNode('font') or a['name'] ]]</font></para>
 </td>
 </tr>
 </blockTable>
