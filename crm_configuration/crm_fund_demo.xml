@@ -49,8 +49,10 @@
 	<record model="crm.case.category2" id="categ2_fund4">
 		<field name="name">Demand Draft</field>
 		<field name="section_id" ref="section_support4"/>
-	</record>		
+	</record>	
 	
+	<!-- MENU -->	
+	<menuitem name="CRM &amp; SRM/Fund Raising" id="menu_crm_case_fund_raise"/>
 	<record model="ir.actions.act_window" id="crm_case_category_act_fund1">
 		<field name="name">Funds</field>
 		<field name="res_model">crm.case</field>
@@ -76,7 +78,7 @@
 		<field name="view_id" ref="crm_case_form_view_fund"/>
 		<field name="act_window_id" ref="crm_case_category_act_fund1"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Fund Raising" id="menu_crm_case_categ0_act_fund" action="crm_case_category_act_fund1"/>
+	<menuitem name="CRM &amp; SRM/Fund Raising/Fund Raising" id="menu_crm_case_categ0_act_fund" action="crm_case_category_act_fund1"/>
 
 </data>
 </terp>
