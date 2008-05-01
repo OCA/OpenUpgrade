@@ -31,6 +31,9 @@ account_move_line()
 class account_invoice(osv.osv):
 
     _inherit = 'account.invoice'
+    _columns = {
+        'internal_note': fields.text('Internal Note'),
+            }
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
         if partner_id:
             data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
