@@ -169,11 +169,12 @@ class SmtpClient(osv.osv):
             
         return True
     
-    def send_email(self, cr, uid, ids, emailto, filelist):
+    def send_email(self, cr, uid, ids,emailto,resource_id,report_name,file_name):
+
         self.open_connection(cr, uid, ids, ids[0])
         
-        def create_report(self,cr,uid,report_name,res_ids,file_name=False):
-            ret_file_name = 'Delivery_Order.pdf'
+        def create_report(self,cr,uid,res_ids,report_name,file_name):
+            ret_file_name = file_name+'.pdf'
             if not report_name or not res_ids:
                 return (False,Exception('Report name and Resources ids are required !!!'))
 
@@ -184,12 +185,13 @@ class SmtpClient(osv.osv):
                 fp.write(result);
                 fp.close();
             except Exception,e:
+                print 'Exception in create',e
                 return (False,str(e))
         #end try:
         
             return (True,ret_file_name)
     
-        ret_file_name=create_report(self,cr,uid,'sale.shipping',ids,file_name=False)
+        ret_file_name=create_report(self,cr,uid,resource_id,report_name,file_name)
         try:
             if self.server['state'] == 'confirm':
                 body = str(self.server['test_email'])
