@@ -33,6 +33,8 @@ class account_invoice(osv.osv):
     _inherit = 'account.invoice'
     _columns = {
         'internal_note': fields.text('Internal Note'),
+        'dept' :  fields.many2one('hr.department','Department'),
+        'invoice_special':fields.boolean('Special Invoice'),
             }
 
     def action_move_create(self, cr, uid, ids, context=None):
@@ -48,6 +50,7 @@ class account_invoice(osv.osv):
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
         if partner_id:
             data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
+            
             if data_partner.alert_others:
                 raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
         return super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
@@ -86,10 +89,6 @@ class account_invoice(osv.osv):
         if data_inv.partner_id.alert_membership and flag:
             raise osv.except_osv('Error!',data_inv.partner_id.alert_explanation or 'Partner is not valid')
         return a
-
-    _columns = {
-        'dept' :  fields.many2one('hr.department','Department'),
-    }
 
 account_invoice()
 
