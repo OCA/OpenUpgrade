@@ -34,6 +34,17 @@ class account_invoice(osv.osv):
     _columns = {
         'internal_note': fields.text('Internal Note'),
             }
+
+    def action_move_create(self, cr, uid, ids, context=None):
+        flag = False
+        data_invoice = self.browse(cr,uid,ids[0])
+        for line in data_invoice.invoice_line:
+            if not line.account_analytic_id:
+                flag = True
+        if flag:
+            raise osv.except_osv('Error!','Invoice line should have Analytic Account')
+        return super(account_invoice, self).action_move_create(cr, uid, ids, context)
+
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
         if partner_id:
             data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
