@@ -7,13 +7,19 @@
 			<field name="inherit_id" ref="base.view_company_form"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="rml_footer2" position="after">
-					<field name="addresses" colspan="4">
-						<tree string="Addresses">
-							<field name="name"/>
-							<field name="type"/>
-						</tree>
-					</field>	
+				<field name="rml_header" position="after">
+					<page string="Email Address">
+						<field name="addresses" colspan="4">
+							<tree string="Email Address">
+								<field name="name"/>
+								<field name="email"/>
+							</tree>
+							<form string="Email Address">
+								<field name="name"/>
+								<field name="email" domain="[('state','=','confirm')]"/>
+							</form>
+						</field>
+					</page>	
 				</field>
 			</field>
 		</record>
