@@ -42,8 +42,12 @@ from email.Message import Message
 from email.MIMEBase import MIMEBase
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
+from email.Utils import COMMASPACE, formatdate
+
+import netsvc
 import random
 import hashlib
+
 
 
 class SmtpClient(osv.osv):
@@ -60,9 +64,9 @@ class SmtpClient(osv.osv):
         'ssl' : fields.boolean("Use SSL?", readonly=True, states={'new':[('readonly',False)]}),
         'users_id': fields.many2many('res.users', 'res_smtpserver_group_rel', 'sid', 'uid', 'Users Allowed'),
         'state': fields.selection([
-            ('new','Not Verified'),
-            ('waiting','Waiting for Verification'),
-            ('confirm','Verified'),
+            ('new','Not Varified'),
+            ('waiting','Waiting for Varification'),
+            ('confirm','Varified'),
         ],'Server Status', select=True, readonly=True),
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),
@@ -80,10 +84,6 @@ class SmtpClient(osv.osv):
     def init(self, cr):
         self.server = None
         self.smtpServer = None
-        
-    def search_count(self, cr, user, args, context=None):
-        print args;
-        super(SmtpClient, self).search(cr, uid, args, context)
         
     def change_email(self, cr, uid, ids, email):
         if email.index('@'):
@@ -169,11 +169,51 @@ class SmtpClient(osv.osv):
             
         return True
     
-    def send_email(self, cr, uid, ids, emailto, filelist = None):
-        pass
+    def send_email(self, cr, uid, ids, emailto, filelist):
+        self.open_connection(cr, uid, ids, ids[0])
         
-SmtpClient()
+        def create_report(self,cr,uid,report_name,res_ids,file_name=False):
+            ret_file_name = 'Delivery_Order.pdf'
+            if not report_name or not res_ids:
+                return (False,Exception('Report name and Resources ids are required !!!'))
 
+            try:
+                service = netsvc.LocalService("report."+report_name);
+                (result,format) = service.create(cr,uid,res_ids,{},{})
+                fp = open(ret_file_name,'wb+');
+                fp.write(result);
+                fp.close();
+            except Exception,e:
+                return (False,str(e))
+        #end try:
+        
+            return (True,ret_file_name)
+    
+        ret_file_name=create_report(self,cr,uid,'sale.shipping',ids,file_name=False)
+        try:
+            if self.server['state'] == 'confirm':
+                body = str(self.server['test_email'])
+                msg = MIMEMultipart()
+                msg['Subject'] = 'TinyERP Test Email!!!'
+                msg['To'] = emailto
+                msg['From'] = str(self.server['from'])
+                msg.attach(MIMEText(body or '', _charset='utf-8'))
+                file =ret_file_name[1]
+                part = MIMEBase('application', "octet-stream")               
+                part.set_payload( open(file,"rb").read())
+               
+                Encoders.encode_base64(part)
+                part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file))
+                msg.attach(part)
+                    
+                    
+                self.smtpServer.sendmail(str(self.server['email']), emailto, msg.as_string())
+        except Exception, e:
+            print 'Exception',e
+            return False     
+        
+        return True
+SmtpClient()
 class HistoryLine(osv.osv):
     _name = 'email.smtpclient.history'
     _description = 'Email Client History'
@@ -192,5 +232,4 @@ class HistoryLine(osv.osv):
     def create(self, cr, uid, vals, context=None):
         super(HistoryLine,self).create(cr, uid, vals, context)
         cr.commit()
-
 HistoryLine()
