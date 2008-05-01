@@ -87,4 +87,16 @@ class account_invoice(osv.osv):
             raise osv.except_osv('Error!',data_inv.partner_id.alert_explanation or 'Partner is not valid')
         return a
 
+    _columns = {
+        'dept' :  fields.many2one('hr.department','Department'),
+    }
+
 account_invoice()
+
+class sale_order(osv.osv):
+    _inherit = "sale.order"
+    _columns = {
+        'dept' :  fields.many2one('hr.department','Department'),
+    }
+
+sale_order()
