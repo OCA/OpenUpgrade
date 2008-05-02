@@ -406,6 +406,20 @@ class product_template(osv.osv):
 product_template()
 
 class Product(osv.osv):
+
+	def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+		if ('product' in context) and (context['product']=='membership_product'):
+			model_data_ids_form = self.pool.get('ir.model.data').search(cr,user,[('model','=','ir.ui.view'),('name','in',['membership_products_form','membership_products_tree'])])
+			resource_id_form = self.pool.get('ir.model.data').read(cr,user,model_data_ids_form,fields=['res_id','name'])
+			dict_model={}
+			for i in resource_id_form:
+				dict_model[i['name']]=i['res_id']
+			if view_type=='form':
+				view_id = dict_model['membership_products_form']
+			else:
+				view_id = dict_model['membership_products_tree']
+		return super(Product,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+
 	'''Product'''
 	_inherit = 'product.product'
 	_description = 'product.product'
