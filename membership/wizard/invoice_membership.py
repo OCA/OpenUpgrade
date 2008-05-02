@@ -8,7 +8,7 @@ def _invoice_membership(self, cr, uid, data, context):
 	product_id = data['form']['product']
 
 	pool = pooler.get_pool(cr.dbname)
-	
+
 	cr.execute('''
 			SELECT partner_id, id, type
 			FROM res_partner_address
@@ -23,11 +23,11 @@ def _invoice_membership(self, cr, uid, data, context):
 		pid = fetchal[x][0]
 		id = fetchal[x][1]
 		type = fetchal[x][2]
-		
+
 		if partner_address_ids.has_key(pid) and partner_address_ids[pid]['type'] == 'invoice':
 			continue
 		partner_address_ids[pid] = {'id': id, 'type': type}
-		
+
 
 	invoice_list= []
 	invoice_obj = pool.get('account.invoice')
@@ -36,7 +36,7 @@ def _invoice_membership(self, cr, uid, data, context):
 	invoice_line_obj = pool.get(('account.invoice.line'))
 	invoice_tax_obj = pool.get(('account.invoice.tax'))
 	product = product_obj.read(cr, uid, product_id, ['uom_id'])
-	
+
 	for partner_id in partner_ids:
 		account_id = partner_obj.read(cr, uid, partner_id, ['property_account_receivable'])['property_account_receivable'][0]
 		invoice_id = invoice_obj.create(cr, uid, {
@@ -86,6 +86,7 @@ wizard_arch= """<?xml version="1.0"?>
 	<field
 		name="product"
 		domain="[('membership','=','True')]"
+		context="product='membership_product'"
 		/>
 </form>"""
 
@@ -94,7 +95,7 @@ wizard_arch= """<?xml version="1.0"?>
 class wizard_invoice_membership(wizard.interface):
 
 	states = {
-		
+
 		'init' : {
 			'actions' : [],
 			'result' : {
