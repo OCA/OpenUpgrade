@@ -18,7 +18,7 @@
     ],
     "update_xml" : [
         "smtpclient_view.xml",
-        "smtpclient_wizard.xml",
+        "smtpclient_wizard.xml","account_workflow.xml"
     ],
     "active": False,
     "installable": True
