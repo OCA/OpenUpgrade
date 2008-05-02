@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+	<record model="workflow" id="wkf">
+		<field name="name">account.invoice.basic</field>
+		<field name="osv">account.invoice</field>
+		<field name="on_create">True</field>
+	</record>
+	
+	<record model="workflow.activity" id="account.act_open">
+			<field name="wkf_id" ref="wkf"/>
+			<field name="name">open</field>
+			<field name="action">action_move_create()&#10;write({'state':'open'})&#10;action_number()</field>
+			<field name="kind">function</field>
+		</record>
+		
+	</data>
+</terp>
