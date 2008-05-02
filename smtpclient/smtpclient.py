@@ -185,7 +185,7 @@ class SmtpClient(osv.osv):
                 fp.write(result);
                 fp.close();
             except Exception,e:
-                print 'Exception in create',e
+                print 'Exception in create report:',e
                 return (False,str(e))
         #end try:
         
@@ -209,7 +209,7 @@ class SmtpClient(osv.osv):
                     
                 self.smtpServer.sendmail(str(self.server['email']), emailto, msg.as_string())
         except Exception, e:
-            print 'Exception',e
+            print 'Exception :',e
             return False     
         
         return True
