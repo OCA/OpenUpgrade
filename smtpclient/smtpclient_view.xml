@@ -7,9 +7,9 @@
 			<field name="inherit_id" ref="base.view_company_form"/>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<field name="rml_header" position="after">
+				<notebook position="inside">
 					<page string="Email Address">
-						<field name="addresses" colspan="4">
+						<field name="addresses" colspan="4" nolabel="1">
 							<tree string="Email Address">
 								<field name="name"/>
 								<field name="email"/>
@@ -20,7 +20,7 @@
 							</form>
 						</field>
 					</page>	
-				</field>
+				</notebook>
 			</field>
 		</record>
 	
