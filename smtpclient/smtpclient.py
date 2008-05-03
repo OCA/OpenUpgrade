@@ -73,6 +73,7 @@ class SmtpClient(osv.osv):
         'test_email' : fields.text('Test Message'),
         'verify_email' : fields.text('Verify Message', readonly=True, states={'new':[('readonly',False)]}),
         'code' : fields.char('Verification Code', size=256),
+        'type' : fields.selection([("default", "Default"),("account", "Account"),("sale","Sale"),("stock","Stock")], "Server Type",required=True),
         'history_line': fields.one2many('email.smtpclient.history', 'server_id', 'History')
     }
     
