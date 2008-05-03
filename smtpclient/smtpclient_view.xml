@@ -49,6 +49,7 @@
 							<field name="ssl" select="1"/>
 							<separator string="Verification Information" colspan="4"/>
 							<field name="state" select="1"/>
+							<field name="type" select="1"/>
 							<field name="active" select="1"/>
 						</page>
 						<page string="Messagess">
@@ -102,6 +103,7 @@
 					<field name="password"/>
 					<field name="server"/>
 					<field name="port"/>
+					<field name="type"/>
 					<field name="ssl"/>
 				</tree>
 			</field>
