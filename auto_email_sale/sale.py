@@ -50,7 +50,12 @@ class sale_order(osv.osv):
         if 'email' in address_data:
             if address_data['email']:
                 email = address_data['email']
-                smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [], context=False)
+                sale_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','sale')], context=False)
+                if not sale_smtpserver_id:
+                    default_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
+                    if not default_smtpserver_id:
+                        raise Exception, 'Varification Failed, No Server Defined!!!'
+                smtpserver_id = sale_smtpserver_id or default_smtpserver_id
                 smtpserver = self.pool.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)[0]
                 body= "Your order is confirmed \n Please See the attachment"
                 state = smtpserver.send_email(cr, uid, smtpserver_id, email,"Tiny ERP: Sale Order Confirmed",ids[0],'sale.order','sale_order',body)
