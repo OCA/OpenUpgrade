@@ -1,5 +1,5 @@
 {
-    "name" : "Auto Email SaleOrder",
+    "name" : "Auto Email Stock Picking",
     "version" : "1.0",
     "depends" : ["smtpclient","stock"],
     "author" : "Tiny",
