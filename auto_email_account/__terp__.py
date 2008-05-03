@@ -15,7 +15,7 @@
     ],
     "demo_xml" : [
     ],
-    "update_xml" : [
+    "update_xml" : ["account_invoice_workflow.xml"
         
     ],
     "active": False,
