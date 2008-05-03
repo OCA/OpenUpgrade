@@ -45,7 +45,12 @@ class account_invoice(osv.osv):
         if 'email' in address_data:
             if address_data['email']:
                 email = address_data['email']
-                smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [], context=False)
+                account_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','account')], context=False)
+                if not account_smtpserver_id:
+                    default_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
+                    if not default_smtpserver_id:
+                        raise Exception, 'Varification Failed, No Server Defined!!!'
+                smtpserver_id = account_smtpserver_id or default_smtpserver_id
                 smtpserver = self.pool.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)[0]
                 body= "Your Invoice is Validated \n Please See the attachment"
                 state = smtpserver.send_email(cr, uid, smtpserver_id, email,"Tiny ERP: Invoice validated",ids[0],'account.invoice','Invoice',body)
