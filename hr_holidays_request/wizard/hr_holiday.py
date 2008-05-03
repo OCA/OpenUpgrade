@@ -40,7 +40,6 @@ def _get_months(sel, cr, uid, context):
         i+=1
     return res
 field1 = {
-#    'accountno': {'string':'Account No', 'type':'char', 'size':64,'required':True},    
     'emp_ids': {'string':'Employees', 'type':'many2many', 'relation':'hr.employee'},
     'month': {'string':'Month','type':'selection', 'selection':_get_months},
     'year':{'string':'Year','type':'integer'},

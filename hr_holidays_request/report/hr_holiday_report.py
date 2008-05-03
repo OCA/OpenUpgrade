@@ -12,14 +12,10 @@ class hr_holiday_report(report_sxw.rml_parse):
             
         })
     def _getShop(self,form):
-#        l=[]
-#        l.append(form)
-#        return l
         if form['active1']:
             startdate=str(datetime.date(form['year'],form['month'],1))
             a=calendar.monthrange(form['year'],form['month'])
             enddate=str(datetime.date(form['year'],form['month'],a[1]))
-#            self.cr.execute("select id from hr_holidays where " )
             
         elif form['active2']:
             
@@ -68,6 +64,5 @@ class hr_holiday_report(report_sxw.rml_parse):
         return ls
                     
                 
-#            self.cr.execute("select employee_id as emp_id,sum(total_half) as total_half,sum(total_full) as total_full,sum(total_hour) as total_hour from hr_holidays where employee_id = %d and state='validate' and date_from1 GROUP BY employee_id" %( li ))
         
 report_sxw.report_sxw('report.hr.holiday.req.report', 'hr.holidays', 'addons/hr_holidays_request/report/hrreport.rml' ,parser=hr_holiday_report)

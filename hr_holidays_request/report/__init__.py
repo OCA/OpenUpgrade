@@ -1,1 +1,2 @@
 import hr_holiday_report
+import hr_holiday_report_form

@@ -19,7 +19,7 @@ class hr_holidays(osv.osv):
     def search(self, cr, uid, args, offset=0, limit=None, order=None,
             context=None, count=False):
         if len(args)==2:
-            if args[0]==['state', '=', 'confirm'] and args[1]==['employee_id',"=",[]]:
+            if (args[0]==['state', '=', 'confirm'] and args[1]==['employee_id',"=",[]]) or (args[0]==('state', '=', 'confirm') and args[1]==('employee_id',"=",[])):
                 res=[]
                 ids = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
                 for id in ids:
@@ -29,7 +29,6 @@ class hr_holidays(osv.osv):
                         boss1 = self.pool.get('hr.employee').search(cr, uid,[('parent_id','=',b)]) 
                         for b1 in boss1:
                             boss.append(b1)
-#                args[1]=['employee_id','in',res]
                 args[1]=['employee_id','in',res]
         
         return super(hr_holidays,self).search(cr, uid, args, offset, limit,
@@ -44,7 +43,6 @@ class hr_holidays(osv.osv):
                 raise osv.except_osv('Data Error !','Can not Delete Validated or refused record')
         return super(hr_holidays, self).unlink(cr, uid, ids, context=context)
     def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
-        print "{}{}{}{",vals
         slobj=self.browse(cr,uid,ids)
         if vals.__contains__('date_from1'):
             d=vals['date_from1']
@@ -211,7 +209,6 @@ class hr_holidays(osv.osv):
             d2[2]=d2[2].split(' ')
             a=datetime.date(int(d1[0]),int(d1[1]),int(d1[2][0]))
             b=datetime.date(int(d2[0]),int(d2[1]),int(d2[2][0]))
-#            if datetime.RelativeDateDiff(date1,date2) > 0 :
             if b >= a:
                 t1=datetime.timedelta(days=1)
                 temp=b-a+t1
@@ -230,8 +227,6 @@ class hr_holidays(osv.osv):
          self.write(cr, uid, ids, {
              'state':'draft'
              })
-#         wf_service = netsvc.LocalService("workflow")
-#         wf_service.trg_create(uid, 'hr.holidays', ids[0], cr)
          return True
     def write_data(self,cr,uid,ids,*args):
         selfobj=self.browse(cr, uid, ids, None)
