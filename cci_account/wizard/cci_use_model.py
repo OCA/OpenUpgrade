@@ -68,7 +68,7 @@ class use_model(wizard.interface):
     states = {
         'init': {
             'actions': [],
-            'result': {'type':'form', 'arch':model_form, 'fields':model_fields, 'state':[('create','Create Entries'),('end','Cancel')]},
+            'result': {'type':'form', 'arch':model_form, 'fields':model_fields, 'state':[('end','Cancel'),('create','Create Entries')]},
         },
         'create': {
             'actions': [_create_entries],
