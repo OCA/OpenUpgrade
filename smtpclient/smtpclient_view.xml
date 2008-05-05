@@ -76,11 +76,18 @@
 									<field name="user_id"/>
 									<field name="date_create"/>
 									<field name="name"/>
+									<field name="email"/>
+									<field name="model"/>
+									<field name="resource_id"/>									
 								</tree>
 								<form string="Server History">
 									<field name="user_id"/>
 									<field name="date_create"/>
 									<field name="name" colspan="4"/>
+									<field name="email"/>
+									<newline/>
+									<field name="model"/>
+									<field name="resource_id"/>									
 								</form>
 							</field>
 						</page>
@@ -127,6 +134,8 @@
 					<field name="server_id"/>
 					<field name="user_id"/>
 					<field name="date_create"/>
+					<field name="model"/>
+					<field name="resource_id"/>
 					<field name="name"/>
 				</tree>
 			</field>
@@ -140,6 +149,8 @@
 				<form string="Server History">
 					<field name="server_id" domain="[('id','=',parent.id)]"/>
 					<field name="date_create"/>
+					<field name="model"/>
+					<field name="resource_id"/>
 					<field name="name" colspan="4"/>
 				</form>
 			</field>
