@@ -466,8 +466,12 @@ class document_file(osv.osv):
 			if 'parent_id' not in vals:
 				obj_directory=self.pool.get('document.directory')
 				directory_ids=obj_directory.search(cr,uid,[('ressource_type_id','=',vals['res_model'])])
-				if len(directory_ids):
-					vals['parent_id']=directory_ids[0]
+				dirs=obj_directory.browse(cr,uid,directory_ids)
+				for dir in dirs:
+					if dir.domain:
+						object_ids=obj_model.search(cr,uid,eval(dir.domain))
+						if vals['res_id'] in object_ids:
+							vals['parent_id']=dir.id
 		datas=None
 		if 'datas' not in vals:
 			import urllib
