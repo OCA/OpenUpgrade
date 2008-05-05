@@ -178,6 +178,38 @@ class cci_missions_embassy_folder_line (osv.osv):
 	_name = 'cci_missions.embassy_folder_line'
 	_description = 'cci_missions.embassy_folder_line '
 
+
+	def create(self, cr, uid, vals, *args, **kwargs):
+
+		prod_name= vals['type'] + str(' Product')
+		cr.execute('select id from product_template where name='"'%s'"''%str(prod_name))
+		prod=cr.fetchone()
+
+		if prod:
+			product_id=prod[0]
+			prod_info = self.pool.get('product.product').browse(cr, uid,product_id)
+			account =  prod_info.product_tmpl_id.property_account_income.id
+			if not account:
+				account = prod_info.categ_id.property_account_income_categ.id
+			vals['account_id']=account
+		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
+
+	def write(self, cr, uid, ids,vals, *args, **kwargs):
+
+		prod_name= vals['type'] + str(' Product')
+		cr.execute('select id from product_template where name='"'%s'"''%str(prod_name))
+		prod=cr.fetchone()
+
+		if prod:
+			product_id=prod[0]
+			prod_info = self.pool.get('product.product').browse(cr, uid,product_id)
+			account =  prod_info.product_tmpl_id.property_account_income.id
+			if not account:
+				account = prod_info.categ_id.property_account_income_categ.id
+			vals['account_id']=account
+
+		return super(osv.osv,self).write( cr, uid, ids,vals, *args, **kwargs)
+
 	def onchange_line_type(self,cr,uid,ids,type):
 		data={}
 		data['courier_cost']=data['customer_amount']=data['account_id']=data['name']=False
@@ -201,6 +233,7 @@ class cci_missions_embassy_folder_line (osv.osv):
 		if not account:
 			account = prod_info.categ_id.property_account_income_categ.id
 		data['account_id']=account
+
 		return {'value' : data }
 
 	_columns = {
@@ -210,7 +243,7 @@ class cci_missions_embassy_folder_line (osv.osv):
 		'customer_amount' : fields.float('Invoiced Amount'),
 		'tax_rate': fields.many2one('account.tax','Tax Rate'),
 		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
-		'account_id' : fields.many2one('account.account', 'Account', required=True),
+		'account_id' : fields.many2one('account.account', 'Account'),
 	}
 
 cci_missions_embassy_folder_line()
