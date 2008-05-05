@@ -202,20 +202,22 @@ def _do_split(self, cr, uid, data, context):
 
 
 def send_mail(self, cr, uid, data, context):
-	picking_data = pooler.get_pool(cr.dbname).get('stock.picking').read(cr, uid, data['id'], context)
-	email=pooler.get_pool(cr.dbname).get('res.partner.address').read(cr, uid, picking_data['address_id'][0], context)['email']
-	stock_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','stock')], context=False)
-	if not stock_smtpserver_id:
-		default_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
-		if not default_smtpserver_id:
-			raise Exception, 'Varification Failed, No Server Defined!!!'
-	smtpserver_id = stock_smtpserver_id or default_smtpserver_id
-	smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, smtpserver_id, context)
-	body= "Your picking is validated. \n Please See the attachment."
-	state = smtpserver.send_email(cr, uid, [smtpserver_id], email,"Tiny ERP : Picking Validated",data['id'],'sale.shipping','Delivery_order',body)
-	if not state:
-		raise Exception, 'Varification Failed, Please check the Server Configuration!!!'
-	return {}
+    picking_data = pooler.get_pool(cr.dbname).get('stock.picking').read(cr, uid, data['id'], context)
+    email=pooler.get_pool(cr.dbname).get('res.partner.address').read(cr, uid, picking_data['address_id'][0], context)['email']
+    if email:
+        stock_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','stock')], context=False)
+        if not stock_smtpserver_id:
+            default_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
+            if not default_smtpserver_id:
+                raise Exception, 'Verification Failed, No Server Defined!!!'
+        smtpserver_id = stock_smtpserver_id or default_smtpserver_id
+        smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, smtpserver_id, context)[0]
+        body= "Your picking is validated. \n Please See the attachment."
+        state = smtpserver.send_email(cr, uid, smtpserver_id, email,"Tiny ERP : Picking Validated",data['id'],'sale.shipping','Delivery_order',body)
+        if not state:
+            raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
+        return {}
+    return {}
 		
 class partial_picking(wizard.interface):
 
