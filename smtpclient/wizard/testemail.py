@@ -34,7 +34,7 @@ form = '''<?xml version="1.0"?>
 </form>'''
 
 fields = {
-    'emailto': {'string': 'Email Address', 'required':True, 'size': 255 , 'type': 'char', 'help': 'Enter email on which address you want to get the Varifiation Code'}
+    'emailto': {'string': 'Email Address', 'required':True, 'size': 255 , 'type': 'char', 'help': 'Enter email on which address you want to get the Verifiation Code'}
 }
 
 class testemail(wizard.interface):
@@ -43,7 +43,7 @@ class testemail(wizard.interface):
         smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, data['id'], context)
         state = smtpserver.test_verivy_email(cr, uid, [data['id']], data['form']['emailto'], test=True)
         if not state:
-            raise Exception, 'Varification Failed, Please check the Server Configuration!!!'
+            raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
         return {}
     
     states = {

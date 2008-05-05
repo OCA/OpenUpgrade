@@ -64,9 +64,9 @@ class SmtpClient(osv.osv):
         'ssl' : fields.boolean("Use SSL?", readonly=True, states={'new':[('readonly',False)]}),
         'users_id': fields.many2many('res.users', 'res_smtpserver_group_rel', 'sid', 'uid', 'Users Allowed'),
         'state': fields.selection([
-            ('new','Not Varified'),
-            ('waiting','Waiting for Varification'),
-            ('confirm','Varified'),
+            ('new','Not Verified'),
+            ('waiting','Waiting for Verification'),
+            ('confirm','Verified'),
         ],'Server Status', select=True, readonly=True),
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),

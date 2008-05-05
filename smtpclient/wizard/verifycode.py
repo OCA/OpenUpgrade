@@ -29,15 +29,15 @@ import wizard
 import pooler
 
 form = '''<?xml version="1.0"?>
-<form string="Varify Code">
+<form string="Verify Code">
     <field name="code" colspan="4"/>
 </form>'''
 
 fields = {
-    'code': {'string': 'Varification Code','required':True,  'size': 255 , 'type': 'char', 'help': 'Enter varification code thay you get in your Varification Email'}
+    'code': {'string': 'Verification Code','required':True,  'size': 255 , 'type': 'char', 'help': 'Enter verification code thay you get in your Verification Email'}
 }
 
-class varifycode(wizard.interface):
+class verifycode(wizard.interface):
     
     def checkcode(self, cr, uid, data, context):
         
@@ -49,7 +49,7 @@ class varifycode(wizard.interface):
         if code == data['form']['code']:
             pooler.get_pool(cr.dbname).get('email.smtpclient').write(cr, uid, [data['id']], {'state':'confirm'})
         else:
-            raise Exception, 'Varification Failed, Invilade Verification Code!!!'
+            raise Exception, 'Verification Failed, Invalid Verification Code!!!'
         return {}
     
     states = {
@@ -62,6 +62,6 @@ class varifycode(wizard.interface):
             'result': {'type':'state', 'state':'end'}
         }
     }
-varifycode('email.varifycode')
+verifycode('email.verifycode')
 
 

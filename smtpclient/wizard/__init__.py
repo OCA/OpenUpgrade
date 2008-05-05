@@ -1,3 +1,3 @@
 import sendcode
-import varifycode
+import verifycode
 import testemail
