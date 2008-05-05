@@ -205,10 +205,13 @@ class SmtpClient(osv.osv):
                
                 Encoders.encode_base64(part)
                 part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file))
-                msg.attach(part)
-                    
-                    
+                msg.attach(part)                                        
                 self.smtpServer.sendmail(str(self.server['email']), emailto, msg.as_string())
+                report_id = pooler.get_pool(cr.dbname).get('ir.actions.report.xml').search(cr, uid, [('report_name','=',report_name)], context=False)
+                report_model=pooler.get_pool(cr.dbname).get('ir.actions.report.xml').read(cr,uid,report_id,['model'])[0]['model']
+                model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=',report_model)], context=False)[0]               
+                pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
+                (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':'The Email is sent successfully to corresponding address','email':emailto,'model':model_id,'resource_id':resource_id})
         except Exception, e:
             print 'Exception :',e
             return False     
@@ -223,6 +226,9 @@ class HistoryLine(osv.osv):
         'date_create': fields.datetime('Date'),
         'user_id':fields.many2one('res.users', 'Username', readonly=True, select=True),
         'server_id' : fields.many2one('email.smtpclient', 'Smtp Server', ondelete='set null', required=True),
+        'model':fields.many2one('ir.model', 'Model', readonly=True, select=True),
+        'resource_id':fields.integer('Resource ID', readonly=True),
+        'email':fields.char('Email',size=64,readonly=True),
     }
     
     _defaults = {
