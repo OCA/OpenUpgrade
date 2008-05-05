@@ -74,13 +74,11 @@ def _group_invoice(self, cr, uid, data, context):
 
 
         for element in dict_info:
-
             final_info={}
             if element['partner_id']==partner_id:
                 data={'model':element['model'],'form':{},'id':element['id'],'ids':[element['id']],'report_type': 'pdf'}
                 final_info['ids']=[]
                 final_info['date']=element['date'][0:10]
-
 
                 if element['model']=='cci_missions.ata_carnet':
                     result=create_invoice_carnet._createInvoices(self,cr,uid,data,context)
@@ -133,6 +131,9 @@ def _group_invoice(self, cr, uid, data, context):
         count=0
         list_inv_lines=[]
         #marked
+
+        if not final_list:
+            continue
         for record in final_list:
             customer_ref = record['date']
             line_obj = pool_obj.get('account.invoice.line')
