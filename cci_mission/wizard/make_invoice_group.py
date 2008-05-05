@@ -87,6 +87,7 @@ def _group_invoice(self, cr, uid, data, context):
 
                     if result['inv_rejected']>0 and result['inv_rej_reason']:
                         disp_msg +='\nFor Partner '+ partner.name +' On ATA Carnet with ' + result['inv_rej_reason']
+                        continue
                     if result['invoice_ids']:
                         list_invoice_ids.append(result['invoice_ids'][0])
                         final_info['ids'].append(result['invoice_ids'][0])
@@ -97,6 +98,7 @@ def _group_invoice(self, cr, uid, data, context):
 
                     if result['inv_rejected']>0 and result['inv_rej_reason']:
                         disp_msg +='\nFor Partner '+ partner.name +' On Embassy Folder with ' + result['inv_rej_reason']
+                        continue
                     if result['invoice_ids']:
                         list_invoice_ids.append(result['invoice_ids'][0])
                         final_info['ids'].append(result['invoice_ids'][0])
@@ -107,6 +109,7 @@ def _group_invoice(self, cr, uid, data, context):
 
                     if result['inv_rejected']>0 and result['inv_rej_reason']:
                         disp_msg +='\nFor Partner '+ partner.name +' On Certificate or Legalization with ' + result['inv_rej_reason']
+                        continue
                     if result['invoice_ids']:
                         list_invoice_ids.append(result['invoice_ids'][0])
                         final_info['ids'].append(result['invoice_ids'][0])
@@ -115,6 +118,7 @@ def _group_invoice(self, cr, uid, data, context):
         done_date=[]
         date_id_dict={}
         done_date=list(set([x['date'] for x in list_info]))
+        done_date.sort()
 
         final_list=[]
         for date in done_date:
@@ -130,7 +134,7 @@ def _group_invoice(self, cr, uid, data, context):
         list_inv_lines=[]
         #marked
         for record in final_list:
-            customer_ref = partner.name + " - " + record['date']
+            customer_ref = record['date']
             line_obj = pool_obj.get('account.invoice.line')
             id_note=line_obj.create(cr,uid,{'name':customer_ref,'state':'title','sequence':count})
             count=count+1
@@ -151,7 +155,8 @@ def _group_invoice(self, cr, uid, data, context):
                     else:
                         name = line.name
                     #pool_obj.get('account.invoice.line').write(cr,uid,line.id,{'name':name,'sequence':count})
-                    inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':line.note,'sequence' : count})
+#                    inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':line.note,'sequence' : count})
+                    inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':False,'sequence' : count})
                     count=count+1
                     list_inv_lines.append(inv_line)
     #            If we want to cancel ==> obj_inv.write(cr,uid,invoice.id,{'state':'cancel'}) here
