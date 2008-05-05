@@ -6,7 +6,7 @@ class cci_account_message(osv.osv):
     _description = 'Notify By Messages'
     _columns = {
         'name' :  fields.char('Title',size=64,required=True),
-        'title' : fields.text('Special Message',size=125,required=True,help='This notification will appear at the bottom of the Invoices when printed.',translate=True)
+        'msg' : fields.text('Special Message',size=125,required=True,help='This notification will appear at the bottom of the Invoices when printed.',translate=True)
     }
 
 cci_account_message()
