@@ -55,7 +55,7 @@ class sale_order(osv.osv):
                 body= "Your order is confirmed \n Please See the attachment"
                 state = smtpserver.send_email(cr, uid, smtpserver_id, email,"Tiny ERP: Sale Order Confirmed",ids[0],'sale.order','sale_order',body)
                 if not state:
-                    raise Exception, 'Varification Failed, Please check the Server Configuration!!!'
+                    raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
                 return {}
         return result
 sale_order()
