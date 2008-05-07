@@ -83,7 +83,7 @@ class hr_holidays(osv.osv):
 		return True
 
 	def holidays_confirm(self, cr, uid, ids, *args):
-		self.set_holidays(cr,uid,ids)
+		#self.set_holidays(cr,uid,ids)
 		self.write(cr, uid, ids, {
 			'state':'confirm'
 		})
@@ -116,19 +116,19 @@ class hr_holidays(osv.osv):
 		})
 		return True
 
-	def set_holidays(self,cr,uid,ids):
-		for record in self.browse(cr, uid, ids):
-			leave_asked=0.0
-			dt_from=strToDate(record.date_from)
-			dt_to=strToDate(record.date_to)
-			diff = dt_to - dt_from
-			leave_asked +=(diff.days)
-			if abs(int(record.date_from[11:13])-int(record.date_to[11:13])) == 4:
-				leave_asked +=0.5
-			if leave_asked == 0:
-				leave_asked=1
-			self.write(cr, uid, ids, {'number_of_days':leave_asked})
-		return True
+#	def set_holidays(self,cr,uid,ids):
+#		for record in self.browse(cr, uid, ids):
+#			leave_asked=0.0
+#			dt_from=strToDate(record.date_from)
+#			dt_to=strToDate(record.date_to)
+#			diff = dt_to - dt_from
+#			leave_asked +=(diff.days)
+#			if abs(int(record.date_from[11:13])-int(record.date_to[11:13])) == 4:
+#				leave_asked +=0.5
+#			if leave_asked == 0:
+#				leave_asked=1
+#			self.write(cr, uid, ids, {'number_of_days':leave_asked})
+#		return True
 
 	def check_holidays(self,cr,uid,ids):
 		print ids
