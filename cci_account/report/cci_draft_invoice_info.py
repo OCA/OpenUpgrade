@@ -93,6 +93,7 @@ class account_invoice_draft(report_sxw.rml_parse):
         for invoice in invoices:
             res={}
             res['name']=invoice.name
+            res['inv_no']=invoice.number
             res['date']=invoice.date_invoice
             res['amt_untaxed']=invoice.amount_untaxed
             self.sum_untaxed +=invoice.amount_untaxed
@@ -104,7 +105,33 @@ class account_invoice_draft(report_sxw.rml_parse):
             self.sum_tot +=invoice.amount_total
 
             res['gen_acc']=invoice.account_id.name
+            res['analytic_acc']=''
             result.append(res)
+
+            if not invoice.invoice_line:
+                continue
+
+            for line in invoice.invoice_line:
+
+                res={}
+                res['name']=line.name
+                res['inv_no']=invoice.number
+                res['date']=invoice.date_invoice
+                untaxed=line.price_unit * line.quantity
+                discounted=(untaxed) * line.discount / 100
+
+                res['amt_untaxed']=(untaxed) - discounted
+                tax_info=pooler.get_pool(self.cr.dbname).get('account.tax').compute(self.cr,self.uid,line.invoice_line_tax_id, line.price_unit,line.quantity)
+                taxed = 0.00
+                if tax_info:
+                    for record in tax_info:
+                        taxed += record['amount']
+                res['vat']=taxed
+
+                res['total']=untaxed - discounted + taxed
+                res['gen_acc']=line.account_id.name
+                res['analytic_acc']=line.account_analytic_id and line.account_analytic_id.name or False
+                result.append(res)
 
         return result
 

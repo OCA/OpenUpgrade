@@ -24,6 +24,8 @@
       <blockBackground colorName="#e6e6e6" start="3,0" stop="3,0"/>
       <blockBackground colorName="#e6e6e6" start="4,0" stop="4,0"/>
       <blockBackground colorName="#e6e6e6" start="5,0" stop="5,0"/>
+      <blockBackground colorName="#e6e6e6" start="6,0" stop="6,0"/>
+      <blockBackground colorName="#e6e6e6" start="7,0" stop="7,0"/>
     </blockTableStyle>
     <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
@@ -45,8 +47,8 @@
     <paraStyle name="P7" fontName="Times-Bold" fontSize="12.0" leading="15"/>
     <paraStyle name="P8" fontName="Times-Roman" fontSize="10.0" leading="14"/>
     <paraStyle name="P9" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P10" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P11" fontName="Times-Roman" fontSize="11.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="10.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="10.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P12" fontName="Times-Roman" fontSize="11.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -100,10 +102,13 @@
     <para style="P5">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="105.0,65.0,85.0,85.0,85.0,95.0" style="Table1">
+    <blockTable colWidths="95.0,44.0,57.0,70.0,60.0,70.0,61.0,63.0" style="Table1">
       <tr>
         <td>
           <para style="P10">Description</para>
+        </td>
+        <td>
+          <para style="P11">Invoice No.</para>
         </td>
         <td>
           <para style="P11">Invoice Date</para>
@@ -120,12 +125,18 @@
         <td>
           <para style="P11">General Account</para>
         </td>
+        <td>
+          <para style="P11">Analytic Account</para>
+        </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="105.0,65.0,85.0,85.0,85.0,95.0" style="Table2">
+    <blockTable colWidths="95.0,44.0,57.0,70.0,60.0,70.0,61.0,63.0" style="Table2">
       <tr>
         <td>
           <para style="P10">[[ repeatIn(lines(o),'a') ]] <font face="Times-Roman">[[ a['name'] ]]</font></para>
+        </td>
+        <td>
+          <para style="P11">[[ a['inv_no'] ]]</para>
         </td>
         <td>
           <para style="P11">[[ a['date'] ]]</para>
@@ -142,12 +153,15 @@
         <td>
           <para style="P11">[[ a['gen_acc'] ]]</para>
         </td>
+        <td>
+          <para style="P11">[[ a['analytic_acc'] ]]</para>
+        </td>
       </tr>
     </blockTable>
     <para style="P3">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="170.0,85.0,85.0,85.0,95.0" style="Table3">
+    <blockTable colWidths="196.0,70.0,60.0,70.0,124.0" style="Table3">
       <tr>
         <td>
           <para style="P11"><b>Total:</b></para>
