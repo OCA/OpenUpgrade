@@ -1,8 +1,7 @@
- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#">
     
 <head>
-	
 	<title>Live Chat</title>
 	
 	<!--
@@ -20,18 +19,7 @@
 	<script type="text/javascript" src="/static/javascript/crm_designer.js"></script> 
 </head>    
 
-<body><!--	
+<body>	
 		<input type="button" value="Start Chat" onclick="popup_table('\chat_window');"></input>
-		
--->
-<!--<form action="/callmain">
-		<input type="button" value="Start" onclick="submit();"></input>
-</form>		
-<form action="/callquit">
-		<input type="button" value="Quit" onclick="submit();"></input>
-</form>		
-
---><iframe src="/messageBox"> </iframe>
-		
 </body>
 </html>

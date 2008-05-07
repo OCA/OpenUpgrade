@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#">
     
-<head>
-	<title>Chat</title>
+<head><!--
+	<meta http-equiv="Refresh" content="4"> </meta>
+	--><title>Chat</title>
 	<style type="text/css">
 <!--
 body {
@@ -22,40 +23,27 @@ height: 100%;
 </head>
 <body style="height: 100%; width: 100%;" onload="load();">
 <form name="MyForm" action="chat_window">
-<!--	
-	<table  id="wrap" style="height: 98%; width:98%;" align="center">
-			<tr >
-					<td style="height:100%; width:100% ">
-						<textarea id="chat_txt1" style="height:100%; width:100% " rows="7" cols="70" readonly="True">
-						</textarea>
-					</td>
-			</tr>
-			<hr/>
-			<tr>
-					<td id="request" style="height: 100%; width: 100%">
-						<textarea name="chat_txt2" style="height:100%; width:100% " rows="3" cols="70" >
-						</textarea>
-					</td>
-			</tr>
-			
-			
-	</table>
--->
+
+ 
 <table id="wrap" border='3px' >
-	<tr style="height:100%" >
-		<td width="90%">
-		
-		</td>
+
+		<tr style="height:100%">
+		<td width="90%" >  </td>
 		
 		<td width = "10%">
 		</td>
 	</tr>
+
+
 	
 	<tr>
 		<td>
 			<input type="submit" value="Send" />
 		</td>
 	</tr>
+	
+	
+		
 	<tr style="height: 100%;">
 		<td colspan="2" style="height: 100%">
 		<span style="background-color: gray;">
