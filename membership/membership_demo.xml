@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+<!-- Demo Data for Membership Product -->
+
+	<record id="member_product_0" model="product.product">
+		<field name="membership">True</field>
+		<field name="membership_date_from">2008-01-01</field>
+		<field name="membership_date_to">2009-06-01</field>
+		<field name="name">Membership Product - 1</field>
+		<field name="categ_id" ref="product.cat1"/>
+		<field name="type">service</field>
+	</record>
+
+	<record id="member_product_1" model="product.product">
+		<field name="membership">True</field>
+		<field name="membership_date_from">2008-01-01</field>
+		<field name="membership_date_to">2009-08-01</field>
+		<field name="name">Membership Product - 2</field>
+		<field name="categ_id" ref="product.cat1"/>
+		<field name="type">service</field>
+	</record>
+
+	</data>
+</terp>
