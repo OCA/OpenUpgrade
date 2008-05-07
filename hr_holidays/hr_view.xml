@@ -33,7 +33,7 @@
 			<field name="inherit_id" ref="hr.view_holiday"/>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<field name="holiday_status" position="after"> 
+				<field name="holiday_status" position="after">
 					<field name="state"/>
 				</field>
 			</field>
@@ -55,11 +55,43 @@
 			<field name="name">hr.holidays.status.tree</field>
 			<field name="model">hr.holidays.status</field>
 			<field name="inherit_id" ref="hr.view_holiday_status"/>
-			<field name="type">tree</field>	
+			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<field name="name" position="after">
 					<field name="color_name" />
 				</field>
+			</field>
+		</record>
+
+		<!-- holidays per user -->
+		<record model="ir.ui.view" id="view_holidays_per_user_form">
+			<field name="name">hr.holidays.per.user.form</field>
+			<field name="model">hr.holidays.per.user</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Holidays Per Employee">
+					<field name="employee_id" select="1" />
+					<field name="holiday_status" />
+					<newline/>
+					<field name="max_leaves" colspan="2" />
+					<newline/>
+					<field name="leaves_taken" colspan="2" />
+					<newline/>
+					<field name="notes" colspan="4" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_holidays_per_user_tree">
+			<field name="name">hr.holidays.per.user.tree</field>
+			<field name="model">hr.holidays.per.user</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Holidays Per Employee">
+					<field name="employee_id"/>
+					<field name="holiday_status"/>
+					<field name="max_leaves"/>
+					<field name="leaves_taken"/>
+				</tree>
 			</field>
 		</record>
 
@@ -138,6 +170,15 @@
 			<field name="domain">[('state','=','confirm')]</field>
 		</record>
 		<menuitem name="Human Resources/Holidays Request/All Holidays Requests/Holidays Requests Awaiting for Validation" id="menu_action_holiday_waiting" action="action_holiday_waiting" />
+
+		<record model="ir.actions.act_window" id="action_holidays_per_user">
+			<field name="name">Holidays Per Employee</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays.per.user</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Human Resources/Configuration/Holidays Per Employee" id="menu_open_holidays_per_user" action="action_holidays_per_user"	groups="base.group_admin"/>
 
 	</data>
 </terp>

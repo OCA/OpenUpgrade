@@ -31,6 +31,7 @@ from mx import DateTime
 import time
 import pooler
 import netsvc
+import datetime
 from osv import fields, osv
 
 def _employee_get(obj,cr,uid,context={}):
@@ -38,6 +39,10 @@ def _employee_get(obj,cr,uid,context={}):
 	if ids:
 		return ids[0]
 	return False
+
+def strToDate(dt):
+    dt_date=datetime.date(int(dt[0:4]),int(dt[5:7]),int(dt[8:10]))
+    return dt_date
 
 class hr_holidays(osv.osv):
 	_name = "hr.holidays"
@@ -70,6 +75,7 @@ class hr_holidays(osv.osv):
 		return True
 
 	def holidays_validate(self, cr, uid, ids, *args):
+		self.check_holidays(cr,uid,ids)
 		#for exp in self.browse(cr, uid, ids):
 		ids2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
 		self.write(cr, uid, ids, {
@@ -79,6 +85,8 @@ class hr_holidays(osv.osv):
 		return True
 
 	def holidays_confirm(self, cr, uid, ids, *args):
+		print"called"
+		self.check_holidays(cr,uid,ids)
 		#for exp in self.browse(cr, uid, ids):
 		self.write(cr, uid, ids, {
 			'state':'confirm'
@@ -108,6 +116,34 @@ class hr_holidays(osv.osv):
 		})
 		return True
 
+	def check_holidays(self,cr,uid,ids):
+		print ids
+		for record in self.browse(cr, uid, ids):
+			print "record",record
+			leave_asked=0.0
+			print record.date_from,record.date_to
+			if record.date_from[0:10]== record.date_to[0:10]:
+				leave_asked +=0.5
+				print "days in half",leave_asked
+			else:
+				dt_from=strToDate(record.date_from)
+				dt_to=strToDate(record.date_to)
+				diff=dt_to - dt_from
+				if (int(record.date_from[11:13])-int(record.date_to[11:13])) == 4:
+					leave_asked +=0.5
+				leave_asked +=(diff.days+1)
+				print "days",leave_asked
+			print "emp",record.employee_id,"status",record.holiday_status
+			holiday_id=self.pool.get('hr.holidays.per.user').search(cr, uid, [('employee_id','=', record.employee_id.id),('holiday_status','=',record.holiday_status.id)])
+			print "dsds",holiday_id
+			obj_holidays_per_user=self.pool.get('hr.holidays.per.user').browse(cr, uid,holiday_id[0])
+			leaves_rest=obj_holidays_per_user.max_leaves - obj_holidays_per_user.leaves_taken
+			print "leaves",leaves_rest
+
+			if leaves_rest < leave_asked:
+				raise osv.except_osv('Attention!','You Cannot Validate or Confirm leaves while available leaves are less than asked leaves.')
+			self.pool.get('hr.holidays.per.user').write(cr,uid,obj_holidays_per_user.id,{'leaves_taken':obj_holidays_per_user.leaves_taken + leave_asked})
+		return True
 hr_holidays()
 
 class hr_holidays_status(osv.osv):
@@ -121,4 +157,20 @@ class hr_holidays_status(osv.osv):
 		'color_name': lambda *args: 'red',
 	}
 hr_holidays_status()
+
+
+class hr_holidays_per_user(osv.osv):
+	_name = "hr.holidays.per.user"
+	_description = "Holidays Per User"
+	_columns = {
+		'employee_id' : fields.many2one('hr.employee', 'Employee',required=True),
+		'holiday_status' : fields.many2one("hr.holidays.status", "Holiday's Status", required=True),
+		'max_leaves' : fields.integer('Maximum Leaves Allowed',required=True),
+		'leaves_taken' : fields.float('Leaves Already Taken',readonly=True),
+		'notes' : fields.text('Notes'),
+	}
+	_defaults = {
+
+	}
+hr_holidays_per_user()
 
