@@ -67,24 +67,6 @@ class ecommerce_category(osv.osv):
         result = super(osv.osv, self).create(cr, uid, vals, context)
         return result
     
-    def write(self,cr,uid,ids,vals,context=None):
-        
-        obj=self.browse(cr,uid,ids[0])
-        curr_id =self.pool.get('ecommerce.shop').browse(cr, uid, ids,context=context)
-        web_id = obj.web_id.id
-        cat_id = vals['category_id']
-        if web_id:
-            if vals['category_id']:
-                    obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
-                    obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
-                    temp=[]
-                    for i in obj_prd:
-                        temp+=[i['id']]
-                    rec = self.pool.get('ecommerce.shop').write(cr,uid,[web_id],{'products':[(6,0,temp)]})
-            
-        return super(ecommerce_category,self).write(cr,uid,ids,vals,context)
-    
-  
     _name = "ecommerce.category"
     _description = "ecommerce category"
     _columns = {
