@@ -6,8 +6,8 @@
 	"depends" : [
 		"project","crm","base_contact","sale"
 	],
-	"demo_xml" : [],
-	"init_xml" : ["event_data.xml","event_demo.xml"],
+	"demo_xml" : ["event_demo.xml"],
+	"init_xml" : ["event_data.xml"],
 	"update_xml" : [
 		"event_wizard.xml","event_view.xml","event_sequence.xml"
 	],
