@@ -72,7 +72,6 @@ def _createInvoices(self, cr, uid, data, context):
             continue
 
         context.update({'date':carnet.creation_date})
-        inv_create = inv_create + 1
         list.append(carnet.type_id.original_product_id.id)
         list.append(carnet.type_id.copy_product_id.id)
         list.append(carnet.warranty_product_id.id)
@@ -98,6 +97,7 @@ def _createInvoices(self, cr, uid, data, context):
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(carnet.id)+": No Partner Address Defined on Partner \n"
             continue
+        inv_create = inv_create + 1
         count=0
         for prod_id in list:
             count += 1
