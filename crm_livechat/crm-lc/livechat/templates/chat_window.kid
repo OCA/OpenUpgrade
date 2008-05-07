@@ -21,7 +21,8 @@ height: 100%;
 	<script type="text/javascript" src="/static/javascript/crm_designer.js"></script>
 </head>
 <body style="height: 100%; width: 100%;" onload="load();">
-<form name="MyForm"><!--	
+<form name="MyForm" action="chat_window">
+<!--	
 	<table  id="wrap" style="height: 98%; width:98%;" align="center">
 			<tr >
 					<td style="height:100%; width:100% ">
@@ -43,20 +44,26 @@ height: 100%;
 <table id="wrap" border='3px' >
 	<tr style="height:100%" >
 		<td width="90%">
-
-		</td>
-		<td width="10%">
 		
-		</td>		
+		</td>
+		
+		<td width = "10%">
+		</td>
 	</tr>
 	
-	
+	<tr>
+		<td>
+			<input type="submit" value="Send" />
+		</td>
+	</tr>
 	<tr style="height: 100%;">
 		<td colspan="2" style="height: 100%">
 		<span style="background-color: gray;">
-			<textarea style="height: 100%; width:100%" id="text2" rows="3"></textarea>
+			<textarea name="txtarea" style="height: 100%; width:100%" id="text2" rows="3" > </textarea>
+			
 		</span>
 		</td>
+		
 	</tr>
 	
 </table>
