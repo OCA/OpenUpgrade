@@ -40,7 +40,7 @@
 			<field name="name">Events by section</field>
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">crm.case.section</field>
-			<field name="domain" eval="[('parent_id','=',ref('case_section_event'))]" />
+			<field name="domain" eval="[('parent_id','=',False)]" />
 			<field name="view_type">tree</field>
 		</record>
 		<menuitem name="Events Organisation/Events by categories" id="menu_action_event_categories" action="action_event_categories" />
