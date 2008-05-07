@@ -9,7 +9,7 @@
 		<field name="uom_id" ref="product.product_uom_unit"/>
 		<field name="uom_po_id" ref="product.product_uom_unit"/>
 		<field name="name">Ticket for Concert</field>
-		<field name="categ_id" ref="product.cat1"/>
+		<field name="categ_id" model="product.category" search="[]"/>
 	</record>
 
 	<record id="event_product_1" model="product.product">
@@ -18,7 +18,7 @@
 		<field name="uom_id" ref="product.product_uom_unit"/>
 		<field name="uom_po_id" ref="product.product_uom_unit"/>
 		<field name="name">Ticket for Opera</field>
-		<field name="categ_id" ref="product.cat1"/>
+		<field name="categ_id" model="product.category" search="[]"/>
 	</record>
 
 	<record id="event_product_2" model="product.product">
@@ -27,7 +27,7 @@
 		<field name="uom_id" ref="product.product_uom_unit"/>
 		<field name="uom_po_id" ref="product.product_uom_unit"/>
 		<field name="name">Ticket for Conference</field>
-		<field name="categ_id" ref="product.cat1"/>
+		<field name="categ_id" model="product.category" search="[]"/>
 	</record>
 
 
