@@ -394,6 +394,7 @@ class Partner(osv.osv):
 	}
 	_defaults = {
 		'free_member': lambda *a: False,
+		'membership_cancel' : lambda *d : False
 	}
 
 Partner()
