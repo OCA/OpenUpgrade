@@ -135,7 +135,7 @@ def _makeInvoices(self, cr, uid, data, context):
             inv_obj = pool_obj.get('account.invoice')
             inv_id = inv_obj.create(cr, uid, inv)
             list_inv.append(inv_id)
-            obj_event_reg.write(cr, uid,reg.id, {'invoice_id' : inv_id})
+            obj_event_reg.write(cr, uid,reg.id, {'invoice_id' : inv_id,'state':'done'})
             obj_event_reg._history(cr, uid,[reg], 'Invoiced', history=True)
             #the below code wll check for if registration has cheques on Payment tab if yes it wll make it reconcile accrodingly , it wll take trunk version of code
             # should be test
