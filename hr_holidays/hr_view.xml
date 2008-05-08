@@ -24,7 +24,9 @@
 					<field name="number_of_days" colspan="2"/>
 					<field name="manager_id" colspan="2"/>
 					<newline />
-					<field name="employee_id" colspan="2" select="1" />
+					<field name="section_id"  select="1" />
+					<field name="employee_id" select="1" />
+					<newline />
 				</field>
 			</field>
 		</record>
@@ -73,11 +75,11 @@
 			<field name="arch" type="xml">
 				<form string="Holidays Per Employee">
 					<field name="employee_id" select="1" />
-					<field name="holiday_status" />
+					<field name="holiday_status" select="1" />
 					<newline/>
-					<field name="max_leaves" colspan="2" />
+					<field name="max_leaves" select="2"  colspan="2" />
 					<newline/>
-					<field name="leaves_taken" colspan="2" />
+					<field name="leaves_taken" select="2" colspan="2" />
 					<newline/>
 					<field name="notes" colspan="4" />
 				</form>
@@ -95,6 +97,19 @@
 					<field name="leaves_taken"/>
 				</tree>
 			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_holidays_per_user_graph">
+			<field name="name">hr.holidays.per.user.graph</field>
+			<field name="model">hr.holidays.per.user</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+			<graph type="bar" string="Holidays Allowed">
+				<field name="employee_id"/>
+				<field name="max_leaves" operator="+"/>
+				<field name="leaves_taken" operator="+"/>
+			</graph>
+		</field>
 		</record>
 
 		<!-- Menu Items -->
@@ -178,9 +193,27 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays.per.user</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree,form,graph</field>
 		</record>
 		<menuitem name="Human Resources/Configuration/Holidays Per Employee" id="menu_open_holidays_per_user" action="action_holidays_per_user"	groups="base.group_admin"/>
+
+		<record model="ir.actions.act_window" id="action_my_holiday_available">
+			<field name="name">My Available Holidays</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays.per.user</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('user_id','=',uid)]</field>
+		</record>
+		<menuitem name="Human Resources/Reporting/My Available Holidays" id="menu_action_my_holiday_available" action="action_my_holiday_available" />
+
+
+	<!--  Shortcuts -->
+		<act_window name="My Holiday Requests"
+			domain="[('employee_id', '=', active_id)]"
+			res_model="hr.holidays"
+			src_model="hr.employee"
+			id="act_hr_employee_holiday_request"/>
 
 	</data>
 </terp>
