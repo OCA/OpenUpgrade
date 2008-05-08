@@ -1,63 +1,60 @@
 <?xml version="1.0"?>
 <terp>
 	<data noupdate="1">
-		<record model="hr.holidays.status" id="jf">
-			<field name="name">Public holidays</field>
-		</record>
 
 		<record model="hr.holidays">
 			<field name="name">New Year</field>
 			<field name="date_from">2008-01-01 08:00</field>
 			<field name="date_to">2008-01-02 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">Easter Monday</field>
 			<field name="date_from">2008-03-28 08:00</field>
 			<field name="date_to">2008-03-29 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">Labor Day</field>
 			<field name="date_from">2008-05-01 08:00</field>
 			<field name="date_to">2008-05-02 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">Ascension</field>
 			<field name="date_from">2008-05-05 08:00</field>
 			<field name="date_to">2008-05-06 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">Ascension Day</field>
 			<field name="date_from">2008-05-16 08:00</field>
 			<field name="date_to">2008-05-17 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">Pentecost Monday</field>
 			<field name="date_from">2008-05-16 08:00</field>
 			<field name="date_to">2008-05-17 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">National day</field>
 			<field name="date_from">2008-07-21 08:00</field>
 			<field name="date_to">2008-07-22 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">All Saints</field>
 			<field name="date_from">2008-11-01 08:00</field>
 			<field name="date_to">2008-11-02 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 		<record model="hr.holidays">
 			<field name="name">Christmas</field>
 			<field name="date_from">2008-12-25 08:00</field>
 			<field name="date_to">2008-12-26 18:00</field>
-			<field name="holiday_status" ref="jf" />
+			<field name="holiday_status" ref="hr.jf" />
 		</record>
 	</data>
 </terp>
