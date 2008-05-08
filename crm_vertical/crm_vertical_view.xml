@@ -23,10 +23,6 @@
 			<field eval="&quot;terp-sale&quot;" name="icon"/>
 			<field eval="False" name="parent_id"/>
 		</record>
-		<record id="crm_configuration.menu_crm_case_fund_raise" model="ir.ui.menu">
-			<field eval="&quot;terp-account&quot;" name="icon"/>
-			<field eval="False" name="parent_id"/>
-		</record>
 		<record id="base.menu_finance_main" model="ir.ui.menu">
 			<field ref="base.menu_base_config" name="parent_id"/>
 		</record>
