@@ -27,7 +27,32 @@
 						<field name="user_id" select="1"/>
 						<field name="date_from" select="2"/>
 						<field name="date_to"/>
-						<field name="line_ids" colspan="4" nolabel="1">
+						<field name="line_ids" widget="one2many_list" colspan="4" nolabel="1" mode="tree">
+							<form tring="Forecast Lines" editable="bottom">
+								<notebook>
+									<page string="Forecast Details">
+									<field name="user_id"/>
+									<field name="category_id"/>
+									<field name="amount"/>
+									<field name="margin"/>
+									<field name="computation_type"/>									
+									<group>
+									<field name="state_draft"/>
+									<field name="state_confirmed"/>
+									<field name="state_cancel"/>
+									<field name="state_done"/>
+									</group>
+									<field name="crm_case_section" colspan="4"/>
+									<field name="crm_case_categ" colspan="4"/>
+									</page>
+									<page string="Feedback">
+									<field name="computed_amount"/>
+									<field name="final_evolution"/>
+									<field name="feedback" colspan="4"/>
+									<field name="note" colspan="4"/>
+									</page>
+								</notebook>
+							</form>						
 							<tree string="Forecast Lines" editable="bottom">
 								<field name="user_id"/>
 								<field name="category_id"/>
@@ -185,6 +210,7 @@
 				<field name="date_from"/>
 				<field name="date_to"/>
 				<field name="user_id"/>
+				<field name="computation_type" />				
 				<field name="manager_id"/>
 				<field name="amount"/>
 				<field name="sum_amount"/>
@@ -204,6 +230,7 @@
 				<field name="date_from"/>
 				<field name="date_to"/>
 				<field name="user_id"/>
+				<field name="computation_type" />
 				<field name="manager_id"/>
 				<field name="category_id"/>
 				<field name="amount"/>
@@ -219,10 +246,15 @@
 		<field name="res_model">report_invoice_salesman.forecast.stat</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
-		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+		<field name="domain">[('user_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('invoice_fix','invoice_margin')')
+							  ]
+		</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/This Month/Sales Forecast/My Current Sales Forecast"
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Invoice/My Current Sales Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_my_current"
 		action="report_invoice_salesman_forecast_stat_my_current" />
 
@@ -233,10 +265,15 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
-		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+		<field name="domain">[('user_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('invoice_fix','invoice_margin')')
+							  ]
+		</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/This Month/Sales Forecast/My Current Sales Forecast/My Current Amount Forecast"
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Invoice/My Current Sales Forecast/My Current Amount Forecast"
 		id="menu_invoice_salesman_forecast_stat_my_current_amount"
 		action="report_invoice_salesman_forecast_stat_my_current_amount" />
 
@@ -246,10 +283,15 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
-		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+		<field name="domain">[('user_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('invoice_fix','invoice_margin')')
+							  ]
+		</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/This Month/Sales Forecast/My Current Sales Forecast/My Current Margin Forecast"
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Invoice/My Current Sales Forecast/My Current Margin Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_my_current_margin"
 		action="report_invoice_salesman_forecast_stat_my_current_margin" />
 
@@ -258,10 +300,15 @@
 		<field name="res_model">report_invoice_salesman.forecast.stat</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
-		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+		<field name="domain">[('manager_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('invoice_fix','invoice_margin')')
+							  ]
+		</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/This Month/Sales Forecast/My Managing Current Sales Forecast"
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Invoice/My Managing Current Sales Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_man_current"
 		action="report_invoice_salesman_forecast_stat_man_current" />
 
@@ -272,10 +319,15 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
-		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+		<field name="domain">[('manager_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('invoice_fix','invoice_margin')')
+							  ]
+		</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/This Month/Sales Forecast/My Managing Current Sales Forecast/My Current Amount Forecast"
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Invoice/My Managing Current Sales Forecast/My Current Amount Forecast"
 		id="menu_invoice_salesman_forecast_stat_man_current_amount"
 		action="report_invoice_salesman_forecast_stat_man_current_amount" />
 
@@ -285,10 +337,15 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
-		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+		<field name="domain">[('manager_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('invoice_fix','invoice_margin')')
+							  ]
+		</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/This Month/Sales Forecast/My Managing Current Sales Forecast/My Current Margin Forecast"
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Invoice/My Managing Current Sales Forecast/My Current Margin Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_man_current_margin"
 		action="report_invoice_salesman_forecast_stat_man_current_margin" />
 
@@ -298,10 +355,10 @@
 		<field name="res_model">report_invoice_salesman.forecast.stat.global</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
-		<field name="domain">[('user_id','=',uid)]</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Global Sales Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Global Sales Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_global_my_current_all"
 		action="report_invoice_salesman_forecast_stat_global_my_current_all" />
 
@@ -311,10 +368,10 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_global_amount_graph"/>
-		<field name="domain">[('user_id','=',uid) ]</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')') ]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Global Sales Forecast/My Amount Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Global Sales Forecast/My Amount Forecast"
 		id="menu_invoice_salesman_forecast_stat_global_my_amount_all"
 		action="report_invoice_salesman_forecast_stat_global_my_amount_all" />
 
@@ -324,10 +381,10 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_global_margin_graph"/>
-		<field name="domain">[('user_id','=',uid)]</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Global Sales Forecast/My Margin Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Global Sales Forecast/My Margin Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_global_my_margin_all"
 		action="report_invoice_salesman_forecast_stat_global_my_margin_all" />
 
@@ -338,10 +395,10 @@
 		<field name="res_model">report_invoice_salesman.forecast.stat</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
-		<field name="domain">[('user_id','=',uid)]</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Sales Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Sales Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_my_current_all"
 		action="report_invoice_salesman_forecast_stat_my_current_all" />
 
@@ -352,10 +409,10 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
-		<field name="domain">[('user_id','=',uid) ]</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Sales Forecast/My Amount Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Sales Forecast/My Amount Forecast"
 		id="menu_invoice_salesman_forecast_stat_my_amount_all"
 		action="report_invoice_salesman_forecast_stat_my_amount_all" />
 
@@ -365,10 +422,10 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
-		<field name="domain">[('user_id','=',uid)]</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Sales Forecast/My Margin Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Sales Forecast/My Margin Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_my_margin_all"
 		action="report_invoice_salesman_forecast_stat_my_margin_all" />
 
@@ -377,10 +434,10 @@
 		<field name="res_model">report_invoice_salesman.forecast.stat</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
-		<field name="domain">[('manager_id','=',uid)]</field>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Managing Sales Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Managing Sales Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_man_all"
 		action="report_invoice_salesman_forecast_stat_man_all" />
 
@@ -389,10 +446,10 @@
 		<field name="res_model">report_invoice_salesman.forecast.stat.global</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
-		<field name="domain">[('manager_id','=',uid)]</field>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Global Managing Sales Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Global Managing Sales Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_global_man_all"
 		action="report_invoice_salesman_forecast_stat_global_man_all"/>
 
@@ -402,10 +459,10 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
-		<field name="domain">[('manager_id','=',uid)]</field>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')')]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Managing Sales Forecast/My Amount Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Managing Sales Forecast/My Amount Forecast"
 		id="menu_invoice_salesman_forecast_stat_man_amount_all"
 		action="report_invoice_salesman_forecast_stat_man_amount_all" />
 
@@ -415,10 +472,10 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
-		<field name="domain">[('manager_id','=',uid) ]</field>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('invoice_fix','invoice_margin')') ]</field>
 	</record>
 	<menuitem
-		name="Sales Management/Reporting/All Months/Sales Forecast/My Managing Sales Forecast/My Margin Forecast"
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Invoice/My Managing Sales Forecast/My Margin Forecast"
 		id="menu_report_invoice_salesman_forecast_stat_margin_all"
 		action="report_invoice_salesman_forecast_stat_margin_all" />
 
@@ -436,7 +493,611 @@
 		view_mode="tree,graph"
 		id="act_forecast_open"/>
 
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_s">
+		<field name="name">My Current Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('sale_order_number','sale_order_value')')
+							  ]
+		</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sale Order/My Current Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_s"
+		action="report_invoice_salesman_forecast_stat_my_current_s" />
 
 
-	</data>
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_amount_s">
+		<field name="name">My Current Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('user_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('sale_order_number','sale_order_value')')
+							  ]
+		</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sale Order/My Current Sales Forecast/My Current Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_my_current_amount_s"
+		action="report_invoice_salesman_forecast_stat_my_current_amount_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_margin_s">
+		<field name="name">My Current Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('user_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('sale_order_number','sale_order_value')')
+							  ]
+		</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sale Order/My Current Sales Forecast/My Current Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_margin_s"
+		action="report_invoice_salesman_forecast_stat_my_current_margin_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_s">
+		<field name="name">My Current Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('sale_order_number','sale_order_value')')
+							  ]
+		</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sale Order/My Managing Current Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_current_s"
+		action="report_invoice_salesman_forecast_stat_man_current_s" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_amount_s">
+		<field name="name">My Current Managing Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('manager_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('sale_order_number','sale_order_value')')
+							  ]
+		</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sale Order/My Managing Current Sales Forecast/My Current Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_man_current_amount_s"
+		action="report_invoice_salesman_forecast_stat_man_current_amount_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_margin_s">
+		<field name="name">My Current Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('manager_id','=',uid),
+							  ('date_from','&lt;=',time.strftime('%Y-%m-%d')), 
+							  ('date_to','&gt;=',time.strftime('%Y-%m-%d')),
+							  ('computation_type','in','('sale_order_number','sale_order_value')')
+							  ]
+		</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sale Order/My Managing Current Sales Forecast/My Current Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_current_margin_s"
+		action="report_invoice_salesman_forecast_stat_man_current_margin_s" />
+
+	<!-- All Months -->
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_my_current_all_s">
+		<field name="name">My Global Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Global Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_g_my_current_all_s"
+		action="report_invoice_salesman_forecast_stat_global_my_current_all_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_my_amount_all_s">
+		<field name="name">My Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_global_amount_graph"/>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')') ]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Global Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_global_my_amount_all_s"
+		action="report_invoice_salesman_forecast_stat_global_my_amount_all_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_my_margin_all_s">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_global_margin_graph"/>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Global Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_g_my_margin_all_s"
+		action="report_invoice_salesman_forecast_stat_global_my_margin_all_s" />
+
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_all_s">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_all_s"
+		action="report_invoice_salesman_forecast_stat_my_current_all_s" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_amount_all_s">
+		<field name="name">My Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_my_amount_all_s"
+		action="report_invoice_salesman_forecast_stat_my_amount_all_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_margin_all_s">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('user_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_margin_all_s"
+		action="report_invoice_salesman_forecast_stat_my_margin_all_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_all_s">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Managing Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_all_s"
+		action="report_invoice_salesman_forecast_stat_man_all_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_man_all_s">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Global Managing Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_global_man_all_s"
+		action="report_invoice_salesman_forecast_stat_global_man_all_s"/>
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_amount_all_s">
+		<field name="name">My Managing Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph"/>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')')]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Managing Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_man_amount_all_s"
+		action="report_invoice_salesman_forecast_stat_man_amount_all_s" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_margin_all_s">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph"/>
+		<field name="domain">[('manager_id','=',uid),('computation_type','in','('sale_order_number','sale_order_value')') ]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sale Order/My Managing Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_margin_all_s"
+		action="report_invoice_salesman_forecast_stat_margin_all_s" />
+
+
+
+
+
+		
+<!--
+
+	
+		Forecast Analysis
+	
+
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_global_margin_graphale">
+		<field name="name">report_invoice_salesman.forecast.stat.global.margin.graph.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Forecasts by Salesman" color="user_id" type="bar">
+				<field name="user_id"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_global_amount_graphale">
+		<field name="name">report_invoice_salesman.forecast.stat.global.amount.graph.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Forecasts by Salesman" type="bar" color="user_id">
+				<field name="user_id"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+			</graph>
+		</field>
+	</record>
+
+
+	
+		Forecast Analysis
+	
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_margin_graph_sale">
+		<field name="name">report_invoice_salesman.forecast.stat.margin.graph.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Sales Forecasts" color="user_id" type="bar">
+				<field name="category_id"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</graph>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_amount_graph_sale">
+		<field name="name">report_invoice_salesman.forecast.stat.amount.graph.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Sales Forecasts" type="bar" color="user_id">
+				<field name="category_id"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+			</graph>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_form_sale">
+		<field name="name">report_invoice_salesman.forecast.stat.form.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Sales Forecasts">
+				<field name="date_from" select="1"/>
+				<field name="date_to" select="2"/>
+				<field name="user_id" select="1"/>
+				<field name="manager_id" select="1"/>
+				<field name="category_id" select="2"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_global_form_sale">
+		<field name="name">report_invoice_salesman.forecast.stat.global.form.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Forecasts by Salesman">
+				<field name="date_from" select="1"/>
+				<field name="date_to" select="1"/>
+				<field name="user_id" select="1"/>
+				<field name="manager_id" select="1"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_global_tree_sale">
+		<field name="name">report_invoice_salesman.forecast.stat.global.tree.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Forecasts by Salesman">
+				<field name="date_from"/>
+				<field name="date_to"/>
+				<field name="user_id"/>
+				<field name="manager_id"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="report_invoice_salesman_forecast_stat_tree_sale">
+		<field name="name">report_invoice_salesman.forecast.stat.tree.sale.order</field>
+		<field name="model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Sales Forecasts">
+				<field name="date_from"/>
+				<field name="date_to"/>
+				<field name="user_id"/>
+				<field name="manager_id"/>
+				<field name="category_id"/>
+				<field name="amount"/>
+				<field name="sum_amount"/>
+				<field name="margin"/>
+				<field name="sum_margin"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_sale">
+		<field name="name">My Current Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sales Order/My Current Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_sale"
+		action="report_invoice_salesman_forecast_stat_my_current_sale" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_amount_sale">
+		<field name="name">My Current Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph_sale"/>
+		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sales Order/My Current Sales Forecast/My Current Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_my_current_amount_sale"
+		action="report_invoice_salesman_forecast_stat_my_current_amount_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_margin_sale">
+		<field name="name">My Current Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph_sale"/>
+		<field name="domain">[('user_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sales Order/My Current Sales Forecast/My Current Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_margin_s"
+		action="report_invoice_salesman_forecast_stat_my_current_margin_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_sale">
+		<field name="name">My Current Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sales Order/My Managing Current Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_current_sale"
+		action="report_invoice_salesman_forecast_stat_man_current_sale" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_amount_sale">
+		<field name="name">My Current Managing Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph_sale"/>
+		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sales Order/My Managing Current Sales Forecast/My Current Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_man_current_amount_sale"
+		action="report_invoice_salesman_forecast_stat_man_current_amount_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_current_margin_sale">
+		<field name="name">My Current Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph_sale"/>
+		<field name="domain">[('manager_id','=',uid),('date_from','&lt;=',time.strftime('%Y-%m-%d')), ('date_to','&gt;=',time.strftime('%Y-%m-%d'))]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/This Month/Sales Forecast/For Sales Order/My Managing Current Sales Forecast/My Current Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_current_margin_s"
+		action="report_invoice_salesman_forecast_stat_man_current_margin_sale" />
+
+	 All Months 
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_my_current_all_sale">
+		<field name="name">My Global Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Global Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_global_my_c_all_s"
+		action="report_invoice_salesman_forecast_stat_global_my_current_all_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_my_amount_all_sale">
+		<field name="name">My Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_global_amount_graph_sale"/>
+		<field name="domain">[('user_id','=',uid) ]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Global Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_global_my_amount_all_sale"
+		action="report_invoice_salesman_forecast_stat_global_my_amount_all_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_my_margin_all_sale">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_global_margin_graph_sale"/>
+		<field name="domain">[('user_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Global Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_global_my_m_all_s"
+		action="report_invoice_salesman_forecast_stat_global_my_margin_all_sale" />
+
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_current_all_sale">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('user_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_current_all_sale"
+		action="report_invoice_salesman_forecast_stat_my_current_all_sale" />
+
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_amount_all_sale">
+		<field name="name">My Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph_sale"/>
+		<field name="domain">[('user_id','=',uid) ]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_my_amount_all_sale"
+		action="report_invoice_salesman_forecast_stat_my_amount_all_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_my_margin_all_sale">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph_sale"/>
+		<field name="domain">[('user_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_my_margin_all_sale"
+		action="report_invoice_salesman_forecast_stat_my_margin_all_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_all_sale">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Managing Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_man_all_sale"
+		action="report_invoice_salesman_forecast_stat_man_all_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_global_man_all_sale">
+		<field name="name">My Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.global.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,graph</field>
+		<field name="domain">[('manager_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Global Managing Sales Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_global_man_all_sale"
+		action="report_invoice_salesman_forecast_stat_global_man_all_sale"/>
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_man_amount_all_sale">
+		<field name="name">My Managing Amount Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_amount_graph_sale"/>
+		<field name="domain">[('manager_id','=',uid)]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Managing Sales Forecast/My Amount Forecast"
+		id="menu_invoice_salesman_forecast_stat_man_amount_all_sale"
+		action="report_invoice_salesman_forecast_stat_man_amount_all_sale" />
+
+	<record model="ir.actions.act_window" id="report_invoice_salesman_forecast_stat_margin_all_sale">
+		<field name="name">My Margin Sales Forecast</field>
+		<field name="res_model">report_invoice_salesman.forecast.stat.sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" ref="report_invoice_salesman_forecast_stat_margin_graph_sale"/>
+		<field name="domain">[('manager_id','=',uid) ]</field>
+	</record>
+	<menuitem
+		name="Sales Management/Reporting/All Months/Sales Forecast/For Sales Order/My Managing Sales Forecast/My Margin Forecast"
+		id="menu_report_invoice_salesman_forecast_stat_margin_all_sale"
+		action="report_invoice_salesman_forecast_stat_margin_all_sale" />
+
+	<act_window name="Forecast by Salesman"
+		domain="[('forecast_id', '=', active_id)]"
+		res_model="report_invoice_salesman.forecast.stat.global.sale.order"
+		src_model="report_invoice_salesman.forecast.sale.order"
+		view_mode="tree,graph"
+		id="act_forecast_global_open_sale"/>
+
+	<act_window name="Forecast Analysis"
+		domain="[('forecast_id', '=', active_id)]"
+		res_model="report_invoice_salesman.forecast.stat.sale.order"
+		src_model="report_invoice_salesman.forecast.sale.order"
+		view_mode="tree,graph"
+		id="act_forecast_open_sale"/>
+
+	--></data>
 </terp>
