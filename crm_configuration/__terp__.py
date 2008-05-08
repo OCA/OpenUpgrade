@@ -15,15 +15,14 @@
                     "crm_lead_view.xml",
                     "crm_meeting_view.xml",
                     "crm_opportunity_view.xml",
-                    "crm_fund_view.xml"
-                  ],
+		            "crm_fund_view.xml"
+                 ],
     "demo_xml" : [
                     "crm_bugs_data.xml",
                     "crm_jobs_data.xml",
                     "crm_meeting_data.xml",
                     "crm_lead_data.xml",
-                    "crm_opportunity_data.xml",
-                    "crm_fund_data.xml"
+                    "crm_opportunity_data.xml"
                   ],
     "update_xml" : [
                     "crm_bugs_demo.xml",
@@ -31,7 +30,6 @@
                     "crm_lead_demo.xml",
                     "crm_meeting_demo.xml",
                     "crm_opportunity_demo.xml",
-                    "crm_fund_demo.xml",
                     "crm_report_view.xml"
                     ],
     "active": False,
