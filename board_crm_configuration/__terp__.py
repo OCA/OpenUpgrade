@@ -6,8 +6,8 @@
     "depends":["board","crm_configuration"],
     "demo_xml":["board_crm_demo.xml"],
     "update_xml":["board_crm_statistical_view.xml",
-                  "board_crm_view.xml",
-                  "board_fund_raising.xml"],
+                  "board_crm_view.xml"
+                  ],
     "description": """
 This module implements a dashboard for CRM that includes:
     * My Leads (list)
