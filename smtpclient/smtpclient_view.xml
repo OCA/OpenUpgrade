@@ -1,6 +1,29 @@
 <?xml version="1.0"?>
 <terp>
 	<data>
+	
+	<record model="ir.ui.view" id="email_smtpclient_history_graph">
+			<field name="name">email.smtpclient.history.graph</field>
+			<field name="model">email.smtpclient.history</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Success by Server" type="bar">
+				<field name="name"/>
+				<field name="model" operator="+" />
+				</graph>
+			</field>
+		</record>
+		
+	<record model="ir.actions.act_window" id="action_view_server_graph">
+			<field name="type">ir.actions.act_window</field>
+			<field name="name">Email Server</field>
+			<field name="res_model">email.smtpclient.history</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">graph,tree</field>
+			<field name="view_id" ref="email_smtpclient_history_graph"/>
+		</record>
+		
+		
 	<record model="ir.ui.view" id="company_form">
 			<field name="name">smtp.company.form</field>
 			<field name="model">res.company</field>
@@ -69,7 +92,14 @@
 							<field name="users_id" select="1" colspan="4" nolabel="1"/>
 						</page>
 						<page string="Statestic">
+						<action
+								string="Server"
+								name="%(action_view_server_graph)d"
+								colspan="4"
+								height="200"
+								width="510"/>
 						</page>
+						
 						<page string="History">
 							<field name="history_line" select="1" colspan="4" nolabel="1">
 								<tree string="Server History">
