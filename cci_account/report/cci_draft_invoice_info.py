@@ -19,7 +19,7 @@ class account_invoice_draft(report_sxw.rml_parse):
         super(account_invoice_draft, self).__init__(cr, uid, name, context)
         self.localcontext.update({
             'time': time,
-            'partner_info':self.partner_info,
+            'partner_objects':self.partner_objects,
             'member_type':self.member_type,
             'nationality':self.nationality,
             'lines':self.lines,
@@ -31,34 +31,11 @@ class account_invoice_draft(report_sxw.rml_parse):
         self.sum_tax=0.00
         self.sum_tot=0.00
 
-    def partner_info(self, object):
-
-        address_info=''
-        if object.address:
-            for ads in object.address:
-                if ads.type=='default':
-                    if ads.title:
-                        address_info +=ads.title
-                    if ads.name:
-                        address_info +=' ' +ads.name
-                    if ads.street:
-                        address_info +='\n' +ads.street
-                    if ads.street2:
-                        address_info +=' '+ ads.street2
-                    if ads.zip_id:
-                        address_info +='\n' +pooler.get_pool(self.cr.dbname).get('res.partner.zip').name_get(self.cr,self.uid,[ads.zip_id.id])[0][1]
-                    if ads.state_id:
-                        address_info += '\n' + ads.state_id.name
-                    if ads.country_id:
-                        address_info +='\n' + ads.country_id.code
-                    if ads.phone:
-                        address_info +='\nTel: ' + ads.phone
-                    if ads.fax:
-                        address_info +='\nFAX: ' + ads.fax
-        if object.vat:
-            address_info +='\nVAT: '+ object.vat
-
-        return address_info
+    def partner_objects(self,ids={}):
+        if not ids:
+            ids = self.ids
+        partner_objects = pooler.get_pool(self.cr.dbname).get('res.partner').browse(self.cr, self.uid, ids)
+        return partner_objects
 
     def member_type(self, object):
         membership=object.membership_state
@@ -133,4 +110,4 @@ class account_invoice_draft(report_sxw.rml_parse):
     def sum_total(self):
         return self.sum_tot
 
-report_sxw.report_sxw('report.partner.draft_invoices', 'res.partner', 'addons/cci_account/report/cci_draft_invoice_info.rml', parser=account_invoice_draft)
+report_sxw.report_sxw('report.partner.draft_invoices', 'res.partner', 'addons/cci_account/report/cci_draft_invoice_info.rml', parser=account_invoice_draft,header=False)
