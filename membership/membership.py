@@ -233,17 +233,71 @@ class Partner(osv.osv):
 	'''Partner'''
 
 	def _membership_state(self, cr, uid, ids, name, args, context=None):
-		'''Compute membership state of partners'''
-		today = time.strftime('%Y-%m-%d')
 		res = {}
 		for id in ids:
 			res[id] = 'none'
-		clause = 'WHERE partner IN (' + ','.join([str(id) for id in ids]) + ')'
-		cr.execute(REQUETE % (today, today, today, today, today, today, clause))
-		fetches = cr.fetchall()
-		for fetch in fetches:
-			res[fetch[0]] = fetch[1]
+		today = time.strftime('%Y-%m-%d')
 
+		for id in ids:
+			partner_data = self.browse(cr,uid,id)
+			if partner_data.membership_cancel and today > partner_data.membership_cancel:
+				res[id] = 'canceled'
+				continue
+			if partner_data.membership_stop and today > partner_data.membership_stop:
+				res[id] = 'old'
+				continue
+			s = 4
+			if partner_data.member_lines:
+				for mline in partner_data.member_lines:
+					if mline.date_from <= today and mline.date_to >= today:
+						mstate = mline.account_invoice_line.invoice_id.state
+						if mstate == 'paid':
+							s = 0
+							break
+						elif mstate == 'open' and s!=0:
+							s = 1
+						elif mstate == 'cancel' and s!=0 and s!=1:
+							s = 2
+						elif  (mstate == 'draft' or mstate == 'proforma') and s!=0 and s!=1:
+							s = 3
+				if s==4:
+					for mline in partner_data.member_lines:
+						if mline.date_from < today and mline.date_to < today and mline.date_from<=mline.date_to and mline.account_invoice_line.invoice_id.state == 'paid':
+							s = 5
+						else:
+							s = 6
+				if s==0:
+					res[id] = 'paid'
+				elif s==1:
+					res[id] = 'invoiced'
+				elif s==2:
+					res[id] = 'canceled'
+				elif s==3:
+					res[id] = 'waiting'
+				elif s==5:
+					res[id] = 'old'
+				elif s==6:
+					res[id] = 'none'
+			if partner_data.free_member and s!=0:
+				res[id] = 'free'
+			if partner_data.associate_member:
+				assciate_partner = self.browse(cr,uid,partner_data.associate_member.id)
+				cr.execute('select membership_state from res_partner where id=%d', (partner_data.id,))
+				data_partner_state = cr.fetchall()
+				for i in assciate_partner.member_lines:
+					if i.date_from <= today and i.date_to >= today and i.account_invoice_line.invoice_id.state == 'paid' and s!=0 and data_partner_state[0][0] !='free':
+						res[id] = 'associated'
+#
+#		'''Compute membership state of partners'''
+#		today = time.strftime('%Y-%m-%d')
+##		res = {}
+##		for id in ids:
+##			res[id] = 'none'
+#		clause = 'WHERE partner IN (' + ','.join([str(id) for id in ids]) + ')'
+#		cr.execute(REQUETE % (today, today, today, today, today, today, clause))
+#		fetches = cr.fetchall()
+#		for fetch in fetches:
+#			res[fetch[0]] = fetch[1]
 		return res
 
 #no more need becaz of new functionality store attribut on function field
@@ -303,7 +357,10 @@ class Partner(osv.osv):
 		res = {}
 		member_line_obj = self.pool.get('membership.membership_line')
 		for partner in self.browse(cr, uid, ids):
-			if partner.membership_state == 'associated':
+			cr.execute('select membership_state from res_partner where id=%d', (partner.id,))
+			data_state = cr.fetchall()
+			#if partner.membership_state == 'associated':
+			if data_state[0][0] == 'associated':
 				partner_id = partner.associate_member.id
 			else:
 				partner_id = partner.id
@@ -394,7 +451,7 @@ class Partner(osv.osv):
 	}
 	_defaults = {
 		'free_member': lambda *a: False,
-		'membership_cancel' : lambda *d : False
+		'membership_cancel' : lambda *d : False,
 	}
 
 Partner()
