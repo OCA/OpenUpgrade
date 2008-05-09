@@ -218,6 +218,7 @@ class SmtpClient(osv.osv):
         
         return True
 SmtpClient()
+
 class HistoryLine(osv.osv):
     _name = 'email.smtpclient.history'
     _description = 'Email Client History'
@@ -240,3 +241,21 @@ class HistoryLine(osv.osv):
         super(HistoryLine,self).create(cr, uid, vals, context)
         cr.commit()
 HistoryLine()
+
+class report_smtp_server(osv.osv):
+    _name = "report.smtp.server"
+    _description = "Server Statestics"
+    _auto = False
+    _columns = {
+        'name': fields.char('Server',size=64,readonly=True),
+        'model':fields.char('Model',size=64, readonly=True),
+        'history':fields.char('History',size=64,readonly=True),
+        'no':fields.integer('# of Activity',readonly=True),
+     }
+    def init(self, cr):
+         cr.execute("""
+            create or replace view report_smtp_server as (
+                 select min(c.id) as id,count(*) as no,h.name as history,c.name as name from email_smtpclient c,email_smtpclient_history h group by c.name,h.name
+                              )
+         """)
+report_smtp_server()
