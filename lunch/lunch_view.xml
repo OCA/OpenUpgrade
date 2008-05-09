@@ -200,7 +200,7 @@
 				<tree string="Box Amount by User">
 					<field name="box" select="1"/>
 					<field name="user_id" select="1"/>
-					<field name="amount" select="1"/>
+					<field name="amount" select="1" sum="Total box" />
 				</tree>
 			</field>
 		</record>
