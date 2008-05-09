@@ -91,22 +91,12 @@ class account_invoice_draft(report_sxw.rml_parse):
         self.sum_tax=0.00
         self.sum_tot=0.00
         for invoice in invoices:
-            res={}
-            res['name']=invoice.name
-            res['inv_no']=invoice.number
-            res['date']=invoice.date_invoice
-            res['amt_untaxed']=invoice.amount_untaxed
+
             self.sum_untaxed +=invoice.amount_untaxed
 
-            res['vat']=invoice.amount_tax
             self.sum_tax +=invoice.amount_tax
 
-            res['total']=invoice.amount_total
             self.sum_tot +=invoice.amount_total
-
-            res['gen_acc']=invoice.account_id.name
-            res['analytic_acc']=''
-            result.append(res)
 
             if not invoice.invoice_line:
                 continue
@@ -115,7 +105,6 @@ class account_invoice_draft(report_sxw.rml_parse):
 
                 res={}
                 res['name']=line.name
-                res['inv_no']=invoice.number
                 res['date']=invoice.date_invoice
                 untaxed=line.price_unit * line.quantity
                 discounted=(untaxed) * line.discount / 100
@@ -130,7 +119,7 @@ class account_invoice_draft(report_sxw.rml_parse):
 
                 res['total']=untaxed - discounted + taxed
                 res['gen_acc']=line.account_id.name
-                res['analytic_acc']=line.account_analytic_id and line.account_analytic_id.name or False
+                res['analytic_acc']=line.account_analytic_id and line.account_analytic_id.name or '-'
                 result.append(res)
 
         return result

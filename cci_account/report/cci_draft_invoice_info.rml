@@ -77,18 +77,27 @@
     <para style="P4">
       <font color="white"> </font>
     </para>
-    <para style="P4">
-      Customer Ref : [[ o.ref or '/']]
-    </para>
-    <para style="P4">
-      Membership : [[ member_type(o) ]]
-    </para>
-    <para style="P4">
-      Nationality : [[ nationality(o) ]]
-    </para>
-    <para style="P4">
-      Domiciliation : [[ o.domiciliation and 'Yes' or 'No' ]]
-    </para>
+     <blockTable colWidths="140.0,170.0,130.0,100.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P4">
+     		 <b>Customer-Ref</b>: [[ o.ref or '/']]
+   			 </para>
+        </td>
+        <td>
+          <para style="P4"><b>Membership</b>: [[ member_type(o) ]]
+    		</para>
+        </td>
+        <td>
+          <para style="P4"><b>Nationality</b>: [[ nationality(o) ]]
+   			 </para>
+        </td>
+        <td>
+          <para style="P4"><b>Domiciliation</b>: [[ o.domiciliation and 'Yes' or 'No' ]]
+    		</para>
+        </td>
+        </tr>
+      </blockTable>
     <para style="P4">
       <font color="white"> </font>
     </para>
@@ -102,13 +111,10 @@
     <para style="P5">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="95.0,44.0,57.0,70.0,60.0,70.0,61.0,63.0" style="Table1">
+    <blockTable colWidths="115.0,57.0,75.0,63.0,75.0,67.0,68.0" style="Table1">
       <tr>
         <td>
           <para style="P10">Description</para>
-        </td>
-        <td>
-          <para style="P11">Invoice No.</para>
         </td>
         <td>
           <para style="P11">Invoice Date</para>
@@ -130,13 +136,10 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="95.0,44.0,57.0,70.0,60.0,70.0,61.0,63.0" style="Table2">
+    <blockTable colWidths="115.0,57.0,75.0,63.0,75.0,67.0,68.0" style="Table2">
       <tr>
         <td>
           <para style="P10">[[ repeatIn(lines(o),'a') ]] <font face="Times-Roman">[[ a['name'] ]]</font></para>
-        </td>
-        <td>
-          <para style="P11">[[ a['inv_no'] ]]</para>
         </td>
         <td>
           <para style="P11">[[ a['date'] ]]</para>
@@ -161,7 +164,7 @@
     <para style="P3">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="196.0,70.0,60.0,70.0,124.0" style="Table3">
+    <blockTable colWidths="172.0,75.0,63.0,75.0,135.0" style="Table3">
       <tr>
         <td>
           <para style="P11"><b>Total:</b></para>
