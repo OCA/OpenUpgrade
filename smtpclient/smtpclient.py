@@ -247,15 +247,17 @@ class report_smtp_server(osv.osv):
     _description = "Server Statestics"
     _auto = False
     _columns = {
+        'server_id':fields.integer('Server ID',readonly=True),
         'name': fields.char('Server',size=64,readonly=True),
         'model':fields.char('Model',size=64, readonly=True),
-        'history':fields.char('History',size=64,readonly=True),
-        'no':fields.integer('# of Activity',readonly=True),
+        'history':fields.char('History',size=64, readonly=True),
+#        'history':fields.integer('History',readonly=True),
+        'no':fields.integer('Total No.',readonly=True),
      }
     def init(self, cr):
          cr.execute("""
             create or replace view report_smtp_server as (
-                 select min(c.id) as id,count(*) as no,h.name as history,c.name as name from email_smtpclient c,email_smtpclient_history h group by c.name,h.name
+                   select c.id as id,h.name as history,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id
                               )
          """)
 report_smtp_server()
