@@ -223,8 +223,8 @@ class HistoryLine(osv.osv):
     _name = 'email.smtpclient.history'
     _description = 'Email Client History'
     _columns = {
-        'name' : fields.text('Description',required=True),
-        'date_create': fields.datetime('Date'),
+        'name' : fields.text('Description',required=True,readonly=True),
+        'date_create': fields.datetime('Date',readonly=True),
         'user_id':fields.many2one('res.users', 'Username', readonly=True, select=True),
         'server_id' : fields.many2one('email.smtpclient', 'Smtp Server', ondelete='set null', required=True),
         'model':fields.many2one('ir.model', 'Model', readonly=True, select=True),
@@ -257,7 +257,7 @@ class report_smtp_server(osv.osv):
     def init(self, cr):
          cr.execute("""
             create or replace view report_smtp_server as (
-                   select c.id as id,h.name as history,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id
+                   select h.server_id as id,c.id as server_id,h.name as history,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id,h.server_id
                               )
          """)
 report_smtp_server()
