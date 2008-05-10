@@ -48,13 +48,14 @@ class sale_order(osv.osv):
         partner_address_id = part['partner_order_id'][0]
         address_data= self.pool.get('res.partner.address').read(cr, uid, partner_address_id,[], context)
         if 'email' in address_data:
+            sale_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','sale')], context=False)
+            if not sale_smtpserver_id:
+                default_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
+            smtpserver_id = sale_smtpserver_id or default_smtpserver_id
             if address_data['email']:
-                email = address_data['email']
-                sale_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','sale')], context=False)
-                if not sale_smtpserver_id:
-                    default_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
-                    if not default_smtpserver_id:
-                        raise Exception, 'Verification Failed, No Server Defined!!!'
+                email = address_data['email']                
+                if not default_smtpserver_id:
+                    raise Exception, 'Verification Failed, No Server Defined!!!'
                 smtpserver_id = sale_smtpserver_id or default_smtpserver_id
                 smtpserver = self.pool.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)[0]
                 body= "Your order is confirmed \n Please See the attachment"
@@ -62,5 +63,10 @@ class sale_order(osv.osv):
                 if not state:
                     raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
                 return {}
+            else:
+                model_id=self.pool.get('ir.model').search(cr, uid, [('model','=','sale.order')], context=False)[0]
+                if smtpserver_id:
+                    self.pool.get('email.smtpclient.history').create \
+                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':'The Email is not sent because the Partner have no Email','email':'','model':model_id,'resource_id':ids[0]})
         return result
 sale_order()
