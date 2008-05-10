@@ -171,7 +171,7 @@ class membership_line(osv.osv):
 
 		res = cr.fetchall()
 		for r in res:
-			if r[0] < 0:
+			if r[0] and r[0] < 0:
 				return False
 		return True
 
@@ -250,16 +250,17 @@ class Partner(osv.osv):
 			if partner_data.member_lines:
 				for mline in partner_data.member_lines:
 					if mline.date_from <= today and mline.date_to >= today:
-						mstate = mline.account_invoice_line.invoice_id.state
-						if mstate == 'paid':
-							s = 0
-							break
-						elif mstate == 'open' and s!=0:
-							s = 1
-						elif mstate == 'cancel' and s!=0 and s!=1:
-							s = 2
-						elif  (mstate == 'draft' or mstate == 'proforma') and s!=0 and s!=1:
-							s = 3
+						if mline.account_invoice_line and mline.account_invoice_line.invoice_id:
+							mstate = mline.account_invoice_line.invoice_id.state
+							if mstate == 'paid':
+								s = 0
+								break
+							elif mstate == 'open' and s!=0:
+								s = 1
+							elif mstate == 'cancel' and s!=0 and s!=1:
+								s = 2
+							elif  (mstate == 'draft' or mstate == 'proforma') and s!=0 and s!=1:
+								s = 3
 				if s==4:
 					for mline in partner_data.member_lines:
 						if mline.date_from < today and mline.date_to < today and mline.date_from<=mline.date_to and mline.account_invoice_line.invoice_id.state == 'paid':
