@@ -204,12 +204,13 @@ def _do_split(self, cr, uid, data, context):
 def send_mail(self, cr, uid, data, context):
     picking_data = pooler.get_pool(cr.dbname).get('stock.picking').read(cr, uid, data['id'], context)
     email=pooler.get_pool(cr.dbname).get('res.partner.address').read(cr, uid, picking_data['address_id'][0], context)['email']
-    if email:
-        stock_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','stock')], context=False)
-        if not stock_smtpserver_id:
-            default_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
-            if not default_smtpserver_id:
-                raise Exception, 'Verification Failed, No Server Defined!!!'
+    stock_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','stock')], context=False)
+    if not stock_smtpserver_id:
+        default_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
+    smtpserver_id = stock_smtpserver_id or default_smtpserver_id
+    if email:       
+        if not default_smtpserver_id:
+            raise Exception, 'Verification Failed, No Server Defined!!!'
         smtpserver_id = stock_smtpserver_id or default_smtpserver_id
         smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, smtpserver_id, context)[0]
         body= "Your picking is validated. \n Please See the attachment."
@@ -217,6 +218,11 @@ def send_mail(self, cr, uid, data, context):
         if not state:
             raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
         return {}
+    else:
+        model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=','stock.picking')], context=False)[0]
+        if smtpserver_id:
+            pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
+            (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':'The Email is not sent because the Partner have no Email','email':'','model':model_id,'resource_id':data['id']})
     return {}
 		
 class partial_picking(wizard.interface):
