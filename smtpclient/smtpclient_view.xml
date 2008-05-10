@@ -7,9 +7,9 @@
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
 			<graph string="Server Statestics" type="bar">
-				<field name="name"/>
+				<field name="model"/>
 				<field name="no" operator="+"/>
-				<field name="history" operator="+" group="True"/>
+				<field name="history" operator="+" group="True"/>				
 			</graph>
 		</field>
 	</record>
@@ -19,7 +19,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Server Statestics">
-				<field name="name"/>
+				<field name="model"/>
 				<field name="no"/>
 				<field name="history"/>
 			</tree>
@@ -39,9 +39,9 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_view_server_statestics_graph">
-			<field name="res_model">report.smtp.server</field>
+			<field name="res_model">report.smtp.server</field>		
 			<field name="view_type">form</field>
-			<field name="view_mode">tree,graph</field>
+			<field name="view_mode">graph,tree</field>
 		</record>
 		
 	<record model="ir.ui.view" id="company_form">
