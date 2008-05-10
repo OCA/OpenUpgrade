@@ -6,8 +6,8 @@
 		<field name="model">report.smtp.server</field>
 		<field name="type">graph</field>
 		<field name="arch" type="xml">
-			<graph string="Server Statestics" type="bar">
-				<field name="model"/>
+			<graph string="Server Statestics" type="bar">				
+				<field name="model" />
 				<field name="no" operator="+"/>
 				<field name="history" operator="+" group="True"/>				
 			</graph>
@@ -31,7 +31,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Server Statestics">
-				<field name="name" select="1"/>
+				<field name="model" select="1"/>
 				<field name="no"/>
 				<field name="history" select="1"/>
 			</form>
