@@ -1,1 +1,0 @@
-import partner_new

@@ -1,2 +1,0 @@
-import wizard_mail_send_ecommerce
-import wizard_product_view
