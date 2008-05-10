@@ -14,7 +14,7 @@ class ecommerce_sale_order(osv.osv):
             ('draft','Draft'),
             ('done','Done'),
             ('cancel','Cancel')
-        ], 'Order State'),
+        ], 'Order State',readonly=True),
         'date_order':fields.date('Date Ordered', required=True),
 
         'epartner_shipping_id':fields.many2one('ecommerce.partner', 'Ecommerce Shipping Address', required=True),
