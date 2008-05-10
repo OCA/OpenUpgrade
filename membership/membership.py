@@ -232,6 +232,13 @@ membership_line()
 class Partner(osv.osv):
 	'''Partner'''
 
+	def _membership_state_search_inv(self,cr,uid,ids):
+		data_inv = self.pool.get('account.invoice').browse(cr,uid,ids)
+		list_partner = []
+		for data in data_inv:
+			list_partner.append(data.partner_id.id)
+		return list_partner
+
 	def _membership_state(self, cr, uid, ids, name, args, context=None):
 		res = {}
 		for id in ids:
@@ -437,7 +444,7 @@ class Partner(osv.osv):
 #		'membership_state': fields.function(_membership_state, method=True, string='Current membership state',
 #			type='selection', selection=STATE, fnct_search=_membership_state_search),
 		'membership_state': fields.function(_membership_state, method=True, string='Current membership state',
-			type='selection',selection=STATE,store={'account.invoice':(['state'],'_membership_state_search_inv')}),
+			type='selection',selection=STATE,store={'account.invoice':(['state'],_membership_state_search_inv)}),
 #		'associate_member': fields.many2one('res.partner', 'Associate member'),
 		'free_member': fields.boolean('Free member'),
 		'membership_start': fields.function(_membership_start, method=True,
@@ -545,13 +552,6 @@ class Invoice(osv.osv):
 					[('account_invoice_line','in',
 						[ l.id for l in invoice.invoice_line])], context)
 			member_line_obj.write(cr,uid,mlines, {'date_cancel':today}, context)
-
-	def _membership_state_search_inv(self,cr,uid,ids):
-		data_inv = self.browse(cr,uid,ids)
-		list_partner = []
-		for data in data_inv:
-			list_partner.append(data.partner_id.id)
-		return list_partner
 Invoice()
 
 
