@@ -5,27 +5,7 @@ import netsvc
 import ir
 
 class ecommerce_shop(osv.osv):
-    
-    def _email_send(self, cr, uid, ids, email_from, subject, body, on_error=None):
-        partners = self.browse(cr, uid, ids)
-        for partner in partners:
-            if len(partner.address):
-                if partner.address[0].email:
-                    tools.email_send(email_from, [partner.address[0].email], subject, body, on_error)
-        return True
-
-    def email_send(self, cr, uid, ids, email_from, subject, body, on_error=''):
-        while len(ids):
-            self.pool.get('ir.cron').create(cr, uid, {
-                'name': 'Send Partner Emails',
-                'user_id': uid,
-                'model': 'res.partner',
-                'function': '_email_send',
-                'args': repr([ids[:16], email_from, subject, body, on_error])
-            })
-            ids = ids[16:]
-        return True
-    
+        
     _name = "ecommerce.shop"
     _description = "Shop Basic Info"
     _columns = {
@@ -53,47 +33,49 @@ class ecommerce_shop(osv.osv):
 ecommerce_shop()
 
 class ecommerce_category(osv.osv):
-    def create(self,cr,uid,vals,context=None):
+       def create(self,cr,uid,vals,context=None):
+           
+            w_id = vals['web_id']
+            if 'category_id' in vals and vals['category_id']:
+                cat_id = vals['category_id']
+                    
+                obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
+                obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
+                temp=[]
+                for i in obj_prd:
+                    temp+=[i['id']]
+                    
+                rec = self.pool.get('ecommerce.shop').write(cr,uid,w_id,{'products':[(6,0,temp)]})
+            result = super(osv.osv, self).create(cr, uid, vals, context)
+            return result
        
-        w_id = vals['web_id']
-        cat_id = vals['category_id']
-        obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
-        obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
-        temp=[]
-        for i in obj_prd:
-            temp+=[i['id']]
+       def write(self,cr,uid,ids,vals,context=None):
             
-        rec = self.pool.get('ecommerce.shop').write(cr,uid,w_id,{'products':[(6,0,temp)]})
-        result = super(osv.osv, self).create(cr, uid, vals, context)
-        return result
-    
-    def write(self,cr,uid,ids,vals,context=None):
-        
-        obj=self.browse(cr,uid,ids[0])
-        curr_id =self.pool.get('ecommerce.shop').browse(cr, uid, ids,context=context)
-        web_id = obj.web_id.id
-        cat_id = vals['category_id']
-        if web_id:
-            if vals['category_id']:
-                    obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
-                    obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
-                    temp=[]
-                    for i in obj_prd:
-                        temp+=[i['id']]
-                    rec = self.pool.get('ecommerce.shop').write(cr,uid,[web_id],{'products':[(6,0,temp)]})
-            
-        return super(ecommerce_category,self).write(cr,uid,ids,vals,context)
-    
+            obj=self.browse(cr,uid,ids[0])
+            curr_id =self.pool.get('ecommerce.shop').browse(cr, uid, ids,context=context)
+            web_id = obj.web_id.id
+         
+            if web_id:
+                if 'category_id' in vals and vals['category_id']:
+                        cat_id = vals['category_id']
+                        obj = self.pool.get('product.product').search(cr, uid, [('categ_id','=',cat_id)])
+                        obj_prd = self.pool.get('product.product').read(cr,uid,obj,[], context={})
+                        temp=[]
+                        for i in obj_prd:
+                            temp+=[i['id']]
+                        rec = self.pool.get('ecommerce.shop').write(cr,uid,[web_id],{'products':[(6,0,temp)]})
+                
+            return super(ecommerce_category,self).write(cr,uid,ids,vals,context)
   
-    _name = "ecommerce.category"
-    _description = "ecommerce category"
-    _columns = {
-        'name': fields.char('E-commerce Category', size=64, required=True),
-        'web_id': fields.many2one('ecommerce.shop', 'Webshop'),
-        'category_id': fields.many2one('product.category', 'Tiny Category'),
-        'include_childs': fields.boolean('Include Childs'),
-        'parent_category_id':fields.many2one('ecommerce.category','Parent Category'),
-        'child_id': fields.one2many('ecommerce.category', 'parent_category_id', string='Childs Categories'),        
+       _name = "ecommerce.category"
+       _description = "ecommerce category"
+       _columns = {
+            'name': fields.char('E-commerce Category', size=64, required=True),
+            'web_id': fields.many2one('ecommerce.shop', 'Webshop'),
+            'category_id': fields.many2one('product.category', 'Tiny Category'),
+            'include_childs': fields.boolean('Include Childs'),
+            'parent_category_id':fields.many2one('ecommerce.category','Parent Category'),
+            'child_id': fields.one2many('ecommerce.category', 'parent_category_id', string='Childs Categories'),        
     }
 ecommerce_category()
 
