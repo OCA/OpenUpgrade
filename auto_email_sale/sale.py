@@ -54,7 +54,7 @@ class sale_order(osv.osv):
             smtpserver_id = sale_smtpserver_id or default_smtpserver_id
             if address_data['email']:
                 email = address_data['email']                
-                if not default_smtpserver_id:
+                if not smtpserver_id:
                     raise Exception, 'Verification Failed, No Server Defined!!!'
                 smtpserver_id = sale_smtpserver_id or default_smtpserver_id
                 smtpserver = self.pool.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)[0]
