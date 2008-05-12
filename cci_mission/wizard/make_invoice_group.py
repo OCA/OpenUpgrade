@@ -4,17 +4,26 @@ import pooler
 import create_invoice_carnet
 import create_invoice_embassy
 import create_invoice
+from event.wizard import make_invoice
 
 from osv import fields, osv
 
 form = """<?xml version="1.0"?>
+<form string="Inovoice Grouped">
+    <field name="registration"/>
+</form>
+"""
+fields = {
+      'registration': {'string':'Include Events Registrations', 'type':'boolean' ,'default': lambda *a: False },
+}
+form_msg = """<?xml version="1.0"?>
 <form string="Inovoice Grouped">
     <separator string="Invoices Grouped for Following Partners." colspan="4" />
     <newline/>
     <field name="message" nolabel="1" colspan="5"/>
 </form>
 """
-fields = {
+fields_msg = {
       'message': {'string':'', 'type':'text', 'readonly':True, 'size':'500'},
 }
 
@@ -23,19 +32,19 @@ def _group_invoice(self, cr, uid, data, context):
     obj_inv=pool_obj.get('account.invoice')
     dict_info=[]
     models=['cci_missions.certificate','cci_missions.legalization','cci_missions.embassy_folder','cci_missions.ata_carnet']
+    if data['form']['registration']:
+        models.append('event.registration')
 
     for model in models:
-        if model=='cci_missions.embassy_folder':
+        if model=='cci_missions.embassy_folder' or model=='event.registration':
             model_ids=pool_obj.get(model).search(cr,uid,[('state','=','open')])
         else:
             model_ids=pool_obj.get(model).search(cr,uid,[('state','=','draft')])
 
         if model_ids:
-            read_ids=pool_obj.get(model).read(cr,uid,model_ids,['partner_id','order_partner_id','date','creation_date'])
-
+            read_ids=pool_obj.get(model).read(cr,uid,model_ids,['partner_id','order_partner_id','date','creation_date','partner_invoice_id'])
             for element in read_ids:
                 part_info={}
-
                 if ('partner_id' in element) and element['partner_id']:
                     part_info['partner_id']=element['partner_id'][0]
                     part_info['id']=element['id']
@@ -43,6 +52,11 @@ def _group_invoice(self, cr, uid, data, context):
 
                 if ('order_partner_id' in element) and element['order_partner_id']:
                     part_info['partner_id']=element['order_partner_id'][0]
+                    part_info['id']=element['id']
+                    part_info['model']=model
+
+                if ('partner_invoice_id' in element) and element['partner_invoice_id']:
+                    part_info['partner_id']=element['partner_invoice_id'][0]
                     part_info['id']=element['id']
                     part_info['model']=model
 
@@ -57,7 +71,10 @@ def _group_invoice(self, cr, uid, data, context):
 
     if not dict_info:
         data['form']['invoice_ids']=[]
-        data['form']['message']="No invoices grouped  because no invoices for Embassy Folder, Legalizations, Certifications and ATA Carnet are in 'Draft' state."
+        if data['form']['registration']:
+            data['form']['message']="No invoices grouped  because no invoices for ATA Carnet, Legalizations, Certifications and (Embassy Folders and Registrations) are in 'Draft' state."
+        else:
+            data['form']['message']="No invoices grouped  because no invoices for ATA Carnet, Legalizations, Certifications and Embassy Folders are in 'Draft' state."
         return data['form']
 
     partner_ids = list(set([x['partner_id'] for x in dict_info]))
@@ -66,12 +83,10 @@ def _group_invoice(self, cr, uid, data, context):
 
     list_invoice=[]
     for partner_id in partner_ids:
-
         partner=pool_obj.get('res.partner').browse(cr, uid,partner_id)
         final_info={}
         list_info=[]
         list_invoice_ids=[]
-
 
         for element in dict_info:
             final_info={}
@@ -79,7 +94,6 @@ def _group_invoice(self, cr, uid, data, context):
                 data={'model':element['model'],'form':{},'id':element['id'],'ids':[element['id']],'report_type': 'pdf'}
                 final_info['ids']=[]
                 final_info['date']=element['date'][0:10]
-
                 if element['model']=='cci_missions.ata_carnet':
                     result=create_invoice_carnet._createInvoices(self,cr,uid,data,context)
 
@@ -107,6 +121,17 @@ def _group_invoice(self, cr, uid, data, context):
 
                     if result['inv_rejected']>0 and result['inv_rej_reason']:
                         disp_msg +='\nFor Partner '+ partner.name +' On Certificate or Legalization with ' + result['inv_rej_reason']
+                        continue
+                    if result['invoice_ids']:
+                        list_invoice_ids.append(result['invoice_ids'][0])
+                        final_info['ids'].append(result['invoice_ids'][0])
+                        list_info.append(final_info)
+
+                if element['model']=='event.registration':
+                    result=make_invoice._makeInvoices(self,cr,uid,data,context)
+
+                    if result['inv_rejected']>0 and result['inv_rej_reason']:
+                        disp_msg +='\nFor Partner '+ partner.name +' On Event Registration ' + result['inv_rej_reason']
                         continue
                     if result['invoice_ids']:
                         list_invoice_ids.append(result['invoice_ids'][0])
@@ -141,10 +166,8 @@ def _group_invoice(self, cr, uid, data, context):
             count=count+1
             list_inv_lines.append(id_note)
             data_inv=obj_inv.browse(cr,uid,record['ids'])
-
             notes = ''
             for invoice in data_inv:
-
                 if invoice.reference:
                     customer_ref = customer_ref +' ' + invoice.reference
                 if invoice.comment:
@@ -195,7 +218,6 @@ def _group_invoice(self, cr, uid, data, context):
         obj_inv.unlink(cr,uid,list_invoice_ids)
     data['form']['invoice_ids']=list_invoice
     data['form']['message']=disp_msg
-
     return data['form']
 
 class mission_group_invoice(wizard.interface):
@@ -215,10 +237,14 @@ class mission_group_invoice(wizard.interface):
         }
     states = {
         'init' : {
-               'actions' : [_group_invoice],
-               'result': {'type': 'form', 'arch': form, 'fields': fields, 'state':[('end','Ok'),('open','Open')]}
+               'actions' : [],
+               'result': {'type': 'form', 'arch': form, 'fields': fields, 'state':[('end','Cancel'),('open','Group Invoice')]}
             },
         'open': {
+            'actions': [_group_invoice],
+            'result': {'type':'form', 'arch': form_msg, 'fields': fields_msg, 'state':[('end','Ok'),('open_inv','Open Invoices')]}
+            },
+        'open_inv': {
             'actions': [],
             'result': {'type':'action', 'action':_list_invoice, 'state':'end'}
             }
