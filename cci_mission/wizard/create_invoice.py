@@ -125,6 +125,7 @@ def _createInvoices(self, cr, uid, data, context={}):
 			context.update({'force_member':force_member})
 			context.update({'force_non_member':force_non_member})
 			context.update({'value_goods':data.goods_value})
+			context.update({'date':data.date})
 
 			price=pool_obj.get('product.product')._product_price(cr, uid, [prod_id], False, False, context)
 			val['value'].update({'price_unit':price[prod_id]})
