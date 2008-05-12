@@ -41,10 +41,10 @@ class account_invoice(osv.osv):
         flag = False
         data_invoice = self.browse(cr,uid,ids[0])
         for line in data_invoice.invoice_line:
-            if not line.account_analytic_id:
+            if not line.analytics_id:
                 flag = True
         if flag:
-            raise osv.except_osv('Error!','Invoice line should have Analytic Account')
+            raise osv.except_osv('Error!','Invoice line should have Analytic Distribution to create Analytic Entries.')
         return super(account_invoice, self).action_move_create(cr, uid, ids, context)
 
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
