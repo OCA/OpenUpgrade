@@ -209,7 +209,7 @@ def send_mail(self, cr, uid, data, context):
         default_smtpserver_id = pooler.get_pool(cr.dbname).get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
     smtpserver_id = stock_smtpserver_id or default_smtpserver_id
     if email:       
-        if not default_smtpserver_id:
+        if not smtpserver_id:
             raise Exception, 'Verification Failed, No Server Defined!!!'
         smtpserver_id = stock_smtpserver_id or default_smtpserver_id
         smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, smtpserver_id, context)[0]
