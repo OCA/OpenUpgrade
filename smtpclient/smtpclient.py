@@ -74,7 +74,9 @@ class SmtpClient(osv.osv):
         'verify_email' : fields.text('Verify Message', readonly=True, states={'new':[('readonly',False)]}),
         'code' : fields.char('Verification Code', size=256),
         'type' : fields.selection([("default", "Default"),("account", "Account"),("sale","Sale"),("stock","Stock")], "Server Type",required=True),
-        'history_line': fields.one2many('email.smtpclient.history', 'server_id', 'History')
+        'history_line': fields.one2many('email.smtpclient.history', 'server_id', 'History'),
+        'server_statestics': fields.one2many('report.smtp.server', 'server_id', 'Statestics')
+        
     }
     
     _defaults = {
@@ -247,17 +249,16 @@ class report_smtp_server(osv.osv):
     _description = "Server Statestics"
     _auto = False
     _columns = {
-        'server_id':fields.integer('Server ID',readonly=True),
+        'server_id':fields.many2one('email.smtpclient','Server ID',readonly=True),
         'name': fields.char('Server',size=64,readonly=True),
         'model':fields.char('Model',size=64, readonly=True),
         'history':fields.char('History',size=64, readonly=True),
-#        'history':fields.integer('History',readonly=True),
         'no':fields.integer('Total No.',readonly=True),
      }
     def init(self, cr):
          cr.execute("""
             create or replace view report_smtp_server as (
-                   select h.server_id as id,c.id as server_id,h.name as history,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id,h.server_id
+                   select min(h.id) as id,c.id as server_id,h.name as history,m.name as model,count(h.name) as no  from email_smtpclient c inner join email_smtpclient_history h on c.id=h.server_id left join ir_model m on m.id=h.model group by h.name,m.name,c.id
                               )
          """)
 report_smtp_server()
