@@ -70,7 +70,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">ecommerce.shop</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="view_shop_basic_form"/>
+		<field name="view_id" ref="view_shop_basic_tree"/>
 	</record>
 	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
 	
@@ -90,7 +90,6 @@
 				</form>
 			</field>
 		</record>
-	
 	
 		<record model="ir.ui.view" id="ecommerce_product_category_tree_view">
 			<field name="name">ecommerce.product.category.tree</field>
