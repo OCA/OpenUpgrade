@@ -24,9 +24,8 @@
 							<newline/>
 							<field name="state"/>
 							<newline/>
-							<button  name="order_draft" states="cancel" string="Set To Draft"/>
-							<button  name="order_create" states="draft" string="Create Order"/>
-							<button  name="order_cancel" states="draft" string="Cancel Order"/>
+							<button  name="signal_call" string="Create Sale Order" states="draft"/>
+							<button  name="order_cancel" states="done,draft" string="Cancel Order"/>
 					</page>
 					<page string="Others data">
 						<field name="order_id" colspan="3"/>
@@ -52,7 +51,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">ecommerce.saleorder</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="sale_order_form"/>
+		<field name="view_id" ref="sale_order_tree"/>
 	</record>
 	<menuitem name="ecommerce/Sale Order/sale order" id="menu_sale_order_form" action="action_sale_order_form"/>  
 		  
@@ -90,4 +89,3 @@
 	</record>
 </data>
 </terp>
-	
