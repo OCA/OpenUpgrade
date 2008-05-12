@@ -106,7 +106,7 @@ class account_analytic_plan_instance(osv.osv):
 	def copy(self, cr, uid, id, default=None, context=None):
 		if not default:
 			default = {}
-			default.update({'account1_ids':False, 'account2_ids':False, 'account3_ids':False, 
+			default.update({'account1_ids':False, 'account2_ids':False, 'account3_ids':False,
 				'account4_ids':False, 'account5_ids':False, 'account6_ids':False})
 		return super(account_analytic_plan_instance, self).copy(cr, uid, id, default, context)
 
@@ -253,7 +253,7 @@ class account_invoice_line(osv.osv):
 	}
 	def move_line_get_item(self, cr, uid, line, context={}):
 		res= super(account_invoice_line,self).move_line_get_item(cr, uid, line, context={})
-		res ['analytics_id']=line.analytics_id.id
+		res ['analytics_id']=line.analytics_id and line.analytics_id.id or False
 		return res
 account_invoice_line()
 
@@ -263,37 +263,42 @@ class account_move_line(osv.osv):
 	_columns = {
 		'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Distribution'),
 	}
-	def _analytic_update(self, cr, uid, ids, context):
-		for line in self.browse(cr, uid, ids, context):
-			if line.analytics_id:
-				toremove = self.pool.get('account.analytic.line').search(cr, uid, [('move_id','=',line.id)], context=context)
-				if toremove:
-					self.pool.get('account.analytic.line').unlink(cr, uid, toremove, context=context)
-				for line2 in line.analytics_id.account_ids:
-					val = (line.debit or 0.0) - (line.credit or  0.0)
-					amt=val * (line2.rate/100)
-					al_vals={
-						'name': line.name,
-						'date': line.date,
-						'account_id': line2.analytic_account_id.id,
-						'amount': amt,
-						'general_account_id': line.account_id.id,
-						'move_id': line.id,
-						'journal_id': line.analytics_id.journal_id.id,
-						'ref': line.ref,
-					}
-					ali_id=self.pool.get('account.analytic.line').create(cr,uid,al_vals)
-		return True
-
-	def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
-		result = super(account_move_line, self).write(cr, uid, ids, vals, context, check, update_check)
-		self._analytic_update(cr, uid, ids, context)
-		return result
-
-	def create(self, cr, uid, vals, context=None, check=True):
-		result = super(account_move_line, self).create(cr, uid, vals, context, check)
-		self._analytic_update(cr, uid, [result], context)
-		return result
+#	def _analytic_update(self, cr, uid, ids, context):
+#		for line in self.browse(cr, uid, ids, context):
+#			if line.analytics_id:
+#				print "line.analytics_id",line,"now",line.analytics_id
+#				toremove = self.pool.get('account.analytic.line').search(cr, uid, [('move_id','=',line.id)], context=context)
+#				print "toremove",toremove
+#				if toremove:
+#					obj_line=self.pool.get('account.analytic.line')
+#					self.pool.get('account.analytic.line').unlink(cr, uid, toremove, context=context)
+#				for line2 in line.analytics_id.account_ids:
+#					val = (line.debit or 0.0) - (line.credit or  0.0)
+#					amt=val * (line2.rate/100)
+#					al_vals={
+#						'name': line.name,
+#						'date': line.date,
+#						'unit_amount':1,
+#						'product_id':12,
+#						'account_id': line2.analytic_account_id.id,
+#						'amount': amt,
+#						'general_account_id': line.account_id.id,
+#						'move_id': line.id,
+#						'journal_id': line.analytics_id.journal_id.id,
+#						'ref': line.ref,
+#					}
+#					ali_id=self.pool.get('account.analytic.line').create(cr,uid,al_vals)
+#		return True
+#
+#	def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+#		result = super(account_move_line, self).write(cr, uid, ids, vals, context, check, update_check)
+#		self._analytic_update(cr, uid, ids, context)
+#		return result
+#
+#	def create(self, cr, uid, vals, context=None, check=True):
+#		result = super(account_move_line, self).create(cr, uid, vals, context, check)
+#		self._analytic_update(cr, uid, [result], context)
+#		return result
 account_move_line()
 
 class account_invoice(osv.osv):
@@ -303,6 +308,48 @@ class account_invoice(osv.osv):
 		res=super(account_invoice,self).line_get_convert(cr, uid, x, part, date, context)
 		res['analytics_id']=x.get('analytics_id',False)
 		return res
+
+	def _get_analityc_lines(self, cr, uid, id):
+		inv = self.browse(cr, uid, [id])[0]
+		cur_obj = self.pool.get('res.currency')
+
+		company_currency = inv.company_id.currency_id.id
+		if inv.type in ('out_invoice', 'in_refund'):
+			sign = 1
+		else:
+			sign = -1
+
+		iml = self.pool.get('account.invoice.line').move_line_get(cr, uid, inv.id)
+
+		for il in iml:
+			if il['analytics_id']:
+
+				if inv.type in ('in_invoice', 'in_refund'):
+					ref = inv.reference
+				else:
+					ref = self._convert_ref(cr, uid, inv.number)
+				obj_move_line=self.pool.get('account.analytic.plan.instance').browse(cr,uid,il['analytics_id'])
+				amount_calc=cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, il['price'], context={'date': inv.date_invoice}) * sign
+				qty=il['quantity']
+				il['analytic_lines']=[]
+				for line2 in obj_move_line.account_ids:
+					amt=amount_calc * (line2.rate/100)
+					qtty=qty* (line2.rate/100)
+					al_vals={
+						'name': il['name'],
+						'date': inv['date_invoice'],
+						'unit_amount':qtty,
+						'product_id':il['product_id'],
+						'account_id': line2.analytic_account_id.id,
+						'amount': amt,
+						'product_uom_id': il['uos_id'],
+						'general_account_id': il['account_id'],
+						'journal_id': self._get_journal_analytic(cr, uid, inv.type),
+						'ref': ref,
+					}
+					il['analytic_lines'].append((0,0,al_vals))
+		return iml
+
 account_invoice()
 
 class account_analytic_plan(osv.osv):
