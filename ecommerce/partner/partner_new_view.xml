@@ -32,6 +32,7 @@
 					<field name="name" select="1"/>
 					<field name="contact_name" select="2"/>
 					<field name="lang" select="2"/>
+					<field name="username" select="2"/>
 					<newline/>
 					<separator string="Partner Address" colspan="4"/>
 							<field name="street" select="2"/>
@@ -61,7 +62,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">ecommerce.partner</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="view_partner_ecommerce_form"/>
+		<field name="view_id" ref="view_partner_ecommerce_tree"/>
 	</record>
 	<menuitem name="ecommerce/Partner/partners" action="action_partner_ecommerce_form" id="menu_partner_ecommerce_form"/>
 	
