@@ -64,7 +64,6 @@ class cci_count_invoices(report_sxw.rml_parse):
                 res[state]=0
 
             for state in states:
-                print "for state",state
                 find_ids=obj_inv.search(self.cr,self.uid,[('partner_id','=',object.id),('state','=',state),('type','=',type)])
 
                 if find_ids:
