@@ -1,0 +1,138 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="34.0" y1="28.0" width="527" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#e6e6e6" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#e6e6e6" start="4,0" stop="4,0"/>
+      <blockBackground colorName="#e6e6e6" start="5,0" stop="5,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Bold" fontSize="14.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Times-Italic" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P5" fontName="Times-Bold" fontSize="13.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="12.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Bold" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="11.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Bold" fontSize="12.0" leading="15" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P13" fontName="Times-Roman" fontSize="12.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P14" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P15" fontName="Times-Bold" fontSize="12.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P16" fontName="Times-Roman" fontSize="11.0" leading="14"/>
+    <paraStyle name="P17" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P18" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P12">
+      <font color="white"> </font>
+    </para>
+    <para style="P1"><u>Counted Invoices</u>:</para>
+    <para style="P5">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">Printing date: [[ time.strftime('%Y-%m-%d') ]] at [[ time.strftime('%H:%M:%S') ]]</para>
+
+    <section>
+      <para style="P10">[[ repeatIn(partner_objects(),'o') ]]</para>
+      <para style="P12">[[ setLang(o.lang) ]]</para>
+      <blockTable colWidths="527.0" style="Table1">
+        <tr>
+          <td>
+            <para style="P5">[[ o.title or '' ]] [[ o.name ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P17">
+        <font color="white"> </font>
+      </para>
+      <blockTable colWidths="131.0,70.0,82.0,71.0,72.0,101.0" style="Table3">
+        <tr>
+          <td>
+            <para style="P11">Invoice Type</para>
+          </td>
+          <td>
+            <para style="P11">Draft</para>
+          </td>
+          <td>
+            <para style="P11">Pro-Forma</para>
+          </td>
+          <td>
+            <para style="P11">Open</para>
+          </td>
+          <td>
+            <para style="P11">Paid</para>
+          </td>
+          <td>
+            <para style="P11">Cancelled</para>
+          </td>
+        </tr>
+      </blockTable>
+      <blockTable colWidths="131.0,71.0,81.0,71.0,73.0,101.0" style="Table4">
+        <tr>
+          <td>
+            <para style="P13"><font face="Times-Roman" size="10.0">[[ repeatIn(get_data(o),'a') ]] </font>[[ a['type'] ]]</para>
+          </td>
+          <td>
+            <para style="P13">[[ '%2d' % a['draft'] ]]</para>
+          </td>
+          <td>
+            <para style="P13">[[ '%2d' % a['proforma'] ]]</para>
+          </td>
+          <td>
+            <para style="P13">[[ '%2d' % a['open'] ]]</para>
+          </td>
+          <td>
+            <para style="P13">[[ '%2d' % a['paid'] ]]</para>
+          </td>
+          <td>
+            <para style="P13">[[ '%2d' % a['cancel'] ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+      <para style="P1">
+        <font color="white"> </font>
+      </para>
+    </section>
+    <para style="P12">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+
