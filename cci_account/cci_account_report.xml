@@ -31,6 +31,22 @@
 			name="wizard.cci.crossovered.analytic"
 			keyword="client_print_multi"/>
 
+		<report
+			string="Print VCS"
+			model="account.invoice"
+			name="cci.vcs"
+			auto="False"
+			rml="cci_account/report/cci_vcs_report.rml"
+			id="report_cci_vcs"
+			menu="False"/>
+
+		<wizard
+			id="wizard_cci_vcs"
+			string="Print VCS"
+			model="account.invoice"
+			name="wizard.cci.vcs"
+			keyword="client_print_multi"/>
+
 	</data>
 </terp>
 
