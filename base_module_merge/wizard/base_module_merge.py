@@ -190,7 +190,7 @@ class base_module_merge(wizard.interface):
 						if os.path.dirname(path)=='':
 							dict_key='__init__.py'
 						else:
-							dict_key=os.path.dirname(path)+'__init__.py'
+							dict_key=os.path.join(os.path.dirname(path),'__init__.py')
 						if dict_key in self.dict_init:
 							self.dict_init[dict_key]+=[new_import]
 						else:
