@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+	<!--
+	=======================================================
+	Offer Views
+	=======================================================
+	-->
+	<record model="ir.ui.view" id="view_offer_form">
+		<field name="name">dm.offer.form</field>
+		<field name="model">dm.offer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Offers">
+				<notebook>
+					<page string="General">
+<!--						<field name="name"/>-->
+<!--						<field name="code"/>-->
+<!--						<field name="lang_orig"/>-->
+<!--						<field name="copywriter_id"/>-->
+<!--						<field name="mark_id"/>-->
+<!--						<field name="offer_origin_id"/>-->
+						<field name="active" colspan="4"/>
+						<newline/>
+<!--						<field name="quotation"/>-->
+<!--						<field name="legal_state"/>-->
+<!--						<field name="notes" nolabel="1"/>-->
+<!--						<field name="date_purchase"/>-->
+<!--						<field name="date_validation"/>-->
+						<separator string="Categories" colspan="4"/>
+						<field name="category_ids"/>
+						<separator string="Status" colspan="4"/>
+						<group col="8" colspan="4">
+							<field name="state" select="1" nolabel="1"/>
+							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
+							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
+							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
+							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+						</group>
+					</page>
+					<page string="Advises">
+						<separator string="Layout Advice" colspan="2"/>
+						<separator string="Category" colspan="2"/>
+<!--						<field name="note_layout"/>-->
+<!--						<field name="layout_category_ids"/>-->
+						<newline/>
+						<separator string="Mark Advice" colspan="2"/>
+						<separator string="Categories" colspan="2"/>
+<!--						<field name="note_mark"/>-->
+<!--						<field name="mark_category_ids"/>-->
+						<newline/>
+						<separator string="Production Notes" colspan="2"/>
+						<separator string="Categories" colspan="2"/>
+<!--						<field name="production_note"/>-->
+						<field name="production_category_ids"/>
+<!--						<field name="production_delay"/>-->
+						<field name="production_cost"/>
+						<newline/>
+						<separator string="Purchase Notes" colspan="2"/>
+						<separator string="Categories" colspan="2"/>
+<!--						<field name="purchase_note"/>-->
+						<field name="purchase_category_ids"/>
+					</page>
+					<page string="History">
+						<field name="history_ids" nolabel="1" colspan="4">
+							<form string="Actions">
+								<separator string="Action Information" colspan="4"/>-
+								<field name="date" />
+								<field name="user_id" />
+								<field name="state" />
+							</form>
+						</field>
+					</page>
+				</notebook>	
+			</form>
+		</field>
+	</record>	
+	<record model="ir.actions.act_window" id="action_offer_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_offer_form"/>
+	</record>
+	<menuitem name="Direct Marketing/Offers/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
+	
+	
+	<record model="ir.ui.view" id="view_offer_category_form">
+		<field name="name">dm.offer.category.form</field>
+		<field name="model">dm.offer.category</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Offer Category">
+				<field name="name"/>
+				<field name="parent_id"/>
+				<field name="domain"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_offer_category_tree">
+		<field name="name">dm.offer.category.tree</field>
+		<field name="model">dm.offer.category</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Offer Category">
+				<field name="complete_name"/>
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>	
+	
+	<record model="ir.ui.view" id="view_offer_history_form">
+		<field name="name">dm.offer.history.form</field>
+		<field name="model">dm.offer.history</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Offers">
+				<field name="offer_id"/>
+				<field name="date"/>
+				<field name="user_id"/>
+				<field name="state"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_offer_history_tree">
+		<field name="name">dm.offer.history.tree</field>
+		<field name="model">dm.offer.history</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Offers">
+				<field name="date"/>
+				<field name="user_id"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+</data>
+</terp>
