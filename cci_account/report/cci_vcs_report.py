@@ -41,26 +41,34 @@ class cci_vcs_report(report_sxw.rml_parse):
     def find_vcs(self,ids={}):
         if not ids:
             ids = self.ids
-
         result=[]
 
         for item in pooler.get_pool(self.cr.dbname).get('account.invoice').browse(self.cr,self.uid,ids):
-            res={}
 
+            res={}
             vcs1='0'+ str(item.date_invoice[2:4])
-            vcs2=str(item.number[3]) + '000'
-            vcs3=str(item.number[-2:])+'0'
-            vcs4= vcs1 + vcs2 + vcs3
+            vcs3=str(item.number).split('/')[1]
+
+            if len(str(vcs3))>=5:
+                vcs2=str(item.number[3]) + str(vcs3[0:5])
+            elif len(str(vcs3))==4:
+                vcs2=str(item.number[3]) + '0' +str(vcs3)
+            else:
+                vcs2=str(item.number[3]) + '00' +str(vcs3)
+
+            vcs4= vcs1 + vcs2 + '0'
+
             vcs5=int(vcs4)
             check_digit=vcs5%97
+
             if check_digit==0:
                 check_digit='97'
             if check_digit<=9:
                 check_digit='0'+str(check_digit)
 
             res['inv_no']=item.number
+            res['vcs']=vcs1+'/'+vcs2+'/'+ '0' +str(check_digit)
 
-            res['vcs']=vcs1+'/'+vcs2+'/'+vcs3 + str(check_digit)
             result.append(res)
         return result
 
