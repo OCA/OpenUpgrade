@@ -139,7 +139,8 @@ def _makeInvoices(self, cr, uid, data, context):
             obj_event_reg._history(cr, uid,[reg], 'Invoiced', history=True)
             #the below code wll check for if registration has cheques on Payment tab if yes it wll make it reconcile accrodingly , it wll take trunk version of code
             # should be test
-            reg.pay_and_recon(cr,uid,reg,inv_obj,inv_id,context=context)
+            if reg.check_ids:
+                reg.pay_and_recon(cr,uid,reg,inv_obj,inv_id,context=context)
             # end.........
 
         return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
