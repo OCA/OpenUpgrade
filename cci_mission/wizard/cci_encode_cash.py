@@ -86,7 +86,7 @@ class receive_encode_cash(wizard.interface):
             'actions' : [],
             'result' : {'type' : 'form' ,   'arch' : form_journal,
                     'fields' : fields_journal,
-                    'state' : [('go','Next')]}
+                    'state' : [('end','Cancel'),('go','Next')]}
         },
         'go' : {
             'actions' : [_default_next],
