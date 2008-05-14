@@ -30,12 +30,12 @@ account_move_line()
 
 class account_invoice(osv.osv):
 
-    _inherit = 'account.invoice'
+    _inherit = "account.invoice"
     _columns = {
-        'internal_note': fields.text('Internal Note'),
-        'dept' :  fields.many2one('hr.department','Department'),
+        'dept':fields.many2one('hr.department','Department'),
         'invoice_special':fields.boolean('Special Invoice'),
-            }
+        'internal_note': fields.text('Internal Note'),
+     }
 
     def action_move_create(self, cr, uid, ids, context=None):
         flag = False

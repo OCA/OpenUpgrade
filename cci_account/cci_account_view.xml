@@ -99,6 +99,17 @@
 	</record>
 	<menuitem name="Financial Management/Configuration/Notification Message/All Notification Messages" id="menu_cci_account_mesage_tree_form" action="cci_account_mesage_tree_form"/>
 
+	<record model="ir.ui.view" id="invoice_form_inherit_cci_sup">
+			<field name="name">account.invoice.supplier.form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="company_id" position="after">
+					<field name="dept" select="2"/>
+				</field>
+			</field>
+	</record>
 	<record model="ir.ui.view" id="invoice_form_inherit_cci">
 			<field name="name">account.invoice.form</field>
 			<field name="model">account.invoice</field>
@@ -107,6 +118,18 @@
 			<field name="arch" type="xml">
 				<field name="company_id" position="after">
 					<field name="dept" select="2"/>
+				</field>
+			</field>
+	</record>
+
+	<record model="ir.ui.view" id="invoice_form_inherit_cci_sup1">
+			<field name="name">account.invoice.supplier.form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="date_due" position="after">
+					<field name="invoice_special" select="2"/>
 				</field>
 			</field>
 	</record>
@@ -122,6 +145,7 @@
 				</field>
 			</field>
 	</record>
+
 	<record model="ir.ui.view" id="view_order_form_inherit_cci">
 			<field name="name">sale.order.form</field>
 			<field name="model">sale.order</field>
