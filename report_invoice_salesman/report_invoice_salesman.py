@@ -58,7 +58,7 @@ class report_invoice_salesman_forecast_line(osv.osv):
 	
 	def _final_evolution(self, cr, uid, ids, name, args, context={}):
 		forecast_line =  self.browse(cr, uid, ids)
-		result ={}
+		result ={forecast_line[0].id :0}
 		for line in forecast_line:
 			state_dict = {
 				'draft' : line.state_draft,
@@ -66,415 +66,60 @@ class report_invoice_salesman_forecast_line(osv.osv):
 				'done' : line.state_done,
 				'cancel' : line.state_cancel
 			}
-			state = filter(lambda x : state_dict[x],state_dict)			
-			if line.computation_type in ['invoice_margin','sale_order_value','invoice_fix','sale_order_number' ]:
-				if line.computation_type == 'invoice_margin' :
-					query = '''select 
-							sum(l.price_unit * l.quantity * ((100-l.discount)/100.0) - l.quantity * t.standard_price) 
-						from account_invoice_line l 
-						left join account_invoice i on (l.invoice_id=i.id)
-						left join product_product p on (l.product_id=p.id)
-						left join product_template t on (p.product_tmpl_id=t.id)
-						where 
-							i.date_invoice>=%s and 
-							i.date_invoice<=%s'''
-							
-				if line.computation_type == 'sale_order_value' :
-					query = '''select 
-							sum(l.price_unit * l.product_uom_qty * ((100-l.discount)/100.0) - l.product_uom_qty * t.standard_price) 
-						from sale_order_line l 
-						left join sale_order i on (l.order_id=i.id)
-						left join product_product p on (l.product_id=p.id)
-						left join product_template t on (p.product_tmpl_id=t.id)
-						where 
-							i.date_order>=%s and 
-							i.date_order<=%s'''
-		
-				if line.computation_type == 'invoice_fix' :
-					query = '''select count(l.id) 
-						from account_invoice_line l 
-						left join account_invoice i on (l.invoice_id=i.id)
-						left join product_product p on (l.product_id=p.id)
-						left join product_template t on (p.product_tmpl_id=t.id)
-						where 
-							i.date_invoice>=%s and 
-							i.date_invoice<=%s'''
-							
-				if line.computation_type == 'sale_order_number' :
-					query = '''select count(l.id)
-						from sale_order_line l 
-						left join sale_order i on (l.order_id=i.id)
-						left join product_product p on (l.product_id=p.id)
-						left join product_template t on (p.product_tmpl_id=t.id)
-						where 
-							i.date_order>=%s and 
-							i.date_order<=%s'''
-							
-				query2 = [line.forecast_id.date_from, line.forecast_id.date_to]
-				
-			
-				if state : 
-					state.append('')
-					query += " and i.state in %s" 	
-					query2.append(tuple(state))			
-				if line.user_id:
-					query += ' and i.user_id=%d'
-					query2.append(line.user_id.id)
-				cr.execute(query, query2)
-				result[line.id] = cr.fetchone()[0]
-			if line.computation_type == 'cases':
-				crm_case_section = map(lambda x : x.id ,line.crm_case_section)
-				crm_case_categ = map(lambda x : x.id , line.crm_case_categ)
-				where = []
-				if crm_case_section :
-					where.append(('section_id','in',crm_case_section))
-				if crm_case_categ : 
-					where.append(('categ_id','in',crm_case_categ))
-				if state :
-					where.append(('state','in',state))
-				where.append(('user_id','=',line.user_id.id))
-				case_ids =  self.pool.get('crm.case').search(cr,uid,where)
-				result[line.id]= len(case_ids)
+			state = filter(lambda x : state_dict[x],state_dict)
+			where = []
+			if state :
+				where.append(('state','in',state))
+			where.append(('user_id','=',line.user_id.id))			
+			if line.computation_type in ('invoice_fix','amount_invoiced') :
+				obj = 'account.invoice'
+				where.append(('date_invoice','>=',line.forecast_id.date_from))
+				where.append(('date_invoice','<=',line.forecast_id.date_to))
+			elif line.computation_type == 'cases' :
+				obj = 'crm.case'
+				where.append(('create_date','>=',line.forecast_id.date_from))
+				where.append(('date_closed','<=',line.forecast_id.date_to))				
+				if line.crm_case_section:
+					section_id = map(lambda x : x.id ,line.crm_case_section)
+					where.append(('section_id','in',section_id))
+				if line.crm_case_categ:
+					categ_id = map(lambda x : x.id ,line.crm_case_categ)
+					where.append(('categ_id','in',categ_id))
+			else :
+				obj = 'sale.order'
+				where.append(('date_order','>=',line.forecast_id.date_from))
+				where.append(('date_order','<=',line.forecast_id.date_to))			
+			searched_ids = self.pool.get(obj).search(cr,uid,where)
+			if 	line.computation_type  in ('amount_sales','amount_invoiced') :
+				res = self.pool.get(obj).browse(cr,uid,searched_ids)
+				amount =0
+				for r in res:
+					amount += r.amount_untaxed
+				print amount
+				result[line.id]=amount
+			else:	
+				result[line.id]=len(searched_ids)		
 		return result
 	
 	_columns = {
 		'forecast_id': fields.many2one('report_invoice_salesman.forecast', 'Forecast',ondelete='cascade',required =True),
-		'category_id':fields.many2one('product.category', 'Product Category', required=True),
-		'user_id': fields.many2one('res.users', 'Salesman'),
-		'amount': fields.float('Amount'),
-		'margin': fields.float('Margin'),
-		'note':fields.text('Note', size=64),
-		'computation_type' : fields.selection([('invoice_fix','Invoice Fix'),('invoice_margin','Invoice Margin'),('cases','Cases'),('sale_order_number','Sale Order Line Number'),('sale_order_value','Sale Order Line Value')],'Computation Base On',),
+		'user_id': fields.many2one('res.users', 'Salesman',required=True),
+		'computation_type' : fields.selection([('invoice_fix','Number of Invoice'),('amount_invoiced','Amount Invoiced'),('cases','No of Cases'),('number_of_sale_order','Number of sale order'),('amount_sales','Amount Sales')],'Computation Base On',required=True),
 		'state_draft' : fields.boolean('Draft'),
 		'state_confirmed': fields.boolean('Confirmed'),
 		'state_done': fields.boolean('Done'),
 		'state_cancel': fields.boolean('Cancel'),
 		'crm_case_section' : fields.many2many('crm.case.section', 'crm_case_section_forecast', 'forecast_id','section_id', 'Case Section'),
 		'crm_case_categ' : fields.many2many('crm.case.categ', 'crm_case_categ_forecast', 'forecast_id','categ_id', 'Case Category',),
-		'computed_amount': fields.function(_final_evolution, string='Evolution',method=True, store=True,),
+		'note':fields.text('Note', size=64),		
+		'amount': fields.float('Value Forecasted'),
+		'computed_amount': fields.function(_final_evolution, string='Real Value',method=True, store=True,),
 		'final_evolution' : fields.selection([('bad','Bad'),('to_be_improved','To Be Improved'),('normal','Noraml'),('good','Good'),('very_good','Very Good')],'Performance',),
 		'feedback' : fields.text('Feedback Comment')	
 	}
-	_order = 'user_id,category_id'
+	_order = 'user_id'
+	_defaults = {
+		'computation_type' : lambda *a : 'invoice_fix'
+	}
 	
 report_invoice_salesman_forecast_line()
-
-
-class report_invoice_salesman_forecast_stat_global(osv.osv):
-	_name = "report_invoice_salesman.forecast.stat.global"
-	_description = "Forecasts by Salesman"
-	_rec_name = 'date_from'
-	_auto = False
-	_log_access = False
-	def _sum_margin_real(self, cr, uid, ids, name, args, context):
-		result = {}
-		for line in self.browse(cr, uid, ids, context):
-
-			if line.computation_type == 'invoice_margin':
-				query = '''select 
-						sum(l.price_unit * l.quantity * ((100-l.discount)/100.0) - l.quantity * t.standard_price) 
-					from account_invoice_line l 
-					left join account_invoice i on (l.invoice_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.date_invoice>=%s and 
-						i.date_invoice<=%s'''
-						
-			if line.computation_type == 'sale_order_value':
-				
-				query = '''select
-						sum(l.price_unit * l.product_uom_qty * ((100-l.discount)/100.0) - l.product_uom_qty * t.standard_price) 
-					from sale_order_line l 
-					left join sale_order i on (l.order_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.date_order>=%s and 
-						i.date_order<=%s'''
-						
-			if line.computation_type == 'invoice_fix' :
-				query = '''select count(l.id) 
-					from account_invoice_line l 
-					left join account_invoice i on (l.invoice_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.date_invoice>=%s and 
-						i.date_invoice<=%s'''
-						
-			if line.computation_type =='sale_order_number':
-				query = '''select count(l.id)
-					from sale_order_line l 
-					left join sale_order i on (l.order_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.date_order>=%s and 
-						i.date_order<=%s'''						
-						
-			query2 = [line.date_from, line.date_to]
-			state_dict = {
-				'draft' : line.state_draft,
-				'confirmed' : line.state_confirmed,
-				'done' : line.state_done,
-				'cancel' : line.state_cancel
-			}
-			state = filter(lambda x : state_dict[x],state_dict)			
-			if state : 
-				state.append('')
-				query += " and i.state in %s" 	
-				query2.append(tuple(state))			
-			if line.user_id:
-				query += ' and i.user_id=%d'
-				query2.append(line.user_id.id)
-			cr.execute(query, query2)
-			result[line.id] = cr.fetchone()[0]
-		return result
-	def _sum_amount_real(self, cr, uid, ids, name, args, context):
-		result = {}
-		for line in self.browse(cr, uid, ids, context):
-			if line.computation_type == 'invoice_margin':			
-				query = '''select 
-						sum(l.price_unit * l.quantity * ((100-l.discount)/100.0)) 
-					from account_invoice_line l 
-					left join account_invoice i on (l.invoice_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.state in ('open','done') and
-						i.date_invoice>=%s and 
-						i.date_invoice<=%s'''
-			if line.computation_type == 'sale_order_value':						
-				query = '''select 
-						sum(l.price_unit * l.product_uom_qty * ((100-l.discount)/100.0)) 
-					from sale_order_line l 
-					left join sale_order i on (l.order_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.state in ('open','done') and
-						i.date_order>=%s and 
-						i.date_order<=%s'''	
-								
-			query2 = [line.date_from, line.date_to]
-			state_dict = {
-				'draft' : line.state_draft,
-				'confirmed' : line.state_confirmed,
-				'done' : line.state_done,
-				'cancel' : line.state_cancel
-			}
-			
-			state = filter(lambda x : state_dict[x],state_dict)			
-			if state : 
-				state.append('')
-				query += " and i.state in %s"	
-				query2.append(tuple(state))			
-			if line.user_id:
-				query += ' and i.user_id=%d'
-				query2.append(line.user_id.id)
-			cr.execute(query, query2)
-			result[line.id] = cr.fetchone()[0]
-		return result
-	_columns = {
-		'user_id': fields.many2one('res.users', 'Salesman'),
-		'amount': fields.float('Amount'),
-		'margin': fields.float('Margin'),
-		'forecast_id': fields.many2one('report_invoice_salesman.forecast', 'Forecast'),
-		'sum_amount': fields.function(_sum_amount_real, method=True, string='Amount Real'),
-		'sum_margin': fields.function(_sum_margin_real, method=True, string='Margin Real'),
-		'manager_id': fields.many2one('res.users', 'Responsible', required=True),
-		'date_from':fields.date('Start Period', required=True),
-		'date_to':fields.date('End Period', required=True),
-		'computation_type' : fields.selection([('invoice_fix','Invoice Fix'),('invoice_margin','Invoice Margin'),('cases','Cases'),('sale_order_number','Sale Order Line Number'),('sale_order_value','Sale Order Line Value')],'Computation Base On',),
-		'state_draft' : fields.boolean('Draft'),
-		'state_confirmed': fields.boolean('Confirmed'),
-		'state_done': fields.boolean('Done'),
-		'state_cancel': fields.boolean('Cancel'),
-	}
-	def init(self, cr):
-		cr.execute("""create or replace view report_invoice_salesman_forecast_stat_global as (
-			select
-				min(l.id) as id,
-				f.date_from as date_from,
-				f.date_to as date_to,
-				f.id as forecast_id,
-				f.user_id as manager_id,
-				l.user_id as user_id,
-				l.computation_type as computation_type,
-				l.state_draft as state_draft,
-				l.state_confirmed as state_confirmed,
-				l.state_done as state_done,
-				l.state_cancel as state_cancel,
-				sum(l.amount) as amount,
-				sum(l.margin) as margin
-			from
-				report_invoice_salesman_forecast f
-			left join
-				report_invoice_salesman_forecast_line l on (l.forecast_id=f.id)
-			group by 
-				f.id, f.user_id, 
-				l.user_id, f.date_from, f.date_to ,l.computation_type,l.state_draft,l.state_confirmed,l.state_done,l.state_cancel
-		) """)
-report_invoice_salesman_forecast_stat_global()
-
-class report_invoice_salesman_forecast_stat(osv.osv):
-	_name = "report_invoice_salesman.forecast.stat"
-	_description = "Sales Forecasts"
-	_rec_name = 'date_from'
-	_auto = False
-	_log_access = False
-	
-	def _sum_margin_real(self, cr, uid, ids, name, args, context):
-		result = {}
-		for line in self.browse(cr, uid, ids, context):
-			cids = self.pool.get('product.category').search(cr, uid, [
-				('parent_id','child_of',[line.category_id.id])
-			], context=context)
-			if line.computation_type =='invoice_margin' :	
-				query = '''select 
-						sum(l.price_unit * l.quantity * ((100-l.discount)/100.0) - l.quantity * t.standard_price) 
-					from account_invoice_line l 
-					left join account_invoice i on (l.invoice_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						t.categ_id in ('''+','.join(map(str,cids))+''') and 
-						i.date_invoice>=%s and 
-						i.date_invoice<=%s'''
-			if line.computation_type == 'sale_order_value':			
-				query = '''select 
-						sum(l.price_unit * l.quantity * ((100-l.discount)/100.0) - l.quantity * t.standard_price)
-					from account_invoice_line l 
-					left join account_invoice i on (l.invoice_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						t.categ_id in ('''+','.join(map(str,cids))+''') and 
-						i.date_invoice>=%s and 
-						i.date_invoice<=%s'''
-			if line.computation_type == 'invoice_fix' :
-				query = '''select count(l.id) 
-					from account_invoice_line l 
-					left join account_invoice i on (l.invoice_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.date_invoice>=%s and 
-						i.date_invoice<=%s'''
-						
-			if line.computation_type =='sale_order_number':
-				query = '''select count(l.id)
-					from sale_order_line l 
-					left join sale_order i on (l.order_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						i.date_order>=%s and 
-						i.date_order<=%s'''						
-										
-			query2 = [line.date_from, line.date_to]
-			state_dict = {
-				'draft' : line.state_draft,
-				'confirmed' : line.state_confirmed,
-				'done' : line.state_done,
-				'cancel' : line.state_cancel
-			}
-			state = filter(lambda x : state_dict[x],state_dict)			
-			if state : 
-				state.append('')
-				query += " and i.state in %s"	
-				query2.append(tuple(state))			
-			if line.user_id:
-				query += ' and i.user_id=%d'
-				query2.append(line.user_id.id)
-			cr.execute(query, query2)
-			result[line.id] = cr.fetchone()[0]
-		return result
-	
-	def _sum_amount_real(self, cr, uid, ids, name, args, context):
-		result = {}
-		for line in self.browse(cr, uid, ids, context):
-			cids = self.pool.get('product.category').search(cr, uid, [ ('parent_id','child_of',[line.category_id.id]) ], context=context)
-			if line.computation_type in ['invoice_fix','invoice_margin'] :			
-				query = '''select 
-						sum(l.price_unit * l.quantity * ((100-l.discount)/100.0)) 
-					from account_invoice_line l 
-					left join account_invoice i on (l.invoice_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						t.categ_id in ('''+','.join(map(str,cids))+''') and 
-						i.date_invoice>=%s and 
-						i.date_invoice<=%s'''
-			if line.computation_type in ['sale_order_number','sale_order_value']:
-				query = '''select 
-						sum(l.price_unit * l.product_uom_qty * ((100-l.discount)/100.0)) 
-					from sale_order_line l 
-					left join sale_order i on (l.order_id=i.id)
-					left join product_product p on (l.product_id=p.id)
-					left join product_template t on (p.product_tmpl_id=t.id)
-					where 
-						t.categ_id in ('''+','.join(map(str,cids))+''') and 
-						i.date_order>=%s and 
-						i.date_order<=%s'''
-															
-			query2 = [line.date_from, line.date_to]
-			state_dict = {
-				'draft' : line.state_draft,
-				'confirmed' : line.state_confirmed,
-				'done' : line.state_done,
-				'cancel' : line.state_cancel
-			}
-			state = filter(lambda x : state_dict[x],state_dict)			
-			if state : 
-				state.append('')
-				query += " and i.state in %s"	
-				query2.append(tuple(state))			
-			
-			if line.user_id:
-				query += ' and i.user_id=%d'
-				query2.append(line.user_id.id)
-			cr.execute(query, query2)
-			result[line.id] = cr.fetchone()[0]
-		return result
-	_columns = {
-		'category_id':fields.many2one('product.category', 'Product Category', required=True),
-		'user_id': fields.many2one('res.users', 'Salesman'),
-		'amount': fields.float('Amount'),
-		'margin': fields.float('Margin'),
-		'forecast_id': fields.many2one('report_invoice_salesman.forecast', 'Forecast'),
-		'sum_amount': fields.function(_sum_amount_real, method=True, string='Amount Real'),
-		'sum_margin': fields.function(_sum_margin_real, method=True, string='Margin Real'),
-		'manager_id': fields.many2one('res.users', 'Responsible', required=True),
-		'date_from':fields.date('Start Period', required=True),
-		'date_to':fields.date('End Period', required=True),
-		'computation_type' : fields.selection([('invoice_fix','Invoice Fix'),('invoice_margin','Invoice Margin'),('cases','Cases'),('sale_order_number','Sale Order Line Number'),('sale_order_value','Sale Order Line Value')],'Computation Base On',),
-		'state_draft' : fields.boolean('Draft'),
-		'state_confirmed': fields.boolean('Confirmed'),
-		'state_done': fields.boolean('Done'),
-		'state_cancel': fields.boolean('Cancel'),
-	}
-	def init(self, cr):
-		cr.execute("""create or replace view report_invoice_salesman_forecast_stat as (
-			select
-				l.id as id,
-				f.date_from as date_from,
-				f.date_to as date_to,
-				f.id as forecast_id,
-				f.user_id as manager_id,
-				l.user_id as user_id,
-				l.amount as amount,
-				l.category_id as category_id,
-				l.computation_type as computation_type,
-				l.margin as margin,
-				l.state_draft as state_draft,
-				l.state_confirmed as state_confirmed,
-				l.state_done as state_done,
-				l.state_cancel as state_cancel
-			from
-				report_invoice_salesman_forecast f
-			left join
-				report_invoice_salesman_forecast_line l on (l.forecast_id=f.id)
-		) """)
-report_invoice_salesman_forecast_stat()
