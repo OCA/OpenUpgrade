@@ -93,7 +93,7 @@ def _createInvoices(self, cr, uid, data, context):
             if (not address_invoice) and (add.type == 'default'):
                 address_invoice = add.id
 
-        if not address_contact or not address_invoice:
+        if not address_invoice:
             inv_reject = inv_reject + 1
             inv_rej_reason += "ID "+str(carnet.id)+": No Partner Address Defined on Partner \n"
             continue
@@ -187,7 +187,7 @@ class create_invoice(wizard.interface):
             'actions' : [_createInvoices],
             'result' : {'type' : 'form' ,   'arch' : form,
                     'fields' : fields,
-                    'state' : [('end','Ok'),('open','Open')]}
+                    'state' : [('end','Ok'),('open','Open Invoice')]}
                     },
         'open': {
             'actions': [],
