@@ -8,7 +8,7 @@ class dm_trademark(osv.osv):
     _name = "dm.trademark"
     _columns = {
         'name' : fields.char('Name', size=64),
-        'partner_id' : fields.many2one('res.partner', 'Partner Name'),
+        'partner_id' : fields.many2one('res.partner', 'Partner'),
         'header' : fields.binary('Header (.odt)'),
         'logo' : fields.binary('Logo'),
         'signature' : fields.binary('Signature')

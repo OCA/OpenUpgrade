@@ -11,7 +11,8 @@ AVAILABLE_STATES = [
 ]
 class dm_offer_category(osv.osv):
     _name = "dm.offer.category"
-
+    _rec_name = "name"
+    
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
@@ -69,19 +70,33 @@ dm_offer_delay()
 
 class dm_offer(osv.osv):
     _name = "dm.offer"
+    _rec_name = 'name'
     _columns = {
+        'name' : fields.char('Offer', size=16),
+        'code' : fields.char('Code', size=16),
+        'lang_orig' : fields.many2one('res.lang', 'Language'),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
+#        'mark_id' : fields.
+        'offer_origin_id' : fields.many2one('dm.offer', 'Parent'),
+        'quotation' : fields.float('Quotation', digits=(16,2)),
+        'legal_state' : fields.char('Legal State', size=16),
+        'notes' : fields.text('Notes'),
+        'date_purchase' : fields.date('Purchase Date'),
+        'date_validation' : fields.date('Validation Date'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History'),
         'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
         'category_ids' : fields.many2one('dm.offer.category', 'Categories', domain="[('domain','=','general')]"),
         'production_category_ids' : fields.many2one('dm.offer.category', 'Production Categories' , domain="[('domain','=','production')]"),
         'purchase_category_ids' : fields.many2one('dm.offer.category', 'Purchase Categories', domain="[('domain','=','purchase')]"),
-        'active' : fields.boolean('Active')
+        'active' : fields.boolean('Active'),
+        'production_note' : fields.text('Production Notes'),
                 }
     
     _defaults = {
         'active': lambda *a: 1,
         'state': lambda *a: 'draft',
+        'date_purchase' : lambda *a: time.strftime('%Y-%m-%d'),
                  }
     
 dm_offer()

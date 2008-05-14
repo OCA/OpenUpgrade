@@ -2,6 +2,102 @@
 <terp>
 <data>
 	<menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
+	<!--
+	=======================================================
+	Campaign Views
+	=======================================================
+	-->
+
+	<record model="ir.ui.view" id="view_campaign_form">
+		<field name="name">dm.campaign.form</field>
+		<field name="model">dm.campaign</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Campaigns">
+				<notebook>
+					<page string="General">
+						<field name="name"/>
+<!--						<field name="code"/>-->
+						<field name="offer_id"/>
+						<field name="parent_id" domain="[('type','=','view')]"/>
+						<field name="country_id"/>
+						<field name="lang_id"/>
+						<field name="date_start"/>
+<!--						<field name="date_end"/>-->
+						<field name="trademark_id"/>
+<!--						<field name="receiver_id"/>-->
+						<field name="project_id"/>
+<!--						[create planning]-->
+						<field name="notes"/>
+						<field name="campaign_stat_ids" nolabel="1" colspan="4">
+							<form string="Statistics">
+								<separator string="Statistics" colspan="4"/>
+								<field name="kind" />
+								<field name="qty" />
+								<field name="rate" />
+							</form>
+						</field>
+						<separator string="Status" colspan="4"/>
+						<group col="8" colspan="4">
+							<field name="state" select="1" nolabel="1"/>
+							<button name="case_close" string="Close" states="open,planning,fabrication" type="object"/>
+							<button name="case_open" string="Open" states="planning,fabrication" type="object"/>
+							<button name="case_cancel" string="Cancel" states="planning,open,fabrication" type="object"/>
+							<button name="case_pending" string="Fabrication" states="planning,open" type="object"/>
+						</group>
+					</page>
+					<page string="Propositions">
+						<field name="proposition_ids" nolabel="1" colspan="4">
+							<form string="Proposition">
+								<field name="name"/>
+								<field name="delay_ids"/>
+							</form>
+						</field>
+					</page>
+					<page string="Procurement">
+<!--						[compute]-->
+						<field name="product_ids"/>
+<!--						[compute procurement]-->
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_campaign_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns" id="menu_action_campaign_form" action="action_campaign_form"/>
+
+	<record model="ir.ui.view" id="view_campaign_form">
+		<field name="name">dm.campaign.proposition.form</field>
+		<field name="model">dm.campaign.proposition</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Propositions">
+				<field name="name"/>
+				<field name="code"/>
+				<field name="delay_ids" colspan="4">
+					<form string="Delays">
+						<field name="key"/>
+						<field name="value"/>
+					</form>
+				</field>
+				<field name="date_start" colspan="4"/>
+				<field name="sent_qty"/>
+				<field name="sale_rate"/>
+				<field name="type"/>
+				<newline/>
+				<field name="customer_pricelist_id"/>
+				<field name="requirer_pricelist_id"/>
+				<field name="segment_ids"/>
+				<newline/>
+				<field name="notes"/>
+			</form>
+		</field>
+	</record>
 
 </data>
 </terp>

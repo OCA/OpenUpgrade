@@ -7,8 +7,8 @@
 	=======================================================
 	-->
 	<record model="ir.ui.view" id="view_offer_step_document_categ_form">
-		<field name="name">dm.offer.step.document.category.form</field>
-		<field name="model">dm.offer.step.document.category</field>
+		<field name="name">dm.offer.document.category.form</field>
+		<field name="model">dm.offer.document.category</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">	
 			<form string="Document Category">
@@ -20,8 +20,8 @@
 	</record>
 
 	<record model="ir.ui.view" id="view_offer_step_document_categ_tree">
-		<field name="name">dm.offer.step.document.category.tree</field>
-		<field name="model">dm.offer.step.document.category</field>
+		<field name="name">dm.offer.document.category.tree</field>
+		<field name="model">dm.offer.document.category</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">	
 			<tree string="Document Category">
@@ -30,13 +30,21 @@
 			</tree>
 		</field>
 	</record>	
+	<record model="ir.actions.act_window" id="action_doc_categ_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer.document.category</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_offer_step_document_categ_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Offer Step/Document Categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form"/>
+
 	<record model="ir.ui.view" id="view_offer_step_document_form">
-		<field name="name">dm.offer.step.document.form</field>
+		<field name="name">dm.offer.document.form</field>
 		<field name="model">dm.offer.document</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Documents">
-<!--				<field name="name"/>-->
+				<field name="name"/>
 <!--				<field name="code"/>-->
 <!--				<field name="lang_id"/>-->
 <!--				<field name="copywriter_id"/>-->
@@ -55,25 +63,26 @@
 		</field>
 	</record>
 	<record model="ir.ui.view" id="view_offer_step_document_tree">
-		<field name="name">dm.offer.step.document.tree</field>
+		<field name="name">dm.offer.document.tree</field>
 		<field name="model">dm.offer.document</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Documents">
+				<field name="name"/>
 				<field name="mailing_at_dates"/>
 				<field name="interactive"/>
 				<field name="answer_letter"/>
 			</tree>
 		</field>
 	</record>
-<!--	<record model="ir.actions.act_window" id="action_document_form">-->
-<!--		<field name="type">ir.actions.act_window</field>-->
-<!--		<field name="res_model">dm.offer.document</field>-->
-<!--		<field name="view_type">form</field>-->
-<!--		<field name="view_id" ref="view_offer_step_document_tree"/>-->
-<!--	</record>-->
-<!--	<menuitem name="Direct Marketing/Offer Step/All Offer Steps/Document" id="menu_action_document_form" action="action_document_form"/>-->
-<!--	-->
+	<record model="ir.actions.act_window" id="action_document_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer.document</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_offer_step_document_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Offer Step/Documents" id="menu_action_document_form" action="action_document_form"/>
+	
 
 	<record model="ir.ui.view" id="view_offer_step_form">
 		<field name="name">dm.offer.step.form</field>
@@ -120,7 +129,6 @@
 					</page>
 					<page string="Documents">
 						<field name="document_ids" colspan="4" nolabel="1"/>
-						<field name="state" select="1" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>

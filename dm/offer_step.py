@@ -53,7 +53,9 @@ dm_offer_document_category()
 
 class dm_offer_document(osv.osv):
     _name = "dm.offer.document"
+    _rec_name = 'name'
     _columns = {
+        'name' : fields.char('Document Name', size=64),
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'mailing_at_dates' : fields.boolean('Mailing at dates'),
         'interactive' : fields.boolean('Interactive'),
@@ -66,7 +68,7 @@ dm_offer_document()
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
     _order = "sequence"
-    rec_name = 'sequence'
+    _rec_name = 'sequence'
     _columns = {
         'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
         'flow_start' : fields.boolean('Flow Start'),

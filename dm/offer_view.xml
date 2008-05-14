@@ -14,21 +14,21 @@
 			<form string="Offers">
 				<notebook>
 					<page string="General">
-<!--						<field name="name"/>-->
-<!--						<field name="code"/>-->
-<!--						<field name="lang_orig"/>-->
-<!--						<field name="copywriter_id"/>-->
+						<field name="name"/>
+						<field name="code"/>
+						<field name="lang_orig"/>
+						<field name="copywriter_id"/>
 <!--						<field name="mark_id"/>-->
-<!--						<field name="offer_origin_id"/>-->
+						<field name="offer_origin_id"/>
 						<field name="active" colspan="4"/>
 						<newline/>
-<!--						<field name="quotation"/>-->
-<!--						<field name="legal_state"/>-->
-<!--						<field name="notes" nolabel="1"/>-->
-<!--						<field name="date_purchase"/>-->
-<!--						<field name="date_validation"/>-->
+						<field name="quotation"/>
+						<field name="legal_state"/>
+						<field name="notes" colspan="4"/>
+						<field name="date_purchase"/>
+						<field name="date_validation"/>
 						<separator string="Categories" colspan="4"/>
-						<field name="category_ids"/>
+						<field name="category_ids" colspan="4"/>
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
 							<field name="state" select="1" nolabel="1"/>
@@ -51,7 +51,7 @@
 						<newline/>
 						<separator string="Production Notes" colspan="2"/>
 						<separator string="Categories" colspan="2"/>
-<!--						<field name="production_note"/>-->
+						<field name="production_note" nolabel="1" colspan="2"/>
 						<field name="production_category_ids"/>
 <!--						<field name="production_delay"/>-->
 						<field name="production_cost"/>
