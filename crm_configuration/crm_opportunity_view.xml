@@ -132,7 +132,7 @@
 		<field name="type">calendar</field>
 		<field name="priority" eval="2"/>
 		<field name="arch" type="xml">
-			<calendar string="Opportunities" date_start="date" color="stage_id" date_delay="duration">
+			<calendar string="Opportunities" date_start="date" color="user_id" date_delay="duration">
 				<field name="name"/>
 				<field name="partner_id"/>
 			</calendar>
