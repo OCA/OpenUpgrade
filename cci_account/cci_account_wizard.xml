@@ -38,18 +38,6 @@
 			id="account.menu_third_party_ledger"/>
 
 	<wizard
-			string="Group Invoice"
-			model="account.invoice"
-			name="account.group_invoice"
-			menu="False"
-			id="account.wizard_group_invoice"/>
-	<menuitem
-			name="Financial Management/Invoices/Group Invoices"
-			action="account.wizard_group_invoice"
-			type="wizard"
-			id="account.group_invoice"/>
-
-	<wizard
 			string="Enlist Vat Details"
 			model="res.partner"
 			name="list.vat.detail"
