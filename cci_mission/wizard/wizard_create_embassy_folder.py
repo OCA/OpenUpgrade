@@ -71,7 +71,7 @@ class create_embassy_folder(wizard.interface):
             'actions' : [],
             'result' : {'type' : 'form' ,   'arch' : preform,
                     'fields' : prefields,
-                    'state' : [('go','Next')]}
+                    'state' : [('end','Cancel'),('go','Next')]}
         },
         'go' : {
             'actions' : [_create_embassy_folder],
