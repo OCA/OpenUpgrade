@@ -8,7 +8,7 @@
 		],
 	"demo_xml" : [
 		#"demo_data.xml",
-		"membership_demo.xml"
+		#"membership_demo.xml"
 		],
 	"init_xml" : [
 		"membership_data.xml",
