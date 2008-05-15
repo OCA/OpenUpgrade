@@ -43,6 +43,7 @@ class dm_offer_category(osv.osv):
         'complete_name' : fields.function(_name_get_fnc, method=True, type='char', string='Category'),
         'parent_id' : fields.many2one('dm.offer.category', 'Parent'),
         'name' : fields.char('Category Name', size=64),
+        'child_ids': fields.one2many('dm.offer.category', 'parent_id', 'Childs Category'),
         'domain' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')], 'Category Domain')
                 }
     
@@ -71,9 +72,22 @@ dm_offer_delay()
 class dm_offer(osv.osv):
     _name = "dm.offer"
     _rec_name = 'name'
+    
+    def __history(self, cr, uid, cases, keyword, context={}):
+        for case in cases:
+            data = {
+                'date' : time.strftime('%Y-%m-%d'),
+                'user_id': uid,
+                'state' : keyword,
+                'offer_id': case.id
+            }
+            obj = self.pool.get('dm.offer.history')
+            obj.create(cr, uid, data, context)
+        return True
+    
     _columns = {
-        'name' : fields.char('Name', size=16),
-        'code' : fields.char('Code', size=16),
+        'name' : fields.char('Name', size=16, required=True),
+        'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
 #        'mark_id' : fields.
@@ -102,7 +116,34 @@ class dm_offer(osv.osv):
         'state': lambda *a: 'draft',
         'date_purchase' : lambda *a: time.strftime('%Y-%m-%d'),
                  }
+
+    def state_close_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'closed')
+        self.write(cr, uid, ids, {'state':'closed'})
+        return True  
+
+    def state_open_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'open')
+        self.write(cr, uid, ids, {'state':'open'})
+        return True 
     
+    def state_freeze_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'freeze')
+        self.write(cr, uid, ids, {'state':'freeze'})
+        return True
+    
+    def state_draft_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'draft')
+        self.write(cr, uid, ids, {'state':'draft'})
+        return True  
 dm_offer()
 
 class dm_offer_history(osv.osv):

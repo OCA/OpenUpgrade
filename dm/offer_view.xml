@@ -6,6 +6,20 @@
 	Offer Views
 	=======================================================
 	-->
+	<record model="ir.ui.view" id="view_offer_tree">
+		<field name="name">dm.offer.tree</field>
+		<field name="model">dm.offer</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Offers">
+				<field name="name"/>
+				<field name="copywriter_id"/>
+				<field name="quotation"/>
+				<field name="state"/>	
+			</tree>
+		</field>
+	</record>
+
 	<record model="ir.ui.view" id="view_offer_form">
 		<field name="name">dm.offer.form</field>
 		<field name="model">dm.offer</field>
@@ -74,11 +88,14 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="view_offer_form"/>
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
 	
-	
+	<!--
+	======================
+	Categories
+	======================
+	-->
 	<record model="ir.ui.view" id="view_offer_category_form">
 		<field name="name">dm.offer.category.form</field>
 		<field name="model">dm.offer.category</field>
@@ -91,13 +108,26 @@
 			</form>
 		</field>
 	</record>
+	
+	<record model="ir.ui.view" id="view_offer_category_list">
+		<field name="name">dm.offer.category.list</field>
+		<field name="model">dm.offer.category</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="6"/>
+		<field name="arch" type="xml">
+			<tree string="Offer Category">
+				<field name="complete_name"/>
+			</tree>
+		</field>
+	</record>
 	<record model="ir.ui.view" id="view_offer_category_tree">
 		<field name="name">dm.offer.category.tree</field>
 		<field name="model">dm.offer.category</field>
 		<field name="type">tree</field>
+		<field name="field_parent">child_ids</field>
 		<field name="arch" type="xml">
 			<tree string="Offer Category">
-				<field name="complete_name"/>
+				<field name="name"/>
 			</tree>
 		</field>
 	</record>	
@@ -107,6 +137,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.category</field>
 		<field name="view_type">tree</field>
+		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_offer_category_tree"/>
 		<field name="domain">[('parent_id','=',False)]</field>
 	</record>
