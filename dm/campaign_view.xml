@@ -8,6 +8,24 @@
 	=======================================================
 	-->
 
+	<record model="ir.ui.view" id="view_campaign_tree">
+		<field name="name">dm.campaign.tree</field>
+		<field name="model">dm.campaign</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Campaigns">
+				<field name="name"/>
+				<field name="type"/>						
+				<field name="offer_id"/>
+				<field name="date_start"/>
+				<field name="date_end"/>
+				<field name="state"/>
+			</tree>
+		</field>
+	</record>
+
+
+
 	<record model="ir.ui.view" id="view_campaign_form">
 		<field name="name">dm.campaign.form</field>
 		<field name="model">dm.campaign</field>
@@ -17,47 +35,57 @@
 				<notebook>
 					<page string="General">
 						<field name="name"/>
-<!--						<field name="code"/>-->
+						<field name="code"/>
+						<field name="type"/>						
 						<field name="offer_id"/>
-						<field name="parent_id" domain="[('type','=','view')]"/>
+						<field name="parent_id"/>
 						<field name="country_id"/>
 						<field name="lang_id"/>
 						<field name="date_start"/>
-<!--						<field name="date_end"/>-->
+						<field name="date_end"/>
 						<field name="trademark_id"/>
-<!--						<field name="receiver_id"/>-->
+						<field name="receiver_id"/>
 						<field name="project_id"/>
-<!--						[create planning]-->
-						<field name="notes"/>
-						<field name="campaign_stat_ids" nolabel="1" colspan="4">
-							<form string="Statistics">
-								<separator string="Statistics" colspan="4"/>
-								<field name="kind" />
-								<field name="qty" />
-								<field name="rate" />
-							</form>
-						</field>
-						<separator string="Status" colspan="4"/>
-						<group col="8" colspan="4">
-							<field name="state" select="1" nolabel="1"/>
-							<button name="case_close" string="Close" states="open,planning,fabrication" type="object"/>
-							<button name="case_open" string="Open" states="planning,fabrication" type="object"/>
-							<button name="case_cancel" string="Cancel" states="planning,open,fabrication" type="object"/>
-							<button name="case_pending" string="Fabrication" states="planning,open" type="object"/>
-						</group>
+						<field name="notes" colspan="4"/>
+<!--						<field name="campaign_stat_ids"/>-->
+						<group colspan="4" col="13">
+							<field name="state" select="2"/>
+							<button name="planning" string="Planning" states="draft,open"/>
+							<button name="open" string="Open" states="draft,fabrication"/>
+							<button name="fabrication" string="Fabrication" states="open,planning"/>
+							<button name="close" string="Close" states="draft,open,fabrication,planning"/>
+							<button name="cancel" string="Cancel" states="draft,open,fabrication,planning,close"/>
+						</group>						
 					</page>
 					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1" colspan="4">
-							<form string="Proposition">
-								<field name="name"/>
-								<field name="delay_ids"/>
-							</form>
-						</field>
+						<field name="proposition_ids" nolabel="1"/>
 					</page>
 					<page string="Procurement">
-<!--						[compute]-->
-						<field name="product_ids"/>
-<!--						[compute procurement]-->
+						<field name="product_ids" nolabel="1">
+							<form string="Products">
+								<field name="product_id"/>
+								<field name="qty_planned"/>
+								<field name="qty_real"/> 
+								<field name="price"/>
+							</form>
+							<tree string="Products">
+								<field name="product_id"/>
+								<field name="qty_planned"/>
+								<field name="qty_real"/> 
+								<field name="price"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Desktop Publishing">					
+						<field name="dtp_date_delivery"/>
+						<field name="dtp_date_real_delivery"/>
+						<field name="dtp_intervention_type"/>
+						<field name="dtp_making"/>    
+						<field name="dtp_operator"/>
+						<field name="dtp_date_recovered"/>
+						<field name="dtp_notes" colspan="4"/>            
+						<field name="partner_id"/>
+						<field name="dtp_making_time"/>
 					</page>
 				</notebook>
 			</form>
@@ -67,11 +95,47 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns" id="menu_action_campaign_form" action="action_campaign_form"/>
+	<menuitem name="Direct Marketing/Campaigns/Campaigns" id="menu_action_campaign_form" action="action_campaign_form"/>
 
-	<record model="ir.ui.view" id="view_campaign_form">
+	<record model="ir.ui.view" id="view_campaign_delay">
+		<field name="name">dm.campaign.delay.form</field>
+		<field name="model">dm.campaign.delay</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Delay">
+				<field name="key_id"/>
+				<field name="value"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_campaign_delay_tree">
+		<field name="name">dm.campaign.delay.tree</field>
+		<field name="model">dm.campaign.delay</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Delay">
+				<field name="key_id"/>
+				<field name="value"/>
+			</tree>
+		</field>
+	</record>	
+	
+	<record model="ir.actions.act_window" id="action_campaign_delay">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.delay</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_delay_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/Delay" id="menu_action_campaign_delay" action="action_campaign_delay"/>
+
+
+
+	<record model="ir.ui.view" id="view_campaign_proposition_form">
 		<field name="name">dm.campaign.proposition.form</field>
 		<field name="model">dm.campaign.proposition</field>
 		<field name="type">form</field>
@@ -79,11 +143,15 @@
 			<form string="Propositions">
 				<field name="name"/>
 				<field name="code"/>
-				<field name="delay_ids" colspan="4">
-					<form string="Delays">
-						<field name="key"/>
+				<field name="delay_ids" colspan="4" nolabel="1">
+					<tree string="Delay">
+						<field name="key_id"/>
 						<field name="value"/>
-					</form>
+					</tree>				
+					<form string="Delay">
+						<field name="key_id"/>
+						<field name="value"/>
+					</form>				
 				</field>
 				<field name="date_start" colspan="4"/>
 				<field name="sent_qty"/>
@@ -94,10 +162,70 @@
 				<field name="requirer_pricelist_id"/>
 				<field name="segment_ids"/>
 				<newline/>
-				<field name="notes"/>
+				<field name="notes" colspan="4"/>
 			</form>
 		</field>
 	</record>
+	
+	<record model="ir.ui.view" id="view_campaign_proposition_tree">
+		<field name="name">dm.campaign.proposition.tree</field>
+		<field name="model">dm.campaign.proposition</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Propositions">
+				<field name="name"/>
+				<field name="code"/>
+				<field name="date_start" colspan="4"/>
+				<field name="sent_qty"/>
+				<field name="sale_rate"/>
+				<field name="type"/>
+			</tree>
+		</field>
+	</record>	
+	
+	<record model="ir.actions.act_window" id="action_campaign_proposition">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.proposition</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_proposition_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/Propositon" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
+
+	<record model="ir.ui.view" id="view_campaign_proposition_segment_form">
+		<field name="name">dm.campaign.proposition.segment.form</field>
+		<field name="model">dm.campaign.proposition.segment</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Propositions">
+				<field name="name"/>
+				<field name="action_code"/>
+				<field name="qty"/>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_campaign_proposition_segment_tree">
+		<field name="name">dm.campaign.proposition.segment.tree</field>
+		<field name="model">dm.campaign.proposition.segment</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Propositions">
+				<field name="name"/>
+				<field name="action_code"/>
+				<field name="qty"/>
+			</tree>
+		</field>
+	</record>	
+	
+	<record model="ir.actions.act_window" id="action_campaign_proposition_segment_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.proposition.segment</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_proposition_segment_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/Segment" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
 
 </data>
 </terp>
