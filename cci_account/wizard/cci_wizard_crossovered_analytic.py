@@ -19,6 +19,17 @@ fields = {
    }
 
 class wizard_crossovered_analytic(wizard.interface):
+    def _checklines(self, cr, uid, data, context):
+        cr.execute('select account_id from account_analytic_line')
+        res=cr.fetchall()
+        acc_ids=[x[0] for x in res]
+
+        obj_acc = pooler.get_pool(cr.dbname).get('account.analytic.account').browse(cr,uid,data['form']['ref'])
+        name=obj_acc.name
+
+        if not data['form']['ref'] in acc_ids:
+            raise wizard.except_wizard('User Error',"There are no Analytic lines related to  Account '" + name +"'" )
+        return {}
 
     states = {
         'init': {
@@ -26,7 +37,7 @@ class wizard_crossovered_analytic(wizard.interface):
             'result': {'type':'form', 'arch':form, 'fields':fields, 'state':[('end','Cancel'),('print','Print')]},
         },
         'print': {
-            'actions': [],
+            'actions': [_checklines],
             'result': {'type':'print', 'report':'account.analytic.account.crossovered.analytic', 'state':'end'},
         },
     }

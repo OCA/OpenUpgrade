@@ -99,21 +99,13 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
                     self.list_ids=find_children(child_ids)
             return self.final_list
 
-
         child_ids=find_children(ids)
 
         self.final_list=child_ids + ids
 
-        if form['ref'] in dict_acc_ref:
-
-            selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list),('ref','in',dict_acc_ref[form['ref']])])
-            query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
-                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+")  GROUP BY aal.account_id,aaa.name,aal.ref ORDER BY aal.account_id"
-
-        else:
-            selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list)])
-            query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
-                WHERE aal.account_id=aaa.id AND aal.account_id IN ("+','.join(map(str, self.final_list))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "' GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
+        selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list),('ref','in',dict_acc_ref[form['ref']])])
+        query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
+            WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+")  GROUP BY aal.account_id,aaa.name,aal.ref ORDER BY aal.account_id"
 
         self.cr.execute(query)
         res = self.cr.dictfetchall()
@@ -123,10 +115,7 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
             if obj_acc:
                 item['acc_name']=obj_acc.name + '/' + item['acc_name']
             final.append(item)
-
         return final
-
-
 
 report_sxw.report_sxw('report.account.analytic.account.crossovered.analytic', 'account.analytic.account', 'addons/cci_account/report/cci_crossovered_analytic.rml',parser=cci_crossovered_analytic, header=False)
 
