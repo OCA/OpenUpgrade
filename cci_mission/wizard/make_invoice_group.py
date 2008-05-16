@@ -87,13 +87,14 @@ def _group_invoice(self, cr, uid, data, context):
         final_info={}
         list_info=[]
         list_invoice_ids=[]
-
+        self.invoice_info=[]
         for element in dict_info:
             final_info={}
             if element['partner_id']==partner_id:
                 data={'model':element['model'],'form':{},'id':element['id'],'ids':[element['id']],'report_type': 'pdf'}
                 final_info['ids']=[]
                 final_info['date']=element['date'][0:10]
+
                 if element['model']=='cci_missions.ata_carnet':
                     result=create_invoice_carnet._createInvoices(self,cr,uid,data,context)
 
@@ -104,6 +105,10 @@ def _group_invoice(self, cr, uid, data, context):
                         list_invoice_ids.append(result['invoice_ids'][0])
                         final_info['ids'].append(result['invoice_ids'][0])
                         list_info.append(final_info)
+                        final_info={}
+                        final_info['id']=element['id']
+                        final_info['model']=element['model']
+                        self.invoice_info.append(final_info)
 
                 if element['model']=='cci_missions.embassy_folder':
                     result=create_invoice_embassy._createInvoices(self,cr,uid,data,context)
@@ -115,6 +120,10 @@ def _group_invoice(self, cr, uid, data, context):
                         list_invoice_ids.append(result['invoice_ids'][0])
                         final_info['ids'].append(result['invoice_ids'][0])
                         list_info.append(final_info)
+                        final_info={}
+                        final_info['id']=element['id']
+                        final_info['model']=element['model']
+                        self.invoice_info.append(final_info)
 
                 if element['model'] in ('cci_missions.certificate','cci_missions.legalization'):
                     result=create_invoice._createInvoices(self,cr,uid,data,context)
@@ -126,6 +135,10 @@ def _group_invoice(self, cr, uid, data, context):
                         list_invoice_ids.append(result['invoice_ids'][0])
                         final_info['ids'].append(result['invoice_ids'][0])
                         list_info.append(final_info)
+                        final_info={}
+                        final_info['id']=element['id']
+                        final_info['model']=element['model']
+                        self.invoice_info.append(final_info)
 
                 if element['model']=='event.registration':
                     result=make_invoice._makeInvoices(self,cr,uid,data,context)
@@ -137,12 +150,15 @@ def _group_invoice(self, cr, uid, data, context):
                         list_invoice_ids.append(result['invoice_ids'][0])
                         final_info['ids'].append(result['invoice_ids'][0])
                         list_info.append(final_info)
+                        final_info={}
+                        final_info['id']=element['id']
+                        final_info['model']=element['model']
+                        self.invoice_info.append(final_info)
 
         done_date=[]
         date_id_dict={}
         done_date=list(set([x['date'] for x in list_info]))
         done_date.sort()
-
         final_list=[]
         for date in done_date:
             date_id_dict={}
@@ -196,7 +212,6 @@ def _group_invoice(self, cr, uid, data, context):
             id_stotal=line_obj.create(cr,uid,{'name':'Subtotal','state':'subtotal','sequence':count})#a new line of type 'subtotal'
             count=count+1
             list_inv_lines.append(id_stotal)
-
         #end-marked
         inv = {
                 'name': 'Grouped Invoice - ' + partner.name,
@@ -213,6 +228,8 @@ def _group_invoice(self, cr, uid, data, context):
                 'payment_term':invoice.payment_term.id,
             }
         inv_id = obj_inv.create(cr, uid, inv)
+        for item in self.invoice_info:
+            pool_obj.get(item['model']).write(cr, uid,[item['id']], {'invoice_id' : inv_id})
         disp_msg +='\n'+ partner.name + ': '+ str(len(data_inv)) +' Invoice(s) Grouped.'
         list_invoice.append(inv_id)
         obj_inv.unlink(cr,uid,list_invoice_ids)
