@@ -109,7 +109,7 @@
 				<tree string="CashMove" editable="top">
 					<field name="name" select="1" required="1"/>
 					<field name="user_cashmove" select="1"/>
-					<field name="amount" select="1"/>
+					<field name="amount" select="1" sum="Total amount"/>
 					<field name="box" select="1"/>
 					<field name="create_date"/>
 				</tree>
@@ -193,7 +193,7 @@
 		<menuitem name="Tools/Lunch/Configuration/Products" id="menu_lunch_product_form" action="action_lunch_product_form"  sequence="1"/>
 
 		<record model="ir.ui.view" id="view_report_lunch_amount_tree">
-			<field name="name">report.lunch.amount.tree</field>
+			<field name="name">Lunch amount</field>
 			<field name="model">report.lunch.amount</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
@@ -206,7 +206,7 @@
 		</record>
 
 		<record model="ir.ui.view" id="view_report_lunch_amount_form">
-			<field name="name">report.lunch.amount.form</field>
+			<field name="name">Lunch amount</field>
 			<field name="model">report.lunch.amount</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
@@ -220,7 +220,7 @@
 
 
 		<record model="ir.actions.act_window" id="action_report_lunch_amount_tree">
-			<field name="name">report.lunch.amount</field>
+			<field name="name">Lunch amount</field>
 			<field name="res_model">report.lunch.amount</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
