@@ -1,4 +1,5 @@
 import time
+import campaign
 
 from osv import fields
 from osv import osv
@@ -15,8 +16,9 @@ AVAILABLE_STATES = [
 
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
-    _rec_name = 'delay'
+    _rec_name = 'name'
     _columns = {
+        'name' : fields.char('Name', size=64),
         'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition'),
         'delay' : fields.integer('Delay'),
         'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay')
@@ -84,12 +86,25 @@ dm_media()
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
     _order = "sequence"
-    _rec_name = 'sequence'
+    _rec_name = 'name'
+    
+    def __history(self, cr, uid, cases, keyword, context={}):
+        for case in cases:
+            data = {
+                'user_id': uid,
+                'state' : keyword,
+                'step_id': case.id,
+                'create_date' : time.strftime('%Y-%m-%d')
+            }
+            obj = self.pool.get('dm.offer.step.history')
+            obj.create(cr, uid, data, context)
+        return True
+    
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
         'legal_state' : fields.char('Legal State', size=32),
-        'name' : fields.char('Name', size=64),
-        'code' : fields.char('Code', size=16),
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
         'quotation' : fields.char('Quotation', size=16),
         'media' : fields.many2one('dm.media', 'Media'),
         'type' : fields.char('Type', size=16),
@@ -108,6 +123,35 @@ class dm_offer_step(osv.osv):
     _defaults = {
         'state': lambda *a : 'draft',
                  }
+    
+    def state_close_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'closed')
+        self.write(cr, uid, ids, {'state':'closed'})
+        return True  
+
+    def state_open_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'open')
+        self.write(cr, uid, ids, {'state':'open'})
+        return True 
+    
+    def state_freeze_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'freeze')
+        self.write(cr, uid, ids, {'state':'freeze'})
+        return True
+    
+    def state_draft_set(self, cr, uid, ids, *args):
+        cases = self.browse(cr, uid, ids)
+        cases[0].state 
+        self.__history(cr,uid, cases, 'draft')
+        self.write(cr, uid, ids, {'state':'draft'})
+        return True  
+    
 dm_offer_step()
 
 class dm_offer_step_history(osv.osv):
@@ -130,8 +174,8 @@ class dm_offer_step_workitem(osv.osv):
     _name = "dm.offer.step.workitem"
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer'),
-#        'segment_id' : fields.many2one(),
-#        'customer_id' : fields.many2one('dm.customer', 'Customer'),
+#        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments'),
+        'customer_id' : fields.many2one('res.partner', 'Customer'),
         'date_next_action' : fields.date('Next Action'),
         'purchase_amount' : fields.float('Amount', digits=(16,2))
                 }

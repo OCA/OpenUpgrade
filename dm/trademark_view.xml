@@ -6,6 +6,17 @@
 	Trademark Views
 	=======================================================
 	-->
+	<record model="ir.ui.view" id="view_trademark_tree">
+		<field name="name">dm.trademark.tree</field>
+		<field name="model">dm.trademark</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Trademarks">
+				<field name="name"/>
+				<field name="partner_id"/>
+			</tree>
+		</field>
+	</record>
 	<record model="ir.ui.view" id="view_trademark_form">
 		<field name="name">dm.trademark.form</field>
 		<field name="model">dm.trademark</field>
@@ -31,7 +42,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.trademark</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="view_trademark_form"/>
+		<field name="view_id" ref="view_trademark_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Trademarks/All Trademarks" id="menu_action_trademark_form" action="action_trademark_form"/>
 	

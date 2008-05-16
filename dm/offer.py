@@ -86,7 +86,7 @@ class dm_offer(osv.osv):
         return True
     
     _columns = {
-        'name' : fields.char('Name', size=16, required=True),
+        'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
