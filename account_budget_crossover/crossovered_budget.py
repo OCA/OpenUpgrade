@@ -74,7 +74,8 @@ class crossovered_budget_lines(osv.osv):
 		res = {}
 		for line in self.browse(cr, uid, ids):
 			acc_ids = ','.join([str(x.id) for x in line.general_budget_id.account_ids])
-
+			if not acc_ids:
+				raise osv.except_osv('Error!',"The General Budget '" + str(line.general_budget_id.name) + "' has no Accounts!" )
 			cr.execute("select sum(amount) from account_analytic_line where account_id=%d and (date between to_date('%s','yyyy-mm-dd') and to_date('%s','yyyy-mm-dd')) and general_account_id in (%s)"%(line.analytic_account_id.id,line.date_from,line.date_to,acc_ids))
 			result=cr.fetchone()[0]
 			if result==None:
