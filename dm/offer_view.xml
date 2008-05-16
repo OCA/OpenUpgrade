@@ -145,10 +145,11 @@
 		<field name="view_id" ref="view_offer_category_tree"/>
 		<field name="domain">[('parent_id','=',False)]</field>		
 	</record>
+	<!--
 	<menuitem name="Direct Marketing/Configuration/Offer's Category" id="menu_action_offer_categ_main" action="action_offer_categ_main"/>
 
 
-	<record model="ir.actions.act_window" id="action_offer_categ_form">
+	--><record model="ir.actions.act_window" id="action_offer_categ_form">
 		<field name="name">Edit Categories</field>
 		<field name="type">ir.actions.act_window</field>			
 		<field name="res_model">dm.offer.category</field>
@@ -173,7 +174,7 @@
 		<field name="object" eval="True"/>
 	</record>	
 	
-	<menuitem name="Direct Marketing/Offers/Offers By Category" id="menu_action_offer_categ_form" action="action_offer_categ_main"/>
+	<menuitem name="Direct Marketing/Offers/Offers By Category" id="menu_action_offer_by_category" action="action_offer_categ_main"/>
 
 	<record model="ir.ui.view" id="view_offer_history_form">
 		<field name="name">dm.offer.history.form</field>
