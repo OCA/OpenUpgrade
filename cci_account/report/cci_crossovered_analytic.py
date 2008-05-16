@@ -47,29 +47,80 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
         acc_id=[]
         final=[]
         journal=form['journal']
-        acc_obj = self.pool.get('account.analytic.account')
+        acc_pool = self.pool.get('account.analytic.account')
+        line_pool=self.pool.get('account.analytic.line')
 
-        acc_ids=acc_obj.search(self.cr,self.uid,[('parent_id','=',form['ref'])])
-
-        acc_ids.append(form['ref'])
-        acc_ids +=ids
-
-
+        dict_acc_ref={}
         if form['journal']:
             journal=" in (" + str(form['journal']) + ")"
         else:
             journal= 'is not null'
 
-        query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
-                WHERE aal.account_id=aaa.id AND aal.account_id IN ("+','.join(map(str, acc_ids))+") AND aal.journal_id " + journal +"\
-                AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) +"'"" GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
+        query_general="select id from account_analytic_line where (journal_id " + journal +") AND date>='"+ str(form['date1']) +"'"" AND date<='" + str(form['date2']) + "'"
+
+        self.cr.execute(query_general)
+        l_ids=self.cr.fetchall()
+        line_ids=[x[0] for x in l_ids]
+
+        obj_line=line_pool.browse(self.cr,self.uid,line_ids)
+
+        for obj in obj_line:
+            dict_acc_ref[obj.account_id.id]=[]
+
+        for obj in obj_line:
+            for id in dict_acc_ref:
+                if obj.account_id.id==id:
+                    dict_acc_ref[id].append(obj.ref)
+
+        # adding parent entries in dict_acc_ref
+        done_ids=[]
+        for obj in obj_line:
+            if obj.account_id.id in done_ids:
+                continue
+            done_ids.append(obj.account_id.id)
+            if (obj.account_id.parent_id) and (obj.account_id.parent_id.id in dict_acc_ref):
+                dict_acc_ref[obj.account_id.parent_id.id] +=dict_acc_ref[obj.account_id.id]
+
+        # distinct entries for lists
+        for entry in dict_acc_ref:
+           dict_acc_ref[entry] = list(set([x for x in dict_acc_ref[entry]]))
+
+        obj_acc=acc_pool.browse(self.cr,self.uid,form['ref'])
+        child_ids=[]
+        self.list_ids=[]
+        self.final_list=[]
+
+        def find_children(ref_id):
+
+            for id in ref_id:
+                child_ids=acc_pool.search(self.cr,self.uid,[('parent_id','=',id)])
+                self.final_list +=child_ids
+                if child_ids:
+                    self.list_ids=find_children(child_ids)
+            return self.final_list
+
+
+        child_ids=find_children(ids)
+
+        self.final_list=child_ids + ids
+
+        if form['ref'] in dict_acc_ref:
+
+            selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list),('ref','in',dict_acc_ref[form['ref']])])
+            query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
+                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+")  GROUP BY aal.account_id,aaa.name,aal.ref ORDER BY aal.account_id"
+
+        else:
+            selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list)])
+            query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
+                WHERE aal.account_id=aaa.id AND aal.account_id IN ("+','.join(map(str, self.final_list))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "' GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
 
         self.cr.execute(query)
         res = self.cr.dictfetchall()
 
         for item in res:
-            obj_acc=acc_obj.browse(self.cr,self.uid,item['id']).parent_id
-            if name:
+            obj_acc=acc_pool.browse(self.cr,self.uid,item['id']).parent_id
+            if obj_acc:
                 item['acc_name']=obj_acc.name + '/' + item['acc_name']
             final.append(item)
 
