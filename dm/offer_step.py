@@ -15,6 +15,7 @@ AVAILABLE_STATES = [
 
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
+    _rec_name = 'delay'
     _columns = {
         'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition'),
         'delay' : fields.integer('Delay'),
@@ -55,34 +56,59 @@ class dm_offer_document(osv.osv):
     _name = "dm.offer.document"
     _rec_name = 'name'
     _columns = {
-        'name' : fields.char('Document Name', size=64),
+        'name' : fields.char('Name', size=64),
+        'code' : fields.char('Code', size=16),
+        'lang_id' : fields.many2one('res.lang', 'Language'),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
         'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
         'mailing_at_dates' : fields.boolean('Mailing at dates'),
         'interactive' : fields.boolean('Interactive'),
         'answer_letter' : fields.boolean('Answer letter'),
-#        'pao_reread' : fields.
+        'dtp_operator' : fields.many2one('res.partner', 'Operator'),
+        'dtp_theorical_date' : fields.date('Theorical Date'),
+        'dtp_valid_date' : fields.date('Valid Date'),
+        'dtp_making_date' : fields.date('Making Date'),
+        'dtp_reread' : fields.date('Reread Date'),
                 }
  
 dm_offer_document()
+
+class dm_media(osv.osv):
+    _name = "dm.media"
+    _columns = {
+        'name' : fields.char('Media', size=64),
+                }
+    
+dm_media()
 
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
     _order = "sequence"
     _rec_name = 'sequence'
     _columns = {
+        'offer_id' : fields.many2one('dm.offer', 'Offer'),
+        'legal_state' : fields.char('Legal State', size=32),
+        'name' : fields.char('Name', size=64),
+        'code' : fields.char('Code', size=16),
+        'quotation' : fields.char('Quotation', size=16),
+        'media' : fields.many2one('dm.media', 'Media'),
+        'type' : fields.char('Type', size=16),
+        'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
+        'notes' : fields.text('Notes'),
         'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
         'flow_start' : fields.boolean('Flow Start'),
         'flow_stop' : fields.boolean('Flow Stop'),
         'sequence' : fields.integer('Sequence'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
+        'incoming_transition_ids' : fields.many2one('dm.offer.step.transition', 'Incoming Transition'),
+        'outgoing_transition_ids' : fields.many2one('dm.offer.step.transition', 'Outgoing Transition'),
                 }
 
     _defaults = {
         'state': lambda *a : 'draft',
                  }
 dm_offer_step()
-
 
 class dm_offer_step_history(osv.osv):
     _name = "dm.offer.step.history"
