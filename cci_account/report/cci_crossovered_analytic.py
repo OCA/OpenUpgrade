@@ -70,7 +70,7 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
         for obj in obj_line:
             for id in dict_acc_ref:
                 if obj.account_id.id==id:
-                    dict_acc_ref[id].append(obj.ref)
+                    dict_acc_ref[id].append(obj.move_id.id)
 
         # adding parent entries in dict_acc_ref
         done_ids=[]
@@ -103,9 +103,9 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
 
         self.final_list=child_ids + ids
 
-        selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list),('ref','in',dict_acc_ref[form['ref']])])
+        selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list),('move_id','in',dict_acc_ref[form['ref']])])
         query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
-            WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+")  GROUP BY aal.account_id,aaa.name,aal.ref ORDER BY aal.account_id"
+            WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+")  GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
 
         self.cr.execute(query)
         res = self.cr.dictfetchall()
