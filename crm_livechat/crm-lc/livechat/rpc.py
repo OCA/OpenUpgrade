@@ -36,7 +36,7 @@ import time
 import socket
 import xmlrpclib
 
-#import tiny_socket
+import tiny_socket
 import common
 
 class RPCException(Exception):
@@ -186,7 +186,7 @@ class NETRPCGateway(RPCGateway):
         sock = tiny_socket.mysocket()
         try:
             sock.connect(self.host, self.port)
-            sock.mysend(('common', 'login', db, user,asswd))
+            sock.mysend(('common', 'login', db, user, passwd))
             res = sock.myreceive()
             sock.disconnect()
         except Exception, e:
@@ -357,7 +357,7 @@ class RPCSession(object):
     def __convert(self, result):
 
         if isinstance(result, basestring):
-            return ustr(result)
+            return result.encode('utf-8')
 
         elif isinstance(result, list):
             return [self.__convert(val) for val in result]
@@ -452,6 +452,7 @@ if __name__=="__main__":
     protocol = 'socket'
 
     session = RPCSession(host, port, protocol, storage=dict())
+
     res = session.listdb()
     print res
 
@@ -463,3 +464,4 @@ if __name__=="__main__":
 
     res = RPCProxy('ir.values').get('action', 'tree_but_open', [('ir.ui.menu', 73)], False, {})
     print res
+

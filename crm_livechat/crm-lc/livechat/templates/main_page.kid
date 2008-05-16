@@ -3,7 +3,8 @@
     
 <head>
 	<title>Live Chat</title>
-	
+	<script type="text/javascript" src="/static/javascript/MochiKit.js"></script>	
+	<script type="text/javascript" src="/static/javascript/crm_designer.js"></script>	
 	<!--
 	<script type="text/javascript">
 	function start_pop()
@@ -20,6 +21,16 @@
 </head>    
 
 <body>	
-		<input type="button" value="Start Chat" onclick="popup_table('\chat_window');"></input>
+<!--<form action="/select_topic">
+		<input type="submit" value="Start Chat" ></input>
+</form>
+		--><table>
+			<tr>
+				<td>
+						<a py:for="name in topiclist" onclick='topicsel(${name["id"]})'>${name['name']}</a>
+				</td>
+			</tr>
+		</table>
+		
 </body>
 </html>

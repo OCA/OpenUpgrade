@@ -1,135 +1,158 @@
-from turbogears import controllers, expose, flash,redirect
-# from livechat import model
+from turbogears import controllers, expose, flash, redirect
+import cherrypy
+from cherrypy import request, response
 import sha, time
 import sys,os,xmpp
 import signal
+import thread
+import xmlrpclib
+import rpc
+from rpc import *
 
-
+rpc.session = rpc.RPCSession( 'localhost', '8070', 'socket', storage=cherrypy.session)
 
 class Root(controllers.RootController):
-            
+    client = None
+    recepients=[]
+    msglist=[]
+    user = ''
+    sessionid = ''
+    topicid = ''
+    
     @expose(template="livechat.templates.welcome")
     def index(self):
+        res = rpc.session.login('crm', 'admin', 'admin')
+        print "res:::",res
+        raise redirect('/select_topic')
+        
+    @expose(template="livechat.templates.chat_box")
+    def chatbox(self):
         pass
-        raise redirect('/main_page')
+        return dict(msglist = self.msglist)
 
     @expose(template="livechat.templates.main_page")
     def main_page(self):
         pass
-        return dict()
+        return dict(topiclist = [])
     
- 
-    
-       
+    @expose(template="livechat.templates.main_page")
+    def select_topic(self,**kw):
+            proxy = rpc.RPCProxy("crm_livechat.livechat")
+            ids=proxy.search([])
+            res = proxy.read(ids, ['id','name','state','max_per_user'])
+            return dict(topiclist = res)
+
+   
     @expose(template="livechat.templates.chat_window")
-    def chat_window(self,**kw):
-        chat = {}
-        chat['txtarea'] = ''
-        print "kw::::",kw
-#        chat['txtarea'] = kw.get('txtarea')
-        print "Message received successfully",chat
-        msg =  kw.get('txtarea')
-        print "Message is ::::", msg
-        jid="cza@tinyerp.com"
-        pwd="cza"
-        recipients=["pso@tinyerp.com"]
+    def start_chat(self,topicid):
+        self.recepients = "Enter Sender ID Here"
+        cl=''
+        self.mainhandler(cl,topicid)
+        return dict(msglist = self.msglist,recepients = self.recepients)
+   
+    @expose()
+    def close_chat(self, **kw):
+       print "KW:::::::::",kw
+       if (kw.get('close')):
+           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(int(self.topicid),int(self.sessionid))
+           print "Stops Session id::::::::::",res
+       return {}
+ 
+    @expose(template="livechat.templates.chat_window")
+    def justsend(self,**kw):
+        print "Kw in justsend:::",kw
+        msg = kw.get('txtarea')
+        sendto = kw.get('sendto')
+        if(self.user):
+             sendto = self.user
+        self.recepients = sendto
+        print "rec::::",self.recepients
+        self.client.send(xmpp.protocol.Message(sendto,msg))
+        msgformat = "Self : "+str(msg)
+        self.msglist.append(msgformat)
+        return dict(msglist = self.msglist,recepients = self.recepients)
+    
+    def myConnection(self,topicid):
+        cr = ''
+        uid = ''
+        print "Gettin conf::: on :::::",topicid
+        self.topicid = topicid
+        livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration([int(topicid)])
+        print "Got conf:::",livechatdata   
+        
+        jid = livechatdata['partner']['1']['login']
+        pwd = livechatdata['partner']['1']['password']
+             
         jid=xmpp.protocol.JID(jid)
         cl=xmpp.Client(jid.getDomain(),debug=[])
+        
         if cl.connect() == "":
-            print "not connected"
-            sys.exit(0)
-        print "Connected....\n\nStarting to Authentication...."
-        if cl.auth(jid.getNode(),pwd,"test") == None:
-            print "authentication failed"
-            sys.exit(0)
-        print "Authenticated...."
-        for recipient in recipients:
-            print "send messages from" ,jid, "to" ,recipient
-            cl.send(xmpp.protocol.Message(recipient,msg))
-        print "Going to Disconnected........."
-        #raise redirect('/main')
-    #        self.main()
-        return {}
-        
-#    @expose()
-#    def callquit(self):
-#        print "quit called"
-#        self.quitflag = True
-#        return {}        
-#        
-#    @expose()
-#    def callmain(self):
-#        print "main called"
-#        self.main()
-#        return {}
-#       
-        
-    
-    @expose()
-    def messageCB(self, conn,msg):
-        print "In messageCB::::::::"
-        print "Message Receive.......";print "Sender: " + str(msg.getFrom())
-        print "Content: " + str(msg.getBody())
-        print "Message: ",msg
-        
-    @expose()
-    def StepOn(self,conn):
-        print "IN StepOn"
-        
-        try:
-            print "CONNECTING"
-            conn.Process(1)
-        except KeyboardInterrupt:
-            return 0
+                print "Connection Faild.... \nExiting"
+                sys.exit(0)
         else:
-            return 1
-            pass
+            print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
         
-        
-    
-    def GoOn(self,conn):
-        print "in GoOn"
-        while self.StepOn(conn):
-            pass
-            
-#            if not self.quitflag:
-#                print "passing...."
-#                pass
-#            else:
-#                print "quitting"
-#                return a
-             
-
-    
-    
-    @expose(template="livechat.templates.chat_window")
-    def main(self):
-
-
-        print "In main:::::::::"
-        jid="cza@tinyerp.com"
-        pwd="cza"
-        jid=xmpp.protocol.JID(jid)
-        cl = xmpp.Client(jid.getDomain(), debug=[])
-
-        if cl.connect() == "":
-                print "not connected"
+        if cl.auth(jid.getNode(),pwd,"test") == None:
+                print "\nAuthentication Failed.... \nExiting..."
                 sys.exit(0)
-
-        if cl.auth(jid.getNode(),pwd,"tempSend") == None:
-                print "authentication failed"
-                sys.exit(0)
-                                
-        cl.RegisterHandler('msg', self.messageCB)
+        else:
+            print "\nAuthenticated....\nClient Started....!!!!!!!!!!!!!!!!!\n\n"
         
-        cl.sendInitPresence()
-        print "Receiving...."
-       
+        cl.RegisterHandler('message', self.messageCB)
+        cl.sendInitPresence();
         
-        self.GoOn(cl)
-        return dict()
+        user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
+        print "USER ::::::::::::",user
+        
+        user = livechatdata['user'][str(user)]['login']
+        self.user= user
+        
+        if(self.user):
+            self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)])
+        
+        return cl
     
+    def messageCB(self,conn,msg):
+        print "Messge Arriving", msg
+        print "\nContent: " + str(msg.getBody())
+        print "Sender: " + str(msg.getFrom())
+        msgformat = str(msg.getFrom()) + " : "+str(msg.getBody())
+        self.msglist.append(msgformat)
         
+    def recieving(self,string,sleeptime,cl,*args):
+        while 1:
+            try:
+                v = cl.Process(1)
+            except KeyboardInterrupt:
+                return 0
+                cl.disconnect()
+                print string," and sleep for ",sleeptime
+                time.sleep(sleeptime) 
+        
+    
+    def sending(self,string,sleeptime,cl,*args):
+        msgcounter = 0
+        while 1:
+            msgcounter = msgcounter + 1
+            print string," in ",sleeptime," secs "
+            cl.send(xmpp.protocol.Message("pso@tinyerp.com","\nMessage : "+str(msgcounter)+"\nHello How are you!!!!"))
+            time.sleep(sleeptime) 
+    
+    def mainhandler(self,cl,topicid):
+        print "Getting in MainHandler..."
+    
+        if not (cl):
+            print "Connection Not Found... \n Making Connetion again...\n"
+            cl = self.myConnection(topicid)
+            self.client = cl
+            print "",cl
+        else:
+            print "MainHandler Called"        
+    
+        print "\nStarting Thread to Recieve...."
+        thread.start_new_thread(self.recieving,("Recieving",5,cl))
+
+
       
         
       

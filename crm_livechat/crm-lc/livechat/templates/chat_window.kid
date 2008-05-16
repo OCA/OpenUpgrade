@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#">
     
-<head><!--
-	<meta http-equiv="Refresh" content="4"> </meta>
+<head>
+	<!--<meta http-equiv="Refresh" content="4"> </meta>
+
 	--><title>Chat</title>
 	<style type="text/css">
 <!--
@@ -20,16 +21,29 @@ height: 100%;
 -->
 </style> 
 	<script type="text/javascript" src="/static/javascript/crm_designer.js"></script>
+	<script type="text/javascript" src="/static/javascript/ajax.js"></script>
+	<script type="text/javascript" src="/static/javascript/MochiKit.js"></script>
 </head>
 <body style="height: 100%; width: 100%;" onload="load();">
-<form name="MyForm" action="chat_window">
+
+
+
+<form name="MyForm" action="/justsend">
 
  
 <table id="wrap" border='3px' >
 
-		<tr style="height:100%">
-		<td width="90%" >  </td>
-		
+	<tr>
+	<td>
+		<input type="text" name="sendto" value="${recepients}"/>
+	</td>
+	</tr>
+	<tr style="height:100%">
+		<td width="90%"> 
+		<iframe src="/chatbox" style="width:100%;height: 600px;border: 1px;"> </iframe>
+		 </td>
+		 
+		 
 		<td width = "10%">
 		</td>
 	</tr>
@@ -38,16 +52,25 @@ height: 100%;
 	
 	<tr>
 		<td>
-			<input type="submit" value="Send" />
+			<input type="submit" onclick="" value="Send" />
+		
+		
+<!--		<td py:if="disp==1"> -->
+<!--				<input type="button" name="close" onclick='close_chat()' value="Close" />-->
+<!--		</td>-->
+	
+			<input type="button" id="close" name="close" onclick="close_chat(window)" value="Close Chat" />
+			
 		</td>
+	
 	</tr>
 	
 	
 		
 	<tr style="height: 100%;">
 		<td colspan="2" style="height: 100%">
-		<span style="background-color: gray;">
-			<textarea name="txtarea" style="height: 100%; width:100%" id="text2" rows="3" > </textarea>
+		<span stdyle="background-color: gray;">
+			<textarea name="txtarea" style="height: 100%; width:100%" id="text2" rows="3" onfocus="0"> </textarea>
 			
 		</span>
 		</td>

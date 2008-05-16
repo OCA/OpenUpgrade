@@ -1,29 +1,39 @@
 function popup_table(url)
 {
-	window.open(url,'welcome','width=450,height=260,resizable=yes,scrollbars=yes')
+	window.open(url,'welcome','width=450,height=300,resizable=yes,scrollbars=yes')
 	
 }
-var refreshflag=false;
-function startrec()
-{
 
-	refreshflag = true;
-	refresh_iframe();
+function call_send()
+{	
+	tosend = document.getElementsByName('txtarea').value
+	var params = {'msg':tosend}
+	var req = MochiKit.Async.doSimpleXMLHttpRequest('/justsend', params);	
+	//var req = Ajax.JSON.post('/justsend', params);
+	a = req.addCallback(function(obj){
+				alert("successfully sent");
+            });
+      return 1;	
+	
 }
 
-function quitrec()
-{
-
-	refreshflag = false;
+function close_chat(thisid)
+{	
+	var params = {'close':'close'}
+	var req = MochiKit.Async.doSimpleXMLHttpRequest('/close_chat', params);	
+	//var req = Ajax.JSON.post('/justsend', params);
+	a = req.addCallback(function(obj){
+				thisid.close();
+				
+            });
+      return 1;	
+	
 }
 
-function refresh_iframe()
+function topicsel(id)
 {
-	document.getElementById('msgframe').src = '/messageBox';
-	if(refreshflag)
-		{
-		setTimeout('refresh_iframe()',1000);
-		}
-	else
-		return 0;
+	var actionurl = "/start_chat/"+id;
+//	document.getElementById("topic_form").action = actionurl;
+//	alert(actionurl+"--------"+document.getElementById("topic_form").action);
+	popup_table(actionurl);
 }
