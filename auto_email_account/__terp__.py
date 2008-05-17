@@ -1,23 +1,16 @@
 {
-    "name" : "Auto Email Invoice",
+    "name" : "Email Invoice",
     "version" : "1.0",
     "depends" : ["smtpclient","account"],
-    "author" : "Tiny",
-    "description": """Use Email Client module 
-    to Send the Automatic Invoice to the 
-    Customer or supplier by Email 
-    when the Invoice confirm
-    """,
+    "author" : "Zikzakmedia SL",
+    "description": """Use Email client module to send to customers or suppliers
+the selected invoices attached by Email
+""",
     "website" : "http://tinyerp.com",
     "category" : "Generic Modules",
-    "init_xml" : [
-        
-    ],
-    "demo_xml" : [
-    ],
-    "update_xml" : ["account_invoice_workflow.xml"
-        
-    ],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : ["account_invoice_wizard.xml"],
     "active": False,
     "installable": True
 }
