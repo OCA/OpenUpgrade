@@ -5,16 +5,22 @@ import create_invoice_carnet
 import create_invoice_embassy
 import create_invoice
 from event.wizard import make_invoice
-
+import time
 from osv import fields, osv
 
 form = """<?xml version="1.0"?>
 <form string="Inovoice Grouped">
+    <field name="date_invoice"/>
+    <newline/>
+    <field name="period_id"/>
+    <newline/>
     <field name="registration"/>
 </form>
 """
 fields = {
       'registration': {'string':'Include Events Registrations', 'type':'boolean' ,'default': lambda *a: False },
+      'date_invoice': {'string':'Date Invoiced', 'type':'date' ,'default': lambda *a: time.strftime('%Y-%m-%d')},
+      'period_id': {'string':'Force Period (keep empty to use current period)','type':'many2one','relation':'account.period'},
 }
 form_msg = """<?xml version="1.0"?>
 <form string="Inovoice Grouped">
@@ -24,10 +30,13 @@ form_msg = """<?xml version="1.0"?>
 </form>
 """
 fields_msg = {
-      'message': {'string':'', 'type':'text', 'readonly':True, 'size':'500'},
+      'message': {'string':'','type':'text', 'readonly':True, 'size':'500'},
 }
 
 def _group_invoice(self, cr, uid, data, context):
+    date_inv = data['form']['date_invoice']
+    force_period = data['form']['period_id']
+    today_date = time.strftime('%Y-%m-%d')
     pool_obj=pooler.get_pool(cr.dbname)
     obj_inv=pool_obj.get('account.invoice')
     dict_info=[]
@@ -226,6 +235,8 @@ def _group_invoice(self, cr, uid, data, context):
                 'currency_id' :invoice.currency_id.id,# 1
                 'comment': "",
                 'payment_term':invoice.payment_term.id,
+                'date_invoice':date_inv or today_date,
+                'period_id':force_period or False
             }
         inv_id = obj_inv.create(cr, uid, inv)
         for item in self.invoice_info:
