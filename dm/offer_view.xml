@@ -28,13 +28,13 @@
 			<form string="Offers">
 				<notebook>
 					<page string="General">
-						<field name="name"/>
+						<field name="name" select="1"/>
 						<field name="code"/>
 						<field name="lang_orig"/>
 						<field name="copywriter_id"/>
 <!--						<field name="mark_id"/>-->
 						<field name="offer_origin_id"/>
-						<field name="active"/>
+						<field name="active" select="2"/>
 						<newline/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
@@ -45,7 +45,7 @@
 						<field name="category_ids" colspan="4" nolabel="1"/>
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
-							<field name="state" nolabel="1"/>
+							<field name="state" nolabel="1" select="1"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
 							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
@@ -105,9 +105,9 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Offer Category">
-				<field name="name"/>
+				<field name="name" select="1"/>
 				<field name="parent_id"/>
-				<field name="domain"/>
+				<field name="domain" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -147,9 +147,9 @@
 	</record>
 	<!--
 	<menuitem name="Direct Marketing/Configuration/Offer's Category" id="menu_action_offer_categ_main" action="action_offer_categ_main"/>
+	-->
 
-
-	--><record model="ir.actions.act_window" id="action_offer_categ_form">
+	<record model="ir.actions.act_window" id="action_offer_categ_form">
 		<field name="name">Edit Categories</field>
 		<field name="type">ir.actions.act_window</field>			
 		<field name="res_model">dm.offer.category</field>

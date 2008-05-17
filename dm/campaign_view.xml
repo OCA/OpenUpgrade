@@ -34,27 +34,31 @@
 			<form string="Campaigns">
 				<notebook>
 					<page string="General">
-						<field name="name"/>
-						<field name="code"/>
-						<field name="type"/>						
+						<field name="name" string="Name"/>
+						<field name="code" string="Code"/>
 						<field name="offer_id"/>
 						<field name="parent_id"/>
+						<field name="type"/>
+						<field name="partner_id" string="Partner"/>
 						<field name="country_id"/>
 						<field name="lang_id"/>
 						<field name="date_start"/>
 						<field name="date_end"/>
 						<field name="trademark_id"/>
 						<field name="receiver_id"/>
-						<field name="project_id"/>
-						<field name="notes" colspan="4"/>
+						<field name="project_id" colspan="4"/>
+						<separator string="Notes" colspan="4"/>
+						<field name="notes" colspan="4" nolabel="1"/>
 <!--						<field name="campaign_stat_ids"/>-->
-						<group colspan="4" col="13">
-							<field name="state" select="2"/>
-							<button name="planning" string="Planning" states="draft,open"/>
-							<button name="open" string="Open" states="draft,fabrication"/>
-							<button name="fabrication" string="Fabrication" states="open,planning"/>
-							<button name="close" string="Close" states="draft,open,fabrication,planning"/>
-							<button name="cancel" string="Cancel" states="draft,open,fabrication,planning,close"/>
+						<separator string="Status" colspan="4"/>
+						<group col="10" colspan="4">
+							<field name="state" select="2" nolabel="1"/>
+							<button name="state_planning_set" string="Planning" states="draft,open" type="object"/>
+							<button name="state_open_set" string="Open" states="draft,fabrication" type="object"/>
+							<button name="state_fabrication_set" string="Fabrication" states="draft,open,planning" type="object"/>
+							<button name="state_close_set" string="Close" states="draft,open,fabrication,planning" type="object"/>
+							<button name="state_cancel_set" string="Cancel" states="draft,open,fabrication,planning" type="object"/>
+							<button name="state_draft_set" string="Reset to Draft" states="close,cancel" type="object"/>
 						</group>						
 					</page>
 					<page string="Propositions">
@@ -80,12 +84,12 @@
 						<field name="dtp_date_delivery"/>
 						<field name="dtp_date_real_delivery"/>
 						<field name="dtp_intervention_type"/>
-						<field name="dtp_making"/>    
+						<field name="dtp_making"/> 
+<!--						<field name="dtp_making_time"/>    -->
 						<field name="dtp_operator"/>
 						<field name="dtp_date_recovered"/>
-						<field name="dtp_notes" colspan="4"/>            
-						<field name="partner_id"/>
-						<field name="dtp_making_time"/>
+						<separator string="Notes" colspan="4"/>
+						<field name="dtp_notes" colspan="4" nolabel="1"/>            
 					</page>
 				</notebook>
 			</form>
@@ -108,6 +112,7 @@
 			<form string="Delay">
 				<field name="key_id"/>
 				<field name="value"/>
+				<field name="proposition_id"/>
 			</form>
 		</field>
 	</record>
@@ -143,24 +148,15 @@
 			<form string="Propositions">
 				<field name="name"/>
 				<field name="code"/>
-				<field name="delay_ids" colspan="4" nolabel="1">
-					<tree string="Delay">
-						<field name="key_id"/>
-						<field name="value"/>
-					</tree>				
-					<form string="Delay">
-						<field name="key_id"/>
-						<field name="value"/>
-					</form>				
-				</field>
-				<field name="date_start" colspan="4"/>
-				<field name="sent_qty"/>
-				<field name="sale_rate"/>
+				<field name="delay_ids" colspan="4"/>
+				<field name="date_start"/>
 				<field name="type"/>
-				<newline/>
+				<field name="sent_qty"/>
 				<field name="customer_pricelist_id"/>
+				<newline/>
+				<field name="sale_rate"/>
 				<field name="requirer_pricelist_id"/>
-				<field name="segment_ids"/>
+				<field name="segment_ids" colspan="4"/>
 				<newline/>
 				<field name="notes" colspan="4"/>
 			</form>
@@ -197,7 +193,7 @@
 		<field name="model">dm.campaign.proposition.segment</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Propositions">
+			<form string="Segments">
 				<field name="name"/>
 				<field name="action_code"/>
 				<field name="qty"/>
@@ -210,7 +206,7 @@
 		<field name="model">dm.campaign.proposition.segment</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Propositions">
+			<tree string="Segments">
 				<field name="name"/>
 				<field name="action_code"/>
 				<field name="qty"/>
@@ -226,6 +222,40 @@
 		<field name="view_id" ref="view_campaign_proposition_segment_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/Segment" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
+
+	<record model="ir.ui.view" id="view_campaign_group_form">
+		<field name="name">dm.campaign.group.form</field>
+		<field name="model">dm.campaign.group</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Group">
+				<field name="name" colspan="4"/>
+				<field name="campaign_ids" colspan="4"/>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_campaign_group_tree">
+		<field name="name">dm.campaign.group.tree</field>
+		<field name="model">dm.campaign.group</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Groups">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>	
+	
+	<record model="ir.actions.act_window" id="action_campaign_group_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.group</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_group_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
+
+
 
 </data>
 </terp>

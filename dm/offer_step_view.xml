@@ -12,9 +12,9 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">	
 			<form string="Document Category">
-				<field name="name"/>
+				<field name="name" select="1"/>
 				<field name="parent_id"/>
-				<field name="copywrite_id"/>
+				<field name="copywrite_id" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -43,19 +43,19 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Documents">
-				<field name="name"/>
+				<field name="name" select="1"/>
 				<field name="code"/>
 				<field name="lang_id"/>
-				<field name="copywriter_id"/>
+				<field name="copywriter_id" select="1"/>
 				<separator string="Document Categories" colspan="4"/>
 				<field name="category_ids" colspan="4" nolabel="1"/>
 				<group col="6" colspan="4">
-					<field name="mailing_at_dates"/>
-					<field name="interactive"/>
-					<field name="answer_letter"/>
+					<field name="mailing_at_dates" select="2"/>
+					<field name="interactive" select="2"/>
+					<field name="answer_letter" select="2"/>
 				</group>
 				<separator string="Desktop Publishing" colspan="4"/>
-				<field name="dtp_operator" colspan="4"/>
+				<field name="dtp_operator" colspan="4" select="2"/>
 				<field name="dtp_theorical_date"/>
 				<field name="dtp_valid_date"/>
 				<field name="dtp_making_date"/>
@@ -109,9 +109,9 @@
 				<notebook>
 					<page string="General">
 						<field name="offer_id"/>
-						<field name="sequence"/>
-						<field name="name"/>
-						<field name="code"/>
+						<field name="sequence" select="2"/>
+						<field name="name" select="1"/>
+						<field name="code" select="2"/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
@@ -122,7 +122,7 @@
 						<field name="notes" colspan="4"/>
 						<newline/>
 						<group col="8" colspan="4">
-							<field name="state" select="1" nolabel="1"/>
+							<field name="state" select="1"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
 							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
@@ -137,7 +137,7 @@
 						<field name="history_ids" nolabel="1" colspan="4">
 							<form string="Actions">
 								<separator string="Action Information" colspan="4"/>
-								<field name="user_id" />
+								<field name="user_id" select="1"/>
 								<field name="state" />
 								<field name="create_date" />
 							</form>
@@ -164,10 +164,10 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Transition">
-				<field name="name" colspan="4"/>
+				<field name="name" colspan="4" select="1"/>
 <!--				<field name="step_from"/>-->
 <!--				<field name="step_to"/>-->
-				<field name="condition"/>
+				<field name="condition" select="1"/>
 				<field name="delay"/>
 				<field name="delay_id"/>
 			</form>
@@ -201,9 +201,9 @@
 		<field name="arch" type="xml">
 			<form string="Workitem">
 				<field name="step_id"/>
-				<field name="customer_id"/>
-<!--				<field name="segment_id"/>-->
-				<field name="date_next_action"/>
+				<field name="customer_id" select="1"/>
+				<field name="segment_id"/>
+				<field name="date_next_action" select="2"/>
 				<field name="purchase_amount"/>
 			</form>
 		</field>
@@ -216,7 +216,7 @@
 			<tree string="Workitem">
 				<field name="step_id"/>
 				<field name="customer_id"/>
-<!--				<field name="segment_id"/>-->
+				<field name="segment_id"/>
 				<field name="date_next_action"/>
 				<field name="purchase_amount"/>
 			</tree>

@@ -3,7 +3,7 @@ import offer
 from osv import fields
 from osv import osv
 
-print dir(offer)
+#print dir(offer)
 
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
@@ -11,27 +11,25 @@ class dm_campaign(osv.osv):
     _rec_name = 'name'
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
         
-        return {}
+        return name
     
     _columns = {
-        'name' : fields.char('Campaign', size=64),
-        'code' : fields.char('Code',size=16,required=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
-        'parent_id' : fields.many2one('dm.campaign','Parent Compaign',domain="[('type','=','view')]"),
+        'parent_id' : fields.many2one('dm.campaign','Parent',domain="[('type','=','view')]"),
         'country_id' : fields.many2one('res.country', 'Country'),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'date_start':fields.date('Start Date'),
         'date_end':fields.date('End Date'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
         'receiver_id': fields.many2one('res.partner','Receiver'),
-        'project_id' : fields.many2one('project.project', 'Project Retroplanning', required=True),
+        'project_id' : fields.many2one('project.project', 'Project', required=True),
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
         'state' : fields.selection([('draft','Draft'),('planning','Planning'), ('open','Open'), ('fabrication','Fabrication'), ('close','Close'), ('cancel','Cancel')], 'State',readonly=True),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
         'type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
 #  
-#                        procuerment    
+#                        desktop publication   
 #  
         'dtp_date_delivery' : fields.date('Delivery Date'),
         'dtp_date_real_delivery' : fields.date('Real Delivery Date'),
@@ -44,6 +42,35 @@ class dm_campaign(osv.osv):
         'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time')
     }
+    
+    _defaults = {
+        'state': lambda *a: 'draft',
+    }
+    
+    def state_close_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'close'})
+        return True  
+
+    def state_cancel_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'cancel'})
+        return True
+    
+    def state_open_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'open'})
+        return True 
+    
+    def state_planning_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'planning'})
+        return True
+    
+    def state_fabrication_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'fabrication'})
+        return True
+    
+    def state_draft_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'draft'})
+        return True  
+    
 dm_campaign()
 
 
@@ -62,7 +89,7 @@ dm_campaign_statistics()
 class dm_campaign_product(osv.osv):
     _name = "dm.campaign.product"
     _columns = {
-        'product_id' : fields.many2one('product.product', 'Product'),
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
         'qty_planned' : fields.integer('Planned Quantity'),
         'qty_real' : fields.float('Real Quantity'),
         'price' : fields.float('Sale Price')
@@ -82,6 +109,9 @@ class dm_campaign_pricelist(osv.osv):
         'currency_id': fields.many2one('res.currency', 'Currency', required=True),
     }
 
+    _defaults = {
+        'active': lambda *a: 1,
+    }
 dm_campaign_pricelist()
 
 class dm_campaign_proposition_segment(osv.osv):
@@ -90,7 +120,7 @@ class dm_campaign_proposition_segment(osv.osv):
     _description = "Segment"
     _columns = {
         'name': fields.char('Name',size=64, required=True),
-        'action_code': fields.char('Code',size=16),
+        'action_code': fields.char('Code',size=16, required=True),
         'qty': fields.integer('Qty'),
     }
 
@@ -99,18 +129,22 @@ dm_campaign_proposition_segment()
 class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _columns = {
-        'name' : fields.char('Name', size=64),
-        'code' : fields.char('Code', size=16),
-        'camp_id' : fields.many2one('dm.campaign','Campagin',ondelete = 'cascade'),
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=16, required=True),
+        'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays'),
         'date_start' : fields.date('Date'),        
-        'sent_qty' : fields.integer("Qty"),
-        'sale_rate' : fields.float('Sale Rate'),
+        'sent_qty' : fields.integer("Quantity"),
+        'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
         'segment_ids' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'customer_pricelist_id':fields.many2one('dm.campaign.pricelist','Customer Price',domain=[('type','=','customer')]),
         'requirer_pricelist_id' : fields.many2one('dm.campaign.pricelist','Requirer Price',domain=[('type','=','requirer')]),
         'notes':fields.text('Notes')
+    }
+    
+    _defaults = {
+        'type' : lambda*a : 'general',
     }
     
 dm_campaign_proposition()
@@ -121,15 +155,15 @@ class dm_campaign_delay(osv.osv):
         'key_id' : fields.many2one('dm.offer.delay', 'Offer delay'),
         'value' : fields.integer('Value'),
         'proposition_id' : fields.many2one('dm.campaign.proposition', 'Proposition')
-                }
+    }
     
 dm_campaign_delay()
 
 class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
     _columns = {
-        'name' : fields.char('Name', size=64),
+        'name' : fields.char('Name', size=64, required=True),
         'campaign_ids' : fields.one2many('dm.campaign', 'name' , 'Campaigns')
-                }
+    }
     
 dm_campaign_group()

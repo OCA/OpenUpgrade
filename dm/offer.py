@@ -42,10 +42,10 @@ class dm_offer_category(osv.osv):
     _columns = {
         'complete_name' : fields.function(_name_get_fnc, method=True, type='char', string='Category'),
         'parent_id' : fields.many2one('dm.offer.category', 'Parent'),
-        'name' : fields.char('Category Name', size=64),
+        'name' : fields.char('Name', size=64, required=True),
         'child_ids': fields.one2many('dm.offer.category', 'parent_id', 'Childs Category'),
         'domain' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')], 'Category Domain')
-                }
+    }
     
     _constraints = [
         (_check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
@@ -57,7 +57,7 @@ class dm_offer_production_cost(osv.osv):
     _name = "dm.offer.production.cost"
     _columns = {
         'name' : fields.char('Name', size=32, required=True)
-                }               
+    }               
     
 dm_offer_production_cost()
 
@@ -65,7 +65,7 @@ class dm_offer_delay(osv.osv):
     _name = "dm.offer.delay"
     _columns = {
         'name' : fields.char('Name', size=32, required=True)
-                }
+    }
     
 dm_offer_delay()
 
@@ -109,13 +109,13 @@ class dm_offer(osv.osv):
         'note_mark' : fields.text('Mark Notes'),
         'production_note' : fields.text('Production Notes'),
         'purchase_note' : fields.text('Purchase Notes')
-                }
+    }
     
     _defaults = {
         'active': lambda *a: 1,
         'state': lambda *a: 'draft',
         'date_purchase' : lambda *a: time.strftime('%Y-%m-%d'),
-                 }
+    }
 
     def state_close_set(self, cr, uid, ids, *args):
         cases = self.browse(cr, uid, ids)
@@ -154,8 +154,9 @@ class dm_offer_history(osv.osv):
         'date' : fields.date('Date'),
         'user_id' : fields.many2one('res.users', 'User'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', size=16)
-                }
+    }
     _defaults = {
         'date': lambda *a: time.strftime('%Y-%m-%d'),
     }   
+
 dm_offer_history()
