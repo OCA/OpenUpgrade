@@ -36,21 +36,20 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
         self.localcontext.update( {
             'time': time,
             'lines': self._lines,
+            'ref_lines' : self._ref_lines,
         })
+        self.base_amount=0.00
 
-
-
-    def _lines(self,form,ids={}):
-        if not ids:
-            ids = self.ids
-
+    def _ref_lines(self,form):
+        result=[]
+        res={}
         acc_id=[]
         final=[]
         journal=form['journal']
         acc_pool = self.pool.get('account.analytic.account')
         line_pool=self.pool.get('account.analytic.line')
 
-        dict_acc_ref={}
+        self.dict_acc_ref={}
         if form['journal']:
             journal=" in (" + str(form['journal']) + ")"
         else:
@@ -65,12 +64,12 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
         obj_line=line_pool.browse(self.cr,self.uid,line_ids)
 
         for obj in obj_line:
-            dict_acc_ref[obj.account_id.id]=[]
+            self.dict_acc_ref[obj.account_id.id]=[]
 
         for obj in obj_line:
-            for id in dict_acc_ref:
+            for id in self.dict_acc_ref:
                 if obj.account_id.id==id:
-                    dict_acc_ref[id].append(obj.move_id.id)
+                    self.dict_acc_ref[id].append(obj.move_id.id)
 
         # adding parent entries in dict_acc_ref
         done_ids=[]
@@ -78,14 +77,41 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
             if obj.account_id.id in done_ids:
                 continue
             done_ids.append(obj.account_id.id)
-            if (obj.account_id.parent_id) and (obj.account_id.parent_id.id in dict_acc_ref):
-                dict_acc_ref[obj.account_id.parent_id.id] +=dict_acc_ref[obj.account_id.id]
+            if (obj.account_id.parent_id) and (obj.account_id.parent_id.id in self.dict_acc_ref):
+                self.dict_acc_ref[obj.account_id.parent_id.id] +=self.dict_acc_ref[obj.account_id.id]
 
         # distinct entries for lists
-        for entry in dict_acc_ref:
-           dict_acc_ref[entry] = list(set([x for x in dict_acc_ref[entry]]))
+        for entry in self.dict_acc_ref:
+           self.dict_acc_ref[entry] = list(set([x for x in self.dict_acc_ref[entry]]))
 
-        obj_acc=acc_pool.browse(self.cr,self.uid,form['ref'])
+        res['ref_name']=acc_pool.name_get(self.cr,self.uid,[form['ref']])[0][1]
+        selected_ids=line_pool.search(self.cr,self.uid,[('account_id','=',form['ref'])])
+        query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
+                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "'"" GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
+
+        self.cr.execute(query)
+        info=self.cr.dictfetchall()
+
+        res['ref_qty']=info[0]['qty']
+        res['ref_amt']=info[0]['amt']
+        self.base_amount= info[0]['amt']
+
+        result.append(res)
+        return result
+
+    def _lines(self,form,ids={}):
+        if not ids:
+            ids = self.ids
+
+        if form['journal']:
+            journal=" in (" + str(form['journal']) + ")"
+        else:
+            journal= 'is not null'
+
+        acc_pool = self.pool.get('account.analytic.account')
+        line_pool=self.pool.get('account.analytic.line')
+        acc_id=[]
+        final=[]
         child_ids=[]
         self.list_ids=[]
         self.final_list=[]
@@ -93,28 +119,52 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
         def find_children(ref_id):
 
             for id in ref_id:
+                # to avoid duplicate entries
+                if id in self.final_list:
+                    continue
+                self.final_list.append(id)
                 child_ids=acc_pool.search(self.cr,self.uid,[('parent_id','=',id)])
-                self.final_list +=child_ids
                 if child_ids:
                     self.list_ids=find_children(child_ids)
             return self.final_list
 
         child_ids=find_children(ids)
+        self.final_list=child_ids
 
-        self.final_list=child_ids + ids
+        for acc_id in self.final_list:
+            selected_ids=line_pool.search(self.cr,self.uid,[('account_id','=',acc_id),('move_id','in',self.dict_acc_ref[form['ref']])])
+            if selected_ids:
+                query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
+                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "'"" GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
 
-        selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list),('move_id','in',dict_acc_ref[form['ref']])])
-        query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
-            WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+")  GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
+                self.cr.execute(query)
+                res = self.cr.dictfetchall()
+                if res:
+                    for element in res:
+                        if self.base_amount<>0.00:
+                            element['perc']= (element['amt'] / self.base_amount) * 100.00
+                        else:
+                            element['perc']=0.00
+                else:
+                    result={}
+                    res=[]
+                    result['id']=acc_id
+                    result['acc_name']=acc_pool.browse(self.cr,self.uid,acc_id).name
+                    result['amt']=result['qty']=result['perc']=0.00
+                    res.append(result)
+            else:
+                result={}
+                res=[]
+                result['id']=acc_id
+                result['acc_name']=acc_pool.browse(self.cr,self.uid,acc_id).name
+                result['amt']=result['qty']=result['perc']=0.00
+                res.append(result)
 
-        self.cr.execute(query)
-        res = self.cr.dictfetchall()
+            for item in res:
+                obj_acc=acc_pool.name_get(self.cr,self.uid,[item['id']])
+                item['acc_name']=obj_acc[0][1]
+                final.append(item)
 
-        for item in res:
-            obj_acc=acc_pool.browse(self.cr,self.uid,item['id']).parent_id
-            if obj_acc:
-                item['acc_name']=obj_acc.name + '/' + item['acc_name']
-            final.append(item)
         return final
 
 report_sxw.report_sxw('report.account.analytic.account.crossovered.analytic', 'account.analytic.account', 'addons/cci_account/report/cci_crossovered_analytic.rml',parser=cci_crossovered_analytic, header=False)
