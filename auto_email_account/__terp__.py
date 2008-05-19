@@ -2,7 +2,7 @@
     "name" : "Email Invoice",
     "version" : "1.0",
     "depends" : ["smtpclient","account"],
-    "author" : "Zikzakmedia SL",
+    "author" : "Tiny",
     "description": """Use Email client module to send to customers or suppliers
 the selected invoices attached by Email
 """,
