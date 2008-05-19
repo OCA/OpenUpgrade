@@ -2,7 +2,7 @@
     "name" : "Email Sale order",
     "version" : "1.0",
     "depends" : ["smtpclient","sale"],
-    "author" : "Zikzakmedia SL",
+    "author" : "Tiny",
     "description": """Use Email client module to send to customers
 the selected sale orders attached by Email
 """,
