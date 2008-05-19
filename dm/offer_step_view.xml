@@ -119,7 +119,20 @@
 						<field name="type"/>
 						<newline/>
 						<field name="origin_id" colspan="4"/>
-						<field name="notes" colspan="4"/>
+						<field name="wrkitem_id" colspan="4" nolabel="1">
+							<form string="Workitem">
+								<field name="customer_id" select="1"/>
+								<field name="segment_id"/>
+								<field name="date_next_action" select="2"/>
+								<field name="purchase_amount"/>
+							</form>
+							<tree>
+								<field name="customer_id"/>
+								<field name="segment_id"/>
+								<field name="date_next_action"/>
+								<field name="purchase_amount"/>							
+							</tree>
+						</field>
 						<newline/>
 						<group col="8" colspan="4">
 							<field name="state" select="1"/>
@@ -142,6 +155,8 @@
 								<field name="create_date" />
 							</form>
 						</field>
+						<separator string="Notes" colspan="4"/>
+						<field name="notes" colspan="4" nolabel="1"/>							
 					</page>
 					<page string="Documents">
 						<field name="document_ids" colspan="4" nolabel="1"/>

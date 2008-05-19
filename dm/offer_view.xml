@@ -52,6 +52,73 @@
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
 						</group>
 					</page>
+					<page string="Offer Steps">
+						<field name="step_id" nolabel="1">
+							<form string="Offer Step">
+								<notebook>
+									<page string="General">
+										<field name="sequence" select="2"/>
+										<field name="name" select="1"/>
+										<field name="code" select="2"/>
+										<field name="quotation"/>
+										<field name="legal_state"/>
+										<newline/>
+										<field name="media"/>
+										<field name="type"/>
+										<newline/>
+										<field name="origin_id" colspan="4"/>
+										<field name="wrkitem_id" colspan="4" nolabel="1">
+											<form string="Workitem">
+												<field name="customer_id" select="1"/>
+												<field name="segment_id"/>
+												<field name="date_next_action" select="2"/>
+												<field name="purchase_amount"/>
+											</form>
+											<tree>
+												<field name="customer_id"/>
+												<field name="segment_id"/>
+												<field name="date_next_action"/>
+												<field name="purchase_amount"/>							
+											</tree>
+										</field>
+										<newline/>
+										<group col="8" colspan="4">
+											<field name="state" select="1"/>
+											<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
+											<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
+											<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
+											<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+										</group>
+									</page>
+									<page string="Transition">
+										<field name="incoming_transition_ids" colspan="4" string="Incoming"/>
+										<field name="outgoing_transition_ids" colspan="4" string="Outgoing"/>
+									</page>
+									<page string="History">
+										<field name="history_ids" nolabel="1" colspan="4">
+											<form string="Actions">
+												<separator string="Action Information" colspan="4"/>
+												<field name="user_id" select="1"/>
+												<field name="state" />
+												<field name="create_date" />
+											</form>
+										</field>
+										<field name="notes" colspan="4"/>							
+									</page>
+									<page string="Documents">
+										<field name="document_ids" colspan="4" nolabel="1"/>
+									</page>
+								</notebook>
+							</form>
+							<tree string="Offer Step">
+								<field name="name"/>
+								<field name="offer_id"/>
+								<field name="incoming_transition_ids"/>
+								<field name="outgoing_transition_ids"/>
+								<field name="state"/>
+							</tree>							
+						</field>						
+					</page>					
 					<page string="Advises"><!--
 						<separator string="Layout" colspan="4"/>
 						<field name="note_layout" nolabel="1" colspan="4"/>

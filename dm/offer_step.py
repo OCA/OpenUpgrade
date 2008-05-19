@@ -101,7 +101,7 @@ class dm_offer_step(osv.osv):
         return True
     
     _columns = {
-        'offer_id' : fields.many2one('dm.offer', 'Offer'),
+        'offer_id' : fields.many2one('dm.offer', 'Offer',required=True),
         'legal_state' : fields.char('Legal State', size=32),
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
@@ -109,6 +109,7 @@ class dm_offer_step(osv.osv):
         'media' : fields.many2one('dm.media', 'Media'),
         'type' : fields.char('Type', size=16),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
+        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
         'notes' : fields.text('Notes'),
         'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
         'flow_start' : fields.boolean('Flow Start'),
@@ -173,7 +174,7 @@ dm_offer_step_history()
 class dm_offer_step_workitem(osv.osv):
     _name = "dm.offer.step.workitem"
     _columns = {
-        'step_id' : fields.many2one('dm.offer.step', 'Offer Step'),
+        'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments'),
         'customer_id' : fields.many2one('res.partner', 'Customer'),
         'date_next_action' : fields.date('Next Action'),
