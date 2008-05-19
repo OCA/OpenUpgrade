@@ -16,7 +16,8 @@
         }
     </style>
 <link href="../static/css/style.css" rel="stylesheet" type="text/css"/>
-<script type="../static/javascript/crm_designer.js"></script>
+<script type="text/javascript" src="/static/javascript/crm_designer.js"></script>
+<script type="text/javascript" src="/static/javascript/ajax.js"></script>
 </head>
 
 <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">

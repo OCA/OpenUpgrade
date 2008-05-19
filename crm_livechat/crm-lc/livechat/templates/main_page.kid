@@ -3,7 +3,7 @@
     
 <head>
 	<title>Live Chat</title>
-	<script type="text/javascript" src="/static/javascript/MochiKit.js"></script>	
+	<!--<script type="text/javascript" src="/static/javascript/MochiKit.js"></script>-->	
 	<script type="text/javascript" src="/static/javascript/crm_designer.js"></script>	
 	<!--
 	<script type="text/javascript">

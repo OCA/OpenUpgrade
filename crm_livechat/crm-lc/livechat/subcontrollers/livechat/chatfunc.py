@@ -16,7 +16,7 @@ class ChatFunc(controllers.RootController):
     
     @expose(template="livechat.templates.welcome")
     def index(self):
-        res = rpc.session.login('crm', 'admin', 'admin')
+        res = rpc.session.login('crm_test', 'admin', 'admin')
         raise redirect('/select_topic')
         
     @expose(template="livechat.templates.chat_box")
@@ -97,7 +97,7 @@ class ChatFunc(controllers.RootController):
         uid = ''
         self.topicid = topicid
         livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration([int(topicid)])
-        
+        print "This is first live chat data",livechatdata
         partnerlist = livechatdata['partner']
         pp=map(lambda p:p,partnerlist)
         
@@ -121,8 +121,9 @@ class ChatFunc(controllers.RootController):
         cl.RegisterHandler('message', self.messageCB)
         cl.sendInitPresence();
         self.client=cl
-        
+        print "This is live chat data:",livechatdata,topicid
         user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
+        print "\n\n\n\nThe user i get :",user
         user = livechatdata['user'][str(user)]['login']
         self.user= user
         
@@ -149,7 +150,3 @@ class ChatFunc(controllers.RootController):
     login = ''
     cont = True
                 
- 
-      
-        
-#khudagawaah
