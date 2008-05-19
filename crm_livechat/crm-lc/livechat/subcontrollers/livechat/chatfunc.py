@@ -1,4 +1,4 @@
-from turbogears import controllers, expose, flash, redirect
+from turbogears import controllers, expose, flash, redirect,config
 import cherrypy
 from cherrypy import request, response
 import sha, time
@@ -6,17 +6,26 @@ import sys,os,xmpp
 import signal
 import thread
 import xmlrpclib
-from livechat import rpc
+from livechat import rpc, common
 from livechat.rpc import *
 
-rpc.session = rpc.RPCSession( 'localhost', '8070', 'socket', storage=cherrypy.session)
+
+cnhost = config.get('cnhost', path="crm")
+cnport = config.get('cnport', path="crm")
+cntype = config.get('cntype', path="crm")
+
+rpc.session = rpc.RPCSession( cnhost, cnport, cntype , storage=cherrypy.session)
 
 class ChatFunc(controllers.RootController):
 
+    dbname = config.get('dbname', path="crm")
+    dbuser = config.get('dbuser', path="crm")
+    dbpwd = config.get('dbpwd', path="crm")
+    
     
     @expose(template="livechat.templates.welcome")
     def index(self):
-        res = rpc.session.login('crm_test', 'admin', 'admin')
+        res = rpc.session.login(self.dbname, self.dbuser, self.dbpwd)
         raise redirect('/select_topic')
         
     @expose(template="livechat.templates.chat_box")
@@ -47,6 +56,7 @@ class ChatFunc(controllers.RootController):
     
     def mainhandler(self,cl,topicid):
         print "Getting in MainHandler..."
+#        partners = rpc.RPCProxy("crm_livechat.livechat.partner").search([('name','like','Bond'])        
         if not (self.client):
             print "Connection Not Found... \n Making Connetion again...\n"
             cl = self.myConnection(topicid)
@@ -92,7 +102,7 @@ class ChatFunc(controllers.RootController):
         self.msglist.append(msgformat)
         return dict(msglist = self.msglist,recepients = self.recepients)
     
-    def myConnection(self,topicid):
+    def myConnection(self,topicid, jid, pwd):
         cr = ''
         uid = ''
         self.topicid = topicid
@@ -108,15 +118,17 @@ class ChatFunc(controllers.RootController):
         jid=xmpp.protocol.JID(jid)
         cl=xmpp.Client(jid.getDomain(),debug=[])
         
-        if cl.connect() == "":
+        
+        x = cl.connect()
+        if x == "":
             print "Connection Error....."
         else:
             print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
-        
-        if cl.auth(jid.getNode(),pwd,"test") == None:
-            print "\nAuthentication Failed.... \nExiting..."
-        else:
-            print "\nAuthenticated....\nClient Started....!!!!!!!!!!!!!!!!!\n\n"
+
+        try:
+            auth = cl.auth(jid.getNode(),pwd,"test")
+        except AttributeError, err:
+            raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
         
         cl.RegisterHandler('message', self.messageCB)
         cl.sendInitPresence();
