@@ -172,16 +172,16 @@ class SmtpClient(osv.osv):
             
         return True
     
-    def send_email(self, cr, uid, ids,emailto,subject,resource_id,report_name,file_name,body):
+    def send_email(self, cr, uid, ids,emailto,subject,resource_id,body=False,report_name=False,file_name=False):
 
         self.open_connection(cr, uid, ids, ids[0])
         
-        def create_report(self,cr,uid,res_ids,report_name,file_name):
-            ret_file_name = file_name+'.pdf'
+        def create_report(self,cr,uid,res_ids,report_name=False,file_name=False):
             if not report_name or not res_ids:
                 return (False,Exception('Report name and Resources ids are required !!!'))
 
             try:
+            	ret_file_name = file_name+'.pdf'
                 service = netsvc.LocalService("report."+report_name);
                 (result,format) = service.create(cr,uid,[res_ids],{},{})
                 fp = open(ret_file_name,'wb+');
@@ -193,22 +193,26 @@ class SmtpClient(osv.osv):
         #end try:
         
             return (True,ret_file_name)
-    
-        file=create_report(self,cr,uid,resource_id,report_name,file_name)[1]
+   
+        file=create_report(self,cr,uid,resource_id,report_name,file_name)
+        is_file=file[0]
+        if is_file:
+        	file_name=file[1]
         try:
             if self.server['state'] == 'confirm':
                 msg = MIMEMultipart()
-                msg['Subject'] = subject
+                msg['Subject'] = subject 
                 msg['To'] = emailto
                 msg['From'] = str(self.server['from'])
                 msg.attach(MIMEText(body or '', _charset='utf-8'))
-                part = MIMEBase('application', "octet-stream")               
-                part.set_payload( open(file,"rb").read())
-               
+                part = MIMEBase('application', "octet-stream")
+                if is_file:
+	                part.set_payload( open(file_name,"rb").read())               
+	                part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file_name))
+	                msg.attach(part)
                 Encoders.encode_base64(part)
-                part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file))
-                msg.attach(part)                                        
                 self.smtpServer.sendmail(str(self.server['email']), emailto, msg.as_string())
+                
                 report_id = pooler.get_pool(cr.dbname).get('ir.actions.report.xml').search(cr, uid, [('report_name','=',report_name)], context=False)
                 report_model=pooler.get_pool(cr.dbname).get('ir.actions.report.xml').read(cr,uid,report_id,['model'])[0]['model']
                 model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=',report_model)], context=False)[0]               
@@ -216,7 +220,7 @@ class SmtpClient(osv.osv):
                 (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':'The Email is sent successfully to corresponding address','email':emailto,'model':model_id,'resource_id':resource_id})
         except Exception, e:
             print 'Exception :',e
-            return False     
+            return False
         
         return True
 SmtpClient()
