@@ -14,7 +14,7 @@
 			<form string="Document Category">
 				<field name="name" select="1"/>
 				<field name="parent_id"/>
-				<field name="copywrite_id" select="2"/>
+				<field name="copywriter_id" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -35,7 +35,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_document_categ_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer Step/Documents By Categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents" id="menu_action_offer_doc" sequence="2"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Documents By Categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form"/>
 
 	<record model="ir.ui.view" id="view_offer_step_document_form">
 		<field name="name">dm.offer.document.form</field>
@@ -84,7 +85,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_document_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer Step/Documents" id="menu_action_document_form" action="action_document_form"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form"/>
 	
 	<record model="ir.ui.view" id="view_offer_step_tree">
 		<field name="name">dm.offer.step.tree</field>
@@ -115,7 +116,7 @@
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
-						<field name="media"/>
+						<field name="media_id"/>
 						<field name="type"/>
 						<newline/>
 						<field name="origin_id" colspan="4"/>
@@ -143,6 +144,7 @@
 						</group>
 					</page>
 					<page string="Transition">
+						<field name="split_mode" colspan="2" string="Split mode"/>
 						<field name="incoming_transition_ids" colspan="4" string="Incoming"/>
 						<field name="outgoing_transition_ids" colspan="4" string="Outgoing"/>
 					</page>
@@ -171,7 +173,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer Step/All Offer Steps" id="menu_action_offer_step_form" action="action_offer_step_form"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Steps" id="menu_action_offer_step_form" action="action_offer_step_form"/>
 
 	<record model="ir.ui.view" id="view_offer_step_transition_form">
 		<field name="name">dm.offer.step.transition.form</field>
@@ -206,7 +208,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_transition_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer Step/Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition"/>
 
 	
 	<record model="ir.ui.view" id="view_offer_step_workitem_form">
@@ -243,7 +245,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_workitem_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer Step/Work Item" id="menu_action_offer_step_workitem" action="action_offer_step_workitem"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Work Items" id="menu_action_offer_step_workitem" action="action_offer_step_workitem"/>
 
 	
 	<record model="ir.ui.view" id="view_offer_step_history_form">

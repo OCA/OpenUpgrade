@@ -7,8 +7,9 @@ from osv import osv
 
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
-    _inherit = "account.analytic.account"
+    _inherits = {'account.analytic.account': 'analytic_account_id'}
     _rec_name = 'name'
+
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
         
         return name
@@ -28,6 +29,7 @@ class dm_campaign(osv.osv):
         'state' : fields.selection([('draft','Draft'),('planning','Planning'), ('open','Open'), ('fabrication','Fabrication'), ('close','Close'), ('cancel','Cancel')], 'State',readonly=True),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
         'type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
+		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
 #  
 #                        desktop publication   
 #  
@@ -40,7 +42,7 @@ class dm_campaign(osv.osv):
         'dtp_notes' : fields.text('Notes'),            
         'partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
         'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
-        'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time')
+        'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
     
     _defaults = {
@@ -117,20 +119,20 @@ dm_campaign_pricelist()
 class dm_campaign_proposition_segment(osv.osv):
     
     _name = "dm.campaign.proposition.segment"
+    _inherits = {'account.analytic.account': 'analytic_account_id'}
     _description = "Segment"
     _columns = {
-        'name': fields.char('Name',size=64, required=True),
         'action_code': fields.char('Code',size=16, required=True),
         'qty': fields.integer('Qty'),
+		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
     }
 
 dm_campaign_proposition_segment()
 
 class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
+    _inherits = {'account.analytic.account': 'analytic_account_id'}
     _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=16, required=True),
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays'),
         'date_start' : fields.date('Date'),        
@@ -140,7 +142,8 @@ class dm_campaign_proposition(osv.osv):
         'segment_ids' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'customer_pricelist_id':fields.many2one('dm.campaign.pricelist','Customer Price',domain=[('type','=','customer')]),
         'requirer_pricelist_id' : fields.many2one('dm.campaign.pricelist','Requirer Price',domain=[('type','=','requirer')]),
-        'notes':fields.text('Notes')
+        'notes':fields.text('Notes'),
+		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
     }
     
     _defaults = {

@@ -49,7 +49,7 @@ class dm_offer_document_category(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'complete_name' : fields.function(_name_get_fnc, method=True, type='char', string='Category'),
         'parent_id' : fields.many2one('dm.offer.document.category', 'Parent'),
-        'copywrite_id' : fields.many2one('res.partner', 'Copywriter')
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter')
     }
     
 dm_offer_document_category()
@@ -106,7 +106,7 @@ class dm_offer_step(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'quotation' : fields.char('Quotation', size=16),
-        'media' : fields.many2one('dm.media', 'Media'),
+        'media_id' : fields.many2one('dm.media', 'Media'),
         'type' : fields.char('Type', size=16),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
@@ -119,10 +119,12 @@ class dm_offer_step(osv.osv):
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.many2one('dm.offer.step.transition', 'Incoming Transition'),
         'outgoing_transition_ids' : fields.many2one('dm.offer.step.transition', 'Outgoing Transition'),
+		'split_mode' : fields.selection([('and','And'),('or','Or')],'Split mode'),
     }
 
     _defaults = {
         'state': lambda *a : 'draft',
+		'split_mode' : lambda *a : 'and',
     }
     
     def state_close_set(self, cr, uid, ids, *args):
@@ -170,6 +172,14 @@ class dm_offer_step_history(osv.osv):
     }
 
 dm_offer_step_history()
+
+class dm_customer(osv.osv):
+	_name = "dm.customer"
+	_inherit = 'res.partner.address'
+	_columns = {
+
+	}
+dm_customer()
 
 class dm_offer_step_workitem(osv.osv):
     _name = "dm.offer.step.workitem"
