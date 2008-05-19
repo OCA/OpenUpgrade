@@ -10,7 +10,7 @@
 		<table>
 			<tr>
 				<td>
-						<a py:for="name in topiclist" onclick='topicsel(${name["id"]})'>${name['name']}</a>
+						<a py:for="name in topiclist" onclick='topicsel(${name["id"]})'> ${name['name']}</a>
 				</td>
 			</tr>
 		</table>

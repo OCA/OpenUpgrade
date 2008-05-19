@@ -15,8 +15,8 @@
             text-align: right;
         }
     </style>
-    <link rel="stylesheet" type="text/css" media="screen" href="../static/css/style.css"
-        py:attrs="href=tg.url('/static/css/style.css')"/>
+<link href="../static/css/style.css" rel="stylesheet" type="text/css"/>
+<script type="../static/javascript/crm_designer.js"></script>
 </head>
 
 <body py:match="item.tag=='{http://www.w3.org/1999/xhtml}body'" py:attrs="item.items()">
@@ -39,11 +39,7 @@
     </div>
 
     <div id="footer">
-        <img src="${tg.url('/static/images/under_the_hood_blue.png')}"
-            alt="TurboGears under the hood" />
-        <p>TurboGears is a open source front-to-back web development framework
-            written in Python</p>
-        <p>Copyright &#169; 2007 Kevin Dangoor</p>
+
     </div>
 </body>
 

@@ -6,110 +6,129 @@ import sys,os,xmpp
 import signal
 import thread
 import xmlrpclib
-import rpc
-from rpc import *
-import subcontrollers
+from livechat import rpc
+from livechat.rpc import *
 
 rpc.session = rpc.RPCSession( 'localhost', '8070', 'socket', storage=cherrypy.session)
 
-class Root(controllers.RootController):
-    client = None
-    recepients=[]
-    msglist=[]
-    user = ''
-    sessionid = ''
-    topicid = ''
+class ChatFunc(controllers.RootController):
 
-    chatfunc = subcontrollers.livechat.chatfunc.ChatFunc();
     
     @expose(template="livechat.templates.welcome")
     def index(self):
-        print "Redirecting to ChatFunc"
-        raise redirect('/chatfunc/index')
+        res = rpc.session.login('crm', 'admin', 'admin')
+        raise redirect('/select_topic')
         
     @expose(template="livechat.templates.chat_box")
     def chatbox(self):
         pass
-        expose(template="livechat.templates.chat_box")
         return dict(msglist = self.msglist)
-
-    @expose(template="livechat.templates.main_page")
-    def main_page(self):
-        pass
-        return dict(topiclist = [])
     
+    @expose(format='json')
+    def chatbox2(self):
+        pass
+        print "chatbox2 called"
+        return dict(msglist = self.msglist)    
+
     @expose(template="livechat.templates.main_page")
     def select_topic(self,**kw):
             proxy = rpc.RPCProxy("crm_livechat.livechat")
-            ids=proxy.search([])
+            ids = proxy.search([])
             res = proxy.read(ids, ['id','name','state','max_per_user'])
-            for i in range(0,len(res)):
-                rs = res[i]['name']
-                print rs,"----------------------"
             return dict(topiclist = res)
 
    
     @expose(template="livechat.templates.chat_window")
     def start_chat(self,topicid):
-        self.recepients = "Enter Sender ID Here"
         cl=''
+        self.recepients = "Enter Sender ID Here"
         self.mainhandler(cl,topicid)
         return dict(msglist = self.msglist,recepients = self.recepients)
+    
+    def mainhandler(self,cl,topicid):
+        print "Getting in MainHandler..."
+        if not (self.client):
+            print "Connection Not Found... \n Making Connetion again...\n"
+            cl = self.myConnection(topicid)
+        else:
+            print "MainHandler Called"        
+    
+        print "\nStarting Thread to Recieve...."
+        thread.start_new_thread(self.recieving,("Recieving",5,cl))    
+
+    def recieving(self,string,sleeptime,cl,*args):
+        while self.cont:
+            self.recthread = os.getpid()
+            try:
+                v = cl.Process(1)
+            except KeyboardInterrupt:
+                return 0
+                time.sleep(sleeptime)
+        print "Ending Receiving Thread"
+        self.cont = True
+        return 0
    
     @expose()
     def close_chat(self, **kw):
-       print "KW:::::::::",kw
        if (kw.get('close')):
            res = rpc.RPCProxy('crm_livechat.livechat').stop_session(int(self.topicid),int(self.sessionid))
-           print "Stops Session id::::::::::",res
+           if(self.client):
+               self.client.disconnect()
+               self.client=None    
+           self.cont = False
        return {}
  
-   
+    @expose(template="livechat.templates.chat_window")
+    def justsend(self,**kw):
+        sendto = ''
+        msg = kw.get('txtarea')
+        if(self.user):
+            print "sending '"+msg+ "' to ::",self.user
+            sendto = self.user
+        print "sendto:::",sendto
+        self.recepients = sendto
+        self.client.send(xmpp.protocol.Message(sendto,msg))
+        msgformat = str(self.login) + " : "+ str(msg)
+        self.msglist.append(msgformat)
+        return dict(msglist = self.msglist,recepients = self.recepients)
+    
     def myConnection(self,topicid):
         cr = ''
         uid = ''
-        print "Gettin conf::: on :::::",topicid
         self.topicid = topicid
         livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration([int(topicid)])
-        print "Got conf:::",livechatdata
         
         partnerlist = livechatdata['partner']
         pp=map(lambda p:p,partnerlist)
-        print "pp:::::",pp
         
         jid = livechatdata['partner'][pp[0]]['login']
+        self.login = jid
         pwd = livechatdata['partner'][pp[0]]['password']
-        print "Jabber ID--------", jid
-        print "Jabber Password-------", pwd
              
         jid=xmpp.protocol.JID(jid)
         cl=xmpp.Client(jid.getDomain(),debug=[])
         
         if cl.connect() == "":
-                print "Connection Faild.... \nExiting"
-                sys.exit(0)
+            print "Connection Error....."
         else:
             print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
         
         if cl.auth(jid.getNode(),pwd,"test") == None:
-                print "\nAuthentication Failed.... \nExiting..."
-                sys.exit(0)
+            print "\nAuthentication Failed.... \nExiting..."
         else:
             print "\nAuthenticated....\nClient Started....!!!!!!!!!!!!!!!!!\n\n"
         
         cl.RegisterHandler('message', self.messageCB)
         cl.sendInitPresence();
+        self.client=cl
         
         user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
-        print "USER ::::::::::::",user
-        
         user = livechatdata['user'][str(user)]['login']
-        print "User--------------------", user
         self.user= user
         
         if(self.user):
             self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)])
-        
+            print "\nCreating Session ........";
         return cl
     
     def messageCB(self,conn,msg):
@@ -119,40 +138,18 @@ class Root(controllers.RootController):
         msgformat = str(msg.getFrom()) + " : "+str(msg.getBody())
         self.msglist.append(msgformat)
         
-    def recieving(self,string,sleeptime,cl,*args):
-        while 1:
-            try:
-                v = cl.Process(1)
-            except KeyboardInterrupt:
-                return 0
-                cl.disconnect()
-                print string," and sleep for ",sleeptime
-                time.sleep(sleeptime) 
-        
-    
-    def sending(self,string,sleeptime,cl,*args):
-        msgcounter = 0
-        while 1:
-            msgcounter = msgcounter + 1
-            print string," in ",sleeptime," secs "
-            cl.send(xmpp.protocol.Message("pso@tinyerp.com","\nMessage : "+str(msgcounter)+"\nHello How are you!!!!"))
-            time.sleep(sleeptime) 
-    
-    def mainhandler(self,cl,topicid):
-        print "Getting in MainHandler..."
-    
-        if not (cl):
-            print "Connection Not Found... \n Making Connetion again...\n"
-            cl = self.myConnection(topicid)
-            self.client = cl
-            print "",cl
-        else:
-            print "MainHandler Called"        
-    
-        print "\nStarting Thread to Recieve...."
-        thread.start_new_thread(self.recieving,("Recieving",5,cl))
-
-
+    client = None
+    recepients=[]
+    msglist=[]
+    user = ''
+    sessionid = ''
+    topicid = ''
+    mainthread = ''
+    recthread = ''
+    login = ''
+    cont = True
+                
+ 
       
         
 #khudagawaah

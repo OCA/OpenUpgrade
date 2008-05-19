@@ -2,16 +2,12 @@
  * Quick mash-up of CSS for the TG quick start page.
  */
 
-
-
-
-
-
-
-
 body {
 margin: 0;
 padding: 0;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-top : 1px solid #aaa;
 }
 #wrap {
 position: absolute; /* Needed for Safari */
@@ -28,9 +24,7 @@ tr.even td {background-color:#fff;}
 #header {
   height: 80px;
   width: 777px;
-  background: blue URL('../images/header_inner.png') no-repeat;
-  border-left: 1px solid #aaa;
-  border-right: 1px solid #aaa;
+  border-bottom : 1px solid #aaa;
   margin: 0 auto 0 auto;
 }
 
@@ -41,7 +35,8 @@ a.link, a, a.active {
 
 #main_content {
   color: black;
-  font-size: 127%;
+  font-size:100%;
+  font-family: "Century Schoolbook L", Georgia, serif;
   background-color: white;
   width: 757px;
   margin: 0 auto 0 auto;
@@ -72,10 +67,6 @@ a.link, a, a.active {
 h1,h2,h3,h4,h5,h6,#getting_started_steps {
   font-family: "Century Schoolbook L", Georgia, serif;
   font-weight: bold;
-}
-
-h2 {
-  font-size: 150%;
 }
 
 #getting_started_steps a {

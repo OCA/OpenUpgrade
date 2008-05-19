@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#" >
     
 <head>
 	<!--<meta http-equiv="Refresh" content="4"> </meta>
@@ -28,7 +28,7 @@ height: 100%;
 
 
 
-<form name="MyForm" action="/justsend">
+<form name="MyForm" action="/chatfunc/justsend">
 
  
 <table id="wrap" border='3px' >
@@ -40,8 +40,11 @@ height: 100%;
 	</tr>
 	<tr style="height:100%">
 		<td width="90%"> 
-		<iframe src="/chatbox" style="width:100%;height: 600px;border: 1px;"> </iframe>
-		 </td>
+		<iframe src="/chatfunc/chatbox" style="width:100%;height: 600px;border: 1px;"> </iframe><!--
+		<div id="refreshdiv">
+		</div>
+		<input type="button" value="Click me" onclick="refreshg()"/>
+		 --></td>
 		 
 		 
 		<td width = "10%">
