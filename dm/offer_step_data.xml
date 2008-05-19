@@ -1,0 +1,174 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+	<!--
+	=======================================================
+	Offer Step - Document Category 
+	=======================================================
+	-->
+		<record id="dm_offer_document_category_legaldocs0" model="dm.offer.document.category">
+			<field name="copywrite_id" ref="base.res_partner_agrolait"/>
+			<field eval="&quot;Legal Docs&quot;" name="name"/>
+		</record>
+		<record id="dm_offer_document_category_affidavit0" model="dm.offer.document.category">
+			<field name="copywrite_id" ref="base.res_partner_agrolait"/>
+			<field name="parent_id" ref="dm_offer_document_category_legaldocs0"/>
+			<field eval="&quot;Affidavit&quot;" name="name"/>
+		</record>
+		<record id="dm_offer_document_category_letterofconsent0" model="dm.offer.document.category">
+			<field name="copywrite_id" ref="base.res_partner_agrolait"/>
+			<field name="parent_id" ref="dm_offer_document_category_legaldocs0"/>
+			<field eval="&quot;Letter Of Consent&quot;" name="name"/>
+		</record>
+		
+	<!--
+	=======================================================
+	Offer Step - Documents 
+	=======================================================
+	-->
+		<record id="dm_offer_document_identityproof0" model="dm.offer.document">
+			<field eval="&quot;identity&quot;" name="code"/>
+			<field name="copywriter_id" ref="base.res_partner_2"/>
+			<field eval="0" name="answer_letter"/>
+			<field eval="&quot;Identity Proof&quot;" name="name"/>
+			<field eval="time.strftime('%Y-%m-01')" name="dtp_theorical_date"/>
+			<field eval="[(6,0,[ref('dm_offer_document_category_affidavit0')])]" name="category_ids"/>
+			<field name="dtp_operator" ref="base.res_partner_2"/>
+			<field eval="1" name="mailing_at_dates"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field eval="time.strftime('%Y-%m-31')" name="dtp_valid_date"/>
+			<field eval="time.strftime('%Y-%m-19')" name="dtp_making_date"/>
+			<field eval="0" name="interactive"/>
+		</record>	
+		<record id="dm_offer_document_nocnoobjectioncertificate0" model="dm.offer.document">
+			<field eval="&quot;noc&quot;" name="code"/>
+			<field name="copywriter_id" ref="base.res_partner_6"/>
+			<field eval="1" name="answer_letter"/>
+			<field eval="&quot;NOC - No Objection Certificate&quot;" name="name"/>
+			<field eval="time.strftime('%Y-%m-05')" name="dtp_theorical_date"/>
+			<field eval="[(6,0,[ref('dm_offer_document_category_letterofconsent0')])]" name="category_ids"/>
+			<field name="dtp_operator" ref="base.res_partner_11"/>
+			<field eval="1" name="mailing_at_dates"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field eval="time.strftime('%Y-%m-25')" name="dtp_valid_date"/>
+			<field eval="time.strftime('%Y-%m-22')" name="dtp_making_date"/>
+			<field eval="0" name="interactive"/>
+		</record>
+		
+	<!--
+	=======================================================
+	Offer Step - Transitions 
+	=======================================================
+	-->
+		<record id="dm_offer_step_transition_prepareddocuments0" model="dm.offer.step.transition">
+			<field eval="1" name="delay"/>
+			<field eval="&quot;Prepared Documents&quot;" name="name"/>
+			<field eval="&quot;true&quot;" name="condition"/>
+		</record>
+		<record id="dm_offer_step_transition_submissionofdocuments0" model="dm.offer.step.transition">
+			<field eval="&quot;Submission Of Documents&quot;" name="name"/>
+			<field eval="&quot;true&quot;" name="condition"/>
+		</record>
+		<record id="dm_offer_step_transition_biddingopenedforpublic0" model="dm.offer.step.transition">
+			<field eval="&quot;Bidding opened for public&quot;" name="name"/>
+			<field eval="&quot;notpurchased&quot;" name="condition"/>
+		</record>
+		<record id="dm_offer_step_transition_biddingclosed0" model="dm.offer.step.transition">
+			<field eval="&quot;Bidding closed&quot;" name="name"/>
+			<field eval="&quot;purchased&quot;" name="condition"/>
+		</record>	
+
+	<!--
+	=======================================================
+	Offer Steps 
+	=======================================================
+	-->
+		<record id="dm_media_contacts0" model="dm.media">
+			<field eval="&quot;Contacts&quot;" name="name"/>
+		</record>
+		<record id="dm_offer_step_inquireaboutthetypesofloansavailable0" model="dm.offer.step">
+			<field eval="[(6,0,[ref('dm_offer_document_identityproof0')])]" name="document_ids"/>
+			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>
+			<field eval="&quot;inquiry&quot;" name="code"/>
+			<field eval="&quot;Inquire about the types of loans available&quot;" name="name"/>
+			<field name="media" ref="dm_media_contacts0"/>
+			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
+			<field eval="1" name="sequence"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Submission Of Documents')]"/>
+			<field eval="&quot;valid&quot;" name="legal_state"/>
+			<field eval="&quot;2000&quot;" name="quotation"/>
+		</record>
+	
+		<record id="dm_offer_step_eliminatethewrongoptions0" model="dm.offer.step">
+			<field eval="[(6,0,[ref('dm_offer_document_identityproof0')])]" name="document_ids"/>
+			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>
+			<field eval="&quot;elimination&quot;" name="code"/>
+			<field eval="2" name="sequence"/>
+			<field eval="&quot;Eliminate the wrong options&quot;" name="name"/>
+			<field name="media" ref="dm_media_contacts0"/>
+			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Submission Of Documents')]"/>
+			<field eval="&quot;invalid&quot;" name="legal_state"/>
+		</record>
+
+		<record id="dm_media_newspapers0" model="dm.media">
+			<field eval="&quot;Newspapers&quot;" name="name"/>
+		</record>
+	
+		<record id="dm_offer_step_negotiation0" model="dm.offer.step">
+			<field eval="[(6,0,[ref('dm_offer_document_nocnoobjectioncertificate0')])]" name="document_ids"/>
+			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>
+			<field eval="&quot;negotiate&quot;" name="code"/>
+			<field eval="&quot;Negotiation&quot;" name="name"/>
+			<field name="media" ref="dm_media_newspapers0"/>
+			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
+			<field eval="2" name="sequence"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Bidding closed')]"/>
+			<field eval="&quot;valid&quot;" name="legal_state"/>
+			<field eval="&quot;200000&quot;" name="quotation"/>
+		</record>
+
+		<record id="dm_offer_step_dealfinilized0" model="dm.offer.step">
+			<field eval="[(6,0,[ref('dm_offer_document_identityproof0'),ref('dm_offer_document_nocnoobjectioncertificate0')])]" name="document_ids"/>
+			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>
+			<field eval="&quot;deal&quot;" name="code"/>
+			<field eval="&quot;Deal finilized&quot;" name="name"/>
+			<field name="origin_id" ref="dm_offer_step_negotiation0"/>
+			<field name="media" ref="dm_media_newspapers0"/>
+			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
+			<field eval="3" name="sequence"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Bidding closed')]"/>
+			<field eval="&quot;valid&quot;" name="legal_state"/>
+			<field eval="&quot;3000000&quot;" name="quotation"/>
+		</record>
+
+	<!--
+	=======================================================
+	Offer Step - WorkItem 
+	=======================================================
+	-->	
+		<record id="dm_offer_step_workitem_0" model="dm.offer.step.workitem">
+			<field eval="1500.0" name="purchase_amount"/>
+			<field name="step_id" ref="dm.dm_offer_step_inquireaboutthetypesofloansavailable0"/>
+			<field name="customer_id" ref="base.res_partner_3"/>
+			<field eval="time.strftime('%Y-%m-15')" name="date_next_action"/>
+		</record>
+	
+		<record id="dm_offer_step_workitem_1" model="dm.offer.step.workitem">
+			<field eval="2000000.0" name="purchase_amount"/>
+			<field name="step_id" ref="dm.dm_offer_step_negotiation0"/>
+			<field name="customer_id" ref="base.res_partner_14"/>
+			<field eval="time.strftime('%Y-%m-08')" name="date_next_action"/>
+		</record>
+	
+		<record id="dm_offer_step_workitem_2" model="dm.offer.step.workitem">
+			<field eval="3000000.0" name="purchase_amount"/>
+			<field name="step_id" ref="dm.dm_offer_step_dealfinilized0"/>
+			<field name="customer_id" ref="base.res_partner_14"/>
+		</record>
+	</data>
+</terp>
