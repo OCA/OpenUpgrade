@@ -40,6 +40,16 @@ class crm_livechat_livechat(osv.osv):
 		self.sessions = {}
 		return super(crm_livechat_livechat, self).__init__(*args, **argv)
 
+	def get_chat_name(self,cr,uid,context={}):
+		ids=self.search(cr,uid,[],context)
+		res=self.browse(cr,uid,ids,context)
+		result={}
+		for r in res:
+			result[str(r.id)]=r.name
+		print "RESULT:::::::::::",result
+		return result
+
+
 	#
 	# return { jabber_id, {jabber_connection_data} }
 	# This is used by the web application to get information about jabber accounts
@@ -47,29 +57,52 @@ class crm_livechat_livechat(osv.osv):
 	#
 	def get_configuration(self, cr, uid, ids, context={}):
 		result = {}
+		main_res={}
+		print "Ids ",ids
 		for lc in self.browse(cr, uid, ids, context):
-			for u in lc.user_ids + lc.partner_ids:
-				result[u.jabber_id.id] = {
+			print "In loop",lc
+			print "lc.user_ids + lc.partner_ids:",lc.user_ids ," dfdfdfdf          ",lc.partner_ids
+			for u in lc.user_ids:
+				result[str(u.id)] = {
 					'name': u.name,
 					'server': u.jabber_id.server,
 					'login':  u.jabber_id.login,
 					'password':  u.jabber_id.password,
+					'state': u.state
 				}
-		return result
+			main_res['user']=result
+			result={}
+			for u in lc.partner_ids:
+				result[str(u.id)] = {
+					'name': u.name,
+					'server': u.jabber_id.server,
+					'login':  u.jabber_id.login,
+					'password':  u.jabber_id.password,
+					'state': u.state
+				}			
+			main_res['partner']=result	
+		print "This is result",main_res
+		return main_res
 
 	def get_user(self, cr, uid, id, context={}):
 		minu = (9999999,False)
-		livechat = self.browse(cr, uid, id)
-		for user in livechat.user_ids:
-			if not user.state==available:
+		print "This is id ",id
+		livechat = self.browse(cr, uid, id,context)
+		print "This is livechat",livechat
+		for user in livechat[0].user_ids:
+			print "users ",user
+			if  user.state=='active':
+#				continue
+				c = 0
+				for s in self.sessions:
+					if s[0]==user.user_id.id:
+						c+=1
+				if c<minu[0]:
+					if c<livechat[0].max_per_user:
+						minu = (c, user.id)
+			else:
+				print "Not active"
 				continue
-			c = 0
-			for s in self.sessions:
-				if s[0]==user.user_id.id:
-					c+=1
-			if c<minu[0]:
-				if c<livechat.max_per_user:
-					minu = (c, user.user_id.id)
 		return minu[1]
 
 	"""
@@ -83,25 +116,30 @@ class crm_livechat_livechat(osv.osv):
 			(session_id, user_jabber_id, partner_jabber_id) if available
 	"""
 	def start_session(self, cr, uid, livechat_id, user_id=False, partner_ip='Unknown', lang=False, context={}):
+		print "In session srtart", livechat_id," User id ", user_id
 		if not user_id:
 			user_id = self.get_user(cr, uid, livechat_id, context)
 		if not user_id:
 			return False
 
 		partner_id=False
-		for p in self.browse(cr, uid, livechat_id, context).partner_ids:
-			if not p.available:
-				partner_id = p.jabber_id.id
+		for p in self.browse(cr, uid, livechat_id, context)[0].partner_ids:
+			print "partner ids::::::::::::::::",p.id,p.state
+			if p.state=='active':
+				print "In if",p.id
+				partner_id = p.id
+				break
 		if not partner_id:
 			return False
+		print "Parnter id",partner_id
 		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [partner_id], {
 			'available': partner_ip,
 			'available_date': time.strftime('%Y-%m-%d %H:%M:%S')
 		})
 		self.session_count+=1
 		self.sessions[self.session_count] = (user_id, partner_id, livechat_id)
-		return True
-
+		print "self.session",self.sessions
+		return self.session_count
 	"""
 		IN:
 			livechat_id
@@ -109,17 +147,24 @@ class crm_livechat_livechat(osv.osv):
 		OUT:
 			True
 	"""
-	def stop_session(self, cr, uid, id, session_id, log=False, context={}):
-		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [partner_id], {
-			'available': False,
+	def stop_session(self, cr, uid, id, session_id, log=True, context={}):
+		print "session_id"
+		print "session id ",session_id," data it have ",self.sessions
+		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [self.sessions[session_id][1]], {
+			'available': 'notactive',
 		})
+		print "This is self session",self.sessions
 		if session_id in self.sessions:
+			print "This is log ",session_id
+			print " Value of log ",log
 			if log:
+				print "In logging"
 				self.pool.get('crm_livechat.log').create(cr, uid, {
 					'note': log,
-					'user_id': self.sessions[session_id][0],
-					'livechat_id':self.sessions[session_id][2],
+					'user_id': self.sessions[session_id][1],
+					'livechat_id':self.sessions[session_id][2][0],
 				})
+				print "LOG COMPLTERD::::::::::::::"
 			del self.sessions[session_id]
 		return True
 
@@ -166,7 +211,7 @@ class crm_livechat_livechat_log(osv.osv):
 	_order = 'id desc'
 	_columns={
 		'name': fields.datetime("Date and Time", required=True),
-		'user_id': fields.many2one('res.users', "User"),
+		'user_id': fields.many2one('crm_livechat.livechat.user', "User"),
 		'livechat_id': fields.many2one("crm_livechat.livechat", "Livechat", required=True, ondelete='cascade'),
 		'note': fields.text('History')
 	}
@@ -174,6 +219,5 @@ class crm_livechat_livechat_log(osv.osv):
 		'name': lambda *args: time.strftime('%Y-%m-%d %H:%M:%S')
 	}
 crm_livechat_livechat_log()
-
 
 
