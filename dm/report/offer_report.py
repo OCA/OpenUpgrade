@@ -1,8 +1,6 @@
 ##############################################################################
 #
-# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#
-# $Id: __init__.py 6511 2007-06-19 19:01:25Z fp $
+# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -27,8 +25,17 @@
 #
 ##############################################################################
 
-import trademark
-import offer
-import offer_step
-import campaign
-import report
+import time
+from report import report_sxw
+
+class offer_report(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(offer_report, self).__init__(cr, uid, name, context)
+        self.sum_debit = 0.0
+        self.sum_credit = 0.0
+        self.localcontext.update({
+            'time': time,
+        })
+        self.context = context
+        
+report_sxw.report_sxw('report.offer.report', 'dm.offer', 'addons/dm/report/dm_offer.rml', parser=offer_report)
