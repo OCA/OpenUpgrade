@@ -7,16 +7,16 @@
 	=======================================================
 	-->
 		<record id="dm_offer_document_category_legaldocs0" model="dm.offer.document.category">
-			<field name="copywrite_id" ref="base.res_partner_agrolait"/>
+			<field name="copywriter_id" ref="base.res_partner_agrolait"/>
 			<field eval="&quot;Legal Docs&quot;" name="name"/>
 		</record>
 		<record id="dm_offer_document_category_affidavit0" model="dm.offer.document.category">
-			<field name="copywrite_id" ref="base.res_partner_agrolait"/>
+			<field name="copywriter_id" ref="base.res_partner_agrolait"/>
 			<field name="parent_id" ref="dm_offer_document_category_legaldocs0"/>
 			<field eval="&quot;Affidavit&quot;" name="name"/>
 		</record>
 		<record id="dm_offer_document_category_letterofconsent0" model="dm.offer.document.category">
-			<field name="copywrite_id" ref="base.res_partner_agrolait"/>
+			<field name="copywriter_id" ref="base.res_partner_agrolait"/>
 			<field name="parent_id" ref="dm_offer_document_category_legaldocs0"/>
 			<field eval="&quot;Letter Of Consent&quot;" name="name"/>
 		</record>
@@ -91,7 +91,7 @@
 			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>
 			<field eval="&quot;inquiry&quot;" name="code"/>
 			<field eval="&quot;Inquire about the types of loans available&quot;" name="name"/>
-			<field name="media" ref="dm_media_contacts0"/>
+			<field name="media_id" ref="dm_media_contacts0"/>
 			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
 			<field eval="1" name="sequence"/>
 			<field eval="&quot;draft&quot;" name="state"/>
@@ -106,7 +106,7 @@
 			<field eval="&quot;elimination&quot;" name="code"/>
 			<field eval="2" name="sequence"/>
 			<field eval="&quot;Eliminate the wrong options&quot;" name="name"/>
-			<field name="media" ref="dm_media_contacts0"/>
+			<field name="media_id" ref="dm_media_contacts0"/>
 			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Submission Of Documents')]"/>
@@ -122,7 +122,7 @@
 			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>
 			<field eval="&quot;negotiate&quot;" name="code"/>
 			<field eval="&quot;Negotiation&quot;" name="name"/>
-			<field name="media" ref="dm_media_newspapers0"/>
+			<field name="media_id" ref="dm_media_newspapers0"/>
 			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
 			<field eval="2" name="sequence"/>
 			<field eval="&quot;draft&quot;" name="state"/>
@@ -137,7 +137,7 @@
 			<field eval="&quot;deal&quot;" name="code"/>
 			<field eval="&quot;Deal finilized&quot;" name="name"/>
 			<field name="origin_id" ref="dm_offer_step_negotiation0"/>
-			<field name="media" ref="dm_media_newspapers0"/>
+			<field name="media_id" ref="dm_media_newspapers0"/>
 			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
 			<field eval="3" name="sequence"/>
 			<field eval="&quot;draft&quot;" name="state"/>
