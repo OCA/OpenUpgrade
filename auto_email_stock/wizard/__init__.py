@@ -28,4 +28,4 @@
 #
 ##############################################################################
 
-import wizard_partial_picking
+import wizard_send_email
