@@ -32,3 +32,4 @@ import offer
 import offer_step
 import campaign
 import report
+import wizard

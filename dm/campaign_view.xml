@@ -48,7 +48,9 @@
 						<field name="campaign_partner_id" string="Partner"/>
 						<field name="trademark_id"/>
 						<field name="receiver_id"/>
-						<field name="project_id" colspan="4"/>
+						<separator string="Tasks management" colspan="4"/>
+						<field name="project_id"/>
+						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4" nolabel="1"/>
 <!--						<field name="campaign_stat_ids"/>-->

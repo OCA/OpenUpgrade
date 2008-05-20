@@ -24,7 +24,7 @@ class dm_campaign(osv.osv):
         'date_end':fields.date('End Date'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
         'receiver_id': fields.many2one('res.partner','Receiver'),
-        'project_id' : fields.many2one('project.project', 'Project', required=True),
+        'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
         'campaign_state' : fields.selection([('draft','Draft'),('planning','Planning'), ('open','Open'), ('fabrication','Fabrication'), ('close','Close'), ('cancel','Cancel')], 'State',readonly=True),
