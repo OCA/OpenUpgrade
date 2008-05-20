@@ -11,21 +11,7 @@ padding: 0;
 }
 #wrap {
 position: absolute; /* Needed for Safari */
-background-color: #ac5;
 width: 100%;
-}
-
-
-td, th {padding:3px;border:none;}
-tr th {text-align:left;background-color:#f0f0f0;color:#333;}
-tr.odd td {background-color:#edf3fe;}
-tr.even td {background-color:#fff;}
-
-#header {
-  height: 80px;
-  width: 777px;
-  border-bottom : 1px solid #aaa;
-  margin: 0 auto 0 auto;
 }
 
 a.link, a, a.active {
@@ -37,19 +23,13 @@ a.link, a, a.active {
   color: black;
   font-size:100%;
   font-family: "Century Schoolbook L", Georgia, serif;
-  background-color: white;
-  width: 757px;
   margin: 0 auto 0 auto;
-  border-left: 1px solid #aaa;
-  border-right: 1px solid #aaa;
-  padding: 10px;
 }
 
 #sidebar {
   border: 1px solid #aaa;
   background-color: #eee;
   margin: 0.5em;
-  padding: 1em;
   float: right;
   width: 200px;
   font-size: 88%;
@@ -91,11 +71,8 @@ h1,h2,h3,h4,h5,h6,#getting_started_steps {
 }
 
 #footer {
-  border: 1px solid #aaa;
   border-top: 0px none;
   color: #999;
-  background-color: white;
-  padding: 10px;
   font-size: 80%;
   text-align: center;
   width: 757px;
@@ -113,7 +90,6 @@ span.code {
 
 #status_block {
   margin: 0 auto 0.5em auto;
-  padding: 15px 10px 15px 55px;
   background: #cec URL('../images/ok.png') left center no-repeat;
   border: 1px solid #9c9;
   width: 450px;
@@ -123,7 +99,6 @@ span.code {
 
 .notice {
   margin: 0.5em auto 0.5em auto;
-  padding: 15px 10px 15px 55px;
   width: 450px;
   background: #eef URL('../images/info.png') left center no-repeat;
   border: 1px solid #cce;

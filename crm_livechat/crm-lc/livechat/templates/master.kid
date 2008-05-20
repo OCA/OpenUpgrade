@@ -2,19 +2,7 @@
 <?python import sitetemplate ?>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:py="http://purl.org/kid/ns#"
     py:extends="sitetemplate">
-
 <head py:match="item.tag=='{http://www.w3.org/1999/xhtml}head'" py:attrs="item.items()">
-    <meta content="text/html; charset=UTF-8" http-equiv="content-type" py:replace="''"/>
-    <title py:replace="''">Your title goes here</title>
-    <meta py:replace="item[:]" name="description" content="master template"/>
-    <style type="text/css" media="screen">
-        #pageLogin
-        {
-            font-size: 10px;
-            font-family: verdana;
-            text-align: right;
-        }
-    </style>
 <link href="../static/css/style.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="/static/javascript/crm_designer.js"></script>
 <script type="text/javascript" src="/static/javascript/ajax.js"></script>

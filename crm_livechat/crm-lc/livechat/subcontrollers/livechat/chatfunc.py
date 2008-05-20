@@ -21,23 +21,24 @@ class ChatFunc(controllers.RootController):
     dbname = config.get('dbname', path="crm")
     dbuser = config.get('dbuser', path="crm")
     dbpwd = config.get('dbpwd', path="crm")
-    
-    
+
+
     @expose(template="livechat.templates.welcome")
     def index(self):
+        print "\n","*"*50,"\nPlease CHECK the Settings in 'dev.cfg'...\n","*"*50,"\n"
         res = rpc.session.login(self.dbname, self.dbuser, self.dbpwd)
         raise redirect('/select_topic')
-        
+
     @expose(template="livechat.templates.chat_box")
     def chatbox(self):
         pass
         return dict(msglist = self.msglist)
-    
+
     @expose(format='json')
     def chatbox2(self):
         pass
         print "chatbox2 called"
-        return dict(msglist = self.msglist)    
+        return dict(msglist = self.msglist)
 
     @expose(template="livechat.templates.main_page")
     def select_topic(self,**kw):
@@ -48,31 +49,40 @@ class ChatFunc(controllers.RootController):
             print "This is ",res
             return dict(topiclist = res)
 
-   
-    @expose(template="livechat.templates.chat_window")
-    def start_chat(self,topicid):
+
+    @expose()
+    def start_chat(self,**kw):
         cl=''
-        self.recepients = "Enter Sender ID Here"
-        self.mainhandler(cl,topicid)
-        return dict(msglist = self.msglist,recepients = self.recepients)
-    
+        topicid = kw.get('topicid')
+        print "toppicid:::",topicid
+        message = self.mainhandler(cl,topicid)
+        print "======message========",message
+        return dict(message=message)
+
+    @expose(template="livechat.templates.chat_window")
+    def chat_window(self):
+        return dict()
+
     def mainhandler(self,cl,topicid):
         print "Getting in MainHandler..."
 #        partners = rpc.RPCProxy("crm_livechat.livechat.partner").search([('name','like','Bond'])
-        
+
         if not (self.client):
-            print "Connection Not Found... \n Making Connetion again...\n"
+            print "Connection Not Found...  Making Connection again...\n"
             cl = self.myConnection(topicid)
             if cl=='NoActive':
                 print "No user left"
+                return "NoUser"
             else:
                 print "\nStarting Thread to Recieve...."
-                thread.start_new_thread(self.recieving,("Recieving",5,cl))        
+                self.cont = True
+                thread.start_new_thread(self.recieving,("Recieving",5,cl))
         else:
-            print "MainHandler Called"        
-    
-        
-            
+            print "MainHandler Called"
+        return "Active"
+
+
+
 
     def recieving(self,string,sleeptime,cl,*args):
         while self.cont:
@@ -85,38 +95,39 @@ class ChatFunc(controllers.RootController):
         print "Ending Receiving Thread"
         self.cont = True
         return 0
-   
+
     @expose()
     def close_chat(self, **kw):
        if (kw.get('close')):
            res = rpc.RPCProxy('crm_livechat.livechat').stop_session(int(self.topicid),int(self.sessionid))
            if(self.client):
                self.client.disconnect()
-               self.client=None    
+               self.client=None
            self.cont = False
        return {}
- 
-    @expose(template="livechat.templates.chat_window")
+
+    @expose(format='json')
     def justsend(self,**kw):
+        print "kw:::::::::::",kw
         sendto = ''
-        msg = kw.get('txtarea')
+        msg = kw.get('messg')
         if(self.user):
-            print "sending '"+msg+ "' to ::",self.user
+            print "sending",msg," :to:  ",self.user
             sendto = self.user
         print "sendto:::",sendto
         self.recepients = sendto
         self.client.send(xmpp.protocol.Message(sendto,msg))
-        msgformat = str(self.login) + " : "+ str(msg)
+        msgformat = (str(self.login) + " : "+ str(msg),'sender')
+        print msgformat,"::::::"
         self.msglist.append(msgformat)
-        return dict(msglist = self.msglist,recepients = self.recepients)
-    
+        print "returning"
+        return dict()
+
     def myConnection(self,topicid):
         cr = ''
         uid = ''
         self.topicid = topicid
         print ">>>>>>>>>>>>>",topicid
-        livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_available_partner_id()
-        print "::::::::::::::::::::::::::::::::::::::::",livechatdata
         livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration(topicid)
         if livechatdata:
             print "This is first live chat data",livechatdata
@@ -124,26 +135,27 @@ class ChatFunc(controllers.RootController):
             pp=map(lambda p:p,partnerlist)
             print "////////////////////////",pp
             jid = livechatdata['partner'][pp[0]]['login']
-            
+
             print "////////////////////////",jid
             self.login = jid
             pwd = livechatdata['partner'][pp[0]]['password']
-                 
+            print "making connection with::",jid," and pwd :::",pwd
             jid=xmpp.protocol.JID(jid)
             cl=xmpp.Client(jid.getDomain(),debug=[])
-            
-            
+
+
             x = cl.connect()
             if x == "":
                 print "Connection Error....."
             else:
                 print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
-    
+
             try:
                 auth = cl.auth(jid.getNode(),pwd,"test")
             except AttributeError, err:
                 raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
-            
+
+            print "cl Authenticated...."
             cl.RegisterHandler('message', self.messageCB)
             cl.sendInitPresence();
             self.client=cl
@@ -152,7 +164,7 @@ class ChatFunc(controllers.RootController):
             print "\n\n\n\nThe user i get :",user
             user = livechatdata['user'][str(user)]['login']
             self.user= user
-            
+
             if(self.user):
     #            for x in livechatdata['partner'].keys()
     #                print x
@@ -162,14 +174,14 @@ class ChatFunc(controllers.RootController):
         else:
             cl="NoActive"
         return cl
-    
+
     def messageCB(self,conn,msg):
         print "Messge Arriving", msg
         print "\nContent: " + str(msg.getBody())
         print "Sender: " + str(msg.getFrom())
-        msgformat = str(msg.getFrom()) + " : "+str(msg.getBody())
+        msgformat = ( str(msg.getFrom()) + " : "+str(msg.getBody()), 'receiver')
         self.msglist.append(msgformat)
-        
+
     client = None
     recepients=[]
     msglist=[]
@@ -180,4 +192,4 @@ class ChatFunc(controllers.RootController):
     recthread = ''
     login = ''
     cont = True
-                
+
