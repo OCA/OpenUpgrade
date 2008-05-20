@@ -1,7 +1,6 @@
 from osv import fields,osv
 from osv import orm
 
-
 def _get_answers(cr, uid, ids):
 	query = """
 	select distinct(answer)
@@ -104,6 +103,24 @@ question()
 class questionnaire(osv.osv):
 	_name="crm_profiling.questionnaire"
 	_description= "Questionnaire"
+
+	def build_form(self, cr, uid, data, context):
+		query = """
+		select name, id
+		from crm_profiling_question
+		where id in ( select question from profile_questionnaire_quest_rel where questionnaire = %s)"""% data['form']['questionnaire_name']
+		cr.execute(query)
+		
+		quest_fields={}
+		quest_form='''<?xml version="1.0"?>
+			<form string="Questionnaire">'''
+		
+		for x in cr.fetchall():
+			quest_form = quest_form + '''<field name="quest_form'''+str(x[1])+'''"/><newline/>'''
+			quest_fields['quest_form'+str(x[1])] = {'string': str(x[0]), 'type': 'many2one', 'relation': 'crm_profiling.answer', 'domain': [('question_id','=',x[1])] }
+		quest_form = quest_form + '''</form>'''		 
+		return quest_form,quest_fields
+
 	_columns={
 		'name': fields.char("Questionnaire",size=128, required=True),
 		'description':fields.text("Description", required=True),
@@ -128,6 +145,23 @@ class partner(osv.osv):
 	_columns={
 		"answers_ids": fields.many2many("crm_profiling.answer","partner_question_rel","partner","answer","Answers"),
 		}
+
+	def _questionnaire_compute(self, cr, uid, data, context):
+		temp = []
+		for x in data['form']:
+			if x.startswith("quest_form") and data['form'][x] != 0 :
+				temp.append(data['form'][x])
+
+		query = """ 
+		select answer from partner_question_rel 
+		where partner =%d"""% data['id']
+		cr.execute(query)
+		for x in cr.fetchall():
+			temp.append(x[0])
+
+		self.write(cr, uid, [data['id']],{'answers_ids':[[6,0,temp]]}, context)
+		return {}
+
 
 	def write(self, cr, uid, ids, vals, context=None):
 		if not context:
