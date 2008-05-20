@@ -17,7 +17,7 @@ class dm_campaign(osv.osv):
     
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
-        'campaign_parent_id' : fields.many2one('dm.campaign','Parent',domain="[('campaign_type','=','view')]"),
+#        'campaign_parent_id' : fields.many2one('dm.campaign','Parent',domain="[('campaign_type','=','view')]"),
         'country_id' : fields.many2one('res.country', 'Country'),
         'lang_id' : fields.many2one('res.lang', 'Language'),
 #        'date_start':fields.date('Start Date'),
@@ -42,7 +42,8 @@ class dm_campaign(osv.osv):
         'dtp_date_recovered' : fields.date('Recovered Date'),
         'dtp_notes' : fields.text('Notes'),            
 #        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
-        'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
+#        'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
+        'product_ids' : fields.one2many('dm.campaign.product', 'camp_id', 'Products'),        
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
     
@@ -73,27 +74,25 @@ class dm_campaign(osv.osv):
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
 
-    def create(self, cr, uid, vals, context=None):
-        new_id = super(dm_campaign, self).create(cr, uid, vals, context=context)
-        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
-            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
-            parent_id = parent_res['analytic_account_id'][0]
-            res = self.read(cr,uid,new_id,['analytic_account_id'])
-            res_id = res['analytic_account_id'][0]
-            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
-        return new_id
-    
-    def write(self, cr, uid, ids, vals, context=None):
-        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
-            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
-            parent_id = parent_res['analytic_account_id'][0]
-            res = self.read(cr,uid,ids,['analytic_account_id'])[0]
-            res_id = res['analytic_account_id'][0]
-            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
-        return super(dm_campaign, self).write(cr, uid, ids, vals, context=context)
-
-
-    
+#    def create(self, cr, uid, vals, context=None):
+#        new_id = super(dm_campaign, self).create(cr, uid, vals, context=context)
+#        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
+#            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
+#            parent_id = parent_res['analytic_account_id'][0]
+#            res = self.read(cr,uid,new_id,['analytic_account_id'])
+#            res_id = res['analytic_account_id'][0]
+#            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
+#        return new_id
+#    
+#    def write(self, cr, uid, ids, vals, context=None):
+#        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
+#            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
+#            parent_id = parent_res['analytic_account_id'][0]
+#            res = self.read(cr,uid,ids,['analytic_account_id'])[0]
+#            res_id = res['analytic_account_id'][0]
+#            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
+#        return super(dm_campaign, self).write(cr, uid, ids, vals, context=context)
+ 
 dm_campaign()
 
 
