@@ -8,6 +8,7 @@ from osv import osv
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
+#    _inherit = 'account.analytic.account'
     _rec_name = 'name'
 
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
@@ -16,19 +17,19 @@ class dm_campaign(osv.osv):
     
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
-        'parent_id' : fields.many2one('dm.campaign','Parent',domain="[('type','=','view')]"),
+        'campaign_parent_id' : fields.many2one('dm.campaign','Parent',domain="[('campaign_type','=','view')]"),
         'country_id' : fields.many2one('res.country', 'Country'),
         'lang_id' : fields.many2one('res.lang', 'Language'),
-        #'date_start':fields.date('Start Date'),
-        #'date_end':fields.date('End Date'),
+#        'date_start':fields.date('Start Date'),
+        'date_end':fields.date('End Date'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
         'receiver_id': fields.many2one('res.partner','Receiver'),
         'project_id' : fields.many2one('project.project', 'Project', required=True),
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
-        'state' : fields.selection([('draft','Draft'),('planning','Planning'), ('open','Open'), ('fabrication','Fabrication'), ('close','Close'), ('cancel','Cancel')], 'State',readonly=True),
+        'campaign_state' : fields.selection([('draft','Draft'),('planning','Planning'), ('open','Open'), ('fabrication','Fabrication'), ('close','Close'), ('cancel','Cancel')], 'State',readonly=True),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
-        'type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
+        'campaign_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
 		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
 #  
 #                        desktop publication   
@@ -40,15 +41,14 @@ class dm_campaign(osv.osv):
         'dtp_operator' : fields.many2one('res.partner','Operator'),
         'dtp_date_recovered' : fields.date('Recovered Date'),
         'dtp_notes' : fields.text('Notes'),            
-        'partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
-        'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
+        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
+        'campaign_product_ids' : fields.one2many('dm.campaign.product', 'campaign_product_id', 'Products'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
     
     _defaults = {
         'state': lambda *a: 'draft',
     }
-    
     def state_close_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'close'})
         return True  
@@ -91,7 +91,7 @@ dm_campaign_statistics()
 class dm_campaign_product(osv.osv):
     _name = "dm.campaign.product"
     _columns = {
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'campaign_product_id' : fields.many2one('product.product', 'Product', required=True),
         'qty_planned' : fields.integer('Planned Quantity'),
         'qty_real' : fields.float('Real Quantity'),
         'price' : fields.float('Sale Price')
@@ -138,7 +138,7 @@ class dm_campaign_proposition(osv.osv):
         #'date_start' : fields.date('Date'),
         'sent_qty' : fields.integer("Quantity"),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
-        'type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
+        'proposition_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
         'segment_ids' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'customer_pricelist_id':fields.many2one('dm.campaign.pricelist','Customer Pricelist',domain=[('type','=','customer')]),
         'requirer_pricelist_id' : fields.many2one('dm.campaign.pricelist','Requirer Pricelist',domain=[('type','=','requirer')]),
