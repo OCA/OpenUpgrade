@@ -38,4 +38,4 @@ class campaign_report(report_sxw.rml_parse):
         })
         self.context = context
         
-report_sxw.report_sxw('report.dm.campaign.report', 'dm.campaign', 'addons/dm/report/dm_campagin.rml', parser=campaign_report, header=False)
+report_sxw.report_sxw('report.dm.campaign.report', 'dm.campaign', 'addons/dm/report/dm_campagin.rml', parser=campaign_report,)
