@@ -92,7 +92,7 @@
 		<record id="dm_campaign_proposition_1" model="dm.campaign.proposition">
 			<field eval="&quot;Verification Issues&quot;" name="name"/>
 			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_netamount0"/>
-			<field eval="10" name="sent_qty"/>
+			<field eval="10" name="quantity_max"/>
 			<field eval="time.strftime('%Y-%m-03')" name="date_start"/>
 			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_grossamt0"/>
 			<field name="segment_ids" ref="dm.dm_campaign_proposition_segment_6"/>
