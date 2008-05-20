@@ -74,10 +74,10 @@ class dm_campaign(osv.osv):
         return True  
 
     def create(self, cr, uid, vals, context=None):
+        new_id = super(dm_campaign, self).create(cr, uid, vals, context=context)
         if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
             parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
             parent_id = parent_res['analytic_account_id'][0]
-            new_id = super(dm_campaign, self).create(cr, uid, vals, context=context)
             res = self.read(cr,uid,new_id,['analytic_account_id'])
             res_id = res['analytic_account_id'][0]
             self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})

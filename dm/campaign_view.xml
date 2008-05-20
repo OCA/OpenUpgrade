@@ -80,15 +80,14 @@
 								<field name="sale_rate"/>
 								<field name="segment_ids" colspan="4"/>
 								<newline/>
-								<separator string="Delays" colspan="4"/>
-								<field name="delay_ids" colspan="4" nolabel="1"/>
+								<field name="delay_ids" colspan="4"/>
 								<field name="notes" colspan="4"/>
 							</form>
 							<tree string="Propositions">
 								<field name="name" string="Name"/>
 								<field name="code" string="Code"/>
 								<field name="date_start" colspan="4"/>
-								<field name="quantity_max"/>
+								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
 								<field name="type"/>
 							</tree>													
