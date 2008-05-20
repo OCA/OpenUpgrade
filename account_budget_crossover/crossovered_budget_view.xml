@@ -107,39 +107,11 @@
 			</field>
 		</record>
 
-		<record model="ir.ui.view" id="view_crossovered_budget_line_graph">
-			<field name="name">crossovered.budget.line.graph</field>
-			<field name="model">crossovered.budget.lines</field>
-			<field name="type">graph</field>
-			<field name="arch" type="xml">
-				<graph type="bar" string="Lines">
-					<field name="general_budget_id" />
-					<field name="analytic_account_id" operator="+"/>
-					<field name="planned_amount" operator="+"/>
-					<field group="True" name="analytic_account_id"/>
-				</graph>
-			</field>
-		</record>
-
-		<record model="ir.ui.view" id="view_crossovered_budget_line_graph1">
-			<field name="name">crossovered.budget.line.graph1</field>
-			<field name="model">crossovered.budget.lines</field>
-			<field name="type">graph</field>
-			<field name="arch" type="xml">
-				<graph type="bar" string="Lines">
-					<field name="analytic_account_id" />
-					<field name="general_budget_id" operator="+"/>
-					<field name="planned_amount" operator="+"/>
-					<field group="True" name="general_budget_id"/>
-				</graph>
-			</field>
-		</record>
-
 		<record model="ir.actions.act_window" id="act_crossovered_budget_lines_view">
 			<field name="name">CrossOvered Budget Lines</field>
 			<field name="res_model">crossovered.budget.lines</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">tree,form,graph</field>
+			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_crossovered_budget_line_tree"/>
 		</record>
 
@@ -197,7 +169,14 @@
 							<field name="account_ids" colspan="4" nolabel="1"/>
 						</page>
 						<page string="Crossovered Budget Lines">
-							<field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph" />
+							<field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph" >
+								<graph type="bar" string="Lines">
+									<field name="analytic_account_id" />
+									<field name="general_budget_id" operator="+" />
+									<field name="planned_amount" operator="+"/>
+									<field group="True" name="general_budget_id"/>
+								</graph>
+							</field>
 						</page>
 					</notebook>
 				</form>
@@ -212,7 +191,7 @@
 			<field name="arch" type="xml">
 				<notebook position="inside">
 					<page string="Crossovered Budget Lines">
-							<field name="crossovered_budget_line" colspan="4" nolabel="1" mode="tree,graph">
+							<field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph">
 							<tree string="Crossovered Budget Lines">
 								<field name="crossovered_budget_id" />
 								<field name="analytic_account_id"/>
@@ -221,8 +200,13 @@
 								<field name="date_to"/>
 								<field name="paid_date"/>
 								<field name="planned_amount"/>
-
 							</tree>
+							<graph type="bar" string="Lines">
+								<field name="general_budget_id" />
+								<field name="analytic_account_id" operator="+"/>
+								<field name="planned_amount" operator="+"/>
+								<field group="True" name="analytic_account_id"/>
+							</graph>
 							</field>
 					</page>
 				</notebook>
