@@ -58,10 +58,12 @@ class crm_livechat_livechat(osv.osv):
 	
 	def get_available_partner_id(self, cr, uid, context={}):
 		res={}
-		id=self.search(cr,uid,[('name','like','Dummy'+"%"),('state','like','active')],context)
+		id=self.search(cr,uid,[('name','like','Dummy'+"%"),('state','like','notactive')],context)
+		print "IDS :::::::",id
 		for lc in self.browse(cr, uid, id, context):
 			for p in lc.partner_ids:
-				if p.state=='active':
+				print "In loop",p.available
+				if p.available==False:
 						res['id']=p.id
 						res['name']=p.jabber_id.name
 						res['jid']=p.jabber_id.login
@@ -114,10 +116,13 @@ class crm_livechat_livechat(osv.osv):
 		for user in livechat[0].user_ids:
 			print "users ",user
 			if  user.state=='active':
+				
 #				continue
 				c = 0
 				for s in self.sessions:
-					if s[0]==user.user_id.id:
+					print "In session",s
+					print "This is s[0]",s,user.user_id
+					if s==user.user_id.id:
 						c+=1
 				if c<minu[0]:
 					if c<livechat[0].max_per_user:
@@ -140,9 +145,9 @@ class crm_livechat_livechat(osv.osv):
 	def start_session(self, cr, uid, livechat_id, user_id=False, partner_ids=False, partner_ip='Unknown', lang=False, context={}):
 		print "In session srtart", livechat_id," User id ", user_id," ?Partner id ", partner_ids
 		partner_ids=int(partner_ids)
-		self.pool.get('crm_livechat.livechat.partner').write(cr, uid,[partner_ids], {
-					'state': 'notactive',
-				})
+#		self.pool.get('crm_livechat.livechat.partner').write(cr, uid,[partner_ids], {
+#					'state': 'notactive',
+#				})
 		if not user_id:
 			print "In notvvvvvv user id",user_id
 			user_id = self.get_user(cr, uid, livechat_id, context)
@@ -176,14 +181,12 @@ class crm_livechat_livechat(osv.osv):
 		OUT:
 			True
 	"""
-	def stop_session(self, cr, uid, id, session_id, partner_id=False,log=True, context={}):
+	def stop_session(self, cr, uid, id, session_id, log=True, context={}):
 		print "session_id"
-		self.pool.get('crm_livechat.livechat.partner').write(cr, uid,[int(partner_id)], {
-					'state': 'active',
-				})
+		
 		print "session id ",session_id," data it have ",self.sessions
 		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [self.sessions[session_id][1]], {
-			'available': 'notactive',
+			'available': False,
 		})
 		print "This is self session",self.sessions
 		if session_id in self.sessions:
