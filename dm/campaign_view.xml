@@ -17,11 +17,11 @@
 		<field name="arch" type="xml">
 			<tree string="Campaigns">
 				<field name="name" string="Name"/>
-				<field name="type"/>
+				<field name="campaign_type"/>
 				<field name="offer_id"/>
 				<field name="date_start"/>
 				<field name="date"/>
-				<field name="state"/>
+				<field name="campaign_state"/>
 			</tree>
 		</field>
 	</record>
@@ -37,15 +37,15 @@
 						<field name="name" string="Name"/>
 						<field name="code" string="Code"/>
 						<field name="offer_id"/>
-						<field name="parent_id"/>
+						<field name="campaign_parent_id"/>
 						<field name="country_id"/>
 						<field name="lang_id"/>
 				<notebook colspan="4">
 					<page string="General">
 						<field name="date_start"/>
 						<field name="date"/>
-						<field name="type"/>
-						<field name="partner_id" string="Partner"/>
+						<field name="campaign_type"/>
+						<field name="campaign_partner_id" string="Partner"/>
 						<field name="trademark_id"/>
 						<field name="receiver_id"/>
 						<field name="project_id" colspan="4"/>
@@ -54,7 +54,7 @@
 <!--						<field name="campaign_stat_ids"/>-->
 						<separator string="Status" colspan="4"/>
 						<group col="10" colspan="4">
-							<field name="state" select="2" nolabel="1"/>
+							<field name="campaign_state" select="2" nolabel="1"/>
 							<button name="state_planning_set" string="Planning" states="draft,open" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,fabrication" type="object"/>
 							<button name="state_fabrication_set" string="Fabrication" states="draft,open,planning" type="object"/>
@@ -67,15 +67,15 @@
 						<field name="proposition_ids" nolabel="1"/>
 					</page>
 					<page string="Procurement">
-						<field name="product_ids" nolabel="1">
+						<field name="campaign_product_ids" nolabel="1">
 							<form string="Products">
-								<field name="product_id"/>
+								<field name="campaign_product_id"/>
 								<field name="qty_planned"/>
 								<field name="qty_real"/> 
 								<field name="price"/>
 							</form>
 							<tree string="Products">
-								<field name="product_id"/>
+								<field name="campaign_product_id"/>
 								<field name="qty_planned"/>
 								<field name="qty_real"/> 
 								<field name="price"/>
@@ -152,7 +152,7 @@
 				<field name="code" string="Code"/>
 				<field name="camp_id"/>
 				<field name="date_start"/>
-				<field name="type"/>
+				<field name="proposition_type"/>
 				<newline/>
 				<field name="customer_pricelist_id"/>
 				<field name="requirer_pricelist_id"/>
@@ -258,8 +258,5 @@
 		<field name="view_id" ref="view_campaign_group_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
-
-
-
 </data>
 </terp>

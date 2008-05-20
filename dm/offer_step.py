@@ -4,9 +4,6 @@ import campaign
 from osv import fields
 from osv import osv
 
-print dir(campaign)
-print dir(campaign.dm_campaign_proposition_segment)
-
 AVAILABLE_STATES = [
     ('draft','Draft'),
     ('open','Open'),
