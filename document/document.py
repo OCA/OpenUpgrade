@@ -56,6 +56,7 @@ import pooler
 #       file: objct = ir.attachement
 #   root: if we are at the first directory of a ressource
 #
+INVALID_CHARS={'*':str(hash('*')), '|':str(hash('|')) , "\\":str(hash("\\")), '/':'__', ':':str(hash(':')), '"':str(hash('"')), '<':str(hash('<')) , '>':str(hash('>')) , '?':str(hash('?'))}
 class node_class(object):
 	def __init__(self, cr, uid, path,object,object2=False, context={}, content=False, type='collection', root=False):
 		self.cr = cr
@@ -151,14 +152,18 @@ class node_class(object):
 			elif nodename:
 				if nodename.find('__') :
 					nodename=nodename.replace('__','/')
+				for invalid in INVALID_CHARS:
+					if nodename.find(INVALID_CHARS[invalid]) :
+						nodename=nodename.replace(INVALID_CHARS[invalid],invalid)
 				where.append(('name','=',nodename))
-
 			ids = obj.search(self.cr, self.uid, where, self.context)
 			res = obj.browse(self.cr, self.uid, ids,self.context)
-
 			for r in res:
 				if not r.name:
 					r.name = name_for+'%d'%r.id
+				for invalid in INVALID_CHARS:
+					if r.name.find(invalid) :
+						r.name=r.name.replace(invalid,INVALID_CHARS[invalid])
 			result2 = map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x, root=True), res)
 			if result2:
 				result = result2
