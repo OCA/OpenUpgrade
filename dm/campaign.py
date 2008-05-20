@@ -42,7 +42,11 @@ class dm_campaign(osv.osv):
         'dtp_date_recovered' : fields.date('Recovered Date'),
         'dtp_notes' : fields.text('Notes'),            
         'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
+<<<<<<< .mine
+        'campaign_product_ids' : fields.one2many('dm.campaign.product', 'camp_id', 'Products'),
+=======
         'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
+>>>>>>> .r2381
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
     
@@ -90,7 +94,9 @@ dm_campaign_statistics()
 
 class dm_campaign_product(osv.osv):
     _name = "dm.campaign.product"
+    _rec_name = 'product_id'
     _columns = {
+        'camp_id' : fields.many2one('dm.campaign', 'Campaign'),
         'product_id' : fields.many2one('product.product', 'Product', required=True),
         'qty_planned' : fields.integer('Planned Quantity'),
         'qty_real' : fields.float('Real Quantity'),
