@@ -37,8 +37,22 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
             'time': time,
             'lines': self._lines,
             'ref_lines' : self._ref_lines,
+            'find_children':self.find_children,
         })
         self.base_amount=0.00
+
+    def find_children(self,ref_id):
+            child_ids=[]
+            list_ids=[]
+            for id in ref_id:
+                # to avoid duplicate entries
+                if id in self.final_list:
+                    continue
+                self.final_list.append(id)
+                child_ids=self.pool.get('account.analytic.account').search(self.cr,self.uid,[('parent_id','=',id)])
+                if child_ids:
+                    list_ids=self.find_children(child_ids)
+            return self.final_list
 
     def _ref_lines(self,form):
         result=[]
@@ -85,9 +99,15 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
            self.dict_acc_ref[entry] = list(set([x for x in self.dict_acc_ref[entry]]))
 
         res['ref_name']=acc_pool.name_get(self.cr,self.uid,[form['ref']])[0][1]
-        selected_ids=line_pool.search(self.cr,self.uid,[('account_id','=',form['ref'])])
-        query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
-                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "'"" GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
+
+        self.final_list=[]
+        child_ids=self.find_children([form['ref']])
+        self.final_list=child_ids
+
+        selected_ids=line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list)])
+
+        query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty FROM account_analytic_line AS aal, account_analytic_account AS aaa \
+                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "'"
 
         self.cr.execute(query)
         info=self.cr.dictfetchall()
@@ -114,21 +134,9 @@ class cci_crossovered_analytic(report_sxw.rml_parse):
         final=[]
         child_ids=[]
         self.list_ids=[]
+
         self.final_list=[]
-
-        def find_children(ref_id):
-
-            for id in ref_id:
-                # to avoid duplicate entries
-                if id in self.final_list:
-                    continue
-                self.final_list.append(id)
-                child_ids=acc_pool.search(self.cr,self.uid,[('parent_id','=',id)])
-                if child_ids:
-                    self.list_ids=find_children(child_ids)
-            return self.final_list
-
-        child_ids=find_children(ids)
+        child_ids=self.find_children(ids)
         self.final_list=child_ids
 
         for acc_id in self.final_list:
