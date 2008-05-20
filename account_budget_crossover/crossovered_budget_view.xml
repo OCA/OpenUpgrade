@@ -35,7 +35,7 @@
 							<group col="4" colspan="2">
 								<button string="Confirm" name="confirm" states="draft" type="workflow" />
 								<button string="Validate" name="validate" states="confirm" type="workflow"/>
-								<button string="Done" name="done" states="validate,cancel" type="workflow"/>
+								<button string="Done" name="done" states="validate" type="workflow"/>
 								<button string="Cancel" name="cancel" states="confirm,validate" type="workflow" />
 								<!--<button string="Set to Draft" name="action_set_to_draft" states="cancel" type="object"/>-->
 							</group>
@@ -107,17 +107,127 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_crossovered_budget_line_graph">
+			<field name="name">crossovered.budget.line.graph</field>
+			<field name="model">crossovered.budget.lines</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph type="bar" string="Lines">
+					<field name="general_budget_id" />
+					<field name="analytic_account_id" operator="+"/>
+					<field name="planned_amount" operator="+"/>
+					<field group="True" name="analytic_account_id"/>
+				</graph>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_crossovered_budget_line_graph1">
+			<field name="name">crossovered.budget.line.graph1</field>
+			<field name="model">crossovered.budget.lines</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph type="bar" string="Lines">
+					<field name="analytic_account_id" />
+					<field name="general_budget_id" operator="+"/>
+					<field name="planned_amount" operator="+"/>
+					<field group="True" name="general_budget_id"/>
+				</graph>
+			</field>
+		</record>
+
 		<record model="ir.actions.act_window" id="act_crossovered_budget_lines_view">
 			<field name="name">CrossOvered Budget Lines</field>
 			<field name="res_model">crossovered.budget.lines</field>
 			<field name="view_type">form</field>
-			<field name="view_mode">tree,form</field>
+			<field name="view_mode">tree,form,graph</field>
 			<field name="view_id" ref="view_crossovered_budget_line_tree"/>
 		</record>
 
 		<menuitem name="Financial Management/Reporting/Budgets/Crossovered Budgets/Entries"
 			id="menu_act_crossovered_budget_lines_view"
 			action="act_crossovered_budget_lines_view" />
+
+		<!--  Shortcuts -->
+		<act_window name="Crossovered Budget Lines"
+			domain="[('analytic_account_id', '=', active_id)]"
+			res_model="crossovered.budget.lines"
+			src_model="account.analytic.account"
+			id="act_account_analytic_account_cb_lines"/>
+
+		<!--<record model="ir.ui.view" id="view_budget_post_dotation_form_inherit">
+			<field name="name">account.budget.post.dotation.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">account.budget.post.dotation</field>
+			<field name="inherit_id" ref="account.view_budget_post_dotation_form"/>
+			<field name="arch" type="xml">
+				<field name="period_id" position="after">
+					<field name="tot_planned" />
+				</field>
+			</field>
+		</record>-->
+
+		<record model="ir.ui.view" id="view_budget_post_dotation_tree_inherit">
+			<field name="name">account.budget.post.dotation.tree.inherit</field>
+			<field name="model">account.budget.post.dotation</field>
+			<field name="type">tree</field>
+			<field name="inherit_id" ref="account.view_budget_post_dotation_tree"/>
+			<field name="arch" type="xml">
+				<field name="period_id" position="after">
+					<field name="tot_planned" />
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account.view_budget_post_form">
+			<field name="name">account.budget.post.form.inherit</field>
+			<field name="model">account.budget.post</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Budget item">
+					<notebook>
+						<page string="Definition">
+							<field name="code" select="1"/>
+							<field name="name" select="1"/>
+						</page>
+						<page string="Dotations">
+							<button string="Spread" name="%(account.wizard_budget_spread)d" type="action"/>
+							<field name="dotation_ids" colspan="4" nolabel="1"/>
+						</page>
+						<page string="Accounts">
+							<field name="account_ids" colspan="4" nolabel="1"/>
+						</page>
+						<page string="Crossovered Budget Lines">
+							<field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph" />
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_account_analytic_account_form_inherit_cci">
+			<field name="name">account.analytic.account.form.inherot.cci</field>
+			<field name="type">form</field>
+			<field name="model">account.analytic.account</field>
+			<field name="inherit_id" ref="account.view_account_analytic_account_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Crossovered Budget Lines">
+							<field name="crossovered_budget_line" colspan="4" nolabel="1" mode="tree,graph">
+							<tree string="Crossovered Budget Lines">
+								<field name="crossovered_budget_id" />
+								<field name="analytic_account_id"/>
+								<field name="general_budget_id"/>
+								<field name="date_from"/>
+								<field name="date_to"/>
+								<field name="paid_date"/>
+								<field name="planned_amount"/>
+
+							</tree>
+							</field>
+					</page>
+				</notebook>
+			</field>
+		</record>
 
 	</data>
 </terp>

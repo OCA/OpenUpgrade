@@ -30,12 +30,12 @@ class crossovered_budget(osv.osv):
 		'creating_user_id': lambda self,cr,uid,context: uid,
 	}
 
-	def action_set_to_draft(self, cr, uid, ids, *args):
-		self.write(cr, uid, ids, {'state': 'draft'})
-		wf_service = netsvc.LocalService('workflow')
-		for id in ids:
-			wf_service.trg_create(uid, self._name, id, cr)
-		return True
+#	def action_set_to_draft(self, cr, uid, ids, *args):
+#		self.write(cr, uid, ids, {'state': 'draft'})
+#		wf_service = netsvc.LocalService('workflow')
+#		for id in ids:
+#			wf_service.trg_create(uid, self._name, id, cr)
+#		return True
 
 	def budget_confirm(self, cr, uid, ids, *args):
 
@@ -132,3 +132,57 @@ class crossovered_budget_lines(osv.osv):
 
 	 }
 crossovered_budget_lines()
+
+class account_budget_post(osv.osv):
+	_name = 'account.budget.post'
+	_inherit = 'account.budget.post'
+	_columns = {
+	'crossovered_budget_line': fields.one2many('crossovered.budget.lines', 'general_budget_id', 'Budget Lines'),
+	}
+account_budget_post()
+
+class account_budget_post_dotation(osv.osv):
+	_name = 'account.budget.post.dotation'
+	_inherit = 'account.budget.post.dotation'
+
+	def _tot_planned(self, cr, uid, ids,name,args,context):
+		res={}
+		for line in self.browse(cr, uid, ids):
+			if line.period_id:
+				obj_period=self.pool.get('account.period').browse(cr, uid,line.period_id.id)
+
+				total_days=strToDate(obj_period.date_stop) - strToDate(obj_period.date_start)
+				budget_id=line.post_id and line.post_id.id or False
+				query="select id from crossovered_budget_lines where  general_budget_id= '"+ str(budget_id) + "' and date_from  >='"  +obj_period.date_start +"'  and date_from <= '"+obj_period.date_stop + "'"
+				cr.execute(query)
+				res1=cr.fetchall()
+
+				tot_planned=0.00
+				for record in res1:
+					obj_lines=self.pool.get('crossovered.budget.lines').browse(cr, uid,record[0])
+					count_days=strToDate(obj_period.date_stop) - strToDate(obj_lines.date_from)
+					counted=count_days.days
+					tot_planned +=float((counted +1)/float(total_days.days+1))*obj_lines.planned_amount
+				res[line.id]=tot_planned
+			else:
+				res[line.id]=0.00
+		return res
+
+	_columns = {
+	'tot_planned':fields.function(_tot_planned,method=True, string='Total Planned Amount',type='float',store=True),
+	}
+
+account_budget_post_dotation()
+
+class account_analytic_account(osv.osv):
+	_name = 'account.analytic.account'
+	_inherit = 'account.analytic.account'
+
+	_columns = {
+	'crossovered_budget_line': fields.one2many('crossovered.budget.lines', 'analytic_account_id', 'Budget Lines'),
+	}
+
+account_analytic_account()
+
+
+
