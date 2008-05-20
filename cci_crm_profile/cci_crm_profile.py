@@ -59,7 +59,7 @@ question()
 class answer(osv.osv):
 	_inherit="crm_profiling.answer"
 	_columns={
-		"text": fields.text("Open Answer"),
+		"text": fields.text("Open Answer", translate=True),
 		}
 answer()
 
