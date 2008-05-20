@@ -42,8 +42,10 @@ class ChatFunc(controllers.RootController):
     @expose(template="livechat.templates.main_page")
     def select_topic(self,**kw):
             proxy = rpc.RPCProxy("crm_livechat.livechat")
-            ids = proxy.search([])
+            ids = proxy.search([('name','not like','Dummy'+"%"),('state','=','active')])
+            print "IDS",ids
             res = proxy.read(ids, ['id','name','state','max_per_user'])
+            print "This is ",res
             return dict(topiclist = res)
 
    
@@ -56,15 +58,21 @@ class ChatFunc(controllers.RootController):
     
     def mainhandler(self,cl,topicid):
         print "Getting in MainHandler..."
-#        partners = rpc.RPCProxy("crm_livechat.livechat.partner").search([('name','like','Bond'])        
+#        partners = rpc.RPCProxy("crm_livechat.livechat.partner").search([('name','like','Bond'])
+        
         if not (self.client):
             print "Connection Not Found... \n Making Connetion again...\n"
             cl = self.myConnection(topicid)
+            if cl=='NoActive':
+                print "No user left"
+            else:
+                print "\nStarting Thread to Recieve...."
+                thread.start_new_thread(self.recieving,("Recieving",5,cl))        
         else:
             print "MainHandler Called"        
     
-        print "\nStarting Thread to Recieve...."
-        thread.start_new_thread(self.recieving,("Recieving",5,cl))    
+        
+            
 
     def recieving(self,string,sleeptime,cl,*args):
         while self.cont:
@@ -102,46 +110,57 @@ class ChatFunc(controllers.RootController):
         self.msglist.append(msgformat)
         return dict(msglist = self.msglist,recepients = self.recepients)
     
-    def myConnection(self,topicid, jid, pwd):
+    def myConnection(self,topicid):
         cr = ''
         uid = ''
         self.topicid = topicid
-        livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration([int(topicid)])
-        print "This is first live chat data",livechatdata
-        partnerlist = livechatdata['partner']
-        pp=map(lambda p:p,partnerlist)
-        
-        jid = livechatdata['partner'][pp[0]]['login']
-        self.login = jid
-        pwd = livechatdata['partner'][pp[0]]['password']
-             
-        jid=xmpp.protocol.JID(jid)
-        cl=xmpp.Client(jid.getDomain(),debug=[])
-        
-        
-        x = cl.connect()
-        if x == "":
-            print "Connection Error....."
+        print ">>>>>>>>>>>>>",topicid
+        livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_available_partner_id()
+        print "::::::::::::::::::::::::::::::::::::::::",livechatdata
+        livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration(topicid)
+        if livechatdata:
+            print "This is first live chat data",livechatdata
+            partnerlist = livechatdata['partner']
+            pp=map(lambda p:p,partnerlist)
+            print "////////////////////////",pp
+            jid = livechatdata['partner'][pp[0]]['login']
+            
+            print "////////////////////////",jid
+            self.login = jid
+            pwd = livechatdata['partner'][pp[0]]['password']
+                 
+            jid=xmpp.protocol.JID(jid)
+            cl=xmpp.Client(jid.getDomain(),debug=[])
+            
+            
+            x = cl.connect()
+            if x == "":
+                print "Connection Error....."
+            else:
+                print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
+    
+            try:
+                auth = cl.auth(jid.getNode(),pwd,"test")
+            except AttributeError, err:
+                raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
+            
+            cl.RegisterHandler('message', self.messageCB)
+            cl.sendInitPresence();
+            self.client=cl
+            print "This is live chat data:",livechatdata,topicid
+            user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
+            print "\n\n\n\nThe user i get :",user
+            user = livechatdata['user'][str(user)]['login']
+            self.user= user
+            
+            if(self.user):
+    #            for x in livechatdata['partner'].keys()
+    #                print x
+                print "yyY",pp
+                self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)], False,pp[0])
+                print "\nCreating Session ........";
         else:
-            print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
-
-        try:
-            auth = cl.auth(jid.getNode(),pwd,"test")
-        except AttributeError, err:
-            raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
-        
-        cl.RegisterHandler('message', self.messageCB)
-        cl.sendInitPresence();
-        self.client=cl
-        print "This is live chat data:",livechatdata,topicid
-        user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
-        print "\n\n\n\nThe user i get :",user
-        user = livechatdata['user'][str(user)]['login']
-        self.user= user
-        
-        if(self.user):
-            self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)])
-            print "\nCreating Session ........";
+            cl="NoActive"
         return cl
     
     def messageCB(self,conn,msg):

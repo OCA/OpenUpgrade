@@ -41,7 +41,7 @@ class crm_livechat_livechat(osv.osv):
 		return super(crm_livechat_livechat, self).__init__(*args, **argv)
 
 	def get_chat_name(self,cr,uid,context={}):
-		ids=self.search(cr,uid,[],context)
+		ids=self.search(cr,uid,['name','<>','Dummy'],context)
 		res=self.browse(cr,uid,ids,context)
 		result={}
 		for r in res:
@@ -55,32 +55,54 @@ class crm_livechat_livechat(osv.osv):
 	# This is used by the web application to get information about jabber accounts
 	# The web application put this in his session to now download it at each time
 	#
+	
+	def get_available_partner_id(self, cr, uid, context={}):
+		res={}
+		id=self.search(cr,uid,[('name','like','Dummy'+"%"),('state','like','active')],context)
+		for lc in self.browse(cr, uid, id, context):
+			for p in lc.partner_ids:
+				if p.state=='active':
+						res['id']=p.id
+						res['name']=p.jabber_id.name
+						res['jid']=p.jabber_id.login
+						res['pwd']=p.jabber_id.password
+						res['server']=p.jabber_id.server
+						return res
+		return res
+	
+	
 	def get_configuration(self, cr, uid, ids, context={}):
+		print "In get config"
 		result = {}
 		main_res={}
 		print "Ids ",ids
-		for lc in self.browse(cr, uid, ids, context):
-			print "In loop",lc
-			print "lc.user_ids + lc.partner_ids:",lc.user_ids ," dfdfdfdf          ",lc.partner_ids
-			for u in lc.user_ids:
-				result[str(u.id)] = {
-					'name': u.name,
-					'server': u.jabber_id.server,
-					'login':  u.jabber_id.login,
-					'password':  u.jabber_id.password,
-					'state': u.state
-				}
-			main_res['user']=result
-			result={}
-			for u in lc.partner_ids:
-				result[str(u.id)] = {
-					'name': u.name,
-					'server': u.jabber_id.server,
-					'login':  u.jabber_id.login,
-					'password':  u.jabber_id.password,
-					'state': u.state
-				}			
-			main_res['partner']=result	
+		partner_detail=self.get_available_partner_id(cr, uid, context)
+		print "`````````````````````````",partner_detail
+		if partner_detail:
+				print "In if condition"
+				for lc in self.browse(cr, uid, [int(ids)], context):
+					print "In loop",lc
+#					print "lc.user_ids + lc.partner_ids:",lc.user_ids ," dfdfdfdf          ",lc.partner_ids
+					for u in lc.user_ids:
+						print "Making user"
+						result[str(u.id)] = {
+							'name': u.name,
+							'server': u.jabber_id.server,
+							'login':  u.jabber_id.login,
+							'password':  u.jabber_id.password,
+							'state': u.state
+						}
+					main_res['user']=result
+					result={}
+					print "Making partner"
+					result[str(partner_detail['id'])] = {
+							'name': partner_detail['name'],
+							'server': partner_detail['server'],
+							'login':  partner_detail['jid'],
+							'password':  partner_detail['pwd'],
+							'state': 'active'
+						}			
+					main_res['partner']=result	
 		print "This is result",main_res
 		return main_res
 
@@ -115,29 +137,36 @@ class crm_livechat_livechat(osv.osv):
 			False if no available users or partners
 			(session_id, user_jabber_id, partner_jabber_id) if available
 	"""
-	def start_session(self, cr, uid, livechat_id, user_id=False, partner_ip='Unknown', lang=False, context={}):
-		print "In session srtart", livechat_id," User id ", user_id
+	def start_session(self, cr, uid, livechat_id, user_id=False, partner_ids=False, partner_ip='Unknown', lang=False, context={}):
+		print "In session srtart", livechat_id," User id ", user_id," ?Partner id ", partner_ids
+		partner_ids=int(partner_ids)
+		self.pool.get('crm_livechat.livechat.partner').write(cr, uid,[partner_ids], {
+					'state': 'notactive',
+				})
 		if not user_id:
+			print "In notvvvvvv user id",user_id
 			user_id = self.get_user(cr, uid, livechat_id, context)
+			print "Return get",user_id
 		if not user_id:
+			print "In not user id",user_id
 			return False
 
 		partner_id=False
-		for p in self.browse(cr, uid, livechat_id, context)[0].partner_ids:
-			print "partner ids::::::::::::::::",p.id,p.state
-			if p.state=='active':
-				print "In if",p.id
-				partner_id = p.id
-				break
-		if not partner_id:
-			return False
-		print "Parnter id",partner_id
-		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [partner_id], {
+#		for p in self.browse(cr, uid, livechat_id, context)[0].partner_ids:
+#			print "partner ids::::::::::::::::",p.id,p.state
+#			if p.state=='active':
+#				print "In if",p.id
+#				partner_id = p.id
+#				break
+#		if not partner_id:
+#			return False
+#		print "Parnter id",partner_id
+		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [partner_ids], {
 			'available': partner_ip,
 			'available_date': time.strftime('%Y-%m-%d %H:%M:%S')
 		})
 		self.session_count+=1
-		self.sessions[self.session_count] = (user_id, partner_id, livechat_id)
+		self.sessions[self.session_count] = (user_id, partner_ids, livechat_id)
 		print "self.session",self.sessions
 		return self.session_count
 	"""
@@ -147,8 +176,11 @@ class crm_livechat_livechat(osv.osv):
 		OUT:
 			True
 	"""
-	def stop_session(self, cr, uid, id, session_id, log=True, context={}):
+	def stop_session(self, cr, uid, id, session_id, partner_id=False,log=True, context={}):
 		print "session_id"
+		self.pool.get('crm_livechat.livechat.partner').write(cr, uid,[int(partner_id)], {
+					'state': 'active',
+				})
 		print "session id ",session_id," data it have ",self.sessions
 		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [self.sessions[session_id][1]], {
 			'available': 'notactive',
@@ -219,5 +251,3 @@ class crm_livechat_livechat_log(osv.osv):
 		'name': lambda *args: time.strftime('%Y-%m-%d %H:%M:%S')
 	}
 crm_livechat_livechat_log()
-
-
