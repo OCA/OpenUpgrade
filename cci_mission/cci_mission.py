@@ -652,6 +652,7 @@ class cci_missions_ata_carnet(osv.osv):
 
 		if 'creation_date' in vals:
 			context.update({'date':vals['creation_date']})
+			context.update({'emission_date':vals['creation_date']})
 		if 'partner_id' in vals:
 			context.update({'partner_id':vals['partner_id']})
 		if 'goods_value' in vals:
@@ -686,8 +687,11 @@ class cci_missions_ata_carnet(osv.osv):
 		context = {}
 		if 'creation_date' in vals:
 			context.update({'date':vals['creation_date']})
+			context.update({'emission_date':vals['creation_date']})
 		else:
 			context.update({'date':data_carnet.creation_date})
+			context.update({'emission_date':data_carnet.creation_date})
+
 		if 'partner_id' in vals:
 			context.update({'partner_id':vals['partner_id']})
 			data_partner=self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])

@@ -64,7 +64,7 @@ def _createInvoices(self, cr, uid, data, context):
 
         if embassy.state != 'open':
             inv_reject = inv_reject + 1
-            inv_rej_reason += "ID "+str(embassy.id)+": Check State.Folder should be Open for Invoicing. \n"
+            inv_rej_reason += "ID "+str(embassy.id)+": Check State. Folder should be Open for Invoicing. \n"
             continue
         if embassy.invoice_id:
             inv_reject = inv_reject + 1
@@ -85,7 +85,7 @@ def _createInvoices(self, cr, uid, data, context):
                 address_invoice = add.id
         if not address_invoice:
             inv_reject = inv_reject + 1
-            inv_rej_reason += "ID "+str(embassy.id)+": No Partner Invoice Address Defined on Partner \n"
+            inv_rej_reason += "ID "+str(embassy.id)+": No Partner Invoice Address Defined on Partner. \n"
             continue
         for line in embassy.embassy_folder_line_ids:
             tax_ids = []

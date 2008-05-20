@@ -70,12 +70,12 @@ def _createInvoices(self, cr, uid, data, context={}):
 		create_ids = []
 		if data.invoice_id:
 			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(data.id)+": Already Has an Invoice Linked \n"
+			inv_rej_reason += "ID "+str(data.id)+": Already Has an Invoice Linked. \n"
 			continue
 
 		if not data.to_bill:
 			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(data.id)+": Cannot Be Billed \n"
+			inv_rej_reason += "ID "+str(data.id)+": Cannot Be Billed. \n"
 			continue
 		for add in data.order_partner_id.address:
 			if add.type == 'contact':
@@ -88,7 +88,7 @@ def _createInvoices(self, cr, uid, data, context={}):
 				address_invoice = add.id
 		if not address_invoice:
 			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(data.id)+": No Partner Address Defined on Billed Customer \n"
+			inv_rej_reason += "ID "+str(data.id)+": No Partner Address Defined on Billed Customer. \n"
 			continue
 
 		context.update({'date':data.date})
