@@ -21,7 +21,7 @@ class dm_campaign(osv.osv):
         'country_id' : fields.many2one('res.country', 'Country'),
         'lang_id' : fields.many2one('res.lang', 'Language'),
 #        'date_start':fields.date('Start Date'),
-        'date_end':fields.date('End Date'),
+#        'date_end':fields.date('End Date'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
         'receiver_id': fields.many2one('res.partner','Receiver'),
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
@@ -41,12 +41,8 @@ class dm_campaign(osv.osv):
         'dtp_operator' : fields.many2one('res.partner','Operator'),
         'dtp_date_recovered' : fields.date('Recovered Date'),
         'dtp_notes' : fields.text('Notes'),            
-        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
-<<<<<<< .mine
-        'campaign_product_ids' : fields.one2many('dm.campaign.product', 'camp_id', 'Products'),
-=======
+#        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
         'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
->>>>>>> .r2381
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
     
@@ -76,6 +72,27 @@ class dm_campaign(osv.osv):
     def state_draft_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
+
+    def create(self, cr, uid, vals, context=None):
+        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
+            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
+            parent_id = parent_res['analytic_account_id'][0]
+            new_id = super(dm_campaign, self).create(cr, uid, vals, context=context)
+            res = self.read(cr,uid,new_id,['analytic_account_id'])
+            res_id = res['analytic_account_id'][0]
+            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
+        return new_id
+    
+    def write(self, cr, uid, ids, vals, context=None):
+        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
+            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
+            parent_id = parent_res['analytic_account_id'][0]
+            res = self.read(cr,uid,ids,['analytic_account_id'])[0]
+            res_id = res['analytic_account_id'][0]
+            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
+        return super(dm_campaign, self).write(cr, uid, ids, vals, context=context)
+
+
     
 dm_campaign()
 
@@ -142,7 +159,7 @@ class dm_campaign_proposition(osv.osv):
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays'),
         #'date_start' : fields.date('Date'),
-        'sent_qty' : fields.integer("Quantity"),
+#        'sent_qty' : fields.integer("Quantity"),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
         'segment_ids' : fields.many2one('dm.campaign.proposition.segment','Segment'),

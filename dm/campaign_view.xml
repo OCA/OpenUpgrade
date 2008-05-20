@@ -45,7 +45,7 @@
 						<field name="date_start"/>
 						<field name="date"/>
 						<field name="campaign_type"/>
-						<field name="campaign_partner_id" string="Partner"/>
+						<field name="partner_id"/>
 						<field name="trademark_id"/>
 						<field name="receiver_id"/>
 						<separator string="Tasks management" colspan="4"/>
@@ -76,7 +76,7 @@
 								<field name="customer_pricelist_id"/>
 								<field name="requirer_pricelist_id"/>
 								<newline/>
-								<field name="sent_qty"/>
+								<field name="quantity_max"/>
 								<field name="sale_rate"/>
 								<field name="segment_ids" colspan="4"/>
 								<newline/>
@@ -88,7 +88,7 @@
 								<field name="name" string="Name"/>
 								<field name="code" string="Code"/>
 								<field name="date_start" colspan="4"/>
-								<field name="sent_qty"/>
+								<field name="quantity_max"/>
 								<field name="sale_rate"/>
 								<field name="type"/>
 							</tree>													
