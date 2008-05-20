@@ -10,7 +10,6 @@ import rpc
 from rpc import *
 import subcontrollers
 
-rpc.session = rpc.RPCSession( 'localhost', '8070', 'socket', storage=cherrypy.session)
 
 class Root(controllers.RootController):
     client = None

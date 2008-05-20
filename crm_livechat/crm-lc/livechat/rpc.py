@@ -226,7 +226,7 @@ class RPCSession(object):
     """
 
     __slots__ = ['host', 'port', 'protocol', 'storage', 'gateway']
-
+    
     def __init__(self, host, port, protocol='socket', storage={}):
         """Create new instance of RPCSession.
 
@@ -239,7 +239,7 @@ class RPCSession(object):
         self.port = port
         self.protocol = protocol
         self.storage = storage
-
+        
         if protocol == 'http':
             self.gateway = XMLRPCGateway(host, port, 'http')
 
