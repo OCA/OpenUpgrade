@@ -148,8 +148,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Propositions">
-				<field name="name"/>
-				<field name="code"/>
+				<field name="name" string="Name"/>
+				<field name="code" string="Code"/>
 				<field name="delay_ids" colspan="4"/>
 				<field name="date_start"/>
 				<field name="type"/>
@@ -171,8 +171,8 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Propositions">
-				<field name="name"/>
-				<field name="code"/>
+				<field name="name" string="Name"/>
+				<field name="code" string="Code"/>
 				<field name="date_start" colspan="4"/>
 				<field name="sent_qty"/>
 				<field name="sale_rate"/>
