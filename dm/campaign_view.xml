@@ -66,18 +66,44 @@
 						</group>						
 					</page>
 					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1"/>
+						<field name="proposition_ids" nolabel="1">
+							<form string="Propositions">
+								<field name="name" string="Name"/>
+								<field name="code" string="Code"/>
+								<field name="date_start"/>
+								<field name="proposition_type"/>
+								<newline/>
+								<field name="customer_pricelist_id"/>
+								<field name="requirer_pricelist_id"/>
+								<newline/>
+								<field name="sent_qty"/>
+								<field name="sale_rate"/>
+								<field name="segment_ids" colspan="4"/>
+								<newline/>
+								<separator string="Delays" colspan="4"/>
+								<field name="delay_ids" colspan="4" nolabel="1"/>
+								<field name="notes" colspan="4"/>
+							</form>
+							<tree string="Propositions">
+								<field name="name" string="Name"/>
+								<field name="code" string="Code"/>
+								<field name="date_start" colspan="4"/>
+								<field name="sent_qty"/>
+								<field name="sale_rate"/>
+								<field name="type"/>
+							</tree>													
+						</field>
 					</page>
 					<page string="Procurement">
-						<field name="campaign_product_ids" nolabel="1">
+						<field name="product_ids" nolabel="1">
 							<form string="Products">
-								<field name="campaign_product_id"/>
+								<field name="product_id"/>
 								<field name="qty_planned"/>
 								<field name="qty_real"/> 
 								<field name="price"/>
 							</form>
 							<tree string="Products">
-								<field name="campaign_product_id"/>
+								<field name="product_id"/>
 								<field name="qty_planned"/>
 								<field name="qty_real"/> 
 								<field name="price"/>
