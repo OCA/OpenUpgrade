@@ -16,11 +16,11 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Campaigns">
-				<field name="name"/>
+				<field name="name" string="Name"/>
 				<field name="type"/>
 				<field name="offer_id"/>
 				<field name="date_start"/>
-				<field name="date_end"/>
+				<field name="date"/>
 				<field name="state"/>
 			</tree>
 		</field>
@@ -43,7 +43,7 @@
 				<notebook colspan="4">
 					<page string="General">
 						<field name="date_start"/>
-						<field name="date_end"/>
+						<field name="date"/>
 						<field name="type"/>
 						<field name="partner_id" string="Partner"/>
 						<field name="trademark_id"/>
@@ -150,16 +150,18 @@
 			<form string="Propositions">
 				<field name="name" string="Name"/>
 				<field name="code" string="Code"/>
-				<field name="delay_ids" colspan="4"/>
+				<field name="camp_id"/>
 				<field name="date_start"/>
 				<field name="type"/>
-				<field name="sent_qty"/>
-				<field name="customer_pricelist_id"/>
 				<newline/>
-				<field name="sale_rate"/>
+				<field name="customer_pricelist_id"/>
 				<field name="requirer_pricelist_id"/>
+				<newline/>
+				<field name="sent_qty"/>
+				<field name="sale_rate"/>
 				<field name="segment_ids" colspan="4"/>
 				<newline/>
+				<field name="delay_ids" colspan="4"/>
 				<field name="notes" colspan="4"/>
 			</form>
 		</field>
@@ -196,8 +198,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Segments">
-				<field name="name"/>
-				<field name="action_code"/>
+				<field name="name" string="Name"/>
+				<field name="action_code" string="Action Code"/>
 				<field name="qty"/>
 			</form>
 		</field>
@@ -209,8 +211,8 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Segments">
-				<field name="name"/>
-				<field name="action_code"/>
+				<field name="name" string="Name"/>
+				<field name="action_code" string="Action Code"/>
 				<field name="qty"/>
 			</tree>
 		</field>
