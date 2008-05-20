@@ -153,16 +153,18 @@ class account_budget_post_dotation(osv.osv):
 
 				total_days=strToDate(obj_period.date_stop) - strToDate(obj_period.date_start)
 				budget_id=line.post_id and line.post_id.id or False
-				query="select id from crossovered_budget_lines where  general_budget_id= '"+ str(budget_id) + "' and date_from  >='"  +obj_period.date_start +"'  and date_from <= '"+obj_period.date_stop + "'"
+				query="select id from crossovered_budget_lines where  general_budget_id= '"+ str(budget_id) + "' AND (date_from  >='"  +obj_period.date_start +"'  and date_from <= '"+obj_period.date_stop + "') OR (date_to  >='"  +obj_period.date_start +"'  and date_to <= '"+obj_period.date_stop + "')"
 				cr.execute(query)
 				res1=cr.fetchall()
 
 				tot_planned=0.00
 				for record in res1:
-					obj_lines=self.pool.get('crossovered.budget.lines').browse(cr, uid,record[0])
-					count_days=strToDate(obj_period.date_stop) - strToDate(obj_lines.date_from)
-					counted=count_days.days
-					tot_planned +=float((counted +1)/float(total_days.days+1))*obj_lines.planned_amount
+					obj_lines = self.pool.get('crossovered.budget.lines').browse(cr, uid,record[0])
+					count_days = min(strToDate(obj_period.date_stop),strToDate(obj_lines.date_to)) - max(strToDate(obj_period.date_start), strToDate(obj_lines.date_from))
+					days_in_period = count_days.days +1
+					count_days = strToDate(obj_lines.date_to) - strToDate(obj_lines.date_from)
+					total_days_of_rec = count_days.days +1
+					tot_planned += obj_lines.planned_amount/total_days_of_rec* days_in_period
 				res[line.id]=tot_planned
 			else:
 				res[line.id]=0.00

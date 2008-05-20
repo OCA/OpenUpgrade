@@ -6,7 +6,7 @@
 			<field name="model">crossovered.budget</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Crossovered Budget">
+				<form string="Budget">
 							<field name="name" colspan="1" select="1"/>
 							<field name="code" colspan="1" select="1" />
 							<field name="creating_user_id" />
@@ -14,7 +14,7 @@
 							<field name="date_from" select="2"/>
 							<field name="date_to" select="2"/>
 							<field name="crossovered_budget_line" colspan="4" nolabel="1">
-								<tree string="Crossovered Budget Lines">
+								<tree string="Budget Lines">
 									<field name="analytic_account_id"/>
 									<field name="general_budget_id"/>
 									<field name="date_from"/>
@@ -22,7 +22,7 @@
 									<field name="paid_date"/>
 									<field name="planned_amount"/>
 								</tree>
-								<form string="Crossovered Budget Lines">
+								<form string="Budget Lines">
 									<field name="analytic_account_id" select="1"/>
 									<field name="general_budget_id" select="1"/>
 									<field name="date_from"/>
@@ -49,7 +49,7 @@
 			<field name="model">crossovered.budget</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Crossovered Budget">
+				<tree string="Budget">
 					<field name="name" colspan="1" select="1"/>
 					<field name="code" colspan="1" select="1" />
 					<field name="state"/>
@@ -66,7 +66,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="crossovered_budget_view_tree"/>
 		</record>
-		<menuitem name="Financial Management/Configuration/Budgets/Crossovered Budgets"
+		<menuitem name="Financial Management/Configuration/Budgets/Budgets"
 			id="menu_act_crossovered_budget_view"
 			action="act_crossovered_budget_view" />
 
@@ -75,7 +75,7 @@
 			<field name="model">crossovered.budget.lines</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Crossovered Budget Lines">
+				<tree string="Budget Lines">
 					<field name="analytic_account_id"/>
 					<field name="general_budget_id"/>
 					<field name="date_from"/>
@@ -93,7 +93,7 @@
 			<field name="model">crossovered.budget.lines</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Crossovered Budget Lines">
+				<form string="Budget Lines">
 					<field name="crossovered_budget_id"/>
 					<field name="analytic_account_id" select="1"/>
 					<field name="general_budget_id" select="1"/>
@@ -116,7 +116,7 @@
 			<field name="view_id" ref="view_crossovered_budget_line_tree"/>
 		</record>
 
-		<menuitem name="Financial Management/Reporting/Budgets/Crossovered Budgets/Entries"
+		<menuitem name="Financial Management/Reporting/Budgets/Budgets/Entries"
 			id="menu_act_crossovered_budget_lines_view"
 			action="act_crossovered_budget_lines_view" />
 
@@ -145,7 +145,7 @@
 			<field name="type">tree</field>
 			<field name="inherit_id" ref="account.view_budget_post_dotation_tree"/>
 			<field name="arch" type="xml">
-				<field name="period_id" position="after">
+				<field name="amount" position="after">
 					<field name="tot_planned" />
 				</field>
 			</field>
@@ -156,7 +156,7 @@
 			<field name="model">account.budget.post</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Budget item">
+				<form string="Master Budget">
 					<notebook>
 						<page string="Definition">
 							<field name="code" select="1"/>
@@ -169,7 +169,7 @@
 						<page string="Accounts">
 							<field name="account_ids" colspan="4" nolabel="1"/>
 						</page>
-						<page string="Crossovered Budget Lines">
+						<page string="Budget Lines">
 							<field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph">
 								<graph type="bar" string="Lines">
 									<field name="analytic_account_id" />
@@ -177,7 +177,7 @@
 									<field name="planned_amount" operator="+"/>
 									<field group="True" name="general_budget_id"/>
 								</graph>
-								<tree string="Crossovered Budget Lines"  editable="top">
+								<tree string="Budget Lines"  editable="top">
 									<field name="crossovered_budget_id"/>
 									<field name="analytic_account_id"/>
 									<field name="date_from"/>
@@ -188,7 +188,7 @@
 									<field name="theoritical_amount"/>
 									<field name="percentage"/>
 								</tree>
-								<form string="Crossovered Budget Lines">
+								<form string="Budget Lines">
 									<field name="crossovered_budget_id"/>
 									<field name="analytic_account_id"/>
 									<field name="date_from"/>
@@ -213,9 +213,9 @@
 			<field name="inherit_id" ref="account.view_account_analytic_account_form"/>
 			<field name="arch" type="xml">
 				<notebook position="inside">
-					<page string="Crossovered Budget Lines">
+					<page string="Budget Lines">
 							<field name="crossovered_budget_line" widget="one2many_list" colspan="4" nolabel="1" mode="tree,graph">
-								<tree string="Crossovered Budget Lines" editable="top">
+								<tree string="Budget Lines" editable="top">
 									<field name="crossovered_budget_id"/>
 									<field name="general_budget_id"/>
 									<field name="date_from"/>
@@ -223,7 +223,7 @@
 									<field name="paid_date"/>
 									<field name="planned_amount"/>
 								</tree>
-								<form string="Crossovered Budget Lines">
+								<form string="Budget Lines">
 									<field name="crossovered_budget_id"/>
 									<field name="general_budget_id"/>
 									<field name="date_from"/>
