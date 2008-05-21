@@ -21,6 +21,9 @@
 									<field name="date_to"/>
 									<field name="paid_date"/>
 									<field name="planned_amount"/>
+									<field name="practical_amount"/>
+									<field name="theoritical_amount"/>
+									<field name="percentage"/>
 								</tree>
 								<form string="Budget Lines">
 									<field name="analytic_account_id" select="1"/>
@@ -60,7 +63,7 @@
 		</record>
 
 		<record model="ir.actions.act_window" id="act_crossovered_budget_view">
-			<field name="name">CrossOvered Budget</field>
+			<field name="name">Budget</field>
 			<field name="res_model">crossovered.budget</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -109,7 +112,7 @@
 		</record>
 
 		<record model="ir.actions.act_window" id="act_crossovered_budget_lines_view">
-			<field name="name">CrossOvered Budget Lines</field>
+			<field name="name">Budget Lines</field>
 			<field name="res_model">crossovered.budget.lines</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -121,7 +124,7 @@
 			action="act_crossovered_budget_lines_view" />
 
 		<!--  Shortcuts -->
-		<act_window name="Crossovered Budget Lines"
+		<act_window name="Budget Lines"
 			domain="[('analytic_account_id', '=', active_id)]"
 			res_model="crossovered.budget.lines"
 			src_model="account.analytic.account"
