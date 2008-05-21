@@ -2,13 +2,6 @@
 <terp>
 	<data>
 
-		<record model="res.groups" id="group_nogroup">
-			<field name="name">nogroup</field>
-		</record>
-
-		<menuitem name="Production" id="mrp.menu_mrp_root" groups="nogroup"/>
-		<menuitem name="Human Resources/Attendances" id="hr.menu_hr_attendances" groups="nogroup"/>
-
 		<record model="ir.ui.view" id="view_report_account_invoice_product_tree">
 			<field name="name">report.account.invoice.product.tree</field>
 			<field name="model">report.account.invoice.product</field>
