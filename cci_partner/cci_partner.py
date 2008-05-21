@@ -211,7 +211,7 @@ class res_partner(osv.osv):
         'dir_name2':fields.char('1st Shortcut name ',size=250,help='First shortcut in the members directory, pointing to the dir_name field'),
         'dir_name3':fields.char('2nd Shortcut name ',size=250,help='Second shortcut'),
         'dir_date_last':fields.date('Partner Data Date',help='Date of latest update of the partner data by itself (via paper or Internet)'),
-        'dir_date_accept':fields.date("Good to shoot Date",help='Date of last acceptation of Bon à Tirer'),
+        'dir_date_accept':fields.date("Good to shoot Date",help='Date of last acceptation of Bon a Tirer'),
         'dir_presence':fields.boolean('Dir. Presence',help='Present in the directory of the members'),
         'dir_date_publication':fields.date('Publication Date'),
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
