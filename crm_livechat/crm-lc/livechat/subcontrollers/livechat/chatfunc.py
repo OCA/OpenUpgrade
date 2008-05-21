@@ -72,7 +72,10 @@ class ChatFunc(controllers.RootController):
             cl = self.myConnection(topicid)
             if cl=='NoActive':
                 print "No user left"
-                return "NoUser"
+                return "Maximum Number of Connection exhausted."
+            elif cl == 'ConError':
+                print "Failed to Connect..."
+                return "Failed to Connect."
             else:
                 print "\nStarting Thread to Recieve...."
                 self.cont = True
@@ -146,31 +149,32 @@ class ChatFunc(controllers.RootController):
 
             x = cl.connect()
             if x == "":
-                print "Connection Error....."
+                print " Not Connected  \n Connection Error....."
+                return "ConError"
             else:
                 print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
 
-            try:
-                auth = cl.auth(jid.getNode(),pwd,"test")
-            except AttributeError, err:
-                raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
+                try:
+                    auth = cl.auth(jid.getNode(),pwd,"test")
+                except AttributeError, err:
+                    raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
 
-            print "cl Authenticated...."
-            cl.RegisterHandler('message', self.messageCB)
-            cl.sendInitPresence();
-            self.client=cl
-            print "This is live chat data:",livechatdata,topicid
-            user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
-            print "\n\n\n\nThe user i get :",user
-            user = livechatdata['user'][str(user)]['login']
-            self.user= user
+                print "cl Authenticated...."
+                cl.RegisterHandler('message', self.messageCB)
+                cl.sendInitPresence();
+                self.client=cl
+                print "This is live chat data:",livechatdata,topicid
+                user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
+                print "\n\n\n\nThe user i get :",user
+                user = livechatdata['user'][str(user)]['login']
+                self.user= user
 
-            if(self.user):
-    #            for x in livechatdata['partner'].keys()
-    #                print x
-                print "yyY",pp
-                self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)], False,pp[0])
-                print "\nCreating Session ........";
+                if(self.user):
+        #            for x in livechatdata['partner'].keys()
+        #                print x
+                    print "yyY",pp
+                    self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)], False,pp[0])
+                    print "\nCreating Session ........";
         else:
             cl="NoActive"
         return cl
