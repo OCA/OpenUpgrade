@@ -168,7 +168,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_delay_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>
 
 
 
@@ -255,7 +255,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_proposition_segment_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
 
 	<record model="ir.ui.view" id="view_campaign_group_form">
 		<field name="name">dm.campaign.group.form</field>
@@ -287,6 +287,6 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_group_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
 </data>
 </terp>
