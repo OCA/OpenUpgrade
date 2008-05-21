@@ -23,6 +23,18 @@ class dm_offer_step_transition(osv.osv):
     
 dm_offer_step_transition()
 
+class dm_product(osv.osv):
+    _name = "dm.product"
+    _rec_name = 'product_id'
+    _columns = {
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'qty_planned' : fields.integer('Planned Quantity'),
+        'qty_real' : fields.float('Real Quantity'),
+        'price' : fields.float('Sale Price')
+    }
+dm_product()
+
+
 class dm_offer_document_category(osv.osv):
     _name = "dm.offer.document.category"
     _rec_name = "name"
@@ -113,6 +125,7 @@ class dm_offer_step(osv.osv):
         'flow_stop' : fields.boolean('Flow Stop'),
         'sequence' : fields.integer('Sequence', required=True),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
+		'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.many2one('dm.offer.step.transition', 'Incoming Transition'),
         'outgoing_transition_ids' : fields.many2one('dm.offer.step.transition', 'Outgoing Transition'),

@@ -120,7 +120,9 @@
 						<field name="type"/>
 						<newline/>
 						<field name="origin_id" colspan="4"/>
-						<field name="notes" colspan="4"/>							
+						<separator string="Products" colspan="4"/>
+						<field name="product_ids" colspan="4"/>
+						<newline/>
 						<group col="8" colspan="4">
 							<field name="state" select="1"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>

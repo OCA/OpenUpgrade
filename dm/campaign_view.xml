@@ -21,7 +21,7 @@
 				<field name="offer_id"/>
 				<field name="date_start"/>
 				<field name="date"/>
-				<field name="campaign_state"/>
+				<field name="state"/>
 			</tree>
 		</field>
 	</record>
@@ -32,41 +32,67 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Campaigns">
+				<notebook colspan="4">
+					<page string="General">
+						<separator string="Global informations" colspan="4"/>
 						<field name="name" string="Name"/>
 						<field name="code" string="Code"/>
 						<field name="offer_id"/>
-						<field name="parent_id" string="Category"/>
+						<field name="parent_id" string="Category" domain="[('type','=','view')]"/>
 						<field name="country_id"/>
 						<field name="lang_id"/>
-				<notebook colspan="4">
-					<page string="General">
 						<field name="date_start"/>
 						<field name="date"/>
 						<field name="campaign_type"/>
 						<field name="partner_id"/>
 						<field name="trademark_id"/>
-						<field name="receiver_id"/>
 						<separator string="Tasks management" colspan="4"/>
+						<group colspan="4">
 						<field name="project_id"/>
 						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
-						<separator string="Notes" colspan="4"/>
-						<field name="notes" colspan="4" nolabel="1"/>
+						</group>
+						<separator string="Process state" colspan="4"/>
+						<field name="planning_state" select="2" nolabel="0"/>
+						<field name="manufacturing_state" select="2" nolabel="0"/>
 <!--						<field name="campaign_stat_ids"/>-->
-						<separator string="Status" colspan="4"/>
+						<separator string="Campaign Status" colspan="4"/>
 						<group col="10" colspan="4">
-							<field name="campaign_state" select="2" nolabel="1"/>
-							<button name="state_planning" string="Planning" states="draft,open" type="object"/>
-							<button name="state_open" string="Open" states="draft,fabrication" type="object"/>
-							<button name="state_fabrication" string="Fabrication" states="draft,open,planning" type="object"/>
-							<button name="state_close" string="Close" states="draft,open,fabrication,planning" type="object"/>
-							<button name="state_cancel" string="Cancel" states="draft,open,fabrication,planning" type="object"/>
-							<button name="state_draft" string="Reset to Draft" states="close,cancel" type="object"/>
-						</group>					
+							<field name="state" readonly="1" select="2" nolabel="1"/>
+							<button name="state_open_set" string="Open" states="draft,pending" type="object"/>
+							<button name="state_close_set" string="Close" states="draft,open,pending" type="object"/>
+							<button name="state_pending_set" string="Set pending" states="open" type="object"/>
+							<button name="state_draft_set" string="Set to draft" states="open,pending,close" type="object"/>
+						</group>
 					</page>
 					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1"/>
+						<field name="proposition_ids" nolabel="1">
+							<form string="Propositions">
+								<field name="name" string="Name"/>
+								<field name="code" string="Code"/>
+								<field name="date_start"/>
+								<field name="proposition_type"/>
+								<newline/>
+								<field name="customer_pricelist_id"/>
+								<field name="requirer_pricelist_id"/>
+								<newline/>
+								<field name="quantity_max"/>
+								<field name="sale_rate"/>
+								<field name="segment_ids" colspan="4"/>
+								<newline/>
+								<field name="delay_ids" colspan="4"/>
+								<field name="notes" colspan="4"/>
+							</form>
+							<tree string="Propositions">
+								<field name="name" string="Name"/>
+								<field name="code" string="Code"/>
+								<field name="date_start" colspan="4"/>
+								<field name="quantity_max" string="Quantity"/>
+								<field name="sale_rate"/>
+								<field name="type"/>
+							</tree>
+						</field>
 					</page>
-					<page string="Procurement">
+<!--					<page string="Procurement">
 						<field name="product_ids" nolabel="1">
 							<form string="Products">
 								<field name="product_id"/>
@@ -82,7 +108,7 @@
 							</tree> 
 						</field>
 					</page>
-					<page string="Desktop Publishing">					
+-->					<page string="Desktop Publishing">
 						<field name="dtp_date_delivery"/>
 						<field name="dtp_date_real_delivery"/>
 						<field name="dtp_intervention_type"/>
@@ -91,7 +117,11 @@
 						<field name="dtp_operator"/>
 						<field name="dtp_date_recovered"/>
 						<separator string="Notes" colspan="4"/>
-						<field name="dtp_notes" colspan="4" nolabel="1"/>            
+						<field name="dtp_notes" colspan="4" nolabel="1"/>
+					</page>
+-->					<page string="Notes">
+						<separator string="Notes" colspan="4"/>
+						<field name="notes" colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>

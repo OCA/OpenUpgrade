@@ -103,7 +103,7 @@ class dm_offer(osv.osv):
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History'),
         'production_delay' : fields.many2one('dm.offer.delay', 'Delay'),
         'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
-        'category_ids' : fields.many2one('dm.offer.category', 'Categories', domain="[('domain','=','general')]"),
+        'category_ids' : fields.many2many('dm.offer.category','dm_offer_category_rel', 'offer_id', 'offer_category_id', 'Categories', domain="[('domain','=','general')]"),
         'production_category_ids' : fields.many2one('dm.offer.category', 'Production Categories' , domain="[('domain','=','production')]"),
         'purchase_category_ids' : fields.many2one('dm.offer.category', 'Purchase Categories', domain="[('domain','=','purchase')]"),
         'active' : fields.boolean('Active'),

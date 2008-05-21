@@ -4,12 +4,10 @@ import offer
 from osv import fields
 from osv import osv
 
-#print dir(offer)
 
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
-#    _inherit = 'account.analytic.account'
     _rec_name = 'name'
 
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
@@ -18,22 +16,19 @@ class dm_campaign(osv.osv):
     
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
-#        'campaign_parent_id' : fields.many2one('dm.campaign','Parent',domain="[('campaign_type','=','view')]"),
         'country_id' : fields.many2one('res.country', 'Country'),
         'lang_id' : fields.many2one('res.lang', 'Language'),
-#        'date_start':fields.date('Start Date'),
-#        'date_end':fields.date('End Date'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
-        'receiver_id': fields.many2one('res.partner','Receiver'),
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
-        'campaign_state' : fields.selection([('draft','Draft'),('planning','Planning'), ('open','Open'), ('fabrication','Fabrication'), ('close','Close'), ('cancel','Cancel')], 'State',readonly=True),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
         'campaign_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
-		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
+        'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
 #  
-#                        desktop publication   
+#                        desktop publication
 #  
         'dtp_date_delivery' : fields.date('Delivery Date'),
         'dtp_date_real_delivery' : fields.date('Real Delivery Date'),
@@ -43,57 +38,27 @@ class dm_campaign(osv.osv):
         'dtp_date_recovered' : fields.date('Recovered Date'),
         'dtp_notes' : fields.text('Notes'),            
 #        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
-#        'product_ids' : fields.one2many('dm.campaign.product', 'product_id', 'Products'),
-        'product_ids' : fields.one2many('dm.campaign.product', 'camp_id', 'Products'),        
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
     
     _defaults = {
         'campaign_state': lambda *a: 'draft',
+        'planning_state': lambda *a: 'pending',
+        'manufacturing_state': lambda *a: 'pending',
+        'campaign_type': lambda *a: 'general',
     }
-    def state_close(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'campaign_state':'close'})
+
+    def state_close_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'close'})
         return True  
 
-    def state_cancel(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'campaign_state':'cancel'})
+    def state_pending_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'pending'})
         return True
-    
-    def state_open(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'campaign_state':'open'})
+
+    def state_open_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'open'})
         return True 
-    
-    def state_planning(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'campaign_state':'planning'})
-        return True
-    
-    def state_fabrication(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'campaign_state':'fabrication'})
-        return True
-    
-    def state_draft(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'campaign_state':'draft'})
-        return True  
-
-#    def create(self, cr, uid, vals, context=None):
-#        new_id = super(dm_campaign, self).create(cr, uid, vals, context=context)
-#        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
-#            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
-#            parent_id = parent_res['analytic_account_id'][0]
-#            res = self.read(cr,uid,new_id,['analytic_account_id'])
-#            res_id = res['analytic_account_id'][0]
-#            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
-#        return new_id
-#    
-#    def write(self, cr, uid, ids, vals, context=None):
-#        if vals.has_key('campaign_parent_id') and vals['campaign_parent_id']:
-#            parent_res = self.read(cr,uid,[vals['campaign_parent_id']],['analytic_account_id'])[0]
-#            parent_id = parent_res['analytic_account_id'][0]
-#            res = self.read(cr,uid,ids,['analytic_account_id'])[0]
-#            res_id = res['analytic_account_id'][0]
-#            self.pool.get('account.analytic.account').write(cr,uid,[res_id],{'parent_id':parent_id})
-#        return super(dm_campaign, self).write(cr, uid, ids, vals, context=context)
- 
 dm_campaign()
 
 #Postgres view
@@ -105,24 +70,10 @@ class dm_campaign_statistics(osv.osv):
         'rate' : fields.float('Rate', digits=(16,2)),
         'camp_id' : fields.many2one('dm.campaign', 'Campaign')
     }
-
 dm_campaign_statistics()
 
-class dm_campaign_product(osv.osv):
-    _name = "dm.campaign.product"
-    _rec_name = 'product_id'
-    _columns = {
-        'camp_id' : fields.many2one('dm.campaign', 'Campaign'),
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'qty_planned' : fields.integer('Planned Quantity'),
-        'qty_real' : fields.float('Real Quantity'),
-        'price' : fields.float('Sale Price')
-    }
-    
-dm_campaign_product()
 
 class dm_campaign_pricelist(osv.osv):
-    
     _name = "dm.campaign.pricelist"
     _description = "Pricelist"
     _columns = {
@@ -157,7 +108,7 @@ class dm_campaign_proposition(osv.osv):
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays'),
         #'date_start' : fields.date('Date'),
-#        'sent_qty' : fields.integer("Quantity"),
+        'sent_qty' : fields.integer("Quantity"),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
         'segment_ids' : fields.many2one('dm.campaign.proposition.segment','Segment'),
