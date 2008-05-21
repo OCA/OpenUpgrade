@@ -53,7 +53,50 @@
 						</group>
 					</page>
 					<page string="Offer Steps">
-						<field name="step_id" nolabel="1"/>
+						<field name="step_id" nolabel="1">
+							<form string="Offer Step">
+								<notebook>
+									<page string="General">
+										<field name="sequence"/>
+										<field name="name"/>
+										<field name="code"/>
+										<field name="origin_id"/>
+										<newline/>
+										<field name="quotation"/>
+										<field name="legal_state"/>
+										<field name="media_id"/>
+										<field name="type"/>
+										<newline/>
+										<field name="notes" colspan="4"/>							
+										<group col="8" colspan="4">
+											<field name="state" select="1"/>
+											<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
+											<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
+											<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
+											<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+										</group>
+									</page>
+									<page string="Transition">
+										<field name="split_mode" colspan="2" string="Split mode"/>
+										<field name="incoming_transition_ids" colspan="4" string="Incoming"/>
+										<field name="outgoing_transition_ids" colspan="4" string="Outgoing"/>
+									</page>
+									<page string="History">
+										<field name="history_ids" nolabel="1" colspan="4"/>
+									</page>
+									<page string="Documents">
+										<field name="document_ids" colspan="4" nolabel="1"/>
+									</page>
+								</notebook>
+							</form>
+							<tree string="Offer Step">
+								<field name="name"/>
+								<field name="quotation"/>
+								<field name="incoming_transition_ids"/>
+								<field name="outgoing_transition_ids"/>
+								<field name="state"/>
+							</tree>
+					</field>
 					</page>					
 					<page string="Advises"><!--
 						<separator string="Layout" colspan="4"/>
