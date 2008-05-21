@@ -1,5 +1,6 @@
 import time
 import offer
+
 from osv import fields
 from osv import osv
 
@@ -95,7 +96,6 @@ class dm_campaign(osv.osv):
  
 dm_campaign()
 
-
 #Postgres view
 class dm_campaign_statistics(osv.osv):
     _name = "dm.campaign.statistics"
@@ -120,7 +120,6 @@ class dm_campaign_product(osv.osv):
     }
     
 dm_campaign_product()
-
 
 class dm_campaign_pricelist(osv.osv):
     
@@ -188,7 +187,7 @@ class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
-        'campaign_ids' : fields.one2many('dm.campaign', 'name' , 'Campaigns')
+        'campaign_ids': fields.many2many('dm.campaign', 'dm_campaign_group_rel', 'group_id', 'campaign_id', 'Campaigns')
     }
     
 dm_campaign_group()
