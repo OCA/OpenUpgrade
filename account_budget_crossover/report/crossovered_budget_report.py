@@ -67,8 +67,6 @@ class budget_report(report_sxw.rml_parse):
 		for budget_id in budgets:
 			res={}
 			budget_lines=[]
-			bd_ids = ','.join([str(x) for x in budget_lines])
-			obj_lines=self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,bd_ids)
 
 			d_from=form['date_from']
 			d_to=form['date_to']

@@ -32,23 +32,39 @@ class analytic_account_budget_report(report_sxw.rml_parse):
             'perc':0.00
         }
         result=[]
-        res={}
-
         accounts = self.pool.get('account.analytic.account').browse(self.cr, self.uid, [object.id], self.context.copy())
 
-        if form['date_from']<=accounts[0].date_start< accounts[0].date<=form['date_to']:
-            go=1 # does nothing just carry on.
-        else:
-            return [] # stops calculations.displays nothing
+#        if form['date_from']<=accounts[0].date_start< accounts[0].date<=form['date_to']:
+#            go=1 # does nothing just carry on.
+#        else:
+#            return [] # stops calculations.displays nothing
 
         for account_id in accounts:
             res={}
-            budget_lines = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('analytic_account_id', '=', account_id.id)])
+            budget_lines=[]
+
+            for line in account_id.crossovered_budget_line:
+                budget_lines.append(line.id)
 
             bd_lines_ids = ','.join([str(x) for x in budget_lines])
-            self.cr.execute('select distinct(crossovered_budget_id) from crossovered_budget_lines where id in (%s)'%(bd_lines_ids))
-            budget_ids=self.cr.fetchall()
 
+            d_from=form['date_from']
+            d_to=form['date_to']
+
+            query="select id from crossovered_budget_lines where id in ("+ str(bd_lines_ids) + ") AND '"+ str(d_from) +"'<=date_from AND date_from<date_to AND date_to<= '"+ str(d_to) +"'"
+
+            self.cr.execute(query)
+            budget_line_ids=self.cr.fetchall()
+
+            if not budget_line_ids:
+                return []
+
+            budget_lines=[x[0] for x in budget_line_ids]
+
+            bd_ids = ','.join([str(x) for x in budget_lines])
+
+            self.cr.execute('select distinct(crossovered_budget_id) from crossovered_budget_lines where id in (%s)'%(bd_ids))
+            budget_ids=self.cr.fetchall()
 
             for i in range(0,len(budget_ids)):
 
@@ -63,7 +79,7 @@ class analytic_account_budget_report(report_sxw.rml_parse):
                 }
                 result.append(res)
 
-                line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('crossovered_budget_id', '=', budget_ids[i][0]),('analytic_account_id','=',account_id.id)])
+                line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('id', 'in', budget_lines),('crossovered_budget_id','=',budget_ids[i][0])])
                 line_id = self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,line_ids)
                 tot_theo=tot_pln=tot_prac=tot_perc=0
 
@@ -106,7 +122,6 @@ class analytic_account_budget_report(report_sxw.rml_parse):
     def funct_total(self,form):
         result=[]
         res={}
-
         res={
              'tot_theo':tot['theo'],
              'tot_pln':tot['pln'],
@@ -115,7 +130,6 @@ class analytic_account_budget_report(report_sxw.rml_parse):
         }
         result.append(res)
 
-
         return result
 
-report_sxw.report_sxw('report.account.analytic.account.budget', 'account.analytic.account', 'addons/crossovered_budget/report/analytic_account_budget_report.rml',parser=analytic_account_budget_report,header=False)
+report_sxw.report_sxw('report.account.analytic.account.budget', 'account.analytic.account', 'addons/account_budget_crossover/report/analytic_account_budget_report.rml',parser=analytic_account_budget_report,header=False)
