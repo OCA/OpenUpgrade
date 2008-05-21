@@ -135,19 +135,21 @@ class ChatFunc(controllers.RootController):
         if livechatdata:
             print "This is first live chat data",livechatdata
             partnerlist = livechatdata['partner']
+            
             pp=map(lambda p:p,partnerlist)
             print "////////////////////////",pp
             jid = livechatdata['partner'][pp[0]]['login']
-
-            print "////////////////////////",jid
+            jserver = livechatdata['partner'][pp[0]]['server']
+            print "////////////////////////",jid,jserver
             self.login = jid
             pwd = livechatdata['partner'][pp[0]]['password']
             print "making connection with::",jid," and pwd :::",pwd
             jid=xmpp.protocol.JID(jid)
             cl=xmpp.Client(jid.getDomain(),debug=[])
 
-
-            x = cl.connect()
+            
+            x = cl.connect((jserver,5223))
+            
             if x == "":
                 print " Not Connected  \n Connection Error....."
                 return "ConError"
