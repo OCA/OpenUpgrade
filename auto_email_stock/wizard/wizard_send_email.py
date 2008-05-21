@@ -42,12 +42,13 @@ def _get_defaults(self, cr, uid, data, context):
 
     picking = p.get('stock.picking').browse(cr, uid, data['ids'], context)
     adr_ids = []
-    partner_id = picking[0].address_id.partner_id.id
+    addresses=[]
+#    partner_id = picking[0].address_id.partner_id.id
     for o in picking:
-        if partner_id != o.address_id.partner_id.id:
-            raise osv.except_osv('Warning', 'You have selected documents for different partners.')
-        if o.name:
-            subject = subject + ' ' + o.name
+#        if partner_id != o.address_id.partner_id.id:
+#            raise osv.except_osv('Warning', 'You have selected documents for different partners.')
+#        if o.name:
+#            subject = subject + ' ' + o.name
 #        if o.client_order_ref:
 #            text = o.client_order_ref + '\n' + text
 #        if o.partner_order_id.id not in adr_ids:
@@ -56,12 +57,14 @@ def _get_defaults(self, cr, uid, data, context):
 #            adr_ids.append(o.partner_invoice_id.id)
 #        if o.partner_shipping_id.id not in adr_ids:
 #            adr_ids.append(o.partner_shipping_id.id)
-    addresses = p.get('res.partner.address').browse(cr, uid, picking[0].address_id.id, context)
+        addresses=p.get('res.partner.address').browse(cr, uid, o.address_id.id, context)
+        if addresses not in adr_ids:
+            adr_ids.append(addresses)
     to = ''
-#    for adr in addresses:
-    if addresses.email:
-        name = addresses.name or addresses.partner_id.name
-        to = to + ',%s <%s>' % (name, addresses.email)
+    for adr in adr_ids:
+        if adr.email:
+            name = adr.name or adr.partner_id.name
+            to = to + ',%s <%s>' % (name, adr.email)
     return {'to': to[1:], 'subject': subject, 'text': text}
 
 
@@ -83,7 +86,6 @@ def _send_mails(self, cr, uid, data, context):
     for email in data['form']['to'].split(','):
 #        state = smtpserver.send_email(cr, uid, smtpserver_id, email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text'])
         state = smtpserver.send_email(cr, uid, smtpserver_id, email,data['form']['subject'],data['ids'][0],data['form']['text'],'sale.shipping','Delivery_Order')
-#                                (self, cr, uid, ids,emailto,subject,resource_id,body=False,report_name=False,file_name=False):
         if not state:
             raise osv.except_osv('Error sending email', 'Please check the Server Configuration!')
 
