@@ -1,1 +1,2 @@
 import report_account_invoice_layout
+import special_message_invoice
