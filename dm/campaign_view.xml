@@ -75,7 +75,7 @@
 								<field name="customer_pricelist_id"/>
 								<field name="requirer_pricelist_id"/>
 								<newline/>
-								<field name="quantity_max"/>
+								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
 								<field name="segment_ids" colspan="4"/>
 								<newline/>
@@ -188,7 +188,7 @@
 				<field name="customer_pricelist_id"/>
 				<field name="requirer_pricelist_id"/>
 				<newline/>
-				<field name="quantity_max"/>
+				<field name="quantity_max" string="Quantity"/>
 				<field name="sale_rate"/>
 				<newline/>
 				<field name="delay_ids" colspan="4"/>
@@ -206,7 +206,7 @@
 				<field name="name" string="Name"/>
 				<field name="code" string="Code"/>
 				<field name="date_start" colspan="4"/>
-				<field name="quantity_max"/>
+				<field name="quantity_max" string="Quantity"/>
 				<field name="sale_rate"/>
 				<field name="proposition_type"/>
 			</tree>

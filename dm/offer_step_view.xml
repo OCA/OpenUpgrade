@@ -92,7 +92,7 @@
 		<field name="model">dm.offer.step</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Offer Step">
+			<tree string="Offer Steps">
 				<field name="name"/>
 				<field name="offer_id"/>
 				<field name="incoming_transition_ids"/>
@@ -133,6 +133,8 @@
 					</page>
 					<page string="Transition">
 						<field name="split_mode" colspan="2" string="Split mode"/>
+						<field name="flow_start" colspan="2"/>
+						<field name="flow_stop" colspan="2"/>
 						<field name="incoming_transition_ids" colspan="4" string="Incoming"/>
 						<field name="outgoing_transition_ids" colspan="4" string="Outgoing"/>
 					</page>

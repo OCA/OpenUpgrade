@@ -125,11 +125,11 @@ class dm_offer_step(osv.osv):
         'flow_stop' : fields.boolean('Flow Stop'),
         'sequence' : fields.integer('Sequence', required=True),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
-		'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
+        'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.many2one('dm.offer.step.transition', 'Incoming Transition'),
         'outgoing_transition_ids' : fields.many2one('dm.offer.step.transition', 'Outgoing Transition'),
-		'split_mode' : fields.selection([('and','And'),('or','Or')],'Split mode'),
+        'split_mode' : fields.selection([('and','And'),('or','Or')],'Split mode'),
     }
 
     _defaults = {

@@ -48,6 +48,10 @@ class dm_campaign(osv.osv):
         'campaign_type': lambda *a: 'general',
     }
 
+    def state_draft_set(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'draft'})
+        return True  
+
     def state_close_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'close'})
         return True  
@@ -98,7 +102,6 @@ class dm_campaign_proposition_segment(osv.osv):
         'qty': fields.integer('Qty'),
 		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
     }
-
 dm_campaign_proposition_segment()
 
 class dm_campaign_proposition(osv.osv):
@@ -111,7 +114,7 @@ class dm_campaign_proposition(osv.osv):
         'sent_qty' : fields.integer("Quantity"),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
-        'segment_ids' : fields.many2one('dm.campaign.proposition.segment','Segment'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
         'customer_pricelist_id':fields.many2one('dm.campaign.pricelist','Customer Pricelist',domain=[('type','=','customer')]),
         'requirer_pricelist_id' : fields.many2one('dm.campaign.pricelist','Requirer Pricelist',domain=[('type','=','requirer')]),
         'notes':fields.text('Notes'),
@@ -121,7 +124,6 @@ class dm_campaign_proposition(osv.osv):
     _defaults = {
         'proposition_type' : lambda*a : 'general',
     }
-    
 dm_campaign_proposition()
 
 class dm_campaign_delay(osv.osv):
