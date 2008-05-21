@@ -173,7 +173,6 @@ class SmtpClient(osv.osv):
         return True
     
     def send_email(self, cr, uid, ids,emailto,subject,resource_id,body=False,report_name=False,file_name=False):
-
         self.open_connection(cr, uid, ids, ids[0])
         
         def create_report(self,cr,uid,res_ids,report_name=False,file_name=False):
@@ -183,7 +182,7 @@ class SmtpClient(osv.osv):
             try:
             	ret_file_name = file_name+'.pdf'
                 service = netsvc.LocalService("report."+report_name);
-                (result,format) = service.create(cr,uid,[res_ids],{},{})
+                (result,format) = service.create(cr,uid,res_ids,{},{})
                 fp = open(ret_file_name,'wb+');
                 fp.write(result);
                 fp.close();
@@ -216,8 +215,10 @@ class SmtpClient(osv.osv):
                 report_id = pooler.get_pool(cr.dbname).get('ir.actions.report.xml').search(cr, uid, [('report_name','=',report_name)], context=False)
                 report_model=pooler.get_pool(cr.dbname).get('ir.actions.report.xml').read(cr,uid,report_id,['model'])[0]['model']
                 model_id=pooler.get_pool(cr.dbname).get('ir.model').search(cr, uid, [('model','=',report_model)], context=False)[0]               
-                pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
-                (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':'The Email is sent successfully to corresponding address','email':emailto,'model':model_id,'resource_id':resource_id})
+                
+                for resource in resource_id:                    
+                    r=pooler.get_pool(cr.dbname).get('email.smtpclient.history').create \
+                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : ids[0],'name':'The Email is sent successfully to corresponding address','email':emailto,'model':model_id,'resource_id':resource})
         except Exception, e:
             print 'Exception :',e
             return False
