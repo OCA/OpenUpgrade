@@ -48,30 +48,30 @@ class dm_campaign(osv.osv):
     }
     
     _defaults = {
-        'state': lambda *a: 'draft',
+        'campaign_state': lambda *a: 'draft',
     }
-    def state_close_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state':'close'})
+    def state_close(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'campaign_state':'close'})
         return True  
 
-    def state_cancel_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state':'cancel'})
+    def state_cancel(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'campaign_state':'cancel'})
         return True
     
-    def state_open_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state':'open'})
+    def state_open(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'campaign_state':'open'})
         return True 
     
-    def state_planning_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state':'planning'})
+    def state_planning(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'campaign_state':'planning'})
         return True
     
-    def state_fabrication_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state':'fabrication'})
+    def state_fabrication(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'campaign_state':'fabrication'})
         return True
     
-    def state_draft_set(self, cr, uid, ids, *args):
-        self.write(cr, uid, ids, {'state':'draft'})
+    def state_draft(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'campaign_state':'draft'})
         return True  
 
 #    def create(self, cr, uid, vals, context=None):
@@ -169,7 +169,7 @@ class dm_campaign_proposition(osv.osv):
     }
     
     _defaults = {
-        'type' : lambda*a : 'general',
+        'proposition_type' : lambda*a : 'general',
     }
     
 dm_campaign_proposition()

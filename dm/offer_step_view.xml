@@ -120,23 +120,9 @@
 						<field name="type"/>
 						<newline/>
 						<field name="origin_id" colspan="4"/>
-						<field name="wrkitem_id" colspan="4" nolabel="1">
-							<form string="Workitem">
-								<field name="customer_id" select="1"/>
-								<field name="segment_id"/>
-								<field name="date_next_action" select="2"/>
-								<field name="purchase_amount"/>
-							</form>
-							<tree>
-								<field name="customer_id"/>
-								<field name="segment_id"/>
-								<field name="date_next_action"/>
-								<field name="purchase_amount"/>							
-							</tree>
-						</field>
-						<newline/>
+						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
-							<field name="state" select="1"/>
+							<field name="state" select="1" nolabel="1"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
 							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
@@ -154,7 +140,7 @@
 								<separator string="Action Information" colspan="4"/>
 								<field name="user_id" select="1"/>
 								<field name="state" />
-								<field name="create_date" />
+								<field name="date" />
 							</form>
 						</field>
 						<separator string="Notes" colspan="4"/>
@@ -257,7 +243,7 @@
 				<field name="step_id"/>
 				<field name="user_id"/>
 				<field name="state"/>
-				<field name="create_date"/>
+				<field name="date"/>
 			</form>
 		</field>
 	</record>
@@ -269,7 +255,7 @@
 			<tree string="History">
 				<field name="user_id"/>
 				<field name="state"/>
-				<field name="create_date"/>
+				<field name="date"/>
 			</tree>
 		</field>
 	</record>

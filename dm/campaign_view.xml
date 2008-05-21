@@ -57,17 +57,17 @@
 						<separator string="Status" colspan="4"/>
 						<group col="10" colspan="4">
 							<field name="campaign_state" select="2" nolabel="1"/>
-							<button name="state_planning_set" string="Planning" states="draft,open" type="object"/>
-							<button name="state_open_set" string="Open" states="draft,fabrication" type="object"/>
-							<button name="state_fabrication_set" string="Fabrication" states="draft,open,planning" type="object"/>
-							<button name="state_close_set" string="Close" states="draft,open,fabrication,planning" type="object"/>
-							<button name="state_cancel_set" string="Cancel" states="draft,open,fabrication,planning" type="object"/>
-							<button name="state_draft_set" string="Reset to Draft" states="close,cancel" type="object"/>
-						</group>						
+							<button name="state_planning" string="Planning" states="draft,open" type="object"/>
+							<button name="state_open" string="Open" states="draft,fabrication" type="object"/>
+							<button name="state_fabrication" string="Fabrication" states="draft,open,planning" type="object"/>
+							<button name="state_close" string="Close" states="draft,open,fabrication,planning" type="object"/>
+							<button name="state_cancel" string="Cancel" states="draft,open,fabrication,planning" type="object"/>
+							<button name="state_draft" string="Reset to Draft" states="close,cancel" type="object"/>
+						</group>					
 					</page>
 					<page string="Propositions">
 						<field name="proposition_ids" nolabel="1">
-							<form string="Propositions">
+							<!--<form string="Propositions">
 								<field name="name" string="Name"/>
 								<field name="code" string="Code"/>
 								<field name="date_start"/>
@@ -89,9 +89,9 @@
 								<field name="date_start" colspan="4"/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
-								<field name="type"/>
+								<field name="proposition_type"/>
 							</tree>													
-						</field>
+						--></field>
 					</page>
 					<page string="Procurement">
 						<field name="product_ids" nolabel="1">
@@ -205,7 +205,7 @@
 				<field name="date_start" colspan="4"/>
 				<field name="sent_qty"/>
 				<field name="sale_rate"/>
-				<field name="type"/>
+				<field name="proposition_type"/>
 			</tree>
 		</field>
 	</record>	

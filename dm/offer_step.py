@@ -91,7 +91,7 @@ class dm_offer_step(osv.osv):
                 'user_id': uid,
                 'state' : keyword,
                 'step_id': case.id,
-                'create_date' : time.strftime('%Y-%m-%d')
+                'date' : time.strftime('%Y-%m-%d')
             }
             obj = self.pool.get('dm.offer.step.history')
             obj.create(cr, uid, data, context)
@@ -106,7 +106,7 @@ class dm_offer_step(osv.osv):
         'media_id' : fields.many2one('dm.media', 'Media'),
         'type' : fields.char('Type', size=16),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
-        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
+#        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
         'notes' : fields.text('Notes'),
         'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
         'flow_start' : fields.boolean('Flow Start'),
@@ -156,16 +156,16 @@ dm_offer_step()
 
 class dm_offer_step_history(osv.osv):
     _name = "dm.offer.step.history"
-    _order = 'create_date'
+    _order = 'date'
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer'),
         'user_id' : fields.many2one('res.users', 'User'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16),
-        'create_date' : fields.date('Date')
+        'date' : fields.date('Date')
     }
     
     _defaults = {
-        'create_date' : lambda *a: time.strftime('%Y-%m-%d'),
+        'date' : lambda *a: time.strftime('%Y-%m-%d'),
     }
 
 dm_offer_step_history()
