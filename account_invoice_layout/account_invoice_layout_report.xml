@@ -1,7 +1,13 @@
 <?xml version="1.0"?>
 <terp>
 	<data>
-		<report id="account_invoices_1"
+	<wizard	string="Invoices with messages"
+			model="account.invoice"
+			name="wizard.cci_account_message"
+			id="wizard_cci_account_message"
+			keyword="client_print_multi" />
+
+	<report id="account_invoices_1"
 			string="Formatted Invoices"
 			model="account.invoice"
 			name="account.invoice.layout"
