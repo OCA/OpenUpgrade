@@ -120,9 +120,9 @@
 						<field name="type"/>
 						<newline/>
 						<field name="origin_id" colspan="4"/>
-						<separator string="Status" colspan="4"/>
+						<field name="notes" colspan="4"/>							
 						<group col="8" colspan="4">
-							<field name="state" select="1" nolabel="1"/>
+							<field name="state" select="1"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
 							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
@@ -136,8 +136,6 @@
 					</page>
 					<page string="History">
 						<field name="history_ids" nolabel="1" colspan="4"/>
-					    <separator string="Notes" colspan="4"/>
-						<field name="notes" colspan="4" nolabel="1"/>							
 					</page>
 					<page string="Documents">
 						<field name="document_ids" colspan="4" nolabel="1"/>
