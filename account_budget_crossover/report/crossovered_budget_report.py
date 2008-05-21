@@ -88,6 +88,7 @@ class budget_report(report_sxw.rml_parse):
 
 				analytic_name=self.pool.get('account.analytic.account').browse(self.cr, self.uid,[an_ids[i][0]])
 				res={
+			 		'id':'-1',
 			 		'name':analytic_name[0].name,
 			 		'status':1,
 			 		'theo':0.00,
@@ -102,22 +103,38 @@ class budget_report(report_sxw.rml_parse):
 				line_id = self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,line_ids)
 				tot_theo=tot_pln=tot_prac=tot_perc=0
 
+				done_budget=[]
 				for line in line_id:
 
-					res1={
-			 			'name':line.general_budget_id.name,
-			 			'status':2,
-			 			'theo':line.theoritical_amount,
-			 			'pln':line.planned_amount,
-			 			'prac':line.practical_amount,
-			 			'perc':line.percentage
-					}
-					tot_theo += line.theoritical_amount
-					tot_pln +=line.planned_amount
-					tot_prac +=line.practical_amount
-					tot_perc +=line.percentage
-					if form['report']=='analytic-full':
-						result.append(res1)
+					if line.general_budget_id.id in done_budget:
+						for record in result:
+						    if record['id']==line.general_budget_id.id:
+
+						        record['theo'] +=line.theoritical_amount
+						        record['pln'] +=line.planned_amount
+						        record['prac'] +=line.practical_amount
+						        record['perc'] +=line.percentage
+						        tot_theo += line.theoritical_amount
+						        tot_pln +=line.planned_amount
+						        tot_prac +=line.practical_amount
+						        tot_perc +=line.percentage
+					else:
+						res1={
+							'id':line.general_budget_id.id,
+					 			'name':line.general_budget_id.name,
+					 			'status':2,
+					 			'theo':line.theoritical_amount,
+					 			'pln':line.planned_amount,
+					 			'prac':line.practical_amount,
+					 			'perc':line.percentage
+						}
+						tot_theo += line.theoritical_amount
+						tot_pln +=line.planned_amount
+						tot_prac +=line.practical_amount
+						tot_perc +=line.percentage
+						if form['report']=='analytic-full':
+							result.append(res1)
+							done_budget.append(line.general_budget_id.id)
 
 				if tot_theo==0.00:
 					tot_perc=0.00
@@ -125,13 +142,13 @@ class budget_report(report_sxw.rml_parse):
 					tot_perc=float(tot_prac /tot_theo)*100
 
 				if form['report']=='analytic-full':
-					result[-(len(line_id) +1)]['theo']=tot_theo
+					result[-(len(done_budget) +1)]['theo']=tot_theo
 					tot['theo'] +=tot_theo
-					result[-(len(line_id) +1)]['pln']=tot_pln
+					result[-(len(done_budget) +1)]['pln']=tot_pln
 					tot['pln'] +=tot_pln
-					result[-(len(line_id) +1)]['prac']=tot_prac
+					result[-(len(done_budget) +1)]['prac']=tot_prac
 					tot['prac'] +=tot_prac
-					result[-(len(line_id) +1)]['perc']=tot_perc
+					result[-(len(done_budget) +1)]['perc']=tot_perc
 				else:
 					result[-1]['theo']=tot_theo
 					tot['theo'] +=tot_theo
