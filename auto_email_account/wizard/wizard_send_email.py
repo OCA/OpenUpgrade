@@ -38,18 +38,18 @@ def _get_defaults(self, cr, uid, data, context):
     p = pooler.get_pool(cr.dbname)
     user = p.get('res.users').browse(cr, uid, uid, context)
     subject = user.company_id.name+'. Num.'
-    text = '\n' + user.signature
+    text = '\n--' + user.signature
 
     invoices = p.get('account.invoice').browse(cr, uid, data['ids'], context)
     adr_ids = []
     partner_id = invoices[0].partner_id.id
     for inv in invoices:
-        if partner_id != inv.partner_id.id:
-            raise osv.except_osv('Warning', 'You have selected documents for different partners.')
-        if inv.number:
-            subject = subject + ' ' + inv.number
-        if inv.name:
-            text = inv.name + '\n' + text
+#        if partner_id != inv.partner_id.id:
+#            raise osv.except_osv('Warning', 'You have selected documents for different partners.')
+#        if inv.number:
+#            subject = subject + ' ' + inv.number
+#        if inv.name:
+#            text = inv.name + '\n' + text
         if inv.address_invoice_id.id not in adr_ids:
             adr_ids.append(inv.address_invoice_id.id)
         if inv.address_contact_id and inv.address_contact_id.id not in adr_ids:
@@ -81,7 +81,7 @@ def _send_mails(self, cr, uid, data, context):
     for email in data['form']['to'].split(','):
         print email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text']
 #        state = smtpserver.send_email(cr, uid, smtpserver_id, email, data['form']['subject'], data['ids'], data['model'], file_name, data['form']['text'])
-        state = smtpserver.send_email(cr, uid, smtpserver_id, email,data['form']['subject'],data['ids'][0],data['form']['text'],'account.invoice','Invoice')
+        state = smtpserver.send_email(cr, uid, smtpserver_id, email,data['form']['subject'],data['ids'],data['form']['text'],'account.invoice','Invoice')
         if not state:
             raise osv.except_osv('Error sending email', 'Please check the Server Configuration!')
 
