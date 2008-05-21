@@ -1,4 +1,5 @@
 import time
+import offer_step
 
 from osv import fields
 from osv import osv
