@@ -10,13 +10,12 @@ dates_form = '''<?xml version="1.0"?>
 dates_fields = {
     'date_from': {'string':'Start of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-01-01')},
     'date_to': {'string':'End of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
-
 }
 
-class wizard_report(wizard.interface):
+class wizard_report_summary(wizard.interface):
 
     def _default(self, cr, uid, data, context):
-        data['form']['report']='analytic-full'
+        data['form']['report']='analytic-one'
         return data['form']
 
     states = {
@@ -29,4 +28,4 @@ class wizard_report(wizard.interface):
             'result': {'type':'print', 'report':'crossovered.budget.report', 'state':'end'}
         }
     }
-wizard_report('wizard.crossovered.budget')
+wizard_report_summary('wizard.crossovered.budget.summary')

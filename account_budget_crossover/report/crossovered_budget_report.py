@@ -42,7 +42,6 @@ class budget_report(report_sxw.rml_parse):
 		})
 		self.context=context
 
-
 	def funct(self,object,form,ids={}, done=None, level=1):
 
 		if not ids:
@@ -65,17 +64,25 @@ class budget_report(report_sxw.rml_parse):
 
 		budgets = self.pool.get('crossovered.budget').browse(self.cr, self.uid, [object.id], self.context.copy())
 
-		if form['date_from']<=budgets[0].date_from< budgets[0].date_to<=form['date_to']:
-			go=1 # does nothing just carry on.
-		else:
-			return [] # stops calculations.displays nothing
-
 		for budget_id in budgets:
 			res={}
-#			print "working for",budget_id
-			budget_lines = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('crossovered_budget_id', '=', budget_id.id)])
-
+			budget_lines=[]
 			bd_ids = ','.join([str(x) for x in budget_lines])
+			obj_lines=self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,bd_ids)
+
+			d_from=form['date_from']
+			d_to=form['date_to']
+
+			query="select id from crossovered_budget_lines where crossovered_budget_id = '"+ str(budget_id.id) + "' AND '"+ str(d_from) +"'<=date_from AND date_from<date_to AND date_to<= '"+ str(d_to) +"'"
+			self.cr.execute(query)
+			budget_line_ids=self.cr.fetchall()
+
+			if not budget_line_ids:
+				return []
+
+			budget_lines=[x[0] for x in budget_line_ids]
+			bd_ids = ','.join([str(x) for x in budget_lines])
+
 			self.cr.execute('select distinct(analytic_account_id) from crossovered_budget_lines where id in (%s)'%(bd_ids))
 			an_ids=self.cr.fetchall()
 
@@ -92,7 +99,7 @@ class budget_report(report_sxw.rml_parse):
 				}
 				result.append(res)
 
-				line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('crossovered_budget_id', '=', budget_id.id),('analytic_account_id','=',an_ids[i][0])])
+				line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('id', 'in', budget_lines),('analytic_account_id','=',an_ids[i][0])])
 
 				line_id = self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,line_ids)
 				tot_theo=tot_pln=tot_prac=tot_perc=0
@@ -111,7 +118,7 @@ class budget_report(report_sxw.rml_parse):
 					tot_pln +=line.planned_amount
 					tot_prac +=line.practical_amount
 					tot_perc +=line.percentage
-					if form['report_type']=='analytic-full':
+					if form['report']=='analytic-full':
 						result.append(res1)
 
 				if tot_theo==0.00:
@@ -119,7 +126,7 @@ class budget_report(report_sxw.rml_parse):
 				else:
 					tot_perc=float(tot_prac /tot_theo)*100
 
-				if form['report_type']=='analytic-full':
+				if form['report']=='analytic-full':
 					result[-(len(line_id) +1)]['theo']=tot_theo
 					tot['theo'] +=tot_theo
 					result[-(len(line_id) +1)]['pln']=tot_pln
@@ -139,7 +146,6 @@ class budget_report(report_sxw.rml_parse):
 				tot['perc'] =0.00
 			else:
 				tot['perc']=float(tot['prac'] /tot['theo'])*100
-		print result
 		return result
 
 	def funct_total(self,form):
