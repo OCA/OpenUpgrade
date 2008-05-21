@@ -66,32 +66,7 @@
 						</group>					
 					</page>
 					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1">
-							<!--<form string="Propositions">
-								<field name="name" string="Name"/>
-								<field name="code" string="Code"/>
-								<field name="date_start"/>
-								<field name="proposition_type"/>
-								<newline/>
-								<field name="customer_pricelist_id"/>
-								<field name="requirer_pricelist_id"/>
-								<newline/>
-								<field name="quantity_max"/>
-								<field name="sale_rate"/>
-								<field name="segment_ids" colspan="4"/>
-								<newline/>
-								<field name="delay_ids" colspan="4"/>
-								<field name="notes" colspan="4"/>
-							</form>
-							<tree string="Propositions">
-								<field name="name" string="Name"/>
-								<field name="code" string="Code"/>
-								<field name="date_start" colspan="4"/>
-								<field name="quantity_max" string="Quantity"/>
-								<field name="sale_rate"/>
-								<field name="proposition_type"/>
-							</tree>													
-						--></field>
+						<field name="proposition_ids" nolabel="1"/>
 					</page>
 					<page string="Procurement">
 						<field name="product_ids" nolabel="1">
@@ -179,14 +154,14 @@
 				<field name="code" string="Code"/>
 				<field name="camp_id"/>
 				<field name="date_start"/>
+				<field name="segment_ids"/>
 				<field name="proposition_type"/>
 				<newline/>
 				<field name="customer_pricelist_id"/>
 				<field name="requirer_pricelist_id"/>
 				<newline/>
-				<field name="sent_qty"/>
+				<field name="quantity_max"/>
 				<field name="sale_rate"/>
-				<field name="segment_ids" colspan="4"/>
 				<newline/>
 				<field name="delay_ids" colspan="4"/>
 				<field name="notes" colspan="4"/>
@@ -203,7 +178,7 @@
 				<field name="name" string="Name"/>
 				<field name="code" string="Code"/>
 				<field name="date_start" colspan="4"/>
-				<field name="sent_qty"/>
+				<field name="quantity_max"/>
 				<field name="sale_rate"/>
 				<field name="proposition_type"/>
 			</tree>
