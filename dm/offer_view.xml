@@ -83,14 +83,7 @@
 										<field name="outgoing_transition_ids" colspan="4" string="Outgoing"/>
 									</page>
 									<page string="History">
-										<field name="history_ids" nolabel="1" colspan="4">
-											<form string="Actions">
-												<separator string="Action Information" colspan="4"/>
-												<field name="user_id" select="1"/>
-												<field name="state" />
-												<field name="create_date" />
-											</form>
-										</field>
+										<field name="history_ids" nolabel="1" colspan="4"/>
 										<field name="notes" colspan="4"/>
 									</page>
 									<page string="Documents">
