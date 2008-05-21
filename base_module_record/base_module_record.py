@@ -102,6 +102,7 @@ class base_module_record(osv.osv):
 				if not id:
 					field.setAttribute("model", fields[key]['relation'])
 					name = self.pool.get(fields[key]['relation']).browse(cr, uid, val).name
+					print name
 					field.setAttribute("search", "[('name','=','"+name+"')]")
 				else:
 					field.setAttribute("ref", id)
