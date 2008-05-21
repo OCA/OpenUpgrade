@@ -28,8 +28,8 @@
 ##############################################################################
 
 import trademark
-import offer
 import offer_step
+import offer
 import campaign
 import report
 import wizard
