@@ -153,7 +153,7 @@ class account_budget_post_dotation(osv.osv):
 
 				total_days=strToDate(obj_period.date_stop) - strToDate(obj_period.date_start)
 				budget_id=line.post_id and line.post_id.id or False
-				query="select id from crossovered_budget_lines where  general_budget_id= '"+ str(budget_id) + "' AND (date_from  >='"  +obj_period.date_start +"'  and date_from <= '"+obj_period.date_stop + "') OR (date_to  >='"  +obj_period.date_start +"'  and date_to <= '"+obj_period.date_stop + "')"
+				query="select id from crossovered_budget_lines where  general_budget_id= '"+ str(budget_id) + "' AND (date_from  >='"  +obj_period.date_start +"'  and date_from <= '"+obj_period.date_stop + "') OR (date_to  >='"  +obj_period.date_start +"'  and date_to <= '"+obj_period.date_stop + "') OR (date_from  <'"  +obj_period.date_start +"'  and date_to > '"+obj_period.date_stop + "')"
 				cr.execute(query)
 				res1=cr.fetchall()
 
