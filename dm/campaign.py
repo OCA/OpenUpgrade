@@ -42,7 +42,7 @@ class dm_campaign(osv.osv):
     }
     
     _defaults = {
-        'campaign_state': lambda *a: 'draft',
+        'state': lambda *a: 'draft',
         'planning_state': lambda *a: 'pending',
         'manufacturing_state': lambda *a: 'pending',
         'campaign_type': lambda *a: 'general',
