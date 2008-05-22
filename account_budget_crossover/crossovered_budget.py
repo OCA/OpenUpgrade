@@ -76,7 +76,13 @@ class crossovered_budget_lines(osv.osv):
 			acc_ids = ','.join([str(x.id) for x in line.general_budget_id.account_ids])
 			if not acc_ids:
 				raise osv.except_osv('Error!',"The General Budget '" + str(line.general_budget_id.name) + "' has no Accounts!" )
-			cr.execute("select sum(amount) from account_analytic_line where account_id=%d and (date between to_date('%s','yyyy-mm-dd') and to_date('%s','yyyy-mm-dd')) and general_account_id in (%s)"%(line.analytic_account_id.id,line.date_from,line.date_to,acc_ids))
+			date_to = line.date_to
+			date_from = line.date_from
+			if context.has_key('wizard_date_from'):
+				date_from = context['wizard_date_from']
+			if context.has_key('wizard_date_to'):
+				date_to = context['wizard_date_to']
+			cr.execute("select sum(amount) from account_analytic_line where account_id=%d and (date between to_date('%s','yyyy-mm-dd') and to_date('%s','yyyy-mm-dd')) and general_account_id in (%s)"%(line.analytic_account_id.id,date_from,date_to,acc_ids))
 			result=cr.fetchone()[0]
 			if result==None:
 				result=0.00
@@ -84,7 +90,6 @@ class crossovered_budget_lines(osv.osv):
 		return res
 
 	def _theo_amt(self, cr, uid, ids,name,args,context):
-		print "context: ", context
 		res = {}
 		for line in self.browse(cr, uid, ids):
 			today=datetime.datetime.today()
