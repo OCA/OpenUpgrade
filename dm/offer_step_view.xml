@@ -45,7 +45,7 @@
 		<field name="arch" type="xml">
 			<form string="Documents">
 				<field name="name" select="1"/>
-				<field name="code"/>
+				<field name="code" select="2"/>
 				<field name="lang_id"/>
 				<field name="copywriter_id" select="1"/>
 				<separator string="Document Categories" colspan="4"/>
@@ -56,7 +56,7 @@
 					<field name="answer_letter" select="2"/>
 				</group>
 				<separator string="Desktop Publishing" colspan="4"/>
-				<field name="dtp_operator" colspan="4" select="2"/>
+				<field name="dtp_operator" colspan="4"/>
 				<field name="dtp_theorical_date"/>
 				<field name="dtp_valid_date"/>
 				<field name="dtp_making_date"/>
@@ -116,7 +116,7 @@
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
-						<field name="media_id"/>
+						<field name="media_id" select="1"/>
 						<field name="type"/>
 						<newline/>
 						<field name="origin_id" colspan="4"/>
@@ -173,7 +173,7 @@
 <!--				<field name="step_from"/>-->
 <!--				<field name="step_to"/>-->
 				<field name="condition" select="1"/>
-				<field name="delay"/>
+				<field name="delay" select="2"/>
 				<field name="delay_id"/>
 			</form>
 		</field>
@@ -209,7 +209,7 @@
 				<field name="customer_id" select="1"/>
 				<field name="segment_id"/>
 				<field name="date_next_action" select="2"/>
-				<field name="purchase_amount"/>
+				<field name="purchase_amount" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -287,10 +287,10 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Product">
-				<field name="product_id" string="Name"/>
+				<field name="product_id" string="Name" select="1"/>
 				<field name="qty_planned"/>
-				<field name="qty_real"/>
-				<field name="price"/>
+				<field name="qty_real" select="1"/>
+				<field name="price" select="2"/>
 			</form>
 		</field>
 	</record>
