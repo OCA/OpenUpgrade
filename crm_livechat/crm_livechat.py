@@ -46,38 +46,11 @@ class crm_livechat_livechat(osv.osv):
 		self.sessions = {}
 		return super(crm_livechat_livechat, self).__init__(*args, **argv)
 
-	def get_chat_name(self,cr,uid,context={}):
-		ids=self.search(cr,uid,['name','<>','Dummy'],context)
-		res=self.browse(cr,uid,ids,context)
-		result={}
-		for r in res:
-			result[str(r.id)]=r.name
-		print "RESULT:::::::::::",result
-		return result
-
-
 	#
 	# return { jabber_id, {jabber_connection_data} }
 	# This is used by the web application to get information about jabber accounts
 	# The web application put this in his session to now download it at each time
 	#
-	
-	def get_available_partner_id(self, cr, uid, context={}):
-		res={}
-		
-		id=self.search(cr,uid,[('name','like','Dummy'+"%"),('state','like','notactive')],context)
-		print "IDS :::::::",id
-		for lc in self.browse(cr, uid, id, context):
-			for p in lc.partner_ids:
-				print "In loop",p.available
-				if p.available==False:
-						res['id']=p.id
-						res['name']=p.jabber_id.name
-						res['jid']=p.jabber_id.login
-						res['pwd']=p.jabber_id.password
-						res['server']=p.jabber_id.server
-						return res
-		return res
 	
 	
 	def get_configuration(self, cr, uid, ids, context={}):
@@ -85,13 +58,8 @@ class crm_livechat_livechat(osv.osv):
 		result = {}
 		main_res={}
 		print "Ids ",ids
-#		partner_detail=self.pool.get('crm_livechat.livechat.partner').get_live_parnter()
-#		print "`````````````````````````",partner_detail
-#		if partner_detail:
-#				print "In if condition"
 		for lc in self.browse(cr, uid, [int(ids)], context):
 			print "In loop",lc
-#					print "lc.user_ids + lc.partner_ids:",lc.user_ids ," dfdfdfdf          ",lc.partner_ids
 			for u in lc.user_ids:
 				print "Making user"
 				result[str(u.id)] = {
@@ -99,19 +67,11 @@ class crm_livechat_livechat(osv.osv):
 							'server': u.jabber_id.server,
 							'login':  u.jabber_id.login,
 							'password':  u.jabber_id.password,
+							'port':u.jabber_id.port,
+							'ssl':u.jabber_id.ssl,
 							'state': u.state
 				}
 				main_res['user']=result
-#				result={}
-#				print "Making partner"
-#				result[str(partner_detail['id'])] = {
-#						'name': partner_detail['name'],
-#						'server': partner_detail['server'],
-#							'login':  partner_detail['jid'],
-#							'password':  partner_detail['pwd'],
-#							'state': 'active'
-#						}			
-#					main_res['partner']=result	
 		print "This is result",main_res
 		return main_res
 
@@ -123,7 +83,6 @@ class crm_livechat_livechat(osv.osv):
 		for user in livechat[0].user_ids:
 			print "users ",user
 			if  user.state=='active':
-				
 #				continue
 				c = 0
 				for s in self.sessions:
@@ -152,9 +111,6 @@ class crm_livechat_livechat(osv.osv):
 	def start_session(self, cr, uid, livechat_id, user_id=False, partner_ids=False, partner_ip='Unknown', lang=False, context={}):
 		print "In session srtart", livechat_id," User id ", user_id," ?Partner id ", partner_ids
 		partner_ids=int(partner_ids)
-#		self.pool.get('crm_livechat.livechat.partner').write(cr, uid,[partner_ids], {
-#					'state': 'notactive',
-#				})
 		if not user_id:
 			print "In notvvvvvv user id",user_id
 			user_id = self.get_user(cr, uid, livechat_id, context)
@@ -162,17 +118,6 @@ class crm_livechat_livechat(osv.osv):
 		if not user_id:
 			print "In not user id",user_id
 			return False
-
-#		partner_id=False
-#		for p in self.browse(cr, uid, livechat_id, context)[0].partner_ids:
-#			print "partner ids::::::::::::::::",p.id,p.state
-#			if p.state=='active':
-#				print "In if",p.id
-#				partner_id = p.id
-#				break
-#		if not partner_id:
-#			return False
-#		print "Parnter id",partner_id
 		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [partner_ids], {
 			'available': partner_ip,
 			'available_date': time.strftime('%Y-%m-%d %H:%M:%S')
@@ -235,14 +180,14 @@ class crm_livechat_livechat_partner(osv.osv):
 		id=self.search(cr,uid,[('state','=','active'),('available','like','')],context)
 		print "IDS :::::::",id
 		for p in self.browse(cr, uid, id, context):
-				print p
-				print "In loop",p.available
 				if p.available==False:
 						res['id']=p.id
 						res['name']=p.jabber_id.name
 						res['jid']=p.jabber_id.login
 						res['pwd']=p.jabber_id.password
 						res['server']=p.jabber_id.server
+						res['port']=p.jabber_id.port
+						res['ssl']=p.jabber_id.ssl
 						return res
 	
 crm_livechat_livechat_partner()
