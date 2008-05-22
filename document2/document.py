@@ -83,11 +83,11 @@ class node_class(object):
 				path = self.path+'/'+test_nodename
 				#path = self.path+'/'+self.object2.name + (content.suffix or '') + (content.extension or '')
 				if not nodename:
-					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content')
+					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content', root=self.root)
 					res2.append( n)
 				else:
 					if nodename == test_nodename:
-						n = node_class(self.cr, self.uid, path, self.object2, False, content=content, type='content')
+						n = node_class(self.cr, self.uid, path, self.object2, False, content=content, type='content', root=self.root)
 						res2.append(n)
 		else:
 			where.append( ('parent_id','=',self.object.id) )
@@ -98,7 +98,7 @@ class node_class(object):
 		if self.object and self.root:
 			ids += fobj.search(self.cr, self.uid, where+[ ('parent_id','=',False) ], context=self.context)
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
-		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file'), res) + res2
+		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file', root=self.root), res) + res2
 
 
 	def directory_list_for_child(self,nodename,parent=False):
@@ -117,20 +117,17 @@ class node_class(object):
 		if self.type not in ('collection','database'):
 			return []
 		res = self.directory_list_for_child(nodename)
-		result= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, self.object2), res)
+		result= map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, x.type=='directory' and self.object2 or False, root=self.root), res)
 		if self.type=='database':
 			pool = pooler.get_pool(self.cr.dbname)
 			fobj = pool.get('ir.attachment')
 			file_ids=fobj.search(self.cr,self.uid,[('parent_id','=',False)])
 			res = fobj.browse(self.cr, self.uid, file_ids, context=self.context)
-			result +=map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file'), res)
+			result +=map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file', root=self.root), res)
 		if self.type=='collection' and self.object.type=="ressource":
-			where = self.object.domain and eval(self.object.domain) or []
-			obj = self.object2
-
-			if not self.object2:
-				pool = pooler.get_pool(self.cr.dbname)
-				obj = pool.get(self.object.ressource_type_id.model)
+			where = self.object.domain and eval(self.object.domain, {'active_id':self.root}) or []
+			pool = pooler.get_pool(self.cr.dbname)
+			obj = pool.get(self.object.ressource_type_id.model)
 
 			if self.object.ressource_tree:
 				if obj._parent_name in obj.fields_get(self.cr,self.uid):
@@ -161,7 +158,7 @@ class node_class(object):
 				for invalid in INVALID_CHARS:
 					if r.name.find(invalid) :
 						r.name=r.name.replace(invalid,INVALID_CHARS[invalid])
-			result2 = map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x, root=True), res)
+			result2 = map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name.replace('/','__'), self.object, x, root=r.id), res)
 			if result2:
 				result = result2
 		return result
