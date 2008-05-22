@@ -1,6 +1,8 @@
 import os
 import time
 from tarfile import filemode
+import StringIO
+import base64
 
 import pooler
 import netsvc
@@ -109,10 +111,14 @@ class abstracted_fs:
 
 	# --- Wrapper methods around open() and tempfile.mkstemp
 
-	def open(self, filename, mode):
-		"""Open a file returning its handler."""
-		raise 'Not Yet Implemented'
-		return open(filename, mode)
+	def open(self, node, mode):
+		print 'Open', mode
+		if 'w' in mode:
+			raise 'Not Implemented'
+		else:
+			if not self.isfile(node):
+				raise OSError(1, 'Operation not permited.')
+			return StringIO.StringIO(base64.decodestring(node.object.datas))
 
 	def mkstemp(self, suffix='', prefix='', dir=None, mode='wb'):
 		"""A wrap around tempfile.mkstemp creating a file with a unique
@@ -241,6 +247,7 @@ class abstracted_fs:
 		"""Should process a read, a create and a remove"""
 		raise 'Not Yet Implemented'
 
+	# Nearly Ok
 	def stat(self, node):
 		return os.stat('/')
 		print 'STAT', node
@@ -413,6 +420,7 @@ class abstracted_fs:
 			yield "%s %3s %-8s %-8s %8s %s %s\r\n" %(perms, nlinks, uname, gname,
 													 size, mtime, file.path.split('/')[-1])
 
+	# Ok
 	def format_mlsx(self, basedir, listing, perms, facts, ignore_err=True):
 		"""Return an iterator object that yields the entries of a given
 		directory or of a single file in a form suitable with MLSD and
