@@ -12,6 +12,8 @@
 					<field name="server" select="1"/>
 					<field name="login" select="1"/>
 					<field name="password"/>
+					<field name="ssl"/>
+					<field name="port"/>
 				</form>
 			</field>
 		</record>
@@ -68,7 +70,7 @@
 							</group>
 						</form>
 					</field>
-					<separator string="Visitors Accounts" colspan="4"/>
+			<!-- 		<separator string="Visitors Accounts" colspan="4"/>
 					<field name="partner_ids" nolabel="1" colspan="4">
 						<tree string="Visitors">
 							<field name="name"/>
@@ -76,7 +78,8 @@
 							<field name="available_date"/>
 							<field name="state"/>
 						</tree>
-						<form string="Visitors">
+					 
+					 	<form string="Visitors">
 							<field name="name" colspan="4" select="1"/>
 							<field name="jabber_id" select="2"/>
 							<separator colspan="4" string="Status"/>
@@ -88,7 +91,7 @@
 								<button name="set_unactif" type="object" string="Desactivate"/>
 							</group>
 						</form>
-					</field>
+					</field>-->
 				</form>
 			</field>
 		</record>
@@ -122,7 +125,7 @@
 			<field name="arch" type="xml">
 				<form string="partners Accounts">
 					<field name="name" select="1"/>
-					<field name="livechat_id" select="1"/>
+					<!--  <field name="livechat_id" select="1"/>-->
 					<field name="available" select="2"/>
 					<field name="available_date"/>
 					<field name="jabber_id" select="2"/>
@@ -142,7 +145,7 @@
 			<field name="arch" type="xml">
 				<tree string="partners Accounts">
 					<field name="name"/>
-					<field name="livechat_id"/>
+					<!-- <field name="livechat_id"/>-->
 					<field name="available"/>
 					<field name="available_date"/>
 					<field name="jabber_id"/>
