@@ -35,8 +35,16 @@ class sale_order(osv.osv):
 	_columns = {
 		'published_customer': fields.many2one('res.partner','Published Customer'),
 		'adverstising_agency': fields.many2one('res.partner','Advertising Agency'),
-		'case_ids': fields.one2many('crm.case', 'ref', 'Related Cases')
+#		'case_ids1': fields.one2many('crm.case', 'ref', 'Related Cases'),
+#		'case_ids2': fields.one2many('crm.case', 'ref2', 'Related Cases')
 	}
+	def onchange_published_customer(self, cursor, user, ids ,published_customer):
+		data = {'adverstising_agency':published_customer,'partner_id':published_customer,'partner_invoice_id': False, 'partner_shipping_id':False, 'partner_order_id':False}
+		if published_customer:
+			address = self.onchange_partner_id(cursor, user, ids, published_customer)
+			data.update(address['value'])
+		return {'value' : data}
+
 sale_order()
 
 class sale_advertising_issue(osv.osv):
