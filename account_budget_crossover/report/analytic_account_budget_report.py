@@ -52,7 +52,7 @@ class analytic_account_budget_report(report_sxw.rml_parse):
             d_from=form['date_from']
             d_to=form['date_to']
 
-            query="select id from crossovered_budget_lines where id in ("+ str(bd_lines_ids) + ") AND '"+ str(d_from) +"'<=date_from AND date_from<date_to AND date_to<= '"+ str(d_to) +"'"
+            query="select id from crossovered_budget_lines where id in ("+ str(bd_lines_ids) + ")"# AND '"+ str(d_from) +"'<=date_from AND date_from<date_to AND date_to<= '"+ str(d_to) +"'"
 
             self.cr.execute(query)
             budget_line_ids=self.cr.fetchall()

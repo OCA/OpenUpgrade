@@ -38,14 +38,12 @@ class crossovered_budget(osv.osv):
 #		return True
 
 	def budget_confirm(self, cr, uid, ids, *args):
-
 		self.write(cr, uid, ids, {
 			'state':'confirm'
 		})
 		return True
 
 	def budget_validate(self, cr, uid, ids, *args):
-
 		self.write(cr, uid, ids, {
 			'state':'validate',
 			'validating_user_id': uid,
@@ -60,7 +58,6 @@ class crossovered_budget(osv.osv):
 		return True
 
 	def budget_done(self, cr, uid, ids, *args):
-
 		self.write(cr, uid, ids, {
 			'state':'done'
 		})
@@ -134,9 +131,9 @@ class crossovered_budget_lines(osv.osv):
 		'date_to': fields.date('End Date',required=True),
 		'paid_date': fields.date('Paid Date'),
 		'planned_amount':fields.float('Planned Amount',required=True),
-		'practical_amount':fields.function(_pra_amt,method=True, string='Practical Amount',type='float',store=True),
-		'theoritical_amount':fields.function(_theo_amt,method=True, string='Theoritical Amount',type='float',store=True),
-		'percentage':fields.function(_perc,method=True, string='Percentage',type='float',store=True),
+		'practical_amount':fields.function(_pra_amt,method=True, string='Practical Amount',type='float'),
+		'theoritical_amount':fields.function(_theo_amt,method=True, string='Theoritical Amount',type='float'),
+		'percentage':fields.function(_perc,method=True, string='Percentage',type='float'),
 
 	 }
 crossovered_budget_lines()
