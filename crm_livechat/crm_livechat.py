@@ -51,8 +51,8 @@ class crm_livechat_livechat(osv.osv):
 	# This is used by the web application to get information about jabber accounts
 	# The web application put this in his session to now download it at each time
 	#
-	
-	
+
+
 	def get_configuration(self, cr, uid, ids, context={}):
 		print "In get config"
 		result = {}
@@ -133,9 +133,9 @@ class crm_livechat_livechat(osv.osv):
 		OUT:
 			True
 	"""
-	def stop_session(self, cr, uid, id, session_id, log=True, context={}):
+	def stop_session(self, cr, uid, id, session_id, log=True, chat_data='', context={}):
 		print "session_id"
-		
+
 		print "session id ",session_id," data it have ",self.sessions
 		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [self.sessions[session_id][1]], {
 			'available': False,
@@ -147,7 +147,7 @@ class crm_livechat_livechat(osv.osv):
 			if log:
 				print "In logging"
 				self.pool.get('crm_livechat.log').create(cr, uid, {
-					'note': log,
+					'note': chat_data,
 					'user_id': self.sessions[session_id][1],
 					'livechat_id':self.sessions[session_id][2][0],
 				})
@@ -174,7 +174,7 @@ class crm_livechat_livechat_partner(osv.osv):
 	_defaults = {
 		'state': lambda *args: 'active'
 	}
-	
+
 	def get_live_parnter(self,cr,uid,context={}):
 		res={}
 		id=self.search(cr,uid,[('state','=','active'),('available','like','')],context)
@@ -189,7 +189,7 @@ class crm_livechat_livechat_partner(osv.osv):
 						res['port']=p.jabber_id.port
 						res['ssl']=p.jabber_id.ssl
 						return res
-	
+
 crm_livechat_livechat_partner()
 
 class crm_livechat_livechat_user(osv.osv):
