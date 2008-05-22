@@ -116,9 +116,23 @@ class abstracted_fs:
 		if 'w' in mode:
 			raise 'Not Implemented'
 		else:
-			if not self.isfile(node):
+			# Reading operation
+			if node.type=='file':
+				if not self.isfile(node):
+					raise OSError(1, 'Operation not permited.')
+				return StringIO.StringIO(base64.decodestring(node.object.datas or ''))
+			elif node.type=='content':
+				cr = node.cr
+				uid = node.uid
+				pool = pooler.get_pool(cr.dbname)
+				report = pool.get('ir.actions.report.xml').browse(cr, uid, node.content['report_id']['id'])
+				srv = netsvc.LocalService('report.'+report.report_name)
+				pdf,pdftype = srv.create(cr, uid, [node.object.id], {}, {})
+				s = StringIO.StringIO(pdf)
+				s.name = node
+				return s
+			else:
 				raise OSError(1, 'Operation not permited.')
-			return StringIO.StringIO(base64.decodestring(node.object.datas))
 
 	def mkstemp(self, suffix='', prefix='', dir=None, mode='wb'):
 		"""A wrap around tempfile.mkstemp creating a file with a unique
@@ -295,7 +309,7 @@ class abstracted_fs:
 	def getmtime(self, node):
 		"""Return the last modified time as a number of seconds since
 		the epoch."""
-		if node.object:
+		if node.object and node.type<>'content':
 			dt = (node.object.write_date or node.object.create_date)[:19]
 			result = time.mktime(time.strptime(dt, '%Y-%m-%d %H:%M:%S'))
 		else:
