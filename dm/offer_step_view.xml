@@ -121,10 +121,10 @@
 						<newline/>
 						<field name="origin_id" colspan="4"/>
 						<separator string="Products" colspan="4"/>
-						<field name="product_ids" colspan="4"/>
-						<newline/>
+						<field name="product_ids" colspan="4" nolabel="1"/>
+						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
-							<field name="state" select="1"/>
+							<field name="state" select="1" nolabel="1"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
 							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
@@ -156,6 +156,13 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Steps" id="menu_action_offer_step_form" action="action_offer_step_form"/>
 
+	<act_window name="Offer Steps"
+		res_model="dm.offer.step"
+		src_model="dm.offer"
+		view_type="form"
+		view_mode="tree,form"
+		id="act_offer_step_opened"/>
+		
 	<record model="ir.ui.view" id="view_offer_step_transition_form">
 		<field name="name">dm.offer.step.transition.form</field>
 		<field name="model">dm.offer.step.transition</field>
@@ -260,5 +267,40 @@
 			</tree>
 		</field>
 	</record>
+
+	<record model="ir.ui.view" id="view_product_tree">
+		<field name="name">dm.product.tree</field>
+		<field name="model">dm.product</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Products">
+				<field name="product_id" string="Name"/>
+				<field name="qty_planned"/>
+				<field name="qty_real"/>
+				<field name="price"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_product_form">
+		<field name="name">dm.product.form</field>
+		<field name="model">dm.product</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Product">
+				<field name="product_id" string="Name"/>
+				<field name="qty_planned"/>
+				<field name="qty_real"/>
+				<field name="price"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_offer_step_product">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.product</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_product_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product"/>
+
 </data>
 </terp>
