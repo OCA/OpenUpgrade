@@ -84,24 +84,27 @@ class crossovered_budget_lines(osv.osv):
 		return res
 
 	def _theo_amt(self, cr, uid, ids,name,args,context):
+		print "context: ", context
 		res = {}
 		for line in self.browse(cr, uid, ids):
 			today=datetime.datetime.today()
-			td=today.strftime("%Y-%m-%d")
+			date_to = today.strftime("%Y-%m-%d")
+			date_from = line.date_from
+			if context.has_key('wizard_date_from'):
+				date_from = context['wizard_date_from']
+			if context.has_key('wizard_date_to'):
+				date_to = context['wizard_date_to']
 
 			if line.paid_date:
-				if strToDate(td)<=strToDate(line.paid_date):
+				if strToDate(date_to)<=strToDate(line.paid_date):
 					theo_amt=0.00
 				else:
 					theo_amt=line.planned_amount
 			else:
 				total=strToDate(line.date_to) - strToDate(line.date_from)
-				if strToDate(td) < strToDate(line.date_from):
-					elapsed = strToDate(td) - strToDate(td)
-				elif strToDate(line.date_to) < strToDate(td):
-					elapsed=total
-				else:
-					elapsed = strToDate(td) - strToDate(line.date_from)
+				elapsed = min(strToDate(line.date_to),strToDate(date_to)) - max(strToDate(line.date_from),strToDate(date_from))
+				if strToDate(date_to) < strToDate(line.date_from):
+					elapsed = strToDate(date_to) - strToDate(date_to)
 
 				theo_amt=float(elapsed.days/float(total.days))*line.planned_amount
 
