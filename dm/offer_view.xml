@@ -31,7 +31,7 @@
 						<field name="name" select="1"/>
 						<field name="code"/>
 						<field name="lang_orig"/>
-						<field name="copywriter_id"/>
+						<field name="copywriter_id"  select="2"/>
 <!--						<field name="mark_id"/>-->
 						<field name="offer_origin_id"/>
 						<field name="active" select="2"/>
@@ -39,7 +39,7 @@
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<field name="date_purchase"/>
-						<field name="date_validation"/>
+						<field name="date_validation"  select="1"/>
 						<separator string="Categories" colspan="4"/>
 						<field name="category_ids" colspan="4" nolabel="1"/>
 						<separator string="Notes" colspan="4"/>
@@ -72,14 +72,7 @@
 						<field name="purchase_category_ids" colspan="4"  string="Category"/>
 					</page>
 					<page string="History">
-						<field name="history_ids" nolabel="1" colspan="4">
-							<!--<form string="Actions">
-								<separator string="Action Information" colspan="4"/>-
-								<field name="date" />
-								<field name="user_id" />
-								<field name="state" />
-							</form>
-						--></field>
+						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
 				</notebook>	
 			</form>
