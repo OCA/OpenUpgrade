@@ -35,15 +35,15 @@
 				<notebook colspan="4">
 					<page string="General">
 						<separator string="Global Information" colspan="4"/>
-						<field name="name" string="Name"/>
-						<field name="code" string="Code"/>
+						<field name="name" string="Name" select="1"/>
+						<field name="code" string="Code" select="2"/>
 						<field name="offer_id"/>
 						<field name="parent_id" string="Category" domain="[('type','=','view')]"/>
-						<field name="country_id"/>
+						<field name="country_id" select="1"/>
 						<field name="lang_id"/>
 						<field name="date_start"/>
 						<field name="date"/>
-						<field name="campaign_type"/>
+						<field name="campaign_type" select="2"/>
 						<field name="partner_id"/>
 						<field name="trademark_id"/>
 						<separator string="Tasks Management" colspan="4"/>
@@ -119,7 +119,7 @@
 						<separator string="Notes" colspan="4"/>
 						<field name="dtp_notes" colspan="4" nolabel="1"/>
 					</page>
--->					<page string="Notes">
+					<page string="Notes">
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4" nolabel="1"/>
 					</page>
@@ -142,9 +142,9 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Delay">
-				<field name="key_id"/>
-				<field name="value"/>
-				<field name="proposition_id"/>
+				<field name="key_id" select="1"/>
+				<field name="value" select="1"/>
+				<field name="proposition_id" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -178,12 +178,12 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Propositions">
-				<field name="name" string="Name"/>
-				<field name="code" string="Code"/>
+				<field name="name" string="Name" select="1"/>
+				<field name="code" string="Code" select="2"/>
 				<field name="camp_id"/>
-				<field name="date_start"/>
+				<field name="date_start" select="2"/>
 				<field name="segment_id"/>
-				<field name="proposition_type"/>
+				<field name="proposition_type" select="1"/>
 				<newline/>
 				<field name="customer_pricelist_id"/>
 				<field name="requirer_pricelist_id"/>
@@ -228,8 +228,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Segments">
-				<field name="name" string="Name"/>
-				<field name="action_code" string="Action Code"/>
+				<field name="name" string="Name" select="1"/>
+				<field name="action_code" string="Action Code" select="2"/>
 				<field name="qty"/>
 			</form>
 		</field>
@@ -263,8 +263,8 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Group">
-				<field name="name" colspan="4"/>
-				<field name="campaign_ids" colspan="4"/>
+				<field name="name" colspan="4" select="1"/>
+				<field name="campaign_ids" colspan="4" select="2"/>
 			</form>
 		</field>
 	</record>
