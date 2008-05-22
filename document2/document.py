@@ -176,7 +176,7 @@ class node_class(object):
 		res = self._file_get(name)
 		if res:
 			return res[0]
-		raise 'Error'
+		return None
 
 	def path_get(self):
 		path = self.path
@@ -254,10 +254,9 @@ class document_directory(osv.osv):
 	"""
 	def get_object(self, cr, uid, uri, context={}):
 		if not uri:
-			return None
+			return node_class(cr, uid, '', False, type='database')
 		turi = tuple(uri)
-		if (turi in self._cache):
-			print '*'*50
+		if False and (turi in self._cache):
 			(path, oo, oo2, content,type,root) = self._cache[turi]
 			if oo:
 				object = self.pool.get(oo[0]).browse(cr, uid, oo[1], context)
@@ -270,10 +269,13 @@ class document_directory(osv.osv):
 			node = node_class(cr, uid, path, object,object2, context, content, type, root)
 			return node
 
-		node = node_class(cr, uid, uri[0], False, type='database')
-		for path in uri[1:]:
+		node = node_class(cr, uid, '/', False, type='database')
+		for path in uri[:]:
 			if path:
+				print 'node', node, node.path, path
 				node = node.child(path)
+				if not node:
+					return False
 		oo = node.object and (node.object._name, node.object.id) or False
 		oo2 = node.object2 and (node.object2._name, node.object2.id) or False
 		self._cache[turi] = (node.path, oo, oo2, node.content,node.type,node.root)
@@ -495,7 +497,10 @@ class document_file(osv.osv):
 	def unlink(self,cr, uid, ids, context={}):
 		for f in self.browse(cr, uid, ids, context):
 			if f.store_method=='fs':
-				path = os.path.join(os.getcwd(),'filestore',f.store_fname)
-				os.unlink(path)
+				try:
+					path = os.path.join(os.getcwd(),'filestore',f.store_fname)
+					os.unlink(path)
+				except:
+					pass
 		return super(document_file, self).unlink(cr, uid, ids, context)
 document_file()

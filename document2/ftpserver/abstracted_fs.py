@@ -2,6 +2,11 @@ import os
 import time
 from tarfile import filemode
 
+import pooler
+import netsvc
+import posix
+from service import security
+
 class abstracted_fs:
 	"""A class used to interact with the file system, providing a high
 	level, cross-platform interface compatible with both Windows and
@@ -17,6 +22,22 @@ class abstracted_fs:
 	 - (str) rnfr: source file to be renamed.
 	"""
 
+	# Ok
+	def db_list(self):
+		s = netsvc.LocalService('db')
+		result = s.list()
+		self.db_name_list=[]
+		for db_name in result:
+			db = pooler.get_db_only(db_name)
+			cr = db.cursor()
+			cr.execute("select id from ir_module_module where name like 'document%' and state='installed' ")
+			res=cr.fetchone()
+			if res and len(res):
+				self.db_name_list.append(db_name)
+			cr.close()
+		return self.db_name_list
+
+	# Ok
 	def __init__(self):
 		self.root = None
 		self.cwd = '/'
@@ -24,6 +45,7 @@ class abstracted_fs:
 
 	# --- Pathname / conversion utilities
 
+	# Ok
 	def ftpnorm(self, ftppath):
 		"""Normalize a "virtual" ftp pathname (tipically the raw string
 		coming from client) depending on the current working directory.
@@ -53,12 +75,26 @@ class abstracted_fs:
 			p = "/"
 		return p
 
-	def ftp2fs(self, ftppath):
-		return ftppath
+	# Ok
+	def ftp2fs(self, path_orig):
+		path = os.path.join(self.cwd, path_orig)
+		print 'FTP2FS', path, self.cwd, path
+		if path and path=='/':
+			return None
+		cr, uid, pool, path2 = self.get_cr(path)
+		res = pool.get('document.directory').get_object(cr, uid, path2[:])
+		if not res:
+			raise OSError(2, 'Not such file or directory.')
+		return res
 
-	def fs2ftp(self, fspath):
-		return ftppath
+	# Ok
+	def fs2ftp(self, node):
+		res = node and ('/' + node.cr.dbname + '/' + node.path) or '/'
+		print 'FS2FTP', node, res
 
+		return res
+
+	# Ok
 	def validpath(self, path):
 		"""Check whether the path belongs to user's home directory.
 		Expected argument is a "real" filesystem pathname.
@@ -69,7 +105,7 @@ class abstracted_fs:
 		Pathnames escaping from user's root directory are considered
 		not valid.
 		"""
-		return True
+		return path and True or False
 
 	# --- Wrapper methods around open() and tempfile.mkstemp
 
@@ -98,59 +134,165 @@ class abstracted_fs:
 		file = os.fdopen(fd, mode)
 		return FileWrapper(file, name)
 
-	# --- Wrapper methods around os.*
-
+	# Ok
 	def chdir(self, path):
-		self.cwd = path
+		self.cwd = self.fs2ftp(path)
 
-	def mkdir(self, path):
+	# Ok
+	def mkdir(self, node, basename):
 		"""Create the specified directory."""
-		raise 'Not Yet Implemented'
+		if not node:
+			raise OSError(1, 'Operation not permited.')
+		try:
+			object2=node and node.object2 or False
+			object=node and node.object or False
+			cr = node.cr
+			uid = node.uid
+			pool = pooler.get_pool(cr.dbname)
+			if node.object and (node.object.type=='ressource') and not node.object2:
+				raise OSError(1, 'Operation not permited.')
+			pool.get('document.directory').create(cr, uid, {
+				'name': basename,
+				'parent_id': object and object.id or False,
+				'ressource_type_id': object and object.ressource_type_id.id or False,
+				'ressource_id': object2 and object2.id or False
+			})
+			cr.commit()
+			cr.close()
+		except:
+			raise OSError(1, 'Operation not permited.')
 
+
+	# Ok
+	def get_cr(self, path):
+		dbname = path.split('/')[1]
+		try:
+			db,pool = pooler.get_db_and_pool(dbname)
+		except:
+			raise OSError(1, 'Operation not permited.')
+		cr = db.cursor()
+		uri2 = filter(None,path.split('/'))[1:]
+		print 'GET CR', path, uri2
+		return cr, 1, pool, uri2
+
+	# Ok
 	def listdir(self, path):
 		"""List the content of a directory."""
-		return os.listdir(path)
+		print 'LIST', path, path
+		class false_node():
+			object = None
+			type = 'database'
+			def __init__(self, db):
+				self.path = '/'+db
 
-	def rmdir(self, path):
+		if path is None:
+			result = []
+			for db in self.db_list():
+				result.append(false_node(db))
+			return result
+		return path.children()
+#		result = []
+#		for d in path.children():
+#			print d.path
+#			result.append( d.path.split('/')[-1] )
+#		return result
+
+	# Ok
+	def rmdir(self, node):
 		"""Remove the specified directory."""
-		raise 'Not Yet Implemented'
+		cr = node.cr
+		uid = node.uid
+		pool = pooler.get_pool(cr.dbname)
+		object2=node and node.object2 or False
+		object=node and node.object or False
+		if object._table_name=='document.directory':
+			if object.child_ids:
+				raise OSError(39, 'Directory not empty.')
+			if object.file_ids:
+				raise OSError(39, 'Directory not empty.')
+			res = pool.get('document.directory').unlink(cr, uid, [object.id])
+		else:
+			raise OSError(39, 'Directory not empty.')
 
-	def remove(self, path):
+		cr.commit()
+		cr.close()
+
+	# Ok
+	def remove(self, node):
 		"""Remove the specified file."""
-		raise 'Not Yet Implemented'
+		cr = node.cr
+		uid = node.uid
+		pool = pooler.get_pool(cr.dbname)
+		object2=node and node.object2 or False
+		object=node and node.object or False
+		if not object:
+			raise OSError(2, 'Not such file or directory.')
+		if object._table_name=='ir.attachment':
+			res = pool.get('ir.attachment').unlink(cr, uid, [object.id])
+		else:
+			raise OSError(1, 'Operation not permited.')
+		cr.commit()
+		cr.close()
 
 	def rename(self, src, dst):
 		"""Should process a read, a create and a remove"""
 		raise 'Not Yet Implemented'
 
-	def stat(self, path):
-		"""Perform a stat() system call on the given path."""
-		return os.stat('/tmp')
+	def stat(self, node):
+		return os.stat('/')
+		print 'STAT', node
+		r = list(os.stat('/'))
+		if self.isfile(node):
+			r[0] = 33188
+		r[6] = self.getsize(node)
+		r[7] = self.getmtime(node)
+		r[8] =  self.getmtime(node)
+		r[9] =  self.getmtime(node)
+		return posix.stat_result(r)
 	lstat = stat
 
 	# --- Wrapper methods around os.path.*
 
-	def isfile(self, path):
-		"""Return True if path is a file."""
-		return True
+	# Ok
+	def isfile(self, node):
+		if node and (node.type not in ('collection','database')):
+			return True
+		return False
 
+	# Ok
 	def islink(self, path):
 		"""Return True if path is a symbolic link."""
 		return False
 
-	def isdir(self, path):
+	# Ok
+	def isdir(self, node):
 		"""Return True if path is a directory."""
-		return True
+		if node is None:
+			return True
+		if node and (node.type in ('collection','database')):
+			return True
+		return False
 
-	def getsize(self, path):
+	# Ok
+	def getsize(self, node):
 		"""Return the size of the specified file in bytes."""
-		return 4096L
+		result = 0L
+		if node.type=='file':
+			result = node.object.file_size or 0L
+		return result
 
-	def getmtime(self, path):
+	# Ok
+	def getmtime(self, node):
 		"""Return the last modified time as a number of seconds since
 		the epoch."""
-		return 1211272250.0
+		if node.object:
+			dt = (node.object.write_date or node.object.create_date)[:19]
+			result = time.mktime(time.strptime(dt, '%Y-%m-%d %H:%M:%S'))
+		else:
+			result = time.mktime(time.localtime())
+		return result
 
+	# Ok
 	def realpath(self, path):
 		"""Return the canonical version of path eliminating any
 		symbolic links encountered in the path (if they are
@@ -158,13 +300,15 @@ class abstracted_fs:
 		"""
 		return path
 
+	# Ok
 	def lexists(self, path):
 		"""Return True if path refers to an existing path, including
 		a broken or circular symbolic link.
 		"""
-		return True
-	exists = lexists  # alias for backward compatibility with 0.2.0
+		return node and True or False
+	exists = lexists
 
+	# Ok, can be improved
 	def glob1(self, dirname, pattern):
 		"""Return a list of files matching a dirname pattern
 		non-recursively.
@@ -173,28 +317,30 @@ class abstracted_fs:
 		"""
 		names = self.listdir(dirname)
 		if pattern[0] != '.':
-			names = filter(lambda x: x[0] != '.', names)
+			names = filter(lambda x: x.path[0] != '.', names)
 		return fnmatch.filter(names, pattern)
 
 	# --- Listing utilities
 
 	# note: the following operations are no more blocking
 
+	# Ok
 	def get_list_dir(self, path):
 		""""Return an iterator object that yields a directory listing
 		in a form suitable for LIST command.
 		"""
 		if self.isdir(path):
 			listing = self.listdir(path)
-			listing.sort()
-			return self.format_list(path, listing)
+			#listing.sort()
+			return self.format_list(path and path.path or '/', listing)
 		# if path is a file or a symlink we return information about it
-		else:
-			basedir, filename = os.path.split(path)
+		elif self.isfile(path):
+			basedir, filename = os.path.split(path.path)
 			self.lstat(path)  # raise exc in case of problems
 			return self.format_list(basedir, [filename])
 
 
+	# Ok
 	def get_stat_dir(self, rawline):
 		"""Return an iterator object that yields a list of files
 		matching a dirname pattern non-recursively in a form
@@ -217,6 +363,7 @@ class abstracted_fs:
 					listing.sort()
 				return self.format_list(basedir, listing)
 
+	# Ok
 	def format_list(self, basedir, listing, ignore_err=True):
 		"""Return an iterator object that yields the entries of given
 		directory emulating the "/bin/ls -lA" UNIX command output.
@@ -238,15 +385,13 @@ class abstracted_fs:
 		drwxrwxrwx   1 owner   group		  0 Aug 31 18:50 e-books
 		-rw-rw-rw-   1 owner   group		380 Sep 02  3:40 module.py
 		"""
-		for basename in listing:
-			file = os.path.join(basedir, basename)
+		for file in listing:
 			try:
 				st = self.lstat(file)
 			except os.error:
 				if ignore_err:
 					continue
 				raise
-			print st
 			perms = filemode(st.st_mode)  # permissions
 			nlinks = st.st_nlink  # number of links to inode
 			if not nlinks:  # non-posix system, let's use a bogus value
@@ -263,7 +408,7 @@ class abstracted_fs:
 
 			# formatting is matched with proftpd ls output
 			yield "%s %3s %-8s %-8s %8s %s %s\r\n" %(perms, nlinks, uname, gname,
-													 size, mtime, basename)
+													 size, mtime, file.path.split('/')[-1])
 
 	def format_mlsx(self, basedir, listing, perms, facts, ignore_err=True):
 		"""Return an iterator object that yields the entries of a given

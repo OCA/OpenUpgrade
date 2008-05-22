@@ -212,6 +212,7 @@ def _strerror(err):
 
      - (instance) err: an EnvironmentError or derived class instance.
     """
+    print err, dir(err), err.errno, err.strerror, err.message
     if hasattr(os, 'strerror'):
         return os.strerror(err.errno)
     else:
@@ -1037,9 +1038,9 @@ class AbstractedFS:
             os.chdir(basedir)
             self.cwd = self.fs2ftp(path)
 
-    def mkdir(self, path):
+    def mkdir(self, path, basename):
         """Create the specified directory."""
-        os.mkdir(path)
+        os.mkdir(os.path.join(path, basename))
 
     def listdir(self, path):
         """List the content of a directory."""
@@ -1565,7 +1566,7 @@ class FTPHandler(asynchat.async_chat):
 
         # provide full command set
         elif (self.authenticated) and (cmd in proto_cmds):
-            if not (self.__check_path(arg, arg) and self.__check_perm(cmd, arg)):
+            if not (self.__check_path(arg, arg)): # and self.__check_perm(cmd, arg)):
                 return
             method = getattr(self, 'ftp_' + cmd)
             method(arg)  # call the proper ftp_* method
@@ -2515,10 +2516,11 @@ class FTPHandler(asynchat.async_chat):
 
     def ftp_MKD(self, line):
         """Create the specified directory."""
-        path = self.fs.ftp2fs(line)
         line = self.fs.ftpnorm(line)
+        basedir,basename = os.path.split(line)
+        path = self.fs.ftp2fs(basedir)
         try:
-            self.run_as_current_user(self.fs.mkdir, path)
+            self.run_as_current_user(self.fs.mkdir, path, basename)
         except OSError, err:
             why = _strerror(err)
             self.log('FAIL MKD "%s". %s.' %(line, why))
@@ -2982,7 +2984,7 @@ def test():
     authorizer = DummyAuthorizer()
     authorizer.add_anonymous(os.getcwd(), perm='elradfmw')
     FTPHandler.authorizer = authorizer
-    address = ('', 21)
+    address = ('', 8021)
     ftpd = FTPServer(address, FTPHandler)
     ftpd.serve_forever()
 
