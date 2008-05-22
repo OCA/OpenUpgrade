@@ -111,6 +111,7 @@ class abstracted_fs:
 
 	# --- Wrapper methods around open() and tempfile.mkstemp
 
+	# Ok
 	def create(self, node, objname, mode):
 		class file_wrapper(StringIO.StringIO):
 			def __init__(self, sstr='', ressource_id=False, dbname=None, uid=1, name=''):
@@ -172,6 +173,7 @@ class abstracted_fs:
 		s = file_wrapper('', cid, cr.dbname, uid, )
 		return s
 
+	# Ok
 	def open(self, node, mode):
 		# Reading operation
 		if node.type=='file':
@@ -191,6 +193,7 @@ class abstracted_fs:
 		else:
 			raise OSError(1, 'Operation not permited.')
 
+	# To be Done
 	def mkstemp(self, suffix='', prefix='', dir=None, mode='wb'):
 		"""A wrap around tempfile.mkstemp creating a file with a unique
 		name.  Unlike mkstemp it returns an object with a file-like
@@ -320,8 +323,6 @@ class abstracted_fs:
 
 	# Nearly Ok
 	def stat(self, node):
-		return os.stat('/')
-		print 'STAT', node
 		r = list(os.stat('/'))
 		if self.isfile(node):
 			r[0] = 33188
