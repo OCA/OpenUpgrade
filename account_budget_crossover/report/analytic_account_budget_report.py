@@ -42,11 +42,12 @@ class analytic_account_budget_report(report_sxw.rml_parse):
         for account_id in accounts:
             res={}
             budget_lines=[]
+            b_line_ids=[]
 
             for line in account_id.crossovered_budget_line:
-                budget_lines.append(line.id)
+                b_line_ids.append(line.id)
 
-            bd_lines_ids = ','.join([str(x) for x in budget_lines])
+            bd_lines_ids = ','.join([str(x) for x in b_line_ids])
 
             d_from=form['date_from']
             d_to=form['date_to']
@@ -63,14 +64,15 @@ class analytic_account_budget_report(report_sxw.rml_parse):
 
             bd_ids = ','.join([str(x) for x in budget_lines])
 
-            self.cr.execute('select distinct(crossovered_budget_id) from crossovered_budget_lines where id in (%s)'%(bd_ids))
+            self.cr.execute('select distinct(crossovered_budget_id) from crossovered_budget_lines where id in (%s)'%(bd_lines_ids))
             budget_ids=self.cr.fetchall()
 
             for i in range(0,len(budget_ids)):
 
                 budget_name=self.pool.get('crossovered.budget').browse(self.cr, self.uid,[budget_ids[i][0]])
                 res={
-                     'id':'-1',
+                     'b_id':'-1',
+                     'a_id':'-1',
                      'name':budget_name[0].name,
                      'status':1,
                      'theo':0.00,
@@ -80,43 +82,68 @@ class analytic_account_budget_report(report_sxw.rml_parse):
                 }
                 result.append(res)
 
-                line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('id', 'in', budget_lines),('crossovered_budget_id','=',budget_ids[i][0])])
+                line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('id', 'in', b_line_ids),('crossovered_budget_id','=',budget_ids[i][0])])
                 line_id = self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,line_ids)
                 tot_theo=tot_pln=tot_prac=tot_perc=0
 
                 done_budget=[]
                 for line in line_id:
 
-                    if line.general_budget_id.id in done_budget:
+                    if line.id in budget_lines:
+                        theo=pract=0.00
+                        theo=line._theo_amt(self.cr, self.uid, [line.id],"theoritical_amount",None,context={'wizard_date_from':d_from,'wizard_date_to':d_to})[line.id]
+                        pract=line._pra_amt(self.cr, self.uid, [line.id],"practical_amount",None,context={'wizard_date_from':d_from,'wizard_date_to':d_to})[line.id]
 
-                        for record in result:
-                            if record['id']==line.general_budget_id.id:
 
-                                record['theo'] +=line.theoritical_amount
-                                record['pln'] +=line.planned_amount
-                                record['prac'] +=line.practical_amount
-                                record['perc'] +=line.percentage
-                                tot_theo += line.theoritical_amount
-                                tot_pln +=line.planned_amount
-                                tot_prac +=line.practical_amount
-                                tot_perc +=line.percentage
+                        if line.general_budget_id.id in done_budget:
+
+                            for record in result:
+                               if record['b_id']==line.general_budget_id.id  and record['a_id']==line.analytic_account_id.id:
+
+                                    record['theo'] +=theo
+                                    record['pln'] +=line.planned_amount
+                                    record['prac'] +=pract
+                                    record['perc'] +=line.percentage
+                                    tot_theo +=theo
+                                    tot_pln +=line.planned_amount
+                                    tot_prac +=pract
+                                    tot_perc +=line.percentage
+                        else:
+
+                            res1={
+                                 'b_id':line.general_budget_id.id,
+                                 'a_id':line.analytic_account_id.id,
+                                 'name':line.general_budget_id.name,
+                                 'status':2,
+                                 'theo':theo,
+                                 'pln':line.planned_amount,
+                                 'prac':pract,
+                                 'perc':line.percentage
+                            }
+
+                            tot_theo += theo
+                            tot_pln +=line.planned_amount
+                            tot_prac +=pract
+                            tot_perc +=line.percentage
+                            result.append(res1)
+                            done_budget.append(line.general_budget_id.id)
                     else:
+                       if line.general_budget_id.id in done_budget:
+                            continue
+                       else:
+                            res1={
+                                    'b_id':line.general_budget_id.id,
+                                    'a_id':line.analytic_account_id.id,
+                                     'name':line.general_budget_id.name,
+                                     'status':2,
+                                     'theo':0.00,
+                                     'pln':0.00,
+                                     'prac':0.00,
+                                     'perc':0.00
+                            }
 
-                        res1={
-                             'id':line.general_budget_id.id,
-                             'name':line.general_budget_id.name,
-                             'status':2,
-                             'theo':line.theoritical_amount,
-                             'pln':line.planned_amount,
-                             'prac':line.practical_amount,
-                             'perc':line.percentage
-                        }
-                        tot_theo += line.theoritical_amount
-                        tot_pln +=line.planned_amount
-                        tot_prac +=line.practical_amount
-                        tot_perc +=line.percentage
-                        result.append(res1)
-                        done_budget.append(line.general_budget_id.id)
+                            result.append(res1)
+                            done_budget.append(line.general_budget_id.id)
 
 
                 if tot_theo==0.00:

@@ -65,11 +65,17 @@ class budget_report(report_sxw.rml_parse):
 		budgets = self.pool.get('crossovered.budget').browse(self.cr, self.uid, [object.id], self.context.copy())
 
 		for budget_id in budgets:
+
 			res={}
 			budget_lines=[]
-
+			budget_ids=[]
 			d_from=form['date_from']
 			d_to=form['date_to']
+
+			for line in budget_id.crossovered_budget_line:
+				budget_ids.append(line.id)
+
+			b_line_ids=','.join([str(x) for x in budget_ids])
 
 			query="select id from crossovered_budget_lines where crossovered_budget_id = '"+ str(budget_id.id) + "' AND '"+ str(d_from) +"'<=date_from AND date_from<date_to AND date_to<= '"+ str(d_to) +"'"
 			self.cr.execute(query)
@@ -79,16 +85,19 @@ class budget_report(report_sxw.rml_parse):
 				return []
 
 			budget_lines=[x[0] for x in budget_line_ids]
+
 			bd_ids = ','.join([str(x) for x in budget_lines])
 
-			self.cr.execute('select distinct(analytic_account_id) from crossovered_budget_lines where id in (%s)'%(bd_ids))
+			self.cr.execute('select distinct(analytic_account_id) from crossovered_budget_lines where id in (%s)'%(b_line_ids))
 			an_ids=self.cr.fetchall()
 
 			for i in range(0,len(an_ids)):
 
 				analytic_name=self.pool.get('account.analytic.account').browse(self.cr, self.uid,[an_ids[i][0]])
+
 				res={
-			 		'id':'-1',
+			 		'b_id':'-1',
+			 		'a_id':'-1',
 			 		'name':analytic_name[0].name,
 			 		'status':1,
 			 		'theo':0.00,
@@ -98,7 +107,7 @@ class budget_report(report_sxw.rml_parse):
 				}
 				result.append(res)
 
-				line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('id', 'in', budget_lines),('analytic_account_id','=',an_ids[i][0])])
+				line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('id', 'in', budget_ids),('analytic_account_id','=',an_ids[i][0])])
 
 				line_id = self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,line_ids)
 				tot_theo=tot_pln=tot_prac=tot_perc=0
@@ -106,42 +115,71 @@ class budget_report(report_sxw.rml_parse):
 				done_budget=[]
 				for line in line_id:
 
-					if line.general_budget_id.id in done_budget:
-						for record in result:
-						    if record['id']==line.general_budget_id.id:
+					if line.id in budget_lines:
+						theo=pract=0.00
+						theo=line._theo_amt(self.cr, self.uid, [line.id],"theoritical_amount",None,context={'wizard_date_from':d_from,'wizard_date_to':d_to})[line.id]
+						pract=line._pra_amt(self.cr, self.uid, [line.id],"practical_amount",None,context={'wizard_date_from':d_from,'wizard_date_to':d_to})[line.id]
 
-						        record['theo'] +=line.theoritical_amount
-						        record['pln'] +=line.planned_amount
-						        record['prac'] +=line.practical_amount
-						        record['perc'] +=line.percentage
-						        tot_theo += line.theoritical_amount
-						        tot_pln +=line.planned_amount
-						        tot_prac +=line.practical_amount
-						        tot_perc +=line.percentage
+						if line.general_budget_id.id in done_budget:
+
+							for record in result:
+							    if record['b_id']==line.general_budget_id.id  and record['a_id']==line.analytic_account_id.id:
+
+							        record['theo'] +=theo
+							        record['pln'] +=line.planned_amount
+							        record['prac'] +=pract
+							        record['perc'] +=line.percentage
+							        tot_theo += theo
+							        tot_pln +=line.planned_amount
+							        tot_prac +=pract
+							        tot_perc +=line.percentage
+						else:
+
+							res1={
+									'a_id':line.analytic_account_id.id,
+									'b_id':line.general_budget_id.id,
+						 			'name':line.general_budget_id.name,
+						 			'status':2,
+						 			'theo':theo,
+						 			'pln':line.planned_amount,
+						 			'prac':pract,
+						 			'perc':line.percentage
+							}
+							tot_theo += theo
+							tot_pln +=line.planned_amount
+							tot_prac +=pract
+							tot_perc +=line.percentage
+							if form['report']=='analytic-full':
+								result.append(res1)
+								done_budget.append(line.general_budget_id.id)
 					else:
-						res1={
-							'id':line.general_budget_id.id,
-					 			'name':line.general_budget_id.name,
-					 			'status':2,
-					 			'theo':line.theoritical_amount,
-					 			'pln':line.planned_amount,
-					 			'prac':line.practical_amount,
-					 			'perc':line.percentage
-						}
-						tot_theo += line.theoritical_amount
-						tot_pln +=line.planned_amount
-						tot_prac +=line.practical_amount
-						tot_perc +=line.percentage
-						if form['report']=='analytic-full':
-							result.append(res1)
-							done_budget.append(line.general_budget_id.id)
+
+						if line.general_budget_id.id in done_budget:
+							continue
+						else:
+							res1={
+								 	'a_id':line.analytic_account_id.id,
+								 	'b_id':line.general_budget_id.id,
+							 		'name':line.general_budget_id.name,
+							 		'status':2,
+							 		'theo':0.00,
+							 		'pln':0.00,
+							 		'prac':0.00,
+							 		'perc':0.00
+								}
+
+							if form['report']=='analytic-full':
+								result.append(res1)
+								done_budget.append(line.general_budget_id.id)
 
 				if tot_theo==0.00:
 					tot_perc=0.00
 				else:
 					tot_perc=float(tot_prac /tot_theo)*100
 
+
 				if form['report']=='analytic-full':
+
 					result[-(len(done_budget) +1)]['theo']=tot_theo
 					tot['theo'] +=tot_theo
 					result[-(len(done_budget) +1)]['pln']=tot_pln
@@ -175,8 +213,6 @@ class budget_report(report_sxw.rml_parse):
 		}
 		result.append(res)
 
-
 		return result
 
 report_sxw.report_sxw('report.crossovered.budget.report', 'crossovered.budget', 'addons/account_budget_crossover/report/crossovered_budget_report.rml',parser=budget_report,header=False)
-
