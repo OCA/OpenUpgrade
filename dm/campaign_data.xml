@@ -61,14 +61,14 @@
 			<field eval="&quot;requirer&quot;" name="type"/>
 			<field eval="&quot;List Price&quot;" name="name"/>
 		</record>
-		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
+ 		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
 			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_listprice0"/>
 			<field eval="&quot;Registration Procedure&quot;" name="name"/>
 			<field eval="time.strftime('%Y-%m-25')" name="date_start"/>
 			<field eval="&quot;Issues related to the initial procedure of registration&quot;" name="notes"/>
 			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_custprice0"/>
-			<field name="segment_ids" ref="dm.dm_campaign_proposition_segment_1"/>
-		</record>
+			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>
+		</record>  
 		<record id="dm_campaign_delay_0" model="dm.campaign.delay">
 			<field name="key_id" ref="dm_offer_delay_postponetheregistrationdate0"/>
 			<field name="proposition_id" ref="dm_campaign_proposition_0"/>
@@ -95,13 +95,86 @@
 			<field eval="10" name="quantity_max"/>
 			<field eval="time.strftime('%Y-%m-03')" name="date_start"/>
 			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_grossamt0"/>
-			<field name="segment_ids" ref="dm.dm_campaign_proposition_segment_6"/>
+			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_6"/>
 		</record>
 		<record id="dm_campaign_delay_1" model="dm.campaign.delay">
 			<field name="key_id" ref="dm_offer_delay_verifyingdocuments0"/>
 			<field name="proposition_id" ref="dm_campaign_proposition_1"/>
 			<field eval="10" name="value"/>
 		</record>
+
+	<!--
+	=======================================================
+	Campaigns
+	=======================================================
+	-->	
+ 		<record id="dm_campaign_0" model="dm.campaign">
+			<field eval="&quot;Promoting further studies&quot;" name="name"/>
+			<field eval="time.strftime('%Y-%m-01')" name="date_start"/>
+			<field eval="time.strftime('2009-%m-01')" name="date"/>
+			<field name="partner_id" ref="base.res_partner_agrolait"/>
+			<field name="trademark_id" ref="dm.dm_trademark_tiny0"/>
+			<field eval="&quot;general&quot;" name="campaign_type"/>
+			<field name="country_id" ref="base.bd"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field eval="&quot;pending&quot;" name="planning_state"/>
+			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
+			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
+		</record>
+		<record id="dm_campaign_0" model="dm.campaign">
+			<field eval="&quot;inprogress&quot;" name="planning_state"/>
+			<field eval="time.strftime('%Y-%m-15')" name="dtp_date_real_delivery"/>
+			<field eval="time.strftime('%Y-%m-31')" name="dtp_date_delivery"/>
+			<field name="dtp_operator" ref="base.res_partner_8"/>
+			<field eval="time.strftime('%Y-08-15')" name="dtp_date_recovered"/>
+			<field eval="time.strftime('%Y-09-15')" name="dtp_intervention_type"/>
+		</record>
+		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
+			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_listprice0"/>
+			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_2"/>
+			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_custprice0"/>
+			<field name="camp_id" ref="dm_campaign_0"/>
+			<field eval="&quot;general&quot;" name="proposition_type"/>
+		</record>
+		<record id="dm_campaign_1" model="dm.campaign">
+			<field eval="&quot;Furnitures&quot;" name="name"/>
+			<field eval="time.strftime('%Y-%m-21')" name="date_start"/>
+			<field eval="time.strftime('2009-%m-31')" name="date"/>
+			<field name="partner_id" ref="base.res_partner_6"/>
+			<field name="trademark_id" ref="dm.dm_trademark_tinyerp0"/>
+			<field eval="&quot;general&quot;" name="campaign_type"/>
+			<field name="country_id" ref="base.be"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field eval="&quot;pending&quot;" name="planning_state"/>
+			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
+			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
+		</record>
+		<record id="dm_campaign_1" model="dm.campaign">
+			<field eval="time.strftime('%Y-06-10')" name="dtp_date_recovered"/>
+			<field eval="time.strftime('%Y-06-20')" name="dtp_date_real_delivery"/>
+			<field eval="time.strftime('%Y-07-15')" name="dtp_date_delivery"/>
+			<field name="dtp_operator" ref="base.res_partner_10"/>
+			<field eval="&quot;done&quot;" name="manufacturing_state"/>
+			<field eval="time.strftime('%Y-10-05')" name="dtp_intervention_type"/>
+		</record>
+		<record id="dm_campaign_proposition_1" model="dm.campaign.proposition">
+			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_netamount0"/>
+			<field eval="&quot;Furniture manufactured&quot;" name="notes"/>
+			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>
+			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_grossamt0"/>
+			<field eval="15000.0" name="sale_rate"/>
+			<field name="camp_id" ref="dm_campaign_1"/>
+			<field eval="&quot;general&quot;" name="proposition_type"/>
+		</record>
 	
+	<!--
+	=======================================================
+	Campaigns - Groups
+	=======================================================
+	-->
+		<record id="dm_campaign_group_donatingfundsfurnituretoschools0" model="dm.campaign.group">
+			<field eval="&quot;Donating funds &amp; furniture to schools&quot;" name="name"/>
+			<field eval="[(6,0,[ref('dm.dm_campaign_0'),ref('dm.dm_campaign_1')])]" name="campaign_ids"/>
+		</record>
 	</data>
 </terp>
