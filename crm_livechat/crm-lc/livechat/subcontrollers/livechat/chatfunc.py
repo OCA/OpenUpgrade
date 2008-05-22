@@ -131,18 +131,30 @@ class ChatFunc(controllers.RootController):
         uid = ''
         self.topicid = topicid
         print ">>>>>>>>>>>>>",topicid
+        '''
+        1. Partner Check
+        2. User Availablity for support
+        3. if 1 and 2 proceed else stop
+        '''
+        patnerdata=rpc.RPCProxy('crm_livechat.livechat.partner').get_live_parnter()
+        
+        print "This is parnter data",patnerdata
         livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration(topicid)
-        if livechatdata:
+        if livechatdata and patnerdata:
             print "This is first live chat data",livechatdata
-            partnerlist = livechatdata['partner']
-            
-            pp=map(lambda p:p,partnerlist)
-            print "////////////////////////",pp
-            jid = livechatdata['partner'][pp[0]]['login']
-            jserver = livechatdata['partner'][pp[0]]['server']
+            print "This is first parnter chat data",patnerdata
+#            partnerlist = livechatdata['partner']
+#            
+#            pp=map(lambda p:p,partnerlist)
+#            print "////////////////////////",pp
+
+#            jid = livechatdata['partner'][pp[0]]['login']
+            jid = patnerdata['jid']
+#            jserver = livechatdata['partner'][pp[0]]['server']
+            jserver = patnerdata['server']
             print "////////////////////////",jid,jserver
             self.login = jid
-            pwd = livechatdata['partner'][pp[0]]['password']
+            pwd = patnerdata['pwd']
             print "making connection with::",jid," and pwd :::",pwd
             jid=xmpp.protocol.JID(jid)
             cl=xmpp.Client(jid.getDomain(),debug=[])
@@ -174,8 +186,8 @@ class ChatFunc(controllers.RootController):
                 if(self.user):
         #            for x in livechatdata['partner'].keys()
         #                print x
-                    print "yyY",pp
-                    self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)], False,pp[0])
+#                    print "yyY",pp
+                    self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)], False,patnerdata['id'])
                     print "\nCreating Session ........";
         else:
             cl="NoActive"

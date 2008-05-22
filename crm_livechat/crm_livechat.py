@@ -8,9 +8,15 @@ class crm_livechat_jabber(osv.osv):
 	_description= "Livechat Account"
 	_columns={
 		'name': fields.char("Jabber Account", size=128, required=True),
-		'server': fields.char('Jabber Server', size=40, required=True),
+		'server': fields.char('Server', size=40, required=True),
 		'login': fields.char('Account Login', size=32, required=True),
 		'password': fields.char('Account Password', size=16, required=True),
+		'ssl':fields.selection([('0','No SSL'),('1','SSL with port remapped'),('2','SSL with 5223 or 443 port')], 'SSL Info'),
+		'port':fields.char('Port Number',size=05)
+	}
+	_defaults = {
+		'port': lambda *args: '5223',
+		'ssl': lambda *args: '2'
 	}
 crm_livechat_jabber()
 
@@ -29,7 +35,7 @@ class crm_livechat_livechat(osv.osv):
 		'max_per_user': fields.integer('Maximum Customer per User'),
 		'session_delay': fields.integer('Minutes to Close a session', help="Put here to number of minutes after which a session is considered as closed"),
 		'user_ids': fields.one2many('crm_livechat.livechat.user', 'livechat_id', 'Users Accounts'),
-		'partner_ids': fields.one2many('crm_livechat.livechat.partner', 'livechat_id', 'Visitors Accounts'),
+#		'partner_ids': fields.one2many('crm_livechat.livechat.partner', 'livechat_id', 'Visitors Accounts'),
 	}
 	_defaults = {
 		'max_per_user': lambda *args: 5,
@@ -58,6 +64,7 @@ class crm_livechat_livechat(osv.osv):
 	
 	def get_available_partner_id(self, cr, uid, context={}):
 		res={}
+		
 		id=self.search(cr,uid,[('name','like','Dummy'+"%"),('state','like','notactive')],context)
 		print "IDS :::::::",id
 		for lc in self.browse(cr, uid, id, context):
@@ -78,33 +85,33 @@ class crm_livechat_livechat(osv.osv):
 		result = {}
 		main_res={}
 		print "Ids ",ids
-		partner_detail=self.get_available_partner_id(cr, uid, context)
-		print "`````````````````````````",partner_detail
-		if partner_detail:
-				print "In if condition"
-				for lc in self.browse(cr, uid, [int(ids)], context):
-					print "In loop",lc
+#		partner_detail=self.pool.get('crm_livechat.livechat.partner').get_live_parnter()
+#		print "`````````````````````````",partner_detail
+#		if partner_detail:
+#				print "In if condition"
+		for lc in self.browse(cr, uid, [int(ids)], context):
+			print "In loop",lc
 #					print "lc.user_ids + lc.partner_ids:",lc.user_ids ," dfdfdfdf          ",lc.partner_ids
-					for u in lc.user_ids:
-						print "Making user"
-						result[str(u.id)] = {
+			for u in lc.user_ids:
+				print "Making user"
+				result[str(u.id)] = {
 							'name': u.name,
 							'server': u.jabber_id.server,
 							'login':  u.jabber_id.login,
 							'password':  u.jabber_id.password,
 							'state': u.state
-						}
-					main_res['user']=result
-					result={}
-					print "Making partner"
-					result[str(partner_detail['id'])] = {
-							'name': partner_detail['name'],
-							'server': partner_detail['server'],
-							'login':  partner_detail['jid'],
-							'password':  partner_detail['pwd'],
-							'state': 'active'
-						}			
-					main_res['partner']=result	
+				}
+				main_res['user']=result
+#				result={}
+#				print "Making partner"
+#				result[str(partner_detail['id'])] = {
+#						'name': partner_detail['name'],
+#						'server': partner_detail['server'],
+#							'login':  partner_detail['jid'],
+#							'password':  partner_detail['pwd'],
+#							'state': 'active'
+#						}			
+#					main_res['partner']=result	
 		print "This is result",main_res
 		return main_res
 
@@ -156,7 +163,7 @@ class crm_livechat_livechat(osv.osv):
 			print "In not user id",user_id
 			return False
 
-		partner_id=False
+#		partner_id=False
 #		for p in self.browse(cr, uid, livechat_id, context)[0].partner_ids:
 #			print "partner ids::::::::::::::::",p.id,p.state
 #			if p.state=='active':
@@ -214,14 +221,30 @@ class crm_livechat_livechat_partner(osv.osv):
 	_columns={
 		'name': fields.char("Account Name", size=128, required=True),
 		'jabber_id': fields.many2one('crm_livechat.jabber', "Jabber Account", required=True),
-		'livechat_id': fields.many2one("crm_livechat.livechat", "Livechat", required=True),
+#		'livechat_id': fields.many2one("crm_livechat.livechat", "Livechat", required=True),
 		'available': fields.char('Available IP', size=64, help="If empty, the acount is available/not used"),
 		'available_date': fields.datetime('Available Date'),
 		'state': fields.selection([('active','Active'),('notactive','Not Active')], "State", required=True),
 	}
 	_defaults = {
-		'state': lambda *args: 'notactive'
+		'state': lambda *args: 'active'
 	}
+	
+	def get_live_parnter(self,cr,uid,context={}):
+		res={}
+		id=self.search(cr,uid,[('state','=','active'),('available','like','')],context)
+		print "IDS :::::::",id
+		for p in self.browse(cr, uid, id, context):
+				print p
+				print "In loop",p.available
+				if p.available==False:
+						res['id']=p.id
+						res['name']=p.jabber_id.name
+						res['jid']=p.jabber_id.login
+						res['pwd']=p.jabber_id.password
+						res['server']=p.jabber_id.server
+						return res
+	
 crm_livechat_livechat_partner()
 
 class crm_livechat_livechat_user(osv.osv):
