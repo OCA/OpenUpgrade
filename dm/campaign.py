@@ -110,8 +110,6 @@ class dm_campaign_proposition(osv.osv):
     _columns = {
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays'),
-        #'date_start' : fields.date('Date'),
-        'sent_qty' : fields.integer("Quantity"),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
