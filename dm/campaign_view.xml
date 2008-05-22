@@ -34,7 +34,7 @@
 			<form string="Campaigns">
 				<notebook colspan="4">
 					<page string="General">
-						<separator string="Global informations" colspan="4"/>
+						<separator string="Global Information" colspan="4"/>
 						<field name="name" string="Name"/>
 						<field name="code" string="Code"/>
 						<field name="offer_id"/>
@@ -46,12 +46,12 @@
 						<field name="campaign_type"/>
 						<field name="partner_id"/>
 						<field name="trademark_id"/>
-						<separator string="Tasks management" colspan="4"/>
+						<separator string="Tasks Management" colspan="4"/>
 						<group colspan="4">
 						<field name="project_id"/>
 						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
 						</group>
-						<separator string="Process state" colspan="4"/>
+						<separator string="Process State" colspan="4"/>
 						<field name="planning_state" select="2" nolabel="0"/>
 						<field name="manufacturing_state" select="2" nolabel="0"/>
 <!--						<field name="campaign_stat_ids"/>-->
@@ -77,7 +77,7 @@
 								<newline/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
-								<field name="segment_ids" colspan="4"/>
+								<field name="segment_id" colspan="4"/>
 								<newline/>
 								<field name="delay_ids" colspan="4"/>
 								<field name="notes" colspan="4"/>
@@ -88,7 +88,7 @@
 								<field name="date_start" colspan="4"/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
-								<field name="type"/>
+								<field name="proposition_type"/>
 							</tree>
 						</field>
 					</page>
@@ -182,7 +182,7 @@
 				<field name="code" string="Code"/>
 				<field name="camp_id"/>
 				<field name="date_start"/>
-				<field name="segment_ids"/>
+				<field name="segment_id"/>
 				<field name="proposition_type"/>
 				<newline/>
 				<field name="customer_pricelist_id"/>
