@@ -80,6 +80,41 @@
 
 	<!--
 	=======================================================
+	Offer Step - Products 
+	=======================================================
+	-->
+		<record id="dm_product_0" model="dm.product">
+			<field eval="10" name="qty_planned"/>
+			<field eval="20000.0" name="price"/>
+			<field eval="5.0" name="qty_real"/>
+			<field name="product_id" ref="product.product_product_fan2"/>
+		</record>
+		<record id="dm_product_1" model="dm.product">
+			<field eval="5" name="qty_planned"/>
+			<field eval="7.0" name="qty_real"/>
+			<field name="product_id" ref="product.product_product_cpu2"/>
+		</record>
+		<record id="dm_product_2" model="dm.product">
+			<field eval="20" name="qty_planned"/>
+			<field eval="10000.0" name="price"/>
+			<field eval="20.0" name="qty_real"/>
+			<field name="product_id" ref="product.product_product_25"/>
+		</record>
+		<record id="dm_product_3" model="dm.product">
+			<field eval="6" name="qty_planned"/>
+			<field eval="10000.0" name="price"/>
+			<field eval="6.0" name="qty_real"/>
+			<field name="product_id" ref="product.product_product_26"/>
+		</record>
+		<record id="dm_product_4" model="dm.product">
+			<field eval="3" name="qty_planned"/>
+			<field eval="100000.0" name="price"/>
+			<field eval="5.0" name="qty_real"/>
+			<field name="product_id" ref="product.product_product_pc1"/>
+		</record>	
+	
+	<!--
+	=======================================================
 	Offer Steps 
 	=======================================================
 	-->
@@ -88,6 +123,7 @@
 		</record>
 		<record id="dm_offer_step_inquireaboutthetypesofloansavailable0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_identityproof0')])]" name="document_ids"/>
+			<field eval="[(6,0,[ref('dm_product_0'), ref('dm_product_1')])]" name="product_ids"/>
 			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>
 			<field eval="&quot;inquiry&quot;" name="code"/>
 			<field eval="&quot;Inquire about the types of loans available&quot;" name="name"/>
@@ -102,6 +138,7 @@
 	
 		<record id="dm_offer_step_eliminatethewrongoptions0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_identityproof0')])]" name="document_ids"/>
+			<field eval="[(6,0,[ref('dm_product_2'), ref('dm_product_3')])]" name="product_ids"/>
 			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>
 			<field eval="&quot;elimination&quot;" name="code"/>
 			<field eval="2" name="sequence"/>
@@ -119,6 +156,7 @@
 	
 		<record id="dm_offer_step_negotiation0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_nocnoobjectioncertificate0')])]" name="document_ids"/>
+			<field eval="[(6,0,[ref('dm_product_4'), ref('dm_product_1')])]" name="product_ids"/>
 			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>
 			<field eval="&quot;negotiate&quot;" name="code"/>
 			<field eval="&quot;Negotiation&quot;" name="name"/>
@@ -133,6 +171,7 @@
 
 		<record id="dm_offer_step_dealfinilized0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_identityproof0'),ref('dm_offer_document_nocnoobjectioncertificate0')])]" name="document_ids"/>
+			<field eval="[(6,0,[ref('dm_product_2'), ref('dm_product_4')])]" name="product_ids"/>
 			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>
 			<field eval="&quot;deal&quot;" name="code"/>
 			<field eval="&quot;Deal finilized&quot;" name="name"/>
