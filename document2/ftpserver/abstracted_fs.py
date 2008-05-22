@@ -111,28 +111,85 @@ class abstracted_fs:
 
 	# --- Wrapper methods around open() and tempfile.mkstemp
 
+	def create(self, node, objname, mode):
+		class file_wrapper(StringIO.StringIO):
+			def __init__(self, sstr='', ressource_id=False, dbname=None, uid=1, name=''):
+				StringIO.StringIO.__init__(self, sstr)
+				self.ressource_id = ressource_id
+				self.name = name
+				self.dbname = dbname
+				self.uid = uid
+			def close(self, *args, **kwargs):
+				db,pool = pooler.get_db_and_pool(self.dbname)
+				cr = db.cursor()
+				uid =self.uid
+				val = self.getvalue()
+				val2 = {
+					'datas': base64.encodestring(val),
+					'file_size': len(val),
+				}
+				pool.get('ir.attachment').write(cr, uid, [self.ressource_id], val2)
+				cr.commit()
+				cr.close()
+				StringIO.StringIO.close(self, *args, **kwargs)
+
+		cr = node.cr
+		uid = node.uid
+		pool = pooler.get_pool(cr.dbname)
+
+		fobj = pool.get('ir.attachment')
+		ext = objname.find('.') >0 and objname.split('.')[1] or False
+
+		# TODO: test if already exist and modify in this case if node.type=file
+
+		print '*** CREATE', 'not node'
+		object2=node and node.object2 or False
+		object=node and node.object or False
+		val = {
+			'name': objname,
+			'datas_fname': objname,
+			'datas': '',
+			'file_size': 0L,
+			'file_type': ext,
+			'parent_id': object and object.id or False,
+		}
+		partner = False
+		if object2:
+			if object2.partner_id and object2.partner_id.id:
+				partner = object2.partner_id.id
+			if object2._name == 'res.partner':
+				partner = object2.id
+			val.update( {
+				'res_model': object2._name,
+				'partner_id': partner,
+				'res_id': object2.id
+			})
+		print val
+		cid = fobj.create(cr, uid, val, objname)
+		cr.commit()
+		cr.close()
+
+		s = file_wrapper('', cid, cr.dbname, uid, )
+		return s
+
 	def open(self, node, mode):
-		print 'Open', mode
-		if 'w' in mode:
-			raise 'Not Implemented'
-		else:
-			# Reading operation
-			if node.type=='file':
-				if not self.isfile(node):
-					raise OSError(1, 'Operation not permited.')
-				return StringIO.StringIO(base64.decodestring(node.object.datas or ''))
-			elif node.type=='content':
-				cr = node.cr
-				uid = node.uid
-				pool = pooler.get_pool(cr.dbname)
-				report = pool.get('ir.actions.report.xml').browse(cr, uid, node.content['report_id']['id'])
-				srv = netsvc.LocalService('report.'+report.report_name)
-				pdf,pdftype = srv.create(cr, uid, [node.object.id], {}, {})
-				s = StringIO.StringIO(pdf)
-				s.name = node
-				return s
-			else:
+		# Reading operation
+		if node.type=='file':
+			if not self.isfile(node):
 				raise OSError(1, 'Operation not permited.')
+			return StringIO.StringIO(base64.decodestring(node.object.datas or ''))
+		elif node.type=='content':
+			cr = node.cr
+			uid = node.uid
+			pool = pooler.get_pool(cr.dbname)
+			report = pool.get('ir.actions.report.xml').browse(cr, uid, node.content['report_id']['id'])
+			srv = netsvc.LocalService('report.'+report.report_name)
+			pdf,pdftype = srv.create(cr, uid, [node.object.id], {}, {})
+			s = StringIO.StringIO(pdf)
+			s.name = node
+			return s
+		else:
+			raise OSError(1, 'Operation not permited.')
 
 	def mkstemp(self, suffix='', prefix='', dir=None, mode='wb'):
 		"""A wrap around tempfile.mkstemp creating a file with a unique

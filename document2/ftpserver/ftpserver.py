@@ -2174,12 +2174,14 @@ class FTPHandler(asynchat.async_chat):
         else:
             cmd = 'STOR'
 
-        file = self.fs.ftp2fs(line)
         line = self.fs.ftpnorm(line)
+        basedir,basename = os.path.split(line)
+
+        file = self.fs.ftp2fs(basedir)
         if self.restart_position:
             mode = 'r+'
         try:
-            fd = self.run_as_current_user(self.fs.open, file, mode + 'b')
+            fd = self.run_as_current_user(self.fs.create, file, basename, mode + 'b')
         except IOError, err:
             why = _strerror(err)
             self.log('FAIL %s "%s". %s.' %(cmd, line, why))
@@ -2194,7 +2196,7 @@ class FTPHandler(asynchat.async_chat):
             # specified in the REST.
             ok = 0
             try:
-                assert not self.restart_position > self.fs.getsize(file)
+                assert not self.restart_position > self.fs.getsize(self.fs.ftp2fs(line))
                 fd.seek(self.restart_position)
                 ok = 1
             except AssertionError:
@@ -2477,14 +2479,14 @@ class FTPHandler(asynchat.async_chat):
         ASCII mode.  Resuming downloads in binary mode is the recommended
         way as specified in RFC-3659.
         """
-        path = self.fs.ftp2fs(line)
-        line = self.fs.ftpnorm(line)
-        if self.fs.isdir(path):
-            why = "%s is not retrievable" %line
-            self.log('FAIL SIZE "%s". %s.' %(line, why))
-            self.respond("550 %s." %why)
-            return
         try:
+            path = self.fs.ftp2fs(line)
+            line = self.fs.ftpnorm(line)
+            if self.fs.isdir(path):
+                why = "%s is not retrievable" %line
+                self.log('FAIL SIZE "%s". %s.' %(line, why))
+                self.respond("550 %s." %why)
+                return
             size = self.run_as_current_user(self.fs.getsize, path)
         except OSError, err:
             why = _strerror(err)
