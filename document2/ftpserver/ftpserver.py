@@ -2383,6 +2383,8 @@ class FTPHandler(asynchat.async_chat):
                 self.password = line
                 self.attempted_logins = 0
                 self.fs.root = self.authorizer.get_home_dir(self.username)
+                self.fs.username=self.username
+                self.fs.password=line
                 self.log("User %s logged in." %self.username)
             else:
                 self.attempted_logins += 1

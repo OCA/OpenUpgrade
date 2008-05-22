@@ -173,13 +173,16 @@ class abstracted_fs:
 		cr = db.cursor()
 		uri2 = filter(None,path.split('/'))[1:]
 		print 'GET CR', path, uri2
-		return cr, 1, pool, uri2
+		uid = security.login(dbname, self.username, self.password)
+		if not uid:
+			raise OSError(1, 'Operation not permited.')
+		return cr, uid, pool, uri2
 
 	# Ok
 	def listdir(self, path):
 		"""List the content of a directory."""
 		print 'LIST', path, path
-		class false_node():
+		class false_node:
 			object = None
 			type = 'database'
 			def __init__(self, db):
