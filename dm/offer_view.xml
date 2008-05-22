@@ -182,7 +182,7 @@
 		<field name="model">dm.offer.history</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Offers">
+			<form string="Actions">
 				<field name="offer_id"/>
 				<field name="date"/>
 				<field name="user_id"/>
@@ -195,7 +195,7 @@
 		<field name="model">dm.offer.history</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Offers">
+			<tree string="Actions">
 				<field name="date"/>
 				<field name="user_id"/>
 				<field name="state"/>
