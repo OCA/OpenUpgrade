@@ -1,3 +1,153 @@
 <?xml version="1.0"?>
-<document filename="test.pdf"><template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20"><pageTemplate id="first"><frame id="first" x1="35.0" y1="35.0" width="525" height="772"/></pageTemplate></template><stylesheet><blockTableStyle id="Standard_Outline"><blockAlignment value="LEFT"/><blockValign value="TOP"/></blockTableStyle><blockTableStyle id="Table2"><blockAlignment value="LEFT"/><blockValign value="TOP"/></blockTableStyle><blockTableStyle id="Table8"><blockAlignment value="LEFT"/><blockValign value="TOP"/></blockTableStyle><blockTableStyle id="Table1"><blockAlignment value="LEFT"/><blockValign value="TOP"/><lineStyle kind="GRID" colorName="black"/></blockTableStyle><blockTableStyle id="Table7"><blockAlignment value="LEFT"/><blockValign value="TOP"/></blockTableStyle><blockTableStyle id="Table5"><blockAlignment value="LEFT"/><blockValign value="TOP"/><lineStyle kind="GRID" colorName="black"/></blockTableStyle><blockTableStyle id="Table3"><blockAlignment value="LEFT"/><blockValign value="TOP"/></blockTableStyle><initialize><paraStyle name="all" alignment="justify"/></initialize><paraStyle name="P1" fontName="Times-Roman"/><paraStyle name="P2" fontName="Times-Roman"/><paraStyle name="P3" fontName="Times-Bold"/><paraStyle name="P4" fontName="Times-Roman" fontSize="6.0" leading="8"/><paraStyle name="P5" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="P6" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="P7" fontName="Times-Bold" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="P8" fontName="Times-Bold" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="P9" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="P10" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="P11" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="3.0"/><paraStyle name="P12" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="3.0"/><paraStyle name="P13" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/><paraStyle name="P14" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="0.0"/><paraStyle name="P15" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="0.0"/><paraStyle name="Standard" fontName="Times-Roman"/><paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/><paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/><paraStyle name="Index" fontName="Times-Roman"/></stylesheet><images/><story><para style="P4">[[repeatIn(objects,'o') ]]</para><para style="P3">Campaign Details</para><para style="P2"><font color="white"> </font></para><blockTable colWidths="304.0,221.0" style="Table2"><tr><td><para style="P11"><font face="Times-Roman">Name :</font> [[o.name]]</para><para style="P11"><font face="Times-Roman">Code :</font> [[o.code]]</para><para style="P11"><font face="Times-Roman">Offer :</font> [[o.offer_id and o.offer_id.name]]</para><para style="P11"><font face="Times-Roman">Country of Campaign :</font> [[o.country_id and o.country_id.name]]</para><para style="P11"><font face="Times-Roman">Language of Campaign :</font> [[o.lang_id and o.lang_id.name]]</para><para style="P12"><font face="Times-Roman">Starting Date : </font>[[o.date_start]]</para><para style="P12"><font face="Times-Roman">Ending Date :</font> [[o.date_end]]</para></td><td><para style="P12"><font face="Times-Roman">Type : </font>[[ o.type]]</para><para style="P12"><font face="Times-Roman">Partner :</font> [[o.partner_id and p.partner_id.name]]</para><para style="P12"><font face="Times-Roman">Trademark :</font> [[o.trademark_id and o.trademark_id.name]]</para><para style="P12"><font face="Times-Roman">Project :</font> [[o.project_id and o.project_id.name]]</para><para style="P12"><font face="Times-Roman">Receiver :</font> [[o.receiver_id and o.receiver_id.name]]</para><para style="P12"><font face="Times-Roman">Status :</font> [[o.state]]</para></td></tr></blockTable><para style="P2"><font color="white"> </font></para><para style="P3">Desktop Publishing : </para><para style="P2"><font color="white"> </font></para><blockTable colWidths="304.0,221.0" style="Table8"><tr><td><para style="P11"><font face="Times-Roman">Delivery Date :</font>[[o.dtp_intervention_type]]</para><para style="P11"><font face="Times-Roman">Real Delivery :</font> [[o.dtp_date_real_delivery]]</para><para style="P11"><font face="Times-Roman">Intervention Type : </font>[[o.dtp_date_delivery]]</para></td><td><para style="P11"><font face="Times-Roman">Making : </font>[[o.dtp_making]]</para><para style="P11"><font face="Times-Roman">Operator : </font>[[o.dtp_operator and o.dtp_operator.name]]</para><para style="P11"><font face="Times-Roman">Recovered Date : </font>[[o.dtp_date_recovered]]</para></td></tr></blockTable><para style="P2"><font color="white"> </font></para><para style="P2">Proposition :</para><blockTable colWidths="114.0,68.0,61.0,70.0,69.0,141.0" style="Table1"><tr><td><para style="P8">Name</para></td><td><para style="P8">Starting Date</para></td><td><para style="P8">Type</para></td><td><para style="P8">Sent Quantity</para></td><td><para style="P8">Sale Rate</para></td><td><para style="P8">Segment</para></td></tr></blockTable><blockTable colWidths="115.0,68.0,61.0,70.0,69.0,142.0" style="Table7"><tr><td><para style="P13">[[ repeatIn(o.proposition_ids,'pro') ]]</para><para style="P14">[[ pro.name]]</para><para style="P14"><font color="white"> </font></para></td><td><para style="P9">[[ pro.date_start]]</para></td><td><para style="P9">[[pro.type]]</para></td><td><para style="P9">[[ pro.sent_qty]]</para></td><td><para style="P9">[[pro.sale_rate]]</para></td><td><para style="P9">[[pro.segment_ids and pro.segment_ids.name]]</para></td></tr></blockTable><para style="P2"><font color="white"> </font></para><para style="P2">Products :</para><blockTable colWidths="131.0,131.0,131.0,131.0" style="Table5"><tr><td><para style="P8">Product name</para></td><td><para style="P8">Planned Qty</para></td><td><para style="P8">Real Qty</para></td><td><para style="P8">Price</para></td></tr></blockTable><blockTable colWidths="131.0,131.0,131.0,131.0" style="Table3"><tr><td><para style="P15"><font face="Times-Roman" size="5.0">[[repeatIn(o.product_ids,'p')]]</font> [[ p.product_id.name]]</para></td><td><para style="P10">[[p.qty_planned]]</para></td><td><para style="P10">[[p.qty_real]]</para></td><td><para style="P10">[[p.price]]</para></td></tr></blockTable><para style="P2"><font color="white"> </font></para><para style="P2"><font color="white"> </font></para></story></document>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="35.0" y1="35.0" width="525" height="772"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table8">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#c0c0c0" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#c0c0c0" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#c0c0c0" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#c0c0c0" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#c0c0c0" start="4,0" stop="4,0"/>
+      <blockBackground colorName="#c0c0c0" start="5,0" stop="5,0"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman"/>
+    <paraStyle name="P2" fontName="Times-Bold"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="6.0" leading="8"/>
+    <paraStyle name="P4" fontName="Times-Bold" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P3">[[repeatIn(objects,'o') ]]</para>
+    <para style="P2">Campaign Details</para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="304.0,221.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P6"><font face="Times-Roman">Name :</font> [[o.name]]</para>
+          <para style="P6"><font face="Times-Roman">Code :</font> [[o.code]]</para>
+          <para style="P6"><font face="Times-Roman">Country of Campaign :</font> [[o.country_id and o.country_id.name]]</para>
+          <para style="P6"><font face="Times-Roman">Language of Campaign :</font> [[o.lang_id and o.lang_id.name]]</para>
+          <para style="P7"><font face="Times-Roman">Starting Date : </font>[[o.date_start]]</para>
+          <para style="P7"><font face="Times-Roman">Ending Date :</font> [[o.date]]</para>
+        </td>
+        <td>
+          <para style="P7"><font face="Times-Roman">Offer :</font>[[o.offer_id and o.offer_id.name]]</para>
+          <para style="P7"><font face="Times-Roman">Type : </font>[[ o.campaign_type]]</para>
+          <para style="P7"><font face="Times-Roman">Partner :</font> [[o.partner_id and o.partner_id.name]]</para>
+          <para style="P7"><font face="Times-Roman">Trademark :</font> [[o.trademark_id and o.trademark_id.name]]</para>
+          <para style="P7"><font face="Times-Roman">Project :</font> [[o.project_id and o.project_id.name]]</para>
+          <para style="P7"><font face="Times-Roman">Status :</font> [[o.state]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">Desktop Publishing : </para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="304.0,221.0" style="Table8">
+      <tr>
+        <td>
+          <para style="P6"><font face="Times-Roman">Delivery Date :</font>[[o.dtp_intervention_type]]</para>
+          <para style="P6"><font face="Times-Roman">Real Delivery :</font> [[o.dtp_date_real_delivery]]</para>
+          <para style="P6"><font face="Times-Roman">Intervention Type : </font>[[o.dtp_date_delivery]]</para>
+        </td>
+        <td>
+          <para style="P6"><font face="Times-Roman">Making : </font>[[o.dtp_making]]</para>
+          <para style="P6"><font face="Times-Roman">Operator : </font>[[o.dtp_operator and o.dtp_operator.name]]</para>
+          <para style="P6"><font face="Times-Roman">Recovered Date : </font>[[o.dtp_date_recovered]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">Proposition :</para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="114.0,68.0,61.0,70.0,69.0,141.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P4">Name</para>
+        </td>
+        <td>
+          <para style="P4">Starting Date</para>
+        </td>
+        <td>
+          <para style="P4">Type</para>
+        </td>
+        <td>
+          <para style="P4">Sent Quantity</para>
+        </td>
+        <td>
+          <para style="P4">Sale Rate</para>
+        </td>
+        <td>
+          <para style="P4">Segment</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P8">[[ repeatIn(o.proposition_ids,'pro') ]]</para>
+          <para style="P9">[[ pro.name]]</para>
+        </td>
+        <td>
+          <para style="P5">[[ pro.date_start]]</para>
+        </td>
+        <td>
+          <para style="P5">[[pro.proposition_type]]</para>
+        </td>
+        <td>
+          <para style="P5">[[pro.quantity_max]]</para>
+        </td>
+        <td>
+          <para style="P5">[[pro.sale_rate]]</para>
+        </td>
+        <td>
+          <para style="P5">[[pro.segment_id and pro.segment_id.name]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
 
