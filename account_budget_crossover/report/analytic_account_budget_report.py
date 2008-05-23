@@ -18,9 +18,8 @@ class analytic_account_budget_report(report_sxw.rml_parse):
 
         if not ids:
             ids = self.ids
-
-        if not ids:
-            return []
+#        if not ids:
+#            return []
         if not done:
             done={}
 
@@ -33,11 +32,6 @@ class analytic_account_budget_report(report_sxw.rml_parse):
         }
         result=[]
         accounts = self.pool.get('account.analytic.account').browse(self.cr, self.uid, [object.id], self.context.copy())
-
-#        if form['date_from']<=accounts[0].date_start< accounts[0].date<=form['date_to']:
-#            go=1 # does nothing just carry on.
-#        else:
-#            return [] # stops calculations.displays nothing
 
         for account_id in accounts:
             res={}
@@ -94,7 +88,6 @@ class analytic_account_budget_report(report_sxw.rml_parse):
                         theo=line._theo_amt(self.cr, self.uid, [line.id],"theoritical_amount",None,context={'wizard_date_from':d_from,'wizard_date_to':d_to})[line.id]
                         pract=line._pra_amt(self.cr, self.uid, [line.id],"practical_amount",None,context={'wizard_date_from':d_from,'wizard_date_to':d_to})[line.id]
 
-
                         if line.general_budget_id.id in done_budget:
 
                             for record in result:
@@ -144,7 +137,6 @@ class analytic_account_budget_report(report_sxw.rml_parse):
 
                             result.append(res1)
                             done_budget.append(line.general_budget_id.id)
-
 
                 if tot_theo==0.00:
                     tot_perc=0.00

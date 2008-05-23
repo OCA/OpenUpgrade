@@ -46,9 +46,8 @@ class budget_report(report_sxw.rml_parse):
 
 		if not ids:
 			ids = self.ids
-
-		if not ids:
-			return []
+#		if not ids:
+#			return []
 		if not done:
 			done={}
 
@@ -60,7 +59,6 @@ class budget_report(report_sxw.rml_parse):
 			'perc':0.00
 		}
 		result=[]
-		res={}
 
 		budgets = self.pool.get('crossovered.budget').browse(self.cr, self.uid, [object.id], self.context.copy())
 
@@ -110,7 +108,7 @@ class budget_report(report_sxw.rml_parse):
 				line_ids = self.pool.get('crossovered.budget.lines').search(self.cr, self.uid, [('id', 'in', budget_ids),('analytic_account_id','=',an_ids[i][0])])
 
 				line_id = self.pool.get('crossovered.budget.lines').browse(self.cr,self.uid,line_ids)
-				tot_theo=tot_pln=tot_prac=tot_perc=0
+				tot_theo=tot_pln=tot_prac=tot_perc=0.00
 
 				done_budget=[]
 				for line in line_id:
@@ -133,6 +131,7 @@ class budget_report(report_sxw.rml_parse):
 									tot_pln +=line.planned_amount
 									tot_prac +=pract
 									tot_perc +=line.percentage
+
 						else:
 
 							res1={
@@ -176,7 +175,6 @@ class budget_report(report_sxw.rml_parse):
 					tot_perc=0.00
 				else:
 					tot_perc=float(tot_prac /tot_theo)*100
-
 
 				if form['report']=='analytic-full':
 
