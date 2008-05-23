@@ -161,7 +161,8 @@
 		src_model="dm.offer"
 		view_type="form"
 		view_mode="tree,form"
-		id="act_offer_step_opened"/>
+		id="act_offer_step_opened"
+		domain = "[('offer_id','=',active_id)]"/>
 		
 	<record model="ir.ui.view" id="view_offer_step_transition_form">
 		<field name="name">dm.offer.step.transition.form</field>
@@ -240,7 +241,8 @@
 		src_model="dm.offer.step"
 		view_type="form"
 		view_mode="tree,form"
-		id="act_workitem_opened"/>
+		id="act_workitem_opened"
+		domain = "[('step_id','=',active_id)]"/>
 	
 	<record model="ir.ui.view" id="view_offer_step_history_form">
 		<field name="name">dm.offer.step.history.form</field>
