@@ -317,15 +317,32 @@ class abstracted_fs:
 		cr.commit()
 		cr.close()
 
-	# for file , rename ok
+	# for file, directory , rename ok
 	def rename(self, src, dst_basedir,dst_basename):
 		"""Should process a read, a create and a remove"""
-		src_file=self.open(src,'r')
-		dst_file=self.create(dst_basedir,dst_basename,'w')
-		dst_file.write(src_file.getvalue())
-		dst_file.close()
-		src_file.close()
-		self.remove(src)
+		if src.type=='collection':
+			cr = src.cr
+			uid = src.uid
+			pool = pooler.get_pool(cr.dbname)
+			object2=src and src.object2 or False
+			object=src and src.object or False
+			if object2:
+				raise OSError(40, 'Resource Directory should not rename.')
+			if object._table_name=='document.directory':
+				res = pool.get('document.directory').write(cr, uid, [object.id],{'name':dst_basename})
+			else:
+				raise OSError(1, 'Operation not permited.')
+			cr.commit()
+			cr.close()
+		elif src.type in ('file','content'):
+			src_file=self.open(src,'r')
+			dst_file=self.create(dst_basedir,dst_basename,'w')
+			dst_file.write(src_file.getvalue())
+			dst_file.close()
+			src_file.close()
+			self.remove(src)
+		else:
+			raise OSError(1, 'Operation not permited.')
 
 
 	# Nearly Ok
