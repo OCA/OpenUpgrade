@@ -14,7 +14,7 @@ form = """<?xml version="1.0"?>
 fields = {
     'date1': {'string':'Start Date', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-01-01')},
     'date2': {'string':'End Date', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
-    'journal': {'string':'Analytic Journal', 'type':'many2one', 'relation':'account.analytic.journal'},
+    'journal': {'string':'Analytic Journal', 'type':'many2one', 'relation':'account.analytic.journal','domain':[('type','in',['sale','purchase'])]},
     'ref' :{'string':'Analytic Account Ref.', 'type':'many2one', 'relation':'account.analytic.account','required':True},
    }
 
