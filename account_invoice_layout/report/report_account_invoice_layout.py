@@ -20,17 +20,12 @@ class account_invoice_1(report_sxw.rml_parse):
         })
         self.context = context
 
-    def find_vcs(self,ids={}):
-        if not ids:
-            ids = self.ids
-        result=[]
-
-        for item in pooler.get_pool(self.cr.dbname).get('account.invoice').browse(self.cr,self.uid,ids):
-
-            res={}
-            vcs1='0'+ str(item.date_invoice[2:4])
+    def find_vcs(self,invoice_id):
+        item = pooler.get_pool(self.cr.dbname).get('account.invoice').browse(self.cr,self.uid,invoice_id)
+        vcs =''
+        if item.number:
             vcs3=str(item.number).split('/')[1]
-
+            vcs1='0'+ str(item.date_invoice[2:4])
             if len(str(vcs3))>=5:
                 vcs2=str(item.number[3]) + str(vcs3[0:5])
             elif len(str(vcs3))==4:
@@ -47,11 +42,8 @@ class account_invoice_1(report_sxw.rml_parse):
                 check_digit='97'
             if check_digit<=9:
                 check_digit='0'+str(check_digit)
-
-            res['vcs']=vcs1+'/'+vcs2+'/'+ '0' +str(check_digit)
-
-            result.append(res)
-        return result
+            vcs=vcs1+'/'+vcs2+'/'+ '0' +str(check_digit)
+        return vcs
 
 
     def repeat_In(self, lst, name, nodes_parent=False,td=False,width=[],value=[],type=[]):
