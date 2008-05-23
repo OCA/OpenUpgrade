@@ -61,7 +61,6 @@
 	=======================================================
 	-->
 		<record id="dm_offer_step_transition_prepareddocuments0" model="dm.offer.step.transition">
-			<field eval="1" name="delay"/>
 			<field eval="&quot;Prepared Documents&quot;" name="name"/>
 			<field eval="&quot;true&quot;" name="condition"/>
 		</record>
@@ -124,14 +123,14 @@
 		<record id="dm_offer_step_inquireaboutthetypesofloansavailable0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_identityproof0')])]" name="document_ids"/>
 			<field eval="[(6,0,[ref('dm_product_0'), ref('dm_product_1')])]" name="product_ids"/>
-			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>
+<!--			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>-->
 			<field eval="&quot;inquiry&quot;" name="code"/>
 			<field eval="&quot;Inquire about the types of loans available&quot;" name="name"/>
 			<field name="media_id" ref="dm_media_contacts0"/>
 			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
 			<field eval="1" name="sequence"/>
 			<field eval="&quot;draft&quot;" name="state"/>
-			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Submission Of Documents')]"/>
+<!--			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Submission Of Documents')]"/>-->
 			<field eval="&quot;valid&quot;" name="legal_state"/>
 			<field eval="&quot;2000&quot;" name="quotation"/>
 		</record>
@@ -139,14 +138,14 @@
 		<record id="dm_offer_step_eliminatethewrongoptions0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_identityproof0')])]" name="document_ids"/>
 			<field eval="[(6,0,[ref('dm_product_2'), ref('dm_product_3')])]" name="product_ids"/>
-			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>
+<!--			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Prepared Documents')]"/>-->
 			<field eval="&quot;elimination&quot;" name="code"/>
 			<field eval="2" name="sequence"/>
 			<field eval="&quot;Eliminate the wrong options&quot;" name="name"/>
 			<field name="media_id" ref="dm_media_contacts0"/>
 			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
-			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Submission Of Documents')]"/>
+<!--			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Submission Of Documents')]"/>-->
 			<field eval="&quot;invalid&quot;" name="legal_state"/>
 		</record>
 
@@ -157,14 +156,14 @@
 		<record id="dm_offer_step_negotiation0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_nocnoobjectioncertificate0')])]" name="document_ids"/>
 			<field eval="[(6,0,[ref('dm_product_4'), ref('dm_product_1')])]" name="product_ids"/>
-			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>
+<!--			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>-->
 			<field eval="&quot;negotiate&quot;" name="code"/>
 			<field eval="&quot;Negotiation&quot;" name="name"/>
 			<field name="media_id" ref="dm_media_newspapers0"/>
 			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
 			<field eval="2" name="sequence"/>
 			<field eval="&quot;draft&quot;" name="state"/>
-			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Bidding closed')]"/>
+<!--			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Bidding closed')]"/>-->
 			<field eval="&quot;valid&quot;" name="legal_state"/>
 			<field eval="&quot;200000&quot;" name="quotation"/>
 		</record>
@@ -172,7 +171,7 @@
 		<record id="dm_offer_step_dealfinilized0" model="dm.offer.step">
 			<field eval="[(6,0,[ref('dm_offer_document_identityproof0'),ref('dm_offer_document_nocnoobjectioncertificate0')])]" name="document_ids"/>
 			<field eval="[(6,0,[ref('dm_product_2'), ref('dm_product_4')])]" name="product_ids"/>
-			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>
+<!--			<field model="dm.offer.step.transition" name="incoming_transition_ids" search="[('name','=','Bidding opened for public')]"/>-->
 			<field eval="&quot;deal&quot;" name="code"/>
 			<field eval="&quot;Deal finilized&quot;" name="name"/>
 			<field name="origin_id" ref="dm_offer_step_negotiation0"/>
@@ -180,7 +179,7 @@
 			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
 			<field eval="3" name="sequence"/>
 			<field eval="&quot;draft&quot;" name="state"/>
-			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Bidding closed')]"/>
+<!--			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Bidding closed')]"/>-->
 			<field eval="&quot;valid&quot;" name="legal_state"/>
 			<field eval="&quot;3000000&quot;" name="quotation"/>
 		</record>

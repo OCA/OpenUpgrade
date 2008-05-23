@@ -49,24 +49,24 @@
 		<record id="dm_offer_delay_postponetheregistrationdate0" model="dm.offer.delay">
 			<field eval="&quot;Postpone the registration date&quot;" name="name"/>
 		</record>
-		<record id="dm_campaign_pricelist_custprice0" model="dm.campaign.pricelist">
-			<field eval="1" name="active"/>
-			<field name="currency_id" ref="base.EUR"/>
-			<field eval="&quot;customer&quot;" name="type"/>
-			<field eval="&quot;Cust Price&quot;" name="name"/>
-		</record>
-		<record id="dm_campaign_pricelist_listprice0" model="dm.campaign.pricelist">
-			<field eval="1" name="active"/>
-			<field name="currency_id" ref="base.EUR"/>
-			<field eval="&quot;requirer&quot;" name="type"/>
-			<field eval="&quot;List Price&quot;" name="name"/>
-		</record>
+<!--		<record id="dm_campaign_pricelist_custprice0" model="dm.campaign.pricelist">-->
+<!--			<field eval="1" name="active"/>-->
+<!--			<field name="currency_id" ref="base.EUR"/>-->
+<!--			<field eval="&quot;customer&quot;" name="type"/>-->
+<!--			<field eval="&quot;Cust Price&quot;" name="name"/>-->
+<!--		</record>-->
+<!--		<record id="dm_campaign_pricelist_listprice0" model="dm.campaign.pricelist">-->
+<!--			<field eval="1" name="active"/>-->
+<!--			<field name="currency_id" ref="base.EUR"/>-->
+<!--			<field eval="&quot;requirer&quot;" name="type"/>-->
+<!--			<field eval="&quot;List Price&quot;" name="name"/>-->
+<!--		</record>-->
  		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
-			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_listprice0"/>
+<!--			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_listprice0"/>-->
 			<field eval="&quot;Registration Procedure&quot;" name="name"/>
 			<field eval="time.strftime('%Y-%m-25')" name="date_start"/>
 			<field eval="&quot;Issues related to the initial procedure of registration&quot;" name="notes"/>
-			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_custprice0"/>
+<!--			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_custprice0"/>-->
 			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>
 		</record>  
 		<record id="dm_campaign_delay_0" model="dm.campaign.delay">
@@ -77,24 +77,24 @@
 		<record id="dm_offer_delay_verifyingdocuments0" model="dm.offer.delay">
 			<field eval="&quot;Verifying documents&quot;" name="name"/>
 		</record>
-		<record id="dm_campaign_pricelist_grossamt0" model="dm.campaign.pricelist">
-			<field eval="1" name="active"/>
-			<field name="currency_id" ref="base.IDR"/>
-			<field eval="&quot;customer&quot;" name="type"/>
-			<field eval="&quot;Gross Amt.&quot;" name="name"/>
-		</record>
-		<record id="dm_campaign_pricelist_netamount0" model="dm.campaign.pricelist">
-			<field eval="1" name="active"/>
-			<field name="currency_id" ref="base.IDR"/>
-			<field eval="&quot;requirer&quot;" name="type"/>
-			<field eval="&quot;Net Amount&quot;" name="name"/>
-		</record>
+<!--		<record id="dm_campaign_pricelist_grossamt0" model="dm.campaign.pricelist">-->
+<!--			<field eval="1" name="active"/>-->
+<!--			<field name="currency_id" ref="base.IDR"/>-->
+<!--			<field eval="&quot;customer&quot;" name="type"/>-->
+<!--			<field eval="&quot;Gross Amt.&quot;" name="name"/>-->
+<!--		</record>-->
+<!--		<record id="dm_campaign_pricelist_netamount0" model="dm.campaign.pricelist">-->
+<!--			<field eval="1" name="active"/>-->
+<!--			<field name="currency_id" ref="base.IDR"/>-->
+<!--			<field eval="&quot;requirer&quot;" name="type"/>-->
+<!--			<field eval="&quot;Net Amount&quot;" name="name"/>-->
+<!--		</record>-->
 		<record id="dm_campaign_proposition_1" model="dm.campaign.proposition">
 			<field eval="&quot;Verification Issues&quot;" name="name"/>
-			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_netamount0"/>
+<!--			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_netamount0"/>-->
 			<field eval="10" name="quantity_max"/>
 			<field eval="time.strftime('%Y-%m-03')" name="date_start"/>
-			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_grossamt0"/>
+<!--			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_grossamt0"/>-->
 			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_6"/>
 		</record>
 		<record id="dm_campaign_delay_1" model="dm.campaign.delay">
@@ -130,9 +130,9 @@
 			<field eval="time.strftime('%Y-09-15')" name="dtp_intervention_type"/>
 		</record>
 		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
-			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_listprice0"/>
+<!--			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_listprice0"/>-->
 			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_2"/>
-			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_custprice0"/>
+<!--			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_custprice0"/>-->
 			<field name="camp_id" ref="dm_campaign_0"/>
 			<field eval="&quot;general&quot;" name="proposition_type"/>
 		</record>
@@ -158,10 +158,10 @@
 			<field eval="time.strftime('%Y-10-05')" name="dtp_intervention_type"/>
 		</record>
 		<record id="dm_campaign_proposition_1" model="dm.campaign.proposition">
-			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_netamount0"/>
+<!--			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_netamount0"/>-->
 			<field eval="&quot;Furniture manufactured&quot;" name="notes"/>
 			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>
-			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_grossamt0"/>
+<!--			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_grossamt0"/>-->
 			<field eval="15000.0" name="sale_rate"/>
 			<field name="camp_id" ref="dm_campaign_1"/>
 			<field eval="&quot;general&quot;" name="proposition_type"/>
