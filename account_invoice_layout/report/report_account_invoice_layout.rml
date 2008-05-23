@@ -88,10 +88,11 @@
     <paraStyle name="P17" fontName="Times-Roman" fontSize="11.0" leading="14"/>
     <paraStyle name="P18" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
     <paraStyle name="P19" fontName="Times-Roman" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P20" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
-    <paraStyle name="P21" fontName="Times-Italic" fontSize="10.0" leading="13" alignment="LEFT"/>
-    <paraStyle name="P22" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
-    <paraStyle name="P23" fontName="Times-Bold" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P20" fontName="Times-Bold" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P21" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
+    <paraStyle name="P22" fontName="Times-Italic" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="P23" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
+    <paraStyle name="P24" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -103,6 +104,9 @@
   <story>
     <para style="P1">[[ repeatIn(objects,'o') ]]</para>
     <para style="P1">[[ setLang(o.partner_id.lang) ]]</para>
+    <para style="P22">
+      <font color="white"> </font>
+    </para>
     <blockTable colWidths="295.0,232.0" style="Tableau2">
       <tr>
         <td>
@@ -127,9 +131,13 @@
         </td>
       </tr>
     </blockTable>
-    <para style="P21">[[ repeatIn(find_vcs(),'a') ]]</para>
+    <para style="P22">
+      <font color="white"> </font>
+    </para>
     <para style="P15">Invoice [[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
-    <para style="P22">VCS Number : [[ a['vcs'] ]]</para>
+    <para style="P23">
+      <font face="Times-Roman">VCS Number : [[ find_vcs(o.id) ]]</font>
+    </para>
     <para style="P15">PRO-FORMA [[ ((o.type == 'out_invoice' and o.state == 'proforma') or removeParentNode('para')) and '' ]]</para>
     <para style="P15">Draft Invoice [[ ((o.type == 'out_invoice' and o.state == 'draft') or removeParentNode('para')) and '' ]]</para>
     <para style="P15">Canceled Invoice [[ ((o.type == 'out_invoice' and o.state == 'cancel') or removeParentNode('para')) and '' ]]</para>
@@ -178,7 +186,7 @@
       </tr>
     </blockTable>
     <section>
-      <para style="P23">[[ repeat_In(invoice_lines(o), 'a') ]]</para>
+      <para style="P20">[[ repeat_In(invoice_lines(o), 'a') ]]</para>
     </section>
     <blockTable colWidths="527.0" style="Table2">
       <tr>
