@@ -173,6 +173,10 @@ class account_analytic_plan_instance(osv.osv):
 			journal= self.pool.get('account.journal').browse(cr,uid,context['journal_id'])
 			vals.update({'plan_id': journal.plan_id.id})
 
+			pids = self.pool.get('account.analytic.plan.instance').search(cr, uid, [('name','=',vals['name']),('code','=',vals['code']),('plan_id','<>',False)])
+			if pids:
+				raise osv.except_osv('Error', 'A model having this name and code already exists !')
+
 			res = self.pool.get('account.analytic.plan.line').search(cr,uid,[('plan_id','=',journal.plan_id.id)])
 			for i in res:
 				total_per_plan = 0
@@ -304,6 +308,9 @@ account_move_line()
 class account_invoice(osv.osv):
 	_name = "account.invoice"
 	_inherit="account.invoice"
+
+
+
 	def line_get_convert(self, cr, uid, x, part, date, context={}):
 		res=super(account_invoice,self).line_get_convert(cr, uid, x, part, date, context)
 		res['analytics_id']=x.get('analytics_id',False)
