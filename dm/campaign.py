@@ -77,20 +77,20 @@ class dm_campaign_statistics(osv.osv):
 dm_campaign_statistics()
 
 
-class dm_campaign_pricelist(osv.osv):
-    _name = "dm.campaign.pricelist"
-    _description = "Pricelist"
-    _columns = {
-        'name': fields.char('Name',size=64, required=True),
-        'active': fields.boolean('Active'),
-        'type': fields.selection([('customer','Customer'),('requirer','Requirer')], 'Pricelist Type', required=True),
-        'currency_id': fields.many2one('res.currency', 'Currency', required=True),
-    }
-
-    _defaults = {
-        'active': lambda *a: 1,
-    }
-dm_campaign_pricelist()
+#class dm_campaign_pricelist(osv.osv):
+#    _name = "dm.campaign.pricelist"
+#    _description = "Pricelist"
+#    _columns = {
+#        'name': fields.char('Name',size=64, required=True),
+#        'active': fields.boolean('Active'),
+#        'type': fields.selection([('customer','Customer'),('requirer','Requirer')], 'Pricelist Type', required=True),
+#        'currency_id': fields.many2one('res.currency', 'Currency', required=True),
+#    }
+#
+#    _defaults = {
+#        'active': lambda *a: 1,
+#    }
+#dm_campaign_pricelist()
 
 class dm_campaign_proposition_segment(osv.osv):
     
@@ -113,8 +113,8 @@ class dm_campaign_proposition(osv.osv):
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
-        'customer_pricelist_id':fields.many2one('dm.campaign.pricelist','Customer Pricelist',domain=[('type','=','customer')]),
-        'requirer_pricelist_id' : fields.many2one('dm.campaign.pricelist','Requirer Pricelist',domain=[('type','=','requirer')]),
+        'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
+        'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
         'notes':fields.text('Notes'),
 		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
     }

@@ -65,7 +65,8 @@ dm_offer_production_cost()
 class dm_offer_delay(osv.osv):
     _name = "dm.offer.delay"
     _columns = {
-        'name' : fields.char('Name', size=32, required=True)
+        'name' : fields.char('Name', size=32, required=True),
+		'value' : fields.integer('Number of days'),
     }
     
 dm_offer_delay()
@@ -91,7 +92,7 @@ class dm_offer(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
-        'step_id' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
+        'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
 #        'mark_id' : fields.
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer'),
         'quotation' : fields.char('Quotation', size=16),

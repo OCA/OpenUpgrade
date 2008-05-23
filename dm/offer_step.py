@@ -17,8 +17,10 @@ class dm_offer_step_transition(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition'),
-        'delay' : fields.integer('Delay'),
-        'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay')
+        #'delay' : fields.integer('Delay'),
+        'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
+        'step_from' : fields.many2one('dm.offer.step','From Offer Step'),
+        'step_to' : fields.many2one('dm.offer.step','To Offer Step'),
     }
     
 dm_offer_step_transition()
@@ -127,14 +129,16 @@ class dm_offer_step(osv.osv):
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
         'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
-        'incoming_transition_ids' : fields.many2one('dm.offer.step.transition', 'Incoming Transition'),
-        'outgoing_transition_ids' : fields.many2one('dm.offer.step.transition', 'Outgoing Transition'),
-        'split_mode' : fields.selection([('and','And'),('or','Or')],'Split mode'),
+        'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition'),
+        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
+        'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
+        'join_mode' : fields.selection([('and','And'),('xor','Xor')],'Join mode'),
     }
 
     _defaults = {
         'state': lambda *a : 'draft',
-		'split_mode' : lambda *a : 'and',
+		'split_mode' : lambda *a : 'xor',
+		'join_mode' : lambda *a : 'xor',
     }
     
     def state_close_set(self, cr, uid, ids, *args):
@@ -202,3 +206,4 @@ class dm_offer_step_workitem(osv.osv):
     }
     
 dm_offer_step_workitem()
+

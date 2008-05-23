@@ -173,7 +173,7 @@
 <!--				<field name="step_from"/>-->
 <!--				<field name="step_to"/>-->
 				<field name="condition" select="1"/>
-				<field name="delay" select="2"/>
+<!--				<field name="delay" select="2"/>-->
 				<field name="delay_id"/>
 			</form>
 		</field>
@@ -186,7 +186,7 @@
 			<tree string="Transition">
 				<field name="name"/>	
 				<field name="condition"/>
-				<field name="delay"/>
+				<field name="delay_id"/>
 			</tree>
 		</field>
 	</record>
