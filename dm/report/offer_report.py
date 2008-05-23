@@ -35,7 +35,12 @@ class offer_report(report_sxw.rml_parse):
         self.sum_credit = 0.0
         self.localcontext.update({
             'time': time,
+            'offer_steps':self.offer_steps,
         })
         self.context = context
         
+    def offer_steps(self,offer_id):
+        offer_step_ids = self.pool.get('dm.offer.step').search(self.cr,self.uid,[('offer_id','=',offer_id)])
+        res = self.pool.get('dm.offer.step').browse(self.cr,self.uid,offer_step_ids)
+        return res
 report_sxw.report_sxw('report.offer.report', 'dm.offer', 'addons/dm/report/dm_offer.rml', parser=offer_report)
