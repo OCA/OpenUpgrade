@@ -126,14 +126,22 @@ class budget_report(report_sxw.rml_parse):
 									record['theo'] +=theo
 									record['pln'] +=line.planned_amount
 									record['prac'] +=pract
-									record['perc'] +=line.percentage
+									if record['theo']<>0.00:
+										perc=(record['prac']/record['theo'])*100
+									else:
+										perc=0.00
+									record['perc'] =perc
 									tot_theo += theo
 									tot_pln +=line.planned_amount
 									tot_prac +=pract
-									tot_perc +=line.percentage
+									tot_perc +=perc
 
 						else:
 
+							if theo<>0.00:
+								perc=(pract/theo)*100
+							else:
+								perc=0.00
 							res1={
 									'a_id':line.analytic_account_id.id,
 									'b_id':line.general_budget_id.id,
@@ -142,12 +150,12 @@ class budget_report(report_sxw.rml_parse):
 									'theo':theo,
 									'pln':line.planned_amount,
 									'prac':pract,
-									'perc':line.percentage
+									'perc':perc,
 							}
 							tot_theo += theo
 							tot_pln +=line.planned_amount
 							tot_prac +=pract
-							tot_perc +=line.percentage
+							tot_perc +=perc
 							if form['report']=='analytic-full':
 								result.append(res1)
 								done_budget.append(line.general_budget_id.id)
