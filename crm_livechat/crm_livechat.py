@@ -180,7 +180,8 @@ class crm_livechat_livechat_partner(osv.osv):
 		id=self.search(cr,uid,[('state','=','active'),('available','like','')],context)
 		print "IDS :::::::",id
 		for p in self.browse(cr, uid, id, context):
-				if p.available==False:
+			print "ooooooooooo:",p
+			if p.available==False:
 						res['id']=p.id
 						res['name']=p.jabber_id.name
 						res['jid']=p.jabber_id.login
@@ -189,6 +190,7 @@ class crm_livechat_livechat_partner(osv.osv):
 						res['port']=p.jabber_id.port
 						res['ssl']=p.jabber_id.ssl
 						return res
+			return {}
 
 crm_livechat_livechat_partner()
 

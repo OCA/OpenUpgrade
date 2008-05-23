@@ -6,20 +6,15 @@
 <form name="MyForm" action="/chatfunc/justsend">
 <table id="wrap" border='3px' >
 
-	<tr style="height:100%">
-		<td width="90%">
+	<tr id="trref" >
+		<td id="tdref">
 <!--		<iframe src="/chatfunc/chatbox" style="width:100%;height: 600px;border: 1px;"> </iframe>
 -->
-		<div id="refreshdiv" style="overflow:auto; height: 200px;">
+		<div id="refreshdiv" class="chatbox" style="overflow:auto; ">
 		</div>
 		 </td>
-		<td width = "10%">
-		</td>
 	</tr>
-
-
-
-	<tr>
+	<tr id="buttonref">
 		<td>
 			<input type="button" onclick="sendmsg();" value="Send" />
 
@@ -33,13 +28,10 @@
 		</td>
 
 	</tr>
-
-
-
-	<tr style="height: 100%;">
+	<tr id="txtarearef">
 		<td colspan="2" style="height: 100%">
-		<span stdyle="background-color: gray;">
-			<textarea name="txtarea" style="height: 100%; width:100%" id="text2" rows="3" onfocus="0" onkeypress="return submitenter(this,event)"> </textarea>
+		<span>
+			<textarea name="txtarea" style="width:100%; background-color: activeborder;" id="text2" onkeypress="return submitenter(this,event)"></textarea>
 		</span>
 		</td>
 
@@ -49,61 +41,6 @@
 </form>
 <script type="text/javascript">
 <!--
-function submitenter(myfield,e)
-{
-	var keycode;
-	if (window.event) keycode = window.event.keyCode;
-	else if (e) keycode = e.which;
-	else return true;
-
-	if (keycode == 13)
-   	{
-   		//myfield.form.submit();
-   		sendmsg();
-   		return false;
-   	}
-	else
-   		return true;
-}
-
-function getWindowHeight() {
-	var windowHeight = 0;
-	if (typeof(window.innerHeight) == 'number')
-	{
-		windowHeight = window.innerHeight;
-	}
-	else
-	{
-		if (document.documentElement && document.documentElement.clientHeight)
-		{
-			windowHeight = document.documentElement.clientHeight;
-		}
-		else
-		{
-			if (document.body && document.body.clientHeight)
-			{
-				windowHeight = document.body.clientHeight;
-			}
-		}
-	}
-	return windowHeight;
-	window.innerWidth
-}
-
-function setWrap()
-{
-	if (document.getElementById)
-	{
-		var windowHeight = getWindowHeight();
-		if (windowHeight > 0)
-		{
-			var wrapElement = document.getElementById('wrap');
-			wrapElement.style.position = 'absolute';
-			wrapElement.style.height = (windowHeight-2) + 'px';
-
-		}
-	}
-}
 
 window.onload = function()
 {
@@ -115,6 +52,9 @@ window.onresize = function()
 {
 	setWrap();
 }
+/*
+
+*/
 //-->
 </script>
 </body>

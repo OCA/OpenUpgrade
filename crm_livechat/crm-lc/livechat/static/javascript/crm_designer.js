@@ -4,6 +4,8 @@ function popup_table(url)
 
 }
 
+
+
 function refreshg()
 {
 	tosend = document.getElementsByName('txtarea').value
@@ -14,16 +16,30 @@ function refreshg()
 				msgs= obj.msglist;
 				a = MochiKit.DOM.getElement('refreshdiv');
 				a.innerHTML=''
-
 				dlid = MochiKit.DOM.DIV({});
 				for(i=0;i<msgs.length;i++)
 				{
 					dtid = MochiKit.DOM.DIV({});
-					dtid.innerHTML = msgs[i][0];
-					if(msgs[i][1] == 'sender')
-						dtid.style.color = '#AA1E09';
+					//dtid.innerHTML = msgs[i][0];
+
+//					var d = msgs[i].['timestamp'];
+//					var curr_day = d.getDay();
+//					var curr_time = "("+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+") ";
+
+					senderpart = MochiKit.DOM.DIV({});
+					senderpart.innerHTML = msgs[i]['sender'] + " : "
+					senderpart.style.display = 'inline';
+					if (msgs[i]['type'] != 'sender')
+						senderpart.className = 'reciever';
 					else
-						dtid.style.color = '#204A87';
+						senderpart.className = 'sender';
+					MochiKit.DOM.appendChildNodes(dtid,senderpart);
+
+					messagepart = MochiKit.DOM.DIV({});
+					messagepart.style.display = 'inline';
+					messagepart.className = 'message';
+					messagepart.innerHTML = msgs[i]['message']
+					MochiKit.DOM.appendChildNodes(dtid,messagepart);
 
 					MochiKit.DOM.appendChildNodes(dlid,dtid);
 				}
@@ -79,4 +95,77 @@ function sendmsg()
     return 1;
 
 
+}
+
+function submitenter(myfield,e)
+{
+	var keycode;
+	if (window.event) keycode = window.event.keyCode;
+	else if (e) keycode = e.which;
+	else return true;
+
+	if (keycode == 13)
+   	{
+   		//myfield.form.submit();
+   		sendmsg();
+   		return false;
+   	}
+	else
+   		return true;
+}
+
+function getWindowHeight() {
+	var windowHeight = 0;
+	if (typeof(window.innerHeight) == 'number')
+	{
+		windowHeight = window.innerHeight;
+	}
+	else
+	{
+		if (document.documentElement && document.documentElement.clientHeight)
+		{
+			windowHeight = document.documentElement.clientHeight;
+		}
+		else
+		{
+			if (document.body && document.body.clientHeight)
+			{
+				windowHeight = document.body.clientHeight;
+			}
+		}
+	}
+	window.scrollTo = windowHeight;
+	return windowHeight;
+}
+
+function setWrap()
+{
+	if (document.getElementById)
+	{
+		var windowHeight = getWindowHeight();
+
+		if (windowHeight > 0)
+		{
+			var wrapElement = el('wrap');
+			wrapElement.style.position = 'absolute';
+			wrapHeight = (windowHeight-70);
+			wrapElement.style.height = wrapHeight+'px';
+			wrap80 = (wrapHeight -(Math.round(wrapHeight*0.20)))-20
+			wrap20 = (wrapHeight -(Math.round(wrapHeight*0.80)))-20
+			//alert(wrapHeight+":"+wrap80+":"+wrap10);
+			el('trref').style.height = (wrapHeight-25-50) +'px';
+			el('refreshdiv').style.height = (wrapHeight-25-50)+'px';
+			el('buttonref').style.height = '25px';
+			el('txtarearef').style.height = '50px';
+			el('text2').style.height = '50px';
+
+
+		}
+
+	}
+}
+
+function el(id)
+{
+	return document.getElementById(id);
 }

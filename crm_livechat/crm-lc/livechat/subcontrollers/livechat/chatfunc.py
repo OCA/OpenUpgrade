@@ -10,12 +10,6 @@ from livechat import rpc, common
 from livechat.rpc import *
 
 
-cnhost = config.get('cnhost', path="crm")
-cnport = config.get('cnport', path="crm")
-cntype = config.get('cntype', path="crm")
-
-rpc.session = rpc.RPCSession( cnhost, cnport, cntype , storage=cherrypy.session)
-
 class ChatFunc(controllers.RootController):
 
     dbname = config.get('dbname', path="crm")
@@ -29,15 +23,14 @@ class ChatFunc(controllers.RootController):
         res = rpc.session.login(self.dbname, self.dbuser, self.dbpwd)
         raise redirect('/select_topic')
 
-    @expose(template="livechat.templates.chat_box")
-    def chatbox(self):
-        pass
-        return dict(msglist = self.msglist)
-
     @expose(format='json')
     def chatbox2(self):
-        pass
-        print "chatbox2 called"
+#        print "\nMsgList:::",self.msglist
+#    MsgList:::[{'message': 'sa', 'type': 'sender', 'sender': 'cza@tinyerp.com'},
+#                {'message': 'dafadsf', 'type': 'receiver', 'sender': 'hko@tinyerp.com/Home'},
+#                {'message': 'fdasfa', 'type': 'sender', 'sender': 'cza@tinyerp.com'},
+#                {'message': 'chin', 'type': 'receiver', 'sender': 'hko@tinyerp.com/Home'}]
+
         return dict(msglist = self.msglist)
 
     @expose(template="livechat.templates.main_page")
@@ -119,8 +112,10 @@ class ChatFunc(controllers.RootController):
             sendto = self.user
         print "sendto:::",sendto
         self.recepients = sendto
-        self.client.send(xmpp.protocol.Message(sendto,msg))
-        msgformat = (str(self.login) + " : "+ str(msg),'sender')
+        msg_obj = xmpp.protocol.Message(sendto,msg);
+        self.client.send(msg_obj)
+#        msgformat = (str(self.login) + " : "+ str(msg),'sender')
+        msgformat = {"sender":str(self.login) , "message" : str(msg),"type":'sender'}
         print msgformat,"::::::"
         self.msglist.append(msgformat)
         print "returning"
@@ -137,14 +132,13 @@ class ChatFunc(controllers.RootController):
         3. if 1 and 2 proceed else stop
         '''
         patnerdata=rpc.RPCProxy('crm_livechat.livechat.partner').get_live_parnter()
-        
         print "This is parnter data",patnerdata
         livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration(topicid)
         if livechatdata and patnerdata:
             print "This is first live chat data",livechatdata
             print "This is first parnter chat data",patnerdata
 #            partnerlist = livechatdata['partner']
-#            
+#
 #            pp=map(lambda p:p,partnerlist)
 #            print "////////////////////////",pp
 
@@ -159,9 +153,9 @@ class ChatFunc(controllers.RootController):
             jid=xmpp.protocol.JID(jid)
             cl=xmpp.Client(jid.getDomain(),debug=[])
 
-            
+
             x = cl.connect((jserver,5223))
-            
+
             if x == "":
                 print " Not Connected  \n Connection Error....."
                 return "ConError"
@@ -197,7 +191,8 @@ class ChatFunc(controllers.RootController):
         print "Messge Arriving", msg
         print "\nContent: " + str(msg.getBody())
         print "Sender: " + str(msg.getFrom())
-        msgformat = ( str(msg.getFrom()) + " : "+str(msg.getBody()), 'receiver')
+#        msgformat = ( str(msg.getFrom()) + " : "+str(msg.getBody()), 'receiver')
+        msgformat = {"sender":str(msg.getFrom()) , "message" : str(msg.getBody()),"timestamp": str(msg.getTimestamp()),"type":'receiver'}
         self.msglist.append(msgformat)
 
     client = None
