@@ -11,20 +11,6 @@ AVAILABLE_STATES = [
     ('closed', 'Close')
 ]
 
-class dm_offer_step_transition(osv.osv):
-    _name = "dm.offer.step.transition"
-    _rec_name = 'name'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition'),
-        #'delay' : fields.integer('Delay'),
-        'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
-        'step_from' : fields.many2one('dm.offer.step','From Offer Step'),
-        'step_to' : fields.many2one('dm.offer.step','To Offer Step'),
-    }
-    
-dm_offer_step_transition()
-
 class dm_product(osv.osv):
     _name = "dm.product"
     _rec_name = 'product_id'
@@ -171,6 +157,20 @@ class dm_offer_step(osv.osv):
     
 dm_offer_step()
 
+
+class dm_offer_step_transition(osv.osv):
+    _name = "dm.offer.step.transition"
+    _rec_name = 'name'
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition'),
+        #'delay' : fields.integer('Delay'),
+        'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
+        'step_from' : fields.many2one('dm.offer.step','From Offer Step'),
+        'step_to' : fields.many2one('dm.offer.step','To Offer Step'),
+    }
+    
+dm_offer_step_transition()
 class dm_offer_step_history(osv.osv):
     _name = "dm.offer.step.history"
     _order = 'date'
