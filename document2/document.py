@@ -378,9 +378,12 @@ class document_file(osv.osv):
 			if m=='db':
 				result[id] = d
 			elif m=='fs':
-				path = os.path.join(os.getcwd(),'filestore')
-				value = file(os.path.join(path,r), 'rb').read()
-				result[id] = base64.encodestring(value)
+				try:
+					path = os.path.join(os.getcwd(),'filestore')
+					value = file(os.path.join(path,r), 'rb').read()
+					result[id] = base64.encodestring(value)
+				except:
+					result[id]=''
 			else:
 				result[id] = ''
 		return result
