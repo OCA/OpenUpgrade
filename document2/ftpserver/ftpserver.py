@@ -2586,11 +2586,13 @@ class FTPHandler(asynchat.async_chat):
             self.respond("503 Bad sequence of commands: use RNFR first.")
             return
         src = self.fs.ftp2fs(self.fs.rnfr)
-        dst = self.fs.ftp2fs(line)
         line = self.fs.ftpnorm(line)
+        basedir,basename = os.path.split(line)
+        dst = self.fs.ftp2fs(basedir)
+
         try:
             try:
-                self.run_as_current_user(self.fs.rename, src, dst)
+                self.run_as_current_user(self.fs.rename, src, dst,basename)
             except OSError, err:
                 why = _strerror(err)
                 self.log('FAIL RNFR/RNTO "%s ==> %s". %s.' \

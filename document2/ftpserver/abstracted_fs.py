@@ -317,9 +317,16 @@ class abstracted_fs:
 		cr.commit()
 		cr.close()
 
-	def rename(self, src, dst):
+	# for file , rename ok
+	def rename(self, src, dst_basedir,dst_basename):
 		"""Should process a read, a create and a remove"""
-		raise 'Not Yet Implemented'
+		src_file=self.open(src,'r')
+		dst_file=self.create(dst_basedir,dst_basename,'w')
+		dst_file.write(src_file.getvalue())
+		dst_file.close()
+		src_file.close()
+		self.remove(src)
+
 
 	# Nearly Ok
 	def stat(self, node):
@@ -387,7 +394,7 @@ class abstracted_fs:
 		"""Return True if path refers to an existing path, including
 		a broken or circular symbolic link.
 		"""
-		return node and True or False
+		return path and True or False
 	exists = lexists
 
 	# Ok, can be improved
