@@ -269,7 +269,6 @@ class document_directory(osv.osv):
 		node = node_class(cr, uid, '/', False, type='database')
 		for path in uri[:]:
 			if path:
-				print 'node', node, node.path, path
 				node = node.child(path)
 				if not node:
 					return False
@@ -335,7 +334,6 @@ class ir_action_report_xml(osv.osv):
 	def _model_search(self, cr, uid, obj, name, args):
 		if not len(args):
 			return []
-		print '*'*10,args
 		model_id= args[0][2]
 		if not model_id:
 			return []
