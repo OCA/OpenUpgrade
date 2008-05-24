@@ -80,7 +80,6 @@ class abstracted_fs:
 	# Ok
 	def ftp2fs(self, path_orig):
 		path = os.path.join(self.cwd, path_orig)
-		print 'FTP2FS', path, self.cwd, path
 		if path and path=='/':
 			return None
 		cr, uid, pool, path2 = self.get_cr(path)
@@ -92,8 +91,6 @@ class abstracted_fs:
 	# Ok
 	def fs2ftp(self, node):
 		res = node and ('/' + node.cr.dbname + '/' + node.path) or '/'
-		print 'FS2FTP', node, res
-
 		return res
 
 	# Ok
@@ -125,7 +122,6 @@ class abstracted_fs:
 				cr = db.cursor()
 				uid =self.uid
 				val = self.getvalue()
-				print '*** Write', len(val)
 				val2 = {
 					'datas': base64.encodestring(val),
 					'file_size': len(val),
@@ -144,7 +140,6 @@ class abstracted_fs:
 
 		# TODO: test if already exist and modify in this case if node.type=file
 
-		print '*** CREATE', 'not node'
 		object2=node and node.object2 or False
 		object=node and node.object or False
 		val = {
@@ -166,7 +161,6 @@ class abstracted_fs:
 				'partner_id': partner,
 				'res_id': object2.id
 			})
-		print val
 		cid = fobj.create(cr, uid, val, objname)
 		cr.commit()
 		cr.close()
@@ -255,7 +249,6 @@ class abstracted_fs:
 			raise OSError(1, 'Operation not permited.')
 		cr = db.cursor()
 		uri2 = filter(None,path.split('/'))[1:]
-		print 'GET CR', path, uri2
 		uid = security.login(dbname, self.username, self.password)
 		if not uid:
 			raise OSError(1, 'Operation not permited.')
@@ -264,7 +257,6 @@ class abstracted_fs:
 	# Ok
 	def listdir(self, path):
 		"""List the content of a directory."""
-		print 'LIST', path, path
 		class false_node:
 			object = None
 			type = 'database'
@@ -279,7 +271,6 @@ class abstracted_fs:
 		return path.children()
 #		result = []
 #		for d in path.children():
-#			print d.path
 #			result.append( d.path.split('/')[-1] )
 #		return result
 
@@ -329,8 +320,8 @@ class abstracted_fs:
 			pool = pooler.get_pool(cr.dbname)
 			object2=src and src.object2 or False
 			object=src and src.object or False
-			if object2:
-				raise OSError(40, 'Resource Directory should not rename.')
+			if object2 and not object.ressource_id:
+				raise OSError(1, 'Operation not permited.')
 			if object._table_name=='document.directory':
 				res = pool.get('document.directory').write(cr, uid, [object.id],{'name':dst_basename})
 			else:
@@ -386,7 +377,6 @@ class abstracted_fs:
 	def getsize(self, node):
 		"""Return the size of the specified file in bytes."""
 		result = 0L
-		print 'Get Size', node.type
 		if node.type=='file':
 			result = node.object.file_size or 0L
 		return result

@@ -10,7 +10,6 @@ class authorizer:
 	def validate_authentication(self, username, password):
 		"""Return True if the supplied username and password match the
 		stored credentials."""
-		print 'VALIDATE', username, password
 		self.password = password
 		return True
 
@@ -34,7 +33,6 @@ class authorizer:
 
 	def has_user(self, username):
 		"""Whether the username exists in the virtual users table."""
-		print 'HAS', username
 		return True
 
 	def has_perm(self, username, perm, path=None):
@@ -44,7 +42,6 @@ class authorizer:
 		Expected perm argument is one of the following letters:
 		"elradfmw".
 		"""
-		print 'HAS PERM', username, perm
 		return True
 		paths = path.split('/')
 		if not len(paths)>2:
