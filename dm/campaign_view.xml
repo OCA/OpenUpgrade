@@ -127,15 +127,98 @@
 			</form>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="action_campaign_form">
+	# ------------------------------------------------------
+	# All Campaigns
+	# ------------------------------------------------------
+
+	<record model="ir.actions.act_window" id="action_campaign_form_all">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form" action="action_campaign_form"/>
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
 
+	<record model="ir.actions.act_window" id="action_campaign_form_all1">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="domain">[('state','=','open')]</field>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all1" action="action_campaign_form_all1"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_form_all2">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="domain">[('state','=','draft')]</field>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_form_all3">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="domain">[('state','=','close')]</field>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
+
+	# ------------------------------------------------------
+	# My Campaigns
+	# ------------------------------------------------------
+
+	<record model="ir.actions.act_window" id="action_campaign_form_my">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="domain">[('user_id','=',uid)]</field>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_form_my1">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="domain">[('state','=','open'),('user_id','=',uid)]</field>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/My Campaigns/My Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_form_my2">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="domain">[('state','=','draft'),('user_id','=',uid)]</field>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/My Campaigns/My Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_form_my3">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="domain">[('state','=','close'),('user_id','=',uid)]</field>
+	</record>
+	<menuitem name="Direct Marketing/Campaigns/My Campaigns/My Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
+
+	<!--
+	=======================================================
+	Delays Views
+	=======================================================
+	-->
 	<record model="ir.ui.view" id="view_campaign_delay">
 		<field name="name">dm.campaign.delay.form</field>
 		<field name="model">dm.campaign.delay</field>
@@ -170,6 +253,11 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>
 
+	<!--
+	=======================================================
+	Proposition Views
+	=======================================================
+	-->
 	<record model="ir.ui.view" id="view_campaign_proposition_form">
 		<field name="name">dm.campaign.proposition.form</field>
 		<field name="model">dm.campaign.proposition</field>
