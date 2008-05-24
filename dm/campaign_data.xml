@@ -118,8 +118,10 @@
 			<field name="country_id" ref="base.bd"/>
 			<field name="lang_id" ref="base.lang_en"/>
 			<field eval="&quot;pending&quot;" name="planning_state"/>
+			<field eval="&quot;draft&quot;" name="state"/>
 			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
 			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
+			<field name="user_id" ref="base.user_admin"/>
 		</record>
 		<record id="dm_campaign_0" model="dm.campaign">
 			<field eval="&quot;inprogress&quot;" name="planning_state"/>
@@ -148,6 +150,7 @@
 			<field eval="&quot;pending&quot;" name="planning_state"/>
 			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
 			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
+			<field name="user_id" ref="base.user_admin"/>
 		</record>
 		<record id="dm_campaign_1" model="dm.campaign">
 			<field eval="time.strftime('%Y-06-10')" name="dtp_date_recovered"/>
@@ -155,6 +158,7 @@
 			<field eval="time.strftime('%Y-07-15')" name="dtp_date_delivery"/>
 			<field name="dtp_operator" ref="base.res_partner_10"/>
 			<field eval="&quot;done&quot;" name="manufacturing_state"/>
+			<field eval="&quot;open&quot;" name="state"/>
 			<field eval="time.strftime('%Y-10-05')" name="dtp_intervention_type"/>
 		</record>
 		<record id="dm_campaign_proposition_1" model="dm.campaign.proposition">
@@ -166,7 +170,52 @@
 			<field name="camp_id" ref="dm_campaign_1"/>
 			<field eval="&quot;general&quot;" name="proposition_type"/>
 		</record>
-	
+		<record id="dm_campaign_2" model="dm.campaign">
+			<field eval="&quot;Increase in Sales Margin&quot;" name="name"/>
+			<field eval="time.strftime('%Y-%m-11')" name="date_start"/>
+			<field eval="time.strftime('2009-%m-31')" name="date"/>
+			<field name="partner_id" ref="base.res_partner_6"/>
+			<field name="trademark_id" ref="dm.dm_trademark_tinyerp0"/>
+			<field eval="&quot;general&quot;" name="campaign_type"/>
+			<field name="country_id" ref="base.be"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field eval="&quot;pending&quot;" name="planning_state"/>
+			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
+			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
+		</record>
+		<record id="dm_campaign_2" model="dm.campaign">
+			<field eval="time.strftime('%Y-06-10')" name="dtp_date_recovered"/>
+			<field eval="time.strftime('%Y-06-20')" name="dtp_date_real_delivery"/>
+			<field eval="time.strftime('%Y-07-15')" name="dtp_date_delivery"/>
+			<field name="dtp_operator" ref="base.res_partner_10"/>
+			<field eval="&quot;done&quot;" name="manufacturing_state"/>
+			<field eval="&quot;close&quot;" name="state"/>
+			<field eval="time.strftime('%Y-10-05')" name="dtp_intervention_type"/>
+			<field name="user_id" ref="base.user_demo"/>
+		</record>
+		<record id="dm_campaign_3" model="dm.campaign">
+			<field eval="&quot;Increse the flow of production&quot;" name="name"/>
+			<field eval="time.strftime('%Y-%m-15')" name="date_start"/>
+			<field eval="time.strftime('2009-%m-31')" name="date"/>
+			<field name="partner_id" ref="base.res_partner_6"/>
+			<field name="trademark_id" ref="dm.dm_trademark_tinyerp0"/>
+			<field eval="&quot;general&quot;" name="campaign_type"/>
+			<field name="country_id" ref="base.be"/>
+			<field name="lang_id" ref="base.lang_en"/>
+			<field eval="&quot;pending&quot;" name="planning_state"/>
+			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
+			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
+		</record>
+		<record id="dm_campaign_3" model="dm.campaign">
+			<field eval="time.strftime('%Y-06-10')" name="dtp_date_recovered"/>
+			<field eval="time.strftime('%Y-06-20')" name="dtp_date_real_delivery"/>
+			<field eval="time.strftime('%Y-07-15')" name="dtp_date_delivery"/>
+			<field name="dtp_operator" ref="base.res_partner_10"/>
+			<field eval="&quot;done&quot;" name="manufacturing_state"/>
+			<field eval="&quot;close&quot;" name="state"/>
+			<field eval="time.strftime('%Y-10-05')" name="dtp_intervention_type"/>
+			<field name="user_id" ref="base.user_admin"/>
+		</record>	
 	<!--
 	=======================================================
 	Campaigns - Groups
