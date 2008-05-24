@@ -78,8 +78,10 @@ class abstracted_fs:
 		return p
 
 	# Ok
-	def ftp2fs(self, path_orig):
-		path = os.path.join(self.cwd, path_orig)
+	def ftp2fs(self, path_orig, cwd_orig=None):
+		if not cwd_orig:
+			cwd_orig = self.cwd
+		path = os.path.join(cwd_orig, path_orig)
 		if path and path=='/':
 			return None
 		cr, uid, pool, path2 = self.get_cr(path)
@@ -170,6 +172,8 @@ class abstracted_fs:
 
 	# Ok
 	def open(self, node, mode):
+		if not node:
+			raise OSError(1, 'Operation not permited.')
 		# Reading operation
 		if node.type=='file':
 			if not self.isfile(node):
