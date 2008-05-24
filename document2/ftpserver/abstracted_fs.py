@@ -125,6 +125,7 @@ class abstracted_fs:
 				cr = db.cursor()
 				uid =self.uid
 				val = self.getvalue()
+				print '*** Write', len(val)
 				val2 = {
 					'datas': base64.encodestring(val),
 					'file_size': len(val),
@@ -179,7 +180,9 @@ class abstracted_fs:
 		if node.type=='file':
 			if not self.isfile(node):
 				raise OSError(1, 'Operation not permited.')
-			return StringIO.StringIO(base64.decodestring(node.object.datas or ''))
+			s = StringIO.StringIO(base64.decodestring(node.object.datas or ''))
+			s.name = node
+			return s
 		elif node.type=='content':
 			cr = node.cr
 			uid = node.uid
@@ -383,6 +386,7 @@ class abstracted_fs:
 	def getsize(self, node):
 		"""Return the size of the specified file in bytes."""
 		result = 0L
+		print 'Get Size', node.type
 		if node.type=='file':
 			result = node.object.file_size or 0L
 		return result

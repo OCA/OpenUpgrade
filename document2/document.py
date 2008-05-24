@@ -399,6 +399,7 @@ class document_file(osv.osv):
 			if not os.path.isdir(path):
 				os.mkdir(path)
 			flag = None
+			# This can be improved
 			for dirs in os.listdir(path):
 				if os.path.isdir(os.path.join(path,dirs)) and len(os.listdir(os.path.join(path,dirs)))<4000:
 					flag = dirs
@@ -407,9 +408,10 @@ class document_file(osv.osv):
 			filename = random_name()
 			fname = os.path.join(path, flag, filename)
 			fp = file(fname,'wb')
-			fp.write(base64.decodestring(value))
+			v = base64.decodestring(value)
+			fp.write(v)
 			filesize = os.stat(fname).st_size
-			cr.execute('update ir_attachment set store_fname=%s,store_method=%s,file_size=%d where id=%d', (os.path.join(flag,filename),'fs',filesize,id))
+			cr.execute('update ir_attachment set store_fname=%s,store_method=%s,file_size=%d where id=%d', (os.path.join(flag,filename),'fs',len(v),id))
 		else:
 			cr.execute('update ir_attachment set datas=%s,store_method=%s where id=%d', (psycopg.Binary(value),'db',id))
 		return True

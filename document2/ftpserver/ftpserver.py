@@ -2018,9 +2018,9 @@ class FTPHandler(asynchat.async_chat):
         #   formats in which case we fall back on cwd as default.
         if not line or line.lower() in ('-a', '-l', '-al', '-la'):
             line = self.fs.cwd
-        path = self.fs.ftp2fs(line)
-        line = self.fs.ftpnorm(line)
         try:
+            path = self.fs.ftp2fs(line)
+            line = self.fs.ftpnorm(line)
             iterator = self.run_as_current_user(self.fs.get_list_dir, path)
         except OSError, err:
             why = _strerror(err)
@@ -2037,9 +2037,9 @@ class FTPHandler(asynchat.async_chat):
         """
         if not line:
             line = self.fs.cwd
-        path = self.fs.ftp2fs(line)
-        line = self.fs.ftpnorm(line)
         try:
+            path = self.fs.ftp2fs(line)
+            line = self.fs.ftpnorm(line)
             if self.fs.isdir(path):
                 listing = self.run_as_current_user(self.fs.listdir, path)
             else:
@@ -2128,10 +2128,15 @@ class FTPHandler(asynchat.async_chat):
         """Retrieve the specified file (transfer from the server to the
         client)
         """
-        file = self.fs.ftp2fs(line)
-        line = self.fs.ftpnorm(line)
         try:
+            file = self.fs.ftp2fs(line)
+            line = self.fs.ftpnorm(line)
             fd = self.run_as_current_user(self.fs.open, file, 'rb')
+        except OSError, err:
+            why = _strerror(err)
+            self.log('FAIL RETR "%s". %s.' %(line, why))
+            self.respond('550 %s.' %why)
+            return
         except IOError, err:
             why = _strerror(err)
             self.log('FAIL RETR "%s". %s.' %(line, why))
@@ -2444,8 +2449,8 @@ class FTPHandler(asynchat.async_chat):
         # Search for official references about this behaviour.
         if not line:
             line = '/'
-        path = self.fs.ftp2fs(line)
         try:
+            path = self.fs.ftp2fs(line)
             self.run_as_current_user(self.fs.chdir, path)
         except OSError, err:
             why = _strerror(err)
