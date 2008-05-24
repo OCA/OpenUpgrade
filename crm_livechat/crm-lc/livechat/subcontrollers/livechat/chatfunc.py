@@ -77,9 +77,6 @@ class ChatFunc(controllers.RootController):
             print "MainHandler Called"
         return "Active"
 
-
-
-
     def recieving(self,string,sleeptime,cl,*args):
         while self.cont:
             self.recthread = os.getpid()
@@ -94,14 +91,32 @@ class ChatFunc(controllers.RootController):
 
     @expose()
     def close_chat(self, **kw):
+       temp=[]
+       if(self.client):
+           self.client.disconnect()
+           print "Disconnection called"
+           self.client=None
+       print "Tghis is ",self.msglist 
        if (kw.get('close')):
-           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(int(self.topicid),int(self.sessionid))
-           if(self.client):
-               self.client.disconnect()
-               self.client=None
+           for i in range(0,len(self.msglist)):
+               s=''
+               s = self.msglist[i]['sender']
+               s = s + " : "
+               s  = s +self.msglist[i]['message']
+               print "ttttTTT:::::",str(s)
+               
+               temp.append(str(s))
+#              temp.append(self.msglist[i][0])
+           print "TEMP IS:::::::::", temp
+           logentry = '\n'.join(temp)
+           print logentry,"----------->"
+           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.topicid,self.sessionid,True,logentry)           
+#           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(int(self.topicid),int(self.sessionid),True,logentry)
+           print "Final result is-------------->", res
+           self.msglist=[]
            self.cont = False
        return {}
-
+   
     @expose(format='json')
     def justsend(self,**kw):
         print "kw:::::::::::",kw
