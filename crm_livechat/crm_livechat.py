@@ -148,7 +148,7 @@ class crm_livechat_livechat(osv.osv):
 				print "In logging"
 				self.pool.get('crm_livechat.log').create(cr, uid, {
 					'note': chat_data,
-					'user_id': self.sessions[session_id][1],
+					'user_id': self.sessions[session_id][0],
 					'livechat_id':self.sessions[session_id][2][0],
 				})
 				print "LOG COMPLTERD::::::::::::::"
@@ -177,7 +177,7 @@ class crm_livechat_livechat_partner(osv.osv):
 
 	def get_live_parnter(self,cr,uid,context={}):
 		res={}
-		id=self.search(cr,uid,[('state','=','active'),('available','like','')],context)
+		id=self.search(cr,uid,[('state','=','active'),('available','=',False)],context)
 		print "IDS :::::::",id
 		for p in self.browse(cr, uid, id, context):
 			print "ooooooooooo:",p
@@ -190,7 +190,7 @@ class crm_livechat_livechat_partner(osv.osv):
 						res['port']=p.jabber_id.port
 						res['ssl']=p.jabber_id.ssl
 						return res
-			return {}
+		return res
 
 crm_livechat_livechat_partner()
 
