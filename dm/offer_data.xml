@@ -72,7 +72,7 @@
 			<field name="copywriter_id" ref="base.res_partner_c2c"/>
 			<field name="category_ids" eval="[(6,0,[ref('dm.dm_offer_category_longterm1')])]"/>
 			<field eval="1" name="active"/>
-			<field eval="&quot;draft&quot;" name="state"/>
+			<field eval="&quot;closed&quot;" name="state"/>
 			<field eval="&quot;girl_edu&quot;" name="code"/>
 			<field eval="&quot;No Bankruptcy&quot;" name="legal_state"/>
 			<field eval="time.strftime('%Y-%m-15')" name="date_purchase"/>
