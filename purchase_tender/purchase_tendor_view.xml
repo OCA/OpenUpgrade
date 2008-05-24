@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+	<record model="ir.ui.view" id="purchase_order_form_inherit">
+			<field name="name">purchase.order.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<field name="partner_ref" position="after">
+					<field name="tendor_id" select="2"/>
+				</field>
+			</field>
+		</record>
+
+<!-- view for  purchase.tendor  -->
+		<record model="ir.ui.view" id="view_purchase_tendor_form">
+			<field name="name">purchase.tendor.form</field>
+			<field name="type">form</field>
+			<field name="model">purchase.tendor</field>
+			<field name="arch" type="xml">
+				<form string="Purchase Tendor">
+					<field name="name" select="1"/>
+					<field name="description" select="2"/>
+					<separator string="Purchase Orders" colspan="4"/>
+					<field name="purchase_ids" nolabel="1" colspan="4"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_purchase_tendor_tree">
+			<field name="name">purchase.tendor.tree</field>
+			<field name="type">tree</field>
+			<field name="model">purchase.tendor</field>
+			<field name="arch" type="xml">
+				<tree string="Purchase Tendor">
+					<field name="name"/>
+					<field name="description"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_purchase_tendor">
+			<field name="name">Purchase Tendor</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">purchase.tendor</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_purchase_tendor_tree"/>
+		</record>
+		<menuitem name="Purchase Management/Purchase Tendors/Purchase Tendor" action="action_purchase_tendor" id="menu_purchase_tendor"/>
+
+	</data>
+</terp>
