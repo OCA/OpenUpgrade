@@ -105,7 +105,7 @@ class sale_advertising_proof(osv.osv):
 		'name': fields.char('Name', size=32),
 		'address_id':fields.many2one('res.partner.address','Delivery Address'),
 		'number': fields.integer('Number of Copies'),
-		'target_id': fields.many2one('sale.order.line','Target'),
+		'target_id': fields.many2one('sale.order','Target'),
 	}
 sale_advertising_proof()
 
