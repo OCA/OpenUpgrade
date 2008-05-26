@@ -125,23 +125,24 @@
 	# ------------------------------------------------------
 	# My Offers
 	# ------------------------------------------------------
-<!-- 
+
 	<record model="ir.actions.act_window" id="action_offer_form_my">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
+		<field name="domain">[('create_uid','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
-
+ 
 	<record model="ir.actions.act_window" id="action_offer_form_my1">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','open')]</field>	
+		<field name="domain">[('state','=','open'),('create_uid','=',uid)]</field>	
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/My Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
 
@@ -151,7 +152,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','draft')]</field>		
+		<field name="domain">[('state','=','draft'),('create_uid','=',uid)]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/My Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
 
@@ -161,10 +162,10 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','closed')]</field>		
+		<field name="domain">[('state','=','closed'),('create_uid','=',uid)]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/My Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
- -->	
+	
 	<!--
 	======================
 	Categories
