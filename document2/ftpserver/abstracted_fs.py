@@ -110,6 +110,7 @@ class abstracted_fs:
 
 	# Ok
 	def create(self, node, objname, mode):
+		print 'mode',mode
 		class file_wrapper(StringIO.StringIO):
 			def __init__(self, sstr='', ressource_id=False, dbname=None, uid=1, name=''):
 				StringIO.StringIO.__init__(self, sstr)
@@ -139,29 +140,38 @@ class abstracted_fs:
 		ext = objname.find('.') >0 and objname.split('.')[1] or False
 
 		# TODO: test if already exist and modify in this case if node.type=file
-
+		### checked already exits
 		object2=node and node.object2 or False
 		object=node and node.object or False
-		val = {
-			'name': objname,
-			'datas_fname': objname,
-			'datas': '',
-			'file_size': 0L,
-			'file_type': ext,
-			'parent_id': object and object.id or False,
-		}
-		partner = False
+		cid=False
+		where=[('name','=',objname),('parent_id','=',object and object.id or False)]
 		if object2:
-			if object2.partner_id and object2.partner_id.id:
-				partner = object2.partner_id.id
-			if object2._name == 'res.partner':
-				partner = object2.id
-			val.update( {
-				'res_model': object2._name,
-				'partner_id': partner,
-				'res_id': object2.id
-			})
-		cid = fobj.create(cr, uid, val, objname)
+			where +=[('res_id','=',object2.id),('res_model','=',object2._name)]
+		cids = fobj.search(cr, uid,where)
+		if len(cids):
+			cid=cids[0]
+
+		if not cid:
+			val = {
+				'name': objname,
+				'datas_fname': objname,
+				'datas': '',
+				'file_size': 0L,
+				'file_type': ext,
+				'parent_id': object and object.id or False,
+			}
+			partner = False
+			if object2:
+				if 'partner_id' in object2 and object2.partner_id.id:
+					partner = object2.partner_id.id
+				if object2._name == 'res.partner':
+					partner = object2.id
+				val.update( {
+					'res_model': object2._name,
+					'partner_id': partner,
+					'res_id': object2.id
+				})
+			cid = fobj.create(cr, uid, val, context={})
 		cr.commit()
 		cr.close()
 
@@ -322,7 +332,7 @@ class abstracted_fs:
 		"""
 		print 'RENAME', src.type
 		if src.type=='collection':
-			if object._table_name <> 'document.directory':
+			if src.object._table_name <> 'document.directory':
 				raise OSError(1, 'Operation not permited.')
 			result = {
 				'directory': [],
@@ -351,17 +361,18 @@ class abstracted_fs:
 				raise OSError(1, 'Operation not permited.')
 			val = {
 				'name':dst_basename,
-				'parent_id': dst_basedir.object.parent_id and dst_basedir.object.id or False
+				'parent_id': src.object.parent_id and src.object.parent_id.id or False
 			}
 			res = pool.get('document.directory').write(cr, uid, [object.id],val)
 
 			if dst_basedir.object2:
+
 				# Todo: Find good ressource_id and ressource_type_id
-				# ressource_type_id = False
-				# ressource_id = False
-				# pool.get('document.directory').write(cr, uid, result['directory'], {'ressource_id': ressource_id, 'ressource_type_id': ressource_type_id})
-				# pool.get('ir.attachment').write(cr, uid, result['attachment'], {'ressource_id': ressource_id, 'ressource_type_id': ressource_type_id})
-				pass
+				ressource_type_id = pool.get('ir.model').search(cr,uid,[('model','=',dst_basedir.object2._name)])[0]
+				ressource_id = dst_basedir.object2.id
+				print 'Resources : ',ressource_type_id,ressource_id
+				pool.get('document.directory').write(cr, uid, result['directory'], {'ressource_id': ressource_id, 'ressource_type_id': ressource_type_id})
+				pool.get('ir.attachment').write(cr, uid, result['attachment'], {'res_id': ressource_id, 'res_model': dst_basedir.object2._name})
 
 			cr.commit()
 			cr.close()
@@ -373,6 +384,11 @@ class abstracted_fs:
 			dst_file.write(src_file.getvalue())
 			dst_file.close()
 			src_file.close()
+			if src.object:
+				ressource_type_id = src.object.ressource_type_id
+				ressource_id = src.object.ressource_id and src.object.ressource_id.id or False
+				pool = pooler.get_pool(src.cr.dbname)
+				pool.get('ir.attachment').write(src.cr, src.uid, [dst_file.ressource_id], {'parent_id':src.object.parent_id.id,'partner_id':src.object.partner_id and src.object.partner_id.id or False,'res_id': ressource_id, 'res_model': ressource_type_id})
 			self.remove(src)
 		elif src.type=='content':
 			src_file=self.open(src,'r')
