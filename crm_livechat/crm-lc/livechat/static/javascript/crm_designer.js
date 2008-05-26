@@ -8,10 +8,10 @@ function popup_table(url)
 
 function refreshg()
 {
-	tosend = document.getElementsByName('txtarea').value
+	if (!chatendflag)
+	{
 	var params = {}
 	var req = Ajax.JSON.post('/chatfunc/chatbox2', params);
-	//var req = Ajax.JSON.post('/justsend', params);
 	a = req.addCallback(function(obj){
 				msgs= obj.msglist;
 				a = MochiKit.DOM.getElement('refreshdiv');
@@ -20,12 +20,6 @@ function refreshg()
 				for(i=0;i<msgs.length;i++)
 				{
 					dtid = MochiKit.DOM.DIV({});
-					//dtid.innerHTML = msgs[i][0];
-
-//					var d = msgs[i].['timestamp'];
-//					var curr_day = d.getDay();
-//					var curr_time = "("+d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()+") ";
-
 					senderpart = MochiKit.DOM.DIV({});
 					senderpart.innerHTML = msgs[i]['sender'] + " : "
 					senderpart.style.display = 'inline';
@@ -47,25 +41,32 @@ function refreshg()
 				a.scrollTop = a.scrollHeight;
             });
       return 1;
+	}
 
 }
-
+var chatendflag = false;
 function close_chat(thisid)
 {
+	chatendflag = true;
 	var params = {'close':'close'}
 	var req = MochiKit.Async.doSimpleXMLHttpRequest('/chatfunc/close_chat', params);
 	//var req = Ajax.JSON.post('/justsend', params);
 	a = req.addCallback(function(obj){
 				thisid.close();
-
+				chatendflag = false;
             });
       return 1;
 
 }
-
+var kintervalId=0;
 function activate_refreshg()
 {
-	kintervalId = setInterval ( "refreshg()", 1000 );
+	if(chatendflag && kintervalId!=0)
+		clearInterval(kintervalId)
+	else{
+		kintervalId = 0;
+		kintervalId = setInterval ( "refreshg()", 1000 );
+	}
 }
 
 function topicsel(id)
