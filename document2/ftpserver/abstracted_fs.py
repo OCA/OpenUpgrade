@@ -340,10 +340,10 @@ class abstracted_fs:
 				child_ids = [src]
 				while len(child_ids):
 					node = child_ids.pop(0)
-					childs_ids += node.children()
+					child_ids += node.children()
 					if node.type =='collection':
 						result['directory'].append(node.object.id)
-						if not node.ressource_id:
+						if not node.object.ressource_id:
 							raise OSError(1, 'Operation not permited.')
 					elif node.type =='file':
 						result['attachment'].append(node.object.id)
@@ -357,7 +357,7 @@ class abstracted_fs:
 				raise OSError(1, 'Operation not permited.')
 			val = {
 				'name':dst_basename,
-				'parent_id': src.object.parent_id and src.object.parent_id.id or False
+				'parent_id': dst_basedir.object.id and dst_basedir.object.id or False
 			}
 			res = pool.get('document.directory').write(cr, uid, [object.id],val)
 
@@ -368,25 +368,41 @@ class abstracted_fs:
 					'ressource_id': ressource_id,
 					'ressource_type_id': ressource_type_id
 				})
-				pool.get('ir.attachment').write(cr, uid, result['attachment'], {
+				val = {
 					'res_id': ressource_id,
-					'res_model': dst_basedir.object2._name
-				})
+					'res_model': dst_basedir.object2._name,
+					'title': dst_basedir.object2.name
+				}
+				if dst_basedir.object2._name=='res.partner':
+					val['partner_id']=dst_basedir.object2.id
+				else:
+					val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
+				pool.get('ir.attachment').write(cr, uid, result['attachment'], val)
 
 			cr.commit()
 			cr.close()
 		elif src.type=='file':
-			ressource_type_id = src.object.ressource_type_id
-			ressource_id = src.object.ressource_id and src.object.ressource_id.id or False
 			pool = pooler.get_pool(src.cr.dbname)
-			pool.get('ir.attachment').write(src.cr, src.uid, [dst_file.ressource_id], {
-				'parent_id':src.object.parent_id.id,
-				'partner_id':src.object.partner_id and src.object.partner_id.id or False,
-				'res_id': ressource_id,
-				'res_model': ressource_type_id,
+			val = {
+				'partner_id':False,
+				'res_id': False,
+				'res_model': False,
 				'name': dst_basename,
-				'directory_id': dst_basedir.object.id
-			})
+				'title': dst_basename,
+				'parent_id': dst_basedir.object.id
+			}
+			if dst_basedir.object2:
+				val['res_model'] = dst_basedir.object2._name
+				val['res_id'] = dst_basedir.object2.id
+				val['title'] = dst_basedir.object2.name
+				if dst_basedir.object2._name=='res.partner':
+					val['partner_id']=dst_basedir.object2.id
+				else:
+					val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
+
+			pool.get('ir.attachment').write(src.cr, src.uid, [src.object.id], val)
+			src.cr.commit()
+			src.cr.close()
 		elif src.type=='content':
 			src_file=self.open(src,'r')
 			dst_file=self.create(dst_basedir,dst_basename,'w')
