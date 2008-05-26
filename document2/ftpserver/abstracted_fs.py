@@ -402,6 +402,8 @@ class abstracted_fs:
 				else:
 					val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
 			elif src.object.res_id:
+				# I had to do that because writing False to an integer writes 0 instead of NULL
+				# change if one day we decide to improve osv/fields.py
 				cr.execute('update ir_attachment set res_id=NULL where id=%d', (src.object.id,))
 
 			pool.get('ir.attachment').write(src.cr, src.uid, [src.object.id], val)
