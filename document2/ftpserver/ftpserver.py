@@ -4,6 +4,7 @@
 #  pyftpdlib is released under the MIT license, reproduced below:
 #  ======================================================================
 #  Copyright (C) 2007 Giampaolo Rodola' <g.rodola@gmail.com>
+#  Hacked by Fabien Pinckaers (C) 2008 <fp@tinyerp.com>
 #
 #                         All Rights Reserved
 #
@@ -128,6 +129,8 @@ except ImportError:
     pwd = grp = None
 
 
+LOG_ACTIVE = True
+
 __all__ = ['proto_cmds', 'Error', 'log', 'logline', 'logerror', 'DummyAuthorizer',
            'FTPHandler', 'FTPServer', 'PassiveDTP', 'ActiveDTP', 'DTPHandler',
            'FileProducer', 'IteratorProducer', 'BufferedIteratorProducer',
@@ -212,7 +215,6 @@ def _strerror(err):
 
      - (instance) err: an EnvironmentError or derived class instance.
     """
-    print err, dir(err), err.errno, err.strerror, err.message
     if hasattr(os, 'strerror'):
         return os.strerror(err.errno)
     else:
@@ -232,11 +234,13 @@ class AuthorizerError(Error):
 
 def log(msg):
     """Log messages intended for the end user."""
-    print msg
+    if LOG_ACTIVE:
+        print msg
 
 def logline(msg):
     """Log commands and responses passing through the command channel."""
-    print msg
+    if LOG_ACTIVE:
+        print msg
 
 def logerror(msg):
     """Log traceback outputs occurring in case of errors."""
@@ -1589,16 +1593,23 @@ class FTPHandler(asynchat.async_chat):
         # to do so.
         if cmd in ('APPE','CWD','DELE','MDTM','NLST','MLSD','MLST','RETR',
                    'RMD','SIZE','STOR','XCWD','XRMD'):
-            if not self.fs.validpath(self.fs.ftp2fs(line)):
-                line = self.fs.ftpnorm(line)
-                err = '"%s" points to a path which is outside ' \
-                      "the user's root directory" %line
-                self.respond("550 %s." %err)
-                self.log('FAIL %s "%s". %s.' %(cmd, line, err))
-                return False
+            datacr = None
+            datacr = self.fs.get_cr(line)
+            try:
+                if not self.fs.validpath(self.fs.ftp2fs(line, datacr)):
+                    line = self.fs.ftpnorm(line)
+                    err = '"%s" points to a path which is outside ' \
+                          "the user's root directory" %line
+                    self.respond("550 %s." %err)
+                    self.log('FAIL %s "%s". %s.' %(cmd, line, err))
+                    self.fs.close_cr(datacr)
+                    return False
+            except:
+                pass
+            self.fs.close_cr(datacr)
         return True
 
-    def __check_perm(self, cmd, line):
+    def __check_perm(self, cmd, line, datacr):
         """Check permissions depending on issued command."""
         map = {'CWD':'e', 'XCWD':'e', 'CDUP':'e', 'XCUP':'e',
                'LIST':'l', 'NLST':'l', 'MLSD':'l', 'STAT':'l',
@@ -1613,9 +1624,9 @@ class FTPHandler(asynchat.async_chat):
                 return True
             perm = map[cmd]
             if not line and (cmd in ('LIST','NLST','MLSD')):
-                path = self.fs.ftp2fs(self.fs.cwd)
+                path = self.fs.ftp2fs(self.fs.cwd, datacr)
             else:
-                path = self.fs.ftp2fs(line)
+                path = self.fs.ftp2fs(line, datacr)
             if not self.authorizer.has_perm(self.username, perm, path):
                 self.log('FAIL %s "%s". Not enough privileges.' \
                          %(cmd, self.fs.ftpnorm(line)))
@@ -2019,14 +2030,18 @@ class FTPHandler(asynchat.async_chat):
         if not line or line.lower() in ('-a', '-l', '-al', '-la'):
             line = self.fs.cwd
         try:
-            path = self.fs.ftp2fs(line)
+            data = None
+            data = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, data)
             line = self.fs.ftpnorm(line)
             iterator = self.run_as_current_user(self.fs.get_list_dir, path)
         except OSError, err:
+            self.fs.close_cr(data)
             why = _strerror(err)
             self.log('FAIL LIST "%s". %s.' %(line, why))
             self.respond('550 %s.' %why)
         else:
+            self.fs.close_cr(data)
             self.log('OK LIST "%s". Transfer starting.' %line)
             producer = BufferedIteratorProducer(iterator)
             self.push_dtp_data(producer, isproducer=True)
@@ -2038,7 +2053,9 @@ class FTPHandler(asynchat.async_chat):
         if not line:
             line = self.fs.cwd
         try:
-            path = self.fs.ftp2fs(line)
+            data = None
+            data = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, data)
             line = self.fs.ftpnorm(line)
             if self.fs.isdir(path):
                 listing = self.run_as_current_user(self.fs.listdir, path)
@@ -2048,10 +2065,12 @@ class FTPHandler(asynchat.async_chat):
                 basedir, filename = os.path.split(path)
                 listing = [filename]
         except OSError, err:
+            self.fs.close_cr(data)
             why = _strerror(err)
             self.log('FAIL NLST "%s". %s.' %(line, why))
             self.respond('550 %s.' %why)
         else:
+            self.fs.close_cr(data)
             data = ''
             if listing:
                 listing.sort()
@@ -2074,7 +2093,9 @@ class FTPHandler(asynchat.async_chat):
         if not line:
             line = self.fs.cwd
         try:
-            path = self.fs.ftp2fs(line)
+            datacr = None
+            datacr = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             basedir, basename = os.path.split(path)
             perms = self.authorizer.get_perms(self.username)
@@ -2082,10 +2103,12 @@ class FTPHandler(asynchat.async_chat):
                        [basename], perms, self.current_facts, ignore_err=False)
             data = ''.join(iterator)
         except OSError, err:
+            self.fs.close_cr(datacr)
             why = _strerror(err)
             self.log('FAIL MLST "%s". %s.' %(line, why))
             self.respond('550 %s.' %why)
         else:
+            self.fs.close_cr(datacr)
             # since TVFS is supported (see RFC-3659 chapter 6), a fully
             # qualified pathname should be returned
             data = data.split(' ')[0] + ' %s\r\n' %line
@@ -2103,7 +2126,9 @@ class FTPHandler(asynchat.async_chat):
         if not line:
             line = self.fs.cwd
         try:
-            path = self.fs.ftp2fs(line)
+            datacr = None
+            datacr = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             # RFC-3659 requires 501 response code if path is not a directory
             if not self.fs.isdir(path):
@@ -2113,10 +2138,12 @@ class FTPHandler(asynchat.async_chat):
                 return
             listing = self.run_as_current_user(self.fs.listdir, path)
         except OSError, err:
+            self.fs.close_cr(datacr)
             why = _strerror(err)
             self.log('FAIL MLSD "%s". %s.' %(line, why))
             self.respond('550 %s.' %why)
         else:
+            self.fs.close_cr(datacr)
             perms = self.authorizer.get_perms(self.username)
             iterator = self.fs.format_mlsx(path, listing, perms,
                        self.current_facts)
@@ -2129,15 +2156,19 @@ class FTPHandler(asynchat.async_chat):
         client)
         """
         try:
-            file = self.fs.ftp2fs(line)
+            datacr = None
+            datacr = self.fs.get_cr(line)
+            file = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             fd = self.run_as_current_user(self.fs.open, file, 'rb')
         except OSError, err:
+            self.fs.close_cr(datacr)
             why = _strerror(err)
             self.log('FAIL RETR "%s". %s.' %(line, why))
             self.respond('550 %s.' %why)
             return
         except IOError, err:
+            self.fs.close_cr(datacr)
             why = _strerror(err)
             self.log('FAIL RETR "%s". %s.' %(line, why))
             self.respond('550 %s.' %why)
@@ -2162,10 +2193,12 @@ class FTPHandler(asynchat.async_chat):
             if not ok:
                 self.respond('554 %s' %why)
                 self.log('FAIL RETR "%s". %s.' %(line, why))
+                self.fs.close_cr(datacr)
                 return
         self.log('OK RETR "%s". Download starting.' %line)
         producer = FileProducer(fd, self.current_type)
         self.push_dtp_data(producer, isproducer=True, file=fd)
+        self.fs.close_cr(datacr)
 
     def ftp_STOR(self, line, mode='w'):
         """Store a file (transfer from the client to the server)."""
@@ -2182,10 +2215,13 @@ class FTPHandler(asynchat.async_chat):
         line = self.fs.ftpnorm(line)
         basedir,basename = os.path.split(line)
 
+        datacr = None
         try:
-            file = self.fs.ftp2fs(basedir)
+            datacr = self.fs.get_cr(line)
+            file = self.fs.ftp2fs(basedir, datacr)
 
         except OSError, err:
+            self.fs.close_cr(datacr)
             why = _strerror(err)
             self.log('FAIL %s "%s". %s.' %(cmd, line, why))
             self.respond('550 %s.' %why)
@@ -2196,6 +2232,7 @@ class FTPHandler(asynchat.async_chat):
         try:
             fd = self.run_as_current_user(self.fs.create, file, basename, mode + 'b')
         except IOError, err:
+            self.fs.close_cr(datacr)
             why = _strerror(err)
             self.log('FAIL %s "%s". %s.' %(cmd, line, why))
             self.respond('550 %s.' %why)
@@ -2209,7 +2246,7 @@ class FTPHandler(asynchat.async_chat):
             # specified in the REST.
             ok = 0
             try:
-                assert not self.restart_position > self.fs.getsize(self.fs.ftp2fs(line))
+                assert not self.restart_position > self.fs.getsize(self.fs.ftp2fs(line, datacr))
                 fd.seek(self.restart_position)
                 ok = 1
             except AssertionError:
@@ -2218,6 +2255,7 @@ class FTPHandler(asynchat.async_chat):
                 why = _strerror(err)
             self.restart_position = 0
             if not ok:
+                self.fs.close_cr(datacr)
                 self.respond('554 %s' %why)
                 self.log('FAIL %s "%s". %s.' %(cmd, line, why))
                 return
@@ -2230,6 +2268,7 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.respond("150 File status okay. About to open data connection.")
             self.__in_dtp_queue = fd
+        self.fs.close_cr(datacr)
 
 
     def ftp_STOU(self, line):
@@ -2249,11 +2288,14 @@ class FTPHandler(asynchat.async_chat):
             self.respond("450 Can't STOU while REST request is pending.")
             return
 
+        datacr = None
+        datacr = self.fs.get_cr(line)
+
         if line:
-            basedir, prefix = os.path.split(self.fs.ftp2fs(line))
+            basedir, prefix = os.path.split(self.fs.ftp2fs(line, datacr))
             prefix = prefix + '.'
         else:
-            basedir = self.fs.ftp2fs(self.fs.cwd)
+            basedir = self.fs.ftp2fs(self.fs.cwd, datacr)
             prefix = 'ftpd.'
         try:
             fd = self.run_as_current_user(self.fs.mkstemp, prefix=prefix,
@@ -2268,6 +2310,7 @@ class FTPHandler(asynchat.async_chat):
                 why = _strerror(err)
             self.respond("450 %s." %why)
             self.log('FAIL STOU "%s". %s.' %(self.fs.ftpnorm(line), why))
+            self.close_cr(datacr)
             return
 
         filename = os.path.basename(fd.name)
@@ -2275,6 +2318,7 @@ class FTPHandler(asynchat.async_chat):
             self.log('FAIL STOU "%s". Not enough privileges'
                      %self.fs.ftpnorm(line))
             self.respond("550 Can't STOU: not enough privileges.")
+            self.close_cr(datacr)
             return
 
         # now just acts like STOR except that restarting isn't allowed
@@ -2286,6 +2330,7 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.respond("150 FILE: %s" %filename)
             self.__in_dtp_queue = fd
+        self.close_cr(datacr)
 
 
     def ftp_APPE(self, line):
@@ -2457,8 +2502,10 @@ class FTPHandler(asynchat.async_chat):
         # Search for official references about this behaviour.
         if not line:
             line = '/'
+        datacr = None
         try:
-            path = self.fs.ftp2fs(line)
+            datacr = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, datacr)
             self.run_as_current_user(self.fs.chdir, path)
         except OSError, err:
             why = _strerror(err)
@@ -2467,6 +2514,7 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.log('OK CWD "%s".' %self.fs.cwd)
             self.respond('250 "%s" is the current directory.' %self.fs.cwd)
+        self.fs.close_cr(datacr)
 
     def ftp_CDUP(self, line):
         """Change into the parent directory."""
@@ -2492,8 +2540,10 @@ class FTPHandler(asynchat.async_chat):
         ASCII mode.  Resuming downloads in binary mode is the recommended
         way as specified in RFC-3659.
         """
+        datacr = None
         try:
-            path = self.fs.ftp2fs(line)
+            datacr = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             if self.fs.isdir(path):
                 why = "%s is not retrievable" %line
@@ -2508,18 +2558,21 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.respond("213 %s" %size)
             self.log('OK SIZE "%s".' %line)
+        self.fs.close_cr(datacr)
 
     def ftp_MDTM(self, line):
         """Return last modification time of file to the client as an ISO
         3307 style timestamp (YYYYMMDDHHMMSS) as defined in RFC-3659.
         """
+        datacr = None
         try:
-            path = self.fs.ftp2fs(line)
+            path = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             if not self.fs.isfile(self.fs.realpath(path)):
                 why = "%s is not retrievable" %line
                 self.log('FAIL MDTM "%s". %s.' %(line, why))
                 self.respond("550 %s." %why)
+                self.fs.close_cr(datacr)
                 return
             lmt = self.run_as_current_user(self.fs.getmtime, path)
         except OSError, err:
@@ -2530,13 +2583,16 @@ class FTPHandler(asynchat.async_chat):
             lmt = time.strftime("%Y%m%d%H%M%S", time.localtime(lmt))
             self.respond("213 %s" %lmt)
             self.log('OK MDTM "%s".' %line)
+        self.fs.close_cr(datacr)
 
     def ftp_MKD(self, line):
         """Create the specified directory."""
+        datacr = None
         line = self.fs.ftpnorm(line)
         basedir,basename = os.path.split(line)
         try:
-            path = self.fs.ftp2fs(basedir)
+            datacr = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(basedir, datacr)
             self.run_as_current_user(self.fs.mkdir, path, basename)
         except OSError, err:
             why = _strerror(err)
@@ -2545,16 +2601,20 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.log('OK MKD "%s".' %line)
             self.respond("257 Directory created.")
+        self.fs.close_cr(datacr)
 
     def ftp_RMD(self, line):
         """Remove the specified directory."""
+        datacr = None
         try:
-            path = self.fs.ftp2fs(line)
+            datacr = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             if self.fs.realpath(path) == self.fs.realpath(self.fs.root):
                 msg = "Can't remove root directory."
                 self.respond("550 %s" %msg)
                 self.log('FAIL MKD "/". %s' %msg)
+                self.fs.close_cr(datacr)
                 return
             self.run_as_current_user(self.fs.rmdir, path)
         except OSError, err:
@@ -2564,11 +2624,14 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.log('OK RMD "%s".' %line)
             self.respond("250 Directory removed.")
+        self.fs.close_cr(datacr)
 
     def ftp_DELE(self, line):
         """Delete the specified file."""
+        datacr = None
         try:
-            path = self.fs.ftp2fs(line)
+            datacr = self.fs.get_cr(line)
+            path = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             self.run_as_current_user(self.fs.remove, path)
         except OSError, err:
@@ -2578,12 +2641,15 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.log('OK DELE "%s".' %line)
             self.respond("250 File removed.")
+        self.fs.close_cr(datacr)
 
     def ftp_RNFR(self, line):
         """Rename the specified (only the source name is specified
         here, see RNTO command)"""
+        datacr = None
+        datacr = self.fs.get_cr(line)
         line = self.fs.ftpnorm(line)
-        path = self.fs.ftp2fs(line)
+        path = self.fs.ftp2fs(line, datacr)
         if not self.fs.lexists(path):
             self.respond("550 No such file or directory.")
         elif self.fs.realpath(path) == self.fs.realpath(self.fs.root):
@@ -2591,6 +2657,7 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.fs.rnfr = line
             self.respond("350 Ready for destination name.")
+        self.fs.close_cr(datacr)
 
     def ftp_RNTO(self, line):
         """Rename file (destination name only, source is specified with
@@ -2599,18 +2666,16 @@ class FTPHandler(asynchat.async_chat):
         if not self.fs.rnfr:
             self.respond("503 Bad sequence of commands: use RNFR first.")
             return
+        datacr = None
+        datacr = self.fs.get_cr(line)
         try:
             try:
-                print 'Enter', self.fs.rnfr, line, self.fs.cwd
-                src = self.fs.ftp2fs(self.fs.rnfr)
+                src = self.fs.ftp2fs(self.fs.rnfr, datacr)
                 line = self.fs.ftpnorm(line)
-                print src, line
                 basedir,basename = os.path.split(line)
-                dst = self.fs.ftp2fs(basedir)
-                print 'Rename', src, dst, basename
+                dst = self.fs.ftp2fs(basedir, datacr)
                 self.run_as_current_user(self.fs.rename, src, dst,basename)
             except OSError, err:
-                print '***,,,'
                 why = _strerror(err)
                 self.log('FAIL RNFR/RNTO "%s ==> %s". %s.' \
                          %(self.fs.ftpnorm(self.fs.rnfr), line, why))
@@ -2621,6 +2686,7 @@ class FTPHandler(asynchat.async_chat):
                 self.respond("250 Renaming ok.")
         finally:
             self.fs.rnfr = None
+            self.fs.close_cr(datacr)
 
 
         # --- others
@@ -2703,14 +2769,17 @@ class FTPHandler(asynchat.async_chat):
             self.respond('211 End of status.')
         # return directory LISTing over the command channel
         else:
+            datacr = None
             try:
-                iterator = self.run_as_current_user(self.fs.get_stat_dir, line)
+                datacr = self.fs.get_cr(line)
+                iterator = self.run_as_current_user(self.fs.get_stat_dir, line, datacr)
             except OSError, err:
                 self.respond('550 %s.' %_strerror(err))
             else:
                 self.push('213-Status of "%s":\r\n' %self.fs.ftpnorm(line))
                 self.push_with_producer(BufferedIteratorProducer(iterator))
                 self.respond('213 End of status.')
+            self.fs.close_cr(datacr)
 
     def ftp_FEAT(self, line):
         """List all new features supported as defined in RFC-2398."""

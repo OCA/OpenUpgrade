@@ -100,7 +100,6 @@ class node_class(object):
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
 		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file', root=self.root), res) + res2
 
-
 	def directory_list_for_child(self,nodename,parent=False):
 		pool = pooler.get_pool(self.cr.dbname)
 		where = []
@@ -121,7 +120,11 @@ class node_class(object):
 		if self.type=='database':
 			pool = pooler.get_pool(self.cr.dbname)
 			fobj = pool.get('ir.attachment')
-			file_ids=fobj.search(self.cr,self.uid,[('parent_id','=',False)])
+			vargs = [('parent_id','=',False)]
+			if nodename:
+				vargs.append(('name','=',nodename))
+			file_ids=fobj.search(self.cr,self.uid,vargs)
+
 			res = fobj.browse(self.cr, self.uid, file_ids, context=self.context)
 			result +=map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file', root=self.root), res)
 		if self.type=='collection' and self.object.type=="ressource":

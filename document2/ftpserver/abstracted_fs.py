@@ -4,6 +4,9 @@ from tarfile import filemode
 import StringIO
 import base64
 
+import glob
+import fnmatch
+
 import pooler
 import netsvc
 import posix
@@ -78,11 +81,13 @@ class abstracted_fs:
 		return p
 
 	# Ok
-	def ftp2fs(self, path_orig):
+	def ftp2fs(self, path_orig, data):
 		path = self.ftpnorm(path_orig)
 		if path and path=='/':
 			return None
-		cr, uid, pool, path2 = self.get_cr(path)
+		path2 = filter(None,path.split('/'))[1:]
+		(cr, uid, pool) = data
+		print 'Get Object', path2
 		res = pool.get('document.directory').get_object(cr, uid, path2[:])
 		if not res:
 			raise OSError(2, 'Not such file or directory.')
@@ -128,7 +133,6 @@ class abstracted_fs:
 				}
 				pool.get('ir.attachment').write(cr, uid, [self.ressource_id], val2)
 				cr.commit()
-				cr.close()
 				StringIO.StringIO.close(self, *args, **kwargs)
 
 		cr = node.cr
@@ -172,7 +176,6 @@ class abstracted_fs:
 				})
 			cid = fobj.create(cr, uid, val, context={})
 		cr.commit()
-		cr.close()
 
 		s = file_wrapper('', cid, cr.dbname, uid, )
 		return s
@@ -246,24 +249,33 @@ class abstracted_fs:
 				'ressource_id': object2 and object2.id or False
 			})
 			cr.commit()
-			cr.close()
 		except:
 			raise OSError(1, 'Operation not permited.')
 
 
 	# Ok
+	def close_cr(self, data):
+		if data:
+			data[0].close()
+		return True
+
 	def get_cr(self, path):
+		path = self.ftpnorm(path)
+		if path=='/':
+			return None
+		print path
 		dbname = path.split('/')[1]
 		try:
 			db,pool = pooler.get_db_and_pool(dbname)
 		except:
+			print 'O1'
 			raise OSError(1, 'Operation not permited.')
 		cr = db.cursor()
-		uri2 = filter(None,path.split('/'))[1:]
 		uid = security.login(dbname, self.username, self.password)
 		if not uid:
+			print 'O2'
 			raise OSError(1, 'Operation not permited.')
-		return cr, uid, pool, uri2
+		return cr, uid, pool
 
 	# Ok
 	def listdir(self, path):
@@ -280,10 +292,6 @@ class abstracted_fs:
 				result.append(false_node(db))
 			return result
 		return path.children()
-#		result = []
-#		for d in path.children():
-#			result.append( d.path.split('/')[-1] )
-#		return result
 
 	# Ok
 	def rmdir(self, node):
@@ -303,7 +311,6 @@ class abstracted_fs:
 			raise OSError(39, 'Directory not empty.')
 
 		cr.commit()
-		cr.close()
 
 	# Ok
 	def remove(self, node):
@@ -320,8 +327,8 @@ class abstracted_fs:
 		else:
 			raise OSError(1, 'Operation not permited.')
 		cr.commit()
-		cr.close()
 
+	# Seems Ok, to be tested more
 	def rename(self, src, dst_basedir,dst_basename):
 		"""
 			Renaming operation, the effect depends on the src:
@@ -380,18 +387,19 @@ class abstracted_fs:
 				pool.get('ir.attachment').write(cr, uid, result['attachment'], val)
 
 			cr.commit()
-			cr.close()
 		elif src.type=='file':
 			pool = pooler.get_pool(src.cr.dbname)
+			print src, src.object, dst_basedir, dst_basedir.object, dst_basedir.object2
 			val = {
 				'partner_id':False,
 				'res_id': False,
 				'res_model': False,
 				'name': dst_basename,
 				'title': dst_basename,
-				'parent_id': dst_basedir.object.id
+				'parent_id': dst_basedir.object and dst_basedir.object.id or False
 			}
 			if dst_basedir.object2:
+				print 'ICI'
 				val['res_model'] = dst_basedir.object2._name
 				val['res_id'] = dst_basedir.object2.id
 				val['title'] = dst_basedir.object2.name
@@ -400,9 +408,10 @@ class abstracted_fs:
 				else:
 					val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
 
+			print '*'*7
+			print val
 			pool.get('ir.attachment').write(src.cr, src.uid, [src.object.id], val)
 			src.cr.commit()
-			src.cr.close()
 		elif src.type=='content':
 			src_file=self.open(src,'r')
 			dst_file=self.create(dst_basedir,dst_basename,'w')
@@ -515,7 +524,7 @@ class abstracted_fs:
 
 
 	# Ok
-	def get_stat_dir(self, rawline):
+	def get_stat_dir(self, rawline, datacr):
 		"""Return an iterator object that yields a list of files
 		matching a dirname pattern non-recursively in a form
 		suitable for STAT command.
@@ -525,13 +534,13 @@ class abstracted_fs:
 		"""
 		ftppath = self.ftpnorm(rawline)
 		if not glob.has_magic(ftppath):
-			return self.get_list_dir(self.ftp2fs(rawline))
+			return self.get_list_dir(self.ftp2fs(rawline, datacr))
 		else:
 			basedir, basename = os.path.split(ftppath)
 			if glob.has_magic(basedir):
 				return iter(['Directory recursion not supported.\r\n'])
 			else:
-				basedir = self.ftp2fs(basedir)
+				basedir = self.ftp2fs(basedir, datacr)
 				listing = self.glob1(basedir, basename)
 				if listing:
 					listing.sort()
