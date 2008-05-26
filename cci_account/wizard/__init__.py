@@ -8,3 +8,5 @@ import cci_use_model
 import cci_wizard_crossovered_analytic
 import cci_wizard_vcs
 import open_closed_fiscalyear
+
+import invoice_special_message
