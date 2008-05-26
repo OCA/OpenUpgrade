@@ -2582,13 +2582,14 @@ class FTPHandler(asynchat.async_chat):
     def ftp_RNFR(self, line):
         """Rename the specified (only the source name is specified
         here, see RNTO command)"""
+        line = self.fs.ftpnorm(line)
         path = self.fs.ftp2fs(line)
         if not self.fs.lexists(path):
             self.respond("550 No such file or directory.")
         elif self.fs.realpath(path) == self.fs.realpath(self.fs.root):
             self.respond("550 Can't rename the home directory.")
         else:
-            self.fs.rnfr = (self.fs.cwd, line)
+            self.fs.rnfr = line
             self.respond("350 Ready for destination name.")
 
     def ftp_RNTO(self, line):
@@ -2601,21 +2602,22 @@ class FTPHandler(asynchat.async_chat):
         try:
             try:
                 print 'Enter', self.fs.rnfr, line, self.fs.cwd
-                src = self.fs.ftp2fs(self.fs.rnfr[0], self.fs.rnfr[1])
+                src = self.fs.ftp2fs(self.fs.rnfr)
                 line = self.fs.ftpnorm(line)
                 print src, line
                 basedir,basename = os.path.split(line)
                 dst = self.fs.ftp2fs(basedir)
+                print 'Rename', src, dst, basename
                 self.run_as_current_user(self.fs.rename, src, dst,basename)
             except OSError, err:
                 print '***,,,'
                 why = _strerror(err)
                 self.log('FAIL RNFR/RNTO "%s ==> %s". %s.' \
-                         %(self.fs.ftpnorm(self.fs.rnfr[1]), line, why))
+                         %(self.fs.ftpnorm(self.fs.rnfr), line, why))
                 self.respond('550 %s.' %why)
             else:
                 self.log('OK RNFR/RNTO "%s ==> %s".' \
-                         %(self.fs.ftpnorm(self.fs.rnfr[1]), line))
+                         %(self.fs.ftpnorm(self.fs.rnfr), line))
                 self.respond("250 Renaming ok.")
         finally:
             self.fs.rnfr = None

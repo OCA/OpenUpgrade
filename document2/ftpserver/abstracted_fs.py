@@ -78,10 +78,8 @@ class abstracted_fs:
 		return p
 
 	# Ok
-	def ftp2fs(self, path_orig, cwd_orig=None):
-		if not cwd_orig:
-			cwd_orig = self.cwd
-		path = os.path.join(cwd_orig, path_orig)
+	def ftp2fs(self, path_orig):
+		path = self.ftpnorm(path_orig)
 		if path and path=='/':
 			return None
 		cr, uid, pool, path2 = self.get_cr(path)
@@ -317,8 +315,33 @@ class abstracted_fs:
 
 	# for file, directory , rename ok
 	def rename(self, src, dst_basedir,dst_basename):
-		"""Should process a read, a create and a remove"""
+		"""
+			Renaming operation, the effect depends on the src:
+			* A file: read, create and remove
+			* A directory: change the parent and reassign childs to ressource
+		"""
+		print 'RENAME', src.type
 		if src.type=='collection':
+			if object._table_name <> 'document.directory':
+				raise OSError(1, 'Operation not permited.')
+			result = {
+				'directory': [],
+				'attachment': []
+			}
+			if dst_basedir.object2:
+				# Compute all childs to set the new ressource ID
+				child_ids = [src]
+				while len(child_ids):
+					node = child_ids.pop(0)
+					childs_ids += node.children()
+					if node.type =='collection':
+						result['directory'].append(node.object.id)
+
+						if not node.ressource_id:
+							raise OSError(1, 'Operation not permited.')
+					elif node.type =='file':
+						result['attachment'].append(node.object.id)
+
 			cr = src.cr
 			uid = src.uid
 			pool = pooler.get_pool(cr.dbname)
@@ -326,19 +349,37 @@ class abstracted_fs:
 			object=src and src.object or False
 			if object2 and not object.ressource_id:
 				raise OSError(1, 'Operation not permited.')
-			if object._table_name=='document.directory':
-				res = pool.get('document.directory').write(cr, uid, [object.id],{'name':dst_basename})
-			else:
-				raise OSError(1, 'Operation not permited.')
+			val = {
+				'name':dst_basename,
+				'parent_id': dst_basedir.object.parent_id and dst_basedir.object.id or False
+			}
+			res = pool.get('document.directory').write(cr, uid, [object.id],val)
+
+			if dst_basedir.object2:
+				# Todo: Find good ressource_id and ressource_type_id
+				# ressource_type_id = False
+				# ressource_id = False
+				# pool.get('document.directory').write(cr, uid, result['directory'], {'ressource_id': ressource_id, 'ressource_type_id': ressource_type_id})
+				# pool.get('ir.attachment').write(cr, uid, result['attachment'], {'ressource_id': ressource_id, 'ressource_type_id': ressource_type_id})
+				pass
+
 			cr.commit()
 			cr.close()
-		elif src.type in ('file','content'):
+		elif src.type=='file':
+			# Improve this by doing a write on the attachement with:
+			# Good parent_id, ressource_id, ressource_type_id
 			src_file=self.open(src,'r')
 			dst_file=self.create(dst_basedir,dst_basename,'w')
 			dst_file.write(src_file.getvalue())
 			dst_file.close()
 			src_file.close()
 			self.remove(src)
+		elif src.type=='content':
+			src_file=self.open(src,'r')
+			dst_file=self.create(dst_basedir,dst_basename,'w')
+			dst_file.write(src_file.getvalue())
+			dst_file.close()
+			src_file.close()
 		else:
 			raise OSError(1, 'Operation not permited.')
 
