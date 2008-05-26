@@ -360,7 +360,7 @@ class abstracted_fs:
 				raise OSError(1, 'Operation not permited.')
 			val = {
 				'name':dst_basename,
-				'parent_id': dst_basedir.object.id and dst_basedir.object.id or False
+				'parent_id': dst_basedir.object and dst_basedir.object.id or False
 			}
 			res = pool.get('document.directory').write(cr, uid, [object.id],val)
 
@@ -390,6 +390,7 @@ class abstracted_fs:
 				#'res_id': False,
 				'res_model': False,
 				'name': dst_basename,
+				'datas_fname': dst_basename,
 				'title': dst_basename,
 				'parent_id': dst_basedir.object and dst_basedir.object.id or False
 			}
