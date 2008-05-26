@@ -117,9 +117,6 @@
 <font color="white"> </font>
 </para>
 <para style="P23">Invoice [[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]] [[ o.number ]]</para>
-<para style="P23">
-      <font face="Times-Roman">VCS Number : [[ find_vcs(o.id) ]]</font>
-    </para>
 <para style="P23">PRO-FORMA [[ ((o.type == 'out_invoice' and o.state == 'proforma') or removeParentNode('para')) and '' ]]</para>
 <para style="P23">Draft Invoice [[ ((o.type == 'out_invoice' and o.state == 'draft') or removeParentNode('para')) and '' ]]</para>
 <para style="P23">Canceled Invoice [[ ((o.type == 'out_invoice' and o.state == 'cancel') or removeParentNode('para')) and '' ]]</para>
