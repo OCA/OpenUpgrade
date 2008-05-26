@@ -41,6 +41,19 @@
 			name="wizard.cci.vcs"
 			keyword="client_print_multi"/>
 
+		<report id="account_invoice_layout.account_invoices_1"
+			string="Formatted Invoices"
+			model="account.invoice"
+			name="cci.account.invoice.layout"
+			rml="cci_account/report/report_account_invoice_layout.rml"
+			auto="False"/>
+
+		<wizard	string="Invoices with messages"
+			model="account.invoice"
+			name="wizard.cci_account_message"
+			id="account_invoice_layout.wizard_notify_message"
+			keyword="client_print_multi"
+			/>
 	</data>
 </terp>
 
