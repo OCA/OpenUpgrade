@@ -1,1 +1,1 @@
-import purchase_tendor
+import purchase_tender
