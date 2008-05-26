@@ -1,16 +1,6 @@
 from osv import fields, osv
 import time
 
-class cci_account_message(osv.osv):
-    _name = 'cci_account.message'
-    _description = 'Notify By Messages'
-    _columns = {
-        'name' :  fields.char('Title',size=64,required=True),
-        'msg' : fields.text('Special Message',size=125,required=True,help='This notification will appear at the bottom of the Invoices when printed.',translate=True)
-    }
-
-cci_account_message()
-
 class account_move_line(osv.osv):
 
     def search(self, cr, user, args, offset=0, limit=None, order=None,
