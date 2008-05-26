@@ -1,6 +1,16 @@
 from osv import fields,osv
 
 
+class notify_message(osv.osv):
+    _name = 'notify.message'
+    _description = 'Notify By Messages'
+    _columns = {
+        'name' :  fields.char('Title',size=64,required=True),
+        'msg' : fields.text('Special Message',size=125,required=True,help='This notification will appear at the bottom of the Invoices when printed.',translate=True)
+    }
+
+notify_message()
+
 class account_invoice_line(osv.osv):
 
 	def move_line_get_item(self, cr, uid, line, context={}):
@@ -45,7 +55,7 @@ class account_invoice_line(osv.osv):
 			return {}
 		if type != 'article':
 			temp = {'value': {
-					'product_id': False, 
+					'product_id': False,
 					'uos_id': False,
 					'account_id': False,
 					'price_unit': False,
@@ -97,7 +107,7 @@ class account_invoice_line(osv.osv):
 	def copy(self, cr, uid, id, default=None, context=None):
 		if default is None:
 			default = {}
-		default['state'] = self.browse(cr, uid, id).state 
+		default['state'] = self.browse(cr, uid, id).state
 		return super(account_invoice_line, self).copy(cr, uid, id, default, context)
 
 	def _fnct(self, cr, uid, id, name, args, context):
