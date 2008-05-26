@@ -2647,16 +2647,19 @@ class FTPHandler(asynchat.async_chat):
         """Rename the specified (only the source name is specified
         here, see RNTO command)"""
         datacr = None
-        datacr = self.fs.get_cr(line)
-        line = self.fs.ftpnorm(line)
-        path = self.fs.ftp2fs(line, datacr)
-        if not self.fs.lexists(path):
-            self.respond("550 No such file or directory.")
-        elif self.fs.realpath(path) == self.fs.realpath(self.fs.root):
-            self.respond("550 Can't rename the home directory.")
-        else:
-            self.fs.rnfr = line
-            self.respond("350 Ready for destination name.")
+        try:
+            datacr = self.fs.get_cr(line)
+            line = self.fs.ftpnorm(line)
+            path = self.fs.ftp2fs(line, datacr)
+            if not self.fs.lexists(path):
+                self.respond("550 No such file or directory.")
+            elif self.fs.realpath(path) == self.fs.realpath(self.fs.root):
+                self.respond("550 Can't rename the home directory.")
+            else:
+                self.fs.rnfr = line
+                self.respond("350 Ready for destination name.")
+        except:
+            self.respond("550 Can't find the file or directory.")
         self.fs.close_cr(datacr)
 
     def ftp_RNTO(self, line):

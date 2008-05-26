@@ -87,7 +87,6 @@ class abstracted_fs:
 			return None
 		path2 = filter(None,path.split('/'))[1:]
 		(cr, uid, pool) = data
-		print 'Get Object', path2
 		res = pool.get('document.directory').get_object(cr, uid, path2[:])
 		if not res:
 			raise OSError(2, 'Not such file or directory.')
@@ -263,17 +262,14 @@ class abstracted_fs:
 		path = self.ftpnorm(path)
 		if path=='/':
 			return None
-		print path
 		dbname = path.split('/')[1]
 		try:
 			db,pool = pooler.get_db_and_pool(dbname)
 		except:
-			print 'O1'
 			raise OSError(1, 'Operation not permited.')
 		cr = db.cursor()
 		uid = security.login(dbname, self.username, self.password)
 		if not uid:
-			print 'O2'
 			raise OSError(1, 'Operation not permited.')
 		return cr, uid, pool
 
@@ -389,17 +385,15 @@ class abstracted_fs:
 			cr.commit()
 		elif src.type=='file':
 			pool = pooler.get_pool(src.cr.dbname)
-			print src, src.object, dst_basedir, dst_basedir.object, dst_basedir.object2
 			val = {
 				'partner_id':False,
-				'res_id': False,
+				#'res_id': False,
 				'res_model': False,
 				'name': dst_basename,
 				'title': dst_basename,
 				'parent_id': dst_basedir.object and dst_basedir.object.id or False
 			}
 			if dst_basedir.object2:
-				print 'ICI'
 				val['res_model'] = dst_basedir.object2._name
 				val['res_id'] = dst_basedir.object2.id
 				val['title'] = dst_basedir.object2.name
@@ -407,9 +401,9 @@ class abstracted_fs:
 					val['partner_id']=dst_basedir.object2.id
 				else:
 					val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
+			elif src.object.res_id:
+				cr.execute('update ir_attachment set res_id=NULL where id=%d', (src.object.id,))
 
-			print '*'*7
-			print val
 			pool.get('ir.attachment').write(src.cr, src.uid, [src.object.id], val)
 			src.cr.commit()
 		elif src.type=='content':
