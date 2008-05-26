@@ -338,4 +338,188 @@
 	<data>
 		<workflow action="signal_call" model="ecommerce.saleorder" ref="ecommerce_saleorder_so0"/>
 	</data>
+	
+	<!-- State Demo -->
+	 <data>
+	 	<record model="res.country.state" id="in-ap">
+			<field name="name">Andhra Pradesh</field>
+			<field name="code">ap</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-ar">
+			<field name="name">Arunachal Pradesh</field>
+			<field name="code">ar</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-as">
+			<field name="name">Assam</field>
+			<field name="code">as</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-bi">
+			<field name="name">Bihar</field>
+			<field name="code">bi</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-ch">
+			<field name="name">Chhattisgarh</field>
+			<field name="code">ch</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-go">
+			<field name="name">Goa</field>
+			<field name="code">go</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-hr">
+			<field name="name">Haryana</field>
+			<field name="code">hr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-hp">
+			<field name="name">Himachal Pradesh</field>
+			<field name="code">hp</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-jk">
+			<field name="name">Jammu Kashmir</field>
+			<field name="code">jk</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="in-jr">
+			<field name="name">Jharkhand</field>
+			<field name="code">jr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-kr">
+			<field name="name">Karnataka</field>
+			<field name="code">kr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-ke">
+			<field name="name">Kerala</field>
+			<field name="code">ke</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>  
+		<record model="res.country.state" id="in-mp">
+			<field name="name">Madhya Pradesh</field>
+			<field name="code">mp</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		 <record model="res.country.state" id="in-mh">
+			<field name="name">Maharashtra</field>
+			<field name="code">mh</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-mn">
+			<field name="name">Manipur</field>
+			<field name="code">mn</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-me">
+			<field name="name">Meghalaya</field>
+			<field name="code">me</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-mz">
+			<field name="name">Mizoram</field>
+			<field name="code">mz</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-na">
+			<field name="name">Nagalend</field>
+			<field name="code">na</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-or">
+			<field name="name">Orissa</field>
+			<field name="code">or</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		 <record model="res.country.state" id="in-pn">
+			<field name="name">Punjab</field>
+			<field name="code">pn</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-rj">
+			<field name="name">Rajashtan</field>
+			<field name="code">rj</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-sk">
+			<field name="name">Sikkim</field>
+			<field name="code">sk</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-tn">
+			<field name="name">Tamil Nadu</field>
+			<field name="code">tn</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-tr">
+			<field name="name">Tripura</field>
+			<field name="code">tr</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-up">
+			<field name="name">Uttar Pradesh</field>
+			<field name="code">up</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-ut">
+			<field name="name">Uttarakhand</field>
+			<field name="code">ut</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record> 
+		<record model="res.country.state" id="in-wb">
+			<field name="name">West Bengal</field>
+			<field name="code">wb</field>
+			<field name="country_id" model="res.country" ref="base.in"/>
+		</record>
+		<record model="res.country.state" id="fr-pa">
+			<field name="name">Paris</field>
+			<field name="code">pa</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		<record model="res.country.state" id="fr-bo">
+			<field name="name">Bordeaux</field>
+			<field name="code">bo</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record> 
+		<record model="res.country.state" id="fr-li">
+			<field name="name">Lille</field>
+			<field name="code">li</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record> 
+		<record model="res.country.state" id="fr-ly">
+			<field name="name">Lyon</field>
+			<field name="code">ly</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record> 
+		<record model="res.country.state" id="fr-re">
+			<field name="name">Rennes</field>
+			<field name="code">re</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record> 
+		<record model="res.country.state" id="fr-to">
+			<field name="name">Toulouse</field>
+			<field name="code">to</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record> 
+		<record model="res.country.state" id="fr-ma">
+			<field name="name">Marseille</field>
+			<field name="code">ma</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record> 
+		<record model="res.country.state" id="fr-st">
+			<field name="name">Strasbourg</field>
+			<field name="code">st</field>
+			<field name="country_id" model="res.country" ref="base.fr"/>
+		</record>
+		
+		<!-- GUEST PARTNER CATEGORY -->
+		<record model="res.partner.category" id="guest">
+			<field name="name">Guest</field>
+		</record>
+	</data>
 </terp>
