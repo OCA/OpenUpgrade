@@ -9,7 +9,7 @@ invoice_form = """<?xml version="1.0"?>
 </form>"""
 
 invoice_fields = {
-    'message': {'string': 'Message', 'type': 'many2one', 'relation': 'cci_account.message', 'required': True},
+    'message': {'string': 'Message', 'type': 'many2one', 'relation': 'notify.message', 'required': True},
    }
 
 class wizard_report(wizard.interface):
@@ -21,9 +21,9 @@ class wizard_report(wizard.interface):
         },
         'print': {
             'actions': [],
-            'result': {'type':'print', 'report':'cci_account.invoice', 'state':'end'},
+            'result': {'type':'print', 'report':'notify_account.invoice', 'state':'end'},
         },
     }
 
-wizard_report('wizard.cci_account_message')
+wizard_report('wizard.notify_message')
 
