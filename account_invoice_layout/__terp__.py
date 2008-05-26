@@ -10,8 +10,8 @@
 		* order all the lines of an invoice
 		* add titles, comment lines, sub total lines
 		* draw horizontal lines and put page breaks
-		* report to print invoices with given spcial message at the bottom of invoice
-
+	
+	Moreover, there is one option which allow you to print all the selected invoices with a given special message at the bottom of it. This feature can be very useful for printing your invoices with end-of-year wishes, special punctual conditions...
 
 	""",
 	"website" : "http://tinyerp.com/",
