@@ -343,7 +343,7 @@ class abstracted_fs:
 					child_ids += node.children()
 					if node.type =='collection':
 						result['directory'].append(node.object.id)
-						if not node.object.ressource_id:
+						if (not node.object.ressource_id) and node.object2:
 							raise OSError(1, 'Operation not permited.')
 					elif node.type =='file':
 						result['attachment'].append(node.object.id)
