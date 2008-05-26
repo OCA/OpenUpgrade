@@ -9,44 +9,52 @@
 			<field name="inherit_id" ref="purchase.purchase_order_form"/>
 			<field name="arch" type="xml">
 				<field name="partner_ref" position="after">
-					<field name="tendor_id" select="2"/>
+					<field name="tender_id" select="2"/>
 				</field>
 			</field>
 		</record>
 
-<!-- view for  purchase.tendor  -->
-		<record model="ir.ui.view" id="view_purchase_tendor_form">
-			<field name="name">purchase.tendor.form</field>
+<!-- view for  purchase.tender  -->
+		<record model="ir.ui.view" id="view_purchase_tender_form">
+			<field name="name">purchase.tender.form</field>
 			<field name="type">form</field>
-			<field name="model">purchase.tendor</field>
+			<field name="model">purchase.tender</field>
 			<field name="arch" type="xml">
-				<form string="Purchase Tendor">
+				<form string="Purchase Tender">
 					<field name="name" select="1"/>
-					<field name="description" select="2"/>
+					<field name="description" select="2" colspan="4"/>
 					<separator string="Purchase Orders" colspan="4"/>
-					<field name="purchase_ids" nolabel="1" colspan="4"/>
+					<field name="purchase_ids" nolabel="1" colspan="4">
+						<tree string="Purchase Order">
+							<field name="name"/>
+							<field name="date_order"/>
+							<field name="partner_id"/>
+							<field name="state"/>
+							<field name="notes"/>
+						</tree>
+					</field>
 				</form>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_purchase_tendor_tree">
-			<field name="name">purchase.tendor.tree</field>
+		<record model="ir.ui.view" id="view_purchase_tender_tree">
+			<field name="name">purchase.tender.tree</field>
 			<field name="type">tree</field>
-			<field name="model">purchase.tendor</field>
+			<field name="model">purchase.tender</field>
 			<field name="arch" type="xml">
-				<tree string="Purchase Tendor">
+				<tree string="Purchase Tender">
 					<field name="name"/>
 					<field name="description"/>
 				</tree>
 			</field>
 		</record>
-		<record model="ir.actions.act_window" id="action_purchase_tendor">
-			<field name="name">Purchase Tendor</field>
+		<record model="ir.actions.act_window" id="action_purchase_tender">
+			<field name="name">Purchase Tender</field>
 			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">purchase.tendor</field>
+			<field name="res_model">purchase.tender</field>
 			<field name="view_type">form</field>
-			<field name="view_id" ref="view_purchase_tendor_tree"/>
+			<field name="view_id" ref="view_purchase_tender_tree"/>
 		</record>
-		<menuitem name="Purchase Management/Purchase Tendors/Purchase Tendor" action="action_purchase_tendor" id="menu_purchase_tendor"/>
+		<menuitem name="Purchase Management/Purchase Tenders/Purchase Tender" action="action_purchase_tender" id="menu_purchase_tender"/>
 
 	</data>
 </terp>
