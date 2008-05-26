@@ -36,44 +36,18 @@ parents = {
     }
 
 class account_invoice_with_message(report_sxw.rml_parse):
-    def __init__(self, cr, uid, name, context):
+	def __init__(self, cr, uid, name, context):
 		super(account_invoice_with_message, self).__init__(cr, uid, name, context)
 		self.localcontext.update({
 			'time': time,
 			'spcl_msg': self.spcl_msg,
 			'invoice_lines': self.invoice_lines,
             'repeat_In':self.repeat_In,
-            'find_vcs' : self.find_vcs
 
 		})
 		self.context = context
 
-    def find_vcs(self,invoice_id):
-        item = pooler.get_pool(self.cr.dbname).get('account.invoice').browse(self.cr,self.uid,invoice_id)
-        vcs =''
-        if item.number:
-            vcs3=str(item.number).split('/')[1]
-            vcs1='0'+ str(item.date_invoice[2:4])
-            if len(str(vcs3))>=5:
-                vcs2=str(item.number[3]) + str(vcs3[0:5])
-            elif len(str(vcs3))==4:
-                vcs2=str(item.number[3]) + '0' +str(vcs3)
-            else:
-                vcs2=str(item.number[3]) + '00' +str(vcs3)
-
-            vcs4= vcs1 + vcs2 + '0'
-
-            vcs5=int(vcs4)
-            check_digit=vcs5%97
-
-            if check_digit==0:
-                check_digit='97'
-            if check_digit<=9:
-                check_digit='0'+str(check_digit)
-            vcs=vcs1+'/'+vcs2+'/'+ '0' +str(check_digit)
-        return vcs
-
-    def repeat_In(self, lst, name, nodes_parent=False,td=False,width=[],value=[],type=[]):
+	def repeat_In(self, lst, name, nodes_parent=False,td=False,width=[],value=[],type=[]):
 		self._node.data = ''
 		node = self._find_parent(self._node, nodes_parent or parents)
 		ns = node.nextSibling
@@ -125,11 +99,14 @@ class account_invoice_with_message(report_sxw.rml_parse):
 		                    i+=1
 
 		return super(account_invoice_with_message,self).repeatIn(lst, name, nodes_parent=False)
-    def spcl_msg(self, form):
-		account_msg_data = pooler.get_pool(self.cr.dbname).get('cci_account.message').browse(self.cr, self.uid, form['message'])
+
+	def spcl_msg(self, form):
+		account_msg_data = pooler.get_pool(self.cr.dbname).get('notify.message').browse(self.cr, self.uid, form['message'])
 		msg = account_msg_data.msg
 		return msg
-    def invoice_lines(self,invoice):
+
+
+	def invoice_lines(self,invoice):
 		result =[]
 		sub_total={}
 		info=[]
@@ -242,4 +219,4 @@ class account_invoice_with_message(report_sxw.rml_parse):
 		    result.append(res)
 		return result
 
-report_sxw.report_sxw('report.cci_account.invoice', 'account.invoice', 'addons/account_invoice_layout/report/special_message_invoice.rml', parser=account_invoice_with_message)
+report_sxw.report_sxw('report.notify_account.invoice', 'account.invoice', 'addons/account_invoice_layout/report/special_message_invoice.rml', parser=account_invoice_with_message)
