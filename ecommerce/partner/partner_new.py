@@ -18,6 +18,7 @@ class ecommerce_partner(osv.osv):
         'contact_name': fields.char('Contact Name', size=128, required=True, select=True),
         'lang': fields.selection(_lang_get, 'Language', size=5),
         'username':fields.char('User Name',size=128,select=True),
+        'company_name':fields.char('Company Name',size=64),
         'street': fields.char('Street', size=128),
         'street2': fields.char('Street2', size=128),
         'zip': fields.char('Zip', change_default=True, size=24),
