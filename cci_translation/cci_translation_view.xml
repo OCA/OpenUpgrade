@@ -1,0 +1,178 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+<!-- view for translation.dossier ... -->
+		<record model="ir.ui.view" id="view_translation_dossier_form">
+			<field name="name">translation.dossier.form</field>
+			<field name="type">form</field>
+			<field name="model">translation.dossier</field>
+			<field name="arch" type="xml">
+				<form string="Translation Dossier">
+					<field name="awex_amount" select="1" />
+					<field name="awex_eligible" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_translation_dossier_tree">
+			<field name="name">translation.dossier.tree</field>
+			<field name="type">tree</field>
+			<field name="model">translation.dossier</field>
+			<field name="arch" type="xml">
+				<tree string="Translation Dossier">
+					<field name="awex_amount" />
+					<field name="awex_eligible"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_translation_dossier">
+			<field name="name">Translation Dossier</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">translation.dossier</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_translation_dossier_tree"/>
+		</record>
+		<menuitem name="Translation/Translation Dossier" action="action_translation_dossier" id="menu_translation_dossier"/>
+
+<!-- view for credit.line ... -->
+		<record model="ir.ui.view" id="view_credit_line_form">
+			<field name="name">credit.line.form</field>
+			<field name="type">form</field>
+			<field name="model">credit.line</field>
+			<field name="arch" type="xml">
+				<form string="Credit line">
+					<field name="from_date" select="1"/>
+					<field name="to_date" select="1" />
+					<field name="global_credit" select="2" />
+					<field name="customer_credit" select="2" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_credit_line_tree">
+			<field name="name">credit.line.tree</field>
+			<field name="type">tree</field>
+			<field name="model">credit.line</field>
+			<field name="arch" type="xml">
+				<tree string="Credit line">
+					<field name="from_date"/>
+					<field name="to_date"/>
+					<field name="global_credit"/>
+					<field name="customer_credit"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_credit_line">
+			<field name="name">Credit line</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">credit.line</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_credit_line_tree"/>
+		</record>
+		<menuitem name="Translation/Credit Line" action="action_credit_line" id="menu_credit_line"/>
+
+<!-- view for letter.credence ... -->
+		<record model="ir.ui.view" id="view_letter_credence_form">
+			<field name="name">letter.credence.form</field>
+			<field name="type">form</field>
+			<field name="model">letter.credence</field>
+			<field name="arch" type="xml">
+				<form string="Letter of Credence">
+					<field name="emission_date" select="1"/>
+					<field name="asked_amount" select="1" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_letter_credence_tree">
+			<field name="name">letter.credence.tree</field>
+			<field name="type">tree</field>
+			<field name="model">letter.credence</field>
+			<field name="arch" type="xml">
+				<tree string="Letter of Credence">
+					<field name="emission_date" select="1"/>
+					<field name="asked_amount" select="1" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_letter_credence">
+			<field name="name">Letter of Credence</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">letter.credence</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_letter_credence_tree"/>
+		</record>
+		<menuitem name="Translation/Letter of Credence" action="action_letter_credence" id="menu_letter_credence"/>
+
+
+<!-- view for res.partner inherited ... -->
+	<record model="ir.ui.view" id="view_partner_form_inherit_translation">
+			<field name="name">res.partner.form.translation</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="employee_nbr_total" position="after">
+					<field name="awex_eligible"/>
+				</field>
+			</field>
+		</record>
+
+<!-- view for embassy folder line (Translation Billing Line) ... -->
+	<record model="ir.ui.view" id="cci_missions_embassy_folder_form_translation">
+			<field name="name">cci_missions.embassy_folder.form</field>
+			<field name="type">form</field>
+			<field name="model">cci_missions.embassy_folder</field>
+			<field name="inherit_id" ref="cci_mission.cci_missions_embassy_folder_form"/>
+			<field name="arch" type="xml">
+				<field name="embassy_folder_line_ids" nolabel="1" colspan="4" position="replace">
+					<field name="embassy_folder_line_ids" nolabel="1" colspan="4">
+					<tree string="Embassy Foder Lines">
+						<field name="name"/>
+						<field name="courier_cost"/>
+						<field name="customer_amount"/>
+						<field name="tax_rate"/>
+						<field name="awex_amount"/>
+					</tree>
+					<form string="Embassy Foder Lines">
+						<field name="name" />
+						<newline/>
+						<field name="type" on_change="onchange_line_type(type)" />
+						<field name="courier_cost"/>
+						<newline/>
+						<field name="customer_amount"/>
+						<field name="tax_rate" />
+						<newline/>
+						<field name="awex_amount"/>
+						<field name="awex_eligible"/>
+					</form>
+					</field>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="missions_embassy_folder_line_form_tran">
+			<field name="name">cci_missions.embassy_folder_line.translation</field>
+			<field name="type">form</field>
+			<field name="model">cci_missions.embassy_folder_line</field>
+			<field name="inherit_id" ref="cci_mission.cci_missions_embassy_folder_line_form"/>
+			<field name="arch" type="xml">
+				<field name="account_id" position="after">
+					<field name="awex_eligible"/>
+					<field name="awex_amount"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="cci_missions_embassy_folder_line_translation">
+			<field name="name">cci_missions.embassy_folder_line.translation.tree</field>
+			<field name="type">form</field>
+			<field name="model">cci_missions.embassy_folder_line</field>
+			<field name="inherit_id" ref="cci_mission.cci_missions_embassy_folder_line_tree"/>
+			<field name="arch" type="xml">
+				<field name="customer_amount" position="after">
+					<field name="awex_eligible"/>
+					<field name="awex_amount"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</terp>
