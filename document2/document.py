@@ -212,7 +212,7 @@ class document_directory(osv.osv):
 		'type': lambda *args: 'directory',
 	}
 	_sql_constraints = [
-		('filename_uniq', 'unique (name,parent_id,ressource_id)', 'The directory name must be unique !')
+		('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_type_id)', 'The directory name must be unique !')
 	]
 	def _check_recursion(self, cr, uid, ids):
 		level = 100
@@ -442,6 +442,9 @@ class document_file(osv.osv):
 		'file_size': lambda self,cr,uid,ctx:0,
 		'store_method': lambda *args: 'db'
 	}
+	_sql_constraints = [
+		('filename_uniq', 'unique (name,parent_id,res_id,res_model)', 'The file name must be unique !')
+	]
 	def write(self, cr, uid, ids, vals, context=None):
 		result = super(document_file,self).write(cr,uid,ids,vals,context=context)
 		try:
