@@ -2566,6 +2566,7 @@ class FTPHandler(asynchat.async_chat):
         """
         datacr = None
         try:
+            datacr = self.fs.get_cr(line)
             path = self.fs.ftp2fs(line, datacr)
             line = self.fs.ftpnorm(line)
             if not self.fs.isfile(self.fs.realpath(path)):
