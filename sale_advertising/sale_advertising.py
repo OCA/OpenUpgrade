@@ -55,16 +55,24 @@ class sale_order(osv.osv):
 
 	_columns = {
 		'published_customer': fields.many2one('res.partner','Published Customer'),
-		'adverstising_agency': fields.many2one('res.partner','Advertising Agency'),
+		'advertising_agency': fields.many2one('res.partner','Advertising Agency'),
 		'case_ids': one2many_mod_advert('crm.case', 'id', "Related Cases"),
 	}
 
 	def onchange_published_customer(self, cursor, user, ids ,published_customer):
-		data = {'adverstising_agency':published_customer,'partner_id':published_customer,'partner_invoice_id': False, 'partner_shipping_id':False, 'partner_order_id':False}
+		data = {'advertising_agency':published_customer,'partner_id':published_customer,'partner_invoice_id': False, 'partner_shipping_id':False, 'partner_order_id':False}
 		if published_customer:
 			address = self.onchange_partner_id(cursor, user, ids, published_customer)
 			data.update(address['value'])
 		return {'value' : data}
+
+	def onchange_advertising_agency(self, cursor, user, ids, ad_agency):
+		data = {'partner_id':ad_agency,'partner_invoice_id': False, 'partner_shipping_id':False, 'partner_order_id':False}
+		if ad_agency:
+			address = self.onchange_partner_id(cursor, user, ids, ad_agency)
+			data.update(address['value'])
+		return {'value' : data}
+
 
 sale_order()
 
@@ -72,12 +80,16 @@ class sale_advertising_issue(osv.osv):
 	_name = "sale.advertising.issue"
 	_description="Sale Advertising Issue"
 	_columns = {
-		'name': fields.char('Name', size=32),
-		'issue_date': fields.datetime('Issue Date'),
-		'medium': fields.many2one('product.category','Medium'),
+		'name': fields.char('Name', size=32, required=True),
+		'issue_date': fields.datetime('Issue Date', required=True),
+		'medium': fields.many2one('product.category','Medium', required=True),
 		'state': fields.selection([('open','Open'),('close','Close')], 'State'),
 		'default_note': fields.text('Default Note'),
 	}
+	#_defaults:{
+	#	'issue_date': lambda *a: current.datetime(),
+	#}
+
 sale_advertising_issue()
 
 class sale_order_line(osv.osv):
