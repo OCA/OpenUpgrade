@@ -333,7 +333,7 @@ class Partner(osv.osv):
 			else:
 				partner_id = partner.id
 			line_id = member_line_obj.search(cr, uid, [('partner', '=', partner_id)],
-					limit=1, order='date_from ASC')
+					limit=1, order='date_from')
 			if line_id:
 				res[partner.id] = member_line_obj.read(cr, uid, line_id[0],
 						['date_from'])['date_from']
@@ -373,7 +373,7 @@ class Partner(osv.osv):
 			else:
 				partner_id = partner.id
 			line_id = member_line_obj.search(cr, uid, [('partner', '=', partner_id)],
-					limit=1, order='date_to DESC')
+					limit=1, order='date_to desc')
 			if line_id:
 				res[partner.id] = member_line_obj.read(cr, uid, line_id[0],
 						['date_to'])['date_to']
@@ -406,7 +406,7 @@ class Partner(osv.osv):
 		member_line_obj = self.pool.get('membership.membership_line')
 		for partner_id in ids:
 			line_id = member_line_obj.search(cr, uid, [('partner', '=', partner_id)],
-					limit=1, order='date_cancel ASC')
+					limit=1, order='date_cancel')
 			if line_id:
 				res[partner_id] = member_line_obj.read(cr, uid, line_id[0],
 						['date_cancel'])['date_cancel']
