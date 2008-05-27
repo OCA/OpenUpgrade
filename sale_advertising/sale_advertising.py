@@ -28,6 +28,7 @@
 
 from osv import fields,osv
 from osv import orm
+import time
 
 class one2many_mod_advert(fields.one2many):
 #this class is used to display crm.case with fields ref or ref2 which are related to the current object
@@ -86,9 +87,9 @@ class sale_advertising_issue(osv.osv):
 		'state': fields.selection([('open','Open'),('close','Close')], 'State'),
 		'default_note': fields.text('Default Note'),
 	}
-	#_defaults:{
-	#	'issue_date': lambda *a: current.datetime(),
-	#}
+	_defaults = {
+		'issue_date': lambda *a: time.strftime('%Y-%m-%d'),
+	}
 
 sale_advertising_issue()
 

@@ -17,7 +17,7 @@
 				<notebook position="inside">
 					<page string="Advertising">
 						<field name="published_customer" select="2" on_change="onchange_published_customer(published_customer)"/>
-						<field name="adverstising_agency" select="2"/>
+						<field name="advertising_agency" select="2" on_change="onchange_advertising_agency(advertising_agency)"/>
 						<separator string="Related Cases" colspan="4"/>
 						<field name="case_ids" colspan="4" nolabel="1"/>
 					</page>
