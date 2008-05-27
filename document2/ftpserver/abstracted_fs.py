@@ -238,7 +238,7 @@ class abstracted_fs:
 		else:
 			raise OSError(1, 'Operation not permited.')
 
-	# Ok
+	# Ok, still check duplicate
 	def mkdir(self, node, basename):
 		"""Create the specified directory."""
 		if not node:
@@ -258,6 +258,7 @@ class abstracted_fs:
 			}
 			if (object and (object.type=='directory')) or not object2:
 				val['parent_id'] =  object and object.id or False
+			# Check if it alreayd exists !
 			pool.get('document.directory').create(cr, uid, val)
 			cr.commit()
 		except:
@@ -334,7 +335,7 @@ class abstracted_fs:
 			raise OSError(1, 'Operation not permited.')
 		cr.commit()
 
-	# Seems Ok, to be tested more
+	# Ok, check duplicate
 	def rename(self, src, dst_basedir,dst_basename):
 		"""
 			Renaming operation, the effect depends on the src:
