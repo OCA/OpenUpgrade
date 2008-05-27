@@ -286,10 +286,15 @@ class tinyerp_handler(dav_interface):
 				'file_type': ext,
 				'parent_id': object and object.id or False,
 			}
+			partner = False
+			if object2.partner_id and object2.partner_id.id:
+				partner = object2.partner_id.id
+			if object2._name == 'res.partner':
+				partner = object2.id
 			if object2:
 				val.update( {
 					'res_model': object2._name,
-					'partner_id': object2.partner_id and object2.partner_id.id or False,
+					'partner_id': partner,
 					'res_id': object2.id
 				})
 			cid = fobj.create(cr, uid, val)

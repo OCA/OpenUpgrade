@@ -20,7 +20,6 @@ class tinyerp_AuthRequestHandler(AuthRequestHandler):
 		self.request_version = version = "HTTP/0.9" # Default
 		requestline = self.raw_requestline
 
-    # needed by send_error
 		self.command = requestline
 		if requestline[-2:] == '\r\n':
 			requestline = requestline[:-2]
