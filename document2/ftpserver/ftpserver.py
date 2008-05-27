@@ -2059,10 +2059,11 @@ class FTPHandler(asynchat.async_chat):
             line = self.fs.ftpnorm(line)
             if self.fs.isdir(path):
                 listing = self.run_as_current_user(self.fs.listdir, path)
+                listing = map(lambda x:os.path.split(x.path)[1], listing)
             else:
                 # if path is a file we just list its name
                 self.fs.lstat(path)  # raise exc in case of problems
-                basedir, filename = os.path.split(path)
+                basedir, filename = os.path.split(line)
                 listing = [filename]
         except OSError, err:
             self.fs.close_cr(data)
@@ -2073,6 +2074,7 @@ class FTPHandler(asynchat.async_chat):
             self.fs.close_cr(data)
             data = ''
             if listing:
+                print listing
                 listing.sort()
                 data = '\r\n'.join(listing) + '\r\n'
             self.log('OK NLST "%s". Transfer starting.' %line)
