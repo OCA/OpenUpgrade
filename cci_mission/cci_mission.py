@@ -242,7 +242,7 @@ class cci_missions_embassy_folder_line (osv.osv):
 		'courier_cost' : fields.float('Couriers Costs'),
 		'customer_amount' : fields.float('Invoiced Amount'),
 		'tax_rate': fields.many2one('account.tax','Tax Rate'),
-		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type'),
+		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type',required=True),
 		'account_id' : fields.many2one('account.account', 'Account',required=True),
 	}
 
