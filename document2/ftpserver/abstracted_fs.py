@@ -168,7 +168,7 @@ class abstracted_fs:
 				'file_type': ext,
 			}
 			if object and (object.type=='directory') or not object2:
-				val['parent_id']= object.id
+				val['parent_id']= object and object.id or False
 			partner = False
 			if object2:
 				if 'partner_id' in object2 and object2.partner_id.id:
@@ -233,7 +233,10 @@ class abstracted_fs:
 
 	# Ok
 	def chdir(self, path):
-		self.cwd = self.fs2ftp(path)
+		if path.type in ('collection','database'):
+			self.cwd = self.fs2ftp(path)
+		else:
+			raise OSError(1, 'Operation not permited.')
 
 	# Ok
 	def mkdir(self, node, basename):
@@ -253,9 +256,8 @@ class abstracted_fs:
 				'ressource_parent_type_id': object and object.ressource_type_id.id or False,
 				'ressource_id': object2 and object2.id or False
 			}
-			print '*'*5, object, object.type, object2
 			if (object and (object.type=='directory')) or not object2:
-				val['parent_id'] =  object.id
+				val['parent_id'] =  object and object.id or False
 			pool.get('document.directory').create(cr, uid, val)
 			cr.commit()
 		except:
@@ -308,9 +310,7 @@ class abstracted_fs:
 		object2=node and node.object2 or False
 		object=node and node.object or False
 		if object._table_name=='document.directory':
-			if object.child_ids:
-				raise OSError(39, 'Directory not empty.')
-			if object.file_ids:
+			if node.children():
 				raise OSError(39, 'Directory not empty.')
 			res = pool.get('document.directory').unlink(cr, uid, [object.id])
 		else:

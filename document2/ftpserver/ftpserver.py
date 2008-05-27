@@ -2671,9 +2671,9 @@ class FTPHandler(asynchat.async_chat):
             self.respond("503 Bad sequence of commands: use RNFR first.")
             return
         datacr = None
-        datacr = self.fs.get_cr(line)
         try:
             try:
+                datacr = self.fs.get_cr(line)
                 src = self.fs.ftp2fs(self.fs.rnfr, datacr)
                 line = self.fs.ftpnorm(line)
                 basedir,basename = os.path.split(line)
