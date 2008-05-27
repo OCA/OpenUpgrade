@@ -146,7 +146,13 @@ class abstracted_fs:
 		object2=node and node.object2 or False
 		object=node and node.object or False
 		cid=False
-		where=[('name','=',objname),('parent_id','=',object and object.id or False)]
+
+		where=[('name','=',objname)]
+		if object and (object.type=='directory') or object2:
+			where.append(('parent_id','=',object.id))
+		else:
+			where.append(('parent_id','=',False))
+
 		if object2:
 			where +=[('res_id','=',object2.id),('res_model','=',object2._name)]
 		cids = fobj.search(cr, uid,where)
@@ -160,8 +166,9 @@ class abstracted_fs:
 				'datas': '',
 				'file_size': 0L,
 				'file_type': ext,
-				'parent_id': object and object.id or False,
 			}
+			if object and (object.type=='directory') or object2:
+				val['parent_id']= object.id
 			partner = False
 			if object2:
 				if 'partner_id' in object2 and object2.partner_id.id:
@@ -241,12 +248,14 @@ class abstracted_fs:
 			pool = pooler.get_pool(cr.dbname)
 			if node.object and (node.object.type=='ressource') and not node.object2:
 				raise OSError(1, 'Operation not permited.')
-			pool.get('document.directory').create(cr, uid, {
+			val = {
 				'name': basename,
-				'parent_id': object and object.id or False,
 				'ressource_type_id': object and object.ressource_type_id.id or False,
 				'ressource_id': object2 and object2.id or False
-			})
+			}
+			if object and (object.type=='directory') or object2:
+				val['parent_id'] =  object.id
+			pool.get('document.directory').create(cr, uid, val)
 			cr.commit()
 		except:
 			raise OSError(1, 'Operation not permited.')
@@ -360,8 +369,11 @@ class abstracted_fs:
 				raise OSError(1, 'Operation not permited.')
 			val = {
 				'name':dst_basename,
-				'parent_id': dst_basedir.object and dst_basedir.object.id or False
 			}
+			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or dst_basedir.object2:
+				val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
+			else:
+				val['parent_id'] = False
 			res = pool.get('document.directory').write(cr, uid, [object.id],val)
 
 			if dst_basedir.object2:
@@ -392,8 +404,13 @@ class abstracted_fs:
 				'name': dst_basename,
 				'datas_fname': dst_basename,
 				'title': dst_basename,
-				'parent_id': dst_basedir.object and dst_basedir.object.id or False
 			}
+
+			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or dst_basedir.object2:
+				val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
+			else:
+				val['parent_id'] = False
+
 			if dst_basedir.object2:
 				val['res_model'] = dst_basedir.object2._name
 				val['res_id'] = dst_basedir.object2.id

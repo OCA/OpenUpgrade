@@ -105,7 +105,13 @@ class node_class(object):
 		where = []
 		if nodename:
 			where.append(('name','=',nodename))
-		where.append(('parent_id','=',self.object and self.object.id or False))
+		if (self.object and self.object.type=='directory') or not self.object2:
+			where.append(('parent_id','=',self.object and self.object.id or False))
+		else:
+			where.append(('parent_id','=',False))
+			if self.object:
+				where.append(('ressource_type_id','=',self.object.ressource_type_id.id))
+
 		ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',0)], self.context)
 		if self.object2:
 			ids += pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',self.object2.id)], self.context)

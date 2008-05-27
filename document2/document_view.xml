@@ -76,7 +76,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">document.directory</field>
 		<field name="view_type">tree</field>
-		<field name="domain">[('parent_id','=',False)]</field>
+		<field name="domain">[('parent_id','=',False),('ressource_id','=',0)]</field>
 	</record>
 	<menuitem
 		name="Document Management/Directorie's Structure"
