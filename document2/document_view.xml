@@ -15,11 +15,12 @@
 					<field name="parent_id"/>
 					<separator string="Directory Type" colspan="4"/>
 					<field name="type"/>
-					<newline/>
 					<field name="ressource_type_id"  on_change="onchange_content_id(ressource_type_id)"/>
-					<field name="ressource_tree"/>
+					<newline/>
 					<field name="domain"/>
+					<field name="ressource_tree"/>
 					<field name="ressource_id" select="2"/>
+					<field name="ressource_parent_type_id"/>
 
 					<separator string="Contents" colspan="4"/>
 					<field name="content_ids" nolabel="1" colspan="4">
@@ -76,7 +77,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">document.directory</field>
 		<field name="view_type">tree</field>
-		<field name="domain">[('parent_id','=',False),('ressource_id','=',0)]</field>
+		<field name="domain">[('ressource_parent_type_id','=',False),('parent_id','=',False)]</field>
 	</record>
 	<menuitem
 		name="Document Management/Directorie's Structure"

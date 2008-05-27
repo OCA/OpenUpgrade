@@ -167,7 +167,7 @@ class abstracted_fs:
 				'file_size': 0L,
 				'file_type': ext,
 			}
-			if object and (object.type=='directory') or object2:
+			if object and (object.type=='directory') or not object2:
 				val['parent_id']= object.id
 			partner = False
 			if object2:
@@ -250,10 +250,11 @@ class abstracted_fs:
 				raise OSError(1, 'Operation not permited.')
 			val = {
 				'name': basename,
-				'ressource_type_id': object and object.ressource_type_id.id or False,
+				'ressource_parent_type_id': object and object.ressource_type_id.id or False,
 				'ressource_id': object2 and object2.id or False
 			}
-			if object and (object.type=='directory') or object2:
+			print '*'*5, object, object.type, object2
+			if (object and (object.type=='directory')) or not object2:
 				val['parent_id'] =  object.id
 			pool.get('document.directory').create(cr, uid, val)
 			cr.commit()
@@ -347,18 +348,18 @@ class abstracted_fs:
 				'directory': [],
 				'attachment': []
 			}
-			if dst_basedir.object2:
-				# Compute all childs to set the new ressource ID
-				child_ids = [src]
-				while len(child_ids):
-					node = child_ids.pop(0)
-					child_ids += node.children()
-					if node.type =='collection':
-						result['directory'].append(node.object.id)
-						if (not node.object.ressource_id) and node.object2:
-							raise OSError(1, 'Operation not permited.')
-					elif node.type =='file':
-						result['attachment'].append(node.object.id)
+			# Compute all childs to set the new ressource ID
+			child_ids = [src]
+			while len(child_ids):
+				node = child_ids.pop(0)
+				child_ids += node.children()
+				print node.type
+				if node.type =='collection':
+					result['directory'].append(node.object.id)
+					if (not node.object.ressource_id) and node.object2:
+						raise OSError(1, 'Operation not permited.')
+				elif node.type =='file':
+					result['attachment'].append(node.object.id)
 
 			cr = src.cr
 			uid = src.uid
@@ -370,7 +371,7 @@ class abstracted_fs:
 			val = {
 				'name':dst_basename,
 			}
-			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or dst_basedir.object2:
+			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
 				val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
 			else:
 				val['parent_id'] = False
@@ -379,20 +380,35 @@ class abstracted_fs:
 			if dst_basedir.object2:
 				ressource_type_id = pool.get('ir.model').search(cr,uid,[('model','=',dst_basedir.object2._name)])[0]
 				ressource_id = dst_basedir.object2.id
-				pool.get('document.directory').write(cr, uid, result['directory'], {
-					'ressource_id': ressource_id,
-					'ressource_type_id': ressource_type_id
-				})
-				val = {
-					'res_id': ressource_id,
-					'res_model': dst_basedir.object2._name,
-					'title': dst_basedir.object2.name
-				}
+				title = dst_basedir.object2.name
+				ressource_model = dst_basedir.object2._name
 				if dst_basedir.object2._name=='res.partner':
-					val['partner_id']=dst_basedir.object2.id
+					partner_id=dst_basedir.object2.id
 				else:
-					val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
-				pool.get('ir.attachment').write(cr, uid, result['attachment'], val)
+					partner_id= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
+			else:
+				ressource_type_id = False
+				ressource_id=False
+				ressource_model = False
+				partner_id = False
+				title = False
+
+			pool.get('document.directory').write(cr, uid, result['directory'], {
+				'ressource_id': ressource_id,
+				'ressource_parent_type_id': ressource_type_id
+			})
+			val = {
+				'res_id': ressource_id,
+				'res_model': ressource_model,
+				'title': title,
+				'partner_id': partner_id
+			}
+			print '-'*50
+			print val, ressource_type_id
+			print result
+			pool.get('ir.attachment').write(cr, uid, result['attachment'], val)
+			if (not val['res_id']) and result['attachment']:
+				dst_basedir.cr.execute('update ir_attachment set res_id=NULL where id in ('+','.join(map(str,result['attachment']))+')')
 
 			cr.commit()
 		elif src.type=='file':
@@ -406,7 +422,7 @@ class abstracted_fs:
 				'title': dst_basename,
 			}
 
-			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or dst_basedir.object2:
+			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
 				val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
 			else:
 				val['parent_id'] = False
@@ -422,7 +438,7 @@ class abstracted_fs:
 			elif src.object.res_id:
 				# I had to do that because writing False to an integer writes 0 instead of NULL
 				# change if one day we decide to improve osv/fields.py
-				cr.execute('update ir_attachment set res_id=NULL where id=%d', (src.object.id,))
+				dst_basedir.cr.execute('update ir_attachment set res_id=NULL where id=%d', (src.object.id,))
 
 			pool.get('ir.attachment').write(src.cr, src.uid, [src.object.id], val)
 			src.cr.commit()
@@ -432,6 +448,7 @@ class abstracted_fs:
 			dst_file.write(src_file.getvalue())
 			dst_file.close()
 			src_file.close()
+			src.cr.commit()
 		else:
 			raise OSError(1, 'Operation not permited.')
 

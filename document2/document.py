@@ -34,6 +34,7 @@ import urlparse
 import os
 
 import pooler
+from content_index import content_index
 
 # Unsupported WebDAV Commands:
 #     label
@@ -83,22 +84,24 @@ class node_class(object):
 				path = self.path+'/'+test_nodename
 				#path = self.path+'/'+self.object2.name + (content.suffix or '') + (content.extension or '')
 				if not nodename:
-					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content', root=self.root)
+					n = node_class(self.cr, self.uid,path, self.object2, False, content=content, type='content', root=False)
 					res2.append( n)
 				else:
 					if nodename == test_nodename:
-						n = node_class(self.cr, self.uid, path, self.object2, False, content=content, type='content', root=self.root)
+						n = node_class(self.cr, self.uid, path, self.object2, False, content=content, type='content', root=False)
 						res2.append(n)
 		else:
 			where.append( ('parent_id','=',self.object.id) )
 			where.append( ('res_id','=',False) )
 		if nodename:
 			where.append( (fobj._rec_name,'=',nodename) )
+		print '(search)', where+[ ('parent_id','=',self.object and self.object.id or False) ]
 		ids = fobj.search(self.cr, self.uid, where+[ ('parent_id','=',self.object and self.object.id or False) ], context=self.context)
-		if self.object and self.root:
+		if self.object and self.root and (self.object.type=='ressource'):
+			print '(search2)', where+[ ('parent_id','=',False) ]
 			ids += fobj.search(self.cr, self.uid, where+[ ('parent_id','=',False) ], context=self.context)
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
-		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file', root=self.root), res) + res2
+		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file', root=False), res) + res2
 
 	def directory_list_for_child(self,nodename,parent=False):
 		pool = pooler.get_pool(self.cr.dbname)
@@ -109,8 +112,10 @@ class node_class(object):
 			where.append(('parent_id','=',self.object and self.object.id or False))
 		else:
 			where.append(('parent_id','=',False))
-			if self.object:
-				where.append(('ressource_type_id','=',self.object.ressource_type_id.id))
+		if self.object:
+			where.append(('ressource_parent_type_id','=',self.object.ressource_type_id.id))
+		else:
+			where.append(('ressource_parent_type_id','=',False))
 
 		ids = pool.get('document.directory').search(self.cr, self.uid, where+[('ressource_id','=',0)], self.context)
 		if self.object2:
@@ -208,7 +213,8 @@ class document_directory(osv.osv):
 		'file_ids': fields.one2many('ir.attachment', 'parent_id', 'Files'),
 		'content_ids': fields.one2many('document.directory.content', 'directory_id', 'Virtual Files'),
 		'type': fields.selection([('directory','Static Directory'),('ressource','Other Ressources')], 'Type', required=True),
-		'ressource_type_id': fields.many2one('ir.model', 'Ressource Model'),
+		'ressource_type_id': fields.many2one('ir.model', 'Childs Model'),
+		'ressource_parent_type_id': fields.many2one('ir.model', 'Linked Model'),
 		'ressource_id': fields.integer('Ressource ID'),
 		'ressource_tree': fields.boolean('Tree Structure'),
 	}
@@ -218,7 +224,7 @@ class document_directory(osv.osv):
 		'type': lambda *args: 'directory',
 	}
 	_sql_constraints = [
-		('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_type_id)', 'The directory name must be unique !')
+		('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)', 'The directory name must be unique !')
 	]
 	def _check_recursion(self, cr, uid, ids):
 		level = 100
@@ -479,15 +485,6 @@ class document_file(osv.osv):
 				else:
 					vals['partner_id']='partner_id' in result[0] and result[0].partner_id.id or False
 
-			if 'parent_id' not in vals:
-				obj_directory=self.pool.get('document.directory')
-				directory_ids=obj_directory.search(cr,uid,[('ressource_type_id','=',vals['res_model'])])
-				dirs=obj_directory.browse(cr,uid,directory_ids)
-				for dir in dirs:
-					if dir.domain:
-						object_ids=obj_model.search(cr,uid,eval(dir.domain))
-						if vals['res_id'] in object_ids:
-							vals['parent_id']=dir.id
 		datas=None
 		if 'datas' not in vals:
 			import urllib
@@ -502,6 +499,7 @@ class document_file(osv.osv):
 			super(document_file,self).write(cr, uid, [result], {
 				'index_content': res,
 			})
+			cr.commit()
 		except:
 			pass
 		return result
