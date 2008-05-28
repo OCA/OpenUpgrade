@@ -45,7 +45,7 @@ class res_partner_contact(osv.osv):
         'country_ids': fields.many2many('res.country','res_country_rel','contact','country',"Expertize's Countries"),
         'link_ids':fields.one2many('res.partner.contact.link','current_contact_id','Contact Link'),
         'canal_id': fields.many2one('res.partner.canal', 'Favourite Channel'),
-
+        'national_number' : fields.char( 'National Number',size=15), 
     }
     _defaults = {
         'data_private' : lambda *a : False,
