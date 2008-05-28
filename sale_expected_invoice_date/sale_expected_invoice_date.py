@@ -33,7 +33,7 @@ class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
     _description="Sale order line"
     _columns = {
-        'expected_invoice_date': fields.datetime('Expected Invocie Date'),
+        'expected_invoice_date': fields.datetime('Expected Invoice Date')
     }
 
 sale_order_line()
