@@ -31,13 +31,36 @@
 import time
 import netsvc
 from osv import fields, osv
+
+class one2many_mod_advert(fields.one2many):
+#this class is used to display crm.case with fields ref or ref2 which are related to the current object
+
+	def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
+		if not context:
+			context = {}
+		if not values:
+				values = {}
+		res = {}
+		for id in ids:
+			res[id] = []
+		for id in ids:
+			temp = 'sale.order,'+str(id)
+			query = "select id from crm_case where ref = '%s' or ref2 = '%s'" %(temp,temp)
+			cr.execute(query)
+			case_ids = [ x[0] for x in cr.fetchall()]
+			ids2 = obj.pool.get('crm.case').search(cr, user, [(self._fields_id,'in',case_ids)], limit=self._limit)
+			for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
+				res[id].append( r['id'] )
+		return res
+
+
 class sale_order(osv.osv):
-    _name = "sale.order"
-    _inherit = "sale.order"
+	_name = "sale.order"
+	_inherit = "sale.order"
 
-    _columns= {
-     'parent_so':fields.many2one("sale.order","Parent Sales Order"),
-     'child_so':fields.one2many("sale.order","parent_so","Child Sales Order"),
-      }
-
+	_columns= {
+		'parent_so':fields.many2one("sale.order","Parent Sales Order"),
+		'child_so':fields.one2many("sale.order","parent_so","Child Sales Order"),
+		'case_ids': one2many_mod_advert('crm.case', 'id', "Related Cases"),
+	}
 sale_order()
