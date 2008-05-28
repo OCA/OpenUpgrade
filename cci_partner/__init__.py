@@ -28,3 +28,4 @@
 
 import cci_partner
 import report
+import wizard
