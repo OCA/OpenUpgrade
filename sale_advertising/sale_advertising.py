@@ -30,26 +30,7 @@ from osv import fields,osv
 from osv import orm
 import time
 
-class one2many_mod_advert(fields.one2many):
-#this class is used to display crm.case with fields ref or ref2 which are related to the current object
 
-	def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
-		if not context:
-			context = {}
-		if not values:
-				values = {}
-		res = {}
-		for id in ids:
-			res[id] = []
-		for id in ids:
-			temp = 'sale.order,'+str(id)
-			query = "select id from crm_case where ref = '%s' or ref2 = '%s'" %(temp,temp)
-			cr.execute(query)
-			case_ids = [ x[0] for x in cr.fetchall()]
-			ids2 = obj.pool.get('crm.case').search(cr, user, [(self._fields_id,'in',case_ids)], limit=self._limit)
-			for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
-				res[id].append( r['id'] )
-		return res
 
 class sale_order(osv.osv):
 	_inherit = "sale.order"
@@ -57,7 +38,6 @@ class sale_order(osv.osv):
 	_columns = {
 		'published_customer': fields.many2one('res.partner','Published Customer'),
 		'advertising_agency': fields.many2one('res.partner','Advertising Agency'),
-		'case_ids': one2many_mod_advert('crm.case', 'id', "Related Cases"),
 	}
 
 	def onchange_published_customer(self, cursor, user, ids ,published_customer):
@@ -74,7 +54,6 @@ class sale_order(osv.osv):
 			data.update(address['value'])
 		return {'value' : data}
 
-
 sale_order()
 
 class sale_advertising_issue(osv.osv):
@@ -82,13 +61,14 @@ class sale_advertising_issue(osv.osv):
 	_description="Sale Advertising Issue"
 	_columns = {
 		'name': fields.char('Name', size=32, required=True),
-		'issue_date': fields.datetime('Issue Date', required=True),
+		'issue_date': fields.date('Issue Date', required=True),
 		'medium': fields.many2one('product.category','Medium', required=True),
 		'state': fields.selection([('open','Open'),('close','Close')], 'State'),
 		'default_note': fields.text('Default Note'),
 	}
 	_defaults = {
 		'issue_date': lambda *a: time.strftime('%Y-%m-%d'),
+		'state': lambda *a: 'open',
 	}
 
 sale_advertising_issue()
@@ -115,10 +95,13 @@ class sale_advertising_proof(osv.osv):
 	_name = "sale.advertising.proof"
 	_description="Sale Advertising Proof"
 	_columns = {
-		'name': fields.char('Name', size=32),
-		'address_id':fields.many2one('res.partner.address','Delivery Address'),
-		'number': fields.integer('Number of Copies'),
-		'target_id': fields.many2one('sale.order','Target'),
+		'name': fields.char('Name', size=32, required=True),
+		'address_id':fields.many2one('res.partner.address','Delivery Address', required=True),
+		'number': fields.integer('Number of Copies', required=True),
+		'target_id': fields.many2one('sale.order','Target', required=True),
+	}
+	_defaults = {
+		'number': lambda *a: 1,
 	}
 sale_advertising_proof()
 

@@ -18,8 +18,6 @@
 					<page string="Advertising">
 						<field name="published_customer" select="2" on_change="onchange_published_customer(published_customer)"/>
 						<field name="advertising_agency" select="2" on_change="onchange_advertising_agency(advertising_agency)"/>
-						<separator string="Related Cases" colspan="4"/>
-						<field name="case_ids" colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
 			</field>
@@ -92,6 +90,26 @@
 			</field>
 		</field>
 	</record>
+
+		<record model="ir.ui.view" id="view_order_form_inherit2">
+			<field name="name">sale.order.line.form.inherit.line2</field>
+			<field name="type">form</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2"/>
+			<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Advertising">
+					<field name="adv_issue" select="1"/>
+					<field name="page_reference"/>
+					<field name="from_date"/>
+					<field name="to_date"/>
+					<separator string="Layout Remark" colspan="4"/>
+					<field name="layout_remark" colspan="4" nolabel="1"/>
+				</page>
+			</notebook>
+			</field>
+		</record>
+
 
 <!-- View for sale.advertising.issue object -->
 	<record model="ir.ui.view" id="sale_advertising_issue_form">

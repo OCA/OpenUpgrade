@@ -4,11 +4,11 @@
 	"author" : "Tiny",
 	"category" : "Generic Modules/Sales",
 	"website" : "http://tinyerp.com/",
-	"description": """TODO.
+	"description": """This module allow you to use the Sale Management to encode your advertising sales ... TODO
 """,
-	"depends" : ["sale",],
+	"depends" : ["sale"],
 	"init_xml" : [],
-	"demo_xml" : [],
+	"demo_xml" : ["sale_advertising_demo.xml"],
 	"update_xml" : ["sale_advertising_view.xml",],
 	"active": False,
 	"installable": True
