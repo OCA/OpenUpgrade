@@ -8,7 +8,7 @@
 	"category" : "Generic Modules/Others",
 	"website": "http://www.tinyerp.com",
 	"description": """This is a complete document management system:
-	* WebDav Interface
+	* FTP Interface
 	* User Authentification
 	* Document Indexation
 """,
