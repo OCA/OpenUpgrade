@@ -62,6 +62,7 @@
 <!--			<field eval="&quot;List Price&quot;" name="name"/>-->
 <!--		</record>-->
  		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
+ 			<field name="user_id" ref="base.user_admin"/>
 <!--			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_listprice0"/>-->
 			<field eval="&quot;Registration Procedure&quot;" name="name"/>
 			<field eval="time.strftime('%Y-%m-25')" name="date_start"/>
@@ -90,6 +91,7 @@
 <!--			<field eval="&quot;Net Amount&quot;" name="name"/>-->
 <!--		</record>-->
 		<record id="dm_campaign_proposition_1" model="dm.campaign.proposition">
+			<field name="user_id" ref="base.user_demo"/>
 			<field eval="&quot;Verification Issues&quot;" name="name"/>
 <!--			<field name="requirer_pricelist_id" ref="dm_campaign_pricelist_netamount0"/>-->
 			<field eval="10" name="quantity_max"/>
