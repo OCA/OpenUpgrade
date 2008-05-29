@@ -11,15 +11,15 @@
     "init_xml" : [ ],
     "demo_xml" : ["trademark_data.xml",
                   "offer_data.xml",
-                 "offer_step_data.xml",
+                  "offer_step_data.xml",
                   "campaign_data.xml"
                    ],
     "update_xml" : [
                     "dm_wizard.xml",
-					"campaign_view.xml",
-                    "offer_step_view.xml",
                     "offer_view.xml",
+					"offer_step_view.xml",
                     "trademark_view.xml",
+                    "campaign_view.xml",
                     "dm_report.xml",
                     ],
     "active": False,
