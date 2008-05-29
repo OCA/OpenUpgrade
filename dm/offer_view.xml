@@ -56,24 +56,21 @@
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1"/>
 					</page>
-					<page string="Advises">
-						<separator string="Layout Advice" colspan="2"/>
-						<separator string="Category" colspan="2"/>
+					<page string="Advices">
+						<separator string="Layout Advices" colspan="2"/>
+						<separator string="Categories" colspan="2"/>
 						<field name="note_layout" nolabel="1" colspan="2"/>
 						<field name="layout_category_ids" nolabel="1" colspan="2"/>
-						<newline/>
-						<separator string="Mark" colspan="2"/>
-						<separator string="Category" colspan="2"/>
+						<separator string="Mark Advices" colspan="2"/>
+						<separator string="Categories" colspan="2"/>
 						<field name="note_mark" nolabel="1" colspan="2"/>
 						<field name="mark_category_ids" nolabel="1" colspan="2"/>
-						<newline/>-->
-						<separator string="Production Notes" colspan="2"/>
-						<separator string="Category" colspan="2"/>
+ 						<separator string="Production Notes" colspan="2"/>
+						<separator string="Categories" colspan="2"/>
 						<field name="production_note" nolabel="1" colspan="2"/>
-						<field name="production_category_ids" string="Category"/>
+						<field name="production_category_ids" string="Category" nolabel="1" colspan="2"/>
 						<field name="production_delay"/>
 						<field name="production_cost" string="Cost"/>
-						<newline/>
 						<separator string="Purchase Notes" colspan="2"/>
 						<separator string="Categories" colspan="2"/>
 						<field name="purchase_note" nolabel="1" colspan="2"/>
@@ -85,13 +82,13 @@
 					</page>
 					<page string="Dates">
 						<field name="order_date"/>
-						<field name="last_modification_date"/>
+<!--						<field name="last_modification_date"/>-->
 						<field name="plannned_delivery_date"/>
 						<field name="delivery_date"/>	
 						<field name="fixed_date"/>
 						<field name="buffer_delay"/>
 					</page>
-					<page string="Critaria">
+					<page string="Criteria">
 						<separator string="Trademark criteria" colspan="4"/>
 						<field name="trademark_sex"/>
 						<field name="trademark_age"/>

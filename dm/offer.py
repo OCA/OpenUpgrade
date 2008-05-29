@@ -95,13 +95,25 @@ class dm_offer(osv.osv):
             obj = self.pool.get('dm.offer.history')
             obj.create(cr, uid, data, context)
         return True
-    
+#    def dtp_last_modification_date(self, cr, uid, ids, field_name, arg, context={}):
+#        result=[]
+#        for id in ids:
+#            sql = "select write_date,create_date from dm_offer where id = %d"%id
+#            cr.execute(sql)
+#            res = cr.fetchone()
+#            print res[1]
+#            if res[0]:
+#                result.append({id:res[0].split(' ')[0]})
+#            else :
+#                result.append({id:res[1].split(' ')[0]})
+#        print result
+#        return result
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
-        'recommended_trademark' : fields.char('Recommended Trademark',size=64),
+        'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer'),
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
@@ -126,7 +138,7 @@ class dm_offer(osv.osv):
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade"),
 
         'order_date' : fields.date('Order Date'),
-        'last_modification_date' : fields.date('Last Modification Date'),
+#        'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="string", string='Last Modification Date',readonly=True),
         'plannned_delivery_date' : fields.date('Planned Delivery Date'),
         'delivery_date' : fields.date('Delivery Date'),
         'fixed_date' : fields.date('Fixed Date'),
