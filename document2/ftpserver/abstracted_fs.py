@@ -114,77 +114,81 @@ class abstracted_fs:
 
 	# Ok
 	def create(self, node, objname, mode):
-		class file_wrapper(StringIO.StringIO):
-			def __init__(self, sstr='', ressource_id=False, dbname=None, uid=1, name=''):
-				StringIO.StringIO.__init__(self, sstr)
-				self.ressource_id = ressource_id
-				self.name = name
-				self.dbname = dbname
-				self.uid = uid
-			def close(self, *args, **kwargs):
-				db,pool = pooler.get_db_and_pool(self.dbname)
-				cr = db.cursor()
-				uid =self.uid
-				val = self.getvalue()
-				val2 = {
-					'datas': base64.encodestring(val),
-					'file_size': len(val),
-				}
-				pool.get('ir.attachment').write(cr, uid, [self.ressource_id], val2)
-				cr.commit()
-				StringIO.StringIO.close(self, *args, **kwargs)
+		try:
+			class file_wrapper(StringIO.StringIO):
+				def __init__(self, sstr='', ressource_id=False, dbname=None, uid=1, name=''):
+					StringIO.StringIO.__init__(self, sstr)
+					self.ressource_id = ressource_id
+					self.name = name
+					self.dbname = dbname
+					self.uid = uid
+				def close(self, *args, **kwargs):
+					db,pool = pooler.get_db_and_pool(self.dbname)
+					cr = db.cursor()
+					uid =self.uid
+					val = self.getvalue()
+					val2 = {
+						'datas': base64.encodestring(val),
+						'file_size': len(val),
+					}
+					pool.get('ir.attachment').write(cr, uid, [self.ressource_id], val2)
+					cr.commit()
+					StringIO.StringIO.close(self, *args, **kwargs)
 
-		cr = node.cr
-		uid = node.uid
-		pool = pooler.get_pool(cr.dbname)
+			cr = node.cr
+			uid = node.uid
+			pool = pooler.get_pool(cr.dbname)
 
-		fobj = pool.get('ir.attachment')
-		ext = objname.find('.') >0 and objname.split('.')[1] or False
+			fobj = pool.get('ir.attachment')
+			ext = objname.find('.') >0 and objname.split('.')[1] or False
 
-		# TODO: test if already exist and modify in this case if node.type=file
-		### checked already exits
-		object2=node and node.object2 or False
-		object=node and node.object or False
-		cid=False
+			# TODO: test if already exist and modify in this case if node.type=file
+			### checked already exits
+			object2=node and node.object2 or False
+			object=node and node.object or False
+			cid=False
 
-		where=[('name','=',objname)]
-		if object and (object.type=='directory') or object2:
-			where.append(('parent_id','=',object.id))
-		else:
-			where.append(('parent_id','=',False))
+			where=[('name','=',objname)]
+			if object and (object.type=='directory') or object2:
+				where.append(('parent_id','=',object.id))
+			else:
+				where.append(('parent_id','=',False))
 
-		if object2:
-			where +=[('res_id','=',object2.id),('res_model','=',object2._name)]
-		cids = fobj.search(cr, uid,where)
-		if len(cids):
-			cid=cids[0]
-
-		if not cid:
-			val = {
-				'name': objname,
-				'datas_fname': objname,
-				'datas': '',
-				'file_size': 0L,
-				'file_type': ext,
-			}
-			if object and (object.type=='directory') or not object2:
-				val['parent_id']= object and object.id or False
-			partner = False
 			if object2:
-				if 'partner_id' in object2 and object2.partner_id.id:
-					partner = object2.partner_id.id
-				if object2._name == 'res.partner':
-					partner = object2.id
-				val.update( {
-					'res_model': object2._name,
-					'partner_id': partner,
-					'res_id': object2.id
-				})
-			cid = fobj.create(cr, uid, val, context={})
-		cr.commit()
+				where +=[('res_id','=',object2.id),('res_model','=',object2._name)]
+			cids = fobj.search(cr, uid,where)
+			if len(cids):
+				cid=cids[0]
 
-		s = file_wrapper('', cid, cr.dbname, uid, )
-		return s
+			if not cid:
+				val = {
+					'name': objname,
+					'datas_fname': objname,
+					'datas': '',
+					'file_size': 0L,
+					'file_type': ext,
+				}
+				if object and (object.type=='directory') or not object2:
+					val['parent_id']= object and object.id or False
+				partner = False
+				if object2:
+					if 'partner_id' in object2 and object2.partner_id.id:
+						partner = object2.partner_id.id
+					if object2._name == 'res.partner':
+						partner = object2.id
+					val.update( {
+						'res_model': object2._name,
+						'partner_id': partner,
+						'res_id': object2.id
+					})
+				cid = fobj.create(cr, uid, val, context={})
+			cr.commit()
+
+			s = file_wrapper('', cid, cr.dbname, uid, )
+			return s
+		except Exception,e:
+			print e
+			raise OSError(1, 'Operation not permited.')
 
 	# Ok
 	def open(self, node, mode):
@@ -263,7 +267,8 @@ class abstracted_fs:
 			# Check if it alreayd exists !
 			pool.get('document.directory').create(cr, uid, val)
 			cr.commit()
-		except:
+		except Exception,e:
+			print e
 			raise OSError(1, 'Operation not permited.')
 
 
@@ -344,116 +349,122 @@ class abstracted_fs:
 			* A file: read, create and remove
 			* A directory: change the parent and reassign childs to ressource
 		"""
-		if src.type=='collection':
-			if src.object._table_name <> 'document.directory':
-				raise OSError(1, 'Operation not permited.')
-			result = {
-				'directory': [],
-				'attachment': []
-			}
-			# Compute all childs to set the new ressource ID
-			child_ids = [src]
-			while len(child_ids):
-				node = child_ids.pop(0)
-				child_ids += node.children()
-				print node.type
-				if node.type =='collection':
-					result['directory'].append(node.object.id)
-					if (not node.object.ressource_id) and node.object2:
-						raise OSError(1, 'Operation not permited.')
-				elif node.type =='file':
-					result['attachment'].append(node.object.id)
+		try:
+			if src.type=='collection':
+				if src.object._table_name <> 'document.directory':
+					raise OSError(1, 'Operation not permited.')
+				result = {
+					'directory': [],
+					'attachment': []
+				}
+				# Compute all childs to set the new ressource ID
+				child_ids = [src]
+				while len(child_ids):
+					node = child_ids.pop(0)
+					child_ids += node.children()
+					print node.type
+					if node.type =='collection':
+						result['directory'].append(node.object.id)
+						if (not node.object.ressource_id) and node.object2:
+							raise OSError(1, 'Operation not permited.')
+					elif node.type =='file':
+						result['attachment'].append(node.object.id)
 
-			cr = src.cr
-			uid = src.uid
-			pool = pooler.get_pool(cr.dbname)
-			object2=src and src.object2 or False
-			object=src and src.object or False
-			if object2 and not object.ressource_id:
-				raise OSError(1, 'Operation not permited.')
-			val = {
-				'name':dst_basename,
-			}
-			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
-				val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
-			else:
-				val['parent_id'] = False
-			res = pool.get('document.directory').write(cr, uid, [object.id],val)
-
-			if dst_basedir.object2:
-				ressource_type_id = pool.get('ir.model').search(cr,uid,[('model','=',dst_basedir.object2._name)])[0]
-				ressource_id = dst_basedir.object2.id
-				title = dst_basedir.object2.name
-				ressource_model = dst_basedir.object2._name
-				if dst_basedir.object2._name=='res.partner':
-					partner_id=dst_basedir.object2.id
+				cr = src.cr
+				uid = src.uid
+				pool = pooler.get_pool(cr.dbname)
+				object2=src and src.object2 or False
+				object=src and src.object or False
+				if object2 and not object.ressource_id:
+					raise OSError(1, 'Operation not permited.')
+				val = {
+					'name':dst_basename,
+				}
+				if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
+					val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
 				else:
-					partner_id= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
-			else:
-				ressource_type_id = False
-				ressource_id=False
-				ressource_model = False
-				partner_id = False
-				title = False
+					val['parent_id'] = False
+				res = pool.get('document.directory').write(cr, uid, [object.id],val)
 
-			pool.get('document.directory').write(cr, uid, result['directory'], {
-				'ressource_id': ressource_id,
-				'ressource_parent_type_id': ressource_type_id
-			})
-			val = {
-				'res_id': ressource_id,
-				'res_model': ressource_model,
-				'title': title,
-				'partner_id': partner_id
-			}
-			print '-'*50
-			print val, ressource_type_id
-			print result
-			pool.get('ir.attachment').write(cr, uid, result['attachment'], val)
-			if (not val['res_id']) and result['attachment']:
-				dst_basedir.cr.execute('update ir_attachment set res_id=NULL where id in ('+','.join(map(str,result['attachment']))+')')
-
-			cr.commit()
-		elif src.type=='file':
-			pool = pooler.get_pool(src.cr.dbname)
-			val = {
-				'partner_id':False,
-				#'res_id': False,
-				'res_model': False,
-				'name': dst_basename,
-				'datas_fname': dst_basename,
-				'title': dst_basename,
-			}
-
-			if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
-				val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
-			else:
-				val['parent_id'] = False
-
-			if dst_basedir.object2:
-				val['res_model'] = dst_basedir.object2._name
-				val['res_id'] = dst_basedir.object2.id
-				val['title'] = dst_basedir.object2.name
-				if dst_basedir.object2._name=='res.partner':
-					val['partner_id']=dst_basedir.object2.id
+				if dst_basedir.object2:
+					ressource_type_id = pool.get('ir.model').search(cr,uid,[('model','=',dst_basedir.object2._name)])[0]
+					ressource_id = dst_basedir.object2.id
+					title = dst_basedir.object2.name
+					ressource_model = dst_basedir.object2._name
+					if dst_basedir.object2._name=='res.partner':
+						partner_id=dst_basedir.object2.id
+					else:
+						partner_id= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
 				else:
-					val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
-			elif src.object.res_id:
-				# I had to do that because writing False to an integer writes 0 instead of NULL
-				# change if one day we decide to improve osv/fields.py
-				dst_basedir.cr.execute('update ir_attachment set res_id=NULL where id=%d', (src.object.id,))
+					ressource_type_id = False
+					ressource_id=False
+					ressource_model = False
+					partner_id = False
+					title = False
 
-			pool.get('ir.attachment').write(src.cr, src.uid, [src.object.id], val)
-			src.cr.commit()
-		elif src.type=='content':
-			src_file=self.open(src,'r')
-			dst_file=self.create(dst_basedir,dst_basename,'w')
-			dst_file.write(src_file.getvalue())
-			dst_file.close()
-			src_file.close()
-			src.cr.commit()
-		else:
-			raise OSError(1, 'Operation not permited.')
+				pool.get('document.directory').write(cr, uid, result['directory'], {
+					'ressource_id': ressource_id,
+					'ressource_parent_type_id': ressource_type_id
+				})
+				val = {
+					'res_id': ressource_id,
+					'res_model': ressource_model,
+					'title': title,
+					'partner_id': partner_id
+				}
+				print '-'*50
+				print val, ressource_type_id
+				print result
+				pool.get('ir.attachment').write(cr, uid, result['attachment'], val)
+				if (not val['res_id']) and result['attachment']:
+					dst_basedir.cr.execute('update ir_attachment set res_id=NULL where id in ('+','.join(map(str,result['attachment']))+')')
+
+				cr.commit()
+			elif src.type=='file':
+				pool = pooler.get_pool(src.cr.dbname)
+				val = {
+					'partner_id':False,
+					#'res_id': False,
+					'res_model': False,
+					'name': dst_basename,
+					'datas_fname': dst_basename,
+					'title': dst_basename,
+				}
+
+				if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
+					val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
+				else:
+					val['parent_id'] = False
+
+				if dst_basedir.object2:
+					val['res_model'] = dst_basedir.object2._name
+					val['res_id'] = dst_basedir.object2.id
+					val['title'] = dst_basedir.object2.name
+					if dst_basedir.object2._name=='res.partner':
+						val['partner_id']=dst_basedir.object2.id
+					else:
+						val['partner_id']= dst_basedir.object2.partner_id and dst_basedir.object2.partner_id.id or False
+				elif src.object.res_id:
+					# I had to do that because writing False to an integer writes 0 instead of NULL
+					# change if one day we decide to improve osv/fields.py
+					dst_basedir.cr.execute('update ir_attachment set res_id=NULL where id=%d', (src.object.id,))
+
+				pool.get('ir.attachment').write(src.cr, src.uid, [src.object.id], val)
+				src.cr.commit()
+			elif src.type=='content':
+				src_file=self.open(src,'r')
+				dst_file=self.create(dst_basedir,dst_basename,'w')
+				dst_file.write(src_file.getvalue())
+				dst_file.close()
+				src_file.close()
+				src.cr.commit()
+			else:
+				raise OSError(1, 'Operation not permited.')
+		except Exception,err:
+			print err
+			raise OSError(1,'Operation not permited.')
+
+
 
 
 	# Nearly Ok

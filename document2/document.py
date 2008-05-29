@@ -29,6 +29,7 @@
 import base64
 
 from osv import osv, fields
+from osv.orm import except_orm
 import urlparse
 
 import os
@@ -226,6 +227,27 @@ class document_directory(osv.osv):
 	_sql_constraints = [
 		('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)', 'The directory name must be unique !')
 	]
+
+	def _check_duplication(self, cr, uid,vals):
+		if 'name' in vals:
+			where=" name='%s'"% (vals['name'])
+			if not 'parent_id' in vals or not vals['parent_id']:
+				where+=' and parent_id is null'
+			else:
+				where+=' and parent_id=%d'%(vals['parent_id'])
+			if not 'ressource_parent_type_id' in vals or not vals['ressource_parent_type_id']:
+				where+= ' and ressource_parent_type_id is null'
+			else:
+				where+=" and ressource_parent_type_id='%s'"%(vals['ressource_parent_type_id'])
+#			if not 'ressource_id' in vals or not vals['ressource_id']:
+#				where+= ' and ressource_id is null'
+#			else:
+#				where+=" and ressource_id=%d"%(vals['ressource_id'])
+			cr.execute("select id from document_directory where" + where)
+			res = cr.fetchall()
+			if len(res):
+				return False
+		return True
 	def _check_recursion(self, cr, uid, ids):
 		level = 100
 		while len(ids):
@@ -303,7 +325,14 @@ class document_directory(osv.osv):
 		#result = map(lambda x: urlparse.urljoin(path+'/',x.name), childs)
 		return result
 
+	def write(self, cr, uid, ids, vals, context=None):
+		if not self._check_duplication(cr,uid,vals):
+			raise except_orm('ValidateError', 'Directory name must be unique!')
+		return super(document_directory,self).write(cr,uid,ids,vals,context=context)
+
 	def create(self, cr, uid, vals, context=None):
+		if not self._check_duplication(cr,uid,vals):
+			raise except_orm('ValidateError', 'Directory name must be unique!')
 		if vals.get('name',False) and (vals.get('name').find('/')+1 or vals.get('name').find('@')+1 or vals.get('name').find('$')+1 or vals.get('name').find('#')+1) :
 			raise 'Error'
 		return super(document_directory,self).create(cr, uid, vals, context)
@@ -457,7 +486,17 @@ class document_file(osv.osv):
 	_sql_constraints = [
 		('filename_uniq', 'unique (name,parent_id,res_id,res_model)', 'The file name must be unique !')
 	]
+
+	def _check_duplication(self, cr, uid,vals):
+		if 'name' in vals:
+			res=self.search(cr,uid,[('name','=',vals['name']),('parent_id','=','parent_id' in vals and vals['parent_id'] or False),('res_id','=','res_id' in vals and vals['res_id'] or False),('res_model','=','res_model' in vals and vals['res_model']) or False])
+			if len(res):
+				return False
+		return True
+
 	def write(self, cr, uid, ids, vals, context=None):
+		if not self._check_duplication(cr,uid,vals):
+			raise except_orm('ValidateError', 'File name must be unique!')
 		result = super(document_file,self).write(cr,uid,ids,vals,context=context)
 		try:
 			for f in self.browse(cr, uid, ids, context=context):
@@ -492,6 +531,8 @@ class document_file(osv.osv):
 		else:
 			datas=vals['datas']
 		vals['file_size']= len(datas)
+		if not self._check_duplication(cr,uid,vals):
+			raise except_orm('ValidateError', 'File name must be unique!')
 		result = super(document_file,self).create(cr, uid, vals, context)
 		cr.commit()
 		try:
