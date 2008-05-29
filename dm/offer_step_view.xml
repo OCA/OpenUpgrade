@@ -301,5 +301,12 @@
 		<field name="view_id" ref="view_product_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product"/>
+
+	<act_window name="Products"
+		res_model="dm.product"
+		src_model="dm.offer"
+		view_type="form"
+		view_mode="tree,form"
+		id="act_offer_product_opened"/>
 </data>
 </terp>
