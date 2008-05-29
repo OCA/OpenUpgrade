@@ -33,14 +33,12 @@
 						<field name="code"/>
 						<field name="lang_orig"/>
 						<field name="copywriter_id"  select="2"/>
-<!--						<field name="mark_id"/>-->
+						<field name="recommended_trademark"/>
 						<field name="offer_origin_id"/>
 						<field name="active" select="2"/>
 						<newline/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
-						<field name="date_purchase"/>
-						<field name="date_validation"  select="1"/>
 						<separator string="Categories" colspan="4"/>
 						<field name="category_ids" colspan="4" nolabel="1"/>
 						<separator string="Notes" colspan="4"/>
@@ -54,27 +52,57 @@
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
 						</group>
 					</page>
-					<page string="Advises"><!--
-						<separator string="Layout" colspan="4"/>
-						<field name="note_layout" nolabel="1" colspan="4"/>
-
+					<page string="Description">
+						<separator string="Description" colspan="4"/>
+						<field name="desc" nolabel="1"/>
+					</page>
+					<page string="Advises">
+						<separator string="Layout Advice" colspan="2"/>
+						<separator string="Category" colspan="2"/>
+						<field name="note_layout" nolabel="1" colspan="2"/>
+						<field name="layout_category_ids" nolabel="1" colspan="2"/>
 						<newline/>
-						<separator string="Mark" colspan="4"/>
-						<field name="note_mark" nolabel="1" colspan="4"/>
+						<separator string="Mark" colspan="2"/>
+						<separator string="Category" colspan="2"/>
+						<field name="note_mark" nolabel="1" colspan="2"/>
+						<field name="mark_category_ids" nolabel="1" colspan="2"/>
 						<newline/>-->
-						<separator string="Production" colspan="4"/>
-						<field name="production_note" nolabel="1" colspan="4"/>
-						<field name="production_category_ids" colspan="2" string="Category"/>
+						<separator string="Production Notes" colspan="2"/>
+						<separator string="Category" colspan="2"/>
+						<field name="production_note" nolabel="1" colspan="2"/>
+						<field name="production_category_ids" string="Category"/>
 						<field name="production_delay"/>
-						<field name="production_cost" colspan="4" string="Cost"/>
+						<field name="production_cost" string="Cost"/>
 						<newline/>
-						<separator string="Purchase" colspan="4"/>
-						<field name="purchase_note" nolabel="1" colspan="4"/>
-						<field name="purchase_category_ids" colspan="4"  string="Category"/>
+						<separator string="Purchase Notes" colspan="2"/>
+						<separator string="Categories" colspan="2"/>
+						<field name="purchase_note" nolabel="1" colspan="2"/>
+						<field name="purchase_category_ids" colspan="2" nolabel="1" string="Category"/>
 					</page>
 					<page string="History">
+						<separator string="History" />
 						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
+					<page string="Dates">
+						<field name="order_date"/>
+						<field name="last_modification_date"/>
+						<field name="plannned_delivery_date"/>
+						<field name="delivery_date"/>	
+						<field name="fixed_date"/>
+						<field name="buffer_delay"/>
+					</page>
+					<page string="Critaria">
+						<separator string="Trademark criteria" colspan="4"/>
+						<field name="trademark_sex"/>
+						<field name="trademark_age"/>
+						<field name="trademark_country_ids" colspan="4"/>		
+						<separator string="Geographical criteria" colspan="4"/>
+						<field name="forbidden_country_ids" colspan="4"/>		
+						<field name="forbidden_state_ids" colspan="4" />	
+					</page>
+<!--					<page string="Statistics" >-->
+<!--						still not define -->
+<!--					</page>-->
 				</notebook>	
 			</form>
 		</field>
@@ -273,5 +301,50 @@
 			</tree>
 		</field>
 	</record>
+
+	<record model="ir.ui.view" id="view_dm_preoffer_form">
+		<field name="name">dm.dm.preoffer.form</field>
+		<field name="model">dm.preoffer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">	
+			<form string="PreOffer">
+				<field name="name" colspan="4"/>
+				<field name="creator_id"/>
+				<field name="copywriter_id"/>		
+				<field name="market_id"/>
+				<field name="media_id"/>
+				<field name="type"/>
+				<field name="order_number"/>
+				<field name="order_date" colspan="4"/>
+				<field name="plannned_delivery_date"/>
+				<field name="delivery_date"/>
+				<separator string="Summary" colspan="4"/>		
+				<field name="summary" nolabel="1" colspan="4"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_dm_preoffer_tree">
+		<field name="name">dm.preoffer.tree</field>
+		<field name="model">dm.preoffer</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">	
+			<tree string="Document Category">
+				<field name="name" colspan="4"/>
+				<field name="type"/>
+				<field name="order_number"/>
+				<field name="order_date" colspan="4"/>
+				<field name="plannned_delivery_date"/>
+				<field name="delivery_date"/>
+			</tree>
+		</field>
+	</record>	
+	<record model="ir.actions.act_window" id="action_dm_preoffer_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.preoffer</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_dm_preoffer_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Offers/Preoffer" id="menu_dm_preoffer_form" sequence="2" action="action_dm_preoffer_form"/>	
 </data>
 </terp>

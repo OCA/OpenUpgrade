@@ -72,14 +72,6 @@ class dm_offer_document(osv.osv):
  
 dm_offer_document()
 
-class dm_media(osv.osv):
-    _name = "dm.media"
-    _columns = {
-        'name' : fields.char('Media', size=64, required=True),
-    }
-    
-dm_media()
-
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
     _order = "sequence"
