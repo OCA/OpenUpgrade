@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+	<menuitem name="Direct Marketing/Trademark" id="menu_dm_trademark" sequence="3"/>
 	<!--
 	=======================================================
 	Trademark Views
@@ -44,7 +45,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_trademark_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Trademarks/All Trademarks" id="menu_action_trademark_form" action="action_trademark_form"/>
-	
+	<menuitem name="Direct Marketing/Trademark/All Trademarks" id="menu_action_trademark_form" action="action_trademark_form"/>
+
 </data>
 </terp>

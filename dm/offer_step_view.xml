@@ -18,7 +18,6 @@
 			</form>
 		</field>
 	</record>
-
 	<record model="ir.ui.view" id="view_offer_step_document_categ_tree">
 		<field name="name">dm.offer.document.category.tree</field>
 		<field name="model">dm.offer.document.category</field>
@@ -36,7 +35,7 @@
 		<field name="view_id" ref="view_offer_step_document_categ_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents" id="menu_action_offer_doc" sequence="2"/>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Documents By Categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Documents By Categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form" sequence="2"/>
 
 	<record model="ir.ui.view" id="view_offer_step_document_form">
 		<field name="name">dm.offer.document.form</field>
@@ -85,7 +84,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_document_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form" sequence="1"/>
 	
 	<record model="ir.ui.view" id="view_offer_step_tree">
 		<field name="name">dm.offer.step.tree</field>
@@ -199,7 +198,6 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition"/>
 
-	
 	<record model="ir.ui.view" id="view_offer_step_workitem_form">
 		<field name="name">dm.offer.step.workitem.form</field>
 		<field name="model">dm.offer.step.workitem</field>
@@ -303,6 +301,5 @@
 		<field name="view_id" ref="view_product_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product"/>
-
 </data>
 </terp>
