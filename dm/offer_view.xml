@@ -58,17 +58,17 @@
 						<field name="desc" nolabel="1"/>
 					</page>
 					<page string="Advises">
-						<separator string="DTP Advice" colspan="4"/>
+						<separator string="DTP Advices" colspan="4"/>
 						<field name="dtp_note" nolabel="1" colspan="4"/>
 						<newline/>
-						<separator string="Trademark" colspan="4"/>
+						<separator string="Trademark Advices" colspan="4"/>
 						<field name="trademark_note" nolabel="1" colspan="4"/>
 						<newline/>-->
-						<separator string="Production Notes" colspan="4"/>
+						<separator string="Production Advices" colspan="4"/>
 						<field name="production_note" nolabel="1" colspan="4"/>
 						<field name="production_delay"/>
 						<field name="production_cost" string="Cost"/>
-						<separator string="Purchase Notes" colspan="4"/>
+						<separator string="Purchase Advices" colspan="4"/>
 						<field name="purchase_note" nolabel="1" colspan="4"/>
 					</page>
 					<page string="History">
@@ -80,6 +80,7 @@
 <!--						<field name="last_modification_date"/>-->
 						<field name="plannned_delivery_date"/>
 						<field name="delivery_date"/>	
+						<newline />
 						<field name="fixed_date"/>
 						<field name="buffer_delay"/>
 					</page>
