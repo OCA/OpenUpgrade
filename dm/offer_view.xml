@@ -35,6 +35,7 @@
 						<field name="copywriter_id"  select="2"/>
 						<field name="recommended_trademark"/>
 						<field name="offer_origin_id"/>
+						<field name="type" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
 						<field name="quotation"/>
@@ -46,9 +47,9 @@
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
 							<field name="state" nolabel="1" select="1"/>
-							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
-							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
+							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
+							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
 						</group>
 					</page>
@@ -56,25 +57,19 @@
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1"/>
 					</page>
-					<page string="Advices">
-						<separator string="Layout Advices" colspan="2"/>
-						<separator string="Categories" colspan="2"/>
-						<field name="note_layout" nolabel="1" colspan="2"/>
-						<field name="layout_category_ids" nolabel="1" colspan="2"/>
-						<separator string="Mark Advices" colspan="2"/>
-						<separator string="Categories" colspan="2"/>
-						<field name="note_mark" nolabel="1" colspan="2"/>
-						<field name="mark_category_ids" nolabel="1" colspan="2"/>
- 						<separator string="Production Notes" colspan="2"/>
-						<separator string="Categories" colspan="2"/>
-						<field name="production_note" nolabel="1" colspan="2"/>
-						<field name="production_category_ids" string="Category" nolabel="1" colspan="2"/>
+					<page string="Advises">
+						<separator string="DTP Advice" colspan="4"/>
+						<field name="dtp_note" nolabel="1" colspan="4"/>
+						<newline/>
+						<separator string="Trademark" colspan="4"/>
+						<field name="trademark_note" nolabel="1" colspan="4"/>
+						<newline/>-->
+						<separator string="Production Notes" colspan="4"/>
+						<field name="production_note" nolabel="1" colspan="4"/>
 						<field name="production_delay"/>
 						<field name="production_cost" string="Cost"/>
-						<separator string="Purchase Notes" colspan="2"/>
-						<separator string="Categories" colspan="2"/>
-						<field name="purchase_note" nolabel="1" colspan="2"/>
-						<field name="purchase_category_ids" colspan="2" nolabel="1" string="Category"/>
+						<separator string="Purchase Notes" colspan="4"/>
+						<field name="purchase_note" nolabel="1" colspan="4"/>
 					</page>
 					<page string="History">
 						<separator string="History" />

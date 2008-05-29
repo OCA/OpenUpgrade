@@ -11,6 +11,14 @@ AVAILABLE_STATES = [
     ('closed', 'Close')
 ]
 
+AVAILABLE_TYPE = [
+    ('model','Model'),
+    ('new','New'),
+    ('standart','Standart'),
+    ('rewrite','Rewrite'),
+]
+
+
 class dm_media(osv.osv):
     _name = "dm.media"
     _columns = {
@@ -54,7 +62,7 @@ class dm_offer_category(osv.osv):
         'parent_id' : fields.many2one('dm.offer.category', 'Parent'),
         'name' : fields.char('Name', size=64, required=True),
         'child_ids': fields.one2many('dm.offer.category', 'parent_id', 'Childs Category'),
-        'domain' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')], 'Category Domain')
+        'domain' : fields.selection([('model','Model'),('general','General'),('production','Production'),('purchase','Purchase')], 'Category Domain')
     }
     
     _constraints = [
@@ -83,7 +91,7 @@ dm_offer_delay()
 class dm_offer(osv.osv):
     _name = "dm.offer"
     _rec_name = 'name'
-    
+
     def __history(self, cr, uid, cases, keyword, context={}):
         for case in cases:
             data = {
@@ -95,6 +103,7 @@ class dm_offer(osv.osv):
             obj = self.pool.get('dm.offer.history')
             obj.create(cr, uid, data, context)
         return True
+
 #    def dtp_last_modification_date(self, cr, uid, ids, field_name, arg, context={}):
 #        result=[]
 #        for id in ids:
@@ -113,50 +122,47 @@ class dm_offer(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
+#        'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer'),
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
         'legal_state' : fields.selection([('validated','validated'), ('notvalidated','notvalidated'), ('inprogress','inprogress'), ('refused','refused')],'Legal State'),
         'category_ids' : fields.many2many('dm.offer.category','dm_offer_category_rel', 'offer_id', 'offer_category_id', 'Categories', domain="[('domain','=','general')]"),
-        'notes' : fields.text('Notes'),
+        'notes' : fields.text('General Notes'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
-        
         'desc' : fields.text('Description'),
-        
-        'note_layout' : fields.text('Layout Notes'),
-        'layout_category_ids' : fields.many2many('dm.offer.category','dm_offer_layout_category','offer_id','offer_layout_categ_id', 'Layout Categories') ,# domain="[('domain','=','production')]"),
-        'note_mark' : fields.text('Mark Notes'),
-        'mark_category_ids' : fields.many2many('dm.offer.category','dm_offer_mark_category','offer_id','offer_mark_categ_id','Mark Categories'),# domain="[('domain','=','purchase')]"),
+        'dtp_note' : fields.text('DTP Notes'),
+        'dtp_category_ids' : fields.many2many('dm.offer.category','dm_offer_dtp_category','offer_id','offer_dtp_categ_id', 'DTP Categories') ,# domain="[('domain','=','production')]"),
+        'trademark_note' : fields.text('Trademark Notes'),
+        'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),# domain="[('domain','=','purchase')]"),
         'production_note' : fields.text('Production Notes'),
+        'purchase_note' : fields.text('Purchase Notes'),
+        'type' : fields.selection(AVAILABLE_TYPE, 'Type', size=16),
         'production_category_ids' : fields.many2many('dm.offer.category','dm_offer_production_category','offer_id','offer_production_categ_id', 'Production Categories' , domain="[('domain','=','production')]"),
         'production_delay' : fields.many2one('dm.offer.delay', 'Delay'),
         'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
         'purchase_note' : fields.text('Purchase Notes'),
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
-
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade"),
-
         'order_date' : fields.date('Order Date'),
 #        'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="string", string='Last Modification Date',readonly=True),
         'plannned_delivery_date' : fields.date('Planned Delivery Date'),
         'delivery_date' : fields.date('Delivery Date'),
         'fixed_date' : fields.date('Fixed Date'),
         'buffer_delay' : fields.integer('Buffer Delay'),
-
         'trademark_sex' : fields.selection([('',''),('female','Female'),('male','male')],"Sex"), 
         'trademark_age' : fields.integer('Age'),        
         'trademark_country_ids' : fields.many2many('res.country','dm_offer_trademark_country', 'offer_id', 'country_id', 'Nationality'),
         'forbidden_country_ids' : fields.many2many('res.country','dm_offer_forbidden_country', 'offer_id', 'country_id', 'Forbidden Countries'),
         'forbidden_state_ids' : fields.many2many('res.country.state','dm_offer_forbidden_state', 'offer_id', 'state_id', 'Forbidden States'),
-   
 #       (still to be defined by the client)
-    
     }
     
     _defaults = {
         'active': lambda *a: 1,
         'state': lambda *a: 'draft',
+        'type': lambda *a: 'new',
     }
 
     def state_close_set(self, cr, uid, ids, *args):
@@ -199,7 +205,7 @@ class dm_offer_history(osv.osv):
     }
     _defaults = {
         'date': lambda *a: time.strftime('%Y-%m-%d'),
-    }   
+    }
 
 dm_offer_history()
 

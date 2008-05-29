@@ -124,9 +124,9 @@
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
 							<field name="state" select="1" nolabel="1"/>
-							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
 							<button name="state_freeze_set" string="Freeze" states="draft,open" type="object"/>
+							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
 						</group>
 					</page>
@@ -160,8 +160,7 @@
 		src_model="dm.offer"
 		view_type="form"
 		view_mode="tree,form"
-		id="act_offer_step_opened"
-		domain = "[('offer_id','=',active_id)]"/>
+		id="act_offer_step_opened"/>
 		
 	<record model="ir.ui.view" id="view_offer_step_transition_form">
 		<field name="name">dm.offer.step.transition.form</field>
@@ -170,8 +169,8 @@
 		<field name="arch" type="xml">
 			<form string="Transition">
 				<field name="name" colspan="4" select="1"/>
-<!--				<field name="step_from"/>-->
-<!--				<field name="step_to"/>-->
+				<field name="step_from"/>
+				<field name="step_to"/>
 				<field name="condition" select="1"/>
 <!--				<field name="delay" select="2"/>-->
 				<field name="delay_id"/>
@@ -239,8 +238,7 @@
 		src_model="dm.offer.step"
 		view_type="form"
 		view_mode="tree,form"
-		id="act_workitem_opened"
-		domain = "[('step_id','=',active_id)]"/>
+		id="act_workitem_opened"/>
 	
 	<record model="ir.ui.view" id="view_offer_step_history_form">
 		<field name="name">dm.offer.step.history.form</field>

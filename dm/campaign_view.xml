@@ -251,6 +251,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_delay_tree"/>
 	</record>
+<!--	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>-->
 
 	<!--
 	=======================================================
@@ -276,8 +277,9 @@
 				<field name="quantity_max" string="Quantity"/>
 				<field name="sale_rate"/>
 				<newline/>
-				<field name="delay_ids" colspan="4"/>
-				<field name="notes" colspan="4"/>
+<!--				<field name="delay_ids" colspan="4"/>-->
+				<separator string="Notes" colspan="4"/>
+				<field name="notes" colspan="4" nolabel="1"/>
 			</form>
 		</field>
 	</record>
