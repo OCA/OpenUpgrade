@@ -91,7 +91,6 @@ class event(osv.osv):
 	def _get_register(self, cr, uid, ids, name, args, context=None):
 		res={}
 		for event in self.browse(cr, uid, ids, context):
-#			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','close') group by c.state,s.name""" % event.section_id.id
 			query = """select sum(nb_register) from crm_case c left join crm_case_section s on (c.section_id=s.id) right join event_event e on (e.section_id=s.id) right join event_registration r on (r.case_id=c.id) where e.section_id = %s and c.state in ('open','done')""" % event.section_id.id
 			cr.execute(query)
 			res2 = cr.fetchone()
@@ -173,12 +172,6 @@ class event_registration(osv.osv):
 		self._history(cr, uid, cases, 'Cancel', history=True)
 		return True
 
-#	def _get_section(self, cr, uid, context=None):
-#		event_id2 =  self.pool.get('event.event').browse(cr, uid, 'event_id', context).section_id
-#		print 'event_id2: ', event_id2
-#		print self.pool.get('crm.case.section').search(cr, uid, [('id','=',event_id2)])
-#		return {}
-
 	def create(self, cr, uid, *args, **argv):
 		args[0]['section_id']= self.pool.get('event.event').browse(cr, uid, args[0]['event_id'], None).section_id.id
 		res = super(event_registration, self).create(cr, uid, *args, **argv)
@@ -251,7 +244,6 @@ class event_registration(osv.osv):
 
 		return {'value':data}
 
-
 	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
 		context={}
 		if not event_id:
@@ -263,8 +255,7 @@ class event_registration(osv.osv):
 				return {'value':{'unit_price' : unit_price , 'invoice_label' : data_event.product_id.name}}
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
 			context.update({'partner_id':data_partner})
-			unit_price=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
-
+			unit_price = self.pool.get('product.product')._product_price(cr, uid, [data_event.product_id.id], False, False, {'pricelist':data_partner.property_product_pricelist.id})[data_event.product_id.id]
 			return {'value':{'unit_price' :unit_price , 'invoice_label' : data_event.product_id.name}}
 		return {'value':{'unit_price' : False,'invoice_label' : False}}
 
@@ -303,7 +294,7 @@ class event_registration(osv.osv):
 				return {'value':data}
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
 			context.update({'partner_id':data_partner})
-			data['unit_price']=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
+			data['unit_price'] = self.pool.get('product.product')._product_price(cr, uid, [data_event.product_id.id], False, False, {'pricelist':data_partner.property_product_pricelist.id})[data_event.product_id.id]
 			return {'value':data}
 		return {'value':data}
 
@@ -312,18 +303,6 @@ class event_registration(osv.osv):
 			return {'value':{}}
 		cat = self.pool.get('crm.case.categ').browse(cr, uid, categ, context).probability
 		return {'value':{'probability':cat}}
-
-#	def onchange_partner_id(self, cr, uid, ids, part, email=False):
-#		if not part:
-#			return {'value':{}}
-#		data = {}
-#		if not email:
-#			data['email_from'] = self.pool.get('res.partner.address').browse(cr, uid, part).email
-#		return {'value':data}
-
-#	def onchange_partner_id(self, cr, uid, ids, part,event_id, email=False):
-#		print "this"
-#		return self.pool.get('crm.case').onchange_partner_id(cr, uid, ids,  part)
 
 	def pay_and_recon(self,cr,uid,reg,inv_obj,inv_id,context={}):
 		# this dummy function is used to minimize the code for make_invoice
