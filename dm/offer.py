@@ -127,7 +127,7 @@ class dm_offer(osv.osv):
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer'),
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
-        'legal_state' : fields.selection([('validated','validated'), ('notvalidated','notvalidated'), ('inprogress','inprogress'), ('refused','refused')],'Legal State'),
+        'legal_state' : fields.selection([('validated','Validated'), ('notvalidated','Not Validated'), ('inprogress','In Progress'), ('refused','Refused')],'Legal State'),
         'category_ids' : fields.many2many('dm.offer.category','dm_offer_category_rel', 'offer_id', 'offer_category_id', 'Categories', domain="[('domain','=','general')]"),
         'notes' : fields.text('General Notes'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
@@ -163,6 +163,7 @@ class dm_offer(osv.osv):
         'active': lambda *a: 1,
         'state': lambda *a: 'draft',
         'type': lambda *a: 'new',
+        'legal_state': lambda *a: 'validated',
     }
 
     def state_close_set(self, cr, uid, ids, *args):
