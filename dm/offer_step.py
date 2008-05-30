@@ -89,11 +89,19 @@ class dm_offer_step(osv.osv):
             obj.create(cr, uid, data, context)
         return True
     
+    def _offer_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+            code=''
+            offer_step = self.browse(cr,uid,[id])[0]
+            code = '_'.join([offer_step.offer_id.code,str(id),(offer_step.type or '')])
+            result[id]=code
+        return result
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
         'legal_state' : fields.char('Legal State', size=32),
         'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=16, required=True),
+        'code' : fields.function(_offer_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
         'media_id' : fields.many2one('dm.media', 'Media'),
         'type' : fields.char('Type', size=16),

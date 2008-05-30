@@ -9,11 +9,11 @@
                     """,
     "depends" : ["project"],
     "init_xml" : [ ],
-    "demo_xml" : ["trademark_data.xml",
-                  "offer_data.xml",
-                  "offer_step_data.xml",
-                  "campaign_data.xml"
-                   ],
+#    "demo_xml" : ["trademark_data.xml",
+#                  "offer_data.xml",
+#                  "offer_step_data.xml",
+#                  "campaign_data.xml"
+#                   ],
     "update_xml" : [
                     "dm_wizard.xml",
                     "offer_view.xml",

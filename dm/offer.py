@@ -27,6 +27,23 @@ class dm_media(osv.osv):
     
 dm_media()
 
+class dm_preoffer(osv.osv):
+    _name = "dm.preoffer"
+    _columns = {    
+        'name' : fields.char("Name",size=64,required=True),
+        'creator_id' : fields.many2one('res.country','Creator'),
+        'copywriter_id' : fields.many2one('res.partner','Ordered To'),
+        'market_id' : fields.many2one('res.country','Market'),
+        'media_id' : fields.many2one('dm.media','Media',ondelete="cascade"),
+        'type' : fields.selection([('new','New'),('rewrite','Rewrite')],'Type'),
+        'order_number' : fields.char('Order Number',size=16),
+        'order_date' : fields.date('Order Date'),
+        'plannned_delivery_date' : fields.date('Planner Delivery Date') ,
+        'delivery_date' : fields.date('Delivery Date'),
+        'summary' : fields.text('Summary')
+    }
+dm_preoffer()
+
 class dm_offer_category(osv.osv):
     _name = "dm.offer.category"
     _rec_name = "name"
@@ -104,25 +121,25 @@ class dm_offer(osv.osv):
             obj.create(cr, uid, data, context)
         return True
 
-#    def dtp_last_modification_date(self, cr, uid, ids, field_name, arg, context={}):
-#        result=[]
-#        for id in ids:
-#            sql = "select write_date,create_date from dm_offer where id = %d"%id
-#            cr.execute(sql)
-#            res = cr.fetchone()
-#            print res[1]
-#            if res[0]:
-#                result.append({id:res[0].split(' ')[0]})
-#            else :
-#                result.append({id:res[1].split(' ')[0]})
-#        print result
-#        return result
+    def dtp_last_modification_date(self, cr, uid, ids, field_name, arg, context={}):
+        result={}
+        for id in ids:
+            sql = "select write_date,create_date from dm_offer where id = %d"%id
+            cr.execute(sql)
+            res = cr.fetchone()
+            print res[1]
+            if res[0]:
+                result[id]=res[0].split(' ')[0]
+            else :
+                result[id]=res[1].split(' ')[0]
+        return result
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
         'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
 #        'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
+        'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer'),
         'active' : fields.boolean('Active'),
@@ -146,16 +163,17 @@ class dm_offer(osv.osv):
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade"),
         'order_date' : fields.date('Order Date'),
-#        'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="string", string='Last Modification Date',readonly=True),
+        'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="char", string='Last Modification Date',readonly=True),
         'plannned_delivery_date' : fields.date('Planned Delivery Date'),
         'delivery_date' : fields.date('Delivery Date'),
         'fixed_date' : fields.date('Fixed Date'),
         'buffer_delay' : fields.integer('Buffer Delay'),
-        'trademark_sex' : fields.selection([('',''),('female','Female'),('male','male')],"Sex"), 
+        'trademark_sex' : fields.selection([('all','All'),('female','Female'),('male','male')],"Sex"), 
         'trademark_age' : fields.integer('Age'),        
         'trademark_country_ids' : fields.many2many('res.country','dm_offer_trademark_country', 'offer_id', 'country_id', 'Nationality'),
         'forbidden_country_ids' : fields.many2many('res.country','dm_offer_forbidden_country', 'offer_id', 'country_id', 'Forbidden Countries'),
         'forbidden_state_ids' : fields.many2many('res.country.state','dm_offer_forbidden_state', 'offer_id', 'state_id', 'Forbidden States'),
+        'preoffer_id' : fields.many2one('dm.preoffer','Preoffer'),
 #       (still to be defined by the client)
     }
     
@@ -209,20 +227,3 @@ class dm_offer_history(osv.osv):
     }
 
 dm_offer_history()
-
-class dm_preoffer(osv.osv):
-    _name = "dm.preoffer"
-    _columns = {    
-        'name' : fields.char("Name",size=64,required=True),
-        'creator_id' : fields.many2one('res.country','Creator'),
-        'copywriter_id' : fields.many2one('res.partner','Ordered To'),
-        'market_id' : fields.many2one('res.country','Market'),
-        'media_id' : fields.many2one('dm.media','Media',ondelete="cascade"),
-        'type' : fields.selection([('new','New'),('rewrite','Rewrite')],'Type'),
-        'order_number' : fields.char('Order Number',size=16),
-        'order_date' : fields.date('Order Date'),
-        'plannned_delivery_date' : fields.date('Planner Delivery Date') ,
-        'delivery_date' : fields.date('Delivery Date'),
-        'summary' : fields.text('Summary')
-    }
-dm_preoffer()

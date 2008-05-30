@@ -48,6 +48,14 @@ class dm_campaign(osv.osv):
         'campaign_type': lambda *a: 'general',
     }
 
+    def onchange_offer(self, cr, uid, ids, offer_id):
+        value={'name':''}
+        if not offer_id:
+            return {'value':value}
+        res = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
+        value['name']=res.name
+        return {'value':value}
+
     def state_draft_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
