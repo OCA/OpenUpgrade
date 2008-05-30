@@ -31,6 +31,7 @@ class dm_preoffer(osv.osv):
     _name = "dm.preoffer"
     _columns = {    
         'name' : fields.char("Name",size=64,required=True),
+        'code' : fields.char("Code",size=64,required=True),
         'creator_id' : fields.many2one('res.country','Creator'),
         'copywriter_id' : fields.many2one('res.partner','Ordered To'),
         'market_id' : fields.many2one('res.country','Market'),
@@ -42,6 +43,23 @@ class dm_preoffer(osv.osv):
         'delivery_date' : fields.date('Delivery Date'),
         'summary' : fields.text('Summary')
     }
+    
+    def go_to_offer(self,cr, uid, ids, *args):
+        res = self.browse(cr,uid,ids)[0]
+        country = [res.creator_id,res.market_id]
+        vals = {
+                'name':res.name,
+                'type':res.type,
+                'order_date':res.order_date,
+                'plannned_delivery_date':res.plannned_delivery_date,
+                'delivery_date' : res.delivery_date,
+                'desc':res.summary,
+                'code':res.code,
+                'trademark_country_ids':[[6,0,country]],
+                'copywriter_id':res.copywriter_id.id,
+            }
+        self.pool.get('dm.offer').create(cr,uid,vals)
+        return {}
 dm_preoffer()
 
 class dm_offer_category(osv.osv):

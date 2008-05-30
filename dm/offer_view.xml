@@ -303,17 +303,20 @@
 		<field name="arch" type="xml">	
 			<form string="PreOffer">
 				<field name="name" colspan="4"/>
+				<field name="code" />
 				<field name="creator_id"/>
 				<field name="copywriter_id"/>		
 				<field name="market_id"/>
 				<field name="media_id"/>
 				<field name="type"/>
 				<field name="order_number"/>
-				<field name="order_date" colspan="4"/>
+				<field name="order_date"/>
 				<field name="plannned_delivery_date"/>
 				<field name="delivery_date"/>
+				<button name="go_to_offer" string="Create Offers" type="object"/>
 				<separator string="Summary" colspan="4"/>		
 				<field name="summary" nolabel="1" colspan="4"/>
+				
 			</form>
 		</field>
 	</record>
@@ -323,11 +326,12 @@
 		<field name="model">dm.preoffer</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">	
-			<tree string="Document Category">
+			<tree string="All Preoffers">
 				<field name="name" colspan="4"/>
+				<field name="code" />
 				<field name="type"/>
 				<field name="order_number"/>
-				<field name="order_date" colspan="4"/>
+				<field name="order_date"/>
 				<field name="plannned_delivery_date"/>
 				<field name="delivery_date"/>
 			</tree>
@@ -339,6 +343,6 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_preoffer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offers/Preoffer" id="menu_dm_preoffer_form" sequence="2" action="action_dm_preoffer_form"/>	
+	<menuitem name="Direct Marketing/Offer/All Preoffers" id="menu_dm_preoffer_form" sequence="2" action="action_dm_preoffer_form"/>	
 </data>
 </terp>
