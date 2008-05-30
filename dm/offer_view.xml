@@ -37,6 +37,7 @@
 						<field name="offer_origin_id"/>
 						<field name="preoffer_id"/>
 						<field name="type" select="2"/>
+						<field name="offer_responsible_id" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
 						<field name="quotation"/>
@@ -155,7 +156,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('create_uid','=',uid)]</field>
+		<field name="domain">[('offer_responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offer/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
  
@@ -165,7 +166,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','open'),('create_uid','=',uid)]</field>	
+		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid)]</field>	
 	</record>
 	<menuitem name="Direct Marketing/Offer/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
 
@@ -175,7 +176,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','draft'),('create_uid','=',uid)]</field>		
+		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid)]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offer/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
 
@@ -185,7 +186,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','closed'),('create_uid','=',uid)]</field>		
+		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid)]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offer/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
 	
@@ -313,10 +314,12 @@
 				<field name="order_date"/>
 				<field name="plannned_delivery_date"/>
 				<field name="delivery_date"/>
-				<button name="go_to_offer" string="Create Offers" type="object"/>
 				<separator string="Summary" colspan="4"/>		
 				<field name="summary" nolabel="1" colspan="4"/>
-				
+				<group col="8" colspan="4">
+					<field name="state" nolabel="1" select="1"/>
+					<button name="go_to_offer" string="Create Offers" states="free" type="object"/>
+				</group>
 			</form>
 		</field>
 	</record>

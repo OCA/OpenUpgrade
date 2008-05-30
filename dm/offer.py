@@ -32,7 +32,7 @@ class dm_preoffer(osv.osv):
     _columns = {    
         'name' : fields.char("Name",size=64,required=True),
         'code' : fields.char("Code",size=64,required=True),
-        'creator_id' : fields.many2one('res.country','Creator'),
+        'creator_id' : fields.many2one('res.users','Creator'),
         'copywriter_id' : fields.many2one('res.partner','Ordered To'),
         'market_id' : fields.many2one('res.country','Market'),
         'media_id' : fields.many2one('dm.media','Media',ondelete="cascade"),
@@ -41,12 +41,19 @@ class dm_preoffer(osv.osv):
         'order_date' : fields.date('Order Date'),
         'plannned_delivery_date' : fields.date('Planner Delivery Date') ,
         'delivery_date' : fields.date('Delivery Date'),
-        'summary' : fields.text('Summary')
+        'summary' : fields.text('Summary'),
+        'state' : fields.selection([('free','Free'),('assigned','Assigned')],"State",readonly=True),
     }
     
+    _defaults = {
+        'state': lambda *a: 'free',    
+    }
     def go_to_offer(self,cr, uid, ids, *args):
         res = self.browse(cr,uid,ids)[0]
-        country = [res.creator_id,res.market_id]
+        if res.market_id:
+            country = [[6,0,[res.market_id.id]]]
+        else :
+            country =[]
         vals = {
                 'name':res.name,
                 'type':res.type,
@@ -55,11 +62,13 @@ class dm_preoffer(osv.osv):
                 'delivery_date' : res.delivery_date,
                 'desc':res.summary,
                 'code':res.code,
-                'trademark_country_ids':[[6,0,country]],
+                'trademark_country_ids':country,
                 'copywriter_id':res.copywriter_id.id,
+                'offer_responsible_id':res.creator_id.id
             }
         self.pool.get('dm.offer').create(cr,uid,vals)
-        return {}
+        self.write(cr,uid,ids,{'state':'assigned'})
+        return True
 dm_preoffer()
 
 class dm_offer_category(osv.osv):
