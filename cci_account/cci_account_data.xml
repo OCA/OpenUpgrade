@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<terp>
+	<data noupdate="1">
+
+	<!-- Data for account_account -->
+		<record id="account_account_creancesawexchequesformationsetchequeslangues0" model="account.account">
+			<field eval="&quot;59&quot;" name="code"/>
+			<field eval="&quot;Creances AWEX - Cheques Formations et Cheques Langues&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<!--<field eval="&quot;1&quot;" name="sign"/>-->
+			<field eval="&quot;balance&quot;" name="close_method"/>
+			<field eval="[(6,0,[ref('l10n_be.a5')])]" name="parent_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;cash&quot;" name="type"/>
+			<field eval="0" name="reconcile"/>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+
+	<!-- Data for account_journal -->
+		<record id="account_journal_awexjournal0" model="account.journal">
+			<field model="account.account" name="default_debit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;AWEX Journal&quot;" name="name"/>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_view"/>
+			<field eval="[(6,0,[])]" name="type_control_ids"/>
+			<field name="sequence_id" ref="account.sequence_journal"/>
+			<field eval="[(6,0,[])]" name="account_control_ids"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;cash&quot;" name="type"/>
+			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+		</record>
+
+	</data>
+</terp>
+
