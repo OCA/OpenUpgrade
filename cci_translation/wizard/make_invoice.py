@@ -100,13 +100,14 @@ def _createInvoices(self, cr, uid, data, context):
 		inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
 			'name': val['value']['name'],
 			'account_id': val['value']['account_id'],
-			'price_unit': transfolder.base_amount - transfolder.awex_amount,
+			'price_unit': transfolder.base_amount,
 			'quantity': 1,
 			'discount': False,
 			'uos_id': val['value']['uos_id'],
 			'product_id': translation_product_id,
 			'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
 			'note': note,
+			'cci_special_reference': "translation.folder*" + str(transfolder.id)
 		})
 		inv = {
 			'name': transfolder.name,
