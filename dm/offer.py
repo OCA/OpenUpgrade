@@ -64,7 +64,8 @@ class dm_preoffer(osv.osv):
                 'code':res.code,
                 'trademark_country_ids':country,
                 'copywriter_id':res.copywriter_id.id,
-                'offer_responsible_id':res.creator_id.id
+                'offer_responsible_id':res.creator_id.id,
+                'preoffer_id':res.id
             }
         self.pool.get('dm.offer').create(cr,uid,vals)
         self.write(cr,uid,ids,{'state':'assigned'})
