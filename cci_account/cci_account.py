@@ -3,93 +3,239 @@ import time
 
 class account_move_line(osv.osv):
 
-    def search(self, cr, user, args, offset=0, limit=None, order=None,
-            context=None, count=False):
-        # will check if the partner/account exists in statement lines if not then display all partner's account.move.line
-        for item in args:
-            if (item[0] in ('partner_id','account_id')) and (not item[2]):
-                args.pop(args.index(item))
+	def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
+		# will check if the partner/account exists in statement lines if not then display all partner's account.move.line
+		for item in args:
+			if (item[0] in ('partner_id','account_id')) and (not item[2]):
+				args.pop(args.index(item))
 
-        return super(account_move_line,self).search(cr, user, args, offset, limit, order,
-            context, count)
+		return super(account_move_line,self).search(cr, user, args, offset, limit, order, context, count)
 
-    _inherit = "account.move.line"
-    _description = "account.move.line"
+	_inherit = "account.move.line"
+	_description = "account.move.line"
 
 account_move_line()
 
+
 class account_invoice(osv.osv):
 
-    _inherit = "account.invoice"
-    _columns = {
-        'dept':fields.many2one('hr.department','Department'),
-        'invoice_special':fields.boolean('Special Invoice'),
-        'internal_note': fields.text('Internal Note'),
-     }
+	_inherit = "account.invoice"
+	_columns = {
+		'dept':fields.many2one('hr.department','Department'),
+		'invoice_special':fields.boolean('Special Invoice'),
+		'internal_note': fields.text('Internal Note'),
+	}
 
-    def action_move_create(self, cr, uid, ids, context=None):
-        flag = False
-        data_invoice = self.browse(cr,uid,ids[0])
-        for line in data_invoice.invoice_line:
-            if not line.analytics_id:
-                flag = True
-        if flag:
-            raise osv.except_osv('Error!','Invoice line should have Analytic Distribution to create Analytic Entries.')
-        return super(account_invoice, self).action_move_create(cr, uid, ids, context)
+	#raise an error if one of the account_invoice_line doesn't have an analytic entry
+	def action_move_create(self, cr, uid, ids, context=None):
+		flag = False
+		data_invoice = self.browse(cr,uid,ids[0])
+		for line in data_invoice.invoice_line:
+			if not line.analytics_id:
+				flag = True
+		if flag:
+			raise osv.except_osv('Error!','Invoice line should have Analytic Distribution to create Analytic Entries.')
+#		return super(account_invoice, self).action_move_create(cr, uid, ids, context)
 
-    def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
-        inv_special=False
-        if partner_id:
-            data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
-            inv_special=data_partner.invoice_special
-            if data_partner.alert_others:
-                raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
+#	#create other move lines if the invoice_line is related to a check payment or an AWEX credence
+#	def action_move_create(self, cr, uid, ids, context=None):
+		super(account_invoice, self).action_move_create(cr, uid, ids, context)
 
-        data=super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
-        data['value']['invoice_special']=inv_special
-        return data
+		for inv in self.browse(cr, uid, ids):
+			move_obj = self.pool.get('account.move')
+			move_id = move_obj.browse(cr, uid, [inv.move_id.id])
+			#move_obj.write(cr, uid,move_id.id, {'state' : 'draft'})
 
-    def create(self, cr, uid, vals, *args, **kwargs):
-        product_ids = []
-        flag = False
-        if 'abstract_line_ids' in vals:
-            for lines in vals['abstract_line_ids']:
-                if lines[2]['product_id']:
-                    product_ids.append(lines[2]['product_id'])
-        if product_ids:
-            data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
-            for product in data_product:
-                if product.membership:
-                    flag = True
-        if vals['partner_id']:
-            data_partner = self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])
-            if data_partner.alert_membership and flag:
-                raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
-        return super(account_invoice,self).create(cr, uid, vals, *args, **kwargs)
+			#line_ids = self.read(cr, uid, [inv.id], ['invoice_line'])[0]['invoice_line']
+			#ils = self.pool.get('account.invoice.line').read(cr, uid, line_ids)
+			iml = []
+			for item in self.pool.get('account.invoice.line').search(cr, uid, [('invoice_id','=',inv.id)]):
+				line = self.pool.get('account.invoice.line').browse(cr,uid, [item])[0]
+				print line
+				if line.cci_special_reference:
+					if inv.type in ('in_invoice', 'in_refund'):
+						ref = inv.reference
+					else:
+						ref = self._convert_ref(cr, uid, inv.number)
+					temp = line.cci_special_reference.split('*')
+					obj = temp[0]
+					obj_id = int(temp[1])
+					obj_ref = self.pool.get(obj).browse(cr, uid, [obj_id])[0]
+					acc_id = self.pool.get('account.account').search(cr, uid, [('name','=','Creances AWEX - Cheques Formations et Cheques Langues')])[0]
+					iml.append({
+						'type': 'dest',
+						'name': inv['name'] or '/',
+						'price': obj_ref.awex_amount,
+						'account_id': acc_id,
+						'date_maturity': inv.date_due or False,
+						'amount_currency': False,
+						'currency_id': inv.currency_id.id or False,
+						'ref': ref,
+					})
+					iml.append({
+						'type': 'dest',
+						'name': inv['name'] or '/',
+						'price': -(obj_ref.awex_amount),
+						'account_id': inv.account_id.id,
+						'date_maturity': inv.date_due or False,
+						'amount_currency': False,
+						'currency_id': inv.currency_id.id or False,
+						'ref': ref,
+					})
+			if iml:
+				date = inv.date_invoice
+				part = inv.partner_id.id
+				new_lines = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part, date, context={})) ,iml)
+				journal_id = self.pool.get('account.journal').search(cr, uid, [('name','=','AWEX Journal')])[0]
+				journal = self.pool.get('account.journal').browse(cr, uid, journal_id)
+				if journal.sequence_id:
+					name = self.pool.get('ir.sequence').get_id(cr, uid, journal.sequence_id.id)
 
-    def write(self, cr, uid, ids,vals, *args, **kwargs):
-        product_ids = []
-        a = super(account_invoice,self).write(cr, uid, ids,vals, *args, **kwargs)
-        flag = False
-        data_inv = self.browse(cr,uid,ids[0])
-        for lines in data_inv.abstract_line_ids:
-            if lines.product_id:
-                product_ids.append(lines.product_id.id)
-        if product_ids:
-            data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
-            for product in data_product:
-                if product.membership:
-                    flag = True
-        if data_inv.partner_id.alert_membership and flag:
-            raise osv.except_osv('Error!',data_inv.partner_id.alert_explanation or 'Partner is not valid')
-        return a
+				move = {'name': name, 'line_id': new_lines, 'journal_id': journal_id}
+				if inv.period_id:
+					move['period_id'] = inv.period_id.id
+					for i in line:
+						i[2]['period_id'] = inv.period_id.id
+				print 'move: ', move
+				move_id = self.pool.get('account.move').create(cr, uid, move)
+				move_obj.post(cr, uid, [move_id])
+			#move_obj.post(cr, uid, [move_id.id])
+
+		return True
+
+	#raise an error if the partner has the warning 'alert_others' when we choose him in the account_invoice form
+	def onchange_partner_id(self, cr, uid, ids, type, partner_id,date_invoice=False, payment_term=False, partner_bank_id=False):
+		inv_special=False
+		if partner_id:
+			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_id)
+			inv_special=data_partner.invoice_special
+			if data_partner.alert_others:
+				raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
+
+		data=super(account_invoice,self).onchange_partner_id( cr, uid, ids, type, partner_id,date_invoice, payment_term, partner_bank_id)
+		data['value']['invoice_special']=inv_special
+		return data
+
+	#raise an error when we try to invoice a membership product to a partner with the 'alert_membership' warning set to TRUE
+	def create(self, cr, uid, vals, *args, **kwargs):
+		product_ids = []
+		flag = False
+		if 'abstract_line_ids' in vals:
+			for lines in vals['abstract_line_ids']:
+				if lines[2].has_key('product_id') and lines[2]['product_id']:
+					product_ids.append(lines[2]['product_id'])
+		if product_ids:
+			data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
+			for product in data_product:
+				if product.membership:
+					flag = True
+		if vals['partner_id']:
+			data_partner = self.pool.get('res.partner').browse(cr,uid,vals['partner_id'])
+			if data_partner.alert_membership and flag:
+				raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
+		return super(account_invoice,self).create(cr, uid, vals, *args, **kwargs)
+
+	#raise an error when we try to invoice a membership product to a partner with the 'alert_membership' warning set to TRUE
+	def write(self, cr, uid, ids,vals, *args, **kwargs):
+		product_ids = []
+		a = super(account_invoice,self).write(cr, uid, ids,vals, *args, **kwargs)
+		flag = False
+		data_inv = self.browse(cr,uid,ids[0])
+		for lines in data_inv.abstract_line_ids:
+			if lines.product_id:
+				product_ids.append(lines.product_id.id)
+		if product_ids:
+			data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
+			for product in data_product:
+				if product.membership:
+					flag = True
+		if data_inv.partner_id.alert_membership and flag:
+			raise osv.except_osv('Error!',data_inv.partner_id.alert_explanation or 'Partner is not valid')
+		return a
 
 account_invoice()
 
+
 class sale_order(osv.osv):
-    _inherit = "sale.order"
-    _columns = {
-        'dept' :  fields.many2one('hr.department','Department'),
-    }
+	_inherit = "sale.order"
+	_columns = {
+		'dept' :  fields.many2one('hr.department','Department'),
+	}
 
 sale_order()
+
+
+
+class account_invoice_line(osv.osv):
+	_inherit = "account.invoice.line"
+	_columns = {
+		'cci_special_reference' : fields.char('Special Reference', size=64),
+	}
+	_defaults = {
+		'cci_special_reference': lambda *a : False,
+	}
+account_invoice_line()
+
+
+#class account_invoice(osv.osv):
+
+#	_inherit = "account.invoice"
+
+#	#create other move lines if the invoice_line is related to a check payment or an AWEX credence
+#	def action_move_create(self, cr, uid, ids, context=None):
+#		super(account_invoice, self).action_move_create(cr, uid, ids, context)
+#
+#		for inv in self.browse(cr, uid, ids):
+#			move_obj = self.pool.get('account.move')
+#			move_id = move_obj.browse(cr, uid, [inv.move_id.id])
+#			#move_obj.write(cr, uid,move_id.id, {'state' : 'draft'})
+#
+#			#line_ids = self.read(cr, uid, [inv.id], ['invoice_line'])[0]['invoice_line']
+#			#ils = self.pool.get('account.invoice.line').read(cr, uid, line_ids)
+#			iml = {}
+#			for line in inv.line_ids:
+#				if line.cci_special_reference:
+#					if inv.type in ('in_invoice', 'in_refund'):
+#						ref = inv.reference
+#					else:
+#						ref = self._convert_ref(cr, uid, inv.number)
+#					temp = line.cci_special_reference.split('*')
+#					obj = temp[0]
+#					obj_id = int(temp[1])
+#					obj_ref = self.pool.get(obj).browse(cr, uid, [obj_id])
+#					acc_id = self.pool.get('account.account').search(cr, uid, [('name','=','Creances AWEX - Cheques Formations et Cheques Langues')])[0]
+#					iml.append({
+#						'type': 'dest',
+#						'name': inv['name'] or '/',
+#						'price': obj_ref.awex_amount,
+#						'account_id': acc_id,
+#						'date_maturity': inv.date_due or False,
+#						'amount_currency': diff_currency_p \
+#								and  amount_currency or False,
+#						'currency_id': diff_currency_p \
+#								and inv.currency_id.id or False,
+#						'ref': ref,
+#					})
+#					iml.append({
+#						'type': 'dest',
+#						'name': inv['name'] or '/',
+#						'price': -(obj_ref.awex_amount),
+#						'account_id': invoice.account_id,
+#						'date_maturity': inv.date_due or False,
+#						'amount_currency': diff_currency_p \
+#								and  amount_currency or False,
+#						'currency_id': diff_currency_p \
+#								and inv.currency_id.id or False,
+#						'ref': ref,
+#					})
+#			date = inv.date_invoice
+#			part = inv.partner_id.id
+#			new_lines = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part, date, context={})) ,iml)
+#
+#			line_ids = move_id.line_id
+#			line_ids.append(new_lines)
+#			move_obj.write(cr, uid,move_id.id, {'line_id' : line_ids})
+#			#move_obj.post(cr, uid, [move_id.id])
+#
+#		return True
+#account_invoice()
