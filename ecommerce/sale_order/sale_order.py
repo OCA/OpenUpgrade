@@ -16,14 +16,11 @@ class ecommerce_sale_order(osv.osv):
             ('cancel','Cancel')
         ], 'Order State',readonly=True),
         'date_order':fields.date('Date Ordered', required=True),
-
-        'epartner_shipping_id':fields.many2one('ecommerce.partner', 'Ecommerce Shipping Address', required=True),
-        'epartner_invoice_id':fields.many2one('ecommerce.partner', 'Ecommerce Invoice Address', required=True),
-
-        'partner_id':fields.many2one('res.partner', 'Contact Address'),
-        'partner_shipping_id':fields.many2one('res.partner.address', 'Shipping Address'),
-        'partner_invoice_id':fields.many2one('res.partner.address', 'Invoice Address'),
-
+        'epartner_id':fields.many2one('ecommerce.partner', 'Ecommerce Partner', required=True),
+        'epartner_add_id':fields.many2one('ecommerce.partner.address', 'Contact Address'),
+        'epartner_shipping_id':fields.many2one('ecommerce.partner.address', 'Shipping Address'),
+        'epartner_invoice_id':fields.many2one('ecommerce.partner.address', 'Invoice Address'),
+        'pricelist_id': fields.many2one('product.pricelist', 'Pricelist', required=True),
         'web_id':fields.many2one('ecommerce.shop', 'Web Shop', required=True),
         'order_lines': fields.one2many('ecommerce.order.line', 'order_id', 'Order Lines'),
         'order_id': fields.many2one('sale.order', 'Sale Order'),
@@ -32,6 +29,9 @@ class ecommerce_sale_order(osv.osv):
     _defaults = {
         'date_order': lambda *a: time.strftime('%Y-%m-%d'),
         'state': lambda *a: 'draft',
+        'epartner_invoice_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['invoice'])['invoice'],
+        'epartner_add_id': lambda self, cr, uid, context: context.get('partner_id', False) and  self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['contact'])['contact'],
+        'epartner_shipping_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['delivery'])['deliver']
     }
 
     def order_draft(self,cr,uid,ids):
@@ -43,12 +43,73 @@ class ecommerce_sale_order(osv.osv):
         return True
     
     def order_create_function(self, cr, uid, ids, context={}):
-       
         for order in self.browse(cr, uid, ids, context):
-            if not (order.partner_id and order.partner_invoice_id and order.partner_shipping_id):
+            addid = []  
+            if not (order.epartner_id and order.epartner_invoice_id and order.epartner_shipping_id):
                 raise osv.except_osv('No addresses !', 'You must assign addresses before creating the order.')
+          
+            res_prt = self.pool.get('res.partner')
+            prt_id = res_prt.search(cr, uid, [('name','=',order.epartner_id.name)])
+            res = res_prt.read(cr, uid, prt_id, ['id'], context)
+            res_add = self.pool.get('res.partner.address')
+            
+            if res:
+                partner_id = res[0]['id']
+                
+                prt_add_id =res_add.search(cr,uid,[('partner_id','=',partner_id)])
+                res_prt_add = res_add.read(cr,uid,prt_add_id,['id'],context)
+                addid = res_prt_add[0]['id']
+           
+            if not prt_id:     
+                partner_id = self.pool.get('res.partner').create(cr, uid, {
+                    'name': order.epartner_id.name,
+                    'lang':order.epartner_id.lang,
+                   })
+                order.epartner_id.address
+                for addr_type in order.epartner_id.address:
+                     addid = self.pool.get('res.partner.address').create(cr, uid, {
+                    'name': addr_type.username,
+                    'type':addr_type.type,
+                    'street':addr_type.street,
+                    'street2':addr_type.street2,
+                    'partner_id':partner_id,
+                    'zip':addr_type.zip,
+                    'city':addr_type.city,
+                    'state_id':addr_type.state_id.id,
+                    'country_id':addr_type.country_id.id,
+                    'email':addr_type.email,
+                    'phone':addr_type.phone,
+                    'fax':addr_type.fax,
+                    'mobile':addr_type.mobile,
+                })
+            data_partner = res_prt.browse(cr,uid,partner_id)
+            address_contact = False
+            address_invoice = False
+            address_delivery = False
 
-            pricelist_id=order.partner_id.property_product_pricelist
+            for tmp_addr_var in data_partner.address:
+                if tmp_addr_var.type == 'contact':
+                    address_contact = tmp_addr_var.id
+                  
+                if tmp_addr_var.type == 'invoice':
+                    address_invoice = tmp_addr_var.id
+                   
+                if tmp_addr_var.type == 'delivery':
+                    address_delivery = tmp_addr_var.id
+                 
+                if (not address_contact) and (tmp_addr_var.type == 'default'):
+                    address_contact = tmp_addr_var.id
+                   
+                if (not address_invoice) and (tmp_addr_var.type == 'default'):
+                    address_invoice = tmp_addr_var.id
+                    
+                if (not address_delivery) and (tmp_addr_var.type == 'default'):
+                     address_delivery = tmp_addr_var.id
+           
+            if (not address_contact) or (not address_invoice) or (not address_delivery) :
+                     raise osv.except_osv('Error','Please Enter Default Address!'); 
+               
+            pricelist_id=order.pricelist_id.id
             order_lines = []
             for line in order.order_lines:
                 val = {
@@ -65,25 +126,24 @@ class ecommerce_sale_order(osv.osv):
                 val.update( val_new )
                 val['tax_id'] = 'tax_id' in val and [(6,0,val['tax_id'])] or False
                 order_lines.append((0,0,val))
-              
+                      
             order_id = self.pool.get('sale.order').create(cr, uid, {
-                                                                    
                 'name': order.name,
-                'shop_id': order.web_id.shop_id.id,
+                'shop_id': order.web_id.id,
                 'user_id': uid,
                 'note': order.note or '',
-                'partner_id': order.partner_id.id,
-                'partner_invoice_id':order.partner_invoice_id.id,
-                'partner_order_id':order.partner_invoice_id.id,
-                'partner_shipping_id':order.partner_shipping_id.id,
-                'pricelist_id': pricelist_id.id,
+                'partner_id': partner_id,
+                'partner_invoice_id':address_invoice,  
+                'partner_order_id':address_contact,  
+                'partner_shipping_id':address_delivery,  
+                'pricelist_id': order.pricelist_id.id,
                 'order_line':order_lines
             })
             self.write(cr, uid, [order.id], {'state':'done', 'order_id': order_id})
-
         return True
 
     def address_set(self, cr, uid, ids, *args):
+        
         done = []
         for order in self.browse(cr, uid, ids):
             for a in [order.epartner_shipping_id.id,order.epartner_invoice_id.id]:
@@ -96,7 +156,14 @@ class ecommerce_sale_order(osv.osv):
                 'partner_invoice_id': order.epartner_shipping_id.address_id.id,
            })
         return True
-   
+    
+    def onchange_epartner_id(self, cr, uid, ids, part):
+    
+        if not part:
+            return {'value':{'epartner_invoice_id': False, 'epartner_shipping_id':False, 'epartner_add_id':False}}
+        addr = self.pool.get('ecommerce.partner').address_get(cr, uid, [part], ['delivery','invoice','contact'])
+        return {'value':{'epartner_invoice_id': addr['invoice'], 'epartner_add_id':addr['contact'], 'epartner_shipping_id':addr['delivery']}}
+    
 ecommerce_sale_order()
 
 class ecommerce_order_line(osv.osv):
@@ -110,8 +177,7 @@ class ecommerce_order_line(osv.osv):
         'product_uom_id': fields.many2one('product.uom', 'Unit of Measure',required=True),
         'price_unit': fields.float('Unit Price',digits=(16, int(config['price_accuracy'])), required=True),
     }
-    _defaults = {
-    }
+   
 ecommerce_order_line()
 
 
