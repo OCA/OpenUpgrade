@@ -20,6 +20,18 @@
 		</field>
 	</record>
 	
+	<record model="ir.ui.view" id="view_product_currency">
+		<field name="name">product.form.currency</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view"/>   
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="volume" position="after">
+	 			<field name="currency_id"/> 
+	 		</field>
+ 		</field>
+	</record>
+		
 	<!--  Special Offers -->
 		<record model="ir.ui.view" id="ecommerce_pricelist_version">
 		<field name="name">ecommerce.pricelist.version</field>
@@ -72,5 +84,79 @@
 			<field name="view_id" ref="ecommerce_reviews_view_tree"/>
 		</record>
 	    <menuitem name="ecommerce/Catalog/Reviews" id="menu_action_ecommerce_reviews_view_form" action="action_ecommerce_reviews_view_form"/>
+	    
+	      <!-- Shipping Service -->
+	   
+	  <record model="ir.ui.view" id="ecommerce_shipping_service_tree">
+		 <field name="name">ecommerce.shipping.service.tree</field>
+		 <field name="model">ecommerce.shipping.service</field>
+		 <field name="type">tree</field>
+		 <field name="arch" type="xml">
+			<tree string="Shipping Service">
+                    	<field name="shipping_type" select="1"></field>
+			    	 <field name="shipping_charge"></field>
+				    <field name="country_id"></field>
+				     <field name="currency"/>
+	   		</tree>
+		 </field>
+	    </record>
+	    
+	    <record model="ir.ui.view" id="ecommerce_shipping_service_form">
+			<field name="name">ecommerce.shipping.service.form</field>
+			<field name="model">ecommerce.shipping.service</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Shipping Service">
+					<field name="country_id"></field>
+				    <field name="shipping_type" select="1"></field>
+				    <field name="shipping_charge"></field>
+				    <field name="currency"/>
+				</form>
+			</field>
+		</record>
+	 	
+	 	<record model="ir.actions.act_window" id="action_ecommerce_shipping_service_form">
+			<field name="res_model">ecommerce.shipping.service</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="ecommerce_shipping_service_tree"/>
+		</record>
+	    <menuitem name="ecommerce/Shipping/Shipping Service" id="menu_action_ecommerce_shipping_service_form" action="action_ecommerce_shipping_service_form"/>
+	 	
+	 	<!-- Shipping Method -->
+	 	
+	 	<record model="ir.ui.view" id="ecommerce_shipping_method_tree">
+		 <field name="name">ecommerce.shipping.method.tree</field>
+		 <field name="model">ecommerce.shipping.method</field>
+		 <field name="type">tree</field>
+		 <field name="arch" type="xml">
+			<tree string="Shipping Method">
+                     <field name="country_id" select="1"></field>
+				    <field name="state_id"></field>
+				    <field name="shipping" select="1"></field>
+       		</tree>
+		 </field>
+	    </record>
+	    
+	    <record model="ir.ui.view" id="ecommerce_shipping_method_form">
+			<field name="name">ecommerce.shipping.method.form</field>
+			<field name="model">ecommerce.shipping.method</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Shipping Service">
+				    <field name="country_id" select="1"></field>
+				    <field name="state_id"></field>
+				    <field name="shipping" select="1" colspan="4" nolabel="1"></field>
+				</form>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_ecommerce_shipping_method_form">
+			<field name="res_model">ecommerce.shipping.method</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="ecommerce_shipping_method_tree"/>
+		</record>
+		<menuitem name="ecommerce/Shipping/Shipping Method" id="menu_action_ecommerce_shipping_method_form" action="action_ecommerce_shipping_method_form"/>
 	</data>
 </terp>
