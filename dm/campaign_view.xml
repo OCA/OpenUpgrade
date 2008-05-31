@@ -308,7 +308,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_proposition_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns Propositons" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns Propositions" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_proposition_my">
 		<field name="type">ir.actions.act_window</field>
@@ -318,7 +318,7 @@
 		<field name="view_id" ref="view_campaign_proposition_tree"/>
 		<field name="domain">[('user_id','=',uid)]</field>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/My Campaigns Propositons" id="menu_action_campaign_proposition_my" action="action_campaign_proposition_my"/>
+	<menuitem name="Direct Marketing/Campaigns/My Campaigns Propositions" id="menu_action_campaign_proposition_my" action="action_campaign_proposition_my"/>
 
 	<record model="ir.ui.view" id="view_campaign_proposition_segment_form">
 		<field name="name">dm.campaign.proposition.segment.form</field>

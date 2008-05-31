@@ -51,6 +51,41 @@
 
 	<!--
 	=======================================================
+	Pre-Offers 
+	=======================================================
+	-->
+		<record id="dm_preoffer_proposalforbidding0" model="dm.preoffer">
+			<field eval="&quot;bid_furni&quot;" name="code"/>
+<!--			<field name="media_id" ref="dm.dm_media_contacts0"/>-->
+			<field eval="&quot;Proposal for bidding&quot;" name="name"/>
+			<field name="market_id" ref="base.al"/>
+			<field eval="time.strftime('%Y-07-01')" name="plannned_delivery_date"/>
+			<field eval="&quot;free&quot;" name="state"/>
+			<field name="creator_id" ref="base.user_admin"/>
+			<field name="copywriter_id" ref="base.res_partner_agrolait"/>
+			<field eval="time.strftime('%Y-%m-01')" name="order_date"/>
+			<field eval="&quot;new&quot;" name="type"/>
+			<field eval="&quot;123456&quot;" name="order_number"/>
+			<field eval="time.strftime('%Y-07-01')" name="delivery_date"/>
+		</record>
+		<record id="dm_preoffer_test0" model="dm.preoffer">
+			<field eval="&quot;test&quot;" name="code"/>
+<!--			<field name="media_id" ref="dm.dm_media_newspapers0"/>-->
+			<field eval="&quot;test&quot;" name="name"/>
+			<field name="market_id" ref="base.au"/>
+			<field eval="time.strftime('%Y-10-30')" name="plannned_delivery_date"/>
+			<field eval="&quot;free&quot;" name="state"/>
+			<field name="creator_id" ref="base.user_demo"/>
+			<field name="copywriter_id" ref="base.res_partner_2"/>
+			<field eval="time.strftime('%Y-%m-15')" name="order_date"/>
+			<field eval="&quot;rewrite&quot;" name="type"/>
+			<field eval="&quot;333&quot;" name="order_number"/>
+			<field eval="time.strftime('%Y-09-01')" name="delivery_date"/>
+			<field eval="&quot;Testing to convert preoffer into offer &quot;" name="summary"/>
+		</record>
+	
+	<!--
+	=======================================================
 	Offers 
 	=======================================================
 	-->		
@@ -66,6 +101,7 @@
 			<field eval="&quot;1000000&quot;" name="quotation"/>
 			<field name="lang_orig" ref="base.lang_en"/>
 			<field eval="&quot;Discounts for Educational Loan&quot;" name="name"/>
+			<field name="offer_responsible_id" ref="base.user_admin"/>
 		</record>
 		
 		<record id="dm_offer_specialdiscountsforgirlseduloan0" model="dm.offer">
@@ -81,6 +117,7 @@
 			<field name="lang_orig" ref="base.lang_en"/>
 			<field name="offer_origin_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
 			<field eval="&quot;Special Discounts for girls - edu loan&quot;" name="name"/>
+			<field name="offer_responsible_id" ref="base.user_admin"/>
 		</record>
 
 		<record id="dm_offer_biddingoffurniture0" model="dm.offer">
@@ -96,6 +133,7 @@
 			<field eval="&quot;5000000&quot;" name="quotation"/>
 			<field name="lang_orig" ref="base.lang_en"/>
 			<field eval="&quot;Bidding of furniture&quot;" name="name"/>
+			<field name="offer_responsible_id" ref="base.user_demo"/>
 		</record>
 	</data>
 </terp>

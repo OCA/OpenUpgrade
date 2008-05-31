@@ -39,7 +39,7 @@ class dm_preoffer(osv.osv):
         'type' : fields.selection([('new','New'),('rewrite','Rewrite')],'Type'),
         'order_number' : fields.char('Order Number',size=16),
         'order_date' : fields.date('Order Date'),
-        'plannned_delivery_date' : fields.date('Planner Delivery Date') ,
+        'plannned_delivery_date' : fields.date('Planned Delivery Date') ,
         'delivery_date' : fields.date('Delivery Date'),
         'summary' : fields.text('Summary'),
         'state' : fields.selection([('free','Free'),('assigned','Assigned')],"State",readonly=True),

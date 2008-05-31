@@ -87,11 +87,11 @@
 						<field name="buffer_delay"/>
 					</page>
 					<page string="Criteria">
-						<separator string="Trademark criteria" colspan="4"/>
+						<separator string="Trademark Criteria" colspan="4"/>
 						<field name="trademark_sex"/>
 						<field name="trademark_age"/>
 						<field name="trademark_country_ids" colspan="4"/>		
-						<separator string="Geographical criteria" colspan="4"/>
+						<separator string="Geographical Criteria" colspan="4"/>
 						<field name="forbidden_country_ids" colspan="4"/>		
 						<field name="forbidden_state_ids" colspan="4" />	
 					</page>
@@ -298,28 +298,26 @@
 	</record>
 
 	<record model="ir.ui.view" id="view_dm_preoffer_form">
-		<field name="name">dm.dm.preoffer.form</field>
+		<field name="name">dm.preoffer.form</field>
 		<field name="model">dm.preoffer</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">	
 			<form string="PreOffer">
-				<field name="name" colspan="4"/>
+				<field name="name" colspan="4" select="1"/>
 				<field name="code" />
-				<field name="creator_id"/>
-				<field name="copywriter_id"/>		
+				<field name="creator_id" select="2"/>
+				<field name="copywriter_id" select="2"/>		
 				<field name="market_id"/>
 				<field name="media_id"/>
-				<field name="type"/>
+				<field name="type" select="1"/>
 				<field name="order_number"/>
 				<field name="order_date"/>
 				<field name="plannned_delivery_date"/>
 				<field name="delivery_date"/>
+				<field name="state" select="1" colspan="2"/>
+				<button name="go_to_offer" string="Create Offer" states="free" type="object" colspan="2"/>
 				<separator string="Summary" colspan="4"/>		
 				<field name="summary" nolabel="1" colspan="4"/>
-				<group col="8" colspan="4">
-					<field name="state" nolabel="1" select="1"/>
-					<button name="go_to_offer" string="Create Offers" states="free" type="object"/>
-				</group>
 			</form>
 		</field>
 	</record>
@@ -346,6 +344,6 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_preoffer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Preoffers" id="menu_dm_preoffer_form" sequence="2" action="action_dm_preoffer_form"/>	
+	<menuitem name="Direct Marketing/Offer/All PreOffers" id="menu_dm_preoffer_form" sequence="1" action="action_dm_preoffer_form"/>	
 </data>
 </terp>
