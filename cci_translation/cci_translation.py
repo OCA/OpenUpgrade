@@ -115,6 +115,7 @@ class translation_folder(osv.osv):
 		'state':fields.selection([('draft','Draft'),('confirmed','Confirmed'),('invoiced','Invoiced'),('done', 'Done')],'State',readonly=True),
 		'credit_line_id': fields.many2one('credit.line', 'Credit Line', readonly=True),
 		'invoice_id': fields.many2one('account.invoice', 'Invoice'),
+		'purchase_order': fields.many2one('purchase.order', 'Purchase Order'),
 	}
 	_defaults = {
 		'state' : lambda *a : 'draft',

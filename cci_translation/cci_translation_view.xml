@@ -14,12 +14,13 @@
 					<field name="base_amount" select="1"/>
 					<field name="awex_amount" select="1" />
 					<field name="awex_eligible" select="2"/>
+					<field name="purchase_order"/>
 					<newline/>
 					<field name="state" select="2"/>
-						<group col="8" colspan="2">
-							<button name="confirmed" string="Confirmed" states="draft"/>
-							<button name="done" string="Done" states="invoiced"/>
-						</group>
+					<group col="8" colspan="2">
+						<button name="confirmed" string="Confirmed" states="draft"/>
+						<button name="done" string="Done" states="invoiced"/>
+					</group>
 				</form>
 			</field>
 		</record>
