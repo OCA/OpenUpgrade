@@ -169,7 +169,7 @@ class account_analytic_plan_instance(osv.osv):
 			return res
 
 	def create(self, cr, uid, vals, context=None):
-		if context and context['journal_id']:
+		if context and 'journal_id' in context:
 			journal= self.pool.get('account.journal').browse(cr,uid,context['journal_id'])
 			vals.update({'plan_id': journal.plan_id.id})
 
@@ -255,6 +255,12 @@ class account_invoice_line(osv.osv):
 	_columns = {
 		'analytics_id':fields.many2one('account.analytic.plan.instance','Analytic Distribution'),
 	}
+
+	def create(self, cr, uid, vals, context=None):
+		if 'analytics_id' in vals and isinstance(vals['analytics_id'],tuple):
+			vals['analytics_id'] = vals['analytics_id'][0]
+		return super(account_invoice_line, self).create(cr, uid, vals, context)
+
 	def move_line_get_item(self, cr, uid, line, context={}):
 		res= super(account_invoice_line,self).move_line_get_item(cr, uid, line, context={})
 		res ['analytics_id']=line.analytics_id and line.analytics_id.id or False
