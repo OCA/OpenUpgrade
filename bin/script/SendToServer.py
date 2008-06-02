@@ -120,9 +120,13 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                     res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
                 oDoc2.store()
                 url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
-                fp = file(url, 'rb')
+                temp1=url.replace("%20"," ")
+                url1=temp1.__getslice__(1,temp1.__len__())
+                if os.name=='nt':    
+                    fp=file(url1,'rb')
+                else:
+                    fp=file(url,'rb')
                 data=fp.read()
-                fp.close()
                 self.getInverseFieldsRecord(0)
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
@@ -176,11 +180,8 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                     oPar.SelectedItem = oPar.Items[nVal]
                     if nVal==0:
                         oPar.update()
-
         except:
             pass
-
-
 if __name__<>"package" and __name__=="__main__":
     SendtoServer(None)
 elif __name__=="package":
@@ -188,5 +189,3 @@ elif __name__=="package":
             SendtoServer,
             "org.openoffice.tiny.report.sendtoserver",
             ("com.sun.star.task.Job",),)
-
-
