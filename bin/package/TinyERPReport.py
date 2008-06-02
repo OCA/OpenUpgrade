@@ -109,11 +109,13 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
 
 def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableName=""):
     if sTableName.find(".") != -1:
+        print sTableName,1
         for i in range(aItemList.__len__()):
             if aComponentAdd[i]==sTableName:
                 sLVal=aItemList[i].__getitem__(1).__getslice__(aItemList[i].__getitem__(1).find(",'")+2,aItemList[i].__getitem__(1).find("')"))
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal:
+                        print aObjectList[j]
                         insVariable.addItem(aObjectList[j],1)
         VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList, sTableName.__getslice__(0,sTableName.rfind(".")))
     else:
@@ -122,6 +124,7 @@ def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableNa
                 sLVal=aItemList[i].__getitem__(1).__getslice__(aItemList[i].__getitem__(1).find(",'")+2,aItemList[i].__getitem__(1).find("')"))
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal and sLVal!="":
+                        print aObjectList[j]
                         insVariable.addItem(aObjectList[j],1)
 
 def getList(aObjectList,host,count):
@@ -213,6 +216,7 @@ def getPath(sPath,sMain):
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
     parent=""
+#    bFlag = False
     Doc =desktop.getCurrentComponent()
     #oVC = Doc.CurrentController.getViewCursor()
     oParEnum = Doc.getTextFields().createEnumeration()
@@ -1183,7 +1187,7 @@ if __name__<>"package":
     from lib.functions import *
     from ServerParameter import *
     from LoginTest import *
-    database="test"
+    database="db_test002"
     uid = 3
 
 #class RepeatIn:
@@ -1229,8 +1233,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.aVariableList=[]
         # Call method to perform Enumration on Report Document
         EnumDocument(self.aItemList,self.aComponentAdd)
-        print self.aItemList
-        print self.aComponentAdd
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
         # filled if condition is true
         desktop=getDesktop()
@@ -1286,7 +1288,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 if tcur.TextTable:
 
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
-                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
+                           VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
 
             self.bModify=bFromModify
 
@@ -1320,6 +1322,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(8,len(var)))])
                 fields=['name','model']
                 self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                print self.model_res
                 if self.model_res <> []:
                     if var.__getslice__(0,8)<>'List of ':
                         self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
@@ -1353,7 +1356,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             docinfo=doc.getDocumentInfo()
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxText("cmbVariable")
-            sItem= self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
                 if var.__getslice__(0,8)=='List of ':
                     if var.__getslice__(0,8)==sItem.__getslice__(0,8):
@@ -1446,6 +1448,8 @@ elif __name__=="package":
             "org.openoffice.tiny.report.repeatln",
             ("com.sun.star.task.Job",),)
 
+
+
 import uno
 import string
 import unohelper
@@ -1456,7 +1460,7 @@ if __name__<>"package":
     from lib.functions import *
     from lib.error import ErrorDialog
     from LoginTest import *
-    database="test"
+    database="db_test002"
     uid = 3
 
 
@@ -1531,7 +1535,7 @@ class Fields(unohelper.Base, XJobExecutor ):
                                 #self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextTable:
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
-                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
+                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
 
             self.bModify=bFromModify
             if self.bModify==True:
@@ -1545,14 +1549,18 @@ class Fields(unohelper.Base, XJobExecutor ):
 #                self.win.setEditText("txtUName",sDisplayName)
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
-                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-                self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
-                fields=['name','model']
-                self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
-                if self.model_res <> []:
-                    self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
-                else:
-                    self.insVariable.addItem(var ,self.insVariable.getItemCount())
+#                try:
+                    sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
+                    fields=['name','model']
+                    self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                    if self.model_res <> []:
+                        self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+                    else:
+                        self.insVariable.addItem(var ,self.insVariable.getItemCount())
+#                except:
+#                        ErrorDialog("Error")
+#                        pass
                 #res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
 
             self.win.doModalDialog("lstFields",self.sValue)
@@ -1613,18 +1621,20 @@ class Fields(unohelper.Base, XJobExecutor ):
 
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
-            sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-            desktop=getDesktop()
-            doc =desktop.getCurrentComponent()
-            docinfo=doc.getDocumentInfo()
-            self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
-            self.aListFields=[]
-            tempItem = self.win.getComboBoxText("cmbVariable")
-            for var in self.aVariableList:
-                if var.__getslice__(0,var.find("(")) == tempItem.__getslice__(0,tempItem.find("(")):
-                    sItem=var
-            genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-
+            try:
+                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
+                desktop=getDesktop()
+                doc =desktop.getCurrentComponent()
+                docinfo=doc.getDocumentInfo()
+                self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
+                self.aListFields=[]
+                tempItem = self.win.getComboBoxText("cmbVariable")
+                for var in self.aVariableList:
+                    if var.__getslice__(0,var.find("(")) == tempItem.__getslice__(0,tempItem.find("(")):
+                        sItem=var
+                genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+            except:
+                import traceback;traceback.print_exc()
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -1673,7 +1683,6 @@ elif __name__=="package":
         Fields,
         "org.openoffice.tiny.report.fields",
         ("com.sun.star.task.Job",),)
-
 
 import uno
 import string
@@ -2160,6 +2169,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
         self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
+#        self.res_other.sort(lambda x, y: cmp(x['name'],y['name']))
 
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
@@ -2191,12 +2201,21 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
             fp_name = tempfile.mktemp('.'+"sxw")
+            fp_name1="r"+fp_name
+            fp_path=os.path.join(fp_name1).replace("\\","/") 
+            fp_win=fp_path.__getslice__(1,fp_path.__len__())             
             if res['report_sxw_content']:
                 data = base64.decodestring(res['report_sxw_content'])
-                fp = file(fp_name, 'wb')
+                if os.name=='nt':
+                    fp = file(fp_win, 'wb')
+                else:                
+                    fp = file(fp_name, 'wb')
                 fp.write(data)
                 fp.close()
-            url="file://"+fp_name
+            if os.name=='nt':                
+                 url="file:///"+fp_win
+            else:  
+                 url="file:///"+fp_name   
             arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
             docinfo2=oDoc2.getDocumentInfo()
@@ -2358,9 +2377,13 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                     res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
                 oDoc2.store()
                 url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
-                fp = file(url, 'rb')
+                temp1=url.replace("%20"," ")
+                url1=temp1.__getslice__(1,temp1.__len__())
+                if os.name=='nt':    
+                    fp=file(url1,'rb')
+                else:
+                    fp=file(url,'rb')
                 data=fp.read()
-                fp.close()
                 self.getInverseFieldsRecord(0)
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
@@ -2414,11 +2437,8 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                     oPar.SelectedItem = oPar.Items[nVal]
                     if nVal==0:
                         oPar.update()
-
         except:
             pass
-
-
 if __name__<>"package" and __name__=="__main__":
     SendtoServer(None)
 elif __name__=="package":
@@ -2426,8 +2446,6 @@ elif __name__=="package":
             SendtoServer,
             "org.openoffice.tiny.report.sendtoserver",
             ("com.sun.star.task.Job",),)
-
-
 
 
 import uno
@@ -2799,7 +2817,7 @@ if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
     from lib.error import *
-    database="test"
+    database="placement1"
     uid = 3
 
 class ExportToRML( unohelper.Base, XJobExecutor ):
@@ -2818,32 +2836,42 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
 
         # Read Data from sxw file
         tmpsxw = tempfile.mktemp('.'+"sxw")
+        
+        
         if not doc.hasLocation():
             mytype = Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             doc.storeAsURL("file://"+tmpsxw,mytype)
         url=doc.getURL().__getslice__(7,doc.getURL().__len__())
-        fp = file(url, 'rb')
+        temp=url.replace("%20"," ")
+        url1=temp.__getslice__(1,temp.__len__())
+        if os.name=='nt':
+                fp = file(url1, 'rb')
+        else:
+                fp = file(url, 'rb')
         data=fp.read()
         fp.close()
-
         #tmprml = tempfile.mktemp('.'+"rml")
         if docinfo.getUserFieldValue(2) == "":
             ErrorDialog("Please Save this file on server","Use Send To Server Option in Tiny Report Menu","Error")
             exit(1)
-        tmprml = self.GetAFileName()
-        if tmprml == None:
+        tmprml =self.GetAFileName()
+        temp=tmprml.replace("%20"," ")
+        if temp == None:
             exit(1)
-        tmprml = tmprml.__getslice__(7,len(tmprml))
-
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
+        temp = temp.__getslice__(7,len(temp))
+        t= temp.__getslice__(1,len(temp))
         try:
+            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
             if res['report_rml_content']:
                 data = res['report_rml_content']
-                fp = file(tmprml, 'wb')
+                if os.name=='nt':
+                        fp = file(t, 'wb')
+                else:
+                        fp=file(temp,'wb')        
                 fp.write(data)
                 fp.close()
-        except:
+        except Exception,e:
             pass
         #self.win.doModalDialog("",None)
 
@@ -2858,7 +2886,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         oUcb = createUnoService("com.sun.star.ucb.SimpleFileAccess")
         oFileDialog.initialize(sFilePickerArgs)
         oFileDialog.appendFilter("TinyReport File Save To ....","*.rml")
-        oFileDialog.setCurrentFilter("Report Markup Language(rml)")
+      #  oFileDialog.setCurrentFilter("Report Markup Language(rml)")
         f_path=tempfile.mktemp("","")
         f_path = "Tiny-"+f_path.__getslice__(f_path.rfind("/")+1,len(f_path))
         oFileDialog.setDefaultName(f_path)
@@ -2875,8 +2903,6 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
             sPath = None
         oFileDialog.dispose()
         return sPath
-
-
 if __name__<>"package" and __name__=="__main__":
     ExportToRML(None)
 elif __name__=="package":
