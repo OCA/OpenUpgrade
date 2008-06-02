@@ -57,8 +57,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.aVariableList=[]
         # Call method to perform Enumration on Report Document
         EnumDocument(self.aItemList,self.aComponentAdd)
-        print self.aItemList
-        print self.aComponentAdd
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
         # filled if condition is true
         desktop=getDesktop()
@@ -114,7 +112,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                 if tcur.TextTable:
 
                     if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
-                        VariableScope(tcur,self.aVariableList,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
+                           VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
 
             self.bModify=bFromModify
 
