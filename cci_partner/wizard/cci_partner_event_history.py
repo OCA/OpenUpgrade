@@ -28,6 +28,7 @@
 
 import wizard
 import pooler
+import time
 
 _event_form = '''<?xml version="1.0"?>
         <form string="Partner Event">
@@ -49,7 +50,7 @@ _event_form = '''<?xml version="1.0"?>
 </form>'''
 
 _event_fields = {
-        'user_id': {'domain': [], 'relation': 'res.users', 'string': 'User', 'context': '', 'views': {}, 'type': 'many2one'},
+        'user_id': {'domain': [], 'relation': 'res.users', 'string': 'User', 'context': '', 'views': {}, 'type': 'many2one',},
        'name': {'required': True, 'type': 'char', 'string': 'Events', 'size': 64},
        'probability': {'type': 'float', 'string': 'Probability (0.50)'},
        'canal_id': {'domain': [], 'relation': 'res.partner.canal', 'string': 'Channel', 'context': '', 'views': {}, 'type': 'many2one'},
@@ -59,7 +60,7 @@ _event_fields = {
        'som': {'domain': [], 'relation': 'res.partner.som', 'string': 'State of Mind', 'context': '', 'views': {}, 'type': 'many2one'},
        'partner_type': {'selection': [('customer', 'Customer'), ('retailer', 'Retailer'), ('prospect', 'Commercial Prospect')], 'type': 'selection', 'string': 'Partner Relation'},
        'planned_revenue': {'type': 'float', 'string': 'Planned Revenue'},
-       'date': {'type': 'datetime', 'string': 'Date', 'size': 16},
+       'date': {'type': 'datetime', 'string': 'Date', 'size': 16, 'default': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S')},
        'document': {'selection': [('product.product', 'Product'), ('crm.case', 'Case'), ('account.invoice', 'Invoice'), ('stock.production.lot', 'Production Lot'), ('project.project', 'Project'), ('project.task', 'Project task'), ('purchase.order', 'Purchase Order'), ('sale.order', 'Sale Order')], 'type': 'reference', 'string': 'Document', 'size': 128}
 }
 def create_event(self, cr, uid, data, context):
