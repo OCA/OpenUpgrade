@@ -71,7 +71,7 @@ class ecommerce_partner_address(osv.osv):
     _rec_name = "username"
     _name="ecommerce.partner.address"
     _columns={
-        'username':fields.char('User Name',size=128,select=True,required=True),
+        'username':fields.char('Contact Name',size=128,select=True,required=True),
         'partner_id': fields.many2one('ecommerce.partner', 'Partner', required=True, ondelete='cascade', select=True),
         'type': fields.selection( [ ('default','Default'),('invoice','Invoice'), ('delivery','Delivery'), ('contact','Contact'), ('other','Other') ],'Address Type'),
         'street': fields.char('Street', size=128),
