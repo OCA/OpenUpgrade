@@ -31,8 +31,8 @@ from osv import osv, fields
 VoteValues = [('0','Very Bad'),('25', 'Bad'),('50','None'),('75','Good'),('100','Very Good') ]
 DefaultVoteValue = '50'
 
-class idm_idea(osv.osv):
-    _name = 'idm.idea'
+class idea_idea(osv.osv):
+    _name = 'idea.idea'
     _rec_name = 'title'
 
     def _vote_avg_compute(self, cr, uid, ids, name, arg, context = None):
@@ -40,11 +40,11 @@ class idm_idea(osv.osv):
 	    return {}
 
 	sql = """
-	select idm_vote.idea_id as id,
-	       avg( cast( idm_vote.score as integer ) ) as avg
-	  from idm_vote
-	 where idm_vote.idea_id in (%s)
-	 group by idm_vote.idea_id
+	select idea_vote.idea_id as id,
+	       avg( cast( idea_vote.score as integer ) ) as avg
+	  from idea_vote
+	 where idea_vote.idea_id in (%s)
+	 group by idea_vote.idea_id
 	""" % ','.join(map( lambda x: '%d', ids ))
 
 	cr.execute(sql, ids)
@@ -55,11 +55,11 @@ class idm_idea(osv.osv):
 	    return {}
 
 	sql = """
-	    select idm_idea.id as id, 
-	           count(idm_vote) as cnt 
-	    from idm_idea left outer join idm_vote on idm_idea.id = idm_vote.idea_id
-	    where idm_idea.id in (%s)
-	    group by idm_idea.id
+	    select idea_idea.id as id, 
+	           count(idea_vote) as cnt 
+	    from idea_idea left outer join idea_vote on idea_idea.id = idea_vote.idea_id
+	    where idea_idea.id in (%s)
+	    group by idea_idea.id
 	""" % ','.join(map(lambda x: '%d', ids))
 
 	cr.execute(sql,ids)
@@ -70,11 +70,11 @@ class idm_idea(osv.osv):
 	    return {}
 
 	sql = """
-	    select idm_idea.id as id, 
-	           count(idm_comment) as cnt 
-	    from idm_idea left outer join idm_comment on idm_idea.id = idm_comment.idea_id
-	    where idm_idea.id in (%s)
-	    group by idm_idea.id
+	    select idea_idea.id as id, 
+	           count(idea_comment) as cnt 
+	    from idea_idea left outer join idea_comment on idea_idea.id = idea_comment.idea_id
+	    where idea_idea.id in (%s)
+	    group by idea_idea.id
 	""" % ','.join(map(lambda x: '%d', ids))
 
 	cr.execute(sql,ids)
@@ -82,7 +82,7 @@ class idm_idea(osv.osv):
 
     def _vote_read(self, cr, uid, ids, name, arg, context = None):
 	res = {}
-	vote_obj = self.pool.get('idm.vote')
+	vote_obj = self.pool.get('idea.vote')
 	votes_ids = vote_obj.search(cr, uid, [('idea_id', 'in', ids), ('user_id', '=', uid)])
 	for vote in vote_obj.browse(cr, uid, votes_ids, context):
 	    res[vote.idea_id.id] = vote.score
@@ -90,7 +90,7 @@ class idm_idea(osv.osv):
 	return res
 
     def _vote_save(self, cr, uid, id, field_name, field_value, arg, context = None):
-	vote_obj = self.pool.get('idm.vote')
+	vote_obj = self.pool.get('idea.vote')
 	vote = vote_obj.search(cr,uid,[('idea_id', '=', id),('user_id', '=', uid)])
 	textual_value = str(field_value)
 	if vote:
@@ -103,9 +103,9 @@ class idm_idea(osv.osv):
 	'user_id': fields.many2one('res.users', 'Creator', required=True, readonly=True),
 	'title': fields.char('Idea Summary', size=64, required=True),
 	'description': fields.text('Description', required=True, help='Content of the idea'),
-	'comment_ids': fields.one2many('idm.comment', 'idea_id', 'Comments'),
+	'comment_ids': fields.one2many('idea.comment', 'idea_id', 'Comments'),
 	'create_date' : fields.datetime( 'Creation date', readonly=True),
-	'vote_ids' : fields.one2many('idm.vote', 'idea_id', 'Vote'),
+	'vote_ids' : fields.one2many('idea.vote', 'idea_id', 'Vote'),
 	'my_vote' : fields.function(_vote_read, fnct_inv = _vote_save, string="My Vote", method=True, type="selection", selection=VoteValues),
 	'vote_avg' : fields.function(_vote_avg_compute, method=True, string="Average Score", type="float"),
 	'count_votes' : fields.function(_vote_count, method=True, string="Count of votes", type="integer"),
@@ -120,14 +120,14 @@ class idm_idea(osv.osv):
     _order = 'id desc'
 
 
-idm_idea()
+idea_idea()
 
-class idm_comment(osv.osv):
-    _name = 'idm.comment'
+class idea_comment(osv.osv):
+    _name = 'idea.comment'
     _description = 'Comments'
     _rec_name = 'content'
     _columns = {
-	'idea_id': fields.many2one('idm.idea', 'Idea', required=True, ondelete='cascade' ),
+	'idea_id': fields.many2one('idea.idea', 'Idea', required=True, ondelete='cascade' ),
 	'user_id': fields.many2one('res.users', 'User', required=True ),
 	'content': fields.text( 'Comment', required=True ),
 	'create_date' : fields.datetime( 'Creation date', readonly=True),
@@ -137,18 +137,18 @@ class idm_comment(osv.osv):
     }
     _order = 'id desc'
 
-idm_comment()
+idea_comment()
 
-class idm_vote(osv.osv):
-    _name = 'idm.vote'
+class idea_vote(osv.osv):
+    _name = 'idea.vote'
     _rec_name = 'score'
     _columns = {
 	'user_id': fields.many2one( 'res.users', 'User'),
-	'idea_id': fields.many2one('idm.idea', 'Idea', required=True, ondelete='cascade'),
+	'idea_id': fields.many2one('idea.idea', 'Idea', required=True, ondelete='cascade'),
 	'score': fields.selection( VoteValues, 'Score', required=True)
     }
     _defaults = {
 	'score': lambda *a: DefaultVoteValue,
     }
 
-idm_vote()
+idea_vote()
