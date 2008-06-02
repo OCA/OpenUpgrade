@@ -32,7 +32,7 @@
 	<field name="type" ref="payment_type_pay"/>
 	<field name="bank_id" ref="main_bank"/>
 	<field name="journal" model="account.journal" search="[('type','=','cash')]"/>
-	<field name="account">1</field> <!-- FIXME -->
+	<!--<field name="account">1</field>--> <!-- FIXME -->
   </record>
 
 </data>
