@@ -128,7 +128,7 @@
 		<record id="dm_campaign_0" model="dm.campaign">
 			<field eval="&quot;inprogress&quot;" name="planning_state"/>
 			<field eval="time.strftime('%Y-%m-15')" name="dtp_date_real_delivery"/>
-			<field eval="time.strftime('%Y-%m-31')" name="dtp_date_delivery"/>
+			<field eval="time.strftime('%Y-%m-30')" name="dtp_date_delivery"/>
 			<field name="dtp_operator" ref="base.res_partner_8"/>
 			<field eval="time.strftime('%Y-08-15')" name="dtp_date_recovered"/>
 			<field eval="time.strftime('%Y-09-15')" name="dtp_intervention_type"/>
@@ -143,7 +143,7 @@
 		<record id="dm_campaign_1" model="dm.campaign">
 			<field eval="&quot;Furnitures&quot;" name="name"/>
 			<field eval="time.strftime('%Y-%m-21')" name="date_start"/>
-			<field eval="time.strftime('2009-%m-31')" name="date"/>
+			<field eval="time.strftime('2009-%m-30')" name="date"/>
 			<field name="partner_id" ref="base.res_partner_6"/>
 			<field name="trademark_id" ref="dm.dm_trademark_tinyerp0"/>
 			<field eval="&quot;general&quot;" name="campaign_type"/>
@@ -175,7 +175,7 @@
 		<record id="dm_campaign_2" model="dm.campaign">
 			<field eval="&quot;Increase in Sales Margin&quot;" name="name"/>
 			<field eval="time.strftime('%Y-%m-11')" name="date_start"/>
-			<field eval="time.strftime('2009-%m-31')" name="date"/>
+			<field eval="time.strftime('2009-%m-30')" name="date"/>
 			<field name="partner_id" ref="base.res_partner_6"/>
 			<field name="trademark_id" ref="dm.dm_trademark_tinyerp0"/>
 			<field eval="&quot;general&quot;" name="campaign_type"/>
@@ -198,7 +198,7 @@
 		<record id="dm_campaign_3" model="dm.campaign">
 			<field eval="&quot;Increse the flow of production&quot;" name="name"/>
 			<field eval="time.strftime('%Y-%m-15')" name="date_start"/>
-			<field eval="time.strftime('2009-%m-31')" name="date"/>
+			<field eval="time.strftime('2009-%m-30')" name="date"/>
 			<field name="partner_id" ref="base.res_partner_6"/>
 			<field name="trademark_id" ref="dm.dm_trademark_tinyerp0"/>
 			<field eval="&quot;general&quot;" name="campaign_type"/>
