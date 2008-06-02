@@ -62,13 +62,16 @@ class mrp_production_workcenter_line(osv.osv):
 
 	_columns = {
 		'state': fields.selection([('draft','Draft'),('confirm', 'Confirm'),('cancel','Canceled'),('done','Done')],'State', readonly=True),
-		'date_start': fields.datetime('Start Date'),
-		'date_finnished': fields.datetime('End Date'),
-		'delay': fields.function(_calc_delay, method=True, type='integer', string='Delay', help="This is delay between operation start and stop in this workcenter"),
+#		'date_start': fields.datetime('Start Date'),
+#		'date_finnished': fields.datetime('End Date'),
+#		'delay': fields.function(_calc_delay, method=True, string='Delay', help="This is delay between operation start and stop in this workcenter"),
+		'delay': fields.float('delay', required=True),
+
 
 	}
 	_defaults = {
 		'state': lambda *a: 'draft',
+		'delay': lambda *a: 0.0
 	}
 
 	def action_draft(self, cr, uid, ids):
@@ -113,3 +116,22 @@ class mrp_production(osv.osv):
 		return super(mrp_production,self).action_cancel(cr,uid,ids)
 
 mrp_production()
+
+class mrp_operations_operation_code(osv.osv):
+	_name="mrp_operations.operation.code"
+	_columns={
+		'name': fields.char('Operation Name',size=64, required=True),
+		'code': fields.char('Code', size=16, required=True),
+		'start_stop': fields.selection([('start','Start'),('stop','Stop')], 'State', required=True),
+	}
+mrp_operations_operation_code()
+
+class mrp_operations_operation(osv.osv):
+	_name="mrp_operations.operation"
+	_columns={
+		'Production_id':fields.many2one('mrp.production','Production'),
+		'Workcenter_id':fields.many2one('mrp.workcenter','Workcenter'),
+		'code_id':fields.many2one('mrp_operations.operation.code','Code'),
+		}
+
+mrp_operations_operation()

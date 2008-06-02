@@ -31,7 +31,7 @@
 
 	""",
 	"init_xml" : [],
-	"demo_xml" : [],
+	"demo_xml" : ["mrp_operation_data.xml"],
 	"update_xml" : ["mrp_operations_workflow.xml","mrp_operations_view.xml",],
 	"active": False,
 	"installable": True
