@@ -41,7 +41,6 @@ class purchase_order(osv.osv):
         return True
 
     def button_purchase_temp(self ,cr, uid, ids,context={}):
-        print "helloooo"
         wf_service = netsvc.LocalService('workflow')
         for po in self.browse(cr, uid, ids):
             if po.amount_total < 10000:
@@ -51,7 +50,6 @@ class purchase_order(osv.osv):
         return True
 
     def wkf_write_approvator(self ,cr, uid, ids,context={}):
-        print "wkf_write_approvator"
         wf_service = netsvc.LocalService('workflow')
         for po in self.browse(cr, uid, ids):
             self.write(cr, uid, [po.id], { 'validator' : uid})
