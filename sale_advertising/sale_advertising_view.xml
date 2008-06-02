@@ -149,5 +149,16 @@
 			</field>
 		</record>
 
+<!-- New Menuitem -->
+	<record model="ir.actions.act_window" id="advertising_sale_order_action">
+		<field name="name">All Advertising Sale Orders</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('published_customer','&lt;&gt;', False)]</field>
+	</record>
+	<menuitem name="Sales Management/Advertising/All Advertising Sale Orders" id="menu_advertising_sale_order" action="advertising_sale_order_action"/>
+
 	</data>
 </terp>
