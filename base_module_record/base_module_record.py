@@ -135,11 +135,14 @@ class base_module_record(osv.osv):
 			else:
 				field = doc.createElement('field')
 				field.setAttribute("name", key)
-				if type(val) not in (type(''),type(u'')):
-					val=str(val)
-				val  = val and ('"'+val.replace('\\','\\\\').replace('"','\"')+'"') or 'False'
-				if type(val)==type(''):
+
+				if not isinstance(val, basestring):
+					val = str(val)
+
+				val = val and ('"""%s"""' % val.replace('\\', '\\\\').replace('"', '\"')) or 'False'
+				if isinstance(val, basestring):
 					val = val.decode('utf8')
+
 				field.setAttribute(u"eval",  val)
 				record.appendChild(field)
 		return record_list, noupdate
