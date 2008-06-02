@@ -53,7 +53,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
         self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
-        self.res_other.sort(lambda x, y: cmp(x['name'],y['name']))
+#        self.res_other.sort(lambda x, y: cmp(x['name'],y['name']))
 
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
@@ -85,12 +85,21 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
             fp_name = tempfile.mktemp('.'+"sxw")
+            fp_name1="r"+fp_name
+            fp_path=os.path.join(fp_name1).replace("\\","/") 
+            fp_win=fp_path.__getslice__(1,fp_path.__len__())             
             if res['report_sxw_content']:
                 data = base64.decodestring(res['report_sxw_content'])
-                fp = file(fp_name, 'wb')
+                if os.name=='nt':
+                    fp = file(fp_win, 'wb')
+                else:                
+                    fp = file(fp_name, 'wb')
                 fp.write(data)
                 fp.close()
-            url="file://"+fp_name
+            if os.name=='nt':                
+                 url="file:///"+fp_win
+            else:  
+                 url="file:///"+fp_name   
             arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
             docinfo2=oDoc2.getDocumentInfo()
