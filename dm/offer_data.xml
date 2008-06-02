@@ -1,6 +1,13 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
+		<record id="dm_media_contacts0" model="dm.media">
+			<field eval="&quot;Contacts&quot;" name="name"/>
+		</record>
+		<record id="dm_media_newspapers0" model="dm.media">
+			<field eval="&quot;Newspapers&quot;" name="name"/>
+		</record>
+	
 	<!--
 	=======================================================
 	Offer - Category 
@@ -56,7 +63,7 @@
 	-->
 		<record id="dm_preoffer_proposalforbidding0" model="dm.preoffer">
 			<field eval="&quot;bid_furni&quot;" name="code"/>
-<!--			<field name="media_id" ref="dm.dm_media_contacts0"/>-->
+			<field name="media_id" ref="dm_media_contacts0"/>
 			<field eval="&quot;Proposal for bidding&quot;" name="name"/>
 			<field name="market_id" ref="base.al"/>
 			<field eval="time.strftime('%Y-07-01')" name="plannned_delivery_date"/>
@@ -70,11 +77,11 @@
 		</record>
 		<record id="dm_preoffer_test0" model="dm.preoffer">
 			<field eval="&quot;test&quot;" name="code"/>
-<!--			<field name="media_id" ref="dm.dm_media_newspapers0"/>-->
+			<field name="media_id" ref="dm_media_newspapers0"/>
 			<field eval="&quot;test&quot;" name="name"/>
 			<field name="market_id" ref="base.au"/>
 			<field eval="time.strftime('%Y-10-30')" name="plannned_delivery_date"/>
-			<field eval="&quot;free&quot;" name="state"/>
+			<field eval="&quot;assigned&quot;" name="state"/>
 			<field name="creator_id" ref="base.user_demo"/>
 			<field name="copywriter_id" ref="base.res_partner_2"/>
 			<field eval="time.strftime('%Y-%m-15')" name="order_date"/>
@@ -134,6 +141,21 @@
 			<field name="lang_orig" ref="base.lang_en"/>
 			<field eval="&quot;Bidding of furniture&quot;" name="name"/>
 			<field name="offer_responsible_id" ref="base.user_demo"/>
+		</record>
+		
+		<record id="dm_offer_test0" model="dm.offer">
+			<field name="copywriter_id" ref="base.res_partner_2"/>
+			<field eval="&quot;Testing to convert preoffer into offer &quot;" name="notes"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field eval="&quot;test&quot;" name="code"/>
+			<field eval="&quot;test&quot;" name="name"/>
+			<field name="offer_responsible_id" ref="base.user_demo"/>
+			<field eval="[(6,0,[ref('base.au')])]" name="trademark_country_ids"/>
+			<field eval="&quot;rewrite&quot;" name="type"/>
+			<field eval="time.strftime('%Y-%m-15')" name="order_date"/>
+			<field eval="time.strftime('%Y-10-30')" name="plannned_delivery_date"/>
+			<field eval="time.strftime('%Y-09-01')" name="delivery_date"/>
 		</record>
 	</data>
 </terp>
