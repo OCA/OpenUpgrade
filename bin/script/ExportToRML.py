@@ -9,7 +9,7 @@ if __name__<>"package":
     from lib.gui import *
     from LoginTest import *
     from lib.error import *
-    database="test"
+    database="placement1"
     uid = 3
 
 class ExportToRML( unohelper.Base, XJobExecutor ):
@@ -28,32 +28,42 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
 
         # Read Data from sxw file
         tmpsxw = tempfile.mktemp('.'+"sxw")
+        
+        
         if not doc.hasLocation():
             mytype = Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             doc.storeAsURL("file://"+tmpsxw,mytype)
         url=doc.getURL().__getslice__(7,doc.getURL().__len__())
-        fp = file(url, 'rb')
+        temp=url.replace("%20"," ")
+        url1=temp.__getslice__(1,temp.__len__())
+        if os.name=='nt':
+                fp = file(url1, 'rb')
+        else:
+                fp = file(url, 'rb')
         data=fp.read()
         fp.close()
-
         #tmprml = tempfile.mktemp('.'+"rml")
         if docinfo.getUserFieldValue(2) == "":
             ErrorDialog("Please Save this file on server","Use Send To Server Option in Tiny Report Menu","Error")
             exit(1)
-        tmprml = self.GetAFileName()
-        if tmprml == None:
+        tmprml =self.GetAFileName()
+        temp=tmprml.replace("%20"," ")
+        if temp == None:
             exit(1)
-        tmprml = tmprml.__getslice__(7,len(tmprml))
-
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
+        temp = temp.__getslice__(7,len(temp))
+        t= temp.__getslice__(1,len(temp))
         try:
+            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
             if res['report_rml_content']:
                 data = res['report_rml_content']
-                fp = file(tmprml, 'wb')
+                if os.name=='nt':
+                        fp = file(t, 'wb')
+                else:
+                        fp=file(temp,'wb')        
                 fp.write(data)
                 fp.close()
-        except:
+        except Exception,e:
             pass
         #self.win.doModalDialog("",None)
 
@@ -68,7 +78,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         oUcb = createUnoService("com.sun.star.ucb.SimpleFileAccess")
         oFileDialog.initialize(sFilePickerArgs)
         oFileDialog.appendFilter("TinyReport File Save To ....","*.rml")
-        oFileDialog.setCurrentFilter("Report Markup Language(rml)")
+      #  oFileDialog.setCurrentFilter("Report Markup Language(rml)")
         f_path=tempfile.mktemp("","")
         f_path = "Tiny-"+f_path.__getslice__(f_path.rfind("/")+1,len(f_path))
         oFileDialog.setDefaultName(f_path)
@@ -85,8 +95,6 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
             sPath = None
         oFileDialog.dispose()
         return sPath
-
-
 if __name__<>"package" and __name__=="__main__":
     ExportToRML(None)
 elif __name__=="package":
