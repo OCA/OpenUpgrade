@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+
+<!-- add payments tab on account.invoice -->
+		<record model="ir.ui.view" id="invoice_form_payment">
+			<field name="name">account.invoice.payment.form</field>
+			<field name="type">form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Payments">
+						<field name="move_lines" colspan="4"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+	<record model="ir.ui.view" id="invoice_supplier_payment">
+			<field name="name">account.invoice.payment.supplier</field>
+			<field name="type">form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Payments">
+						<field name="move_lines" colspan="4"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+	</data>
+</terp>
