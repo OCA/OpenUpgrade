@@ -118,6 +118,15 @@ class idea_idea(osv.osv):
 	_order = 'id desc'
 
 
+	def idea_cancel(self, cr, uid, ids):
+		return True
+
+	def idea_open(self, cr, uid, ids):
+		return True
+
+	def idea_close(self, cr, uid, ids):
+		return True
+
 
 idea_idea()
 
