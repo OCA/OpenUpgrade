@@ -149,7 +149,7 @@ class abstracted_fs:
 			cid=False
 
 			where=[('name','=',objname)]
-			if object and (object.type=='directory') or object2:
+			if object and (object.type in ('directory','ressource')) or object2:
 				where.append(('parent_id','=',object.id))
 			else:
 				where.append(('parent_id','=',False))
@@ -168,7 +168,7 @@ class abstracted_fs:
 					'file_size': 0L,
 					'file_type': ext,
 				}
-				if object and (object.type=='directory') or not object2:
+				if object and (object.type in ('directory','ressource')) or not object2:
 					val['parent_id']= object and object.id or False
 				partner = False
 				if object2:
@@ -262,7 +262,7 @@ class abstracted_fs:
 				'ressource_parent_type_id': object and object.ressource_type_id.id or False,
 				'ressource_id': object2 and object2.id or False
 			}
-			if (object and (object.type=='directory')) or not object2:
+			if (object and (object.type in ('directory','ressource'))) or not object2:
 				val['parent_id'] =  object and object.id or False
 			# Check if it alreayd exists !
 			pool.get('document.directory').create(cr, uid, val)
@@ -380,7 +380,7 @@ class abstracted_fs:
 				val = {
 					'name':dst_basename,
 				}
-				if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
+				if (dst_basedir.object and (dst_basedir.object.type in ('directory','ressource'))) or not dst_basedir.object2:
 					val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
 				else:
 					val['parent_id'] = False
@@ -431,7 +431,7 @@ class abstracted_fs:
 					'title': dst_basename,
 				}
 
-				if (dst_basedir.object and (dst_basedir.object.type=='directory')) or not dst_basedir.object2:
+				if (dst_basedir.object and (dst_basedir.object.type in ('directory','ressource'))) or not dst_basedir.object2:
 					val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
 				else:
 					val['parent_id'] = False
