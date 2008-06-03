@@ -2201,57 +2201,63 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         #self.win.setEditText("lblModuleSelection1",tempfile.mktemp('.'+"sxw"))
     def btnOkOrCancel_clicked(self, oActionEvent):
         if oActionEvent.Source.getModel().Name == "btnSave":
-            desktop=getDesktop()
-            doc = desktop.getCurrentComponent()
-            docinfo=doc.getDocumentInfo()
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
-            fp_name = tempfile.mktemp('.'+"sxw")
-            fp_name1="r"+fp_name
-            fp_path=os.path.join(fp_name1).replace("\\","/") 
-            fp_win=fp_path.__getslice__(1,fp_path.__len__())             
-            if res['report_sxw_content']:
-                data = base64.decodestring(res['report_sxw_content'])
-                if os.name=='nt':
-                    fp = file(fp_win, 'wb')
-                else:                
-                    fp = file(fp_name, 'wb')
-                fp.write(data)
-                fp.close()
-            if os.name=='nt':                
-                 url="file:///"+fp_win
-            else:  
-                 url="file:///"+fp_name   
-            arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
-            oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
-            docinfo2=oDoc2.getDocumentInfo()
-            docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
-            docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
-            docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
-            docinfo2.setUserFieldValue(3,self.res_other[self.win.getListBoxSelectedItemPos("lstReport")]['model'])
-
-#            desktop=getDesktop()
-#            doc = desktop.getCurrentComponent()
-            #try:
-            oParEnum = oDoc2.getTextFields().createEnumeration()
-            while oParEnum.hasMoreElements():
-                oPar = oParEnum.nextElement()
-                if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
-                    oPar.SelectedItem = oPar.Items[0]
-                    oPar.update()
-            #except:
-            #    pass
-
-            if oDoc2.isModified():
-                if oDoc2.hasLocation() and not oDoc2.isReadonly():
-                    oDoc2.store()
+            try:
+                desktop=getDesktop()
+                doc = desktop.getCurrentComponent()
+                docinfo=doc.getDocumentInfo()
+                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
+                fp_name = tempfile.mktemp('.'+"sxw")
+                fp_name1="r"+fp_name
+                fp_path=os.path.join(fp_name1).replace("\\","/") 
+                fp_win=fp_path.__getslice__(1,fp_path.__len__())             
+                if res['report_sxw_content']:
+                    data = base64.decodestring(res['report_sxw_content'])
+                    if os.name=='nt':
+                        fp = file(fp_win, 'wb')
+                    else:                
+                        fp = file(fp_name, 'wb')
+                    fp.write(data)
+                    fp.close()
+                if os.name=='nt':                
+                     url="file:///"+fp_win
+                else:  
+                     url="file:///"+fp_name   
+                arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
+                oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
+                docinfo2=oDoc2.getDocumentInfo()
+                docinfo2.setUserFieldValue(2,self.ids[self.win.getListBoxSelectedItemPos("lstReport")])
+                docinfo2.setUserFieldValue(1,docinfo.getUserFieldValue(1))
+                docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
+                docinfo2.setUserFieldValue(3,self.res_other[self.win.getListBoxSelectedItemPos("lstReport")]['model'])
+    
+    #            desktop=getDesktop()
+    #            doc = desktop.getCurrentComponent()
+                #try:
+                oParEnum = oDoc2.getTextFields().createEnumeration()
+                while oParEnum.hasMoreElements():
+                    oPar = oParEnum.nextElement()
+                    if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
+                        oPar.SelectedItem = oPar.Items[0]
+                        oPar.update()
+                #except:
+                #    pass
+    
+                if oDoc2.isModified():
+                    if oDoc2.hasLocation() and not oDoc2.isReadonly():
+                        oDoc2.store()
+                    #End If
                 #End If
-            #End If
-            #os.system( "`which ooffice` '-accept=socket,host=localhost,port=2002;urp;'")
-            ErrorDialog("Download is Completed","Your file has been placed here :\n"+ fp_name,"Download Message")
-            self.win.endExecute()
+                #os.system( "`which ooffice` '-accept=socket,host=localhost,port=2002;urp;'")
+                ErrorDialog("Download is Completed","Your file has been placed here :\n"+ fp_name,"Download Message")
+                self.win.endExecute()
+            except:
+                ErrorDialog("Report is not Download ","Report Not Open XSL/XML Type :\n"+ fp_name,"Download Message")
+                self.win.endExecute()
+                
+                    
         elif oActionEvent.Source.getModel().Name == "btnCancel":
-            self.win.endExecute()
+                self.win.endExecute()
 
 if __name__<>"package" and __name__=="__main__":
     ModifyExistingReport(None)
