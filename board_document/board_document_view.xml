@@ -16,32 +16,23 @@
 							<action
 								string="New Files"
 								name="%(report_document.action_view_all_document_tree)d"
-								view_mode="tree,graph"/>
- 							<action
-								string="Files by Month"
-								name="%(report_document.action_view_files_by_month_graph)d"
-								view_mode="graph,tree"/>
-								<action
-								string="Files by Users"
-								name="%(report_document.action_view_user_graph)d"
-								view_mode="graph,tree"/>
-								
-						</child1>
-						<child2>
+								view_mode="tree"/>
+	 							
 							<action
 								string="File Size by Month"
 								name="%(report_document.action_view_size_month)d"
 								view_mode="graph,tree"/>
-								
-								<action
+						</child1>
+						<child2>
+							<action
 								string="Files by Resource Type"
 								name="%(report_document.action_view_document_by_resourcetype_graph)d"
-								view_mode="graph,tree"/>								
+								view_mode="graph,tree"/>			
+								
 							<action
-							string="Files by Partner"
-							name="%(report_document.action_view_files_by_partner)d"
-							view_mode="graph,tree"/>
-
+								string="Files by Partner"
+								name="%(report_document.action_view_files_by_partner)d"
+								view_mode="graph,tree"/>
 						</child2>
  					</hpaned>
  				</form>
@@ -79,6 +70,18 @@
 								view_mode="tree"/>
 								
 						</child1>
+						<child2>
+							<action
+								string="Files by Users"
+								name="%(report_document.action_view_user_graph)d"
+								view_mode="graph,tree"/>
+
+							<action
+								string="Files by Month"
+								name="%(report_document.action_view_files_by_month_graph)d"
+								view_mode="graph,tree"/>
+								
+						</child2>
  					</hpaned>
  				</form>
  			</field>
@@ -90,7 +93,6 @@
  			<field name="res_model">board.board</field>
  			<field name="view_type">form</field>
  			<field name="view_mode">form</field>
-
 			<field name="view_id" ref="board_document_manager_form1"/>
  		</record>
 
