@@ -37,9 +37,10 @@ class account_invoice(osv.osv):
         res = {}
         for id in ids:
             move_lines = self.move_line_id_payment_get(cr,uid,[id])
-            data_lines = self.pool.get('account.move.line').browse(cr,uid,move_lines)
-            if not data_lines:
+            if not move_lines:
                 res[id] = []
+                continue
+            data_lines = self.pool.get('account.move.line').browse(cr,uid,move_lines)
             for line in data_lines:
                 ids_line = []
                 if line.reconcile_id:
