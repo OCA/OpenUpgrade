@@ -297,12 +297,14 @@
 				<field name="segment_ids" colspan="4" nolabel="1">
 					<form string="Segments">
 						<field name="name" string="Name" select="1"/>
+						<field name="sequence" />						
 						<field name="action_code" string="Action Code" select="2"/>
 						<field name="qty"/>
 						<field name="note" colspan="4"/>
 					</form>
 					<tree string="Segments">
 						<field name="name" string="Name" select="1"/>
+						<field name="sequence" />
 						<field name="action_code" string="Action Code" select="2"/>
 						<field name="qty"/>
 					</tree>
@@ -356,6 +358,7 @@
 			<form string="Segments">
 				<field name="name" string="Name" select="1"/>
 				<field name="proposition_id" />
+				<field name="sequence" />
 				<field name="action_code" string="Action Code" select="2"/>
 				<field name="qty"/>
 				<field name="note" colspan="4"/>
@@ -370,6 +373,7 @@
 		<field name="arch" type="xml">
 			<tree string="Segments">
 				<field name="name" string="Name"/>
+				<field name="sequence" />				
 				<field name="action_code" string="Action Code"/>
 				<field name="qty"/>
 			</tree>
