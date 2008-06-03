@@ -51,7 +51,6 @@ class account_invoice(osv.osv):
 			iml = []
 			for item in self.pool.get('account.invoice.line').search(cr, uid, [('invoice_id','=',inv.id)]):
 				line = self.pool.get('account.invoice.line').browse(cr,uid, [item])[0]
-				print line
 				if line.cci_special_reference:
 					if inv.type in ('in_invoice', 'in_refund'):
 						ref = inv.reference
@@ -96,7 +95,6 @@ class account_invoice(osv.osv):
 					move['period_id'] = inv.period_id.id
 					for i in line:
 						i[2]['period_id'] = inv.period_id.id
-				print 'move: ', move
 				move_id = self.pool.get('account.move').create(cr, uid, move)
 				move_obj.post(cr, uid, [move_id])
 			#move_obj.post(cr, uid, [move_id.id])
