@@ -37,7 +37,7 @@
 		<field name="name">ecommerce.pricelist.version</field>
 		<field name="model">product.pricelist.version</field>
 		<field name="inherit_id" ref="product.product_pricelist_version_form_view"/>
-		<field name="type">tree,form</field>
+		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<field name="date_end" position="after">
 				<field name="offer_name"/>
