@@ -1,1 +1,3 @@
 import cci_partner_event_history
+import cci_wizard_spam
+import cci_wizard_sms
