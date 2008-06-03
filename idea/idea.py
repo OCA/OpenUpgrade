@@ -54,7 +54,11 @@ class idea_idea(osv.osv):
 		if not len(ids):
 			return {}
 
-		sql = "select id, avgscore from idea_stat where id in (%s)" % ','.join(['%d']*len(ids))
+		sql = """select i.id, avg(v.score::integer) 
+				   from idea_idea i left outer join idea_vote v on i.id = v.idea_id
+					where i.id in (%s)
+					group by i.id
+				""" % ','.join(['%d']*len(ids))
 
 		cr.execute(sql, ids)
 		return dict(cr.fetchall())
@@ -63,7 +67,12 @@ class idea_idea(osv.osv):
 		if not len(ids):
 			return {}
 
-		sql = "select id, nbr_votes from idea_stat where id in (%s)" % ','.join(['%d']*len(ids))
+		sql = """select i.id, count(1) 
+				   from idea_idea i left outer join idea_vote v on i.id = v.idea_id
+					where i.id in (%s)
+					group by i.id
+				""" % ','.join(['%d']*len(ids))
+
 		cr.execute(sql, ids)
 		return dict(cr.fetchall())
 
@@ -71,7 +80,13 @@ class idea_idea(osv.osv):
 		if not len(ids):
 			return {}
 
-		sql = "select id, nbr_comments from idea_stat where id in (%s)" % ','.join(['%d']*len(ids))
+		sql = """select i.id, count(1) 
+				   from idea_idea i left outer join idea_comment c on i.id = c.idea_id
+					where i.id in (%s)
+					group by i.id
+				""" % ','.join(['%d']*len(ids))
+
+
 		cr.execute(sql,ids)
 		return dict(cr.fetchall())
 
@@ -107,6 +122,8 @@ class idea_idea(osv.osv):
 		'count_comments': fields.function(_comment_count, method=True, string="Count of comments", type="integer"),
 		'category_id': fields.many2one('idea.category', 'Category', required=True ),
 		'state': fields.selection([('draft','Draft'),('open','Opened'),('close','Closed'),('cancel','Canceled')], 'State', readonly=True),
+
+		'stat_vote_ids': fields.one2many('idea.vote.stat', 'idea_id', 'Statistics', readonly=True),
 	}
 
 	_defaults = {
@@ -169,24 +186,16 @@ class idea_vote(osv.osv):
 idea_vote()
 
 
-class idea_stat(osv.osv):
-	_name = 'idea.stat'
-	_description = 'Idea statistics'
+class idea_vote_stat(osv.osv):
+	_name = 'idea.vote.stat'
+	_description = 'Idea Votes Statistics'
 	_auto = False
+	_rec_name = 'idea_id'
 	_columns = {
-		'name': fields.many2one('idea.idea', 'Idea', readonly=True),
-		'avgscore': fields.float('Average Score', readonly=True),
-		'nbr_comments': fields.integer('Number of comments', readonly=True),
-		'nbr_votes': fields.integer('Number of votes', readonly=True),
-		'nbr_very_bad_votes': fields.integer('Number of "Very Bad" votes', readonly=True),
-		'nbr_bad_votes': fields.integer('Number of "Bad" votes', readonly=True),
-		'nbr_none_votes': fields.integer('Number of "None" votes', readonly=True),
-		'nbr_good_votes': fields.integer('Number of "Good" votes', readonly=True),
-		'nbr_very_good_votes': fields.integer('Number of "Very Good" votes', readonly=True),
+		'idea_id': fields.many2one('idea.idea', 'Idea', readonly=True),
+		'score': fields.selection( VoteValues, 'Score', readonly=True),
+		'nbr': fields.integer('Number of Votes', readonly=True),
 	}
-
-	_order = 'name'
-	
 	def init(self, cr):
 		"""
 		initialize the sql view for the stats
@@ -194,25 +203,19 @@ class idea_stat(osv.osv):
 		cr -- the cursor
 		"""
 		cr.execute("""
-			create or replace view idea_stat as (
-				select i.id, 
-					i.id as name,
-					avg(v.score::integer) as avgscore, 
-					(select count(1) from idea_comment where idea_id = i.id) as nbr_comments, 
-					count(v.user_id) as nbr_votes, 
-					(select count(1) from idea_vote where idea_id = i.id and score = '0') as nbr_very_bad_votes,
-					(select count(1) from idea_vote where idea_id = i.id and score = '25') as nbr_bad_votes,
-					(select count(1) from idea_vote where idea_id = i.id and score = '50') as nbr_none_votes,
-					(select count(1) from idea_vote where idea_id = i.id and score = '75') as nbr_good_votes,
-					(select count(1) from idea_vote where idea_id = i.id and score = '100') as nbr_very_good_votes
-				from idea_idea i left outer join idea_vote v on i.id = v.idea_id
-				group by i.id
+			create or replace view idea_vote_stat as (
+				select
+					min(v.id) as id,
+					i.id as idea_id,
+					v.score,
+					count(1) as nbr
+				from
+					idea_vote v
+					left join 
+					idea_idea i on (v.idea_id=i.id)
+				group by
+					i.id, v.score, i.id
 		)""")
 	
-idea_stat()
-	
-	
-	
-	
-	
-	
+idea_vote_stat()
+
