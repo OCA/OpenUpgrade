@@ -31,6 +31,20 @@ from osv import osv, fields
 VoteValues = [('0','Very Bad'),('25', 'Bad'),('50','None'),('75','Good'),('100','Very Good') ]
 DefaultVoteValue = '50'
 
+class idea_category(osv.osv):
+    _name = "idea.category"
+    _description = "Category for an idea"
+    _columns = {
+	'name': fields.char('Category', size=64, required=True),
+	'summary' : fields.char('Summary', size=255 ),
+    }
+    _sql_constraints = [
+	('name', 'unique(name)', 'The name of the category must be unique' )
+    ]
+    _order = 'name asc'
+
+idea_category()
+
 class idea_idea(osv.osv):
     _name = 'idea.idea'
     _rec_name = 'title'
@@ -110,6 +124,7 @@ class idea_idea(osv.osv):
 	'vote_avg' : fields.function(_vote_avg_compute, method=True, string="Average Score", type="float"),
 	'count_votes' : fields.function(_vote_count, method=True, string="Count of votes", type="integer"),
 	'count_comments': fields.function(_comment_count, method=True, string="Count of comments", type="integer"),
+	'category_id': fields.many2one('idea.category', 'Category', required=True ),
     }
 
     _defaults = {
@@ -152,3 +167,4 @@ class idea_vote(osv.osv):
     }
 
 idea_vote()
+
