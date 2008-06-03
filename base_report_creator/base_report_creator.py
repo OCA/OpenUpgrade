@@ -146,6 +146,8 @@ class report_creator(osv.osv):
 				field_dict = fields_get.get(k)
 				field_type = field_dict and field_dict.get('type',False) or False 
 				if field_type and field_type == 'many2one':
+					if r[k]==False:
+						continue
 					related_name = self.pool.get(field_dict.get('relation')).name_get(cr,user,[r[k]],context)[0]
 					r[k] = related_name 
 		return res
@@ -220,7 +222,7 @@ class report_creator(osv.osv):
 			self.model_set_id = model_dict.get(reference_model_dict.keys()[reference_model_dict.values().index(min(reference_model_dict.values()))])
 		if model_list and not len(model_dict.keys()) == 1:
 			raise osv.except_osv("No Related Models!!",'These is/are model(s) (%s) in selection which is/are not related to any other model'%','.join(model_list) )
-		if filter_ids:
+		if filter_ids and where_list<>[]:
 			where_list.append('and')
 			where_list.append(' ')
 		for filter_id in filter_ids:
@@ -256,7 +258,9 @@ class report_creator(osv.osv):
 					fields.append('\t'+f.group_method+'('+t+'.'+f.field_id.name+')'+' as field'+str(i))
 				i+=1
 			models = self._path_get(cr, uid, obj.model_ids, obj.filter_ids)
-			fields.insert(0,(self._id_get(cr, uid, ids[0], context)+' as id'))
+			check=self._id_get(cr, uid, ids[0], context)
+			if check<>False:
+				fields.insert(0,(check+' as id'))
 			result[obj.id] = """select
 %s
 from
