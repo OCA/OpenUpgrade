@@ -37,6 +37,7 @@ class dm_campaign(osv.osv):
         'dtp_operator' : fields.many2one('res.partner','Operator'),
         'dtp_date_recovered' : fields.date('Recovered Date'),
         'dtp_notes' : fields.text('Notes'),            
+        'responsible_id' : fields.many2one('res.users','Responsible'),
 #        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
@@ -107,9 +108,14 @@ class dm_campaign_proposition_segment(osv.osv):
     _description = "Segment"
     _columns = {
         'action_code': fields.char('Code',size=16, required=True),
+        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition'),
         'qty': fields.integer('Qty'),
 		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'note' : fields.text('Notes'),
+        'sequence' : fields.integer('Sequence'),
     }
+    _order = 'sequence'
+    
 dm_campaign_proposition_segment()
 
 class dm_campaign_proposition(osv.osv):
@@ -119,8 +125,8 @@ class dm_campaign_proposition(osv.osv):
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
-        'proposition_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment','Segment'),
+        'proposition_type' : fields.selection([('init','Init'),('recall','Recall')],"Type"),
+        'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment'),        
         'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
         'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
         'notes':fields.text('Notes'),

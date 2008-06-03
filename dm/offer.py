@@ -32,7 +32,7 @@ class dm_preoffer(osv.osv):
     _columns = {    
         'name' : fields.char("Name",size=64,required=True),
         'code' : fields.char("Code",size=64,required=True),
-        'creator_id' : fields.many2one('res.users','Creator'),
+        'creator_id' : fields.many2one('res.partner','Creator'),
         'copywriter_id' : fields.many2one('res.partner','Ordered To'),
         'market_id' : fields.many2one('res.country','Market'),
         'media_id' : fields.many2one('dm.media','Media',ondelete="cascade"),
@@ -132,6 +132,19 @@ class dm_offer_delay(osv.osv):
     }
     
 dm_offer_delay()
+
+
+class dm_customer(osv.osv):
+    _name = "dm.customer"
+    _inherit = 'res.partner'
+    _columns = {
+        'language_id' : fields.many2one('res.lang','Main Language'),
+        'language_ids' : fields.many2many('res.lang','dm.customer','lang_id','customer_id','Other Languages'),
+        'prospect_media_ids' : fields.many2many('dm.media','dm.customer','prospect_media_id','customer_id','Prospect for Media'),
+        'client_media_ids' : fields.many2many('dm.media','dm.customer','client_media_id','customer_id','Client for Media'),
+    }
+dm_customer()
+
 
 class dm_offer(osv.osv):
     _name = "dm.offer"

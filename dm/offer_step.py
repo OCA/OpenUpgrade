@@ -187,14 +187,6 @@ class dm_offer_step_history(osv.osv):
 
 dm_offer_step_history()
 
-class dm_customer(osv.osv):
-	_name = "dm.customer"
-	_inherit = 'res.partner.address'
-	_columns = {
-
-	}
-dm_customer()
-
 class dm_offer_step_workitem(osv.osv):
     _name = "dm.offer.step.workitem"
     _columns = {
