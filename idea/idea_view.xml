@@ -49,14 +49,13 @@
 	</record>
 
 	<record model="ir.ui.view" id="view_idea_comment_tree">
-		    <field name="user_id" />
 	    <field name="name">idea.comment.tree</field>
 	    <field name="model">idea.comment</field>
 	    <field name="type">tree</field>
 	    <field name="arch" type="xml">
 		<tree string="Comments">
 		    <field name="create_date" />
-		    <field name="user_id" />
+                    <field name="user_id" />
 		    <field name="content" string="Comment" />
 		</tree>
 	    </field>
