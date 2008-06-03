@@ -262,7 +262,7 @@ class abstracted_fs:
 				'ressource_parent_type_id': object and object.ressource_type_id.id or False,
 				'ressource_id': object2 and object2.id or False
 			}
-			if (object and (object.type in ('directory','ressource'))) or not object2:
+			if (object and (object.type in ('directory'))) or not object2:
 				val['parent_id'] =  object and object.id or False
 			# Check if it alreayd exists !
 			pool.get('document.directory').create(cr, uid, val)
