@@ -49,6 +49,15 @@ email_send_fields = {
     'event': {'string':'Open Partners for Event History', 'type':'boolean'},
 }
 
+form1 = '''<?xml version="1.0"?>
+<form string="Mass Mailing">
+    <field name="nbr"/>
+</form>'''
+
+fields1 = {
+    'nbr': {'string':"Number of Mail sent", 'type':'char', 'size':64 , 'readonly':True},
+}
+
 # this sends an email to ALL the addresses of the selected partners.
 def _mass_mail_send(self, cr, uid, data, context):
     nbr = 0
@@ -60,16 +69,20 @@ def _mass_mail_send(self, cr, uid, data, context):
                 to = '%s <%s>' % (name, adr.email)
 #TODO: add some tests to check for invalid email addresses
 #CHECKME: maybe we should use res.partner/email_send
-                tools.email_send(data['form']['from'], [to], data['form']['subject'], data['form']['text'])
+                res = tools.email_send(data['form']['from'], [to], data['form']['subject'], data['form']['text'])
                 nbr += 1
         pooler.get_pool(cr.dbname).get('res.partner.event').create(cr, uid,
                 {'name': 'Email sent through mass mailing',
                  'partner_id': partner.id,
                  'description': data['form']['text'], })
 
+    data['form']['nbr'] = nbr
     if data['form']['event']:
         return 'open'
     return 'ok'
+
+def _nbr_mail(self, cr, uid, data, context):
+    return {'nbr':str(data['form']['nbr'])}
 
 class part_email(wizard.interface):
      def _open_partners(self, cr, uid, data, context):
@@ -95,8 +108,8 @@ class part_email(wizard.interface):
             'result' : {'type': 'choice', 'next_state': _mass_mail_send }
         },
         'ok':{
-          'actions': [],
-          'result': {'type': 'state', 'state':'end'}
+          'actions': [_nbr_mail],
+          'result': {'type': 'form', 'arch': form1, 'fields': fields1, 'state':[('end','Ok')]}
               },
         'open': {
             'actions': [],
