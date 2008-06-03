@@ -53,6 +53,14 @@ sms_send_fields = {
     'event': {'string':'Open Partners for Event History', 'type':'boolean'},
 }
 
+form1 = '''<?xml version="1.0"?>
+<form string="SMS">
+    <field name="nbr"/>
+</form>'''
+
+fields1 = {
+    'nbr': {'string':"Number of sms sent", 'type':'char', 'size':64 , 'readonly':True},
+}
 def _sms_send(self, cr, uid, data, context):
     service = netsvc.LocalService("object_proxy")
 
@@ -65,9 +73,15 @@ def _sms_send(self, cr, uid, data, context):
         if to:
             tools.sms_send(data['form']['user'], data['form']['password'], data['form']['app_id'], unicode(data['form']['text'], 'utf-8').encode('latin1'), to)
             nbr += 1
+
+    data['form']['nbr'] = nbr
     if data['form']['event']:
         return 'open'
     return 'ok'
+
+def _nbr_sms(self, cr, uid, data, context):
+    return {'nbr':str(data['form']['nbr'])}
+
 class part_sms(wizard.interface):
      def _open_partners(self, cr, uid, data, context):
          pool_obj = pooler.get_pool(cr.dbname)
@@ -92,8 +106,8 @@ class part_sms(wizard.interface):
             'result' : {'type': 'choice', 'next_state': _sms_send }
         },
          'ok':{
-          'actions': [],
-          'result': {'type': 'state', 'state':'end'}
+          'actions': [_nbr_sms],
+         'result': {'type': 'form', 'arch': form1, 'fields': fields1, 'state':[('end','Ok')]}
               },
         'open': {
             'actions': [],
