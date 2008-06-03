@@ -37,7 +37,7 @@ def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableNa
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal:
                         print aObjectList[j]
-                        insVariable.addItem(aObjectList[j],1)
+                        insVariable.append(aObjectList[j])
         VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList, sTableName.__getslice__(0,sTableName.rfind(".")))
     else:
         for i in range(aItemList.__len__()):
@@ -46,7 +46,7 @@ def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableNa
                 for j in range(aObjectList.__len__()):
                     if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal and sLVal!="":
                         print aObjectList[j]
-                        insVariable.addItem(aObjectList[j],1)
+                        insVariable.append(aObjectList[j])
 
 def getList(aObjectList,host,count):
     desktop=getDesktop()
@@ -137,7 +137,7 @@ def getPath(sPath,sMain):
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
     parent=""
-#    bFlag = False
+    bFlag = False
     Doc =desktop.getCurrentComponent()
     #oVC = Doc.CurrentController.getViewCursor()
     oParEnum = Doc.getTextFields().createEnumeration()
@@ -152,8 +152,14 @@ def EnumDocument(aItemList,aComponentAdd):
             parent = "Document"
         sItem=oPar.Items.__getitem__(1)
         if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-            aItemList.append(oPar.Items )
-            aComponentAdd.append(parent)
+            for i in aItemList:
+                if i == oPar.Items:
+                    bFlag = True
+                else:
+                    bFlag = False
+            if not bFlag:
+                aItemList.append(oPar.Items)
+                aComponentAdd.append(parent)
             #getChildTable(oPar,aItemList,aComponentAdd)
 #    print dir(Doc)
 #    print dir(Doc.getText())
