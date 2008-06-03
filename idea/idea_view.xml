@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+?xml version="1.0"?>
 <terp>
     <data>
 	<menuitem name="Tools" id="menu_tools" icon="STOCK_PREFERENCES" />
@@ -52,19 +52,26 @@
 	    <field name="model">idea.idea</field>
 	    <field name="type">form</field>
 	    <field name="arch" type="xml">
-		<form string="Idea">
-		    <field name="title" select="2" />
-                    <field name="category_id" select="2"/>
-                    <field name="user_id" select="2"/>
-		    <field name="my_vote"/>
-		    <field name="vote_avg" string="Average" />
-		    <field name="description" colspan="4"/>
-		    <field name="comment_ids" nolabel="1" colspan="4">
-			<form string="Comment">
-			    <separator string="Your comment" colspan="4"/>
-			    <field name="content" nolabel="1" />
-			</form>
-		    </field>
+		<form string="New Idea">
+                    <notebook>
+                        <page string="Idea">
+                            <field name="title" select="2" />
+                            <field name="category_id" select="2"/>
+                            <field name="user_id" select="2"/>
+                            <field name="my_vote"/>
+                            <field name="state" select="2"/>
+                            <field name="vote_avg" string="Average" />
+                            <field name="description" colspan="4"/>
+                        </page>
+                        <page string="Comments">
+                            <field name="comment_ids" nolabel="1" colspan="4">
+                                <form string="Comment">
+                                    <separator string="Your comment" colspan="4"/>
+                                    <field name="content" nolabel="1" />
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
 		</form>
 	    </field>
 	</record>

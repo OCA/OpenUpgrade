@@ -106,14 +106,17 @@ class idea_idea(osv.osv):
 		'count_votes' : fields.function(_vote_count, method=True, string="Count of votes", type="integer"),
 		'count_comments': fields.function(_comment_count, method=True, string="Count of comments", type="integer"),
 		'category_id': fields.many2one('idea.category', 'Category', required=True ),
+		'state': fields.selection([('draft','Draft'),('open','Opened'),('close','Closed'),('cancel','Canceled')], 'State', readonly=True),
 	}
 
 	_defaults = {
 		'user_id': lambda self,cr,uid,context: uid,
 		'my_vote': lambda *a: MaximumVoteValue, 
+		'state': lambda *a: 'draft'
 	}
 
 	_order = 'id desc'
+
 
 
 idea_idea()
@@ -177,16 +180,16 @@ class idea_stat(osv.osv):
 		cr.execute("""
 			create or replace view idea_stat as (
 				select i.id, 
-			           i.id as name,
-					   avg(v.score::integer) as avgscore, 
-                       (select count(1) from idea_comment where idea_id = i.id) as nbr_comments, 
-                       count(v.user_id) as nbr_votes, 
-                       (select count(1) from idea_vote where idea_id = i.id and score = '0') as nbr_very_bad_votes,
-                       (select count(1) from idea_vote where idea_id = i.id and score = '25') as nbr_bad_votes,
-                       (select count(1) from idea_vote where idea_id = i.id and score = '50') as nbr_none_votes,
-                       (select count(1) from idea_vote where idea_id = i.id and score = '75') as nbr_good_votes,
-                       (select count(1) from idea_vote where idea_id = i.id and score = '100') as nbr_very_good_votes
-		         from idea_idea i left outer join idea_vote v on i.id = v.idea_id
+					i.id as name,
+					avg(v.score::integer) as avgscore, 
+					(select count(1) from idea_comment where idea_id = i.id) as nbr_comments, 
+					count(v.user_id) as nbr_votes, 
+					(select count(1) from idea_vote where idea_id = i.id and score = '0') as nbr_very_bad_votes,
+					(select count(1) from idea_vote where idea_id = i.id and score = '25') as nbr_bad_votes,
+					(select count(1) from idea_vote where idea_id = i.id and score = '50') as nbr_none_votes,
+					(select count(1) from idea_vote where idea_id = i.id and score = '75') as nbr_good_votes,
+					(select count(1) from idea_vote where idea_id = i.id and score = '100') as nbr_very_good_votes
+				from idea_idea i left outer join idea_vote v on i.id = v.idea_id
 				group by i.id
 		)""")
 	
