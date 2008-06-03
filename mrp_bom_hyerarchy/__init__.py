@@ -1,8 +1,7 @@
 ##############################################################################
 #
-# Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#
-# $Id: stock.py 1005 2005-07-25 08:41:42Z nicoe $
+# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#                    Fabien Pinckaers <fp@tiny.Be>
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -27,21 +26,4 @@
 #
 ##############################################################################
 
-import netsvc
-from osv import fields,osv
-
-class product(osv.osv):
-	_inherit = "product.product"
-	_columns = {
-		'auto_pick': fields.boolean('Auto Picking', help="Auto picking for raw materials of production orders.")
-	}
-	_defaults = {
-		'auto_pick': lambda *args: True
-	}
-product()
-
-class mrp_production(osv.osv):
-	_inherit = "mrp.production"
-	def _get_auto_picking(self, cr, uid, production):
-		return production.product_id.auto_pick
-mrp_production()
+import bom_hyerarchy
