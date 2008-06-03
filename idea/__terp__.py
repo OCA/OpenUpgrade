@@ -8,6 +8,6 @@
 		"depends" : ['base'],
 		"init_xml" : [ ],
 		"demo_xml" : [ ],
-		"update_xml" : ['idea_view.xml'],
+		"update_xml" : ['idea_view.xml', 'idea_workflow.xml'],
 		"installable": True
 }

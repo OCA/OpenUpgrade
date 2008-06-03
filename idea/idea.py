@@ -119,12 +119,19 @@ class idea_idea(osv.osv):
 
 
 	def idea_cancel(self, cr, uid, ids):
+		self.write(cr, uid, ids, { 'state' : 'cancel' })
 		return True
 
 	def idea_open(self, cr, uid, ids):
+		self.write(cr, uid, ids, { 'state' : 'open' })
 		return True
 
 	def idea_close(self, cr, uid, ids):
+		self.write(cr, uid, ids, { 'state' : 'close' })
+		return True
+
+	def idea_draft(self, cr, uid, ids):
+		self.write(cr, uid, ids, { 'state' : 'draft' })
 		return True
 
 

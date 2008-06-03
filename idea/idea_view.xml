@@ -59,9 +59,14 @@
                             <field name="category_id" select="2"/>
                             <field name="user_id" select="2"/>
                             <field name="my_vote"/>
-                            <field name="state" select="2"/>
                             <field name="vote_avg" string="Average" />
                             <field name="description" colspan="4"/>
+                            <group colspan="4" col="9">
+                                <field name="state" select="2"/>
+                                <button name="idea_open" string="Open" states="draft"/>
+                                <button name="idea_close" string="Close" states="open"/>
+                                <button name="idea_cancel" string="Cancel" states="open" />
+                            </group>
                         </page>
                         <page string="Comments">
                             <field name="comment_ids" nolabel="1" colspan="4">
