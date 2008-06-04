@@ -32,8 +32,8 @@ class md_hr_contract_availability(osv.osv):
     _columns={
               'contract_id':fields.many2one('hr.contract','Contract'),
               'day':fields.selection([('sun','Sunday'),('mon','Monday'),('tue','Tuesday'),('wed','Wednesday'),('thu','Thursday'),('fri','Friday'),('sat','Saturday')],'Day'),
-              'from_hour':fields.datetime('From'),
-              'to_hour':fields.datetime('To'),
+              'from_hour':fields.time('From'),
+              'to_hour':fields.time('To'),
               }
     _defaults={
                'day':lambda *a:'sun'
