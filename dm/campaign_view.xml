@@ -196,7 +196,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('user_id','=',uid)]</field>
+		<field name="domain">[('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
 
@@ -206,7 +206,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>]
-		<field name="domain">[('state','=','open'),('user_id','=',uid)]</field>
+		<field name="domain">[('state','=','open'),('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
 
@@ -216,7 +216,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>]
-		<field name="domain">[('state','=','draft'),('user_id','=',uid)]</field>
+		<field name="domain">[('state','=','draft'),('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
 
@@ -226,7 +226,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>]
-		<field name="domain">[('state','=','close'),('user_id','=',uid)]</field>
+		<field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
 
@@ -358,9 +358,9 @@
 			<form string="Segments">
 				<field name="name" string="Name" select="1"/>
 				<field name="proposition_id" />
-				<field name="sequence" />
+				<field name="sequence"/>
 				<field name="action_code" string="Action Code" select="2"/>
-				<field name="qty"/>
+				<field name="qty" select="2"/>
 				<field name="note" colspan="4"/>
 			</form>
 		</field>
