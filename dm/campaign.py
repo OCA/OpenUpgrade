@@ -101,32 +101,15 @@ dm_campaign_statistics()
 #    }
 #dm_campaign_pricelist()
 
-class dm_campaign_proposition_segment(osv.osv):
-    
-    _name = "dm.campaign.proposition.segment"
-    _inherits = {'account.analytic.account': 'analytic_account_id'}
-    _description = "Segment"
-    _columns = {
-        'action_code': fields.char('Code',size=16, required=True),
-        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition'),
-        'qty': fields.integer('Qty'),
-		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
-        'note' : fields.text('Notes'),
-        'sequence' : fields.integer('Sequence'),
-    }
-    _order = 'sequence'
-    
-dm_campaign_proposition_segment()
-
 class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _columns = {
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
-        'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays'),
+        'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('init','Init'),('recall','Recall')],"Type"),
-        'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment'),        
+        'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),        
         'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
         'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
         'notes':fields.text('Notes'),
@@ -138,6 +121,22 @@ class dm_campaign_proposition(osv.osv):
     }
 dm_campaign_proposition()
 
+class dm_campaign_proposition_segment(osv.osv):
+    
+    _name = "dm.campaign.proposition.segment"
+    _inherits = {'account.analytic.account': 'analytic_account_id'}
+    _description = "Segment"
+    _columns = {
+        'action_code': fields.char('Code',size=16, required=True),
+        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
+        'qty': fields.integer('Qty'),
+        'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'note' : fields.text('Notes'),
+        'sequence' : fields.integer('Sequence'),
+    }
+    _order = 'sequence'
+    
+dm_campaign_proposition_segment()
 class dm_campaign_delay(osv.osv):
     _name = "dm.campaign.delay"
     _columns = {
