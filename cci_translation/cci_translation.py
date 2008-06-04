@@ -93,7 +93,7 @@ class translation_folder(osv.osv):
 			data['state']='confirmed'
 			if id.awex_eligible and id.partner_id.awex_eligible == 'yes':
 				print 'go'
-				#look for an existing credit line in the current time 
+				#look for an existing credit line in the current time
 				credit_line = self.pool.get('credit.line').search(cr, uid, [('from_date','<=',time.strftime('%Y-%m-%d')), ('to_date', '>=', time.strftime('%Y-%m-%d'))])
 				if credit_line:
 					#if there is one available: get available amount from it
@@ -112,7 +112,7 @@ class translation_folder(osv.osv):
 		'base_amount': fields.float('Base Amount', required=True, readonly=True, states={'draft':[('readonly',False)]}),
 		'awex_eligible':fields.boolean('AWEX Eligible', readonly=True, states={'draft':[('readonly',False)]}),
 		'awex_amount':fields.float('AWEX Amount', readonly=True),
-		'state':fields.selection([('draft','Draft'),('confirmed','Confirmed'),('invoiced','Invoiced'),('done', 'Done')],'State',readonly=True),
+		'state':fields.selection([('draft','Draft'),('confirmed','Confirmed'),('invoiced','Invoiced'),('done', 'Done'),('cancel','Cancel')],'State',readonly=True),
 		'credit_line_id': fields.many2one('credit.line', 'Credit Line', readonly=True),
 		'invoice_id': fields.many2one('account.invoice', 'Invoice'),
 		'purchase_order': fields.many2one('purchase.order', 'Purchase Order'),
