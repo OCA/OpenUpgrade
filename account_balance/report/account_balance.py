@@ -464,7 +464,7 @@ class account_balance(report_sxw.rml_parse):
 			done={}
 
 		def cmp_code(x, y):
-			return cmp(int(x.code), int(y.code))
+			return cmp(x.code, y.code)
 		for n in range(0,len(accounts)):
 			accounts[n].sort(cmp_code)
 		common={}
