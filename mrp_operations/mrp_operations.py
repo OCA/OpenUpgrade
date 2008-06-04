@@ -122,16 +122,33 @@ class mrp_operations_operation_code(osv.osv):
 	_columns={
 		'name': fields.char('Operation Name',size=64, required=True),
 		'code': fields.char('Code', size=16, required=True),
-		'start_stop': fields.selection([('start','Start'),('stop','Stop')], 'State', required=True),
+		'start_stop': fields.selection([('start','Start'),('stop','Stop'),('done','Done')], 'State', required=True),
 	}
 mrp_operations_operation_code()
 
 class mrp_operations_operation(osv.osv):
 	_name="mrp_operations.operation"
+	def create(self, cr, uid, vals, context=None):
+		wf_service = netsvc.LocalService('workflow')
+		code_ids=self.pool.get('mrp_operations.operation.code').search(cr,uid,[('id','=',vals['code_id'])])
+		code=self.pool.get('mrp_operations.operation.code').browse(cr,uid,code_ids)[0]
+		if code.start_stop=='start' or code.start_stop=='stop' or code.start_stop=='done':
+			wc_op_id=self.pool.get('mrp.production.workcenter.line').search(cr,uid,[('workcenter_id','=',vals['workcenter_id']),('production_id','=',vals['production_id'])])
+			if not wc_op_id:
+				production_obj=self.pool.get('mrp.production').browse(cr,uid,vals['production_id'])
+				wc_op_id.append(self.pool.get('mrp.production.workcenter.line').create(cr,uid,{'production_id':vals['production_id'],'name':production_obj.product_id.name,'workcenter_id':vals['workcenter_id']}))
+			if code.start_stop=='start':
+				tmp=self.pool.get('mrp.production.workcenter.line').action_confirm(cr,uid,wc_op_id[0])
+			if code.start_stop=='done':
+				tmp=self.pool.get('mrp.production.workcenter.line').action_done(cr,uid,wc_op_id)
+			if code.start_stop=='stop':
+				self.pool.get('mrp.production').write(cr,uid,vals['production_id'],{'date_finnished':DateTime.now().strftime('%Y-%m-%d %H:%M:%S')})
+		return super(mrp_operations_operation, self).create(cr, uid, vals,	context=context)
+
 	_columns={
-		'Production_id':fields.many2one('mrp.production','Production'),
-		'Workcenter_id':fields.many2one('mrp.workcenter','Workcenter'),
-		'code_id':fields.many2one('mrp_operations.operation.code','Code'),
+		'production_id':fields.many2one('mrp.production','Production',required=True),
+		'workcenter_id':fields.many2one('mrp.workcenter','Workcenter',required=True),
+		'code_id':fields.many2one('mrp_operations.operation.code','Code',required=True),
 		}
 
 mrp_operations_operation()
