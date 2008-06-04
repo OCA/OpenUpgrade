@@ -234,5 +234,17 @@
 			<field eval="&quot;Donating funds &amp; furniture to schools&quot;" name="name"/>
 			<field eval="[(6,0,[ref('dm.dm_campaign_0'),ref('dm.dm_campaign_1')])]" name="campaign_ids"/>
 		</record>
+		
+		<record model="ir.cron" id="ir_cron_campaign_proposition">
+			<field name="name">Create Workitem</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">minutes</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False"/>
+			<field name="model" eval="'dm.campaign.proposition'"/>
+			<field name="function" eval="'_check'"/>
+			<field name="args" eval="'()'"/>
+		</record>		
+		
 	</data>
 </terp>
