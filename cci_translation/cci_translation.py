@@ -107,7 +107,8 @@ class translation_folder(osv.osv):
 		return True
 
 	_columns = {
-		'name': fields.char('Name', size=32, required=True),
+		'order_desc':fields.char('Description', size=64, required=True, select=True),
+		'name': fields.text('Name', required=True),
 		'partner_id': fields.many2one('res.partner', 'Partner', required=True),
 		'base_amount': fields.float('Base Amount', required=True, readonly=True, states={'draft':[('readonly',False)]}),
 		'awex_eligible':fields.boolean('AWEX Eligible', readonly=True, states={'draft':[('readonly',False)]}),
@@ -116,9 +117,12 @@ class translation_folder(osv.osv):
 		'credit_line_id': fields.many2one('credit.line', 'Credit Line', readonly=True),
 		'invoice_id': fields.many2one('account.invoice', 'Invoice'),
 		'purchase_order': fields.many2one('purchase.order', 'Purchase Order'),
-	}
+		'order_date':fields.date('Order Date',required=True)
+		}
 	_defaults = {
 		'state' : lambda *a : 'draft',
+		'order_date': lambda *b: time.strftime('%Y-%m-%d'),
+		'order_desc': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'translation.folder'),
 	}
 translation_folder()
 
