@@ -117,7 +117,7 @@ class dm_campaign_proposition(osv.osv):
     }
     
     _defaults = {
-        'proposition_type' : lambda*a : 'general',
+        'proposition_type' : lambda*a : 'init',
     }
     
 
