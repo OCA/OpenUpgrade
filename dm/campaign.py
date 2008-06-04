@@ -128,7 +128,7 @@ class dm_campaign_proposition_segment(osv.osv):
     _description = "Segment"
     _columns = {
         'action_code': fields.char('Code',size=16, required=True),
-        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
+        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', required=True, ondelete='cascade'),
         'qty': fields.integer('Qty'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),

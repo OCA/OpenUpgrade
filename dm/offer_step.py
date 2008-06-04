@@ -191,7 +191,7 @@ class dm_offer_step_workitem(osv.osv):
     _name = "dm.offer.step.workitem"
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, ondelete="cascade"),
-        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments'),
+        'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, ondelete="cascade"),
         'customer_id' : fields.many2one('res.partner', 'Customer'),
         'date_next_action' : fields.date('Next Action'),
         'purchase_amount' : fields.float('Amount', digits=(16,2))

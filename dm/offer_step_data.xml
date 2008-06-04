@@ -187,6 +187,7 @@
 			<field name="step_id" ref="dm.dm_offer_step_inquireaboutthetypesofloansavailable0"/>
 			<field name="customer_id" ref="base.res_partner_3"/>
 			<field eval="time.strftime('%Y-%m-15')" name="date_next_action"/>
+			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_0"/>
 		</record>
 	
 		<record id="dm_offer_step_workitem_1" model="dm.offer.step.workitem">
@@ -194,12 +195,14 @@
 			<field name="step_id" ref="dm.dm_offer_step_negotiation0"/>
 			<field name="customer_id" ref="base.res_partner_14"/>
 			<field eval="time.strftime('%Y-%m-08')" name="date_next_action"/>
+			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>
 		</record>
 	
 		<record id="dm_offer_step_workitem_2" model="dm.offer.step.workitem">
 			<field eval="3000000.0" name="purchase_amount"/>
 			<field name="step_id" ref="dm.dm_offer_step_dealfinilized0"/>
 			<field name="customer_id" ref="base.res_partner_14"/>
+			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_5"/>
 		</record>
 	</data>
 </terp>

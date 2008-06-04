@@ -3,46 +3,6 @@
 	<data>
 	<!--
 	=======================================================
-	Campaign - Segment 
-	=======================================================
-	-->
-		<record id="dm_campaign_proposition_segment_0" model="dm.campaign.proposition.segment">
-			<field eval="&quot;Registration for Educational Fair&quot;" name="name"/>
-			<field eval="&quot;register&quot;" name="action_code"/>
-		</record>
-		<record id="dm_campaign_proposition_segment_1" model="dm.campaign.proposition.segment">
-			<field eval="&quot;Issue Of Tickets&quot;" name="name"/>
-			<field eval="&quot;Tickets&quot;" name="action_code"/>
-			<field eval="50000" name="qty"/>
-		</record>
-		<record id="dm_campaign_proposition_segment_2" model="dm.campaign.proposition.segment">
-			<field eval="&quot;Registration Of Students&quot;" name="name"/>
-			<field eval="&quot;stu_regis&quot;" name="action_code"/>
-			<field eval="20000" name="qty"/>
-		</record>
-		<record id="dm_campaign_proposition_segment_3" model="dm.campaign.proposition.segment">
-			<field eval="&quot;Conducting Mock Tests&quot;" name="name"/>
-			<field eval="&quot;mocks&quot;" name="action_code"/>
-			<field eval="25000" name="qty"/>
-		</record>
-		<record id="dm_campaign_proposition_segment_4" model="dm.campaign.proposition.segment">
-			<field eval="&quot;Registration for Educational Fair&quot;" name="name"/>
-			<field eval="&quot;select&quot;" name="action_code"/>
-			<field eval="15000" name="qty"/>
-		</record>
-		<record id="dm_campaign_proposition_segment_5" model="dm.campaign.proposition.segment">
-			<field eval="&quot;Providing loan options to selected candidates&quot;" name="name"/>
-			<field eval="&quot;loan_options&quot;" name="action_code"/>
-			<field eval="10000" name="qty"/>
-		</record>
-		<record id="dm_campaign_proposition_segment_6" model="dm.campaign.proposition.segment">
-			<field eval="&quot;Sanctioning Loans&quot;" name="name"/>
-			<field eval="&quot;sanction&quot;" name="action_code"/>
-			<field eval="10000" name="qty"/>
-		</record>
-
-	<!--
-	=======================================================
 	Campaign - Propositions 
 	=======================================================
 	-->
@@ -107,6 +67,53 @@
 
 	<!--
 	=======================================================
+	Campaign - Segment 
+	=======================================================
+	-->
+		<record id="dm_campaign_proposition_segment_0" model="dm.campaign.proposition.segment">
+			<field eval="&quot;Registration for Educational Fair&quot;" name="name"/>
+			<field eval="&quot;register&quot;" name="action_code"/>
+			<field name="proposition_id" ref="dm.dm_campaign_proposition_0"/>
+		</record>
+		<record id="dm_campaign_proposition_segment_1" model="dm.campaign.proposition.segment">
+			<field eval="&quot;Issue Of Tickets&quot;" name="name"/>
+			<field eval="&quot;Tickets&quot;" name="action_code"/>
+			<field eval="50000" name="qty"/>
+			<field name="proposition_id" ref="dm.dm_campaign_proposition_0"/>
+		</record>
+		<record id="dm_campaign_proposition_segment_2" model="dm.campaign.proposition.segment">
+			<field eval="&quot;Registration Of Students&quot;" name="name"/>
+			<field eval="&quot;stu_regis&quot;" name="action_code"/>
+			<field name="proposition_id" ref="dm.dm_campaign_proposition_1"/>
+			<field eval="20000" name="qty"/>
+		</record>
+		<record id="dm_campaign_proposition_segment_3" model="dm.campaign.proposition.segment">
+			<field eval="&quot;Conducting Mock Tests&quot;" name="name"/>
+			<field eval="&quot;mocks&quot;" name="action_code"/>
+			<field name="proposition_id" ref="dm.dm_campaign_proposition_0"/>
+			<field eval="25000" name="qty"/>
+		</record>
+		<record id="dm_campaign_proposition_segment_4" model="dm.campaign.proposition.segment">
+			<field eval="&quot;Registration for Educational Fair&quot;" name="name"/>
+			<field eval="&quot;select&quot;" name="action_code"/>
+			<field name="proposition_id" ref="dm.dm_campaign_proposition_1"/>
+			<field eval="15000" name="qty"/>
+		</record>
+		<record id="dm_campaign_proposition_segment_5" model="dm.campaign.proposition.segment">
+			<field eval="&quot;Providing loan options to selected candidates&quot;" name="name"/>
+			<field eval="&quot;loan_options&quot;" name="action_code"/>
+			<field name="proposition_id" ref="dm.dm_campaign_proposition_1"/>
+			<field eval="10000" name="qty"/>
+		</record>
+		<record id="dm_campaign_proposition_segment_6" model="dm.campaign.proposition.segment">
+			<field eval="&quot;Sanctioning Loans&quot;" name="name"/>
+			<field eval="&quot;sanction&quot;" name="action_code"/>
+			<field name="proposition_id" ref="dm.dm_campaign_proposition_1"/>
+			<field eval="10000" name="qty"/>
+		</record>
+
+	<!--
+	=======================================================
 	Campaigns
 	=======================================================
 	-->	
@@ -123,7 +130,7 @@
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field name="offer_id" ref="dm.dm_offer_discountsforeducationalloan0"/>
 			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
-			<field name="user_id" ref="base.user_admin"/>
+			<field name="responsible_id" ref="base.user_admin"/>
 		</record>
 		<record id="dm_campaign_0" model="dm.campaign">
 			<field eval="&quot;inprogress&quot;" name="planning_state"/>
@@ -152,7 +159,7 @@
 			<field eval="&quot;pending&quot;" name="planning_state"/>
 			<field name="offer_id" ref="dm.dm_offer_biddingoffurniture0"/>
 			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
-			<field name="user_id" ref="base.user_admin"/>
+			<field name="responsible_id" ref="base.user_admin"/>
 		</record>
 		<record id="dm_campaign_1" model="dm.campaign">
 			<field eval="time.strftime('%Y-06-10')" name="dtp_date_recovered"/>
@@ -193,7 +200,7 @@
 			<field eval="&quot;done&quot;" name="manufacturing_state"/>
 			<field eval="&quot;close&quot;" name="state"/>
 			<field eval="time.strftime('%Y-10-05')" name="dtp_intervention_type"/>
-			<field name="user_id" ref="base.user_demo"/>
+			<field name="responsible_id" ref="base.user_demo"/>
 		</record>
 		<record id="dm_campaign_3" model="dm.campaign">
 			<field eval="&quot;Increse the flow of production&quot;" name="name"/>
@@ -216,7 +223,7 @@
 			<field eval="&quot;done&quot;" name="manufacturing_state"/>
 			<field eval="&quot;close&quot;" name="state"/>
 			<field eval="time.strftime('%Y-10-05')" name="dtp_intervention_type"/>
-			<field name="user_id" ref="base.user_admin"/>
+			<field name="responsible_id" ref="base.user_admin"/>
 		</record>	
 	<!--
 	=======================================================
