@@ -115,9 +115,13 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         else:
                                             sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
                                             try:
-
-                                                oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
-                                                oPar.update()
+                                                if sExpr:
+                                                    oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+                                                    oPar.update()
+                                                else:
+                                                     oPar.Items=(u"/",oPar.Items[1])
+                                                     oPar.update()
+                                                            
                                             except Exception, e:
                                                 oPar.Items=(str(sExpr) ,oPar.Items[1])
                                                 oPar.update()
