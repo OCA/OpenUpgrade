@@ -1,3 +1,4 @@
+
 import uno
 import string
 import unohelper
@@ -39,6 +40,8 @@ class NewReport(unohelper.Base, XJobExecutor):
         ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
         fields = [ 'model','name']
         res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
+        res.sort(lambda x, y: cmp(x['name'],y['name']))
+         
         for i in range(res.__len__()):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])
@@ -65,4 +68,3 @@ elif __name__=="package":
             NewReport,
             "org.openoffice.tiny.report.opennewreport",
             ("com.sun.star.task.Job",),)
-
