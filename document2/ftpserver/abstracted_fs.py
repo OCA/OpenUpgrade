@@ -215,25 +215,42 @@ class abstracted_fs:
 			raise OSError(1, 'Operation not permited.')
 
 	# To be Done
+	# still error : after server send respone 150 to client , file could not be not closed. so file is not make properly
 	def mkstemp(self, suffix='', prefix='', dir=None, mode='wb'):
 		"""A wrap around tempfile.mkstemp creating a file with a unique
 		name.  Unlike mkstemp it returns an object with a file-like
 		interface.
 		"""
 		raise 'Not Yet Implemented'
-		class FileWrapper:
-			def __init__(self, fd, name):
-				self.file = fd
-				self.name = name
-			def __getattr__(self, attr):
-				return getattr(self.file, attr)
+#		class FileWrapper:
+#			def __init__(self, fd, name):
+#				self.file = fd
+#				self.name = name
+#			def __getattr__(self, attr):
+#				return getattr(self.file, attr)
+#
+#		text = not 'b' in mode
+#		# max number of tries to find out a unique file name
+#		tempfile.TMP_MAX = 50
+#		fd, name = tempfile.mkstemp(suffix, prefix, dir, text=text)
+#		file = os.fdopen(fd, mode)
+#		return FileWrapper(file, name)
 
 		text = not 'b' in mode
-		# max number of tries to find out a unique file name
-		tempfile.TMP_MAX = 50
-		fd, name = tempfile.mkstemp(suffix, prefix, dir, text=text)
-		file = os.fdopen(fd, mode)
-		return FileWrapper(file, name)
+		# for unique file , maintain version if duplicate file
+		if dir:
+			cr = dir.cr
+			uid = dir.uid
+			pool = pooler.get_pool(cr.dbname)
+			object=dir and dir.object or False
+			object2=dir and dir.object2 or False
+			res=pool.get('ir.attachment').search(cr,uid,[('name','like',prefix),('parent_id','=',object and object.type in ('directory','ressource') and object.id or False),('res_id','=',object2 and object2.id or False),('res_model','=',object2 and object2._name or False)])
+			if len(res):
+				prefix=prefix + '.v'+str(len(res))
+			#prefix = prefix + '.'
+		return self.create(dir,suffix+prefix,text)
+
+
 
 	# Ok
 	def chdir(self, path):

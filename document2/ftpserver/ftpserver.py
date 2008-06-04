@@ -2294,8 +2294,10 @@ class FTPHandler(asynchat.async_chat):
         datacr = self.fs.get_cr(line)
 
         if line:
-            basedir, prefix = os.path.split(self.fs.ftp2fs(line, datacr))
-            prefix = prefix + '.'
+            line = self.fs.ftpnorm(line)
+            basedir,prefix = os.path.split(line)
+            basedir = self.fs.ftp2fs(basedir, datacr)
+            #prefix = prefix + '.'
         else:
             basedir = self.fs.ftp2fs(self.fs.cwd, datacr)
             prefix = 'ftpd.'
@@ -2312,15 +2314,15 @@ class FTPHandler(asynchat.async_chat):
                 why = _strerror(err)
             self.respond("450 %s." %why)
             self.log('FAIL STOU "%s". %s.' %(self.fs.ftpnorm(line), why))
-            self.close_cr(datacr)
+            self.fs.close_cr(datacr)
             return
 
-        filename = os.path.basename(fd.name)
+        filename = line
         if not self.authorizer.has_perm(self.username, 'w', filename):
             self.log('FAIL STOU "%s". Not enough privileges'
                      %self.fs.ftpnorm(line))
             self.respond("550 Can't STOU: not enough privileges.")
-            self.close_cr(datacr)
+            self.fs.close_cr(datacr)
             return
 
         # now just acts like STOR except that restarting isn't allowed
@@ -2332,7 +2334,7 @@ class FTPHandler(asynchat.async_chat):
         else:
             self.respond("150 FILE: %s" %filename)
             self.__in_dtp_queue = fd
-        self.close_cr(datacr)
+        self.fs.close_cr(datacr)
 
 
     def ftp_APPE(self, line):
