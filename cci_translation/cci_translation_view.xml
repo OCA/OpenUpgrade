@@ -20,6 +20,7 @@
 					<group col="8" colspan="2">
 						<button name="confirmed" string="Confirmed" states="draft"/>
 						<button name="done" string="Done" states="invoiced"/>
+						<button name="cancel" string="Cancel" states="draft,invoiced,confirmed"/>
 					</group>
 				</form>
 			</field>
