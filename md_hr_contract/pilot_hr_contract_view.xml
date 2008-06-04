@@ -137,8 +137,6 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Employee Availability">
-					<field name="contract_id" />
-					<newline />
 					<field name="day" />
 					<newline />
 					<field name="from_hour" />
@@ -153,7 +151,6 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Employee Availability">
-					<field name="contract_id" />
 					<field name="day" />
 					<field name="from_hour" />
 					<field name="to_hour" />
