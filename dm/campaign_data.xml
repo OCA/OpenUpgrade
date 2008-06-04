@@ -68,7 +68,7 @@
 			<field eval="time.strftime('%Y-%m-25')" name="date_start"/>
 			<field eval="&quot;Issues related to the initial procedure of registration&quot;" name="notes"/>
 <!--			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_custprice0"/>-->
-			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>
+<!--			<field name="segment_ids" ref="dm.dm_campaign_proposition_segment_1"/>-->
 		</record>  
 		<record id="dm_campaign_delay_0" model="dm.campaign.delay">
 			<field name="key_id" ref="dm_offer_delay_postponetheregistrationdate0"/>
@@ -97,7 +97,7 @@
 			<field eval="10" name="quantity_max"/>
 			<field eval="time.strftime('%Y-%m-03')" name="date_start"/>
 <!--			<field name="customer_pricelist_id" ref="dm_campaign_pricelist_grossamt0"/>-->
-			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_6"/>
+<!--			<field name="segment_ids" ref="dm.dm_campaign_proposition_segment_6"/>-->
 		</record>
 		<record id="dm_campaign_delay_1" model="dm.campaign.delay">
 			<field name="key_id" ref="dm_offer_delay_verifyingdocuments0"/>
@@ -135,7 +135,7 @@
 		</record>
 		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
 <!--			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_listprice0"/>-->
-			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_2"/>
+<!--			<field name="segment_ids" ref="dm.dm_campaign_proposition_segment_2"/>-->
 <!--			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_custprice0"/>-->
 			<field name="camp_id" ref="dm_campaign_0"/>
 			<field eval="&quot;general&quot;" name="proposition_type"/>
@@ -166,7 +166,7 @@
 		<record id="dm_campaign_proposition_1" model="dm.campaign.proposition">
 <!--			<field name="requirer_pricelist_id" ref="dm.dm_campaign_pricelist_netamount0"/>-->
 			<field eval="&quot;Furniture manufactured&quot;" name="notes"/>
-			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>
+<!--			<field name="segment_id" ref="dm.dm_campaign_proposition_segment_1"/>-->
 <!--			<field name="customer_pricelist_id" ref="dm.dm_campaign_pricelist_grossamt0"/>-->
 			<field eval="15000.0" name="sale_rate"/>
 			<field name="camp_id" ref="dm_campaign_1"/>
