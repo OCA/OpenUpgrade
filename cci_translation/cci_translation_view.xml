@@ -33,7 +33,7 @@
 			<field name="model">translation.folder</field>
 			<field name="arch" type="xml">
 				<tree string="Translation Dossier">
-					<field name="name"/>
+					<field name="order_desc" select="1"/>
 					<field name="partner_id"/>
 					<field name="base_amount"/>
 					<field name="awex_amount"/>
