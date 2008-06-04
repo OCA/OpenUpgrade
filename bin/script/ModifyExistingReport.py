@@ -17,7 +17,6 @@ if __name__<>'package':
     uid = 3
 
 #
-
 class ModifyExistingReport(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
         self.ctx     = ctx
@@ -53,8 +52,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
         self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
-#        self.res_other.sort(lambda x, y: cmp(x['name'],y['name']))
-
+        self.res_other.sort(lambda x, y: cmp(x['model'],y['model']))
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
                 self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',self.res_other[i]['model'])])
@@ -63,7 +61,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 if self.model_res_other <> []:
                     self.lstReport.addItem(self.model_res_other[0]['name']+" - "+self.res_other[i]['name'],self.lstReport.getItemCount())
                 else:
-                    self.lstReport.addItem(self.res_other[i]['model']+" - "+self.res_other[i]['name'],self.lstReport.getItemCount())
+                    self.lstReport.addItem(self.res_other[i]['name']+" - "+self.res_other[i]['model'],self.lstReport.getItemCount())
 
         #self.win.addFixedText("lblModuleSelection1", 2, 98, 178, 15, "Module Selection")
         self.win.addButton('btnSave',-2 ,-5,80,15,'Open Report'
