@@ -105,7 +105,7 @@ class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _columns = {
-        'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade'),
+        'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('init','Init'),('recall','Recall')],"Type"),
@@ -113,12 +113,27 @@ class dm_campaign_proposition(osv.osv):
         'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
         'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
         'notes':fields.text('Notes'),
-		'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
     }
     
     _defaults = {
         'proposition_type' : lambda*a : 'general',
     }
+    
+
+    def _check(self, cr, uid, ids=False, context={}):
+        '''
+        Function called by the sceduler to create workitem from the segments of propositions.
+        '''
+        ids = self.search(cr,uid,[('date_start','=',time.strftime('%Y-%m-%d %H:%M:%S'))])
+        for id in ids:
+            res = self.browse(cr,uid,[id])[0]
+            offer_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',res.camp_id.offer_id.id),('flow_start','=',True)])
+            if offer_step_id : 
+                vals = {'step_id':offer_step_id[0],'segment_id':id}
+                new_id = self.pool.get('dm.offer.step.workitem').create(cr,uid,vals)
+        return True
+    
 dm_campaign_proposition()
 
 class dm_campaign_proposition_segment(osv.osv):
@@ -137,6 +152,7 @@ class dm_campaign_proposition_segment(osv.osv):
     _order = 'sequence'
     
 dm_campaign_proposition_segment()
+
 class dm_campaign_delay(osv.osv):
     _name = "dm.campaign.delay"
     _columns = {
