@@ -136,20 +136,21 @@ class crossovered_analytic(report_sxw.rml_parse):
                     result['id']=acc_id
                     result['acc_name']=acc_pool.browse(self.cr,self.uid,acc_id).name
                     result['amt']=result['qty']=result['perc']=0.00
-                    res.append(result)
+                    if not form['empty_line']:
+                        res.append(result)
             else:
                 result={}
                 res=[]
                 result['id']=acc_id
                 result['acc_name']=acc_pool.browse(self.cr,self.uid,acc_id).name
                 result['amt']=result['qty']=result['perc']=0.00
-                res.append(result)
+                if not form['empty_line']:
+                    res.append(result)
 
             for item in res:
                 obj_acc=acc_pool.name_get(self.cr,self.uid,[item['id']])
                 item['acc_name']=obj_acc[0][1]
                 final.append(item)
-
         return final
 
 report_sxw.report_sxw('report.account.analytic.account.crossovered.analytic', 'account.analytic.account', 'addons/account_analytic_plans/report/crossovered_analytic.rml',parser=crossovered_analytic, header=False)
