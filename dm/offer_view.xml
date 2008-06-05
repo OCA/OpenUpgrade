@@ -356,6 +356,7 @@
 			<form string="Customer">
 			<notebook>
 				<page string="General">
+					<field name="customer_number" string="Number" select="1"/>
 					<field name="name" select="1"/>
 					<field name="language_id"  select="2"/>
 					<separator string="Other Languages" colspan="4"/>							
@@ -406,6 +407,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">	
 			<tree string="Customers">
+				<field name="customer_number" select="1"/>
 				<field name="name" colspan="4" select="1"/>
 				<field name="language_id"  select="2"/>
 			</tree>
@@ -430,16 +432,18 @@
 		<field name="arch" type="xml">	
 			<form string="Customer Offer">
 				<field name="raw_datas" colspan="4" on_change="onchange_rawdatas(raw_datas)"/>
-				<field name="customer_id" colspan="4"/>
+				<field name="customer_id"/>
+				<field name="customer_number" select="1"/>
 				<field name="action_code"/>
 				<field name="offer_step"/>
-				<field name="customer_firstname"/>
-				<field name="customer_lastname"/>
+				<field name="title"/>
+				<field name="customer_firstname" select="1"/>
+				<field name="customer_lastname" select="2"/>
 				<field name="customer_add1"/>
 				<field name="customer_add2"/>
 				<field name="customer_add3"/>
 				<field name="customer_add4"/>
-				<field name="country" colspan="4"/>
+				<field name="country" colspan="4" select="2"/>
 				<field name="zip"/>
 				<field name="zip_summary"/>
 				<field name="distribution_office" colspan="4"/>
@@ -456,6 +460,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Customer Offer">
+				<field name="customer_number"/>			
 				<field name="customer_firstname"/>
 				<field name="customer_lastname"/>
 				<field name="country"/>
@@ -469,7 +474,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_offer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Customer Odders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
+	<menuitem name="Direct Marketing/Offer/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
 
 </data>
 </terp>
