@@ -26,15 +26,16 @@
 			<field name="arch" type="xml">
 				<field name="regime" position="replace">
 					<field name="travel_allowance"/>
-					<field name="dist_home_work"/>
+					<field name="dist_home_work" on_change="on_change_dist_home_work(dist_home_work)"/>
 					<field name="amount_travel_allowance"/>
 					<newline/>
 					<field name="pension"/>
 					<field name="pension_waiver"/>
 					<field name="waowiaww"/>
+					<field name="waowiaww_dep_id"/>
 					<newline/>
-					<field name="attachment_earings_order"/>
-					<field name="earings_order_beneficier"/>
+					<field name="attachment_earings_order" on_change="on_change_attachment_earings_order(attachment_earings_order)"/>
+					<field name="earings_order_beneficier" />
 					<field name="earings_order_amount"/>
 					<field name="earings_order_account"/>
 					<newline/>
@@ -67,7 +68,7 @@
 					<field name="email"/>
 					<separator string="Familly" colspan="4" />
 					<field name="maiden_name"/>
-					<field name="nbr_of_children"/>
+					<field name="nbr_of_children" on_change="on_change_nbr_of_children(nbr_of_children)"/>
 					<field name="marital_status"/>
 					<newline/>
 					<field name="partner_lastname"/>

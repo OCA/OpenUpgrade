@@ -30,6 +30,7 @@
 from mx import DateTime
 import time
 from osv import fields, osv
+import tools
 
 class md_hr_address_street(osv.osv):
     _name = "md.hr.address.street"
@@ -78,9 +79,11 @@ class md_hr_address(osv.osv):
 md_hr_address()   
 
 class hr_employee(osv.osv):
+         
     _name = "hr.employee"
     _description = "Employee"
     _inherit = "hr.employee"
+    
     _columns = {
                 'code' : fields.char("Personal Number", size=8),
                 'firstname' : fields.char("Surname", size=80),
@@ -115,8 +118,9 @@ class hr_employee(osv.osv):
                 'pension' : fields.boolean("Pension"), 
                 'pension_waiver' : fields.boolean("Pension waiver"), 
                 'waowiaww' : fields.boolean("Disability/unemployment benefit"),
+                'waowiaww_dep_id':fields.many2one('hr.department','If yes, which department'),
                 'attachment_earings_order' : fields.boolean("Attachment of earings order"),
-                'earings_order_beneficier' : fields.char("In name of", size=80),
+                'earings_order_beneficier' : fields.char("In name of", size=80,readonly=True),
                 'earings_order_amount' : fields.float("Amount"),
                 'earings_order_account' : fields.char("Account Number",size=16),
                 'spaarloonregeling' : fields.float("Spaarloonregeling"),
@@ -125,7 +129,45 @@ class hr_employee(osv.osv):
                 'levensloopregeling_account' : fields.char("A/C number levensloonregeling",size=16),
                           
                 }
+    
+    def on_change_nbr_of_children(self,cr, uid, ids, nbr_of_children,context=None):   
+        if nbr_of_children < 0:
+            raise osv.except_osv(
+                        'Please Enter Value > 0!!!!','# of children')
+            return {'value':{'nbr_of_children':0}}
+        return {}
+    
+    
+       
+#    def fields_get(self, cr, uid, fields=None,context=None):
+#        res = super(hr_employee, self).fields_get(cr, uid, fields, context)
+#        print"::Attachment of earings order::",res['attachment_earings_order']
+#        print"::In name of::",res['earings_order_beneficier']['readonly']
+#        if res['attachment_earings_order']:
+#           res['earings_order_beneficier']['readonly'] = False
+#           print"::In name of::",res['earings_order_beneficier']['readonly']
+##        field_type_obj = self.pool.get('hr.employee')
+##        type_ids = field_type_obj.search(cr, uid, [])
+##        types = field_type_obj.browse(cr, uid, type_ids)
+##        print"::Field's Type::",types
+##        for type in types:
+##            print"::attachment_earings_order::",type.attachment_earings_order
+##            print"::earings_order_beneficier::",type.earings_order_beneficier
+##            
+##            type.earings_order_beneficier['readonly'] = [('readonly', type.readonly)]
+##            print"type.attachment_earings_order :",type.attachment_earings_order
+#        return res
   
+    def on_change_attachment_earings_order(self,cr, uid, ids, attachment_earings_order,context=None):   
+        if attachment_earings_order == True:
+               res = super(hr_employee, self).fields_get(cr, uid,context)
+               print"::Attachment of earings order::",res['attachment_earings_order']
+               print"::In name of::",res['earings_order_beneficier']
+               res['earings_order_beneficier']['readonly'] = False
+               print"::In name of::",res['earings_order_beneficier']
+               return res
+        return {}          
+                
 hr_employee()
 
 
