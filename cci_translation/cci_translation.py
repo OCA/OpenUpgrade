@@ -36,43 +36,26 @@ class credit_line(osv.osv):
 	_description = 'Credit line'
 
 	def get_available_amount(self, cr, uid, credit_line_id, base_amount, partner_id, context={}):
-		#sum the eligible amounts for translation folder + embassy folder line for this customer
 		this = self.browse(cr, uid, [credit_line_id])[0]
-		sum = 0
-		print this.id
-		list = self.pool.get('translation.folder').search(cr, uid, [('credit_line_id','=',this.id), ('partner_id', '=', partner_id)])
-		for item in self.pool.get('translation.folder').browse(cr, uid, list):
-			sum +=  item.awex_amount
-
-		#list = self.pool.get('cci_missions.embassy_folder_line').search(cr, uid, [('credit_line_id','=',self.id)), ('folder_id.partner_id', '=', partner_id)])
-		#for item in list:
-		#	sum += item.awex_amount
-
-		print 'customer sum: ', sum
-		remaining_amount = this.customer_credit - sum
-		if remaining_amount <= 0:
-			return 0
-		if (base_amount/2) > remaining_amount:
-			return remaining_amount
-
 
 		#sum the eligible amounts for translation folder + embassy folder line for all customers
-		sum = 0
-		list = self.pool.get('translation.folder').search(cr, uid, [('credit_line_id','=',this.id)])
+		tot_sum = 0
+		partner_sum = 0
+
+		list = self.pool.get('translation.folder').search(cr, uid, [('credit_line_id','=',this.id),('state','<>','cancel')])
 		for item in self.pool.get('translation.folder').browse(cr, uid, list):
-			sum += item.awex_amount
+			tot_sum += item.awex_amount
+			if item.partner_id.id == partner_id:
+				#sum the eligible amounts for translation folder + embassy folder line for this customer
+				partner_sum +=  item.awex_amount
 
-		#list = self.pool.get('cci_missions.embassy_folder_line').search(cr, uid, [('credit_line_id','=',self.id)), ('folder_id.partner_id', '=', partner_id)])
-		#for item in list:
-		#	sum += item.awex_amount
-		print 'total sum: ', sum
+		partner_remaining_amount = this.customer_credit - partner_sum
+		tot_remaining_amount = this.global_credit - tot_sum
 
-		remaining_amount = this.global_credit - sum
-		if remaining_amount <= 0:
+		res = min(base_amount / 2, partner_remaining_amount, tot_remaining_amount)
+		if res < 0:
 			return 0
-		if (base_amount/2) > remaining_amount:
-			return remaining_amount
-		return base_amount / 2
+		return res
 
 	_columns = {
 		'name':fields.char('Name', size=32, required=True),
