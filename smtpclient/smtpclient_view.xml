@@ -101,11 +101,14 @@
 								<child1>
 									<separator string="Verification Message" colspan="4"/>
 									<field name="verify_email" select="1" colspan="4" nolabel="1"/>
-								</child1>
-								<child2>
 									<separator string="Test Message" colspan="4"/>
 									<field name="test_email" select="1" colspan="4" nolabel="1"/>
+								</child1>
+								<child2>
+									<separator string="Message" colspan="4"/>
+									<field name="body" select="1" colspan="4" nolabel="1"/>
 								</child2>
+								
 							</vpaned>
 						</page>
 						<page string="Permission">
