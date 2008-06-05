@@ -71,6 +71,7 @@ class SmtpClient(osv.osv):
         'active' : fields.boolean("Active"),
         'date_create': fields.date('Date Create', required=True, readonly=True, states={'new':[('readonly',False)]}),
         'test_email' : fields.text('Test Message'),
+        'body' : fields.text('Message', help="specify the message text here that will be send along with the email which is send through this server"),
         'verify_email' : fields.text('Verify Message', readonly=True, states={'new':[('readonly',False)]}),
         'code' : fields.char('Verification Code', size=256),
         'type' : fields.selection([("default", "Default"),("account", "Account"),("sale","Sale"),("stock","Stock")], "Server Type",required=True),
@@ -172,7 +173,36 @@ class SmtpClient(osv.osv):
             
         return True
     
-    def send_email(self, cr, uid, ids,emailto,subject,resource_id,body=False,report_name=False,file_name=False):
+    def selectAddress(self, cr, uid, partner=None, contact=None, ):
+        email = 'none@none.com'
+        if partner is None and contact is None:
+            return 'none@none.com'
+         
+        if partner is not None and contact is None:
+            pool = self.pool.get('res.partner')
+            data = pool.read(cr, uid, [partner])[0]
+            if data:
+                contact = data['address']
+
+        if contact is not None:
+            pool = self.pool.get('res.partner.address')
+            data = pool.read(cr, uid, contact)[0]
+            email = data['email']
+        
+        return email
+    
+    def select(self, cr, uid, type):
+        pool = self.pool.get('email.smtpclient')
+        ids = pool.search(cr, uid, [('type','=',type)], context=False)
+        if not ids:
+            ids = pool.search(cr, uid, [('type','=','default')], context=False)
+        
+        if not ids:
+            return False
+        
+        return ids[0]
+            
+    def send_email(self, cr, uid, ids, emailto, subject, resource_id, body=False, report_name=False, file_name=False):
         self.open_connection(cr, uid, ids, ids[0])
         
         def create_report(self,cr,uid,res_ids,report_name=False,file_name=False):
@@ -189,10 +219,10 @@ class SmtpClient(osv.osv):
             except Exception,e:
                 print 'Exception in create report:',e
                 return (False,str(e))
-        #end try:
+            #end try:
         
             return (True,ret_file_name)
-   
+        
         file=create_report(self,cr,uid,resource_id,report_name,file_name)
         is_file=file[0]
         if is_file:
