@@ -26,28 +26,21 @@ class account_invoice(osv.osv):
 		'internal_note': fields.text('Internal Note'),
 	}
 
-	#raise an error if one of the account_invoice_line doesn't have an analytic entry
 	def action_move_create(self, cr, uid, ids, context=None):
 		flag = False
+		move_obj = self.pool.get('account.move')
+		move_line_obj = self.pool.get('account.move.line')
 		data_invoice = self.browse(cr,uid,ids[0])
+		#raise an error if one of the account_invoice_line doesn't have an analytic entry
 		for line in data_invoice.invoice_line:
 			if not line.analytics_id:
 				flag = True
 		if flag:
 			raise osv.except_osv('Error!','Invoice line should have Analytic Distribution to create Analytic Entries.')
-#		return super(account_invoice, self).action_move_create(cr, uid, ids, context)
-
-#	#create other move lines if the invoice_line is related to a check payment or an AWEX credence
-#	def action_move_create(self, cr, uid, ids, context=None):
 		super(account_invoice, self).action_move_create(cr, uid, ids, context)
 
+		#create other move lines if the invoice_line is related to a check payment or an AWEX credence
 		for inv in self.browse(cr, uid, ids):
-			move_obj = self.pool.get('account.move')
-			move_id = move_obj.browse(cr, uid, [inv.move_id.id])
-			#move_obj.write(cr, uid,move_id.id, {'state' : 'draft'})
-
-			#line_ids = self.read(cr, uid, [inv.id], ['invoice_line'])[0]['invoice_line']
-			#ils = self.pool.get('account.invoice.line').read(cr, uid, line_ids)
 			iml = []
 			for item in self.pool.get('account.invoice.line').search(cr, uid, [('invoice_id','=',inv.id)]):
 				line = self.pool.get('account.invoice.line').browse(cr,uid, [item])[0]
@@ -85,6 +78,10 @@ class account_invoice(osv.osv):
 				date = inv.date_invoice
 				part = inv.partner_id.id
 				new_lines = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part, date, context={})) ,iml)
+				for item in new_lines:
+					if item[2]['credit']:
+						id1 = item[2]['credit']
+
 				journal_id = self.pool.get('account.journal').search(cr, uid, [('name','=','AWEX Journal')])[0]
 				journal = self.pool.get('account.journal').browse(cr, uid, journal_id)
 				if journal.sequence_id:
@@ -95,9 +92,13 @@ class account_invoice(osv.osv):
 					move['period_id'] = inv.period_id.id
 					for i in line:
 						i[2]['period_id'] = inv.period_id.id
-				move_id = self.pool.get('account.move').create(cr, uid, move)
+				move_id = move_obj.create(cr, uid, move)
 				move_obj.post(cr, uid, [move_id])
-			#move_obj.post(cr, uid, [move_id.id])
+
+				#this function could be improved in order to enable having more than one translation line per invoice
+				id1 = move_line_obj.search(cr, uid, [('move_id','=',move_id),('credit','<>',False)])[0]
+				id2 = move_line_obj.search(cr, uid, [('invoice','=',inv.id),('debit','<>',0)])[0]
+				move_line_obj.reconcile_partial(cr, uid, [id2,id1], 'manual', context=context)
 
 		return True
 
