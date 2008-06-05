@@ -9,6 +9,7 @@ form = """<?xml version="1.0"?>
     <field name="date2"/>
     <field name="ref" colspan="4"/>
     <field name="journal_ids" colspan="4"/>
+    <field name="empty_line"/>
 </form>"""
 
 fields = {
@@ -16,6 +17,7 @@ fields = {
     'date2': {'string':'End Date', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
     'journal_ids': {'string':'Analytic Journal', 'type':'many2many', 'relation':'account.analytic.journal'},
     'ref' :{'string':'Analytic Account Ref.', 'type':'many2one', 'relation':'account.analytic.account','required':True},
+    'empty_line': {'string':'Dont show empty lines', 'type':'boolean', 'default': lambda *a:False},
 }
 
 class wizard_crossovered_analytic(wizard.interface):
