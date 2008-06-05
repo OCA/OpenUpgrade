@@ -140,9 +140,9 @@ class dm_customer(osv.osv):
     _columns = {
         'customer_number' : fields.char('Customer Number',size=16),
         'language_id' : fields.many2one('res.lang','Main Language'),
-        'language_ids' : fields.many2many('res.lang','dm.customer','lang_id','customer_id','Other Languages'),
-        'prospect_media_ids' : fields.many2many('dm.media','dm.customer','prospect_media_id','customer_id','Prospect for Media'),
-        'client_media_ids' : fields.many2many('dm.media','dm.customer','client_media_id','customer_id','Client for Media'),
+        'language_ids' : fields.many2many('res.lang','dm_customer_langs','lang_id','customer_id','Other Languages'),
+        'prospect_media_ids' : fields.many2many('dm.media','dm_customer_prospect_media','prospect_media_id','customer_id','Prospect for Media'),
+        'client_media_ids' : fields.many2many('dm.media','dm_customer_client_media','client_media_id','customer_id','Client for Media'),
     }
 dm_customer()
 
@@ -171,10 +171,15 @@ class dm_customer_offer(osv.osv):
     def onchange_rawdatas(self,cr,uid,ids,raw_datas):
         if not raw_datas:
             return {}
-#        raw_datas = "2;00573G;168120;MISS;Lever;Shirley;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
+        raw_datas = "2;00573G;168120;MISS;Lever;Shirley;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
         value = raw_datas.split(';')
         key = ['datamatrix_type','action_code','customer_number','title','customer_lastname','customer_firstname','customer_add1','customer_add2','customer_add3','customer_add4','country','zip_summary','zip','distribution_office']
-        return {'value':dict(zip(key,value))}
+        value = dict(zip(key,value))
+        if value['customer_number']:
+            dm_customer = self.pool.get('dm.customer').search(cr,uid,[('customer_number','=',value['customer_number'])])
+            if dm_customer:
+                value['customer_id']=dm_customer[0]
+        return {'value':value}
     
     def set_confirm(self, cr, uid, ids, *args):
         return True
