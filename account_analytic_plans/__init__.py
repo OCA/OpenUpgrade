@@ -28,3 +28,4 @@
 
 import account_analytic_plans
 import wizard
+import report
