@@ -66,7 +66,7 @@ class report_document_user(osv.osv):
                      min(EXTRACT(MONTH FROM f.create_date)||'-'||substring(to_char(f.create_date,'YY-Month-DD') from 4 for 9)) as month,
                      f.write_date as change_date
                  from ir_attachment f
-                     inner join document_directory d on (f.parent_id=d.id and d.name<>'')
+                     left join document_directory d on (f.parent_id=d.id and d.name<>'')
                      inner join res_users u on (f.user_id=u.id)
                  group by d.name,f.parent_id,d.type,f.create_date,f.user_id,f.file_size,u.name,d.type,f.write_date
              )
@@ -135,7 +135,18 @@ class report_document_wall(osv.osv):
     def init(self, cr):
          cr.execute("""
             create or replace view report_document_wall as (
-               select max(f.id) as id,min(title) as file_name,to_char(min(f.create_date),'YYYY-MM-DD HH24:MI:SS') as last,f.user_id as user_id,f.user_id as user,substring(to_char(f.create_date,'YY-Month-DD') from 4 for 9) as month from ir_attachment f where create_date in (select max(create_date) from ir_attachment i inner join res_users u on (i.user_id=u.id) group by i.user_id) group by f.user_id,f.create_date having (to_date(substring(CURRENT_DATE for 10),'YYYY-MM-DD') - to_date(substring(f.create_date for 10),'YYYY-MM-DD')) > 30
+               select max(f.id) as id,
+               min(title) as file_name,
+               to_char(min(f.create_date),'YYYY-MM-DD HH24:MI:SS') as last,
+               f.user_id as user_id,f.user_id as user,
+               substring(to_char(f.create_date,'YY-Month-DD') from 4 for 9) as month 
+               from ir_attachment f 
+               where create_date in (
+                   select max(create_date) 
+                   from ir_attachment i 
+                   inner join res_users u on (i.user_id=u.id) 
+                   group by i.user_id) group by f.user_id,f.create_date 
+                   having (to_date(substring(CURRENT_DATE for 10),'YYYY-MM-DD') - to_date(substring(f.create_date for 10),'YYYY-MM-DD')) > 30
              )
          """)
 report_document_wall()
