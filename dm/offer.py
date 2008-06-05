@@ -138,6 +138,7 @@ class dm_customer(osv.osv):
     _name = "dm.customer"
     _inherit = 'res.partner'
     _columns = {
+        'customer_number' : fields.char('Customer Number',size=16),
         'language_id' : fields.many2one('res.lang','Main Language'),
         'language_ids' : fields.many2many('res.lang','dm.customer','lang_id','customer_id','Other Languages'),
         'prospect_media_ids' : fields.many2many('dm.media','dm.customer','prospect_media_id','customer_id','Prospect for Media'),
@@ -150,7 +151,7 @@ class dm_customer_offer(osv.osv):
     _columns ={
         'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
         'customer_number' : fields.char('Customer Number',size=16),
-        'title' : fields.char('Titel',size=16),
+        'title' : fields.char('Title',size=16),
         'customer_firstname' : fields.char('First Name', size=16),
         'customer_lastname' : fields.char('Last Name', size=16),
         'customer_add1' : fields.char('Address1', size=16),
