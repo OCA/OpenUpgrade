@@ -22,10 +22,10 @@ def content_index(content, filename=None, content_type=None):
 		fp = os.popen('pdftotext -enc UTF-8 -nopgbrk '+fname+' -', 'r')
 		result = fp.read()
 		fp.close()
-	elif ext == '.odt':
+	elif ext in ('.xls','.ods','.odt'):
 		s = StringIO.StringIO(content)
 		o = odt2txt.OpenDocumentTextFile(s)
 		result = o.toString().encode('ascii','replace')
-	elif ext in ('.txt','.py','.patch','.html','.csv') :
+	elif ext in ('.txt','.py','.patch','.html','.csv','.xml'):
 		result = content
 	return result
