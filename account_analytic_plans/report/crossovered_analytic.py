@@ -81,6 +81,7 @@ class crossovered_analytic(report_sxw.rml_parse):
                     self.dict_acc_ref[form['ref']].append(obj.move_id.id)
 
         res['ref_name'] = acc_pool.name_get(self.cr,self.uid,[form['ref']])[0][1]
+        res['ref_code'] = acc_pool.browse(self.cr,self.uid,form['ref']).code
 
         self.final_list = children_list
         selected_ids = line_pool.search(self.cr,self.uid,[('account_id','in',self.final_list)])
@@ -119,8 +120,8 @@ class crossovered_analytic(report_sxw.rml_parse):
         for acc_id in self.final_list:
             selected_ids = line_pool.search(self.cr,self.uid,[('account_id','=',acc_id),('move_id','in',self.dict_acc_ref[form['ref']])])
             if selected_ids:
-                query="SELECT sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
-                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "'"" GROUP BY aal.account_id,aaa.name ORDER BY aal.account_id"
+                query="SELECT aaa.code as code , sum(aal.amount) AS amt, sum(aal.unit_amount) AS qty,aaa.name as acc_name,aal.account_id as id  FROM account_analytic_line AS aal, account_analytic_account AS aaa \
+                WHERE aal.account_id=aaa.id AND aal.id IN ("+','.join(map(str,selected_ids))+") AND (aal.journal_id " + journal +") AND aal.date>='"+ str(form['date1']) +"'"" AND aal.date<='" + str(form['date2']) + "'"" GROUP BY aal.account_id,aaa.name,aaa.code ORDER BY aal.account_id"
 
                 self.cr.execute(query)
                 res = self.cr.dictfetchall()
@@ -134,7 +135,9 @@ class crossovered_analytic(report_sxw.rml_parse):
                     result={}
                     res=[]
                     result['id']=acc_id
-                    result['acc_name']=acc_pool.browse(self.cr,self.uid,acc_id).name
+                    data_account = acc_pool.browse(self.cr,self.uid,acc_id)
+                    result['acc_name']=data_account.name
+                    result['code'] = data_account.code
                     result['amt']=result['qty']=result['perc']=0.00
                     if not form['empty_line']:
                         res.append(result)
@@ -142,7 +145,9 @@ class crossovered_analytic(report_sxw.rml_parse):
                 result={}
                 res=[]
                 result['id']=acc_id
-                result['acc_name']=acc_pool.browse(self.cr,self.uid,acc_id).name
+                data_account = acc_pool.browse(self.cr,self.uid,acc_id)
+                result['acc_name']=data_account.name
+                result['code'] = data_account.code
                 result['amt']=result['qty']=result['perc']=0.00
                 if not form['empty_line']:
                     res.append(result)
