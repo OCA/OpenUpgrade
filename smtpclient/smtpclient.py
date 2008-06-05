@@ -123,7 +123,7 @@ class SmtpClient(osv.osv):
                 else:
                     key = hashlib.md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
                     
-                body = body.replace("%(code)", key)
+                body = body.replace("__code__", key)
                 
             user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, [uid])[0]
             body = body.replace("%(user)", user.name)
@@ -159,7 +159,7 @@ class SmtpClient(osv.osv):
         if self.server:
             try:
                 self.smtpServer = smtplib.SMTP()
-                self.smtpServer.debuglevel = 5
+                #self.smtpServer.debuglevel = 5
                 self.smtpServer.connect(str(self.server['server']),self.server['port'])
                 
                 if self.server['ssl']:
@@ -201,7 +201,7 @@ class SmtpClient(osv.osv):
             return False
         
         return ids[0]
-            
+
     def send_email(self, cr, uid, ids, emailto, subject, resource_id, body=False, report_name=False, file_name=False):
         self.open_connection(cr, uid, ids, ids[0])
         
@@ -223,8 +223,8 @@ class SmtpClient(osv.osv):
         
             return (True,ret_file_name)
         
-        file=create_report(self,cr,uid,resource_id,report_name,file_name)
-        is_file=file[0]
+        file = create_report(self,cr,uid,resource_id,report_name,file_name)
+        is_file = file[0]
         if is_file:
         	file_name=file[1]
         try:
