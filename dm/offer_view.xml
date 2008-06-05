@@ -443,7 +443,10 @@
 				<field name="zip"/>
 				<field name="zip_summary"/>
 				<field name="distribution_office" colspan="4"/>
-				<button string="Confirm" name="set_confirm" type="object"/>
+				<group col="4" colspan="3">
+					<label name="" colspan="1"/>
+					<button string="Confirm" name="set_confirm" type="object" align="center"/>
+				</group>
 			</form>
 		</field>
 	</record>	

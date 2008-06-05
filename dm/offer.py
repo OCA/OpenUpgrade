@@ -160,9 +160,14 @@ class dm_customer_offer(osv.osv):
         'zip_summary' : fields.char('Zip Summary', size=64),
         'distribution_office' : fields.char('Distribution Office', size=64),
         'action_code' : fields.char('Action Code', size=16),
-        'offer_step' : fields.many2one('dm.offer.step', 'Offer Step', ondelete="cascade"),
+#        'offer_step' : fields.many2one('dm.offer.step', 'Offer Step', ondelete="cascade"),
+        'offer_step' : fields.char('Offer Step', size=16),
         'raw_datas' : fields.char('Raw Datas', size=16),
     }
+    
+    def set_confirm(self, cr, uid, ids, *args):
+        return True
+    
 dm_customer_offer()
 
 class dm_offer(osv.osv):
