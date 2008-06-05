@@ -59,9 +59,9 @@ class Invoice(osv.osv):
             body= smtpserver.body
             name = self.pool.get('res.partner.address').read(cr, uid, [address['address_invoice_id'][0]], ['name'])[0]['name'] or 'Customer'
             user = self.pool.get('res.users').read(cr, uid, [uid], ['name'])[0]['name'] or 'Tiny ERP'
-            body = body.replace('%(name)', name)
-            body = body.replace('%(user)', user)
-            body = body.replace('%(number)', str(address['number']))
+            body = body.replace('__name__', name)
+            body = body.replace('__user__', user)
+            body = body.replace('__number__', str(address['number']))
             
             state = smtpserver.send_email(
                         cr, 
@@ -74,6 +74,22 @@ class Invoice(osv.osv):
                         'account.invoice',
                         'Invoice'
                     )
+            
+            inv_data = self.read(cr, uid, ids ,['partner_id', 'amount_total'],context=None)
+            partner_ids = inv_data[0]['partner_id']
+            total = inv_data[0]['amount_total']
+            
+            event_obj = self.pool.get('res.partner.event')
+            event_obj.create(cr, uid, {'name': 'Invoice: '+ str(address['number']),\
+                    'partner_id': partner_ids[0],\
+                    'date': time.strftime('%Y-%m-%d %H:%M:%S'),\
+                    'user_id': uid,\
+                    'partner_type': 'customer', 
+                    'probability': 1.0,\
+                    'planned_revenue': total,
+                    'description' : body,
+                    'document' : 'account.invoice,'+str(ids[0])})
+            cr.commit()
             
             if not state:
                 raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
