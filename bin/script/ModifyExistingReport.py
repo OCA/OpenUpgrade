@@ -13,7 +13,7 @@ if __name__<>'package':
     from lib.gui import *
     from lib.error import *
     from LoginTest import *
-    database="test"
+    database="test_001"
     uid = 3
 
 #
@@ -52,7 +52,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         #res_sxw = sock.execute(docinfo.getUserFieldValue(2), 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'report_get', ids[0])
         fields=['name','report_name','model']
         self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', self.ids,fields)
-        self.res_other.sort(lambda x, y: cmp(x['model'],y['model']))
+#        self.res_other.sort(lambda x, y: cmp(x['model'],y['model']))
         for i in range(self.res_other.__len__()):
             if self.res_other[i]['name']<>"":
                 self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',self.res_other[i]['model'])])
