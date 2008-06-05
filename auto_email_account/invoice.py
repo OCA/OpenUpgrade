@@ -34,60 +34,72 @@ import netsvc
 from tools.misc import UpdateableStr, UpdateableDict
 import threading
 
-class account_invoice(osv.osv):
+class Invoice(osv.osv):
     _inherit = "account.invoice"
     
     def send_mail(self, db_name, uid, ids):
         db, pool = pooler.get_db_and_pool(db_name)
         cr = db.cursor()
+        
         result=None
         context=None
-        part=self.read(cr, uid, ids ,['address_invoice_id'],context=None)[0]            
-        partner_address_id = part['address_invoice_id'][0]
-        address_data= self.pool.get('res.partner.address').read(cr, uid, partner_address_id,[], context)
-        if 'email' in address_data:
-            account_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','account')], context=False)
-            if not account_smtpserver_id:
-                default_smtpserver_id = self.pool.get('email.smtpclient').search(cr, uid, [('type','=','default')], context=False)
-            smtpserver_id = account_smtpserver_id or default_smtpserver_id
-            if address_data['email']:
-                email = address_data['email'] 
-                smtpserver_id = account_smtpserver_id or default_smtpserver_id               
-                if not smtpserver_id:
-                    raise Exception, 'Verification Failed, No Server Defined!!!'                
-                smtpserver = self.pool.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)[0]
-                body= "Your Invoice is Validated \n Please See the attachment"
-                state = smtpserver.send_email(cr, uid, smtpserver_id, email,"Tiny ERP: Invoice validated",ids,body,'account.invoice','Invoice')
-                if not state:
-                    raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
-                return {}
-            else:                
-                model_id=self.pool.get('ir.model').search(cr, uid, [('model','=','account.invoice')], context=False)[0]
-                if smtpserver_id:
-                    self.pool.get('email.smtpclient.history').create \
-                    (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':'The Email is not sent because the Partner have no Email','email':'','model':model_id,'resource_id':ids[0]})
+        
+        smtp = self.pool.get('email.smtpclient')
+        
+        address = self.read(cr, uid, ids ,['address_invoice_id', 'number', 'name'],context=None)[0]
+        email = smtp.selectAddress(cr, uid, partner=None, contact=[address['address_invoice_id'][0]])
+        smtpserver_id = self.pool.get('email.smtpclient').select(cr, uid, 'account')
+        
+        if email:
+            if smtpserver_id is False:
+                raise Exception, 'Please check the Server Configuration !!!'
+            
+            smtpserver = self.pool.get('email.smtpclient').browse(cr, uid, smtpserver_id, context=False)
+            
+            body= smtpserver.body
+            name = self.pool.get('res.partner.address').read(cr, uid, [address['address_invoice_id'][0]], ['name'])[0]['name'] or 'Customer'
+            user = self.pool.get('res.users').read(cr, uid, [uid], ['name'])[0]['name'] or 'Tiny ERP'
+            body = body.replace('%(name)', name)
+            body = body.replace('%(user)', user)
+            body = body.replace('%(number)', str(address['number']))
+            
+            state = smtpserver.send_email(
+                        cr, 
+                        uid, 
+                        [smtpserver_id], 
+                        email, 
+                        "Invoice  : " + str(address['number']),
+                        ids,
+                        body,
+                        'account.invoice',
+                        'Invoice'
+                    )
+            
+            if not state:
+                raise Exception, 'Verification Failed, Please check the Server Configuration!!!'
+        else:
+            model_id=self.pool.get('ir.model').search(cr, uid, [('model','=','account.invoice')], context=False)[0]
+            if smtpserver_id:
+                history = self.pool.get('email.smtpclient.history')
+                history.create(
+                    cr, 
+                    uid,
+                    {
+                        'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),
+                        'server_id' : smtpserver_id,
+                        'name':'The Email is not sent because the Partner have no Email',
+                        'email':'',
+                        'model':model_id,
+                        'resource_id':ids[0]
+                    }
+                )
         return {}
     
     def action_number(self, cr, uid, ids):
-#        result = self.action_number1(cr, uid, ids)
-#        if result:
-        threads=[]
-        thread2 = threading.Thread( target=self.action_number1 , args=( cr.dbname, uid, ids) )
-        thread2.start()
-        threads.append(thread2)
-        thread1 = threading.Thread( target=self.send_mail , args=( cr.dbname, uid, ids) )
+        super(Invoice, self).action_number(cr, uid, ids)
+        cr.commit()
+        thread1 = threading.Thread( target=self.send_mail , args=(cr.dbname, uid, ids))
         thread1.start()
-        threads.append(thread1)
-#        for thread in threads:
-#            thread.join()
-        return {}
-    
-    def action_number1(self, db_name, uid, ids):
-        db, pool = pooler.get_db_and_pool(db_name)
-        cr = db.cursor()
-        result=None
-        context=None
-        result=super(account_invoice, self).action_number(cr, uid, ids)
-        return result
-#    
-account_invoice()
+        return True
+        
+Invoice()
