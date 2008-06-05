@@ -356,8 +356,8 @@
 			<form string="Customer">
 			<notebook>
 				<page string="General">
+					<field name="name" select="1" colspan="4"/>
 					<field name="customer_number" string="Number" select="1"/>
-					<field name="name" select="1"/>
 					<field name="language_id"  select="2"/>
 					<separator string="Other Languages" colspan="4"/>							
 					<field name="language_ids" colspan="4" nolabel="1"/>
@@ -422,7 +422,7 @@
 	<menuitem name="Direct Marketing/Offer/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>	
 	<!--
 	=======================================================
-	Customer Offer Views
+	Customer Order Views
 	=======================================================
 	-->	
 	<record model="ir.ui.view" id="view_dm_customer_offer_form">
@@ -430,23 +430,24 @@
 		<field name="model">dm.customer.offer</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">	
-			<form string="Customer Offer">
+			<form string="Customer Order">
 				<field name="raw_datas" colspan="4" on_change="onchange_rawdatas(raw_datas)"/>
 				<field name="customer_id"/>
 				<field name="customer_number" select="1"/>
 				<field name="action_code"/>
 				<field name="offer_step"/>
+				<field name="distribution_office"/>
 				<field name="title"/>
 				<field name="customer_firstname" select="1"/>
 				<field name="customer_lastname" select="2"/>
+				<newline/>
 				<field name="customer_add1"/>
 				<field name="customer_add2"/>
 				<field name="customer_add3"/>
 				<field name="customer_add4"/>
-				<field name="country" colspan="4" select="2"/>
+				<field name="country" select="2" colspan="4"/>
 				<field name="zip"/>
 				<field name="zip_summary"/>
-				<field name="distribution_office" colspan="4"/>
 				<group col="4" colspan="3">
 					<label name="" colspan="1"/>
 					<button string="Confirm" name="set_confirm" type="object" align="center"/>
@@ -459,7 +460,7 @@
 		<field name="model">dm.customer.offer</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Customer Offer">
+			<tree string="Customer Order">
 				<field name="customer_number"/>			
 				<field name="customer_firstname"/>
 				<field name="customer_lastname"/>
