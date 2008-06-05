@@ -536,7 +536,7 @@ class document_file(osv.osv):
 		result = super(document_file,self).create(cr, uid, vals, context)
 		cr.commit()
 		try:
-			res = content_index(base64.decodestring(datas), vals['title'], vals.get('content_type', None))
+			res = content_index(base64.decodestring(datas), vals['name'], vals.get('content_type', None))
 			super(document_file,self).write(cr, uid, [result], {
 				'index_content': res,
 			})
