@@ -10,7 +10,10 @@ the selected invoices attached by Email
     "category" : "Generic Modules",
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["account_invoice_wizard.xml"],
+    "update_xml" : [
+        "account_invoice_wizard.xml",
+        "account_workflow.xml"
+    ],
     "active": False,
     "installable": True
 }
