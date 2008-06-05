@@ -149,6 +149,8 @@ class dm_customer_offer(osv.osv):
     _name = "dm.customer.offer"
     _columns ={
         'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
+        'customer_number' : fields.char('Customer Number',size=16),
+        'title' : fields.char('Titel',size=16),
         'customer_firstname' : fields.char('First Name', size=16),
         'customer_lastname' : fields.char('Last Name', size=16),
         'customer_add1' : fields.char('Address1', size=16),
@@ -165,9 +167,16 @@ class dm_customer_offer(osv.osv):
         'raw_datas' : fields.char('Raw Datas', size=16),
     }
     
+    def onchange_rawdatas(self,cr,uid,ids,raw_datas):
+        if not raw_datas:
+            return {}
+#        raw_datas = "2;00573G;168120;MISS;Lever;Shirley;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
+        value = raw_datas.split(';')
+        key = ['datamatrix_type','action_code','customer_number','title','customer_lastname','customer_firstname','customer_add1','customer_add2','customer_add3','customer_add4','country','zip_summary','zip','distribution_office']
+        return {'value':dict(zip(key,value))}
+    
     def set_confirm(self, cr, uid, ids, *args):
         return True
-    
 dm_customer_offer()
 
 class dm_offer(osv.osv):

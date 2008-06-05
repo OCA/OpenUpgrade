@@ -429,7 +429,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">	
 			<form string="Customer Offer">
-				<field name="raw_datas" colspan="4"/>
+				<field name="raw_datas" colspan="4" on_change="onchange_rawdatas(raw_datas)"/>
 				<field name="customer_id" colspan="4"/>
 				<field name="action_code"/>
 				<field name="offer_step"/>
@@ -469,7 +469,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_offer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Customer Offers" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
+	<menuitem name="Direct Marketing/Offer/All Customer Odders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
 
 </data>
 </terp>
