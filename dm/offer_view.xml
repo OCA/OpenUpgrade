@@ -448,10 +448,9 @@
 				<field name="country" select="2" colspan="4"/>
 				<field name="zip"/>
 				<field name="zip_summary"/>
-				<group col="4" colspan="3">
-					<label name="" colspan="1"/>
-					<button string="Confirm" name="set_confirm" type="object" align="center"/>
-				</group>
+				<field name="note" colspan="4"/>
+				<field name="state"/>
+				<button string="Confirm" name="set_confirm" type="object" states="draft" colspan="2"/>
 			</form>
 		</field>
 	</record>	
@@ -466,6 +465,7 @@
 				<field name="customer_lastname"/>
 				<field name="country"/>
 				<field name="distribution_office"/>
+				<field name="state"/>
 			</tree>
 		</field>
 	</record>

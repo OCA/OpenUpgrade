@@ -166,8 +166,12 @@ class dm_customer_offer(osv.osv):
 #        'offer_step' : fields.many2one('dm.offer.step', 'Offer Step', ondelete="cascade"),
         'offer_step' : fields.char('Offer Step', size=16),
         'raw_datas' : fields.char('Raw Datas', size=16),
+        'note' : fields.text('Notes'),
+        'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
     }
-    
+    _defaults = {
+        'state': lambda *a: 'draft',
+    }
     def onchange_rawdatas(self,cr,uid,ids,raw_datas):
         if not raw_datas:
             return {}
@@ -182,7 +186,9 @@ class dm_customer_offer(osv.osv):
         return {'value':value}
     
     def set_confirm(self, cr, uid, ids, *args):
+        self.write(cr,uid,ids,{'state':'done'})
         return True
+    
 dm_customer_offer()
 
 class dm_offer(osv.osv):
