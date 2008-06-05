@@ -418,6 +418,55 @@
 		<field name="view_id" ref="view_dm_customer_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Offer/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>	
-		
+	<!--
+	=======================================================
+	Customer Offer Views
+	=======================================================
+	-->	
+	<record model="ir.ui.view" id="view_dm_customer_offer_form">
+		<field name="name">dm.customer.offer.form</field>
+		<field name="model">dm.customer.offer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">	
+			<form string="Customer Offer">
+				<field name="raw_datas" colspan="4"/>
+				<field name="customer_id" colspan="4"/>
+				<field name="action_code"/>
+				<field name="offer_step"/>
+				<field name="customer_firstname"/>
+				<field name="customer_lastname"/>
+				<field name="customer_add1"/>
+				<field name="customer_add2"/>
+				<field name="customer_add3"/>
+				<field name="customer_add4"/>
+				<field name="country" colspan="4"/>
+				<field name="zip"/>
+				<field name="zip_summary"/>
+				<field name="distribution_office" colspan="4"/>
+				<button string="Confirm" name="set_confirm" type="object"/>
+			</form>
+		</field>
+	</record>	
+	<record model="ir.ui.view" id="view_dm_customer_offer_tree">
+		<field name="name">dm.customer.offer.tree</field>
+		<field name="model">dm.customer.offer</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Customer Offer">
+				<field name="customer_firstname"/>
+				<field name="customer_lastname"/>
+				<field name="country"/>
+				<field name="distribution_office"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_dm_customer_offer_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.customer.offer</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_dm_customer_offer_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Offer/All Customer Offers" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
+
 </data>
 </terp>

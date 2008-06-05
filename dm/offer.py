@@ -145,6 +145,25 @@ class dm_customer(osv.osv):
     }
 dm_customer()
 
+class dm_customer_offer(osv.osv):
+    _name = "dm.customer.offer"
+    _columns ={
+        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
+        'customer_firstname' : fields.char('First Name', size=16),
+        'customer_lastname' : fields.char('Last Name', size=16),
+        'customer_add1' : fields.char('Address1', size=16),
+        'customer_add2' : fields.char('Address2', size=16),
+        'customer_add3' : fields.char('Address3', size=16),
+        'customer_add4' : fields.char('Address4', size=16),
+        'country' : fields.char('Country', size=16),
+        'zip' : fields.char('Zip Code', size=12),
+        'zip_summary' : fields.char('Zip Summary', size=64),
+        'distribution_office' : fields.char('Distribution Office', size=64),
+        'action_code' : fields.char('Action Code', size=16),
+        'offer_step' : fields.many2one('dm.offer.step', 'Offer Step', ondelete="cascade"),
+        'raw_datas' : fields.char('Raw Datas', size=16),
+    }
+dm_customer_offer()
 
 class dm_offer(osv.osv):
     _name = "dm.offer"
