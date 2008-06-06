@@ -129,7 +129,7 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
-				<field name="employee_nbr_total" position="after">
+				<field name="address" position="before">
 					<field name="awex_eligible"/>
 				</field>
 			</field>
