@@ -214,8 +214,8 @@ class abstracted_fs:
 		else:
 			raise OSError(1, 'Operation not permited.')
 
-	# To be Done
-	# still error : after server send respone 150 to client , file could not be not closed. so file is not make properly
+	# ok, but need test more
+
 	def mkstemp(self, suffix='', prefix='', dir=None, mode='wb'):
 		"""A wrap around tempfile.mkstemp creating a file with a unique
 		name.  Unlike mkstemp it returns an object with a file-like
@@ -246,7 +246,8 @@ class abstracted_fs:
 			object2=dir and dir.object2 or False
 			res=pool.get('ir.attachment').search(cr,uid,[('name','like',prefix),('parent_id','=',object and object.type in ('directory','ressource') and object.id or False),('res_id','=',object2 and object2.id or False),('res_model','=',object2 and object2._name or False)])
 			if len(res):
-				prefix=prefix + '.v'+str(len(res))
+				pre = prefix.split('.')
+				prefix=pre[0] + '.v'+str(len(res))+'.'+pre[1]
 			#prefix = prefix + '.'
 		return self.create(dir,suffix+prefix,text)
 
@@ -261,7 +262,7 @@ class abstracted_fs:
 		else:
 			raise OSError(1, 'Operation not permited.')
 
-	# Ok, still check duplicate
+	# Ok
 	def mkdir(self, node, basename):
 		"""Create the specified directory."""
 		if not node:
@@ -359,7 +360,7 @@ class abstracted_fs:
 			raise OSError(1, 'Operation not permited.')
 		cr.commit()
 
-	# Ok, check duplicate
+	# Ok
 	def rename(self, src, dst_basedir,dst_basename):
 		"""
 			Renaming operation, the effect depends on the src:
