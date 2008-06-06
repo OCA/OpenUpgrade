@@ -92,10 +92,12 @@ def _createInvoices(self, cr, uid, data, context):
 		translation_product_id = pool_obj.get('product.product').search(cr, uid, [('name', 'like', 'Translation Folder')])[0]
 		val = obj_lines.product_id_change(cr, uid, [], translation_product_id,uom =False, partner_id = transfolder.partner_id.id)
 
-		if transfolder.awex_eligible:
+		note = ''
+		cci_special_reference = False
+
+		if transfolder.awex_eligible and transfolder.awex_amount > 0:
 			note = 'AWEX intervention for a total of ' + str(transfolder.awex_amount)
-		else:
-			note = ''
+			cci_special_reference = "translation.folder*" + str(transfolder.id)
 
 		inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
 			'name': val['value']['name'],
@@ -107,7 +109,7 @@ def _createInvoices(self, cr, uid, data, context):
 			'product_id': translation_product_id,
 			'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
 			'note': note,
-			'cci_special_reference': "translation.folder*" + str(transfolder.id)
+			'cci_special_reference': cci_special_reference
 		})
 		inv = {
 			'name': transfolder.name,

@@ -7,7 +7,7 @@
 	"description": """
 		cci translation
 	""",
-	"depends" : ["base","cci_mission","cci_account"],
+	"depends" : ["base","cci_account"],
 	"init_xml" : [],
 	"demo_xml" : ["cci_translation_data.xml"],
 

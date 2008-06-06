@@ -128,12 +128,3 @@ class res_partner(osv.osv):
 		'awex_eligible' : lambda *a : 'unknown',
 	}
 res_partner()
-
-class translation_billing_line(osv.osv):
-	_inherit = 'cci_missions.embassy_folder_line'
-	_description = 'Translation Billing Line'
-	_columns = {
-		'awex_eligible':fields.boolean('AWEX Eligible'),
-		'awex_amount':fields.float('AWEX Amount')
-	}
-translation_billing_line()
