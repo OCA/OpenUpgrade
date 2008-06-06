@@ -245,7 +245,7 @@ class dm_customer_offer(osv.osv):
             print vals
             workitem.create(cr,uid,vals)
         
-#        self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
+        self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
         return True
     
 dm_customer_offer()
