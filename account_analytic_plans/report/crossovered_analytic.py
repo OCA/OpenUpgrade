@@ -43,12 +43,30 @@ class crossovered_analytic(report_sxw.rml_parse):
 
     def find_children(self,ref_ids):
         to_return_ids = []
+        final_list = []
+        parent_list = []
+        set_list = []
         for id in ref_ids:
             # to avoid duplicate entries
             if id not in to_return_ids:
                 to_return_ids.append(self.pool.get('account.analytic.account').search(self.cr,self.uid,[('parent_id','child_of',[id])]))
-        return to_return_ids[0]
+        data_accnt = self.pool.get('account.analytic.account').browse(self.cr,self.uid,to_return_ids[0])
+        for data in data_accnt:
+            if data.parent_id and data.parent_id.id == ref_ids[0]:
+                parent_list.append(data.id)
+        final_list.append(ref_ids[0])
+        set_list = self.set_account(parent_list)
+        final_list.extend(set_list)
+        return final_list #to_return_ids[0]
 
+    def set_account(self,cats):
+        lst = []
+        category = self.pool.get('account.analytic.account').read(self.cr,self.uid,cats)
+        for cat in category:
+            lst.append(cat['id'])
+            if cat['child_ids']:
+                lst.extend(self.set_account(cat['child_ids']))
+        return lst
 
     def _ref_lines(self,form):
         result = []
