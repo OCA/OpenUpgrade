@@ -195,6 +195,9 @@ class dm_customer_offer(osv.osv):
 #            if res.customer_number != customer.customer_number:
 #                 vals['customer_number'] = customer.customer_number
         customer_id = res.customer_id.id
+        
+#                                    Create Customer
+ 
         if not res.customer_id:
               vals={}
               vals['customer_number']=res.customer_number
@@ -210,25 +213,39 @@ class dm_customer_offer(osv.osv):
 #              country_id = self.pool.get("res.country")
               vals['address'] = [[0, 0,address]]
               customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
-        vals={}
-        vals['customer_id']=customer_id
+
         segment = self.pool.get('dm.campaign.proposition.segment')
         segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
-        if segment_id :
-            vals['segment_id']=segment_id[0]
+        workitem = self.pool.get('dm.offer.step.workitem')
+        workitem_id = workitem.search(cr,uid,[('customer_id','=',res.customer_id.id),('segment_id','=',segment_id[0])])
+        vals={}
+        
         segment_obj = segment.browse(cr,uid,segment_id)[0]
         offer_id = segment_obj.proposition_id.camp_id.offer_id.id
         offer_step = self.pool.get('dm.offer.step')
         step_id = offer_step.search(cr,uid,[('offer_id','=',offer_id),('type','=',res.offer_step)])
+        
         vals['step_id'] =step_id[0]
+        
         step = offer_step.browse(cr,uid,step_id)[0]
+        
+#    change the loop
         amount = 0
         for p in step.product_ids:
             amount+=p.price
-        print amount  
         vals['purchase_amount']= amount
-        self.pool.get('dm.offer.step.workitem').create(cr,uid,vals)
-        self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
+        if workitem_id : 
+            print vals
+            workitem.write(cr,uid,workitem_id,vals)
+#                                        create new workitem
+        else:
+            vals['customer_id']=customer_id
+            if segment_id :
+                vals['segment_id']=segment_id[0]
+            print vals
+            workitem.create(cr,uid,vals)
+        
+#        self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
         return True
     
 dm_customer_offer()

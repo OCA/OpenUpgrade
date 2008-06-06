@@ -176,6 +176,7 @@
 <!--			<field model="dm.offer.step.transition" name="outgoing_transition_ids" search="[('name','=','Bidding closed')]"/>-->
 			<field eval="&quot;valid&quot;" name="legal_state"/>
 			<field eval="&quot;3000000&quot;" name="quotation"/>
+			<field eval="&quot;MI&quot;" name="type"/>
 		</record>
 
 	<!--

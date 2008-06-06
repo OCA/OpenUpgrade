@@ -94,7 +94,7 @@ class dm_offer_step(osv.osv):
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            code = '_'.join([offer_step.offer_id.code,(offer_step.sequence or ''),(offer_step.type or '')])
+            code = '_'.join([offer_step.offer_id.code,(str(offer_step.sequence) or ''),(offer_step.type or '')])
             result[id]=code
         return result
     _columns = {
