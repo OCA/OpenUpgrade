@@ -205,7 +205,6 @@
 						<field name="destination_id"/>
 						<field name="member_price"/>
 						<newline/>
-
 						<field name="embassy_folder_line_ids" nolabel="1" colspan="4">
 							<tree string="Embassy Foder Lines">
 								<field name="name"/>
@@ -223,8 +222,9 @@
 								<field name="customer_amount"/>
 								<newline/>
 								<field name="tax_rate" />
-								<!--<newline/>
-								<field name="account_id" />-->
+								<newline/>
+								<field name="awex_amount"/>
+								<field name="awex_eligible"/>
 							</form>
 						</field>
 						<newline/>
@@ -319,6 +319,9 @@
 					<newline/>
 					<field name="tax_rate" />
 					<field name="account_id" />
+					<newline/>
+					<field name="awex_amount"/>
+					<field name="awex_eligible"/>
 				</form>
 			</field>
 		</record>

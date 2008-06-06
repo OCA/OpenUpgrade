@@ -87,6 +87,24 @@ class cci_missions_embassy_folder(osv.osv):
 		self.write(cr, uid, ids, {'state':'open',})
 		cases = self.browse(cr, uid, ids)
 		self._history(cr, uid, cases, 'Got Back', history=True)
+		for id in self.browse(cr, uid, ids):
+			data = {}
+			obj_folder_line = self.pool.get('cci_missions.embassy_folder_line')
+			temp = obj_folder_line.search(cr, uid, [('folder_id','=',id.id),('type','=','Translation')])
+			if temp:
+				translation_line = obj_folder_line.browse(cr, uid, [temp[0]])[0]
+				if translation_line.awex_eligible and id.partner_id.awex_eligible == 'yes':
+					#look for an existing credit line in the current time
+					credit_line = self.pool.get('credit.line').search(cr, uid, [('from_date','<=',time.strftime('%Y-%m-%d')), ('to_date', '>=', time.strftime('%Y-%m-%d'))])
+					if credit_line:
+						#if there is one available: get available amount from it
+						amount = self.pool.get('credit.line').browse(cr, uid,[credit_line[0]])[0].get_available_amount(cr, uid, credit_line[0], translation_line.customer_amount, id.partner_id.id)
+						if amount > 0:
+							data['awex_amount'] = amount
+							data['credit_line_id'] =  credit_line[0]
+						else:
+							data['awex_eligible'] = False
+					obj_folder_line.write(cr, uid, [translation_line.id], data)
 		return True
 
 	def _cci_mission_done_folder(self,cr,uid,ids,*args):
@@ -105,12 +123,6 @@ class cci_missions_embassy_folder(osv.osv):
 				'case_id': case.crm_case_id.id
 			}
 			obj = self.pool.get('crm.case.log')
-#			if history and case.description:
-#				obj = self.pool.get('crm.case.history')
-#				data['description'] = case.description
-#				data['email'] = email or \
-#				(case.user_id and case.user_id.address_id and \
-#				case.user_id.address_id.email) or False
 			obj.create(cr, uid, data, context)
 		return True
 
@@ -139,7 +151,7 @@ class cci_missions_embassy_folder(osv.osv):
 		return {'value':data}
 
 	def check_folder_line(self, cr, uid, ids):
-			#CONSTRAINT: For each embassy Folder, it can only be one embassy_folder_line of each type.
+		#CONSTRAINT: For each embassy Folder, it can only be one embassy_folder_line of each type.
 		data_folder = self.browse(cr,uid,ids)
 		list = []
 		for folder in data_folder:
@@ -180,7 +192,6 @@ class cci_missions_embassy_folder_line (osv.osv):
 
 
 	def create(self, cr, uid, vals, *args, **kwargs):
-
 		prod_name= vals['type'] + str(' Product')
 		cr.execute('select id from product_template where name='"'%s'"''%str(prod_name))
 		prod=cr.fetchone()
@@ -194,20 +205,18 @@ class cci_missions_embassy_folder_line (osv.osv):
 			vals['account_id']=account
 		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
-	def write(self, cr, uid, ids,vals, *args, **kwargs):
-
-		prod_name= vals['type'] + str(' Product')
-		cr.execute('select id from product_template where name='"'%s'"''%str(prod_name))
-		prod=cr.fetchone()
-
-		if prod:
-			product_id=prod[0]
-			prod_info = self.pool.get('product.product').browse(cr, uid,product_id)
-			account =  prod_info.product_tmpl_id.property_account_income.id
-			if not account:
-				account = prod_info.categ_id.property_account_income_categ.id
-			vals['account_id']=account
-
+	def write(self, cr, uid, ids, vals, *args, **kwargs):
+		if vals.has_key('type'):
+			prod_name = vals['type'] + str(' Product')
+			cr.execute('select id from product_template where name='"'%s'"''%str(prod_name))
+			prod=cr.fetchone()
+			if prod:
+				product_id=prod[0]
+				prod_info = self.pool.get('product.product').browse(cr, uid,product_id)
+				account =  prod_info.product_tmpl_id.property_account_income.id
+				if not account:
+					account = prod_info.categ_id.property_account_income_categ.id
+				vals['account_id']=account
 		return super(osv.osv,self).write( cr, uid, ids,vals, *args, **kwargs)
 
 	def onchange_line_type(self,cr,uid,ids,type):
@@ -244,6 +253,9 @@ class cci_missions_embassy_folder_line (osv.osv):
 		'tax_rate': fields.many2one('account.tax','Tax Rate'),
 		'type' : fields.selection([('CBA','CBA'),('Ministry','Ministry'),('Embassy Consulate','Embassy Consulate'),('Translation','Translation'),('Administrative','Administrative'),('Travel Costs','Travel Costs'),('Others','Others')],'Type',required=True),
 		'account_id' : fields.many2one('account.account', 'Account',required=True),
+		'awex_eligible':fields.boolean('AWEX Eligible'),
+		'awex_amount':fields.float('AWEX Amount', readonly=True),
+		'credit_line_id':fields.many2one('credit.line', 'Credit Line', readonly=True),
 	}
 
 cci_missions_embassy_folder_line()
@@ -299,16 +311,6 @@ class cci_missions_dossier(osv.osv):
 			'sender_name': sender_name}
 		}
 		return result
-
-#	def _amount_total(self, cr, uid, ids, name, args, context=None):
-#		res ={}
-#		data_dosseir = self.browse(cr,uid,ids)
-#		for data in data_dosseir:
-#			if data.state =='draft':
-#				res[data.id] = 0.0
-#			else :
-#				res[data.id]=data.invoiced_amount
-#		return res
 
 	def _amount_subtotal(self, cr, uid, ids, name, args, context=None):
 		res={}
@@ -458,7 +460,6 @@ class cci_missions_certificate(osv.osv):
 
 	def create(self, cr, uid, vals, *args, **kwargs):
 #		Overwrite the name fields to set next sequence according to the sequence in the certification type (type_id)
-		#vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Certificate')])[0]
 		if vals['type_id']:
 			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
 			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
@@ -566,7 +567,6 @@ class cci_missions_legalization(osv.osv):
 
 	def create(self, cr, uid, vals, *args, **kwargs):
 #		Overwrite the name fields to set next sequence according to the sequence in the legalization type (type_id)
-		#vals['type_id']=self.pool.get('cci_missions.dossier_type').search(cr, uid, [('name','=','Legalization')])[0]
 		if vals['type_id']:
 			data = self.pool.get('cci_missions.dossier_type').browse(cr, uid,vals['type_id'])
 			seq = self.pool.get('ir.sequence').get(cr, uid,data.sequence_id.code)
@@ -582,8 +582,7 @@ class cci_missions_legalization(osv.osv):
 		return res
 
 	_columns = {
-		'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),#added for inherits
-		#'quantity_original' : fields.integer('Quantity of Originals',required=True),
+		'dossier_id' : fields.many2one('cci_missions.dossier','Dossier'),
 		'total':fields.function(_amount_total, method=True, string='Total', store=True),# sum of the price for copies, originals and extra_products
 		'certificate_id' : fields.many2one('cci_missions.certificate','Related Certificate'),
 		'partner_member_state': fields.function(_get_member_state, method=True,selection=STATE,string='Member State of the Partner',readonly=True,type="selection"),
@@ -611,7 +610,7 @@ class cci_missions_courier_log(osv.osv):
 		'documents_invoice' : fields.text('List of Invoices'),
 		'documents_others' : fields.text('Others'),
 		'message' : fields.text('Message to the Courier'),
-		'return_address' : fields.selection([('A la CCI','A la CCI'),('Au clent','Au client')],'Address of Return',required=True),#onchange
+		'return_address' : fields.selection([('A la CCI','A la CCI'),('Au clent','Au client')],'Address of Return',required=True),
 		'address_name_1' : fields.char('Company Name',size=80),
 		'address_name_2' : fields.char('Contact Name',size=80),
 		'address_street' : fields.char('Street',size=80),
@@ -682,7 +681,6 @@ class cci_missions_ata_carnet(osv.osv):
 		return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
 	def write(self, cr, uid, ids,vals, *args, **kwargs):
-		#super(cci_missions_ata_carnet,self).write(cr, uid, ids,vals, *args, **kwargs)
 		data_carnet = self.browse(cr,uid,ids[0])
 		context = {}
 		if 'creation_date' in vals:
@@ -767,7 +765,6 @@ class cci_missions_ata_carnet(osv.osv):
 		return res
 
 	def onchange_type_carnet(self, cr, uid, ids,type_id,own_risk):
-
 		data={'warranty_product_id' : False,'warranty':False}
 		if not type_id:
 			return {'value':data}
@@ -782,7 +779,6 @@ class cci_missions_ata_carnet(osv.osv):
 		return {'value':data}
 
 	def onchange_own_risk(self,cr,uid,ids,type_id,own_risk):
-
 		data={'warranty_product_id' : False,'warranty':False}
 		if not type_id:
 			return {'value': data}
@@ -795,7 +791,6 @@ class cci_missions_ata_carnet(osv.osv):
 		data['warranty_product_id']	=warranty_prod
 		dict1=self.onchange_warranty_product_id(cr,uid,ids,warranty_prod)
 		data.update(dict1['value'])
-
 		return {'value':data}
 
 	def _get_member_state(self, cr, uid, ids, name, args, context=None):
