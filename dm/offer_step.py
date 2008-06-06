@@ -94,7 +94,7 @@ class dm_offer_step(osv.osv):
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            code = '_'.join([offer_step.offer_id.code,str(id),(offer_step.type or '')])
+            code = '_'.join([offer_step.offer_id.code,(offer_step.sequence or ''),(offer_step.type or '')])
             result[id]=code
         return result
     _columns = {
@@ -192,7 +192,7 @@ class dm_offer_step_workitem(osv.osv):
     _columns = {
         'step_id' : fields.many2one('dm.offer.step', 'Offer Step',required=True, ondelete="cascade"),
         'segment_id' : fields.many2one('dm.campaign.proposition.segment', 'Segments', required=True, ondelete="cascade"),
-        'customer_id' : fields.many2one('res.partner', 'Customer'),
+        'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete="cascade"),
         'date_next_action' : fields.date('Next Action'),
         'purchase_amount' : fields.float('Amount', digits=(16,2))
     }

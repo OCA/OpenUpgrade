@@ -152,7 +152,7 @@ class dm_customer_offer(osv.osv):
         'customer_id' : fields.many2one('dm.customer', 'Customer', ondelete='cascade'),
         'customer_number' : fields.char('Customer Number',size=16),
         'title' : fields.char('Title',size=16),
-        'customer_firstname' : fields.char('First Name', size=16),
+        'customer_firstname' : fields.char('First Name', size=16,required=True),
         'customer_lastname' : fields.char('Last Name', size=16),
         'customer_add1' : fields.char('Address1', size=16),
         'customer_add2' : fields.char('Address2', size=16),
@@ -162,10 +162,10 @@ class dm_customer_offer(osv.osv):
         'zip' : fields.char('Zip Code', size=12),
         'zip_summary' : fields.char('Zip Summary', size=64),
         'distribution_office' : fields.char('Distribution Office', size=64),
-        'action_code' : fields.char('Action Code', size=16),
+        'action_code' : fields.char('Action Code', size=16,required=True),
 #        'offer_step' : fields.many2one('dm.offer.step', 'Offer Step', ondelete="cascade"),
-        'offer_step' : fields.char('Offer Step', size=16),
-        'raw_datas' : fields.char('Raw Datas', size=16),
+        'offer_step' : fields.char('Offer Step', size=16,required=True),
+        'raw_datas' : fields.char('Raw Datas', size=128),
         'note' : fields.text('Notes'),
         'state' : fields.selection([('draft','Draft'),('done','Done')], 'Status', readonly=True),
     }
@@ -175,7 +175,7 @@ class dm_customer_offer(osv.osv):
     def onchange_rawdatas(self,cr,uid,ids,raw_datas):
         if not raw_datas:
             return {}
-        raw_datas = "2;00573G;168120;MISS;Lever;Shirley;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
+        raw_datas = "2;00573G;162220;MR;Shah;Harshit;W Sussex;;25 Oxford Road;;GBR;BN;BN11 1XQ;WORTHING.LU.SX"
         value = raw_datas.split(';')
         key = ['datamatrix_type','action_code','customer_number','title','customer_lastname','customer_firstname','customer_add1','customer_add2','customer_add3','customer_add4','country','zip_summary','zip','distribution_office']
         value = dict(zip(key,value))
@@ -186,7 +186,49 @@ class dm_customer_offer(osv.osv):
         return {'value':value}
     
     def set_confirm(self, cr, uid, ids, *args):
-        self.write(cr,uid,ids,{'state':'done'})
+        res = self.browse(cr,uid,ids)[0]
+#        if res.customer_id:
+#            customer = self.pool.get('dm.customer').browse(cr,uid,[res.customer_id])[0]
+#            vals = {}
+#            if res.name != customer.name:
+#                 vals['name'] = customer.name
+#            if res.customer_number != customer.customer_number:
+#                 vals['customer_number'] = customer.customer_number
+        customer_id = res.customer_id.id
+        if not res.customer_id:
+              vals={}
+              vals['customer_number']=res.customer_number
+              vals['name'] = ( res.customer_firstname or '') + ' ' + (res.customer_lastname or '')
+              address={'city':res.customer_add3,
+                       'name': vals['name'], 
+                       'zip': res.zip, 
+                       'title': res.title, 
+                       'street2': res.customer_add2, 
+                       'street': res.customer_add1,
+                    }
+#              state_id = self.pool.get("res.country.state")
+#              country_id = self.pool.get("res.country")
+              vals['address'] = [[0, 0,address]]
+              customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
+        vals={}
+        vals['customer_id']=customer_id
+        segment = self.pool.get('dm.campaign.proposition.segment')
+        segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
+        if segment_id :
+            vals['segment_id']=segment_id[0]
+        segment_obj = segment.browse(cr,uid,segment_id)[0]
+        offer_id = segment_obj.proposition_id.camp_id.offer_id.id
+        offer_step = self.pool.get('dm.offer.step')
+        step_id = offer_step.search(cr,uid,[('offer_id','=',offer_id),('type','=',res.offer_step)])
+        vals['step_id'] =step_id[0]
+        step = offer_step.browse(cr,uid,step_id)[0]
+        amount = 0
+        for p in step.product_ids:
+            amount+=p.price
+        print amount  
+        vals['purchase_amount']= amount
+        self.pool.get('dm.offer.step.workitem').create(cr,uid,vals)
+        self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
         return True
     
 dm_customer_offer()
