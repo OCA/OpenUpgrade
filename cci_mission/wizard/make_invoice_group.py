@@ -205,7 +205,7 @@ def _group_invoice(self, cr, uid, data, context):
                         name = line.name
                     #pool_obj.get('account.invoice.line').write(cr,uid,line.id,{'name':name,'sequence':count})
 #                    inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':line.note,'sequence' : count})
-                    inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':False,'sequence' : count})
+                    inv_line = line_obj.create(cr, uid, {'name': name,'account_id':line.account_id.id,'price_unit': line.price_unit,'quantity': line.quantity,'discount': False,'uos_id': line.uos_id.id,'product_id':line.product_id.id,'invoice_line_tax_id': [(6,0,line.invoice_line_tax_id)],'note':line.note,'sequence' : count,'cci_special_reference': line.cci_special_reference})
                     count=count+1
                     list_inv_lines.append(inv_line)
     #            If we want to cancel ==> obj_inv.write(cr,uid,invoice.id,{'state':'cancel'}) here
