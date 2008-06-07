@@ -256,7 +256,7 @@ class abstracted_fs:
 	# Ok
 	def chdir(self, path):
 		if not path:
-			return None
+			self.cwd='/'
 		if path.type in ('collection','database'):
 			self.cwd = self.fs2ftp(path)
 		else:
