@@ -96,10 +96,8 @@ class node_class(object):
 			where.append( ('res_id','=',False) )
 		if nodename:
 			where.append( (fobj._rec_name,'=',nodename) )
-		print '(search)', where+[ ('parent_id','=',self.object and self.object.id or False) ]
 		ids = fobj.search(self.cr, self.uid, where+[ ('parent_id','=',self.object and self.object.id or False) ], context=self.context)
 		if self.object and self.root and (self.object.type=='ressource'):
-			print '(search2)', where+[ ('parent_id','=',False) ]
 			ids += fobj.search(self.cr, self.uid, where+[ ('parent_id','=',False) ], context=self.context)
 		res = fobj.browse(self.cr, self.uid, ids, context=self.context)
 		return map(lambda x: node_class(self.cr, self.uid, self.path+'/'+x.name, x, False, type='file', root=False), res) + res2

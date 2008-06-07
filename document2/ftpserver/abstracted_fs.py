@@ -381,7 +381,6 @@ class abstracted_fs:
 				while len(child_ids):
 					node = child_ids.pop(0)
 					child_ids += node.children()
-					print node.type
 					if node.type =='collection':
 						result['directory'].append(node.object.id)
 						if (not node.object.ressource_id) and node.object2:
@@ -431,9 +430,6 @@ class abstracted_fs:
 					'title': title,
 					'partner_id': partner_id
 				}
-				print '-'*50
-				print val, ressource_type_id
-				print result
 				pool.get('ir.attachment').write(cr, uid, result['attachment'], val)
 				if (not val['res_id']) and result['attachment']:
 					dst_basedir.cr.execute('update ir_attachment set res_id=NULL where id in ('+','.join(map(str,result['attachment']))+')')
