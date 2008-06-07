@@ -693,7 +693,7 @@ class pos_order_line(osv.osv):
 				'Please set one before choosing a product.')
 
 		price = self.pool.get('product.pricelist').price_get(cr,uid,
-			[pricelist], product_id, qty or 1.0, partner_id)[pricelist]
+			[pricelist], product_id, qty or 1.0, partner_id, context={})[pricelist]
 		if price is False:
 			raise osv.except_osv('No valid pricelist line found !',
 				"Couldn't find a pricelist line matching this product"
