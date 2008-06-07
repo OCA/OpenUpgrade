@@ -399,7 +399,7 @@ class abstracted_fs:
 				val = {
 					'name':dst_basename,
 				}
-				if (dst_basedir.object and (dst_basedir.object.type in ('directory','ressource'))) or not dst_basedir.object2:
+				if (dst_basedir.object and (dst_basedir.object.type in ('directory'))) or not dst_basedir.object2:
 					val['parent_id'] = dst_basedir.object and dst_basedir.object.id or False
 				else:
 					val['parent_id'] = False
