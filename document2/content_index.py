@@ -9,7 +9,7 @@ import odt2txt
 def content_index(content, filename=None, content_type=None):
 	fname,ext = os.path.splitext(filename)
 	result = ''
-	if ext == '.doc': #or content_type ?
+	if ext in ('.doc'): #or content_type ?
 		(stdin,stdout) = os.popen2('antiword -', 'b')
 		stdin.write(content)
 		stdin.close()
@@ -22,10 +22,11 @@ def content_index(content, filename=None, content_type=None):
 		fp = os.popen('pdftotext -enc UTF-8 -nopgbrk '+fname+' -', 'r')
 		result = fp.read()
 		fp.close()
-	elif ext in ('.xls','.ods','.odt'):
+	elif ext in ('.xls','.ods','.odt','.odp'):
 		s = StringIO.StringIO(content)
 		o = odt2txt.OpenDocumentTextFile(s)
 		result = o.toString().encode('ascii','replace')
+		s.close()
 	elif ext in ('.txt','.py','.patch','.html','.csv','.xml'):
 		result = content
 	return result
