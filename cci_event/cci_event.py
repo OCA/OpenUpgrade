@@ -1,4 +1,3 @@
-
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -107,19 +106,12 @@ class event(osv.osv):
 			'state': fields.selection([('draft','Draft'),('fixed','Fixed'),('open','Open'),('confirm','Confirmed'),('running','Running'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),
 			'agreement_nbr':fields.char('Agreement Nbr',size=16),
 			'check_accept':fields.many2one('event.check.type','Allowed checks'),
-#			'mail_auto_registr':fields.boolean('Mail Auto Register',help='A mail is send when the registration is confirmed'),
-#			'mail_auto_confirm':fields.boolean('Mail Auto Confirm',help='A mail is send when the event is confimed'),
-#			'mail_registr':fields.text('Mail Register',help='Template for the mail'),
-#			'mail_confirm':fields.text('Mail Confirm',help='Template for the mail'),
 			'note':fields.text('Note'),
 			'fse_code':fields.char('FSE code',size=64),
 			'fse_hours':fields.integer('FSE Hours'),
 			'signet_type':fields.selection(_group_names, 'Signet type'),
 			'localisation':fields.char('Localisation',size=20),
-			'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
-#			'budget_id':fields.many2one('account.budget.post','Budget'),
-#			'product_id':fields.many2one('product.product','Product'),
-			'check_type': fields.many2one('event.check.type','Check Type'),
+			'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),			'check_type': fields.many2one('event.check.type','Check Type'),
 			}
 event()
 
@@ -142,7 +134,7 @@ class event_check(osv.osv):
 	_columns={
 		"name": fields.char('Name', size=128, required=True),
 		"code": fields.char('Code', size=64),
-		"case_id": fields.many2one('event.registration','Inscriptions',required=True, size=20),
+		"reg_id": fields.many2one('event.registration','Inscriptions',required=True, size=20),
 		"state": fields.selection([('draft','Draft'),('block','Blocked'),('confirm','Confirm'),('cancel','Cancel'),('asked','Asked')], 'State', readonly=True),#should be check (previous states :('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')])
 		"unit_nbr": fields.integer('Units'),
 		"type_id":fields.many2one('event.check.type','Type'),
@@ -172,7 +164,6 @@ class event_group(osv.osv):
 		"name":fields.char('Group Name',size=20,required=True),
 		"bookmark_name":fields.char('Value',size=128),
 		"picture":fields.binary('Picture'),
-#		"cavalier":fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
 		"type":fields.selection([('image','Image'),('text','Text')], 'Type',required=True)
 		}
 	_defaults = {
@@ -215,52 +206,21 @@ class event_registration(osv.osv):
 	_inherit = 'event.registration'
 	_description="event.registration"
 	_columns={
-#			"partner_invoice_id":fields.many2one('res.partner', 'Partner Invoice'),
 			"contact_order_id":fields.many2one('res.partner.contact','Contact Order'),
-#			"unit_price": fields.float('Unit Price'),
-#			"badge_title":fields.char('Badge Title',size=128),
-#			"badge_name":fields.char('Badge Name',size=128),
-#			"badge_partner":fields.char('Badge Partner',size=128),
 			"group_id": fields.many2one('event.group','Event Group'),
 			"cavalier": fields.boolean('Cavalier',help="Check if we should print papers with participant name"),
-#			"invoice_label":fields.char("Label Invoice",size=128,required=True),
-#			"tobe_invoiced":fields.boolean("To be Invoice"),
 			"payment_mode":fields.many2one('payment.mode',"Payment Mode"),#should be check (m2o ?)
-#			"invoice_id":fields.many2one("account.invoice","Invoice"),
 			"check_mode":fields.boolean('Check Mode'),
-			"check_ids":fields.one2many('event.check','case_id',"Check ids"),
+			"check_ids":fields.one2many('event.check','reg_id',"Check ids"),
 			"payment_ids":fields.one2many("payment.order","case_id","Payment"),#should be corect (o2m ?)
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
 			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
 			"check_amount":fields.function(cal_check_amount,method=True,type='integer', string='Check Amount')
 	}
 	_defaults = {
-#		'tobe_invoiced' : lambda *a: True,
 		'name': lambda *a: 'Registration',
-				 }
+	}
 
-#	def create(self, cr, uid, vals, *args, **kwargs):
-#		temp = super(event_registration,self).create(cr, uid, vals, *args, **kwargs)
-#		return temp
-#	def onchange_badge_name(self, cr, uid, ids, badge_name):
-#		data ={}
-#		if not badge_name:
-#			return data
-#		data['name'] = 'Registration: ' + badge_name
-#		return {'value':data}
-
-#	def onchange_contact_id(self, cr, uid, ids, contact_id):
-#		data ={}
-#		if not contact_id:
-#			return data
-#		obj_addr=self.pool.get('res.partner.address').browse(cr, uid, contact_id)
-#		data['email_from'] = obj_addr.email
-#		if obj_addr.contact_id:
-#			data['badge_name']=obj_addr.contact_id.name
-#			data['badge_title']=obj_addr.contact_id.title
-#			d=self.onchange_badge_name(cr, uid, ids,data['badge_name'])
-#			data.update(d['value'])
-#		return {'value':data}
 
 
 	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
@@ -269,21 +229,7 @@ class event_registration(osv.osv):
 			if data_partner.alert_events:
 				raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
 		return super(event_registration,self).onchange_partner_id(cr, uid, ids, part, event_id, email)
-#	def onchange_event(self, cr, uid, ids, event_id, partner_invoice_id):
-#		context={}
-#		if not event_id:
-#			return {'value':{'unit_price' : False ,'invoice_label' : False }}
-#		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
-#		if data_event.product_id:
-#			if not partner_invoice_id:
-#				unit_price=self.pool.get('product.product')._product_price(cr, uid, [data_event.product_id.id], False, False, context)
-#				return {'value':{'unit_price' : unit_price[data_event.product_id.id] , 'invoice_label' : data_event.product_id.name}}
-#			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
-#			context.update({'partner_id':data_partner})
-#			unit_price=self.pool.get('product.product')._product_price(cr, uid, [data_event.product_id.id], False, False, context)
-#
-#			return {'value':{'unit_price' :unit_price[data_event.product_id.id] , 'invoice_label' : data_event.product_id.name}}
-#		return {'value':{'unit_price' : False,'invoice_label' : False}}
+
 
 	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
 		data={}
@@ -308,33 +254,29 @@ class event_registration(osv.osv):
 			return {'value':data}
 		return {'value':data}
 
-	def pay_and_recon(self,cr,uid,reg,inv_obj,inv_id,context={}):
+#	def pay_and_recon(self,cr,uid,reg,inv_obj,inv_id,context={}):
+#
+#		if reg.check_ids:
+#			total = 0
+#			writeoff_account_id = False # should be check
+#			writeoff_journal_id = False # should be check
+#			data_inv = inv_obj.browse(cr,uid,inv_id)
+#			journal_obj = self.pool.get('account.journal')
+#			wf_service = netsvc.LocalService('workflow')
+#
+#			for check in reg.check_ids:
+#			    total = total + check.unit_nbr
 
-		if reg.check_ids:
-			total = 0
-			writeoff_account_id = False # should be check
-			writeoff_journal_id = False # should be check
-			data_inv = inv_obj.browse(cr,uid,inv_id)
-			journal_obj = self.pool.get('account.journal')
-			wf_service = netsvc.LocalService('workflow')
+#			ids = self.pool.get('account.period').find(cr, uid, context=context)
+#			period_id = False
+#			if len(ids):
+#			    period_id = ids[0]
+#
+#			cash_id = journal_obj.search(cr, uid, [('type', '=', 'cash')])
+#			acc_id = journal_obj.browse(cr, uid, cash_id[0], context).default_credit_account_id.id
+#			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
+#			inv_obj.pay_and_reconcile(cr,uid,[inv_id],total, acc_id, period_id, cash_id[0], writeoff_account_id, period_id, writeoff_journal_id, context)
 
-			for check in reg.check_ids:
-			    total = total + check.unit_nbr
-
-			ids = self.pool.get('account.period').find(cr, uid, context=context)
-			period_id = False
-			if len(ids):
-			    period_id = ids[0]
-
-			cash_id = journal_obj.search(cr, uid, [('type', '=', 'cash')])
-			acc_id = journal_obj.browse(cr, uid, cash_id[0], context).default_credit_account_id.id
-			wf_service.trg_validate(uid, 'account.invoice', inv_id, 'invoice_open', cr)
-			inv_obj.pay_and_reconcile(cr,uid,[inv_id],total, acc_id, period_id, cash_id[0], writeoff_account_id, period_id, writeoff_journal_id, context)
-
-	def check_special_condition(self,cr,uid,reg):
-		if  (reg.check_mode and not reg.check_ids):
-			return (True, 'No Checks')
-		return (False, False)
 
 event_registration()
 
