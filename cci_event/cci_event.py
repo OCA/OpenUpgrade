@@ -202,6 +202,16 @@ class event_registration(osv.osv):
 		self.pool.get('event.registration')._history(cr, uid, cases, 'Cancel', history=True)
 		return True
 
+	def cal_check_amount(self, cr, uid, ids, name, arg, context={}):
+		res = {}
+		data_reg = self.browse(cr,uid,ids)
+		for reg in data_reg:
+			total = 0
+			for check in reg.check_ids:
+				total = total + check.unit_nbr
+			res[reg.id] = total
+		return res
+
 	_inherit = 'event.registration'
 	_description="event.registration"
 	_columns={
@@ -222,6 +232,7 @@ class event_registration(osv.osv):
 			"payment_ids":fields.one2many("payment.order","case_id","Payment"),#should be corect (o2m ?)
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
 			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
+			"check_amount":fields.function(cal_check_amount,method=True,type='integer', string='Check Amount')
 	}
 	_defaults = {
 #		'tobe_invoiced' : lambda *a: True,
