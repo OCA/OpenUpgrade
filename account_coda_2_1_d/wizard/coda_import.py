@@ -128,7 +128,7 @@ def _coda_parsing(self, cr, uid, data, context):
                 st_line = {}
                 st_line['statement_id']=0
                 st_line['name'] = line[2:10]
-                st_line['date'] = str2date(line[115:121])
+                st_line['date'] = time.strftime('%Y-%m-%d',time.strptime(str2date(line[115:121]),"%y/%m/%d"))
                 st_line_amt = list2float(line[32:47])
 
                 if line[61]=='1':
@@ -228,7 +228,7 @@ def _coda_parsing(self, cr, uid, data, context):
                            })
             cr.commit()
 
-            str_not= "\n \n Account Number: %s \n Account Holder Name: %s " %(statement["acc_number"],statement["acc_holder"])
+            str_not= "\n \nAccount Number: %s \nAccount Holder Name: %s " %(statement["acc_number"],statement["acc_holder"])
             std_log = std_log + "\nDate  : %s, Starting Balance :  %.2f , Ending Balance : %.2f "\
                       %(statement['date'], float(statement["balance_start"]), float(statement["balance_end_real"]))
             bkst_list.append(bk_st_id)
@@ -251,7 +251,7 @@ def _coda_parsing(self, cr, uid, data, context):
 #            raise
 
     err_log= err_log + '\n\nNumber of statements : '+ str(len([bkst_list]))
-    err_log= err_log + '\nNumber of error :'+ str(nb_err) +'\n'
+    err_log= err_log + '\nNumber of errors :'+ str(nb_err) +'\n'
 
     pool.get('account.coda').create(cr, uid,{
         'name':codafile,
