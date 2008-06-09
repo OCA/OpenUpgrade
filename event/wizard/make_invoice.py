@@ -76,14 +76,6 @@ def _makeInvoices(self, cr, uid, data, context):
                 inv_reject = inv_reject + 1
                 inv_rej_reason += "ID "+str(reg.id)+": Registration Already Has an Invoice Linked \n"
                 continue
-
-            (condition,reason)=reg.check_special_condition(cr,uid,reg)
-            if condition:
-                inv_reject = inv_reject + 1
-                inv_rej_reason += "ID "+str(reg.id)+": "+ reason +" \n"
-                continue
-#            if  (reg.check_mode and not reg.check_ids):
-
             if not reg.event_id.product_id:
                 inv_reject = inv_reject + 1
                 inv_rej_reason += "ID "+str(reg.id)+": Event Related Don't Have any Product \n"
@@ -108,7 +100,7 @@ def _makeInvoices(self, cr, uid, data, context):
             inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
                     'name': reg.name,
                     'account_id':value['value']['account_id'],
-                    'price_unit': reg.unit_price,# value['value']['price_unit'],
+                    'price_unit': reg.unit_price,
                     'quantity': reg.nb_register,
                     'discount': False,
                     'uos_id': value['value']['uos_id'],
@@ -137,11 +129,6 @@ def _makeInvoices(self, cr, uid, data, context):
             list_inv.append(inv_id)
             obj_event_reg.write(cr, uid,reg.id, {'invoice_id' : inv_id,'state':'done'})
             obj_event_reg._history(cr, uid,[reg], 'Invoiced', history=True)
-            #the below code wll check for if registration has cheques on Payment tab if yes it wll make it reconcile accrodingly , it wll take trunk version of code
-            # should be test
-            if reg.check_ids:
-                reg.pay_and_recon(cr,uid,reg,inv_obj,inv_id,context=context)
-            # end.........
 
         return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
 

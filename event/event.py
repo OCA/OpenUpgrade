@@ -304,14 +304,6 @@ class event_registration(osv.osv):
 		cat = self.pool.get('crm.case.categ').browse(cr, uid, categ, context).probability
 		return {'value':{'probability':cat}}
 
-	def pay_and_recon(self,cr,uid,reg,inv_obj,inv_id,context={}):
-		# this dummy function is used to minimize the code for make_invoice
-		# if this object has chieck_ids field,it will pay and reconcile the invocie
-		return {}
-	def check_special_condition(self,cr,uid,reg):
-		# same as pay_and_recon,will be used if check_ids field exists
-		return (False,False)
-
 	def _map_ids(self,method,cr, uid, ids, *args, **argv):
 		case_data = self.browse(cr,uid,ids)
 		new_ids=[]
