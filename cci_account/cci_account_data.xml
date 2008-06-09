@@ -32,6 +32,21 @@
 			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
 		</record>
 
+	<!-- Data for account_journal -->
+		<record id="account_journal_cfljournal0" model="account.journal">
+			<field model="account.account" name="default_debit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;CFL Journal&quot;" name="name"/>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_view"/>
+			<field eval="[(6,0,[])]" name="type_control_ids"/>
+			<field name="sequence_id" ref="account.sequence_journal"/>
+			<field eval="[(6,0,[])]" name="account_control_ids"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;cash&quot;" name="type"/>
+			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+		</record>
 	</data>
 </terp>
 

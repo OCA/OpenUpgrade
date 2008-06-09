@@ -41,10 +41,10 @@ class account_invoice(osv.osv):
 
 		#create other move lines if the invoice_line is related to a check payment or an AWEX credence
 		for inv in self.browse(cr, uid, ids):
-			iml = []
 			for item in self.pool.get('account.invoice.line').search(cr, uid, [('invoice_id','=',inv.id)]):
 				line = self.pool.get('account.invoice.line').browse(cr,uid, [item])[0]
 				if line.cci_special_reference:
+					iml = []
 					if inv.type in ('in_invoice', 'in_refund'):
 						ref = inv.reference
 					else:
@@ -53,11 +53,19 @@ class account_invoice(osv.osv):
 					obj = temp[0]
 					obj_id = int(temp[1])
 					obj_ref = self.pool.get(obj).browse(cr, uid, [obj_id])[0]
-					acc_id = self.pool.get('account.account').search(cr, uid, [('name','=','Creances AWEX - Cheques Formations et Cheques Langues')])[0]
+					if obj == "event.registration":
+						#acc_id = self.pool.get('account.account').search(cr, uid, [('name','=','Creances AWEX - Cheques Formations et Cheques Langues')])[0]
+						journal_id = self.pool.get('account.journal').search(cr, uid, [('name','=','CFL Journal')])[0]
+						amount = obj_ref.check_amount
+					else:
+						journal_id = self.pool.get('account.journal').search(cr, uid, [('name','=','AWEX Journal')])[0]
+						#acc_id = self.pool.get('account.account').search(cr, uid, [('name','=','Creances AWEX - Cheques Formations et Cheques Langues')])[0]
+						amount = obj_ref.awex_amount
+					acc_id = self.pool.get('account.journal').browse(cr, uid, [journal_id])[0].default_debit_account_id.id
 					iml.append({
 						'type': 'dest',
 						'name': inv['name'] or '/',
-						'price': obj_ref.awex_amount,
+						'price': amount,
 						'account_id': acc_id,
 						'date_maturity': inv.date_due or False,
 						'amount_currency': False,
@@ -67,38 +75,36 @@ class account_invoice(osv.osv):
 					iml.append({
 						'type': 'dest',
 						'name': inv['name'] or '/',
-						'price': -(obj_ref.awex_amount),
+						'price': -(amount),
 						'account_id': inv.account_id.id,
 						'date_maturity': inv.date_due or False,
 						'amount_currency': False,
 						'currency_id': inv.currency_id.id or False,
 						'ref': ref,
 					})
-			if iml:
-				date = inv.date_invoice
-				part = inv.partner_id.id
-				new_lines = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part, date, context={})) ,iml)
-				for item in new_lines:
-					if item[2]['credit']:
-						id1 = item[2]['credit']
+					date = inv.date_invoice
+					part = inv.partner_id.id
+					new_lines = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part, date, context={})) ,iml)
+					for item in new_lines:
+						if item[2]['credit']:
+							id1 = item[2]['credit']
 
-				journal_id = self.pool.get('account.journal').search(cr, uid, [('name','=','AWEX Journal')])[0]
-				journal = self.pool.get('account.journal').browse(cr, uid, journal_id)
-				if journal.sequence_id:
-					name = self.pool.get('ir.sequence').get_id(cr, uid, journal.sequence_id.id)
+					journal = self.pool.get('account.journal').browse(cr, uid, journal_id)
+					if journal.sequence_id:
+						name = self.pool.get('ir.sequence').get_id(cr, uid, journal.sequence_id.id)
 
-				move = {'name': name, 'line_id': new_lines, 'journal_id': journal_id}
-				if inv.period_id:
-					move['period_id'] = inv.period_id.id
-					for i in line:
-						i[2]['period_id'] = inv.period_id.id
-				move_id = move_obj.create(cr, uid, move)
-				move_obj.post(cr, uid, [move_id])
+					move = {'name': name, 'line_id': new_lines, 'journal_id': journal_id}
+					if inv.period_id:
+						move['period_id'] = inv.period_id.id
+						for i in line:
+							i[2]['period_id'] = inv.period_id.id
+					move_id = move_obj.create(cr, uid, move)
+					move_obj.post(cr, uid, [move_id])
 
 				#this function could be improved in order to enable having more than one translation line per invoice
-				id1 = move_line_obj.search(cr, uid, [('move_id','=',move_id),('credit','<>',False)])[0]
-				id2 = move_line_obj.search(cr, uid, [('invoice','=',inv.id),('debit','<>',0)])[0]
-				move_line_obj.reconcile_partial(cr, uid, [id2,id1], 'manual', context=context)
+					id1 = move_line_obj.search(cr, uid, [('move_id','=',move_id),('credit','<>',False)])[0]
+					id2 = move_line_obj.search(cr, uid, [('invoice','=',inv.id),('debit','<>',0)])[0]
+					move_line_obj.reconcile_partial(cr, uid, [id2,id1], 'manual', context=context)
 
 		return True
 
@@ -174,67 +180,3 @@ class account_invoice_line(osv.osv):
 		'cci_special_reference': lambda *a : False,
 	}
 account_invoice_line()
-
-
-#class account_invoice(osv.osv):
-
-#	_inherit = "account.invoice"
-
-#	#create other move lines if the invoice_line is related to a check payment or an AWEX credence
-#	def action_move_create(self, cr, uid, ids, context=None):
-#		super(account_invoice, self).action_move_create(cr, uid, ids, context)
-#
-#		for inv in self.browse(cr, uid, ids):
-#			move_obj = self.pool.get('account.move')
-#			move_id = move_obj.browse(cr, uid, [inv.move_id.id])
-#			#move_obj.write(cr, uid,move_id.id, {'state' : 'draft'})
-#
-#			#line_ids = self.read(cr, uid, [inv.id], ['invoice_line'])[0]['invoice_line']
-#			#ils = self.pool.get('account.invoice.line').read(cr, uid, line_ids)
-#			iml = {}
-#			for line in inv.line_ids:
-#				if line.cci_special_reference:
-#					if inv.type in ('in_invoice', 'in_refund'):
-#						ref = inv.reference
-#					else:
-#						ref = self._convert_ref(cr, uid, inv.number)
-#					temp = line.cci_special_reference.split('*')
-#					obj = temp[0]
-#					obj_id = int(temp[1])
-#					obj_ref = self.pool.get(obj).browse(cr, uid, [obj_id])
-#					acc_id = self.pool.get('account.account').search(cr, uid, [('name','=','Creances AWEX - Cheques Formations et Cheques Langues')])[0]
-#					iml.append({
-#						'type': 'dest',
-#						'name': inv['name'] or '/',
-#						'price': obj_ref.awex_amount,
-#						'account_id': acc_id,
-#						'date_maturity': inv.date_due or False,
-#						'amount_currency': diff_currency_p \
-#								and  amount_currency or False,
-#						'currency_id': diff_currency_p \
-#								and inv.currency_id.id or False,
-#						'ref': ref,
-#					})
-#					iml.append({
-#						'type': 'dest',
-#						'name': inv['name'] or '/',
-#						'price': -(obj_ref.awex_amount),
-#						'account_id': invoice.account_id,
-#						'date_maturity': inv.date_due or False,
-#						'amount_currency': diff_currency_p \
-#								and  amount_currency or False,
-#						'currency_id': diff_currency_p \
-#								and inv.currency_id.id or False,
-#						'ref': ref,
-#					})
-#			date = inv.date_invoice
-#			part = inv.partner_id.id
-#			new_lines = map(lambda x:(0,0,self.line_get_convert(cr, uid, x, part, date, context={})) ,iml)
-#
-#			line_ids = move_id.line_id
-#			line_ids.append(new_lines)
-#			move_obj.write(cr, uid,move_id.id, {'line_id' : line_ids})
-#			#move_obj.post(cr, uid, [move_id.id])
-#
-#		return True
-#account_invoice()
