@@ -475,7 +475,7 @@ class cci_missions_certificate(osv.osv):
 		'special_reason' : fields.selection([('none','None'),('Commercial Reason','Commercial Reason'),('Substitution','Substitution')],'For special cases'),
 		'legalization_ids' : fields.one2many('cci_missions.legalization','certificate_id','Related Legalizations'),
 		'customs_ids' : fields.many2many('cci_missions.custom_code','certificate_custome_code_rel','certificate_id','custom_id','Custom Codes'),
-		'sending_SPF': fields.date('SPF Sending Date',help='Date of the sending of this record to the external database'),
+		'sending_spf': fields.date('SPF Sending Date',help='Date of the sending of this record to the external database'),
 		'origin_ids' : fields.many2many('res.country','certificate_country_rel','certificate_id','country_id','Origin Countries')
 	}
 
