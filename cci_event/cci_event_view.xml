@@ -282,6 +282,7 @@
 					<button name="remind_partner" string="Send Reminder" states="open,pending" type="object"/>
 					<newline/>
 					<field name="user_id" select="1" colspan="2"/>
+					<field name="check_amount"/>
 					<button name="remind_user" string="Send Reminder" states="open,pending" type="object"/>
 
 					<separator colspan="6"/>
