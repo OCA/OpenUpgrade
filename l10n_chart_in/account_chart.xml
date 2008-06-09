@@ -2,10 +2,6 @@
 <terp>
 	<data noupdate="True">
 
-		# # Indian Accounts tree #
-
-		# Entry for the res currency - Indian rupee
-
 		<record model="res.currency" id="base.IDR">
 			<field name="name">Rs</field>
 			<field name="code">INR</field>
@@ -18,7 +14,6 @@
 		</record>
 
 		## account chart
-
 		<record model="account.account" id="root">
 			<field name="name">Account Chart-India</field>
 			<field name="code">0</field>
