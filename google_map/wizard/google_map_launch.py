@@ -32,10 +32,6 @@ from osv import fields
 import time
 
 def _launch_wizard(self, cr, uid, data, context):
-    """
-    Search for a wizard to launch according to the type.
-    If type is manual. just confirm the order.
-    """
     address_obj= pooler.get_pool(cr.dbname).get('res.partner.address')
     m= address_obj.browse(cr,uid,data['id'],context)
     url=''
