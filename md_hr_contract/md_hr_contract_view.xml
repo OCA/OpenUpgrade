@@ -43,7 +43,7 @@
 					<field name="salary_level" />
 					<field name="salary_grade" />
 					<field name="fte_hrs" />
-					<field name="fte" />
+					<field name="fte" on_change="on_change_fte(fte)"/>
 				</field>
 			</field>
 		</record>
@@ -72,6 +72,9 @@
 				</field>
 			</field>
 		</record>
+		
+		
+		
 		***********************************************************************************************************
 		md_hr_employee
 		***********************************************************************************************************
@@ -117,7 +120,7 @@
 							<field name="fulltime_salary" />
 							<field name="salary_level" />
 							<field name="salary_grade" />
-							<field name="fte" />
+							<field name="fte" on_change="on_change_fte(fte)"/>
 							<field name="fte_hrs" />
 							<field name="wage" />
 							<field name="availability_per_week"

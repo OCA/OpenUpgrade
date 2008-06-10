@@ -31,27 +31,43 @@ from osv import osv,fields
 import datetime
 from datetime import time
 
-def _fte_in_hrs(self, cr, uid, ids, name, args, context):    
-        res={}
-        contact_obj=self.browse(cr, uid, ids, context)[0]
-        res[ids[0]]=int(contact_obj.fte*100)
-        return res
-     
-def _full_time_salary(self, cr, uid, ids, name, args, context):
-        res={}
-        contact_obj=self.browse(cr, uid, ids, context)[0]
-        res[ids[0]]=contact_obj.salary_level*contact_obj.wage+contact_obj.salary_grade
-        return res 
+class hr_department(osv.osv):
+    _description='HR Department'
+    _inherit='hr.department'
+    _columns={
+    'max_temp_contract':fields.integer('Maximum temporary contracts',size=64),
+              }
+hr_department()
+
 
     
 class hr_contract(osv.osv):
     _description='HR Contract'
     _inherit='hr.contract'
+#    def _full_time_salary(self, cr, uid, ids,name, args, context):
+#        res={}
+#        if ids <> []:
+#           for contact_obj in self.browse(cr, uid, ids, context): 
+#                res[contact_obj.id]=contact_obj.salary_level*contact_obj.wage+contact_obj.salary_grade
+#                return {'values':res} 
+#        else:
+#         return {}
+#     
+
+    
+    def on_change_fte(self, cr, uid, ids,fte):
+        res={}
+        res={'fte_hrs':int(fte*160)}
+        return {'value':res}
+
+
+
     _columns={
             'code':fields.char('code',size=8),  
             'date_start' : fields.date('Date of appointment', required=True),
             'date_end' : fields.date('Expire date'),
-            'fulltime_salary':fields.function(_full_time_salary,method=True, store=True,type='float', string='Full-time Salary'),
+       #     'fulltime_salary':fields.function(_full_time_salary,method=True,store=True, string='Full-time Salary'),
+            'fulltime_salary':fields.float('Full-time Salary'),  
             'wage' : fields.float('Base salary', required=True),
             'bank_account_nbr':fields.char('Bank account number',size=64),
             'department_id':fields.many2one('hr.department','Department'),
@@ -60,22 +76,25 @@ class hr_contract(osv.osv):
             'trial_period_review':fields.date('Trial period review'),
             'function' : fields.many2one('res.partner.function', 'Position'),
             'fte':fields.float('FTE'),
-            'fte_hrs':fields.function(_fte_in_hrs,method=True,store=True,type='integer', string='FTE in hours'),
+            'fte_hrs':fields.integer('FTE in hours',size=64,readonly=True),
             'salary_level':fields.integer('Salary level',size=64),
             'salary_grade':fields.integer('Salary grade',size=64),
             'availability_per_week':fields.one2many('md.hr.contract.availability','contract_id','Availability per week'),
               }
-   
+    _defaults={
+               'form_of_employment':lambda *a:'temp'
+               }
     def create(self, cr, uid, vals, context=None):
-        if vals['form_of_employment'] and vals['department_id']:
-            cr.execute('select count(id) from hr_contract where form_of_employment=%s and department_id =%d',(vals['form_of_employment'],vals['department_id']))
-            rec=cr.fetchall()
-            dept_obj=self.pool.get('hr.department').browse(cr,uid,vals['department_id'])
-            if rec[0][0]+1>dept_obj.max_temp_contract:
-                raise osv.except_osv('Caution !','Maximum Number of temporary contracts have been reached!')
-        else:
-            return super(hr_contract,self).create(cr, uid, vals, context=None)
-      
+
+            if vals['form_of_employment'] and vals['department_id']:
+                cr.execute('select count(id) from hr_contract where form_of_employment=%s and department_id =%d',(vals['form_of_employment'],vals['department_id']))
+                rec=cr.fetchall()
+                dept_obj=self.pool.get('hr.department').browse(cr,uid,vals['department_id'])
+                if rec[0][0]+1>dept_obj.max_temp_contract:
+                    raise osv.except_osv('Caution !','Maximum Number of temporary contracts has been reached!')
+            else:
+                return super(hr_contract,self).create(cr, uid, vals, context=None)
+          
 hr_contract()
 
 class md_hr_contract_availability(osv.osv):
@@ -100,12 +119,6 @@ class res_partner_function(osv.osv):
     }
 res_partner_function()
 
-class hr_department(osv.osv):
-    _description='HR Department'
-    _inherit='hr.department'
-    _columns={
-    'max_temp_contract':fields.integer('Maximum temporary contracts',size=64),
-              }
-hr_department()
+
     
     
