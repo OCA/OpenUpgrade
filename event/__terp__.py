@@ -5,7 +5,7 @@
 	"category" : "Generic Modules/Association",
 	"description": """Organization and management of events.
 
-	This module allow you 
+	This module allow you
 		* to manage your events and their registrations
 		* to create retro planning for managing your events
 		* to use emails to automaticly confirm and send acknowledgements for any registration to an event
@@ -15,10 +15,10 @@
 	- You can define new types of events in
 				Events \ Configuration \ Types of Events
 	- You can access pre-defined reports about number of registration per event or per event category in :
-				Events \ Reporting 
+				Events \ Reporting
 """,
 	"depends" : [
-		"project","crm","base_contact",
+		"project","crm","base_contact","sale"
 	],
 	"demo_xml" : ["event_demo.xml"],
 	"init_xml" : ["event_data.xml"],
