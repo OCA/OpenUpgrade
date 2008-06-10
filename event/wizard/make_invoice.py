@@ -33,7 +33,7 @@ import pooler
 
 from osv import fields, osv
 form = """<?xml version="1.0"?>
-<form string="Create invoices">
+<form string="Create Invoices">
     <newline />
     <field name="inv_created"/>
     <newline />
@@ -70,23 +70,23 @@ def _makeInvoices(self, cr, uid, data, context):
                continue
             if (not reg.tobe_invoiced):
                 inv_reject = inv_reject + 1
-                inv_rej_reason += "ID "+str(reg.id)+": Registration Cannot Be Invoiced \n"
+                inv_rej_reason += "ID "+str(reg.id)+": Registration Cannot Be Invoiced. \n"
                 continue
             if reg.invoice_id:
                 inv_reject = inv_reject + 1
-                inv_rej_reason += "ID "+str(reg.id)+": Registration Already Has an Invoice Linked \n"
+                inv_rej_reason += "ID "+str(reg.id)+": Registration Already Has an Invoice Linked. \n"
                 continue
             if not reg.event_id.product_id:
                 inv_reject = inv_reject + 1
-                inv_rej_reason += "ID "+str(reg.id)+": Event Related Don't Have any Product \n"
+                inv_rej_reason += "ID "+str(reg.id)+": Event Related Doesn't Have any Product. \n"
                 continue
             if not reg.partner_address_id:
                 inv_reject = inv_reject + 1
-                inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Contact \n"
+                inv_rej_reason += "ID "+str(reg.id)+": Registration Doesn't Have any Contact. \n"
                 continue
             if not reg.partner_invoice_id:
                 inv_reject = inv_reject + 1
-                inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Partner to Invoice \n"
+                inv_rej_reason += "ID "+str(reg.id)+": Registration Doesn't Have any Partner to Invoice. \n"
                 continue
 
             inv_create = inv_create + 1
@@ -119,7 +119,7 @@ def _makeInvoices(self, cr, uid, data, context):
                 'address_invoice_id':reg.partner_address_id.id,
                 'address_contact_id':reg.partner_address_id.id,
                 'invoice_line': [(6,0,[inv_id])],
-                'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
+                'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,
                 'comment': "",
                 'payment_term':reg.partner_invoice_id.property_payment_term.id,
             }
