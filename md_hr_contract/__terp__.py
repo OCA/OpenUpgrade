@@ -2,7 +2,7 @@
     "name" : "Pilot Human Resource Management",
     "version" : "1.0",
     "author" : "Tiny",
-    "depends" : ["base","hr","hr_contract", ],
+    "depends" : ["base","hr","hr_contract"],
     "description": """
     Contract Module for human resource management. You can manage:
     * Contract of the employee

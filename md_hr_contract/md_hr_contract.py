@@ -42,32 +42,30 @@ hr_department()
 
     
 class hr_contract(osv.osv):
-    _description='HR Contract'
     _inherit='hr.contract'
-#    def _full_time_salary(self, cr, uid, ids,name, args, context):
-#        res={}
-#        if ids <> []:
-#           for contact_obj in self.browse(cr, uid, ids, context): 
-#                res[contact_obj.id]=contact_obj.salary_level*contact_obj.wage+contact_obj.salary_grade
-#                return {'values':res} 
-#        else:
-#         return {}
-#     
-
     
-    def on_change_fte(self, cr, uid, ids,fte):
+    def _full_time_salary(self, cr, uid, ids,name, args, context):
         res={}
-        res={'fte_hrs':int(fte*160)}
-        return {'value':res}
-
-
-
+        if len(ids):
+            for contact_obj in self.browse(cr, uid, ids, context): 
+                res[contact_obj.id]=contact_obj.salary_level*contact_obj.wage+contact_obj.salary_grade
+            return res 
+        else:
+            return {}
+    def _fte_in_hours(self, cr, uid, ids,name, args, context):
+        res={}
+        if len(ids):
+            for contact_obj in self.browse(cr, uid, ids, context): 
+               res[contact_obj.id]=int(contact_obj.fte*160)
+            return res 
+        else:
+            return {}
+    
     _columns={
             'code':fields.char('code',size=8),  
             'date_start' : fields.date('Date of appointment', required=True),
             'date_end' : fields.date('Expire date'),
-       #     'fulltime_salary':fields.function(_full_time_salary,method=True,store=True, string='Full-time Salary'),
-            'fulltime_salary':fields.float('Full-time Salary'),  
+            'fulltime_salary':fields.function(_full_time_salary,method=True,store=True, string='Full-time Salary'),
             'wage' : fields.float('Base salary', required=True),
             'bank_account_nbr':fields.char('Bank account number',size=64),
             'department_id':fields.many2one('hr.department','Department'),
@@ -76,7 +74,7 @@ class hr_contract(osv.osv):
             'trial_period_review':fields.date('Trial period review'),
             'function' : fields.many2one('res.partner.function', 'Position'),
             'fte':fields.float('FTE'),
-            'fte_hrs':fields.integer('FTE in hours',size=64,readonly=True),
+            'fte_hrs':fields.function(_fte_in_hours,method=True,store=True, string='FTE in Hours',readonly=True),
             'salary_level':fields.integer('Salary level',size=64),
             'salary_grade':fields.integer('Salary grade',size=64),
             'availability_per_week':fields.one2many('md.hr.contract.availability','contract_id','Availability per week'),
