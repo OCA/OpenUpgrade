@@ -5,24 +5,34 @@ from osv import fields, osv
 
 form = """<?xml version="1.0"?>
 <form string="Entries">
-    <label string="Entries Removed"/>
+    <field name="fyear_id"/>
 </form>
 """
-
+fields={
+    'fyear_id': {'string': 'Fiscal year to open', 'type': 'many2one', 'relation': 'account.fiscalyear', 'required': True},
+        }
 def _remove_entries(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
-    ids_journal = pool.get('account.journal').search(cr, uid, [('centralisation', '=', True)])
-    if not ids_journal:
-        raise wizard.except_wizard('Warning', 'There is no centralised counterpart journal available ')
-    ids_move = pool.get('account.move.line').search(cr,uid,[('journal_id','in',ids_journal)])
-    pool.get('account.move.line').unlink(cr,uid,ids_move)
+    data_fyear = pool.get('account.fiscalyear').browse(cr,uid,data['form']['fyear_id'])
+    if not data_fyear.period_id:
+        raise wizard.except_wizard('Error', 'You should have New Entries journal define in fiscal year')
+    period_journal = data_fyear.period_id
+    if not period_journal.journal_id.centralisation:
+            raise wizard.except_wizard('UserError',
+                    'The journal must have centralised counterpart')
+    ids_move = pool.get('account.move').search(cr,uid,[('journal_id','=',period_journal.journal_id.id),('period_id','=',period_journal.period_id.id)])
+    pool.get('account.move').unlink(cr,uid,ids_move)
     return {}
 
 class open_closed_fiscal(wizard.interface):
     states = {
         'init' : {
-               'actions' : [_remove_entries],
-               'result': {'type': 'form', 'arch': form, 'fields': {}, 'state':[('end','Ok')]}
+               'actions' : [],
+               'result': {'type': 'form', 'arch': form, 'fields': fields, 'state':[('end','Cancel'),('open','Open')]}
             },
+        'open': {
+            'actions': [],
+            'result': {'type':'action', 'action':_remove_entries, 'state':'end'},
+        },
     }
 open_closed_fiscal("cci_account.open_closed_fiscal")
