@@ -158,6 +158,7 @@ def _coda_parsing(self, cr, uid, data, context):
                 contry_name=line[47:125]
                 #bank_ids = pool.get('res.partner.bank').search(cr,uid,[('number','=',st_line_partner_acc)])
                 bank_ids = pool.get('res.partner.bank').search(cr,uid,[('acc_number','=',st_line_partner_acc)])
+
                 if bank_ids:
                     bank = pool.get('res.partner.bank').browse(cr,uid,bank_ids[0],context)
                     line=bank_statement_lines[st_line_name]
@@ -211,10 +212,11 @@ def _coda_parsing(self, cr, uid, data, context):
                 'balance_end_real': statement["balance_end_real"],
                 'state':'draft',
             })
+
             lines=statement["bank_statement_line"]
             for value in lines:
                 line=lines[value]
-                str_not1="Partner name:%s \n Partner Account Number:%s \n Communication:%s \n Value Date:%s \n Entry Date:%s \n"%(line["contry_name"],line["cntry_number"],line["free_comm"],line["val_date"],line["entry_date"][0])
+                str_not1="Partner name:%s \nPartner Account Number:%s \nCommunication:%s \nValue Date:%s \nEntry Date:%s \n"%(line["contry_name"],line["cntry_number"],line["free_comm"],line["val_date"][0],line["entry_date"][0])
                 id=pool.get('account.bank.statement.line').create(cr,uid,{
                            'name':line['name'],
                            'date': line['date'],
@@ -236,32 +238,36 @@ def _coda_parsing(self, cr, uid, data, context):
         except osv.except_osv, e:
             cr.rollback()
             nb_err+=1
-            err_log= err_log +'\n Application Error : ' + str(e)
-#            raise # REMOVEME
+            err_log= err_log +'\n\nApplication Error : ' + str(e)
+#            raise
 
         except Exception, e:
             cr.rollback()
             nb_err+=1
-            err_log= err_log +'\n System Error : '+str(e)
-#            raise # REMOVEME
+            err_log= err_log +'\n\nSystem Error : '+str(e)
+#            raise
         except :
             cr.rollback()
             nb_err+=1
-            err_log= err_log +'\n Unknown Error'
+            err_log= err_log +'\n\nUnknown Error'
 #            raise
 
     err_log= err_log + '\n\nNumber of statements : '+ str(len([bkst_list]))
     err_log= err_log + '\nNumber of errors :'+ str(nb_err) +'\n'
 
-    pool.get('account.coda').create(cr, uid,{
-        'name':codafile,
-        #'statement_ids':[(6,0,bkst_list)],
-        'statement_id':bk_st_id,
-        'note':str_log1+str_not+std_log+err_log,
-        'journal_id':data['form']['journal_id'],
-        'date':time.strftime("%Y-%m-%d"),
-        'user_id':uid,
-        })
+    if nb_err<>0:
+        bk_st_id=False
+    else:
+        pool.get('account.coda').create(cr, uid,{
+            'name':codafile,
+            #'statement_ids':[(6,0,bkst_list)],
+            'statement_id':bk_st_id,
+            'note':str_log1+str_not+std_log+err_log,
+            'journal_id':data['form']['journal_id'],
+            'date':time.strftime("%Y-%m-%d"),
+            'user_id':uid,
+            })
+
 
     return {'note':str_log1 + std_log + err_log ,'journal_id': data['form']['journal_id'], 'coda': data['form']['coda'],'statment_id':bk_st_id}
 
@@ -283,12 +289,6 @@ def list2float(lst):
                 return str2float((lambda s : s[:-3] + '.' + s[-3:])(lst))
             except:
                 return 0.0
-#def _import_data(self, cr, uid, data, context):
-#    data['form']['journal_id'] = 3
-#    data['form']['def_payable']=5
-#    data['form']['def_receivable']=10
-#    return data['form']
-#    domain = "[('user_id', '=', uid)]"
 
 class coda_import(wizard.interface):
     def _action_open_window(self, cr, uid, data, context):
@@ -326,12 +326,3 @@ class coda_import(wizard.interface):
 
     }
 coda_import("account.coda_21d_import")
-
-
-
-
-
-
-
-
-
