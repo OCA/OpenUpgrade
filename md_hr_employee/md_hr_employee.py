@@ -39,7 +39,7 @@ class md_hr_address_street(osv.osv):
     _name = "md.hr.address.street"
     _description = "Street"
     _columns = {
-                'name' : fields.char("Street", size=80),
+                'name' : fields.char("Street", size=80,select=1),
                 
                 }
 md_hr_address_street()
@@ -48,7 +48,7 @@ class md_hr_address_zip(osv.osv):
     _name = "md.hr.address.zip"
     _description = "Zip"
     _columns = {
-                'name' : fields.char("Zip", size=16),
+                'name' : fields.char("Zip", size=16,select=1),
                 
                 }
     
@@ -58,7 +58,7 @@ class md_hr_address_town(osv.osv):
     _name = "md.hr.address.town"
     _description = "Town"
     _columns = {
-                'name' : fields.char("Town", size=16),
+                'name' : fields.char("Town", size=16,select=1),
                 
                 }
     
@@ -149,48 +149,7 @@ class hr_employee(osv.osv):
                         'Please Enter Value > 0!!!!','Dist. between home and workplace (km)')
             return {'value':{'dist_home_work':0}}
         return {}
-   
-#    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-#        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context)
-#        print"::Result::",result['fields']['attachment_earings_order']
-#        print"::Result::",result['fields']['earings_order_beneficier']
-#        fields=[]
-#        for field in result['fields']:
-#            print"==field==",field['attachment_earings_order']
-#            
-#            attrs = []
-##            if field.readonly:
-##               attrs.append('readonly="1"')       
-#        return result
-       
-    def on_change_attachment_earings_order(self,cr, uid, ids, attachment_earings_order,context=None): 
-        global val
-        if attachment_earings_order == True:
-            val=False
-        else:
-            val=True
-        res = self.fields_get(cr, uid,context=context)
-##           print"::Attachment of earings order::",res['attachment_earings_order']
-##           print"::In name of::",res['earings_order_beneficier']
-##           res['earings_order_beneficier']['readonly'] = False
-##           print"::In name of::",res['earings_order_beneficier']
-##           
-#             
-        return {}          
-                
-    def fields_get(self, cr, uid,fields=None,context=None):
-        global val
-        print "vasaaa;",val
-        res = super(hr_employee, self).fields_get(cr, uid, fields, context)
-#        print
-#        b1={
-#            'True': [('readonly', False)],
-#            'False': [('readonly', True)],
-#           }
-#        states = {'earings_order_beneficier':{'True': [('readonly', False)]}} 
-        res['earings_order_beneficier']['readonly']=not val    
-        print "rsss",res['earings_order_beneficier']
-        return res            
+    
 hr_employee()
 
 
