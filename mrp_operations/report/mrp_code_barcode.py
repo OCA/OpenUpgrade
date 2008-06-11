@@ -26,5 +26,14 @@
 #
 ##############################################################################
 
-import mrp_operations
-import report
+import pooler
+import time
+from report import report_sxw
+
+class code_barcode(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(code_barcode, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
+report_sxw.report_sxw('report.mrp.code.barcode', 'mrp_operations.operation.code', 'addons/mrp_operations/report/mrp_code_barcode.rml',parser=code_barcode,header=False)

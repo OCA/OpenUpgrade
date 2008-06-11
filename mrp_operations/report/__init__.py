@@ -26,5 +26,5 @@
 #
 ##############################################################################
 
-import mrp_operations
-import report
+import mrp_wc_barcode
+import mrp_code_barcode

@@ -75,19 +75,23 @@ class mrp_production_workcenter_line(osv.osv):
 	}
 
 	def action_draft(self, cr, uid, ids):
-		self.write(cr, uid, ids, {'state':'draft','date_start':None})
+		self.write(cr, uid, ids, {'state':'draft'})
+#		self.write(cr, uid, ids, {'state':'draft','date_start':None})
 		return True
 
 	def action_confirm(self, cr, uid, ids):
-		self.write(cr, uid, ids, {'state':'confirm','date_start':DateTime.now().strftime('%Y-%m-%d %H:%M:%S')})
+		self.write(cr, uid, ids, {'state':'confirm'})
+#		self.write(cr, uid, ids, {'state':'confirm','date_start':DateTime.now().strftime('%Y-%m-%d %H:%M:%S')})
 		return True
 
 	def action_done(self, cr, uid, ids):
-		self.write(cr, uid, ids, {'state':'done','date_finnished':DateTime.now().strftime('%Y-%m-%d %H:%M:%S')})
+		self.write(cr, uid, ids, {'state':'done'})
+#		self.write(cr, uid, ids, {'state':'done','date_finnished':DateTime.now().strftime('%Y-%m-%d %H:%M:%S')})
 		return True
 
 	def action_cancel(self, cr, uid, ids):
-		self.write(cr, uid, ids, {'state':'cancel','date_start':None})
+		self.write(cr, uid, ids, {'state':'cancel'})
+#		self.write(cr, uid, ids, {'state':'cancel','date_start':None})
 		return True
 
 mrp_production_workcenter_line()

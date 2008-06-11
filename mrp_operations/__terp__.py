@@ -32,7 +32,7 @@
 	""",
 	"init_xml" : [],
 	"demo_xml" : ["mrp_operation_data.xml"],
-	"update_xml" : ["mrp_operations_workflow.xml","mrp_operations_view.xml",],
+	"update_xml" : ["mrp_operations_workflow.xml","mrp_operations_view.xml","mrp_operations_report.xml"],
 	"active": False,
 	"installable": True
 }
