@@ -54,3 +54,11 @@ class account_bank_statement(osv.osv):
     }
 account_bank_statement()
 
+class account_bank_statement_line(osv.osv):
+    _inherit = "account.bank.statement.line"
+    _columns = {
+       'statement_id': fields.many2one('account.bank.statement', 'Statement',
+            select=True, required=True,ondelete='cascade'),
+    }
+account_bank_statement_line()
+

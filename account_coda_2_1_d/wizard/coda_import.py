@@ -155,7 +155,8 @@ def _coda_parsing(self, cr, uid, data, context):
                 st_line_name = line[2:10]
                 st_line_partner_acc = str(line[10:47]).strip()
                 cntry_number=line[10:47]
-                contry_name=line[47:125]
+                contry_name=line[47:82]
+                communication=line[82:125]
                 #bank_ids = pool.get('res.partner.bank').search(cr,uid,[('number','=',st_line_partner_acc)])
                 bank_ids = pool.get('res.partner.bank').search(cr,uid,[('acc_number','=',st_line_partner_acc)])
 
@@ -164,6 +165,7 @@ def _coda_parsing(self, cr, uid, data, context):
                     line=bank_statement_lines[st_line_name]
                     line['cntry_number']=cntry_number
                     line['contry_name']=contry_name
+                    line['free_comm'] = line['free_comm'] + communication
 
                     if line and bank.partner_id:
                         line['partner_id']=bank.partner_id.id
@@ -176,6 +178,7 @@ def _coda_parsing(self, cr, uid, data, context):
                     line=bank_statement_lines[st_line_name]
                     line['cntry_number']=cntry_number
                     line['contry_name']=contry_name
+                    line['free_comm'] = line['free_comm'] + communication
                     bank_statement_lines[st_line_name]=line
 
                 bank_statement["bank_statement_line"]=bank_statement_lines
