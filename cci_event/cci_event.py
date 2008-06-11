@@ -134,7 +134,7 @@ class event_check(osv.osv):
 	_columns={
 		"name": fields.char('Name', size=128, required=True),
 		"code": fields.char('Code', size=64),
-		"reg_id": fields.many2one('event.registration','Inscriptions',required=True, size=20),
+		"reg_id": fields.many2one('event.registration','Inscriptions',required=True),
 		"state": fields.selection([('draft','Draft'),('block','Blocked'),('confirm','Confirm'),('cancel','Cancel'),('asked','Asked')], 'State', readonly=True),#should be check (previous states :('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')])
 		"unit_nbr": fields.integer('Units'),
 		"type_id":fields.many2one('event.check.type','Type'),
