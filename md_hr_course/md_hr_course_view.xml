@@ -67,7 +67,7 @@
 							<newline/>
 							<field name="personal_contribution"/>
 							<field name="state" select="1"/>
-							<field name="payback_clause"/>
+							<field name="payback_clause" on_change="on_change_payback_clause(payback_clause)"/>
 							<field name="payback_clause_ends"/>
 						</page>
 					</notebook>
@@ -79,7 +79,7 @@
 			<field name="model">md.hr.course.student</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Employees">
+				<tree string="Courses By Employee">
 					<field name="course_id"/>
 					
 				</tree>

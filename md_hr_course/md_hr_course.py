@@ -55,4 +55,18 @@ class md_hr_course_student(osv.osv):
         'payback_clause_ends':fields.date('Pay back clause ends'),
         
         }
+    def on_change_payback_clause(self,cr, uid, ids, payback_clause,context=None): 
+
+        if payback_clause < 0.00 :
+           raise osv.except_osv(
+                            'Please Enter Value > 0 !!!!','Pay back clause (in %)')
+           return {'value':{'payback_clause':0.00}}
+        if payback_clause > 100.00:
+          raise osv.except_osv(
+                        'Please Enter Value < 100 !!!!','Pay back clause (in %)')
+          return {'value':{'payback_clause':0.00}} 
+        return {}
+        
+    
 md_hr_course_student()
+
