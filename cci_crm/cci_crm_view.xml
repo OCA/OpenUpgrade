@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+
+<!-- view for crm.case inherit -->
+	<record model="ir.ui.view" id="crm_case-view_inherit">
+			<field name="name">crm.case.form.confidential</field>
+			<field name="type">form</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="arch" type="xml">
+				<field name="som" position="after">
+					<field name="meeting_id" select="2"/>
+				</field>
+			</field>
+		</record>
+
+<!-- view for meeting.confidential.info -->
+		<record model="ir.ui.view" id="meeting_confidential_info_form">
+			<field name="name">meeting.confidential.info.form</field>
+			<field name="type">form</field>
+			<field name="model">meeting.confidential.info</field>
+			<field name="arch" type="xml">
+				<form string="Confidential Info">
+					<field name="group" select="1"/>
+					<newline/>
+					<field name="description" select="2"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="meeting_confidential_info_tree">
+			<field name="name">meeting.confidential.info.tree</field>
+			<field name="type">tree</field>
+			<field name="model">meeting.confidential.info</field>
+			<field name="arch" type="xml">
+				<tree string="Confidential Info">
+					<field name="group"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_meeting_confidential_info">
+			<field name="name">Confidential Info</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">meeting.confidential.info</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="CRM &amp; SRM/Meeting Confidential Info" action="action_meeting_confidential_info" id="menu_meeting_confidential_info"/>
+
+	</data>
+</terp>
