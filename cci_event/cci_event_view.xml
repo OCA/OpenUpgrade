@@ -177,8 +177,9 @@
 					<field name="name" select="1"/>
 					<field name="code" select="1"/>
 					<field name="unit_nbr" select="1"/>
+					<newline/>
 					<field name="type_id" select="1" />
-					<field name="case_id" select="2"/>
+					<field name="reg_id" select="1" />
 					<newline/>
 					<field name="date_reception" select="2"/>
 					<field name="date_limit" select="2"/>
@@ -201,6 +202,7 @@
 				<tree string="Event Check">
 					<field name="name"/>
 					<field name="code"/>
+					<field name="reg_id"/>
 				</tree>
 			</field>
 		</record>
