@@ -35,7 +35,7 @@ from osv import osv
 
 picking_form = """<?xml version="1.0"?>
 <form string="Select an Open Sale Order">
-	<field name="picking_id" domain="[('state','in',('assigned','confirmed'))]"/>
+	<field name="picking_id" domain="[('state','in',('assigned','confirmed'))]" context="{'contact_display':'partner'}"/>
 </form>
 """
 

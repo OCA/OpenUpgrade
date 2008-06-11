@@ -42,7 +42,7 @@ _form = """<?xml version="1.0"?>
 """
 
 _fields = {
-	'discount': {'string':'Discount percentage', 'type':'integer','required': True,},
+	'discount': {'string':'Discount percentage', 'type':'float','required': True,'default':lambda *args: 5},
 	}
 
 def apply_discount(self, cr, uid, data, context):

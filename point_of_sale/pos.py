@@ -70,6 +70,7 @@ class pos_order(osv.osv):
 							line.price_unit * \
 							(1-(line.discount or 0.0)/100.0), line.qty),
 							val)
+
 			res[order.id] = val
 		return res
 
@@ -146,7 +147,7 @@ class pos_order(osv.osv):
 			states={'draft':[('readonly',False)]}, readonly=True,
 			method=True),
 		'amount_return': fields.function(_total_return,'Returned',
-										 method=True),
+										method=True),
 		'lines': fields.one2many('pos.order.line', 'order_id',
 			'Order Lines', states={'draft':[('readonly',False)]},
 			readonly=True ),
@@ -179,9 +180,8 @@ class pos_order(osv.osv):
 		'account_receivable': fields.many2one('account.account',
 			'Default Receivable', required=True,states={'draft':[('readonly',False)]},
 			readonly=True,),
-
+		'invoice_wanted': fields.boolean('Create invoice')
 		}
-
 
 	def _journal_default(self, cr, uid, context={}):
 		journal_list = self.pool.get('account.journal').search(cr,uid,[('type','=','cash')])
@@ -189,7 +189,6 @@ class pos_order(osv.osv):
 			return journal_list[0]
 		else :
 			return False
-
 
 	_defaults={
 		'user_id': lambda self,cr,uid, context: uid,
@@ -201,32 +200,29 @@ class pos_order(osv.osv):
 		'nb_print': lambda *a: 0,
 		'sale_journal': _sale_journal_get,
 		'account_receivable': _receivable_get,
+		'invoice_wanted': lambda *a: True
 		}
 
 	def test_order_lines(self, cr, uid,order,context={}):
 		if not order.lines :
-			raise osv.except_osv(
-				"Error","No order lines defined for this sale.")
+			raise osv.except_osv("Error","No order lines defined for this sale.")
 			return False
 
 		wf_service = netsvc.LocalService("workflow")
 		wf_service.trg_validate(uid, 'pos.order', order.id, 'paid', cr)
 		return True
 
-
 	def dummy_button(self, cr, uid,order,context={}):
 		return True
 
 	def test_paid(self, cr, uid, ids, context=None):
-
-		for order in self.browse(cr,uid,ids,context):
+		for order in self.browse(cr, uid, ids, context):
 			if order.lines and not order.amount_total:
 				return True
 			if (not order.lines) or (not order.payments) or \
 				(order.amount_paid != order.amount_total):
 				return False
 		return True
-
 
 	def create_picking(self, cr, uid, ids, context={}):
 		"""Create a picking for each order and validate it."""
@@ -282,7 +278,6 @@ class pos_order(osv.osv):
 
 		return True
 
-
 	def set_to_draft(self, cr, uid, ids, *args):
 		if not len(ids):
 			return False
@@ -293,7 +288,6 @@ class pos_order(osv.osv):
 		for i in ids:
 			wf_service.trg_create(uid, 'pos.order', i, cr)
 		return True
-
 
 	def cancel_order(self, cr, uid, ids, context=None):
 		"""Cancel each picking with an inverted one."""
@@ -326,7 +320,7 @@ class pos_order(osv.osv):
 			for move in stock_move_obj.browse(cr, uid, move_ids, context=context):
 				stock_move_obj.write(
 					cr, uid, move.id,{'location_id': move.location_dest_id.id,
-									  'location_dest_id': move.location_id.id})
+									'location_dest_id': move.location_id.id})
 
 		self.pool.get('stock.picking').force_assign(cr,
 			uid, clone_list, context)
@@ -335,13 +329,18 @@ class pos_order(osv.osv):
 
 	def add_payment(self, cr, uid, order_id, amount, journal, context=None):
 		"""Create a new payment for the order"""
+
+		order = self.browse(cr, uid, order_id, context)
+		if order.invoice_wanted and not order.partner_id:
+			raise osv.except_osv("Error","Cannot create invoice without a partner.")
+
 		payment_id = self.pool.get('pos.payment').create(cr,uid,{
 			'order_id': order_id,
 			'journal_id': journal,
 			'amount': amount,
 			})
-		self.wf_service.trg_validate(uid, 'pos.order',
-									 order_id, 'payment', cr)
+
+		self.wf_service.trg_validate(uid, 'pos.order', order_id, 'payment', cr)
 		self.wf_service.trg_write(uid, 'pos.order', order_id, cr)
 		return payment_id
 
@@ -390,22 +389,18 @@ class pos_order(osv.osv):
 					})
 		return clone_list
 
-
 	def action_invoice(self, cr, uid, ids, context={}):
-
 		inv_ref= self.pool.get('account.invoice')
 		inv_line_ref= self.pool.get('account.invoice.line')
 		inv_ids=[]
 
 		for order in  self.browse(cr, uid,ids, context):
-
 			if order.invoice_id:
 				inv_ids.append(order.invoice_id.id)
 				continue
 
 			if not order.partner_id:
-				raise osv.except_osv('Error', 'Please provide a partner '
-					'for the sale.')
+				raise osv.except_osv('Error', 'Please provide a partner for the sale.')
 
 			inv = {
 				'name': 'Invoice from POS: '+order.name,
@@ -416,12 +411,10 @@ class pos_order(osv.osv):
 				'comment': order.note or '',
 				'price_type': 'tax_included'
 				}
-			inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice',
-				order.partner_id.id)['value'])
+			inv.update(inv_ref.onchange_partner_id(cr,uid, [], 'out_invoice', order.partner_id.id)['value'])
 			inv_id = inv_ref.create(cr, uid, inv, context)
 
-			self.write(cr,uid,[order.id],{'invoice_id':inv_id,
-										  'state':'invoiced'})
+			self.write(cr,uid,[order.id],{'invoice_id': inv_id, 'state': 'invoiced'})
 			inv_ids.append(inv_id)
 
 			for line in order.lines:
@@ -441,13 +434,11 @@ class pos_order(osv.osv):
 					and [(6,0,inv_line['invoice_line_tax_id'])] or []
 				inv_line_ref.create(cr, uid, inv_line,context)
 
-		for i in inv_ids :  self.wf_service.trg_validate(uid,
-			'account.invoice',i , 'invoice_open', cr)
+		for i in inv_ids:
+			self.wf_service.trg_validate(uid, 'account.invoice',i , 'invoice_open', cr)
 		return inv_ids
 
-
 	def create_account_move(self, cr, uid, ids, context=None):
-
 		account_move_obj = self.pool.get('account.move')
 		account_move_line_obj = self.pool.get('account.move.line')
 		account_period_obj = self.pool.get('account.period')
@@ -481,8 +472,8 @@ class pos_order(osv.osv):
 				for tax in computed_taxes:
 					tax_amount += round(tax['amount'],2)
 					group_key = (tax['tax_code_id'],
-								 tax['base_code_id'],
-								 tax['account_collected_id'])
+								tax['base_code_id'],
+								tax['account_collected_id'])
 
 					if group_key in group_tax:
 						group_tax[group_key] += round(tax['amount'],2)
@@ -495,11 +486,11 @@ class pos_order(osv.osv):
 				# Search for the income account
 				if  line.product_id.property_account_income.id:
 					income_account = accountline.\
-									 product_id.property_account_income.id
+									product_id.property_account_income.id
 				elif line.product_id.categ_id.\
-						 property_account_income_categ.id:
+						property_account_income_categ.id:
 					income_account = line.product_id.categ_id.\
-									 property_account_income_categ.id
+									property_account_income_categ.id
 				else:
 					raise osv.except_osv('Error !', 'There is no income '\
 						'account defined for this product: "%s" (id:%d)'\
@@ -532,8 +523,8 @@ class pos_order(osv.osv):
 					'debit': ((amount<0) and -amount) or 0.0,
 					'journal_id': order.sale_journal.id,
 					'period_id': period,
- 					'tax_code_id': tax_code_id,
- 					'tax_amount': tax_amount,
+					'tax_code_id': tax_code_id,
+					'tax_amount': tax_amount,
 				}, context=context)
 
 				# For each remaining tax with a code, whe create a move line
@@ -556,8 +547,8 @@ class pos_order(osv.osv):
 						'debit': 0.0,
 						'journal_id': order.sale_journal.id,
 						'period_id': period,
-	 					'tax_code_id': tax_code_id,
- 						'tax_amount': tax_amount,
+						'tax_code_id': tax_code_id,
+						'tax_amount': tax_amount,
 					}, context=context)
 
 
@@ -646,13 +637,11 @@ class pos_order(osv.osv):
 					'period_id': period,
 				},context=context))
 
-
 			account_move_obj.button_validate(cr, uid, [move_id, payment_move_id],
-										 context=context)
- 			account_move_line_obj.reconcile(cr, uid, to_reconcile, type='manual',
- 										context=context)
+										context=context)
+			account_move_line_obj.reconcile(cr, uid, to_reconcile, type='manual',
+										context=context)
 		return True
-
 
 	def action_paid(self, cr, uid, ids, context=None):
 		self.create_picking(cr, uid, ids, context={})
@@ -683,8 +672,7 @@ class pos_order_line(osv.osv):
 			res[line.id] = line.price_unit * line.qty * (1 - (line.discount or 0.0) / 100.0)
 		return res
 
-	def price_by_product(self, cr, uid, ids, pricelist, product_id,
-						 qty=0, partner_id=False):
+	def price_by_product(self, cr, uid, ids, pricelist, product_id, qty=0, partner_id=False):
 		if not product_id:
 			return 0.0
 		if not pricelist:
@@ -693,7 +681,7 @@ class pos_order_line(osv.osv):
 				'Please set one before choosing a product.')
 
 		price = self.pool.get('product.pricelist').price_get(cr,uid,
-			[pricelist], product_id, qty or 1.0, partner_id, context={})[pricelist]
+			[pricelist], product_id, qty or 1.0, partner_id)[pricelist]
 		if price is False:
 			raise osv.except_osv('No valid pricelist line found !',
 				"Couldn't find a pricelist line matching this product"
@@ -701,18 +689,15 @@ class pos_order_line(osv.osv):
 				" the quantity or the pricelist.")
 		return price
 
-	def onchange_product_id(self, cr, uid, ids, pricelist, product_id,
-							qty=0, partner_id=False):
-		price= self.price_by_product(cr, uid, ids, pricelist, product_id,
-							qty, partner_id)
+	def onchange_product_id(self, cr, uid, ids, pricelist, product_id, qty=0, partner_id=False):
+		price= self.price_by_product(cr, uid, ids, pricelist, product_id, qty, partner_id)
 
 		return {'value': {'price_unit': price}}
-
 
 	_columns = {
 		'name': fields.char('Line Description', size=512),
 		'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)], required=True,
-									  change_default=True, relate=True),
+									change_default=True, relate=True),
 		'price_unit': fields.float('Unit Price', required=True),
 		'qty': fields.float('Quantity'),
 		'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal'),
@@ -735,7 +720,6 @@ class pos_order_line(osv.osv):
 		return super(pos_order_line, self).write(cr, user, ids, values, context)
 
 pos_order_line()
-
 
 
 class pos_payment(osv.osv):
@@ -812,3 +796,4 @@ class report_transaction_pos(osv.osv):
             )
         """)
 report_transaction_pos()
+

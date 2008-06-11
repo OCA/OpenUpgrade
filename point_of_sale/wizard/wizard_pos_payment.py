@@ -44,24 +44,25 @@ def _get_journal(self, cr, uid, context):
 
 payment_form = """<?xml version="1.0"?>
 <form string="Add payment :">
-<field name="amount"/>
-<field name="journal"/>
+  <field name="amount" />
+  <field name="journal"/>
+  <field name="invoice_wanted" />
 </form>
 """
 
 payment_fields = {
 	'amount': {'string':'Amount', 'type':'float','required': True,},
+	'invoice_wanted': {'string':'Invoice', 'type':'boolean'},
 	'journal':{'string':'Journal',
- 				'type':'selection',
- 				'selection': _get_journal,
- 				'required': True,
-			   },
+			'type':'selection',
+			'selection': _get_journal,
+			'required': True,
+		},
 	}
 
 def _pre_init(self, cr, uid, data, context):
-
 	pool = pooler.get_pool(cr.dbname)
-	order = pool.get('pos.order').browse(cr,uid,data['id'],context)
+	order = pool.get('pos.order').browse(cr,uid,data['id'], context)
 	j_obj = pool.get('account.journal')
 
 	ids = j_obj.search(cr, uid, [('type','=','cash')])
@@ -77,22 +78,26 @@ def _pre_init(self, cr, uid, data, context):
 	if not journal:
 		journal = ids[0]
 
-
-	return {'amount': order.amount_total - order.amount_paid,
-			'journal': journal}
+	invoice_wanted_checked = not not order.partner_id # not not -> boolean
+	return {'amount': order.amount_total - order.amount_paid, 'journal': journal, 'invoice_wanted': invoice_wanted_checked}
 
 def _add_pay(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
 	order_obj = pool.get('pos.order')
-	order_obj.add_payment(cr,uid,data['id'],data['form']['amount'],
-						  data['form']['journal'],context=context)
+	amount = data['form']['amount']
+	journal = data['form']['journal']
+	invoice_wanted = data['form']['invoice_wanted'] == 1
 
+  # add 'invoice_wanted' in 'pos.order'
+	order_obj.write(cr, uid, [data['id']], {'invoice_wanted' : invoice_wanted})
+
+	order_obj.add_payment(cr, uid, data['id'], amount, journal, context=context)
 	return {}
 
 def _check(self, cr, uid, data, context):
 	"""Check the order:
 	if the order is not paid: continue payment,
-	if the order is paid print invoice or ticket.
+	if the order is paid print invoice (if wanted) or ticket.
 	"""
 
 	pool = pooler.get_pool(cr.dbname)
@@ -101,9 +106,18 @@ def _check(self, cr, uid, data, context):
 	#if not order.amount_total:
 	#	return 'receipt'
 	order_obj.test_order_lines(cr,uid,order,context=context)
-	return (order.state == 'paid') and  \
-		   (order.partner_id and 'invoice' or 'receipt') or \
-		   'ask_pay'
+
+	action = 'ask_pay'
+	if order.state == 'paid':
+		if order.partner_id:
+			if order.invoice_wanted:
+				action = 'invoice'
+			else:
+				action = 'paid'
+		else:
+			action = 'receipt'
+
+	return action
 
 def create_invoice(self, cr, uid, data, context):
 	order = pooler.get_pool(cr.dbname).get('pos.order')
@@ -116,42 +130,49 @@ def create_invoice(self, cr, uid, data, context):
 
 
 class pos_payment(wizard.interface):
-
 	states = {
 		'init' : {'actions' : [],
-				  'result' : {'type' : 'choice',
-							  'next_state': _check,
-							  }
-				  },
+			'result' : {'type' : 'choice',
+									'next_state': _check,
+			}
+		},
 		'ask_pay' : {'actions' : [_pre_init],
-				 'result' : {'type' : 'form',
-							 'arch': payment_form,
-							 'fields': payment_fields,
-							 'state' : (('end', 'Cancel'),
-										('add_pay', 'Ma_ke payment',
-										 'gtk-ok', True)
-										)
-							 }
-				 },
+			'result' : {'type' : 'form',
+						'arch': payment_form,
+						'fields': payment_fields,
+						'state' : (('end', 'Cancel'),
+									('add_pay', 'Ma_ke payment',
+									'gtk-ok', True)
+									)
+			}
+		},
 		'add_pay' : {'actions' : [_add_pay],
-					 'result' : {'type' : 'state',
-								 'state': "init",
-							  }
-				  },
+			'result' : {'type' : 'state',
+									'state': "init",
+			}
+		},
 		'invoice' : {
 			'actions' : [create_invoice],
 			'result' : {'type' : 'print',
-						'report': 'pos.invoice',
-						'state':'end'
-						}
+									'report': 'pos.invoice',
+									'state':'end'
+			}
 		},
 		'receipt' : {
 			'actions' : [],
 			'result' : {'type' : 'print',
-						'report': 'pos.receipt',
-						'state' : 'end'
-						}
+									'report': 'pos.receipt',
+									'state' : 'end'
+			}
 		},
+		'paid' : {
+			'actions' : [],
+			'result' : {'type' : 'state',
+									'state' : 'end'
+			}
+		},
+
 	}
 
 pos_payment('pos.payment')
+

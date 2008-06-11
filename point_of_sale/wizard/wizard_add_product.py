@@ -41,18 +41,18 @@ _form = """<?xml version="1.0"?>
 _fields = {
 
 	'product': {'string':'Product', 'type':'many2one',
-			   'relation': 'product.product', 'required': True,
+							'relation': 'product.product', 'required': True,
 				'default':False},
 
 	'quantity': {'string':'Quantity', 'type':'integer',
-				 'required': True, 'default':1},
+								'required': True, 'default':1},
 	}
 
 def _add(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
 	order_obj = pool.get('pos.order')
 	order_obj.add_product(cr,uid,data['id'],data['form']['product'],
-						  data['form']['quantity'],context=context)
+							data['form']['quantity'],context=context)
 
 	return {}
 
@@ -64,21 +64,21 @@ class add_product(wizard.interface):
 	states = {
 
 		'init' : {'actions' : [_pre_init],
-				 'result' : {'type' : 'form',
-							 'arch': _form,
-							 'fields': _fields,
-							 'state' : [('end', 'Cancel'),
+				'result' : {'type' : 'form',
+							'arch': _form,
+							'fields': _fields,
+							'state' : [('end', 'Cancel'),
 										('add', '_Add product', 'gtk-ok', True)
 										]
-							 }
-					 },
+							}
+					},
 		'add' : {'actions' : [_add],
-				  'result' : {'type' : 'state',
-							  'state': 'init',
-							  }
-				  },
+				'result' : {'type' : 'state',
+							'state': 'init',
+							}
+				},
 
 
-				 }
+				}
 
 add_product('pos.add_product')

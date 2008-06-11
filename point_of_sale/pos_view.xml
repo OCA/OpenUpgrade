@@ -114,10 +114,6 @@
 	</record>
 
 
-
-
-
-
 	<record model="ir.actions.act_window" id="action_pos_pos_form">
 		<field name="name">Point of Sale</field>
 		<field name="type">ir.actions.act_window</field>
@@ -126,7 +122,6 @@
 		<field name="view_id" ref="view_pos_pos_form"/>
 		<field name="domain">[ ('date_order','>=',time.strftime('%Y-%m-%d')) ]</field>
 	</record>
-
 
 
 	<record model="ir.ui.view" id="view_pos_order_tree">
