@@ -18,7 +18,7 @@
 				Events \ Reporting
 """,
 	"depends" : [
-		"project","crm","base_contact","sale"
+		"project","crm","base_contact",
 	],
 	"demo_xml" : ["event_demo.xml"],
 	"init_xml" : ["event_data.xml"],
