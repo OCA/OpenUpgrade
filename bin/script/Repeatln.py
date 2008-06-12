@@ -25,8 +25,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
         self.win = DBModalDialog(60, 50, 180, 250, "RepeatIn Builder")
         self.win.addFixedText("lblVariable", 2, 12, 60, 15, "Objects to loop on :")
-        self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
-                            itemListenerProc=self.cmbVariable_selected)
+        self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True, itemListenerProc=self.cmbVariable_selected)
         self.insVariable = self.win.getControl( "cmbVariable" )
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Field to loop on :")
@@ -39,11 +38,9 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblUName", 8, 207, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 205, 120, 15,)
 
-        self.win.addButton('btnOK',-2 ,-10,45,15,'Ok'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnOK',-2 ,-10,45,15,'Ok', actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel', actionListenerProc = self.btnOkOrCancel_clicked )
         # Variable Declaration
         self.sValue=None
         self.sObj=None
@@ -81,37 +78,28 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
 
-            for j in range(self.aObjectList.__len__()):
-
-                if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find(" ")) == "List":
-                    #self.insVariable.addItem(self.aObjectList[j],1)
+	    for j in range(len(self.aObjectList)):
+		if self.aObjectList[j][:self.aObjectList[j].find(" ")] == "List":
                     self.aVariableList.append(self.aObjectList[j])
-            for i in range(self.aItemList.__len__()):
 
+	    for i in range(len(self.aItemList)):
                 if self.aComponentAdd[i]=="Document":
-                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
+		    sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
 
-                    for j in range(self.aObjectList.__len__()):
-
-                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                            #self.insVariable.addItem(self.aObjectList[j],1)
+                    for j in range(len(self.aObjectList)):
+			if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
                             self.aVariableList.append(self.aObjectList[j])
 
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
-                    #for k in range(self.aSectionList.__len__()):
-
                     if self.aComponentAdd[i] in self.aSectionList:
-                        sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
-
-                        for j in range(self.aObjectList.__len__()):
-                            if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
-                                #self.insVariable.addItem(self.aObjectList[j],1)
+			sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
+			for j in range(len(self.aObjectList)):
+			    if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
                                 self.aVariableList.append(self.aObjectList[j])
 
                 if tcur.TextTable:
-
-                    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
+		    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i][self.aComponentAdd[i].rfind(".")+1:] == tcur.TextTable.Name:
                            VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
 
             self.bModify=bFromModify
@@ -126,30 +114,26 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.sValue= "objects"
                 else:
                     sItem=""
-                    i=0
-
-                    for i in range(self.aObjectList.__len__()):
-                        if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sObject:
+		    for i in range(len(self.aObjectList)):
+			if self.aObjectList[i][:self.aObjectList[i].find("(")]==sObject:
                             sItem= self.aObjectList[i]
                             self.insVariable.setText(sItem)
 
-                    genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
-#                    self.win.setEditText("txtName", sVariable)
-#                    self.win.setEditText("txtUName",sDisplayName)
+		    genTree(sItem[sItem.find("(")+1:sItem.find(")")], self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
 
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
             for var in self.aVariableList:
                 sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-                if var.__getslice__(0,8)<>'List of ':
-                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
+		if var[:8] <> 'List of ':
+		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                 else:
-                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(8,len(var)))])
+		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[8:])])
                 fields=['name','model']
                 self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
                 print self.model_res
                 if self.model_res <> []:
-                    if var.__getslice__(0,8)<>'List of ':
-                        self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+		    if var[:8]<>'List of ':
+                        self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                     else:
                         self.insVariable.addItem('List of ' + self.model_res[0]['name'] ,self.insVariable.getItemCount())
                 else:
@@ -168,8 +152,8 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             self.win.setEditText("txtName", self.sGVariable)
             self.win.setEditText("txtUName",self.sGDisplayName)
         else:
-            self.win.setEditText("txtName",sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))
-            self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind("/")+1,sItem.__len__())+".-|")
+	    self.win.setEditText("txtName",sMain[sMain.rfind("/")+1:])
+	    self.win.setEditText("txtUName","|-."+sItem[sItem.rfind("/")+1:]+".-|")
 
     def cmbVariable_selected(self,oItemEvent):
 
@@ -181,28 +165,28 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             self.win.removeListBoxItems("lstFields", 0, self.win.getListBoxItemCount("lstFields"))
             sItem=self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
-                if var.__getslice__(0,8)=='List of ':
-                    if var.__getslice__(0,8)==sItem.__getslice__(0,8):
+		if var[:8]=='List of ':
+		    if var[:8]==sItem[:8]:
                         sItem = var
-                elif var.__getslice__(0,var.find("(")+1)==sItem.__getslice__(0,sItem.find("(")+1):
+		elif var[:var.find("(")+1] == sItem[:sItem.find("(")+1]:
                     sItem = var
             self.aListRepeatIn=[]
 
-            if sItem.__getslice__(sItem.rfind(" ")+1,sItem.__len__()) == docinfo.getUserFieldValue(3):
+	    if sItem[sItem.rfind(" ")+1:] == docinfo.getUserFieldValue(3):
                 genTree(docinfo.getUserFieldValue(3), self.aListRepeatIn, self.insField,self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
             else:
-                genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")), self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+		genTree(sItem[sItem.find("(")+1:sItem.find(")")], self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
 
             self.win.selectListBoxItemPos("lstFields", 0, True )
 
         else:
             sItem=self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
-                if var.__getslice__(0,8)=='List of ':
-                    if var.__getslice__(0,8)==sItem.__getslice__(0,8):
+		if var[0:8]=='List of ':
+		    if var[0:8]==sItem[0:8]:
                         sItem = var
-            self.win.setEditText("txtName",sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__()))
-            self.win.setEditText("txtUName","|-."+sItem.__getslice__(sItem.rfind(".")+1,sItem.__len__())+".-|")
+	    self.win.setEditText("txtName",sItem[sItem.rfind(".")+1:])
+	    self.win.setEditText("txtUName","|-."+sItem[sItem.rfind(".")+1:]+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
             self.win.selectListBoxItemPos("lstFields", 0, True )
 
@@ -226,7 +210,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         oCurObj.update()
                     else:
                         sObjName=self.win.getComboBoxText("cmbVariable")
-                        sObjName=sObjName.__getslice__(0,sObjName.find("("))
+			sObjName=sObjName[:sObjName.find("(")]
                         sKey=u""+ self.win.getEditText("txtUName")
                         sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
                         oCurObj.Items = (sKey,sValue)
@@ -241,7 +225,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         text.insertTextContent(cursor,oInputList,False)
                     else:
                         sObjName=self.win.getComboBoxText("cmbVariable")
-                        sObjName=sObjName.__getslice__(0,sObjName.find("("))
+			sObjName=sObjName[:sObjName.find("(")]
 
                         if cursor.TextTable==None:
                             sKey=u""+ self.win.getEditText("txtUName")
