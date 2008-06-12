@@ -221,7 +221,13 @@ class event_registration(osv.osv):
 		'name': lambda *a: 'Registration',
 	}
 
-
+	def write(self, cr, uid, *args, **argv):
+		if 'partner_invoice_id' in args[1] and args[1]['partner_invoice_id']:
+			data_partner = self.pool.get('res.partner').browse(cr,uid,args[1]['partner_invoice_id'])
+			if data_partner:
+				args[1]['training_authorization'] = data_partner.training_authorization
+				args[1]['lang_authorization'] = data_partner.lang_authorization
+		return super(event_registration, self).write(cr, uid, *args, **argv)
 
 	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
 		if part:
@@ -229,7 +235,6 @@ class event_registration(osv.osv):
 			if data_partner.alert_events:
 				raise osv.except_osv('Error!',data_partner.alert_explanation or 'Partner is not valid')
 		return super(event_registration,self).onchange_partner_id(cr, uid, ids, part, event_id, email)
-
 
 	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
 		data={}
