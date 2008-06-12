@@ -36,6 +36,7 @@ class ObjRenderer :
 	def __init__ (self) :
 		# an empty dictionary of classes
 		self.klasses = {}
+                self.klass_names = []   # store class names to maintain order
 		self.arrows = []
 		self.filename = ""
 		
@@ -67,6 +68,7 @@ class ObjRenderer :
 						#print "\t", attr[0], attr[1], attr[4]
 						k.AddAttribute(attr[0], attr[1], attr[4], attr[2], attr[3])
 					self.klasses[o.properties["name"].value] = k
+                                        self.klass_names += [o.properties["name"].value]
 					#Connections
 				elif o.type.name == "UML - Association" :
 					# should already have got attributes relation by names
@@ -186,7 +188,7 @@ class OpenERPRenderer(ObjRenderer) :
 <terp>
 <data>
 """
-		for sk in self.klasses.keys() :
+		for sk in self.klass_names:
 			result += self.view_class_get(sk, self.klasses[sk])
 		result += """
 </data>
@@ -225,7 +227,7 @@ class OpenERPRenderer(ObjRenderer) :
 from osv import osv, fields
 
 """
-		for sk in self.klasses.keys() :
+		for sk in self.klass_names:
 			cname = sk.replace('.','_')
 			result += "class %s(osv.osv):\n" % (cname,)
 			if self.klasses[sk].comment:
