@@ -79,8 +79,8 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
 				sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
                                 r = sock.execute(database, uid, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
-				sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]["string"] + ".-|"
-                                oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
+				sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]]["string"] + ".-|"
+                                oPar.Items=(sExpr.encode("utf-8"),oPar.Items[1])
                                 oPar.update()
                             else:
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
@@ -89,7 +89,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 				    if rl[0] == res[0][:res[0].find(".")]:
                                         obj=rl[1]
                                 try:
-				    sOBject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/")
+				    sOBject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
                                     r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
