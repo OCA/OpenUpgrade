@@ -61,7 +61,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         getList(oRepeatInObjects,sHost,nCount)
         for ro in oRepeatInObjects:
             if ro.find("(")<>-1:
-                saRepeatInList.append([ro.__getslice__(0,ro.find("(")),ro.__getslice__(ro.find("(")+1,ro.find(")"))])
+                saRepeatInList.append( [ ro[:ro.find("(")], ro[ro.find("(")+1:ro.find(")")] ])
         try:
             oParEnum = doc.getTextFields().createEnumeration()
             while oParEnum.hasMoreElements():
@@ -72,24 +72,24 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
-                                sTemp = "|-." + sTemp.__getslice__(sTemp.rfind(".")+1,len(sTemp)) + ".-|"
+				sTemp = "|-." + sTemp[sTemp.rfind(".")+1:] + ".-|"
                                 oPar.Items=(sTemp.encode("utf-8"),oPar.Items[1])
                                 oPar.update()
                             elif type(res[0]) <> type(u''):
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
-                                sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0].__getslice__(res[0][0].find(".")+1,len(res[0][0])).replace(".","/"))
+				sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
                                 r = sock.execute(database, uid, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
-                                sExpr="|-." + r[res[0][0].__getslice__(res[0][0].rfind(".")+1 ,len(res[0][0]))]["string"] + ".-|"
+				sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]["string"] + ".-|"
                                 oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
                                 oPar.update()
                             else:
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
                                 obj = None
                                 for rl in saRepeatInList:
-                                    if rl[0] == res[0].__getslice__(0,res[0].find(".")):
+				    if rl[0] == res[0][:res[0].find(".")]:
                                         obj=rl[1]
                                 try:
-                                    sObject = self.getRes(sock, obj, res[0].__getslice__(res[0].find(".")+1,len(res[0])).replace(".","/"))
+				    sOBject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/")
                                     r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
@@ -101,8 +101,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                             if reg[1] == 'Field':
                                                 for ires in res:
                                                     try:
-                                                        sExpr=r[0][ires.__getslice__(ires.rfind(".")+1,len(ires))]
-                                                        print sExpr,ires
+							sExpr=r[0][ires[ires.rfind(".")+1:]]
                                                         break
                                                     except:
                                                         pass
@@ -113,7 +112,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                     oPar.Items=(str(sExpr) ,oPar.Items[1])
                                                     oPar.update()
                                         else:
-                                            sExpr=r[0][res[0].__getslice__(res[0].rfind(".")+1,len(res[0]))]
+					    sExpr=r[0][res[0][res[0].rfind(".")+1:]]
                                             try:
                                                 if sExpr:
                                                     oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
@@ -143,12 +142,12 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         key.sort()
         myval=None
         if not sVar.find("/")==-1:
-            myval=sVar.__getslice__(0,sVar.find("/"))
+	    myval=sVar[:sVar.find("/")]
         else:
             myval=sVar
         for k in key:
             if (res[k]['type'] in ['many2one']) and k==myval:
-                sObject = self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+		sObject = self.getRes(sock,res[myval]['relation'], sVar[sVar.find("/")+1:])
         return sObject
     def getBraces(self,aReportSyntex=[]):
 
