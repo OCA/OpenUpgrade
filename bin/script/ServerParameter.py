@@ -58,7 +58,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 self.lstDatabase.addItem("No Database found !!!",0)
             else:
                 self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
-                for i in range(res.__len__()):
+		for i in range(len(res)):
                     self.lstDatabase.addItem(res[i],i)
                 sValue = database
 
@@ -107,7 +107,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         else:
             self.win.setEditText("txtHost",aVal[0])
             self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
-            for i in range(aVal[1].__len__()):
+	    for i in range(len(aVal[1])):
                 self.lstDatabase.addItem(aVal[1][i],i)
 
 
