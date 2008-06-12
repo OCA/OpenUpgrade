@@ -146,6 +146,17 @@
 	</record>
 	<menuitem name="Direct Marketing/Offer/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
 
+	<record model="ir.actions.act_window" id="action_offer_form_all_model">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref = "view_offer_tree" />
+		<field name="domain">[('type','=','model')]</field>		
+	</record>
+	<menuitem name="Direct Marketing/Offer/All Offers/All offer models" id="menu_action_offer_form_all_model" action="action_offer_form_all_model"/>
+
+
 	# ------------------------------------------------------
 	# My Offers
 	# ------------------------------------------------------

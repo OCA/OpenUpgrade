@@ -85,6 +85,36 @@
 		<field name="view_id" ref="view_offer_step_document_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form" sequence="1"/>
+
+	<record model="ir.ui.view" id="view_offer_step_type_form">
+		<field name="name">dm.offer.step.type.form</field>
+		<field name="model">dm.offer.step.type</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">	
+			<form string="Offer Step Type">
+				<field name="name" select="1"/>
+				<field name="code"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_offer_step_type_tree">
+		<field name="name">dm.offer.step.type.tree</field>
+		<field name="model">dm.offer.step.type</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">	
+			<tree string="Offer Step Type">
+				<field name="name" select="1"/>
+				<field name="code"/>
+			</tree>
+		</field>
+	</record>	
+	<record model="ir.actions.act_window" id="action_step_type_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer.step.type</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_offer_step_type_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Offer Step Type" id="menu_action_step_type_form" action="action_step_type_form"/>
 	
 	<record model="ir.ui.view" id="view_offer_step_tree">
 		<field name="name">dm.offer.step.tree</field>
@@ -92,7 +122,6 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Offer Steps">
-				<field name="name"/>
 				<field name="offer_id"/>
 				<field name="incoming_transition_ids"/>
 				<field name="outgoing_transition_ids"/>
@@ -110,7 +139,6 @@
 					<page string="General">
 						<field name="offer_id"/>
 						<field name="sequence" select="2"/>
-						<field name="name" select="1"/>
 						<field name="code" select="2"/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
@@ -169,7 +197,6 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Transition">
-				<field name="name" colspan="4" select="1"/>
 				<field name="step_from"/>
 				<field name="step_to"/>
 				<field name="condition" select="1"/>
@@ -183,7 +210,6 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Transition">
-				<field name="name"/>	
 				<field name="condition"/>
 				<field name="delay_id"/>
 			</tree>

@@ -73,10 +73,21 @@ class dm_offer_document(osv.osv):
  
 dm_offer_document()
 
+class dm_offer_step_type(osv.osv):
+    _name="dm.offer.step.type"
+    _rec_name = 'name'
+    
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=8, required=True),
+        }
+    
+dm_offer_step_type()
+    
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
     _order = "sequence"
-    _rec_name = 'name'
+    _rec_name = 'type'
     
     def __history(self, cr, uid, cases, keyword, context={}):
         for case in cases:
@@ -95,17 +106,22 @@ class dm_offer_step(osv.osv):
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            code = '_'.join([offer_step.offer_id.code,(str(offer_step.sequence) or ''),(offer_step.type or '')])
+            code = '_'.join([offer_step.offer_id.code,(str(id)),(offer_step.type or '')])
             result[id]=code
         return result
+    def _get_offer_step_type(self,cr,uid,context={}):
+        offer_step_type = self.pool.get('dm.offer.step.type')
+        type_ids = offer_step_type.search(cr,uid,[])
+        type = offer_step_type.browse(cr,uid,type_ids)
+        return map(lambda x : [x.code,x.code],type)
+    
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
         'legal_state' : fields.char('Legal State', size=32),
-        'name' : fields.char('Name', size=64, required=True),
         'code' : fields.function(_offer_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
         'media_id' : fields.many2one('dm.media', 'Media'),
-        'type' : fields.char('Type', size=16),
+        'type' : fields.selection(_get_offer_step_type,'Type'),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
 #        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
         'notes' : fields.text('Notes'),
@@ -160,13 +176,12 @@ dm_offer_step()
 
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
-    _rec_name = 'name'
+    _rec_name = 'condition'
     _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition'),
+        'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
         'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
-        'step_from' : fields.many2one('dm.offer.step','From Offer Step'),
-        'step_to' : fields.many2one('dm.offer.step','To Offer Step'),
+        'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True),
+        'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True),
     }
     
 dm_offer_step_transition()
