@@ -10,7 +10,7 @@
     """,
     "depends" : ["base","crm"],
     "init_xml" : [],
-    "demo_xml" : [],
+    "demo_xml" : ["cci_crm_demo.xml"],
     "update_xml" : ["cci_crm_view.xml"],
     "active": False,
     "installable": True
