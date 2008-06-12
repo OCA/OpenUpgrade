@@ -212,7 +212,7 @@ class event_registration(osv.osv):
 			"payment_mode":fields.many2one('payment.mode',"Payment Mode"),#should be check (m2o ?)
 			"check_mode":fields.boolean('Check Mode'),
 			"check_ids":fields.one2many('event.check','reg_id',"Check ids"),
-			"payment_ids":fields.one2many("payment.order","case_id","Payment"),#should be corect (o2m ?)
+			"payment_ids":fields.one2many("account.move.line","case_id","Payment", readonly=True),
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
 			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
 			"check_amount":fields.function(cal_check_amount,method=True,type='integer', string='Check Amount')
@@ -286,9 +286,9 @@ class event_registration(osv.osv):
 event_registration()
 
 
-class payment_order(osv.osv):
-	_inherit = 'payment.order'
+class account_move_line(osv.osv):
+	_inherit = 'account.move.line'
 	_columns={
-		"case_id" : fields.many2one('crm.case','Registration'),
-		}
-payment_order()
+		"case_id" : fields.many2one('event.registration','Registration'),
+	}
+account_move_line()
