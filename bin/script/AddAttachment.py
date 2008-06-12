@@ -108,16 +108,16 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             if self.win.getListBoxSelectedItem("lstResourceType") <> "":
                 if oDoc2.getURL() <> "":
                     if self.win.getListBoxSelectedItem("lstResourceType") == "pdf":
-                        url = self.doc2pdf(oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__()))
+			url = self.doc2pdf(oDoc2.getURL()[7:])
                     else:
                         url= oDoc2.getURL()
                     if url <> None:
-                        fp = file(url.__getslice__(7,url.__len__()), 'rb')
+			fp = file(url[7:], 'rb')
                         data=fp.read()
                         fp.close()
                         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                         value={
-                            'name': url.__getslice__(url.rfind('/')+1,url.__len__()),
+			    'name': url[url.rfind('/')+1:],
                             'datas': base64.encodestring(data),
                             'res_model': docinfo.getUserFieldValue(3),
                             'res_id': docinfo.getUserFieldValue(2)
@@ -135,11 +135,11 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                 if self.win.getListBoxSelectedItem("lstResource") <> "" and self.win.getListBoxSelectedItem("lstmodel") <> "":
                     if oDoc2.getURL() <> "":
                         if self.win.getListBoxSelectedItem("lstResourceType") == "pdf":
-                            url = self.doc2pdf(oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__()))
+			    url = self.doc2pdf(oDoc2.getURL()[7:])
                         else:
                             url= oDoc2.getURL()
                         if url <> None:
-                            fp = file(url.__getslice__(7,url.__len__()), 'rb')
+			    fp = file(url[7:], 'rb')
                             data=fp.read()
                             fp.close()
                             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
@@ -149,7 +149,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                                     resourceid = s[0]
                             if resourceid <> None:
                                 value={
-                                    'name': url.__getslice__(url.rfind('/')+1,url.__len__()),
+				    'name': url[url.rfind('/')+1:],
                                     'datas': base64.encodestring(data),
                                     'res_model': self.dModel[self.win.getListBoxSelectedItem("lstmodel")],
                                     'res_id': resourceid
