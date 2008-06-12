@@ -63,33 +63,37 @@ class Fields(unohelper.Base, XJobExecutor ):
             cursor = doc.getCurrentController().getViewCursor()
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
-	    for j in range(len(self.aObjectList)):
-		if self.aObjectList[j][:self.aObjectList[j].find("(")] == "Objects":
-                    self.aVariableList.append(self.aObjectList[j])
+	    for anObject in self.aObjectList:
+		if anObject[:anObject.find("(")] == "Objects":
+		    self.aVariableList.append(anObject)
+
 	    for i in range(len(self.aItemList)):
-                if self.aComponentAdd[i]=="Document":
-		    sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
-		    for j in range(len(self.aObjectList)):
-			if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
-                            self.aVariableList.append(self.aObjectList[j])
+		anItem = self.aItemList[i][1]
+		component = self.aComponentAdd[i]
+		
+		if component == "Document": 
+		    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+		    for anObject in self.aObjectList:
+			if anObject[:anObject.find("(")] == sLVal:
+			    self.aVariableList.append(anObject)
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
-                    if self.aComponentAdd[i] in self.aSectionList:
-			sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
-			for j in range(len(self.aObjectList)):
-			    if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
-                                self.aVariableList.append(self.aObjectList[j])
+		    if component in self.aSectionList:
+			sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+			for anObject in self.aObjectList:
+			    if anObject[:anObject.find("(")] == sLVal:
+				self.aVariableList.append(anObject)
                 if tcur.TextTable:
-		    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i][self.aComponentAdd[i].rfind(".")+1:] == tcur.TextTable.Name:
-                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
+		    if not component == "Document" and component[component.rfind(".")+1:] == tcur.TextTable.Name:
+                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList, component)
 
             self.bModify=bFromModify
             if self.bModify==True:
                 sItem=""
-		for i in range(len(self.aObjectList)):
-		    if self.aObjectList[i][:self.aObjectList[i].find("(")]==sVariable:
-                        sItem= self.aObjectList[i]
-                        self.insVariable.setText(sItem)
+		for anObject in self.aObjectList:
+		    if anObject[:anObject.find("(")] == sVariable:
+			sItem = anObject
+			self.insVariable.setText(sItem)
 		genTree(sItem[sItem.find("(")+1:sItem.find(")")],self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
@@ -137,7 +141,7 @@ class Fields(unohelper.Base, XJobExecutor ):
         key.sort()
         myval=None
         if not sVar.find("/")==-1:
-	    myval=sVar[0:sVar.find("/")]
+	    myval=sVar[:sVar.find("/")]
         else:
             myval=sVar
         if myval in key:
@@ -150,7 +154,6 @@ class Fields(unohelper.Base, XJobExecutor ):
     def cmbVariable_selected(self,oItemEvent):
         if self.count > 0 :
             try:
-                sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
                 desktop=getDesktop()
                 doc =desktop.getCurrentComponent()
                 docinfo=doc.getDocumentInfo()
@@ -160,9 +163,18 @@ class Fields(unohelper.Base, XJobExecutor ):
                 for var in self.aVariableList:
 		    if var[:var.find("(")] == tempItem[:tempItem.find("(")]:
                         sItem=var
-		genTree(sItem[sItem.find("(")+1:sItem.find(")")],self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+		genTree(
+		    sItem[sItem.find("(")+1:sItem.find(")")],
+		    self.aListFields, 
+		    self.insField,
+		    self.sMyHost,
+		    2,
+		    ending_excl=['one2many','many2one','many2many','reference'], 
+		    recur=['many2one']
+		)
             except:
                 import traceback;traceback.print_exc()
+
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -171,33 +183,31 @@ class Fields(unohelper.Base, XJobExecutor ):
             doc = desktop.getCurrentComponent()
             text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
-            if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" and self.bModify==True :
+
+	    itemSelected = self.win.getListBoxSelectedItem( "lstFields" )
+	    itemSelectedPos = self.win.getListBoxSelectedItemPos( "lstFields" )
+	    txtUName = self.win.getEditText("txtUName")
+            sKey=u""+ txtUName
+
+            if itemSelected != "" and txtUName != "" and self.bModify==True :
                 oCurObj=cursor.TextField
                 sObjName=self.insVariable.getText()
 		sObjName=sObjName[:sObjName.find("(")]
-                sKey=u""+ self.win.getEditText("txtUName")
-                sValue=u"[[ " + sObjName + self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + " ]]"
+                sValue=u"[[ " + sObjName + self.aListFields[itemSelectedPos].replace("/",".") + " ]]"
                 oCurObj.Items = (sKey,sValue)
                 oCurObj.update()
                 self.win.endExecute()
-            elif self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtUName") != "" :
-                sObjName=""
+            elif itemSelected != "" and txtUName != "" :
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                 sObjName=self.win.getComboBoxText("cmbVariable")
 		sObjName=sObjName[:sObjName.find("(")]
-                if cursor.TextTable==None:
-                    sKey=u""+ self.win.getEditText("txtUName")
-                    sValue=u"[[ " + sObjName + self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + " ]]"
-                    oInputList.Items = (sKey,sValue)
-                    text.insertTextContent(cursor,oInputList,False)
-                else:
-                    oTable = cursor.TextTable
-                    oCurCell = cursor.Cell
-                    tableText = oTable.getCellByName( oCurCell.CellName )
-                    sKey=u""+ self.win.getEditText("txtUName")
-                    sValue=u"[[ " + sObjName + self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + " ]]"
-                    oInputList.Items = (sKey,sValue)
-                    tableText.insertTextContent(cursor,oInputList,False)
+
+		if cursor.TextTable:
+		    text = cursor.TextTable.getCellByName( cursor.Cell.CellName )
+
+		sValue = u"[[ " + sObjName + self.aListFields[itemSelectedPos].replace("/",".") + " ]]"
+		oInputList.Items = (sKey,sValue)
+		text.insertTextContent(cursor,oInputList,False)
                 self.win.endExecute()
             else:
                     ErrorDialog("Please Fill appropriate data in Name field \nor select perticular value from the list of fields")
@@ -207,8 +217,5 @@ class Fields(unohelper.Base, XJobExecutor ):
 if __name__<>"package" and __name__=="__main__":
     Fields()
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( \
-        Fields,
-        "org.openoffice.tiny.report.fields",
-        ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( Fields, "org.openoffice.tiny.report.fields", ("com.sun.star.task.Job",),)
 

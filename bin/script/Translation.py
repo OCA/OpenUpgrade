@@ -120,7 +120,6 @@ class AddLang(unohelper.Base, XJobExecutor ):
             desktop=getDesktop()
             doc =desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
-            #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
 		if var[:var.find("(")+1]==sItem[:sItem.find("(")+1]:
@@ -198,17 +197,18 @@ class AddLang(unohelper.Base, XJobExecutor ):
 
 	    itemSelected = self.win.getListBoxSelectedItem( "lstFields" )
 	    itemSelectedPos = self.win.getListBoxSelectedItemPos( "lstFields" )
+	    txtUName = self.win.getEditText("txtUName")
+            sKey=u""+ txtUName
 
-            if itemSelected != "" and self.win.getEditText("txtUName") != "" and self.bModify==True :
+            if itemSelected != "" and txtUName != "" and self.bModify==True :
                 oCurObj=cursor.TextField
                 sObjName=self.insVariable.getText()
 		sObjName=sObjName[:sObjName.find("(")]
-                sKey=u""+ self.win.getEditText("txtUName")
                 sValue=u"[[ setLang" + sObjName + self.aListFields[itemSelectedPos].replace("/",".") + ")" " ]]"
                 oCurObj.Items = (sKey,sValue)
                 oCurObj.update()
                 self.win.endExecute()
-            elif itemSelected != "" and self.win.getEditText("txtUName") != "" :
+	    elif itemSelected != "" and txtUName != "" :
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                 sObjName=self.win.getComboBoxText("cmbVariable")
 		sObjName=sObjName[:sObjName.find("(")]
@@ -216,7 +216,6 @@ class AddLang(unohelper.Base, XJobExecutor ):
 		if cursor.TextTable:
 		    text = cursor.TextTable.getCellByName( cursor.Cell.CellName )
 
-		sKey = u"" + self.win.getEditText("txtUName")
 		sValue = u"[[setLang" + "(" + sObjName + self.aListFields[itemSelectedPos].replace("/",".") +")" " ]]"
 		oInputList.Items = (sKey,sValue)
 		text.insertTextContent(cursor,oInputList,False)
