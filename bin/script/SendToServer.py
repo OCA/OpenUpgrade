@@ -29,24 +29,14 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module' ,  'search', [('name','=','base_report_designer')])
-        fields=['name','state']
-        self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module', 'read', self.ids,fields)
-        bFlag = False
-        if len(self.res_other) > 0:
-            for r in self.res_other:
-                if r['state'] == "installed":
-                    bFlag = True
-        else:
-            exit(1)
-        if bFlag <> True:
-            ErrorDialog("Please Install base_report_designer module","","Module Uninstalled Error")
-            exit(1)
+        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
+	if not len(ids):
+	    ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
+	    exit(1)
+
         report_name = ""
         name=""
         if docinfo.getUserFieldValue(2)<>"" :
-            #self.ids = sock.execute(database, 3, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,  'search', [('id','=',int(docinfo.getUserFieldValue(2)))])
-            #print ids
             try:
                 fields=['name','report_name']
                 self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
@@ -102,17 +92,11 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 if not oDoc2.hasLocation():
                     oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                print 1
                 if docinfo.getUserFieldValue(2)=="":
-                    print 2
                     id=self.getID()
-                    print 3
                     docinfo.setUserFieldValue(2,id)
-                    print 4
                     rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
-                    print 5
                     res=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
-                    print 6
                 else:
                     id = docinfo.getUserFieldValue(2)
                     vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
@@ -130,17 +114,15 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 self.getInverseFieldsRecord(0)
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
-                bHeader = True
-                res1 = {}
-                res1['name'] =self.win.getEditText("txtName")
-                res1['model'] =docinfo.getUserFieldValue(3)
-                res1['report_name'] =self.win.getEditText("txtReportName")
 
-                if self.win.getCheckBoxState("chkHeader")==0:
-                    bHeader = False
-                res1["header"] = bHeader
-                res1["report_type"]=self.win.getListBoxSelectedItem("lstResourceType")
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)),res1)
+                params = {
+		    'name': self.win.getEditText("txtName"),
+		    'model': docinfo.getUserFieldValue(3),
+		    'report_name': self.win.getEditText("txtReportName"),
+		    'header': (self.win.getCheckBoxState("chkHeader") <> 0),
+		    'report_type': self.win.getListBoxSelectedItem("lstResourceType"),
+		}
+                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
                 self.win.endExecute()
             else:
                 ErrorDialog("Either Report Name or Technical Name is blank !!!\nPlease specify appropriate Name","","Blank Field ERROR")
@@ -152,20 +134,14 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        print 11
-        res = {}
-        print 12
-        res['name'] =self.win.getEditText("txtName")
-        print 13
-        res['model'] =docinfo.getUserFieldValue(3)
-        print 14
-        res['report_name'] =self.win.getEditText("txtReportName")
-        print 15
+	params = {
+	    'name': self.win.getEditText("txtName"),
+	    'model': docinfo.getUserFieldValue(3),
+	    'report_name': self.win.getEditText('txtReportName')
+	}
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        print 16,res
-        id=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create',res)
-        print 17
+        id=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create', params)
         return id
 
     def getInverseFieldsRecord(self,nVal):
@@ -185,7 +161,4 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 if __name__<>"package" and __name__=="__main__":
     SendtoServer(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( \
-            SendtoServer,
-            "org.openoffice.tiny.report.sendtoserver",
-            ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( SendtoServer, "org.openoffice.tiny.report.sendtoserver", ("com.sun.star.task.Job",),)
