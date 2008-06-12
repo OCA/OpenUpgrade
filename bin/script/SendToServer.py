@@ -119,9 +119,9 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                     rec = { 'name': self.win.getEditText("txtReportName")}
                     res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
                 oDoc2.store()
-                url=oDoc2.getURL().__getslice__(7,oDoc2.getURL().__len__())
+		url=oDoc2.getURL()[7:]
                 temp1=url.replace("%20"," ")
-                url1=temp1.__getslice__(1,temp1.__len__())
+		url1=temp1[1:]
                 if os.name=='nt':    
                     fp=file(url1,'rb')
                 else:

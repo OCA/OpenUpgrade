@@ -29,8 +29,6 @@ class NewReport(unohelper.Base, XJobExecutor):
         self.win.addFixedText("lblModuleSelection", 2, 2, 60, 15, "Module Selection")
         self.win.addComboListBox("lstModule", -2,13,176,80 , False)
         self.lstModule = self.win.getControl( "lstModule" )
-#        self.win.addFixedText("lblReportName", 17 ,95 , 60, 15, "Report Name")
-#        self.win.addEdit("txtReportName", -2, 92, 123, 15)
         self.aModuleName=[]
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
@@ -42,13 +40,11 @@ class NewReport(unohelper.Base, XJobExecutor):
         res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
         res.sort(lambda x, y: cmp(x['name'],y['name']))
          
-        for i in range(res.__len__()):
+	for i in range(len(res)):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])
-        self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.addButton('btnCancel',-2 - 70 - 5 ,-5, 35,15,'Cancel'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report' ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnCancel',-2 - 70 - 5 ,-5, 35,15,'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.doModalDialog("",None)
 
     def btnOkOrCancel_clicked(self,oActionEvent):

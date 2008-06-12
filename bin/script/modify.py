@@ -21,15 +21,6 @@ class modify(unohelper.Base, XJobExecutor ):
         self.module  = "tiny_report"
         self.version = "0.1"
         self.win=None
-#        localContext = uno.getComponentContext()
-#        resolver = localContext.ServiceManager.createInstanceWithContext(
-#                        "com.sun.star.bridge.UnoUrlResolver", localContext )
-#        smgr = resolver.resolve( "uno:socket,host=localhost,port=2002;urp;StarOffice.ServiceManager" )
-#        remoteContext = smgr.getPropertyValue( "DefaultContext" )
-#        desktop = smgr.createInstanceWithContext( "com.sun.star.frame.Desktop",remoteContext)
-        desktop = getDesktop()
-        Doc =desktop.getCurrentComponent()
-        self.oVC = Doc.CurrentController.getViewCursor()
         # Variable Declaration
         self.sObj=None
         self.count=0
@@ -39,6 +30,7 @@ class modify(unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
+        self.oVC = doc.CurrentController.getViewCursor()
         self.oMyObject=None
         if not docinfo.getUserFieldValue(0)=="":
             self.sMyHost= docinfo.getUserFieldValue(0)
@@ -49,14 +41,13 @@ class modify(unohelper.Base, XJobExecutor ):
         if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
             if self.oVC.TextField:
                 self.oCurObj=self.oVC.TextField
-                self.oMyObject= self.getOperation(self.oVC.TextField.Items.__getitem__(1))
-                if self.oMyObject.__getitem__(0) == "field":
-                    Fields(self.oMyObject.__getitem__(1).__getslice__(0,self.oMyObject.__getitem__(1).find(".")),self.oMyObject.__getitem__(1).__getslice__(self.oMyObject.__getitem__(1).find("."),self.oMyObject.__getitem__(1).__len__()).replace(".","/"),self.oCurObj.Items[0],True)
-                elif self.oMyObject.__getitem__(0) == "expression":
-                    Expression(self.oMyObject.__getitem__(1),self.oCurObj.Items.__getitem__(0),True)
-                elif self.oMyObject.__getitem__(0)=="repeatIn":
-                    #RepeatIn(self,sObject="",sVariable="",sFields="",sDisplayName="",bFromModify=False):
-                    RepeatIn(self.oMyObject.__getitem__(1).__getslice__(0,self.oMyObject.__getitem__(1).find(".")),self.oMyObject[2],self.oMyObject.__getitem__(1).__getslice__(self.oMyObject.__getitem__(1).find("."),self.oMyObject.__getitem__(1).__len__()).replace(".","/"),self.oCurObj.Items[0],True)
+                self.oMyObject= self.getOperation(self.oVC.TextField.Items[1])
+                if self.oMyObject[0] == "field":
+		    Fields(self.oMyObject[1][:self.oMyObject[1].find(".")],self.oMyObject[1][self.oMyObject[1].find("."):].replace(".","/"),self.oCurObj.Items[0],True)
+                elif self.oMyObject[0] == "expression":
+                    Expression(self.oMyObject[1],self.oCurObj.Items[0],True)
+                elif self.oMyObject[0]=="repeatIn":
+		    RepeatIn(self.oMyObject[1][:self.oMyObject[1].find(".")],self.oMyObject[2], self.oMyObject[1][self.oMyObject[1].find("."):].replace(".","/"),self.oCurObj.Items[0],True)
             else:
                 ErrorDialog("Please place your cursor at begaining of field \nwhich you want to modify","")
 
