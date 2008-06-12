@@ -85,7 +85,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 fp_name = tempfile.mktemp('.'+"sxw")
                 fp_name1="r"+fp_name
                 fp_path=os.path.join(fp_name1).replace("\\","/") 
-                fp_win=fp_path.__getslice__(1,fp_path.__len__())             
+		fp_win=fp_path[1:]
                 if res['report_sxw_content']:
                     data = base64.decodestring(res['report_sxw_content'])
                     if os.name=='nt':
