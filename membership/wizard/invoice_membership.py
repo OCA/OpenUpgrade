@@ -107,10 +107,9 @@ class wizard_invoice_membership(wizard.interface):
 							'type': 'many2one',
 							'relation': 'product.product',
 							'required': True
-							},
-
 						},
-				    'state' : [('end', 'Cancel'),('ok', 'Confirm') ]}
+				},
+				'state' : [('end', 'Cancel'),('ok', 'Confirm') ]}
 		},
 
 		'ok' : {
