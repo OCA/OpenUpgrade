@@ -1,8 +1,21 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-	<record model="ir.ui.view" id="view_partner_form">
-		<field name="name">res.partner.bank.form.inherit</field>
+	<record model="ir.ui.view" id="view_partner_form_inherit_code">
+		<field name="name">res.partner.form.code.inherit</field>
+		<field name="model">res.partner</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="arch" type="xml">
+			<field name="acc_number" position="after">
+				<field name="institution_code" select="1"/>
+				<newline/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_bank_form_inherit_code">
+		<field name="name">res.partner.bank.form.code.inherit</field>
 		<field name="model">res.partner.bank</field>
 		<field name="type">form</field>
 		<field name="inherit_id" ref="base.view_partner_bank_form"/>
@@ -13,5 +26,6 @@
 			</field>
 		</field>
 	</record>
+
 </data>
 </terp>

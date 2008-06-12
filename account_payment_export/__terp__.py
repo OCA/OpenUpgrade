@@ -32,7 +32,7 @@
     "version":"1.0",
     "author":"Tiny",
     "category":"Payment Order Export",
-    "depends":["base", "account","account_payment","base_iban"],
+    "depends":["base","account_payment","base_iban","base_vat"],
     "demo_xml":[],
     "init_xml":[],
     "update_xml" : ["payment_export_wizard.xml","payment_export_view.xml","payment_export_data.xml"],
@@ -40,6 +40,5 @@
     "description": """
      This module will export payment order
      """,
-
     "installable":True,
 }

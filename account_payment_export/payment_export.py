@@ -35,8 +35,8 @@ class account_pay(osv.osv):
     _name = "account.pay"
     _description = "Payment Export History"
     _columns = {
-        'name': fields.binary('Export file', readonly=True),
-        'note': fields.text('Creation log', readonly=True),
+        'name': fields.binary('Export File', readonly=True),
+        'note': fields.text('Creation Log', readonly=True),
 
     }
 account_pay()
@@ -45,7 +45,7 @@ account_pay()
 class res_partner_bank(osv.osv):
     _inherit = "res.partner.bank"
     _columns = {
-                'institution_code':fields.char('Institution code.', size=3),
+                'institution_code':fields.char('Institution Code', size=3),
     }
 res_partner_bank()
 
