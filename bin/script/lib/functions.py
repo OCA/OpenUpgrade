@@ -21,7 +21,7 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
         key.sort()
         for k in key:
             if (not ending or res[k]['type'] in ending) and ((not ending_excl) or not (res[k]['type'] in ending_excl)):
-                insField.addItem(root+'/'+res[k]["string"],aList.__len__())#getListBoxItemCount("lstFields"))
+                insField.addItem(root+'/'+res[k]["string"],len(aList))
                 aList.append(actualroot+'/'+k)
             if (res[k]['type'] in recur) and (level>0):
                 genTree(res[k]['relation'],aList,insField,host ,level-1, ending, ending_excl, recur,root+'/'+res[k]["string"],actualroot+'/'+k)
@@ -31,20 +31,19 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
 def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableName=""):
     if sTableName.find(".") != -1:
         print sTableName,1
-        for i in range(aItemList.__len__()):
+	for i in range(len(aItemList)):
             if aComponentAdd[i]==sTableName:
-                sLVal=aItemList[i].__getitem__(1).__getslice__(aItemList[i].__getitem__(1).find(",'")+2,aItemList[i].__getitem__(1).find("')"))
-                for j in range(aObjectList.__len__()):
-                    if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal:
-                        print aObjectList[j]
+		sLVal=aItemList[i][1][aItemList[i][1].find(",'")+2:aItemList[i][1].find("')")]
+                for j in range(len(aObjectList)):
+		    if aObjectList[j][:aObjectList[j].find("(")] == sLVal:
                         insVariable.append(aObjectList[j])
-        VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList, sTableName.__getslice__(0,sTableName.rfind(".")))
+	VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList, sTableName[:sTableName.rfind(".")])
     else:
-        for i in range(aItemList.__len__()):
+	for i in range(len(aItemList)):
             if aComponentAdd[i]==sTableName:
-                sLVal=aItemList[i].__getitem__(1).__getslice__(aItemList[i].__getitem__(1).find(",'")+2,aItemList[i].__getitem__(1).find("')"))
-                for j in range(aObjectList.__len__()):
-                    if aObjectList[j].__getslice__(0,aObjectList[j].find("(")) == sLVal and sLVal!="":
+		sLVal=aItemList[i][1][aItemList[i][1].find(",'")+2:aItemList[i][1].find("')")]
+                for j in range(len(aObjectList)):
+		    if aObjectList[j][:aObjectList[j].find("(")] == sLVal and sLVal!="":
                         print aObjectList[j]
                         insVariable.append(aObjectList[j])
 
@@ -59,25 +58,25 @@ def getList(aObjectList,host,count):
             while oParEnum.hasMoreElements():
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
-                    sItem=oPar.Items.__getitem__(1)
-                    if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
-                        sMain = sItem.__getslice__(sItem.find(",'")+2,sItem.find("')"))
+                    sItem=oPar.Items[1]
+		    if sItem[sItem.find("(")+1:sItem.find(",")]=="objects":
+			sMain = sItem[sItem.find(",'")+2:sItem.find("')")]
             oParEnum = doc.getTextFields().createEnumeration()
             aObjectList.append("List of " + docinfo.getUserFieldValue(3))
             while oParEnum.hasMoreElements():
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
-                    sItem=oPar.Items.__getitem__(1)
-                    if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-                        if sItem.__getslice__(sItem.find("(")+1,sItem.find(","))=="objects":
-                            aObjectList.append(sItem.__getslice__(sItem.rfind(",'")+2,sItem.rfind("')")) + "(" + docinfo.getUserFieldValue(3) + ")")
+                    sItem=oPar.Items[1]
+		    if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
+			if sItem[sItem.find("(")+1:sItem.find(",")]=="objects":
+			    aObjectList.append(sItem[sItem.rfind(",'")+2:sItem.rfind("')")] + "(" + docinfo.getUserFieldValue(3) + ")")
                         else:
-                            sTemp=sItem.__getslice__(sItem.find("(")+1,sItem.find(","))
-                            if sMain == sTemp.__getslice__(0,sTemp.find(".")):
-                                getRelation(docinfo.getUserFieldValue(3), sItem.__getslice__(sItem.find(".")+1,sItem.find(",")), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")),aObjectList,host)
+			    sTemp=sItem[sItem.find("(")+1:sItem.find(",")]
+			    if sMain == sTemp[:sTemp.find(".")]:
+				getRelation(docinfo.getUserFieldValue(3), sItem[sItem.find(".")+1:sItem.find(",")], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
                             else:
-                                sPath=getPath(sItem.__getslice__(sItem.find("(")+1,sItem.find(",")), sMain)
-                                getRelation(docinfo.getUserFieldValue(3), sPath.__getslice__(sPath.find(".")+1,sPath.__len__()), sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")),aObjectList,host)
+				sPath=getPath(sItem[sItem.find("(")+1:sItem.find(",")], sMain)
+				getRelation(docinfo.getUserFieldValue(3), sPath[sPath.find(".")+1:], sItem[sItem.find(",'")+2:sItem.find("')")],aObjectList,host)
     else:
         aObjectList.append("List of " + docinfo.getUserFieldValue(3))
 
@@ -93,8 +92,8 @@ def getRelation(sRelName, sItem, sObjName, aObjectList, host ):
                 if k == sItem:
                     aObjectList.append(sObjName + "(" + res[k]['relation'] + ")")
                     return 0
-            if k == sItem.__getslice__(0,sItem.find(".")):
-                getRelation(res[k]['relation'], sItem.__getslice__(sItem.find(".")+1,sItem.__len__()), sObjName,aObjectList,host)
+	    if k == sItem[:sItem.find(".")]:
+		getRelation(res[k]['relation'], sItem[sItem.find(".")+1:], sObjName,aObjectList,host)
 
 
 def getPath(sPath,sMain):
@@ -104,35 +103,16 @@ def getPath(sPath,sMain):
     while oParEnum.hasMoreElements():
         oPar = oParEnum.nextElement()
         if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
-            sItem=oPar.Items.__getitem__(1)
-            if sPath.__getslice__(0,sPath.find(".")) == sMain:
+            sItem=oPar.Items[1]
+	    if sPath[:sPath.find(".")] == sMain:
                 break;
             else:
                 res = re.findall('\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]',sPath)
                 if len(res) <> 0:
-                    if sItem.__getslice__(sItem.find(",'")+2,sItem.find("')")) == sPath.__getslice__(0,sPath.find(".")):
-                        sPath =  sItem.__getslice__(sItem.find("(")+1,sItem.find(",")) + sPath.__getslice__(sPath.find("."),sPath.__len__())
+		    if sItem[sItem.find(",'")+2:sItem.find("')")] == sPath[:sPath.find(".")]:
+			sPath =  sItem[sItem.find("(")+1:sItem.find(",")] + sPath[sPath.find("."):]
                         getPath(sPath, sMain)
     return sPath
-
-#def getRes(sock ,sObject,sVar):
-#    desktop=getDesktop()
-#    doc =desktop.getCurrentComponent()
-#    docinfo=doc.getDocumentInfo()
-#    res = sock.execute(database, 3, docinfo.getUserFieldValue(1), sObject , 'fields_get')
-#    key = res.keys()
-#    key.sort()
-#    myval=None
-#    if not sVar.find("/")==-1:
-#        myval=sVar.__getslice__(0,sVar.find("/"))
-#    else:
-#        myval=sVar
-#    for k in key:
-#        if (res[k]['type'] in ['many2one']) and k==myval:
-#            self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
-#            return res[myval]['relation']
-#        elif k==myval:
-#            return sObject
 
 def EnumDocument(aItemList,aComponentAdd):
     desktop = getDesktop()
@@ -150,8 +130,8 @@ def EnumDocument(aItemList,aComponentAdd):
             parent = oPar.Anchor.TextSection.Name
         elif oPar.Anchor.Text:
             parent = "Document"
-        sItem=oPar.Items.__getitem__(1)
-        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+        sItem=oPar.Items[1]
+	if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
             for i in aItemList:
                 if i == oPar.Items:
                     bFlag = True
@@ -160,31 +140,6 @@ def EnumDocument(aItemList,aComponentAdd):
             if not bFlag:
                 aItemList.append(oPar.Items)
                 aComponentAdd.append(parent)
-            #getChildTable(oPar,aItemList,aComponentAdd)
-#    print dir(Doc)
-#    print dir(Doc.getText())
-#    print Doc.getTextTables().Types
-#    oParEnum = Doc.getText().createEnumeration()
-#    while oParEnum.hasMoreElements():
-#        oPar = oParEnum.nextElement()
-#        if oPar.supportsService("com.sun.star.text.TextTable"):
-#            getChildTable(oPar,aItemList,aComponentAdd)
-#        if oPar.supportsService("com.sun.star.text.Paragraph"):
-#            oSecEnum = oPar.createEnumeration()
-#            while oSecEnum.hasMoreElements():
-#                oSubSection = oSecEnum.nextElement()
-#                if oSubSection.TextSection:
-#                    if oSubSection.TextField:
-#                        aItemList.append( oSubSection.TextField.Items )
-#                        aComponentAdd.append(oSubSection.TextSection.Name)
-#                elif oSubSection.getAnchor().TextField:
-#                    print oSubSection.getAnchor().TextField.Items
-#                    if oSubSection.getAnchor().supportsService("com.sun.star.text.TextField.DropDown"):
-#                        #print oPar.getAnchor().TextField
-#                        sItem=oSubSection.getAnchor().TextField.Items.__getitem__(1)
-#                        if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
-#                            aItemList.append(oSubSection.TextField.Items )
-#                            aComponentAdd.append("Document")
 
 def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     sNames = oPar.getCellNames()
@@ -209,8 +164,8 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
                         oSubSection = oSecEnum.nextElement()
                         if oSubSection.supportsService("com.sun.star.text.TextField"):
                             bEmptyTableFlag=False
-                            sItem=oSubSection.TextField.Items.__getitem__(1)
-                            if sItem.__getslice__(sItem.find("[[ ")+3,sItem.find("("))=="repeatIn":
+                            sItem=oSubSection.TextField.Items[1]
+			    if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
                                 if aItemList.__contains__(oSubSection.TextField.Items)==False:
                                     aItemList.append(oSubSection.TextField.Items)
                                 if sTableName=="":
