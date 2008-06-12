@@ -35,7 +35,7 @@ class meeting_confidential_info(osv.osv):
     _description = 'Meeting Confidential Info'
     _rec_name = 'group'
     _columns ={
-       'description':fields.text('Description' ,read=['base.group_admin']),
+       'description':fields.text('Description'),
        'group':fields.selection([('group1','Group1'),('group2','Group2')],'Group')
                }
 
