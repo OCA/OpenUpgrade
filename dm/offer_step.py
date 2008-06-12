@@ -121,7 +121,7 @@ class dm_offer_step(osv.osv):
         'code' : fields.function(_offer_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
         'media_id' : fields.many2one('dm.media', 'Media'),
-        'type' : fields.selection(_get_offer_step_type,'Type',require=True),
+        'type' : fields.selection(_get_offer_step_type,'Type',required=True),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
 #        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
         'notes' : fields.text('Notes'),
