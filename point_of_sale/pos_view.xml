@@ -141,10 +141,22 @@
 		</field>
 	</record>
 
-
 	<menuitem name="Point of Sale/Point of Sale" action="action_pos_pos_form" sequence="1"/>
 
+	<wizard 
+		string="Wizard default journals"
+		model="pos.config.journal"
+		name="pos.config.journal"
+		menu="False"
+		id="wizard_default_journal"/>
 
+	<menuitem name="Point of Sale/Configuration" />
+	<menuitem
+		name="Point of Sale/Configuration/Default journals"
+		string="Default journals"
+		action="wizard_default_journal"
+		type="wizard"
+		id="menu_wizard_default_journal" />
 
 <!-- 	<record model="ir.actions.act_window" id="action_pos_order_tree"> -->
 <!-- 		<field name="name">pos.order</field> -->

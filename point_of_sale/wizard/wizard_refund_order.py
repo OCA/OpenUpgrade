@@ -37,7 +37,6 @@ import pooler
 from osv import osv
 
 
-
 warning_form = '''<?xml version="1.0"?>
 <form string="Refund ">
 <separator string="Refund order :" colspan="4"/>
@@ -46,16 +45,16 @@ warning_form = '''<?xml version="1.0"?>
 </form>
 '''
 
-warning_fields={
-	'date_validity': {'string':'Validity Date', 'type':'date'} 
-	}
+warning_fields = {
+	'date_validity': {'string':'Validity Date', 'type':'date'}
+}
 
 
 def _get_date(self, cr, uid, data, context):
 	order_ref = pooler.get_pool(cr.dbname).get('pos.order')
 	order= order_ref.browse(cr, uid, data['id'], context)
 	return {'date_validity': order.date_validity}
-	
+
 def _refunding(self, cr, uid, data, context):
 	order_ref= pooler.get_pool(cr.dbname).get('pos.order')
 	clone_list= order_ref.refund(cr, uid, data['ids'], context)
@@ -64,38 +63,33 @@ def _refunding(self, cr, uid, data, context):
 		order_ref.write(cr,uid,clone_list,{
 			'date_validity':data['form']['date_validity']
 			})
-			
+
 	return {
 		'domain': "[('id','in',["+','.join(map(str,clone_list))+"])]",
 		'name': 'Refunded Orders',
 		'view_type': 'form',
 		'view_mode': 'tree,form',
 		'res_model': 'pos.order',
-		'view_id': False, 
+		'view_id': False,
 		#'context': "{'journal_id':%d}" % (form['journal_id'],),
 		'type': 'ir.actions.act_window'
 	}
-
 
 
 class refund_order(wizard.interface):
 	states = {
 		'init' : {
 			'actions' : [_get_date],
-			'result' : {'type' : 'form',
-				    'arch' : warning_form,
-				    'fields' : warning_fields,
-				    'state' : [('end', 'Cancel','gtk-no'),('refund_n_quit', 'Ok','gtk-yes') ]}
+			'result' : {
+				'type' : 'form',
+				'arch' : warning_form,
+				'fields' : warning_fields,
+				'state' : [('end', 'Cancel','gtk-no'),('refund_n_quit', 'Ok','gtk-yes') ]}
 		},
-
-
-
-		'refund_n_quit': { 
+		'refund_n_quit': {
 			'actions' : [],
 			'result': {'type': 'action', 'action':_refunding, 'state':'end'}
 		},
-
-		
 	}
-	
+
 refund_order('pos.refund_order')

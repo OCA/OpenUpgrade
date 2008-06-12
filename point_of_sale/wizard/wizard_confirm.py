@@ -40,13 +40,16 @@ def _confirm(self, cr, uid, data, context):
 		wf_service.trg_validate(uid, 'pos.order', i, 'done', cr)
 	return {}
 
-class pos_confirm(wizard.interface):
 
+class pos_confirm(wizard.interface):
 	states = {
 		'init' : {'actions' : [_confirm],
-				  'result' : {'type' : 'state',
-							  'state': 'end',
-							  }
-				  },
-		}
+			'result' : {
+				'type' : 'state',
+				'state': 'end',
+			}
+		},
+	}
+
 pos_confirm('pos.confirm')
+

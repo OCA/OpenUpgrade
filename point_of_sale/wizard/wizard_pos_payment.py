@@ -26,7 +26,6 @@
 #
 ##############################################################################
 
-
 import pooler
 import netsvc
 import wizard
@@ -36,7 +35,7 @@ from osv import osv
 def _get_journal(self, cr, uid, context):
 	pool=pooler.get_pool(cr.dbname)
 	obj=pool.get('account.journal')
-	ids = obj.search(cr, uid, [('type','=','cash')])
+	ids = obj.search(cr, uid, [('type', '=', 'cash')])
 	res = obj.read(cr, uid, ids, ['id', 'name'], context)
 	res = [(r['id'], r['name']) for r in res]
 	return res
@@ -44,42 +43,66 @@ def _get_journal(self, cr, uid, context):
 
 payment_form = """<?xml version="1.0"?>
 <form string="Add payment :">
-  <field name="amount" />
-  <field name="journal"/>
-  <field name="invoice_wanted" />
+	<field name="amount" />
+	<field name="journal"/>
+	<field name="invoice_wanted" />
 </form>
 """
 
 payment_fields = {
-	'amount': {'string':'Amount', 'type':'float','required': True,},
-	'invoice_wanted': {'string':'Invoice', 'type':'boolean'},
-	'journal':{'string':'Journal',
-			'type':'selection',
+	'amount': {'string': 'Amount', 'type': 'float', 'required': True},
+	'invoice_wanted': {'string': 'Invoice', 'type': 'boolean'},
+	'journal': {'string': 'Journal',
+			'type': 'selection',
 			'selection': _get_journal,
 			'required': True,
 		},
 	}
 
+
 def _pre_init(self, cr, uid, data, context):
+
+	def _get_journal(pool, order):
+		j_obj = pool.get('account.journal')
+
+		journal_to_fetch = 'DEFAULT'
+		if order.amount_total < 0:
+			journal_to_fetch = 'GIFT'
+		else:
+			if order.amount_paid > 0:
+				journal_to_fetch = 'REBATE'
+
+		pos_config_journal = pool.get('pos.config.journal')
+		ids = pos_config_journal.search(cr, uid, [('code', '=', journal_to_fetch)])
+		objs = pos_config_journal.browse(cr, uid, ids)
+		if objs:
+			journal = objs[0].journal_id.id
+		else:
+			existing = [payment.journal_id.id for payment in order.payments]
+			ids = j_obj.search(cr, uid, [('type', '=', 'cash')])
+			for i in ids:
+				if i not in existing:
+					journal = i
+					break
+			if not journal:
+				journal = ids[0]
+
+		return journal
+
 	pool = pooler.get_pool(cr.dbname)
-	order = pool.get('pos.order').browse(cr,uid,data['id'], context)
-	j_obj = pool.get('account.journal')
+	order = pool.get('pos.order').browse(cr, uid, data['id'], context)
 
-	ids = j_obj.search(cr, uid, [('type','=','cash')])
-	journal = 0
-	existing = []
+	# get amount to pay:
+	amount = order.amount_total - order.amount_paid
 
-	for payment in order.payments:
-		existing.append(payment.journal_id.id)
-	for i in ids:
-		if i not in existing:
-			journal = i
-			break
-	if not journal:
-		journal = ids[0]
+	# get journal:
+	journal = _get_journal(pool, order)
 
+	# check if an invoice is wanted:
 	invoice_wanted_checked = not not order.partner_id # not not -> boolean
-	return {'amount': order.amount_total - order.amount_paid, 'journal': journal, 'invoice_wanted': invoice_wanted_checked}
+
+	return {'journal': journal, 'amount': amount, 'invoice_wanted': invoice_wanted_checked}
+
 
 def _add_pay(self, cr, uid, data, context):
 	pool = pooler.get_pool(cr.dbname)
@@ -88,11 +111,12 @@ def _add_pay(self, cr, uid, data, context):
 	journal = data['form']['journal']
 	invoice_wanted = data['form']['invoice_wanted'] == 1
 
-  # add 'invoice_wanted' in 'pos.order'
-	order_obj.write(cr, uid, [data['id']], {'invoice_wanted' : invoice_wanted})
+	# add 'invoice_wanted' in 'pos.order'
+	order_obj.write(cr, uid, [data['id']], {'invoice_wanted': invoice_wanted})
 
 	order_obj.add_payment(cr, uid, data['id'], amount, journal, context=context)
 	return {}
+
 
 def _check(self, cr, uid, data, context):
 	"""Check the order:
@@ -102,10 +126,10 @@ def _check(self, cr, uid, data, context):
 
 	pool = pooler.get_pool(cr.dbname)
 	order_obj = pool.get('pos.order')
-	order = order_obj.browse(cr,uid,data['id'],context)
+	order = order_obj.browse(cr, uid, data['id'], context)
 	#if not order.amount_total:
 	#	return 'receipt'
-	order_obj.test_order_lines(cr,uid,order,context=context)
+	order_obj.test_order_lines(cr, uid, order, context=context)
 
 	action = 'ask_pay'
 	if order.state == 'paid':
@@ -118,6 +142,7 @@ def _check(self, cr, uid, data, context):
 			action = 'receipt'
 
 	return action
+
 
 def create_invoice(self, cr, uid, data, context):
 	order = pooler.get_pool(cr.dbname).get('pos.order')
@@ -140,10 +165,10 @@ class pos_payment(wizard.interface):
 			'result' : {'type' : 'form',
 						'arch': payment_form,
 						'fields': payment_fields,
-						'state' : (('end', 'Cancel'),
-									('add_pay', 'Ma_ke payment',
-									'gtk-ok', True)
-									)
+						'state': (('end', 'Cancel'),
+											('add_pay', 'Ma_ke payment',
+												'gtk-ok', True)
+											)
 			}
 		},
 		'add_pay' : {'actions' : [_add_pay],
@@ -155,7 +180,7 @@ class pos_payment(wizard.interface):
 			'actions' : [create_invoice],
 			'result' : {'type' : 'print',
 									'report': 'pos.invoice',
-									'state':'end'
+									'state': 'end'
 			}
 		},
 		'receipt' : {

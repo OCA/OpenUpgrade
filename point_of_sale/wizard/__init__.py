@@ -27,6 +27,7 @@
 ##############################################################################
 
 import wizard_pos_payment
+import wizard_default_journal
 import wizard_refund_order
 import wizard_add_product
 import wizard_confirm

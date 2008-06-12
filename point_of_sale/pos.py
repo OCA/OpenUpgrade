@@ -33,6 +33,18 @@ from osv import fields, osv
 from mx import DateTime
 
 
+class pos_config_journal(osv.osv):
+	_name = 'pos.config.journal'
+	_description = "Point of Sale journal configuration."
+	_columns = {
+		'name': fields.char('Description', size=64),
+		'code': fields.char('Code', size=64),
+		'journal_id': fields.many2one('account.journal', "Journal")
+	}
+
+pos_config_journal()
+
+
 class pos_order(osv.osv):
 	_name = "pos.order"
 	_description = "Point of Sale"
