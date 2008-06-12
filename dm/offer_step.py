@@ -3,6 +3,7 @@ import campaign
 
 from osv import fields
 from osv import osv
+import datetime
 
 AVAILABLE_STATES = [
     ('draft','Draft'),
@@ -157,20 +158,19 @@ class dm_offer_step(osv.osv):
     
 dm_offer_step()
 
-
 class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
     _rec_name = 'name'
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition'),
-        #'delay' : fields.integer('Delay'),
         'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step'),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step'),
     }
     
 dm_offer_step_transition()
+
 class dm_offer_step_history(osv.osv):
     _name = "dm.offer.step.history"
     _order = 'date'
@@ -196,6 +196,28 @@ class dm_offer_step_workitem(osv.osv):
         'date_next_action' : fields.date('Next Action'),
         'purchase_amount' : fields.float('Amount', digits=(16,2))
     }
+    def create(self, cr, uid, vals, context=None, check=True):
+        step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
+        if step.outgoing_transition_ids:
+            transitions = dict(map(lambda x:(x.id,x.delay_id.value),filter(lambda x : x.condition in ['true','notpurchased'],step.outgoing_transition_ids)))
+            trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
+            new_date = datetime.date.today() + datetime.timedelta(trans[1])
+            vals['date_next_action'] = new_date
+        return super(dm_offer_step_workitem, self).create(cr, uid, vals, context)
+
+    def _update_workitem(self, cr, uid, ids=False, context={}):
+        '''
+        Function called by the sceduler to update workitem from the segments of propositions.
+        '''
+        wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
+        wrkitem =self.browse(cr,uid,wrkitem_ids)
+        if not wrkitem:
+            return 
+        step = wrkitem[0].step_id
+        if step.outgoing_transition_ids:
+            transitions = dict(map(lambda x:(x,x.delay_id.value),filter(lambda x : x.condition in ['true','notpurchased'],step.outgoing_transition_ids)))
+            trans = [k for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
+            self.write(cr,uid,wrkitem_ids,{'step_id':trans.step_to.id})
+        return True    
     
 dm_offer_step_workitem()
-

@@ -173,8 +173,7 @@
 				<field name="step_from"/>
 				<field name="step_to"/>
 				<field name="condition" select="1"/>
-<!--				<field name="delay" select="2"/>-->
-				<field name="delay_id"/>
+				<field name="delay_id" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -307,5 +306,16 @@
 		view_type="form"
 		view_mode="tree,form"
 		id="act_offer_product_opened"/>
+		
+		<record model="ir.cron" id="ir_cron_update_wrkitem">		
+			<field name="name">Update Workitem</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">minutes</field>
+			<field name='numbercall'>-1</field>
+			<field name="doall" eval="False"/>			
+			<field name='model' eval="'dm.offer.step.workitem'"/>
+			<field name='function' eval="'_update_workitem'"/>
+			<field name="args" eval="'()'"/>
+		</record>
 </data>
 </terp>

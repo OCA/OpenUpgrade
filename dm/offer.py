@@ -128,7 +128,7 @@ class dm_offer_delay(osv.osv):
     _name = "dm.offer.delay"
     _columns = {
         'name' : fields.char('Name', size=32, required=True),
-		'value' : fields.integer('Number of days'),
+		'value' : fields.integer('Number of days',required=True),
     }
     
 dm_offer_delay()
@@ -214,6 +214,8 @@ class dm_customer_offer(osv.osv):
               vals['address'] = [[0, 0,address]]
               customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
 
+#                                           Workitem
+
         segment = self.pool.get('dm.campaign.proposition.segment')
         segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
         workitem = self.pool.get('dm.offer.step.workitem')
@@ -234,6 +236,9 @@ class dm_customer_offer(osv.osv):
         for p in step.product_ids:
             amount+=p.price
         vals['purchase_amount']= amount
+        
+#                                        change workitem
+        
         if workitem_id : 
             print vals
             workitem.write(cr,uid,workitem_id,vals)
@@ -254,13 +259,13 @@ class dm_offer(osv.osv):
     _name = "dm.offer"
     _rec_name = 'name'
 
-    def __history(self, cr, uid, cases, keyword, context={}):
-        for case in cases:
+    def __history(self, cr, uid, offers, keyword, context={}):
+        for offer in offers:
             data = {
                 'date' : time.strftime('%Y-%m-%d'),
                 'user_id': uid,
                 'state' : keyword,
-                'offer_id': case.id
+                'offer_id': offer.id
             }
             obj = self.pool.get('dm.offer.history')
             obj.create(cr, uid, data, context)
@@ -330,30 +335,37 @@ class dm_offer(osv.osv):
     }
 
     def state_close_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state 
-        self.__history(cr,uid, cases, 'closed')
+        offers = self.browse(cr, uid, ids)
+        offers[0].state 
+        self.__history(cr,uid, offers, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state 
-        self.__history(cr,uid, cases, 'open')
+        offers = self.browse(cr, uid, ids)
+        offers[0].state 
+        self.__history(cr,uid, offers, 'open')
         self.write(cr, uid, ids, {'state':'open'})
+#                            create transitions
+        steps = self.pool.get('dm.offer.step').search(cr,uid,(offers[0].id,'=','offer_id'))
+        print steps
+        for step in steps:
+            incoming_transition_ids = step.incoming_transition_ids
+            outgoign_transition_ids = step_outgoing_transition_ids
+        
         return True 
     
     def state_freeze_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state 
-        self.__history(cr,uid, cases, 'freeze')
+        offers = self.browse(cr, uid, ids)
+        offers[0].state 
+        self.__history(cr,uid, offers, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
     
     def state_draft_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state 
-        self.__history(cr,uid, cases, 'draft')
+        offers = self.browse(cr, uid, ids)
+        offers[0].state 
+        self.__history(cr,uid, offers, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
 dm_offer()
