@@ -63,54 +63,48 @@ class AddLang(unohelper.Base, XJobExecutor ):
             cursor = doc.getCurrentController().getViewCursor()
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
-            for j in range(self.aObjectList.__len__()):
-                if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == "Objects":
+	    for j in range(len(self.aObjectList)):
+		if self.aObjectList[j][:self.aObjectList[j].find("(")] == "Objects":
                     self.aVariableList.append(self.aObjectList[j])
-                    #self.insVariable.addItem(self.aObjectList[j],1)
-            for i in range(self.aItemList.__len__()):
+
+            for i in range(len(self.aItemList)):
                 if self.aComponentAdd[i]=="Document":
-                    sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
-                    for j in range(self.aObjectList.__len__()):
-                        if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+		    sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
+                    for j in range(len(self.aObjectList)):
+			if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
                             self.aVariableList.append(self.aObjectList[j])
-                            #self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
-                    #for k in range(self.aSectionList.__len__()):
                     if self.aComponentAdd[i] in self.aSectionList:
-                        sLVal=self.aItemList[i].__getitem__(1).__getslice__(self.aItemList[i].__getitem__(1).find(",'")+2,self.aItemList[i].__getitem__(1).find("')"))
-                        for j in range(self.aObjectList.__len__()):
-                            if self.aObjectList[j].__getslice__(0,self.aObjectList[j].find("(")) == sLVal:
+			sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
+                        for j in range(len(self.aObjectList)):
+			    if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
                                 self.aVariableList.append(self.aObjectList[j])
-                                #self.insVariable.addItem(self.aObjectList[j],1)
                 if tcur.TextTable:
-                    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())== tcur.TextTable.Name:
-                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])#self.aComponentAdd[i].__getslice__(self.aComponentAdd[i].rfind(".")+1,self.aComponentAdd[i].__len__())
+		    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i][self.aComponentAdd[i].rfind(".")+1:] == tcur.TextTable.Name:
+                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
 
             self.bModify=bFromModify
             if self.bModify==True:
                 sItem=""
                 i=0
-                for i in range(self.aObjectList.__len__()):
-                    if self.aObjectList[i].__getslice__(0,self.aObjectList[i].find("("))==sVariable:
+                for i in range(len(self.aObjectList)):
+		    if self.aObjectList[i][:self.aObjectList[i].find("(")]==sVariable:
                         sItem= self.aObjectList[i]
                         self.insVariable.setText(sItem)
-#                genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-                genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-#                self.win.setEditText("txtUName",sDisplayName)
+		genTree(sItem[sItem.find("(")+1:sItem.find(")")],self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
                 
                     sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var.__getslice__(var.find("(")+1,var.find(")")))])
+		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                     fields=['name','model']
                     self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
                     if self.model_res <> []:
-                        self.insVariable.addItem(var.__getslice__(0,var.find("(")+1) + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+			self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                     else:
                         self.insVariable.addItem(var ,self.insVariable.getItemCount())
-                                   
-                #res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read',[1])
+
             self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please insert user define field Field-1 or Field-4","Just go to File->Properties->User Define \nField-1 Eg. http://localhost:8069 \nOR \nField-4 Eg. account.invoice")
@@ -125,15 +119,15 @@ class AddLang(unohelper.Base, XJobExecutor ):
             #sItem=self.win.getComboBoxSelectedText("cmbVariable")
             sItem= self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
-                if var.__getslice__(0,var.find("(")+1)==sItem.__getslice__(0,sItem.find("(")+1):
+		if var[:var.find("(")+1]==sItem[:sItem.find("(")+1]:
                     sItem = var
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
             t=sMain.rfind('/lang')
             if t!=-1:
-                sObject=self.getRes(sock,sItem.__getslice__(sItem.find("(")+1,sItem.__len__()-1),sMain.__getslice__(1,sMain.__len__()))
+		sObject=self.getRes(sock,sItem[sItem.find("(")+1:-1],sMain[1:])
                 ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject ,  'search', [])
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[ids[0]])
-                self.win.setEditText("txtUName",res[0][(sMain.__getslice__(sMain.rfind("/")+1,sMain.__len__()))])
+		self.win.setEditText("txtUName",res[0][sMain[sMain.rfind("/")+1:]])
             else:
                  ErrorDialog("Please select the Language Field") 
                   
@@ -153,13 +147,13 @@ class AddLang(unohelper.Base, XJobExecutor ):
         key.sort()
         myval=None
         if not sVar.find("/")==-1:
-            myval=sVar.__getslice__(0,sVar.find("/"))
+	    myval=sVar[:sVar.find("/")]
         else:
             myval=sVar
         if myval in key:
             if (res[myval]['type'] in ['many2one']):
                 sObject = res[myval]['relation']
-                return self.getRes(sock,res[myval]['relation'], sVar.__getslice__(sVar.find("/")+1,sVar.__len__()))
+		return self.getRes(sock,res[myval]['relation'], sVar[sVar.find("/")+1:])
             else:
                 return sObject
 
@@ -175,14 +169,14 @@ class AddLang(unohelper.Base, XJobExecutor ):
                 self.aListFields=[]
                 tempItem = self.win.getComboBoxText("cmbVariable")
                 for var in self.aVariableList:
-                    if var.__getslice__(0,var.find("(")) == tempItem.__getslice__(0,tempItem.find("(")):
+		    if var[:var.find("(")] == tempItem[:tempItem.find("(")]:
                         sItem=var
                      
-                genTree(sItem.__getslice__(sItem.find("(")+1,sItem.find(")")),self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
-#                genTree('res.partner',self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+		genTree(sItem[sItem.find("(")+1:sItem.find(")")],self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
                 
             except:
                 import traceback;traceback.print_exc()
+
     def btnOkOrCancel_clicked( self, oActionEvent ):
         #Called when the OK or Cancel button is clicked.
         if oActionEvent.Source.getModel().Name == "btnOK":
@@ -196,7 +190,7 @@ class AddLang(unohelper.Base, XJobExecutor ):
                 
                 oCurObj=cursor.TextField
                 sObjName=self.insVariable.getText()
-                sObjName=sObjName.__getslice__(0,sObjName.find("("))
+		sObjName=sObjName[:sObjName.find("(")]
                 sKey=u""+ self.win.getEditText("txtUName")
                 sValue=u"[[ setLang" + sObjName + self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ")" " ]]"
                 oCurObj.Items = (sKey,sValue)
@@ -207,7 +201,7 @@ class AddLang(unohelper.Base, XJobExecutor ):
                 sObjName=""
                 oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                 sObjName=self.win.getComboBoxText("cmbVariable")
-                sObjName=sObjName.__getslice__(0,sObjName.find("("))
+		sObjName=sObjName[:sObjName.find("(")]
                 if cursor.TextTable==None:
                    
                     sKey=u""+ self.win.getEditText("txtUName")
