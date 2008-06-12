@@ -33,9 +33,9 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         if not doc.hasLocation():
             mytype = Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             doc.storeAsURL("file://"+tmpsxw,mytype)
-        url=doc.getURL().__getslice__(7,doc.getURL().__len__())
+	url=doc.getURL()[7:]
         temp=url.replace("%20"," ")
-        url1=temp.__getslice__(1,temp.__len__())
+	url1=temp[1:]
         if os.name=='nt':
                 fp = file(url1, 'rb')
         else:
@@ -50,8 +50,8 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         temp=tmprml.replace("%20"," ")
         if temp == None:
             exit(1)
-        temp = temp.__getslice__(7,len(temp))
-        t= temp.__getslice__(1,len(temp))
+	temp = temp[7:]
+	t= temp[1:]
         try:
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
             res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
@@ -80,7 +80,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         oFileDialog.appendFilter("TinyReport File Save To ....","*.rml")
       #  oFileDialog.setCurrentFilter("Report Markup Language(rml)")
         f_path=tempfile.mktemp("","")
-        f_path = "Tiny-"+f_path.__getslice__(f_path.rfind("/")+1,len(f_path))
+	f_path = "Tiny-"+f_path[f_path.rfind("/")+1:]
         oFileDialog.setDefaultName(f_path)
         if InitPath == "":
             InitPath = tempfile.gettempdir()
@@ -95,6 +95,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
             sPath = None
         oFileDialog.dispose()
         return sPath
+
 if __name__<>"package" and __name__=="__main__":
     ExportToRML(None)
 elif __name__=="package":
