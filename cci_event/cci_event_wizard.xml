@@ -12,5 +12,16 @@
 					name="event.event_copy"
 					menu="True"
 		/>
+	<wizard
+			string="Registrations with Missing Checks"
+			model="event.registration"
+			name="cci_event.reg_checks"
+			menu="False"
+			id="wizard_missing_checks_reg"/>
+	<menuitem
+			name="Events Organisation/Reporting/Registrations with Missing Checks"
+			action="wizard_missing_checks_reg"
+			type="wizard"
+			id="menu_missing_checks_reg"/>
 	</data>
 </terp>
