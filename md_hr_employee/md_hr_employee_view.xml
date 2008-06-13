@@ -245,7 +245,7 @@
 					<notebook>
 						<page string="Information">
 							<separator string="Address Information" colspan="4" />
-							<field name="employee_id"/>
+							
 							<field name="type" select="1"/>
 							<field name="name"/>
 							<field name="house_nbr"/>
@@ -264,7 +264,7 @@
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Employees Address">
-					<field name="employee_id"/>
+					<field name="name"/>
 				</tree>
 			</field>
 		</record>
