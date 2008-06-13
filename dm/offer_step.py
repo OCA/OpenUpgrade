@@ -86,7 +86,6 @@ dm_offer_step_type()
     
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
-    _order = "sequence"
     _rec_name = 'type'
     
     def __history(self, cr, uid, cases, keyword, context={}):
@@ -143,6 +142,7 @@ class dm_offer_step(osv.osv):
 		'join_mode' : lambda *a : 'xor',
     }
     
+   
     def state_close_set(self, cr, uid, ids, *args):
         cases = self.browse(cr, uid, ids)
         cases[0].state 
@@ -177,12 +177,12 @@ class dm_offer_step_transition(osv.osv):
     _name = "dm.offer.step.transition"
     _rec_name = 'condition'
     _columns = {
-        'condition' : fields.selection([('true','True'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
+        'condition' : fields.selection([('automatic','Automatic'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
         'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True),
     }
-    
+
 dm_offer_step_transition()
 
 class dm_offer_step_history(osv.osv):
@@ -213,7 +213,7 @@ class dm_offer_step_workitem(osv.osv):
     def create(self, cr, uid, vals, context=None, check=True):
         step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
         if step.outgoing_transition_ids:
-            transitions = dict(map(lambda x:(x.id,x.delay_id.value),filter(lambda x : x.condition in ['true','notpurchased'],step.outgoing_transition_ids)))
+            transitions = dict(map(lambda x:(x.id,x.delay_id.value),step.outgoing_transition_ids))
             trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
             new_date = datetime.date.today() + datetime.timedelta(trans[1])
             vals['date_next_action'] = new_date
@@ -229,7 +229,7 @@ class dm_offer_step_workitem(osv.osv):
             return 
         step = wrkitem[0].step_id
         if step.outgoing_transition_ids:
-            transitions = dict(map(lambda x:(x,x.delay_id.value),filter(lambda x : x.condition in ['true','notpurchased'],step.outgoing_transition_ids)))
+            transitions = dict(map(lambda x:(x.id,x.delay_id.value),step.outgoing_transition_ids))
             trans = [k for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
             self.write(cr,uid,wrkitem_ids,{'step_id':trans.step_to.id})
         return True    
