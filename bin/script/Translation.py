@@ -31,10 +31,8 @@ class AddLang(unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblUName", 8, 187, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 185, 120, 15,)
 
-        self.win.addButton('btnOK',-5 ,-5,45,15,'Ok'
-                     ,actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnOK',-5 ,-5, 45, 15, 'Ok', actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel', actionListenerProc = self.btnOkOrCancel_clicked )
         self.sValue=None
         self.sObj=None
         self.aSectionList=[]
@@ -62,9 +60,8 @@ class AddLang(unohelper.Base, XJobExecutor ):
             cursor = doc.getCurrentController().getViewCursor()
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
-	    for anObject in self.aObjectList:
-		if anObject[:anObject.find("(")] == "Objects":
-		    self.aVariableList.append(anObject)
+
+	    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == "Objects", self.aObjectList ) )
 
             for i in range(len(self.aItemList)):
 		anItem = self.aItemList[i][1]
@@ -72,17 +69,13 @@ class AddLang(unohelper.Base, XJobExecutor ):
 
                 if component == "Document":
 		    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-		    for anObject in self.aObjectList:
-			if anObject[:anObject.find("(")] == sLVal:
-			    self.aVariableList.append(anObject)
+		    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
                     if component in self.aSectionList:
 			sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-			for anObject in self.aObjectList:
-			    if anObject[:anObject.find("(")] == sLVal:
-				self.aVariableList.append( anObject )
+			self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextTable:
 		    if not component == "Document" and component[component.rfind(".") + 1:] == tcur.TextTable.Name:
@@ -191,7 +184,6 @@ class AddLang(unohelper.Base, XJobExecutor ):
             self.bOkay = True
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
-            text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
 
 	    itemSelected = self.win.getListBoxSelectedItem( "lstFields" )

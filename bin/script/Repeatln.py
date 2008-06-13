@@ -1,5 +1,3 @@
-
-
 import uno
 import string
 import unohelper
@@ -13,6 +11,7 @@ if __name__<>"package":
     from LoginTest import *
     database="db_test002"
     uid = 3
+
 
 #class RepeatIn:
 class RepeatIn( unohelper.Base, XJobExecutor ):
@@ -56,9 +55,9 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         EnumDocument(self.aItemList,self.aComponentAdd)
         # Perform checking that Field-1 and Field - 4 is available or not alos get Combobox
         # filled if condition is true
-        desktop=getDesktop()
-        doc =desktop.getCurrentComponent()
-        docinfo=doc.getDocumentInfo()
+        desktop = getDesktop()
+        doc = desktop.getCurrentComponent()
+        docinfo = doc.getDocumentInfo()
         # Check weather Field-1 is available if not then exit from application
         self.sMyHost= ""
 
@@ -69,38 +68,33 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
             while oParEnum.hasMoreElements():
                 oPar = oParEnum.nextElement()
-
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     self.count += 1
 
             getList(self.aObjectList, self.sMyHost,self.count)
             cursor = doc.getCurrentController().getViewCursor()
-            text=cursor.getText()
-            tcur=text.createTextCursorByRange(cursor)
+            text = cursor.getText()
+            tcur = text.createTextCursorByRange(cursor)
 
-	    for j in range(len(self.aObjectList)):
-		if self.aObjectList[j][:self.aObjectList[j].find(" ")] == "List":
-                    self.aVariableList.append(self.aObjectList[j])
+	    self.aVariableList.extend( reduce( lambda obj: obj[:obj.find(" ")] == "List", self.aObjectList ) )
 
 	    for i in range(len(self.aItemList)):
-                if self.aComponentAdd[i]=="Document":
-		    sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
+		anItem = self.aItemList[i][1]
+		component = self.aComponentAdd[i]
 
-                    for j in range(len(self.aObjectList)):
-			if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
-                            self.aVariableList.append(self.aObjectList[j])
+		if component == "Document":
+		    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+		    self.aVariableList.extend( reduce( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
-                    if self.aComponentAdd[i] in self.aSectionList:
-			sLVal=self.aItemList[i][1][self.aItemList[i][1].find(",'")+2:self.aItemList[i][1].find("')")]
-			for j in range(len(self.aObjectList)):
-			    if self.aObjectList[j][:self.aObjectList[j].find("(")] == sLVal:
-                                self.aVariableList.append(self.aObjectList[j])
+		    if component in self.aSectionList:
+			sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+			self.aVariableList.extend( reduce( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextTable:
-		    if not self.aComponentAdd[i] == "Document" and self.aComponentAdd[i][self.aComponentAdd[i].rfind(".")+1:] == tcur.TextTable.Name:
-                           VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList,self.aComponentAdd[i])
+		    if not component == "Document" and component[component.rfind(".") + 1:] == tcur.TextTable.Name:
+			VariableScope( tcur, self.insVariable, self.aObjectList, self.aComponentAdd, self.aItemList, component )
 
             self.bModify=bFromModify
 
@@ -114,14 +108,23 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     self.sValue= "objects"
                 else:
                     sItem=""
-		    for i in range(len(self.aObjectList)):
-			if self.aObjectList[i][:self.aObjectList[i].find("(")]==sObject:
-                            sItem= self.aObjectList[i]
-                            self.insVariable.setText(sItem)
+		    for anObject in self.aObjectList:
+			if anObject[:anObject.find("(")] == sObject:
+			    sItem = anObject
+			    self.insVariable.setText( sItem )
 
-		    genTree(sItem[sItem.find("(")+1:sItem.find(")")], self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
+		    genTree(
+			sItem[sItem.find("(")+1:sItem.find(")")], 
+			self.aListRepeatIn, 
+			self.insField, 
+			self.sMyHost, 
+			2, 
+			ending=['one2many','many2many'], 
+			recur=['one2many','many2many']
+		    )
 
                     self.sValue= self.win.getListBoxItem("lstFields",self.aListRepeatIn.index(sFields))
+
             for var in self.aVariableList:
                 sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
 		if var[:8] <> 'List of ':
@@ -138,13 +141,13 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                         self.insVariable.addItem('List of ' + self.model_res[0]['name'] ,self.insVariable.getItemCount())
                 else:
                     self.insVariable.addItem(var ,self.insVariable.getItemCount())
+
             self.win.doModalDialog("lstFields",self.sValue)
         else:
             ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
             self.win.endExecute()
 
     def lstbox_selected(self,oItemEvent):
-
         sItem=self.win.getListBoxSelectedItem("lstFields")
         sMain=self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")]
 
@@ -172,19 +175,16 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     sItem = var
             self.aListRepeatIn=[]
 
-	    if sItem[sItem.rfind(" ")+1:] == docinfo.getUserFieldValue(3):
-                genTree(docinfo.getUserFieldValue(3), self.aListRepeatIn, self.insField,self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'])
-            else:
-		genTree(sItem[sItem.find("(")+1:sItem.find(")")], self.aListRepeatIn, self.insField,self.sMyHost,2,ending=['one2many','many2many'], recur=['one2many','many2many'])
+	    data = ( sItem[sItem.rfind(" ") + 1:] == docinfo.getUserFieldValue(3) ) and docinfo.getUserFieldValue(3) or sItem[sItem.find("(")+1:sItem.find(")")] 
+	    genTree( data, self.aListRepeatIn, self.insField, self.sMyHost, 2, ending=['one2many','many2many'], recur=['one2many','many2many'] )
 
             self.win.selectListBoxItemPos("lstFields", 0, True )
 
         else:
             sItem=self.win.getComboBoxText("cmbVariable")
             for var in self.aVariableList:
-		if var[0:8]=='List of ':
-		    if var[0:8]==sItem[0:8]:
-                        sItem = var
+		if var[:8]=='List of ' and var[:8] == sItem[:8]:
+		    sItem = var
 	    self.win.setEditText("txtName",sItem[sItem.rfind(".")+1:])
 	    self.win.setEditText("txtUName","|-."+sItem[sItem.rfind(".")+1:]+".-|")
             self.insField.addItem("objects",self.win.getListBoxItemCount("lstFields"))
@@ -194,56 +194,36 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         if oActionEvent.Source.getModel().Name == "btnOK":
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
-            text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
 
-            if self.win.getListBoxSelectedItem("lstFields") != "" and self.win.getEditText("txtName") != "" and self.win.getEditText("txtUName") != "" :
-                sObjName=""
+	    selectedItem = self.win.getListBoxSelectedItem( "lstFields" )
+	    selectedItemPos = self.win.getListBoxSelectedItemPos( "lstFields" )
+	    txtName = self.win.getEditText( "txtName" )
+	    txtUName = self.win.getEditText( "txtUName" )
 
-                if self.bModify==True:
-                    oCurObj=cursor.TextField
+            if selectedItem != "" and txtName != "" and txtUName != "":
+		sKey=u""+ txtUName
+		if selectedItem == "objects":
+		    sValue=u"[[ repeatIn(" + selectedItem + ",'" + txtName + "') ]]"
+		else:
+		    sObjName=self.win.getComboBoxText("cmbVariable")
+		    sObjName=sObjName[:sObjName.find("(")]
+		    sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[selectedItemPos].replace("/",".") + ",'" + txtName +"') ]]"
 
-                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
-                        sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
-                        oCurObj.Items = (sKey,sValue)
-                        oCurObj.update()
-                    else:
-                        sObjName=self.win.getComboBoxText("cmbVariable")
-			sObjName=sObjName[:sObjName.find("(")]
-                        sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-                        oCurObj.Items = (sKey,sValue)
-                        oCurObj.update()
-                else:
+		if self.bModify == True:
+		    oCurObj = cursor.TextField
+		    oCurObj.Items = (sKey,sValue)
+		    oCurObj.update()
+		else:
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-
-                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
-                        sKey=u""+ self.win.getEditText("txtUName")
-                        sValue=u"[[ repeatIn(" + self.win.getListBoxSelectedItem("lstFields") + ",'" + self.win.getEditText("txtName") + "') ]]"
-                        oInputList.Items = (sKey,sValue)
-                        text.insertTextContent(cursor,oInputList,False)
-                    else:
-                        sObjName=self.win.getComboBoxText("cmbVariable")
-			sObjName=sObjName[:sObjName.find("(")]
-
-                        if cursor.TextTable==None:
-                            sKey=u""+ self.win.getEditText("txtUName")
-                            sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-                            oInputList.Items = (sKey,sValue)
-                            text.insertTextContent(cursor,oInputList,False)
-                        else:
-                            oTable = cursor.TextTable
-                            oCurCell = cursor.Cell
-                            tableText = oTable.getCellByName( oCurCell.CellName )
-                            sKey=u""+ self.win.getEditText("txtUName")
-                            sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[self.win.getListBoxSelectedItemPos("lstFields")].replace("/",".") + ",'" + self.win.getEditText("txtName") +"') ]]"
-                            oInputList.Items = (sKey,sValue)
-                            tableText.insertTextContent(cursor,oInputList,False)
+		    oInputList.Items = (sKey,sValue)
+		    widget = ( cursor.TextTable or selectedItem <> 'object' ) and cursor.TextTable.getCellByName( cursor.cell.CellName ) or doc.Text
+		    widget.insertTextContent(cursor,oInputList,False)
 
                 self.win.endExecute()
             else:
                 ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
+
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
 
@@ -251,8 +231,4 @@ if __name__<>"package" and __name__=="__main__":
     RepeatIn()
 elif __name__=="package":
     g_ImplementationHelper = unohelper.ImplementationHelper()
-    g_ImplementationHelper.addImplementation( \
-            RepeatIn,
-            "org.openoffice.tiny.report.repeatln",
-            ("com.sun.star.task.Job",),)
-
+    g_ImplementationHelper.addImplementation( RepeatIn, "org.openoffice.tiny.report.repeatln", ("com.sun.star.task.Job",),) 

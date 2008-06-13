@@ -63,9 +63,9 @@ class Fields(unohelper.Base, XJobExecutor ):
             cursor = doc.getCurrentController().getViewCursor()
             text=cursor.getText()
             tcur=text.createTextCursorByRange(cursor)
-	    for anObject in self.aObjectList:
-		if anObject[:anObject.find("(")] == "Objects":
-		    self.aVariableList.append(anObject)
+
+
+	    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == "Objects", self.aObjectList ) )
 
 	    for i in range(len(self.aItemList)):
 		anItem = self.aItemList[i][1]
@@ -73,16 +73,14 @@ class Fields(unohelper.Base, XJobExecutor ):
 		
 		if component == "Document": 
 		    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-		    for anObject in self.aObjectList:
-			if anObject[:anObject.find("(")] == sLVal:
-			    self.aVariableList.append(anObject)
+		    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
 		    if component in self.aSectionList:
 			sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-			for anObject in self.aObjectList:
-			    if anObject[:anObject.find("(")] == sLVal:
-				self.aVariableList.append(anObject)
+			self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+
                 if tcur.TextTable:
 		    if not component == "Document" and component[component.rfind(".")+1:] == tcur.TextTable.Name:
                         VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList, component)
@@ -94,7 +92,15 @@ class Fields(unohelper.Base, XJobExecutor ):
 		    if anObject[:anObject.find("(")] == sVariable:
 			sItem = anObject
 			self.insVariable.setText(sItem)
-		genTree(sItem[sItem.find("(")+1:sItem.find(")")],self.aListFields, self.insField,self.sMyHost,2,ending_excl=['one2many','many2one','many2many','reference'], recur=['many2one'])
+		genTree(
+		    sItem[sItem.find("(")+1:sItem.find(")")],
+		    self.aListFields, 
+		    self.insField,
+		    self.sMyHost,
+		    2,
+		    ending_excl=['one2many','many2one','many2many','reference'], 
+		    recur=['many2one']
+		)
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
                     sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
@@ -181,7 +187,6 @@ class Fields(unohelper.Base, XJobExecutor ):
             self.bOkay = True
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
-            text = doc.Text
             cursor = doc.getCurrentController().getViewCursor()
 
 	    itemSelected = self.win.getListBoxSelectedItem( "lstFields" )
