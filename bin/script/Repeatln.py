@@ -76,7 +76,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             text = cursor.getText()
             tcur = text.createTextCursorByRange(cursor)
 
-	    self.aVariableList.extend( reduce( lambda obj: obj[:obj.find(" ")] == "List", self.aObjectList ) )
+	    self.aVariableList.extend( filter( lambda obj: obj[:obj.find(" ")] == "List", self.aObjectList ) )
 
 	    for i in range(len(self.aItemList)):
 		anItem = self.aItemList[i][1]
@@ -84,13 +84,13 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
 		if component == "Document":
 		    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-		    self.aVariableList.extend( reduce( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+		    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
 		    if component in self.aSectionList:
 			sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-			self.aVariableList.extend( reduce( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+			self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextTable:
 		    if not component == "Document" and component[component.rfind(".") + 1:] == tcur.TextTable.Name:
