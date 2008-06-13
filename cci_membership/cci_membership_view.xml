@@ -3,14 +3,13 @@
 	<data>
 
 <!-- View for res.partner object inherited from base module................ -->
-		<record model="ir.ui.view" id="view_partner_form_member">
+		<record model="ir.ui.view" id="view_partner_form">
 			<field name="name">res.partner.form.member</field>
-			<field name="type">form</field>
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
-				<field name="membership_cancel" position="after">
-					<!-- <field name="membership_vcs"/> used by Philmer to test the fields.function -->
+				<field name="member_lines" position="before">
+					 <field name="membership_vcs"/> <!-- used by Philmer to test the fields.function -->
 				</field>
 			</field>
 		</record>
