@@ -44,22 +44,26 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
 	    ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
 	    exit(1)
 
-	self.ids = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml' ,  'search', [('report_xsl', '=', False),('report_xml', '=', False)])
+	ids = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml' ,  'search', [('report_xsl', '=', False),('report_xml', '=', False)])
 
-        fields=['name','report_name','model']
+        fields=['id', 'name','report_name','model']
 
-        self.reports = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml', 'read', self.ids, fields)
-        # res_other.sort(lambda x, y: cmp(x['model'],y['model']))
+        self.reports = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml', 'read', ids, fields)
+	self.report_with_id = []
     
 	for report in self.reports:
             if report['name']<>"":
                 model_ids = sock.execute(database, uid, self.userInfo, 'ir.model' ,  'search', [('model','=', report['model'])])
-                fields=['name','model']
-                model_res_other = sock.execute(database, uid, self.userInfo, 'ir.model', 'read', model_ids,fields)
+                model_res_other = sock.execute(database, uid, self.userInfo, 'ir.model', 'read', model_ids, [ 'name', 'model' ] )
                 if model_res_other <> []:
-                    self.lstReport.addItem(model_res_other[0]['name']+" - "+ report['name'],self.lstReport.getItemCount())
+		    self.report_with_id.append( (report['id'], model_res_other[0]['name'] + " - " + report['name'] ) ) 
                 else:
-                    self.lstReport.addItem( report['name']+" - "+ report['model'],self.lstReport.getItemCount() )
+                    self.report_with_id.append( (report['id'], report['name'] + " - " + report['model'] ) )
+	
+	self.report_with_id.sort( lambda x, y: cmp( x[1], y[1] ) )	
+
+	for id, report_name in self.report_with_id:
+	    self.lstReport.addItem( report_name, self.lstReport.getItemCount() )
 
         self.win.addButton('btnSave',-2 ,-5,80,15,'Open Report' ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton('btnCancel',-2 -80 ,-5,45,15,'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
@@ -79,7 +83,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 docinfo=doc.getDocumentInfo()
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 		selectedItemPos = self.win.getListBoxSelectedItemPos( "lstReport" )
-		id = self.ids[ selectedItemPos ]
+		id = self.report_with_id[ selectedItemPos ][0]
 
                 res = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml', 'report_get', id)
                 fp_name = tempfile.mktemp('.'+"sxw")
