@@ -68,6 +68,7 @@
       <font color="white"> </font>
     </para>
     <para style="P6">Production Order N° : <font face="Times-Roman" size="16.0">[[ o.name ]]</font></para>
+	<barCode code="code128" x="26.9mm" height="68.1mm" quiet="9" fontName="Times-Roman" fontSize="50"  alignment="CENTER">[['ID'+str(o.id)]]</barCode>
     <para style="P7">
       <font color="white"> </font>
     </para>
