@@ -181,10 +181,16 @@ class dm_offer_step_transition(osv.osv):
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
-
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
+        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context)
+        print result
+        return result
+    
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
         if context.has_key('type'):
+            if not context['step_id']:
+                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
             data['condition']='automatic'
             data[context['type']] = context['step_id']
         return data
