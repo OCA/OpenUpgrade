@@ -136,7 +136,7 @@ class event_check(osv.osv):
 		"code": fields.char('Code', size=64),
 		"reg_id": fields.many2one('event.registration','Inscriptions',required=True),
 		"state": fields.selection([('draft','Draft'),('block','Blocked'),('confirm','Confirm'),('cancel','Cancel'),('asked','Asked')], 'State', readonly=True),#should be check (previous states :('open','Open'),('block','Blocked'),('paid','Paid'),('refused','Refused'),('asked','Asked')])
-		"unit_nbr": fields.integer('Units'),
+		"unit_nbr": fields.float('Value'),
 		"type_id":fields.many2one('event.check.type','Type'),
 		"date_reception":fields.date("Reception Date"),
 		"date_limit":fields.date('Limit Date'),
@@ -212,10 +212,10 @@ class event_registration(osv.osv):
 			"payment_mode":fields.many2one('payment.mode',"Payment Mode"),#should be check (m2o ?)
 			"check_mode":fields.boolean('Check Mode'),
 			"check_ids":fields.one2many('event.check','reg_id',"Check ids"),
-			"payment_ids":fields.one2many("account.move.line","case_id","Payment", readonly=True),
+			"payment_ids":fields.many2many("account.move.line","move_line_registration", "reg_id", "move_line_id","Payment", readonly=True),
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
 			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
-			"check_amount":fields.function(cal_check_amount,method=True,type='integer', string='Check Amount')
+			"check_amount":fields.function(cal_check_amount,method=True,type='float', string='Check Amount')
 	}
 	_defaults = {
 		'name': lambda *a: 'Registration',
@@ -289,6 +289,6 @@ event_registration()
 class account_move_line(osv.osv):
 	_inherit = 'account.move.line'
 	_columns={
-		"case_id" : fields.many2one('event.registration','Registration'),
+		"case_id" : fields.many2many("event.registration","move_line_registration", "move_line_id", "reg_id","Registration"),
 	}
 account_move_line()
