@@ -59,7 +59,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         oFileDialog.appendFilter("TinyReport File Save To ....","*.rml")
 
         f_path=tempfile.mktemp("","")
-	f_path = "Tiny-"+f_path[f_path.rfind("/")+1:]
+	f_path = "Tiny-"+ os.path.basename( tempfile.mktemp("","") )
         oFileDialog.setDefaultName(f_path)
 
 	InitPath = tempfile.gettempdir()
