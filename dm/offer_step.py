@@ -178,8 +178,8 @@ class dm_offer_step_transition(osv.osv):
     _columns = {
         'condition' : fields.selection([('automatic','Automatic'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
         'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
-        'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True),
-        'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True),
+        'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
+        'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
 
     def default_get(self, cr, uid, fields, context={}):
