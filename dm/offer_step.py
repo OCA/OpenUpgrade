@@ -141,8 +141,7 @@ class dm_offer_step(osv.osv):
 		'split_mode' : lambda *a : 'xor',
 		'join_mode' : lambda *a : 'xor',
     }
-    
-   
+
     def state_close_set(self, cr, uid, ids, *args):
         cases = self.browse(cr, uid, ids)
         cases[0].state 
@@ -183,6 +182,13 @@ class dm_offer_step_transition(osv.osv):
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True),
     }
 
+    def default_get(self, cr, uid, fields, context={}):
+        data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
+        if context.has_key('type'):
+            data['condition']='automatic'
+            data[context['type']] = context['step_id']
+        return data
+    
 dm_offer_step_transition()
 
 class dm_offer_step_history(osv.osv):

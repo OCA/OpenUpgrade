@@ -123,8 +123,8 @@
 		<field name="arch" type="xml">
 			<tree string="Offer Steps">
 				<field name="offer_id"/>
-				<field name="incoming_transition_ids"/>
-				<field name="outgoing_transition_ids"/>
+				<field name="incoming_transition_ids" context="{'type':'incoming'}"/>
+				<field name="outgoing_transition_ids" context="{'type':'outgoing'}"/>
 				<field name="state"/>
 			</tree>
 		</field>
@@ -161,8 +161,8 @@
 						<field name="split_mode" colspan="2" string="Split mode"/>
 						<field name="flow_start" colspan="2"/>
 						<field name="flow_stop" colspan="2"/>
-						<field name="incoming_transition_ids" colspan="4" string="Incoming"/>
-						<field name="outgoing_transition_ids" colspan="4" string="Outgoing"/>
+						<field name="incoming_transition_ids" colspan="4" string="Incoming" context="{'type':'step_to','step_id':active_id}"/>
+						<field name="outgoing_transition_ids" colspan="4" string="Outgoing" context="{'type':'step_from','step_id':active_id}"/>
 					</page>
 					<page string="History">
 						<field name="history_ids" nolabel="1" colspan="4"/>
