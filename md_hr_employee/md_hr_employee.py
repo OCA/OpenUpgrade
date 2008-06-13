@@ -32,9 +32,6 @@ import time
 from osv import fields, osv
 import tools
 
-global val
-val=True
-
 class md_hr_address_street(osv.osv):
     _name = "md.hr.address.street"
     _description = "Street"
@@ -82,6 +79,31 @@ class md_hr_address(osv.osv):
 md_hr_address()   
 
 class hr_employee(osv.osv):
+    
+    def _expressed_by_year(self, cr, uid, ids, field_name, arg, context): 
+#        print"Amit j. Patel"
+        res = {}
+        for emp in self.browse(cr, uid, ids):
+            M = 50000
+            A = 50
+            dist_home_work =  emp.dist_home_work and emp.dist_home_work or 1.0
+            cr.execute("""
+                      select count(tmp.*) as no_of_days from hr_employee as hr_emp left outer join (
+                             select hremp.id as emp_id,count(*) as no_of_days from md_hr_contract_availability as hrcon_avail
+                                    inner join hr_contract as hrcon on hrcon.id = hrcon_avail.contract_id
+                                    inner join hr_employee as hremp on hrcon.employee_id = hremp.id
+                                    group by hremp.id,hrcon_avail.day) as tmp on hr_emp.id = tmp.emp_id
+                            where hr_emp.id = %d
+                            group by hr_emp.id
+                            order by hr_emp.id
+                      """%(emp.id))
+            tmp = cr.fetchone()
+            number_of_workdays_per_week = tmp[0] and tmp[0] or 0
+            if number_of_workdays_per_week and dist_home_work:
+                res[emp.id] = min( A * dist_home_work * number_of_workdays_per_week * 52 , M )
+            else:
+                res[emp.id] = 0.0
+        return res
          
     _name = "hr.employee"
     _description = "Employee"
@@ -116,7 +138,7 @@ class hr_employee(osv.osv):
                 'field_of_education' : fields.char("Field of education", size=80), 
                 'travel_allowance' : fields.boolean("Travel Allowande"), 
                 'dist_home_work' : fields.integer("Dist. between home and workplace (km)", size=8),
-                'amount_travel_allowance' : fields.float("Travel allowance(per year)"),
+                'amount_travel_allowance' : fields.function(_expressed_by_year, method=True, string="Travel allowance(per year)",readonly=True),
                 'pension' : fields.boolean("Pension"), 
                 'pension_waiver' : fields.boolean("Pension waiver"), 
                 'waowiaww' : fields.boolean("Disability/unemployment benefit"),
@@ -135,6 +157,7 @@ class hr_employee(osv.osv):
     _defaults={
                'attachment_earings_order': lambda *a: 1,
                }
+    
     
     def on_change_nbr_of_children(self,cr, uid, ids, nbr_of_children,context=None):   
         if nbr_of_children < 0:
