@@ -38,16 +38,27 @@ class credit_line(osv.osv):
 	def get_available_amount(self, cr, uid, credit_line_id, base_amount, partner_id, context={}):
 		this = self.browse(cr, uid, [credit_line_id])[0]
 
-		#sum the eligible amounts for translation folder + embassy folder line for all customers
+		#sum the eligible amounts for translation folder + embassy folder line for everyone and for this partner
 		tot_sum = 0
 		partner_sum = 0
 
+		#translation folder
 		list = self.pool.get('translation.folder').search(cr, uid, [('credit_line_id','=',this.id),('state','<>','cancel')])
 		for item in self.pool.get('translation.folder').browse(cr, uid, list):
+			#for everyone
 			tot_sum += item.awex_amount
 			if item.partner_id.id == partner_id:
-				#sum the eligible amounts for translation folder + embassy folder line for this customer
+				#for this partner
 				partner_sum +=  item.awex_amount
+
+		#embassy folder line 
+		list2 = self.pool.get('cci_missions.embassy_folder_line').search(cr, uid, [('credit_line_id','=',this.id),('awex_eligible','=',True)])
+		for item2 in self.pool.get('cci_missions.embassy_folder_line').browse(cr, uid, list2):
+			#for everyone
+			tot_sum += item2.awex_amount
+			if item2.folder_id.crm_case_id.partner_id.id == partner_id:
+				#for this partner
+				partner_sum +=  item2.awex_amount
 
 		partner_remaining_amount = this.customer_credit - partner_sum
 		tot_remaining_amount = this.global_credit - tot_sum
@@ -75,7 +86,6 @@ class translation_folder(osv.osv):
 			data = {}
 			data['state']='confirmed'
 			if id.awex_eligible and id.partner_id.awex_eligible == 'yes':
-				print 'go'
 				#look for an existing credit line in the current time
 				credit_line = self.pool.get('credit.line').search(cr, uid, [('from_date','<=',time.strftime('%Y-%m-%d')), ('to_date', '>=', time.strftime('%Y-%m-%d'))])
 				if credit_line:
