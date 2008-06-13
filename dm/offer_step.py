@@ -230,14 +230,15 @@ class dm_offer_step_workitem(osv.osv):
         Function called by the sceduler to update workitem from the segments of propositions.
         '''
         wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
-        wrkitem =self.browse(cr,uid,wrkitem_ids)
-        if not wrkitem:
+        wrkitems =self.browse(cr,uid,wrkitem_ids)
+        if not wrkitems:
             return 
-        step = wrkitem[0].step_id
-        if step.outgoing_transition_ids:
-            transitions = dict(map(lambda x:(x.id,x.delay_id.value),step.outgoing_transition_ids))
-            trans = [k for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
-            self.write(cr,uid,wrkitem_ids,{'step_id':trans.step_to.id})
+        for wrkitem in wrkitems :
+            step = wrkitem.step_id
+            if step.outgoing_transition_ids:
+                transitions = dict(map(lambda x:(x.id,x.delay_id.value),step.outgoing_transition_ids))
+                trans = [k for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
+                self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
         return True    
     
 dm_offer_step_workitem()
