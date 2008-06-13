@@ -30,7 +30,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         docinfo=oDoc2.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
         self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
-	if not len(ids):
+	if not len(self.ids):
 	    ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
 	    exit(1)
 
