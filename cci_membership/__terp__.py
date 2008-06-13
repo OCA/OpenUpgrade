@@ -11,7 +11,7 @@
     "depends" : ["base","membership"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["cci_membership_view.xml","cci_membership_report.xml"],
+    "update_xml" : ["cci_membership_view.xml","cci_membership_report.xml","cci_membership_wizard.xml"],
     "active": False,
     "installable": True
 }
