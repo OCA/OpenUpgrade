@@ -1,1 +1,2 @@
 import members_total_sold
+import show_partners
