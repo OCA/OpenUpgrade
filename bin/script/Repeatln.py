@@ -133,7 +133,6 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[8:])])
                 fields=['name','model']
                 self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
-                print self.model_res
                 if self.model_res <> []:
 		    if var[:8]<>'List of ':
                         self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
@@ -200,8 +199,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 	    selectedItemPos = self.win.getListBoxSelectedItemPos( "lstFields" )
 	    txtName = self.win.getEditText( "txtName" )
 	    txtUName = self.win.getEditText( "txtUName" )
-
-            if selectedItem != "" and txtName != "" and txtUName != "":
+	    if selectedItem != "" and txtName != "" and txtUName != "":
 		sKey=u""+ txtUName
 		if selectedItem == "objects":
 		    sValue=u"[[ repeatIn(" + selectedItem + ",'" + txtName + "') ]]"
@@ -217,12 +215,11 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 		else:
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
 		    oInputList.Items = (sKey,sValue)
-		    widget = ( cursor.TextTable or selectedItem <> 'object' ) and cursor.TextTable.getCellByName( cursor.cell.CellName ) or doc.Text
+		    widget = ( cursor.TextTable or selectedItem <> 'objects' ) and cursor.TextTable.getCellByName( cursor.cell.CellName ) or doc.Text
 		    widget.insertTextContent(cursor,oInputList,False)
-
-                self.win.endExecute()
-            else:
-                ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
+		self.win.endExecute()
+	    else:
+		ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
 
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
