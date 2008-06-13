@@ -52,21 +52,18 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
 	    ErrorDialog("Can't save the file to the hard drive.", "Exception: %s" % e, "Error" )
 
     def GetAFileName(self):
-
         sFilePickerArgs = Array(10)
         oFileDialog = createUnoService("com.sun.star.ui.dialogs.FilePicker")
         oFileDialog.initialize(sFilePickerArgs)
         oFileDialog.appendFilter("TinyReport File Save To ....","*.rml")
 
-        f_path=tempfile.mktemp("","")
-	f_path = "Tiny-"+ os.path.basename( tempfile.mktemp("","") )
-        oFileDialog.setDefaultName(f_path)
-
-	InitPath = tempfile.gettempdir()
-
+	f_path = "Tiny-"+ os.path.basename( tempfile.mktemp("","") ) + ".rml"
+	initPath = tempfile.gettempdir()
         oUcb = createUnoService("com.sun.star.ucb.SimpleFileAccess")
-        if oUcb.exists(InitPath):
-            oFileDialog.setDisplayDirectory(InitPath)
+        if oUcb.exists(initPath):
+	    oFileDialog.setDisplayDirectory('file://' + ( os.name == 'nt' and '/' or '' ) + initPath )
+
+        oFileDialog.setDefaultName(f_path )
 
 	sPath = oFileDialog.execute() == 1 and oFileDialog.Files[0] or None
         oFileDialog.dispose()

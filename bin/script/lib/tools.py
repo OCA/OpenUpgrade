@@ -9,10 +9,10 @@ def read_data_from_file( filename ):
 	fp = file( filename, "rb" )
 	data = fp.read()
 	fp.close()
-	return fp
+	return data
 
 # This function writes the content to a file
-def write_date_to_file( filename, data ):
+def write_data_to_file( filename, data ):
 	fp = file( filename, 'wb' )
 	fp.write( data )
 	fp.close()

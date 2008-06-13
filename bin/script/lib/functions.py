@@ -131,15 +131,9 @@ def EnumDocument(aItemList,aComponentAdd):
         elif oPar.Anchor.Text:
             parent = "Document"
         sItem=oPar.Items[1]
-	if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn":
-            for i in aItemList:
-                if i == oPar.Items:
-                    bFlag = True
-                else:
-                    bFlag = False
-            if not bFlag:
-                aItemList.append(oPar.Items)
-                aComponentAdd.append(parent)
+	if sItem[sItem.find("[[ ")+3:sItem.find("(")]=="repeatIn" and not oPar.Items in aItemList:
+	    aItemList.append( oPar.Items )
+	    aComponentAdd.append( parent )
 
 def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
     sNames = oPar.getCellNames()
