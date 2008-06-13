@@ -77,16 +77,5 @@
 			type="wizard"
 			id="menu_use_model"/>
 
-	<wizard
-			string="Open a Closed fiscal year"
-			model="account.fiscalyear"
-			name="cci_account.open_closed_fiscal"
-			menu="False"
-			id="wizard_open_closed_fiscalyear"/>
-	<menuitem
-			name="Financial Management/End of Year Treatments/Open a Closed fiscal year"
-			action="wizard_open_closed_fiscalyear"
-			type="wizard"
-			id="menu_wizard_open_closed_fy"/>
 	</data>
 </terp>
