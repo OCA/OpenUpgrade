@@ -202,12 +202,11 @@ class Fields(unohelper.Base, XJobExecutor ):
                 sObjName=self.win.getComboBoxText("cmbVariable")
 		sObjName=sObjName[:sObjName.find("(")]
 
-		if cursor.TextTable:
-		    text = cursor.TextTable.getCellByName( cursor.Cell.CellName )
+		widget = ( cursor.TextTable and cursor.TextTable.getCellByName( cursor.Cell.CellName ) or doc.Text )
 
 		sValue = u"[[ " + sObjName + self.aListFields[itemSelectedPos].replace("/",".") + " ]]"
 		oInputList.Items = (sKey,sValue)
-		text.insertTextContent(cursor,oInputList,False)
+		widget.insertTextContent(cursor,oInputList,False)
                 self.win.endExecute()
             else:
                     ErrorDialog("Please Fill appropriate data in Name field \nor select perticular value from the list of fields")

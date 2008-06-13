@@ -1,5 +1,4 @@
 
-
 import uno
 import string
 import unohelper
@@ -213,12 +212,11 @@ class AddLang(unohelper.Base, XJobExecutor ):
                 sObjName=self.win.getComboBoxText("cmbVariable")
 		sObjName=sObjName[:sObjName.find("(")]
 
-		if cursor.TextTable:
-		    text = cursor.TextTable.getCellByName( cursor.Cell.CellName )
+		widget = ( cursor.TextTable and cursor.TextTable.getCellByName( cursor.Cell.CellName ) or doc.Text )
 
 		sValue = u"[[setLang" + "(" + sObjName + self.aListFields[itemSelectedPos].replace("/",".") +")" " ]]"
 		oInputList.Items = (sKey,sValue)
-		text.insertTextContent(cursor,oInputList,False)
+		widget.insertTextContent(cursor,oInputList,False)
                    
                 self.win.endExecute()
             else:
