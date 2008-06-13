@@ -4,6 +4,7 @@
 	"author":"Tiny",
 	"category":"Profile",
 	"depends":[
+		"audittrail",
 		"base_module_record", 
 		"base_report_creator",
 		"account_analytic_package",
@@ -12,6 +13,7 @@
 		"l10n_be",
 		"account_asset",
 		"account_budget_crossover",
+		"invoice_payment_tab",
 		"cci_base_contact", 
 		"cci_partner", 
 		"cci_crm_profile", 
