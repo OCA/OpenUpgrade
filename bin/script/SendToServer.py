@@ -11,13 +11,20 @@ import sys
 if __name__<>'package':
     from lib.gui import *
     from lib.error import *
-    from LoginTest import *
     from lib.functions import *
+    from lib.tools import * 
+    from LoginTest import *
     database="test"
     uid = 3
 #
 #
 class SendtoServer(unohelper.Base, XJobExecutor):
+    Kind = {
+	'PDF' : 'pdf',
+	'OpenOffice': 'sxw',
+	'HTML' : 'html'
+    }
+
     def __init__(self,ctx):
         self.ctx     = ctx
         self.module  = "tiny_report"
@@ -64,18 +71,14 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         self.win.addFixedText("lblResourceType", 2 , 60, 50, 15, "Select Rpt. Type :")
         self.win.addComboListBox("lstResourceType", -5, 58, 123, 15,True,itemListenerProc=self.lstbox_selected)
         self.lstResourceType = self.win.getControl( "lstResourceType" )
-        self.lstResourceType.addItem("PDF",0)
-        self.lstResourceType.addItem("OpenOffice",1)
-        self.lstResourceType.addItem("HTML",3)
-        if docinfo.getUserFieldValue(3)<>"" and docinfo.getUserFieldValue(2)<>"":
-            self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
-                                actionListenerProc = self.btnOkOrCancel_clicked)
-        else:
-            self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
-                                actionListenerProc = self.btnOkOrCancel_clicked)
-        self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel",
-                        actionListenerProc = self.btnOkOrCancel_clicked)
-        self.win.doModalDialog("lstResourceType","pdf")
+
+	for kind in self.Kind.keys(): 
+	    self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
+
+	self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server", actionListenerProc = self.btnOkOrCancel_clicked)
+        self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel", actionListenerProc = self.btnOkOrCancel_clicked)
+
+        self.win.doModalDialog("lstResourceType", self.Kind.keys()[0])
 
     def lstbox_selected(self,oItemEvent):
         pass
@@ -95,33 +98,32 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 if docinfo.getUserFieldValue(2)=="":
                     id=self.getID()
                     docinfo.setUserFieldValue(2,id)
-                    rec={ 'name': self.win.getEditText("txtReportName"), 'key': 'action', 'model': docinfo.getUserFieldValue(3),'value': 'ir.actions.report.xml,'+str(id),'key2': 'client_print_multi','object': True }
-                    res=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec)
+                    rec = { 
+			'name': self.win.getEditText("txtReportName"), 
+			'key': 'action', 
+			'model': docinfo.getUserFieldValue(3),
+			'value': 'ir.actions.report.xml,'+str(id),
+			'key2': 'client_print_multi',
+			'object': True 
+		    }
+                    res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec )
                 else:
                     id = docinfo.getUserFieldValue(2)
                     vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
-                    rec = { 'name': self.win.getEditText("txtReportName")}
+                    rec = { 'name': self.win.getEditText("txtReportName") }
                     res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
                 oDoc2.store()
-		url=oDoc2.getURL()[7:]
-                temp1=url.replace("%20"," ")
-		url1=temp1[1:]
-                if os.name=='nt':    
-                    fp=file(url1,'rb')
-                else:
-                    fp=file(url,'rb')
-                data=fp.read()
+		data = read_data_from_file( get_absolute_file_path( oDoc2.getURL()[7:] ) )
                 self.getInverseFieldsRecord(0)
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
 
-		convert_report_type = { 'OpenOffice': 'sxw', 'PDF':'pdf', 'HTML':'html' }
                 params = {
 		    'name': self.win.getEditText("txtName"),
 		    'model': docinfo.getUserFieldValue(3),
 		    'report_name': self.win.getEditText("txtReportName"),
 		    'header': (self.win.getCheckBoxState("chkHeader") <> 0),
-		    'report_type': convert_report_type[self.win.getListBoxSelectedItem("lstResourceType")],
+		    'report_type': self.Kind[self.win.getListBoxSelectedItem("lstResourceType")],
 		}
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
                 self.win.endExecute()
