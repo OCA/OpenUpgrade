@@ -75,63 +75,62 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 	for kind in self.Kind.keys(): 
 	    self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
 
-	self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server", actionListenerProc = self.btnOkOrCancel_clicked)
-        self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel", actionListenerProc = self.btnOkOrCancel_clicked)
+	self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server", actionListenerProc = self.btnOk_clicked)
+        self.win.addButton( "btnCancel", -5 - 80 -5, -5, 40, 15, "Cancel", actionListenerProc = self.btnCancel_clicked)
 
         self.win.doModalDialog("lstResourceType", self.Kind.keys()[0])
 
     def lstbox_selected(self,oItemEvent):
         pass
 
-    def btnOkOrCancel_clicked(self, oActionEvent):
+    def btnCancel_clicked( self, oActionEvent ):
+	self.win.endExecute()
 
-        if oActionEvent.Source.getModel().Name == "btnSend":
-            if self.win.getEditText("txtName") <> "" and self.win.getEditText("txtReportName") <> "":
-                desktop=getDesktop()
-                oDoc2 = desktop.getCurrentComponent()
-                docinfo=oDoc2.getDocumentInfo()
-                self.getInverseFieldsRecord(1)
-                fp_name = tempfile.mktemp('.'+"sxw")
-                if not oDoc2.hasLocation():
-                    oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
-                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                if docinfo.getUserFieldValue(2)=="":
-                    id=self.getID()
-                    docinfo.setUserFieldValue(2,id)
-                    rec = { 
-			'name': self.win.getEditText("txtReportName"), 
-			'key': 'action', 
-			'model': docinfo.getUserFieldValue(3),
-			'value': 'ir.actions.report.xml,'+str(id),
-			'key2': 'client_print_multi',
-			'object': True 
-		    }
-                    res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec )
-                else:
-                    id = docinfo.getUserFieldValue(2)
-                    vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
-                    rec = { 'name': self.win.getEditText("txtReportName") }
-                    res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
-                oDoc2.store()
-		data = read_data_from_file( get_absolute_file_path( oDoc2.getURL()[7:] ) )
-                self.getInverseFieldsRecord(0)
-                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
-
-                params = {
-		    'name': self.win.getEditText("txtName"),
+    def btnOk_clicked(self, oActionEvent):
+	if self.win.getEditText("txtName") <> "" and self.win.getEditText("txtReportName") <> "":
+	    desktop=getDesktop()
+	    oDoc2 = desktop.getCurrentComponent()
+	    docinfo=oDoc2.getDocumentInfo()
+	    self.getInverseFieldsRecord(1)
+	    fp_name = tempfile.mktemp('.'+"sxw")
+	    if not oDoc2.hasLocation():
+		oDoc2.storeAsURL("file://"+fp_name,Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),))
+	    sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+	    if docinfo.getUserFieldValue(2)=="":
+		id=self.getID()
+		docinfo.setUserFieldValue(2,id)
+		rec = { 
+		    'name': self.win.getEditText("txtReportName"), 
+		    'key': 'action', 
 		    'model': docinfo.getUserFieldValue(3),
-		    'report_name': self.win.getEditText("txtReportName"),
-		    'header': (self.win.getCheckBoxState("chkHeader") <> 0),
-		    'report_type': self.Kind[self.win.getListBoxSelectedItem("lstResourceType")],
+		    'value': 'ir.actions.report.xml,'+str(id),
+		    'key2': 'client_print_multi',
+		    'object': True 
 		}
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
-                self.win.endExecute()
-            else:
-                ErrorDialog("Either Report Name or Technical Name is blank !!!\nPlease specify appropriate Name","","Blank Field ERROR")
+		res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec )
+	    else:
+		id = docinfo.getUserFieldValue(2)
+		vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
+		rec = { 'name': self.win.getEditText("txtReportName") }
+		res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
+	    oDoc2.store()
+	    data = read_data_from_file( get_absolute_file_path( oDoc2.getURL()[7:] ) )
+	    self.getInverseFieldsRecord(0)
+	    sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+	    res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
 
-        elif oActionEvent.Source.getModel().Name == "btnCancel":
-            self.win.endExecute()
+	    params = {
+		'name': self.win.getEditText("txtName"),
+		'model': docinfo.getUserFieldValue(3),
+		'report_name': self.win.getEditText("txtReportName"),
+		'header': (self.win.getCheckBoxState("chkHeader") <> 0),
+		'report_type': self.Kind[self.win.getListBoxSelectedItem("lstResourceType")],
+	    }
+	    res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
+	    self.win.endExecute()
+	else:
+	    ErrorDialog("Either Report Name or Technical Name is blank !!!\nPlease specify appropriate Name","","Blank Field ERROR")
+
 
     def getID(self):
         desktop=getDesktop()
