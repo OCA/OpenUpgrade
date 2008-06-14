@@ -64,9 +64,9 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         self.win.addFixedText("lblResourceType", 2 , 60, 50, 15, "Select Rpt. Type :")
         self.win.addComboListBox("lstResourceType", -5, 58, 123, 15,True,itemListenerProc=self.lstbox_selected)
         self.lstResourceType = self.win.getControl( "lstResourceType" )
-        self.lstResourceType.addItem("pdf",0)
-        self.lstResourceType.addItem("sxw",1)
-        self.lstResourceType.addItem("html",3)
+        self.lstResourceType.addItem("PDF",0)
+        self.lstResourceType.addItem("OpenOffice",1)
+        self.lstResourceType.addItem("HTML",3)
         if docinfo.getUserFieldValue(3)<>"" and docinfo.getUserFieldValue(2)<>"":
             self.win.addButton( "btnSend", -5, -5, 80, 15, "Send Report to Server",
                                 actionListenerProc = self.btnOkOrCancel_clicked)
@@ -115,12 +115,13 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
 
+		convert_report_type = { 'OpenOffice': 'sxw', 'PDF':'pdf', 'HTML':'html' }
                 params = {
 		    'name': self.win.getEditText("txtName"),
 		    'model': docinfo.getUserFieldValue(3),
 		    'report_name': self.win.getEditText("txtReportName"),
 		    'header': (self.win.getCheckBoxState("chkHeader") <> 0),
-		    'report_type': self.win.getListBoxSelectedItem("lstResourceType"),
+		    'report_type': convert_report_type[self.win.getListBoxSelectedItem("lstResourceType")],
 		}
                 res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
                 self.win.endExecute()
