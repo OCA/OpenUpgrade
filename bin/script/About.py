@@ -11,8 +11,7 @@ class About(unohelper.Base, XJobExecutor):
         self.ctx     = ctx
         self.module  = "tiny_report"
         self.version = "0.1"
-        self.win = DBModalDialog(60, 50, 175, 115, ".:: About Us !!! ::.")
-
+        self.win = DBModalDialog(60, 50, 175, 115, ".:: About OpenERP Report Designer ::.")
 
         fdBigFont = createUnoStruct("com.sun.star.awt.FontDescriptor")
         fdBigFont.Width = 20
@@ -20,22 +19,19 @@ class About(unohelper.Base, XJobExecutor):
         fdBigFont.Weight = 120
         fdBigFont.Family= 3
 
-        self.win.addFixedText("lblTitle1", 1, 1, 30, 30)
-        oLabelTitle1 = self.win.getControl("lblTitle1")
+        oLabelTitle1 = self.win.addFixedText("lblTitle1", 1, 1, 35, 30)
         oLabelTitle1.Model.TextColor = 16056320
         oLabelTitle1.Model.FontDescriptor = fdBigFont
         oLabelTitle1.Model.FontRelief = 1
-        oLabelTitle1.Text = "Tiny"
+        oLabelTitle1.Text = "Open"
 
-        self.win.addFixedText("lblTitle2", 31, 1, 30, 30)
-        oLabelTitle2 = self.win.getControl("lblTitle2")
+        oLabelTitle2 = self.win.addFixedText("lblTitle2", 35, 1, 30, 30)
         oLabelTitle2.Model.TextColor = 1
         oLabelTitle2.Model.FontDescriptor = fdBigFont
         oLabelTitle2.Model.FontRelief = 1
         oLabelTitle2.Text = "ERP"
 
-        self.win.addFixedText("lblProdDesc", 1, 30, 173, 75)
-        oLabelProdDesc = self.win.getControl("lblProdDesc")
+        oLabelProdDesc = self.win.addFixedText("lblProdDesc", 1, 30, 173, 75)
         oLabelProdDesc.Model.TextColor = 1
         fdBigFont.Width = 10
         fdBigFont.Height = 11
@@ -44,11 +40,9 @@ class About(unohelper.Base, XJobExecutor):
         oLabelProdDesc.Model.Align = 1
         oLabelProdDesc.Model.FontRelief = 1
         oLabelProdDesc.Model.MultiLine = True
-        sMessage = "This  package  helps  you  to  create  or  modify\nreports  in  Tiny  ERP.  Once  connected  to  the\nserver, you can design your template of reports\nusing fields  and expressions  and  browsing the\ncomplete structure of Tiny ERP object database."
-        oLabelProdDesc.Text = sMessage
+        oLabelProdDesc.Text = "This  package  helps  you  to  create  or  modify\nreports  in  OpenERP.  Once  connected  to  the\nserver, you can design your template of reports\nusing fields  and expressions  and  browsing the\ncomplete structure of OpenERP object database."
 
-        self.win.addFixedText("lblFooter", -1, -1, 173, 25)
-        oLabelFooter = self.win.getControl("lblFooter")
+        oLabelFooter = self.win.addFixedText("lblFooter", -1, -1, 173, 25)
         oLabelFooter.Model.TextColor = 255
         #oLabelFooter.Model.BackgroundColor = 1
         oLabelFooter.Model.Border = 2
@@ -60,8 +54,9 @@ class About(unohelper.Base, XJobExecutor):
         oLabelFooter.Model.Align = 1
         oLabelFooter.Model.FontRelief = 1
         oLabelFooter.Model.MultiLine = True
-        sMessage = "Tiny Report v1.0 \nCopyright 2007-TODAY Tiny sprl \nThis product is free software, under the GPL licence."
+        sMessage = "OpenERP Report Designer v1.0 \nCopyright 2007-TODAY Tiny sprl \nThis product is free software, under the GPL licence."
         oLabelFooter.Text = sMessage
+
 #
 #        if __name__=="package":
 #
@@ -74,8 +69,5 @@ class About(unohelper.Base, XJobExecutor):
 if __name__<>"package" and __name__=="__main__":
     About(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( \
-            About,
-            "org.openoffice.tiny.report.about",
-            ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( About, "org.openoffice.tiny.report.about", ("com.sun.star.task.Job",),)
 

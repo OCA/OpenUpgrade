@@ -400,6 +400,8 @@ class DBModalDialog:
                          bDropdown=None,
                          cLabel=cLabel )
 
+	return self.getControl( cCtrlName )
+
     #--------------------------------------------------
     #   Add Controls to dialog
     #--------------------------------------------------
