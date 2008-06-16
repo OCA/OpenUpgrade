@@ -521,7 +521,7 @@
 
 	<!--
 	=======================================================
-	Offer Delayw
+	Offer Delay
 	=======================================================
 	-->	
 	<record model="ir.ui.view" id="view_dm_offer_delay_form">
@@ -552,7 +552,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_offer_delay_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/Offer Delays" id="menu_action_dm_offer_delay_form" sequence="2" action="action_dm_offer_delay_form"/>	
+	<menuitem name="Direct Marketing/Configuration/Offers/Offer Delays" id="menu_action_dm_offer_delay_form" sequence="2" action="action_dm_offer_delay_form"/>	
 
 </data>
 </terp>
