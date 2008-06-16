@@ -36,16 +36,16 @@ class project_project(osv.osv):
     _description = 'project.project'
 
     def write(self, cr, uid, ids,vals, *args, **kwargs):
-        if 'date_end' in vals:
+        if 'date_end' in vals and vals['date_end']:
             data_project = self.browse(cr,uid,ids)
             for prj in data_project:
                 c= date(*time.strptime(vals['date_end'],'%Y-%m-%d')[:3])
-                d= date(*time.strptime(prj.date_end,'%Y-%m-%d')[:3])
-                for task in prj.tasks:
-                    if task.date_deadline:
-                        print task.date_deadline
-                        f = (datetime(*time.strptime(task.date_deadline,'%Y-%m-%d  %H:%M:%S')[:6])+(c-d)).strftime('%Y-%m-%d %H:%M:%S')
-                        self.pool.get('project.task').write(cr,uid,task.id,{'date_deadline':f})
+                if prj.date_end:
+                    d= date(*time.strptime(prj.date_end,'%Y-%m-%d')[:3])
+                    for task in prj.tasks:
+                        if task.date_deadline:
+                            f = (datetime(*time.strptime(task.date_deadline,'%Y-%m-%d  %H:%M:%S')[:6])+(c-d)).strftime('%Y-%m-%d %H:%M:%S')
+                            self.pool.get('project.task').write(cr,uid,task.id,{'date_deadline':f})
         return super(project_project,self).write(cr, uid, ids,vals, *args, **kwargs)
 
 project_project()
