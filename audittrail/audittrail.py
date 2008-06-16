@@ -16,14 +16,14 @@ class audittrail_rule(osv.osv):
 		"state": fields.selection((("draft", "Draft"),("subscribed", "Subscribed")), "State", required=True),
 		"action_id":fields.many2one('ir.actions.act_window',"Action ID"),
 	}
-	
+
 	_defaults = {
 		'state': lambda *a: 'draft',
 		'log_create': lambda *a: 1,
 		'log_unlink': lambda *a: 1,
 		'log_write': lambda *a: 1,
 	}
-	
+
 	_sql_constraints = [
 		('model_uniq', 'unique (object_id)', """There is a rule defined on this object\n You can not define other on the same!""")
 	]
@@ -33,11 +33,9 @@ class audittrail_rule(osv.osv):
 		for obj_name in pool.obj_list():
 			obj=pool.get(obj_name)
 			for field in ('read','write','create','unlink'):
-				 setattr(obj, field, self.logging_fct(getattr(obj,field), obj))			
+				 setattr(obj, field, self.logging_fct(getattr(obj,field), obj))
 		super(audittrail_rule, self).__init__(pool,cr)
-		
 
-		
 	def subscribe(self, cr, uid, ids, *args):
 		for thisrule in self.browse(cr, uid, ids):
 			obj = self.pool.get(thisrule.object_id.model)
@@ -45,14 +43,14 @@ class audittrail_rule(osv.osv):
 				raise osv.except_osv(
                         'WARNING:audittrail is not part of the pool',
                         'Change audittrail depends -- Setting rule as DRAFT')
-				self.write(cr, uid, [thisrule.id], {"state": "draft"})		
+				self.write(cr, uid, [thisrule.id], {"state": "draft"})
 		val={
 			 "name":'View Log',
 			 "res_model":'audittrail.log',
 			 "src_model":thisrule.object_id.model,
 			 "domain":"[('res_id', '=', active_id)]"
-						
-		}	
+
+		}
 		id=self.pool.get('ir.actions.act_window').create(cr, uid, val)
 		self.write(cr, uid, ids, {"state": "subscribed","action_id":id})
 		keyword = 'client_action_relate'
@@ -63,42 +61,42 @@ class audittrail_rule(osv.osv):
 
 	def logging_fct(self, fct_src, obj):
 		object_name=obj._name
-		object=None		
+		object=None
 		logged_uids = []
-		def get_value_text(cr, uid, field_name,values,object, context={}):	
+		def get_value_text(cr, uid, field_name,values,object, context={}):
 			f_id= self.pool.get('ir.model.fields').search(cr, uid,[('name','=',field_name),('model_id','=',object.id)])
-			if f_id:			
+			if f_id:
 				field=self.pool.get('ir.model.fields').read(cr, uid,f_id)[0]
 				model=field['relation']
-				
+
 				if field['ttype']=='many2one':
 					if values:
 						if type(values)==tuple:
 								values=values[0]
 						val=self.pool.get(model).read(cr,uid,[values],['name'])
 						if len(val):
-							return val[0]['name']						
-						
+							return val[0]['name']
+
 				elif field['ttype'] == 'many2many':
 					value=[]
 					if values:
 						for id in values:
 							val=self.pool.get(model).read(cr,uid,[id],['name'])
 							if len(val):
-								value.append(val[0]['name'])											
+								value.append(val[0]['name'])
 					return value
-						
+
 				elif field['ttype'] == 'one2many':
-					
+
 					if values:
 						value=[]
-						for id in values:						
+						for id in values:
 							val=self.pool.get(model).read(cr,uid,[id],['name'])
 							if len(val):
 								value.append(val[0]['name'])
-						return value			
+						return value
 			return values
-		
+
 		def create_log_line(cr,uid,id,object,lines=[]):
 			for line in lines:
 				f_id= self.pool.get('ir.model.fields').search(cr, uid,[('name','=',line['name']),('model_id','=',object.id)])
@@ -108,7 +106,7 @@ class audittrail_rule(osv.osv):
 					new_value='new_value' in line and  line['new_value'] or ''
 					old_value_text='old_value_text' in line and  line['old_value_text'] or ''
 					new_value_text='new_value_text' in line and  line['new_value_text'] or ''
-					
+
 					if fields[0]['ttype']== 'many2one':
 						if type(old_value)==tuple:
 							old_value=old_value[0]
@@ -116,31 +114,30 @@ class audittrail_rule(osv.osv):
 							new_value=new_value[0]
 					self.pool.get('audittrail.log.line').create(cr, uid, {"log_id": id, "field_id": f_id[0] ,"old_value":old_value ,"new_value":new_value,"old_value_text":old_value_text ,"new_value_text":new_value_text,"field_description":fields[0]['field_description']})
 			return True
-			
-		def my_fct( cr, uid, *args, **args2):			
+
+		def my_fct( cr, uid, *args, **args2):
 			obj_ids= self.pool.get('ir.model').search(cr, uid,[('model','=',object_name)])
-			if not len(obj_ids):	
-				return fct_src(cr, uid, *args, **args2)	
+			if not len(obj_ids):
+				return fct_src(cr, uid, *args, **args2)
 			object=self.pool.get('ir.model').browse(cr,uid,obj_ids)[0]
 			rule_ids=self.search(cr, uid, [('object_id','=',obj_ids[0]),('state','=','subscribed')])
 			if not len(rule_ids):
 				return fct_src(cr, uid, *args, **args2)
-			
-			
+
 			field=fct_src.__name__
 			for thisrule in self.browse(cr, uid, rule_ids):
 				if not getattr(thisrule, 'log_'+field):
-					return fct_src(cr, uid, *args, **args2)					
+					return fct_src(cr, uid, *args, **args2)
 				self.__functions.setdefault(thisrule.id, [])
 				self.__functions[thisrule.id].append( (obj,field, getattr(obj,field)) )
 				for user in thisrule.user_id:
 							logged_uids.append(user.id)
-			
-			if fct_src.__name__ in ('create'):							
+
+			if fct_src.__name__ in ('create'):
 				res_id =fct_src( cr, uid, *args, **args2)
 				new_value=self.pool.get(object.model).read(cr,uid,[res_id],args[0].keys())[0]
 				if 'id' in new_value:
-					del new_value['id']		
+					del new_value['id']
 				if not len(logged_uids) or uid in logged_uids:
 					id=self.pool.get('audittrail.log').create(cr, uid, {"method": fct_src.__name__, "object_id": object.id, "user_id": uid, "res_id": res_id,"name": "%s %s %s" % (fct_src.__name__, object.id, time.strftime("%Y-%m-%d %H:%M:%S"))})
 					lines=[]
@@ -154,16 +151,16 @@ class audittrail_rule(osv.osv):
 							lines.append(line)
 					create_log_line(cr,uid,id,object,lines)
 				return res_id
-			
-			if fct_src.__name__ in ('write'):				
+
+			if fct_src.__name__ in ('write'):
 				res_ids=args[0]
-				for res_id in res_ids:				
+				for res_id in res_ids:
 					old_values=self.pool.get(object.model).read(cr,uid,res_id,args[1].keys())
-					old_values_text={}					
-					for field in args[1].keys():						
+					old_values_text={}
+					for field in args[1].keys():
 						old_values_text[field]=get_value_text(cr,uid,field,old_values[field],object)
 					res =fct_src( cr, uid, *args, **args2)
-					if res:						
+					if res:
 						new_values=self.pool.get(object.model).read(cr,uid,res_ids,args[1].keys())[0]
 						if not len(logged_uids) or uid in logged_uids:
 							id=self.pool.get('audittrail.log').create(cr, uid, {"method": fct_src.__name__, "object_id": object.id, "user_id": uid, "res_id": res_id,"name": "%s %s %s" % (fct_src.__name__, object.id, time.strftime("%Y-%m-%d %H:%M:%S"))})
@@ -180,22 +177,22 @@ class audittrail_rule(osv.osv):
 									lines.append(line)
 							create_log_line(cr,uid,id,object,lines)
 					return res
-				
-			if fct_src.__name__ in ('read'):				
+
+			if fct_src.__name__ in ('read'):
 				res_ids=args[0]
 				old_values={}
-				res =fct_src( cr, uid,*args, **args2)				
+				res =fct_src( cr, uid,*args, **args2)
 				if type(res)==list:
-					
+
 					for v in res:
 						old_values[v['id']]=v
 				else:
 
-					old_values[res['id']]=res					
-				for res_id in old_values:													
+					old_values[res['id']]=res
+				for res_id in old_values:
 					if not len(logged_uids) or uid in logged_uids:
 						id=self.pool.get('audittrail.log').create(cr, uid, {"method": fct_src.__name__, "object_id": object.id, "user_id": uid, "res_id": res_id,"name": "%s %s %s" % (fct_src.__name__, object.id, time.strftime("%Y-%m-%d %H:%M:%S"))})
-						lines=[]						
+						lines=[]
 						for field in old_values[res_id]:
 							if old_values[res_id][field]:
 								line={
@@ -206,9 +203,7 @@ class audittrail_rule(osv.osv):
 								lines.append(line)
 					create_log_line(cr,uid,id,object,lines)
 				return res
-			
-			
-			if fct_src.__name__ in ('unlink'):				
+			if fct_src.__name__ in ('unlink'):
 				res_ids=args[0]
 				old_values={}
 				for res_id in res_ids:
@@ -227,18 +222,18 @@ class audittrail_rule(osv.osv):
 									  }
 								lines.append(line)
 						create_log_line(cr,uid,id,object,lines)
-				res =fct_src( cr, uid,*args, **args2)							
+				res =fct_src( cr, uid,*args, **args2)
 				return res
-			
+
 		return my_fct
-		
+
 	def unsubscribe(self, cr, uid, ids, *args):
-		for thisrule in self.browse(cr, uid, ids):	
+		for thisrule in self.browse(cr, uid, ids):
 			if thisrule.id in self.__functions :
 				for function in self.__functions[thisrule.id]:
 					setattr(function[0], function[1], function[2])
 		w_id=self.pool.get('ir.actions.act_window').search(cr, uid, [('name','=','View Log'),('res_model','=','audittrail.log'),('src_model','=',thisrule.object_id.model)])
-		self.pool.get('ir.actions.act_window').unlink(cr, uid,w_id )		
+		self.pool.get('ir.actions.act_window').unlink(cr, uid,w_id )
 		val_obj=self.pool.get('ir.values')
 		value="ir.actions.act_window"+','+str(w_id[0])
 		val_id=val_obj.search(cr, uid, [('model','=',thisrule.object_id.model),('value','=',value)])
@@ -260,7 +255,7 @@ class audittrail_log(osv.osv):
 		"timestamp": fields.datetime("Date"),
 		"res_id":fields.integer('Resource Id'),
 		"line_ids":fields.one2many('audittrail.log.line','log_id','Log lines')
-		
+
 	}
 	_defaults = {
 		"timestamp": lambda *a: time.strftime("%Y-%m-%d %H:%M:%S")
