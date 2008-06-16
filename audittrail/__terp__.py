@@ -1,7 +1,10 @@
+#
+# you must set the depends variable on modules you plan to audit !
+#
 {
 	"name" : "Audit Trail",
 	"version" : "1.0",
-	"depends" : ["base","account","sale","purchase","mrp"],
+	"depends" : ["base","account","purchase","mrp"],
 	"website" : "http://tinyerp.com",
 	"author" : "Tiny",
 	"init_xml" : [],

@@ -92,6 +92,7 @@ self.pool.get('res.partner').write(cr, uid, [context['action_id']], {'name':name
 		<field name="view_type">form</field>
 	</record>
 	<menuitem name="Testing" id="menu_test"/>
+
 	<menuitem parent="menu_test" action="action_test_form" id="menu_test_order"/>
 
 	<act_window name="Test Wizard"
