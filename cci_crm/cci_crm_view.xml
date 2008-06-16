@@ -15,6 +15,37 @@
 			</field>
 		</record>
 
+	<record model="ir.ui.view" id="view_case_form_inherit2">
+			<field name="name">crm.case.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Sponsoring">
+						<separator string="Events" colspan="4"/>
+						<field name="event_ids" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+<!-- view for event.event inherit -->
+	<record model="ir.ui.view" id="view_event_form_inherit">
+		<field name="name">event.event.form.inherit</field>
+		<field name="type">form</field>
+		<field name="model">event.event</field>
+		<field name="inherit_id" ref="event.view_event_form"/>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Sponsoring">
+					<separator string="Cases" colspan="4"/>
+					<field name="case_ids" colspan="4" nolabel="1"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
 <!-- view for meeting.confidential.info -->
 		<record model="ir.ui.view" id="meeting_confidential_info_form">
 			<field name="name">meeting.confidential.info.form</field>
