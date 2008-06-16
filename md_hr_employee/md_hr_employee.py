@@ -118,10 +118,10 @@ class hr_employee(osv.osv):
             tmp = cr.fetchone()
             number_of_workdays_per_week = tmp[0] and tmp[0] or 0
             if number_of_workdays_per_week and dist_home_work:
-                res[emp.id] = min( A * dist_home_work * number_of_workdays_per_week * 52 , M )
-               
+               res[emp.id] = min( A * dist_home_work * number_of_workdays_per_week * 52 , M )
+               print"res[emp.id]",res[emp.id]
             else:
-                res[emp.id] = 0.0
+               res[emp.id] = 0.0
         return res
          
     _name = "hr.employee"
