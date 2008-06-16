@@ -493,7 +493,7 @@ class pos_order(osv.osv):
 
 				# Search for the income account
 				if  line.product_id.property_account_income.id:
-					income_account = accountline.\
+					income_account = line.\
 									product_id.property_account_income.id
 				elif line.product_id.categ_id.\
 						property_account_income_categ.id:
