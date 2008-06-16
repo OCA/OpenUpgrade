@@ -240,14 +240,19 @@ class dm_customer_offer(osv.osv):
 #                                        change workitem
         
         if workitem_id : 
+#			if step.type == 'RL'
+#				propo = self.pool.get('dm.campaign.proposition')
+
+            print "DEBUG - updating workitem for customer"
             workitem.write(cr,uid,workitem_id,vals)
 #                                        create new workitem
         else:
             vals['customer_id']=customer_id
             if segment_id :
                 vals['segment_id']=segment_id[0]
+            print "DEBUG - Creating new workitem for customer"
             workitem.create(cr,uid,vals)
-        
+
         self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
         return True
     

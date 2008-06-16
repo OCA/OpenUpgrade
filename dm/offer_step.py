@@ -178,7 +178,7 @@ class dm_offer_step(osv.osv):
     
     def state_draft_set(self, cr, uid, ids, *args):
         cases = self.browse(cr, uid, ids)
-        cases[0].state 
+        cases[0].state
         self.__history(cr,uid, cases, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
@@ -233,7 +233,7 @@ class dm_offer_step_workitem(osv.osv):
     def create(self, cr, uid, vals, context=None, check=True):
         step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
         if step.outgoing_transition_ids:
-            transitions = dict(map(lambda x:(x.id,x.delay_id.value),step.outgoing_transition_ids))
+            transitions = dict(map(lambda x : (x.id,x.delay_id.value),step.outgoing_transition_ids))
             trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
             new_date = datetime.date.today() + datetime.timedelta(trans[1])
             vals['date_next_action'] = new_date
@@ -243,16 +243,27 @@ class dm_offer_step_workitem(osv.osv):
         '''
         Function called by the sceduler to update workitem from the segments of propositions.
         '''
+        print "DEBUG - _update_workitem called by scheduler"
         wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
         wrkitems =self.browse(cr,uid,wrkitem_ids)
         if not wrkitems:
-            return 
+            print "DEBUG - no workitem to update"
+            return
         for wrkitem in wrkitems :
             step = wrkitem.step_id
             if step.outgoing_transition_ids:
-                transitions = dict(map(lambda x:(x,x.delay_id.value),step.outgoing_transition_ids))
-                trans = [k for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
+                transitions = dict(map(lambda x : (x,int(x.delay_id.value)),step.outgoing_transition_ids))
+                print "DEBUG - transitions items: ", transitions.items()
+                print "DEBUG - transitions values: ", transitions.values()
+                trans = [k for k,v in transitions.items() if v == min(transitions.values())][0]
+                # If relaunching
+                if trans.step_to.type == 'RL':
+                    pres = self.pool.get('dm.campaign.proposition').copy(cr, uid, wrkitem.segment_id.proposition_id.id,
+                        {'proposition_type':'relaunching', 'initial_proposition_id':wrkitem.segment_id.proposition_id.id})
+                    print "DEBUG - new propo id : ",pres
+#                   self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
+                print "DEBUG - Updating workitem for segment"
                 self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
-        return True    
-    
+        return True
+
 dm_offer_step_workitem()

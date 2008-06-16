@@ -108,7 +108,8 @@ class dm_campaign_proposition(osv.osv):
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
-        'proposition_type' : fields.selection([('init','Init'),('recall','Recall')],"Type"),
+        'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching')],"Type"),
+		'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),        
         'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
         'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
@@ -117,7 +118,7 @@ class dm_campaign_proposition(osv.osv):
     }
     
     _defaults = {
-        'proposition_type' : lambda*a : 'init',
+        'proposition_type' : lambda *a : 'init',
     }
     
 
