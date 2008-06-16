@@ -21,12 +21,10 @@
 					<newline />
 					<field name="notes" col="12" colspan="4"/>
 					<newline />
-					<field name="number_of_days" colspan="2"/>
 					<field name="manager_id" colspan="2"/>
-					<newline />
-					<field name="section_id"  select="1" />
 					<field name="employee_id" select="1" />
 					<newline />
+					<field name="number_of_days" colspan="2"/>
 				</field>
 			</field>
 		</record>
@@ -52,6 +50,7 @@
 			<field name="arch" type="xml">
 				<field name="name" position="after">
 					<field name="color_name" select="2"/>
+					<field name="section_id"  select="1" />
 				</field>
 			</field>
 		</record>
@@ -63,6 +62,7 @@
 			<field name="arch" type="xml">
 				<field name="name" position="after">
 					<field name="color_name" />
+					<field name="section_id" />
 				</field>
 			</field>
 		</record>

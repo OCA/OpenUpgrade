@@ -59,7 +59,6 @@ class hr_holidays(osv.osv):
 		'manager_id' : fields.many2one('hr.employee', 'Holiday manager', invisible=False, readonly=True),
 		'notes' : fields.text('Notes'),
 		'number_of_days': fields.float('Number of Days in this Holiday Request',required=True),
-		'section_id': fields.many2one('crm.case.section', 'Section'),
 		'case_id':fields.many2one('crm.case', 'Case'),
 	}
 	_defaults = {
@@ -133,10 +132,10 @@ class hr_holidays(osv.osv):
 					if leaves_rest < leave_asked:
 						raise osv.except_osv('Attention!','You Cannot Validate leaves while available leaves are less than asked leaves.')
 					self.pool.get('hr.holidays.per.user').write(cr,uid,obj_holidays_per_user.id,{'leaves_taken':obj_holidays_per_user.leaves_taken + leave_asked})
-				if record.section_id:
+				if record.holiday_status.section_id:
 					vals={}
 					vals['name']=record.name
-					vals['section_id']=record.section_id.id
+					vals['section_id']=record.holiday_status.section_id.id
 					case_id=self.pool.get('crm.case').create(cr,uid,vals)
 					self.write(cr, uid, ids, {'case_id':case_id})
 			else:
@@ -161,6 +160,7 @@ class hr_holidays_status(osv.osv):
 	_inherit = 'hr.holidays.status'
 	_description = "Holidays Status"
 	_columns = {
+		'section_id': fields.many2one('crm.case.section', 'Section'),
 		'color_name' : fields.selection([('red', 'Red'), ('lightgreen', 'Light Green'), ('lightblue','Light Blue'), ('lightyellow', 'Light Yellow'), ('magenta', 'Magenta'),('lightcyan', 'Light Cyan'),('black', 'Black'),('lightpink', 'Light Pink'),('brown', 'Brown'),('violet', 'Violet'),('lightcoral', 'Light Coral'),('lightsalmon', 'Light Salmon'),('lavender', 'Lavender'),('wheat', 'Wheat'),('ivory', 'Ivory')],'Color of the status', required=True),
 	}
 	_defaults = {

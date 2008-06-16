@@ -6,9 +6,12 @@
 	"website" : "http://tinyerp.com/",
 	"description": """Human Ressources: Holidays tracking and workflow
 
+	This module allows you to manage holidays and holidays requests. For each employee, you can also define a number of available holidays per holiday status. 
+
 	Note that:
-	- You can set up your color preferencies in
+	- A synchronisation with an internal agenda (use of the crm module) is possible: in order to automaticly create a case when an holiday request is accepted, you have to link the holidays status to a case section. You can set up this info and your color preferencies in
 				HR \ Configuration \ Holidays Status
+	- An employee can make a negative holiday request (holiday request of -2 days for example), this is considered by the system as an ask for more off-days. It will increase his total of that holiday status available (if the request is accepted).
 	- There are two ways to print the employee's holidays:
 		* The first will allow to choose employees by department and is used by clicking the menu item located in
 				HR \ Holidays Request \ Print Summary of Holidays
