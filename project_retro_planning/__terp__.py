@@ -10,7 +10,7 @@
         ],
     "demo_xml" : [],
     "init_xml" : [],
-    "update_xml" : ["project_retro_planning_view.xml"],
+    "update_xml" : [],
     "active" : False,
     "installable" : True,
 }
