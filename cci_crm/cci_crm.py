@@ -26,7 +26,6 @@
 #
 ##############################################################################
 
-import netsvc
 from osv import fields, osv
 
 class meeting_confidential_info(osv.osv):
@@ -46,7 +45,17 @@ class crm_case(osv.osv):
     _inherit = 'crm.case'
     _desctiption = 'crm case'
     _columns = {
-        'meeting_id' : fields.many2one('meeting.confidential.info','Meeting confidential')
+        'meeting_id' : fields.many2one('meeting.confidential.info','Meeting confidential'),
+        'event_ids' : fields.many2many('event.event','event_case_rel','case_id','event_id','Events'),
                 }
 
 crm_case()
+
+class event_event(osv.osv):#to be check
+    _inherit = 'event.event'
+    _description = 'Event Event'
+    _columns = {
+        'case_ids' : fields.many2many('crm.case','case_event_rel','event_id','case_id','Cases')
+                }
+
+event_event()
