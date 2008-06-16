@@ -76,16 +76,34 @@ class md_hr_address(osv.osv):
                   
                             
                  }
-md_hr_address()   
+md_hr_address()
+
+class hr_employee_max_travel_allow(osv.osv):
+     _name = "hr.employee.max.travel.allow"
+     _description = "Maximun Travel allowance per year and per day"
+     _columns = {
+                 'amount_per_day' : fields.float("Maximun Amount Per Day",required=True),
+                 'amount_per_year' : fields.float("Maximum Amount Per Year",required=True),
+                 }
+   
+hr_employee_max_travel_allow()
 
 class hr_employee(osv.osv):
     
     def _expressed_by_year(self, cr, uid, ids, field_name, arg, context): 
-#        print"Amit j. Patel"
         res = {}
         for emp in self.browse(cr, uid, ids):
-            M = 50000
-            A = 50
+            data=self.pool.get('hr.employee.max.travel.allow')
+            ids = data.search(cr, uid, [])
+            vals = data.read(cr, uid, ids, ['amount_per_day', 'amount_per_year'], context)
+            print"::VALS::",vals
+            for val in vals:
+                M = val['amount_per_year']
+                A = val['amount_per_day']
+            print"::M::",M
+            print"::A::",A
+#            M = 50000
+#            A = 50
             dist_home_work =  emp.dist_home_work and emp.dist_home_work or 1.0
             cr.execute("""
                       select count(tmp.*) as no_of_days from hr_employee as hr_emp left outer join (
@@ -101,6 +119,7 @@ class hr_employee(osv.osv):
             number_of_workdays_per_week = tmp[0] and tmp[0] or 0
             if number_of_workdays_per_week and dist_home_work:
                 res[emp.id] = min( A * dist_home_work * number_of_workdays_per_week * 52 , M )
+               
             else:
                 res[emp.id] = 0.0
         return res
@@ -154,10 +173,7 @@ class hr_employee(osv.osv):
                 'evaluation_id': fields.one2many('hr_evaluation.evaluation', 'employee_id'),
                 'holidays_id': fields.one2many('hr.holidays', 'employee_id'),          
                 }
-    _defaults={
-               'attachment_earings_order': lambda *a: 1,
-               }
-    
+   
     
     def on_change_nbr_of_children(self,cr, uid, ids, nbr_of_children,context=None):   
         if nbr_of_children < 0:

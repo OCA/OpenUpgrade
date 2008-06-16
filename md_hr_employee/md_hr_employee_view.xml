@@ -263,5 +263,42 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_md_employee_address_tree"/>
 		</record>
+		
+		<!--
+		=============================================
+		Maximun Travel allowance per year and per day
+		=============================================
+		-->
+		<record model="ir.ui.view" id="view_hr_employee_max_travel_allow_form">
+			<field name="name">hr.employee.max.travel.allow.form</field>
+			<field name="model">hr.employee.max.travel.allow</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Maximun Travel allowance">
+					<field name="amount_per_day"/>
+					<field name="amount_per_year"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_hr_employee_max_travel_allow_tree">
+			<field name="name">hr.employee.max.travel.allow.tree</field>
+			<field name="model">hr.employee.max.travel.allow</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Maximun Travel allowance">
+					<field name="amount_per_day"/>
+					<field name="amount_per_year"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_hr_employee_max_travel_allow_tree">
+			<field name="res_model">hr.employee.max.travel.allow</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_hr_employee_max_travel_allow_tree"/>
+		</record>
+		<menuitem name="Human Resources/Configuration/Maximun Travel allowance"
+					id="menu_open_view_hr_employee_max_travel_allow_tree" 
+					action="open_view_hr_employee_max_travel_allow_tree"/>
 	</data>
 </terp>
