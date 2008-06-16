@@ -94,6 +94,8 @@
 			<form string="Offer Step Type">
 				<field name="name" select="1"/>
 				<field name="code"/>
+				<field name="flow_start" />
+				<field name="flow_stop" />
 			</form>
 		</field>
 	</record>
@@ -105,6 +107,8 @@
 			<tree string="Offer Step Type">
 				<field name="name" select="1"/>
 				<field name="code"/>
+				<field name="flow_start" />
+				<field name="flow_stop" />
 			</tree>
 		</field>
 	</record>	
@@ -122,6 +126,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Offer Steps">
+				<field name="type"/>
 				<field name="offer_id"/>
 				<field name="incoming_transition_ids" context="{'type':'incoming'}"/>
 				<field name="outgoing_transition_ids" context="{'type':'outgoing'}"/>
@@ -138,12 +143,12 @@
 				<notebook>
 					<page string="General">
 						<field name="offer_id"/>
-						<field name="code" select="2"/>
+						<field name="type" select="2" on_change="onchange_type(type)"/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
 						<field name="media_id" select="1"/>
-						<field name="type"/>
+						<field name="code"/>
 						<newline/>
 						<field name="origin_id" colspan="4"/>
 						<separator string="Products" colspan="4"/>

@@ -80,8 +80,14 @@ class dm_offer_step_type(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=8, required=True),
+        'flow_start' : fields.boolean('Flow Start'),
+        'flow_stop' : fields.boolean('Flow Stop'),
         }
     
+    _sql_constraints = [
+        ('code_uniq', 'UNIQUE(code)', 'The code must be unique!'),
+    ]
+        
 dm_offer_step_type()
     
 class dm_offer_step(osv.osv):
@@ -108,6 +114,7 @@ class dm_offer_step(osv.osv):
             code = '_'.join([offer_step.offer_id.code,(str(id)),(offer_step.type or '')])
             result[id]=code
         return result
+    
     def _get_offer_step_type(self,cr,uid,context={}):
         offer_step_type = self.pool.get('dm.offer.step.type')
         type_ids = offer_step_type.search(cr,uid,[])
@@ -141,6 +148,12 @@ class dm_offer_step(osv.osv):
 		'split_mode' : lambda *a : 'xor',
 		'join_mode' : lambda *a : 'xor',
     }
+
+    def onchange_type(self,cr,uid,ids,type):
+        step_type_ids= self.pool.get('dm.offer.step.type').search(cr,uid,[('code','=',type)])
+        step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,step_type_ids)[0]
+        return {'value':{'flow_start':step_type['flow_start'],'flow_stop':step_type['flow_stop']}}
+
 
     def state_close_set(self, cr, uid, ids, *args):
         cases = self.browse(cr, uid, ids)
@@ -181,11 +194,6 @@ class dm_offer_step_transition(osv.osv):
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-        result = super(osv.osv, self).fields_view_get(cr, uid, view_id,view_type,context)
-        print result
-        return result
-    
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
         if context.has_key('type'):

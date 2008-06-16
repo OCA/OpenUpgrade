@@ -156,6 +156,7 @@
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all1">
+		<field name="name">Open Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
@@ -166,6 +167,7 @@
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all1" action="action_campaign_form_all1"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all2">
+		<field name="name">Draft Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
@@ -176,6 +178,7 @@
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all3">
+		<field name="name">Closed Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
@@ -190,6 +193,7 @@
 	# ------------------------------------------------------
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my">
+		<field name="name">My Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
@@ -200,6 +204,7 @@
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my1">
+		<field name="name">My Open Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
@@ -210,6 +215,7 @@
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my2">
+		<field name="name">My Draft Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
@@ -220,6 +226,7 @@
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my3">
+		<field name="name">My Closed Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
@@ -330,6 +337,7 @@
 	</record>	
 
 	<record model="ir.actions.act_window" id="action_campaign_proposition">
+		<field name="name">All Campaigns Propositions</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition</field>
 		<field name="view_type">form</field>
@@ -339,6 +347,7 @@
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns Propositions" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_proposition_my">
+		<field name="name">My Campaigns Propositions</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition</field>
 		<field name="view_type">form</field>

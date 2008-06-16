@@ -240,14 +240,12 @@ class dm_customer_offer(osv.osv):
 #                                        change workitem
         
         if workitem_id : 
-            print vals
             workitem.write(cr,uid,workitem_id,vals)
 #                                        create new workitem
         else:
             vals['customer_id']=customer_id
             if segment_id :
                 vals['segment_id']=segment_id[0]
-            print vals
             workitem.create(cr,uid,vals)
         
         self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
@@ -277,7 +275,6 @@ class dm_offer(osv.osv):
             sql = "select write_date,create_date from dm_offer where id = %d"%id
             cr.execute(sql)
             res = cr.fetchone()
-            print res[1]
             if res[0]:
                 result[id]=res[0].split(' ')[0]
             else :
@@ -346,13 +343,12 @@ class dm_offer(osv.osv):
         offers[0].state 
         self.__history(cr,uid, offers, 'open')
         self.write(cr, uid, ids, {'state':'open'})
-#                            create transitions
-        steps = self.pool.get('dm.offer.step').search(cr,uid,(offers[0].id,'=','offer_id'))
-        print steps
-        for step in steps:
-            incoming_transition_ids = step.incoming_transition_ids
-            outgoign_transition_ids = step_outgoing_transition_ids
-        
+##                            create transitions
+#        step_ids = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offers[0].id)])
+#        steps = self.pool.get('dm.offer.step').browse(cr,uid,step_ids)
+#        for step in steps:
+#            incoming_transition_ids = step.incoming_transition_ids
+#            outgoign_transition_ids = step.outgoing_transition_ids
         return True 
     
     def state_freeze_set(self, cr, uid, ids, *args):
@@ -368,6 +364,23 @@ class dm_offer(osv.osv):
         self.__history(cr,uid, offers, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
+    
+    def copy(self, cr, uid, id, default=None, context=None):
+        if default is None:
+            default = {}
+        default = default.copy()
+        
+#            offer is copied
+        offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
+
+        offer_step_obj = self.pool.get('dm.offer.step')
+        offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
+        offer_steps = offer_step_obj.browse(cr,uid,offer_step_ids)
+        
+        for step in offer_steps :
+            new_id = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id},{})
+        return offer_id    
+    
 dm_offer()
 
 class dm_offer_history(osv.osv):

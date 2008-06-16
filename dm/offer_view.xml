@@ -108,6 +108,7 @@
 	# ------------------------------------------------------
 
 	<record model="ir.actions.act_window" id="action_offer_form">
+		<field name="name">All Offers</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -117,6 +118,7 @@
 	<menuitem name="Direct Marketing/Offer/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_all1">
+		<field name="name">Open Offer</field>	
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -127,6 +129,7 @@
 	<menuitem name="Direct Marketing/Offer/All Offers/Open Offers" id="menu_action_offer_form_all1" action="action_offer_form_all1"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_all2">
+		<field name="name">Draft Offer</field>	
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -137,6 +140,7 @@
 	<menuitem name="Direct Marketing/Offer/All Offers/Draft Offers" id="menu_action_offer_form_all2" action="action_offer_form_all2"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_all3">
+		<field name="name">Closed Offer</field>	
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -147,6 +151,7 @@
 	<menuitem name="Direct Marketing/Offer/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_all_model">
+		<field name="name">Offer Models</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -162,6 +167,7 @@
 	# ------------------------------------------------------
 
 	<record model="ir.actions.act_window" id="action_offer_form_my">
+		<field name="name">My Offers</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -172,6 +178,7 @@
 	<menuitem name="Direct Marketing/Offer/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
  
 	<record model="ir.actions.act_window" id="action_offer_form_my1">
+		<field name="name">My Open Offer</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -182,6 +189,7 @@
 	<menuitem name="Direct Marketing/Offer/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_my2">
+		<field name="name">My Draft Offer</field>	
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -192,6 +200,7 @@
 	<menuitem name="Direct Marketing/Offer/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_my3">
+		<field name="name">My Closed Offer</field>	
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -256,6 +265,7 @@
 	-->
 
 	<record model="ir.actions.act_window" id="action_offer_categ_form">
+		<field name="name">All Offers</field>	
 		<field name="name">Edit Categories</field>
 		<field name="type">ir.actions.act_window</field>			
 		<field name="res_model">dm.offer.category</field>
@@ -282,6 +292,13 @@
 	
 	<menuitem name="Direct Marketing/Offer/Offers By Category" id="menu_action_offer_by_category" action="action_offer_categ_main"/>
 
+
+	<!--
+	======================
+	History
+	======================
+	-->
+
 	<record model="ir.ui.view" id="view_offer_history_form">
 		<field name="name">dm.offer.history.form</field>
 		<field name="model">dm.offer.history</field>
@@ -307,6 +324,12 @@
 			</tree>
 		</field>
 	</record>
+
+	<!--
+	======================
+	Preoffer
+	======================
+	-->
 
 	<record model="ir.ui.view" id="view_dm_preoffer_form">
 		<field name="name">dm.preoffer.form</field>
@@ -358,6 +381,12 @@
 		<field name="view_id" ref="view_dm_preoffer_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Offer/All PreOffers" id="menu_dm_preoffer_form" sequence="1" action="action_dm_preoffer_form"/>
+		
+	<!--
+	======================
+	Customer
+	======================
+	-->		
 		
 	<record model="ir.ui.view" id="view_dm_customer_form">
 		<field name="name">dm.customer.form</field>
@@ -430,12 +459,14 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>	
+	<menuitem name="Direct Marketing/Offer/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
+		
 	<!--
 	=======================================================
 	Customer Order Views
 	=======================================================
 	-->	
+	
 	<record model="ir.ui.view" id="view_dm_customer_offer_form">
 		<field name="name">dm.customer.offer.form</field>
 		<field name="model">dm.customer.offer</field>
@@ -487,6 +518,41 @@
 		<field name="view_id" ref="view_dm_customer_offer_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Offer/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
+
+	<!--
+	=======================================================
+	Offer Delayw
+	=======================================================
+	-->	
+	<record model="ir.ui.view" id="view_dm_offer_delay_form">
+		<field name="name">dm.offer.delay.form</field>
+		<field name="model">dm.offer.delay</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">	
+			<form string="Offer Delay">
+				<field name="name"/>
+				<field name="value"/>
+			</form>
+		</field>
+	</record>	
+	<record model="ir.ui.view" id="view_dm_offer_delay_tree">
+		<field name="name">dm.offer.delay.tree</field>
+		<field name="model">dm.offer.delay</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Offer Delays">
+				<field name="name"/>
+				<field name="value"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_dm_offer_delay_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer.delay</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_dm_offer_delay_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Offer/Offer Delays" id="menu_action_dm_offer_delay_form" sequence="2" action="action_dm_offer_delay_form"/>	
 
 </data>
 </terp>
