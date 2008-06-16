@@ -257,7 +257,7 @@ class audittrail_log(osv.osv):
 		"object_id": fields.many2one('ir.model', 'Object'),
 		"user_id": fields.many2one('res.users', 'User'),
 		"method": fields.selection((('read', 'Read'), ('write', 'Write'), ('unlink', 'Delete'), ('create', 'Create')), "Method"),
-		"timestamp": fields.datetime("Timestamp"),
+		"timestamp": fields.datetime("Date"),
 		"res_id":fields.integer('Resource Id'),
 		"line_ids":fields.one2many('audittrail.log.line','log_id','Log lines')
 		

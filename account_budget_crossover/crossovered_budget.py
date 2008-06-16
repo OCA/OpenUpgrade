@@ -134,8 +134,7 @@ class crossovered_budget_lines(osv.osv):
 		'practical_amount':fields.function(_pra_amt,method=True, string='Practical Amount',type='float'),
 		'theoritical_amount':fields.function(_theo_amt,method=True, string='Theoritical Amount',type='float'),
 		'percentage':fields.function(_perc,method=True, string='Percentage',type='float'),
-
-	 }
+	}
 crossovered_budget_lines()
 
 class account_budget_post(osv.osv):
@@ -190,3 +189,5 @@ class account_analytic_account(osv.osv):
 	}
 
 account_analytic_account()
+
+

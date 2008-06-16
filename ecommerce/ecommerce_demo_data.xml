@@ -385,7 +385,7 @@
 		<record id="ecommerce_order_line_pc0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_pc2"/>
 			<field name="order_id" ref="ecommerce_saleorder_so0"/>
-			<field name="product_uom_id" ref="product.product_uom_pce"/>
+			<field name="product_uom_id" ref="product.product_uom_unit"/>
 			<field eval="50000.0" name="price_unit"/>
 			<field eval="3.0" name="product_qty"/>
 			<field eval="&quot;PC &quot;" name="name"/>
@@ -393,7 +393,7 @@
 		<record id="ecommerce_order_line_mouse0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_25"/>
 			<field name="order_id" ref="ecommerce_saleorder_so0"/>
-			<field name="product_uom_id" ref="product.product_uom_pce"/>
+			<field name="product_uom_id" ref="product.product_uom_unit"/>
 			<field eval="10000.0" name="price_unit"/>
 			<field eval="70.0" name="product_qty"/>
 			<field eval="&quot;Mouse&quot;" name="name"/>
@@ -420,7 +420,7 @@
 		<record id="ecommerce_order_line_processor0" model="ecommerce.order.line">
 			<field name="product_id" ref="product.product_product_cpu_gen"/>
 			<field name="order_id" ref="ecommerce_saleorder_so1"/>
-			<field name="product_uom_id" ref="product.product_uom_pce"/>
+			<field name="product_uom_id" ref="product.product_uom_unit"/>
 			<field eval="12000.0" name="price_unit"/>
 			<field eval="16.0" name="product_qty"/>
 			<field eval="&quot;Processor&quot;" name="name"/>
