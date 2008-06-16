@@ -78,7 +78,7 @@ self.pool.get('res.partner').write(cr, uid, [context['action_id']], {'name':name
 				</group>
 				<group colspan="2" col="2">
 					<label string="This button close the window without saving the form:" align="1.0"/>
-					<button name="cancel_close" string="Cancel / Close" type="cancel"/>
+					<button special="cancel" string="Cancel / Close"/>
 				</group>
 			</form>
 		</field>
