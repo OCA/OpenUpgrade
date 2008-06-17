@@ -33,6 +33,18 @@ from osv import fields, osv
 class account_invoice(osv.osv):
     _inherit = 'account.invoice'
     _description = 'Account Invoice'
+
+    def _amount_residual(self, cr, uid, ids, name, args, context={}):
+        res = {}
+        data_inv = self.browse(cr, uid, ids)
+        for inv in data_inv:
+            paid_amt = 0.0
+            to_pay = inv.amount_total
+            for lines in inv.move_lines:
+                paid_amt = paid_amt + lines.credit
+            res[inv.id] = to_pay - paid_amt
+        return res
+
     def _get_lines(self, cr, uid, ids, name, arg, context=None):
         res = {}
         for id in ids:
@@ -52,7 +64,8 @@ class account_invoice(osv.osv):
         return res
 
     _columns = {
-        'move_lines':fields.function(_get_lines , method=True,type='many2many' , relation='account.move.line',string='Move Lines')
+        'move_lines':fields.function(_get_lines , method=True,type='many2many' , relation='account.move.line',string='Move Lines'),
+        'residual': fields.function(_amount_residual, method=True, digits=(16,2),string='Residual', store=True),
                 }
 
 account_invoice()
