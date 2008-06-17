@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		<record id="dm_offer_delay_immediate0" model="dm.offer.delay">
+			<field eval="&quot;Immediate&quot;" name="name"/>
+			<field eval="0" name="value"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_delay_days0" model="dm.offer.delay">
+			<field eval="&quot;4 days&quot;" name="name"/>
+			<field eval="4" name="value"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_startingmail0" model="dm.offer.step.type">
+			<field eval="&quot;SM&quot;" name="code"/>
+			<field eval="&quot;Starting Mail&quot;" name="name"/>
+			<field eval="&quot;1&quot;" name="flow_start"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_intermediatemail0" model="dm.offer.step.type">
+			<field eval="&quot;IM&quot;" name="code"/>
+			<field eval="&quot;Intermediate Mail&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_relaunching0" model="dm.offer.step.type">
+			<field eval="&quot;RL&quot;" name="code"/>
+			<field eval="&quot;Relaunching&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_testoffermodel0" model="dm.offer">
+			<field eval="&quot;TOM&quot;" name="code"/>
+			<field eval="[(6,0,[])]" name="trademark_country_ids"/>
+			<field eval="[(6,0,[])]" name="forbidden_state_ids"/>
+			<field name="copywriter_id" ref="base.main_partner"/>
+			<field name="lang_orig" ref="base.lang_en"/>
+			<field eval="[(6,0,[])]" name="category_ids"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field eval="&quot;model&quot;" name="type"/>
+			<field eval="&quot;1&quot;" name="active"/>
+			<field eval="&quot;validated&quot;" name="legal_state"/>
+			<field eval="&quot;Testoffermodel&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="forbidden_country_ids"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_0" model="dm.offer.step">
+			<field eval="[(6,0,[])]" name="document_ids"/>
+			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
+			<field eval="&quot;xor&quot;" name="join_mode"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field eval="&quot;xor&quot;" name="split_mode"/>
+			<field eval="[(6,0,[])]" name="product_ids"/>
+			<field eval="&quot;1&quot;" name="flow_start"/>
+			<field eval="&quot;SM&quot;" name="type"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_1" model="dm.offer.step">
+			<field eval="[(6,0,[])]" name="document_ids"/>
+			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
+			<field eval="&quot;xor&quot;" name="join_mode"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field eval="&quot;xor&quot;" name="split_mode"/>
+			<field eval="[(6,0,[])]" name="product_ids"/>
+			<field eval="&quot;IM&quot;" name="type"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_1" model="dm.offer.step"/>
+		<record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
+			<field name="step_from" ref="dm_offer_step_0"/>
+			<field name="step_to" ref="dm_offer_step_1"/>
+			<field eval="&quot;automatic&quot;" name="condition"/>
+			<field name="delay_id" ref="dm_offer_delay_immediate0"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_campaign_0" model="dm.campaign">
+			<rield eval="&quot;general&quot;" name="campaign_type"/>
+			<field eval="&quot;campaign01&quot;" name="name"/>
+			<field name="country_id" ref="base.be"/>
+			<field eval="&quot;pending&quot;" name="planning_state"/>
+			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
+			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_campaign_0" model="dm.campaign"/>
+		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
+			<field eval="&quot;campaignpropo01&quot;" name="name"/>
+			<field name="camp_id" ref="dm_campaign_0"/>
+			<field eval="&quot;init&quot;" name="proposition_type"/>
+		</record>
+		<record id="dm_campaign_proposition_segment_0" model="dm.campaign.proposition.segment">
+			<field eval="&quot;segment01&quot;" name="name"/>
+			<field eval="&quot;SEG01&quot;" name="action_code"/>
+			<field name="proposition_id" ref="dm_campaign_proposition_0"/>
+			<field eval="1000" name="qty"/>
+		</record>
+	</data>
+</terp>
