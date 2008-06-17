@@ -109,32 +109,32 @@ class dm_campaign_proposition(osv.osv):
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching')],"Type"),
-		'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
-        'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),        
+        'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
+        'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
         'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
         'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
     }
-    
+
     _defaults = {
         'proposition_type' : lambda *a : 'init',
     }
-    
 
     def _check(self, cr, uid, ids=False, context={}):
         '''
-        Function called by the sceduler to create workitem from the segments of propositions.
+        Function called by the scheduler to create workitem from the segments of propositions.
         '''
         ids = self.search(cr,uid,[('date_start','=',time.strftime('%Y-%m-%d %H:%M:%S'))])
         for id in ids:
             res = self.browse(cr,uid,[id])[0]
             offer_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',res.camp_id.offer_id.id),('flow_start','=',True)])
-            if offer_step_id : 
-                vals = {'step_id':offer_step_id[0],'segment_id':id}
-                new_id = self.pool.get('dm.offer.step.workitem').create(cr,uid,vals)
+            if offer_step_id :
+                for segment in res.segment_ids:
+                    vals = {'step_id':offer_step_id[0],'segment_id':segment.id}
+                    new_id = self.pool.get('dm.offer.step.workitem').create(cr,uid,vals)
         return True
-    
+
 dm_campaign_proposition()
 
 class dm_campaign_proposition_segment(osv.osv):

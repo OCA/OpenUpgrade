@@ -118,7 +118,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_type_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Offer Step Type" id="menu_action_step_type_form" action="action_step_type_form"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Step Types" id="menu_action_step_type_form" action="action_step_type_form"/>
 	
 	<record model="ir.ui.view" id="view_offer_step_tree">
 		<field name="name">dm.offer.step.tree</field>
@@ -337,7 +337,7 @@
 		view_type="form"
 		view_mode="tree,form"
 		id="act_offer_product_opened"/>
-		
+		<!--
 		<record model="ir.cron" id="ir_cron_update_wrkitem">		
 			<field name="name">Update Workitem</field>
 			<field name="interval_number">1</field>
@@ -348,5 +348,6 @@
 			<field name='function' eval="'_update_workitem'"/>
 			<field name="args" eval="'()'"/>
 		</record>
+		-->
 </data>
 </terp>

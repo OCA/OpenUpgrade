@@ -234,9 +234,13 @@ class dm_offer_step_workitem(osv.osv):
         step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
         if step.outgoing_transition_ids:
             transitions = dict(map(lambda x : (x.id,x.delay_id.value),step.outgoing_transition_ids))
-            trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values()) and v!=0][0]
+            print "DEBUG - Creating new workitem"
+            print "DEBUG - transitions items: ", transitions.items()
+            print "DEBUG - transitions values: ", transitions.values()
+            trans = [(k,v) for k,v in transitions.items() if v == min(transitions.values())][0]
             new_date = datetime.date.today() + datetime.timedelta(trans[1])
             vals['date_next_action'] = new_date
+            print "DEBUG - vals : ",vals
         return super(dm_offer_step_workitem, self).create(cr, uid, vals, context)
 
     def _update_workitem(self, cr, uid, ids=False, context={}):
@@ -258,12 +262,15 @@ class dm_offer_step_workitem(osv.osv):
                 trans = [k for k,v in transitions.items() if v == min(transitions.values())][0]
                 # If relaunching
                 if trans.step_to.type == 'RL':
-                    pres = self.pool.get('dm.campaign.proposition').copy(cr, uid, wrkitem.segment_id.proposition_id.id,
+                    prop_id = self.pool.get('dm.campaign.proposition').copy(cr, uid, wrkitem.segment_id.proposition_id.id,
                         {'proposition_type':'relaunching', 'initial_proposition_id':wrkitem.segment_id.proposition_id.id})
-                    print "DEBUG - new propo id : ",pres
-#                   self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
-                print "DEBUG - Updating workitem for segment"
-                self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
+                    print "DEBUG - Creating new proposition - id : ",prop_id
+                    self.pool.get('dm.campaign.proposition.segment').write(cr, uid, wrkitem.segment_id.id, {'proposition_id':prop_id})
+                    re_step_id = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',step.offer_id.id),('flow_start','=',True),('media_id','=',step.media_id.id)])
+                    self.write(cr,uid,wrkitem.id,{'step_id':re_step_id[0]}) 
+                else :
+                    print "DEBUG - Updating workitem for segment"
+                    self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
         return True
 
 dm_offer_step_workitem()

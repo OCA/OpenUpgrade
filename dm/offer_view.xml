@@ -380,7 +380,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_preoffer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All PreOffers" id="menu_dm_preoffer_form" sequence="1" action="action_dm_preoffer_form"/>
+	<menuitem name="Direct Marketing/Offer/All PreOffers" id="menu_dm_preoffer_form" sequence="2" action="action_dm_preoffer_form"/>
 		
 	<!--
 	======================
@@ -459,7 +459,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
+	<menuitem name="Direct Marketing/Offer/Customers" id="menu_dm_customer_menu" sequence="1" />
+	<menuitem name="Direct Marketing/Offer/Customers/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
 		
 	<!--
 	=======================================================
@@ -517,7 +518,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_offer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
+	<menuitem name="Direct Marketing/Offer/Customers/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>	
 
 	<!--
 	=======================================================
