@@ -30,5 +30,43 @@
 				</notebook>
 			</field>
 		</record>
+
+<!-- add residual field on invoice object form + tree -->
+		<record model="ir.ui.view" id="invoice_form_payment_inherit">
+			<field name="name">account.invoice.form.residual</field>
+			<field name="type">form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_form"/>
+			<field name="arch" type="xml">
+				<field name="reconciled" position="after">
+					<field name="residual"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="invoice_tree_inherit">
+			<field name="name">account.invoice.tree.residual</field>
+			<field name="type">form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_tree"/>
+			<field name="arch" type="xml">
+				<field name="state" position="before">
+					<field name="residual"/>
+				</field>
+			</field>
+		</record>
+
+	<record model="ir.ui.view" id="invoice_supplier_form_residual">
+			<field name="name">account.invoice.supplier.inherit</field>
+			<field name="type">form</field>
+			<field name="model">account.invoice</field>
+			<field name="inherit_id" ref="account.invoice_supplier_form"/>
+			<field name="arch" type="xml">
+				<field name="reconciled" position="after">
+					<field name="residual"/>
+				</field>
+			</field>
+		</record>
+
 	</data>
 </terp>
