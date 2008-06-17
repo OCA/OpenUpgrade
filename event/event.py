@@ -112,6 +112,15 @@ class event(osv.osv):
 				res[event.id] = 0
 		return res
 
+	def write(self, cr, uid, ids,vals, *args, **kwargs):
+		res = super(event,self).write(cr, uid, ids,vals, *args, **kwargs)
+		if 'date_begin' in vals and vals['date_begin']:
+			data_event = self.browse(cr, uid, ids)
+			for eve in data_event:
+				if eve.project_id:
+					self.pool.get('project.project').write(cr, uid, eve.project_id.id, {'date_end':eve.date_begin})
+		return res
+
 	_columns = {
 		'type': fields.many2one('event.type', 'Type'),
 		'section_id': fields.many2one('crm.case.section', 'Case section', required=True),
