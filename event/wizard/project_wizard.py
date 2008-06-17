@@ -33,6 +33,8 @@
 import wizard
 import pooler
 
+import time
+
 parameter_form = '''<?xml version="1.0"?>
 <form string="Event" colspan="4">
     <field name="project_id"
@@ -47,8 +49,12 @@ def _create_duplicate(self, cr, uid, data, context):
     event_obj=pooler.get_pool(cr.dbname).get('event.event')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
     duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True})
-    project_obj.write(cr, uid, duplicate_project_id, {'name': "copy of " + project_obj.browse(cr, uid, duplicate_project_id, context).name})
-    event_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
+    project_obj.write(cr, uid, duplicate_project_id, {'name': "copy of " + project_obj.browse(cr, uid, duplicate_project_id, context).name , 'date_start':time.strftime('%Y-%m-%d')})
+    project_data = project_obj.browse(cr, uid, duplicate_project_id)
+    if project_data.date_end:
+        event_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id ,'date_begin':project_data.date_end})
+    else:
+        event_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id })
     return {}
 
 class wizard_event_project(wizard.interface):
