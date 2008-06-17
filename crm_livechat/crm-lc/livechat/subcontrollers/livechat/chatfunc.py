@@ -5,17 +5,19 @@ import sha, time
 import sys,os,xmpp
 import signal
 import thread
-import xmlrpclib
+import xmlrpclib,socket
 from livechat import rpc, common
 from livechat.rpc import *
-
+import jabber
+import string
 
 class ChatFunc(controllers.RootController):
 
     dbname = config.get('dbname', path="crm")
     dbuser = config.get('dbuser', path="crm")
     dbpwd = config.get('dbpwd', path="crm")
-
+    
+    sock = xmlrpclib.ServerProxy('http://localhost:8069/xmlrpc/object')
 
     @expose(template="livechat.templates.welcome")
     def index(self):
@@ -25,23 +27,14 @@ class ChatFunc(controllers.RootController):
 
     @expose(format='json')
     def chatbox2(self):
-#        print "\nMsgList:::",self.msglist
-#    MsgList:::[{'message': 'sa', 'type': 'sender', 'sender': 'cza@tinyerp.com'},
-#                {'message': 'dafadsf', 'type': 'receiver', 'sender': 'hko@tinyerp.com/Home'},
-#                {'message': 'fdasfa', 'type': 'sender', 'sender': 'cza@tinyerp.com'},
-#                {'message': 'chin', 'type': 'receiver', 'sender': 'hko@tinyerp.com/Home'}]
-
         return dict(msglist = self.msglist)
 
     @expose(template="livechat.templates.main_page")
     def select_topic(self,**kw):
-            proxy = rpc.RPCProxy("crm_livechat.livechat")
-            ids = proxy.search([('name','not like','Dummy'+"%"),('state','=','active')])
-            print "IDS",ids
-            res = proxy.read(ids, ['id','name','state','max_per_user'])
-            print "This is ",res
-            return dict(topiclist = res)
-
+        proxy = rpc.RPCProxy("crm_livechat.livechat")
+        ids = proxy.search([('name','not like','Dummy'+"%"),('state','=','active')])
+        res = proxy.read(ids, ['id','name','state','max_per_user'])
+        return dict(topiclist = res)
 
     @expose()
     def start_chat(self,**kw):
@@ -49,7 +42,6 @@ class ChatFunc(controllers.RootController):
         topicid = kw.get('topicid')
         print "toppicid:::",topicid
         message = self.mainhandler(cl,topicid)
-        print "======message========",message
         return dict(message=message)
 
     @expose(template="livechat.templates.chat_window")
@@ -57,20 +49,44 @@ class ChatFunc(controllers.RootController):
         return dict()
 
     def mainhandler(self,cl,topicid):
-        print "Getting in MainHandler..."
-#        partners = rpc.RPCProxy("crm_livechat.livechat.partner").search([('name','like','Bond'])
-
+        clt = ""
         if not (self.client):
-            print "Connection Not Found...  Making Connection again...\n"
             cl = self.myConnection(topicid)
-            if cl=='NoActive':
-                print "No user left"
+            
+            cl.RegisterHandler('presence', self.presenceCB)
+            thread.start_new_thread(self.presencing,("Presencing",2,cl))
+            
+            c = cl.getRoster()
+            self.dis = c._data
+            self.contactlist = []
+            for k,v in self.dis.items():
+                self.contactlist.append(str(k))
+            cl.RegisterHandler('message', self.messageCB)
+            cl.sendInitPresence()
+            self.client=cl
+            self.userlist = []
+            for k,v in self.livechatdata['user'].items():
+                self.userlist.append(str(self.livechatdata['user'][k]['login']))
+            
+            users = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
+            for usr in users:
+                print "Searching for user ::::::::::::::::", usr
+                usr = self.livechatdata['user'][str(usr)]['login']
+                self.user= usr
+                print "The First user is this ....................", self.user
+                while not self.finalist.has_key(self.user):
+                    print "Waituing ....................>>>>>>>>>>>>>>>>>>"
+                if self.finalist[str(self.user)] == "online":   
+                    self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)],False,self.partnerdata['id'])
+                else:
+                    print "________________Priyesah"
+                    clt="NoActive"
+            
+            if clt=='NoActive':
                 return "Maximum Number of Connection exhausted."
-            elif cl == 'ConError':
-                print "Failed to Connect..."
+            elif clt == 'ConError':
                 return "Failed to Connect."
             else:
-                print "\nStarting Thread to Recieve...."
                 self.cont = True
                 thread.start_new_thread(self.recieving,("Recieving",5,cl))
         else:
@@ -78,6 +94,7 @@ class ChatFunc(controllers.RootController):
         return "Active"
 
     def recieving(self,string,sleeptime,cl,*args):
+        self.pcont = False
         while self.cont:
             self.recthread = os.getpid()
             try:
@@ -85,8 +102,18 @@ class ChatFunc(controllers.RootController):
             except KeyboardInterrupt:
                 return 0
                 time.sleep(sleeptime)
-        print "Ending Receiving Thread"
         self.cont = True
+        return 0
+    
+    def presencing(self,string,sleeptime,cl,*args):
+        while self.pcont:
+            self.prethread = os.getpid()
+            try:
+                v = cl.Process(1)
+            except KeyboardInterrupt:
+                return 0
+                time.sleep(sleeptime)
+        self.pcont = True
         return 0
 
     @expose()
@@ -94,24 +121,23 @@ class ChatFunc(controllers.RootController):
        temp=[]
        if(self.client):
            self.client.disconnect()
-           print "Disconnection called"
            self.client=None
-       print "Tghis is ",self.msglist 
        if (kw.get('close')):
            for i in range(0,len(self.msglist)):
-               s=''
-               s = self.msglist[i]['sender']
-               s = s + " : "
-               s  = s +self.msglist[i]['message']
-               print "ttttTTT:::::",str(s)
-               
-               temp.append(str(s))
-#              temp.append(self.msglist[i][0])
-           print "TEMP IS:::::::::", temp
-           logentry = '\n'.join(temp)
-           print logentry,"----------->"
-           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.topicid,self.sessionid,True,logentry)           
-#           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(int(self.topicid),int(self.sessionid),True,logentry)
+             if  self.msglist[i] == 'UnknownCommand' or self.msglist[i] == 'Command':
+                 temp.append(self.msglist[i]) 
+                 print "Temporary is this . . . .  ............", temp
+                 continue
+             else:
+                 temp.append(str(self.msglist[i]['sender'] + " : " + self.msglist[i]['message']))
+                 print "Temporary is as follows as ..............", temp
+          
+           b = '\n'.join(temp)
+           cmd = b.split('Command')
+           print "After Splitting the command is as follows .........................", cmd
+           self.logentry = '\n'.join(cmd)
+           print self.logentry,"-----------> First part "
+           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.topicid,self.sessionid,True,self.logentry)           
            print "Final result is-------------->", res
            self.msglist=[]
            self.cont = False
@@ -119,97 +145,120 @@ class ChatFunc(controllers.RootController):
    
     @expose(format='json')
     def justsend(self,**kw):
-        print "kw:::::::::::",kw
         sendto = ''
         msg = kw.get('messg')
         if(self.user):
             print "sending",msg," :to:  ",self.user
             sendto = self.user
-        print "sendto:::",sendto
         self.recepients = sendto
         msg_obj = xmpp.protocol.Message(sendto,msg);
         self.client.send(msg_obj)
-#        msgformat = (str(self.login) + " : "+ str(msg),'sender')
         msgformat = {"sender":str(self.login) , "message" : str(msg),"type":'sender'}
-        print msgformat,"::::::"
         self.msglist.append(msgformat)
-        print "returning"
         return dict()
 
     def myConnection(self,topicid):
         cr = ''
         uid = ''
         self.topicid = topicid
-        print ">>>>>>>>>>>>>",topicid
+        
         '''
         1. Partner Check
         2. User Availablity for support
         3. if 1 and 2 proceed else stop
         '''
-        patnerdata=rpc.RPCProxy('crm_livechat.livechat.partner').get_live_parnter()
-        print "This is parnter data",patnerdata
-        livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration(topicid)
-        if livechatdata and patnerdata:
-            print "This is first live chat data",livechatdata
-            print "This is first parnter chat data",patnerdata
-#            partnerlist = livechatdata['partner']
-#
-#            pp=map(lambda p:p,partnerlist)
-#            print "////////////////////////",pp
-
-#            jid = livechatdata['partner'][pp[0]]['login']
-            jid = patnerdata['jid']
-#            jserver = livechatdata['partner'][pp[0]]['server']
-            jserver = patnerdata['server']
-            print "////////////////////////",jid,jserver
+        self.partnerdata=rpc.RPCProxy('crm_livechat.livechat.partner').get_live_parnter()
+        self.partid = self.partnerdata['jid']
+        print "Partner is this  :::::::::::::", self.partid 
+        self.livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration(topicid)
+       
+        if self.livechatdata and self.partnerdata:
+            jid = self.partnerdata['jid']
+            jserver = self.partnerdata['server']
             self.login = jid
-            pwd = patnerdata['pwd']
-            print "making connection with::",jid," and pwd :::",pwd
+            pwd = self.partnerdata['pwd']
             jid=xmpp.protocol.JID(jid)
             cl=xmpp.Client(jid.getDomain(),debug=[])
-
-
             x = cl.connect((jserver,5223))
 
             if x == "":
-                print " Not Connected  \n Connection Error....."
                 return "ConError"
             else:
-                print "Connected....\nStarting to Authenticate!!!!!!!!!!!!!!...."
-
                 try:
                     auth = cl.auth(jid.getNode(),pwd,"test")
                 except AttributeError, err:
                     raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
-
-                print "cl Authenticated...."
-                cl.RegisterHandler('message', self.messageCB)
-                cl.sendInitPresence();
-                self.client=cl
-                print "This is live chat data:",livechatdata,topicid
-                user = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
-                print "\n\n\n\nThe user i get :",user
-                user = livechatdata['user'][str(user)]['login']
-                self.user= user
-
-                if(self.user):
-        #            for x in livechatdata['partner'].keys()
-        #                print x
-#                    print "yyY",pp
-                    self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)], False,patnerdata['id'])
-                    print "\nCreating Session ........";
-        else:
-            cl="NoActive"
+                
         return cl
-
+   
     def messageCB(self,conn,msg):
+        cmd = 0
+        body = str(msg.getBody())
+        who = str(msg.getFrom())
+        who =  who.split('/')[0]
+        print "Who is this ? .....Don .....Don ", who
+        print "Self.user is this  ? ........", self.user 
+        if str(who) == str(self.user):
+            print "they are equals :::::::::::::"
+            index=body.find('/')
+            body=body[index:]
+            
+            if body[0]=='/':
+                cmd = -1
+                cmd=body.split(' ')[0][1:]
+                
+                if cmd.lower()=='pass':
+                    id = body.split(' ')[1]
+                    if id == self.partid:
+                        print "Given id is not Valid .................."
+                    else :
+                        self.newuser = id
+                        self.flagnewuser = True
+                        self.Reghandler(id)
+                        cmd = 1
+    
+                elif cmd.lower()=='close':
+                    print "*****************************************************close"
+          
         print "Messge Arriving", msg
         print "\nContent: " + str(msg.getBody())
         print "Sender: " + str(msg.getFrom())
-#        msgformat = ( str(msg.getFrom()) + " : "+str(msg.getBody()), 'receiver')
-        msgformat = {"sender":str(msg.getFrom()) , "message" : str(msg.getBody()),"timestamp": str(msg.getTimestamp()),"type":'receiver'}
-        self.msglist.append(msgformat)
-
+        
+        msgformat = {"sender" : str(msg.getFrom()) , "message" : str(msg.getBody()),"timestamp" : str(msg.getTimestamp()),"type" : 'receiver'}
+        if cmd == 0:
+            self.msglist.append(msgformat)
+        elif cmd == -1:
+            self.msglist.append('UnknownCommand')
+        elif cmd == 1:
+            self.msglist.append('Command')            
+    
+    def presenceCB(self,conn,prs):
+        who=prs.getFrom()
+        usr_type = prs.getType()
+        show = prs.getShow()
+        status = prs.getStatus()
+        
+        if len(str(who).split('/')[0]) == 1:
+            check = who
+        else:
+            check = str(who).split('/')[0]
+        
+        if usr_type == 'unavailable':
+            self.finalist[check] = 'offline'
+        if usr_type == None and show == 'away' :    
+            self.finalist[check] = 'away'
+        elif usr_type == None and show == None:
+            self.finalist[check] = 'online'
+                      
+    def Reghandler(self, user):
+        if self.flagnewuser:
+            if self.finalist[self.newuser] == "online":
+                rs = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','stop_session',self.topicid,self.sessionid,True,self.logentry)
+                if self.newuser:         
+                    res = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','start_session',[int(self.topicid)],True,self.partnerdata['id'])
+                    self.user = self.newuser
+                self.flagnewuser = False
+                 
     client = None
     recepients=[]
     msglist=[]
@@ -217,7 +266,20 @@ class ChatFunc(controllers.RootController):
     sessionid = ''
     topicid = ''
     mainthread = ''
+    prethread = ''
     recthread = ''
     login = ''
     cont = True
-
+    pcont = True
+    dis = {}
+    finalist={}
+    userlist = []
+    contactlist=[]
+    livechatdata={}
+    partnerdata={}
+    logentry = {}
+    newuser = ''
+    flagnewuser = False
+    partid = ''
+  
+  

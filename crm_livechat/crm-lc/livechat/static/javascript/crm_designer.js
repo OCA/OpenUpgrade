@@ -4,8 +4,6 @@ function popup_table(url)
 
 }
 
-
-
 function refreshg()
 {
 	if (!chatendflag)

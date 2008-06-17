@@ -3,6 +3,12 @@ from osv import orm
 import pooler
 import time
 
+def getBoodyPresence(server,port,ssl,uid,password):
+	jid=xmpp.protocol.JID(jid)
+	cl=xmpp.Client(jid.getDomain(),debug=[])
+	cl.connect(('jabber.tinyerp.com',5223))
+	
+
 class crm_livechat_jabber(osv.osv):
 	_name="crm_livechat.jabber"
 	_description= "Livechat Account"
@@ -20,12 +26,12 @@ class crm_livechat_jabber(osv.osv):
 	}
 crm_livechat_jabber()
 
-
 #
 # When a visitor wants to talk, he has to call start_session
 # To know is there is a user available, you can call get_user
 # Then close_session when it's finnished
 #
+
 class crm_livechat_livechat(osv.osv):
 	_name="crm_livechat.livechat"
 	_description= "LiveChat Account"
@@ -35,7 +41,6 @@ class crm_livechat_livechat(osv.osv):
 		'max_per_user': fields.integer('Maximum Customer per User'),
 		'session_delay': fields.integer('Minutes to Close a session', help="Put here to number of minutes after which a session is considered as closed"),
 		'user_ids': fields.one2many('crm_livechat.livechat.user', 'livechat_id', 'Users Accounts'),
-#		'partner_ids': fields.one2many('crm_livechat.livechat.partner', 'livechat_id', 'Visitors Accounts'),
 	}
 	_defaults = {
 		'max_per_user': lambda *args: 5,
@@ -76,27 +81,54 @@ class crm_livechat_livechat(osv.osv):
 		return main_res
 
 	def get_user(self, cr, uid, id, context={}):
+		activeusr=[]
 		minu = (9999999,False)
+		tmpres={}
 		print "This is id ",id
-		livechat = self.browse(cr, uid, id,context)
+		livechat = self.browse(cr, uid, id, context)
 		print "This is livechat",livechat
+
 		for user in livechat[0].user_ids:
 			print "users ",user
+			
+			tmpres = {
+							'name': user.name,
+							'server': user.jabber_id.server,
+							'login':  user.jabber_id.login,
+							'password':  user.jabber_id.password,
+							'port':user.jabber_id.port,
+							'ssl':user.jabber_id.ssl,
+							'state': user.state,
+							'id' : user.id
+			}
+			print ">>>>>>>>>>>>>>",tmpres
+		
 			if  user.state=='active':
-#				continue
+				activeusr.append(tmpres)
+				print "IN IF LOOp Plz go ........."
 				c = 0
+				
+				print "Session is Statrting >>>>>>>>>>>>>", self.sessions
 				for s in self.sessions:
 					print "In session",s
 					print "This is s[0]",s,user.user_id
 					if s==user.user_id.id:
 						c+=1
+						
 				if c<minu[0]:
 					if c<livechat[0].max_per_user:
 						minu = (c, user.id)
+			
 			else:
 				print "Not active"
 				continue
-		return minu[1]
+		print ".....................", minu
+		print "MINUBHAI: ........ ", minu[1]
+		print "Active USer",activeusr
+		lst= []
+		for x in activeusr:
+			lst.append(x['id'])
+		return lst
 
 	"""
 		IN:
@@ -135,26 +167,30 @@ class crm_livechat_livechat(osv.osv):
 	"""
 	def stop_session(self, cr, uid, id, session_id, log=True, chat_data='', context={}):
 		print "session_id"
-
 		print "session id ",session_id," data it have ",self.sessions
-		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, [self.sessions[session_id][1]], {
+#		print "first of this is .... > > > > > > > > > >", self.sessions[session_id]
+#		print "first of this is zeroooooooo.... > > > > > > > > > >", self.sessions[session_id][0]
+#		print "Writing record on this ..............", self.sessions[session_id][1]
+		
+		self.pool.get('crm_livechat.livechat.partner').write(cr, uid, self.sessions, {
 			'available': False,
 		})
 		print "This is self session",self.sessions
 		if session_id in self.sessions:
 			print "This is log ",session_id
 			print " Value of log ",log
+			print "Livechat id is as folows . . . . . . . . . . .  ", self.sessions[session_id][2][0]
 			if log:
 				print "In logging"
 				self.pool.get('crm_livechat.log').create(cr, uid, {
 					'note': chat_data,
-					'user_id': self.sessions[session_id][0],
+					'user_id': self.sessions[session_id][0][1],
 					'livechat_id':self.sessions[session_id][2][0],
 				})
 				print "LOG COMPLTERD::::::::::::::"
 			del self.sessions[session_id]
 		return True
-
+	
 crm_livechat_livechat()
 
 #

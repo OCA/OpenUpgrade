@@ -31,4 +31,3 @@ class Root(controllers.RootController):
         print "Redirecting to ChatFunc"
         raise redirect('chatfunc/index')
 
-##khudagawaah
