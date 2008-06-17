@@ -35,9 +35,9 @@ class account_pay(osv.osv):
     _name = "account.pay"
     _description = "Payment Export History"
     _columns = {
-        'name': fields.binary('Export File', readonly=True),
+        'name': fields.binary('Export File', readonly=True,required=True),
+        'info': fields.char('Information',size=50,readonly=True),
         'note': fields.text('Creation Log', readonly=True),
-
     }
 account_pay()
 

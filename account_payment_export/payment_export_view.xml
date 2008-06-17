@@ -27,5 +27,44 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_account_pay_tree">
+			<field name="name">account.pay.tree</field>
+			<field name="model">account.pay</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Payment Export Logs">
+					<field name="info" select="1"/>
+					<field name="note" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_payment_mode_form">
+			<field name="name">account.pay.form</field>
+			<field name="model">account.pay</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Payment Export Logs">
+					<field name="name" colspan="4" />
+					<newline/>
+					<field name="info" />
+					<newline/>
+					<field name="note" colspan="4" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_account_pay_tree">
+			<field name="name">Payment Export Logs</field>
+			<field name="res_model">account.pay</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem
+			name="Financial Management/Configuration/Payment Export"
+			id="menu_action_action_account_pay" />
+
+		<menuitem
+			name="Financial Management/Configuration/Payment Export/Payment Export Logs"
+			id="menu_action_action_account_pay_tree" action="action_account_pay_tree"/>
 </data>
 </terp>
