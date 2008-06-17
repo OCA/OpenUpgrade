@@ -100,6 +100,7 @@ self.pool.get('res.partner').write(cr, uid, [context['action_id']], {'name':name
 		res_model="test.temporal"
 		src_model="res.partner"
 		view_mode="form"
+		target="new"
 		id="act_res_partner_temporal"/>
 
 
