@@ -20,7 +20,7 @@
 			<field name="name">confirm</field>
 			<field name="kind">function</field>
 			<field name="action">write({'state':'confirm'})</field>
-			<field name="action_id" ref="view_action_form3"/>
+			<field name="action_id" eval="False"/>
 		</record>
 		<record model="workflow.activity" id="act_done">
 			<field name="wkf_id" ref="wkf_test" />
