@@ -212,8 +212,9 @@ class dm_customer_offer(osv.osv):
 #              state_id = self.pool.get("res.country.state")
 #              country_id = self.pool.get("res.country")
               vals['address'] = [[0, 0,address]]
+              print "DEBUG - customer vals : ",vals
               customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
-
+              print "DEBUG - created new customer : ",customer_id
 #                                           Workitem
 
         segment = self.pool.get('dm.campaign.proposition.segment')
