@@ -16,7 +16,7 @@ class dm_campaign(osv.osv):
     
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
-        'country_id' : fields.many2one('res.country', 'Country'),
+        'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
@@ -49,13 +49,18 @@ class dm_campaign(osv.osv):
         'campaign_type': lambda *a: 'general',
     }
 
-    def onchange_offer(self, cr, uid, ids, offer_id):
-        value={'name':''}
+    def onchange_offer(self, cr, uid, ids, offer_id,country_id):
+        if not country_id:
+            raise osv.except_osv("Error!!","Country can't be empty ,First select Country")
         if not offer_id:
-            return {'value':value}
+            return {}
         res = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
-        value['name']=res.name
-        return {'value':value}
+        forbidden_state_ids = map(lambda x:x.country_id.id ,res.forbidden_state_ids)
+        forbidden_country_ids = map(lambda x:x.id ,res.forbidden_country_ids)
+        forbidden_country_ids.extend(forbidden_state_ids)
+        if country_id in forbidden_country_ids:
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")
+        return {'value':{'name':res.name}}
 
     def state_draft_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})

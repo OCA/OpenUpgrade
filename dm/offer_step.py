@@ -154,7 +154,18 @@ class dm_offer_step(osv.osv):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,step_type_ids)[0]
         return {'value':{'flow_start':step_type['flow_start'],'flow_stop':step_type['flow_stop']}}
 
-
+    def on_change_flow_start(self,cr,uid,ids,flow_start,offer_id,media_id):
+#        if not flow_start:
+#            return
+        if not offer_id or not media_id :
+            raise osv.except_osv("Error","Offer and Media are necessary")
+#        sefl.search(cr,uid,[('offer_id.id','=',offer_id,'media_id.id','=',media_id)])
+        step_ids = self.search(cr,uid,[('offer_id','=',offer_id),('media_id','=',media_id),('flow_start','=',True)])
+        print step_ids
+        if flow_start and step_ids and not ids[0] in step_ids :
+            raise osv.except_osv("Error","There is already a flow start defined for this offer and media")
+        return {}
+                     
     def state_close_set(self, cr, uid, ids, *args):
         cases = self.browse(cr, uid, ids)
         cases[0].state 
@@ -190,7 +201,7 @@ class dm_offer_step_transition(osv.osv):
     _rec_name = 'condition'
     _columns = {
         'condition' : fields.selection([('automatic','Automatic'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
-        'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay'),
+        'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay' ,required=True),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
