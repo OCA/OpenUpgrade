@@ -146,7 +146,7 @@ class pos_order(osv.osv):
 			states={'draft': [('readonly', False)]}, readonly=True),
 		'date_order': fields.date('Date Ordered', readonly=True),
 		'date_validity': fields.date('Validity Date', required=True),
-		'user_id': fields.many2one('res.users', 'Salesman', relate=True,
+		'user_id': fields.many2one('res.users', 'Salesman', 
 			readonly=True),
 		'amount_tax': fields.function(_amount_tax, method=True, string='Taxes'),
 		'amount_total': fields.function(_amount_total, method=True,
@@ -166,7 +166,7 @@ class pos_order(osv.osv):
 			required=True, states={'draft': [('readonly', False)]},
 			readonly=True),
 		'partner_id': fields.many2one(
-			'res.partner', 'Partner', change_default=True, relate=True,
+			'res.partner', 'Partner', change_default=True, 
 			states={'draft': [('readonly', False)], 'paid': [('readonly', False)]},
 			readonly=True),
 		'state': fields.selection([('cancel', 'Cancel'), ('draft', 'Draft'),
@@ -704,7 +704,7 @@ class pos_order_line(osv.osv):
 	_columns = {
 		'name': fields.char('Line Description', size=512),
 		'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], required=True,
-									change_default=True, relate=True),
+									change_default=True),
 		'price_unit': fields.float('Unit Price', required=True),
 		'qty': fields.float('Quantity'),
 		'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal'),
@@ -781,8 +781,8 @@ class report_transaction_pos(osv.osv):
 	_auto = False
 	_columns = {
 		'date_create': fields.date('Date', readonly=True),
-		'journal_id': fields.many2one('account.journal', 'Journal', readonly=True, relate=True),
-		'user_id': fields.many2one('res.users', 'User', readonly=True, relate=True),
+		'journal_id': fields.many2one('account.journal', 'Journal', readonly=True),
+		'user_id': fields.many2one('res.users', 'User', readonly=True),
 		'no_trans': fields.float('Number of transaction', readonly=True),
 		'amount': fields.float('Amount', readonly=True),
 		'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
