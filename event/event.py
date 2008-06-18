@@ -118,7 +118,7 @@ class event(osv.osv):
 			data_event = self.browse(cr, uid, ids)
 			for eve in data_event:
 				if eve.project_id:
-					self.pool.get('project.project').write(cr, uid, eve.project_id.id, {'date_end':eve.date_begin})
+					self.pool.get('project.project').write(cr, uid, [eve.project_id.id], {'date_end':eve.date_begin})
 		return res
 
 	_columns = {
