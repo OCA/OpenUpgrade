@@ -67,16 +67,23 @@ class ChatFunc(controllers.RootController):
             self.userlist = []
             for k,v in self.livechatdata['user'].items():
                 self.userlist.append(str(self.livechatdata['user'][k]['login']))
-            
+            print "Users list are ****************", self.userlist
+             
             users = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
+            print "Users are available as ............", users
+#            for i in range(0,len(users)):
+#                self.actuser = users[i]
+#                print self.actuser
             for usr in users:
                 print "Searching for user ::::::::::::::::", usr
+
                 usr = self.livechatdata['user'][str(usr)]['login']
                 self.user= usr
                 print "The First user is this ....................", self.user
                 while not self.finalist.has_key(self.user):
                     print "Waituing ....................>>>>>>>>>>>>>>>>>>"
                 if self.finalist[str(self.user)] == "online":   
+                    self.msglist = []
                     self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)],False,self.partnerdata['id'])
                 else:
                     print "________________Priyesah"
@@ -123,26 +130,29 @@ class ChatFunc(controllers.RootController):
            self.client.disconnect()
            self.client=None
        if (kw.get('close')):
-           for i in range(0,len(self.msglist)):
-             if  self.msglist[i] == 'UnknownCommand' or self.msglist[i] == 'Command':
-                 temp.append(self.msglist[i]) 
-                 print "Temporary is this . . . .  ............", temp
-                 continue
-             else:
-                 temp.append(str(self.msglist[i]['sender'] + " : " + self.msglist[i]['message']))
-                 print "Temporary is as follows as ..............", temp
-          
-           b = '\n'.join(temp)
-           cmd = b.split('Command')
-           print "After Splitting the command is as follows .........................", cmd
-           self.logentry = '\n'.join(cmd)
-           print self.logentry,"-----------> First part "
+           self.chat_log()
            res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.topicid,self.sessionid,True,self.logentry)           
            print "Final result is-------------->", res
-           self.msglist=[]
            self.cont = False
        return {}
    
+    def chat_log(self):
+       print "Go into the Chat log Functtion ............."
+       for i in range(0,len(self.msglist)):
+         if  self.msglist[i] == 'UnknownCommand' or self.msglist[i] == 'Command':
+             self.temp = []
+             self.temp.append(self.msglist[i]) 
+             print "Temporary is this . . . .  ............", self.temp
+             continue
+         else:
+             self.temp.append(str(self.msglist[i]['sender'] + " : " + self.msglist[i]['message']))
+             print "Temporary is as follows as ..............", self.temp
+       b = '\n'.join(self.temp)
+       cmd = b.split('Command')
+       print "After Splitting the command is as follows .........................", cmd
+       self.logentry = '\n'.join(cmd)
+       print self.logentry,"-----------> "
+       
     @expose(format='json')
     def justsend(self,**kw):
         sendto = ''
@@ -188,7 +198,6 @@ class ChatFunc(controllers.RootController):
                     auth = cl.auth(jid.getNode(),pwd,"test")
                 except AttributeError, err:
                     raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
-                
         return cl
    
     def messageCB(self,conn,msg):
@@ -213,6 +222,8 @@ class ChatFunc(controllers.RootController):
                         print "Given id is not Valid .................."
                     else :
                         self.newuser = id
+                        print "In message Cb function goes .............."
+                        self.chat_log()
                         self.flagnewuser = True
                         self.Reghandler(id)
                         cmd = 1
@@ -254,7 +265,8 @@ class ChatFunc(controllers.RootController):
         if self.flagnewuser:
             if self.finalist[self.newuser] == "online":
                 rs = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','stop_session',self.topicid,self.sessionid,True,self.logentry)
-                if self.newuser:         
+                self.msglist = []
+                if self.newuser: 
                     res = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','start_session',[int(self.topicid)],True,self.partnerdata['id'])
                     self.user = self.newuser
                 self.flagnewuser = False
@@ -281,5 +293,4 @@ class ChatFunc(controllers.RootController):
     newuser = ''
     flagnewuser = False
     partid = ''
-  
-  
+    temp = []
