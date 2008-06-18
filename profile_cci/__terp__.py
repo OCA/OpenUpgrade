@@ -4,7 +4,8 @@
 	"author":"Tiny",
 	"category":"Profile",
 	"depends":[
-		"audittrail",
+		"project_retro_planning",
+		"purchase_tender",
 		"base_module_record", 
 		"base_report_creator",
 		"account_analytic_package",
