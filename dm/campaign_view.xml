@@ -247,7 +247,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Delay">
-				<field name="key_id" select="1"/>
+				<field name="make" select="1"/>
 				<field name="value" select="1"/>
 				<field name="proposition_id" select="2"/>
 			</form>
@@ -260,7 +260,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Delay">
-				<field name="key_id"/>
+				<field name="name"/>
 				<field name="value"/>
 			</tree>
 		</field>

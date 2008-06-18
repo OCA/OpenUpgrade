@@ -162,7 +162,7 @@ dm_campaign_proposition_segment()
 class dm_campaign_delay(osv.osv):
     _name = "dm.campaign.delay"
     _columns = {
-        'key_id' : fields.many2one('dm.offer.delay', 'Offer delay'),
+        'name' : fields.char('Name', size=64, required=True),
         'value' : fields.integer('Value'),
         'proposition_id' : fields.many2one('dm.campaign.proposition', 'Proposition')
     }

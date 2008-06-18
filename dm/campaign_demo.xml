@@ -122,21 +122,13 @@
 	Campaign - Delays 
 	=======================================================
 	-->
-		<record id="dm_offer_delay_postponetheregistrationdate0" model="dm.offer.delay">
-			<field eval="&quot;Postpone the registration date&quot;" name="name"/>
-			<field eval="3" name="value"/>
-		</record>
 		<record id="dm_campaign_delay_0" model="dm.campaign.delay">
-			<field name="key_id" ref="dm_offer_delay_postponetheregistrationdate0"/>
+			<field eval="&quot;Postpone the registration date&quot;" name="name"/>
 			<field name="proposition_id" ref="dm_campaign_proposition_0"/>
 			<field eval="1" name="value"/>
 		</record>
-		<record id="dm_offer_delay_verifyingdocuments0" model="dm.offer.delay">
-			<field eval="&quot;Verifying documents&quot;" name="name"/>
-			<field eval="2" name="value"/>
-		</record>
 		<record id="dm_campaign_delay_1" model="dm.campaign.delay">
-			<field name="key_id" ref="dm_offer_delay_verifyingdocuments0"/>
+			<field eval="&quot;Verifying documents&quot;" name="name"/>
 			<field name="proposition_id" ref="dm_campaign_proposition_1"/>
 			<field eval="10" name="value"/>
 		</record>

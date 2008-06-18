@@ -1,37 +1,22 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
-		<record id="dm_offer_delay_immediate0" model="dm.offer.delay">
-			<field eval="&quot;Immediate&quot;" name="name"/>
-			<field eval="0" name="value"/>
-		</record>
-	</data>
-	<data>
-		<record id="dm_offer_delay_days0" model="dm.offer.delay">
-			<field eval="&quot;4 days&quot;" name="name"/>
-			<field eval="4" name="value"/>
-		</record>
-	</data>
-	<data>
 		<record id="dm_offer_step_type_startingmail0" model="dm.offer.step.type">
 			<field eval="&quot;SM&quot;" name="code"/>
 			<field eval="&quot;Starting Mail&quot;" name="name"/>
 			<field eval="&quot;1&quot;" name="flow_start"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_offer_step_type_intermediatemail0" model="dm.offer.step.type">
 			<field eval="&quot;IM&quot;" name="code"/>
 			<field eval="&quot;Intermediate Mail&quot;" name="name"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_offer_step_type_relaunching0" model="dm.offer.step.type">
 			<field eval="&quot;RL&quot;" name="code"/>
 			<field eval="&quot;Relaunching&quot;" name="name"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_offer_testoffermodel0" model="dm.offer">
 			<field eval="&quot;TOM&quot;" name="code"/>
 			<field eval="[(6,0,[])]" name="trademark_country_ids"/>
@@ -46,8 +31,7 @@
 			<field eval="&quot;Testoffermodel&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="forbidden_country_ids"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_offer_step_0" model="dm.offer.step">
 			<field eval="[(6,0,[])]" name="document_ids"/>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
@@ -58,8 +42,7 @@
 			<field eval="&quot;1&quot;" name="flow_start"/>
 			<field eval="&quot;SM&quot;" name="type"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_offer_step_1" model="dm.offer.step">
 			<field eval="[(6,0,[])]" name="document_ids"/>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
@@ -69,17 +52,15 @@
 			<field eval="[(6,0,[])]" name="product_ids"/>
 			<field eval="&quot;IM&quot;" name="type"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_offer_step_1" model="dm.offer.step"/>
 		<record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
 			<field name="step_from" ref="dm_offer_step_0"/>
 			<field name="step_to" ref="dm_offer_step_1"/>
 			<field eval="&quot;automatic&quot;" name="condition"/>
-			<field name="delay_id" ref="dm_offer_delay_immediate0"/>
+			<field name="delay" eval="1"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_campaign_0" model="dm.campaign">
 			<rield eval="&quot;general&quot;" name="campaign_type"/>
 			<field eval="&quot;campaign01&quot;" name="name"/>
@@ -88,8 +69,7 @@
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
 		</record>
-	</data>
-	<data>
+
 		<record id="dm_campaign_0" model="dm.campaign"/>
 		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
 			<field eval="&quot;campaignpropo01&quot;" name="name"/>

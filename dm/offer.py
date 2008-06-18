@@ -124,16 +124,6 @@ class dm_offer_production_cost(osv.osv):
     
 dm_offer_production_cost()
 
-class dm_offer_delay(osv.osv):
-    _name = "dm.offer.delay"
-    _columns = {
-        'name' : fields.char('Name', size=32, required=True),
-		'value' : fields.integer('Number of days',required=True),
-    }
-    
-dm_offer_delay()
-
-
 class dm_customer(osv.osv):
     _name = "dm.customer"
     _inherit = 'res.partner'
@@ -310,7 +300,7 @@ class dm_offer(osv.osv):
         'purchase_note' : fields.text('Purchase Notes'),
         'type' : fields.selection(AVAILABLE_TYPE, 'Type', size=16),
         'production_category_ids' : fields.many2many('dm.offer.category','dm_offer_production_category','offer_id','offer_production_categ_id', 'Production Categories' , domain="[('domain','=','production')]"),
-        'production_delay' : fields.many2one('dm.offer.delay', 'Delay'),
+#        'production_delay' : fields.many2one('dm.offer.delay', 'Delay'),
         'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
         'purchase_note' : fields.text('Purchase Notes'),
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
@@ -320,7 +310,7 @@ class dm_offer(osv.osv):
         'plannned_delivery_date' : fields.date('Planned Delivery Date'),
         'delivery_date' : fields.date('Delivery Date'),
         'fixed_date' : fields.date('Fixed Date'),
-        'buffer_delay' : fields.integer('Buffer Delay'),
+#        'buffer_delay' : fields.integer('Buffer Delay'),
         'trademark_sex' : fields.selection([('all','All'),('female','Female'),('male','male')],"Sex"), 
         'trademark_age' : fields.integer('Age'),        
         'trademark_country_ids' : fields.many2many('res.country','dm_offer_trademark_country', 'offer_id', 'country_id', 'Nationality'),

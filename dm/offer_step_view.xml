@@ -204,7 +204,7 @@
 				<field name="step_from"/>
 				<field name="step_to"/>
 				<field name="condition" select="1"/>
-				<field name="delay_id" select="2"/>
+				<field name="delay" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -215,7 +215,7 @@
 		<field name="arch" type="xml">
 			<tree string="Transition">
 				<field name="condition"/>
-				<field name="delay_id"/>
+				<field name="delay"/>
 			</tree>
 		</field>
 	</record>

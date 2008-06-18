@@ -201,7 +201,7 @@ class dm_offer_step_transition(osv.osv):
     _rec_name = 'condition'
     _columns = {
         'condition' : fields.selection([('automatic','Automatic'),('purchased','Purchased'),('notpurchased','Not Purchased')], 'Condition',required=True),
-        'delay_id' : fields.many2one('dm.offer.delay', 'Offer Delay' ,required=True),
+        'delay' : fields.integer('Offer Delay' ,required=True),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
     }
@@ -244,7 +244,7 @@ class dm_offer_step_workitem(osv.osv):
     def create(self, cr, uid, vals, context=None, check=True):
         step = self.pool.get('dm.offer.step').browse(cr,uid,[vals['step_id']])[0]
         if step.outgoing_transition_ids:
-            transitions = dict(map(lambda x : (x.id,x.delay_id.value),step.outgoing_transition_ids))
+            transitions = dict(map(lambda x : (x.id,x.delay),step.outgoing_transition_ids))
             print "DEBUG - Creating new workitem"
             print "DEBUG - transitions items: ", transitions.items()
             print "DEBUG - transitions values: ", transitions.values()
@@ -267,7 +267,7 @@ class dm_offer_step_workitem(osv.osv):
         for wrkitem in wrkitems :
             step = wrkitem.step_id
             if step.outgoing_transition_ids:
-                transitions = dict(map(lambda x : (x,int(x.delay_id.value)),step.outgoing_transition_ids))
+                transitions = dict(map(lambda x : (x,int(x.delay)),step.outgoing_transition_ids))
                 print "DEBUG - transitions items: ", transitions.items()
                 print "DEBUG - transitions values: ", transitions.values()
                 trans = [k for k,v in transitions.items() if v == min(transitions.values())][0]
