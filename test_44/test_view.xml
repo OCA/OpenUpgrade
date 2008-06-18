@@ -53,34 +53,45 @@ self.pool.get('res.partner').write(cr, uid, [context['action_id']], {'name':name
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Testing">
-				<field name="name" colspan="4"/>
-				<field name="partner_id"/>
-				<newline/>
-				<group colspan="4" col="4">
-					<button name="get_action" string="Function Call: Action Sales Orders" type="object"/>
-					<button name="%(view_action_form)s" string="Action Set Partner Name (Using Context)" type="action"/>
-				</group>
-				<field name="partner_ids" colspan="4"/>
-				<field name="line_ids" colspan="4">
-					<tree string="Lines" editable="bottom">
-						<field name="name"/>
-						<field name="length"/>
-					</tree>
-				</field>
-				<label string="The workflow can now use objects: partner_id.name=='ASUStek'" colspan="4"/>
-				<separator colspan="4" string="Status"/>
-				<field name="state"/>
-				<group colspan="2" col="10">
-					<label string="Workflows:" align="0.0"/>
-					<button name="confirm" string="Validate if ASUStek" states="draft"/>
-					<button name="cancel" string="Cancel" states="confirm"/>
-					<button name="done" string="Done" states="confirm"/>
-				</group>
-				<group colspan="2" col="2">
-					<label string="This button close the window without saving the form:" align="1.0"/>
-					<button special="cancel" string="Cancel / Close"/>
-					<button special="save" string="Save + New"/>
-				</group>
+
+				<notebook>
+					<page string="Always Visible">
+						<field name="name" colspan="4"/>
+						<field name="partner_id"/>
+						<newline/>
+						<group colspan="4" col="4">
+							<button name="get_action" string="Function Call: Action Sales Orders" type="object"/>
+							<button name="%(view_action_form)s" string="Action Set Partner Name (Using Context)" type="action"/>
+						</group>
+						<field name="partner_ids" colspan="4"/>
+						<label string="The workflow can now use objects: partner_id.name=='ASUStek'" colspan="4"/>
+						<separator colspan="4" string="Status"/>
+						<field name="state"/>
+						<group colspan="2" col="10" states="draft,confirm">
+							<label string="Workflows:"/>
+							<button name="confirm" string="Validate if ASUStek" states="draft"/>
+							<button name="cancel" string="Cancel" states="confirm"/>
+							<button name="done" string="Done" states="confirm"/>
+						</group>
+						<group colspan="2" col="2">
+							<label string="This button close the window without saving the form:" align="1.0"/>
+							<button special="cancel" string="Cancel / Close"/>
+							<label string="Save &amp; New:" align="1.0"/>
+							<button special="save" string="Save + New"/>
+						</group>
+					</page>
+					<page string="Dynamic Visiblity" states="draft,done">
+						<label string="The visibility of this page depends on state field." colspan="4"/>
+						<newline/>
+						<field name="line_ids" colspan="4">
+							<tree string="Lines" editable="bottom">
+								<field name="name"/>
+								<field name="length"/>
+							</tree>
+						</field>
+					</page>
+				</notebook>
+
 			</form>
 		</field>
 	</record>
