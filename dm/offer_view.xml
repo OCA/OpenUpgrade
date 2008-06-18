@@ -209,6 +209,69 @@
 		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid)]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offer/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
+
+	<!--
+	=======================================================
+	Offer Views
+	=======================================================
+	-->
+	<record model="ir.ui.view" id="view_offer_model_form">
+		<field name="name">dm.offer.form</field>
+		<field name="model">dm.offer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Offers">
+				<notebook>
+					<page string="General">
+						<field name="name" select="1"/>
+						<field name="code"/>
+						<field name="lang_orig"/>
+						<field name="copywriter_id"  select="2"/>
+						<field name="recommended_trademark"/>
+						<field name="offer_origin_id"/>
+						<field name="preoffer_id"/>
+						<field name="type" select="2"/>
+						<field name="offer_responsible_id" select="2"/>
+						<field name="active" select="2"/>
+						<newline/>
+						<field name="quotation"/>
+						<field name="legal_state"/>
+						<separator string="Categories" colspan="4"/>
+						<field name="category_ids" colspan="4" nolabel="1"/>
+						<separator string="Notes" colspan="4"/>
+						<field name="notes" colspan="4"  nolabel="1"/>
+						<separator string="Status" colspan="4"/>
+						<group col="8" colspan="4">
+							<field name="state" nolabel="1" select="1"/>
+							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
+							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
+							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
+							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+						</group>
+					</page>
+					<page string="Description">
+						<separator string="Description" colspan="4"/>
+						<field name="desc" nolabel="1"/>
+					</page>
+				</notebook>	
+			</form>
+		</field>
+	</record>	
+	
+	<record model="ir.actions.act_window" id="action_offer_model_form">
+		<field name="name">All Offers</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" eval = "view_offer_model_form" />	
+		<field name="domain">[('type','=','model')]</field>
+		<field name="context">{'type':'model'}</field>
+	</record>
+	<menuitem name="Direct Marketing/Offer/All Offers/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
+	
+	
+	
 	
 	<!--
 	======================
