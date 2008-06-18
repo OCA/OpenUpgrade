@@ -4,12 +4,13 @@
     "author" : "Tiny",
     "category" : "Generic Modules/Human Resources",
     "website" : "http://tinyerp.com/module_hr.html",
-    "depends" : ["hr","hr_evaluation","hr_holidays_request","md_hr_contract"],
+    "depends" : ["base","hr","hr_holidays_request","md_hr_contract","hr_evaluation"],
     "init_xml" : [],
     "demo_xml" : [
         
     ],
     "update_xml" : ["md_hr_employee_view.xml",
+                    "md_hr_employee_data.xml",
         
     ],
     "active": False,
