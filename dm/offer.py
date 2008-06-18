@@ -327,6 +327,14 @@ class dm_offer(osv.osv):
         'legal_state': lambda *a: 'validated',
     }
 
+    def change_code(self,cr,uid,ids,type,copywriter_id) :
+        if type=='model':
+            return {'value':{'code':'Model%%0%sd' % 3 % ids[0]}}
+        if copywriter_id :
+            copywriter = self.pool.get('res.partner').browse(cr,uid,[copywriter_id])[0]
+            code = ( copywriter.ref or '')+'%%0%sd' % 3 % ids[0]
+            return {'value':{'code':code}}
+        return {'value':{'code':''}}
     def state_close_set(self, cr, uid, ids, *args):
         offers = self.browse(cr, uid, ids)
         offers[0].state 

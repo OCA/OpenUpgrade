@@ -32,11 +32,11 @@
 						<field name="name" select="1"/>
 						<field name="code"/>
 						<field name="lang_orig"/>
-						<field name="copywriter_id"  select="2"/>
+						<field name="copywriter_id"  select="2"  on_change = "change_code(type,copywriter_id)" />
 						<field name="recommended_trademark"/>
 						<field name="offer_origin_id"/>
 						<field name="preoffer_id"/>
-						<field name="type" select="2"/>
+						<field name="type" select="2" on_change = "change_code(type,copywriter_id)" />
 						<field name="offer_responsible_id" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
@@ -226,11 +226,11 @@
 						<field name="name" select="1"/>
 						<field name="code"/>
 						<field name="lang_orig"/>
-						<field name="copywriter_id"  select="2"/>
+						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>
 						<field name="recommended_trademark"/>
 						<field name="offer_origin_id"/>
 						<field name="preoffer_id"/>
-						<field name="type" select="2"/>
+						<field name="type" select="2" on_change = "change_code(type,copywriter_id)"/>
 						<field name="offer_responsible_id" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
@@ -268,10 +268,7 @@
 		<field name="domain">[('type','=','model')]</field>
 		<field name="context">{'type':'model'}</field>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Offers/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
-	
-	
-	
+	<menuitem name="Direct Marketing/Offer/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
 	
 	<!--
 	======================
