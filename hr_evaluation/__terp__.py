@@ -10,5 +10,5 @@
 	"demo_xml" : ["hr_evaluation_demo.xml"],
 	"update_xml" : ["hr_evaluation_view.xml"],
 	"active": False,
-	"installable": False
+	"installable": True
 }
