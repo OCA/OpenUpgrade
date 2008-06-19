@@ -94,6 +94,10 @@
 						<field name="forbidden_country_ids" colspan="4"/>		
 						<field name="forbidden_state_ids" colspan="4" />	
 					</page>
+					<page string="Keywords" >
+						<separator string="Keywords" colspan="4"/>
+						<field name="keywords" colspan="4"  nolabel="1"/>
+					</page>				
 <!--					<page string="Statistics" >-->
 <!--						still not define -->
 <!--					</page>-->
@@ -313,6 +317,10 @@
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1"/>
 					</page>
+					<page string="Keywords" >
+						<separator string="Keywords" colspan="4"/>
+						<field name="keywords" colspan="4"  nolabel="1"/>
+					</page>						
 				</notebook>	
 			</form>
 		</field>
