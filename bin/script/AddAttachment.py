@@ -40,16 +40,29 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.win.addFixedText("lblModuleName",2 , 9, 42, 20, "Select Module:")
             self.win.addComboListBox("lstmodel", -2, 5, 134, 15,True)
             self.lstModel = self.win.getControl( "lstmodel" )
-            self.dModel = {
-		"Parner":'res.partner',
-		"Case":"crm.case",
-		"Sale Order":"sale.order",
-		"Purchase Order":"purchase.order",
-		"Analytic Account":"account.analytic.account",
-		"Project":"project.project",
-		"Tasks":"project.task",
-		"Employee":"hr.employee"
-	    }
+	    self.dModel = {}
+
+	    if 1:
+		self.dModel = {
+		    "Partner":'res.partner',
+		    "Case":"crm.case",
+		    "Sale Order":"sale.order",
+		    "Purchase Order":"purchase.order",
+		    "Analytic Account":"account.analytic.account",
+		    "Project":"project.project",
+		    "Tasks":"project.task",
+		    "Employee":"hr.employee"
+		}
+
+	    else:
+		sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
+		ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
+		fields = [ 'name', 'model' ]
+		models = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
+		models.sort(lambda x, y: cmp(x['name'],y['name']))
+
+		for model in models:
+		    self.dModel[model['name']] = model['model']
 
 	    for item in self.dModel.keys():
 		self.lstModel.addItem(item, self.lstModel.getItemCount())
@@ -71,146 +84,142 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	for kind in self.Kind.keys(): 
 	    self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
 	self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnCancel_clicked )
-	self.win.doModalDialog("",None)
+        self.win.doModalDialog("lstResourceType", self.Kind.keys()[0])
 
     def btnSearch_clicked( self, oActionEvent ):
 	modelSelectedItem = self.win.getListBoxSelectedItem("lstmodel")
-	if modelSelectedItem <> "":
-	    desktop=getDesktop()
-	    oDoc2 = desktop.getCurrentComponent()
-	    docinfo=oDoc2.getDocumentInfo()
+	if modelSelectedItem == "":
+	    return
 
-	    sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-	    res = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
-	    self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
-	    self.aSearchResult = res
-	    if self.aSearchResult <> []:
-		for result in self.aSearchResult:
-		    self.lstResource.addItem(result[1],result[0])
-	    else:
-		ErrorDialog("No Search Result Found !!!","","Search ERROR")
+	desktop=getDesktop()
+	oDoc2 = desktop.getCurrentComponent()
+	docinfo=oDoc2.getDocumentInfo()
+
+	sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+	self.aSearchREsult = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
+	self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
+	if self.aSearchResult == []:
+	    ErrorDialog("No search result found !!!", "", "Search ERROR" )
+	    return
+
+	for result in self.aSearchResult:
+	    self.lstResource.addItem(result[1],result[0])
+
+    def _send_attachment( self, name, data, res_model, res_id ):
+	print "_send_attachment"
+	desktop = getDesktop()
+	oDoc2 = desktop.getCurrentComponent()
+	docinfo = oDoc2.getDocumentInfo()
+
+	sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
+	params = {
+	    'name': name, 
+	    'datas': base64.encodestring( data ), 
+	    'res_model' : res_model, 
+	    'res_id' : res_id,
+	}
+
+	return sock.execute( database, uid, docinfo.getUserFieldValue(1), 'ir.attachment', 'create', params )
+
+    def send_attachment( self, url, model, resource_id ):
+	desktop = getDesktop()
+	oDoc2 = desktop.getCurrentComponent()
+	docinfo = oDoc2.getDocumentInfo()
+
+	if oDoc2.getURL() == "":
+	    ErrorDialog("Please save your file", "", "Saving ERROR" )
+	    return None 
+
+	url = oDoc2.getURL()
+	if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
+	    url = self.doc2pdf(url[7:])
+
+	if url == None:
+	    ErrorDialog( "Ploblem in creating PDF", "", "PDF Error" )
+	    return None 
+
+	data = read_data_from_file( get_absolute_file_path( url ) )
+	return self._send_attachment( url[url.rfind('/')+1:], data, model, resource_id )
 
     def btnOkWithoutInformation_clicked( self, oActionEvent ):
-        desktop = getDesktop()
-        oDoc2 = desktop.getCurrentComponent()
-        docinfo = oDoc2.getDocumentInfo()
+	desktop = getDesktop()
+	oDoc2 = desktop.getCurrentComponent()
+	docinfo = oDoc2.getDocumentInfo()
 
-	if self.win.getListBoxSelectedItem("lstResourceType") <> "":
-	    if oDoc2.getURL() <> "":
-		if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
-		    url = self.doc2pdf(oDoc2.getURL()[7:])
-		else:
-		    url= oDoc2.getURL()
-		if url <> None:
-		    data = read_data_from_file( get_absolute_file_path( url ) )
-		    sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-		    value={
-			'name': url[url.rfind('/')+1:],
-			'datas': base64.encodestring(data),
-			'res_model': docinfo.getUserFieldValue(3),
-			'res_id': docinfo.getUserFieldValue(2)
-		    }
-		    res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
-		    self.win.endExecute()
-		else:
-		    ErrorDialog("Problem in Creating PDF","","PDF ERROR")
-	    else:
-		ErrorDialog("Please Save Your File","","Saving ERROR")
-	else:
-	    ErrorDialog("Please Select Resource Type","","Selection ERROR")
+	if self.win.getListBoxSelectedItem("lstResourceType") == "":
+	    ErrorDialog("Please select resource type", "", "Selection ERROR" )
+	    return 
+
+	res = self.send_attachment( docinfo.getUserFieldValue(3), docinfo.getUserFieldValue(2) )
+	self.win.endExecute()
 
     def btnOkWithInformation_clicked(self,oActionEvent):
-        desktop = getDesktop()
-        oDoc2 = desktop.getCurrentComponent()
-        docinfo = oDoc2.getDocumentInfo()
-        if oActionEvent.Source.getModel().Name == "btnOkWithInformation":
-            if self.win.getListBoxSelectedItem("lstResourceType") <> "":
-                if self.win.getListBoxSelectedItem("lstResource") <> "" and self.win.getListBoxSelectedItem("lstmodel") <> "":
-                    if oDoc2.getURL() <> "":
-                        if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
-			    url = self.doc2pdf(oDoc2.getURL()[7:])
-                        else:
-                            url= oDoc2.getURL()
-                        if url <> None:
-			    data = read_data_from_file( get_absolute_file_path( url ) )
-                            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                            resourceid = None
-                            for s in self.aSearchResult:
-                                if s[1] == self.win.getListBoxSelectedItem("lstResource"):
-                                    resourceid = s[0]
-				    break
-                            if resourceid <> None:
-                                value={
-				    'name': url[url.rfind('/')+1:],
-                                    'datas': base64.encodestring(data),
-                                    'res_model': self.dModel[self.win.getListBoxSelectedItem("lstmodel")],
-                                    'res_id': resourceid
-                                    }
-                                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.attachment' , 'create' , value )
-                                self.win.endExecute()
-                            else:
-                                ErrorDialog("No Resource Selected !!!","","Resource ERROR")
-                        else:
-                            ErrorDialog("Problem in Creating PDF","","PDF ERROR")
-                    else:
-                        ErrorDialog("Please Save Your File","","Saving ERROR")
-                else:
-                    ErrorDialog("Please select Model and Resource","","Selection ERROR")
-            else:
-                ErrorDialog("Please Select Resource Type","","Selection ERROR")
+	if self.win.getListBoxSelectedItem("lstResourceType") == "":
+	    ErrorDialog( "Please select resource type", "", "Selection ERROR" )
+	    return 
+
+	if self.win.getListBoxSelectedItem("lstResource") == "" or self.win.getListBoxSelectedItem("lstmodel") == "":
+	    ErrorDialog("Please select Model and Resource","","Selection ERROR")
+	    return 
+
+	resourceid = None
+	for s in self.aSearchResult:
+	    if s[1] == self.win.getListBoxSelectedItem("lstResource"):
+		resourceid = s[0]
+		break
+
+	if resourceid == None:
+	    ErrorDialog("No resource selected !!!", "", "Resource ERROR" )
+	    return 
+
+	res = self.send_attachment( url, self.dModel[self.win.getListBoxSelectedItem('lstmodel')], resourceid )
+	self.win.endExecute()
 
     def btnCancel_clicked( self, oActionEvent ):
 	self.win.endExecute()
 
     def doc2pdf(self, strFile):
-       oDoc = None
-       strFilterSubName = ''
+	oDoc = None
+	strFilterSubName = ''
 
-       strUrl = convertToURL( strFile )
-       desktop = getDesktop()
-       oDoc = desktop.loadComponentFromURL( strUrl, "_blank", 0, Array(self._MakePropertyValue("Hidden",True)))
-       if oDoc:
-          strFilterSubName = ""
-          # select appropriate filter
-          if oDoc.supportsService("com.sun.star.presentation.PresentationDocument"):
-             strFilterSubName = "impress_pdf_Export"
-          elif oDoc.supportsService("com.sun.star.sheet.SpreadsheetDocument"):
-             strFilterSubName = "calc_pdf_Export"
-          elif oDoc.supportsService("com.sun.star.text.WebDocument"):
-             strFilterSubName = "writer_web_pdf_Export"
-          elif oDoc.supportsService("com.sun.star.text.GlobalDocument"):
-             strFilterSubName = "writer_globaldocument_pdf_Export"
-          elif oDoc.supportsService("com.sun.star.text.TextDocument"):
-             strFilterSubName = "writer_pdf_Export"
-          elif oDoc.supportsService("com.sun.star.drawing.DrawingDocument"):
-             strFilterSubName = "draw_pdf_Export"
-          elif oDoc.supportsService("com.sun.star.formula.FormulaProperties"):
-             strFilterSubName = "math_pdf_Export"
-          elif oDoc.supportsService("com.sun.star.chart.ChartDocument"):
-             strFilterSubName = "chart_pdf_Export"
-          else:
-              pass
-          #EndIf
-       #EndIf
+	strUrl = convertToURL( strFile )
+	desktop = getDesktop()
+	oDoc = desktop.loadComponentFromURL( strUrl, "_blank", 0, Array(self._MakePropertyValue("Hidden",True)))
+	if oDoc:
+	    strFilterSubName = ""
+	    # select appropriate filter
+	    if oDoc.supportsService("com.sun.star.presentation.PresentationDocument"):
+		strFilterSubName = "impress_pdf_Export"
+	    elif oDoc.supportsService("com.sun.star.sheet.SpreadsheetDocument"):
+		strFilterSubName = "calc_pdf_Export"
+	    elif oDoc.supportsService("com.sun.star.text.WebDocument"):
+		strFilterSubName = "writer_web_pdf_Export"
+	    elif oDoc.supportsService("com.sun.star.text.GlobalDocument"):
+		strFilterSubName = "writer_globaldocument_pdf_Export"
+	    elif oDoc.supportsService("com.sun.star.text.TextDocument"):
+		strFilterSubName = "writer_pdf_Export"
+	    elif oDoc.supportsService("com.sun.star.drawing.DrawingDocument"):
+		strFilterSubName = "draw_pdf_Export"
+	    elif oDoc.supportsService("com.sun.star.formula.FormulaProperties"):
+		strFilterSubName = "math_pdf_Export"
+	    elif oDoc.supportsService("com.sun.star.chart.ChartDocument"):
+		strFilterSubName = "chart_pdf_Export"
+	    else:
+		pass
 
-       if len(strFilterSubName) > 0:
-          oDoc.storeToURL( convertToURL( strFile + ".pdf" ), Array(self._MakePropertyValue("FilterName", strFilterSubName ),self._MakePropertyValue("CompressMode", "1" )))
-          return convertToURL( strFile + ".pdf" )
-       #EndIf
-       return None
-       oDoc.close(True)
-    #End Sub
+	    if len(strFilterSubName) > 0:
+		oDoc.storeToURL( convertToURL( strFile + ".pdf" ), Array(self._MakePropertyValue("FilterName", strFilterSubName ),self._MakePropertyValue("CompressMode", "1" )))
+		return convertToURL( strFile + ".pdf" )
+	    oDoc.close(True)
+	    return None
 
     def _MakePropertyValue(self, cName = "", uValue = u"" ):
        oPropertyValue = createUnoStruct( "com.sun.star.beans.PropertyValue" )
        if cName:
           oPropertyValue.Name = cName
-       #EndIf
        if uValue:
           oPropertyValue.Value = uValue
-       #EndIf
        return oPropertyValue
-    #End Function
 
 
 if __name__<>"package" and __name__=="__main__":
