@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-	<menuitem name="Direct Marketing/Offer" id="menu_dm_offer" sequence="2"/>
+	<menuitem name="Direct Marketing/Offers" id="menu_dm_offer" sequence="2"/>
 	<!--
 	=======================================================
 	Offer Views
@@ -114,7 +114,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />		
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
+	<menuitem name="Direct Marketing/Offers/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_all1">
 		<field name="name">Open Offer</field>	
@@ -125,7 +125,7 @@
 		<field name="view_id" ref = "view_offer_tree" />
 		<field name="domain">[('state','=','open')]</field>	
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Offers/Open Offers" id="menu_action_offer_form_all1" action="action_offer_form_all1"/>
+	<menuitem name="Direct Marketing/Offers/All Offers/Open Offers" id="menu_action_offer_form_all1" action="action_offer_form_all1"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_all2">
 		<field name="name">Draft Offer</field>	
@@ -136,7 +136,7 @@
 		<field name="view_id" ref = "view_offer_tree" />
 		<field name="domain">[('state','=','draft')]</field>		
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Offers/Draft Offers" id="menu_action_offer_form_all2" action="action_offer_form_all2"/>
+	<menuitem name="Direct Marketing/Offers/All Offers/Draft Offers" id="menu_action_offer_form_all2" action="action_offer_form_all2"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_all3">
 		<field name="name">Closed Offer</field>	
@@ -147,18 +147,7 @@
 		<field name="view_id" ref = "view_offer_tree" />
 		<field name="domain">[('state','=','closed')]</field>		
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
-
-	<record model="ir.actions.act_window" id="action_offer_form_all_model">
-		<field name="name">Offer Models</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.offer</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('type','=','model')]</field>		
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Offers/All offer models" id="menu_action_offer_form_all_model" action="action_offer_form_all_model"/>
+	<menuitem name="Direct Marketing/Offers/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
 
 
 	# ------------------------------------------------------
@@ -174,7 +163,7 @@
 		<field name="view_id" ref = "view_offer_tree" />
 		<field name="domain">[('offer_responsible_id','=',uid)]</field>
 	</record>
-	<menuitem name="Direct Marketing/Offer/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
+	<menuitem name="Direct Marketing/Offers/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
  
 	<record model="ir.actions.act_window" id="action_offer_form_my1">
 		<field name="name">My Open Offer</field>
@@ -185,7 +174,7 @@
 		<field name="view_id" ref = "view_offer_tree" />
 		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid)]</field>	
 	</record>
-	<menuitem name="Direct Marketing/Offer/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
+	<menuitem name="Direct Marketing/Offers/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_my2">
 		<field name="name">My Draft Offer</field>	
@@ -196,7 +185,7 @@
 		<field name="view_id" ref = "view_offer_tree" />
 		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid)]</field>		
 	</record>
-	<menuitem name="Direct Marketing/Offer/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
+	<menuitem name="Direct Marketing/Offers/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
 
 	<record model="ir.actions.act_window" id="action_offer_form_my3">
 		<field name="name">My Closed Offer</field>	
@@ -207,7 +196,7 @@
 		<field name="view_id" ref = "view_offer_tree" />
 		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid)]</field>		
 	</record>
-	<menuitem name="Direct Marketing/Offer/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
+	<menuitem name="Direct Marketing/Offers/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
 
 	<!--
 	=======================================================
@@ -267,7 +256,7 @@
 		<field name="domain">[('type','=','model')]</field>
 		<field name="context">{'type':'model'}</field>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
+	<menuitem name="Direct Marketing/Offers/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
 
 	<!--
 	=======================================================
@@ -284,7 +273,7 @@
 		<field name="domain">[('type','=','preoffer')]</field>
 		<field name="context">{'type':'preoffer'}</field>
 	</record>
-	<menuitem name="Direct Marketing/Offer/All PreOffers " id="menu_action_preoffer_form" action="action_preoffer_form"/>
+	<menuitem name="Direct Marketing/Offers/All PreOffers " id="menu_action_preoffer_form" action="action_preoffer_form"/>
 	
 	<!--
 	======================
@@ -365,7 +354,7 @@
 		<field name="object" eval="True"/>
 	</record>	
 	
-	<menuitem name="Direct Marketing/Offer/Offers By Category" id="menu_action_offer_by_category" action="action_offer_categ_main"/>
+	<menuitem name="Direct Marketing/Offers/Offers By Category" id="menu_action_offer_by_category" action="action_offer_categ_main"/>
 
 
 	<!--
@@ -477,8 +466,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/Customers" id="menu_dm_customer_menu" sequence="1" />
-	<menuitem name="Direct Marketing/Offer/Customers/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
+	<menuitem name="Direct Marketing/Offers/Customers" id="menu_dm_customer_menu" sequence="1" />
+	<menuitem name="Direct Marketing/Offers/Customers/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
 		
 	<!--
 	=======================================================
@@ -536,6 +525,6 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_offer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offer/Customers/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>
+	<menuitem name="Direct Marketing/Offers/Customers/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>
 	</data>
 </terp>
