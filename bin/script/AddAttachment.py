@@ -32,12 +32,12 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         if docinfo.getUserFieldValue(2) <> "" and docinfo.getUserFieldValue(3) <> "":
             self.win = DBModalDialog(60, 50, 180, 70, "Add Attachment to Server")
             self.win.addFixedText("lblResourceType", 2 , 5, 100, 10, "Select Appropriate Resource Type:")
-            self.win.addComboListBox("lstResourceType", -2, 25, 176, 15,True,itemListenerProc=self.lstbox_selected)
+            self.win.addComboListBox("lstResourceType", -2, 25, 176, 15,True)
             self.win.addButton('btnOk1', -2 , -5, 25 , 15,'OK' ,actionListenerProc = self.btnOkOrCancel_clicked )
         else:
             self.win = DBModalDialog(60, 50, 180, 190, "Add Attachment to Server")
             self.win.addFixedText("lblModuleName",2 , 9, 42, 20, "Select Module:")
-            self.win.addComboListBox("lstmodel", -2, 5, 134, 15,True,itemListenerProc=self.lstbox_selected)
+            self.win.addComboListBox("lstmodel", -2, 5, 134, 15,True)
             self.lstModel = self.win.getControl( "lstmodel" )
             self.dModel={"Parner":'res.partner',
                          "Case":"crm.case",
@@ -57,18 +57,18 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search' ,actionListenerProc = self.btnSearch_clicked )
 
             self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 10, "Search Result:")
-            self.win.addComboListBox("lstResource", -2, 65, 176, 70, False, itemListenerProc=self.lstbox_selected)
+            self.win.addComboListBox("lstResource", -2, 65, 176, 70, False )
             self.lstResource = self.win.getControl( "lstResource" )
 
             self.win.addFixedText("lblResourceType", 2 , 137, 100, 20, "Select Appropriate Resource Type:")
-            self.win.addComboListBox("lstResourceType", -2, 147, 176, 15,True,itemListenerProc=self.lstbox_selected)
+            self.win.addComboListBox("lstResourceType", -2, 147, 176, 15,True )
 
             self.win.addButton('btnOk', -2 , -5, 25 , 15,'OK' ,actionListenerProc = self.btnOkOrCancel_clicked )
 
 	self.lstResourceType = self.win.getControl( "lstResourceType" )
 	for kind in self.Kind.keys(): 
 	    self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
-	self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
+	self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnCancel_clicked )
 	self.win.doModalDialog("",None)
 
     def btnSearch_clicked( self, oActionEvent ):
@@ -87,9 +87,6 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 		    self.lstResource.addItem(result[1],result[0])
 	    else:
 		ErrorDialog("No Search Result Found !!!","","Search ERROR")
-
-    def lstbox_selected(self,oItemEvent):
-        pass
 
     def btnOkOrCancel_clicked(self,oActionEvent):
         desktop=getDesktop()
@@ -157,8 +154,9 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                     ErrorDialog("Please select Model and Resource","","Selection ERROR")
             else:
                 ErrorDialog("Please Select Resource Type","","Selection ERROR")
-        elif oActionEvent.Source.getModel().Name == "btnCancel":
-            self.win.endExecute()
+
+    def btnCancel_clicked( self, oActionEvent ):
+	self.win.endExecute()
 
     def doc2pdf(self, strFile):
        oDoc = None
