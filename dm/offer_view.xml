@@ -281,11 +281,21 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" eval = "view_offer_tree" />	
+		<field name="view_id" ref = "view_offer_tree" />	
 		<field name="domain">[('type','=','preoffer')]</field>
 		<field name="context">{'type':'preoffer'}</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_offer_model_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_preoffer_form"/>
+	</record>
 	
+	<record model="ir.actions.act_window.view" id="action_offer_model_form_view">
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_offer_model_form"/>
+		<field name="act_window_id" ref="action_preoffer_form"/>
+	</record>		
 	<menuitem name="Direct Marketing/Offers/All PreOffers " id="menu_action_preoffer_form" action="action_preoffer_form"/>
 	
 	<!--
