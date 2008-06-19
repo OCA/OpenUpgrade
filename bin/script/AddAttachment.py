@@ -54,7 +54,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
             self.win.addFixedText("lblSearchName",2 , 25, 60, 10, "Enter Search String:")
             self.win.addEdit("txtSearchName", 2, 35, 149, 15,)
-            self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search' ,actionListenerProc = self.btnOkOrCancel_clicked )
+            self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search' ,actionListenerProc = self.btnSearch_clicked )
 
             self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 10, "Search Result:")
             self.win.addComboListBox("lstResource", -2, 65, 176, 70, False, itemListenerProc=self.lstbox_selected)
@@ -71,6 +71,23 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
 	self.win.doModalDialog("",None)
 
+    def btnSearch_clicked( self, oActionEvent ):
+	modelSelectedItem = self.win.getListBoxSelectedItem("lstmodel")
+	if modelSelectedItem <> "":
+	    desktop=getDesktop()
+	    oDoc2 = desktop.getCurrentComponent()
+	    docinfo=oDoc2.getDocumentInfo()
+
+	    sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+	    res = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
+	    self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
+	    self.aSearchResult = res
+	    if self.aSearchResult <> []:
+		for result in self.aSearchResult:
+		    self.lstResource.addItem(result[1],result[0])
+	    else:
+		ErrorDialog("No Search Result Found !!!","","Search ERROR")
+
     def lstbox_selected(self,oItemEvent):
         pass
 
@@ -78,22 +95,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
-        if oActionEvent.Source.getModel().Name == "btnSearch":
-            if self.win.getListBoxSelectedItem("lstmodel") <> "":
-                desktop=getDesktop()
-                oDoc2 = desktop.getCurrentComponent()
-                docinfo=oDoc2.getDocumentInfo()
-
-                sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-                res = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[self.win.getListBoxSelectedItem("lstmodel")], 'name_search', self.win.getEditText("txtSearchName"))
-                self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
-                self.aSearchResult = res
-                if self.aSearchResult <> []:
-                    for result in self.aSearchResult:
-                        self.lstResource.addItem(result[1],result[0])
-                else:
-                    ErrorDialog("No Search Result Found !!!","","Search ERROR")
-        elif oActionEvent.Source.getModel().Name == "btnOk1":
+        if oActionEvent.Source.getModel().Name == "btnOk1":
             if self.win.getListBoxSelectedItem("lstResourceType") <> "":
                 if oDoc2.getURL() <> "":
                     if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
@@ -212,7 +214,4 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 if __name__<>"package" and __name__=="__main__":
     AddAttachment(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( \
-            AddAttachment,
-            "org.openoffice.tiny.report.addattachment",
-            ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( AddAttachment, "org.openoffice.tiny.report.addattachment", ("com.sun.star.task.Job",),)
