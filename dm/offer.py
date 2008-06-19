@@ -8,7 +8,7 @@ AVAILABLE_STATES = [
     ('draft','Draft'),
     ('open','Open'),
     ('freeze', 'Freeze'),
-    ('closed', 'Close')
+    ('closed', 'Close'),
 ]
 
 AVAILABLE_TYPE = [
@@ -16,6 +16,7 @@ AVAILABLE_TYPE = [
     ('new','New'),
     ('standart','Standart'),
     ('rewrite','Rewrite'),
+    ('preoffer','Preoffer')
 ]
 
 
@@ -26,51 +27,6 @@ class dm_media(osv.osv):
     }
     
 dm_media()
-
-class dm_preoffer(osv.osv):
-    _name = "dm.preoffer"
-    _columns = {    
-        'name' : fields.char("Name",size=64,required=True),
-        'code' : fields.char("Code",size=64,required=True),
-        'creator_id' : fields.many2one('res.partner','Creator'),
-        'copywriter_id' : fields.many2one('res.partner','Ordered To'),
-        'market_id' : fields.many2one('res.country','Market'),
-        'media_id' : fields.many2one('dm.media','Media',ondelete="cascade"),
-        'type' : fields.selection([('new','New'),('rewrite','Rewrite')],'Type'),
-        'order_number' : fields.char('Order Number',size=16),
-        'order_date' : fields.date('Order Date'),
-        'plannned_delivery_date' : fields.date('Planned Delivery Date') ,
-        'delivery_date' : fields.date('Delivery Date'),
-        'summary' : fields.text('Summary'),
-        'state' : fields.selection([('free','Free'),('assigned','Assigned')],"State",readonly=True),
-    }
-    
-    _defaults = {
-        'state': lambda *a: 'free',    
-    }
-    def go_to_offer(self,cr, uid, ids, *args):
-        res = self.browse(cr,uid,ids)[0]
-        if res.market_id:
-            country = [[6,0,[res.market_id.id]]]
-        else :
-            country =[]
-        vals = {
-                'name':res.name,
-                'type':res.type,
-                'order_date':res.order_date,
-                'plannned_delivery_date':res.plannned_delivery_date,
-                'delivery_date' : res.delivery_date,
-                'desc':res.summary,
-                'code':res.code,
-                'trademark_country_ids':country,
-                'copywriter_id':res.copywriter_id.id,
-                'offer_responsible_id':res.creator_id.id,
-                'preoffer_id':res.id
-            }
-        self.pool.get('dm.offer').create(cr,uid,vals)
-        self.write(cr,uid,ids,{'state':'assigned'})
-        return True
-dm_preoffer()
 
 class dm_offer_category(osv.osv):
     _name = "dm.offer.category"
@@ -107,7 +63,6 @@ class dm_offer_category(osv.osv):
         'parent_id' : fields.many2one('dm.offer.category', 'Parent'),
         'name' : fields.char('Name', size=64, required=True),
         'child_ids': fields.one2many('dm.offer.category', 'parent_id', 'Childs Category'),
-        'domain' : fields.selection([('model','Model'),('general','General'),('production','Production'),('purchase','Purchase')], 'Category Domain')
     }
     
     _constraints = [
@@ -316,7 +271,6 @@ class dm_offer(osv.osv):
         'trademark_country_ids' : fields.many2many('res.country','dm_offer_trademark_country', 'offer_id', 'country_id', 'Nationality'),
         'forbidden_country_ids' : fields.many2many('res.country','dm_offer_forbidden_country', 'offer_id', 'country_id', 'Forbidden Countries'),
         'forbidden_state_ids' : fields.many2many('res.country.state','dm_offer_forbidden_state', 'offer_id', 'state_id', 'Forbidden States'),
-        'preoffer_id' : fields.many2one('dm.preoffer','Preoffer'),
 #       (still to be defined by the client)
     }
     
@@ -328,7 +282,7 @@ class dm_offer(osv.osv):
     }
 
     def change_code(self,cr,uid,ids,type,copywriter_id) :
-        if type=='model':
+        if type=='model' and ids:
             return {'value':{'code':'Model%%0%sd' % 3 % ids[0]}}
         if copywriter_id :
             copywriter = self.pool.get('res.partner').browse(cr,uid,[copywriter_id])[0]
@@ -368,6 +322,13 @@ class dm_offer(osv.osv):
         self.__history(cr,uid, offers, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
+    
+    def go_to_offer(self,cr, uid, ids, *args):
+        self.copy(cr,uid,ids[0])
+        offers = self.browse(cr,uid,ids)
+        self.__history(cr,uid,offers, 'open')
+        self.write(cr, uid, ids, {'state':'open'})
+        return True
     
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:

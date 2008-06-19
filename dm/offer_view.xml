@@ -35,7 +35,6 @@
 						<field name="copywriter_id"  select="2"  on_change = "change_code(type,copywriter_id)" />
 						<field name="recommended_trademark"/>
 						<field name="offer_origin_id"/>
-						<field name="preoffer_id"/>
 						<field name="type" select="2" on_change = "change_code(type,copywriter_id)" />
 						<field name="offer_responsible_id" select="2"/>
 						<field name="active" select="2"/>
@@ -212,11 +211,11 @@
 
 	<!--
 	=======================================================
-	Offer Views
+	Offer Model Views
 	=======================================================
 	-->
 	<record model="ir.ui.view" id="view_offer_model_form">
-		<field name="name">dm.offer.form</field>
+		<field name="name">dm.offer.model.form</field>
 		<field name="model">dm.offer</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
@@ -229,7 +228,6 @@
 						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>
 						<field name="recommended_trademark"/>
 						<field name="offer_origin_id"/>
-						<field name="preoffer_id"/>
 						<field name="type" select="2" on_change = "change_code(type,copywriter_id)"/>
 						<field name="offer_responsible_id" select="2"/>
 						<field name="active" select="2"/>
@@ -247,6 +245,7 @@
 							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+							<button name="go_to_offer" string="Duplicate Offers" states="draft" type="object"/>
 						</group>
 					</page>
 					<page string="Description">
@@ -259,7 +258,7 @@
 	</record>	
 	
 	<record model="ir.actions.act_window" id="action_offer_model_form">
-		<field name="name">All Offers</field>
+		<field name="name">Offers Model</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -269,6 +268,23 @@
 		<field name="context">{'type':'model'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Offer/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
+
+	<!--
+	=======================================================
+	Pre-Offer Views
+	=======================================================
+	-->
+	<record model="ir.actions.act_window" id="action_preoffer_form">
+		<field name="name">PreOffers</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" eval = "view_offer_model_form" />	
+		<field name="domain">[('type','=','preoffer')]</field>
+		<field name="context">{'type':'preoffer'}</field>
+	</record>
+	<menuitem name="Direct Marketing/Offer/All PreOffers " id="menu_action_preoffer_form" action="action_preoffer_form"/>
 	
 	<!--
 	======================
@@ -283,7 +299,6 @@
 			<form string="Offer Category">
 				<field name="name" select="1"/>
 				<field name="parent_id"/>
-				<field name="domain" select="1"/>
 			</form>
 		</field>
 	</record>
@@ -385,63 +400,6 @@
 		</field>
 	</record>
 
-	<!--
-	======================
-	Preoffer
-	======================
-	-->
-
-	<record model="ir.ui.view" id="view_dm_preoffer_form">
-		<field name="name">dm.preoffer.form</field>
-		<field name="model">dm.preoffer</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">	
-			<form string="PreOffer">
-				<field name="name" colspan="4" select="1"/>
-				<field name="code" />
-				<field name="creator_id" select="2"/>
-				<field name="copywriter_id" select="2"/>		
-				<field name="market_id"/>
-				<field name="media_id"/>
-				<field name="type" select="1"/>
-				<field name="order_number"/>
-				<field name="order_date"/>
-				<field name="plannned_delivery_date"/>
-				<field name="delivery_date"/>
-				<separator string="Summary" colspan="4"/>		
-				<field name="summary" nolabel="1" colspan="4"/>
-				<group col="8" colspan="4">
-					<field name="state" nolabel="1" select="1"/>
-					<button name="go_to_offer" string="Create Offers" states="free" type="object"/>
-				</group>
-			</form>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_dm_preoffer_tree">
-		<field name="name">dm.preoffer.tree</field>
-		<field name="model">dm.preoffer</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">	
-			<tree string="All Preoffers">
-				<field name="name" colspan="4"/>
-				<field name="code" />
-				<field name="type"/>
-				<field name="order_number"/>
-				<field name="order_date"/>
-				<field name="plannned_delivery_date"/>
-				<field name="delivery_date"/>
-			</tree>
-		</field>
-	</record>	
-	<record model="ir.actions.act_window" id="action_dm_preoffer_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.preoffer</field>
-		<field name="view_type">form</field>
-		<field name="view_id" ref="view_dm_preoffer_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Offer/All PreOffers" id="menu_dm_preoffer_form" sequence="2" action="action_dm_preoffer_form"/>
-		
 	<!--
 	======================
 	Customer
