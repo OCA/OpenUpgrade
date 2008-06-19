@@ -12,6 +12,10 @@ if __name__<>"package":
     uid = 3
 
 class AddAttachment(unohelper.Base, XJobExecutor ):
+    Kind = {
+	'PDF' : 'pdf',
+	'OpenOffice': 'sxw',
+    }
     def __init__(self,ctx):
         self.ctx     = ctx
         self.module  = "tiny_report"
@@ -28,13 +32,12 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.win.addFixedText("lblResourceType", 2 , 5, 100, 10, "Select Appropriate Resource Type:")
             self.win.addComboListBox("lstResourceType", -2, 25, 176, 15,True,itemListenerProc=self.lstbox_selected)
             self.lstResourceType = self.win.getControl( "lstResourceType" )
-            self.lstResourceType.addItem("pdf",0)
-            self.lstResourceType.addItem("sxw",1)
 
-            self.win.addButton('btnOk1', -2 , -5, 25 , 15,'OK'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
-            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+	    for kind in self.Kind.keys(): 
+		self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
+
+            self.win.addButton('btnOk1', -2 , -5, 25 , 15,'OK' ,actionListenerProc = self.btnOkOrCancel_clicked )
+            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
 
             self.win.doModalDialog("",None)
         else:
@@ -62,8 +65,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
             self.win.addFixedText("lblSearchName",2 , 25, 60, 10, "Enter Search String:")
             self.win.addEdit("txtSearchName", 2, 35, 149, 15,)
-            self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+            self.win.addButton('btnSearch', -2 , 35, 25 , 15,'Search' ,actionListenerProc = self.btnOkOrCancel_clicked )
 
             self.win.addFixedText("lblSearchRecord", 2 , 55, 60, 10, "Search Result:")
             self.win.addComboListBox("lstResource", -2, 65, 176, 70, False, itemListenerProc=self.lstbox_selected)
@@ -72,13 +74,11 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.win.addFixedText("lblResourceType", 2 , 137, 100, 20, "Select Appropriate Resource Type:")
             self.win.addComboListBox("lstResourceType", -2, 147, 176, 15,True,itemListenerProc=self.lstbox_selected)
             self.lstResourceType = self.win.getControl( "lstResourceType" )
-            self.lstResourceType.addItem("pdf",0)
-            self.lstResourceType.addItem("sxw",1)
+	    for kind in self.Kind.keys(): 
+		self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
 
-            self.win.addButton('btnOk', -2 , -5, 25 , 15,'OK'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
-            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+            self.win.addButton('btnOk', -2 , -5, 25 , 15,'OK' ,actionListenerProc = self.btnOkOrCancel_clicked )
+            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
 
             self.win.doModalDialog("",None)
 
@@ -107,7 +107,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         elif oActionEvent.Source.getModel().Name == "btnOk1":
             if self.win.getListBoxSelectedItem("lstResourceType") <> "":
                 if oDoc2.getURL() <> "":
-                    if self.win.getListBoxSelectedItem("lstResourceType") == "pdf":
+                    if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
 			url = self.doc2pdf(oDoc2.getURL()[7:])
                     else:
                         url= oDoc2.getURL()
@@ -134,7 +134,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             if self.win.getListBoxSelectedItem("lstResourceType") <> "":
                 if self.win.getListBoxSelectedItem("lstResource") <> "" and self.win.getListBoxSelectedItem("lstmodel") <> "":
                     if oDoc2.getURL() <> "":
-                        if self.win.getListBoxSelectedItem("lstResourceType") == "pdf":
+                        if self.Kin[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
 			    url = self.doc2pdf(oDoc2.getURL()[7:])
                         else:
                             url= oDoc2.getURL()
