@@ -7,6 +7,7 @@ from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
     from lib.error import ErrorDialog
+    from lib.tools import * 
     from LoginTest import *
     database="test"
     uid = 3
@@ -101,9 +102,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 		else:
 		    url= oDoc2.getURL()
 		if url <> None:
-		    fp = file(url[7:], 'rb')
-		    data=fp.read()
-		    fp.close()
+		    data = read_data_from_file( get_absolute_file_path( url ) )
 		    sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 		    value={
 			'name': url[url.rfind('/')+1:],
@@ -128,19 +127,18 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             if self.win.getListBoxSelectedItem("lstResourceType") <> "":
                 if self.win.getListBoxSelectedItem("lstResource") <> "" and self.win.getListBoxSelectedItem("lstmodel") <> "":
                     if oDoc2.getURL() <> "":
-                        if self.Kin[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
+                        if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
 			    url = self.doc2pdf(oDoc2.getURL()[7:])
                         else:
                             url= oDoc2.getURL()
                         if url <> None:
-			    fp = file(url[7:], 'rb')
-                            data=fp.read()
-                            fp.close()
+			    data = read_data_from_file( get_absolute_file_path( url ) )
                             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
                             resourceid = None
                             for s in self.aSearchResult:
                                 if s[1] == self.win.getListBoxSelectedItem("lstResource"):
                                     resourceid = s[0]
+				    break
                             if resourceid <> None:
                                 value={
 				    'name': url[url.rfind('/')+1:],
