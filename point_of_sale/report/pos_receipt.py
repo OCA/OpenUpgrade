@@ -63,5 +63,5 @@ class order(report_sxw.rml_parse):
 				sum = sum +(r[2] * (r[0]*r[1]/100))
 		return sum
 
-report_sxw.report_sxw('report.pos.receipt', 'pos.order', 'addons/pos/report/pos_receipt.rml', parser=order, header=False)
+report_sxw.report_sxw('report.pos.receipt', 'pos.order', 'addons/point_of_sale/report/pos_receipt.rml', parser=order, header=False)
 

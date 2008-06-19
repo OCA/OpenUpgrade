@@ -116,5 +116,5 @@ class pos_details(report_sxw.rml_parse):
 			'getperiod': self._get_period,
 		})
 
-report_sxw.report_sxw('report.pos.details', 'pos.order', 'addons/pos/report/pos_details.rml', parser=pos_details)
+report_sxw.report_sxw('report.pos.details', 'pos.order', 'addons/point_of_sale/report/pos_details.rml', parser=pos_details, header=None)
 

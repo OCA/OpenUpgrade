@@ -77,6 +77,12 @@
         <paraStyle name="Index" fontName="Times-Roman"/>
     </stylesheet>
     <story>
+        <para style="Heading">
+            <font face="Times-Roman" size="11.0">Detail of Sales</font>
+        </para>
+        <para style="Heading1">
+            <font face="Times-Roman" size="11.0"> </font>
+        </para>
         <para style="P12">
             <font face="Times-Roman" size="11.0">Company: [[ company.name ]]</font>
         </para>
@@ -143,6 +149,7 @@
                                     <font face="Helvetica-Bold" size="10.0">Mode of Taxes</font>
                                 </para>
                             </td>
+                            <td></td>
                         </tr>
                         <tr>[[ repeatIn(gettaxamount(objects).items(), 'p') ]]
                             <td>[[ p[0] ]]</td>
@@ -157,6 +164,7 @@
                                     <font face="Helvetica-Bold" size="10.0">Mode of payment</font>
                                 </para>
                             </td>
+                            <td></td>
                         </tr>
                         <tr>[[ repeatIn(getpayments(objects).items(), 'p') ]]
                             <td>[[ p[0] ]]</td>
