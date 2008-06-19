@@ -106,7 +106,7 @@
                 <tr>
                     <td>[[ repeatIn(o.lines,'line') ]]<para style="P5">[[line.create_date ]]</para> </td>
                     <td> </td>
-                    <td> <para style="P5"> [[strip_name(line.product_id.name) ]] </para></td>
+                    <td> <para style="P5"> [[strip_name(line.product_id.name, 32) ]] </para></td>
                     <td> <para style="P16"> [[ '%.2f' % (line.price_subtotal,) ]]</para></td>
                     <td> <para style="P16"> [[ '%d' % line.qty ]]</para></td>
                     <td> <para style="P16"> [[ '%d%%' % (line.discount * 100) ]]</para></td>

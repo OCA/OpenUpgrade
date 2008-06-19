@@ -77,7 +77,7 @@ class pos_order(osv.osv):
 		for order in self.browse(cr, uid, ids):
 			val= 0.0
 			for line in order.lines:
-				val = reduce( lambda x, y: x+round(y['amount'], 2),
+				val = reduce(lambda x, y: x+round(y['amount'], 2),
 						tax_obj.compute_inv(cr, uid, line.product_id.taxes_id,
 							line.price_unit * \
 							(1-(line.discount or 0.0)/100.0), line.qty),
@@ -146,7 +146,7 @@ class pos_order(osv.osv):
 			states={'draft': [('readonly', False)]}, readonly=True),
 		'date_order': fields.date('Date Ordered', readonly=True),
 		'date_validity': fields.date('Validity Date', required=True),
-		'user_id': fields.many2one('res.users', 'Salesman', 
+		'user_id': fields.many2one('res.users', 'Salesman',
 			readonly=True),
 		'amount_tax': fields.function(_amount_tax, method=True, string='Taxes'),
 		'amount_total': fields.function(_amount_total, method=True,
@@ -166,28 +166,28 @@ class pos_order(osv.osv):
 			required=True, states={'draft': [('readonly', False)]},
 			readonly=True),
 		'partner_id': fields.many2one(
-			'res.partner', 'Partner', change_default=True, 
+			'res.partner', 'Partner', change_default=True,
 			states={'draft': [('readonly', False)], 'paid': [('readonly', False)]},
 			readonly=True),
 		'state': fields.selection([('cancel', 'Cancel'), ('draft', 'Draft'),
 			('paid', 'Paid'), ('done', 'Done'), ('invoiced', 'Invoiced')], 'State',
-			readonly=True,),
+			readonly=True, ),
 		'invoice_id': fields.many2one('account.invoice', 'Invoice' , readonly=True),
 		'account_move': fields.many2one('account.move', 'Account Entry' ,
 			readonly=True),
-		'pickings':fields.one2many('stock.picking','pos_order','Picking',
+		'pickings': fields.one2many('stock.picking', 'pos_order', 'Picking',
 			readonly=True),
 		'last_out_picking': fields.many2one('stock.picking',
 											'Last output picking',
 											readonly=True),
 		'note': fields.text('Notes'),
-		'nb_print': fields.integer('Number of print',readonly=True),
-		'sale_journal': fields.many2one('account.journal','Journal',
-			required=True,states={'draft':[('readonly', False)]},
-			readonly=True,),
+		'nb_print': fields.integer('Number of print', readonly=True),
+		'sale_journal': fields.many2one('account.journal', 'Journal',
+			required=True, states={'draft': [('readonly', False)]},
+			readonly=True, ),
 		'account_receivable': fields.many2one('account.account',
-			'Default Receivable', required=True,states={'draft':[('readonly', False)]},
-			readonly=True,),
+			'Default Receivable', required=True, states={'draft': [('readonly', False)]},
+			readonly=True, ),
 		'invoice_wanted': fields.boolean('Create invoice')
 		}
 
@@ -502,7 +502,7 @@ class pos_order(osv.osv):
 				else:
 					raise osv.except_osv('Error !', 'There is no income '\
 						'account defined for this product: "%s" (id:%d)'\
-						% (line.product_id.name, line.product_id.id,))
+						% (line.product_id.name, line.product_id.id, ))
 
 
 				# Empty the tax list as long as there is no tax code:
@@ -599,7 +599,7 @@ class pos_order(osv.osv):
 			if not account_receivable:
 				raise  osv.except_osv('Error !',
 					'There is no receivable account defined for this journal:'\
-					' "%s" (id:%d)' % (order.sale_journal.name, order.sale_journal.id,))
+					' "%s" (id:%d)' % (order.sale_journal.name, order.sale_journal.id, ))
 
 			for payment in order.payments:
 

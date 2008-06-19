@@ -31,7 +31,9 @@ from report import report_sxw
 from osv import osv
 import pooler
 
+
 class order(report_sxw.rml_parse):
+
 	def __init__(self, cr, uid, name, context):
 		super(order, self).__init__(cr, uid, name, context)
 
@@ -48,18 +50,18 @@ class order(report_sxw.rml_parse):
 	def netamount(self, order_line_id):
 		sql = 'select (qty*price_unit) as net_price from pos_order_line where id = %d '
 		self.cr.execute(sql%(order_line_id))
-		res=self.cr.fetchone();
-		return res[0];
+		res=self.cr.fetchone()
+		return res[0]
 
 	def discount(self, order_id):
 		sql = 'select discount, price_unit, qty from pos_order_line where order_id  = %d '
 		self.cr.execute(sql%(order_id))
-		res=self.cr.fetchall();
-		sum = 0;
+		res=self.cr.fetchall()
+		sum = 0
 		for r in res:
 			if r[0]!=0:
 				sum = sum +(r[2] * (r[0]*r[1]/100))
-		return sum;
+		return sum
 
 report_sxw.report_sxw('report.pos.receipt', 'pos.order', 'addons/pos/report/pos_receipt.rml', parser=order, header=False)
 

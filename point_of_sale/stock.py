@@ -30,11 +30,13 @@ from osv import osv, fields
 import time
 import netsvc
 
+
 class stock_picking(osv.osv):
 
 	_inherit = 'stock.picking'
 	_columns = {
 		'pos_order': fields.many2one('pos.order', 'Pos order'),
-		}
+	}
 
 stock_picking()
+
