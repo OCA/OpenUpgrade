@@ -23,23 +23,17 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
+
         self.aSearchResult = []
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
+
         if docinfo.getUserFieldValue(2) <> "" and docinfo.getUserFieldValue(3) <> "":
             self.win = DBModalDialog(60, 50, 180, 70, "Add Attachment to Server")
             self.win.addFixedText("lblResourceType", 2 , 5, 100, 10, "Select Appropriate Resource Type:")
             self.win.addComboListBox("lstResourceType", -2, 25, 176, 15,True,itemListenerProc=self.lstbox_selected)
-            self.lstResourceType = self.win.getControl( "lstResourceType" )
-
-	    for kind in self.Kind.keys(): 
-		self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
-
             self.win.addButton('btnOk1', -2 , -5, 25 , 15,'OK' ,actionListenerProc = self.btnOkOrCancel_clicked )
-            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
-
-            self.win.doModalDialog("",None)
         else:
             self.win = DBModalDialog(60, 50, 180, 190, "Add Attachment to Server")
             self.win.addFixedText("lblModuleName",2 , 9, 42, 20, "Select Module:")
@@ -54,14 +48,9 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                          "Tasks":"project.task",
                          "Employee":"hr.employee"
                          }
-            self.lstModel.addItem("Parner",0)
-            self.lstModel.addItem("Case",1)
-            self.lstModel.addItem("Sale Order",2)
-            self.lstModel.addItem("Purchase Order",3)
-            self.lstModel.addItem("Analytic Account",4)
-            self.lstModel.addItem("Project",5)
-            self.lstModel.addItem("Tasks",6)
-            self.lstModel.addItem("Employee",7)
+
+	    for item in self.dModel.keys():
+		self.lstModel.addItem(item, self.lstModel.getItemCount())
 
             self.win.addFixedText("lblSearchName",2 , 25, 60, 10, "Enter Search String:")
             self.win.addEdit("txtSearchName", 2, 35, 149, 15,)
@@ -73,14 +62,14 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
             self.win.addFixedText("lblResourceType", 2 , 137, 100, 20, "Select Appropriate Resource Type:")
             self.win.addComboListBox("lstResourceType", -2, 147, 176, 15,True,itemListenerProc=self.lstbox_selected)
-            self.lstResourceType = self.win.getControl( "lstResourceType" )
-	    for kind in self.Kind.keys(): 
-		self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
 
             self.win.addButton('btnOk', -2 , -5, 25 , 15,'OK' ,actionListenerProc = self.btnOkOrCancel_clicked )
-            self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-            self.win.doModalDialog("",None)
+	self.lstResourceType = self.win.getControl( "lstResourceType" )
+	for kind in self.Kind.keys(): 
+	    self.lstResourceType.addItem( kind, self.lstResourceType.getItemCount() )
+	self.win.addButton('btnCancel', -2 - 27 , -5 , 30 , 15, 'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
+	self.win.doModalDialog("",None)
 
     def lstbox_selected(self,oItemEvent):
         pass
