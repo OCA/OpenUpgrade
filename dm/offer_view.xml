@@ -275,6 +275,49 @@
 	Pre-Offer Views
 	=======================================================
 	-->
+	<record model="ir.ui.view" id="view_preoffer_form">
+		<field name="name">dm.preoffer.form</field>
+		<field name="model">dm.offer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Offers">
+				<notebook>
+					<page string="General">
+						<field name="name" select="1"/>
+						<field name="code"/>
+						<field name="lang_orig"/>
+						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>
+						<field name="recommended_trademark"/>
+						<field name="offer_origin_id"/>
+						<field name="type" select="2" on_change = "change_code(type,copywriter_id)"/>
+						<field name="offer_responsible_id" select="2"/>
+						<field name="active" select="2"/>
+						<newline/>
+						<field name="quotation"/>
+						<field name="legal_state"/>
+						<separator string="Categories" colspan="4"/>
+						<field name="category_ids" colspan="4" nolabel="1"/>
+						<separator string="Notes" colspan="4"/>
+						<field name="notes" colspan="4"  nolabel="1"/>
+						<separator string="Status" colspan="4"/>
+						<group col="8" colspan="4">
+							<field name="state" nolabel="1" select="1"/>
+							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
+							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
+							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
+							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
+							<button name="go_to_offer" string="Duplicate Offers" states="draft" type="object"/>
+						</group>
+					</page>
+					<page string="Description">
+						<separator string="Description" colspan="4"/>
+						<field name="desc" nolabel="1"/>
+					</page>
+				</notebook>	
+			</form>
+		</field>
+	</record>		
+	
 	<record model="ir.actions.act_window" id="action_preoffer_form">
 		<field name="name">PreOffers</field>
 		<field name="type">ir.actions.act_window</field>
@@ -293,7 +336,7 @@
 	
 	<record model="ir.actions.act_window.view" id="action_preoffer_form_view">
 		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_offer_model_form"/>
+		<field name="view_id" ref="view_preoffer_form"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
 	</record>		
 	<menuitem name="Direct Marketing/Offers/All PreOffers " id="menu_action_preoffer_form" action="action_preoffer_form"/>
