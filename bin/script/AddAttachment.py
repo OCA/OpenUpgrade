@@ -96,7 +96,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	docinfo=oDoc2.getDocumentInfo()
 
 	sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-	self.aSearchREsult = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
+	self.aSearchResult = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
 	self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
 	if self.aSearchResult == []:
 	    ErrorDialog("No search result found !!!", "", "Search ERROR" )
@@ -125,12 +125,9 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	oDoc2 = desktop.getCurrentComponent()
 	docinfo = oDoc2.getDocumentInfo()
 
-	print "1. before getURL"
 	if oDoc2.getURL() == "":
 	    ErrorDialog("Please save your file", "", "Saving ERROR" )
 	    return None 
-
-	print "2. before getURL"
 
 	url = oDoc2.getURL()
 	if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
@@ -140,9 +137,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    ErrorDialog( "Ploblem in creating PDF", "", "PDF Error" )
 	    return None 
 
-	print "after url == None"
-
-	data = read_data_from_file( get_absolute_file_path( url ) )
+	data = read_data_from_file( get_absolute_file_path( url[7:] ) )
 	return self._send_attachment( url[url.rfind('/')+1:], data, model, resource_id )
 
     def btnOkWithoutInformation_clicked( self, oActionEvent ):
@@ -154,8 +149,6 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    ErrorDialog("Please select resource type", "", "Selection ERROR" )
 	    return 
 
-
-	print "Ik ben here"
 	res = self.send_attachment( docinfo.getUserFieldValue(3), docinfo.getUserFieldValue(2) )
 	self.win.endExecute()
 
