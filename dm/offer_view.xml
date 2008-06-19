@@ -285,13 +285,13 @@
 		<field name="domain">[('type','=','preoffer')]</field>
 		<field name="context">{'type':'preoffer'}</field>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_offer_model_tree_view">
+	<record model="ir.actions.act_window.view" id="action_preoffer_tree_view">
 		<field name="view_mode">tree</field>
 		<field name="view_id" ref="view_offer_tree"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
 	</record>
 	
-	<record model="ir.actions.act_window.view" id="action_offer_model_form_view">
+	<record model="ir.actions.act_window.view" id="action_preoffer_form_view">
 		<field name="view_mode">tree</field>
 		<field name="view_id" ref="view_offer_model_form"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
