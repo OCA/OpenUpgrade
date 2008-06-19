@@ -208,13 +208,13 @@ class dm_offer(osv.osv):
     _name = "dm.offer"
     _rec_name = 'name'
 
-    def __history(self, cr, uid, offers, keyword, context={}):
-        for offer in offers:
+    def __history(self, cr, uid, ids, keyword, context={}):
+        for id in ids:
             data = {
                 'date' : time.strftime('%Y-%m-%d'),
                 'user_id': uid,
                 'state' : keyword,
-                'offer_id': offer.id
+                'offer_id': id
             }
             obj = self.pool.get('dm.offer.history')
             obj.create(cr, uid, data, context)
@@ -290,16 +290,12 @@ class dm_offer(osv.osv):
             return {'value':{'code':code}}
         return {'value':{'code':''}}
     def state_close_set(self, cr, uid, ids, *args):
-        offers = self.browse(cr, uid, ids)
-        offers[0].state 
-        self.__history(cr,uid, offers, 'closed')
+        self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
-        offers = self.browse(cr, uid, ids)
-        offers[0].state 
-        self.__history(cr,uid, offers, 'open')
+        self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
 ##                            create transitions
 #        step_ids = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offers[0].id)])
@@ -310,23 +306,18 @@ class dm_offer(osv.osv):
         return True 
     
     def state_freeze_set(self, cr, uid, ids, *args):
-        offers = self.browse(cr, uid, ids)
-        offers[0].state 
-        self.__history(cr,uid, offers, 'freeze')
+        self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
     
     def state_draft_set(self, cr, uid, ids, *args):
-        offers = self.browse(cr, uid, ids)
-        offers[0].state 
-        self.__history(cr,uid, offers, 'draft')
+        self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
     
     def go_to_offer(self,cr, uid, ids, *args):
         self.copy(cr,uid,ids[0])
-        offers = self.browse(cr,uid,ids)
-        self.__history(cr,uid,offers, 'open')
+        self.__history(cr,uid,ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True
     

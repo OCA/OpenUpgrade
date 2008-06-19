@@ -94,12 +94,12 @@ class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
     _rec_name = 'type'
     
-    def __history(self, cr, uid, cases, keyword, context={}):
-        for case in cases:
+    def __history(self, cr, uid, ids, keyword, context={}):
+        for id in ids:
             data = {
                 'user_id': uid,
                 'state' : keyword,
-                'step_id': case.id,
+                'step_id': id,
                 'date' : time.strftime('%Y-%m-%d')
             }
             obj = self.pool.get('dm.offer.step.history')
@@ -167,30 +167,22 @@ class dm_offer_step(osv.osv):
         return {}
                      
     def state_close_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state 
-        self.__history(cr,uid, cases, 'closed')
+        self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
         return True  
 
     def state_open_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state 
-        self.__history(cr,uid, cases, 'open')
+        self.__history(cr,uid,ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True 
     
     def state_freeze_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state 
-        self.__history(cr,uid, cases, 'freeze')
+        self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
     
     def state_draft_set(self, cr, uid, ids, *args):
-        cases = self.browse(cr, uid, ids)
-        cases[0].state
-        self.__history(cr,uid, cases, 'draft')
+        self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True  
     
