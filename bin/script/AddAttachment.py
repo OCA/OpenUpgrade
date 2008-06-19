@@ -106,7 +106,6 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    self.lstResource.addItem(result[1],result[0])
 
     def _send_attachment( self, name, data, res_model, res_id ):
-	print "_send_attachment"
 	desktop = getDesktop()
 	oDoc2 = desktop.getCurrentComponent()
 	docinfo = oDoc2.getDocumentInfo()
@@ -121,14 +120,17 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 
 	return sock.execute( database, uid, docinfo.getUserFieldValue(1), 'ir.attachment', 'create', params )
 
-    def send_attachment( self, url, model, resource_id ):
+    def send_attachment( self, model, resource_id ):
 	desktop = getDesktop()
 	oDoc2 = desktop.getCurrentComponent()
 	docinfo = oDoc2.getDocumentInfo()
 
+	print "1. before getURL"
 	if oDoc2.getURL() == "":
 	    ErrorDialog("Please save your file", "", "Saving ERROR" )
 	    return None 
+
+	print "2. before getURL"
 
 	url = oDoc2.getURL()
 	if self.Kind[self.win.getListBoxSelectedItem("lstResourceType")] == "pdf":
@@ -137,6 +139,8 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	if url == None:
 	    ErrorDialog( "Ploblem in creating PDF", "", "PDF Error" )
 	    return None 
+
+	print "after url == None"
 
 	data = read_data_from_file( get_absolute_file_path( url ) )
 	return self._send_attachment( url[url.rfind('/')+1:], data, model, resource_id )
@@ -150,6 +154,8 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    ErrorDialog("Please select resource type", "", "Selection ERROR" )
 	    return 
 
+
+	print "Ik ben here"
 	res = self.send_attachment( docinfo.getUserFieldValue(3), docinfo.getUserFieldValue(2) )
 	self.win.endExecute()
 
@@ -172,7 +178,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    ErrorDialog("No resource selected !!!", "", "Resource ERROR" )
 	    return 
 
-	res = self.send_attachment( url, self.dModel[self.win.getListBoxSelectedItem('lstmodel')], resourceid )
+	res = self.send_attachment( self.dModel[self.win.getListBoxSelectedItem('lstmodel')], resourceid )
 	self.win.endExecute()
 
     def btnCancel_clicked( self, oActionEvent ):
