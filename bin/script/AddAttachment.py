@@ -1,4 +1,4 @@
-
+import os
 import uno
 import unohelper
 import xmlrpclib
@@ -206,11 +206,14 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    else:
 		pass
 
+	    filename = len(strFilterSubName) > 0 and convertToURL( os.path.splitext( strFile )[0] + ".pdf" ) or None
+
 	    if len(strFilterSubName) > 0:
-		oDoc.storeToURL( convertToURL( strFile + ".pdf" ), Array(self._MakePropertyValue("FilterName", strFilterSubName ),self._MakePropertyValue("CompressMode", "1" )))
-		return convertToURL( strFile + ".pdf" )
+		oDoc.storeToURL( filename, Array(self._MakePropertyValue("FilterName", strFilterSubName ),self._MakePropertyValue("CompressMode", "1" )))
+
 	    oDoc.close(True)
-	    return None
+	    # Can be None if len(strFilterSubName) <= 0
+	    return filename
 
     def _MakePropertyValue(self, cName = "", uValue = u"" ):
        oPropertyValue = createUnoStruct( "com.sun.star.beans.PropertyValue" )
