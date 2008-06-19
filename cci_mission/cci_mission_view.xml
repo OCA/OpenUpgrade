@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+﻿<?xml version="1.0" ?>
 <terp>
 	<data>
 
@@ -42,6 +42,7 @@
 					<field name="original_product_id" />
 					<field name="copy_product_id" />
 					<field name="section" select="2"/>
+					<field name="id_letter"/>
 					<field name="warranty_product_1" />
 					<field name="warranty_product_2" />
 				</form>
@@ -825,5 +826,31 @@
 				</form>
 			</field>
 		</record>
+		<!-- VUES PARTICULIERES SUR LES CERTIFICATS  -->
+
+		<record model="ir.actions.act_window" id="action_certificates_incompleted">
+			<field name="name">Incompleted Certificates</field>
+			<field name="res_model">cci_missions.certificate</field>
+			<!--<field name="domain">[('goods_value', '=', 0),('destination_id', '=', 0),('goods','=','')]</field>  HOWTO MAKE ONE 'OR' CONDITION ??? -->
+			<field name="domain">[('goods_value', '=', 0)]</field>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_certificates_incompleted_tree">
+			<field name="sequence" eval="1"/>
+			<field name="view_mode">tree</field>
+			<field name="view_id" ref="cci_missions_certificate_tree"/>
+			<field name="act_window_id" ref="action_certificates_incompleted"/>
+		</record>
+
+		<record model="ir.actions.act_window.view" id="action_certificates_incompleted_form">
+			<field name="sequence" eval="2"/>
+			<field name="view_mode">form</field>
+			<field name="act_window_id" ref="action_certificates_incompleted"/>
+		</record>
+
+		<menuitem name="Missions/Incompleted Certificates" 
+			id="menu_incompleted_certificates"
+			action="action_certificates_incompleted"/>
+
 	</data>
 </terp>

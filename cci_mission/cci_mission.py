@@ -274,6 +274,7 @@ class cci_missions_dossier_type(osv.osv):
 		'section' : fields.selection([('certificate','Certificate'),('legalization','Legalization'),('ATA','ATA Carnet')],'Type',required=True),
 		'warranty_product_1': fields.many2one('product.product', 'Warranty product for ATA carnet if Own Risk'),
 		'warranty_product_2': fields.many2one('product.product', 'Warranty product for ATA carnet if not own Risk'),
+		'id_letter' : fields.char('ID Letter', size=1, help='for identify the type of certificate by the federation' ), 
 	}
 
 cci_missions_dossier_type()
