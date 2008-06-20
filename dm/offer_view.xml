@@ -261,7 +261,6 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_offer_tree" />	
 		<field name="domain">[('type','=','model')]</field>
 		<field name="context">{'type':'model'}</field>
 	</record>
@@ -343,7 +342,6 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-<!--		<field name="view_id" ref="view_offer_tree" />	-->
 		<field name="domain">[('type','=','preoffer')]</field>
 		<field name="context">{'type':'preoffer'}</field>
 	</record>
