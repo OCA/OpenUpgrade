@@ -297,7 +297,7 @@
 						<field name="lang_orig"/>
 						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>
 						<field name="recommended_trademark"/>
-						<field name="type" select="2" on_change = "change_code(type,copywriter_id)"/>
+						<field name="preoffer_type" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
 						<separator string="Categories" colspan="4"/>

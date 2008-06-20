@@ -254,6 +254,7 @@ class dm_offer(osv.osv):
         'production_note' : fields.text('Production Notes'),
         'purchase_note' : fields.text('Purchase Notes'),
         'type' : fields.selection(AVAILABLE_TYPE, 'Type', size=16),
+        'preoffer_type' : fields.selection([('rewrite','Rewrite'),('new','New')], 'Type', size=16),
         'production_category_ids' : fields.many2many('dm.offer.category','dm_offer_production_category','offer_id','offer_production_categ_id', 'Production Categories' , domain="[('domain','=','production')]"),
 #        'production_delay' : fields.many2one('dm.offer.delay', 'Delay'),
         'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
@@ -323,7 +324,9 @@ class dm_offer(osv.osv):
         return True
     
     def create(self,cr,uid,vals,context={}):
-        if not vals.has_key('type'):
+        if not vals.has_key('type') and vals.has_key('preoffer_type'):
+            vals['type'] = 'preoffer'
+        elif not vals.has_key('type') :
             vals['type'] = 'model'
         return super(dm_offer,self).create(cr,uid,vals,context)
     
