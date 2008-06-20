@@ -115,7 +115,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    'name': name, 
 	    'datas': base64.encodestring( data ), 
 	    'res_model' : res_model, 
-	    'res_id' : res_id,
+	    'res_id' : int(res_id),
 	}
 
 	return sock.execute( database, uid, docinfo.getUserFieldValue(1), 'ir.attachment', 'create', params )
@@ -137,8 +137,9 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	    ErrorDialog( "Ploblem in creating PDF", "", "PDF Error" )
 	    return None 
 
-	data = read_data_from_file( get_absolute_file_path( url[7:] ) )
-	return self._send_attachment( url[url.rfind('/')+1:], data, model, resource_id )
+	url = url[7:]
+	data = read_data_from_file( get_absolute_file_path( url ) )
+	return self._send_attachment( os.path.basename( url ), data, model, resource_id )
 
     def btnOkWithoutInformation_clicked( self, oActionEvent ):
 	desktop = getDesktop()
