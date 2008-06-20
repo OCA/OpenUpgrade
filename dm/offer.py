@@ -323,6 +323,13 @@ class dm_offer(osv.osv):
         self.write(cr, uid, ids, {'state':'open'})
         return True
     
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+        print toolbar
+        result = super(dm_offer,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+        if context.has_key('type') and context['type'] == 'preoffer' :
+            if result.has_key('toolbar') and result['toolbar'].has_key('relate'):
+                result['toolbar']['relate']=''
+        return result
     def create(self,cr,uid,vals,context={}):
         if not vals.has_key('type') and vals.has_key('preoffer_type'):
             vals['type'] = 'preoffer'
