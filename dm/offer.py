@@ -243,7 +243,7 @@ class dm_offer(osv.osv):
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
         'legal_state' : fields.selection([('validated','Validated'), ('notvalidated','Not Validated'), ('inprogress','In Progress'), ('refused','Refused')],'Legal State'),
-        'category_ids' : fields.many2many('dm.offer.category','dm_offer_category_rel', 'offer_id', 'offer_category_id', 'Categories', domain="[('domain','=','general')]"),
+        'category_ids' : fields.many2many('dm.offer.category','dm_offer_category_rel', 'offer_id', 'offer_category_id', 'Categories'),
         'notes' : fields.text('General Notes'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'desc' : fields.text('Description'),
