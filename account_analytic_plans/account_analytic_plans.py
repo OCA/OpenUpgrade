@@ -116,7 +116,7 @@ class account_analytic_plan_instance(osv.osv):
 	def name_get(self, cr, uid, ids, context={}):
 		res = []
 		for inst in self.browse(cr, uid, ids, context):
-			name = inst.name or ''
+			name = inst.name or '/'
 			if name and inst.code:
 				name=name+' ('+inst.code+')'
 			res.append((inst.id, name))
@@ -161,7 +161,7 @@ class account_analytic_plan_instance(osv.osv):
 					i+=1
 				res['arch'] += "</form>"
 				doc = dom.minidom.parseString(res['arch'])
-				xarch, xfields = self._orm__view_look_dom_arch(cr, uid, doc, context=context)
+				xarch, xfields = self._view_look_dom_arch(cr, uid, doc, context=context)
 				res['arch'] = xarch
 				res['fields'] = xfields
 			return res
