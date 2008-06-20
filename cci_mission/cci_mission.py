@@ -982,13 +982,12 @@ class Product(osv.osv):
 
 		res = {}
 		product_uom_obj = self.pool.get('product.uom')
-
 		# force_member works for forcing member price if partner is non member, same reasonning for force_non_member
 		for product in self.browse(cr, uid, ids, context=context):
 			if ptype == 'member_price':
 				res[product.id] = product['list_price']
 				if context and ('partner_id' in context):
-					state = context['partner_id'].membership_state
+					state = self.pool.get('res.partner').browse(cr, uid, [context['partner_id']])[0].membership_state
 					if (state in ['waiting','associated','free','paid','invoiced']):
 						res[product.id] = product['member_price']
 				if context and ('force_member' in context):
