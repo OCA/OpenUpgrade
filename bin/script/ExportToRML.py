@@ -16,7 +16,7 @@ if __name__<>"package":
 class ExportToRML( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
         if not loginstatus and __name__=="package":
@@ -36,7 +36,7 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
 	data = read_data_from_file( get_absolute_file_path( doc.getURL()[7:] ) )
 
         if docinfo.getUserFieldValue(2) == "":
-            ErrorDialog("Please Save this file on server","Use Send To Server Option in Tiny Report Menu","Error")
+            ErrorDialog("Please Save this file on server","Use Send To Server Option in OpenERP Report Menu","Error")
             exit(1)
 
 	filename = self.GetAFileName()
@@ -55,9 +55,9 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
         sFilePickerArgs = Array(10)
         oFileDialog = createUnoService("com.sun.star.ui.dialogs.FilePicker")
         oFileDialog.initialize(sFilePickerArgs)
-        oFileDialog.appendFilter("TinyReport File Save To ....","*.rml")
+        oFileDialog.appendFilter("OpenERP Report File Save To ....","*.rml")
 
-	f_path = "Tiny-"+ os.path.basename( tempfile.mktemp("","") ) + ".rml"
+	f_path = "OpenERP-"+ os.path.basename( tempfile.mktemp("","") ) + ".rml"
 	initPath = tempfile.gettempdir()
         oUcb = createUnoService("com.sun.star.ucb.SimpleFileAccess")
         if oUcb.exists(initPath):
@@ -72,4 +72,4 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
 if __name__<>"package" and __name__=="__main__":
     ExportToRML(None)
 elif __name__=="package": 
-    g_ImplementationHelper.addImplementation( ExportToRML, "org.openoffice.tiny.report.exporttorml", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( ExportToRML, "org.openoffice.openerp.report.exporttorml", ("com.sun.star.task.Job",),)

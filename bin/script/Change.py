@@ -4,7 +4,7 @@ if __name__<>"package":
 
 class Change:
     def __init__(self, aVal= None, sURL=""):
-        self.win=DBModalDialog(60, 50, 120, 90, "Connect to Tiny ERP Server")
+        self.win=DBModalDialog(60, 50, 120, 90, "Connect to Open ERP Server")
 
         self.win.addFixedText("lblVariable", 38, 12, 60, 15, "Server")
 

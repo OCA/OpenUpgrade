@@ -220,5 +220,5 @@ class AddLang(unohelper.Base, XJobExecutor ):
 if __name__<>"package" and __name__=="__main__":
     AddLang()
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( AddLang, "org.openoffice.tiny.report.langtag", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( AddLang, "org.openoffice.openerp.report.langtag", ("com.sun.star.task.Job",),)
 

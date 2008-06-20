@@ -13,7 +13,7 @@ if __name__<>"package":
 class ServerParameter( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
@@ -116,6 +116,6 @@ if __name__<>"package" and __name__=="__main__":
 elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
             ServerParameter,
-            "org.openoffice.tiny.report.serverparam",
+            "org.openoffice.openerp.report.serverparam",
             ("com.sun.star.task.Job",),)
 

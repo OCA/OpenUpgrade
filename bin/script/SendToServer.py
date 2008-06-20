@@ -27,7 +27,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 
     def __init__(self,ctx):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
         if not loginstatus and __name__=="package":
@@ -59,7 +59,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 
             report_name = docinfo.getUserFieldValue(3) + "." + result
         else:
-            ErrorDialog("Please select appropriate module...","Note: use Tiny Report -> Open a new Report", "Module selection ERROR");
+            ErrorDialog("Please select appropriate module...","Note: use OpenERP Report -> Open a new Report", "Module selection ERROR");
             exit(1)
 
         self.win = DBModalDialog(60, 50, 180, 100, "Send To Server")
@@ -163,4 +163,4 @@ class SendtoServer(unohelper.Base, XJobExecutor):
 if __name__<>"package" and __name__=="__main__":
     SendtoServer(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( SendtoServer, "org.openoffice.tiny.report.sendtoserver", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( SendtoServer, "org.openoffice.openerp.report.sendtoserver", ("com.sun.star.task.Job",),)

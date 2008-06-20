@@ -9,7 +9,7 @@ if __name__<>'package':
 class About(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
         self.win = DBModalDialog(60, 50, 175, 115, ".:: About OpenERP Report Designer ::.")
 
@@ -69,5 +69,5 @@ class About(unohelper.Base, XJobExecutor):
 if __name__<>"package" and __name__=="__main__":
     About(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( About, "org.openoffice.tiny.report.about", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( About, "org.openoffice.openerp.report.about", ("com.sun.star.task.Job",),)
 

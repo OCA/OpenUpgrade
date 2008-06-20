@@ -20,7 +20,7 @@ if __name__<>"package":
 class NewReport(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
         if not loginstatus and __name__=="package":
@@ -62,5 +62,5 @@ if __name__<>"package" and __name__=="__main__":
 elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
             NewReport,
-            "org.openoffice.tiny.report.opennewreport",
+            "org.openoffice.openerp.report.opennewreport",
             ("com.sun.star.task.Job",),)

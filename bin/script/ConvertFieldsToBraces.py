@@ -16,7 +16,7 @@ class ConvertFieldsToBraces( unohelper.Base, XJobExecutor ):
     def __init__(self,ctx):
 
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
         if not loginstatus and __name__=="package":
@@ -48,7 +48,7 @@ if __name__<>"package":
 else:
     g_ImplementationHelper.addImplementation( \
         ConvertFieldsToBraces,
-        "org.openoffice.tiny.report.convertFB",
+        "org.openoffice.openerp.report.convertFB",
         ("com.sun.star.task.Job",),)
 
 

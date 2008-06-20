@@ -20,7 +20,7 @@ if __name__<>'package':
 class ModifyExistingReport(unohelper.Base, XJobExecutor):
     def __init__(self,ctx):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
 
         LoginTest()
@@ -104,7 +104,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                      url="file:///"+fp_name   
 
                 arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
-                oDoc2 = desktop.loadComponentFromURL(url, "tiny", 55, arr)
+                oDoc2 = desktop.loadComponentFromURL(url, "openerp", 55, arr)
                 docinfo2=oDoc2.getDocumentInfo()
                 docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
                 docinfo2.setUserFieldValue(1,self.userInfo)
@@ -133,5 +133,5 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
 if __name__<>"package" and __name__=="__main__":
     ModifyExistingReport(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( ModifyExistingReport, "org.openoffice.tiny.report.modifyreport", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( ModifyExistingReport, "org.openoffice.openerp.report.modifyreport", ("com.sun.star.task.Job",),)
 

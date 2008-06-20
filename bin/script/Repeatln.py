@@ -143,7 +143,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
 
             self.win.doModalDialog("lstFields",self.sValue)
         else:
-            ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nTiny Report->Open a New Report")
+            ErrorDialog("Please Select Appropriate module" ,"Create new report from: \nOpenERP -> Open a New Report")
             self.win.endExecute()
 
     def lstbox_selected(self,oItemEvent):
@@ -228,4 +228,4 @@ if __name__<>"package" and __name__=="__main__":
     RepeatIn()
 elif __name__=="package":
     g_ImplementationHelper = unohelper.ImplementationHelper()
-    g_ImplementationHelper.addImplementation( RepeatIn, "org.openoffice.tiny.report.repeatln", ("com.sun.star.task.Job",),) 
+    g_ImplementationHelper.addImplementation( RepeatIn, "org.openoffice.openerp.report.repeatln", ("com.sun.star.task.Job",),) 

@@ -16,7 +16,7 @@ if __name__<>"package":
 class modify(unohelper.Base, XJobExecutor ):
     def __init__( self, ctx ):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
 
         # Variable Declaration
@@ -87,5 +87,5 @@ class modify(unohelper.Base, XJobExecutor ):
 if __name__<>"package":
     modify(None)
 else:
-    g_ImplementationHelper.addImplementation( modify, "org.openoffice.tiny.report.modify", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( modify, "org.openoffice.openerp.report.modify", ("com.sun.star.task.Job",),)
 

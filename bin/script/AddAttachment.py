@@ -19,7 +19,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
     }
     def __init__(self,ctx):
         self.ctx     = ctx
-        self.module  = "tiny_report"
+        self.module  = "openerp_report"
         self.version = "0.1"
         LoginTest()
         if not loginstatus and __name__=="package":
@@ -228,4 +228,4 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 if __name__<>"package" and __name__=="__main__":
     AddAttachment(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( AddAttachment, "org.openoffice.tiny.report.addattachment", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( AddAttachment, "org.openoffice.openerp.report.addattachment", ("com.sun.star.task.Job",),)

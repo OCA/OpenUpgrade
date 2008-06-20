@@ -72,6 +72,6 @@ if __name__<>"package" and __name__=="__main__":
 elif __name__=="package":
     g_ImplementationHelper.addImplementation( \
         Expression,
-        "org.openoffice.tiny.report.expression",
+        "org.openoffice.openerp.report.expression",
         ("com.sun.star.task.Job",),)
 

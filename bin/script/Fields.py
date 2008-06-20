@@ -221,5 +221,5 @@ class Fields(unohelper.Base, XJobExecutor ):
 if __name__<>"package" and __name__=="__main__":
     Fields()
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( Fields, "org.openoffice.tiny.report.fields", ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( Fields, "org.openoffice.openerp.report.fields", ("com.sun.star.task.Job",),)
 
