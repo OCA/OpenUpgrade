@@ -273,7 +273,8 @@
 	</record>
 	
 	<record model="ir.actions.act_window.view" id="action_offer_model_form_view">
-		<field name="view_mode">tree</field>
+		<field name="view_mode">form</field>
+		<field name="sequence">1</field>
 		<field name="view_id" ref="view_offer_model_form"/>
 		<field name="act_window_id" ref="action_offer_model_form"/>
 	</record>	
