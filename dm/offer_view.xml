@@ -321,6 +321,15 @@
 					<page string="Keywords" >
 						<separator string="Keywords" colspan="4"/>
 						<field name="keywords" colspan="4"  nolabel="1" select="1"/>
+					</page>								
+					<page string="Dates">
+						<field name="order_date"/>
+						<field name="last_modification_date"/>
+						<field name="plannned_delivery_date"/>
+						<field name="delivery_date"/>	
+						<newline />
+						<field name="fixed_date"/>
+<!--						<field name="buffer_delay"/>-->
 					</page>						
 				</notebook>	
 			</form>
