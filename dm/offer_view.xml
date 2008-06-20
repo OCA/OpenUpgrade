@@ -297,13 +297,9 @@
 						<field name="lang_orig"/>
 						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>
 						<field name="recommended_trademark"/>
-						<field name="offer_origin_id"/>
 						<field name="type" select="2" on_change = "change_code(type,copywriter_id)"/>
-						<field name="offer_responsible_id" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
-						<field name="quotation"/>
-						<field name="legal_state"/>
 						<separator string="Categories" colspan="4"/>
 						<field name="category_ids" colspan="4" nolabel="1"/>
 						<separator string="Notes" colspan="4"/>
