@@ -9,7 +9,8 @@
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
 				<field name="member_lines" position="before">
-					 <field name="membership_vcs"/> <!-- used by Philmer to test the fields.function -->
+					<field name="membership_vcs"/> <!-- used by Philmer to test the fields.function -->
+					<field name="refuse_membership" select="2"/>
 				</field>
 			</field>
 		</record>

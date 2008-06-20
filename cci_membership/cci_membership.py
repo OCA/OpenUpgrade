@@ -1,7 +1,7 @@
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+#					Fabien Pinckaers <fp@tiny.Be>
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -30,22 +30,28 @@ import netsvc
 from osv import fields, osv
 
 class res_partner(osv.osv):
-    _inherit = 'res.partner'
-    _description = 'Partner'
-    def _membership_vcs(self,cr,uid,ids,field_name=None,arg=None,context={}):
-        '''To obtain the ID of the partner in the form of a belgian VCS for a membership offer'''
-        res = {}
-        for id in ids:
-            value_digits = 1000000000 + id
-            check_digits = value_digits % 97
-            if check_digits == 0:
-                check_digits = 97
-            pure_string = str(value_digits) +  ( str(check_digits).zfill(2) )
-            res[id] = '***' + pure_string[0:3] + '/' + pure_string[3:7] + '/' + pure_string[7:] + '***'
-        return res
+	_inherit = 'res.partner'
+	_description = 'Partner'
 
-    _columns = {
-        'membership_vcs': fields.function( _membership_vcs, method=True,string='VCS number for membership offer', type='char', size=20)
-                }
+	def _membership_vcs(self,cr,uid,ids,field_name=None,arg=None,context={}):
+		'''To obtain the ID of the partner in the form of a belgian VCS for a membership offer'''
+		res = {}
+		for id in ids:
+			value_digits = 1000000000 + id
+			check_digits = value_digits % 97
+			if check_digits == 0:
+				check_digits = 97
+			pure_string = str(value_digits) +  ( str(check_digits).zfill(2) )
+			res[id] = '***' + pure_string[0:3] + '/' + pure_string[3:7] + '/' + pure_string[7:] + '***'
+		return res
+
+	_columns = {
+		'membership_vcs': fields.function( _membership_vcs, method=True,string='VCS number for membership offer', type='char', size=20),
+		'refuse_membership': fields.boolean('Didn\'t Refuse Explicitly to Become a Member'),
+	}
+
+	_default = {
+		'refuse_membership': lambda *a: True,
+	}
 
 res_partner()
