@@ -116,7 +116,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />		
+		<field name="view_id" ref = "view_offer_tree" />
+		<field name="domain">[('type','!=','model')]</field>					
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
 
@@ -127,7 +128,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','open')]</field>	
+		<field name="domain">[('state','=','open'),('type','!=','model')]</field>	
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Open Offers" id="menu_action_offer_form_all1" action="action_offer_form_all1"/>
 
@@ -138,7 +139,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','draft')]</field>		
+		<field name="domain">[('state','=','draft'),('type','!=','model')]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Draft Offers" id="menu_action_offer_form_all2" action="action_offer_form_all2"/>
 
@@ -149,7 +150,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','closed')]</field>		
+		<field name="domain">[('state','=','closed'),('type','!=','model')]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
 
@@ -165,7 +166,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('offer_responsible_id','=',uid)]</field>
+		<field name="domain">[('offer_responsible_id','=',uid),('type','!=','model')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
  
@@ -176,7 +177,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid)]</field>	
+		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid),('type','!=','model')]</field>	
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
 
@@ -187,7 +188,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid)]</field>		
+		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid),('type','!=','model')]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
 
@@ -198,7 +199,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid)]</field>		
+		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid),('type','!=','model')]</field>		
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
 
@@ -217,18 +218,18 @@
 					<page string="General">
 						<field name="name" select="1"/>
 						<field name="code"/>
-						<field name="lang_orig"/>
-						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>
-						<field name="recommended_trademark"/>
-						<field name="offer_origin_id"/>
-						<field name="type" select="2" on_change = "change_code(type,copywriter_id)"/>
-						<field name="offer_responsible_id" select="2"/>
-						<field name="active" select="2"/>
-						<newline/>
-						<field name="quotation"/>
-						<field name="legal_state"/>
-						<separator string="Categories" colspan="4"/>
-						<field name="category_ids" colspan="4" nolabel="1"/>
+<!--						<field name="lang_orig"/>-->
+<!--						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>-->
+<!--						<field name="recommended_trademark"/>-->
+<!--						<field name="offer_origin_id"/>-->
+<!--						<field name="type" select="2" on_change = "change_code(type,copywriter_id)"/>-->
+<!--						<field name="offer_responsible_id" select="2"/>-->
+<!--						<field name="active" select="2"/>-->
+<!--						<newline/>-->
+<!--						<field name="quotation"/>-->
+<!--						<field name="legal_state"/>-->
+<!--						<separator string="Categories" colspan="4"/>-->
+<!--						<field name="category_ids" colspan="4" nolabel="1"/>-->
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4"  nolabel="1"/>
 						<separator string="Status" colspan="4"/>
@@ -238,13 +239,17 @@
 							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
-							<button name="go_to_offer" string="Duplicate Offers" states="draft" type="object"/>
+							<button name="go_to_offer" string="Create Offers" states="draft" type="object"/>
 						</group>
 					</page>
 					<page string="Description">
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1"/>
 					</page>
+					<page string="History">
+						<separator string="History" />
+						<field name="history_ids" nolabel="1" colspan="4"/>
+					</page>					
 				</notebook>	
 			</form>
 		</field>
@@ -310,7 +315,7 @@
 							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
-							<button name="go_to_offer" string="Duplicate Offers" states="draft" type="object"/>
+							<button name="go_to_offer" string="Create Offers" states="draft" type="object"/>
 						</group>
 					</page>
 					<page string="Description">

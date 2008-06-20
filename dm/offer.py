@@ -317,10 +317,15 @@ class dm_offer(osv.osv):
         return True  
     
     def go_to_offer(self,cr, uid, ids, *args):
-        self.copy(cr,uid,ids[0])
+        self.copy(cr,uid,ids[0],{'type':'standart'})
         self.__history(cr,uid,ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
         return True
+    
+    def create(self,cr,uid,vals,context={}):
+        if not vals.has_key('type'):
+            vals['type'] = 'model'
+        return super(dm_offer,self).create(cr,uid,vals,context)
     
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
