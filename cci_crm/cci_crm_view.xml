@@ -77,5 +77,33 @@
 		</record>
 		<menuitem name="CRM &amp; SRM/Meeting Confidential Info" action="action_meeting_confidential_info" id="menu_meeting_confidential_info"/>
 
+		<act_window name="Open a New RSF"
+			domain="[('partner_id', '=', active_id)]"
+			context="{'partner_id': active_id, 'section_id':ref('case_section_rsf')}"
+			res_model="crm.case"
+			src_model="res.partner"
+			id="act_res_partner_2_new_rsf"/>
+
+<!--
+		<record model="ir.actions.act_window" id="act_res_partner_2_new_RSF">
+			<field name="name">Open aa New RSF</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.case</field>
+			<field name="domain" eval="[('section_id','=',ref('case_section_rsf'))]"/>
+			--><!--<field name="domain">[('partner_id', '=', active_id), ('section_id', '=',ref('eval=['']')]</field>-->
+<!--			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+		<ir_set>
+			<field name="key" eval="'action'"/>
+			<field name="key2" eval="'client_action_multi'"/>
+			<field name="models" eval="['res.partner']"/>
+			<field name="name">Open aaa New RSF</field>
+			<field name="value" eval="'ir.actions.act_window,'+str(act_res_partner_2_new_RSF)"/>
+			--><!--<field name="isobject" eval="True"/>
+			<field name="replace" eval="True"/>-->
+<!--		</ir_set>-->
+
+
 	</data>
 </terp>
