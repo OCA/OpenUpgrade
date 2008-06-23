@@ -74,13 +74,27 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_idea_vote_tree">
+		<field name="name">idea.vote.tree</field>
+		<field name="model">idea.vote</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		<tree string="Votes">
+			<field name="idea_id"/>
+			<field name="user_id"/>
+			<field name="score" />
+		</tree>
+		</field>
+	</record>
 	<record model="ir.ui.view" id="view_idea_vote_form">
 		<field name="name">idea.vote.form</field>
 		<field name="model">idea.vote</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-		<form string="vote">
-			<field name="score" />
+		<form string="Votes">
+			<field name="idea_id" select="1" />
+			<field name="user_id" select="1" />
+			<field name="score" select="2"/>
 		</form>
 		</field>
 	</record>
@@ -261,6 +275,15 @@
 
 
 
+
+
+	<record model="ir.actions.act_window" id="action_idea_vote">
+		<field name="name">Idea's vote</field>
+		<field name="res_model">idea.vote</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Tools/Configuration/Ideas/All Votes" id="menu_idea_vote" action="action_idea_vote"/>
 
 	</data>
 </terp>
