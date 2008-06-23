@@ -28,22 +28,22 @@
 
 from osv import osv, fields
 
-VoteValues = [('0','Very Bad'),('25', 'Bad'),('50','None'),('75','Good'),('100','Very Good') ]
+VoteValues = [('-1','Not Voted'),('0','Very Bad'),('25', 'Bad'),('50','Normal'),('75','Good'),('100','Very Good') ]
 DefaultVoteValue = '50'
-MaximumVoteValue = '100'
 
 class idea_category(osv.osv):
 	_name = "idea.category"
 	_description = "Category for an idea"
 	_columns = {
 		'name': fields.char('Category', size=64, required=True),
-		'summary' : fields.char('Summary', size=255 ),
+		'summary': fields.text('Summary'),
+		'parent_id': fields.many2one('idea.category','Parent Categories', ondelete='set null'),
+		'child_ids': fields.one2many('idea.category','parent_id','Child Categories')
 	}
 	_sql_constraints = [
-		('name', 'unique(name)', 'The name of the category must be unique' )
+		('name', 'unique(parent_id,name)', 'The name of the category must be unique' )
 	]
-	_order = 'name asc'
-
+	_order = 'parent_id,name asc'
 idea_category()
 
 class idea_idea(osv.osv):
@@ -92,11 +92,12 @@ class idea_idea(osv.osv):
 
 	def _vote_read(self, cr, uid, ids, name, arg, context = None):
 		res = {}
+		for id in ids:
+			res[id] = '-1'
 		vote_obj = self.pool.get('idea.vote')
 		votes_ids = vote_obj.search(cr, uid, [('idea_id', 'in', ids), ('user_id', '=', uid)])
 		for vote in vote_obj.browse(cr, uid, votes_ids, context):
 			res[vote.idea_id.id] = vote.score
-
 		return res
 
 	def _vote_save(self, cr, uid, id, field_name, field_value, arg, context = None):
@@ -104,9 +105,13 @@ class idea_idea(osv.osv):
 		vote = vote_obj.search(cr,uid,[('idea_id', '=', id),('user_id', '=', uid)])
 		textual_value = str(field_value)
 		if vote:
-			vote_obj.write(cr,uid, vote[0], { 'score' : textual_value })
+			if int(field_value)>=0:
+				vote_obj.write(cr,uid, vote, { 'score' : textual_value })
+			else:
+				vote_obj.unlink(cr,uid, vote)
 		else:
-			vote_obj.create(cr,uid, { 'idea_id' : id, 'user_id' : uid, 'score' : textual_value })
+			if int(field_value)>=0:
+				vote_obj.create(cr,uid, { 'idea_id' : id, 'user_id' : uid, 'score' : textual_value })
 
 
 	_columns = {
@@ -121,19 +126,16 @@ class idea_idea(osv.osv):
 		'count_votes' : fields.function(_vote_count, method=True, string="Count of votes", type="integer"),
 		'count_comments': fields.function(_comment_count, method=True, string="Count of comments", type="integer"),
 		'category_id': fields.many2one('idea.category', 'Category', required=True ),
-		'state': fields.selection([('draft','Draft'),('open','Opened'),('close','Closed'),('cancel','Canceled')], 'State', readonly=True),
-
+		'state': fields.selection([('draft','Draft'),('open','Opened'),('close','Accepted'),('cancel','Canceled')], 'State', readonly=True),
 		'stat_vote_ids': fields.one2many('idea.vote.stat', 'idea_id', 'Statistics', readonly=True),
 	}
 
 	_defaults = {
 		'user_id': lambda self,cr,uid,context: uid,
-		'my_vote': lambda *a: MaximumVoteValue, 
+		'my_vote': lambda *a: '-1', 
 		'state': lambda *a: 'draft'
 	}
-
 	_order = 'id desc'
-
 
 	def idea_cancel(self, cr, uid, ids):
 		self.write(cr, uid, ids, { 'state' : 'cancel' })
@@ -150,8 +152,6 @@ class idea_idea(osv.osv):
 	def idea_draft(self, cr, uid, ids):
 		self.write(cr, uid, ids, { 'state' : 'draft' })
 		return True
-
-
 idea_idea()
 
 class idea_comment(osv.osv):
@@ -168,7 +168,6 @@ class idea_comment(osv.osv):
 		'user_id': lambda self, cr, uid, context: uid
 	}
 	_order = 'id desc'
-
 idea_comment()
 
 class idea_vote(osv.osv):
@@ -182,9 +181,7 @@ class idea_vote(osv.osv):
 	_defaults = {
 		'score': lambda *a: DefaultVoteValue,
 	}
-
 idea_vote()
-
 
 class idea_vote_stat(osv.osv):
 	_name = 'idea.vote.stat'
@@ -216,6 +213,5 @@ class idea_vote_stat(osv.osv):
 				group by
 					i.id, v.score, i.id
 		)""")
-	
 idea_vote_stat()
 
