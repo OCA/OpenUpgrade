@@ -78,12 +78,14 @@
 		<field name="act_from" ref="act_validate" />
 		<field name="act_to" ref="act_cancel" />
 		<field name="signal">cancel</field>
+		<field name="role_id" ref="HR_holidays"/>
 	</record>
 
 	<record model="workflow.transition" id="t5">
 		<field name="act_from" ref="act_refuse" />
 		<field name="act_to" ref="act_cancel" />
 		<field name="signal">cancel</field>
+		<field name="role_id" ref="HR_holidays"/>
 	</record>
 
 	<record model="workflow.transition" id="t7">

@@ -58,7 +58,7 @@ class hr_holidays(osv.osv):
 		'user_id':fields.many2one('res.users', 'Employee_id', states={'draft':[('readonly',False)]}, relate=True, select=True, readonly=True),
 		'manager_id' : fields.many2one('hr.employee', 'Holiday manager', invisible=False, readonly=True),
 		'notes' : fields.text('Notes'),
-		'number_of_days': fields.float('Number of Days in this Holiday Request',required=True),
+		'number_of_days': fields.float('Number of Days in this Holiday Request',required=True, states={'draft':[('readonly',False)]}, readonly=True),
 		'case_id':fields.many2one('crm.case', 'Case'),
 	}
 	_defaults = {
@@ -106,7 +106,7 @@ class hr_holidays(osv.osv):
 				if holiday_id:
 					obj_holidays_per_user=self.pool.get('hr.holidays.per.user').browse(cr, uid,holiday_id[0])
 					self.pool.get('hr.holidays.per.user').write(cr,uid,obj_holidays_per_user.id,{'leaves_taken':obj_holidays_per_user.leaves_taken - record.number_of_days})
-				if record.section_id:
+				if record.case_id:
 					self.pool.get('crm.case').unlink(cr,uid,record.case_id.id)
 		self.write(cr, uid, ids, {
 			'state':'cancel'
