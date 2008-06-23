@@ -33,6 +33,26 @@ import time
 import mx.DateTime
 from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 
+form = """<?xml version="1.0"?>
+<form string="Payment Export">
+   <field name="charges_code" />
+   <field name="payment_method" />
+   </form>"""
+
+fields = {
+    'payment_method' : {
+        'string':'Payment Method',
+        'type':'many2one',
+        'relation':'payment.method',
+    },
+    'charges_code' : {
+        'string':'Charges Code',
+        'type':'many2one',
+        'relation':'charges.code',
+        'required':True,
+    },
+}
+
 export_form = """<?xml version="1.0"?>
 <form string="Payment Export">
    <field name="pay"/>
@@ -74,7 +94,7 @@ class record:
         self.fields = []
         self.global_values = global_context_dict
         self.pre={'padding':'','seg_num1':'0','seg_num2':'1',
-                  'seg_num3':'1','seg_num4':'1','seg_num5':'1','seg_num_t':'9',
+                  'seg_num3':'1','seg_num4':'1','seg_num5':'1','seg_num8':'1','seg_num_t':'9',
                    'flag':'0','flag1':'\n'
                            }
         self.init_local_context()
@@ -88,18 +108,27 @@ class record:
 
     def generate(self):
         res=''
+        value=0
+        go=True
         for field in self.fields :
-            if self.pre.has_key(field[0]):
-                value = self.pre[field[0]]
-            elif self.global_values.has_key(field[0]):
-                value = self.global_values[field[0]]
-            else :
-                pass
-                #raise Exception(field[0]+' not found !')
-            try:
-                res = res + c_ljust(value, field[1])
-            except :
-                pass
+            if field[0]=='section3':
+                if self.global_values['section3']=='0':
+                    go=False
+                continue
+            if field[0]=='section6':
+                go=True
+            if go:
+                if self.pre.has_key(field[0]):
+                    value = self.pre[field[0]]
+                elif self.global_values.has_key(field[0]):
+                    value = self.global_values[field[0]]
+                else :
+                    continue
+                    #raise Exception(field[0]+' not found !')
+                try:
+                    res = res + c_ljust(value, field[1])
+                except :
+                    pass
 
         return res
 
@@ -130,11 +159,24 @@ class record_payline(record):
             ('cur_code_debit_1',3),('padding',6),
             ('acc_debit',12),('padding',22),('indicate_date',1),('padding',34),('flag1',1),
 
+            ('section3',1),
+
+            ('seg_num6',1),('sequence4',4),('sub_div3',2),('order_cust_address',35),('padding',10),
+            ('order_cust_bic',11),('padding',65),('flag1',1),
+
+            ('seg_num7',1),('sequence5',4),('sub_div5',2),('benf_bank_name',35),('benf_bank_street',35),
+            ('benf_bank_address',35),('padding',16),('flag1',1),
+
+            ('section6',1),
+
             ('seg_num3',1),('sequence1',4),('sub_div6',2),('benf_accnt_no',34),('benf_name',35),('benf_address',35),
             ('type_accnt',1),('bank_country_code',2),('padding',14),('flag1',1),
 
-            ('seg_num5',1),('sequence3',4),('sub_div07',2),('benf_address_continue',35),('benf_address_place',35),('padding',10),('msg_order_benf',35),
+            ('seg_num5',1),('sequence3',4),('sub_div07',2),('benf_address_continue',35),('benf_address_place',35),('padding',10),('comm_1',35),
             ('padding',6),('flag1',1),
+
+            ('seg_num8',1),('sequence6',4),('sub_div8',2),('comm_2',35),('comm_3',35),
+            ('comm_4',35),('padding',16),('flag1',1),
 
             ('seg_num4',1),('sequence2',4),('sub_div10',2),('order_msg',35),('method_pay',3),('charge_code',3),('padding',1),
             ('cur_code_debit',3),('padding',6),('debit_cost',12),('padding',1),('benf_country_code',2),('padding',55),('flag1',1),
@@ -173,166 +215,240 @@ def _create_pay(self,cr,uid,data,context):
     total=0
     pay_order=''
     pool = pooler.get_pool(cr.dbname)
+    currency_obj=pool.get('res.currency')
     payment=pool.get('payment.order').browse(cr, uid, data['id'],context)
 
     #Header Record Start
     v1['uid'] = str(uid)
-    v1['creation_date']= time.strftime('%y%m%d')
-    v1['app_code']='51'
+    v1['creation_date']= time.strftime('%d%m%y')#2-7
+    v1['app_code']='51'#23-24
     v1['reg_number']=payment.reference#25-34
-    v1['id_sender']=payment.user_id.address_id.partner_id.vat or ''#add vat number of current user's partner 35-44
-    v1['id_order_customer']=payment.user_id.address_id.partner_id.vat or ''#vat number46-56
-    v1['ver_code']='3'
-    v1['bilateral']='' #see attach ment 1.2  and 59-70
-    v1['totalisation_code ']='0'#two values 0,no globalization
-    v1['file_status']=''
-    v1['ver_subcode']='1'
+#    v1['id_sender']=payment.user_id.address_id and payment.user_id.address_id.partner_id.vat or '' #add vat number of current user's partner 35-44
+    v1['id_order_customer']=payment.mode.bank_id.partner_id.vat or ''#vat number46-56
+    v1['ver_code']='3'#58
+    v1['bilateral']='' #59-70
+    v1['totalisation_code ']='0'
+    v1['file_status']=''#57
+    v1['ver_subcode']='1'#76
 
     bank_obj=pool.get('res.partner.bank')
-    id_exp= pool.get('account.pay').create(cr,uid,{'name':'test'})
     #look in the mode for insititute_code or protocol number
     cr.execute("SELECT m.bank_id from payment_order o inner join payment_mode m on o.mode=m.id and o.id in (%s) group by bank_id;"% (data['id']))
     bank_id=cr.fetchone()
+
     if bank_id:
         bank = bank_obj.browse(cr, uid, bank_id[0], context)
         if not bank:
-            return {'note':'Please provide bank for the ordering customer.'}
-        v1['institution_code']=bank.institution_code
+            return {'note':'Please Provide Bank for the Ordering Customer.'}
+        v1['institution_code']=bank.institution_code#20-22
         if not v1['institution_code']:
-            return {'note':'Please Provide Institution Code number for Ordering Customer'}
+            return {'note':'Please Provide Institution Code number for the Ordering Customer.'}
     pay_header =record_header(v1).generate()
     #Header Record End
 
     pay_line_obj=pool.get('payment.line')
     pay_line_id = pay_line_obj.search(cr, uid, [('order_id','=',data['id'])])
-    pay_line =pay_line_obj.read(cr, uid, pay_line_id,['currency','partner_id','amount','bank_id','move_line_id','to_pay','name'])
 
-    if not pay_line:
-        return {'note':'Wizard can not generate Export file ,There is no Payment Lines'}
+    if not payment.line_ids:
+         return {'note':'Wizard can not generate Export file ,There are no Payment Lines.'}
+
+    pay_line =pay_line_obj.read(cr, uid, pay_line_id,['date','company_currency','currency','partner_id','amount','bank_id','move_line_id','name','info_owner','info_partner','communication','communication2'])
 
     for pay in pay_line:
 
         #sub1 Start
         seq=seq+1
-        entry_line_obj=pool.get('account.move.line')
-        entry_line=entry_line_obj.browse(cr, uid,pay['move_line_id'][0],context)
-        v['sequence'] = str(seq).rjust(4).replace(' ','0')
-        v['sub_div1']='01'
+        v['sequence'] = str(seq).rjust(4).replace(' ','0')#2-5
+        v['sub_div1']='01'#6-7
 
-        if payment.date_prefered=='now':
-            exec_date=now().strftime('%Y-%m-%d')
-            v['order_exe_date']=time.strftime('%d%m%y',time.strptime(exec_date,"%Y-%m-%d")) #should be corect becaz there is three date ..see (sub01 pos 8-13)
+        if pay['date']:
+            v['order_exe_date']=time.strftime('%d%m%y',time.strptime(pay['date'],"%Y-%m-%d"))
         else:
-            v['order_exe_date']=''
+            v['order_exe_date']=''#8-13
 
         v['order_ref']=pay['name']#14-29
-        if pay['amount']==0.0 or pay['amount']>pay['to_pay']:
-            return {'note':'Payment Amount should Not be Zero or not greater then To-Pay amount in Payment Lines'}
-        v['amt_pay']=float2str('%.2f'%pay['amount'])
+        if pay['amount']==0.0:
+            return {'note':'Payment Amount should Not be Zero in Payment Lines.'}
+        v['amt_pay']=float2str('%.2f'%pay['amount'])#35-49
 
-        if payment.mode.journal.currency:
-            default_cur=payment.mode.journal.currency.code
-        elif entry_line.currency_id:
-            default_cur=entry_line.currency_id.code
-        elif payment.user_id.company_id.currency_id:
-            default_cur=payment.user_id.company_id.currency_id.code
+        default_cur=''
+        if pay['company_currency']:
+            default_cur=currency_obj.browse(cr,uid,pay['company_currency'][0]).code
 
         v['cur_code']=default_cur#30-32
 
+        cur_code=''
+        if pay['currency']:
+            cur_code=currency_obj.browse(cr,uid,pay['currency'][0]).code
         if default_cur != pay['currency'][1]:
-            v['code_pay']='D'#two values 'C' or 'D'  *should be modified
-            v['cur_code_debit_1']=pay['currency'][1]# 30-32
-            v['cur_code_debit']=pay['currency'][1]#sub 10 50-52
+            v['code_pay']='D'#34
+            v['cur_code_debit_1']=cur_code# 51-53
+            v['cur_code_debit']=cur_code#sub 10 50-52
         else:
             v['code_pay']='C'
-            v['cur_code_debit_1']=''
-            v['cur_code_debit']=''
+            v['cur_code_debit_1']=default_cur
+            v['cur_code_debit']=default_cur
 
         total=total+pay['amount']
-        v['acc_debit']=bank.acc_number
+        v['acc_debit']=bank.acc_number # 60-71
         if not v['acc_debit']:
-            return {'note':'Please provide bank account number for the ordering customer.'}
-        v['indicate_date']=''# three value blank,1,2, *should be correct...blank is for order execution date .see sub01=pos 94
+            return {'note':'Please Provide Bank Account Number for the Ordering Customer.'}
+        v['indicate_date']=''
         #sub1 End
+        # subdivision3 if its a foreign payment taking place.
+        cust_country=benf_country=section3=False
+        order_cust_address_obj=payment.mode.bank_id.partner_id
+
+        if order_cust_address_obj.address:
+            for ads in order_cust_address_obj.address:
+                if ads.type=='default':
+                        cust_country=ads.country_id and ads.country_id.code or False
+                        if cust_country:
+                            order_country_name=ads.country_id.name
+                            order_state=ads.state_id and ads.state_id.name or ''
+                            if 'zip_id' in ads:
+                                obj_zip_city= ads.zip_id and pool.get('res.partner.zip').browse(cr,uid,ads.zip_id.id) or ''
+                                order_zip=obj_zip_city and obj_zip_city.name or ''
+                                order_city=obj_zip_city and obj_zip_city.city or  ''
+
+                            else:
+                                order_zip=ads.zip and ads.zip or ''
+                                order_city= ads.city and ads.city or  ''
+
+        v['benf_address']=v['benf_name']=v['benf_address_place']=''
+
+        if pay['partner_id']:
+            part_obj=pool.get('res.partner').browse(cr,uid,pay['partner_id'][0])
+            v['benf_name']=part_obj.name # 42-76 sub div 06
+            if part_obj.address:
+                for ads in part_obj.address:
+                    if ads.type=='default':
+                        adrs=ads.street or ''
+                        adrs +=(ads.street2 or '')
+                        v['benf_address']=adrs #sub div 06 77-111
+                        benf_country=ads.country_id and ads.country_id.code or False
+                        if benf_country:
+                            benf_country_name=ads.country_id.name
+                            v['benf_country_code']=ads.country_id.code#72-73 sub div 10
+                            benf_state=ads.state_id and ads.state_id.name or ''
+                            if 'zip_id' in ads:
+                                obj_zip_city= ads.zip_id and pool.get('res.partner.zip').browse(cr,uid,ads.zip_id.id) or ''
+                                benf_zip=obj_zip_city and obj_zip_city.name or ''
+                                benf_city=obj_zip_city and obj_zip_city.city or  ''
+                            else:
+                                benf_zip=ads.zip and ads.zip or ''
+                                benf_city= ads.city and ads.city or  ''
+                            ct_st_ctry=str(benf_city) + ' ' + str(benf_state) + ' ' + str(benf_country_name)
+                            v['benf_address_place']="*" + str(benf_country).rjust(3) + blank_space + str(benf_zip).rjust(6) + str(ct_st_ctry).rjust(24)#sub div 07 43-77
+
+                        else:
+                            return {'note':'Please Provide Country in Payment Line for \nPartner:'+str(pay['partner_id'][1])+' Ref:'+str(pay['name'])+''}
+                    break
+
+        v['section3']='0'
+        if cust_country and benf_country:
+            if cust_country!=benf_country:
+                # Sub division3- Start
+                v['seg_num6']='1'
+                v['section3']='1'
+                v['sequence4']=str(seq).rjust(4).replace(' ','0')#2-5
+                v['sub_div3']='03'#6-7
+                v['order_cust_address']=''#8-42
+                ct_st_ctry=str(order_city) + ' ' + str(order_state) + ' ' + str(order_country_name)
+                v['order_cust_address']="*" + str(cust_country).rjust(3) + blank_space + str(order_zip).rjust(6) + str(ct_st_ctry).rjust(24)
+                v['order_cust_bic']=''#53-63
+                if payment.mode.bank_id.bank:
+                   v['order_cust_bic']=payment.mode.bank_id.bank.bic or ''
+                section3=True
+                # Sub division3- End
+
+
+
+        # if section 3 exists ,section5 comes into existance.
+        if section3:
+            if pay['bank_id']:
+                #sub division5 -start
+                v['sequence5']=str(seq).rjust(4).replace(' ','0')#2-5
+                v['sub_div5']='05'#6-7
+                v['seg_num7']='1'
+                bank_partner = bank_obj.read(cr, uid, pay['bank_id'][0])
+                v['benf_bank_name']=v['benf_bank_street']= v['benf_bank_address']=''
+                if bank_partner['bank']:
+                    bank_main=pool.get('res.bank').read(cr, uid, bank_partner['bank'][0])
+                    v['benf_bank_name']=bank_main['name']#8-42
+                    v['benf_bank_street']=(bank_main['street'] or '') + blank_space + (bank_main['street2'] or '') # 43-77
+                    v['benf_bank_address']=''#78-112
+                    ctry_code=''
+                    ct_st_ctry=str(bank_main['city'] or '') + ' ' + str(bank_main['state'][1]) + ' ' + str(bank_main['country'][1])
+                    if bank_main['country']:
+                        code_country=pool.get('res.country').read(cr,uid,bank_main['country'][0],['code'])#get bank address of counrty for pos 113-114 sub06
+                        ctry_code=v['bank_country_code']=code_country['code'] # 113-114 in sub div6
+                    v['benf_bank_address']="*" + str(ctry_code).rjust(3) + blank_space + str(bank_main['zip']).rjust(6) + str(ct_st_ctry).rjust(24)
+
+               #sub division5 -End
 
         #sub6 start
-        v['sequence1']=str(seq).rjust(4).replace(' ','0')
-        # Fetch the invoices:
-        cr.execute('''select i.id,ml.ref
-          from payment_line pl
-           join account_move_line ml on (pl.move_line_id = ml.id)
-           join account_move m on (ml.move_id = m.id)
-           join account_invoice i on (i.move_id = m.id)
-           join payment_order p on (pl.order_id = p.id)
-          where p.id = %s and pl.move_line_id= %s
-          '''%(payment.id,str(pay['move_line_id'][0])))
-        res=cr.fetchall()
-
-        if not res:
-            return {'note':'Wizard can not Generate Export file,there is no Related Invoice for \nEntry line:'+str(pay['move_line_id'])+''}
-        else:
-            inv=pool.get('account.invoice').browse(cr, uid, res[0][0],context)
-        v['sub_div6']='06'
+        v['sequence1']=str(seq).rjust(4).replace(' ','0')#2-5
+        v['sub_div6']='06'#6-7
 
         if pay['bank_id']:
             bank1 = bank_obj.read(cr, uid, pay['bank_id'][0])#searching pay line bank account number
+            v['benf_accnt_no']=bank1['acc_number'] # 8-41
             if bank1['state']=='bank':
-                v['benf_accnt_no']=bank1['acc_number']
-                v['type_accnt']='2'
+                v['type_accnt']='2' # 112
             elif bank1['state']=='pay_iban':
-                v['benf_accnt_no']=bank1['iban']
                 v['type_accnt']='1'
             else:
-                v['benf_accnt_no']=''#Should be corrext
                 v['type_accnt']=''
         else:
-            return {'note':'Please Provide Bank Account in payment line for \npartner:'+inv.partner_id.name+' Ref:'+res[0][1]+''}
+            return {'note':'Please Provide Bank Account in Payment Line for \nPartner:'+str(pay['partner_id'][1])+' Ref:'+str(pay['name'])+''}
 
-        #part_addres_obj=pool.get('res.partner.address')#should be correct may by res.bank today
-        part_addres_obj=pool.get('res.bank')
+        part_bank_obj=pool.get('res.bank')
         v['bank_country_code']=''
 
         if bank1['bank']:
-            bank2 = part_addres_obj.read(cr, uid, bank1['bank'][0])#get bank address of counrty for pos 113-114 sub06
+            bank2 = part_bank_obj.read(cr, uid, bank1['bank'][0])
             if bank2['country']:
-                code_country=pool.get('res.country').read(cr,uid,bank2['country'][0],['code'])#get bank address of counrty for pos 113-114 sub06
-                v['bank_country_code']=code_country['code']
+                code_country=pool.get('res.country').read(cr,uid,bank2['country'][0],['code'])
+                v['bank_country_code']=code_country['code'] # 113-114
 
-        v['benf_name']=inv.partner_id.name
-        v['benf_address']=(inv.address_invoice_id.street or '')+blank_space +(inv.address_invoice_id.street2 or '')
-
-        if inv.address_invoice_id.country_id:
-            v['benf_address_place']=str(inv.address_invoice_id.city)+blank_space+(inv.address_invoice_id.state_id and inv.address_invoice_id.state_id.name or '')+blank_space+str(inv.address_invoice_id.country_id.name )
-            if not inv.address_invoice_id.city:
-                return {'note':'Please Provide city for partner address for\n' 'Bank Account:'+str(pay['bank_id'][1])+blank_space+',Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
-        else:
-            return {'note':'Please Provide Country for\n' 'Partner:'+inv.partner_id.name+blank_space+',Ref:'+res[0][1]+''}
         #sub6 End
 
-        #sub7 start
-        v['sequence3']=str(seq).rjust(4).replace(' ','0')
-        v['sub_div07']='07'
-        v['benf_address_continue']=''#contine from v['benf_address']
-        v['msg_order_benf']=''#ordering customer msg to benf customer. pos 88-122,may contain ref-number,invoice-number,etc
-        #sub7 End
+        #sub7 and sub8 -start
+        v['sequence3']=str(seq).rjust(4).replace(' ','0')#2-5 sub7
+        v['sub_div07']='07'#6-7 sub7
+        v['sequence6']=str(seq).rjust(4).replace(' ','0')#2-5 sub8
+        v['sub_div8']='08'#6-7 sub8
+        v['benf_address_continue']=''#8-42 sub7
+        v['comm_1']=v['comm_2']=v['comm_3']=v['comm_4']=''
+        if pay['communication']:
+            if len(pay['communication'])>=36:
+                v['comm_1']=pay['communication'][:35] # 88-122 sub7
+                v['comm_2']=pay['communication'][35:] # 8-42 sub8
+            else:
+                v['comm_1']=pay['communication']# 88-122 sub7
+        if pay['communication2']:
+            if len(pay['communication2'])>=36:
+                v['comm_3']=pay['communication2'][:35] # 43-77 sub8
+                v['comm_4']=pay['communication2'][35:] # 78-112 sub8
+            else:
+                v['comm_3']=pay['communication2'] # 43-77 sub8
+        #sub7 and sub 8 -End
 
         #seg10 start
-        v['sequence2']=str(seq).rjust(4).replace(' ','0')
-        v['sub_div10']='10'
-        v['order_msg']=''#msg from order customer to order cutomer bank *should be correct
-        v['method_pay']='NOR'#43-45
-        v['charge_code']='SHA' #*should be correct
-        #v['cur_code_debit'] assign in sub 01
+        v['sequence2']=str(seq).rjust(4).replace(' ','0')#2-5
+        v['sub_div10']='10'#6-7
+        v['order_msg']=''#msg from order customer to order cutomer bank 8-42
+        v['method_pay']=''#43-45
+        if data['form']['payment_method']:
+            v['method_pay']=pool.get('payment.method').browse(cr, uid,data['form']['payment_method']).name
+        v['charge_code']=pool.get('charges.code').browse(cr, uid,data['form']['charges_code']).name #46-48
         v['debit_cost']='000000000000'#field will only fill when ordering customer account debitted with charges if not field will contain blank or zero
-        v['benf_country_code']=inv.address_invoice_id.country_id.code
-        if not v['benf_country_code']:
-            return {'note':'Please Provide Country for payment line partner'}
         #sub10 End
         pay_order =pay_order+record_payline(v).generate()
 
     #Trailer Record Start
-    v2['tot_record']=str(seq)
-    v2['tot_pay_order']=str(seq)
+    v2['tot_record']=v2['tot_pay_order']=str(seq)
     v2['tot_amount']=float2str('%.2f'%total)
     pay_trailer=record_trailer(v2).generate()
     #Trailer Record End
@@ -345,8 +461,8 @@ def _create_pay(self,cr,uid,data,context):
     log.add("Successfully Exported\n--\nSummary:\n\nTotal amount paid : %.2f \nTotal Number of Payments : %d \n-- "\
             %(total,seq))
 
-    pool.get('account.pay').write(cr,uid,[id_exp],{'note':log,'name':base64.encodestring(pay_order or "")})
-
+    pool.get('account.pay').create(cr,uid,{'note':log(),'info':'Payment Order Reference: '+ payment.reference +' On '+ now().strftime('%Y-%m-%d'),'name':base64.encodestring(pay_order or "")})
+    pool.get('payment.order').set_done(cr,uid,payment.id,context)
     return {'note':log(), 'pay': base64.encodestring(pay_order)}
 
 def float2str(lst):
@@ -355,6 +471,13 @@ def float2str(lst):
 class wizard_pay_create(wizard.interface):
     states = {
         'init' : {
+            'actions' : [],
+            'result' : {'type' : 'form',
+                        'arch' : form,
+                        'fields' : fields,
+                        'state' : [('end', 'Cancel'),('export','Export') ]}
+        },
+        'export' : {
             'actions' : [_create_pay],
             'result' : {'type' : 'form',
                         'arch' : export_form,

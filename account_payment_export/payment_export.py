@@ -46,7 +46,36 @@ class res_partner_bank(osv.osv):
     _inherit = "res.partner.bank"
     _columns = {
                 'institution_code':fields.char('Institution Code', size=3),
+                'acc_number': fields.char('Account number', size=64, required=True),
+                'iban': fields.char('IBAN', size=34, required=True,help="International Bank Account Number"),
     }
+
+    def fields_get(self, cr, uid, fields=None, context=None):
+        return super(osv.osv, self).fields_get(cr, uid, fields, context)
+
+    def name_get(self, cr, uid, ids, context=None):
+            result=[]
+            if not len(ids):
+                return []
+            ret_name=''
+            ret_id=False
+
+            for bank in self.browse(cr, uid, ids, context=context):
+
+                ret_id=bank.id
+                if bank.state=='bank':
+                    ret_name=str(bank.acc_number)
+                    if bank.bank:
+                        ret_name +="("+bank.bank.name + ")"
+                elif bank.state=='iban':
+                    ret_name=str(bank.iban)
+                    if bank.bank:
+                        ret_name +="("+bank.bank.name + ")"
+                else:
+                    ret_id,ret_name=super(res_partner_bank,self).name_get(cr, uid, [bank.id], context=context)[0]
+                result.append((ret_id,ret_name))
+
+            return result
 res_partner_bank()
 
 
@@ -58,3 +87,35 @@ class payment_order(osv.osv):
             return self._module,'wizard_account_payment_create'
         return super(payment_order,self).get_wizard(mode)
 payment_order()
+
+
+class res_bank(osv.osv):
+    _inherit = "res.bank"
+
+    _columns={
+     'bilateral':fields.char('Bilateral Relationship', size=12),
+    }
+
+res_bank()
+
+class payment_method(osv.osv):
+    _name="payment.method"
+    _description="Payment Method For Export"
+
+    _columns = {
+        'name': fields.char('Code',size=3,required=True),
+        'description': fields.text('Description'),
+    }
+
+payment_method()
+
+class charges_code(osv.osv):
+    _name="charges.code"
+    _description="Charges Codes For Export"
+
+    _columns = {
+        'name': fields.char('Code',size=3,required=True),
+        'description': fields.text('Description'),
+    }
+
+charges_code()
