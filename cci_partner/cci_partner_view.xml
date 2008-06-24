@@ -2,6 +2,19 @@
 <terp>
 	<data>
 
+	<!-- adaptation of the view of the res.company to view the field federation_key added by this module -->
+		<record model="ir.ui.view" id="view_company_form_inherit_mission">
+			<field name="name">res.company.form</field>
+			<field name="type">form</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form"/>
+			<field name="arch" type="xml">
+				<field name="partner_id" position="after">
+					<field name="federation_key"/>
+				</field>
+			</field>
+		</record>
+
 <!-- View for res.partner object inherited from base module................ -->
 		<record model="ir.ui.view" id="view_partner_form_inherit1">
 			<field name="name">res.partner.form</field>
