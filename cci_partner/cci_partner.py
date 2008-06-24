@@ -191,7 +191,6 @@ class res_partner(osv.osv):
         'export_year':fields.date('Export date',help='year of the export_procent value'),
         'import_procent':fields.integer('Import (%)'),
         'import_year':fields.date('Import Date',help='year of the import_procent value'),
-        'domiciliation':fields.boolean('Domiciliation'),
         'domiciliation_cotisation':fields.boolean('Domiciliation (cotisation)'),
         'invoice_nbr':fields.integer('Nbr of invoice to print',help='number of additive invoices to be printed for this customer'),
         'name_official':fields.char('Official Name',size=80),
