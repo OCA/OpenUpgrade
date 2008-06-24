@@ -87,7 +87,7 @@ sale_order_line()
 class product_product(osv.osv):
 	_inherit = "product.product"
 	_columns = {
-		'equivalency_in_A4': fields.float('A4 Equivalency'),
+		'equivalency_in_A4': fields.float('A4 Equivalency',digits=(16,2)),
 	}
 product_product()
 

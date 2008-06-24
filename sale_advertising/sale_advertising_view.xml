@@ -29,7 +29,7 @@
 			<field name="type">form</field>
 			<field name="model">sale.order</field>
 			<field name="inherit_id" ref="sale.view_order_form"/>
-			<field name="arch" type="xml"> 
+			<field name="arch" type="xml">
 				<xpath expr="/form/notebook/page/field[@name='order_line']/form/notebook" position="inside">
 					<page string="Advertising">
 						<field name="adv_issue"/>
@@ -143,11 +143,12 @@
 			<field name="model">product.product</field>
 			<field name="inherit_id" ref="product.product_normal_form_view"/>
 			<field name="arch" type="xml">
-				<field name="product_manager" position="after">
+				<field name="product_manager" position="after" >
 					<field name="equivalency_in_A4" select="2"/>
+					<newline/>
 				</field>
 			</field>
-		</record>
+	</record>
 
 <!-- New Menuitem -->
 	<record model="ir.actions.act_window" id="advertising_sale_order_action">
