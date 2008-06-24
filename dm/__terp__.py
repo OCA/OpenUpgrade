@@ -17,7 +17,7 @@
     "update_xml" : [
                     "dm_wizard.xml",
                     "offer_view.xml",
-					"offer_step_view.xml",
+                    "offer_step_view.xml",
                     "trademark_view.xml",
                     "campaign_view.xml",
                     "dm_report.xml",
