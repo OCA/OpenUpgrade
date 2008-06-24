@@ -42,27 +42,23 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.lstModel = self.win.getControl( "lstmodel" )
 	    self.dModel = {}
 
-	    if 1:
+	    self.userInfo = docinfo.getUserFieldValue(1)
+	    # Open a new connexion to the server
+
+	    sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+	    ids = sock.execute(database, uid, self.userInfo, 'ir.module.module', 'search', [('name','=','base_report_model'),('state', '=', 'installed')])
+	    if not len(ids):
+		# If the module 'base_report_model' is not installed, use the default model
 		self.dModel = {
 		    "Partner":'res.partner',
-		    "Case":"crm.case",
-		    "Sale Order":"sale.order",
-		    "Purchase Order":"purchase.order",
-		    "Analytic Account":"account.analytic.account",
-		    "Project":"project.project",
-		    "Tasks":"project.task",
-		    "Employee":"hr.employee"
 		}
-
 	    else:
 		sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
-		ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
-		fields = [ 'name', 'model' ]
-		models = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
-		models.sort(lambda x, y: cmp(x['name'],y['name']))
-
-		for model in models:
-		    self.dModel[model['name']] = model['model']
+		ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'report.model' , 'search', [])
+		res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'report.model' , 'read', ids, ['name','model_id'])
+		models = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', map(lambda x:x['model_id'][0], res), ['model'])
+		models = dict(map(lambda x:(x['id'],x['model']), models))
+		self.dModel = dict(map(lambda x: (x['name'],models[x['model_id'][0]]), res))
 
 	    for item in self.dModel.keys():
 		self.lstModel.addItem(item, self.lstModel.getItemCount())
