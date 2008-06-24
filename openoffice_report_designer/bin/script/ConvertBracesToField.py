@@ -89,7 +89,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
 				    if rl[0] == res[0][:res[0].find(".")]:
                                         obj=rl[1]
                                 try:
-				    sOBject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
+				    sObject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
                                     r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
