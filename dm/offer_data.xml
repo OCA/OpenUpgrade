@@ -19,6 +19,16 @@
 			<field eval="&quot;Offer Access&quot;" name="name"/>
 			<field name="group_id" ref="res_groups_offerrestirction0"/>
 		</record>
+		
+		<record id="res_groups_offeradmin" model="res.groups">
+			<field eval="&quot;Offer Admin&quot;" name="name"/>
+		</record>		
+		<record id="res_groups_offermanager" model="res.groups">
+			<field eval="&quot;Offer Manager&quot;" name="name"/>
+		</record>		
+		<record id="res_groups_alluser" model="res.groups">
+			<field eval="&quot;All User&quot;" name="name"/>
+		</record>		
 	
 	<!--
 	=======================================================
