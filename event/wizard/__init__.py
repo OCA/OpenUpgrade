@@ -1,3 +1,5 @@
 import event_registration
 import project_wizard
 import make_invoice
+import event_registrations_partner
+
