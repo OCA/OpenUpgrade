@@ -79,9 +79,10 @@
 
 		<act_window name="Open a New RSF"
 			domain="[('partner_id', '=', active_id)]"
-			context="{'partner_id': active_id, 'section_id':ref('case_section_rsf')}"
+			context="{'section_id':'_val_rsf'}"
 			res_model="crm.case"
 			src_model="res.partner"
+			view_mode='form'
 			id="act_res_partner_2_new_rsf"/>
 
 <!--

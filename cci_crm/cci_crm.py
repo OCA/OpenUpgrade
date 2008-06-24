@@ -27,6 +27,7 @@
 ##############################################################################
 
 from osv import fields, osv
+import pooler
 
 class meeting_confidential_info(osv.osv):
 
@@ -47,7 +48,14 @@ class crm_case(osv.osv):
     _columns = {
         'meeting_id' : fields.many2one('meeting.confidential.info','Meeting confidential'),
         'event_ids' : fields.many2many('event.event','event_case_rel','case_id','event_id','Events'),
-                }
+     }
+
+    def default_get(self, cr, uid, fields, context={}):
+        data = super(crm_case, self).default_get(cr, uid, fields, context)
+        if context['section_id']=='_val_rsf':
+            id_section=self.pool.get('crm.case.section').search(cr,uid,[('name','=','RSF')])[0]
+            data['section_id']=id_section
+        return data
 
 crm_case()
 
