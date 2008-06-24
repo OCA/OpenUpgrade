@@ -36,7 +36,7 @@ def _get_default_journal_selection(self, cr, uid, context):
 	ids = obj.search(cr, uid, [('type','=','cash')])
 	res = obj.read(cr, uid, ids, ['id', 'name'], context)
 	res = [(r['id'], r['name']) for r in res]
-	res.insert(0, (None, ''))
+	res.insert(0, ('', ''))
 	return res
 
 default_journal_form = '''<?xml version="1.0"?>
