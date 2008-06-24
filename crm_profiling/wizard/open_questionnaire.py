@@ -8,12 +8,12 @@ _QUEST_FIELDS=UpdateableDict()
 class open_questionnaire(wizard.interface):
 
 	def _questionnaire_compute(self, cr, uid, data, context):
-		pooler.get_pool(cr.dbname).get('res.partner').browse(cr, uid, data['id'])._questionnaire_compute(cr, uid, data, context)
+		pooler.get_pool(cr.dbname).get('res.partner')._questionnaire_compute(cr, uid, data, context)
 		return {}
 
 
 	def build_form(self, cr, uid, data, context):
-		quest_form, quest_fields = pooler.get_pool(cr.dbname).get('crm_profiling.questionnaire').browse(cr, uid, data['form']['questionnaire_name']).build_form(cr, uid, data, context)
+		quest_form, quest_fields = pooler.get_pool(cr.dbname).get('crm_profiling.questionnaire').build_form(cr, uid, data, context)
 		_QUEST_FORM. __init__(quest_form)
 		_QUEST_FIELDS.__init__(quest_fields)
 		return{}
