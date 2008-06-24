@@ -27,6 +27,12 @@
 			menu="False"
 			id="wizard_event_new"/>
 
+		<wizard
+			string="List Register Partners"
+			model="event.event"
+			name="event.event_reg_partners"
+			id="wizard_event_reg_partners"/>
+
 		<wizard string="Make Invoice"
 					model="event.registration"
 					name="event.reg_make_invoice"
