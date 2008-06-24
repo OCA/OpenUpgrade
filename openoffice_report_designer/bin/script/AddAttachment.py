@@ -54,8 +54,8 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 		}
 	    else:
 		sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
-		ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'report.model' , 'search', [])
-		res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'report.model' , 'read', ids, ['name','model_id'])
+		ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'base.report.model' , 'search', [])
+		res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'base.report.model' , 'read', ids, ['name','model_id'])
 		models = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', map(lambda x:x['model_id'][0], res), ['model'])
 		models = dict(map(lambda x:(x['id'],x['model']), models))
 		self.dModel = dict(map(lambda x: (x['name'],models[x['model_id'][0]]), res))
