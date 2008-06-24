@@ -214,7 +214,6 @@ class event_registration(osv.osv):
 			"check_ids":fields.one2many('event.check','reg_id',"Check ids"),
 			"payment_ids":fields.many2many("account.move.line","move_line_registration", "reg_id", "move_line_id","Payment", readonly=True),
 			"training_authorization":fields.char('Training Auth.',size=12,help='Formation Checks Authorization number',readonly=True),
-			"lang_authorization":fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number',readonly=True),
 			"check_amount":fields.function(cal_check_amount,method=True,type='float', string='Check Amount')
 	}
 	_defaults = {
@@ -226,7 +225,6 @@ class event_registration(osv.osv):
 			data_partner = self.pool.get('res.partner').browse(cr,uid,args[1]['partner_invoice_id'])
 			if data_partner:
 				args[1]['training_authorization'] = data_partner.training_authorization
-				args[1]['lang_authorization'] = data_partner.lang_authorization
 		return super(event_registration, self).write(cr, uid, *args, **argv)
 
 	def onchange_partner_id(self, cr, uid, ids, part, event_id, email=False):#override function for partner name.
@@ -239,18 +237,17 @@ class event_registration(osv.osv):
 	def onchange_partner_invoice_id(self, cr, uid, ids, event_id, partner_invoice_id):
 		data={}
 		context={}
-		data['training_authorization']=data['lang_authorization']=data['unit_price']=False
+		data['training_authorization']=data['unit_price']=False
 		if partner_invoice_id:
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
 			data['training_authorization']=data_partner.training_authorization
-			data['lang_authorization']=data_partner.lang_authorization
 		if not event_id:
 			return {'value':data}
 		data_event =  self.pool.get('event.event').browse(cr,uid,event_id)
 
 		if data_event.product_id:
 			if not partner_invoice_id:
-				data['training_authorization']=data['lang_authorization']=False
+				data['training_authorization']=False
 				data['unit_price']=self.pool.get('product.product').price_get(cr, uid, [data_event.product_id.id],context=context)[data_event.product_id.id]
 				return {'value':data}
 			data_partner = self.pool.get('res.partner').browse(cr,uid,partner_invoice_id)
