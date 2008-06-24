@@ -49,6 +49,7 @@
 		<record id="res_company_ccilv0" model="res.company">
 			<field eval="&quot;CCILV&quot;" name="name"/>
 			<field name="currency_id" ref="base.EUR"/>
+			<field name="federation_key">35a448ab3abe067fc24ee1cb</field>
 			<field model="res.partner" name="partner_id" search="[('name','=','CCILV')]"/>
 		</record>
 	</data>
