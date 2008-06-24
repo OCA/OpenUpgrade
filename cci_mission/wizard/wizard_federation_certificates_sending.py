@@ -80,7 +80,10 @@ class wizard_cert_fed_send(wizard.interface):
         
         # second header line : give the id code of the CCI, the number of details lines and the email address
         # for the sending of the reception of this file by the federation mail robot
-        lines.append( '35a448ab3abe067fc24ee1cb' + self._field_separator + str(len(res_file)).rjust(6,'0') + self._field_separator + str(data['form']['email_rcp']).strip() + self._field_separator )
+        
+        # we obtain the id key of the CCI in the federation
+        res_company = self.pool.get('res.company')
+        lines.append( res_company.federation_key + self._field_separator + str(len(res_file)).rjust(6,'0') + self._field_separator + str(data['form']['email_rcp']).strip() + self._field_separator )
         
         # Let's build a list of certificates objects
         certificates_ids = [x[0] for x in res_file]
