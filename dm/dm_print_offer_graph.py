@@ -33,7 +33,7 @@ import sys
 import report
 
 def graph_get(cr, uid, graph, offer_id):
-	import pydotdm
+	import pydot
 	offer_obj = pooler.get_pool(cr.dbname).get('dm.offer')
 	#offer = self.pool.get('dm.offer').browse(cr, uid, offer_id)
 	#offer = offer_obj.browse(cr, uid, offer_id)
@@ -71,7 +71,7 @@ class report_graph_instance(object):
 	def __init__(self, cr, uid, ids, data):
 		logger = netsvc.Logger()
 		try:
-			import pydotdm
+			import pydot
 		except Exception,e:
 			logger.notifyChannel('workflow', netsvc.LOG_WARNING,
 					'Import Error for pydot, you will not be able to render workflows\n'
