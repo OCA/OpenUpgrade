@@ -80,7 +80,7 @@ class report_graph_instance(object):
 		offer_id = ids
 		self.done = False
 
-		graph = pydotdm.Dot(fontsize=16, label="Test")
+		graph = pydot.Dot(fontsize=16, label="Test")
 		graph.set('size', '10.7,7.3')
 		graph.set('center', '1')
 		graph.set('ratio', 'auto')
