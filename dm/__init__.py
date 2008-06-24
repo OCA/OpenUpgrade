@@ -31,6 +31,6 @@ import trademark
 import offer_step
 import offer
 import campaign
-import report2
+import reportdm
 import wizard
 import dm_print_offer_graph
