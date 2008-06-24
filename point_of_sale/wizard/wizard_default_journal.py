@@ -30,10 +30,11 @@ import time
 import wizard
 import pooler
 
+
 def _get_default_journal_selection(self, cr, uid, context):
 	pool=pooler.get_pool(cr.dbname)
 	obj=pool.get('account.journal')
-	ids = obj.search(cr, uid, [('type','=','cash')])
+	ids = obj.search(cr, uid, [('type', '=', 'cash')])
 	res = obj.read(cr, uid, ids, ['id', 'name'], context)
 	res = [(r['id'], r['name']) for r in res]
 	res.insert(0, ('', ''))
@@ -50,20 +51,22 @@ default_journal_form = '''<?xml version="1.0"?>
 </form>'''
 
 default_journal_fields = {
-	'default_journal':{'string':'Default journal', 'type':'selection',
+	'default_journal': {'string': 'Default journal', 'type': 'selection',
 		'selection': _get_default_journal_selection,
 	},
-	'default_journal_rebate':{'string':'Default rebate journal', 'type':'selection',
+	'default_journal_rebate': {'string': 'Default rebate journal', 'type': 'selection',
 		'selection': _get_default_journal_selection,
 	},
-	'default_journal_gift':{'string':'Default gift journal', 'type':'selection',
+	'default_journal_gift': {'string': 'Default gift journal', 'type': 'selection',
 		'selection': _get_default_journal_selection,
 	},
 }
 
 
 class wizard_default_journal(wizard.interface):
+
 	def _set_default_journal(self, cr, uid, data, context):
+
 		def _update_default_journal_config_object(journal_type, journal_code, journal_descr, journal_codes, data):
 			default_journal_id = data.get('form', {}).get(journal_type) or None
 			dico = dict(name=journal_descr, code=journal_code, journal_id=default_journal_id)
