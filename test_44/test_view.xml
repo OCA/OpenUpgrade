@@ -97,7 +97,7 @@ self.pool.get('res.partner').write(cr, uid, [context['action_id']], {'name':name
 	</record>
 
 	<record model="ir.actions.act_window" id="action_test_form">
-		<field name="name">Testing</field>
+		<field name="name">Testing Wizard</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="name">Testing</field>
 		<field name="res_model">test.temporal</field>
