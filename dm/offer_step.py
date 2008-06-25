@@ -138,7 +138,7 @@ class dm_offer_step(osv.osv):
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition'),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
-#        'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
+        'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
     }
 
     _defaults = {

@@ -356,8 +356,8 @@ class dm_offer(osv.osv):
             new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
             print "DEBUG - step :",step
             print "DEBUG - step transition :",step.outgoing_transition_ids
-            nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]},{})
-            new_steps.append({'old_id':step.id,'new_id':nid,'i_trans_id':step.incoming_transition_ids})
+            #nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]},{})
+            #new_steps.append({'old_id':step.id,'new_id':nid,'i_trans_id':step.incoming_transition_ids})
 
         print "DEBUG new_steps : ",new_steps
 #            transitions are copied
