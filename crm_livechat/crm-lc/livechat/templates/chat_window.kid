@@ -8,7 +8,6 @@
 	<tr id="trref" >
 		<td id="tdref">
 			<div id="refreshdiv" class="chatbox" style="overflow:auto;"></div>
-			
 		</td>
 	</tr>
 	<tr id="buttonref">
@@ -28,6 +27,7 @@
 
 <script type="text/javascript">
 <!--
+var chatwindow = window;
 window.onload = function()
 {
 	setWrap();

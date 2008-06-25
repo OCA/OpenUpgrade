@@ -17,6 +17,8 @@ function refreshg()
 				dlid = MochiKit.DOM.DIV({});
 				for(i=0;i<msgs.length;i++)
 				{
+					if (msgs[i]['message'] == 'closechat')
+						alert ('hi');
 					dtid = MochiKit.DOM.DIV({});
 					senderpart = MochiKit.DOM.DIV({});
 					senderpart.innerHTML = msgs[i]['sender'] + " : "
@@ -157,10 +159,7 @@ function setWrap()
 			el('buttonref').style.height = '25px';
 			el('txtarearef').style.height = '50px';
 			el('text2').style.height = '50px';
-
-
 		}
-
 	}
 }
 

@@ -50,35 +50,41 @@ class ChatFunc(controllers.RootController):
 
     def mainhandler(self,cl,topicid):
         clt = ""
+        dis = {}
         if not (self.client):
             cl = self.myConnection(topicid)
-            
             cl.RegisterHandler('presence', self.presenceCB)
             thread.start_new_thread(self.presencing,("Presencing",2,cl))
-#            c = cl.getRoster()
-#            self.dis = c._data
-#            self.contactlist = []
-#            for k,v in self.dis.items():
-#                self.contactlist.append(str(k))
+            c = cl.getRoster()
+            dis = c._data
+#            contactlist = []
+#            for k,v in dis.items():
+#                contactlist.append(str(k))
             cl.RegisterHandler('message', self.messageCB)
             cl.sendInitPresence()
             self.client=cl
-            self.userlist = []
+            userlist = []
             for k,v in self.livechatdata['user'].items():
-                self.userlist.append(str(self.livechatdata['user'][k]['login']))
-            print "Users list are ****************", self.userlist
+                userlist.append(str(self.livechatdata['user'][k]['login']))
+            print "Users list are ****************", userlist
              
             self.users = rpc.RPCProxy('crm_livechat.livechat').get_user([int(topicid)])
             print "Users are available as ............", self.users
 
             for usr in self.users:
-                print "Searching for user ::::::::::::::::", usr
-
-                usr = self.livechatdata['user'][str(usr)]['login']
-                self.user= usr
+                self.user_id = usr
+                print "Searching for user ::::::::::::::::", self.user_id           
+                usrs = self.livechatdata['user'][str(usr)]['login']
+                self.user= usrs
                 print "The First user is this ....................", self.user
-                while not self.finalist.has_key(self.user):
-                    print "Waituing ....................>>>>>>>>>>>>>>>>>>"
+                waitcounter = 0
+#                while (not self.finalist.has_key(self.user)) and (dis.has_key(self.user)) and waitcounter < 5000:
+#                    waitcounter = waitcounter + 1
+#                    print "Waiting ....................>>>>>>>>>>>>>>>>>>"
+                if waitcounter == 5000:
+                    print "Waited Enough ..... assuming ", self.user , " is offline......."
+                while not self.finalist.has_key(self.user) and waitcounter < 5000:
+                    print "Waiting ....................>>>>>>>>>>>>>>>>>>"
                 if self.finalist[str(self.user)] == "online":   
                     self.msglist = []
                     self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)],False,self.partnerdata['id'])
@@ -99,8 +105,9 @@ class ChatFunc(controllers.RootController):
 
     def recieving(self,string,sleeptime,cl,*args):
         self.pcont = False
+        recthread = ''
         while self.cont:
-            self.recthread = os.getpid()
+            recthread = os.getpid()
             try:
                 v = cl.Process(1)
             except KeyboardInterrupt:
@@ -110,8 +117,9 @@ class ChatFunc(controllers.RootController):
         return 0
     
     def presencing(self,string,sleeptime,cl,*args):
+        prethread = ''
         while self.pcont:
-            self.prethread = os.getpid()
+            prethread = os.getpid()
             try:
                 v = cl.Process(1)
             except KeyboardInterrupt:
@@ -128,7 +136,8 @@ class ChatFunc(controllers.RootController):
            self.client=None
        if (kw.get('close')):
            self.chat_log()
-           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.topicid,self.sessionid,True,self.logentry)           #           print "Final result is-------------->", res
+           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.user_id,self.sessionid,True,self.logentry)   
+#           print "Final result is-------------->", res
            self.cont = False
        return {}
    
@@ -186,7 +195,6 @@ class ChatFunc(controllers.RootController):
             jid=xmpp.protocol.JID(jid)
             cl=xmpp.Client(jid.getDomain(),debug=[])
             x = cl.connect((jserver,5223))
-
             if x == "":
                 return "ConError"
             else:
@@ -201,30 +209,30 @@ class ChatFunc(controllers.RootController):
         body = str(msg.getBody())
         who = str(msg.getFrom())
         who =  who.split('/')[0]
-        print "Who is this ? .....Don .....Don ", who
-        print "Self.user is this  ? ........", self.user 
+        print "Who is this ? .....Don .....Don ", who, self.user
         if str(who) == str(self.user):
             print "they are equals :::::::::::::"
             index=body.find('/')
-            body=body[index:]
+            bdy=body[index:]
+            print "BODY .............", bdy
             
-            if body[0]=='/':
+            if bdy[0]=='/':
                 cmd = -1
-                cmd=body.split(' ')[0][1:]
+                cmd=bdy.split(' ')[0][1:]
                 
                 if cmd.lower()=='pass':
-                    id = body.split(' ')[1]
+                    id = bdy.split(' ')[1]
                     if id == self.partid:
                         print "Given id is not Valid .................."
                     else :
                         self.newuser = id
                         ids = self.sock.execute('crm2',3,'admin','crm_livechat.jabber','search',[('login','=',self.newuser)])
                         print "IDS ...........................", ids
-                        jaid = ids[0]
-                        print "New jabber id is ............", jaid
-                        user_id = self.sock.execute('crm2',3,'admin','crm_livechat.livechat.user','search',[('jabber_id','=',jaid)])
-                        print "New users ids are here ::::::::::::::::::", user_id
-                        if user_id[0] in self.users:  
+                        usr_id = ids[0]
+                        print "New jabber id is ............", usr_id
+                        self.uid = self.sock.execute('crm2',3,'admin','crm_livechat.livechat.user','search',[('jabber_id','=',usr_id)])
+                        print "New users ids are here ::::::::::::::::::", self.uid[0]
+                        if self.uid[0] in self.users:  
                             print "In message Cb function goes .............."
                             self.chat_log()
                             self.flagnewuser = True
@@ -232,14 +240,18 @@ class ChatFunc(controllers.RootController):
                             cmd = 1
                         else:
                             print "User is not Avaliable at this topic ........... Plz try for another user ............ "
-                elif cmd.lower()=='close':
+                
+                elif cmd.lower() in ['close','close\'']:
                     print "*****************************************************close"
-          
+                    print "Before body is ...............", body
+                    body = 'closechat'
+                    print "session is Stopped due to some reason ..............", body
+              
         print "Messge Arriving", msg
         print "\nContent: " + str(msg.getBody())
         print "Sender: " + str(msg.getFrom())
         
-        msgformat = {"sender" : str(msg.getFrom()) , "message" : str(msg.getBody()),"timestamp" : str(msg.getTimestamp()),"type" : 'receiver'}
+        msgformat = {"sender" : str(msg.getFrom()) , "message" : body , "timestamp" : str(msg.getTimestamp()),"type" : 'receiver'}
         if cmd == 0:
             self.msglist.append(msgformat)
         elif cmd == -1:
@@ -268,7 +280,11 @@ class ChatFunc(controllers.RootController):
     def Reghandler(self, user):
         if self.flagnewuser:
             if self.finalist[self.newuser] == "online":
-                rs = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','stop_session',self.topicid,self.sessionid,True,self.logentry)
+                rs = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','stop_session',self.user_id,self.sessionid,True,self.logentry)
+                print "first Id ..............", self.user_id
+                print "New id > > > > > > > > > > > > > > >", self.uid
+                self.user_id = self.uid[0]
+                print "New User id > > > > > > > > > > > > > > >", self.user_id
                 self.msglist = []
                 if self.newuser: 
                     res = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','start_session',[int(self.topicid)],True,self.partnerdata['id'])
@@ -281,21 +297,17 @@ class ChatFunc(controllers.RootController):
     user = ''
     sessionid = ''
     topicid = ''
-    mainthread = ''
-    prethread = ''
-    recthread = ''
     login = ''
     cont = True
     pcont = True
-    dis = {}
     finalist={}
-    userlist = []
-    contactlist=[]
     livechatdata={}
     partnerdata={}
     logentry = {}
     newuser = ''
+    temp = []
     flagnewuser = False
     partid = ''
-    temp = []
+    user_id = ''
     users = []
+    uid = []
