@@ -182,9 +182,6 @@
 						</group>
 					</page>
 					<page string="Transition">
-<!--						<field name="split_mode" colspan="2" string="Split mode"/>-->
-<!--						<field name="flow_start" colspan="2" on_change = "on_change_flow_start(flow_start,offer_id,media_id)"/>-->
-<!--						<field name="flow_stop" colspan="2"/>-->
 						<field name="incoming_transition_ids" colspan="4" string="Incoming" context="{'type':'step_to','step_id':active_id or False}"/>
 						<field name="outgoing_transition_ids" colspan="4" string="Outgoing" context="{'type':'step_from','step_id':active_id or False}"/>
 					</page>

@@ -346,12 +346,18 @@ class dm_offer(osv.osv):
         
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
+        print "DEBUG - offer_step_ids : ",offer_step_ids
         offer_steps = offer_step_obj.browse(cr,uid,offer_step_ids)
+        print "DEBUG - offer_steps :",offer_steps
 #            offer step are copied
         new_steps = []
         for step in offer_steps :
+            print "DEBUG - step :",step
+            print "DEBUG - step transition :",step.outgoing_transition_ids
             nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]},{})
             new_steps.append({'old_id':step.id,'new_id':nid,'i_trans_id':step.incoming_transition_ids})
+
+        print "DEBUG new_steps : ",new_steps
 #            transitions are copied
         for step in new_steps : 
             if step['i_trans_id']:

@@ -35,37 +35,33 @@ import report
 def graph_get(cr, uid, graph, offer_id):
 	import pydot
 	offer_obj = pooler.get_pool(cr.dbname).get('dm.offer')
-	#offer = self.pool.get('dm.offer').browse(cr, uid, offer_id)
-	#offer = offer_obj.browse(cr, uid, offer_id)
 	offer = offer_obj.browse(cr, uid, offer_id)[0]
 	print "Offer : ",offer
 	print "Offer step_ids : ",offer.step_ids
+	nodes = {}
 	for step in offer.step_ids:
-		args = {
-			#'label': step.type + "\\n32"
-			'label': step.type
-		}
+		args = {}
+		args['label'] = step.type
 		print "DEBUG Graph",step.id
-		print step.type
+		print "Step type :",step.type
+		print "args : ",args
 		graph.add_node(pydot.Node(step.id, **args))
-			
+
+	for step in offer.step_ids:
 		for transition in step.outgoing_transition_ids:
-			args = {
-				'label': transition.condition
+			trargs = {
+				'label': transition.condition + '\\n' + str(transition.delay)
 			}
 			if step.split_mode=='and':
-				args['arrowtail']='box'
+				trargs['arrowtail']='box'
+			elif step.split_mode=='or':
+				trargs['arrowtail']='inv'
 			elif step.split_mode=='xor':
-				args['arrowtail']='inv'
-			graph.add_edge(pydot.Edge( transition.step_from.id ,transition.step_to.id, fontsize=10, **args))
-	print graph.write_dot("/tmp/debug.dot")
-	print dir(graph)
+				trargs['arrowtail']='inv'
+			graph.add_edge(pydot.Edge( str(transition.step_from.id) ,str(transition.step_to.id), fontsize=10, **trargs))
 	return True
 
 
-#
-# TODO: pas clean: concurrent !!!
-#
 
 class report_graph_instance(object):
 	def __init__(self, cr, uid, ids, data):
@@ -80,7 +76,9 @@ class report_graph_instance(object):
 		offer_id = ids
 		self.done = False
 
-		graph = pydot.Dot(fontsize=16, label="Test")
+		offer = pooler.get_pool(cr.dbname).get('dm.offer').browse(cr, uid, offer_id)[0].name
+
+		graph = pydot.Dot(fontsize=16, label=offer)
 		graph.set('size', '10.7,7.3')
 		graph.set('center', '1')
 		graph.set('ratio', 'auto')

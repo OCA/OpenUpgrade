@@ -133,20 +133,17 @@ class dm_offer_step(osv.osv):
         'notes' : fields.text('Notes'),
         'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
         'flow_start' : fields.boolean('Flow Start'),
-        'flow_stop' : fields.boolean('Flow Stop'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
         'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition'),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition',readonly=True),
 #        'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
-        'join_mode' : fields.selection([('and','And'),('xor','Xor')],'Join mode'),
     }
 
     _defaults = {
         'state': lambda *a : 'draft',
-#		'split_mode' : lambda *a : 'xor',
-		'join_mode' : lambda *a : 'xor',
+        'split_mode' : lambda *a : 'or',
     }
 
     def onchange_type(self,cr,uid,ids,type):
@@ -154,17 +151,17 @@ class dm_offer_step(osv.osv):
         step_type = self.pool.get('dm.offer.step.type').browse(cr,uid,step_type_ids)[0]
         return {'value':{'flow_start':step_type['flow_start'],'flow_stop':step_type['flow_stop']}}
 
-    def on_change_flow_start(self,cr,uid,ids,flow_start,offer_id,media_id):
+#    def on_change_flow_start(self,cr,uid,ids,flow_start,offer_id,media_id):
 #        if not flow_start:
 #            return
-        if not offer_id or not media_id :
-            raise osv.except_osv("Error","Offer and Media are necessary")
+#        if not offer_id or not media_id :
+#            raise osv.except_osv("Error","Offer and Media are necessary")
 #        sefl.search(cr,uid,[('offer_id.id','=',offer_id,'media_id.id','=',media_id)])
-        step_ids = self.search(cr,uid,[('offer_id','=',offer_id),('media_id','=',media_id),('flow_start','=',True)])
-        print step_ids
-        if flow_start and step_ids and not ids[0] in step_ids :
-            raise osv.except_osv("Error","There is already a flow start defined for this offer and media")
-        return {}
+#        step_ids = self.search(cr,uid,[('offer_id','=',offer_id),('media_id','=',media_id),('flow_start','=',True)])
+#        print step_ids
+#        if flow_start and step_ids and not ids[0] in step_ids :
+#            raise osv.except_osv("Error","There is already a flow start defined for this offer and media")
+#        return {}
                      
     def state_close_set(self, cr, uid, ids, *args):
         self.__history(cr,uid, ids, 'closed')

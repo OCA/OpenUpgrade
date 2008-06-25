@@ -35,9 +35,8 @@
 		<record id="dm_offer_step_0" model="dm.offer.step">
 			<field eval="[(6,0,[])]" name="document_ids"/>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
-			<field eval="&quot;xor&quot;" name="join_mode"/>
 			<field eval="&quot;draft&quot;" name="state"/>
-<!--			<field eval="&quot;xor&quot;" name="split_mode"/>-->
+			<field eval="&quot;or&quot;" name="split_mode"/>
 			<field eval="[(6,0,[])]" name="product_ids"/>
 			<field eval="&quot;1&quot;" name="flow_start"/>
 			<field eval="&quot;SM&quot;" name="type"/>
@@ -46,9 +45,8 @@
 		<record id="dm_offer_step_1" model="dm.offer.step">
 			<field eval="[(6,0,[])]" name="document_ids"/>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
-			<field eval="&quot;xor&quot;" name="join_mode"/>
 			<field eval="&quot;draft&quot;" name="state"/>
-<!--			<field eval="&quot;xor&quot;" name="split_mode"/>-->
+			<field eval="&quot;or&quot;" name="split_mode"/>
 			<field eval="[(6,0,[])]" name="product_ids"/>
 			<field eval="&quot;IM&quot;" name="type"/>
 		</record>
