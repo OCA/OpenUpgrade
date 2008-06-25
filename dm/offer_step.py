@@ -137,7 +137,7 @@ class dm_offer_step(osv.osv):
         'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition'),
-        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition',readonly=True),
+        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
 #        'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
     }
 
@@ -182,7 +182,7 @@ class dm_offer_step(osv.osv):
         self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True
-    
+      
 dm_offer_step()
 
 class dm_offer_step_transition(osv.osv):
@@ -202,7 +202,7 @@ class dm_offer_step_transition(osv.osv):
             data['condition']='automatic'
             data[context['type']] = context['step_id']
         return data
-    
+ 
 dm_offer_step_transition()
 
 class dm_offer_step_history(osv.osv):

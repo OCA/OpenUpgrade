@@ -342,7 +342,7 @@ class dm_offer(osv.osv):
             default = {}
         default = default.copy()
 #            offer is copied
-        offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
+        offer_id = super(dm_offer, self).copy(cr, uid, id, {'step_ids':[]}, context)
         
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
@@ -352,6 +352,8 @@ class dm_offer(osv.osv):
 #            offer step are copied
         new_steps = []
         for step in offer_steps :
+            nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]})
+            new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
             print "DEBUG - step :",step
             print "DEBUG - step transition :",step.outgoing_transition_ids
             nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]},{})
@@ -360,8 +362,8 @@ class dm_offer(osv.osv):
         print "DEBUG new_steps : ",new_steps
 #            transitions are copied
         for step in new_steps : 
-            if step['i_trans_id']:
-                for trans in step['i_trans_id']:  
+            if step['o_trans_id']:
+                for trans in step['o_trans_id']:
                     step_to =[nid['new_id'] for nid in new_steps if nid['old_id']==trans.step_to.id][0]
                     self.pool.get('dm.offer.step.transition').copy(cr,uid,trans.id,{'step_to':step_to,'step_from':step['new_id']})
         return offer_id    
