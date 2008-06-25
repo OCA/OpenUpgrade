@@ -8,28 +8,6 @@
 			<field eval="&quot;Newspapers&quot;" name="name"/>
 		</record>
 	
-		<record id="res_groups_offerrestirction0" model="res.groups">
-			<field eval="[(6,0,[ref('base.user_demo')])]" name="users"/>
-			<field eval="&quot;Offer Restirction&quot;" name="name"/>
-		</record>
-		
-		<record id="ir_model_access_offeraccess0" model="ir.model.access">
-			<field model="ir.model" name="model_id" search="[('name','=','dm.offer')]"/>
-			<field eval="1" name="perm_read"/>
-			<field eval="&quot;Offer Access&quot;" name="name"/>
-			<field name="group_id" ref="res_groups_offerrestirction0"/>
-		</record>
-		
-		<record id="res_groups_offeradmin" model="res.groups">
-			<field name="name">Offer Admin</field>
-		</record>		
-		<record id="res_groups_offermanager" model="res.groups">
-			<field name="name">Offer Manager</field>
-		</record>		
-		<record id="res_groups_alluser" model="res.groups">
-			<field name="name">All User</field>
-		</record>		
-	
 	<!--
 	=======================================================
 	Offer - Category 

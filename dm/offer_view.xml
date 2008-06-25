@@ -1,6 +1,24 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+
+	<record id="res_groups_offeradmin" model="res.groups">
+		<field name="name">Offer Admin</field>
+	</record>		
+	<record id="res_groups_offermanager" model="res.groups">
+		<field name="name">Offer Manager</field>
+	</record>		
+	<record id="res_groups_alluser" model="res.groups">
+		<field name="name">All User</field>
+	</record>		
+
+	<record id="ir_model_access_offeraccess0" model="ir.model.access">
+		<field model="ir.model" name="model_id" search="[('name','=','dm.offer')]"/>
+		<field eval="1" name="perm_read"/>
+		<field eval="&quot;Offer Access&quot;" name="name"/>
+		<field name="group_id" ref="res_groups_alluser"/>
+	</record>
+	
 	<menuitem name="Direct Marketing/Offers" id="menu_dm_offer" sequence="2"/>
 	<!--
 	=======================================================
