@@ -3,7 +3,7 @@
 <data>
 	<!--
 	=======================================================
-	Offer Step Views
+	Offer Step Document Category Views
 	=======================================================
 	-->
 	<record model="ir.ui.view" id="view_offer_step_document_categ_form">
@@ -14,7 +14,7 @@
 			<form string="Document Category">
 				<field name="name" select="1"/>
 				<field name="parent_id"/>
-				<field name="copywriter_id" select="2"/>
+<!--				<field name="copywriter_id" select="2"/>-->
 			</form>
 		</field>
 	</record>
@@ -34,8 +34,15 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_document_categ_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents" id="menu_action_offer_doc" sequence="2"/>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Documents By Categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form" sequence="2"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents" id="menu_action_offer_doc" sequence="2" />
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Edit document categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form" sequence="2"/>
+
+	<!--
+	=======================================================
+	Offer Step Document Views
+	=======================================================
+	-->
+
 
 	<record model="ir.ui.view" id="view_offer_step_document_form">
 		<field name="name">dm.offer.document.form</field>
@@ -86,6 +93,12 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form" sequence="1"/>
 
+	<!--
+	=======================================================
+	Offer Step Type Views
+	=======================================================
+	-->
+
 	<record model="ir.ui.view" id="view_offer_step_type_form">
 		<field name="name">dm.offer.step.type.form</field>
 		<field name="model">dm.offer.step.type</field>
@@ -119,6 +132,12 @@
 		<field name="view_id" ref="view_offer_step_type_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Step Types" id="menu_action_step_type_form" action="action_step_type_form"/>
+	
+	<!--
+	=======================================================
+	Offer Step Views
+	=======================================================
+	-->
 	
 	<record model="ir.ui.view" id="view_offer_step_tree">
 		<field name="name">dm.offer.step.tree</field>
@@ -163,9 +182,9 @@
 						</group>
 					</page>
 					<page string="Transition">
-						<field name="split_mode" colspan="2" string="Split mode"/>
-						<field name="flow_start" colspan="2" on_change = "on_change_flow_start(flow_start,offer_id,media_id)"/>
-						<field name="flow_stop" colspan="2"/>
+<!--						<field name="split_mode" colspan="2" string="Split mode"/>-->
+<!--						<field name="flow_start" colspan="2" on_change = "on_change_flow_start(flow_start,offer_id,media_id)"/>-->
+<!--						<field name="flow_stop" colspan="2"/>-->
 						<field name="incoming_transition_ids" colspan="4" string="Incoming" context="{'type':'step_to','step_id':active_id or False}"/>
 						<field name="outgoing_transition_ids" colspan="4" string="Outgoing" context="{'type':'step_from','step_id':active_id or False}"/>
 					</page>
@@ -179,6 +198,7 @@
 			</form>
 		</field>
 	</record>
+	
 	<record model="ir.actions.act_window" id="action_offer_step_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step</field>
@@ -194,6 +214,11 @@
 		view_mode="tree,form"
 		id="act_offer_step_opened"
 		domain = "[('offer_id','=',active_id)]"/>
+  <!--
+	=======================================================
+	Offer Step Transition Views
+	=======================================================
+	-->
 		
 	<record model="ir.ui.view" id="view_offer_step_transition_form">
 		<field name="name">dm.offer.step.transition.form</field>
@@ -204,7 +229,7 @@
 				<field name="step_from"/>
 				<field name="step_to"/>
 				<field name="condition" select="1"/>
-				<field name="delay" select="2"/>
+				<field name="delay" string="Delay(In Days)" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -215,7 +240,7 @@
 		<field name="arch" type="xml">
 			<tree string="Transition">
 				<field name="condition"/>
-				<field name="delay"/>
+				<field name="delay" string="Delay(In Days)"/>
 			</tree>
 		</field>
 	</record>
@@ -227,6 +252,12 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition"/>
 
+	<!--
+	=======================================================
+	Offer Step Workitem Views
+	=======================================================
+	-->
+	
 	<record model="ir.ui.view" id="view_offer_step_workitem_form">
 		<field name="name">dm.offer.step.workitem.form</field>
 		<field name="model">dm.offer.step.workitem</field>
@@ -270,6 +301,12 @@
 		view_mode="tree,form"
 		id="act_workitem_opened"
 		domain = "[('step_id','=',active_id)]"/>
+
+	<!--
+	=======================================================
+	Offer Step History Views
+	=======================================================
+	-->
 	
 	<record model="ir.ui.view" id="view_offer_step_history_form">
 		<field name="name">dm.offer.step.history.form</field>
@@ -297,13 +334,19 @@
 		</field>
 	</record>
 
+	<!--
+	=======================================================
+	Offer Step Product Views
+	=======================================================
+	-->
+
 	<record model="ir.ui.view" id="view_product_tree">
 		<field name="name">dm.product.tree</field>
 		<field name="model">dm.product</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Products">
-				<field name="product_id" string="Name"/>
+				<field name="product_id"/>
 				<field name="qty_planned"/>
 				<field name="qty_real"/>
 				<field name="price"/>
@@ -316,7 +359,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Product">
-				<field name="product_id" string="Name" select="1"/>
+				<field name="product_id" select="1"/>
 				<field name="qty_planned"/>
 				<field name="qty_real" select="1"/>
 				<field name="price" select="2"/>
@@ -337,6 +380,5 @@
 		view_type="form"
 		view_mode="tree,form"
 		id="act_offer_product_opened"/>
-
 </data>
 </terp>

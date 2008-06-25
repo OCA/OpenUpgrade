@@ -351,11 +351,11 @@ class dm_offer(osv.osv):
         new_steps = []
         for step in offer_steps :
             nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]},{})
-            new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
+            new_steps.append({'old_id':step.id,'new_id':nid,'i_trans_id':step.incoming_transition_ids})
 #            transitions are copied
         for step in new_steps : 
-            if step['o_trans_id']:
-                for trans in step['o_trans_id']:  
+            if step['i_trans_id']:
+                for trans in step['i_trans_id']:  
                     step_to =[nid['new_id'] for nid in new_steps if nid['old_id']==trans.step_to.id][0]
                     self.pool.get('dm.offer.step.transition').copy(cr,uid,trans.id,{'step_to':step_to,'step_from':step['new_id']})
         return offer_id    

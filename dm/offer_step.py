@@ -138,14 +138,14 @@ class dm_offer_step(osv.osv):
         'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition'),
-        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
-        'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
+        'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition',readonly=True),
+#        'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'join_mode' : fields.selection([('and','And'),('xor','Xor')],'Join mode'),
     }
 
     _defaults = {
         'state': lambda *a : 'draft',
-		'split_mode' : lambda *a : 'xor',
+#		'split_mode' : lambda *a : 'xor',
 		'join_mode' : lambda *a : 'xor',
     }
 
@@ -184,7 +184,7 @@ class dm_offer_step(osv.osv):
     def state_draft_set(self, cr, uid, ids, *args):
         self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
-        return True  
+        return True
     
 dm_offer_step()
 
