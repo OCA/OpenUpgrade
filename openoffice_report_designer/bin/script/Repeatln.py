@@ -9,7 +9,7 @@ if __name__<>"package":
     from lib.functions import *
     from ServerParameter import *
     from LoginTest import *
-    database="db_test002"
+    database="test_db1"
     uid = 3
 
 
@@ -194,30 +194,32 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             cursor = doc.getCurrentController().getViewCursor()
-
-	    selectedItem = self.win.getListBoxSelectedItem( "lstFields" )
-	    selectedItemPos = self.win.getListBoxSelectedItemPos( "lstFields" )
-	    txtName = self.win.getEditText( "txtName" )
-	    txtUName = self.win.getEditText( "txtUName" )
-	    if selectedItem != "" and txtName != "" and txtUName != "":
-		sKey=u""+ txtUName
-		if selectedItem == "objects":
-		    sValue=u"[[ repeatIn(" + selectedItem + ",'" + txtName + "') ]]"
-		else:
-		    sObjName=self.win.getComboBoxText("cmbVariable")
-		    sObjName=sObjName[:sObjName.find("(")]
-		    sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[selectedItemPos].replace("/",".") + ",'" + txtName +"') ]]"
-
-		if self.bModify == True:
-		    oCurObj = cursor.TextField
-		    oCurObj.Items = (sKey,sValue)
-		    oCurObj.update()
-		else:
+            selectedItem = self.win.getListBoxSelectedItem( "lstFields" )
+            selectedItemPos = self.win.getListBoxSelectedItemPos( "lstFields" )
+            txtName = self.win.getEditText( "txtName" )
+            txtUName = self.win.getEditText( "txtUName" )
+            if selectedItem != "" and txtName != "" and txtUName != "":
+                sKey=u""+ txtUName
+                if selectedItem == "objects":
+                    sValue=u"[[ repeatIn(" + selectedItem + ",'" + txtName + "') ]]"
+                else:
+                    sObjName=self.win.getComboBoxText("cmbVariable")
+                    sObjName=sObjName[:sObjName.find("(")]
+                    sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[selectedItemPos].replace("/",".") + ",'" + txtName +"') ]]"
+                if self.bModify == True:
+                    oCurObj = cursor.TextField
+                    oCurObj.Items = (sKey,sValue)
+                    oCurObj.update()
+                else:
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
-		    oInputList.Items = (sKey,sValue)
-		    widget = ( cursor.TextTable or selectedItem <> 'objects' ) and cursor.TextTable.getCellByName( cursor.cell.CellName ) or doc.Text
-		    widget.insertTextContent(cursor,oInputList,False)
-		self.win.endExecute()
+                    if self.win.getListBoxSelectedItem("lstFields") == "objects":
+                        oInputList.Items = (sKey,sValue)
+                        widget = ( cursor.TextTable or selectedItem <> 'objects' ) and cursor.TextTable.getCellByName( cursor.cell.CellName ) or doc.Text
+                        widget.insertTextContent(cursor,oInputList,False)
+                    else:
+                        oInputList.Items = (sKey,sValue)
+                        doc.Text.insertTextContent(cursor,oInputList,False)                
+                self.win.endExecute()
 	    else:
 		ErrorDialog("Please Fill appropriate data in Object Field or Name field \nor select perticular value from the list of fields")
 
