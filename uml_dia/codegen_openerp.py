@@ -137,20 +137,30 @@ class OpenERPRenderer(ObjRenderer) :
 		data = self.data_get()
 		i = 1
 		fields_form = fields_tree = ""
+		cols = {}
 		for sa,attr in cd.attributes:
-			fields_form += "\t\t\t\t<field name=\"%s\" select=\"%d\"/>\n" % (sa,i)
-			fields_tree += "\t\t\t\t<field name=\"%s\"/>\n" % (sa,)
+			cols[sa] = True
+			attrs = ''
+			if attr[0] in ('one2many', 'many2many', 'text'):
+				attrs='colspan="4" '
+			fields_form += ("\t\t\t\t<field name=\"%s\" "+attrs+"select=\"%d\"/>\n") % (sa,i)
+			if attr[0] not in ('one2many', 'many2many'):
+				fields_tree += "\t\t\t\t<field name=\"%s\"/>\n" % (sa,)
 			if (i==2) or not i:
 				i=-1
 			i += 1
 		data['form']= fields_form
 		data['tree']= fields_tree
-		data['name']= cn
 		data['name_id']= cn.replace('.','_')
 		if not cd.stereotype:
 			data['menu']= 'Unknown/'+cn.replace('.','_')
 		else:
 			data['menu']= cd.stereotype
+		data['name']= cn
+		data['name_en']= data['menu'].split('/')[-1]
+		data['mode'] = 'tree,form'
+		if 'date' in cols:
+			data['mode']='tree,form,calendar'
 		result = """
 	<record model="ir.ui.view" id="view_%(name_id)s_form">
 		<field name="name">%(name)s.form</field>
@@ -173,10 +183,10 @@ class OpenERPRenderer(ObjRenderer) :
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_%(name_id)s">
-		<field name="name">%(name)s</field>
+		<field name="name">%(name_en)s</field>
 		<field name="res_model">%(name)s</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
+		<field name="view_mode">%(mode)s</field>
 	</record>
 	<menuitem name="%(menu)s" id="menu_%(name_id)s" action="action_%(name_id)s"/>
 
@@ -247,8 +257,6 @@ from osv import osv, fields
 			result += "\t_columns = {\n"
 			for sa,attr in self.klasses[sk].attributes :
 				value = attr[2]
-				if (not value) or (value[0]<>"'"):
-					value = "'"+str(value)+"'"
 				if attr[3]:
 					value += ", help='%s'" % (attr[3].replace("'"," "),)
 				attr_type = attr[0]
