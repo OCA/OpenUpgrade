@@ -36,11 +36,11 @@ class cci_timesheet_line(osv.osv):
     _name="cci_timesheet.line"
     _description="CCI Timesheet Line"
 
-    columns = {
+    _columns = {
         'name': fields.char('Name', size=128, required=True),
         'day_date' : fields.date('Date of the Day', required=True),
-        'hour_from' : fields.float('Hour From', required=True),
-        'hour_to' : fields.char('Hour To', size=8, required=True),
+        'hour_from' : fields.float('Hour From', size=8, required=True),
+        'hour_to' : fields.float('Hour To', size=8, required=True),
         'user_id': fields.many2one('res.users', 'User', required=True),
         'grant_id': fields.many2one('cci_timesheet.grant', 'Grant', required=True),
         'timesheet_id': fields.many2one('cci.timesheet', 'Timesheet', ondelete='cascade'),
@@ -58,11 +58,11 @@ class cci_timesheet_affectation(osv.osv):
     _name="cci_timesheet.affectation"
     _description="Timesheet Affectation"
 
-    columns = {
+    _columns = {
         'user_id': fields.many2one('res.users', 'User', required=True),
         'grant_id': fields.many2one('cci_timesheet.grant', 'Grant', required=True),
         'percentage' : fields.float('Percentage', digits=(16,2),required=True),
-        'hours_per_week' : fields.float('Hours Per Week',digits=(16,2), required=True),
+        'hours_per_week' : fields.float('Hours Per Week',size=8, required=True),
         'date_from' : fields.date('From Date', required=True),
         'date_to' : fields.date('To Date', required=True),
         'rate' : fields.float('Rate', digits=(16,2), required=True),

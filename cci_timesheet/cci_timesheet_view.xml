@@ -44,8 +44,8 @@
 			<field name="model">cci.timesheet</field>
 			<field name="arch" type="xml">
 				<form string="Timesheet">
-					<field name="name"  select="1" colspan="2" />
-					<field name="grant_id"  select="1" colspan="2" />
+					<field name="name"  select="1"/>
+					<field name="grant_id"  select="1" />
 					<field name="date_from"  select="2" />
 					<field name="date_to"  select="2" />
 					<newline/>
@@ -94,13 +94,13 @@
 				<form string="Timesheet Lines">
 					<notebook>
 						<page string="General">
-							<field name="name"  select="1" colspan="2" />
-							<field name="grant_id" select="1" colspan="2" />
-							<field name="user_id" select="1" colspan="2" />
-							<field name="day_date" select="1" colspan="2" />
+							<field name="name"  select="1"/>
+							<field name="grant_id" select="1" />
+							<field name="user_id" select="1" />
+							<field name="day_date" select="1" />
 							<newline/>
-							<field name="hour_from"  select="2" />
-							<field name="hour_to"  select="2" />
+							<field name="hour_from"  select="2" widget="float_time" sum="Hours From" />
+							<field name="hour_to"  select="2"  widget="float_time" sum="Hours To"/>
 							<newline/>
 							<field name="zip_id" />
 							<field name="partner_id" select="2" />
@@ -109,7 +109,7 @@
 						<page string="Extra Info">
 							<field name="suppl_cost"/>
 							<field name="kms" />
-							<field name="description" />
+							<field name="description" colspan="4"/>
 						</page>
 					</notebook>
 				</form>
@@ -146,7 +146,7 @@
 					<field name="date_from"  select="2" />
 					<field name="date_to"  select="2" />
 					<newline/>
-					<field name="hours_per_week" />
+					<field name="hours_per_week" widget="float_time" sum="Hours Per Week"/>
 					<field name="percentage" select="1"/>
 					<field name="rate" select="2"/>
 				</form>
