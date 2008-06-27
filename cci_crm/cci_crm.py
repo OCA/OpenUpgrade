@@ -54,6 +54,8 @@ class crm_case(osv.osv):
         data = super(crm_case, self).default_get(cr, uid, fields, context)
         if 'section_id' in context and context['section_id'] :
             data['section_id']=context['section_id']
+        if 'partner_id' in context and context['partner_id'] :
+            data['partner_id']=context['partner_id']
 #        if context['section_id']=='_val_rsf':
 #            id_section=self.pool.get('crm.case.section').search(cr,uid,[('name','=','RSF')])[0]
 #            data['section_id']=id_section
