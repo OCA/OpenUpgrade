@@ -1,6 +1,8 @@
 <?xml version="1.0" ?>
 <terp>
 <data>
+
+	<!-- Views for Contacts -->
 	<record model="ir.ui.view" id="view_partner_contact_tree">
 		<field name="name">res.partner.contact.tree</field>
 		<field name="model">res.partner.contact</field>
@@ -33,33 +35,16 @@
 							<field name="lang_id"/>
 							<field name="active"/>
 							<separator string="Functions" colspan="4"/>
-							<field name="address_ids" colspan="4" nolabel="1">
-								<form string="Partner contacts"> <!-- remove contact name from address for partner->contact->address form view -->
-									<field name="partner_id" colspan="4" select="1"/>
-									<newline/>
-									<!--<field name="name" select="1"/>-->
-									<field name="title" domain="[('domain', '=', 'contact')]"/>
-									<field name="function"/>
-									<field name="type" select="2"/>
-									<field name="street" select="2"/>
-									<field name="street2"/>
-									<newline/>
-									<field name="zip" select="2"/>
-									<field name="city" select="2"/>
-									<newline/>
-									<field name="country_id" select="1" completion="1"/>
-									<field name="state_id" select="2"/>
-									<newline/>
-									<field name="phone" select="2"/>
-									<field name="fax"/>
-									<newline/>
-									<field name="mobile" select="2"/>
-									<field name="email" select="2"/>
+							<field name="job_ids" colspan="4" nolabel="1" mode="tree, form">
+								<form string="Functions"> 
+									<field name="function_id"/>
+									<field name="address_id"/>
+									<field name="name"/>
 								</form>
-								<tree string="Address">
-									<field name="partner_id"/>
-									<field name="function"/>
-									<!-- field name="sequence_contact"/ --> <!-- will add -->
+								<tree string="Functions">
+									<field name="function_id"/>
+									<field name="name"/>
+									<field name="address_id"/>
 								</tree>
 							</field>
 					</page>
@@ -82,85 +67,174 @@
 	<menuitem name="Partners/" id="menu_partner_contact_form" action="action_partner_contact_form"/>
 	<menuitem name="Partners/Addresses"  id="base.menu_partner_address_form"/>
 
-<!--	<record model="ir.ui.view" id="view_partner_address_form1">
-		<field name="name">Partner address form inherited</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
-		<field name="type">form</field>
+
+	<!-- Views for Partners -->
+	<record model="ir.ui.view" id="view_partner_tree_inherited1">
+		<field name="name">Partner tree inherited</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_tree"/>
+		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<field name="partner_id" position="replace">
-				<field name="partner_id" select="1"/>
-				<field name="contact_id" select="1"/>
+			<field name="address" position="replace">
+				<field name='address' string='# of Addresses'/>
 			</field>
 		</field>
 	</record>
--->
 
 	<record model="ir.ui.view" id="view_partner_form_inherit">
-		<field name="name">Partner  form inherited</field>
+		<field name="name">Partner form inherited</field>
 		<field name="model">res.partner</field>
 		<field name="inherit_id" ref="base.view_partner_form"/>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1" position="replace">
 				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
-						<form string="Partner contacts">
-							<field name="contact_id" select="1" colspan="4"/> <!-- replced by name (contact name) -->
-							<field name="title" domain="[('domain', '=', 'contact')]"/>
-							<field name="function"/>
-							<field name="type" select="2"/>
-							<field name="street" select="2"/>
-							<field name="street2"/>
-							<newline/>
-							<field name="zip" select="2"/>
-							<field name="city" select="2"/>
-							<newline/>
-							<field name="country_id" select="2" completion="1"/>
-							<field name="state_id" select="2"/>
-							<newline/>
-							<field name="phone"/>
-							<field name="fax"/>
-							<newline/>
-							<field name="mobile"/>
-							<field name="email" select="2" widget="email" />
-						</form>
-						<tree string="Partner contacts">
-							<field name="contact_id"/>
-							<field name="zip"/>
-							<field name="city"/>
-							<field name="country_id"/>
-						</tree>
-					</field>
+					<form string="Address">
+						<field name="type" select="2" colspan="4"/>
+						<newline/>
+						<field name="street" select="2"/>
+						<field name="street2"/>
+						<newline/>
+						<field name="zip" select="2"/>
+						<field name="city" select="2"/>
+						<newline/>
+						<field name="country_id" select="2" completion="1"/>
+						<field name="state_id" select="2"/>
+						<newline/>
+						<field name="phone"/>
+						<field name="fax"/>
+						<newline/>
+						<field name="job_ids" mode="tree, form" colspan="4">
+							<tree string="Contacts" editable="top">
+								<field name="contact_id"/>
+								<field name="function_id"/>
+							</tree>
+							<form string="Contacts">
+								<field name="contact_id"/>
+								<field name="function_id"/>
+							</form>
+						</field>
+					</form>
+					<tree string="Addresses">
+						<field name="type"/>
+						<field name="zip"/>
+						<field name="city"/>
+						<field name="country_id"/>
+						<field name="phone"/>
+						<field name="job_ids"/>
+					</tree>
 				</field>
-		</field>
-	</record>
-
-<!--	<record model="ir.ui.view" id="view_partner_form">
-		<field name="name">Partner  form inherited</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="email" position="after">
-				<field name="contact_id" select="1" colspan="4"/>
 			</field>
 		</field>
 	</record>
--->
 
-	<record model="ir.ui.view" id="view_partner_address_tree">
-		<field name="name">Partner address tree inherited</field>
+	<!-- Views for Addresses -->
+	<record model="ir.ui.view" id="view_partner_address_tree_inherited1">
+		<field name="name">Partner addresses inherited</field>
 		<field name="model">res.partner.address</field>
 		<field name="inherit_id" ref="base.view_partner_address_tree"/>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<field name="partner_id" position="after">
-				<field name="contact_id" select="1"/>
+			<field name="name" position="replace">
+				<field name='job_ids' string='# of Contacts'/>
 			</field>
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_partner_address_form_inherited0">
+		<field name='name'>res.partner.address.form.inherited0</field>
+		<field name='model'>res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name='type'>form</field>
+		<field name='arch' type='xml'>
+			<field name="type" position="replace">
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_address_form_inherited1">
+		<field name='name'>res.partner.address.form.inherited1</field>
+		<field name='model'>res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name='type'>form</field>
+		<field name='arch' type='xml'>
+			<field name="name" position="replace">
+			</field>
+		</field>
+	</record>
+
+	<record id='view_partner_address_form_inherited2' model='ir.ui.view'>
+		<field name='name'>res.partner.address.form.inherited2</field>
+		<field name='model'>res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name='type'>form</field>
+		<field name='arch' type='xml'>
+			<field name="title" position="replace">
+			</field>
+		</field>
+	</record>
+
+	<record id='view_partner_address_form_inherited3' model='ir.ui.view'>
+		<field name='name'>res.partner.address.form.inherited3</field>
+		<field name='model'>res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name='type'>form</field>
+		<field name='arch' type='xml'>
+			<field name="function" position="replace">
+			</field>
+		</field>
+	</record>
+
+	<record id='view_partner_address_form_inherited4' model='ir.ui.view'>
+		<field name='name'>res.partner.address.form.inherited4</field>
+		<field name='model'>res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name='type'>form</field>
+		<field name='arch' type='xml'>
+			<field name='mobile' position="replace">
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_address_form_inherited6">
+		<field name='name'>res.partner.address.form.inherited6</field>
+		<field name='model'>res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name='type'>form</field>
+		<field name='arch' type='xml'>
+			<field name="partner_id" position="replace">
+				<field name='partner_id' select='1'/>
+				<field name='type' select='2'/>
+			</field>
+		</field>
+	</record>
+
+
+	<record id='view_partner_address_form_inherited5' model='ir.ui.view'>
+		<field name='name'>res.partner.address.form.inherited5</field>
+		<field name='model'>res.partner.address</field>
+		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name='type'>form</field>
+		<field name='arch' type='xml'>
+			<field name='email' position="replace">
+				<field name="job_ids" mode="tree, form" colspan="4">
+					<tree string="Contacts" editable="top">
+						<field name="contact_id"/>
+						<field name="function_id"/>
+					</tree>
+					<form string="Contacts">
+						<field name="contact_id"/>
+						<field name="function_id"/>
+					</form>
+				</field>
+			</field>
+		</field>
+	</record>
+
+
+<!-- NOT NEEDED ?? -->
 <!-- contact.title object view -->
+<!--
 		<record model="ir.ui.view" id="view_contact_title_form">
 			<field name="name">contact.title.form</field>
 			<field name="type">form</field>
@@ -172,7 +246,8 @@
 				</form>
 			</field>
 		</record>
-		<record model="ir.ui.view" id="view_contact_title_tree">
+-->
+<!--		<record model="ir.ui.view" id="view_contact_title_tree">
 			<field name="name">contact.title.tree</field>
 			<field name="type">tree</field>
 			<field name="model">contact.title</field>
@@ -191,6 +266,6 @@
 			<field name="view_id" ref="view_contact_title_tree"/>
 		</record>
 		<menuitem name="Partners/Configuration/Contact Courtesy" action="action_contact_title" id="menu_contact_title"/>
-
+-->
 </data>
 </terp>

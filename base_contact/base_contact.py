@@ -27,25 +27,26 @@
 
 import netsvc
 from osv import fields, osv
-class contact_title(osv.osv):
-    _name='contact.title'
-    _description='contact title'
 
-    _columns={
-          'name': fields.char('Title', required=True, size=46, translate=True),
-          'code': fields.char('Code', required=True, size=16),
-              }
-contact_title()
+#class contact_title(osv.osv):
+#    _name='contact.title'
+#    _description='contact title'
+
+#    _columns={
+#          'name': fields.char('Title', required=True, size=46, translate=True),
+#          'code': fields.char('Code', required=True, size=16),
+#              }
+#contact_title()
 
 class res_partner_contact(osv.osv):
     _name = "res.partner.contact"
     _description = "res.partner.contact"
 
     def _title_get(self,cr, user, context={}):
-        obj = self.pool.get('contact.title')
+        obj = self.pool.get('res.partner.title')
         ids = obj.search(cr, user, [])
-        res = obj.read(cr, user, ids, ['code', 'name'], context)
-        res = [(r['code'], r['name']) for r in res]
+        res = obj.read(cr, user, ids, ['shortcut', 'name','domain'], context)
+        res = [(r['shortcut'], r['name']) for r in res if r['domain']=='contact']
         return res
 
     _columns = {
@@ -55,7 +56,7 @@ class res_partner_contact(osv.osv):
         'title': fields.selection(_title_get, 'Title'),
         'website':fields.char('Website',size=120),
         'lang_id':fields.many2one('res.lang','Language'),
-        'address_ids':fields.one2many('res.partner.address','contact_id','Addresses'),
+        'job_ids':fields.one2many('res.partner.job','contact_id','Functions'),
         'country_id':fields.many2one('res.country','Nationality'),
         'birthdate':fields.date('Birth Date'),
         'active' : fields.boolean('Active'),
@@ -78,12 +79,46 @@ class res_partner_contact(osv.osv):
 res_partner_contact()
 
 class res_partner_address(osv.osv):
+
+    #overriding of the name_get defined in base in order to remove the old contact name
+    def name_get(self, cr, user, ids, context={}):
+        if not len(ids):
+            return []
+        res = []
+        for r in self.read(cr, user, ids, ['zip','city','partner_id', 'street']):
+            if context.get('contact_display', 'contact')=='partner':
+                res.append((r['id'], r['partner_id'][1]))
+            else:
+                addr = str('')
+                addr += str(r['street'] or '') + ' ' + str(r['zip'] or '') + ' ' + str(r['city'] or '')
+                res.append((r['id'], addr.strip() or '/'))
+        return res
+
     _name = 'res.partner.address'
     _inherit='res.partner.address'
     _description ='Partner Contact'
     _columns = {
-        'contact_id':fields.many2one('res.partner.contact','Contact'),
-        }
+        'job_ids':fields.one2many('res.partner.job', 'address_id', 'Contacts'),
+    }
 res_partner_address()
+
+class res_partner_job(osv.osv):
+
+    def _get_partner_name(self, cr, uid, ids, *a):
+        res={}
+        for id in self.browse(cr, uid, ids):
+            res[id.id] = id.address_id.partner_id.name
+        return res
+
+    _name = 'res.partner.job'
+    _description ='Contact Function'
+    _columns = {
+        'name': fields.function(_get_partner_name, method=True, type="char", string='Partner'),
+        'address_id':fields.many2one('res.partner.address','Address', required=True),
+        'contact_id':fields.many2one('res.partner.contact','Contact', required=True),
+        'function_id': fields.many2one('res.partner.function','Function', required=True),
+    }
+
+res_partner_job()
 
 
