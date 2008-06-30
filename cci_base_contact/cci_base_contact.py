@@ -32,7 +32,7 @@ class res_partner_contact(osv.osv):
     _inherit = "res.partner.contact"
     _columns = {
         'data_private': fields.boolean('Private data'),
-        'self_sufficent':fields.boolean('Keep contact',help='This contact will not be removed even if all this addresses are deleted'),
+        'self_sufficent':fields.boolean('Keep contact',help='This contact will not be removed even if all his addresses are deleted'),
         'who_date_accept':fields.date('Accept Date'),
         'who_date_last':fields.date('Last Modification'),
         'who_date_publication':fields.date('Publication'),

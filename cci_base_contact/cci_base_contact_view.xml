@@ -44,7 +44,6 @@
 
 
 <!-- res.partner.contact -->
-
 	<record model="ir.ui.view" id="view_partner_contact_tree_inherit">
 		<field name="name">res.partner.contact.tree2</field>
 		<field name="model">res.partner.contact</field>
@@ -52,7 +51,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<field name="lang_id" position="replace">
-			    <field name="address_ids"/>
+				<field name="job_ids"/>
 			</field>
 		</field>
 	</record>
