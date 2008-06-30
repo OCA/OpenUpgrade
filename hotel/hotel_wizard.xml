@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<terp>
+	<data>
+		
+		<wizard
+			string="Folio Total"
+			model="hotel.folio"
+			name="hotel.folio.total_folio"
+			menu="False"
+			id="wizard_hotel_total"/>
+		
+		<menuitem
+			name="Hotel Management/Reports" 
+			action="wizard_hotel_total" 
+			type="wizard"
+			
+			id="wizard_hotel_menu"/>
+	</data>
+</terp>
