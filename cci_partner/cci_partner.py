@@ -209,7 +209,6 @@ class res_partner(osv.osv):
         #'mag_send':fields.selection([('never','Never'),('always','Always'),('managed_by_poste','Managed_by_Poste'),('prospect','Prospect')], 'Send mag.'),
         'date_founded':fields.date('Founding Date',help='Date of foundation of this company'),
         'training_authorization':fields.char('Checks Auth.',size=12,help='Formation and Language Checks Authorization number'),
-        #'lang_authorization':fields.char('Lang. Auth.',size=12,help='Language Checks Authorization number'),
         'alert_advertising':fields.boolean('Adv.Alert',help='Partners description to be shown when inserting new advertising sale'),
         'alert_events':fields.boolean('Event Alert',help='Partners description to be shown when inserting new subscription to a meeting'),
         'alert_legalisations':fields.boolean('Legal. Alert',help='Partners description to be shown when inserting new legalisation'),
@@ -313,17 +312,21 @@ class res_partner_zip(osv.osv):
                 }
 res_partner_zip()
 
-#class function_code(osv.osv):
-#    _name='function.code'
-#    _description = 'function.code'
-#    _columns = {
-#        'name' : fields.char('Name',size=20,required=True)
-#                }
-#function_code()
 
-class res_partner_address(osv.osv):
-    _inherit = "res.partner.address"
-    _description = 'res.partner.address'
+class res_partner_job(osv.osv):
+
+    def unlink(self, cr, uid, ids, context={}):
+        #Unlink related contact if: no other job AND not self_sufficient
+        job_ids=self.pool.get('res.partner.job').browse(cr, uid, ids)
+        for job_id in job_ids:
+            id_contact = job_id.contact_id.id
+            super(res_partner_job,self).unlink(cr, uid, job_id.id,context=context)
+            if id_contact:
+                data_contact=self.pool.get('res.partner.contact').browse(cr, uid,[id_contact])
+                for data in data_contact:
+                    if (not data.self_sufficent) and (not data.job_ids):
+                        self.pool.get('res.partner.contact').unlink(cr, uid,[data.id], context)
+        return True
 
     def create(self, cr, uid, vals, *args, **kwargs):
         if vals.has_key('function_code_label') and vals['function_code_label']:
@@ -333,7 +336,8 @@ class res_partner_address(osv.osv):
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
             vals['function_code_label'] = temp
-        return super(res_partner_address,self).create(cr, uid, vals, *args, **kwargs)
+        vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
+        return super(res_partner_job,self).create(cr, uid, vals, *args, **kwargs)
 
     def write(self, cr, uid, ids,vals, *args, **kwargs):
         if vals.has_key('function_code_label') and vals['function_code_label']:
@@ -343,41 +347,72 @@ class res_partner_address(osv.osv):
                 if res:
                     temp += self.pool.get('res.partner.function').browse(cr, uid,res)[0].code
             vals['function_code_label'] = temp
-        return super(res_partner_address,self).write(cr, uid, ids,vals, *args, **kwargs)
+        vals['function_id'] = self.pool.get('res.partner.function').search(cr, uid, [])[0]
+        return super(res_partner_job,self).write(cr, uid, ids,vals, *args, **kwargs)
 
-    def _get_name(self, cr, uid, ids, name, arg, context={}):
-        res={}
-        for add in self.browse(cr, uid, ids, context):
-              if add.contact_id:
-                  res[add.id] = (add.department or '') + ' ' + add.contact_id.name
-              else:
-                  res[add.id] = add.department
-        return res
-
+    _inherit = 'res.partner.job'
     _columns = {
-        'name': fields.function(_get_name, method=True, string='Contact Name',type='char',size=64),#override parent field
-        'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
-        'zip_id':fields.many2one('res.partner.zip','Zip'),
-        #'function_code_id':fields.many2one('function.code','Function Code'),
-        'function_label':fields.char('Function Label',size=128),
-        'function_code_label':fields.char('Codes',size=128),
+        'function_label':fields.char('Function Label',size=128, required=True),
+        'function_code_label':fields.char('Codes',size=128,),
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
-        'sequence_partner':fields.integer('Sequence (Partner)',help='order of importance of this address in the list of addresses of the linked partner'),
-        'sequence_contact':fields.integer('Sequence (Contact)',help='order of importance of this address in the list of addresses of the linked contact'),
         'canal_id':fields.many2one('res.partner.canal','Canal',help='favorite chanel for communication'),
         'active':fields.boolean('Active'),
         'who_presence':fields.boolean('In Whos Who'),
         'dir_presence':fields.boolean('In Directory'),
         'department': fields.char('Department',size=20),
     }
+
+    _defaults = {
+        'who_presence' : lambda *a: True,
+        'dir_presence' : lambda *a: True,
+        'active' : lambda *a: True,
+    }
+
+res_partner_job()
+
+class res_partner_address(osv.osv):
+    _inherit = "res.partner.address"
+    _description = 'res.partner.address'
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+        if vals.has_key('zip_id') and vals['zip_id']:
+            vals['zip'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].name
+            vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].city
+        return super(res_partner_address,self).create(cr, uid, vals, *args, **kwargs)
+
+    def write(self, cr, uid, ids,vals, *args, **kwargs):
+        if vals.has_key('zip_id') and vals['zip_id']:
+            vals['zip'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].name
+            vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].city
+        return super(res_partner_address,self).write(cr, uid, ids,vals, *args, **kwargs)
+
+#que faire du name?
+
+#    def _get_name(self, cr, uid, ids, name, arg, context={}):
+ #       res={}
+  #      for add in self.browse(cr, uid, ids, context):
+   #           if add.contact_id:
+    #              res[add.id] = (add.department or '') + ' ' + add.contact_id.name
+     #         else:
+      #            res[add.id] = add.department
+       # return res
+
+    _columns = {
+        #'name': fields.function(_get_name, method=True, string='Contact Name',type='char',size=64),#override parent field
+        'state': fields.selection([('correct','Correct'),('to check','To check')],'Code'),
+        'zip_id':fields.many2one('res.partner.zip','Zip'),
+
+        'sequence_partner':fields.integer('Sequence (Partner)',help='order of importance of this address in the list of addresses of the linked partner'),
+
+
+    }
     _defaults = {
                  'state' : lambda *a: 'correct',
-                 'who_presence' : lambda *a: True,
-                 'dir_presence' : lambda *a: True,
-               }
+    }
 
     def onchange_user_id(self, cr, uid, ids,zip_id):
+    #Changing the zip code can change the salesman
         if not ids:
             return {}
         if self.pool.get('res.partner').user_id == False:
@@ -390,19 +425,6 @@ class res_partner_address(osv.osv):
                              if data1.user_id:
                                  self.pool.get('res.partner').write(cr, uid,data.partner_id.id,{'user_id':data1.user_id.id})
         return {}
-
-    def unlink(self, cr, uid, ids, context={}):
-        #Unlink related contact if: no other Address AND not self_sufficient
-        data_addresses=self.pool.get('res.partner.address').browse(cr, uid, ids)
-        for address in data_addresses:
-            id_contact=address.contact_id.id
-            super(res_partner_address,self).unlink(cr, uid, ids,context=context)
-            if id_contact:
-                data_contact=self.pool.get('res.partner.contact').browse(cr, uid,[id_contact])
-                for data in data_contact:
-                    if (not data.self_sufficent)  and (not data.address_ids):
-                        self.pool.get('res.partner.contact').unlink(cr, uid,[data.id], context)
-        return True
 
 #    def onchange_contact_id(self, cr, uid, ids, contact_id):
 #        #return name
@@ -499,7 +521,6 @@ class res_partner_relation(osv.osv):
     _columns = {
         'partner_id': fields.many2one('res.partner','Partner', required=True),
         'current_partner_id':fields.many2one('res.partner','Partner', required=True),
-     #   'partner_relation_id':fields.char('Partner Relation',size=50),#should be correct ?? never used?
         'description':fields.text('Description'),
         'percent':fields.float('Ownership'),
         'type_id':fields.many2one('res.contact.relation.type','Type', required=True),
@@ -523,10 +544,3 @@ class res_partner_contact(osv.osv):
     }
 res_partner_contact()
 
-#class product(osv.osv):
-#    _inherit = 'product.product'
-#    _description = 'product.product'
-#    _columns = {
-#        'member_price':fields.float('Member Price'),
-#                }
-#product()
