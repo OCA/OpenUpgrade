@@ -5,10 +5,18 @@
     "website" : "http://tinyerp.com",
     "category" : "Generic Modules/Base Contact",
     "description": """
-       A simple structure with contacts
+        This module allows you to manage entirely your contacts. 
 
-       base_contact will allow to define contact without companies,
-       contact with several adresses at different companies
+    It lets you define 
+        *contacts unrelated to a partner,
+        *contacts working at several adresses (possibly for different partners), 
+        *contacts with possibly different functions for each of its job's addresses
+
+    It also add a new menuitem located in 
+        Partners \ Contacts
+
+
+    Pay attention that this module converts the existing addresses into "addresses + contacts". It means that some fields of the addresses will be missing (like the contact name), since these are supposed to be defined in an other object.
     """,
     "depends" : ["base"],
     "init_xml" : [],

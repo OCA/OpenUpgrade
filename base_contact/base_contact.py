@@ -28,15 +28,6 @@
 import netsvc
 from osv import fields, osv
 
-#class contact_title(osv.osv):
-#    _name='contact.title'
-#    _description='contact title'
-
-#    _columns={
-#          'name': fields.char('Title', required=True, size=46, translate=True),
-#          'code': fields.char('Code', required=True, size=16),
-#              }
-#contact_title()
 
 class res_partner_contact(osv.osv):
     _name = "res.partner.contact"
