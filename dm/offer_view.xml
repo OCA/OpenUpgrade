@@ -235,10 +235,12 @@
 						<field name="state" nolabel="1" select="1"/>
 						<button name="go_to_offer" string="Create Offers" states="draft" type="object"/>
 					</page>
+					<!--
 					<page string="Description">
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1"/>
 					</page>
+					-->
 					<page string="History">
 						<separator string="History" />
 						<field name="history_ids" nolabel="1" colspan="4"/>
@@ -308,10 +310,12 @@
 							<button name="go_to_offer" string="Create Offers" states="draft" type="object"/>
 						</group>
 					</page>
+					<!--
 					<page string="Description">
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1"/>
 					</page>
+					-->
 					<page string="Keywords" >
 						<separator string="Keywords" colspan="4"/>
 						<field name="keywords" colspan="4"  nolabel="1" select="1"/>

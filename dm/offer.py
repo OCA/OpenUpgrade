@@ -164,6 +164,8 @@ class dm_customer_offer(osv.osv):
 
         segment = self.pool.get('dm.campaign.proposition.segment')
         segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
+        if not segment_id :
+            osv.except_osv('Warning', 'No matching code found in campaign segment')
         workitem = self.pool.get('dm.offer.step.workitem')
         workitem_id = workitem.search(cr,uid,[('customer_id','=',res.customer_id.id),('segment_id','=',segment_id[0])])
         vals={}
@@ -280,7 +282,7 @@ class dm_offer(osv.osv):
     def change_code(self,cr,uid,ids,type,copywriter_id) :
         if type=='model' and ids:
             return {'value':{'code':'Model%%0%sd' % 3 % ids[0]}}
-        if copywriter_id :
+        if copywriter_id and ids:
             copywriter = self.pool.get('res.partner').browse(cr,uid,[copywriter_id])[0]
             code = ( copywriter.ref or '')+'%%0%sd' % 3 % ids[0]
             return {'value':{'code':code}}
@@ -325,7 +327,7 @@ class dm_offer(osv.osv):
         return result
     def fields_get(self, cr, uid, fields=None, context=None):
         res = super(dm_offer, self).fields_get(cr, uid, fields, context)
-        if not context.has_key('type') and res.has_key('type'):
+        if context and not context.has_key('type') and res.has_key('type'):
             res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite'),('preoffer','Preoffer')]
         return res
     def create(self,cr,uid,vals,context={}):
@@ -349,7 +351,7 @@ class dm_offer(osv.osv):
 #            offer step are copied
         new_steps = []
         for step in offer_steps :
-            nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[],'document_ids':[]})
+            nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]})#,'document_ids':[]})
             new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
             print "DEBUG - step :",step
             print "DEBUG - step transition :",step.outgoing_transition_ids

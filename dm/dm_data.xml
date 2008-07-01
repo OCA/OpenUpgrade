@@ -33,7 +33,7 @@
 		</record>
 
 		<record id="dm_offer_step_0" model="dm.offer.step">
-			<field eval="[(6,0,[])]" name="document_ids"/>
+<!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field eval="&quot;or&quot;" name="split_mode"/>
@@ -43,7 +43,7 @@
 		</record>
 
 		<record id="dm_offer_step_1" model="dm.offer.step">
-			<field eval="[(6,0,[])]" name="document_ids"/>
+<!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field eval="&quot;or&quot;" name="split_mode"/>
