@@ -5,7 +5,7 @@
 	=======================================================
 	Offer Step Document Category Views
 	=======================================================
-	-->
+	--><!--
 	<record model="ir.ui.view" id="view_offer_step_document_categ_form">
 		<field name="name">dm.offer.document.category.form</field>
 		<field name="model">dm.offer.document.category</field>
@@ -14,7 +14,7 @@
 			<form string="Document Category">
 				<field name="name" select="1"/>
 				<field name="parent_id"/>
-<!--				<field name="copywriter_id" select="2"/>-->
+				<field name="copywriter_id" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -37,11 +37,11 @@
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents" id="menu_action_offer_doc" sequence="2" />
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Edit document categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form" sequence="2"/>
 
-	<!--
+	
 	=======================================================
 	Offer Step Document Views
 	=======================================================
-	-->
+	
 
 
 	<record model="ir.ui.view" id="view_offer_step_document_form">
@@ -93,7 +93,7 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form" sequence="1"/>
 
-	<!--
+	--><!--
 	=======================================================
 	Offer Step Type Views
 	=======================================================
@@ -185,11 +185,30 @@
 						<field name="incoming_transition_ids" colspan="4" string="Incoming" context="{'type':'step_to','step_id':active_id or False}"/>
 						<field name="outgoing_transition_ids" colspan="4" string="Outgoing" context="{'type':'step_from','step_id':active_id or False}"/>
 					</page>
+					<page string="Description">
+						<separator string="Description" colspan="4"/>
+						<field name="desc" nolabel="1"/>
+					</page>
+					<page string="Advises">
+						<separator string="DTP Advices" colspan="4"/>
+						<field name="dtp_note" nolabel="1" colspan="4"/>
+						<newline/>
+						<separator string="Trademark Advices" colspan="4"/>
+						<field name="trademark_note" nolabel="1" colspan="4"/>
+						<newline/>-->
+						<separator string="Production Advices" colspan="4"/>
+						<field name="production_note" nolabel="1" colspan="4"/>
+<!--						<field name="production_delay"/>-->
+						<separator string="Purchase Advices" colspan="4"/>
+						<field name="purchase_note" nolabel="1" colspan="4"/>
+					</page>
 					<page string="History">
 						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
 					<page string="Documents">
-						<field name="document_ids" colspan="4" nolabel="1"/>
+						<field name="mailing_at_dates" select="2"/>
+						<field name="interactive" select="2"/>
+<!--				<field name="document_ids" colspan="4" nolabel="1"/> -->
 					</page>
 				</notebook>
 			</form>
@@ -227,6 +246,7 @@
 				<field name="step_to"/>
 				<field name="condition" select="1"/>
 				<field name="delay" string="Delay(In Days)" select="2"/>
+				<field name="media_id"/>
 			</form>
 		</field>
 	</record>
@@ -289,7 +309,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_workitem_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Work Items" id="menu_action_offer_step_workitem" action="action_offer_step_workitem" groups="Offer Admin"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Work Items" id="menu_action_offer_step_workitem" action="action_offer_step_workitem" groups="Offer Admin"/><!--
 
 	<act_window name="WorkItems"
 		res_model="dm.offer.step.workitem"
@@ -299,7 +319,7 @@
 		id="act_workitem_opened"
 		domain = "[('step_id','=',active_id)]"/>
 
-	<!--
+	--><!--
 	=======================================================
 	Offer Step History Views
 	=======================================================

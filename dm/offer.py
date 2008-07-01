@@ -246,13 +246,6 @@ class dm_offer(osv.osv):
         'category_ids' : fields.many2many('dm.offer.category','dm_offer_category_rel', 'offer_id', 'offer_category_id', 'Categories'),
         'notes' : fields.text('General Notes'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
-        'desc' : fields.text('Description'),
-        'dtp_note' : fields.text('DTP Notes'),
-        'dtp_category_ids' : fields.many2many('dm.offer.category','dm_offer_dtp_category','offer_id','offer_dtp_categ_id', 'DTP Categories') ,# domain="[('domain','=','production')]"),
-        'trademark_note' : fields.text('Trademark Notes'),
-        'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),# domain="[('domain','=','purchase')]"),
-        'production_note' : fields.text('Production Notes'),
-        'purchase_note' : fields.text('Purchase Notes'),
         'type' : fields.selection(AVAILABLE_TYPE, 'Type', size=16),
         'preoffer_type' : fields.selection([('rewrite','Rewrite'),('new','New')], 'Type', size=16),
         'production_category_ids' : fields.many2many('dm.offer.category','dm_offer_production_category','offer_id','offer_production_categ_id', 'Production Categories' , domain="[('domain','=','production')]"),
@@ -272,7 +265,8 @@ class dm_offer(osv.osv):
         'trademark_country_ids' : fields.many2many('res.country','dm_offer_trademark_country', 'offer_id', 'country_id', 'Nationality'),
         'forbidden_country_ids' : fields.many2many('res.country','dm_offer_forbidden_country', 'offer_id', 'country_id', 'Forbidden Countries'),
         'forbidden_state_ids' : fields.many2many('res.country.state','dm_offer_forbidden_state', 'offer_id', 'state_id', 'Forbidden States'),
-        'keywords' :fields.text('Keywords')
+        'keywords' :fields.text('Keywords'),
+        'version' : fields.float('Version')
 #       (still to be defined by the client)
     }
     
@@ -324,12 +318,16 @@ class dm_offer(osv.osv):
         return True
     
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
-        print toolbar
         result = super(dm_offer,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
         if context.has_key('type') and context['type'] == 'preoffer' :
             if result.has_key('toolbar') and result['toolbar'].has_key('relate'):
                 result['toolbar']['relate']=''
         return result
+    def fields_get(self, cr, uid, fields=None, context=None):
+        res = super(dm_offer, self).fields_get(cr, uid, fields, context)
+        if not context.has_key('type') and res.has_key('type'):
+            res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite'),('preoffer','Preoffer')]
+        return res
     def create(self,cr,uid,vals,context={}):
         if not vals.has_key('type') and vals.has_key('preoffer_type'):
             vals['type'] = 'preoffer'
@@ -343,7 +341,6 @@ class dm_offer(osv.osv):
         default = default.copy()
 #            offer is copied
         offer_id = super(dm_offer, self).copy(cr, uid, id, {'step_ids':[]}, context)
-        
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
         print "DEBUG - offer_step_ids : ",offer_step_ids
@@ -352,12 +349,10 @@ class dm_offer(osv.osv):
 #            offer step are copied
         new_steps = []
         for step in offer_steps :
-            nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]})
+            nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[],'document_ids':[]})
             new_steps.append({'old_id':step.id,'new_id':nid,'o_trans_id':step.outgoing_transition_ids})
             print "DEBUG - step :",step
             print "DEBUG - step transition :",step.outgoing_transition_ids
-            #nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]},{})
-            #new_steps.append({'old_id':step.id,'new_id':nid,'i_trans_id':step.incoming_transition_ids})
 
         print "DEBUG new_steps : ",new_steps
 #            transitions are copied

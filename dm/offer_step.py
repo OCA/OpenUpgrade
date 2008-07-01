@@ -24,54 +24,54 @@ class dm_product(osv.osv):
 dm_product()
 
 
-class dm_offer_document_category(osv.osv):
-    _name = "dm.offer.document.category"
-    _rec_name = "name"
-    def name_get(self, cr, uid, ids, context={}):
-        if not len(ids):
-            return []
-        reads = self.read(cr, uid, ids, ['name','parent_id'], context)
-        res = []
-        for record in reads:
-            name = record['name']
-            if record['parent_id']:
-                name = record['parent_id'][1]+' / '+name
-            res.append((record['id'], name))
-        return res
-        
-    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, unknow_dict):
-        res = self.name_get(cr, uid, ids)
-        return dict(res)
-        
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'complete_name' : fields.function(_name_get_fnc, method=True, type='char', string='Category'),
-        'parent_id' : fields.many2one('dm.offer.document.category', 'Parent'),
-        'copywriter_id' : fields.many2one('res.partner', 'Copywriter')
-    }
-    
-dm_offer_document_category()
+#class dm_offer_document_category(osv.osv):
+#    _name = "dm.offer.document.category"
+#    _rec_name = "name"
+#    def name_get(self, cr, uid, ids, context={}):
+#        if not len(ids):
+#            return []
+#        reads = self.read(cr, uid, ids, ['name','parent_id'], context)
+#        res = []
+#        for record in reads:
+#            name = record['name']
+#            if record['parent_id']:
+#                name = record['parent_id'][1]+' / '+name
+#            res.append((record['id'], name))
+#        return res
+#        
+#    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, unknow_dict):
+#        res = self.name_get(cr, uid, ids)
+#        return dict(res)
+#        
+#    _columns = {
+#        'name' : fields.char('Name', size=64, required=True),
+#        'complete_name' : fields.function(_name_get_fnc, method=True, type='char', string='Category'),
+#        'parent_id' : fields.many2one('dm.offer.document.category', 'Parent'),
+#        'copywriter_id' : fields.many2one('res.partner', 'Copywriter')
+#    }
+#    
+#dm_offer_document_category()
 
-class dm_offer_document(osv.osv):
-    _name = "dm.offer.document"
-    _rec_name = 'name'
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=16, required=True),
-        'lang_id' : fields.many2one('res.lang', 'Language'),
-        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
-        'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
-        'mailing_at_dates' : fields.boolean('Mailing at dates'),
-        'interactive' : fields.boolean('Interactive'),
-        'answer_letter' : fields.boolean('Answer letter'),
-        'dtp_operator' : fields.many2one('res.partner', 'Operator'),
-        'dtp_theorical_date' : fields.date('Theorical Date'),
-        'dtp_valid_date' : fields.date('Valid Date'),
-        'dtp_making_date' : fields.date('Making Date'),
-        'dtp_reread' : fields.date('Reread Date'),
-    }
- 
-dm_offer_document()
+#class dm_offer_document(osv.osv):
+#    _name = "dm.offer.document"
+#    _rec_name = 'name'
+#    _columns = {
+#        'name' : fields.char('Name', size=64, required=True),
+#        'code' : fields.char('Code', size=16, required=True),
+#        'lang_id' : fields.many2one('res.lang', 'Language'),
+#        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
+#        'category_ids' : fields.many2many('dm.offer.document.category','dm_offer_document_rel', 'doc_id', 'category_id', 'Categories'),
+#        'mailing_at_dates' : fields.boolean('Mailing at dates'),
+#        'interactive' : fields.boolean('Interactive'),
+#        'answer_letter' : fields.boolean('Answer letter'),
+#        'dtp_operator' : fields.many2one('res.partner', 'Operator'),
+#        'dtp_theorical_date' : fields.date('Theorical Date'),
+#        'dtp_valid_date' : fields.date('Valid Date'),
+#        'dtp_making_date' : fields.date('Making Date'),
+#        'dtp_reread' : fields.date('Reread Date'),
+#    }
+# 
+#dm_offer_document()
 
 class dm_offer_step_type(osv.osv):
     _name="dm.offer.step.type"
@@ -129,9 +129,23 @@ class dm_offer_step(osv.osv):
         'media_id' : fields.many2one('dm.media', 'Media'),
         'type' : fields.selection(_get_offer_step_type,'Type',required=True),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
+        'desc' : fields.text('Description'),
+        'dtp_note' : fields.text('DTP Notes'),
+        'dtp_category_ids' : fields.many2many('dm.offer.category','dm_offer_dtp_category','offer_id','offer_dtp_categ_id', 'DTP Categories') ,# domain="[('domain','=','production')]"),
+        'trademark_note' : fields.text('Trademark Notes'),
+        'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),# domain="[('domain','=','purchase')]"),
+        'production_note' : fields.text('Production Notes'),
+        'purchase_note' : fields.text('Purchase Notes'),
+
+        'mailing_at_dates' : fields.boolean('Mailing at dates'),
+        'interactive' : fields.boolean('Interactive'),
+        
 #        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
+
         'notes' : fields.text('Notes'),
-        'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
+        
+#        'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
+
         'flow_start' : fields.boolean('Flow Start'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
         'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
@@ -193,6 +207,7 @@ class dm_offer_step_transition(osv.osv):
         'delay' : fields.integer('Offer Delay' ,required=True),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
+        'media_id' : fields.many2one('dm.media','Media')
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)

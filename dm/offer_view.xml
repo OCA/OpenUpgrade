@@ -72,24 +72,6 @@
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
 						</group>
 					</page>
-					<page string="Description">
-						<separator string="Description" colspan="4"/>
-						<field name="desc" nolabel="1"/>
-					</page>
-					<page string="Advises">
-						<separator string="DTP Advices" colspan="4"/>
-						<field name="dtp_note" nolabel="1" colspan="4"/>
-						<newline/>
-						<separator string="Trademark Advices" colspan="4"/>
-						<field name="trademark_note" nolabel="1" colspan="4"/>
-						<newline/>-->
-						<separator string="Production Advices" colspan="4"/>
-						<field name="production_note" nolabel="1" colspan="4"/>
-<!--						<field name="production_delay"/>-->
-						<field name="production_cost" string="Cost"/>
-						<separator string="Purchase Advices" colspan="4"/>
-						<field name="purchase_note" nolabel="1" colspan="4"/>
-					</page>
 					<page string="History">
 						<separator string="History" />
 						<field name="history_ids" nolabel="1" colspan="4"/>
