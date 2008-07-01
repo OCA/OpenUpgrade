@@ -37,14 +37,20 @@
 							<separator string="Functions" colspan="4"/>
 							<field name="job_ids" colspan="4" nolabel="1" mode="tree, form">
 								<form string="Functions"> 
+									<field name="sequence_contact"/>
 									<field name="function_id"/>
-									<field name="address_id"/>
 									<field name="name"/>
+									<field name="address_id"/>
+									<field name="phone"/>
+									<field name="email"/>
 								</form>
 								<tree string="Functions">
+									<field name="sequence_contact"/>
 									<field name="function_id"/>
 									<field name="name"/>
 									<field name="address_id"/>
+									<field name="phone"/>
+									<field name="email"/>
 								</tree>
 							</field>
 					</page>
@@ -108,10 +114,14 @@
 							<tree string="Contacts" editable="top">
 								<field name="contact_id"/>
 								<field name="function_id"/>
+								<field name="phone"/>
+								<field name="email"/>
 							</tree>
 							<form string="Contacts">
 								<field name="contact_id"/>
 								<field name="function_id"/>
+								<field name="phone"/>
+								<field name="email"/>
 							</form>
 						</field>
 					</form>
@@ -221,51 +231,19 @@
 					<tree string="Contacts" editable="top">
 						<field name="contact_id"/>
 						<field name="function_id"/>
+						<field name="phone"/>
+						<field name="email"/>
 					</tree>
 					<form string="Contacts">
 						<field name="contact_id"/>
 						<field name="function_id"/>
+						<field name="phone"/>
+						<field name="email"/>
 					</form>
 				</field>
 			</field>
 		</field>
 	</record>
 
-
-<!-- NOT NEEDED ?? -->
-<!-- contact.title object view -->
-<!--
-		<record model="ir.ui.view" id="view_contact_title_form">
-			<field name="name">contact.title.form</field>
-			<field name="type">form</field>
-			<field name="model">contact.title</field>
-			<field name="arch" type="xml">
-				<form string=" Contact Courtesy">
-					<field name="name" select="1"/>
-					<field name="code" select="1"/>
-				</form>
-			</field>
-		</record>
--->
-<!--		<record model="ir.ui.view" id="view_contact_title_tree">
-			<field name="name">contact.title.tree</field>
-			<field name="type">tree</field>
-			<field name="model">contact.title</field>
-			<field name="arch" type="xml">
-				<tree string=" Contact Courtesy">
-					<field name="name"/>
-					<field name="code"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_contact_title">
-			<field name="name">Contact Courtesy</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">contact.title</field>
-			<field name="view_type">form</field>
-			<field name="view_id" ref="view_contact_title_tree"/>
-		</record>
-		<menuitem name="Partners/Configuration/Contact Courtesy" action="action_contact_title" id="menu_contact_title"/>
--->
 </data>
 </terp>

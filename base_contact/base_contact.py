@@ -112,13 +112,20 @@ class res_partner_job(osv.osv):
 
     _name = 'res.partner.job'
     _description ='Contact Function'
+    _order = 'sequence_contact'
     _columns = {
         'name': fields.function(_get_partner_name, method=True, type="char", string='Partner'),
         'address_id':fields.many2one('res.partner.address','Address', required=True),
         'contact_id':fields.many2one('res.partner.contact','Contact', required=True),
         'function_id': fields.many2one('res.partner.function','Function', required=True),
+        'sequence_contact':fields.integer('Sequence (Contact)',help='order of importance of this address in the list of addresses of the linked contact'),
+        'email': fields.char('E-Mail', size=240),
+        'phone': fields.char('Phone', size=64),
     }
 
+    _defaults = {
+        'sequence_contact' : lambda *a: 0,
+    }
 res_partner_job()
 
 
