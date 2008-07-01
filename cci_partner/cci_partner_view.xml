@@ -950,6 +950,18 @@ TODO: revoir la vue tree aussi
 			</field>
 		</record>
 
+<!-- don't display the city field, since the city is displayed in the field zip_id-->
+		<record model="ir.ui.view" id="view_partner_form_inherit4">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="city" position="replace">
+				</field>
+			</field>
+		</record>
+
 
 	<record model="ir.ui.view" id="view_partner_form_inherit_jobs">
 		<field name="name">Partner form inherited</field>

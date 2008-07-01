@@ -84,8 +84,6 @@ class res_partner_article(osv.osv):
         'data':fields.boolean('Data'),
         'graph':fields.boolean('Graph'),
         'summary':fields.text('Summary'),
-        #'partners_ids':fields.one2many('res.partner','article_id','Partners'),
-        #'contact_ids':fields.one2many('res.partner.contact','article_id','Contacts'),
         'source_id':fields.char('Source',size=256),
         'date':fields.date('Date', required=True),
         'title':fields.char('Title',size=250, required=True),
@@ -137,7 +135,7 @@ class res_partner(osv.osv):
     def write(self, cr, uid, ids,vals, *args, **kwargs):
         super(res_partner,self).write(cr, uid, ids,vals, *args, **kwargs)
         list=[]
-        if self.pool.get('res.partner').browse(cr, uid, ids)[0].user_id.id == False:
+        if not self.pool.get('res.partner').browse(cr, uid, ids)[0].user_id.id:
             if 'address' in vals:
                 for add in vals['address']:
                     if add[2] and (add[2]['zip_id'] and add[2]['type']=='default'):
@@ -377,14 +375,14 @@ class res_partner_address(osv.osv):
 
     def create(self, cr, uid, vals, *args, **kwargs):
         if vals.has_key('zip_id') and vals['zip_id']:
-            vals['zip'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].name
-            vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].city
+            vals['zip'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id']).name
+            vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id']).city
         return super(res_partner_address,self).create(cr, uid, vals, *args, **kwargs)
 
     def write(self, cr, uid, ids,vals, *args, **kwargs):
         if vals.has_key('zip_id') and vals['zip_id']:
-            vals['zip'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].name
-            vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id'])[0].city
+            vals['zip'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id']).name
+            vals['city'] = self.pool.get('res.partner.zip').browse(cr, uid,vals['zip_id']).city
         return super(res_partner_address,self).write(cr, uid, ids,vals, *args, **kwargs)
 
 #que faire du name?
@@ -413,9 +411,10 @@ class res_partner_address(osv.osv):
 
     def onchange_user_id(self, cr, uid, ids,zip_id):
     #Changing the zip code can change the salesman
-        if not ids:
+        if not ids or not zip_id:
             return {}
-        if self.pool.get('res.partner').user_id == False:
+        id = self.browse(cr, uid, ids)[0]
+        if not id.partner_id.user_id:
             data_add=self.pool.get('res.partner.address').browse(cr, uid,ids)
             if zip_id:
                 for data in data_add:
