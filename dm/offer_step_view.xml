@@ -160,15 +160,18 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Offer Step">
-				<notebook>
+				<field name="offer_id" colspan="2"/>
+				<newline/>
+				<field name="code"/>
+				<notebook colspan="4">
 					<page string="General">
-						<field name="offer_id"/>
+<!--						<field name="offer_id"/>-->
 						<field name="type" select="2" on_change="onchange_type(type)"/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
 						<field name="media_id" select="1"/>
-						<field name="code"/>
+<!--						<field name="code"/>-->
 						<newline/>
 						<field name="origin_id" colspan="4"/>
 						<separator string="Products" colspan="4"/>

@@ -53,6 +53,7 @@
 						<field name="copywriter_id"  select="2"  on_change = "change_code(type,copywriter_id)" />
 						<field name="recommended_trademark"/>
 						<field name="offer_origin_id"/>
+						<field name="preoffer_original_id" />
 						<field name="type" select="2" on_change = "change_code(type,copywriter_id)" />
 						<field name="offer_responsible_id" select="2"/>
 						<field name="active" select="2"/>
@@ -223,8 +224,9 @@
 			<form string="Offers">
 				<notebook>
 					<page string="General">
-						<field name="name" select="1" colspan="2"/>
-						<field name="code"/>
+						<field name="name" select="1"/>
+						<field name="preoffer_original_id" />
+						<field name="code" colspan="2"/>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4"  nolabel="1"/>
 						<field name="state" nolabel="1" select="1"/>

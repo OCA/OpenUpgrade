@@ -165,7 +165,7 @@ class dm_customer_offer(osv.osv):
         segment = self.pool.get('dm.campaign.proposition.segment')
         segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
         if not segment_id :
-            osv.except_osv('Warning', 'No matching code found in campaign segment')
+            raise osv.except_osv('Warning', 'No matching code found in campaign segment')
         workitem = self.pool.get('dm.offer.step.workitem')
         workitem_id = workitem.search(cr,uid,[('customer_id','=',res.customer_id.id),('segment_id','=',segment_id[0])])
         vals={}
@@ -241,7 +241,8 @@ class dm_offer(osv.osv):
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
-        'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer'),
+        'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer',domain=[('type','in',['new','standart','rewrite','model'])]),
+        'preoffer_original_id' : fields.many2one('dm.offer', 'Original Preoffer',domain=[('type','=','preoffer')] ),
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
         'legal_state' : fields.selection([('validated','Validated'), ('notvalidated','Not Validated'), ('inprogress','In Progress'), ('refused','Refused')],'Legal State'),
@@ -325,6 +326,7 @@ class dm_offer(osv.osv):
             if result.has_key('toolbar') and result['toolbar'].has_key('relate'):
                 result['toolbar']['relate']=''
         return result
+    
     def fields_get(self, cr, uid, fields=None, context=None):
         res = super(dm_offer, self).fields_get(cr, uid, fields, context)
         if context and not context.has_key('type') and res.has_key('type'):
@@ -341,8 +343,9 @@ class dm_offer(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
+        default['step_id']=[]
 #            offer is copied
-        offer_id = super(dm_offer, self).copy(cr, uid, id, {'step_ids':[]}, context)
+        offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
         print "DEBUG - offer_step_ids : ",offer_step_ids
