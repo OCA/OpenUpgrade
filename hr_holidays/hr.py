@@ -34,6 +34,7 @@ import netsvc
 import datetime
 from osv import fields, osv
 
+
 def _employee_get(obj,cr,uid,context={}):
 	ids = obj.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
 	if ids:
@@ -57,7 +58,7 @@ class hr_holidays(osv.osv):
 		'employee_id' : fields.many2one('hr.employee', 'Employee', select=True, invisible=False, readonly=True, states={'draft':[('readonly',False)]}),
 		'user_id':fields.many2one('res.users', 'Employee_id', states={'draft':[('readonly',False)]}, relate=True, select=True, readonly=True),
 		'manager_id' : fields.many2one('hr.employee', 'Holiday manager', invisible=False, readonly=True),
-		'notes' : fields.text('Notes'),
+		'notes' : fields.text('Notes',readonly=True, states={'draft':[('readonly',False)]}),
 		'number_of_days': fields.float('Number of Days in this Holiday Request',required=True, states={'draft':[('readonly',False)]}, readonly=True),
 		'case_id':fields.many2one('crm.case', 'Case'),
 	}
@@ -136,6 +137,11 @@ class hr_holidays(osv.osv):
 					vals={}
 					vals['name']=record.name
 					vals['section_id']=record.holiday_status.section_id.id
+
+					c= time.strptime(record.date_to,'%Y-%m-%d %H:%M:%S').tm_mday
+					d= time.strptime(record.date_from,'%Y-%m-%d %H:%M:%S').tm_mday
+					vals['duration']= (c-d) * 8
+					vals['note']=record.notes
 					case_id=self.pool.get('crm.case').create(cr,uid,vals)
 					self.write(cr, uid, ids, {'case_id':case_id})
 			else:

@@ -23,7 +23,7 @@
 				Administration \ Users \ Users
 			for example, you maybe will do it for the user 'admin'.
 """,
-	"depends" : ["hr","crm"],
+	"depends" : ["hr","crm_configuration"],
 	"init_xml" : [],
 	"demo_xml" : ["hr_bel_holidays_2008.xml",],
 	"update_xml" : ["hr_workflow.xml","hr_view.xml","hr_holidays_report.xml","hr_holidays_wizard.xml",],
