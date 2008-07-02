@@ -25,6 +25,19 @@
 	Offer Views
 	=======================================================
 	-->
+	<record model="ir.ui.view" id="view_offer_list">
+		<field name="name">dm.offer.list</field>
+		<field name="model">dm.offer</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="6"/>
+		<field name="field_parent">child_ids</field>
+		<field name="arch" type="xml">
+			<tree string="Steps By Offers">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
 	<record model="ir.ui.view" id="view_offer_tree">
 		<field name="name">dm.offer.tree</field>
 		<field name="model">dm.offer</field>
@@ -240,7 +253,7 @@
 					-->
 					<page string="History">
 						<separator string="History" />
-						<field name="history_ids" nolabel="1" colspan="4"/>
+						<field name="history_ids" nolabel="0" colspan="4"/>
 					</page>					
 				</notebook>	
 			</form>
@@ -436,6 +449,36 @@
 	
 	<menuitem name="Direct Marketing/Offers/Offers By Category" id="menu_action_offer_by_category" action="action_offer_categ_main"/>
 
+	<!--
+	======================
+	Steps By Category
+	======================
+	-->
+	<record model="ir.actions.act_window" id="action_step_by_offer">
+		<field name="name">Steps By Offers</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.offer</field>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="view_offer_list"/>
+		<field name="domain">[('offer_origin_id','=',False)]</field>		
+	</record>
+
+	<record model="ir.actions.act_window" id="action_offer_by_step">
+		<field name="name">Offer by Steps</field>	
+		<field name="res_model">dm.offer.step</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('offer_id','=', active_id)]</field>
+	</record>
+  	
+	<record model="ir.values" id="ir_action_offer_by_step">
+		<field name="key2" eval="'tree_but_open'"/>
+		<field name="model" eval="'dm.offer'"/>
+		<field name="name">Open Step</field>
+		<field name="value" eval="'ir.actions.act_window,%d'%action_offer_by_step"/>
+		<field name="object" eval="True"/>
+	</record>
+	<menuitem name="Direct Marketing/Offers/Steps By Offers" id="menu_action_step_by_offer" action="action_step_by_offer"/>
 
 	<!--
 	======================

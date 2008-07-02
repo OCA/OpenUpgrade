@@ -269,7 +269,8 @@ class dm_offer(osv.osv):
         'forbidden_country_ids' : fields.many2many('res.country','dm_offer_forbidden_country', 'offer_id', 'country_id', 'Forbidden Countries'),
         'forbidden_state_ids' : fields.many2many('res.country.state','dm_offer_forbidden_state', 'offer_id', 'state_id', 'Forbidden States'),
         'keywords' :fields.text('Keywords'),
-        'version' : fields.float('Version')
+        'version' : fields.float('Version'),
+        'child_ids': fields.one2many('dm.offer', 'offer_origin_id', 'Childs Category'),
 #       (still to be defined by the client)
     }
     
