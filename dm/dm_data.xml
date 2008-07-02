@@ -51,7 +51,6 @@
 			<field eval="&quot;IM&quot;" name="type"/>
 		</record>
 
-		<record id="dm_offer_step_1" model="dm.offer.step"/>
 		<record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
 			<field name="step_from" ref="dm_offer_step_0"/>
 			<field name="step_to" ref="dm_offer_step_1"/>
@@ -60,7 +59,7 @@
 		</record>
 
 		<record id="dm_campaign_0" model="dm.campaign">
-			<rield eval="&quot;general&quot;" name="campaign_type"/>
+			<field eval="&quot;general&quot;" name="campaign_type"/>
 			<field eval="&quot;campaign01&quot;" name="name"/>
 			<field name="country_id" ref="base.be"/>
 			<field eval="&quot;pending&quot;" name="planning_state"/>
@@ -68,7 +67,6 @@
 			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
 		</record>
 
-		<record id="dm_campaign_0" model="dm.campaign"/>
 		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
 			<field eval="&quot;campaignpropo01&quot;" name="name"/>
 			<field name="camp_id" ref="dm_campaign_0"/>

@@ -142,9 +142,8 @@
 			</form>
 		</field>
 	</record>
-	# ------------------------------------------------------
-	# All Campaigns
-	# ------------------------------------------------------
+        
+        <!-- All Campaigns -->
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all">
 		<field name="type">ir.actions.act_window</field>
@@ -161,7 +160,7 @@
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all1" action="action_campaign_form_all1"/>
@@ -172,7 +171,7 @@
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
@@ -183,14 +182,12 @@
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
 
-	# ------------------------------------------------------
-	# My Campaigns
-	# ------------------------------------------------------
+        <!-- My Campaings -->
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my">
 		<field name="name">My Campaigns</field>
@@ -209,7 +206,7 @@
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open'),('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
@@ -220,7 +217,7 @@
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','draft'),('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
@@ -231,7 +228,7 @@
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_tree"/>]
+		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>

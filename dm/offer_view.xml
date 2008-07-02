@@ -106,10 +106,7 @@
 		</field>
 	</record>	
 	
-	# ------------------------------------------------------
-	# All Offers
-	# ------------------------------------------------------
-
+        <!-- All Offers -->
 	<record model="ir.actions.act_window" id="action_offer_form">
 		<field name="name">All Offers</field>
 		<field name="type">ir.actions.act_window</field>
@@ -155,9 +152,7 @@
 	<menuitem name="Direct Marketing/Offers/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
 
 
-	# ------------------------------------------------------
-	# My Offers
-	# ------------------------------------------------------
+        <!-- My Offers -->
 
 	<record model="ir.actions.act_window" id="action_offer_form_my">
 		<field name="name">My Offers</field>
