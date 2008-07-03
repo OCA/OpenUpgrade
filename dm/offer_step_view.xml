@@ -186,8 +186,32 @@
 						</group>
 					</page>
 					<page string="Transition">
-						<field name="incoming_transition_ids" colspan="4" string="Incoming" context="{'type':'step_to','step_id':active_id or False}"/>
-						<field name="outgoing_transition_ids" colspan="4" string="Outgoing" context="{'type':'step_from','step_id':active_id or False}"/>
+						<field name="incoming_transition_ids" colspan="4" string="Incoming" context="{'type':'step_to','step_id':active_id or False}">
+							<form string="Transition">
+								<field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
+								<field name="step_to" readonly="1"/>
+								<field name="condition" select="1"/>
+								<field name="delay" string="Delay(In Days)" select="2"/>
+								<field name="media_id"/>
+							</form>
+							<tree>
+								<field name="condition" select="1"/>
+								<field name="delay" string="Delay(In Days)" select="2"/>
+							</tree>						
+						</field>
+						<field name="outgoing_transition_ids" colspan="4" string="Outgoing" context="{'type':'step_from','step_id':active_id or False}">
+							<form string="Transition">
+								<field name="step_from" readonly="1"/>
+								<field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
+								<field name="condition" select="1"/>
+								<field name="delay" string="Delay(In Days)" select="2"/>
+								<field name="media_id"/>
+							</form>
+							<tree>
+								<field name="condition" select="1"/>
+								<field name="delay" string="Delay(In Days)" select="2"/>
+							</tree>						
+						</field>						
 					</page>
 					<page string="Description">
 						<separator string="Description" colspan="4"/>

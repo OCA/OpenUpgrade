@@ -259,7 +259,7 @@ class dm_offer(osv.osv):
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade"),
         'order_date' : fields.date('Order Date'),
         'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="char", string='Last Modification Date',readonly=True),
-        'plannned_delivery_date' : fields.date('Planned Delivery Date'),
+        'planned_delivery_date' : fields.date('Planned Delivery Date'),
         'delivery_date' : fields.date('Delivery Date'),
         'fixed_date' : fields.date('Fixed Date'),
 #        'buffer_delay' : fields.integer('Buffer Delay'),
@@ -323,9 +323,24 @@ class dm_offer(osv.osv):
     
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         result = super(dm_offer,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if context.has_key('type') and context['type'] == 'preoffer' :
-            if result.has_key('toolbar') and result['toolbar'].has_key('relate'):
-                result['toolbar']['relate']=''
+        if context.has_key('type'):
+            if context['type'] == 'model' :
+                if result.has_key('toolbar'):
+                    if result['toolbar'].has_key('print'):
+                        new_print = filter(lambda x : x['report_name'] not in ['offer.report','preoffer.report'],result['toolbar']['print'])
+                        result['toolbar']['print'] =new_print
+            if context['type'] == 'preoffer' :
+                if result.has_key('toolbar'):
+                    if result['toolbar'].has_key('relate'):
+                        result['toolbar']['relate']=''
+                    if result['toolbar'].has_key('print'):
+                        new_print = filter(lambda x : x['report_name'] not in ['offer.report','offer.model.report'],result['toolbar']['print'])
+                        result['toolbar']['print'] =new_print
+        else : 
+            if result.has_key('toolbar'):
+                if result['toolbar'].has_key('print'):
+                    new_print = filter(lambda x : x['report_name'] not in ['offer.model.report','preoffer.report'],result['toolbar']['print'])
+                    result['toolbar']['print'] =new_print
         return result
     
     def fields_get(self, cr, uid, fields=None, context=None):

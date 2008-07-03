@@ -93,7 +93,7 @@
 					<page string="Dates">
 						<field name="order_date"/>
 						<field name="last_modification_date"/>
-						<field name="plannned_delivery_date"/>
+						<field name="planned_delivery_date"/>
 						<field name="delivery_date"/>	
 						<newline />
 						<field name="fixed_date"/>
@@ -253,8 +253,8 @@
 					-->
 					<page string="History">
 						<separator string="History" />
-						<field name="history_ids" nolabel="0" colspan="4"/>
-					</page>					
+						<field name="history_ids" nolabel="1" colspan="4"/>
+					</page>				
 				</notebook>	
 			</form>
 		</field>
@@ -333,7 +333,7 @@
 					<page string="Dates">
 						<field name="order_date"/>
 						<field name="last_modification_date"/>
-						<field name="plannned_delivery_date"/>
+						<field name="planned_delivery_date"/>
 						<field name="delivery_date"/>	
 						<newline />
 						<field name="fixed_date"/>
