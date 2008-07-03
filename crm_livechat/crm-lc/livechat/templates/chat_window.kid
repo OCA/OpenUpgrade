@@ -27,7 +27,7 @@
 
 <script type="text/javascript">
 <!--
-var chatwindow = window;
+var chatwindow = window
 window.onload = function()
 {
 	setWrap();

@@ -27,7 +27,16 @@ class ChatFunc(controllers.RootController):
 
     @expose(format='json')
     def chatbox2(self):
-        return dict(msglist = self.msglist)
+        close_chat = False
+        print "msg lsit :::::::::::::\n", self.msglist,"\n"
+        x = map(lambda x:x['message'], self.msglist)
+        print "Mapping is this ................", x
+        if 'closechat' in x:
+            print "In Close chat >>>>>>>>>>>>"
+            close_chat = True
+        elif 'passchat' in x:
+            print "No close chat .............."
+        return dict(msglist = self.msglist,close_chat=close_chat)
 
     @expose(template="livechat.templates.main_page")
     def select_topic(self,**kw):
@@ -53,8 +62,9 @@ class ChatFunc(controllers.RootController):
         dis = {}
         if not (self.client):
             cl = self.myConnection(topicid)
+            print "In main ................." , cl
             cl.RegisterHandler('presence', self.presenceCB)
-            thread.start_new_thread(self.presencing,("Presencing",2,cl))
+            thread.start_new_thread(self.presencing,("Presencing",1,cl))
             c = cl.getRoster()
             dis = c._data
 #            contactlist = []
@@ -77,30 +87,33 @@ class ChatFunc(controllers.RootController):
                 usrs = self.livechatdata['user'][str(usr)]['login']
                 self.user= usrs
                 print "The First user is this ....................", self.user
-                waitcounter = 0
+#                waitcounter = 0
 #                while (not self.finalist.has_key(self.user)) and (dis.has_key(self.user)) and waitcounter < 5000:
 #                    waitcounter = waitcounter + 1
 #                    print "Waiting ....................>>>>>>>>>>>>>>>>>>"
-                if waitcounter == 5000:
-                    print "Waited Enough ..... assuming ", self.user , " is offline......."
-                while not self.finalist.has_key(self.user) and waitcounter < 5000:
-                    print "Waiting ....................>>>>>>>>>>>>>>>>>>"
+#                if waitcounter == 5000:
+#                    print "Waited Enough ..... assuming ", self.user , " is offline......."
+                print "Final list is > > > > > > > >  > > > > >  > >  > > > >  > > > > > > >  >", self.finalist
+                while not self.finalist.has_key(self.user):
+                    pass
                 if self.finalist[str(self.user)] == "online":   
-                    self.msglist = []
                     self.sessionid = rpc.RPCProxy('crm_livechat.livechat').start_session([int(topicid)],False,self.partnerdata['id'])
+                    print "Session is startedd :::::::::::::", self.sessionid
+                    break
                 else:
                     print "________________Priyesah"
                     clt="NoActive"
-            
+            print "After checking online ............................"
             if clt=='NoActive':
                 return "Maximum Number of Connection exhausted."
             elif clt == 'ConError':
                 return "Failed to Connect."
             else:
                 self.cont = True
-                thread.start_new_thread(self.recieving,("Recieving",5,cl))
+#                thread.start_new_thread(self.recieving,("Recieving",5,cl))
         else:
             print "MainHandler Called"
+        print "Return Statement is ::::::::::::::::::"
         return "Active"
 
     def recieving(self,string,sleeptime,cl,*args):
@@ -113,6 +126,7 @@ class ChatFunc(controllers.RootController):
             except KeyboardInterrupt:
                 return 0
                 time.sleep(sleeptime)
+        print "Flag receiving ended ................"
         self.cont = True
         return 0
     
@@ -122,55 +136,107 @@ class ChatFunc(controllers.RootController):
             prethread = os.getpid()
             try:
                 v = cl.Process(1)
-            except KeyboardInterrupt:
+            except KeyboardInterrupt, xml.parsers.expat.ExpatError:
                 return 0
                 time.sleep(sleeptime)
-        self.pcont = True
+        print "Flag presencing ended ................"
+#        self.pcont = True
         return 0
 
     @expose()
     def close_chat(self, **kw):
-       temp=[]
+       print "In close chat functuion > > > > > > > > > > > > >"
        if(self.client):
-           self.client.disconnect()
+           try:
+               self.client.disconnect()
+           except AttributeError:
+               print "Attribute error :::::::::"
+           print "Client is disconnected .............."
            self.client=None
        if (kw.get('close')):
-           self.chat_log()
-           res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.user_id,self.sessionid,True,self.logentry)   
-#           print "Final result is-------------->", res
-           self.cont = False
+           if self.logflag == True:
+               self.logflag = False
+               return {} 
+           else:
+               self.chat_log()
+               print "Before session is stopped ::::::::::"
+               res = rpc.RPCProxy('crm_livechat.livechat').stop_session(self.user_id,self.sessionid,True,self.logentry)   
+               print "Final result is-------------->", res
+               self.cont = False
+               self.pcont = False
+               self.msglist = []
        return {}
    
     def chat_log(self):
        print "Go into the Chat log Functtion ............."
-       for i in range(0,len(self.msglist)):
-         if  self.msglist[i] == 'UnknownCommand' or self.msglist[i] == 'Command':
-             self.temp = []
-             self.temp.append(self.msglist[i]) 
+       self.temp = []
+       for i in range(len(self.newlist)):
+         if  self.newlist[i] == 'UnknownCommand' or self.newlist[i] == 'Command':
+             self.temp.append(self.newlist[i]) 
              print "Temporary is this . . . .  ............", self.temp
              continue
          else:
-             self.temp.append(str(self.msglist[i]['sender'] + " : " + self.msglist[i]['message']))
+             self.temp.append(str(self.newlist[i]['sender'] + " : " + self.newlist[i]['message']))
              print "Temporary is as follows as ..............", self.temp
        b = '\n'.join(self.temp)
-       cmd = b.split('Command')
-       print "After Splitting the command is as follows .........................", cmd
-       self.logentry = '\n'.join(cmd)
+       print "B is .................", b
+       cmnd = b.split('passchat')
+       print "After Splitting the command is as follows .........................", cmnd
+       self.logentry = '\n'.join(cmnd)
        print self.logentry,"-----------> "
-       
+   
+#    def chat_log(self):
+#       print "Go into the Chat log Functtion ............."
+#       for i in range(len(self.msglist)):
+#         if  self.msglist[i] == 'UnknownCommand' or self.msglist[i] == 'Command':
+#             self.temp.append(self.msglist[i]) 
+#             print "Temporary is this . . . .  ............", self.temp
+#             continue
+#         else:
+#             self.temp.append(str(self.msglist[i]['sender'] + " : " + self.msglist[i]['message']))
+#             print "Temporary is as follows as ..............", self.temp
+#       b = '\n'.join(self.temp)
+#       print "B is .................", b
+#       cmnd = b.split('passchat')
+#       print "After Splitting the command is as follows .........................", cmnd
+#       self.logentry = '\n'.join(cmnd)
+#       print self.logentry,"-----------> "
+         
     @expose(format='json')
     def justsend(self,**kw):
-        sendto = ''
-        msg = kw.get('messg')
-        if(self.user):
-            print "sending",msg," :to:  ",self.user
-            sendto = self.user
-        self.recepients = sendto
-        msg_obj = xmpp.protocol.Message(sendto,msg);
-        self.client.send(msg_obj)
-        msgformat = {"sender":str(self.login) , "message" : str(msg),"type":'sender'}
-        self.msglist.append(msgformat)
-        return dict()
+        if not self.client == 'chatended':
+            sendto = ''
+            msg = kw.get('messg')
+            if(self.user):
+                print "sending",msg," :to:  ",self.user
+                sendto = self.user
+            self.recepients = sendto
+            msg_obj = xmpp.protocol.Message(sendto,msg);
+            try:
+                self.client.send(msg_obj)
+            except:
+                print "Exception :::::::::"
+                jid = self.logininfo['jid']
+                jserver = self.logininfo['jserver']
+                pwd = self.logininfo['pwd']
+                jid=xmpp.protocol.JID(jid)
+                cl=xmpp.Client(jid.getDomain(),debug=[])
+                x = cl.connect((jserver,5223))
+                if x == "":
+                    return "ConError"
+                else:
+                    try:
+                        auth = cl.auth(jid.getNode(),pwd,"test")
+                    except AttributeError, err:
+                        raise common.error(_("Connection refused !"), _("%s \n Verify USERNAME and PASSWORD in Jabber Config" % err))
+                
+                self.client = cl
+                self.client.send(msg_obj)
+            msgformat = {"sender":str(self.login) , "message" : str(msg),"type":'sender'}
+            self.msglist.append(msgformat)
+            self.newlist.append(msgformat)
+            return dict()
+        return {}
 
     def myConnection(self,topicid):
         cr = ''
@@ -188,13 +254,17 @@ class ChatFunc(controllers.RootController):
         self.livechatdata = rpc.RPCProxy('crm_livechat.livechat').get_configuration(topicid)
        
         if self.livechatdata and self.partnerdata:
-            jid = self.partnerdata['jid']
-            jserver = self.partnerdata['server']
+            self.logininfo['jid'] = jid = self.partnerdata['jid']
+            self.logininfo['jserver'] = jserver = self.partnerdata['server']
+            self.logininfo['pwd']= pwd = self.partnerdata['pwd']
             self.login = jid
-            pwd = self.partnerdata['pwd']
+            
             jid=xmpp.protocol.JID(jid)
             cl=xmpp.Client(jid.getDomain(),debug=[])
-            x = cl.connect((jserver,5223))
+            try:
+                x = cl.connect((jserver,5223))
+            except AttributeError:
+                print "Exception Error ........."
             if x == "":
                 return "ConError"
             else:
@@ -206,7 +276,8 @@ class ChatFunc(controllers.RootController):
    
     def messageCB(self,conn,msg):
         cmd = 0
-        body = str(msg.getBody())
+        body = msg.getBody()
+        print "Body Of masg is ::::::::::::", body
         who = str(msg.getFrom())
         who =  who.split('/')[0]
         print "Who is this ? .....Don .....Don ", who, self.user
@@ -217,19 +288,20 @@ class ChatFunc(controllers.RootController):
             print "BODY .............", bdy
             
             if bdy[0]=='/':
-                cmd = -1
-                cmd=bdy.split(' ')[0][1:]
-                
-                if cmd.lower()=='pass':
+                command=bdy.split(' ')[0][1:]
+                command = command.lower()
+                print "Command ::::::::::::::", command
+                if command=='pass':
+                    body = 'passchat'
                     id = bdy.split(' ')[1]
                     if id == self.partid:
                         print "Given id is not Valid .................."
                     else :
                         self.newuser = id
+                        self.newuser = self.newuser.split("'")[0]
+                        print "New user is :::::::::::::::::::::", self.newuser
                         ids = self.sock.execute('crm2',3,'admin','crm_livechat.jabber','search',[('login','=',self.newuser)])
-                        print "IDS ...........................", ids
                         usr_id = ids[0]
-                        print "New jabber id is ............", usr_id
                         self.uid = self.sock.execute('crm2',3,'admin','crm_livechat.livechat.user','search',[('jabber_id','=',usr_id)])
                         print "New users ids are here ::::::::::::::::::", self.uid[0]
                         if self.uid[0] in self.users:  
@@ -237,27 +309,47 @@ class ChatFunc(controllers.RootController):
                             self.chat_log()
                             self.flagnewuser = True
                             self.Reghandler(id)
-                            cmd = 1
+#                            cmd = 1
                         else:
                             print "User is not Avaliable at this topic ........... Plz try for another user ............ "
                 
-                elif cmd.lower() in ['close','close\'']:
+                elif command.split("'")[0] == 'close':
                     print "*****************************************************close"
-                    print "Before body is ...............", body
                     body = 'closechat'
-                    print "session is Stopped due to some reason ..............", body
+                    print "after body is > > > > > ..............", body
+                    self.cont = False
+                    self.pcont = False
+                    self.client = 'chatended'
+                    print "Receiving thread endeed ........ ok .........."
+                    self.chat_log()
+                    self.sock.execute('crm2',3,'admin','crm_livechat.livechat','stop_session',self.user_id,self.sessionid,True,self.logentry)
+                    self.logflag = True
+                    print "close chat is called :::::::::::::"
+                    cmd = 0
+                
+                else:
+                    cmd = -1
               
-        print "Messge Arriving", msg
+        print "Messsge arriving ..............", msg
         print "\nContent: " + str(msg.getBody())
         print "Sender: " + str(msg.getFrom())
         
-        msgformat = {"sender" : str(msg.getFrom()) , "message" : body , "timestamp" : str(msg.getTimestamp()),"type" : 'receiver'}
+        
+        if not body == msg.getBody():
+            msgformat = {"sender" : str(msg.getFrom()) , "message" : body , "timestamp" : str(msg.getTimestamp()),"type" : 'receiver'}
+        else:
+            msgformat = {"sender" : str(msg.getFrom()) , "message" : str(msg.getBody()) , "timestamp" : str(msg.getTimestamp()),"type" : 'receiver'}
         if cmd == 0:
             self.msglist.append(msgformat)
         elif cmd == -1:
-            self.msglist.append('UnknownCommand')
-        elif cmd == 1:
-            self.msglist.append('Command')            
+            pass
+        
+        self.newlist.append(msgformat)
+        
+#            msgformat = {"sender" : 'Tiny Server' , "message" : "Unknown Command" , "timestamp" : str(msg.getTimestamp()),"type" : 'receiver'}
+#            self.msglist.append('UnknownCommand')
+#        elif cmd == 1:
+#            self.msglist.append('Command')            
     
     def presenceCB(self,conn,prs):
         who=prs.getFrom()
@@ -281,16 +373,17 @@ class ChatFunc(controllers.RootController):
         if self.flagnewuser:
             if self.finalist[self.newuser] == "online":
                 rs = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','stop_session',self.user_id,self.sessionid,True,self.logentry)
+                self.newlist = []
                 print "first Id ..............", self.user_id
                 print "New id > > > > > > > > > > > > > > >", self.uid
                 self.user_id = self.uid[0]
                 print "New User id > > > > > > > > > > > > > > >", self.user_id
-                self.msglist = []
                 if self.newuser: 
                     res = self.sock.execute('crm2',3,'admin','crm_livechat.livechat','start_session',[int(self.topicid)],True,self.partnerdata['id'])
                     self.user = self.newuser
                 self.flagnewuser = False
                  
+    newlist = []
     client = None
     recepients=[]
     msglist=[]
@@ -311,3 +404,5 @@ class ChatFunc(controllers.RootController):
     user_id = ''
     users = []
     uid = []
+    logininfo = {}
+    logflag = False

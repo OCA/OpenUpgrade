@@ -1,7 +1,8 @@
+//var wn = 0;
+//var ajax_counter = 0;
 function popup_table(url)
 {
-	window.open(url,'welcome','width=450,height=300,resizable=yes,scrollbars=yes')
-
+	window.open( url,'welcome','width=450,height=300,resizable=yes,scrollbars=yes')
 }
 
 function refreshg()
@@ -11,14 +12,15 @@ function refreshg()
 	var params = {}
 	var req = Ajax.JSON.post('/chatfunc/chatbox2', params);
 	a = req.addCallback(function(obj){
+//				closechat = obj.close_chat
 				msgs= obj.msglist;
 				a = MochiKit.DOM.getElement('refreshdiv');
 				a.innerHTML=''
 				dlid = MochiKit.DOM.DIV({});
 				for(i=0;i<msgs.length;i++)
 				{
-					if (msgs[i]['message'] == 'closechat')
-						alert ('hi');
+//				if (msgs[i]['message'] == 'closechat')
+//						close_chat(chatwindow);
 					dtid = MochiKit.DOM.DIV({});
 					senderpart = MochiKit.DOM.DIV({});
 					senderpart.innerHTML = msgs[i]['sender'] + " : "
@@ -47,19 +49,22 @@ function refreshg()
 var chatendflag = false;
 function close_chat(thisid)
 {
+	thisid.close();
 	chatendflag = true;
 	var params = {'close':'close'}
+//	if (ajax_counter = 0)
+//	{
+//		ajax_counter++;
 	var req = MochiKit.Async.doSimpleXMLHttpRequest('/chatfunc/close_chat', params);
-	//var req = Ajax.JSON.post('/justsend', params);
+		//var req = Ajax.JSON.post('/justsend', params);
 	a = req.addCallback(function(obj){
-				thisid.close();
-				chatendflag = false;
-            });
+					chatendflag = false;
+	            });
       return 1;
-
 }
+
 var kintervalId=0;
-function activate_refreshg()
+function activate_refreshg(thisid)
 {
 	if(chatendflag && kintervalId!=0)
 		clearInterval(kintervalId)
