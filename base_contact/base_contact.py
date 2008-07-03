@@ -98,14 +98,14 @@ class res_partner_job(osv.osv):
     def _get_partner_name(self, cr, uid, ids, *a):
         res={}
         for id in self.browse(cr, uid, ids):
-            res[id.id] = id.address_id.partner_id.name
+            res[id.id] = id.address_id.partner_id.id
         return res
 
     _name = 'res.partner.job'
     _description ='Contact Function'
     _order = 'sequence_contact'
     _columns = {
-        'name': fields.function(_get_partner_name, method=True, type="char", string='Partner'),
+        'name': fields.function(_get_partner_name, method=True, type='many2one', relation='res.partner', string='Partner'),
         'address_id':fields.many2one('res.partner.address','Address', required=True),
         'contact_id':fields.many2one('res.partner.contact','Contact', required=True),
         'function_id': fields.many2one('res.partner.function','Function', required=True),
