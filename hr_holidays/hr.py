@@ -142,6 +142,7 @@ class hr_holidays(osv.osv):
 					d= time.strptime(record.date_from,'%Y-%m-%d %H:%M:%S').tm_mday
 					vals['duration']= (c-d) * 8
 					vals['note']=record.notes
+					vals['date']=record.date_from
 					case_id=self.pool.get('crm.case').create(cr,uid,vals)
 					self.write(cr, uid, ids, {'case_id':case_id})
 			else:
