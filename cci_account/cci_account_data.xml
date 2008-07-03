@@ -30,6 +30,7 @@
 			<field eval="1" name="active"/>
 			<field eval="&quot;cash&quot;" name="type"/>
 			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+			<field name="analytic_journal_id" ref="account.cose_journal_sale"/>
 		</record>
 
 	<!-- Data for account_journal -->
@@ -46,6 +47,7 @@
 			<field eval="1" name="active"/>
 			<field eval="&quot;cash&quot;" name="type"/>
 			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+			<field name="analytic_journal_id" ref="account.cose_journal_sale"/>
 		</record>
 	</data>
 </terp>
