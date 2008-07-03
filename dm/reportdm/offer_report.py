@@ -35,14 +35,27 @@ class offer_report(report_sxw.rml_parse):
         self.sum_credit = 0.0
         self.localcontext.update({
             'time': time,
-            'offer_steps':self.offer_steps,
+#            'offer_steps':self.offer_steps,
+            'offer_docs':self.offer_docs,
+            'offer_step_docs':self.offer_step_docs,
         })
         self.context = context
-        
-    def offer_steps(self,offer_id):
-        offer_step_ids = self.pool.get('dm.offer.step').search(self.cr,self.uid,[('offer_id','=',offer_id)])
-        res = self.pool.get('dm.offer.step').browse(self.cr,self.uid,offer_step_ids)
-        return res
+    def offer_docs(self,offer_id):
+        attachment_ids = self.pool.get('ir.attachment').search(self.cr,self.uid,[('res_id','=',offer_id),('res_model','=','dm.offer')])
+        print attachment_ids
+        attachment = self.pool.get('ir.attachment').read(self.cr,self.uid,attachment_ids,['name'])
+        print attachment
+        return ','.join(map(lambda x:x['name'],attachment))
+    
+    def offer_step_docs(self,offer_step_id):
+        attachment_ids = self.pool.get('ir.attachment').search(self.cr,self.uid,[('res_id','=',offer_step_id),('res_model','=','dm.offer.step')])
+        attachment = self.pool.get('ir.attachment').read(self.cr,self.uid,attachment_ids,['name'])
+        print attachment
+        return ','.join(map(lambda x:x['name'],attachment)) 
+#    def offer_steps(self,offer_id):
+#        offer_step_ids = self.pool.get('dm.offer.step').search(self.cr,self.uid,[('offer_id','=',offer_id)])
+#        res = self.pool.get('dm.offer.step').browse(self.cr,self.uid,offer_step_ids)
+#        return res
 report_sxw.report_sxw('report.offer.report', 'dm.offer', 'addons/dm/report/dm_offer.rml', parser=offer_report)
 report_sxw.report_sxw('report.offer.model.report', 'dm.offer', 'addons/dm/report/dm_offer_model.rml', parser=offer_report)
 report_sxw.report_sxw('report.preoffer.report', 'dm.offer', 'addons/dm/report/dm_preoffer.rml', parser=offer_report)

@@ -31,10 +31,9 @@
     <paraStyle name="P3" fontName="Times-Bold" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P4" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="P5" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P6" fontName="Times-Roman" fontSize="9.0" leading="11" spaceBefore="0.0" spaceAfter="1.0"/>
-    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
-    <paraStyle name="P8" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
-    <paraStyle name="P9" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -56,7 +55,7 @@
           <para style="P6">Code : [[o.code]]</para>
           <para style="P6">Type : [[o.preoffer_type]]</para>
           <para style="P6">Recommended Trademark : [[o.recommended_trademark]]</para>
-          <para style="P9">
+          <para style="P8">
             <font color="white"> </font>
           </para>
           <para style="P6">
@@ -69,12 +68,16 @@
           <para style="P6">Fixed Date : [[o.fixed_date]]</para>
         </td>
         <td>
-          <para style="P7">Original Language: <font face="Times-Roman" size="10.0">[[o.lang_orig and o.lang_orig.name]]</font></para>
-          <para style="P8">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
-          <para style="P8">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
-          <para style="P8">
+          <para style="P7">Original Language: [[o.lang_orig and o.lang_orig.name]]</para>
+          <para style="P7">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
+          <para style="P7">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
+          <para style="P7">
             <font color="white"> </font>
           </para>
+          <para style="P7">
+            <font color="white"> </font>
+          </para>
+          <para style="P7">Attached Documents : [[offer_docs(o.id)]]</para>
         </td>
       </tr>
     </blockTable>
@@ -136,15 +139,11 @@
           <para style="P5">[[ ','.join(map(lambda x : x['step_to'].code ,step.outgoing_transition_ids) ) ]]</para>
         </td>
         <td>
-          <para style="P5">
-            <font color="white"> </font>
-          </para>
+          <para style="P5">[[offer_step_docs(step.id)]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P1">
-      <font color="white"> </font>
-    </para>
+    <para style="P1"/>
   </story>
 </document>
 
