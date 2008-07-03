@@ -453,11 +453,11 @@
 
 	<!--
 	======================
-	Steps By Category
+	Offers By Steps
 	======================
 	-->
 	<record model="ir.actions.act_window" id="action_step_by_offer">
-		<field name="name">Steps By Offers</field>
+		<field name="name">Offers By Steps</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">tree</field>
@@ -466,7 +466,7 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_offer_by_step">
-		<field name="name">Offer by Steps</field>	
+		<field name="name">Offer Steps</field>	
 		<field name="res_model">dm.offer.step</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
@@ -480,7 +480,7 @@
 		<field name="value" eval="'ir.actions.act_window,%d'%action_offer_by_step"/>
 		<field name="object" eval="True"/>
 	</record>
-	<menuitem name="Direct Marketing/Offers/Steps By Offers" id="menu_action_step_by_offer" action="action_step_by_offer"/>
+	<menuitem name="Direct Marketing/Offers/Offers By Steps" id="menu_action_step_by_offer" action="action_step_by_offer"/>
 
 	<!--
 	======================
