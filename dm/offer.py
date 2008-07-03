@@ -359,7 +359,7 @@ class dm_offer(osv.osv):
         if default is None:
             default = {}
         default = default.copy()
-        default['step_id']=[]
+        default['step_ids']=[]
 #            offer is copied
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
