@@ -318,7 +318,7 @@ class dm_offer(osv.osv):
     def go_to_offer(self,cr, uid, ids, *args):
         self.copy(cr,uid,ids[0],{'type':'standart'})
         self.__history(cr,uid,ids, 'open')
-        self.write(cr, uid, ids, {'state':'open'})
+        #self.write(cr, uid, ids, {'state':'open'})
         return True
     
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
@@ -361,6 +361,7 @@ class dm_offer(osv.osv):
         default = default.copy()
         default['step_ids']=[]
 #            offer is copied
+        #offer_id = super(dm_offer, self).copy(cr, uid, id, {'step_ids':[],'type':'standart'}, context)
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])

@@ -239,12 +239,11 @@
 					<page string="General">
 						<group col="8" colspan="4">
 						<field name="name" select="1"/>
-						<field name="preoffer_original_id" />
 						<field name="code" colspan="2"/>
 						</group>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4"  nolabel="1"/>
-						<field name="state" nolabel="1" select="1"/>
+<!--						<field name="state" nolabel="1" select="1"/>-->
 						<button name="go_to_offer" string="Create Offers" states="draft" type="object"/>
 					</page>
 					<!--
