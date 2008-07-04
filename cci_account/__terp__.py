@@ -10,7 +10,7 @@
     "depends" : ["base","account","account_invoice_layout","sale","account_analytic_plans","l10n_be"],
     "init_xml" : ["cci_account_data.xml"],
     "demo_xml" : [],
-    "update_xml" : ["cci_account_wizard.xml","cci_account_view.xml","cci_account_report.xml"],
+    "update_xml" : ["cci_account_wizard.xml","cci_account_view.xml","cci_account_report.xml","cci_account_invoice_workflow.xml"],
     "active": False,
     "installable": True
 }
