@@ -30,7 +30,8 @@
 		<field name="model">dm.offer</field>
 		<field name="type">tree</field>
 		<field name="priority" eval="6"/>
-		<field name="field_parent">child_ids</field>
+<!--		<field name="field_parent">child_ids</field>-->
+<!--		<field name="field_parent">step_ids</field>-->
 		<field name="arch" type="xml">
 			<tree string="Steps By Offers">
 				<field name="name"/>
@@ -43,11 +44,11 @@
 		<field name="model">dm.offer</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Offers">
+			<tree string="Offers" colors="blue:state=='draft'">
 				<field name="name"/>
 				<field name="copywriter_id"/>
 				<field name="quotation"/>
-				<field name="state"/>	
+				<field name="state"/>
 			</tree>
 		</field>
 	</record>
@@ -63,12 +64,13 @@
 						<field name="name" select="1"/>
 						<field name="code"/>
 						<field name="lang_orig"/>
-						<field name="copywriter_id"  select="2"  on_change = "change_code(type,copywriter_id)" />
+						<field name="copywriter_id"  select="2"  on_change="change_code(type,copywriter_id)" />
 						<field name="recommended_trademark"/>
-						<field name="offer_origin_id"/>
+						<field name="type" select="2" on_change="change_code(type,copywriter_id)" />
 						<field name="preoffer_original_id" />
-						<field name="type" select="2" on_change = "change_code(type,copywriter_id)" />
+						<field name="offer_origin_id"/>
 						<field name="offer_responsible_id" select="2"/>
+						<field name="version" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
 						<field name="quotation"/>
@@ -103,10 +105,10 @@
 						<separator string="Trademark Criteria" colspan="4"/>
 						<field name="trademark_sex"/>
 						<field name="trademark_age"/>
-						<field name="trademark_country_ids" colspan="4"/>		
+						<field name="trademark_country_ids" colspan="4"/>
 						<separator string="Geographical Criteria" colspan="4"/>
-						<field name="forbidden_country_ids" colspan="4"/>		
-						<field name="forbidden_state_ids" colspan="4" />	
+						<field name="forbidden_country_ids" colspan="4"/>
+						<field name="forbidden_state_ids" colspan="4" />
 					</page>
 					<page string="Keywords" >
 						<separator string="Keywords" colspan="4"/>
@@ -127,8 +129,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('type','!=','model')]</field>					
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
 
@@ -138,8 +140,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','open'),('type','!=','model')]</field>	
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('state','=','open'),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Open Offers" id="menu_action_offer_form_all1" action="action_offer_form_all1"/>
 
@@ -149,8 +151,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','draft'),('type','!=','model')]</field>		
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('state','=','draft'),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Draft Offers" id="menu_action_offer_form_all2" action="action_offer_form_all2"/>
 
@@ -160,8 +162,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','closed'),('type','!=','model')]</field>		
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('state','=','closed'),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
 
@@ -174,8 +176,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('offer_responsible_id','=',uid),('type','!=','model')]</field>
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
  
@@ -185,8 +187,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid),('type','!=','model')]</field>	
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
 
@@ -196,8 +198,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid),('type','!=','model')]</field>		
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
 
@@ -207,8 +209,8 @@
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref = "view_offer_tree" />
-		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid),('type','!=','model')]</field>		
+		<field name="view_id" ref="view_offer_tree" />
+		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
 
@@ -224,7 +226,7 @@
 		<field name="arch" type="xml">
 			<tree string="Offers">
 				<field name="name"/>
-				<field name="code"/>	
+				<field name="code"/>
 			</tree>
 		</field>
 	</record>
@@ -302,9 +304,10 @@
 						<field name="name" select="1"/>
 						<field name="code"/>
 						<field name="lang_orig"/>
-						<field name="copywriter_id"  select="2" on_change = "change_code(type,copywriter_id)"/>
+						<field name="copywriter_id"  select="2" on_change="change_code(type,copywriter_id)"/>
 						<field name="recommended_trademark"/>
 						<field name="preoffer_type" select="2"/>
+						<field name="preoffer_offer_id" select="2"/>
 						<field name="active" select="2"/>
 						<newline/>
 						<separator string="Categories" colspan="4"/>
@@ -318,7 +321,7 @@
 							<button name="state_freeze_set" string="Freeze" states="open" type="object"/>
 							<button name="state_close_set" string="Close" states="open,draft,freeze" type="object"/>
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
-							<button name="go_to_offer" string="Create Offers" states="draft" type="object"/>
+<!--						<button name="go_to_offer" string="Create Offers" states="draft" type="object"/> -->
 						</group>
 					</page>
 					<!--
@@ -330,17 +333,17 @@
 					<page string="Keywords" >
 						<separator string="Keywords" colspan="4"/>
 						<field name="keywords" colspan="4"  nolabel="1" select="1"/>
-					</page>								
+					</page>	
 					<page string="Dates">
 						<field name="order_date"/>
 						<field name="last_modification_date"/>
 						<field name="planned_delivery_date"/>
-						<field name="delivery_date"/>	
+						<field name="delivery_date"/>
 						<newline />
 						<field name="fixed_date"/>
 <!--						<field name="buffer_delay"/>-->
-					</page>						
-				</notebook>	
+					</page>
+				</notebook>
 			</form>
 		</field>
 	</record>		
@@ -367,7 +370,7 @@
 		<field name="view_id" ref="view_preoffer_form"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
 	</record>		
-	<menuitem name="Direct Marketing/Offers/All PreOffers " id="menu_action_preoffer_form" action="action_preoffer_form"/>
+	<menuitem name="Direct Marketing/Offers/All PreOffers" id="menu_action_preoffer_form" action="action_preoffer_form"/>
 	
 	<!--
 	======================
@@ -416,7 +419,7 @@
 		<field name="res_model">dm.offer.category</field>
 		<field name="view_type">tree</field>
 		<field name="view_id" ref="view_offer_category_tree"/>
-		<field name="domain">[('parent_id','=',False)]</field>		
+		<field name="domain">[('parent_id','=',False)]</field>
 	</record>
 	<!--
 	<menuitem name="Direct Marketing/Configuration/Offer's Category" id="menu_action_offer_categ_main" action="action_offer_categ_main"/>
@@ -425,7 +428,7 @@
 	<record model="ir.actions.act_window" id="action_offer_categ_form">
 		<field name="name">All Offers</field>	
 		<field name="name">Edit Categories</field>
-		<field name="type">ir.actions.act_window</field>			
+		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.category</field>
 		<field name="view_type">form</field>
 	</record>
@@ -452,35 +455,36 @@
 
 	<!--
 	======================
-	Offers By Steps
+	Steps by Offers
 	======================
 	-->
-	<record model="ir.actions.act_window" id="action_step_by_offer">
+	<!--
+	<record model="ir.actions.act_window" id="action_step_by_offer_tree">
 		<field name="name">Offers By Steps</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">tree</field>
 		<field name="view_id" ref="view_offer_list"/>
-		<field name="domain">[('offer_origin_id','=',False)]</field>		
+		<field name="domain">[('offer_origin_id','=',False)]</field>
 	</record>
 
-	<record model="ir.actions.act_window" id="action_offer_by_step">
+	<record model="ir.actions.act_window" id="action_steps_by_offer_form">
 		<field name="name">Offer Steps</field>	
 		<field name="res_model">dm.offer.step</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="domain">[('offer_id','=', active_id)]</field>
+		<field name="domain">[('offer_id','child_of', [active_id])]</field>
 	</record>
   	
 	<record model="ir.values" id="ir_action_offer_by_step">
 		<field name="key2" eval="'tree_but_open'"/>
 		<field name="model" eval="'dm.offer'"/>
 		<field name="name">Open Step</field>
-		<field name="value" eval="'ir.actions.act_window,%d'%action_offer_by_step"/>
+		<field name="value" eval="'ir.actions.act_window,%d'%action_steps_by_offer_form"/>
 		<field name="object" eval="True"/>
 	</record>
-	<menuitem name="Direct Marketing/Offers/Offers By Steps" id="menu_action_step_by_offer" action="action_step_by_offer"/>
-
+	<menuitem name="Direct Marketing/Offers/Steps By Offers" id="menu_action_step_by_offer" action="action_step_by_offer_tree"/>
+	-->
 	<!--
 	======================
 	History
@@ -530,14 +534,14 @@
 					<field name="name" select="1" colspan="4"/>
 					<field name="customer_number" string="Number" select="1"/>
 					<field name="language_id"  select="2"/>
-					<separator string="Other Languages" colspan="4"/>							
+					<separator string="Other Languages" colspan="4"/>
 					<field name="language_ids" colspan="4" nolabel="1"/>
-					<separator string="Prospect for Media" colspan="4"/>							
+					<separator string="Prospect for Media" colspan="4"/>
 					<field name="prospect_media_ids" colspan="4" nolabel="1"/>
-					<separator string="Client for Media" colspan="4"/>							
-					<field name="client_media_ids" colspan="4" nolabel="1"/>					
+					<separator string="Client for Media" colspan="4"/>
+					<field name="client_media_ids" colspan="4" nolabel="1"/>
 				</page>
-				<page string="Address">		
+				<page string="Address">
 					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
 						<form string="Customer contacts">
 							<field name="name" select="2"/>
@@ -567,7 +571,7 @@
 						</tree>
 					</field>
 				</page>
-			</notebook>				
+			</notebook>
 			</form>
 		</field>
 	</record>
@@ -603,7 +607,7 @@
 		<field name="name">dm.customer.offer.form</field>
 		<field name="model">dm.customer.offer</field>
 		<field name="type">form</field>
-		<field name="arch" type="xml">	
+		<field name="arch" type="xml">
 			<form string="Customer Order">
 				<field name="raw_datas" colspan="4" on_change="onchange_rawdatas(raw_datas)"/>
 				<field name="customer_id"/>
@@ -634,7 +638,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Customer Order">
-				<field name="customer_number"/>			
+				<field name="customer_number"/>
 				<field name="customer_firstname"/>
 				<field name="customer_lastname"/>
 				<field name="country"/>

@@ -12,7 +12,6 @@
     "demo_xml" : ["trademark_data.xml",
                   "campaign_data.xml",
                   "dm_data.xml",
-                  "offer_data.xml",
                   ],
     "update_xml" : [
                     "dm_wizard.xml",

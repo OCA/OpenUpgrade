@@ -170,10 +170,9 @@
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
-						<field name="media_id" select="1"/>
+						<field name="media_ids" colspan="4" nolabel="1" select="1"/>
 <!--						<field name="code"/>-->
-						<newline/>
-						<field name="origin_id" colspan="4"/>
+<!--						<field name="origin_id" colspan="4"/>-->
 						<separator string="Products" colspan="4"/>
 						<field name="product_ids" colspan="4" nolabel="1"/>
 						<separator string="Status" colspan="4"/>

@@ -250,6 +250,7 @@ class dm_offer(osv.osv):
         'notes' : fields.text('General Notes'),
         'state': fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'type' : fields.selection(AVAILABLE_TYPE, 'Type', size=16),
+        'preoffer_offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('type','in',['new','standart','rewrite'])]),
         'preoffer_type' : fields.selection([('rewrite','Rewrite'),('new','New')], 'Type', size=16),
         'production_category_ids' : fields.many2many('dm.offer.category','dm_offer_production_category','offer_id','offer_production_categ_id', 'Production Categories' , domain="[('domain','=','production')]"),
 #        'production_delay' : fields.many2one('dm.offer.delay', 'Delay'),
@@ -271,13 +272,13 @@ class dm_offer(osv.osv):
         'keywords' :fields.text('Keywords'),
         'version' : fields.float('Version'),
         'child_ids': fields.one2many('dm.offer', 'offer_origin_id', 'Childs Category'),
-#       (still to be defined by the client)
     }
     
     _defaults = {
         'active': lambda *a: 1,
         'state': lambda *a: 'draft',
         'type': lambda *a: 'new',
+        'preoffer_type': lambda *a: 'new',
         'legal_state': lambda *a: 'validated',
     }
 
@@ -346,8 +347,9 @@ class dm_offer(osv.osv):
     def fields_get(self, cr, uid, fields=None, context=None):
         res = super(dm_offer, self).fields_get(cr, uid, fields, context)
         if context and not context.has_key('type') and res.has_key('type'):
-            res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite'),('preoffer','Preoffer')]
+            res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite')]
         return res
+
     def create(self,cr,uid,vals,context={}):
         if not vals.has_key('type') and vals.has_key('preoffer_type'):
             vals['type'] = 'preoffer'

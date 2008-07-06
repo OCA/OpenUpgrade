@@ -38,18 +38,18 @@ dm_product()
 #                name = record['parent_id'][1]+' / '+name
 #            res.append((record['id'], name))
 #        return res
-#        
+#
 #    def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, unknow_dict):
 #        res = self.name_get(cr, uid, ids)
 #        return dict(res)
-#        
+#
 #    _columns = {
 #        'name' : fields.char('Name', size=64, required=True),
 #        'complete_name' : fields.function(_name_get_fnc, method=True, type='char', string='Category'),
 #        'parent_id' : fields.many2one('dm.offer.document.category', 'Parent'),
 #        'copywriter_id' : fields.many2one('res.partner', 'Copywriter')
 #    }
-#    
+#
 #dm_offer_document_category()
 
 #class dm_offer_document(osv.osv):
@@ -70,30 +70,30 @@ dm_product()
 #        'dtp_making_date' : fields.date('Making Date'),
 #        'dtp_reread' : fields.date('Reread Date'),
 #    }
-# 
+#
 #dm_offer_document()
 
 class dm_offer_step_type(osv.osv):
     _name="dm.offer.step.type"
     _rec_name = 'name'
-    
+
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=8, required=True),
         'flow_start' : fields.boolean('Flow Start'),
         'flow_stop' : fields.boolean('Flow Stop'),
         }
-    
+
     _sql_constraints = [
         ('code_uniq', 'UNIQUE(code)', 'The code must be unique!'),
     ]
-        
+
 dm_offer_step_type()
-    
+
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
     _rec_name = 'type'
-    
+
     def __history(self, cr, uid, ids, keyword, context={}):
         for id in ids:
             data = {
@@ -105,7 +105,7 @@ class dm_offer_step(osv.osv):
             obj = self.pool.get('dm.offer.step.history')
             obj.create(cr, uid, data, context)
         return True
-    
+
     def _offer_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -114,19 +114,21 @@ class dm_offer_step(osv.osv):
             code = '_'.join([offer_step.offer_id.code,(str(id)),(offer_step.type or '')])
             result[id]=code
         return result
-    
+
     def _get_offer_step_type(self,cr,uid,context={}):
         offer_step_type = self.pool.get('dm.offer.step.type')
         type_ids = offer_step_type.search(cr,uid,[])
         type = offer_step_type.browse(cr,uid,type_ids)
         return map(lambda x : [x.code,x.code],type)
-    
+
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
+        'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32),
         'code' : fields.function(_offer_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
-        'media_id' : fields.many2one('dm.media', 'Media'),
+        #'media_id' : fields.many2one('dm.media', 'Media'),
+        'media_ids' : fields.many2many('dm.media', 'dm_offer_step_media_rel','step_id','media_id', 'Medias'),
         'type' : fields.selection(_get_offer_step_type,'Type',required=True),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
         'desc' : fields.text('Description'),
@@ -136,16 +138,11 @@ class dm_offer_step(osv.osv):
         'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),# domain="[('domain','=','purchase')]"),
         'production_note' : fields.text('Production Notes'),
         'purchase_note' : fields.text('Purchase Notes'),
-
         'mailing_at_dates' : fields.boolean('Mailing at dates'),
         'interactive' : fields.boolean('Interactive'),
-        
 #        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
-
         'notes' : fields.text('Notes'),
-        
 #        'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
-
         'flow_start' : fields.boolean('Flow Start'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
         'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
@@ -156,7 +153,7 @@ class dm_offer_step(osv.osv):
     }
 
     _defaults = {
-        'state': lambda *a : 'draft',
+        'state': lambda *a : 'open',
         'split_mode' : lambda *a : 'or',
     }
 
@@ -176,27 +173,27 @@ class dm_offer_step(osv.osv):
 #        if flow_start and step_ids and not ids[0] in step_ids :
 #            raise osv.except_osv("Error","There is already a flow start defined for this offer and media")
 #        return {}
-                     
+
     def state_close_set(self, cr, uid, ids, *args):
         self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
-        return True  
+        return True
 
     def state_open_set(self, cr, uid, ids, *args):
         self.__history(cr,uid,ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
-        return True 
-    
+        return True
+
     def state_freeze_set(self, cr, uid, ids, *args):
         self.__history(cr,uid,ids, 'freeze')
         self.write(cr, uid, ids, {'state':'freeze'})
         return True
-    
+
     def state_draft_set(self, cr, uid, ids, *args):
         self.__history(cr,uid,ids, 'draft')
         self.write(cr, uid, ids, {'state':'draft'})
         return True
-      
+
 dm_offer_step()
 
 class dm_offer_step_transition(osv.osv):
@@ -217,7 +214,7 @@ class dm_offer_step_transition(osv.osv):
             data['condition']='automatic'
             data[context['type']] = context['step_id']
         return data
- 
+
 dm_offer_step_transition()
 
 class dm_offer_step_history(osv.osv):
@@ -229,7 +226,7 @@ class dm_offer_step_history(osv.osv):
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16),
         'date' : fields.date('Date')
     }
-    
+
     _defaults = {
         'date' : lambda *a: time.strftime('%Y-%m-%d'),
     }
@@ -262,6 +259,7 @@ class dm_offer_step_workitem(osv.osv):
         '''
         Function called by the sceduler to update workitem from the segments of propositions.
         '''
+        """
         print "DEBUG - _update_workitem called by scheduler"
         wrkitem_ids =self.search(cr,uid,[('date_next_action','=',time.strftime('%Y-%m-%d'))])
         wrkitems =self.browse(cr,uid,wrkitem_ids)
@@ -286,6 +284,7 @@ class dm_offer_step_workitem(osv.osv):
                 else :
                     print "DEBUG - Updating workitem for segment"
                     self.write(cr,uid,wrkitem.id,{'step_id':trans.step_to.id})
+        """
         return True
 
 dm_offer_step_workitem()
