@@ -233,6 +233,17 @@ class dm_offer(osv.osv):
             else :
                 result[id]=res[1].split(' ')[0]
         return result
+
+    def _check_preoffer(self, cr, uid, ids):
+        print "=---------------"
+        offer = self.browse(cr,uid,ids)[0]
+        if offer.preoffer_original_id:
+            preoffer_id = self.search(cr,uid,[('preoffer_original_id','=',offer.preoffer_original_id.id)])
+            if len(preoffer_id) > 1 :
+                print preoffer_id
+                return False
+        return True
+          
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
@@ -281,6 +292,11 @@ class dm_offer(osv.osv):
         'preoffer_type': lambda *a: 'new',
         'legal_state': lambda *a: 'validated',
     }
+    
+    _constraints = [
+        (_check_preoffer, 'Error ! this preoffer is already assigned to an offer',['preoffer_original_id'])
+    ]
+        
 
     def change_code(self,cr,uid,ids,type,copywriter_id) :
         if type=='model' and ids:
@@ -335,7 +351,7 @@ class dm_offer(osv.osv):
                     if result['toolbar'].has_key('relate'):
                         result['toolbar']['relate']=''
                     if result['toolbar'].has_key('print'):
-                        new_print = filter(lambda x : x['report_name'] not in ['offer.report','offer.model.report'],result['toolbar']['print'])
+                        new_print = filter(lambda x : x['report_name'] == 'preoffer.report',result['toolbar']['print'])
                         result['toolbar']['print'] =new_print
         else : 
             if result.has_key('toolbar'):
@@ -355,15 +371,25 @@ class dm_offer(osv.osv):
             vals['type'] = 'preoffer'
         elif not vals.has_key('type') :
             vals['type'] = 'model'
-        return super(dm_offer,self).create(cr,uid,vals,context)
+        new_offer_id = super(dm_offer,self).create(cr,uid,vals,context)
+        if vals.has_key('preoffer_original_id'):
+            self.write(cr,uid,vals['preoffer_original_id'],{'preoffer_offer_id':new_offer_id})
+        return new_offer_id
+    
+    def write(self,cr,uid,ids,vals,context={}):
+        if vals.has_key('preoffer_original_id'):
+            self.write(cr,uid,vals['preoffer_original_id'],{'preoffer_offer_id':ids[0]})
+        return super(dm_offer,self).write(cr,uid,ids,vals,context)
     
     def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
         default = default.copy()
+        offer = self.browse(cr,uid,[id])[0]
+        default['name']='New offer from model %s' % offer.name
+        print default['name']
         default['step_ids']=[]
 #            offer is copied
-        #offer_id = super(dm_offer, self).copy(cr, uid, id, {'step_ids':[],'type':'standart'}, context)
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
