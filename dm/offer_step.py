@@ -92,7 +92,7 @@ dm_offer_step_type()
 
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
-    _rec_name = 'type'
+    #_rec_name = 'type'
 
     def __history(self, cr, uid, ids, keyword, context={}):
         for id in ids:
@@ -122,6 +122,7 @@ class dm_offer_step(osv.osv):
         return map(lambda x : [x.code,x.code],type)
 
     _columns = {
+        'name' : fields.char('Description',size=64, required=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32),

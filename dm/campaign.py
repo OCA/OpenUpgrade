@@ -4,6 +4,26 @@ import offer
 from osv import fields
 from osv import osv
 
+"""
+class dm_campaign_group(osv.osv):
+    _name = "dm.campaign.group"
+
+    _columns = {
+        'name': fields.char('Campaign group name', size=64, required=True),
+        'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns'),
+    }
+dm_campaign_group()
+"""
+
+
+class dm_campaign_group(osv.osv):
+    _name = "dm.campaign.group"
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'campaign_ids': fields.many2many('dm.campaign', 'dm_campaign_group_rel', 'group_id', 'campaign_id', 'Campaigns')
+    }
+    
+dm_campaign_group()
 
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
@@ -11,15 +31,15 @@ class dm_campaign(osv.osv):
     _rec_name = 'name'
 
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
-        
         return name
-    
+
     _columns = {
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
+        'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
@@ -27,21 +47,21 @@ class dm_campaign(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
-#  
+#
 #                        desktop publication
-#  
+#
         'dtp_date_delivery' : fields.date('Delivery Date'),
         'dtp_date_real_delivery' : fields.date('Real Delivery Date'),
         'dtp_intervention_type' : fields.date('Intervention Date'),
-        'dtp_making' : fields.char('Making',size=64),    
+        'dtp_making' : fields.char('Making',size=64),
         'dtp_operator' : fields.many2one('res.partner','Operator'),
         'dtp_date_recovered' : fields.date('Recovered Date'),
-        'dtp_notes' : fields.text('Notes'),            
+        'dtp_notes' : fields.text('Notes'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
 #        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
-    
+
     _defaults = {
         'state': lambda *a: 'draft',
         'planning_state': lambda *a: 'pending',
@@ -169,11 +189,3 @@ class dm_campaign_delay(osv.osv):
     
 dm_campaign_delay()
 
-class dm_campaign_group(osv.osv):
-    _name = "dm.campaign.group"
-    _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'campaign_ids': fields.many2many('dm.campaign', 'dm_campaign_group_rel', 'group_id', 'campaign_id', 'Campaigns')
-    }
-    
-dm_campaign_group()

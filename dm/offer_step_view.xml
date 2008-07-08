@@ -151,6 +151,7 @@
 				<field name="incoming_transition_ids" context="{'type':'incoming'}"/>
 				<field name="outgoing_transition_ids" context="{'type':'outgoing'}"/>
 				<field name="state"/>
+				<field name="name"/>
 			</tree>
 		</field>
 	</record>
@@ -166,6 +167,7 @@
 				<notebook colspan="4">
 					<page string="General">
 <!--						<field name="offer_id"/>-->
+						<field name="name"/>
 						<field name="type" select="2" on_change="onchange_type(type)"/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
