@@ -80,7 +80,7 @@
 					<page string="General">
 						<separator string="Global Information" colspan="4"/>
 						<field name="name" string="Name" select="1"/>
-						<field name="code" string="Code" select="2"/>
+						<field name="code1" string="Code" select="2"/>
 						<field name="parent_id" string="Category" domain="[('type','=','view')]"/>
 						<field name="country_id" select="1" on_change="onchange_offer(offer_id,country_id)"/>
 						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)"/>
@@ -113,13 +113,14 @@
 						<field name="proposition_ids" nolabel="1">
 							<form string="Propositions">
 								<field name="name" string="Name"/>
-								<field name="code" string="Code"/>
+								<field name="code1" string="Code"/>
 								<field name="date_start"/>
 								<field name="proposition_type"/>
 								<newline/>
-								<field name="customer_pricelist_id"/>
-								<field name="requirer_pricelist_id"/>
-								<newline/>
+								<field name="starting_mail_price"/>
+<!--								<field name="customer_pricelist_id"/>-->
+<!--								<field name="requirer_pricelist_id"/>-->
+<!--								<newline/>-->
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
 								<field name="segment_ids" colspan="4" nolabel="1">
@@ -331,15 +332,16 @@
 		<field name="arch" type="xml">
 			<form string="Propositions">
 				<field name="name" string="Name" select="1"/>
-				<field name="code" string="Code" select="2"/>
+				<field name="code1" string="Code" select="2"/>
 				<field name="camp_id"/>
 				<field name="date_start" select="2"/>
 				<field name="proposition_type" select="1"/>
 				<field name="initial_proposition_id" select="1"/>
 				<newline/>
-				<field name="customer_pricelist_id"/>
-				<field name="requirer_pricelist_id"/>
-				<newline/>
+				<field name="starting_mail_price"/>
+<!--				<field name="customer_pricelist_id"/>-->
+<!--				<field name="requirer_pricelist_id"/>-->
+<!--				<newline/>-->
 				<field name="quantity_max" string="Quantity"/>
 				<field name="sale_rate"/>
 				<newline/>
@@ -372,7 +374,7 @@
 		<field name="arch" type="xml">
 			<tree string="Propositions">
 				<field name="name" string="Name"/>
-				<field name="code" string="Code"/>
+				<field name="code1" string="Code"/>
 				<field name="date_start" colspan="4"/>
 				<field name="quantity_max" string="Quantity"/>
 				<field name="sale_rate"/>
@@ -401,6 +403,12 @@
 		<field name="domain">[('user_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns Propositions" id="menu_action_campaign_proposition_my" action="action_campaign_proposition_my"/>
+
+	<!--
+	=======================================================
+	Campaign proposition segment
+	=======================================================
+	-->
 
 	<record model="ir.ui.view" id="view_campaign_proposition_segment_form">
 		<field name="name">dm.campaign.proposition.segment.form</field>
@@ -441,6 +449,12 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
 
+	<!--
+	=======================================================
+	Campaign group
+	=======================================================
+	-->
+
 	<record model="ir.ui.view" id="view_campaign_group_form">
 		<field name="name">dm.campaign.group.form</field>
 		<field name="model">dm.campaign.group</field>
@@ -472,5 +486,45 @@
 		<field name="view_id" ref="view_campaign_group_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
+
+	<!--
+	=======================================================
+	Campaign type
+	=======================================================
+	-->
+
+	<record model="ir.ui.view" id="view_campaign_type_form">
+		<field name="name">dm.campaign.type.form</field>
+		<field name="model">dm.campaign.type</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Type">
+				<field name="name" select="1"/>
+				<field name="code" select="2"/>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_campaign_type_tree">
+		<field name="name">dm.campaign.type.tree</field>
+		<field name="model">dm.campaign.type</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Types">
+				<field name="name"/>
+				<field name="code"/>
+			</tree>
+		</field>
+	</record>	
+	
+	<record model="ir.actions.act_window" id="action_campaign_type_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.type</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_type_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
+	
 </data>
 </terp>

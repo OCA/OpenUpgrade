@@ -4,7 +4,7 @@ import offer
 from osv import fields
 from osv import osv
 
-"""
+
 class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
 
@@ -13,17 +13,25 @@ class dm_campaign_group(osv.osv):
         'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns'),
     }
 dm_campaign_group()
-"""
 
-
+'''
 class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'campaign_ids': fields.many2many('dm.campaign', 'dm_campaign_group_rel', 'group_id', 'campaign_id', 'Campaigns')
     }
-    
 dm_campaign_group()
+''' 
+
+class dm_campaign_type(osv.osv):
+    _name = "dm.campaign.type"
+
+    _columns = {
+        'name': fields.char('Description', size=64, required=True),
+        'code': fields.char('Code', size=16,),
+    }
+dm_campaign_type()
 
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
@@ -33,7 +41,26 @@ class dm_campaign(osv.osv):
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
         return name
 
+    def _campaign_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+            camp = self.browse(cr,uid,[id])[0]
+            trademark = camp.trademark_id and camp.trademark_id.name or ''
+            partner =camp.partner_id and camp.partner_id.name or ''
+            date_start = camp.date_start or ''
+            code = camp.country_id.code or ''
+            code1='-'.join([trademark,partner,date_start,code])
+            result[id]=code1
+        return result
+
+    def _get_campaign_type(self,cr,uid,context={}):
+        campaign_type = self.pool.get('dm.campaign.type')
+        type_ids = campaign_type.search(cr,uid,[])
+        type = campaign_type.browse(cr,uid,type_ids)
+        return map(lambda x : [x.code,x.code],type)
+
     _columns = {
+        'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),                
         'offer_id' : fields.many2one('dm.offer', 'Offer'),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
@@ -43,7 +70,7 @@ class dm_campaign(osv.osv):
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
-        'campaign_type' : fields.selection([('view','View'),('general','General'),('production','Production'),('purchase','Purchase')],"Type"),
+        'campaign_type' : fields.selection(_get_campaign_type,'Type',required=True),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
@@ -67,6 +94,7 @@ class dm_campaign(osv.osv):
         'planning_state': lambda *a: 'pending',
         'manufacturing_state': lambda *a: 'pending',
         'campaign_type': lambda *a: 'general',
+        'responsible_id' : lambda obj, cr, uid, context: uid,
     }
 
     def onchange_offer(self, cr, uid, ids, offer_id,country_id):
@@ -129,15 +157,32 @@ dm_campaign_statistics()
 class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
+    
+    def _proposition_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+            
+            pro = self.browse(cr,uid,[id])[0]
+            trademark = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
+            partner =pro.camp_id.partner_id and pro.camp_id.partner_id.name or ''
+            date_start = pro.date_start or ''
+            print date_start
+            code = pro.camp_id.country_id.code or ''
+            code1='-'.join([trademark,partner,date_start,code,str(id)])
+            result[id]=code1
+        return result
+        
     _columns = {
+        'code1' : fields.function(_proposition_code,string='Code',type="char",method=True,readonly=True),
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
-        'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching')],"Type"),
+        'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
         'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
-        'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
-        'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
+        'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
+#        'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
+#        'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
     }

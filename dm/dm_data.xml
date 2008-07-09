@@ -34,6 +34,7 @@
 
 		<record id="dm_offer_step_0" model="dm.offer.step">
 <!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
+			<field name="name">Step0</field>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field eval="&quot;or&quot;" name="split_mode"/>
@@ -44,6 +45,7 @@
 
 		<record id="dm_offer_step_1" model="dm.offer.step">
 <!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
+			<field name="name">Step1</field>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field eval="&quot;or&quot;" name="split_mode"/>
@@ -57,6 +59,26 @@
 			<field eval="&quot;automatic&quot;" name="condition"/>
 			<field name="delay" eval="1"/>
 		</record>
+
+		<record id="dm_campaign_type" model="dm.campaign.type">
+			<field name="code">Loyalty</field>
+			<field name="name">Development of customer loyalty</field>
+		</record>
+
+		<record id="dm_campaign_type" model="dm.campaign.type">
+			<field name="name">Deleting campaign</field>
+		</record>
+
+		<record id="dm_campaign_type" model="dm.campaign.type">
+			<field name="code">Mixed</field>
+			<field name="name">Mixed campaign</field>
+		</record>
+
+		<record id="dm_campaign_type" model="dm.campaign.type">
+			<field name="code">loyalty</field>
+			<field name="name">Development of customer loyalty</field>
+		</record>
+
 
 		<record id="dm_campaign_0" model="dm.campaign">
 			<field eval="&quot;general&quot;" name="campaign_type"/>

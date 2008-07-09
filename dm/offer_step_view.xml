@@ -426,5 +426,13 @@
 		view_type="form"
 		view_mode="tree,form"
 		id="act_offer_product_opened"/>
+
+	<act_window name="Products"
+		res_model="dm.product"
+		src_model="dm.campaign.proposition"
+		view_type="form"
+		view_mode="tree,form"
+		id="act_offer_product_opened"/>		
+		
 </data>
 </terp>
