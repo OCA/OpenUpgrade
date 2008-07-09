@@ -54,7 +54,7 @@
         <paraStyle name="P1" fontName="Times-Roman" fontSize="11.0" leading="14"/>
         <paraStyle name="P2" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
         <paraStyle name="P3" fontName="Times-Roman" fontSize="8.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
-        <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>
+        <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="14" spaceBefore="0.0" spaceAfter="6.0"/>lp:~openerp/openobject-server/trunk
         <paraStyle name="P5" fontName="Times-Roman" fontSize="8.0" leading="14" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
         <paraStyle name="P6" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
         <paraStyle name="P7" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -115,7 +115,7 @@
                     <td> <para style="P5"> [[strip_name(line.product_id.name, 32) ]] </para></td>
                     <td> <para style="P16"> [[ '%.2f' % (line.price_subtotal,) ]]</para></td>
                     <td> <para style="P16"> [[ '%d' % line.qty ]]</para></td>
-                    <td> <para style="P16"> [[ '%d%%' % (line.discount * 100) ]]</para></td>
+                    <td> <para style="P16"> [[ '%d%%' % (line.discount) ]]</para></td>
                     <td> <para style="P16"> [[ len(line.product_id.taxes_id) > 0 and ('%d%%' % (line.product_id.taxes_id[0].amount * 100)) or '' ]] </para></td>
                     <td></td>
                     <td></td>
