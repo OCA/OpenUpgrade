@@ -54,15 +54,24 @@ class pos_details(report_sxw.rml_parse):
 									objects,
 									0.0 )
 
-	def _get_payments(self, objects):
+	def _get_payments(self, objects, ignore_gift=False):
+		gift_journal_id = None
+		if ignore_gift:
+			config_journal_ids = self.pool.get("pos.config.journal").search(self.cr, self.uid, [('code', '=', 'GIFT')])
+			if len(config_journal_ids):
+				config_journal = self.pool.get("pos.config.journal").browse(self.cr, self.uid, config_journal_ids, {})[0]
+				gift_journal_id = config_journal.journal_id.id
+
 		result = {}
 		for o in objects:
 			for p in o.payments:
+				if gift_journal_id and gift_journal_id == p.journal_id.id:
+					continue
 				result[p.journal_id.name] = result.get(p.journal_id.name, 0.0) + p.amount
 		return result
 
 	def _paid_total(self, objects):
-		return sum(self._get_payments(objects).values(), 0.0)
+		return sum(self._get_payments(objects, True).values(), 0.0)
 
 	def _sum_invoice(self, objects):
 		return reduce(lambda acc, obj:

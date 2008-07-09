@@ -106,7 +106,7 @@ class pos_order(osv.osv):
 
 	def payment_get(self, cr, uid, ids, context=None):
 		cr.execute("select id from pos_payment where order_id in (%s)"% \
-					','.join([str(i) for i in ids]) )
+					','.join([str(i) for i in ids]))
 		return [i[0] for i in cr.fetchall()]
 
 	def _sale_journal_get(self, cr, uid, context):
@@ -172,8 +172,8 @@ class pos_order(osv.osv):
 		'state': fields.selection([('cancel', 'Cancel'), ('draft', 'Draft'),
 			('paid', 'Paid'), ('done', 'Done'), ('invoiced', 'Invoiced')], 'State',
 			readonly=True, ),
-		'invoice_id': fields.many2one('account.invoice', 'Invoice' , readonly=True),
-		'account_move': fields.many2one('account.move', 'Account Entry' ,
+		'invoice_id': fields.many2one('account.invoice', 'Invoice', readonly=True),
+		'account_move': fields.many2one('account.move', 'Account Entry',
 			readonly=True),
 		'pickings': fields.one2many('stock.picking', 'pos_order', 'Picking',
 			readonly=True),
@@ -250,7 +250,7 @@ class pos_order(osv.osv):
 					'auto_picking': True,
 					'pos_order': order.id,
 					})
-				self.write(cr, uid, [order.id], {'last_out_picking': picking_id })
+				self.write(cr, uid, [order.id], {'last_out_picking': picking_id})
 			else:
 				picking_id = order.last_out_picking.id
 				picking_obj.write(cr, uid, [picking_id], {'auto_picking': True})
