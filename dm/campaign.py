@@ -112,6 +112,14 @@ class dm_campaign(osv.osv):
         return True
 
     def state_open_set(self, cr, uid, ids, *args):
+        camp = self.browse(cr,uid,ids)[0]
+        forbidden_state_ids = [state_id.country_id.id for state_id in camp.offer_id.forbidden_state_ids]
+        forbidden_country_ids = [country_id.id for country_id in camp.offer_id.forbidden_country_ids]
+        forbidden_country_ids.extend(forbidden_state_ids)
+        if camp.offer_id.forbidden_country_ids and camp.country_id.id  in  forbidden_country_ids :
+            raise osv.except_osv("Error!!","This offer is not valid in this country")
+        if not camp.date_start or not camp.partner_id or not camp.trademark_id :
+            raise osv.except_osv("Error!!","Informations are missing.Check Date,Associated Partner,Trademark ")
         self.write(cr, uid, ids, {'state':'open'})
         return True 
 dm_campaign()
