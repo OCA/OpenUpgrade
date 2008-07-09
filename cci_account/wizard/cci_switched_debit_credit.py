@@ -5,12 +5,10 @@ import pooler
 
 form = """<?xml version="1.0"?>
 <form string="Switch Values">
-    <label string="Are you sure you want to view switched debit-credit entries?"/>
+    <label string="Are you sure you want to switch debit-credit for selected entries?"/>
 </form>
 """
-fields = {
-
-          }
+fields = {}
 
 class switch_debit_credit(wizard.interface):
     def _open_lines(self, cr, uid, data, context):
