@@ -512,15 +512,21 @@ class document_file(osv.osv):
 		vals['title']=vals['name']
 		if vals.get('res_id', False) and vals.get('res_model',False):
 			obj_model=self.pool.get(vals['res_model'])
-			result = obj_model.browse(cr, uid, [vals['res_id']], context=context)
+			result = obj_model.read(cr, uid, [vals['res_id']], context=context)
 			if len(result):
-				vals['title'] = (result[0].name or '')[:60]
+				obj=result[0]
+				vals['title'] = (obj['name'] or '')[:60]
 				if obj_model._name=='res.partner':
-					vals['partner_id']=result[0].id
-				elif 'address_id' in result[0]:
-					vals['partner_id']=result[0].address_id.partner_id.id or False
-				else:
-					vals['partner_id']='partner_id' in result[0] and result[0].partner_id.id or False
+					vals['partner_id']=obj['id']
+				elif 'address_id' in obj:
+					address=self.pool.get('res.partner.address').read(cr,uid,[obj['address_id']],context=context)
+					if len(address):
+						vals['partner_id']=address[0]['partner_id'] or False
+				elif 'partner_id' in obj:
+					if isinstance(obj['partner_id'],tuple) or isinstance(obj['partner_id'],list):
+						vals['partner_id']=obj['partner_id'][0]
+					else:
+						vals['partner_id']=obj['partner_id']
 
 		datas=None
 		if 'datas' not in vals:
