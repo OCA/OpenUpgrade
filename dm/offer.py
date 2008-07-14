@@ -304,6 +304,7 @@ class dm_offer(osv.osv):
             code = ( copywriter.ref or '')+'%%0%sd' % 3 % ids[0]
             return {'value':{'code':code}}
         return {'value':{'code':''}}
+
     def state_close_set(self, cr, uid, ids, *args):
         self.__history(cr,uid, ids, 'closed')
         self.write(cr, uid, ids, {'state':'closed'})
