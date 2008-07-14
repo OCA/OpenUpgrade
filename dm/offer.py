@@ -264,7 +264,6 @@ class dm_offer(osv.osv):
         'preoffer_offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('type','in',['new','standart','rewrite'])]),
         'preoffer_type' : fields.selection([('rewrite','Rewrite'),('new','New')], 'Type', size=16),
         'production_category_ids' : fields.many2many('dm.offer.category','dm_offer_production_category','offer_id','offer_production_categ_id', 'Production Categories' , domain="[('domain','=','production')]"),
-#        'production_delay' : fields.many2one('dm.offer.delay', 'Delay'),
         'production_cost' : fields.many2one('dm.offer.production.cost', 'Production Cost'),
         'purchase_note' : fields.text('Purchase Notes'),
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
@@ -274,7 +273,6 @@ class dm_offer(osv.osv):
         'planned_delivery_date' : fields.date('Planned Delivery Date'),
         'delivery_date' : fields.date('Delivery Date'),
         'fixed_date' : fields.date('Fixed Date'),
-#        'buffer_delay' : fields.integer('Buffer Delay'),
         'trademark_sex' : fields.selection([('all','All'),('female','Female'),('male','male')],"Sex"), 
         'trademark_age' : fields.integer('Age'),        
         'trademark_country_ids' : fields.many2many('res.country','dm_offer_trademark_country', 'offer_id', 'country_id', 'Nationality'),
@@ -314,12 +312,6 @@ class dm_offer(osv.osv):
     def state_open_set(self, cr, uid, ids, *args):
         self.__history(cr,uid, ids, 'open')
         self.write(cr, uid, ids, {'state':'open'})
-##                            create transitions
-#        step_ids = self.pool.get('dm.offer.step').search(cr,uid,[('offer_id','=',offers[0].id)])
-#        steps = self.pool.get('dm.offer.step').browse(cr,uid,step_ids)
-#        for step in steps:
-#            incoming_transition_ids = step.incoming_transition_ids
-#            outgoign_transition_ids = step.outgoing_transition_ids
         return True 
     
     def state_freeze_set(self, cr, uid, ids, *args):
