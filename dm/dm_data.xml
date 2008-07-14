@@ -1,6 +1,34 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
+
+	<record model="res.partner.category" id="cat_copywriter">
+				<field name="name" eval="&quot;Copywriter&quot;"/>
+		</record>
+	 
+			<record model="res.partner.category" id="cat_dealer">
+				<field name="name" eval="&quot;Dealer&quot;"/>
+			</record>
+	
+			<!--
+	 		<record model="res.partner.category" id="cat_trademark">
+	 			<field name="name" eval="&quot;Trademark&quot;"/>
+	 		</record>
+	 		-->
+	 
+			<record model="dm.media" id="media_paper">
+				<field name="name" eval="&quot;Paper&quot;"/>
+			</record>
+	 
+			<record model="dm.media" id="media_email">
+				<field name="name" eval="&quot;Email&quot;"/>
+			</record>
+	 
+			<record model="dm.media" id="media_phone">
+				<field name="name" eval="&quot;Phone&quot;"/>
+			</record>
+
+
 		<record id="dm_offer_step_type_startingmail0" model="dm.offer.step.type">
 			<field eval="&quot;SM&quot;" name="code"/>
 			<field eval="&quot;Starting Mail&quot;" name="name"/>
