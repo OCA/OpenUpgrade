@@ -20,6 +20,7 @@ class dm_product(osv.osv):
         'qty_planned' : fields.integer('Planned Quantity'),
         'qty_real' : fields.float('Real Quantity'),
         'price' : fields.float('Sale Price')
+        'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
     }
 dm_product()
 
@@ -111,7 +112,7 @@ class dm_offer_step(osv.osv):
         for id in ids:
             code=''
             offer_step = self.browse(cr,uid,[id])[0]
-            code = '_'.join([offer_step.offer_id.code,(str(id)),(offer_step.type or '')])
+            code = '_'.join([offer_step.offer_id.code,(offer_step.type or '')])
             result[id]=code
         return result
 
@@ -138,6 +139,7 @@ class dm_offer_step(osv.osv):
         'trademark_note' : fields.text('Trademark Notes'),
         'trademark_category_ids' : fields.many2many('dm.offer.category','dm_offer_trademark_category','offer_id','offer_trademark_categ_id','Trademark Categories'),# domain="[('domain','=','purchase')]"),
         'production_note' : fields.text('Production Notes'),
+        'planning_note' : fields.text('Planning Notes'),
         'purchase_note' : fields.text('Purchase Notes'),
         'mailing_at_dates' : fields.boolean('Mailing at dates'),
         'interactive' : fields.boolean('Interactive'),
@@ -146,9 +148,9 @@ class dm_offer_step(osv.osv):
 #        'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
         'flow_start' : fields.boolean('Flow Start'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
-        'product_ids' : fields.many2many('dm.product','dm_offer_step_product_rel','offer_step_id','product_id','Products'),
+        'product_ids' : fields.one2many('dm.product', 'offer_step_id', 'Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
-        'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition'),
+        'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',,readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
     }

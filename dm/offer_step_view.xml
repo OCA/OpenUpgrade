@@ -187,7 +187,7 @@
 						</group>
 					</page>
 					<page string="Transition">
-						<field name="incoming_transition_ids" colspan="4" string="Incoming" context="{'type':'step_to','step_id':active_id or False}">
+						<field name="incoming_transition_ids" colspan="4" nolabel="1" context="{'type':'step_to','step_id':active_id or False}">
 							<form string="Transition">
 								<field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
 								<field name="step_to" readonly="1"/>
@@ -195,12 +195,12 @@
 								<field name="delay" string="Delay(In Days)" select="2"/>
 								<field name="media_id"/>
 							</form>
-							<tree>
+							<tree string="Incoming Transitions">
 								<field name="condition" select="1"/>
 								<field name="delay" string="Delay(In Days)" select="2"/>
-							</tree>						
+							</tree>
 						</field>
-						<field name="outgoing_transition_ids" colspan="4" string="Outgoing" context="{'type':'step_from','step_id':active_id or False}">
+						<field name="outgoing_transition_ids" colspan="4" nolabel="1" context="{'type':'step_from','step_id':active_id or False}">
 							<form string="Transition">
 								<field name="step_from" readonly="1"/>
 								<field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
@@ -208,17 +208,21 @@
 								<field name="delay" string="Delay(In Days)" select="2"/>
 								<field name="media_id"/>
 							</form>
-							<tree>
+							<tree string="Outgoing Transitions">
 								<field name="condition" select="1"/>
 								<field name="delay" string="Delay(In Days)" select="2"/>
-							</tree>						
-						</field>						
+							</tree>	
+						</field>
 					</page>
 					<page string="Description">
 						<separator string="Description" colspan="4"/>
 						<field name="desc" nolabel="1"/>
 					</page>
 					<page string="Advises">
+						<field name="mailing_at_dates" select="2"/>
+						<field name="interactive" select="2"/>
+						<separator string="Planning Advices" colspan="4"/>
+						<field name="planning_note" nolabel="1" colspan="4"/>
 						<separator string="DTP Advices" colspan="4"/>
 						<field name="dtp_note" nolabel="1" colspan="4"/>
 						<newline/>
@@ -235,8 +239,6 @@
 						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
 					<page string="Documents">
-						<field name="mailing_at_dates" select="2"/>
-						<field name="interactive" select="2"/>
 <!--				<field name="document_ids" colspan="4" nolabel="1"/> -->
 					</page>
 				</notebook>
