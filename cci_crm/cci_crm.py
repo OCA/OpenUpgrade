@@ -56,7 +56,6 @@ class crm_case(osv.osv):
             data['section_id']=context['section_id']
         if 'partner_id' in context and context['partner_id'] :
             data['partner_id']=context['partner_id']
-
         return data
 
 crm_case()
@@ -67,5 +66,4 @@ class event_event(osv.osv):#to be check
     _columns = {
         'case_ids' : fields.many2many('crm.case','case_event_rel','event_id','case_id','Cases')
                 }
-
 event_event()
