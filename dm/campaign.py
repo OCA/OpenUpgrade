@@ -63,6 +63,7 @@ class dm_campaign(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer'),
 #
 #                        desktop publication
 #
@@ -74,7 +75,6 @@ class dm_campaign(osv.osv):
         'dtp_date_recovered' : fields.date('Recovered Date'),
         'dtp_notes' : fields.text('Notes'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
-#        'campaign_partner_id' : fields.many2one('res.partner', 'Associated partner', help="TO CHANGE : check donneur d'ordre"),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
 
