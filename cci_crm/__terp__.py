@@ -8,7 +8,7 @@
         - define some groups with access rules
         - so using above rules , new object which will be confidential (can only be accessed by some users of grouip)
     """,
-    "depends" : ["base","crm","event"],
+    "depends" : ["base","crm","event","cci_partner"],
     "init_xml" : ["cci_crm_data.xml"],
     "demo_xml" : ["cci_crm_demo.xml"],
     "update_xml" : ["cci_crm_view.xml"],

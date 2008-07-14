@@ -13,16 +13,11 @@
 			<field model="ir.model.fields" name="field_id" search="[('name','=','group')]"/>
 			<field eval="&quot;&quot;&quot;[['group','=','group1']]&quot;&quot;&quot;" name="domain_force"/>
 		</record>
-	</data>
-	<data>
 		<record id="ir_rule_group_rule1" model="ir.rule.group">
 			<field model="ir.model" name="model_id" search="[('name','=','Meeting Confidential Info')]"/>
 			<field eval="0" name="global"/>
 			<field eval="&quot;&quot;&quot;rule2&quot;&quot;&quot;" name="name"/>
 		</record>
-	</data>
-	<data>
-		<record id="ir_rule_group_rule1" model="ir.rule.group"/>
 		<record id="ir_rule_1" model="ir.rule">
 			<field eval="&quot;&quot;&quot;=&quot;&quot;&quot;" name="operator"/>
 			<field eval="&quot;&quot;&quot;','.join(map(lambda x: str(x.id), user.groups_id))&quot;&quot;&quot;" name="operand"/>
@@ -30,21 +25,14 @@
 			<field model="ir.model.fields" name="field_id" search="[('name','=','group')]"/>
 			<field eval="&quot;&quot;&quot;[['group','=','group2']]&quot;&quot;&quot;" name="domain_force"/>
 		</record>
-	</data>
-	<data noupdate="1">
+
 		<record id="res_groups_group0" model="res.groups">
 			<field eval="[(6,0,[])]" name="rule_groups"/>
 			<field eval="[(6,0,[ref('base.user_admin'),ref('cci_partner.res_users_simonmicha0')])]" name="users"/>
 			<field eval="&quot;&quot;&quot;group1&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="menu_access"/>
-		</record>
-	</data>
-	<data>
-		<record id="res_groups_group0" model="res.groups">
 			<field eval="[(6,0,[ref('ir_rule_group_rule0')])]" name="rule_groups"/>
 		</record>
-	</data>
-	<data noupdate="1">
 		<record id="res_groups_group1" model="res.groups">
 			<field eval="[(6,0,[ref('ir_rule_group_rule1')])]" name="rule_groups"/>
 			<field eval="[(6,0,[ref('base.user_admin'),ref('cci_partner.res_users_myriamszepetiuk0'),ref('cci_partner.res_users_xavierminguet0')])]" name="users"/>
