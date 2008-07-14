@@ -78,12 +78,15 @@ class hr_holidays(osv.osv):
 	def holidays_validate(self, cr, uid, ids, *args):
 		self.check_holidays(cr,uid,ids)
 
-		ids2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
-		self.write(cr, uid, ids, {
+		vals = {
 			'state':'validate',
-			'manager_id':ids2[0]
-		})
+		}
+		ids2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
+		if ids2:
+			print ids2
+			vals['manager_id'] = ids2[0]
 
+		self.write(cr, uid, ids, vals)
 		return True
 
 	def holidays_confirm(self, cr, uid, ids, *args):
@@ -142,6 +145,7 @@ class hr_holidays(osv.osv):
 					d= time.strptime(record.date_from,'%Y-%m-%d %H:%M:%S').tm_mday
 					vals['duration']= (c-d) * 8
 					vals['note']=record.notes
+					vals['user_id']=record.user_id.id
 					vals['date']=record.date_from
 					case_id=self.pool.get('crm.case').create(cr,uid,vals)
 					self.write(cr, uid, ids, {'case_id':case_id})

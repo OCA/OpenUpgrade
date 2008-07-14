@@ -41,6 +41,19 @@
 			</field>
 		</record>
 
+		<record model="ir.ui.view" id="view_holiday_2">
+			<field name="name">hr.holidays.tree</field>
+			<field name="model">hr.holidays</field>
+			<field name="inherit_id" ref="hr.view_holiday"/>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="number_of_days" string="Number of Days"/>
+					<field name="employee_id"/>
+				</field>
+			</field>
+		</record>
+
 		<!-- holidays status -->
 		<record model="ir.ui.view" id="edit_holiday_status_form">
 			<field name="name">hr.holidays.status.form</field>
@@ -118,7 +131,7 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="edit_holiday_inherit_new" />
 		</record>
-		<menuitem name="Human Resources/Holidays Request" id="menu_open_ask_holidays" action="open_ask_holidays" groups="base.group_admin"/>
+		<menuitem name="Human Resources/Holidays Request" id="menu_open_ask_holidays" action="open_ask_holidays"/>
 
 		<record model="ir.actions.act_window" id="action_all_holiday">
 			<field name="type">ir.actions.act_window</field>
