@@ -168,7 +168,7 @@
 					<page string="General">
 <!--						<field name="offer_id"/>-->
 						<field name="name"/>
-						<field name="type" select="2" on_change="onchange_type(type)"/>
+						<field name="type" select="2" on_change="onchange_type(type,offer_id)"/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
@@ -420,7 +420,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_product_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product" groups="Offer Admin"/>
 
 	<act_window name="Products"
 		res_model="dm.product"
