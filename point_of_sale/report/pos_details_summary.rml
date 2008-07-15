@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <document filename="test.pdf">
-    <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <template pageSize="(595.0,842.0)" title="Test" author="Olivier Laurent" allowSplitting="20">
         <pageTemplate id="first">
             <frame id="first" x1="5.0" y1="57.0" width="590" height="828"/>
         </pageTemplate>
@@ -93,46 +93,6 @@
             <font face="Times-Roman" size="11.0">Period: [[ '%s' % getperiod(objects) ]]</font>
         </para>
 
-        <blockTable colWidths="80,57,180,40,27,37,37,40,40" style="Tableau8" rowHeights="0.5cm">
-            <tr>
-                <td> <para style="P3">Date</para> </td>
-                <td> <para style="P3">Code</para> </td>
-                <td> <para style="P3">Product</para> </td>
-                <td> <para style="P3">Price</para> </td>
-                <td> <para style="P3">Qty</para> </td>
-                <td> <para style="P3">Disc</para> </td>
-                <td> <para style="P3">VAT(%)</para> </td>
-                <td> <para style="P3">VAT</para> </td>
-                <td> <para style="P3">Invoiced</para> </td>
-            </tr>
-        </blockTable>
-        <section>
-            [[ repeatIn(objects,'o') ]]
-            <blockTable colWidths="80,57,180,40,27,37,37,40,40" style="Tableau6" rowHeights="0.5cm">
-                <tr>
-                    <td>[[ repeatIn(o.lines,'line') ]]<para style="P5">[[line.create_date ]]</para> </td>
-                    <td> </td>
-                    <td> <para style="P5"> [[strip_name(line.product_id.name, 32) ]] </para></td>
-                    <td> <para style="P16"> [[ '%.2f' % (line.price_subtotal,) ]]</para></td>
-                    <td> <para style="P16"> [[ '%d' % line.qty ]]</para></td>
-                    <td> <para style="P16"> [[ '%d%%' % (line.discount) ]]</para></td>
-                    <td> <para style="P16"> [[ len(line.product_id.taxes_id) > 0 and ('%d%%' % (line.product_id.taxes_id[0].amount * 100)) or '' ]] </para></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td> <para style="P5">[[ o.date_order ]] </para></td>
-                    <td> <para style="P5">[[ o.name ]] </para></td>
-                    <td> <para style="P5">[[ o.user_id.name ]] </para></td>
-                    <td> <para style="P17">[[ '%.2f' % (o.amount_total,) ]]</para></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td><para style="P16">[[ o.amount_tax ]] </para></td>
-                    <td><para style="P16">[[ o.invoice_id and o.invoice_id.number or '']]</para></td>
-                </tr>
-            </blockTable>
-        </section>
         <para>
             <font color="white"> </font>
         </para>

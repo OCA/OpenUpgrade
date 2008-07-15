@@ -29,7 +29,7 @@ import time
 from report import report_sxw
 
 
-class pos_details(report_sxw.rml_parse):
+class pos_details_summary(report_sxw.rml_parse):
 
 	def _get_qty_total(self, objects):
 		#code for the sum of qty_total
@@ -114,7 +114,7 @@ class pos_details(report_sxw.rml_parse):
 			return '%s - %s' % (min_date, max_date)
 
 	def __init__(self, cr, uid, name, context):
-		super(pos_details, self).__init__(cr, uid, name, context)
+		super(pos_details_summary, self).__init__(cr, uid, name, context)
 		self.total = 0.0
 		self.localcontext.update({
 			'time': time,
@@ -130,5 +130,9 @@ class pos_details(report_sxw.rml_parse):
 			'getperiod': self._get_period,
 		})
 
-report_sxw.report_sxw('report.pos.details', 'pos.order', 'addons/point_of_sale/report/pos_details.rml', parser=pos_details, header=None)
+report_sxw.report_sxw('report.pos.details_summary',
+											'pos.order',
+											'addons/point_of_sale/report/pos_details_summary.rml',
+											parser=pos_details_summary,
+											header=None)
 

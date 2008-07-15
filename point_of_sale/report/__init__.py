@@ -30,3 +30,5 @@ import pos_receipt
 import pos_invoice
 import pos_lines
 import pos_details
+import pos_details_summary
+
