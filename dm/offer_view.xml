@@ -655,5 +655,40 @@
 		<field name="view_id" ref="view_dm_customer_offer_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Offers/Customers/All Customer Orders" id="menu_action_dm_customer_offer_form" sequence="2" action="action_dm_customer_offer_form"/>
+
+	<!--
+	=======================================================
+	Offer Media Views
+	=======================================================
+	-->	
+	
+	<record model="ir.ui.view" id="view_dm_media_form">
+		<field name="name">dm.media.form</field>
+		<field name="model">dm.media</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Offer Media">
+				<field name="name"/>
+			</form>
+		</field>
+	</record>	
+	<record model="ir.ui.view" id="view_dm_media_tree">
+		<field name="name">dm.meida.tree</field>
+		<field name="model">dm.media</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="All Offer Medias">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_dm_media_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.media</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_dm_media_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Medias" id="menu_action_dm_media_form" sequence="2" action="action_dm_media_form"/>	
+	
 	</data>
 </terp>
