@@ -510,6 +510,11 @@ class document_file(osv.osv):
 
 	def create(self, cr, uid, vals, context={}):
 		vals['title']=vals['name']
+		if vals.get('res_model',False) and (not vals.get('parent_id',False)):
+			dir_model=self.pool.get('document.directory')
+			res_dirs = dir_model.search(cr, uid, [('type','=','ressource'),('ressource_type_id','=',vals['res_model'])], context=context)
+			if len(res_dirs):
+				vals['parent_id']=res_dirs[0]
 		if vals.get('res_id', False) and vals.get('res_model',False):
 			obj_model=self.pool.get(vals['res_model'])
 			result = obj_model.read(cr, uid, [vals['res_id']], context=context)
