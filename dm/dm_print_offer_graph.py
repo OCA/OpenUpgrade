@@ -50,7 +50,7 @@ def graph_get(cr, uid, graph, offer_id):
 	for step in offer.step_ids:
 		for transition in step.outgoing_transition_ids:
 			trargs = {
-				'label': transition.condition + '\\n' + str(transition.delay)
+				'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay)
 			}
 			if step.split_mode=='and':
 				trargs['arrowtail']='box'

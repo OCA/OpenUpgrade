@@ -197,6 +197,7 @@ class dm_offer_step_transition(osv.osv):
             if not context['step_id']:
                 raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
             data['condition']='automatic'
+            data['delay']='0'
             data[context['type']] = context['step_id']
         return data
 
