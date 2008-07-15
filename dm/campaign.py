@@ -182,6 +182,7 @@ class dm_campaign_proposition(osv.osv):
 #        'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'payment_methods' : fields.many2many('account.journal','campaign_payment_method','journal_id','proposition_id','Payment Methods',domain=[('type','=','cash')])
     }
 
     _defaults = {

@@ -123,6 +123,8 @@
 <!--								<newline/>-->
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
+								<separator string="Payment Methods" colspan="4"/>
+								<field name="payment_methods" colspan="4" nolabel="1"/>								
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
@@ -346,6 +348,8 @@
 				<field name="sale_rate"/>
 				<newline/>
 <!--				<field name="delay_ids" colspan="4"/>-->
+				<separator string="Payment Methods" colspan="4"/>
+				<field name="payment_methods" colspan="4" nolabel="1"/>								
 				<field name="segment_ids" colspan="4" nolabel="1">
 					<form string="Segments">
 						<field name="name" string="Name" select="1"/>
