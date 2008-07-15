@@ -289,6 +289,7 @@ class dm_offer(osv.osv):
         'type': lambda *a: 'new',
         'preoffer_type': lambda *a: 'new',
         'legal_state': lambda *a: 'validated',
+        'offer_responsible_id' : lambda obj, cr, uid, context: uid,
     }
     
     _constraints = [
