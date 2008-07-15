@@ -12,18 +12,6 @@ AVAILABLE_STATES = [
     ('closed', 'Close')
 ]
 
-class dm_product(osv.osv):
-    _name = "dm.product"
-    _rec_name = 'product_id'
-    _columns = {
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'qty_planned' : fields.integer('Planned Quantity'),
-        'qty_real' : fields.float('Real Quantity'),
-        'price' : fields.float('Sale Price'),
-        'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
-    }
-dm_product()
-
 
 #class dm_offer_document_category(osv.osv):
 #    _name = "dm.offer.document.category"
@@ -285,3 +273,17 @@ class dm_offer_step_workitem(osv.osv):
         return True
 
 dm_offer_step_workitem()
+
+
+class dm_product(osv.osv):
+    _name = "dm.product"
+    _rec_name = 'product_id'
+    _columns = {
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'qty_planned' : fields.integer('Planned Quantity'),
+        'qty_real' : fields.float('Real Quantity'),
+        'price' : fields.float('Sale Price'),
+        'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
+    }
+dm_product()
+
