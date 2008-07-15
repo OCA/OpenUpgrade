@@ -130,7 +130,7 @@ class node_class(object):
 		if self.type=='database':
 			pool = pooler.get_pool(self.cr.dbname)
 			fobj = pool.get('ir.attachment')
-			vargs = [('parent_id','=',False)]
+			vargs = [('parent_id','=',False),('res_id','=',False)]
 			if nodename:
 				vargs.append(('name','=',nodename))
 			file_ids=fobj.search(self.cr,self.uid,vargs)
@@ -510,11 +510,6 @@ class document_file(osv.osv):
 
 	def create(self, cr, uid, vals, context={}):
 		vals['title']=vals['name']
-		if vals.get('res_model',False) and (not vals.get('parent_id',False)):
-			dir_model=self.pool.get('document.directory')
-			res_dirs = dir_model.search(cr, uid, [('type','=','ressource'),('ressource_type_id','=',vals['res_model'])], context=context)
-			if len(res_dirs):
-				vals['parent_id']=res_dirs[0]
 		if vals.get('res_id', False) and vals.get('res_model',False):
 			obj_model=self.pool.get(vals['res_model'])
 			result = obj_model.read(cr, uid, [vals['res_id']], context=context)
