@@ -225,4 +225,5 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 if __name__<>"package" and __name__=="__main__":
     AddAttachment(None)
 elif __name__=="package":
+    g_ImplementationHelper = unohelper.ImplementationHelper()
     g_ImplementationHelper.addImplementation( AddAttachment, "org.openoffice.openerp.report.addattachment", ("com.sun.star.task.Job",),)
