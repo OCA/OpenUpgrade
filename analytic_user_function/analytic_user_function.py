@@ -1,7 +1,6 @@
 from osv import fields,osv
 from osv import orm
 
-
 class analytic_user_funct_grid(osv.osv):
 
 	_name="analytic_user_funct_grid"
@@ -30,6 +29,21 @@ class hr_analytic_timesheet(osv.osv):
 	_inherit = "hr.analytic.timesheet"
 
 
+	# Look in account, if no value for the user => look in parent until there is no more parent to look
+	# Take the first found... if nothing found => return False
+	def _get_related_user_account_recursiv(self,cr,uid,user_id,account_id):
+		
+		temp=self.pool.get('analytic_user_funct_grid').search(cr, uid, [('user_id', '=', user_id),('account_id', '=', account_id) ])
+		account=self.pool.get('account.analytic.account').browse(cr,uid,account_id)
+		if temp:
+			return temp
+		else:
+			if account.parent_id:
+				return self._get_related_user_account_recursiv(cr,uid,user_id,account.parent_id.id)
+			else:
+				return False
+				
+				
 	def on_change_account_id(self, cr, uid, ids,user_id, account_id, unit_amount=0):
 		#{'value': {'to_invoice': False, 'amount': (-162.0,), 'product_id': 7, 'general_account_id': (5,)}}
 		res = {}
@@ -41,8 +55,8 @@ class hr_analytic_timesheet(osv.osv):
 			return super(hr_analytic_timesheet, self).on_change_account_id(cr, uid, ids,account_id)
 
 		#get the browse record related to user_id and account_id
-		temp = self.pool.get('analytic_user_funct_grid').search(cr, uid, [('user_id', '=', user_id),('account_id', '=', account_id) ])
-
+		temp = self._get_related_user_account_recursiv(cr,uid,user_id,account_id)
+		# temp = self.pool.get('analytic_user_funct_grid').search(cr, uid, [('user_id', '=', user_id),('account_id', '=', account_id) ])
 		if not temp:
 			#if there isn't any record for this user_id and account_id
 			return super(hr_analytic_timesheet, self).on_change_account_id(cr, uid, ids,account_id)
@@ -80,7 +94,8 @@ class hr_analytic_timesheet(osv.osv):
 
 		if account_id:
 			#get the browse record related to user_id and account_id
-			temp = self.pool.get('analytic_user_funct_grid').search(cr, uid, [('user_id', '=', user_id),('account_id', '=', account_id) ])
+			# temp = self.pool.get('analytic_user_funct_grid').search(cr, uid, [('user_id', '=', user_id),('account_id', '=', account_id) ])
+			temp = self._get_related_user_account_recursiv(cr,uid,user_id,account_id)
 			if temp:
 				#add the value from the new relation analytic_user_funct_grid
 				r = self.pool.get('analytic_user_funct_grid').browse(cr, uid, temp)[0]
