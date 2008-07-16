@@ -35,7 +35,18 @@ class sale_order(osv.osv):
 	_defaults = {
 		'name': lambda obj, cr, uid, context: obj.pool.get('sale.order').so_seq_get(cr, uid),
 			  }
-
+	def copy(self, cr, uid, id, default=None,context={}):
+		name=self.so_seq_get(cr, uid)
+		if not default:
+			default = {}
+		default.update({
+			'state':'draft',
+			'shipped':False,
+			'invoice_ids':[],
+			'picking_ids':[],
+			'name': name,
+		})
+		return super(osv.osv, self).copy(cr, uid, id, default, context)
 	def so_seq_get(self, cr, uid):
 
 		pool_seq=self.pool.get('ir.sequence')
@@ -60,6 +71,20 @@ class purchase_order(osv.osv):
 	_defaults = {
 		'name': lambda obj, cr, uid, context: obj.pool.get('purchase.order').po_seq_get(cr, uid),
 		}
+
+	def copy(self, cr, uid, id, default=None,context={}):
+		name=self.po_seq_get(cr, uid)
+		if not default:
+			default = {}
+		default.update({
+			'state':'draft',
+			'shipped':False,
+			'invoice_ids':[],
+			'picking_ids':[],
+			'name': name,
+		})
+		return super(osv.osv, self).copy(cr, uid, id, default, context)
+
 	def po_seq_get(self, cr, uid):
 
 		pool_seq=self.pool.get('ir.sequence')
