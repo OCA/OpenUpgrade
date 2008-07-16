@@ -13,11 +13,11 @@ create:
 	    script/About.py > package/OpenERPReport.py
 
 pack:
-	rm -f openerp_report.zip
-	zip -r openerp_report.zip package/*
+	rm -f openerp_report_add_attachment.zip
+	zip -r openerp_report_add_attachment.zip package/*
 	
 install:
-	sh /usr/lib/openoffice/program/unopkg add -v openerp_report.zip
+	sh /usr/lib/openoffice/program/unopkg add -v openerp_report_add_attachment.zip
 	
 uninstall:
-	sh /usr/lib/openoffice/program/unopkg remove -v  openerp_report.zip
+	sh /usr/lib/openoffice/program/unopkg remove -v  openerp_report_add_attachment.zip
