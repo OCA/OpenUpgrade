@@ -235,12 +235,10 @@ class dm_offer(osv.osv):
         return result
 
     def _check_preoffer(self, cr, uid, ids):
-        print "=---------------"
         offer = self.browse(cr,uid,ids)[0]
         if offer.preoffer_original_id:
             preoffer_id = self.search(cr,uid,[('preoffer_original_id','=',offer.preoffer_original_id.id)])
             if len(preoffer_id) > 1 :
-                print preoffer_id
                 return False
         return True
           
@@ -248,7 +246,7 @@ class dm_offer(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
-        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter',domain=[('category_id','=','Copywriter')]),
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),

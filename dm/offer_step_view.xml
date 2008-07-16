@@ -132,7 +132,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_type_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Step Types" id="menu_action_step_type_form" action="action_step_type_form" groups="Offer Admin"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Step Types" id="menu_action_step_type_form" action="action_step_type_form" groups="Offer Admin,Campaign Admin,Campaign Manager"/>
 	
 	<!--
 	=======================================================
@@ -298,7 +298,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_transition_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition" groups="Offer Admin"/>-->
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition" groups="Offer Admin,,Campaign Admin,Campaign Manager"/>-->
    
    <!--
 	=======================================================
@@ -340,7 +340,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_offer_step_workitem_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Work Items" id="menu_action_offer_step_workitem" action="action_offer_step_workitem" groups="Offer Admin"/><!--
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Work Items" id="menu_action_offer_step_workitem" action="action_offer_step_workitem" groups="Offer Admin,Campaign Admin,Campaign Manager"/><!--
 
 	<act_window name="WorkItems"
 		res_model="dm.offer.step.workitem"
@@ -420,7 +420,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_product_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product" groups="Offer Admin"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product" groups="Offer Admin,Campaign Admin,Campaign Manager"/>
 
 	<act_window name="Products"
 		res_model="dm.product"
