@@ -22,8 +22,7 @@ class Fields(unohelper.Base, XJobExecutor ):
         self.win = DBModalDialog(60, 50, 180, 225, "Field Builder")
 
         self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
-        self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True,
-                            itemListenerProc=self.cmbVariable_selected)
+        self.win.addComboBox("cmbVariable", 180-120-2, 10, 120, 15,True, itemListenerProc=self.cmbVariable_selected)
         self.insVariable = self.win.getControl( "cmbVariable" )
 
         self.win.addFixedText("lblFields", 10, 32, 60, 15, "Variable Fields :")
@@ -33,10 +32,9 @@ class Fields(unohelper.Base, XJobExecutor ):
         self.win.addFixedText("lblUName", 8, 187, 60, 15, "Displayed name :")
         self.win.addEdit("txtUName", 180-120-2, 185, 120, 15,)
 
-        self.win.addButton('btnOK',-5 ,-5,45,15,'Ok'
-                     ,actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnOK',-5 ,-5,45,15,'Ok' ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
+
         self.sValue=None
         self.sObj=None
         self.aSectionList=[]
@@ -51,64 +49,66 @@ class Fields(unohelper.Base, XJobExecutor ):
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
         self.sMyHost= ""
+
         if not docinfo.getUserFieldValue(3) == "" and not docinfo.getUserFieldValue(0)=="":
-            self.sMyHost= docinfo.getUserFieldValue(0)
-            self.count=0
+            self.sMyHost = docinfo.getUserFieldValue(0)
+            self.count = 0
             oParEnum = doc.getTextFields().createEnumeration()
+
             while oParEnum.hasMoreElements():
                 oPar = oParEnum.nextElement()
                 if oPar.supportsService("com.sun.star.text.TextField.DropDown"):
                     self.count += 1
+
             getList(self.aObjectList, self.sMyHost,self.count)
             cursor = doc.getCurrentController().getViewCursor()
-            text=cursor.getText()
-            tcur=text.createTextCursorByRange(cursor)
+            text = cursor.getText()
+            tcur = text.createTextCursorByRange(cursor)
 
+            self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == "Objects", self.aObjectList ) )
 
-	    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == "Objects", self.aObjectList ) )
-
-	    for i in range(len(self.aItemList)):
-		anItem = self.aItemList[i][1]
-		component = self.aComponentAdd[i]
-		
-		if component == "Document": 
-		    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-		    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+            for i in range(len(self.aItemList)):
+                anItem = self.aItemList[i][1]
+                component = self.aComponentAdd[i]
+                
+                if component == "Document": 
+                    sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+                    self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextSection:
                     getRecersiveSection(tcur.TextSection,self.aSectionList)
-		    if component in self.aSectionList:
-			sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
-			self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
+                    if component in self.aSectionList:
+                        sLVal = anItem[anItem.find(",'") + 2:anItem.find("')")]
+                        self.aVariableList.extend( filter( lambda obj: obj[:obj.find("(")] == sLVal, self.aObjectList ) )
 
                 if tcur.TextTable:
-		    if not component == "Document" and component[component.rfind(".")+1:] == tcur.TextTable.Name:
-                        VariableScope(tcur,self.insVariable,self.aObjectList,self.aComponentAdd,self.aItemList, component)
+                    if not component == "Document" and component[component.rfind(".")+1:] == tcur.TextTable.Name:
+                        VariableScope(tcur, self.aVariableList, self.aObjectList, self.aComponentAdd, self.aItemList, component)
 
             self.bModify=bFromModify
             if self.bModify==True:
                 sItem=""
-		for anObject in self.aObjectList:
-		    if anObject[:anObject.find("(")] == sVariable:
-			sItem = anObject
-			self.insVariable.setText(sItem)
-		genTree(
-		    sItem[sItem.find("(")+1:sItem.find(")")],
-		    self.aListFields, 
-		    self.insField,
-		    self.sMyHost,
-		    2,
-		    ending_excl=['one2many','many2one','many2many','reference'], 
-		    recur=['many2one']
-		)
+                for anObject in self.aObjectList:
+                    if anObject[:anObject.find("(")] == sVariable:
+                        sItem = anObject
+                        self.insVariable.setText(sItem)
+                genTree(
+                    sItem[sItem.find("(")+1:sItem.find(")")],
+                    self.aListFields, 
+                    self.insField,
+                    self.sMyHost,
+                    2,
+                    ending_excl=['one2many','many2one','many2many','reference'], 
+                    recur=['many2one']
+                )
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
                     sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
+                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                     fields=['name','model']
                     self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
                     if self.model_res <> []:
-			self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
+                        self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                     else:
                         self.insVariable.addItem(var ,self.insVariable.getItemCount())
 
