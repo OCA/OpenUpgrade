@@ -206,6 +206,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     sObjName=self.win.getComboBoxText("cmbVariable")
                     sObjName=sObjName[:sObjName.find("(")]
                     sValue=u"[[ repeatIn(" + sObjName + self.aListRepeatIn[selectedItemPos].replace("/",".") + ",'" + txtName +"') ]]"
+
                 if self.bModify == True:
                     oCurObj = cursor.TextField
                     oCurObj.Items = (sKey,sValue)
@@ -214,7 +215,7 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
                     oInputList = doc.createInstance("com.sun.star.text.TextField.DropDown")
                     if self.win.getListBoxSelectedItem("lstFields") == "objects":
                         oInputList.Items = (sKey,sValue)
-                        widget = ( cursor.TextTable or selectedItem <> 'objects' ) and cursor.TextTable.getCellByName( cursor.cell.CellName ) or doc.Text
+                        widget = ( cursor.TextTable or selectedItem <> 'objects' ) and cursor.TextTable.getCellByName( cursor.Cell.CellName ) or doc.Text
                         widget.insertTextContent(cursor,oInputList,False)
                     else:
                         oInputList.Items = (sKey,sValue)
