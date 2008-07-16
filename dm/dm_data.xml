@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <terp>
-	<data>
+	<data noupdate="1">
 
 	<record model="res.partner.category" id="cat_copywriter">
 				<field name="name" eval="&quot;Copywriter&quot;"/>
@@ -88,23 +88,24 @@
 			<field name="delay" eval="1"/>
 		</record>
 
-		<record id="dm_campaign_type" model="dm.campaign.type">
+		<record id="dm_campaign_type_loyalty" model="dm.campaign.type">
 			<field name="code">Loyalty</field>
 			<field name="name">Development of customer loyalty</field>
 		</record>
 
-		<record id="dm_campaign_type" model="dm.campaign.type">
+		<record id="dm_campaign_type_deleting" model="dm.campaign.type">
 			<field name="name">Deleting campaign</field>
+			<field name="code">Deleting</field>
 		</record>
 
-		<record id="dm_campaign_type" model="dm.campaign.type">
+		<record id="dm_campaign_type_mixed" model="dm.campaign.type">
 			<field name="code">Mixed</field>
 			<field name="name">Mixed campaign</field>
 		</record>
 
-		<record id="dm_campaign_type" model="dm.campaign.type">
-			<field name="code">loyalty</field>
-			<field name="name">Development of customer loyalty</field>
+		<record id="dm_campaign_type_recruiting" model="dm.campaign.type">
+			<field name="code">recruiting</field>
+			<field name="name">Recruiting campaign</field>
 		</record>
 
 
