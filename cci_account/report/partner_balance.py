@@ -79,7 +79,7 @@ class partner_balance(report_sxw.rml_parse):
 		self.cr.execute('SELECT a.id ' \
 				'FROM account_account a ' \
 				'LEFT JOIN account_account_type t ' \
-					'ON (a.type = t.code) ' \
+					'ON (a.type = t.id) ' \
 				'WHERE t.partner_account = TRUE ' \
 					'AND a.company_id = %d ' \
 					'AND a.active', (data['form']['company_id'],))
