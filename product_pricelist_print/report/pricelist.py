@@ -88,6 +88,9 @@ class report_custom(report_rml):
                 pro.extend(temp)
                 pro.append('</pro>')
                 for x in products:
+                    #Replacement of special characters with their code html for allowing reporting - Edited by Hasa
+                    x['name'] = x['name'].replace("&","&amp;")
+                    x['name'] = x['name'].replace("\"","&quot;")
                     if x['code']:
                         pro.append('<pro name="[%s] %s" >' % (x['code'], x['name']))
                     else:
