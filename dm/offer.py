@@ -295,14 +295,14 @@ class dm_offer(osv.osv):
     ]
         
 
-    def change_code(self,cr,uid,ids,type,copywriter_id) :
-        if type=='model' and ids:
-            return {'value':{'code':'Model%%0%sd' % 3 % ids[0]}}
-        if copywriter_id and ids:
-            copywriter = self.pool.get('res.partner').browse(cr,uid,[copywriter_id])[0]
-            code = ( copywriter.ref or '')+'%%0%sd' % 3 % ids[0]
-            return {'value':{'code':code}}
-        return {'value':{'code':''}}
+#    def change_code(self,cr,uid,ids,type,copywriter_id) :
+#        if type=='model' and ids:
+#            return {'value':{'code':'Model%%0%sd' % 3 % ids[0]}}
+#        if copywriter_id and ids:
+#            copywriter = self.pool.get('res.partner').browse(cr,uid,[copywriter_id])[0]
+#            code = ( copywriter.ref or '')+'%%0%sd' % 3 % ids[0]
+#            return {'value':{'code':code}}
+#        return {'value':{'code':''}}
 
     def state_close_set(self, cr, uid, ids, *args):
         self.__history(cr,uid, ids, 'closed')
@@ -364,7 +364,7 @@ class dm_offer(osv.osv):
     
     def default_get(self, cr, uid, fields, context=None):
         value = super(dm_offer, self).default_get(cr, uid, fields, context)
-        if context.has_key('type') and context['type']=='model' :
+        if not context.has_key('create') and context.has_key('type') and context['type']=='model' :
             value['code']=self.pool.get('ir.sequence').get(cr, uid, 'dm.offer')
         return value        
 
@@ -373,6 +373,7 @@ class dm_offer(osv.osv):
             vals['type'] = 'preoffer'
         elif not vals.has_key('type') :
             vals['type'] = 'model'
+        context['create'] = 'create'
         new_offer_id = super(dm_offer,self).create(cr,uid,vals,context)
         if vals.has_key('preoffer_original_id'):
             self.write(cr,uid,vals['preoffer_original_id'],{'preoffer_offer_id':new_offer_id})
