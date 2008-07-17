@@ -107,7 +107,11 @@
 			<field name="code">recruiting</field>
 			<field name="name">Recruiting campaign</field>
 		</record>
-
+		
+		<record id="dm_campaign_type_model" model="dm.campaign.type">
+			<field name="code">Model</field>
+			<field name="name">Model</field>
+		</record>		
 
 		<record id="dm_campaign_0" model="dm.campaign">
 			<field eval="&quot;general&quot;" name="campaign_type"/>

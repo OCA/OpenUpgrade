@@ -50,7 +50,7 @@ class dm_campaign(osv.osv):
 
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),                
-        'offer_id' : fields.many2one('dm.offer', 'Offer'),
+        'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open')]),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),

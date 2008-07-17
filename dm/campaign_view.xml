@@ -292,6 +292,119 @@
 		<field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
+	
+	<!--
+	=======================================================
+	Campaign Model Views
+	=======================================================
+	-->
+
+	<record model="ir.ui.view" id="view_campaign_model_tree">
+		<field name="name">dm.campaign.model.tree</field>
+		<field name="model">dm.campaign</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="All Campaigns Model">
+				<field name="name" string="Name"/>
+				<field name="campaign_type"/>
+				<field name="country_id" />
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_campaign_model_form">
+		<field name="name">dm.campaign.model.form</field>
+		<field name="model">dm.campaign</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Campaigns Model">
+				<notebook colspan="4">
+					<page string="General">
+						<separator string="Global Information" colspan="4"/>
+						<field name="name" string="Name" select="1"/>
+						<field name="code1" string="Code" select="2"/>
+						<field name="country_id" select="1" on_change="onchange_offer(offer_id,country_id)"/>
+						<field name="campaign_type" select="2"/>
+<!--						<separator string="Process State" colspan="4"/>-->
+<!--						<field name="planning_state" select="2" nolabel="0"/>-->
+<!--						<field name="manufacturing_state" select="2" nolabel="0"/>-->
+<!--						<field name="campaign_stat_ids"/>-->
+						<separator string="Notes" colspan="4"/>
+						<field name="notes" colspan="4" nolabel="1"/>
+					</page>
+					<page string="Propositions">
+						<field name="proposition_ids" nolabel="1">
+							<form string="Propositions">
+								<field name="name" string="Name"/>
+								<field name="code1" string="Code"/>
+								<field name="date_start"/>
+								<field name="proposition_type"/>
+								<newline/>
+								<field name="starting_mail_price"/>
+<!--								<field name="customer_pricelist_id"/>-->
+<!--								<field name="requirer_pricelist_id"/>-->
+<!--								<newline/>-->
+								<field name="quantity_max" string="Quantity"/>
+								<field name="sale_rate"/>
+								<separator string="Payment Methods" colspan="4"/>
+								<field name="payment_methods" colspan="4" nolabel="1"/>								
+								<field name="segment_ids" colspan="4" nolabel="1">
+									<form string="Segments">
+										<field name="name" string="Name" select="1"/>
+										<field name="action_code" string="Action Code" select="2"/>
+										<field name="qty"/>
+										<field name="note" colspan="4"/>
+									</form>
+									<tree string="Segments">
+										<field name="name" string="Name" select="1"/>
+										<field name="action_code" string="Action Code" select="2"/>
+										<field name="qty"/>
+									</tree>
+								</field>
+								<newline/>
+					<!--				<field name="delay_ids" colspan="4"/>-->
+								<separator string="Notes" colspan="4"/>
+								<field name="notes" colspan="4" nolabel="1"/>
+							</form>
+							<tree string="Propositions">
+								<field name="name" string="Name"/>
+								<field name="code" string="Code"/>
+								<field name="date_start" colspan="4"/>
+								<field name="quantity_max" string="Quantity"/>
+								<field name="sale_rate"/>
+								<field name="proposition_type"/>
+							</tree>
+						</field>
+					</page>
+				</notebook>
+			</form>
+		</field>
+	</record>
+        
+	<record model="ir.actions.act_window" id="action_campaign_model_form">
+		<field name="name">Campaign Model</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('type','=','model')]</field>
+		<field name="context">{'type':'model'}</field>
+	</record>
+	
+	<record model="ir.actions.act_window.view" id="action_campaign_model_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_campaign_model_tree"/>
+		<field name="act_window_id" ref="action_campaign_model_form"/>
+	</record>
+	
+	<record model="ir.actions.act_window.view" id="action_campaign_model_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_campaign_model_form"/>
+		<field name="act_window_id" ref="action_campaign_model_form"/>
+	</record>	
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns Model" id="menu_action_campaign_model_form" action="action_campaign_model_form"/>
 
 	<!--
 	=======================================================
