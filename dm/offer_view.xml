@@ -91,7 +91,7 @@
 						<field name="recommended_trademark"/>
 <!--						<field name="type" select="2" on_change="change_code(type,copywriter_id)" />-->
 						<field name="type" select="2"  />
-						<field name="preoffer_original_id" />
+						<field name="preoffer_original_id" context="{'offer_type':'Preoffer'}"/>
 						<field name="offer_origin_id"/>
 						<field name="offer_responsible_id" select="2"/>
 						<field name="version" select="2"/>
