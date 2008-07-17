@@ -20,6 +20,7 @@
                     "trademark_view.xml",
                     "campaign_view.xml",
                     "dm_report.xml",
+                    "offer_sequence.xml",
                     ],
     "active": False,
     "installable": True

@@ -24,13 +24,8 @@ class dm_media(osv.osv):
     _name = "dm.media"
     _columns = {
         'name' : fields.char('Media', size=64, required=True),
-        'active' : fields.boolean('Active'),
     }
- 
-    _defaults = {
-       'active' : lambda *a: True,
-	}
-
+    
 dm_media()
 
 class dm_offer_category(osv.osv):
@@ -298,10 +293,7 @@ class dm_offer(osv.osv):
     _constraints = [
         (_check_preoffer, 'Error ! this preoffer is already assigned to an offer',['preoffer_original_id'])
     ]
-
-    _sql_constraints = [
-        ('code_uniq', 'unique (code)', 'The code of the offer must be unique !')
-    ]
+        
 
     def change_code(self,cr,uid,ids,type,copywriter_id) :
         if type=='model' and ids:
@@ -369,6 +361,12 @@ class dm_offer(osv.osv):
         if context and not context.has_key('type') and res.has_key('type'):
             res['type']['selection'] = [('new','New'),('standart','Standart'),('rewrite','Rewrite')]
         return res
+    
+    def default_get(self, cr, uid, fields, context=None):
+        value = super(dm_offer, self).default_get(cr, uid, fields, context)
+        if context.has_key('type') and context['type']=='model' :
+            value['code']=self.pool.get('ir.sequence').get(cr, uid, 'dm.offer')
+        return value        
 
     def create(self,cr,uid,vals,context={}):
         if not vals.has_key('type') and vals.has_key('preoffer_type'):
@@ -391,9 +389,7 @@ class dm_offer(osv.osv):
         default = default.copy()
         offer = self.browse(cr,uid,[id])[0]
         default['name']='New offer from model %s' % offer.name
-        default['code']='_%s' % offer.code
         print default['name']
-        print default['code']
         default['step_ids']=[]
 #            offer is copied
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)

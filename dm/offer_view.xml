@@ -691,8 +691,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Offer Media">
-				<field name="name" select="1"/>
-				<field name="active" select="1"/>
+				<field name="name"/>
 			</form>
 		</field>
 	</record>	
@@ -703,7 +702,6 @@
 		<field name="arch" type="xml">
 			<tree string="All Offer Medias">
 				<field name="name"/>
-				<field name="active"/>
 			</tree>
 		</field>
 	</record>
