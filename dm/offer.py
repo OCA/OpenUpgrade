@@ -250,7 +250,7 @@ class dm_offer(osv.osv):
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
-        'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer',domain=[('type','in',['new','standart','rewrite','model'])]),
+        'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer',domain=[('type','in',['new','standart','rewrite'])]),
         'preoffer_original_id' : fields.many2one('dm.offer', 'Original Preoffer',domain=[('type','=','preoffer')] ),
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
