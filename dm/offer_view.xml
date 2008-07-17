@@ -10,6 +10,29 @@
 	<record id="res_groups_alluser" model="res.groups">
 		<field name="name">All User</field>
 	</record>		
+	<record id="res_groups_campaignadmin" model="res.groups">
+		<field name="name">Campaign Admin</field>
+	</record>		
+	<record id="res_groups_campaignmanager" model="res.groups">
+		<field name="name">Campaign Manager</field>
+	</record>
+
+	<!--
+	<record id="res_groups_developer" model="res.groups">
+		<field name="name">Developer</field>
+	</record>
+	<record model="res.users" id="user_dev">
+		<field name="login">dev</field>
+		<field name="password">dev</field>
+		<field name="name">Develoeper</field>
+		<field name="signature">Developer</field>
+		<field name="action_id" ref="action_menu_admin"/>
+		<field name="menu_id" ref="action_menu_admin"/>
+		<field name="address_id" ref="main_address"/>
+		<field name="groups_id" eval="[(6,0,[res_groups_dev])]"/>
+		<field name="company_id" ref="main_company"/>
+		</record>
+	-->
 
 	<record id="ir_model_access_offeraccess0" model="ir.model.access">
 		<field model="ir.model" name="model_id" search="[('name','=','dm.offer')]"/>
@@ -68,7 +91,7 @@
 						<field name="recommended_trademark"/>
 <!--						<field name="type" select="2" on_change="change_code(type,copywriter_id)" />-->
 						<field name="type" select="2"  />
-						<field name="preoffer_original_id" />
+						<field name="preoffer_original_id" context="{'offer_type':'Preoffer'}"/>
 						<field name="offer_origin_id"/>
 						<field name="offer_responsible_id" select="2"/>
 						<field name="version" select="2"/>
@@ -595,7 +618,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offers/Customers" id="menu_dm_customer_menu" sequence="1" />
+	<menuitem name="Direct Marketing/Offers/Customers" groups="Offer Admin" id="menu_dm_customer_menu" sequence="1" />
 	<menuitem name="Direct Marketing/Offers/Customers/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
 		
 	<!--

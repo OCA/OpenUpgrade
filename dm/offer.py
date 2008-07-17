@@ -235,12 +235,10 @@ class dm_offer(osv.osv):
         return result
 
     def _check_preoffer(self, cr, uid, ids):
-        print "=---------------"
         offer = self.browse(cr,uid,ids)[0]
         if offer.preoffer_original_id:
             preoffer_id = self.search(cr,uid,[('preoffer_original_id','=',offer.preoffer_original_id.id)])
             if len(preoffer_id) > 1 :
-                print preoffer_id
                 return False
         return True
           
@@ -248,7 +246,7 @@ class dm_offer(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
-        'copywriter_id' : fields.many2one('res.partner', 'Copywriter'),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter',domain=[('category_id','=','Copywriter')]),
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
@@ -333,25 +331,29 @@ class dm_offer(osv.osv):
         return True
     
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
-        result = super(dm_offer,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if context.has_key('type'):
-            if context['type'] == 'model' :
-                if result.has_key('toolbar'):
-                    if result['toolbar'].has_key('print'):
-                        new_print = filter(lambda x : x['report_name'] not in ['offer.report','preoffer.report'],result['toolbar']['print'])
-                        result['toolbar']['print'] =new_print
-            if context['type'] == 'preoffer' :
-                if result.has_key('toolbar'):
-                    if result['toolbar'].has_key('relate'):
-                        result['toolbar']['relate']=''
-                    if result['toolbar'].has_key('print'):
-                        new_print = filter(lambda x : x['report_name'] == 'preoffer.report',result['toolbar']['print'])
-                        result['toolbar']['print'] =new_print
+        if context.has_key('offer_type') and context['offer_type'] :
+            new_view_id = self.pool.get('ir.ui.view').search(cr,user,[('name','=','dm.preoffer.form')])
+            result = super(dm_offer,self).fields_view_get(cr, user, new_view_id[0], view_type, context, toolbar)
         else : 
-            if result.has_key('toolbar'):
-                if result['toolbar'].has_key('print'):
-                    new_print = filter(lambda x : x['report_name'] not in ['offer.model.report','preoffer.report'],result['toolbar']['print'])
-                    result['toolbar']['print'] =new_print
+            result = super(dm_offer,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+            if context.has_key('type'):
+                if context['type'] == 'model' :
+                    if result.has_key('toolbar'):
+                        if result['toolbar'].has_key('print'):
+                            new_print = filter(lambda x : x['report_name'] not in ['offer.report','preoffer.report'],result['toolbar']['print'])
+                            result['toolbar']['print'] =new_print
+                if context['type'] == 'preoffer' :
+                    if result.has_key('toolbar'):
+                        if result['toolbar'].has_key('relate'):
+                            result['toolbar']['relate']=''
+                        if result['toolbar'].has_key('print'):
+                            new_print = filter(lambda x : x['report_name'] == 'preoffer.report',result['toolbar']['print'])
+                            result['toolbar']['print'] =new_print
+            else : 
+                if result.has_key('toolbar'):
+                    if result['toolbar'].has_key('print'):
+                        new_print = filter(lambda x : x['report_name'] not in ['offer.model.report','preoffer.report'],result['toolbar']['print'])
+                        result['toolbar']['print'] =new_print
         return result
     
     def fields_get(self, cr, uid, fields=None, context=None):

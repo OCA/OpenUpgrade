@@ -63,7 +63,7 @@ class dm_campaign(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
-        'dealer_id' : fields.many2one('res.partner', 'Dealer'),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','=','Dealer')]),
 #
 #                        desktop publication
 #

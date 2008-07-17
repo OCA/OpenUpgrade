@@ -2,8 +2,17 @@
 <terp>
 <data>
 	<menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
-	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="Offer Admin,Offer Manager"/>
+	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="Offer Admin,Offer Manager,Campaign Admin,Campaign Manager"/>
+	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="Offer Admin,Campaign Admin,Campaign Manager"/>	
 	<menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
+
+<record id="res_groups_campaignadmin" model="res.groups">
+<field name="name">Campaign Admin</field>
+</record>
+<record id="res_groups_campaignmanager" model="res.groups">
+<field name="name">Campaign Manager</field>
+</record>
+
 
 
 	<!--
@@ -85,10 +94,11 @@
 						<field name="country_id" select="1" on_change="onchange_offer(offer_id,country_id)"/>
 						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)"/>
 						<field name="lang_id"/>
+						<field name="campaign_type" select="2"/>
 						<field name="date_start"/>
 						<field name="date"/>
-						<field name="campaign_type" select="2"/>
-						<field name="partner_id"/>
+<!--						<field name="partner_id"/>-->
+-						<field name="dealer_id"/>
 						<field name="trademark_id"/>
 						<field name="responsible_id" />
 						<separator string="Tasks Management" colspan="4"/>
