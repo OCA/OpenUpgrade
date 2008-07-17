@@ -24,8 +24,13 @@ class dm_media(osv.osv):
     _name = "dm.media"
     _columns = {
         'name' : fields.char('Media', size=64, required=True),
+        'active' : fields.boolean('Active'),
     }
-    
+ 
+    _defaults = {
+       'active' : lambda *a: True,
+	}
+
 dm_media()
 
 class dm_offer_category(osv.osv):
@@ -293,7 +298,10 @@ class dm_offer(osv.osv):
     _constraints = [
         (_check_preoffer, 'Error ! this preoffer is already assigned to an offer',['preoffer_original_id'])
     ]
-        
+
+    _sql_constraints = [
+        ('code_uniq', 'unique (code)', 'The code of the offer must be unique !')
+    ]
 
     def change_code(self,cr,uid,ids,type,copywriter_id) :
         if type=='model' and ids:
@@ -383,7 +391,9 @@ class dm_offer(osv.osv):
         default = default.copy()
         offer = self.browse(cr,uid,[id])[0]
         default['name']='New offer from model %s' % offer.name
+        default['code']='_%s' % offer.code
         print default['name']
+        print default['code']
         default['step_ids']=[]
 #            offer is copied
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
