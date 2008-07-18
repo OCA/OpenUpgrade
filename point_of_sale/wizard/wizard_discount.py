@@ -30,7 +30,6 @@
 import pooler
 
 import wizard
-from osv import osv
 
 
 _form = """<?xml version="1.0"?>
@@ -40,7 +39,12 @@ _form = """<?xml version="1.0"?>
 """
 
 _fields = {
-	'discount': {'string':'Discount percentage', 'type':'float','required': True,'default':lambda *args: 5},
+	'discount': {
+		'string': 'Discount percentage',
+		'type': 'float',
+		'required': True,
+		'default': lambda *args: 5
+	},
 }
 
 
@@ -57,20 +61,21 @@ def apply_discount(self, cr, uid, data, context):
 
 class discount_wizard(wizard.interface):
 	states = {
-		'init' : {'actions' : [],
-			'result' : {
-				'type' : 'form',
+		'init': {
+			'actions': [],
+			'result': {
+				'type': 'form',
 				'arch': _form,
 				'fields': _fields,
-				'state' : ( ('end', 'Cancel'),
+				'state': ( ('end', 'Cancel'),
 										('apply_discount', 'Apply Discount', 'gtk-ok', True)
 									)
 			}
 		},
 		'apply_discount': {
-			'actions' : [],
-			'result' : {
-				'type' : 'action',
+			'actions': [],
+			'result': {
+				'type': 'action',
 				'action': apply_discount,
 				'state': "end",
 			}
@@ -78,3 +83,4 @@ class discount_wizard(wizard.interface):
 	}
 
 discount_wizard('pos.discount')
+

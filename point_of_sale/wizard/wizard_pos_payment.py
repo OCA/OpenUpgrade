@@ -29,7 +29,6 @@
 import pooler
 import netsvc
 import wizard
-from osv import osv
 
 
 def _get_journal(self, cr, uid, context):

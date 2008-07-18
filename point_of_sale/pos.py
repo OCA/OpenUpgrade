@@ -75,7 +75,7 @@ class pos_order(osv.osv):
 		res = {}
 		tax_obj = self.pool.get('account.tax')
 		for order in self.browse(cr, uid, ids):
-			val= 0.0
+			val = 0.0
 			for line in order.lines:
 				val = reduce(lambda x, y: x+round(y['amount'], 2),
 						tax_obj.compute_inv(cr, uid, line.product_id.taxes_id,
@@ -105,7 +105,7 @@ class pos_order(osv.osv):
 		return res
 
 	def payment_get(self, cr, uid, ids, context=None):
-		cr.execute("select id from pos_payment where order_id in (%s)"% \
+		cr.execute("select id from pos_payment where order_id in (%s)" % \
 					','.join([str(i) for i in ids]))
 		return [i[0] for i in cr.fetchall()]
 
@@ -198,7 +198,7 @@ class pos_order(osv.osv):
 		else:
 			return False
 
-	_defaults={
+	_defaults = {
 		'user_id': lambda self, cr, uid, context: uid,
 		'state': lambda *a: 'draft',
 		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence')\
@@ -209,12 +209,11 @@ class pos_order(osv.osv):
 		'sale_journal': _sale_journal_get,
 		'account_receivable': _receivable_get,
 		'invoice_wanted': lambda *a: True
-		}
+	}
 
 	def test_order_lines(self, cr, uid, order, context={}):
 		if not order.lines:
 			raise osv.except_osv("Error", "No order lines defined for this sale.")
-			return False
 
 		wf_service = netsvc.LocalService("workflow")
 		wf_service.trg_validate(uid, 'pos.order', order.id, 'paid', cr)
@@ -232,12 +231,69 @@ class pos_order(osv.osv):
 				return False
 		return True
 
+	def _get_qty_differences(self, orders, old_picking):
+		"""check if the customer changed the product quantity"""
+		order_dict = {}
+		for order in orders:
+			for line in order.lines:
+				order_dict[line.product_id.id] = line
+
+		# check the quantity differences:
+		diff_dict = {}
+		for line in old_picking.move_lines:
+			order_line = order_dict.get(line.product_id.id)
+			if not order_line:
+				deleted = True
+				qty_to_delete_from_original_picking = line.product_qty
+				diff_dict[line.product_id.id] = (deleted, qty_to_delete_from_original_picking)
+			elif line.product_qty != order_line.qty:
+				deleted = False
+				qty_to_delete_from_original_picking = line.product_qty - order_line.qty
+				diff_dict[line.product_id.id] = (deleted, qty_to_delete_from_original_picking)
+
+		return diff_dict
+
+	def _split_picking(self, cr, uid, ids, context, old_picking, diff_dict):
+		"""if the customer changes the product quantity, split the picking in two"""
+		# create a copy of the original picking and adjust the product qty:
+		picking_model = self.pool.get('stock.picking')
+		defaults = {
+			'note': "Partial picking from customer", # add a note to tell why we create a new picking
+			'name': self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.out'), # increment the sequence
+		}
+
+		new_picking_id = picking_model.copy(cr, uid, old_picking.id, defaults)
+		new_picking = picking_model.browse(cr, uid, new_picking_id, context)
+
+		for line in new_picking.move_lines:
+			p_id = line.product_id.id
+			if p_id in diff_dict:
+				diff = diff_dict[p_id]
+				deleted = diff[0]
+				qty_to_del = diff[1]
+				if deleted: # product has been deleted (customer didn't took it):
+					# delete this product from old picking:
+					for old_line in old_picking.move_lines:
+						if old_line.product_id.id == p_id:
+							old_line.write(cr, uid, [old_line.id], {'state': 'draft'}) # cannot delete if not draft
+							old_line.unlink(cr, uid, [old_line.id], context)
+				elif qty_to_del > 0: # product qty has been modified (customer took less than the ordered quantity):
+					# subtract qty from old picking:
+					for old_line in old_picking.move_lines:
+						if old_line.product_id.id == p_id:
+							old_line.write(cr, uid, [old_line.id], {'product_qty': old_line.product_qty - qty_to_del})
+					# add qty to new picking:
+					line.write(cr, uid, [line.id], {'product_qty': qty_to_del})
+				else: # product hasn't changed (customer took it without any change):
+					# delete this product from new picking:
+					line.unlink(cr, uid, [line.id], context)
+
 	def create_picking(self, cr, uid, ids, context={}):
 		"""Create a picking for each order and validate it."""
 		picking_obj = self.pool.get('stock.picking')
 
-		for order in self.browse(cr, uid, ids, context):
-
+		orders = self.browse(cr, uid, ids, context)
+		for order in orders:
 			if not order.last_out_picking:
 				new = True
 				picking_id = picking_obj.create(cr, uid, {
@@ -245,7 +301,7 @@ class pos_order(osv.osv):
 					'type': 'out',
 					'state': 'draft',
 					'move_type': 'direct',
-					'note': 'POS notes '+ (order.note or ""),
+					'note': 'POS notes ' + (order.note or ""),
 					'invoice_state': 'none',
 					'auto_picking': True,
 					'pos_order': order.id,
@@ -254,7 +310,13 @@ class pos_order(osv.osv):
 			else:
 				picking_id = order.last_out_picking.id
 				picking_obj.write(cr, uid, [picking_id], {'auto_picking': True})
+				picking = picking_obj.browse(cr, uid, [picking_id], context)[0]
 				new = False
+
+				# split the picking (if product quantity has changed):
+				diff_dict = self._get_qty_differences(orders, picking)
+				if diff_dict:
+					self._split_picking(cr, uid, ids, context, picking, diff_dict)
 
 			if new:
 				for line in order.lines:
@@ -262,13 +324,13 @@ class pos_order(osv.osv):
 							[('name', '=', 'property_stock_customer')])
 					val = self.pool.get("ir.property").browse(cr, uid,
 							prop_ids[0]).value
-					location_id= order.shop_id.warehouse_id.lot_stock_id.id
+					location_id = order.shop_id.warehouse_id.lot_stock_id.id
 					stock_dest_id = int(val.split(',')[1])
 					if line.qty < 0:
 						(location_id, stock_dest_id)= (stock_dest_id, location_id)
 
 					self.pool.get('stock.move').create(cr, uid, {
-						'name': 'Stock move (POS %d)'% (order.id, ),
+						'name': 'Stock move (POS %d)' % (order.id, ),
 						'product_uom': line.product_id.uom_id.id,
 						'picking_id': picking_id,
 						'product_id': line.product_id.id,
@@ -375,8 +437,8 @@ class pos_order(osv.osv):
 		return order_line_id
 
 	def refund(self, cr, uid, ids, context={}):
-		clone_list=[]
-		line_obj= self.pool.get('pos.order.line')
+		clone_list = []
+		line_obj = self.pool.get('pos.order.line')
 
 		for order in self.browse(cr, uid, ids):
 			clone_id = self.copy(cr, uid, order.id, {
@@ -399,9 +461,9 @@ class pos_order(osv.osv):
 		return clone_list
 
 	def action_invoice(self, cr, uid, ids, context={}):
-		inv_ref= self.pool.get('account.invoice')
-		inv_line_ref= self.pool.get('account.invoice.line')
-		inv_ids=[]
+		inv_ref = self.pool.get('account.invoice')
+		inv_line_ref = self.pool.get('account.invoice.line')
+		inv_ids = []
 
 		for order in self.browse(cr, uid, ids, context):
 			if order.invoice_id:
@@ -419,7 +481,7 @@ class pos_order(osv.osv):
 				'partner_id': order.partner_id.id,
 				'comment': order.note or '',
 				'price_type': 'tax_included'
-				}
+			}
 			inv.update(inv_ref.onchange_partner_id(cr, uid, [], 'out_invoice', order.partner_id.id)['value'])
 			inv_id = inv_ref.create(cr, uid, inv, context)
 
@@ -427,11 +489,11 @@ class pos_order(osv.osv):
 			inv_ids.append(inv_id)
 
 			for line in order.lines:
-				inv_line= {
+				inv_line = {
 					'invoice_id': inv_id,
 					'product_id': line.product_id.id,
 					'quantity': line.qty,
-					}
+				}
 				inv_line.update(inv_line_ref.product_id_change(cr, uid, [],
 					line.product_id.id,
 					line.product_id.uom_id.id,
@@ -510,7 +572,7 @@ class pos_order(osv.osv):
 				tax_amount = 0
 				while computed_taxes:
 					tax = computed_taxes.pop(0)
-					if amount>0:
+					if amount > 0:
 						tax_code_id = tax['base_code_id']
 						tax_amount = line.price_subtotal * tax['base_sign']
 					else:
@@ -537,7 +599,7 @@ class pos_order(osv.osv):
 
 				# For each remaining tax with a code, whe create a move line
 				for tax in computed_taxes:
-					if amount>0:
+					if amount > 0:
 						tax_code_id = tax['base_code_id']
 						tax_amount = line.price_subtotal * tax['base_sign']
 					else:
@@ -604,17 +666,17 @@ class pos_order(osv.osv):
 			for payment in order.payments:
 
 				if payment.amount > 0:
-					payment_account =\
+					payment_account = \
 						payment.journal_id.default_debit_account_id.id
 				else:
-					payment_account =\
+					payment_account = \
 						payment.journal_id.default_credit_account_id.id
 
 				if payment.amount > 0:
-					order_account =\
+					order_account = \
 						order.sale_journal.default_credit_account_id.id
 				else:
-					order_account =\
+					order_account = \
 						order.sale_journal.default_debit_account_id.id
 
 				# Create one entry for the payment
@@ -697,7 +759,7 @@ class pos_order_line(osv.osv):
 		return price
 
 	def onchange_product_id(self, cr, uid, ids, pricelist, product_id, qty=0, partner_id=False):
-		price= self.price_by_product(cr, uid, ids, pricelist, product_id, qty, partner_id)
+		price = self.price_by_product(cr, uid, ids, pricelist, product_id, qty, partner_id)
 
 		return {'value': {'price_unit': price}}
 
@@ -712,6 +774,7 @@ class pos_order_line(osv.osv):
 		'order_id': fields.many2one('pos.order', 'Order Ref', ondelete='cascade'),
 		'create_date': fields.datetime('Creation date', readonly=True),
 		}
+
 	_defaults = {
 		'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'pos.order.line'),
 		'qty': lambda *a: 1,

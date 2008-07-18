@@ -123,8 +123,9 @@ class wizard_default_journal(wizard.interface):
 		},
 		'set_default_journal': {
 			'actions': [_set_default_journal],
-			'result' : {'type' : 'state',
-									'state': "end",
+			'result': {
+				'type': 'state',
+				'state': "end",
 			}
 		},
 	}

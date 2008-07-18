@@ -26,11 +26,8 @@
 #
 ##############################################################################
 
-
 import pooler
-import netsvc
 import wizard
-from osv import osv
 
 
 picking_form = """<?xml version="1.0"?>
@@ -40,22 +37,23 @@ picking_form = """<?xml version="1.0"?>
 """
 
 picking_fields = {
-	'picking_id': {'string':'Sale Order', 'type':'many2one','relation': 'stock.picking','required':True}
+	'picking_id': {'string': 'Sale Order', 'type': 'many2one', 'relation': 'stock.picking', 'required': True}
 }
 
 def _sale_complete(self, cr, uid, data, context):
+	# XXX test XXX
 	pool = pooler.get_pool(cr.dbname)
-	order = pool.get('pos.order').browse(cr,uid,data['id'],context)
+	order = pool.get('pos.order').browse(cr, uid, data['id'], context)
 
-	pick = pool.get('stock.picking').browse(cr,uid,data['form']['picking_id'],context)
+	pick = pool.get('stock.picking').browse(cr, uid, data['form']['picking_id'], context)
 
 	order.write(cr, uid, data['id'], {
-		'last_out_picking':data['form']['picking_id'],
+		'last_out_picking': data['form']['picking_id'],
 		'partner_id': pick.address_id and pick.address_id.partner_id.id
 	})
 
-	order = pool.get('stock.picking').write(cr,uid,[data['form']['picking_id']],{
-		'invoice_state':'none',
+	order = pool.get('stock.picking').write(cr, uid, [data['form']['picking_id']], {
+		'invoice_state': 'none',
 		'pos_order': data['id']
 	})
 
@@ -68,26 +66,32 @@ def _sale_complete(self, cr, uid, data, context):
 			'price_unit': line.sale_line_id.price_unit,
 			'discount': line.sale_line_id.discount,
 		})
+
 	return {}
 
-class pos_sale_get(wizard.interface):
 
+class pos_sale_get(wizard.interface):
 	states = {
-		'init' : {'actions' : [],
-				 'result' : {'type' : 'form',
-							 'arch': picking_form,
-							 'fields': picking_fields,
-							 'state' : (('end', 'Cancel'),
+		'init': {
+			'actions': [],
+			'result': {
+				'type': 'form',
+				'arch': picking_form,
+				'fields': picking_fields,
+				'state':	(	('end', 'Cancel'),
 										('set', 'Confirm',
-										 'gtk-ok', True)
-										)
-							 }
-				 },
-		'set' : {'actions' : [_sale_complete],
-					 'result' : {'type' : 'state',
-								 'state': "end",
-							  }
-				  },
+										'gtk-ok', True)
+									)
+			}
+		},
+		'set': {
+			'actions': [_sale_complete],
+			'result': {
+				'type' : 'state',
+				'state': "end",
+			}
+		},
 	}
 
 pos_sale_get('pos.sale.get')
+
