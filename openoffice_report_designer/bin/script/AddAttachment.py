@@ -105,12 +105,11 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
 	desktop = getDesktop()
 	oDoc2 = desktop.getCurrentComponent()
 	docinfo = oDoc2.getDocumentInfo()
-	filename = len(strFilterSubName) > 0 and convertToURL( os.path.splitext( strFile )[0] + ".pdf" ) or None
 	sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
 	params = {
 	    'name': name, 
 	    'datas': base64.encodestring( data ), 
-	    'datas_fname': filename,
+	    'datas_fname': name,
 	    'res_model' : res_model, 
 	    'res_id' : int(res_id),
 	}
