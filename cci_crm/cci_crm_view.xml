@@ -7,10 +7,10 @@
 			<field name="name">crm.case.form.confidential</field>
 			<field name="type">form</field>
 			<field name="model">crm.case</field>
-			<field name="inherit_id" ref="crm.crm_case-view"/>
+			<field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
 			<field name="arch" type="xml">
-				<field name="som" position="after">
-					<field name="meeting_id" select="2"/>
+				<field name="note" position="after">
+					<field name="meeting_id" select="2" colspan="4"/>
 				</field>
 			</field>
 		</record>
@@ -40,7 +40,7 @@
 			<notebook position="inside">
 				<page string="Sponsoring">
 					<separator string="Cases" colspan="4"/>
-					<field name="case_ids" colspan="4" nolabel="1"/>
+					<field name="case_ids" colspan="4" nolabel="1" domain="[('section_id.name','=','Sponsoring')]"/>
 				</page>
 			</notebook>
 		</field>
@@ -55,7 +55,7 @@
 				<form string="Confidential Info">
 					<field name="group" select="1"/>
 					<newline/>
-					<field name="description" select="2"/>
+					<field name="description" select="1"/>
 				</form>
 			</field>
 		</record>
@@ -66,6 +66,7 @@
 			<field name="arch" type="xml">
 				<tree string="Confidential Info">
 					<field name="group"/>
+					<field name="description"/>
 				</tree>
 			</field>
 		</record>
@@ -77,6 +78,7 @@
 		</record>
 		<menuitem name="CRM &amp; SRM/Meeting Confidential Info" action="action_meeting_confidential_info" id="menu_meeting_confidential_info"/>
 
+<!-- Act window defining a shorcut on partners to open directly a new RSF -->
 		<act_window name="Open a New RSF"
 			domain="[('partner_id', '=', active_id)]"
 			context="{'partner_id':active_id,'section_id':ref('case_section_rsf')}"
@@ -84,6 +86,35 @@
 			src_model="res.partner"
 			view_mode='form'
 			id="act_res_partner_2_new_rsf"/>
+
+			<!-- context="{'partner_id':active_id,'section_id':ref('case_section_rsf')}" -->
+
+
+<!-- view for Agenda -->
+		<record model="ir.ui.view" id="agenda_form">
+			<field name="name">meeting.confidential.info.form</field>
+			<field name="type">form</field>
+			<field name="model">meeting.confidential.info</field>
+			<field name="arch" type="xml">
+				<form string="Confidential Info">
+					<field name="group" select="1"/>
+					<newline/>
+					<field name="description" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="agenda_tree">
+			<field name="name">meeting.confidential.info.tree</field>
+			<field name="type">tree</field>
+			<field name="model">meeting.confidential.info</field>
+			<field name="arch" type="xml">
+				<tree string="Confidential Info">
+					<field name="group"/>
+					<field name="description"/>
+				</tree>
+			</field>
+		</record>
+
 
 <!--
 		<record model="ir.actions.act_window" id="act_res_partner_2_new_RSF">
