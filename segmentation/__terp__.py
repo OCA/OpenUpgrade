@@ -8,6 +8,8 @@
 
 	In this version the new concept of questionnaire allow you to regroup questions into a questionnaire and directly use it on a partner.
 
+
+NOTICE: This Module is Deprecated. Please install crm_profiling in order to have access to the latest functionnalities.
 	""",
 	"website" : "http://tinyerp.com/",
 	"category" : "Generic Modules/Project & Services",
@@ -16,5 +18,5 @@
 	"update_xml" : ["segmentation_view.xml",
 			],
 	"active": False,
-	"installable": True
+	"installable": False
 }
