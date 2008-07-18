@@ -20,7 +20,7 @@
 	Campaign Group Views
 	=======================================================
 	-->
-<!--
+
 	<record model="ir.ui.view" id="view_campaign_group_tree">
 		<field name="name">dm.campaign.group.tree</field>
 		<field name="model">dm.campaign.group</field>
@@ -28,7 +28,7 @@
 		<field name="arch" type="xml">
 			<tree string="Campaign Groups">
 				<field name="name"/>
-				<field name="campaign_group_ids"/>
+				<field name="campaign_ids"/>
 			</tree>
 		</field>
 	</record>
@@ -41,7 +41,7 @@
 			<form string="Campaign Groups">
 				<field name="name"/>
 				<separator string="Campaign Groups" colspan="4"/>
-				<field name="campaign_group_ids" colspan="4" nolabel="1"/>
+				<field name="campaign_ids" colspan="4" nolabel="1"/>
 			</form>
 		</field>
 	</record>
@@ -53,8 +53,8 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_group_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaign Groups" id="menu_action_campaign_group_form_all" action="action_campaign_group_form_all" sequence="1"/>
--->
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaign Groups" id="menu_action_campaign_group_form_all" action="action_campaign_group_form_all" sequence="1"/>
+
 
 	<!--
 	=======================================================

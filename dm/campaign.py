@@ -34,11 +34,17 @@ class dm_campaign(osv.osv):
         result ={}
         for id in ids:
             camp = self.browse(cr,uid,[id])[0]
+            offer_code = id.offer_id and pro.camp_id.offer_id.code or ''
             trademark = camp.trademark_id and camp.trademark_id.name or ''
-            partner =camp.partner_id and camp.partner_id.name or ''
+            partner =camp.partner_id and camp.partner_id.code or ''
             date_start = camp.date_start or ''
             code = camp.country_id.code or ''
-            code1='-'.join([trademark,partner,date_start,code])
+            date = date_start.split('-')
+            year = month = ''
+            if len(date)==3:
+                year = date[0][2:] 
+                month = date[1]
+            code1='-'.join([offer_code ,partner ,trademark ,month ,year ,code])
             result[id]=code1
         return result
 
@@ -160,12 +166,18 @@ class dm_campaign_proposition(osv.osv):
         for id in ids:
             
             pro = self.browse(cr,uid,[id])[0]
+            offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
             trademark = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
-            partner =pro.camp_id.partner_id and pro.camp_id.partner_id.name or ''
+            partner_code =pro.camp_id.partner_id and pro.camp_id.partner_id.code or ''
             date_start = pro.date_start or ''
-            print date_start
-            code = pro.camp_id.country_id.code or ''
-            code1='-'.join([trademark,partner,date_start,code,str(id)])
+            date = date_start.split('-')
+            year = month = ''
+            if len(date)==3:
+                year = date[0][2:] 
+                month = date[1]
+            code = pro.camp_id.country_id.code or '' 
+            seq = '%%0%sd' % 3 % id
+            code1='-'.join([offer_code, partner_code ,trademark ,month ,year ,code ,seq])
             result[id]=code1
         return result
         
