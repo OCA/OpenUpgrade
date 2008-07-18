@@ -81,5 +81,13 @@
 			id="missions_rec_enc_cash_carnet"/>
 
 
+<!-- Philmer addition to send the certificates to the belgian federation -->
+		<wizard string="Send to Federation"
+			model="cci_missions.certificate"
+			name="cci_mission.send_certificates_federation"
+			id="cci_mission_send_certificates_federation"
+			menu="True"/>
+
+
 	</data>
 </terp>
