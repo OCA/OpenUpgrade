@@ -14,7 +14,7 @@ create:
 
 pack:
 	rm -f openerp_report_add_attachment.zip
-	zip -r openerp_report_add_attachment.zip package/*
+	zip openerp_report_add_attachment.zip `find package/ | grep -v svn` 
 	
 install:
 	sh /usr/lib/openoffice/program/unopkg add -v openerp_report_add_attachment.zip
