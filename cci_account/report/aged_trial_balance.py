@@ -78,10 +78,9 @@ class aged_trial_report(report_sxw.rml_parse):
 		for partner in partners:
 			values = {}
 			self.cr.execute("SELECT SUM(debit-credit) " \
-					"FROM account_move_line AS line, account_account, account_account_type AS t " \
+					"FROM account_move_line AS line, account_account " \
 					"WHERE (line.account_id=account_account.id) " \
-						"AND (account_account.type=t.id)"
-						"AND (t.code IN ('payable','receivable')) " \
+						"AND (account_account.type IN ('payable','receivable')) " \
 						"AND (date < %s) AND (partner_id=%d) " \
 						"AND (reconcile_id IS NULL) " \
 						"AND " + line_query + " " \
@@ -92,10 +91,9 @@ class aged_trial_report(report_sxw.rml_parse):
 			values['before'] = before and before[0] or ""
 			for i in range(5):
 				self.cr.execute("SELECT SUM(debit-credit) " \
-						"FROM account_move_line AS line, account_account, account_account_type AS t " \
+						"FROM account_move_line AS line, account_account " \
 						"WHERE (line.account_id=account_account.id) " \
-							"AND (account_account.type=t.id)"
-							"AND (t.code IN ('payable','receivable')) " \
+							"AND (account_account.type IN ('payable','receivable')) " \
 							"AND (date >= %s) AND (date <= %s) " \
 							"AND (partner_id = %d) " \
 							"AND (reconcile_id IS NULL) " \
@@ -108,10 +106,9 @@ class aged_trial_report(report_sxw.rml_parse):
 				values[str(i)] = during and during[0] or ""
 
 			self.cr.execute("SELECT SUM(debit-credit) " \
-					"FROM account_move_line AS line, account_account, account_account_type AS t " \
+					"FROM account_move_line AS line, account_account " \
 					"WHERE (line.account_id = account_account.id) " \
-						"AND (account_account.type=t.id)"
-						"AND (t.code IN ('payable','receivable')) " \
+						"AND (account_account.type IN ('payable','receivable')) " \
 						"AND (partner_id = %d) " \
 						"AND (reconcile_id IS NULL) " \
 						"AND " + line_query + " " \
@@ -140,10 +137,9 @@ class aged_trial_report(report_sxw.rml_parse):
 		line_query = account_move_line_obj._query_get(self.cr, self.uid, obj='line',
 				context={'fiscalyear': fiscalyear})
 		self.cr.execute("SELECT SUM(debit - credit) " \
-				"FROM account_move_line AS line, account_account, account_account_type AS t " \
+				"FROM account_move_line AS line, account_account " \
 				"WHERE (line.account_id = account_account.id) " \
-					"AND (account_account.type=t.id)"
-					"AND (t.code IN ('payable', 'receivable')) "\
+					"AND (account_account.type IN ('payable', 'receivable')) "\
 					"AND reconcile_id IS NULL " \
 					"AND partner_id is NOT NULL " \
 					"AND " + line_query + " " \
@@ -159,10 +155,9 @@ class aged_trial_report(report_sxw.rml_parse):
 		line_query = account_move_line_obj._query_get(self.cr, self.uid, obj='line',
 				context={'fiscalyear': fiscalyear})
 		self.cr.execute("SELECT SUM(debit - credit) " \
-				"FROM account_move_line AS line, account_account, account_account_type AS t " \
+				"FROM account_move_line AS line, account_account " \
 				"WHERE (line.account_id = account_account.id) " \
-					"AND (account_account.type=t.id)"
-					"AND (t.code IN ('payable', 'receivable')) " \
+					"AND (account_account.type IN ('payable', 'receivable')) " \
 					"AND reconcile_id IS NULL " \
 					"AND (date < %s) " \
 					"AND partner_id IS NOT NULL " \
@@ -179,10 +174,9 @@ class aged_trial_report(report_sxw.rml_parse):
 		line_query = account_move_line_obj._query_get(self.cr, self.uid, obj='line',
 				context={'fiscalyear': fiscalyear})
 		self.cr.execute("SELECT SUM(debit - credit) " \
-				"FROM account_move_line AS line, account_account, account_account_type AS t " \
+				"FROM account_move_line AS line, account_account " \
 				"WHERE (line.account_id = account_account.id) " \
-					"AND (account_account.type=t.id)"
-					"AND (t.code IN ('payable', 'receivable')) " \
+					"AND (account_account.type IN ('payable', 'receivable')) " \
 					"AND reconcile_id IS NULL " \
 					"AND (date >= %s) " \
 					"AND (date <= %s) " \

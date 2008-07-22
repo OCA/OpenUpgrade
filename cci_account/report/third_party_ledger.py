@@ -78,7 +78,7 @@ class third_party_ledger(report_sxw.rml_parse):
 			"SELECT a.id " \
 			"FROM account_account a " \
 			"LEFT JOIN account_account_type t " \
-				"ON (a.type=t.id) " \
+				"ON (a.type=t.code) " \
 			"WHERE t.partner_account=TRUE " \
 				"AND a.company_id = %d " \
 				"AND a.active", (data['form']['company_id'],))
