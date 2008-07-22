@@ -220,9 +220,9 @@ class res_partner(osv.osv):
         'dir_date_accept':fields.date("Good to shoot Date",help='Date of last acceptation of Bon a Tirer'),
         'dir_presence':fields.boolean('Dir. Presence',help='Present in the directory of the members'),
         'dir_date_publication':fields.date('Publication Date'),
-        'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
         'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
+        'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','current_partner_id','Partner Relation'),
@@ -236,7 +236,6 @@ class res_partner(osv.osv):
     _defaults = {
         'wall_exclusion' : lambda *a: False,
         'dir_presence' : lambda *a: True,
-        'dir_exclude':lambda *a: False,
         'magazine_subscription': lambda *a: 'prospect',
         'state_id': _get_partner_state,
         'state_id2': _get_customer_state,
@@ -350,7 +349,7 @@ class res_partner_job(osv.osv):
 
     _inherit = 'res.partner.job'
     _columns = {
-        'function_label':fields.char('Function Label',size=128, required=True),
+        'function_label':fields.char('Function Label',size=250, required=True),
         'function_code_label':fields.char('Codes',size=128,),
         'date_start':fields.date('Date start'),
         'date_end':fields.date('Date end'),
@@ -358,7 +357,7 @@ class res_partner_job(osv.osv):
         'active':fields.boolean('Active'),
         'who_presence':fields.boolean('In Whos Who'),
         'dir_presence':fields.boolean('In Directory'),
-        'department': fields.char('Department',size=20),
+        'department': fields.char('Department',size=60),
     }
 
     _defaults = {
