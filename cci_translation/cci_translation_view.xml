@@ -129,9 +129,14 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
-				<field name="address" position="before">
-					<field name="awex_eligible"/>
-				</field>
+
+				<notebook position="inside">
+					<page string="Certificate Details">
+						<separator string="Translation" colspan="4"/>
+                        <field name="awex_eligible"/>
+                    </page>
+				</notebook>
+
 			</field>
 		</record>
 
