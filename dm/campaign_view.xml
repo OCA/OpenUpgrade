@@ -321,16 +321,18 @@
 				<notebook colspan="4">
 					<page string="General">
 						<separator string="Global Information" colspan="4"/>
-						<field name="name" string="Name" select="1"/>
+						<field name="name" string="Name" select="1" />
 						<field name="code1" string="Code" select="2"/>
 						<field name="country_id" select="1" on_change="onchange_offer(offer_id,country_id)"/>
-						<field name="campaign_type" select="2"/>
+						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)"/>
+<!--						<field name="campaign_type" select="2" colspan="2"/>-->
 <!--						<separator string="Process State" colspan="4"/>-->
 <!--						<field name="planning_state" select="2" nolabel="0"/>-->
 <!--						<field name="manufacturing_state" select="2" nolabel="0"/>-->
 <!--						<field name="campaign_stat_ids"/>-->
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4" nolabel="1"/>
+						<button name="copy_campaign" string="Create Campaign" type="object"/>						
 					</page>
 					<page string="Propositions">
 						<field name="proposition_ids" nolabel="1">
@@ -387,8 +389,8 @@
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
-		<field name="domain">[('type','=','model')]</field>
-		<field name="context">{'type':'model'}</field>
+		<field name="domain">[('campaign_type','=','model')]</field>
+		<field name="context">{'campaign_type':'model'}</field>
 	</record>
 	
 	<record model="ir.actions.act_window.view" id="action_campaign_model_tree_view">

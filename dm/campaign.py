@@ -34,25 +34,28 @@ class dm_campaign(osv.osv):
         result ={}
         for id in ids:
             camp = self.browse(cr,uid,[id])[0]
-            offer_code = id.offer_id and pro.camp_id.offer_id.code or ''
-            trademark = camp.trademark_id and camp.trademark_id.name or ''
-            partner =camp.partner_id and camp.partner_id.code or ''
-            date_start = camp.date_start or ''
-            code = camp.country_id.code or ''
-            date = date_start.split('-')
-            year = month = ''
-            if len(date)==3:
-                year = date[0][2:] 
-                month = date[1]
-            code1='-'.join([offer_code ,partner ,trademark ,month ,year ,code])
-            result[id]=code1
+            if camp.campaign_type=='model':
+                result[id]='MOC%%0%sd'%3 %id
+            else :
+                offer_code = camp.offer_id and camp.offer_id.code or ''
+                trademark = camp.trademark_id and camp.trademark_id.name or ''
+                partner =camp.partner_id and camp.partner_id.code or ''
+                date_start = camp.date_start or ''
+                code = camp.country_id.code or ''
+                date = date_start.split('-')
+                year = month = ''
+                if len(date)==3:
+                    year = date[0][2:] 
+                    month = date[1]
+                code1='-'.join([offer_code ,partner ,trademark ,month ,year ,code])
+                result[id]=code1
         return result
 
     def _get_campaign_type(self,cr,uid,context={}):
         campaign_type = self.pool.get('dm.campaign.type')
         type_ids = campaign_type.search(cr,uid,[])
         type = campaign_type.browse(cr,uid,type_ids)
-        return map(lambda x : [x.code,x.code],type)
+        return map(lambda x : [x.code,x.name],type)
 
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),                
@@ -127,7 +130,29 @@ class dm_campaign(osv.osv):
         if not camp.date_start or not camp.partner_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing.Check Date,Associated Partner,Trademark ")
         self.write(cr, uid, ids, {'state':'open'})
-        return True 
+        return True
+    
+    def create(self,cr,uid,vals,context={}):
+        if context.has_key('campaign_type') and context['campaign_type']=='model':
+            vals['campaign_type']='model'
+        return super(dm_campaign,self).create(cr,uid,vals,context)
+
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+        result = super(dm_campaign,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+        if context.has_key('campaign_type'):
+            if context['campaign_type'] == 'model' :
+                if result.has_key('toolbar'):
+                    result['toolbar']['action'] =[]
+        return result
+
+    def copy_campaign(self,cr, uid, ids, *args):
+        camp = self.browse(cr,uid,ids)[0]
+        default={}
+        default['name']='New offer from model %s' % camp.name
+#Need to change        default['campaign_type'] = ''
+        self.copy(cr,uid,ids[0],default)
+        return True
+        
 dm_campaign()
 
 #Postgres view
