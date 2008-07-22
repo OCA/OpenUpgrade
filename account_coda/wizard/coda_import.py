@@ -64,14 +64,14 @@ codawiz_fields = {
         'type' : 'many2one',
         'relation': 'account.account',
         'required':True,
-        'domain':[('type.code','=','payable')],
+        'domain':[('type','=','payable')],
     },
     'def_receivable' : {
         'string' : 'Default receivable Account',
         'type' : 'many2one',
         'relation': 'account.account',
         'required':True,
-        'domain':[('type.code','=','receivable')],
+        'domain':[('type','=','receivable')],
     }
 }
 
