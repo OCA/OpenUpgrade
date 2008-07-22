@@ -35,40 +35,41 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
 
-	self.userInfo = docinfo.getUserFieldValue(1)
-	# Open a new connexion to the server
+        self.userInfo = docinfo.getUserFieldValue(1)
+        # Open a new connexion to the server
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
         ids = sock.execute(database, uid, self.userInfo, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
-	if not len(ids):
-	    ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
-	    exit(1)
+        if not len(ids):
+            ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
+            exit(1)
 
-	ids = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml' ,  'search', [('report_xsl', '=', False),('report_xml', '=', False)])
+        ids = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml', 'search', [('report_xsl', '=', False),('report_xml', '=', False)])
 
         fields=['id', 'name','report_name','model']
 
         self.reports = sock.execute(database, uid, self.userInfo, 'ir.actions.report.xml', 'read', ids, fields)
-	self.report_with_id = []
-    
-	for report in self.reports:
+        self.report_with_id = []
+
+        for report in self.reports:
             if report['name']<>"":
                 model_ids = sock.execute(database, uid, self.userInfo, 'ir.model' ,  'search', [('model','=', report['model'])])
                 model_res_other = sock.execute(database, uid, self.userInfo, 'ir.model', 'read', model_ids, [ 'name', 'model' ] )
                 if model_res_other <> []:
-		    self.report_with_id.append( (report['id'], model_res_other[0]['name'] + " - " + report['name'] ) ) 
+                    name = model_res_other[0]['name'] + " - " + report['name'] 
                 else:
-                    self.report_with_id.append( (report['id'], report['name'] + " - " + report['model'] ) )
-	
-	self.report_with_id.sort( lambda x, y: cmp( x[1], y[1] ) )	
+                    name = report['name'] + " - " + report['model']
+                self.report_with_id.append( (report['id'], name, report['model'] ) )
 
-	for id, report_name in self.report_with_id:
-	    self.lstReport.addItem( report_name, self.lstReport.getItemCount() )
+        self.report_with_id.sort( lambda x, y: cmp( x[1], y[1] ) )	
+
+        for id, report_name, model_name in self.report_with_id:
+            self.lstReport.addItem( report_name, self.lstReport.getItemCount() )
 
         self.win.addButton('btnSave',-2 ,-5,80,15,'Open Report' ,actionListenerProc = self.btnOkOrCancel_clicked )
         self.win.addButton('btnCancel',-2 -80 ,-5,45,15,'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
 
-        self.win.doModalDialog("lstReport",self.reports[0]['name'])
+        self.win.doModalDialog("lstReport",self.report_with_id[0][1] )
 
     def lstbox_selected(self,oItemEvent):
         pass
@@ -109,7 +110,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
                 docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
                 docinfo2.setUserFieldValue(1,self.userInfo)
                 docinfo2.setUserFieldValue(2,id)
-                docinfo2.setUserFieldValue(3,self.reports[selectedItemPos]['model'])
+                docinfo2.setUserFieldValue(3,self.report_with_id[selectedItemPos][2])
     
                 oParEnum = oDoc2.getTextFields().createEnumeration()
                 while oParEnum.hasMoreElements():
