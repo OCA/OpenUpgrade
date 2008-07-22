@@ -1,9 +1,9 @@
 ZIP_FILE=openerp_report_designer.zip
 
-all: create pack uninstall install
+all: pack uninstall install
 
 create:
-	cat import \
+	cat script/import \
 	    script/lib/actions.py \
 	    script/lib/error.py \
 	    script/lib/functions.py \
@@ -26,7 +26,7 @@ create:
 	    script/Translation.py \
 	    script/AddAttachment.py > package/OpenERPReport.py
 
-pack: clean
+pack: clean create
 	zip $(ZIP_FILE) `find package/ | grep -v svn` 
 	
 install:
