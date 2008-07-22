@@ -10,21 +10,19 @@
 			<field name="model">res.partner</field>
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
-				<notebook position="inside">
-					<page string="Certificate Details">
-						<separator string="Asker Info" colspan="4"/>
-						<field name="asker_name" select="2"/>
-						<newline/>
-						<field name="asker_address"/>
-						<newline/>
-						<field name="asker_zip_id"/>
-						<newline/>
-						<separator string="Sender Info" colspan="4"/>
-						<field name="sender_name"/>
-						<separator string="ATA infos" colspan="4"/>
-						<field name="insurer_id" />
-					</page>
-				</notebook>
+				<field name="awex_eligible" position="after">
+					<field name="insurer_id" />
+					<separator string="ATA infos" colspan="4"/>
+					<field name="sender_name"/>
+					<separator string="Sender Info" colspan="4"/>
+					<newline/>
+					<field name="asker_zip_id"/>
+					<newline/>
+					<field name="asker_address"/>
+					<newline/>
+					<field name="asker_name" select="2"/>
+					<separator string="Asker Info" colspan="4"/>
+				</field>
 			</field>
 		</record>
 

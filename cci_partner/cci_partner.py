@@ -164,13 +164,17 @@ class res_partner(osv.osv):
         return True
 
     def _check_activity(self,cr,uid,ids):
-        list_type = []
         data_partner=self.browse(cr, uid, ids)
         for data in data_partner:
+            list_activities = []
             for activity in data.activity_code_ids:
-                if activity.importance in list_type and activity.importance == "main":
-                    return False
-                list_type.append(activity.importance)
+                list_activities.append((activity.importance, activity.activity_id.list_id))
+            main_list = []
+            for (importance, list_id) in list_activities:
+                if importance == "main":
+                    if list_id in main_list:
+                        return False
+                    main_list.append(list_id)
         return True
 
     def _get_partner_state(self, cr, uid, ids):
@@ -213,7 +217,7 @@ class res_partner(osv.osv):
         'alert_membership':fields.boolean('Membership Alert',help='Partners description to be shown when inserting new ship sale'),
         'alert_others':fields.boolean('Other alert',help='Partners description to be shown when inserting new sale not treated by _advertising, _events, _legalisations, _Membership'),
         'alert_explanation':fields.text('Warning'),
-        'dir_name':fields.char('Name in Menber Dir.',size=250,help='Name under wich the partner will be inserted in the members directory'),
+        'dir_name':fields.char('Name in Member Dir.',size=250,help='Name under wich the partner will be inserted in the members directory'),
         'dir_name2':fields.char('1st Shortcut name ',size=250,help='First shortcut in the members directory, pointing to the dir_name field'),
         'dir_name3':fields.char('2nd Shortcut name ',size=250,help='Second shortcut'),
         'dir_date_last':fields.date('Partner Data Date',help='Date of latest update of the partner data by itself (via paper or Internet)'),
@@ -223,6 +227,7 @@ class res_partner(osv.osv):
         'dir_exclude':fields.boolean('Dir. exclude',help='Exclusion from the Members directory'),
 
         'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
+        'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
         'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','current_partner_id','Partner Relation'),

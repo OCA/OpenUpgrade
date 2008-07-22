@@ -850,7 +850,9 @@ TODO: revoir la vue tree aussi
 			<field name="inherit_id" ref="base.view_partner_form"/>
 			<field name="arch" type="xml">
 				<notebook position="inside">
-
+					<page string="Categories">
+						<field colspan="4" name="category_id" nolabel="1" select="2"/>
+					</page>
 					<page string="Activities">
 						<separator string="Activity Codes" colspan="4"/>
 						<field name="activity_code_ids" nolabel="1">
@@ -898,6 +900,7 @@ TODO: revoir la vue tree aussi
 
 					<page string="Accounting Information">
 						<field name="domiciliation_cotisation"/>
+						<field name="domiciliation"/>
 						<field name="invoice_nbr"/>
 						<field name="invoice_paper"/>
 						<field name="invoice_public"/>
@@ -918,8 +921,9 @@ TODO: revoir la vue tree aussi
 						<separator string="Miscelleanous" colspan="4"/>
 						<field name="name_official"/>
 						<field name="name_old"/>
-						<field name="wall_exclusion"/>
 						<field name="magazine_subscription"/>
+						<field name="magazine_subscription_source"/>
+						<field name="wall_exclusion"/>
 						<field name="date_founded"/>
 						<field name="canal_id"/>
 						<separator string="Events" colspan="4"/>
@@ -962,6 +966,42 @@ TODO: revoir la vue tree aussi
 			</field>
 		</record>
 
+<!-- don't display the categories, since it is displayed in an other tab-->
+		<record model="ir.ui.view" id="view_partner_form_inherit5">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="category_id" position="replace">
+				</field>
+			</field>
+		</record>
+
+<!-- don't display the domiciliation, since it is displayed in an other tab-->
+		<record model="ir.ui.view" id="view_partner_form_inherit6">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="domiciliation" position="replace">
+				</field>
+			</field>
+		</record>
+
+<!-- put salesman as select="1"-->
+		<record model="ir.ui.view" id="view_partner_form_inherit7">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="user_id" position="replace">
+					<field name="user_id" select="1"/>
+				</field>
+			</field>
+		</record>
 
 	<record model="ir.ui.view" id="view_partner_form_inherit_jobs">
 		<field name="name">Partner form inherited</field>
