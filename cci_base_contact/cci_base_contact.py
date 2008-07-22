@@ -46,6 +46,10 @@ class res_partner_contact(osv.osv):
         'link_ids':fields.one2many('res.partner.contact.link','current_contact_id','Contact Link'),
         'canal_id': fields.many2one('res.partner.canal', 'Favourite Channel'),
         'national_number' : fields.char( 'National Number',size=15), 
+        'login_name': fields.char('Login Name',size=32), 
+        'password': fields.char('Password',size=32), 
+        'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
+        'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
     }
     _defaults = {
         'data_private' : lambda *a : False,
