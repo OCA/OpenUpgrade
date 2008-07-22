@@ -47,11 +47,11 @@ class res_partner(osv.osv):
 
 	_columns = {
 		'membership_vcs': fields.function( _membership_vcs, method=True,string='VCS number for membership offer', type='char', size=20),
-		'refuse_membership': fields.boolean('Didn\'t Refuse Explicitly to Become a Member'),
+		'refuse_membership': fields.boolean('Refuse to Become a Member'),
 	}
 
 	_default = {
-		'refuse_membership': lambda *a: True,
+		'refuse_membership': lambda *a: 0,
 	}
 
 res_partner()
