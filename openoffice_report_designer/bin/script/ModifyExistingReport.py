@@ -36,9 +36,10 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         doc = desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
 
+        self.hostname = docinfo.getUserFieldValue(0)
         self.password = docinfo.getUserFieldValue(1)
         # Open a new connexion to the server
-        sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+        sock = xmlrpclib.ServerProxy( self.hostname +'/xmlrpc/object')
 
         ids = sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
         if not len(ids):
@@ -77,7 +78,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             desktop=getDesktop()
             doc = desktop.getCurrentComponent()
             docinfo=doc.getDocumentInfo()
-            sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
+            sock = xmlrpclib.ServerProxy( self.hostname +'/xmlrpc/object')
             selectedItemPos = self.win.getListBoxSelectedItemPos( "lstReport" )
             id = self.report_with_id[ selectedItemPos ][0]
 
@@ -96,7 +97,7 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
             arr=Array(makePropertyValue("MediaType","application/vnd.sun.xml.writer"),)
             oDoc2 = desktop.loadComponentFromURL(url, "openerp", 55, arr)
             docinfo2=oDoc2.getDocumentInfo()
-            docinfo2.setUserFieldValue(0,docinfo.getUserFieldValue(0))
+            docinfo2.setUserFieldValue(0, self.hostname)
             docinfo2.setUserFieldValue(1,self.password)
             docinfo2.setUserFieldValue(2,id)
             docinfo2.setUserFieldValue(3,self.report_with_id[selectedItemPos][2])
