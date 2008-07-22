@@ -58,7 +58,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 self.lstDatabase.addItem("No Database found !!!",0)
             else:
                 self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
-                for i in range(len(res)):
+		for i in range(len(res)):
                     self.lstDatabase.addItem(res[i],i)
                 sValue = database
 
@@ -91,7 +91,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 uid=UID
                 #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
                 #docinfo.setUserFieldValue(3,"")
-                ErrorDialog(" You can start creating your report in \nthe current document.","Take care to save it as a .SXW file \nbefore sending to the server.")
+                ErrorDialog(" You can start creating your report in \nthe current document.","Take care to save it as a .SXW file \nbefore sending to the server.","Message")
                 self.win.endExecute()
         elif oActionEvent.Source.getModel().Name == "btnCancel":
             self.win.endExecute()
@@ -107,14 +107,13 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         else:
             self.win.setEditText("txtHost",aVal[0])
             self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
-            for i in range(len(aVal[1])):
+	    for i in range(len(aVal[1])):
                 self.lstDatabase.addItem(aVal[1][i],i)
 
 
 if __name__<>"package" and __name__=="__main__":
     ServerParameter(None)
 elif __name__=="package":
-    g_ImplementationHelper = unohelper.ImplementationHelper()
     g_ImplementationHelper.addImplementation( \
             ServerParameter,
             "org.openoffice.openerp.report.serverparam",

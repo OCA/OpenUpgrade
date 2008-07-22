@@ -7,7 +7,7 @@
             <node oor:name="org.openoffice.openerp.report" oor:op="replace">
                 <prop oor:name="Title" oor:type="xs:string">
                     <value/>
-                    <value xml:lang="en-US">OpenERP Report</value>
+                    <value xml:lang="en-US">OpenERP ~Report</value>
                 </prop>
                 <prop oor:name="Target" oor:type="xs:string">
                     <value>_self</value>
@@ -31,7 +31,7 @@
                             <value>com.sun.star.text.TextDocument</value>
                         </prop>
                     </node>
-                    <node oor:name="m26" oor:op="replace">
+                    <node oor:name="m12" oor:op="replace">
                         <prop oor:name="Context" oor:type="xs:string">
                             <value>com.sun.star.text.TextDocument</value>
                         </prop>
@@ -109,5 +109,6 @@
                 </node>
             </node>
         </node>
+
     </node>
 </oor:component-data>
