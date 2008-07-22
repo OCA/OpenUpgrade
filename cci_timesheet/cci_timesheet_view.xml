@@ -53,7 +53,40 @@
 					<field name="asked_amount" />
 					<field name="accepted_amount" />
 					<newline/>
-					<field name="line_ids" widget="one2many_list" colspan="4"/>
+					<field name="line_ids" widget="one2many_list" colspan="4">
+						<tree string="Timesheet Lines">
+							<field name="name"/>
+							<field name="grant_id"/>
+							<field name="user_id"/>
+							<field name="day_date"/>
+							<field name="hour_from" widget="float_time"/>
+							<field name="hour_to" widget="float_time"/>
+							<field name="partner_id"/>
+							<field name="diff_hours"/>
+						</tree>
+						<form string="Timesheet Lines">
+							<notebook>
+								<page string="General">
+									<field name="name"  select="1"/>
+									<field name="grant_id" select="1" />
+									<field name="user_id" select="1" />
+									<field name="day_date" select="1" />
+									<newline/>
+									<field name="hour_from"  select="2" widget="float_time" />
+									<field name="hour_to"  select="2"  widget="float_time" />
+									<newline/>
+									<field name="zip_id" />
+									<field name="partner_id" select="2" />
+									<field name="contact_id" select="2" />
+								</page>
+								<page string="Extra Info">
+									<field name="suppl_cost"/>
+									<field name="kms" />
+									<field name="description" colspan="4"/>
+								</page>
+							</notebook>
+						</form>
+					</field>
 					<group col="8" colspan="4">
 						<field name="state" select="2"/>
 						<button name="set_to_confirm" string="Confirm" states="draft" type="object"/>
@@ -134,6 +167,7 @@
 					<field name="hour_from" widget="float_time"/>
 					<field name="hour_to" widget="float_time"/>
 					<field name="partner_id"/>
+					<field name="diff_hours"/>
 				</tree>
 			</field>
 		</record>
@@ -145,6 +179,7 @@
 			<field name="model">cci_timesheet.affectation</field>
 			<field name="arch" type="xml">
 				<form string="Timesheet Affectation">
+					<field name="name" colspan="4"/>
 					<field name="user_id"  select="1" colspan="2" />
 					<field name="grant_id"  select="1" colspan="2" />
 					<newline/>
@@ -164,6 +199,7 @@
 			<field name="model">cci_timesheet.affectation</field>
 			<field name="arch" type="xml">
 				<tree string="Timesheet Affectation">
+					<field name="name"/>
 					<field name="user_id" />
 					<field name="grant_id" />
 					<field name="date_from" />
@@ -180,8 +216,85 @@
 			<field name="res_model">cci_timesheet.affectation</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
-
 		</record>
 		<menuitem name="Timesheet/Timesheet Affectation" id="menu_action_timesheet_affectation_tree" action="action_timesheet_affectation_tree" />
+
+
+
+<!-- Timesheet reporting -->
+
+		<record model="ir.ui.view" id="view_report_timesheet_affectation_tree">
+			<field name="name">Timesheets per Employee (Tree)</field>
+			<field name="model">report.timesheet.affectation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Timesheets per Employee">
+					<field name="name"/>
+					<field name="day_date"/>
+					<field name="hour_from"/>
+					<field name="hour_to"/>
+					<field name="user_name"/>
+					<field name="grant_name"/>
+					<field name="timesheet_id"/>
+					<field name="description"/>
+					<field name="diff_hours"/>
+
+					<field name="affectation_name"/>
+					<field name="th_percentage"/>
+					<field name="hours_per_week"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+					<field name="rate"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_report_timesheet_affectation_form">
+			<field name="name">Timesheets per Employee (Form)</field>
+			<field name="model">report.timesheet.affectation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Timesheets per Employee">
+					<field name="name"  select="2"/>
+					<field name="day_date" select="1"/>
+					<field name="hour_from"/>
+					<field name="hour_to"/>
+					<field name="user_name" select="1"/>
+					<field name="grant_name" select="1"/>
+					<field name="timesheet_id"  select="2"/>
+					<field name="description"/>
+					<field name="diff_hours"/>
+
+					<field name="affectation_name" select="2"/>
+					<field name="th_percentage"/>
+					<field name="hours_per_week"/>
+					<field name="date_from"/>
+					<field name="date_to"/>
+					<field name="rate"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_report_timesheet_affectation_graph">
+			<field name="name">Timesheets per Employee (Graph)</field>
+			<field name="model">report.timesheet.affectation</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Timesheets per Employee" type="bar" orientation="horizontal">
+					<field name="user_name"/>
+					<field name="diff_hours" operator="+"/>
+					<field name="affectation_name" group="True"/>
+				</graph>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_report_timesheet_affectation">
+			<field name="name">Timesheets per Employee</field>
+			<field name="res_model">report.timesheet.affectation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,graph</field>
+		</record>
+		<menuitem name="Timesheet/Reporting/Timesheets per Employee" action="action_report_timesheet_affectation" id="menu_report_timesheet_affectation"/>
+
 	</data>
 </terp>
