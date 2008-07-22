@@ -39,23 +39,23 @@ class NewReport(unohelper.Base, XJobExecutor):
         fields = [ 'model','name']
         res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
         res.sort(lambda x, y: cmp(x['name'],y['name']))
-         
+
 	for i in range(len(res)):
             self.lstModule.addItem(res[i]['name'],self.lstModule.getItemCount())
             self.aModuleName.append(res[i]['model'])
-        self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report' ,actionListenerProc = self.btnOkOrCancel_clicked )
-        self.win.addButton('btnCancel',-2 - 70 - 5 ,-5, 35,15,'Cancel' ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnOK',-2 ,-5, 70,15,'Use Module in Report' ,actionListenerProc = self.btnOk_clicked )
+        self.win.addButton('btnCancel',-2 - 70 - 5 ,-5, 35,15,'Cancel' ,actionListenerProc = self.btnCancel_clicked )
         self.win.doModalDialog("",None)
 
-    def btnOkOrCancel_clicked(self,oActionEvent):
-        if oActionEvent.Source.getModel().Name=="btnOK":
-            desktop=getDesktop()
-            doc = desktop.getCurrentComponent()
-            docinfo=doc.getDocumentInfo()
-            docinfo.setUserFieldValue(3,self.aModuleName[self.lstModule.getSelectedItemPos()])
-            self.win.endExecute()
-        elif oActionEvent.Source.getModel().Name=="btnCancel":
-            self.win.endExecute()
+    def btnOk_clicked(self,oActionEvent):
+        desktop=getDesktop()
+        doc = desktop.getCurrentComponent()
+        docinfo=doc.getDocumentInfo()
+        docinfo.setUserFieldValue(3,self.aModuleName[self.lstModule.getSelectedItemPos()])
+        self.win.endExecute()
+
+    def btnCancel_clicked( self, oActionEvent ):
+        self.win.endExecute()
 
 if __name__<>"package" and __name__=="__main__":
     NewReport(None)

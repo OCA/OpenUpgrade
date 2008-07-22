@@ -7,7 +7,6 @@ import base64
 
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
-
     from lib.gui import *
     from LoginTest import *
     database="test"
@@ -37,18 +36,17 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         docinfo=  doc.getDocumentInfo()
         count = 0
         regexes = [
-                  ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"],
-                  ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
-                  ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"]
-
-#                  ['\\[\\[ ([a-zA-Z0-9_]+\.[a-zA-Z1-9]) \\]\\]',"Field"],
-#                  ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-#                  ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
-#                  ['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
-#                  ['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-#                  ['\\[\\[ (.+?) and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
-#                  ['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"]
-                  ]
+            ['[a-zA-Z0-9_]+\.[a-zA-Z0-9_.]+',"Field"],
+            ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
+            ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"]
+            # ['\\[\\[ ([a-zA-Z0-9_]+\.[a-zA-Z1-9]) \\]\\]',"Field"],
+            # ['\\[\\[ [a-zA-Z0-9_\.]+ and ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+            # ['\\[\\[ ([a-zA-Z0-9_\.]+) or .+? \\]\\]',"Field"],
+            # ['\\[\\[ ([a-zA-Z0-9_\.]+) and .+? \\]\\]',"Field"],
+            # ['\\[\\[ .+? or ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+            # ['\\[\\[ (.+?) and ([a-zA-Z0-9_\.]+) \\]\\]',"Field"],
+            # ['\\[\\[ .+? % ([a-zA-Z0-9_\.]+) \\]\\]',"Field"]
+        ]
         oFieldObject = []
         oRepeatInObjects = []
         saRepeatInList = []
@@ -72,24 +70,24 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         if len(res) <> 0:
                             if res[0][0] == "objects":
                                 sTemp = docinfo.getUserFieldValue(3)
-				sTemp = "|-." + sTemp[sTemp.rfind(".")+1:] + ".-|"
+                                sTemp = "|-." + sTemp[sTemp.rfind(".")+1:] + ".-|"
                                 oPar.Items=(sTemp.encode("utf-8"),oPar.Items[1])
                                 oPar.update()
                             elif type(res[0]) <> type(u''):
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
-				sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
+                                sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
                                 r = sock.execute(database, uid, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
-				sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]]["string"] + ".-|"
+                                sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]]["string"] + ".-|"
                                 oPar.Items=(sExpr.encode("utf-8"),oPar.Items[1])
                                 oPar.update()
                             else:
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
                                 obj = None
                                 for rl in saRepeatInList:
-				    if rl[0] == res[0][:res[0].find(".")]:
+                                    if rl[0] == res[0][:res[0].find(".")]:
                                         obj=rl[1]
                                 try:
-				    sObject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
+                                    sObject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
                                     r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
                                 except:
                                     r = "TTT"
@@ -101,7 +99,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                             if reg[1] == 'Field':
                                                 for ires in res:
                                                     try:
-							sExpr=r[0][ires[ires.rfind(".")+1:]]
+                                                        sExpr=r[0][ires[ires.rfind(".")+1:]]
                                                         break
                                                     except:
                                                         pass
@@ -112,7 +110,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                     oPar.Items=(str(sExpr) ,oPar.Items[1])
                                                     oPar.update()
                                         else:
-					    sExpr=r[0][res[0][res[0].rfind(".")+1:]]
+                                            sExpr=r[0][res[0][res[0].rfind(".")+1:]]
                                             try:
                                                 if sExpr:
                                                     oPar.Items=(sExpr.encode("utf-8") ,oPar.Items[1])
@@ -120,7 +118,6 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                                 else:
                                                      oPar.Items=(u"/",oPar.Items[1])
                                                      oPar.update()
-                                                            
                                             except Exception, e:
                                                 oPar.Items=(str(sExpr) ,oPar.Items[1])
                                                 oPar.update()
@@ -142,15 +139,15 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         key.sort()
         myval=None
         if not sVar.find("/")==-1:
-	    myval=sVar[:sVar.find("/")]
+            myval=sVar[:sVar.find("/")]
         else:
             myval=sVar
         for k in key:
             if (res[k]['type'] in ['many2one']) and k==myval:
-		sObject = self.getRes(sock,res[myval]['relation'], sVar[sVar.find("/")+1:])
+                sObject = self.getRes(sock,res[myval]['relation'], sVar[sVar.find("/")+1:])
         return sObject
-    def getBraces(self,aReportSyntex=[]):
 
+    def getBraces(self,aReportSyntex=[]):
         desktop=getDesktop()
         doc = desktop.getCurrentComponent()
         aSearchString=[]
@@ -162,9 +159,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                 ['\\[\\[ *repeatIn\\( *([a-zA-Z0-9_\.]+), *\'([a-zA-Z0-9_]+)\' *\\) *\\]\\]', "RepeatIn"],
                 ['\\[\\[ *([a-zA-Z0-9_\.]+) *\\]\\]', "Field"],
                 ['\\[\\[ *.+? *\\]\\]', "Expression"]
-                ]
-
-            #regexes = [['\[\[ repeatIn\( (.+), \'([a-zA-Z0-9_]+)\' \) \]\]','RepeatIn'],['\[\[([a-zA-Z0-9_\.]+)\]\]','Field'],['\[\[.+?\]\]','Expression']]
+            ]
 
             search = doc.createSearchDescriptor()
             search.SearchRegularExpression = True
@@ -211,17 +206,11 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                         found.String =""
                         found = doc.findNext(found.End, search)
         except:
-            import traceback;traceback.print_exc()
-
-
+            import traceback;
+            traceback.print_exc()
 
 if __name__<>"package":
-
     ConvertBracesToField(None)
 else:
-
-    g_ImplementationHelper.addImplementation( \
-        ConvertBracesToField,
-        "org.openoffice.openerp.report.convertBF",
-        ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( ConvertBracesToField, "org.openoffice.openerp.report.convertBF", ("com.sun.star.task.Job",),)
 

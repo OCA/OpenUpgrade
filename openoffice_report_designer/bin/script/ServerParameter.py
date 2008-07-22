@@ -24,8 +24,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         if docinfo.getUserFieldValue(0)=="":
             docinfo.setUserFieldValue(0,"http://localhost:8069")
         self.win.addEdit("txtHost",-34,9,91,15,docinfo.getUserFieldValue(0))
-        self.win.addButton('btnChange',-2 ,9,30,15,'Change'
-                      ,actionListenerProc = self.btnChange_clicked )
+        self.win.addButton('btnChange',-2 ,9,30,15,'Change', actionListenerProc = self.btnChange_clicked )
 
         self.win.addFixedText("lblDatabaseName", 6, 31, 31, 15, "Database")
         #self.win.addFixedText("lblMsg", -2,28,123,15)
@@ -42,11 +41,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         self.win.setEchoChar("txtPassword",42)
 
 
-        self.win.addButton('btnOK',-2 ,-5, 60,15,'Connect'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnOK',-2 ,-5, 60,15,'Connect' ,actionListenerProc = self.btnOk_clicked )
 
-        self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel'
-                      ,actionListenerProc = self.btnOkOrCancel_clicked )
+        self.win.addButton('btnCancel',-2 - 60 - 5 ,-5, 35,15,'Cancel' ,actionListenerProc = self.btnCancel_clicked )
         sValue=""
         if docinfo.getUserFieldValue(0)<>"":
             res=getConnectionStatus(docinfo.getUserFieldValue(0))
@@ -66,8 +63,7 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
 
         #self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
-    def btnOkOrCancel_clicked(self,oActionEvent):
-        if oActionEvent.Source.getModel().Name == "btnOK":
+    def btnOk_clicked(self,oActionEvent):
             sock = xmlrpclib.ServerProxy(self.win.getEditText("txtHost")+'/xmlrpc/common')
             sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
             sLogin=self.win.getEditText("txtLoginName")
@@ -93,8 +89,9 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
                 #docinfo.setUserFieldValue(3,"")
                 ErrorDialog(" You can start creating your report in \nthe current document.","Take care to save it as a .SXW file \nbefore sending to the server.","Message")
                 self.win.endExecute()
-        elif oActionEvent.Source.getModel().Name == "btnCancel":
-            self.win.endExecute()
+
+    def btnCancel_clicked( self, oActionEvent ):
+        self.win.endExecute()
 
     def btnChange_clicked(self,oActionEvent):
         aVal=[]
