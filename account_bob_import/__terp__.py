@@ -4,7 +4,7 @@
     'category': 'Data Module',
      'init_xml':[],
      'author': 'Tiny',
-     'depends': ['account'],
+     'depends': ['account','base_contact'],
      'version': '1.0',
      'active': False,
      'demo_xml': [],
