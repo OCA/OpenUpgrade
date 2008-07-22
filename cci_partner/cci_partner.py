@@ -248,6 +248,10 @@ class res_partner(osv.osv):
         }
     _constraints = [(check_address, 'Only One default address is allowed!', ['address']),(_check_activity, 'Partner Should have only one Main Activity!', ['activity_code_ids'])]
 
+    _sql_constraints = [
+        ('vat_uniq', 'unique (vat)', 'The VAT of the partner must be unique !')
+    ]
+
 res_partner()
 
 class res_partner_zip_group_type(osv.osv):
