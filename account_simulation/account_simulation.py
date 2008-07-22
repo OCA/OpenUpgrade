@@ -83,8 +83,8 @@ class account_move_line(osv.osv):
 	def _query_get(self, cr, uid, obj='l', context={}):
 		res = super(account_move_line, self)._query_get(cr, uid, obj, context)
 		if context.get('journal_state', []):
-			plus = " and (l.journal_id in (select id from account_journal where state in ('valid', "+','.join(map(lambda x: "'"+x+"'", context['journal_state']))+")))"
+			plus = " and ("+obj+".journal_id in (select id from account_journal where state in ('valid', "+','.join(map(lambda x: "'"+x+"'", context['journal_state']))+")))"
 		else:
-			plus = " and (l.journal_id in (select id from account_journal where state='valid'))"
+			plus = " and ("+obj+".journal_id in (select id from account_journal where state='valid'))"
 		return res+plus
 account_move_line()
