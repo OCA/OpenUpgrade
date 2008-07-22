@@ -44,6 +44,31 @@ account_headers = {
 	'parent_id:id':'parent_id:id'
 	#'close_method': 'Deferral Method',
 	}
+
+journals_map = {
+	'id': ,
+	'code': lambda x: x['DBID,A,4'],
+	'name': lambda x: x['HEADING1,A,30'],
+	'view_id': , # journal view for all except the ones that are of type cash => cash journal view
+	'currency': lambda x: x['DBCURRENCY,A,3'], 
+	'sequence_id': , #entry journal for all
+	'type': lambda x: {
+		'PUR': 'purchase',
+		'PUC': 'purchase',
+		'SAL': 'sale',
+		'SAC': 'sale',
+		'CAS': 'cash',
+		#else should be of 'general' type
+
+	}[x['DBTYPE,A,3']],
+	'default_debit_account_id': #should be filled with the id of the account_account with code = x['DBACCOUNT,A,10'],
+	'default_credit_account_id': ,#should be filled with the id of the account_account with code = 
+}
+
+#this dict is used to know the header of each column
+journals_headers = {
+	}
+
 def convert2utf(row):
 	if row:
 		retRow = {}
