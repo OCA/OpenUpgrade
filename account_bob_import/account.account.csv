@@ -1,0 +1,1188 @@
+code,name,sign,note,parent_id:id,type,id
+1,"Fonds propres, prov. & dettes + d'1an",1,,account_bob_import.account_bob_0,cash,id1
+2,"Immobilis., Dettes & créances à + d'1 an",1,,account_bob_import.account_bob_0,asset,id2
+3,Stocks et commandes en cours d'exécution,1,,account_bob_import.account_bob_0,asset,id3
+4,Créances et dettes à un an au plus,1,,account_bob_import.account_bob_0,view,id4
+5,Placements de trésorerie et disponible,1,,account_bob_import.account_bob_0,asset,id5
+6,Charges,1,,account_bob_import.account_bob_0,expense,id6
+7,Produits,1,,account_bob_import.account_bob_0,income,id7
+10,Capital,1,,id1,cash,id10
+11,Primes d'émission,1,,id1,cash,id11
+12,Plus-values de réévaluation,1,,id1,cash,id12
+13,Réserves,1,,id1,cash,id13
+14,Résultat reporté,1,,id1,cash,id14
+15,Subsides en capital,1,,id1,cash,id15
+16,Provisions et impôts différés,1,,id1,cash,id16
+17,Dettes à plus d'un an,1,,id1,cash,id17
+18,Comptes de liaison établiss. & succurs.,1,,id1,view,id18
+20,Frais d'établissement,1,,id2,asset,id20
+21,Immobilisations incorporelles,1,,id2,asset,id21
+22,Terrains et constructions,1,,id2,asset,id22
+23,"Installations, machines et outillages",1,,id2,asset,id23
+24,Mobilier et matériel roulant,1,,id2,asset,id24
+25,Immobilisation détenues en loc.-Fin.,1,,id2,asset,id25
+26,Autres immobilisations corporelles,1,,id2,asset,id26
+27,Immobilis. corp. en cours & acptes versé,1,,id2,asset,id27
+28,Immobilisations financières,1,,id2,asset,id28
+29,Créances à plus d'un an,1,,id2,asset,id29
+30,Approvisionnements - matières premières,1,,id3,asset,id30
+31,Approvisionnements et fournitures,1,,id3,asset,id31
+32,En cours de fabrication,1,,id3,asset,id32
+33,Produits finis,1,,id3,asset,id33
+34,Marchandises,1,,id3,asset,id34
+35,Immeubles destinés à la vente,1,,id3,asset,id35
+36,Acomptes versés sur achats pour stocks,1,,id3,asset,id36
+37,Commandes en cours d'exécution,1,,id3,asset,id37
+40,Créances commerciales,1,,id4,view,id40
+41,Autres créances à - d'un an,1,,id4,asset,id41
+42,Dettes à + d'1 an échéant dans l'année,1,,id4,cash,id42
+43,Dettes financières,1,,id4,cash,id43
+44,Dettes commerciales,1,,id4,view,id44
+45,"Dettes fiscales, salariales et sociales",1,,id4,cash,id45
+46,Acomptes reçus sur commandes,1,,id4,cash,id46
+47,Dettes suite à l'affect. des résultats,1,,id4,cash,id47
+48,dettes diverses,1,,id4,cash,id48
+49,Comptes de régularisation et cptes d'att,1,,id4,view,id49
+50,Actions propres,1,,id5,asset,id50
+51,Actions et parts,1,,id5,asset,id51
+52,Titres à revenu fixe,1,,id5,asset,id52
+53,Dépôts à terme,1,,id5,asset,id53
+54,Valeurs échues à l'encaissement,1,,id5,asset,id54
+55,Etablissements de crédit,1,,id5,asset,id55
+56,Office des chèques postaux,1,,id5,asset,id56
+57,Caisses,1,,id5,asset,id57
+58,Virements internes,1,,id5,view,id58
+60,Approvisionnements et marchandises,1,,id6,expense,id60
+61,Services et biens divers,1,,id6,expense,id61
+62,"Rémunérations, charges soc. et pensions",1,,id6,expense,id62
+63,"Amortissements, réd. de val. et provis.",1,,id6,expense,id63
+64,Autres charges d'exploitation,1,,id6,expense,id64
+65,Charges financières,1,,id6,expense,id65
+66,Charges exceptionnelles,1,,id6,expense,id66
+67,Impôts sur le résultat,1,,id6,expense,id67
+68,Transferts aux impôts diff. & rés. immun,1,,id6,expense,id68
+69,Affectations et prélèvements,1,,id6,view,id69
+70,Chiffre d'affaires,1,,id7,income,id70
+71,Variation des stocks & comm. en cours,1,,id7,income,id71
+72,Production immobilisée,1,,id7,income,id72
+74,Autres produits d'exploitation,1,,id7,income,id74
+75,Produits financiers,1,,id7,income,id75
+76,Produits exceptionnels,1,,id7,income,id76
+77,Régul. d'impôts & reprises prov. fisc.,1,,id7,income,id77
+78,Prélèvmts / impôts diff. & / rés. immun.,1,,id7,income,id78
+79,Affectations et prélèvements,1,,id7,view,id79
+100,Capital souscrit,1,,id10,cash,id100
+101,Capital non appelé (-),1,,id10,cash,id101
+109,Compte de l'exploitant,1,,id10,cash,id109
+120,Plus-values de rééval. sur immob. Incorp,1,,id12,cash,id120
+121,Plus-values de rééval. sur immob. Corp.,1,,id12,cash,id121
+122,Plus-values de rééval. sur immob. Fin.,1,,id12,cash,id122
+123,Plus-values de réévaluation sur stocks,1,,id12,cash,id123
+124,Reprises de réd. de val./plac. de très.,1,,id12,cash,id124
+130,Réserve légale,1,,id13,cash,id130
+131,Réserves indisponibles,1,,id13,cash,id131
+132,Réserves immunisées,1,,id13,cash,id132
+133,Réserves disponibles,1,,id13,cash,id133
+140,Bénéfice reporté,1,,id14,cash,id140
+141,Perte reportée,1,,id14,cash,id141
+150,Subsides en cap. - Montants obtenus,1,,id15,cash,id150
+151,Subsides-Montants transf. aux résultats,1,,id15,cash,id151
+160,Provisions pour pensions,1,,id16,cash,id160
+161,Provisions pour charges fiscales,1,,id16,cash,id161
+162,Provisions pr grosses rép. & gros entr.,1,,id16,cash,id162
+163,Provisions pour rente viagère,1,,id16,cash,id163
+164,Provisions pr sûretés pers. et réelles,1,,id16,cash,id164
+165,Provisions diverses,1,,id16,cash,id165
+166,Provisions pour charges de commandes,1,,id16,cash,id166
+168,Impôts différés,1,,id16,cash,id168
+170,Emprunts subordonnés,1,,id17,cash,id170
+171,Emprunts obligataires non subordonnés,1,,id17,cash,id171
+172,Dettes de loc. - financ. et assimilées,1,,id17,cash,id172
+173,Etablissements de crédit,1,,id17,cash,id173
+174,Autres emprunts,1,,id17,cash,id174
+175,Dettes commerciales,1,,id17,cash,id175
+176,Acomptes reçus sur commandes,1,,id17,cash,id176
+178,Cautionnements reçus en numéraire,1,,id17,cash,id178
+179,Dettes diverses,1,,id17,cash,id179
+200,Frais de constitution et d'augm. capital,1,,id20,asset,id200
+201,Frais d'émission d'emprunts,1,,id20,asset,id201
+202,Autres frais d'établissement,1,,id20,asset,id202
+204,Frais de restructuration,1,,id20,asset,id204
+210,Frais de recherche et de développement,1,,id21,asset,id210
+211,"Concessions, brevets et licences",1,,id21,asset,id211
+212,Goodwill,1,,id21,asset,id212
+213,Acomptes versés,1,,id21,asset,id213
+214,Surprix afférent à l'acquisit. d'1 part.,1,,id21,asset,id214
+220,Terrains,1,,id22,asset,id220
+221,Constructions,1,,id22,asset,id221
+222,Terrains bâtis,1,,id22,asset,id222
+223,Autres droits réels sur des immeubles,1,,id22,asset,id223
+230,Installations,1,,id23,asset,id230
+231,Machines,1,,id23,asset,id231
+232,Outillage,1,,id23,asset,id232
+233,Pièces de rechange,1,,id23,asset,id233
+238,Plus-values actées sur I./M./O.,1,,id23,asset,id238
+239,Amortissements sur I./M./O.,1,,id23,asset,id239
+240,Mobilier et matériel de bureau,1,,id24,asset,id240
+241,Matériel roulant,1,,id24,asset,id241
+250,Terrains et constructions en loc.-Fin.,1,,id25,asset,id250
+251,"Install., machines & out. en loc.-Fin.",1,,id25,asset,id251
+252,Mobilier et mat. roulant en loc.-Fin.,1,,id25,asset,id252
+270,Immobilisations en cours,1,,id27,asset,id270
+271,Avances & acptes versés / immob.en cours,1,,id27,asset,id271
+280,Participation dans des entreprises liées,1,,id28,asset,id280
+281,Créances sur des entreprises liées,1,,id28,asset,id281
+282,Participations entr. avec lien particip.,1,,id28,asset,id282
+283,Créances / entrepr. avec lien particip,1,,id28,asset,id283
+284,Autres actions et parts,1,,id28,asset,id284
+285,Autres créances,1,,id28,asset,id285
+288,Cautionnements versés en numéraire,1,,id28,asset,id288
+290,Créances commerciales + d'1 an,1,,id29,asset,id290
+291,Autres créances + d'1 an.,1,,id29,asset,id291
+300,Stocks Matières premières val. d'acquis.,1,,id30,asset,id300
+309,Réd. val. - Stocks mat.premières (-),1,,id30,asset,id309
+310,Stocks Fournitures val. d'acquis.,1,,id31,asset,id310
+319,Réd. de val. - Stocks Fournitures (-),1,,id31,asset,id319
+320,En cours de fabrication - Val. d'acquis.,1,,id32,asset,id320
+329,Réductions de valeur / en cours (-),1,,id32,asset,id329
+330,Valeur d'acquisition des produits finis,1,,id33,asset,id330
+339,Réductions de val. / produits finis (-),1,,id33,asset,id339
+340,Stocks Marchandises - Valeur d'acquis.,1,,id34,asset,id340
+349,Réd. de val. / Stocks Marchandises (-),1,,id34,asset,id349
+350,Valeur d'acquis. - Immeubles à vendre,1,,id35,asset,id350
+351,Valeurs Immeubles construits pour vente,1,,id35,asset,id351
+359,Réductions de val. / immeubles à vendre,1,,id35,asset,id359
+360,Acomptes versés / Achats pour stocks,1,,id36,asset,id360
+369,Réd. de val. / Achats pour stocks (-),1,,id36,asset,id369
+370,Valeur d'acquisition commandes en cours,1,,id37,asset,id370
+371,Bénéfices pris sur commandes en cours,1,,id37,asset,id371
+379,Réd. de val. Sur commandes en cours (-),1,,id37,asset,id379
+400,Clients,1,,id40,view,id400
+401,Effets à recevoir - Clients,1,,id40,asset,id401
+402,"Entrepr. apparent., gérants - Cr. comm.",1,,id40,asset,id402
+403,Effets à rec. entr. apparent. & gérants,1,,id40,asset,id403
+404,Produits à recevoir (factures à établir),1,,id40,asset,id404
+405,Compensations clients,1,,id40,asset,id405
+406,Acomptes versés - Clients,1,,id40,asset,id406
+407,Créances douteuses,1,,id40,asset,id407
+408,Ecarts de conversion de devises/créances,1,,id40,asset,id408
+409,Réductions de valeur / Créances comm.,1,,id40,asset,id409
+410,"Capital appelé, non versé",1,,id41,asset,id410
+411,T.V.A. à récupérer,1,,id41,asset,id411
+412,Impôts et précomptes à récupérer,1,,id41,asset,id412
+414,Produits à recevoir,1,,id41,asset,id414
+416,Créances diverses,1,,id41,asset,id416
+417,Créances douteuses,1,,id41,asset,id417
+418,Cautionnements versés en numéraire,1,,id41,asset,id418
+419,Réductions de val. / autres créances (-),1,,id41,asset,id419
+420,Emprunts subordonnés,1,,id42,cash,id420
+421,Emprunts oblig. non subord. éch. ds l'an,1,,id42,cash,id421
+422,Dettes de loc. - financ. éch. ds l'an.,1,,id42,cash,id422
+423,Etablissement de crédit éch. ds l'année,1,,id42,cash,id423
+424,Autres emprunts échéant dans l'année,1,,id42,cash,id424
+425,Dettes commerciales échéant ds l'année,1,,id42,cash,id425
+426,Acomptes reçus / commandes éch. ds l'an,1,,id42,cash,id426
+428,Cautionnements échéant dans l'année,1,,id42,cash,id428
+429,Dettes diverses échéant dans l'année,1,,id42,cash,id429
+430,Banques-Emprunts en compte à terme fixe,1,,id43,cash,id430
+431,Banques-Promesses,1,,id43,cash,id431
+432,Banques-Crédit d'acceptation,1,,id43,cash,id432
+433,Banques-Dettes en compte courant,1,,id43,cash,id433
+439,Autres emprunts,1,,id43,cash,id439
+440,Fournisseurs,1,,id44,view,id440
+441,Effets à payer,1,,id44,cash,id441
+444,Factures à recevoir,1,,id44,cash,id444
+445,Compensations fournisseurs,1,,id44,cash,id445
+446,Acomptes reçus,1,,id44,cash,id446
+448,Ecarts de conversion des devises/dettes,1,,id44,cash,id448
+450,Dettes fiscales estimées,1,,id45,cash,id450
+451,T.V.A. à payer,1,,id45,cash,id451
+452,Impôts et taxes à payer,1,,id45,cash,id452
+453,Précomptes retenus,1,,id45,cash,id453
+454,Office National de la Séc. Soc. à payer,1,,id45,cash,id454
+455,Rémunérations à payer,1,,id45,cash,id455
+456,Pécules de vacances à payer,1,,id45,cash,id456
+459,Autres dettes sociales,1,,id45,cash,id459
+470,Dividendes-tantièmes d'ex. ant. à payer,1,,id47,cash,id470
+471,Dividendes de l'exercice à payer,1,,id47,cash,id471
+472,Tantièmes de l'exercice à payer,1,,id47,cash,id472
+473,Autres allocataires à payer,1,,id47,cash,id473
+480,Obligations et coupons échus (dettes),1,,id48,cash,id480
+481,Actionnaires - capital à rembourser,1,,id48,cash,id481
+482,Participation du personnel à payer,1,,id48,cash,id482
+483,Acomptes reçus d'autres tiers à - d'1 an,1,,id48,cash,id483
+484,Emballages et matériels consignés,1,,id48,cash,id484
+488,Cautionnements reçus en numéraire,1,,id48,cash,id488
+489,Autres dettes diverses,1,,id48,cash,id489
+490,Charges à reporter,1,,id49,asset,id490
+491,Produits acquis,1,,id49,asset,id491
+492,Charges à imputer,1,,id49,cash,id492
+493,Produits à reporter,1,,id49,cash,id493
+496,Ecarts provisoires de conversion (Actif),1,,id49,view,id496
+497,Ecarts provisoires de convers. (Passif),1,,id49,view,id497
+498,"Résultats sur options émises, en cours",1,,id49,view,id498
+499,Comptes d'attente,1,,id49,view,id499
+510,Actions & parts - Valeur d'acquisition,1,,id51,asset,id510
+511,Actions & parts - Montants non app. (-),1,,id51,asset,id511
+512,Actions & parts - Options acquises,1,,id51,asset,id512
+519,Actions & parts - Réductions de val. (-),1,,id51,asset,id519
+520,Titres à rev. Fixes - Valeur d'acquis.,1,,id52,asset,id520
+529,Titres à rev. Fixes - Réd. de val.,1,,id52,asset,id529
+530,Dépôts à terme de plus d'un an,1,,id53,asset,id530
+531,Dépôts à terme de + d'1 mois et - d'1 an,1,,id53,asset,id531
+532,Dépôts à terme d'un mois au plus,1,,id53,asset,id532
+539,Réductions de valeur / dépôts à terme,1,,id53,asset,id539
+540,Chèques à encaisser,1,,id54,asset,id540
+541,Coupons à encaisser,1,,id54,asset,id541
+550,Comptes courants bancaires,1,,id55,asset,id550
+560,Compte courant chèques postaux,1,,id56,asset,id560
+561,Chèques émis (-) chèques postaux,1,,id56,asset,id561
+570,Caisse centrale,1,,id57,asset,id570
+577,Caisses des succursales et agences,1,,id57,asset,id577
+578,Caisses - timbres,1,,id57,asset,id578
+600,Achats de matières premières,1,,id60,expense,id600
+601,Achats de fournitures,1,,id60,expense,id601
+602,"Achats de services, travaux et études",1,,id60,expense,id602
+603,Achats de sous-traitances générales,1,,id60,expense,id603
+604,Achats de marchandises,1,,id60,expense,id604
+605,Achats d'immeubles destinés à la vente,1,,id60,expense,id605
+608,"Remises, ristournes et rabais sur achats",1,,id60,expense,id608
+609,Variation des stocks,1,,id60,expense,id609
+610,Loyers et charges locatives,1,,id61,expense,id610
+611,Entretien et réparations des locaux,1,,id61,expense,id611
+612,Fournitures faites à l'entreprise,1,,id61,expense,id612
+613,Rétributions de tiers,1,,id61,expense,id613
+614,"Annonces, publicité et documentation",1,,id61,expense,id614
+615,Sous-traitants,1,,id61,expense,id615
+617,Personnes mises à disp de la société,1,,id61,expense,id617
+618,Rémun. & divers aux gérants sans contrat,1,,id61,expense,id618
+620,Rémunérations et avantages soc. directs,1,,id62,expense,id620
+621,Cotisations patronales d'assurances soc.,1,,id62,expense,id621
+622,Primes patr. pour ass. extra - légales,1,,id62,expense,id622
+623,Autres frais de personnel,1,,id62,expense,id623
+624,Pensions de retraite et de survie,1,,id62,expense,id624
+625,Provision pour pécule de vacances,1,,id62,expense,id625
+630,Dotations aux amort. & r. de val./immob.,1,,id63,expense,id630
+631,Réductions de valeur sur stocks,1,,id63,expense,id631
+632,Réductions val. /comm. en cours d'exéc.,1,,id63,expense,id632
+633,Réductions de val./sur cr. comm. à L.T.,1,,id63,expense,id633
+634,Réductions de val./sur cr. comm. à C.T.,1,,id63,expense,id634
+635,Provisions pour pensions et oblig. sim.,1,,id63,expense,id635
+636,Provisions pour grosses réparations,1,,id63,expense,id636
+637,Provisions pour autres risques & charges,1,,id63,expense,id637
+640,Charges Fiscales d'exploitation,1,,id64,expense,id640
+641,Moins-val. sur réalis. d'immob. corp.,1,,id64,expense,id641
+642,Moins-val. / réalis. de créances comm.,1,,id64,expense,id642
+643,Charges d'exploitation  diverses,1,,id64,expense,id643
+644,Frais restaurant non déductibles,1,,id64,expense,id644
+645,Frais accueil clients/fourniss. non déd.,1,,id64,expense,id645
+646,Frais achat vins non déductibles,1,,id64,expense,id646
+649,Charges d'exp. à l'actif - restruct. (-),1,,id64,expense,id649
+650,Charges des dettes,1,,id65,expense,id650
+651,Réductions de valeur / actifs circulants,1,,id65,expense,id651
+652,Moins-values sur réalis. d'actifs circ.,1,,id65,expense,id652
+653,Charges d'escompte de créances,1,,id65,expense,id653
+654,Différences de change,1,,id65,expense,id654
+655,Ecarts de conversion des devises,1,,id65,expense,id655
+656,Provisions à caractère financier,1,,id65,expense,id656
+657,"Frais de banque, de chèques postaux",1,,id65,expense,id657
+658,Résultats sur options,1,,id65,expense,id658
+659,"Commissions / ouv. crédit, cautions, .",1,,id65,expense,id659
+660,Amort. et réd. de val. exceptionnelles,1,,id66,expense,id660
+661,Réd. de val. / immob. financières (dot.),1,,id66,expense,id661
+662,Provisions pour risques & charges except,1,,id66,expense,id662
+663,Moins-values sur réalis. d'actifs immob.,1,,id66,expense,id663
+664,Pénalités et amendes diverses,1,,id66,expense,id664
+665,Différences de change exceptionnelles,1,,id66,expense,id665
+666,Charges de liquidation de l'entreprise,1,,id66,expense,id666
+667,Autres charges exceptionnelles,1,,id66,expense,id667
+669,Charges except.. actif - restruct.(-),1,,id66,expense,id669
+670,Impôts belges sur le résultat de l'ex.,1,,id67,expense,id670
+671,Impôts belges/résultat d'ex. antérieurs,1,,id67,expense,id671
+672,Impôts étrangers sur le résultat de l'ex,1,,id67,expense,id672
+673,Impôts étrgs/résultat d'ex. antérieurs,1,,id67,expense,id673
+680,Transferts aux impôts différés,1,,id68,expense,id680
+689,Transferts aux réserves immunisées,1,,id68,expense,id689
+690,Perte reportée de l'exercice précédent,1,,id69,view,id690
+691,Affectations au capital & à prime d'ém.,1,,id69,view,id691
+692,Dotations aux réserves,1,,id69,view,id692
+693,Bénéfice à reporter,1,,id69,view,id693
+694,Rémunération du capital,1,,id69,view,id694
+695,Administrateurs ou gérants,1,,id69,view,id695
+696,Autres allocataires,1,,id69,view,id696
+700,Ventes de marchandises,1,,id70,income,id700
+701,Ventes de produits finis,1,,id70,income,id701
+702,Ventes de déchets et rebuts,1,,id70,income,id702
+703,Ventes d'emballages récupérables,1,,id70,income,id703
+704,Facturations de travaux (assoc. mom.),1,,id70,income,id704
+705,Prestations de services,1,,id70,income,id705
+706,Pénalités et dédits obtenus,1,,id70,income,id706
+708,"Remises, ristournes et rabais accordés",1,,id70,income,id708
+709,Charges d'intérêts / créances à + d'1 an,1,,id70,income,id709
+712,Variation de stocks des encours de fabr.,1,,id71,income,id712
+713,Variation de stocks des produits finis,1,,id71,income,id713
+715,Variation de stocks immeubles à la vente,1,,id71,income,id715
+717,Variation de stocks des comm. en cours,1,,id71,income,id717
+720,Production immobilisée en frais d'établ.,1,,id72,income,id720
+721,Production immobilisée en immob. incorp.,1,,id72,income,id721
+722,Production immobilisée en immob. corp.,1,,id72,income,id722
+723,Production immobilisée en immob.en cours,1,,id72,income,id723
+724,Production immobilisée en construction,1,,id72,income,id724
+740,Subsides d'exploitation & compensations,1,,id74,income,id740
+741,Plus-values sur réal. d'immob. corp.,1,,id74,income,id741
+742,Plus-values sur réalis. créances comm.,1,,id74,income,id742
+743,Produits de services dans l'int. du pers,1,,id74,income,id743
+744,Commissions et courtages,1,,id74,income,id744
+745,Redevances pour brevets et licences,1,,id74,income,id745
+746,"Prestations services (trsp., études,...)",1,,id74,income,id746
+747,Revenus d'immeubles activités non prof.,1,,id74,income,id747
+748,Locations diverses à caractère profess.,1,,id74,income,id748
+749,Produits d'exploitation divers,1,,id74,income,id749
+750,Produits des immob. financières,1,,id75,income,id750
+751,Produits des actifs circulants,1,,id75,income,id751
+752,Plus-values sur réalis. d'actifs circula,1,,id75,income,id752
+753,Subsides en capital et en intérêts,1,,id75,income,id753
+754,Différences de change,1,,id75,income,id754
+755,Ecarts de conversion de devises,1,,id75,income,id755
+756,Produits des autres créances,1,,id75,income,id756
+757,Escomptes obtenus,1,,id75,income,id757
+758,Résultats sur options,1,,id75,income,id758
+760,Reprises d'amortissements & réd. de val.,1,,id76,income,id760
+761,Reprises de R.V. /  immob. financières,1,,id76,income,id761
+762,Reprises de prov. pour risques except.,1,,id76,income,id762
+763,Plus-values sur réalis. d'actifs immob.,1,,id76,income,id763
+764,Produits de liquidation,1,,id76,income,id764
+771,Régularis. d'impôts belges sur résultat,1,,id77,income,id771
+773,Régularis. d'impôts étrangers / résultat,1,,id77,income,id773
+780,Prélèvements sur les impôts différés,1,,id78,income,id780
+789,Prélèvements sur les réserves immunisées,1,,id78,income,id789
+790,Bénéfice reporté de l'exercice précédent,1,,id79,view,id790
+791,Prélèvement sur le capital & pr. d'ém.,1,,id79,view,id791
+792,Prélèvement sur les réserves,1,,id79,view,id792
+793,Perte à reporter,1,,id79,view,id793
+794,Intervention d'associés dans la perte,1,,id79,view,id794
+1654,Provisions pour autres risques & charges,1,,id165,cash,id1654
+1750,Fournisseurs - Dettes en compte,1,,id175,cash,id1750
+1751,Effets à payer,1,,id175,cash,id1751
+2209,Amort. et réd. de valeur / terrains,1,,id220,asset,id2209
+2218,Plus-values actées sur constructions,1,,id221,asset,id2218
+2219,Amort. sur constructions,1,,id221,asset,id2219
+2220,Valeur d'acquisition de tarrains bâtis,1,,id222,asset,id2220
+2228,Plus-val. Actées / terrains bâtis,1,,id222,asset,id2228
+2229,Amort. sur terrains bâtis,1,,id222,asset,id2229
+2400,Mobilier,1,,id240,asset,id2400
+2401,Matériel de bureau,1,,id240,asset,id2401
+2408,Plus-val. actées/ Mob. & Mat. de bur.,1,,id240,asset,id2408
+2409,Amortissements/ Mob. & Mat. de bur.,1,,id240,asset,id2409
+2410,Matériel automobile,1,,id241,asset,id2410
+2418,Plus-values sur matériel roulant,1,,id241,asset,id2418
+2419,Amort. sur matériel roulant,1,,id241,asset,id2419
+2900,Clients + d'1 an,1,,id290,asset,id2900
+2901,Effets à recevoir + d'1 an,1,,id290,asset,id2901
+2910,Autres créances en compte + d'1 an,1,,id291,asset,id2910
+2911,Autres créances-effets à rec. + d'1 an,1,,id291,asset,id2911
+3106,Emballages commerciaux,1,,id310,asset,id3106
+4120,Impôts belges / résultat à récup.,1,,id412,asset,id4120
+4167,Etat et établiss. publics - Créances,1,,id416,asset,id4167
+4400,Fournisseurs - entreprises apparentées,1,,id440,view,id4400
+4401,Fournisseurs ordinaires,1,,id440,view,id4401
+4410,Effets à payer pour entreprises apparent,1,,id441,cash,id4410
+4411,Effets à payer pour fournisseurs ordin.,1,,id441,cash,id4411
+4510,T.V.A. due,1,,id451,cash,id4510
+4511,T.V.A. à récupérer,1,,id451,cash,id4511
+4525,Autres impôts et taxes belges à payer,1,,id452,cash,id4525
+4593,Assurances relat. au personnel à payer,1,,id459,cash,id4593
+4910,Produits d'exploitation acquis,1,,id491,asset,id4910
+4911,Produits financiers acquis,1,,id491,asset,id4911
+4930,Produits d'exploitation à reporter,1,,id493,cash,id4930
+6016,Achats d'emballages commerciaux,1,,id601,expense,id6016
+6120,"Eau, gaz, électricité, vapeur",1,,id612,expense,id6120
+6121,"Téléphone, télégrammes, frais post.",1,,id612,expense,id6121
+6130,Redevances et royalties,1,,id613,expense,id6130
+6131,Assurances non relatives au personnel,1,,id613,expense,id6131
+6132,Autres rétributions de tiers,1,,id613,expense,id6132
+6133,Transports et déplacements,1,,id613,expense,id6133
+6134,Personnel intérimaire,1,,id613,expense,id6134
+6230,Assurances du personnel,1,,id623,expense,id6230
+6231,Charges sociales diverses,1,,id623,expense,id6231
+6232,"Charges soc. des admin., gérants & comm.",1,,id623,expense,id6232
+6400,Taxes et impôts directs,1,,id640,expense,id6400
+6401,Taxes et impôts indirects,1,,id640,expense,id6401
+6402,Impôts provinciaux et communaux,1,,id640,expense,id6402
+6502,Autres charges des dettes,1,,id650,expense,id6502
+7170,Valeur d'acquisition des comm. en cours,1,,id717,income,id7170
+7171,Bénéfice pris en compte / comm. en cours,1,,id717,income,id7171
+7500,Produits des immob. fin. entrepr. liées,1,,id750,income,id7500
+7501,Produits des imm. fin. entr. avec lien,1,,id750,income,id7501
+17500,Fournisseurs - Entreprises apparentées,1,,id1750,cash,id17500
+17501,Dettes en cpte  - Fourniss. ordinaires,1,,id1750,cash,id17501
+17510,Effets à p. - entreprises apparentées,1,,id1751,cash,id17510
+17511,Effets à p. - Fournisseurs ordinaires,1,,id1751,cash,id17511
+100000,Capital non amorti,1,,id100,cash,id100000
+100100,Capital amorti (-),1,,id100,cash,id100100
+101000,Capital non appelé (-),1,,id101,cash,id101000
+109000,Compte de l'exploitant - Op. courantes,1,,id109,cash,id109000
+109100,Compte de l'exploitant - Impôts pers.,1,,id109,cash,id109100
+109200,Compte de l'exploitant - Rémun. & autres,1,,id109,cash,id109200
+110000,Primes d'émission,1,,id11,cash,id110000
+120000,Plus-values de rééval. sur immob. Incorp,1,,id120,cash,id120000
+120100,Reprises de réd. de val. sur immob. Inc.,1,,id120,cash,id120100
+121000,Plus-values de rééval. sur immob. Corp.,1,,id121,cash,id121000
+121100,Reprises de réd. de val. sur immob. Corp,1,,id121,cash,id121100
+122000,Plus-values de rééval. sur immob. Fin.,1,,id122,cash,id122000
+122100,Reprises de réd. de val. sur immob. Fin.,1,,id122,cash,id122100
+123000,Plus-values de réévaluation sur stocks,1,,id123,cash,id123000
+124000,Reprises de réd. de val./plac. de très.,1,,id124,cash,id124000
+130000,Réserve légale,1,,id130,cash,id130000
+131000,Réserves pour actions propres,1,,id131,cash,id131000
+131100,Autres réserves indisponibles,1,,id131,cash,id131100
+132000,Réserves immunisées,1,,id132,cash,id132000
+133000,Réserve pour régularis. de dividendes,1,,id133,cash,id133000
+133100,Réserve pour renouvellement des immob.,1,,id133,cash,id133100
+133200,Réserve pour install. en faveur du pers.,1,,id133,cash,id133200
+133300,Réserves libres,1,,id133,cash,id133300
+140000,Bénéfice reporté,1,,id140,cash,id140000
+141000,Perte reportée,1,,id141,cash,id141000
+150000,Subsides en cap. - Montants obtenus,1,,id150,cash,id150000
+151000,Subsides-Montants transf. aux résultats,1,,id151,cash,id151000
+160000,Provisions pour pensions,1,,id160,cash,id160000
+161000,Provisions pour charges fiscales,1,,id161,cash,id161000
+162000,Provisions pr grosses rép. & gros entr.,1,,id162,cash,id162000
+163000,Provisions pour rente viagère,1,,id163,cash,id163000
+164000,Provisions pr sûretés pers. et réelles,1,,id164,cash,id164000
+165000,Provisions pr engagements sur immobilis.,1,,id165,cash,id165000
+165100,Provisions pr exécut. de commandes,1,,id165,cash,id165100
+165200,Provisions pr posit. & marchés à t.,1,,id165,cash,id165200
+165300,Provisions pr garanties techniques,1,,id165,cash,id165300
+165400,Provisions pour litiges en cours,1,,id1654,cash,id165400
+165410,"Provisions pour amendes, pénalités",1,,id1654,cash,id165410
+165420,Provisions pour propre assureur,1,,id1654,cash,id165420
+165430,Provisions pour risques de crédit,1,,id1654,cash,id165430
+165440,Provisions pr partie non app. d'actions,1,,id1654,cash,id165440
+165450,Provisions pour charge de liquidation,1,,id1654,cash,id165450
+165460,Provisions pour départ de personnel,1,,id1654,cash,id165460
+165490,Provisions pr pertes/titres vendus à t.,1,,id1654,cash,id165490
+166000,Provisions pour charges de commandes,1,,id166,cash,id166000
+168000,Impôts différés sur subsides en capital,1,,id168,cash,id168000
+168100,Impôts différés /plus-val./immob. Inc.,1,,id168,cash,id168100
+168200,Impôts différés /plus-val./immob. Corp.,1,,id168,cash,id168200
+168700,Impôts différés sur plus-values/titres,1,,id168,cash,id168700
+168800,Impôts différés étrangers,1,,id168,cash,id168800
+170000,Emprunts subordonnés convertibles,1,,id170,cash,id170000
+170100,Emprunts subordonnés non convertibles,1,,id170,cash,id170100
+171000,Emprunts oblig. non subord. convertibles,1,,id171,cash,id171000
+171100,Emprunts oblig. non sub. non convert.,1,,id171,cash,id171100
+172000,Dettes de loc. - financ. de biens immob.,1,,id172,cash,id172000
+172100,Dettes de loc. - financ. de biens mob.,1,,id172,cash,id172100
+172200,Dettes sur droits réels sur immeubles,1,,id172,cash,id172200
+173000,Etabliss. de crédit  - Dettes en compte,1,,id173,cash,id173000
+173100,Etabliss. de crédit  - Promesses,1,,id173,cash,id173100
+173200,Etabliss. de crédit  - Crédits d'accept.,1,,id173,cash,id173200
+174000,Autres emprunts,1,,id174,cash,id174000
+175000,Fournisseurs - Entreprises liées,1,,id17500,cash,id175000
+175001,Fournisseurs - Entr. avec lien particip.,1,,id17500,cash,id175001
+175010,Dettes en cpte  - Fournisseurs belges,1,,id17501,cash,id175010
+175011,Dettes en cpte  - Fournisseurs C.E.E.,1,,id17501,cash,id175011
+175012,Dettes en cpte  - Fourniss. importation,1,,id17501,cash,id175012
+175100,Effets à p. - entreprises liées,1,,id17510,cash,id175100
+175101,Effets à p. - Entr. avec lien particip.,1,,id17510,cash,id175101
+175110,Effets à p. - Fournisseurs belges,1,,id17511,cash,id175110
+175111,Effets à p. - Fournisseurs C.E.E.,1,,id17511,cash,id175111
+175112,Effets à p. - Fournisseurs importation,1,,id17511,cash,id175112
+176000,Acomptes reçus sur commandes,1,,id176,cash,id176000
+178000,Cautionnements reçus en numéraire,1,,id178,cash,id178000
+179000,Dettes envers des entreprises liées,1,,id179,cash,id179000
+179100,Dettes envers entr. avec lien particip.,1,,id179,cash,id179100
+179200,Dettes envers les gérants & associés,1,,id179,cash,id179200
+179400,Dettes pour rentes viagères capitalisées,1,,id179,cash,id179400
+179800,Dettes envers co-particip. assoc. mom.,1,,id179,cash,id179800
+179900,Autres dettes diverses,1,,id179,cash,id179900
+180000,Comptes de liaison établiss. & succurs.,1,,id18,view,id180000
+200000,Frais de constitution et d'augm. capital,1,,id200,asset,id200000
+200900,Amort./fr. de const. & augm. de capit.,1,,id200,asset,id200900
+201000,Frais d'émission d'emprunts,1,,id201,asset,id201000
+201900,Amort. sur frais d'émission d'emprunts,1,,id201,asset,id201900
+202000,Autres frais de premier établissement,1,,id202,asset,id202000
+202900,Amort./autres frais d'établissement,1,,id202,asset,id202900
+204000,Coût des frais de restructuration,1,,id204,asset,id204000
+204900,Amort. sur frais de restructuration,1,,id204,asset,id204900
+210000,Frais de recherche et de mise au point,1,,id210,asset,id210000
+210800,Plus-val. /fr.de rech. <  31/12/83,1,,id210,asset,id210800
+210900,Amort. sur frais de recherche,1,,id210,asset,id210900
+211000,"Concessions, brevets et licences",1,,id211,asset,id211000
+211800,Plus-val. / Concessions <  31/12/83,1,,id211,asset,id211800
+211900,"Amort. sur concessions, brevets, etc...",1,,id211,asset,id211900
+212000,Goodwill  - Coût d'acquisition,1,,id212,asset,id212000
+212800,Plus-val. / Goodwill <  31/12/83,1,,id212,asset,id212800
+212900,Amort. sur goodwill,1,,id212,asset,id212900
+213000,Acomptes versés,1,,id213,asset,id213000
+214000,Surprix afférent à l'acquisit. d'1 part.,1,,id214,asset,id214000
+220000,Terrains,1,,id220,asset,id220000
+220200,Frais d'acquisition sur terrains,1,,id220,asset,id220200
+220800,Plus-values actées sur terrains,1,,id220,asset,id220800
+220900,Amort. /frais d'acquisition de terrains,1,,id2209,asset,id220900
+220910,Réductions de valeur sur terrains,1,,id2209,asset,id220910
+221000,Bâtiments industriels,1,,id221,asset,id221000
+221100,Bâtiments administratifs et commerciaux,1,,id221,asset,id221100
+221200,Autres bâtiments d'exploitation,1,,id221,asset,id221200
+221300,Voies de transport et ouvrages d'art,1,,id221,asset,id221300
+221500,Constructions sur sol d'autrui,1,,id221,asset,id221500
+221700,Frais d'acquisition sur constructions,1,,id221,asset,id221700
+221800,Plus-val. actées/bâtiments industriels,1,,id2218,asset,id221800
+221810,Plus-val. actées/bâtiments admin.,1,,id2218,asset,id221810
+221820,Plus-val. actées/autres bâtiments,1,,id2218,asset,id221820
+221840,Plus-val. actées/voies transport,1,,id2218,asset,id221840
+221900,Amort. sur bâtiments industriels,1,,id2219,asset,id221900
+221910,Amort. sur bâtiments administratifs,1,,id2219,asset,id221910
+221920,Amort. sur autres bâtiments d'exploit.,1,,id2219,asset,id221920
+221940,Amort. sur voies de transport,1,,id2219,asset,id221940
+221950,Amort. sur construct. sur sol d'autrui,1,,id2219,asset,id221950
+221960,Amort. /frais d'acquis. sur construct.,1,,id2219,asset,id221960
+222000,Terrains avec bâtiments industriels,1,,id2220,asset,id222000
+222010,Terrains avec bâtiments administratifs,1,,id2220,asset,id222010
+222020,Autres terrains avec bâtiments d'expl.,1,,id2220,asset,id222020
+222030,Terrains avec voies de transport,1,,id2220,asset,id222030
+222040,Frais d'acquisition des terrains à bâtir,1,,id2220,asset,id222040
+222100,Intérêts int. afférents aux terr. bâtis,1,,id222,asset,id222100
+222800,Plus-val. Actées /bâtiments industriels,1,,id2228,asset,id222800
+222810,Plus-val. Actées /bâtiments administr.,1,,id2228,asset,id222810
+222820,Plus-val. Actées /autres bât. d'expl.,1,,id2228,asset,id222820
+222830,Plus-val. Actées /voies de transport,1,,id2228,asset,id222830
+222900,Amort. sur bâtiments industriels,1,,id2229,asset,id222900
+222910,Amort. sur Bâtiments administratifs,1,,id2229,asset,id222910
+222920,Amort. sur autres bâtiments d'exploit.,1,,id2229,asset,id222920
+222930,Amort. sur voies de transport,1,,id2229,asset,id222930
+222940,Amort. sur fr. d'acquis. des terr. bâtis,1,,id2229,asset,id222940
+223000,Val. d'acquis. Terrain en usufruit,1,,id223,asset,id223000
+223100,Val. d'acquis. Bâtiment en usufruit,1,,id223,asset,id223100
+223200,Val. d'acquis. droit de superficie,1,,id223,asset,id223200
+223800,Plus-val. Act/Autres droits réels/imm.,1,,id223,asset,id223800
+223900,Amortissements/ Autres droits réels/imm.,1,,id223,asset,id223900
+230000,Installation d'eau,1,,id230,asset,id230000
+230100,Installation d'électricité,1,,id230,asset,id230100
+230200,Installation de vapeur,1,,id230,asset,id230200
+230300,Installation de gaz,1,,id230,asset,id230300
+230400,Installation de chauffage,1,,id230,asset,id230400
+230500,Installation de conditionnement d'air,1,,id230,asset,id230500
+230600,Installation de chargement,1,,id230,asset,id230600
+231000,Machines,1,,id231,asset,id231000
+232000,Outillage,1,,id232,asset,id232000
+233000,Pièces de rechange,1,,id233,asset,id233000
+238000,Plus-values actées sur installations,1,,id238,asset,id238000
+238100,Plus-values actées sur machines,1,,id238,asset,id238100
+238200,Plus-values actées sur outillage,1,,id238,asset,id238200
+238300,Plus-values actées sur pces de rechange,1,,id238,asset,id238300
+239000,Amortissements sur installations,1,,id239,asset,id239000
+239100,Amortissements sur machines,1,,id239,asset,id239100
+239200,Amortissements sur outillage,1,,id239,asset,id239200
+239300,Amortissements sur pièces de rechange,1,,id239,asset,id239300
+240000,Mobilier bâtiments industriels,1,,id2400,asset,id240000
+240010,Mobilier bâtiments administratifs,1,,id2400,asset,id240010
+240020,Mobilier des autres bâtiments d'exploit.,1,,id2400,asset,id240020
+240030,Mobilier ouvres sociales,1,,id2400,asset,id240030
+240040,Mobilier locaux accueil,1,,id2400,asset,id240040
+240100,Matériel de bur. des bâtiments industr.,1,,id2401,asset,id240100
+240110,Matériel de bur. des bâtiments admin.,1,,id2401,asset,id240110
+240120,Matériel de bur. autres bâtim. d'expl.,1,,id2401,asset,id240120
+240130,Matériel de bur. des ouvres sociales,1,,id2401,asset,id240130
+240800,Plus-values actées sur mobilier,1,,id2408,asset,id240800
+240810,Plus-values sur matériel de bureau,1,,id2408,asset,id240810
+240900,Amort. sur mobilier,1,,id2409,asset,id240900
+240910,Amort. sur matériel de bureau,1,,id2409,asset,id240910
+240920,Mobilier Autre Bat Amortissement,1,,id2409,asset,id240920
+241000,Voitures,1,,id2410,asset,id241000
+241050,Camions,1,,id2410,asset,id241050
+241100,Matériel ferroviaire,1,,id241,asset,id241100
+241200,Matériel fluvial,1,,id241,asset,id241200
+241300,Matériel naval,1,,id241,asset,id241300
+241400,Matériel aérien,1,,id241,asset,id241400
+241800,Plus-values sur matériel automobile,1,,id2418,asset,id241800
+241810,Plus-values sur matériel ferroviaire,1,,id2418,asset,id241810
+241820,Plus-values sur matériel fluvial,1,,id2418,asset,id241820
+241830,Plus-values sur matériel naval,1,,id2418,asset,id241830
+241840,Plus-values sur matériel aérien,1,,id2418,asset,id241840
+241900,Amort. sur matériel automobile,1,,id2419,asset,id241900
+241910,Amort. sur matériel ferroviaire,1,,id2419,asset,id241910
+241920,Amort. sur matériel fluvial,1,,id2419,asset,id241920
+241930,Amort. sur matériel naval,1,,id2419,asset,id241930
+241940,Amort. sur matériel aérien,1,,id2419,asset,id241940
+250000,Terrains en loc.-Fin.,1,,id250,asset,id250000
+250100,Constructions en loc.-Fin.,1,,id250,asset,id250100
+250800,Plus-val. sur emphyt. & leas.  t. & cons,1,,id250,asset,id250800
+250900,Amort./constr. en leas. & RV/t. en leas.,1,,id250,asset,id250900
+251000,Installations en loc.-Fin.,1,,id251,asset,id251000
+251100,Machines en loc.-Fin.,1,,id251,asset,id251100
+251200,Outillage en loc.-Fin.,1,,id251,asset,id251200
+251800,Plus-val. sur inst. Mach. & out. en leas,1,,id251,asset,id251800
+251900,Amort. sur inst. Mach. & out. en leas.,1,,id251,asset,id251900
+251910,AMORT/ matériel leasing,1,,id251,asset,id251910
+252000,Mobilier en loc.-Fin.,1,,id252,asset,id252000
+252100,Matériel roulant en loc.-Fin.,1,,id252,asset,id252100
+252800,Plus-values/mobilier et mat. rlt en leas,1,,id252,asset,id252800
+252900,Amort. sur mobilier et mat. rlt en leas.,1,,id252,asset,id252900
+260000,Frais d'aménagements de locaux loués,1,,id26,asset,id260000
+260900,Amort./ Frais d'aménag. de locaux loués,1,,id26,asset,id260900
+261000,Maison d'habitation prise en location,1,,id26,asset,id261000
+261800,Plus-val. / Maison d'habitation louée,1,,id26,asset,id261800
+261900,Amort. / Maison d'habitation louée,1,,id26,asset,id261900
+262000,Réserve immobilière,1,,id26,asset,id262000
+262800,Plus-val. / Réserve immobilière,1,,id26,asset,id262800
+262900,Amort. / Réserve immobilière,1,,id26,asset,id262900
+263000,Matériel d'emballage,1,,id26,asset,id263000
+263900,Amort. /Matériel d'emballage,1,,id26,asset,id263900
+264000,Emballages récupérables,1,,id26,asset,id264000
+264900,Amort. /Emballages récupérables,1,,id26,asset,id264900
+268000,Terrains & Bât. en nue propriété,1,,id26,asset,id268000
+268800,Plus-val./Terrains & Bât. en nue propr.,1,,id26,asset,id268800
+268900,Amort. /Terrains & Bât. en nue propr.,1,,id26,asset,id268900
+270000,Constructions en cours,1,,id270,asset,id270000
+270100,"Install., machines et outillage en cours",1,,id270,asset,id270100
+270200,Mobilier et matériel roulant en cours,1,,id270,asset,id270200
+270300,Autres immobilisations corp. en cours,1,,id270,asset,id270300
+271000,Avances & acptes versés / immob.en cours,1,,id271,asset,id271000
+280000,Valeur d'acquis. particip. entr. liées,1,,id280,asset,id280000
+280100,Montts non app. part. entr. liées (-),1,,id280,asset,id280100
+280800,Plus-values / particip. entr. liées,1,,id280,asset,id280800
+280900,Réd. Val. / particip. entr. liées (-),1,,id280,asset,id280900
+281000,Créances en compte / entreprises liées,1,,id281,asset,id281000
+281100,Effets à recevoir / entreprises liées,1,,id281,asset,id281100
+281200,Titres à revenu fIxe / entr. liées,1,,id281,asset,id281200
+281700,Créances douteuses / entr. liées,1,,id281,asset,id281700
+281900,Réd. Val. Créances / entr. liées (-),1,,id281,asset,id281900
+282000,Valeur d'acquisition entr. avec lien,1,,id282,asset,id282000
+282100,Montants non app. entr. avec lien (-),1,,id282,asset,id282100
+282800,Plus-values particip. entr. avec lien,1,,id282,asset,id282800
+282900,Réd. val./particip. entr. avec lien (-),1,,id282,asset,id282900
+283000,Créances en compte / entr. avec lien,1,,id283,asset,id283000
+283100,Effets à recevoir / entr. avec lien,1,,id283,asset,id283100
+283200,Titres à revenu fixe / entr. avec lien,1,,id283,asset,id283200
+283700,Créances douteuses / entr. avec lien,1,,id283,asset,id283700
+283900,Réd. Val. / entreprises avec lien,1,,id283,asset,id283900
+284000,Valeur d'acquisition actions et parts,1,,id284,asset,id284000
+284100,Montants non app. actions et parts (-),1,,id284,asset,id284100
+284800,Plus-values / actions et parts,1,,id284,asset,id284800
+284900,Réd. Val. / actions et parts (-),1,,id284,asset,id284900
+285000,Créances en compte - autres créances,1,,id285,asset,id285000
+285100,Effets à recevoir - autres créances,1,,id285,asset,id285100
+285200,Titres à revenu fixe - autres créances,1,,id285,asset,id285200
+285700,Créances douteuses - autres créances,1,,id285,asset,id285700
+285900,Réductions de valeur - autres créances,1,,id285,asset,id285900
+288000,"Téléphone, télex - cautionnements",1,,id288,asset,id288000
+288100,Gaz - cautionnements,1,,id288,asset,id288100
+288200,Eau - cautionnements,1,,id288,asset,id288200
+288300,Electricité - cautionnements,1,,id288,asset,id288300
+288700,Autres cautionnements en numéraire,1,,id288,asset,id288700
+290000,Clients entreprises liées + d'1 an,1,,id2900,asset,id290000
+290010,Clients entreprises avec lien + d'1 an,1,,id2900,asset,id290010
+290020,Clients Belgique  + d'1 an,1,,id2900,asset,id290020
+290030,Clients C.E.E. + d'1 an,1,,id2900,asset,id290030
+290040,Clients hors C.E.E. + d'1 an,1,,id2900,asset,id290040
+290050,Clients assoc. moment. + d'1 an,1,,id2900,asset,id290050
+290100,Effets à rec. Entr. liées + d'1 an,1,,id2901,asset,id290100
+290110,Effets à rec. Entr. avec lien + d'1 an,1,,id2901,asset,id290110
+290120,Effets à rec. Belgique  + d'1 an,1,,id2901,asset,id290120
+290130,Effets à rec. C.E.E. + d'1 an.,1,,id2901,asset,id290130
+290140,Effets à rec. hors C.E.E. + d'1 an.,1,,id2901,asset,id290140
+290500,Retenues sur garanties + d'1 an.,1,,id290,asset,id290500
+290600,Acomptes versés + d'1 an.,1,,id290,asset,id290600
+290700,Créances douteuses + d'1 an.,1,,id290,asset,id290700
+290900,Réd.  Val. Sur créances + d'1 an. (-),1,,id290,asset,id290900
+291000,Autres cr. en cpte entr. liées + d'1 an,1,,id2910,asset,id291000
+291010,Autres cr. en cpte entr. a.lien + d'1 an,1,,id2910,asset,id291010
+291020,Autres cr. en cpte autres déb. + d'1 an,1,,id2910,asset,id291020
+291100,Autres cr. E. à R. entr. liées + d'1 an,1,,id2911,asset,id291100
+291110,Autres cr. E. à R entr. a.lien + d'1 an,1,,id2911,asset,id291110
+291120,Autres cr. E. à R autres déb. + d'1 an,1,,id2911,asset,id291120
+291200,Autres cr. - cession d'immob. en leas.,1,,id291,asset,id291200
+291700,Autres cr. - Créances dout. + d'1 an,1,,id291,asset,id291700
+291900,Autres cr. - Réd. Val./créances + d'1 an,1,,id291,asset,id291900
+300000,Stocks Matières premières val. d'acquis.,1,,id300,asset,id300000
+309000,Réd. val. - Stocks mat.premières (-),1,,id309,asset,id309000
+310000,Stocks Matières d'approvisionnement,1,,id310,asset,id310000
+310100,"Energie (Charbon, mazout, essence, .)",1,,id310,asset,id310100
+310200,Produits d'entretien,1,,id310,asset,id310200
+310300,Fournitures diverses et petit outillage,1,,id310,asset,id310300
+310400,Imprimés et fournitures de bureau,1,,id310,asset,id310400
+310500,Fournitures de services sociaux,1,,id310,asset,id310500
+310600,Emballages perdus,1,,id3106,asset,id310600
+310610,Emballages récupérables,1,,id3106,asset,id310610
+319000,Réd. de val. - Stocks Fournitures (-),1,,id319,asset,id319000
+320000,Valeur des produits semi-ouvrés,1,,id320,asset,id320000
+320100,Valeur des en cours de fabrication,1,,id320,asset,id320100
+320200,Valeur des travaux en cours,1,,id320,asset,id320200
+320500,Valeur des déchets,1,,id320,asset,id320500
+320600,Valeur des rebuts,1,,id320,asset,id320600
+320900,Valeur des travaux en assoc. Mom.,1,,id320,asset,id320900
+329000,Réductions de valeur / en cours (-),1,,id329,asset,id329000
+330000,Valeur des produits finis,1,,id330,asset,id330000
+330100,Valeur des sous-produits,1,,id330,asset,id330100
+339000,Réductions de val. / produits finis (-),1,,id339,asset,id339000
+340000,Stocks Marchandises - Valeur d'acquis.,1,,id340,asset,id340000
+349000,Réd. de val. / Stocks Marchandises (-),1,,id349,asset,id349000
+350000,Valeur d'acquis. - Immeubles à vendre,1,,id350,asset,id350000
+351000,Valeurs Immeubles construits pour vente,1,,id351,asset,id351000
+359000,Réductions de val. / immeubles à vendre,1,,id359,asset,id359000
+360000,Acomptes versés / Achats pour stocks,1,,id360,asset,id360000
+369000,Réd. de val. / Achats pour stocks (-),1,,id369,asset,id369000
+370000,Valeur d'acquisition commandes en cours,1,,id370,asset,id370000
+371000,Bénéfices pris sur commandes en cours,1,,id371,asset,id371000
+379000,Réd. de val. Sur commandes en cours (-),1,,id379,asset,id379000
+400000,Clients,1,,id400,view,id400000
+400100,Clients Etrangers,1,,id400,view,id400100
+400700,"Rabais, remises, ristournes à accorder",1,,id400,view,id400700
+400800,Créances résultant d'assoc. moment.,1,,id400,view,id400800
+401000,Effets à recevoir - Clients,1,,id401,asset,id401000
+401300,Effets à l'encaissement - Clients,1,,id401,asset,id401300
+401500,Effets à l'escompte - Clients,1,,id401,asset,id401500
+402000,Entreprises liées - Créances comm.,1,,id402,asset,id402000
+402100,Entrepr. avec lien - Créances comm.,1,,id402,asset,id402100
+402200,Admin. & gérants - Créances comm.,1,,id402,asset,id402200
+403000,Effets à rec. - Entreprises liées,1,,id403,asset,id403000
+403100,Effets à rec. - Entreprises avec lien,1,,id403,asset,id403100
+403200,Effets à rec. - Admin. et gérants,1,,id403,asset,id403200
+404000,Produits à recevoir (factures à établir),1,,id404,asset,id404000
+405000,Compensations clients,1,,id405,asset,id405000
+406000,Acomptes versés - Clients,1,,id406,asset,id406000
+407000,Créances douteuses,1,,id407,asset,id407000
+408000,Ecarts de conversion de devises/créances,1,,id408,asset,id408000
+409000,Réductions de valeur / Créances comm.,1,,id409,asset,id409000
+410000,Appels de fonds - Capital,1,,id410,asset,id410000
+410100,Actionnaires défaillants,1,,id410,asset,id410100
+411000,T.V.A. due,1,,id411,asset,id411000
+411100,T.V.A. déductible,1,,id411,asset,id411100
+411200,Compte courant admin. T.V.A. à récup.,1,,id411,asset,id411200
+411800,Taxe d'égalisation due,1,,id411,asset,id411800
+412000,Impôts et précomptes à récupérer,1,,id4120,asset,id412000
+412010,Créance d'impôt différé,1,,id4120,asset,id412010
+412500,Autres impôts et taxes à récup.,1,,id412,asset,id412500
+412800,Impôts & taxes étrangers à récup.,1,,id412,asset,id412800
+414000,Produits à recevoir,1,,id414,asset,id414000
+416000,Associés (compte d'apport en société),1,,id416,asset,id416000
+416100,Avances et prêts au personnel,1,,id416,asset,id416100
+416200,Compte crt des associés en SPRL à rec.,1,,id416,asset,id416200
+416300,Compte crt des admin. & gérants à rec.,1,,id416,asset,id416300
+416400,Créances sur sociétés apparentées,1,,id416,asset,id416400
+416600,Emballages et matériel à rendre,1,,id416,asset,id416600
+416700,Subsides à recevoir,1,,id4167,asset,id416700
+416710,"Autres créances - Etats, Etabliss. publ.",1,,id4167,asset,id416710
+416800,"Rabais, ristournes, remises à obtenir",1,,id416,asset,id416800
+417000,Créances douteuses,1,,id417,asset,id417000
+418000,Cautionnements versés en numéraire,1,,id418,asset,id418000
+419000,Réductions de val. / autres créances (-),1,,id419,asset,id419000
+420000,Emprunts  sub. convert. éch. dans l'an.,1,,id420,cash,id420000
+420100,Emprunts sub. non conv. éch. dans l'an.,1,,id420,cash,id420100
+421000,Emprunts obl. non sub. convert. éch./an.,1,,id421,cash,id421000
+421100,Emprunts obl. non sub. non conv. éch./an,1,,id421,cash,id421100
+422000,Financement d'immobiliers éch. ds l'an.,1,,id422,cash,id422000
+422100,Financement de mobiliers éch. ds l'année,1,,id422,cash,id422100
+423000,Dettes en compte échéant dans l'année,1,,id423,cash,id423000
+423100,Promesses échéant dans l'année,1,,id423,cash,id423100
+423200,Crédits d'acceptation éch. ds l'année,1,,id423,cash,id423200
+424000,Autres emprunts échéant dans l'année,1,,id424,cash,id424000
+425000,Fournisseurs échéant dans l'année,1,,id425,cash,id425000
+425100,Effets à payer échéant dans l'année,1,,id425,cash,id425100
+426000,Acomptes reçus / commandes éch. ds l'an,1,,id426,cash,id426000
+428000,Cautionnements échéant dans l'année,1,,id428,cash,id428000
+429000,Dettes vers entrep. liées éch. ds l'an,1,,id429,cash,id429000
+429100,Dettes vers entr. avec lien éch. ds l'an,1,,id429,cash,id429100
+429200,"Dettes vers gérants, assoc. éch. ds l'an",1,,id429,cash,id429200
+429900,Autres dettes diverses échéant ds l'an.,1,,id429,cash,id429900
+430000,Banques-Emprunts en compte à terme fixe,1,,id430,cash,id430000
+431000,Banques-Promesses,1,,id431,cash,id431000
+432000,Banques-Crédit d'acceptation,1,,id432,cash,id432000
+433000,Banques-Dettes en compte courant,1,,id433,cash,id433000
+439000,Autres emprunts,1,,id439,cash,id439000
+440000,Fournisseurs - entreprises liées,1,,id4400,view,id440000
+440010,Fournisseurs - entreprises avec lien,1,,id4400,view,id440010
+440100,Fournisseurs belges,1,,id4401,view,id440100
+440110,Fournisseurs C.E.E.,1,,id4401,view,id440110
+440120,Fournisseurs importation,1,,id4401,view,id440120
+440200,Fournisseurs - co-particip. (ass. mom.),1,,id440,view,id440200
+440300,Fournisseurs - retenues de garanties,1,,id440,view,id440300
+441000,Effets à payer pour entreprises liées,1,,id4410,cash,id441000
+441010,Effets à payer pour entrepr. avec lien,1,,id4410,cash,id441010
+441100,Effets à payer pour fournisseurs belges,1,,id4411,cash,id441100
+441110,Effets à payer pour fournisseurs C.E.E.,1,,id4411,cash,id441110
+441120,Effets à payer pour fournisseurs import.,1,,id4411,cash,id441120
+444000,Factures à recevoir,1,,id444,cash,id444000
+445000,Compensations fournisseurs,1,,id445,cash,id445000
+446000,Acomptes reçus,1,,id446,cash,id446000
+448000,Ecarts de conversion des devises/dettes,1,,id448,cash,id448000
+450000,Impôts belges estimés sur le résultat,1,,id450,cash,id450000
+450500,Autres impôts et taxes belges estimés,1,,id450,cash,id450500
+450800,Impôts et taxes étrangers estimés,1,,id450,cash,id450800
+451000,T.V.A. due sur ventes et prestations,1,,id4510,cash,id451000
+451010,T.V.A. due sur opérations intracomm.,1,,id4510,cash,id451010
+451020,T.V.A. due - cocontractant,1,,id4510,cash,id451020
+451100,T.V.A. à récupérer sur achats,1,,id4511,cash,id451100
+451110,T.V.A. à récupérer sur opérations fin.,1,,id4511,cash,id451110
+451200,Compte courant admin. T.V.A. à payer,1,,id451,cash,id451200
+451800,Taxe d'égalisation due,1,,id451,cash,id451800
+452000,Impôts belges à payer sur le résultat,1,,id452,cash,id452000
+452500,Précompte immobilier à payer,1,,id4525,cash,id452500
+452510,Impôts communaux à payer,1,,id4525,cash,id452510
+452520,Impôts provinciaux à payer,1,,id4525,cash,id452520
+452530,Autres impôts et taxes à payer,1,,id4525,cash,id452530
+452800,Impôts et taxes étrangers à payer,1,,id452,cash,id452800
+452900,Impôts à payer contestés,1,,id452,cash,id452900
+453000,Précompte prof. retenu sur rémunérations,1,,id453,cash,id453000
+453200,Précompte mobilier retenu sur dividendes,1,,id453,cash,id453200
+453300,Précompte mob. retenu sur intérêts payés,1,,id453,cash,id453300
+453800,Autres précomptes retenus,1,,id453,cash,id453800
+454000,O.N.S.S. - Arriérés à payer,1,,id454,cash,id454000
+454100,O.N.S.S. - ler trimestre à payer,1,,id454,cash,id454100
+454200,O.N.S.S. - 2ème trimestre à payer,1,,id454,cash,id454200
+454300,O.N.S.S. - 3ème trimestre à payer,1,,id454,cash,id454300
+454400,O.N.S.S. - 4ème trimestre à payer,1,,id454,cash,id454400
+455000,"Rémun. administrateurs, gérants à payer",1,,id455,cash,id455000
+455100,Rémun. direction à payer,1,,id455,cash,id455100
+455200,Rémun. employés à payer,1,,id455,cash,id455200
+455300,Rémun. ouvriers à payer,1,,id455,cash,id455300
+456000,Pécules de vacances direction à payer,1,,id456,cash,id456000
+456100,Pécules de vacances employés à payer,1,,id456,cash,id456100
+456200,Pécules de vacances ouvriers à payer,1,,id456,cash,id456200
+459000,Provision pour gratific. fin d'année,1,,id459,cash,id459000
+459100,Départs de personnel,1,,id459,cash,id459100
+459200,Oppositions sur rémunérations,1,,id459,cash,id459200
+459300,Assurance loi à payer,1,,id4593,cash,id459300
+459310,Assurance salaire garanti à payer,1,,id4593,cash,id459310
+459320,Assurance groupe à payer,1,,id4593,cash,id459320
+459330,Assurances individuelles à payer,1,,id4593,cash,id459330
+459340,Assurance respons. civile à payer,1,,id4593,cash,id459340
+459350,Assurance dirigeant d'entr. à payer,1,,id4593,cash,id459350
+459360,Assurances diverses du pers. à payer,1,,id4593,cash,id459360
+459400,Caisse d'assurances soc. pour indép.,1,,id459,cash,id459400
+459700,Dettes et provisions sociales diverses,1,,id459,cash,id459700
+460000,Acomptes reçus sur commandes,1,,id46,cash,id460000
+470000,Dividendes-tantièmes d'ex. ant. à payer,1,,id470,cash,id470000
+471000,Dividendes de l'exercice à payer,1,,id471,cash,id471000
+472000,Tantièmes de l'exercice à payer,1,,id472,cash,id472000
+473000,Autres allocataires à payer,1,,id473,cash,id473000
+480000,Obligations et coupons échus (dettes),1,,id480,cash,id480000
+481000,Actionnaires - capital à rembourser,1,,id481,cash,id481000
+482000,Participation du personnel à payer,1,,id482,cash,id482000
+483000,Acomptes reçus d'autres tiers à - d'1 an,1,,id483,cash,id483000
+484000,Emballages et matériels consignés,1,,id484,cash,id484000
+488000,Cautionnements reçus en numéraire,1,,id488,cash,id488000
+489200,Compte crt des associés en SPRL à payer,1,,id489,cash,id489200
+489300,Compte crt des admin. & gérants à payer,1,,id489,cash,id489300
+490000,Charges à reporter,1,,id490,asset,id490000
+491000,"Ristournes, rabais à obtenir",1,,id4910,asset,id491000
+491010,Commissions à obtenir,1,,id4910,asset,id491010
+491020,Autres produits d'exploitation acquis,1,,id4910,asset,id491020
+491100,Intérêts courus et non échus / prêts,1,,id4911,asset,id491100
+491110,Autres produits financiers acquis,1,,id4911,asset,id491110
+492000,Charges à imputer,1,,id492,cash,id492000
+493000,Prorata d'intérêts à reporter,1,,id4930,cash,id493000
+493100,Produits financiers à reporter,1,,id493,cash,id493100
+493200,Produits divers à reporter,1,,id493,cash,id493200
+496000,Ecarts provisoires de conversion (Actif),1,,id496,view,id496000
+497000,Ecarts provisoires de convers. (Passif),1,,id497,view,id497000
+498000,"Résultats sur options émises, en cours",1,,id498,view,id498000
+499000,Compte d'attente,1,,id499,view,id499000
+499100,Compte de répartition périod. des charge,1,,id499,view,id499100
+499800,Solde équilibre en devises (hors PCMN),1,,id499,view,id499800
+499900,Transferts d'exercice,1,,id499,view,id499900
+500000,Actions propres,1,,id50,asset,id500000
+510000,Actions & parts - Valeur d'acquisition,1,,id510,asset,id510000
+511000,Actions & parts - Montants non app. (-),1,,id511,asset,id511000
+512000,Actions & parts - Options acquises,1,,id512,asset,id512000
+519000,Actions & parts - Réductions de val. (-),1,,id519,asset,id519000
+520000,Titres à rev. Fixes - Valeur d'acquis.,1,,id520,asset,id520000
+529000,Titres à rev. Fixes - Réd. de val.,1,,id529,asset,id529000
+530000,Dépôts à terme de plus d'un an,1,,id530,asset,id530000
+531000,Dépôts à terme de + d'1 mois et - d'1 an,1,,id531,asset,id531000
+532000,Dépôts à terme d'un mois au plus,1,,id532,asset,id532000
+539000,Réductions de valeur / dépôts à terme,1,,id539,asset,id539000
+540000,Chèques à encaisser,1,,id540,asset,id540000
+541000,Coupons à encaisser,1,,id541,asset,id541000
+550000,Comptes courants bancaires,1,,id550,asset,id550000
+550100,Chèques émis (-) banques,1,,id550,asset,id550100
+550200,GENERALE BANQUE CPTE TERME,1,,id550,asset,id550200
+550300,GENERALE BANQUE EURO,1,,id550,asset,id550300
+550400,Banque Bruxelles Lambert,1,,id550,asset,id550400
+550500,Banque Cera,1,,id550,asset,id550500
+550900,Réductions de val. / Etabliss. De crédit,1,,id550,asset,id550900
+560000,Compte courant chèques postaux,1,,id560,asset,id560000
+561000,Chèques émis (-) chèques postaux,1,,id561,asset,id561000
+570000,Caisse centrale,1,,id570,asset,id570000
+577000,Caisses des succursales et agences,1,,id577,asset,id577000
+578000,Caisse timbres fiscaux,1,,id578,asset,id578000
+578100,Caisse timbres postaux,1,,id578,asset,id578100
+580000,Virements internes,1,,id58,view,id580000
+600000,Achats de matières premières,1,,id600,expense,id600000
+601000,Achats de matières d'approvisionnement,1,,id601,expense,id601000
+601100,"Achats d'énergie (Charbon, mazout, .)",1,,id601,expense,id601100
+601200,Achats de produits d'entretien,1,,id601,expense,id601200
+601300,Achats de fourn. Div. & petit outill.,1,,id601,expense,id601300
+601400,Achats d'imprimés et fournit. de bureau,1,,id601,expense,id601400
+601500,Achats de fournitures de services soc.,1,,id601,expense,id601500
+601600,Achats d'emballages perdus,1,,id6016,expense,id601600
+601610,Achats d'emballages récupérables,1,,id6016,expense,id601610
+602000,"Achats de services, travaux et études",1,,id602,expense,id602000
+603000,Achats de sous-traitances générales,1,,id603,expense,id603000
+604000,Achats de marchandises - Val. d'acquis.,1,,id604,expense,id604000
+604900,Achats de marchandises - R. de val. (-),1,,id604,expense,id604900
+605000,Achats d'immeubles destinés à la vente,1,,id605,expense,id605000
+608000,"Remises, ristournes et rabais sur achats",1,,id608,expense,id608000
+609000,Variation des stocks de mat. premières,1,,id609,expense,id609000
+609100,Variation des stocks de fournitures,1,,id609,expense,id609100
+609400,Variation des stocks de marchandises,1,,id609,expense,id609400
+609500,Variation stocks d'immeubles dest. à vte,1,,id609,expense,id609500
+610000,Loyers divers,1,,id610,expense,id610000
+610100,"Charges locatives (assurances, ...)",1,,id610,expense,id610100
+611000,Entretien et réparations des locaux,1,,id611,expense,id611000
+611100,Entretien véhicules,1,,id611,expense,id611100
+611101,Isabel formule de base,1,,id611,expense,id611101
+611102,Isabel services divers,1,,id611,expense,id611102
+612000,Eau,1,,id6120,expense,id612000
+612010,Gaz,1,,id6120,expense,id612010
+612020,Electricité,1,,id6120,expense,id612020
+612030,Chauffage des locaux,1,,id6120,expense,id612030
+612040,Mazout,1,,id6120,expense,id612040
+612100,Téléphone,1,,id6121,expense,id612100
+612110,Internet,1,,id6121,expense,id612110
+612120,Télex - Fax,1,,id6121,expense,id612120
+612130,Frais postaux,1,,id6121,expense,id612130
+612200,Fournitures de bureau,1,,id612,expense,id612200
+612300,Photocopies et petites fournitures,1,,id612,expense,id612300
+613000,"Redevances pour brevets, licences, .",1,,id6130,expense,id613000
+613010,Autres redevances (procédés de fabric.),1,,id6130,expense,id613010
+613100,Assurance incendie,1,,id6131,expense,id613100
+613110,Assurance vol,1,,id6131,expense,id613110
+613120,Assurance autos,1,,id6131,expense,id613120
+613130,Assurance crédit,1,,id6131,expense,id613130
+613140,Assurances frais généraux,1,,id6131,expense,id613140
+613200,Commissions aux tiers,1,,id6132,expense,id613200
+613210,"Honoraires d'avocats, d'experts, etc...",1,,id6132,expense,id613210
+613220,Cotisations aux groupements prof.,1,,id6132,expense,id613220
+613230,"Dons, libéralités,...",1,,id6132,expense,id613230
+613240,Frais de contentieux,1,,id6132,expense,id613240
+613250,Publications légales,1,,id6132,expense,id613250
+613300,Transports de personnel,1,,id6133,expense,id613300
+613310,"Voyages, déplacements, représentations",1,,id6133,expense,id613310
+613400,Personnel intérimaire,1,,id6134,expense,id613400
+614000,Annonces et insertions,1,,id614,expense,id614000
+614100,Catalogues et imprimés,1,,id614,expense,id614100
+614200,Echantillons,1,,id614,expense,id614200
+614300,Site Internet,1,,id614,expense,id614300
+614400,Primes,1,,id614,expense,id614400
+614500,Cadeaux à la clientèle,1,,id614,expense,id614500
+614600,Missions et réception,1,,id614,expense,id614600
+614700,Documentation,1,,id614,expense,id614700
+615000,Sous-traitants pour activités propres,1,,id615,expense,id615000
+615100,Sous traitants d'assoc. moment.,1,,id615,expense,id615100
+615200,Quote-part bénéficiaire des co-particip.,1,,id615,expense,id615200
+617000,Personnes mises à disp de la société,1,,id617,expense,id617000
+618000,Rémun. & divers aux gérants sans contrat,1,,id618,expense,id618000
+620000,Administrateurs ou gérants - Rémunérat.,1,,id620,expense,id620000
+620100,Personnel de direction - Rémunérations,1,,id620,expense,id620100
+620200,Employés - Rémunérations,1,,id620,expense,id620200
+620300,Ouvriers - Rémunérations,1,,id620,expense,id620300
+620400,Autres membres du pers. - Rémunérations,1,,id620,expense,id620400
+620500,Chèques repas,1,,id620,expense,id620500
+621000,Cotisations patr. d'ass. soc. / salaires,1,,id621,expense,id621000
+621100,Cotis. patr. d'ass. soc./app. & comm.,1,,id621,expense,id621100
+622000,Primes patr. pour ass. extra - légales,1,,id622,expense,id622000
+623000,"Assurances loi, responsabilité civile",1,,id6230,expense,id623000
+623010,Assurance salaire garanti,1,,id6230,expense,id623010
+623020,Assurances individuelles,1,,id6230,expense,id623020
+623030,Assurance groupe,1,,id6230,expense,id623030
+623100,Jours fériés payés,1,,id6231,expense,id623100
+623110,Salaire hebdomadaire garanti,1,,id6231,expense,id623110
+623120,Allocations familiales complémentaires,1,,id6231,expense,id623120
+623200,Alloc. Fam. Complém. pour non salariés,1,,id6232,expense,id623200
+623210,Lois sociales des indépendants,1,,id6232,expense,id623210
+623220,Charges soc. Diverses des admin.,1,,id6232,expense,id623220
+623300,Indemnités de rupt. contrat de travail,1,,id623,expense,id623300
+623400,Autres divers frais de personnel,1,,id623,expense,id623400
+624000,Pensions de retraite admin. & gérants,1,,id624,expense,id624000
+624100,Pensions de retraite personnel,1,,id624,expense,id624100
+625000,Dotations aux prov. pour péc. vacances,1,,id625,expense,id625000
+625100,Utilisat des. prov. pour péc. Vac. (-),1,,id625,expense,id625100
+630000,Dotations aux amort. / frais d'établiss.,1,,id630,expense,id630000
+630100,Dotations aux amort. / immob. incorp.,1,,id630,expense,id630100
+630200,Dotations aux amort. / immob. corp.,1,,id630,expense,id630200
+630800,Dotations aux réd. de val. / immob. inc.,1,,id630,expense,id630800
+630900,Dotations aux réd. de val./immob. corp.,1,,id630,expense,id630900
+631000,Dotations aux réd. de val. sur stocks,1,,id631,expense,id631000
+631100,Reprises de réd. de val. sur stocks (-),1,,id631,expense,id631100
+632000,Dotations aux réd.val./comm. en cours,1,,id632,expense,id632000
+632100,Reprises de réd.val./comm. en cours (-),1,,id632,expense,id632100
+633000,Dotations aux réd. val./sur créances L.T,1,,id633,expense,id633000
+633100,Reprises réd. val./sur créances L.T(-),1,,id633,expense,id633100
+634000,Dotations aux réd. val./sur créances C.T,1,,id634,expense,id634000
+634100,Reprises réd. val./sur créances C.T(-),1,,id634,expense,id634100
+635000,Dotations aux provisions pour pensions,1,,id635,expense,id635000
+635100,Utilisations des prov. pour pensions (-),1,,id635,expense,id635100
+636000,Dotations aux provisions pour gr. rép.,1,,id636,expense,id636000
+636100,Utilisations des prov. pour gr. rép. (-),1,,id636,expense,id636100
+637000,Dotations prov. pour autres risq. & ch.,1,,id637,expense,id637000
+637100,Utilisations prov. pour risq. & ch. (-),1,,id637,expense,id637100
+640000,Taxes sur autos et camions,1,,id6400,expense,id640000
+640100,Timbres fiscaux pris en charge,1,,id6401,expense,id640100
+640110,Droits d'enregistrement,1,,id6401,expense,id640110
+640120,T.V.A. non déductible sur investiss.,1,,id6401,expense,id640120
+640200,Taxe sur la force motrice,1,,id6402,expense,id640200
+640210,Taxe sur le personnel occupé,1,,id6402,expense,id640210
+640300,Taxes diverses,1,,id640,expense,id640300
+641000,Moins-val. sur réalis. d'immob. corp.,1,,id641,expense,id641000
+642000,Moins-val. / réalis. de créances comm.,1,,id642,expense,id642000
+643000,Frais entretien voiture non déductibles,1,,id643,expense,id643000
+643100,Frais location voiture non déductibles,1,,id643,expense,id643100
+643200,Frais assurances voit. non déductibles,1,,id643,expense,id643200
+643300,Frais - taxes autos non déductibles,1,,id643,expense,id643300
+643400,Frais stationnement - parking non déd.,1,,id643,expense,id643400
+643500,TVA non déductible sur autos,1,,id643,expense,id643500
+643600,Frais garage non déductibles,1,,id643,expense,id643600
+643700,Frais dépannage - réparation non déduct.,1,,id643,expense,id643700
+643800,Frais lavage véhicules non déductibles,1,,id643,expense,id643800
+643900,Frais achat pièces rechange non déduct.,1,,id643,expense,id643900
+644000,Frais boissons / repas non déductibles,1,,id644,expense,id644000
+644100,Frais tabac / repas non déductibles,1,,id644,expense,id644100
+645000,Frais traiteur non déductibles,1,,id645,expense,id645000
+645100,"Frais d'achat boissons, fleurs non déd.",1,,id645,expense,id645100
+645200,Frais d'amortissements non déduct.,1,,id645,expense,id645200
+645300,Frais de services offerts non déduct.,1,,id645,expense,id645300
+646000,"Frais d'achat de vins, alcools non déd.",1,,id646,expense,id646000
+646100,Frais d'achat de parfums luxe non déd.,1,,id646,expense,id646100
+646200,Frais d'achat d'électroménager non déd.,1,,id646,expense,id646200
+646300,"Frais d'achat de montres, . non déd.",1,,id646,expense,id646300
+646400,"Frais d'achat de vidéo, TV, .. non déd.",1,,id646,expense,id646400
+647000,Frais vêtements,1,,id64,expense,id647000
+647100,"Frais de costumes, chemises non déd.",1,,id64,expense,id647100
+647200,"Frais de vestes cuir, trainings non déd.",1,,id64,expense,id647200
+647300,Frais de chaussures de sport non déd.,1,,id64,expense,id647300
+649000,Charges d'exp. à l'actif - restruct. (-),1,,id649,expense,id649000
+650000,"Intérêts, commissions et frais / dettes",1,,id650,expense,id650000
+650100,Amort. des frais d'émission d'emprunts,1,,id650,expense,id650100
+650200,Frais fin. sur loc. voiture non déd.,1,,id6502,expense,id650200
+651000,Dotations aux réd. val. / actifs circ.,1,,id651,expense,id651000
+651100,Reprises de réd. val. / actifs circ. (-),1,,id651,expense,id651100
+652000,Moins-values sur réalis. d'actifs circ.,1,,id652,expense,id652000
+653000,Charges d'escompte de créances,1,,id653,expense,id653000
+654000,Différences de change,1,,id654,expense,id654000
+655000,Ecarts de conversion des devises,1,,id655,expense,id655000
+656000,Dotations aux provisions financières,1,,id656,expense,id656000
+656100,Utilisat. & reprises de prov. fin. (-),1,,id656,expense,id656100
+657000,"Frais de banque, de chèques postaux",1,,id657,expense,id657000
+658000,Résultats sur options,1,,id658,expense,id658000
+659000,"Commissions / ouv. crédit, cautions, .",1,,id659,expense,id659000
+660000,Amort. et R.V. Except. / frais d'établ.,1,,id660,expense,id660000
+660100,Amort. et R.V. Except. / immob. incorpor,1,,id660,expense,id660100
+660200,Amort. et R.V. Except. / immob. corporel,1,,id660,expense,id660200
+661000,Réd. de val. / immob. financières (dot.),1,,id661,expense,id661000
+662000,Dot. aux prov. pr risques & ch. except.,1,,id662,expense,id662000
+662100,Utilisat. prov. pr risques & ch. except.,1,,id662,expense,id662100
+663000,Moins-values sur réalis. d'immob. inc.,1,,id663,expense,id663000
+663100,Moins-values sur réalis. d'immob. corp.,1,,id663,expense,id663100
+663200,Moins-val./réal. d'immob. en loc.-fin.,1,,id663,expense,id663200
+663300,Moins-values / réalis. d'immob. fin.,1,,id663,expense,id663300
+663400,Moins-values/réalis. d'imm. dest. à vte,1,,id663,expense,id663400
+664000,Pénalités et amendes diverses,1,,id664,expense,id664000
+665000,Différences de change exceptionnelles,1,,id665,expense,id665000
+666000,Charges de liquidation de l'entreprise,1,,id666,expense,id666000
+667000,Autres charges exceptionnelles,1,,id667,expense,id667000
+669000,Charges except.. actif - restruct.(-),1,,id669,expense,id669000
+670000,Impôts et préc. belges dus ou versés,1,,id670,expense,id670000
+670100,Excédent de vers. d'impôts à l'actif (-),1,,id670,expense,id670100
+670200,Charges fiscales estimées,1,,id670,expense,id670200
+671000,Suppléments d'impôts belges dus ou versé,1,,id671,expense,id671000
+671100,Suppléments d'impôts belges estimés,1,,id671,expense,id671100
+671200,Provisions fiscales constituées,1,,id671,expense,id671200
+672000,Impôts étrangers sur le résultat de l'ex,1,,id672,expense,id672000
+673000,Impôts étrgs/résultat d'ex. antérieurs,1,,id673,expense,id673000
+680000,Transferts aux impôts différés,1,,id680,expense,id680000
+689000,Transferts aux réserves immunisées,1,,id689,expense,id689000
+690000,Perte reportée de l'exercice précédent,1,,id690,view,id690000
+691000,Affectations au capital & à prime d'ém.,1,,id691,view,id691000
+692000,Dotation à la réserve légale,1,,id692,view,id692000
+692100,Dotations aux autres réserves,1,,id692,view,id692100
+693000,Bénéfice à reporter,1,,id693,view,id693000
+694000,Rémunération du capital,1,,id694,view,id694000
+695000,Administrateurs ou gérants,1,,id695,view,id695000
+696000,Autres allocataires,1,,id696,view,id696000
+700000,Ventes de marchandises en Belgique,1,,id700,income,id700000
+700100,Ventes de marchandises en C.E.E.,1,,id700,income,id700100
+700200,Ventes de marchandises hors C.E.E.,1,,id700,income,id700200
+701000,Ventes de produits finis en Belgique,1,,id701,income,id701000
+701100,Ventes de produits finis en C.E.E.,1,,id701,income,id701100
+701200,Ventes de produits finis hors C.E.E.,1,,id701,income,id701200
+702000,Ventes de déchets et rebuts en Belgique,1,,id702,income,id702000
+702100,Ventes de déchets et rebuts en C.E.E.,1,,id702,income,id702100
+702200,Ventes de déchets et rebuts hors C.E.E.,1,,id702,income,id702200
+703000,Ventes d'emballages récupérables,1,,id703,income,id703000
+704000,Facturations de travaux (assoc. mom.),1,,id704,income,id704000
+705000,Prestations de services en Belgique,1,,id705,income,id705000
+705100,Prestations de services en C.E.E.,1,,id705,income,id705100
+705200,Prestations de services en vue export.,1,,id705,income,id705200
+706000,Pénalités et dédits obtenus,1,,id706,income,id706000
+708000,Remises accordées / ventes marchandises,1,,id708,income,id708000
+708100,Remises accordées / ventes prod. finis,1,,id708,income,id708100
+708200,Remises accordées / ventes déchets,1,,id708,income,id708200
+708300,Remises accordées / prest. de services,1,,id708,income,id708300
+708400,"Mali sur travx, fact. aux assoc. mom.",1,,id708,income,id708400
+709000,Charges d'intérêts / créances à + d'1 an,1,,id709,income,id709000
+712000,Variation de stocks des encours de fabr.,1,,id712,income,id712000
+713000,Variation de stocks des produits finis,1,,id713,income,id713000
+715000,Variation de stocks immeubles à la vente,1,,id715,income,id715000
+717000,Coût des commandes en cours d'exécution,1,,id7170,income,id717000
+717010,Coût des travaux en cours assoc. moment.,1,,id7170,income,id717010
+717100,Bénéfice / comm. en cours d'exécution,1,,id7171,income,id717100
+717110,Bénéfice / travx en cours assoc. moment.,1,,id7171,income,id717110
+720000,Production immobilisée en frais d'établ.,1,,id720,income,id720000
+721000,Production immobilisée en immob. incorp.,1,,id721,income,id721000
+722000,Production immobilisée en immob. corp.,1,,id722,income,id722000
+723000,Production immobilisée en immob.en cours,1,,id723,income,id723000
+724000,Production immobilisée en construction,1,,id724,income,id724000
+740000,Subsides d'exploitation & compensations,1,,id740,income,id740000
+741000,Plus-values sur réal. d'immob. corp.,1,,id741,income,id741000
+742000,Plus-values sur réalis. créances comm.,1,,id742,income,id742000
+743000,Produits de services dans l'int. du pers,1,,id743,income,id743000
+744000,Commissions et courtages,1,,id744,income,id744000
+745000,Redevances pour brevets et licences,1,,id745,income,id745000
+746000,"Prestations services (trsp., études,...)",1,,id746,income,id746000
+747000,Revenus d'immeubles activités non prof.,1,,id747,income,id747000
+748000,Locations diverses à caractère profess.,1,,id748,income,id748000
+748100,Transfert à résultat,1,,id748,income,id748100
+749000,Boni sur reprises d'emballages consignés,1,,id749,income,id749000
+749100,Boni sur travaux en assoc. moment.,1,,id749,income,id749100
+749200,Frais de port facturés,1,,id749,income,id749200
+750000,Revenus des actions entrepr. liées,1,,id7500,income,id750000
+750010,Revenus des obligations entrepr. liées,1,,id7500,income,id750010
+750020,Revenus des cr. à + d'1 an entr. liées,1,,id7500,income,id750020
+750100,Revenus des actions entrepr. avec lien,1,,id7501,income,id750100
+750110,Revenus des obligations entr. avec lien,1,,id7501,income,id750110
+750120,Revenus des cr. à + d'1 an entr. av lien,1,,id7501,income,id750120
+750200,Produits des immob. fin.-autres entrepr.,1,,id750,income,id750200
+751000,Produits des autres créances,1,,id751,income,id751000
+751100,Produits des placements de trésorerie,1,,id751,income,id751100
+751200,Produits des valeurs disponibles,1,,id751,income,id751200
+752000,Plus-values sur réalis. d'actifs circula,1,,id752,income,id752000
+753000,Subsides en capital et en intérêts,1,,id753,income,id753000
+754000,Différences de change,1,,id754,income,id754000
+755000,Ecarts de conversion de devises,1,,id755,income,id755000
+756000,Produits des autres créances,1,,id756,income,id756000
+757000,Escomptes obtenus,1,,id757,income,id757000
+758000,Résultats sur options,1,,id758,income,id758000
+760000,Reprises d'amort. et R.V. / immob. inc.,1,,id760,income,id760000
+760100,Reprises d'amort. et R.V. / immob. corp.,1,,id760,income,id760100
+761000,Reprises de R.V. /  immob. financières,1,,id761,income,id761000
+762000,Reprises de prov. pour grosses réparat.,1,,id762,income,id762000
+762100,Reprises de prov. pr autres risq. except,1,,id762,income,id762100
+763000,Plus-values sur réalis. d'immob. incorp.,1,,id763,income,id763000
+763100,Plus-values sur réalis. d'immob. corp.,1,,id763,income,id763100
+763200,Plus-values sur réalis. d'immob. fin.,1,,id763,income,id763200
+764000,Produits de liquidation,1,,id764,income,id764000
+771000,Régularis. d'impôts belges dus ou versés,1,,id771,income,id771000
+771100,Régularis. d'impôts belges estimés,1,,id771,income,id771100
+771200,Reprises de provisions fiscales belges,1,,id771,income,id771200
+773000,Régularis. d'impôts étrangers / résultat,1,,id773,income,id773000
+780000,Prélèvements sur les impôts différés,1,,id780,income,id780000
+789000,Prélèvements sur les réserves immunisées,1,,id789,income,id789000
+790000,Bénéfice reporté de l'exercice précédent,1,,id790,view,id790000
+791000,Prélèvement sur le capital & pr. d'ém.,1,,id791,view,id791000
+792000,Prélèvement  sur la réserve légale,1,,id792,view,id792000
+792100,Prélèvement  sur les autres réserves,1,,id792,view,id792100
+793000,Perte à reporter,1,,id793,view,id793000
+794000,Intervention d'associés dans la perte,1,,id794,view,id794000
