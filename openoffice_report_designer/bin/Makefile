@@ -1,3 +1,5 @@
+ZIP_FILE=openerp_report_designer.zip
+
 all: create pack uninstall install
 
 create:
@@ -24,12 +26,14 @@ create:
 	    script/Translation.py \
 	    script/AddAttachment.py > package/OpenERPReport.py
 
-pack:
-	rm -f openerp_report_designer.zip
-	zip openerp_report_designer.zip `find package/ | grep -v svn` 
+pack: clean
+	zip $(ZIP_FILE) `find package/ | grep -v svn` 
 	
 install:
-	sh /usr/lib/openoffice/program/unopkg add -v openerp_report_designer.zip
+	sh /usr/lib/openoffice/program/unopkg add -v $(ZIP_FILE)
 	
 uninstall:
-	sh /usr/lib/openoffice/program/unopkg remove -v  openerp_report_designer.zip
+	sh /usr/lib/openoffice/program/unopkg remove -v  $(ZIP_FILE)
+
+clean:
+	rm -f $(ZIP_FILE)
