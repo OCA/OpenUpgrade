@@ -1,0 +1,38 @@
+currency:id,default_debit_account_id:id,code,sequence_id:id,name,view_id:id,default_credit_account_id:id,type
+,,A01,account.sequence_journal,ACHAT MATIERES PREMIERES,account.account_journal_view,,purchase
+,,A02,account.sequence_journal,ACHAT FRAIS GENERAUX,account.account_journal_view,,purchase
+,,A03,account.sequence_journal,ACHATS AUTRES,account.account_journal_view,,purchase
+,,A99,account.sequence_journal,NOTES DE CREDIT SUR ACHATS,account.account_journal_view,,purchase
+,,AB,account.sequence_journal,Abonnements,account.account_journal_view,,general
+,,AMO,account.sequence_journal,Amortissements Immobilisations,account.account_journal_view,,general
+,id550400,BBL,account.sequence_journal,BANQUE BBL,account.account_journal_bank_view,id550400,cash
+,,BLF,account.sequence_journal,Bons de livraison fournisseurs,account.account_journal_view,,general
+,,BLTV,account.sequence_journal,Bons de livraison four. TVAC,account.account_journal_view,,general
+,id570000,CAS,account.sequence_journal,CAISSE,account.account_journal_bank_view,id570000,cash
+,,CC,account.sequence_journal,Commandes clients,account.account_journal_view,,general
+,,CCTV,account.sequence_journal,Commandes clients TVAC,account.account_journal_view,,general
+,,CDF,account.sequence_journal,Commandes fournisseurs,account.account_journal_view,,general
+,id550500,CERA,account.sequence_journal,BANQUE KBC,account.account_journal_bank_view,id550500,cash
+,,CFTV,account.sequence_journal,Commandes four. TVAC,account.account_journal_view,,general
+,,DI0,account.sequence_journal,OPERATION DIVERSES REOUVERTURE,account.account_journal_view,,general
+,,DI1,account.sequence_journal,OPERATIONS DIVERSES,account.account_journal_view,,general
+,,DI2,account.sequence_journal,OPERATIONS DIVERSES OUVERTURE,account.account_journal_view,,general
+,,DI3,account.sequence_journal,OPERATION DIVERSES SIMULATION,account.account_journal_view,,general
+,,DI4,account.sequence_journal,OPER DIV VIREMENT EMIS,account.account_journal_view,,general
+,,DIC,account.sequence_journal,OPER DIVERSES ANALYTIQUES,account.account_journal_view,,general
+,,FAC,account.sequence_journal,FACTURATION,account.account_journal_view,,sale
+,,FTVA,account.sequence_journal,Ventes TVAC,account.account_journal_view,,sale
+,id550100,GB1,account.sequence_journal,FORTIS GB CPTE COURANT,account.account_journal_bank_view,id550100,cash
+,id550200,GB2,account.sequence_journal,FORTIS GB COMPTE TERME,account.account_journal_bank_view,id550200,cash
+,id550300,GBE,account.sequence_journal,FORTIS GB EURO,account.account_journal_bank_view,id550300,cash
+,,INV,account.sequence_journal,Journal d'inventaires,account.account_journal_view,,general
+,,MVT,account.sequence_journal,Mouvements de Stock,account.account_journal_view,,general
+,,NCTV,account.sequence_journal,Notes de crédit TVAC,account.account_journal_view,,sale
+,,NTVA,account.sequence_journal,Notes d'envoi TVAC,account.account_journal_view,,general
+,,NV,account.sequence_journal,Notes d'envoi,account.account_journal_view,,general
+,,OCTV,account.sequence_journal,Offres clients TVAC,account.account_journal_view,,general
+,,OF,account.sequence_journal,Offres clients,account.account_journal_view,,general
+,,PR$,account.sequence_journal,EURO AUTOMATIC CONVERSION,account.account_journal_view,,general
+,,V01,account.sequence_journal,VENTES PRODUITS FINI SIEGE 1,account.account_journal_view,,sale
+,,V02,account.sequence_journal,VENTES PRODUITS FINIS SIEGE 2,account.account_journal_view,,sale
+,,V99,account.sequence_journal,NOTES DE CREDIT,account.account_journal_view,,sale
