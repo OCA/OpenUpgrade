@@ -73,7 +73,11 @@
 		<field name="domain">[('user_id','=',uid)]</field>		
 	</record>
 	
-	<menuitem name="Webmail/Configuration/Server" id="menu_action_webmail_tiny_user" action="action_webmail_tiny_user"/>		
+	<menuitem name="Webmail" id="menu_action_webmail_tiny_user"/>
+	
+	<menuitem name="Configuration" id="menu_action_configuration_tiny_user" parent="webmail.menu_action_webmail_tiny_user"/>
+	 
+	<menuitem name="Server" id="menu_action_server_tiny_user" parent="webmail.menu_action_configuration_tiny_user" action="action_webmail_tiny_user"/>
 	
 	<!-- 
 	<record model="ir.ui.view" id="view_webmail_mailacc_form">
@@ -204,7 +208,7 @@
 		<field name="view_id" ref="view_webmail_email_compose_form"/>		
 	</record>
 	
-	<menuitem name="Webmail/Compose Mail" id="menu_action_webmail_compose_mail" action="action_webmail_compose_mail"/>
+	<menuitem name="Compose Mail" id="menu_action_compose_tiny_user" parent="webmail.menu_action_webmail_tiny_user" action="action_webmail_compose_mail"/>
 	
 </data>
 </terp>
