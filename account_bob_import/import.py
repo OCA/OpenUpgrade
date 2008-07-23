@@ -87,6 +87,45 @@ journals_headers = {
 	'default_credit_account_id:id': 'default_credit_account_id:id' ,#should be filled with the id of the account_account with code =['DBACCOUNT,A,10'],
 	}
 
+partners_map = {
+
+	'id': ,
+	'code': lambda x: x['CID,A,10'],
+	'name': lambda x: x['CNAME1,A,40'],
+	'lang': lambda x: {
+		'E': 'en_US', #'E' for English
+		'D': ?? #'D' for German
+		'F': ??#'F' for French
+		'N': ??#'N' for Dutch
+
+		#/!\ if a lang isn't installed, the value should be filled with ''
+	}[x['CLANGUAGE,A,2']],
+	'vat': lambda x: x['CVATNO,A,12'],
+	'website': lambda x: x['HTTPADDRESS,A,60'],
+	'comment': lambda x: x['CMEMO,M,11'],
+	'domiciliation_bool': lambda x : x['CBANKORDERPAY,L,1'],
+	'domiciliation': lambda x : x['CBANKORDERPAYNO,A,15'],
+
+#have to create one res.partner.adress for this partner with 
+'city' : lambda x: x['CLOCALITY,A,40'],
+'fax': lambda x: x['CFAXNO,A,25'],
+'zip' :  lambda x: x['CZIPCODE,A,10'],
+'country_id' #should be filled with id of res.country that have code == x['CCOUNTRY,A,6']
+'phone' : lambda x: x['CTELNO,A,25'],
+'street' : lambda x: x['CADDRESS1,A,40'],
+'type' : lambda x: 'default',
+
+
+#have to put the partner into category suppliers if CSUPTYPE,A,1 == 'S'
+#have to put the partner into category customers if CCUSTYPE,A,1 == 'C'
+
+#have to create res.partner.bank if x['CBANKNO,A,20'] <> False
+'state': #should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
+'acc_number': lambda x: x['CBANKNO,A,20'],
+
+}
+
+
 def convert2utf(row):
 	if row:
 		retRow = {}
