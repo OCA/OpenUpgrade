@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-# -*- encoding: iso-8859-1 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -92,26 +91,26 @@ class huissier_dossier(osv.osv):
         return res
 
     _columns = {
-#       'name': fields.integer(u'Numéro de vignette'),
-        'num_vignette': fields.integer(u'Numéro de vignette', required=True),
+#       'name': fields.integer(u'NumÃ©ro de vignette'),
+        'num_vignette': fields.integer(u'NumÃ©ro de vignette', required=True),
         #domain="[('category_id','=','Etudes')]",
         'etude_id': fields.many2one('res.partner', u'Etude', required=True),
-        'date_creation': fields.date(u'Création'),
-        'creancier': fields.many2one('res.partner', u'Créancier'),
+        'date_creation': fields.date(u'CrÃ©ation'),
+        'creancier': fields.many2one('res.partner', u'CrÃ©ancier'),
 #       'creancier_name': fields.char('Nom', size=64),
 #       'creancier_address': fields.char('Adresse', size=128),
 #       'creancier_zip': fields.char('Code postal', change_default=True, size=24),
 #       'creancier_city': fields.char('Ville', size=64),
-        'debiteur': fields.many2one('res.partner', u'Débiteur'),
+        'debiteur': fields.many2one('res.partner', u'DÃ©biteur'),
 #       'debiteur_name': fields.char('Nom', size=64),
 #       'debiteur_address': fields.char('Adresse', size=128),
 #       'debiteur_zip': fields.char('Code postal', change_default=True, size=24),
 #       'debiteur_city': fields.char('Ville', size=64),
 #       'debiteur_naissance': fields.date('Date de naissance'),
 #       'debiteur_tva':fields.char('TVA', size=32),
-        'date_prevue': fields.date(u'Date prévue'),
-        'date_reelle': fields.date(u'Date réelle'),
-        'lang': fields.selection((('fr',u'Français'),('nl',u'Néerlandais')), u'Langue', required=True),
+        'date_prevue': fields.date(u'Date prÃ©vue'),
+        'date_reelle': fields.date(u'Date rÃ©elle'),
+        'lang': fields.selection((('fr',u'FranÃ§ais'),('nl',u'NÃ©erlandais')), u'Langue', required=True),
         'toinvoice': fields.boolean(u'Facturer?'),
         'tolist': fields.boolean(u'Listing palais?'),
         'cost_id': fields.many2one('account.tax', u'Frais de Vente', domain="[('domain','=','frais')]"),
@@ -122,10 +121,10 @@ class huissier_dossier(osv.osv):
         'amount_total': fields.function(_total_get, method=True, string=u'Total',store=True),
         'amount_room_costs': fields.function(_room_costs_get,method=True,string=u'Frais de salle' ,store=True ),
         'amount_voirie': fields.float(u'Frais de voirie', digits=(12,2)),
-        'state': fields.selection((('draft',u'Ouvert'),('closed',u'Fermé'),('canceled',u'Annulé')), u'État', readonly=True),
+        'state': fields.selection((('draft',u'Ouvert'),('closed',u'FermÃ©'),('canceled',u'AnnulÃ©')), u'Ã‰tat', readonly=True),
         'lot_id': fields.one2many('huissier.lots', 'dossier_id', u'Objets'),
         'invoice_id': fields.many2one('account.invoice', u'Facture'),
-        'refund_id': fields.many2one('account.invoice', u'Facture remboursée'),
+        'refund_id': fields.many2one('account.invoice', u'Facture remboursÃ©e'),
         'salle_account_id': fields.many2one('account.account', 'Compte Frais de Salle'),
         'voirie_account_id': fields.many2one('account.account', 'Compte Frais de Voirie'),
 #       'expense_account_id': fields.many2one('account.account', 'Expense Account', required=True),
@@ -367,9 +366,9 @@ class huissier_lots(osv.osv):
         'vat': fields.many2one('account.tax', u'Taxe', domain="[('domain','=','tva')]", required=True),
         'adj_price': fields.float(u"Prix d'adjudication", digits=(12,2)),
         'buyer_ref': fields.many2one('res.partner', 'Client'),
-#       'buyer_ref': fields.char(u'Réf. client', size=64),
-#       'buyer_name': fields.char(u'Nom et Prénom', size=64),
- #      'buyer_firstname': fields.char(u'Prénom', size=64),
+#       'buyer_ref': fields.char(u'RÃ©f. client', size=64),
+#       'buyer_name': fields.char(u'Nom et PrÃ©nom', size=64),
+ #      'buyer_firstname': fields.char(u'PrÃ©nom', size=64),
     #"""enleve et remplace par champ partner.address
         'buyer_name': fields.char(u'Nom', size=64),
         'buyer_address': fields.char(u'Adresse', size=128),
@@ -385,7 +384,7 @@ class huissier_lots(osv.osv):
         'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer'),
 #       'payer':fields.boolean('payer'),
 #       'price_wh_costs': fields.function(_get_price_wh_costs, method=True, string=u'A payer', digits=(12,2)),
-        'state': fields.selection((('draft','Brouillon'),('non_vendu','Non vendu'),('vendu','vendu'),('emporte',u'Emporté')),'State',  readonly=True),
+        'state': fields.selection((('draft','Brouillon'),('non_vendu','Non vendu'),('vendu','vendu'),('emporte',u'EmportÃ©')),'State',  readonly=True),
     }
     _defaults = {
         'number': lambda obj,cr,uid,*a: obj._get_next_lot_number(cr, uid),
@@ -398,11 +397,11 @@ class huissier_lots(osv.osv):
     # returns the highest lot number used in dossiers created this year
     def _get_yearly_max_lot_number(self, cr, uid):
         year = time.strftime('%Y')
-        # Ceci aura un comportement "inattendu" si le dossier est créé fin 
-        # d'année, réellement vendu au début de l'année suivante et
-        # que la date réelle du dossier n'a pas été mise à jour. 
-        # Peut être qu'a chaque nouveau lot pour ce dossier, je devrais 
-        # mettre a jour la date réelle?
+        # Ceci aura un comportement "inattendu" si le dossier est crÃ©Ã© fin 
+        # d'annÃ©e, rÃ©ellement vendu au dÃ©but de l'annÃ©e suivante et
+        # que la date rÃ©elle du dossier n'a pas Ã©tÃ© mise Ã  jour. 
+        # Peut Ãªtre qu'a chaque nouveau lot pour ce dossier, je devrais 
+        # mettre a jour la date rÃ©elle?
         cr.execute(
             "select max(number) as number " \
             "from huissier_lots as l left join huissier_dossier as d on l.dossier_id=d.id " \
@@ -488,16 +487,16 @@ class huissier_vignettes(osv.osv):
     _columns = {
         'etude_id': fields.many2one('res.partner', u'Etude', domain="[('category_id', '=', 'Etudes')]", states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
         'price': fields.float(u'Prix unitaire', digits=(12,2), required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
-        'quantity': fields.integer(u'Quantité', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
-        'first': fields.integer(u'Référence de départ', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
-        'last': fields.integer(u'Référence de fin', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
+        'quantity': fields.integer(u'QuantitÃ©', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
+        'first': fields.integer(u'RÃ©fÃ©rence de dÃ©part', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
+        'last': fields.integer(u'RÃ©fÃ©rence de fin', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
         'acquis': fields.boolean(u'Pour acquis', states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
         'invoice_id': fields.many2one('account.invoice', u'Facture', readonly=True),
     # n existe plus 'transfer_id': fields.many2one('account.transfer', u'Payement', readonly=True),
         'income_account_id': fields.many2one('account.account', 'Compte Revenus', required=True, states={'invoiced':[('readonly',True)],'paid':[('readonly',True)]}),
-        'date_creation': fields.datetime(u'Date de création'),
-#       'state': fields.selection( (('draft',u'draft'),('waiting',u'en attente'),('invoiced',u'facturées')),u'État', readonly=True),
-        'state': fields.selection( (('draft',u'draft'),('invoiced',u'facturées'),('paid',u'payées')),u'État', readonly=True),
+        'date_creation': fields.datetime(u'Date de crÃ©ation'),
+#       'state': fields.selection( (('draft',u'draft'),('waiting',u'en attente'),('invoiced',u'facturÃ©es')),u'Ã‰tat', readonly=True),
+        'state': fields.selection( (('draft',u'draft'),('invoiced',u'facturÃ©es'),('paid',u'payÃ©es')),u'Ã‰tat', readonly=True),
         'value': fields.function(_get_range_value, method=True, string=u'A payer'),
         #   'refund_id': fields.many2one('account.invoice', u'Facture remboursee', readonly=True),
 
@@ -534,7 +533,7 @@ class huissier_vignettes(osv.osv):
 #       for lr in label_ranges:
 #           partner_id = lr.etude_id.id
 #           account_src_id = ir.ir_get(cr,uid,[('meta','res.partner'), ('name','account.receivable')], (partner_id or []) and [('id',str(partner_id))] )[0][2]
-#           transfer_name = u'Payement des vignettes %d à %d (%d vignettes)' % (lr.first, lr.last, lr.quantity)
+#           transfer_name = u'Payement des vignettes %d Ã  %d (%d vignettes)' % (lr.first, lr.last, lr.quantity)
 #           transfer = {
 #               'name': transfer_name,
 #               'partner_id': partner_id,
@@ -624,20 +623,20 @@ class huissier_deposit(osv.osv):
     _order = "rentree_mobilier"
     _columns = {
         'dossier_id': fields.many2one('huissier.dossier', u'Dossier', states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'line_desc': fields.char(u'Libellé', size=256, required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'billing_partner_id': fields.many2one('res.partner', u'Partenaire à facturer', required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'rentree_mobilier': fields.date(u'Mobilier rentré le', required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'sortie_mobilier': fields.date(u'Retiré le', states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'cubage': fields.float(u'Cubage (m³)', digits=(12,2), states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'prix_garde_meuble': fields.float(u'Prix au m³/mois', digits=(12,2), required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'nombre_vehicule': fields.integer(u'Nombre de véhicules', states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
-        'forfait_vehicule': fields.float(u'Forfait véhicule', digits=(12,2), required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'line_desc': fields.char(u'LibellÃ©', size=256, required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'billing_partner_id': fields.many2one('res.partner', u'Partenaire Ã  facturer', required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'rentree_mobilier': fields.date(u'Mobilier rentrÃ© le', required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'sortie_mobilier': fields.date(u'RetirÃ© le', states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'cubage': fields.float(u'Cubage (mÂ³)', digits=(12,2), states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'prix_garde_meuble': fields.float(u'Prix au mÂ³/mois', digits=(12,2), required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'nombre_vehicule': fields.integer(u'Nombre de vÃ©hicules', states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
+        'forfait_vehicule': fields.float(u'Forfait vÃ©hicule', digits=(12,2), required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
         'nombre_expo': fields.integer(u"Nombre d'expositions", states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
         'forfait_expo': fields.float(u'Forfait exposition', required=True, digits=(12,2), states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
         'acquis': fields.boolean(u'Pour acquis', states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
         'income_account_id': fields.many2one('account.account', u'Compte Revenus', required=True, states={'running':[('readonly',True)],'closed':[('readonly',True)]}),
         'invoice_id': fields.many2many('account.invoice', 'huissier_deposit_invoice_rel', 'deposit_id', 'invoice_id', u'Factures', readonly=True),
-        'state': fields.selection((('draft',u'draft'),('running',u'en cours'),('closed',u'retiré')), u'Statut', readonly=True),
+        'state': fields.selection((('draft',u'draft'),('running',u'en cours'),('closed',u'retirÃ©')), u'Statut', readonly=True),
     }
     _defaults = {
         'state': lambda *a: 'draft',
@@ -647,7 +646,7 @@ class huissier_deposit(osv.osv):
         dt = time.strftime('%Y-%m-%d')
 
         line_descs_vehicule = {
-            'fr': u'Forfait pour véhicule',
+            'fr': u'Forfait pour vÃ©hicule',
             'nl': u'Voertuig Forfait'
         }
         
@@ -745,7 +744,7 @@ class huissier_partenaire(osv.osv):
     _inherit = 'res.partner'
     _columns = {
         'image': fields.binary('Image'),
-        'date_creation': fields.date(u'Création badge'),
+        'date_creation': fields.date(u'CrÃ©ation badge'),
         'date_expiration':fields.date('Expiration badge')
     }
     _defaults = {

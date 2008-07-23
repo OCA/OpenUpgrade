@@ -39,8 +39,8 @@ palais_form = '''<?xml version="1.0"?>
 </form>'''
 
 palais_fields = {
-    'date1': {'string':u'Début de période', 'type':'date', 'required':True},
-    'date2': {'string':u'Fin de période', 'type':'date', 'required':True},
+    'date1': {'string':u'DÃ©but de pÃ©riode', 'type':'date', 'required':True},
+    'date2': {'string':u'Fin de pÃ©riode', 'type':'date', 'required':True},
 }
 
 def _get_value(self,cr,uid,datas,context):

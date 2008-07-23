@@ -45,7 +45,7 @@ pay_form = '''<?xml version="1.0"?>
 pay_fields = {
     'first': {'string':u'De', 'type':'integer', 'readonly':True},
     'last': {'string':u'a', 'type':'integer', 'readonly':True},
-    'quantity': {'string':u'Quantité', 'type':'integer', 'readonly':True},
+    'quantity': {'string':u'QuantitÃ©', 'type':'integer', 'readonly':True},
     'price': {'string':u'Prix unitaire', 'type':'float', 'readonly':True},
     'value': {'string':u'Montant a payer', 'type':'float', 'readonly':True},
     'account_id': {'string':u'Compte destination', 'type':'many2one', 'required':True, 'relation':'account.account', 'domain':[('type','=','cash')]},
