@@ -627,7 +627,7 @@ class cci_missions_area(osv.osv):
     _name = 'cci_missions.area'
     _description = 'cci_missions.area'
     _columns = {
-        'name' : fields.char('Description',size=50,required=True,transtale=True),
+        'name' : fields.char('Description',size=50,required=True,translate=True),
         'country_ids': fields.many2many('res.country','area_country_rel','area','country',"Countries"),
     }
 

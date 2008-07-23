@@ -203,7 +203,6 @@ class res_partner(osv.osv):
         'export_year':fields.date('Export date',help='year of the export_procent value'),
         'import_procent':fields.integer('Import (%)'),
         'import_year':fields.date('Import Date',help='year of the import_procent value'),
-        'domiciliation_cotisation':fields.boolean('Domiciliation (cotisation)'),
         'invoice_nbr':fields.integer('Nbr of invoice to print',help='number of additive invoices to be printed for this customer'),
         'name_official':fields.char('Official Name',size=80),
         'name_old':fields.char('Former Name',size=80),
@@ -541,7 +540,7 @@ class res_partner_country_relation(osv.osv):
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
         'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),
+        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation')],'Types'),
     }
 res_partner_country_relation()
 
