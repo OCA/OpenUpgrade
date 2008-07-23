@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -42,4 +43,6 @@ class productivity_analysis_models(osv.osv):
     _order = "name"
 productivity_analysis_models()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

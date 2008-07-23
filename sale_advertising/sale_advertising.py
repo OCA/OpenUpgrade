@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -105,4 +106,6 @@ class sale_advertising_proof(osv.osv):
     }
 sale_advertising_proof()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -119,4 +120,6 @@ class res_partner_job(osv.osv):
     }
 res_partner_job()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

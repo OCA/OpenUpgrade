@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import pooler
 from osv import fields, osv
@@ -208,3 +209,5 @@ class report_timesheet_affectation(osv.osv):
 #SELECT users.name as user_id, affect.grant_id as grant_id, SUM(affect.hours_per_week) as th_hours_per_week, SUM(affect.percentage) as th_percentage, SUM(line.hour_to - line.hour_from) as prac_hours_per_week FROM res_users users LEFT JOIN cci_timesheet_affectation affect on (affect.user_id = users.id) LEFT JOIN cci_timesheet_line line on (line.grant_id = affect.grant_id) GROUP BY users.name, affect.grant_id;
 
 report_timesheet_affectation()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Extra Operations on Inventories",
     "version" : "1.0",
@@ -12,3 +13,5 @@ Add a wizard providing a 'Set to Zero' on a specific inventory.""",
     "active": False,
     "installable": True,
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -45,4 +46,6 @@ report_sxw.report_sxw(
     parser=huissier_badge,header=False
 )
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

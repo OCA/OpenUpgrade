@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "crm_profiling management",
     "version" : "1.3",
@@ -25,3 +26,5 @@
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

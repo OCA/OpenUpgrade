@@ -1,4 +1,4 @@
-# -*- coding :utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 from osv import osv, fields
 import time, pooler, copy
@@ -277,3 +277,5 @@ class audittrail_log_line(osv.osv):
               }
 
 audittrail_log_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

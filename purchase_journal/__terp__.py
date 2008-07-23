@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #
 # Use the custom module to put your specific code in a separate module.
 #
@@ -14,3 +15,5 @@
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

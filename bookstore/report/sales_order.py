@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -71,3 +72,5 @@ class sales_order(report_sxw.rml_parse):
     # end def
 
 report_sxw.report_sxw('report.sale.order.bookstore', 'sale.order', 'addons/bookstore/report/sales_order.rml', parser=sales_order)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

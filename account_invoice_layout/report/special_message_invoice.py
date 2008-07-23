@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -220,3 +221,5 @@ class account_invoice_with_message(report_sxw.rml_parse):
         return result
 
 report_sxw.report_sxw('report.notify_account.invoice', 'account.invoice', 'addons/account_invoice_layout/report/special_message_invoice.rml', parser=account_invoice_with_message)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

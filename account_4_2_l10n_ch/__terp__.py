@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     'name': 'Accounting for l10n_ch ion TinyERP 4.2',
     'version': '0.1',
@@ -12,3 +13,5 @@
         'account_invoice.xml',
     ],
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 from osv import orm
 
@@ -98,3 +99,5 @@ class account_invoice(osv.osv):
         return iml
 
 account_invoice()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

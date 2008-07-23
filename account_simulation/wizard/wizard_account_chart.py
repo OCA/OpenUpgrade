@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -80,3 +81,5 @@ class wizard_account_chart(wizard.interface):
         }
     }
 wizard_account_chart('account.simulation.chart')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

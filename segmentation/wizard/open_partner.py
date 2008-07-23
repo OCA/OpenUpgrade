@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import pooler
 import wizard
 
@@ -61,3 +62,5 @@ class open_partner(wizard.interface):
     }
 
 open_partner('open_partner')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

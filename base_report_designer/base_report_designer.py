@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -69,3 +70,5 @@ class report_xml(osv.osv):
             'report_rml_content': report.report_rml_content and base64.encodestring(report.report_rml_content) or False
         }
 report_xml()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -103,3 +103,5 @@ class purchase_order_line(osv.osv):
         'price_subtotal_incl': fields.function(_amount_line, method=True, string='Subtotal'),
     }
 purchase_order_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 import time
@@ -139,3 +140,5 @@ class show_partners(wizard.interface):
 
     }
 show_partners("show_partners")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -42,4 +43,6 @@ class lots_list_inventory(report_sxw.rml_parse):
         print "=================================================="
         return True
 report_sxw.report_sxw('report.lots.list.inventory', 'auction.lots', 'addons/auction/report/lots_list_inventory.rml', parser=lots_list_inventory)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

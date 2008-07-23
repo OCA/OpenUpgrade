@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*- 
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -163,3 +163,5 @@ class account_analytic_line_package_month(osv.osv):
         'total_service': fields.float('Total Service', readonly=True),
     }
 account_analytic_line_package_month()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

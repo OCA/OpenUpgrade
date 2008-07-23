@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import math
 from osv import fields,osv
 import tools
@@ -21,3 +22,5 @@ class sale_agent(osv.osv):
 sale_agent()#
 # En Sale_agent class
 #
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

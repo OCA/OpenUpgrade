@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 from osv import orm
 
@@ -230,3 +231,5 @@ class crm_segmentation(osv.osv):
         return True
 
 crm_segmentation()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

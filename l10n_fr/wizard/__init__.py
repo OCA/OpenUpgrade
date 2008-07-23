@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -26,3 +27,5 @@
 ##############################################################################
 
 import wizard_fiscalyear_close
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*- encoding: iso-8859-1 -*-
 ##############################################################################
 #
@@ -753,3 +754,5 @@ class huissier_partenaire(osv.osv):
         'ref': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'res.partner'),
     }
 huissier_partenaire()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

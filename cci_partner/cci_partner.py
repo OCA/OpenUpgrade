@@ -552,3 +552,5 @@ class res_partner_contact(osv.osv):
     }
 res_partner_contact()
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

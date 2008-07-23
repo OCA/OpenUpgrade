@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -144,3 +145,5 @@ class account_report_bs(report_sxw.rml_parse):
 #   def _sum_debit(self):
 #       return self.sum_debit
 report_sxw.report_sxw('report.account.report.bs', 'account.report.bs', 'addons/account_reporting/report/account_report_bs.rml', parser=account_report_bs)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

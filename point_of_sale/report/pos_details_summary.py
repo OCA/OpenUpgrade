@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ###############################################################################
 ##
 ## Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -135,4 +136,6 @@ report_sxw.report_sxw('report.pos.details_summary',
                                             'addons/point_of_sale/report/pos_details_summary.rml',
                                             parser=pos_details_summary,
                                             header=None)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -136,3 +137,5 @@ class product_product(osv.osv):
                 self.write(cr, uid, [bom.product_id.id], {'standard_price' : price})
             return price
 product_product()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

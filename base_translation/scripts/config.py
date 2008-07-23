@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import os
 
 PATH = "/tmp"
@@ -36,4 +37,6 @@ dependent_language = {
     'fr_FR' : ['fr_BE','fr_XX']
 }
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

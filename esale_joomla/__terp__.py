@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "eSale Interface - Joomla",
     "version" : "1.0",
@@ -19,3 +20,5 @@ If you product has an image attched, it send the image to the Joomla website."""
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

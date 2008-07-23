@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -61,3 +62,5 @@ class auction_seller(report_int):
         return self._obj_invoice.result()
 
 auction_seller('report.auction.seller_labels')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

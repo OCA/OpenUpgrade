@@ -102,3 +102,5 @@ class purchase_order(osv.osv):
         return super(purchase_order,self).create(cr, user, vals, context)
 
 purchase_order()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

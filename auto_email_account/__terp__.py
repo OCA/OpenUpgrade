@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Email Invoice",
     "version" : "1.0",
@@ -17,3 +18,5 @@ the selected invoices attached by Email
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

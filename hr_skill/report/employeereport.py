@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import datetime
 import operator
 import pooler
@@ -33,3 +34,5 @@ class employeereport(report_sxw.rml_parse):
                     return res
 
 report_sxw.report_sxw('report.datereport.print','hr.employee','addons/hr_skill/report/datereport.rml', parser=employeereport, header=True)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

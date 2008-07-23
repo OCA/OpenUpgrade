@@ -65,3 +65,5 @@ class hr_timesheet(osv.osv):
         return res
 hr_timesheet()
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -64,3 +65,5 @@ class sale_order(osv.osv):
         'case_ids': one2many_mod_advert('crm.case', 'id', "Related Cases"),
     }
 sale_order()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

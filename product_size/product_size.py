@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -75,3 +76,5 @@ class sale_order(osv.osv):
         'prodlot_id' : fields.many2one('stock.production.lot', 'Production lot', help="Production lot is used to put a serial number on the production"),
     }
 sale_order()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -45,3 +46,5 @@ class mrp_production(osv.osv):
     def _get_auto_picking(self, cr, uid, production):
         return production.product_id.auto_pick
 mrp_production()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

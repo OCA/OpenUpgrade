@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -74,3 +75,5 @@ class wiz_esale_joomla_stocks(wizard.interface):
 
 
 wiz_esale_joomla_stocks('esale_joomla.stocks');
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

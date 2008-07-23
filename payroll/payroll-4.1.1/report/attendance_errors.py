@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -80,4 +81,6 @@ class attendance_print(report_sxw.rml_parse):
         return (self._sign(total),total2 and self._sign(total2))
 
 report_sxw.report_sxw('report.hr.timesheet.attendance.error', 'hr.employee', 'addons/hr/report/attendance_errors.rml',parser=attendance_print)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

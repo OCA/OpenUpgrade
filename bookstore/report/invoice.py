@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -95,3 +96,5 @@ class account_invoice(report_sxw.rml_parse):
 
 
 report_sxw.report_sxw('report.account.invoice.bookstore', 'account.invoice', 'addons/bookstore/report/invoice.rml', parser=account_invoice)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

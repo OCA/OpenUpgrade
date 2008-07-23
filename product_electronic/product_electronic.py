@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -50,4 +51,6 @@ class product_attribute(osv.osv):
     }
 product_attribute()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

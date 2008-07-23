@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 
 from osv import osv, fields
@@ -95,4 +96,6 @@ class sandwich_order_line(osv.osv):
         #return {'value': {'name': name or product_id.name, 'product_type_id': product_id.product_type_id}}
 
 sandwich_order_line()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

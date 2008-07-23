@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -49,4 +50,6 @@ class stock_picking(osv.osv):
 
 
 stock_picking()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

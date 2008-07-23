@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 from mx import DateTime
 import time
@@ -27,3 +28,5 @@ class payroll_setup(osv.osv):
     _order = 'name desc'
     
 payroll_setup()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

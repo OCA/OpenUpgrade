@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -289,3 +290,5 @@ class account_move_line(osv.osv):
         "case_id" : fields.many2many("event.registration","move_line_registration", "move_line_id", "reg_id","Registration"),
     }
 account_move_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

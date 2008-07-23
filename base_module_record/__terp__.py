@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Module Recorder",
     "version" : "1.0",
@@ -29,3 +30,5 @@ How to use it:
     "update_xml" : [ "base_module_record_wizard.xml" ],
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

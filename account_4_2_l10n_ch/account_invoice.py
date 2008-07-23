@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv, fields
 from mx import DateTime
 
@@ -50,3 +51,5 @@ class AccountInvoice(osv.osv):
         return res
 
 AccountInvoice()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

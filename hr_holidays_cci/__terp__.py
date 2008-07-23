@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Human Resources: Holidays management",
     "version" : "0.1",
@@ -15,3 +16,5 @@ NOTICE: This Module is Deprecated. Please install hr_holidays in order to have l
     "active": False,
     "installable": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

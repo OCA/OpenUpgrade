@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -112,3 +113,5 @@ class questionnaire(osv.osv):
                 quest_fields[field] = {'string': question_rec.name, 'type': 'text',}
         return quest_form, quest_fields
 questionnaire()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -90,4 +91,6 @@ class saleagent_info(report_sxw.rml_parse):
         return ret_list;
     #end def partner_invoices(self,partner_obj):
 report_sxw.report_sxw('report.saleagent.info', 'sale.agent', 'addons/saleagent/report/saleagent_info.rml', parser=saleagent_info)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

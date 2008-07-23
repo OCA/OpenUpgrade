@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -27,3 +28,5 @@
 
 import wizard
 import l10n_fr
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

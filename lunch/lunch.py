@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv, fields
 import time
 
@@ -166,3 +167,5 @@ class report_lunch_amount(osv.osv):
                 )""")
 
 report_lunch_amount()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -147,4 +148,6 @@ class report_custom(report_int):
         pdf_string.close()
         return (self.obj.pdf, 'pdf')
 report_custom('report.productivity_analysis.report')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -41,4 +42,6 @@ class auction_catelog(report_sxw.rml_parse):
 
         })
 report_sxw.report_sxw('report.auction.catelog', 'auction.lots', 'addons/auction/report/auction_catelog.rml', parser=auction_catelog)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

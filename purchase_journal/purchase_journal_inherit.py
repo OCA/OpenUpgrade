@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -50,3 +51,5 @@ class picking(osv.osv):
         'purchase_journal_id': fields.many2one('purchase_journal.purchase.journal', 'Purchase Journal', select=True),
     }
 picking()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

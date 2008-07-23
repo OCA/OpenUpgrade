@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import netsvc
 import pooler
@@ -40,3 +41,5 @@ class wizard_product_ecom_view(wizard.interface):
     }
     
 wizard_product_ecom_view('ecommerce_category_product')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

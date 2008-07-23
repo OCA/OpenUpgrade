@@ -89,3 +89,5 @@ class account_bank_statement_reconcile(osv.osv):
 account_bank_statement_reconcile()
 
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

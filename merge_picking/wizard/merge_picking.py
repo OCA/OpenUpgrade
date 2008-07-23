@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import netsvc
 import pooler
@@ -70,3 +71,5 @@ class wiz_stock_picking_merge(wizard.interface):
         }
     }
 wiz_stock_picking_merge('stock.move.picking.merge')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

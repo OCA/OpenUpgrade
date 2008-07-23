@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import ir
 import time
 import os
@@ -47,4 +48,6 @@ class wiz_esale_osc_stocks(wizard.interface):
 
 
 wiz_esale_osc_stocks('esale_osc.stocks');
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -184,4 +185,6 @@ class account_invoice_line_wh_rebate(osv.osv):
         self.pool.get('account.invoice').write(cr, uid, [invoice_id], {'rebate_amount': rebate_amount})
         return res
 account_invoice_line_wh_rebate()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

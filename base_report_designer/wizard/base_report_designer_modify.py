@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -227,4 +228,6 @@ class base_report_designer_modify(wizard.interface):
     }
 
 base_report_designer_modify('base_report_designer.modify')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import datetime
 import time
 
@@ -241,3 +242,5 @@ class report_custom(report_rml):
         return xml
 
 report_custom('report.holidays.summary', 'hr.holidays', '', 'addons/hr_holidays/report/holidays_summary.xsl')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

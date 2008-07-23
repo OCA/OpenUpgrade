@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 from osv import fields
 from osv import osv
@@ -37,3 +38,5 @@ class account_report_history(osv.osv):
         cr.execute('''create or replace view account_report as (select ar.id as tmp,((pr.id*100000)+ar.id) as id,ar.id as name,pr.id as period_id,pr.fiscalyear_id as fiscalyear_id from account_report_report as ar cross join account_period as pr group by ar.id,pr.id,pr.fiscalyear_id)''')
 
 account_report_history()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

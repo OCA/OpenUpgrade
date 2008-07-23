@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -181,4 +182,6 @@ class project_task(osv.osv):
     # Override read for using this method if context set !!!
     #_order = "((55-ascii(coalesce(priority,'2')))*2 +  coalesce((date_start::date-current_date)/2,8))"
 project_task()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

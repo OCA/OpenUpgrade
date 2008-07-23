@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -89,3 +90,5 @@ class buyer_form_report(report_sxw.rml_parse):
         return grand_total
 
 report_sxw.report_sxw('report.buyer_form_report', 'auction.lots', 'addons/auction/report/buyer_form_report.rml', parser=buyer_form_report)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

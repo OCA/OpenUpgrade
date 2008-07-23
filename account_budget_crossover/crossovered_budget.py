@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv,fields
 import tools
 import netsvc
@@ -190,4 +191,6 @@ class account_analytic_account(osv.osv):
 
 account_analytic_account()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

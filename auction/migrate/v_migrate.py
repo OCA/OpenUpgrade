@@ -116,3 +116,5 @@ import_sql(cr,
 
 
 #   (select cat.name||'\N' from res_partner r1, res_partner_category cat,res_partner_category_rel rel where r1.id=rel.partner_id and rel.category_id=cat.id) as "category_id",
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

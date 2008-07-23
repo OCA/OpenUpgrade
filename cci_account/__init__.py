@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,3 +30,5 @@
 import cci_account
 import report
 import wizard
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

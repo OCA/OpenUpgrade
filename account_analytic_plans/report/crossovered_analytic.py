@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -177,4 +178,6 @@ class crossovered_analytic(report_sxw.rml_parse):
         return final
 
 report_sxw.report_sxw('report.account.analytic.account.crossovered.analytic', 'account.analytic.account', 'addons/account_analytic_plans/report/crossovered_analytic.rml',parser=crossovered_analytic, header=False)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

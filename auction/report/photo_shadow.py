@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import Image, ImageDraw, ImageFilter
 
 def convert_catalog(from_file, to_file, size=220) :
@@ -35,3 +36,5 @@ def __convert(from_file, to_file, size=95):
     del im
     del newimg
     return res
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

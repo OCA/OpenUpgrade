@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -42,4 +43,6 @@ class sale_order_line(osv.osv):
         'price_unit_customer': fields.float('Customer Unit Price'),
     }
 sale_order_line()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

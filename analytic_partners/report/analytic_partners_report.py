@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import pooler
 import time
 from report import report_sxw
@@ -31,3 +32,5 @@ report_sxw.report_sxw(
     'account.analytic.account',
     'addons/analytic_partners/report/analytic_account_partners.rml',
     parser=analytic_partners_report)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -55,3 +56,5 @@ class sale_order_line(osv.osv):
             result['value']['type']='make_to_stock';
         return result;
 sale_order_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

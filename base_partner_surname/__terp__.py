@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Base Partner Surname",
     "version" : "1.0",
@@ -14,3 +15,5 @@ This module use for seperate surname from contact name of partner. Now You can g
     "update_xml" : [ "partner_view.xml" ],
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

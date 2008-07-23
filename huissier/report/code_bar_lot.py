@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -40,4 +41,6 @@ class huissier_code_produit(report_sxw.rml_parse):
         })
 report_sxw.report_sxw('report.huissier.code_bar_lot', 'huissier.lots', 'addons/huissier/report/code_bar_lot.rml',parser=huissier_code_produit,header=False)
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -50,3 +51,5 @@ class scrum_product_backlog(osv.osv):
         'partner_id': fields.function(_get_partner, method=True, string='Customer', fnct_search=_search_partner),
         }
 scrum_product_backlog()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

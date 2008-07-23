@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -49,3 +50,5 @@ class confirm_po(wizard.interface):
         },
     }
 confirm_po("purchase.order.confirm.all")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

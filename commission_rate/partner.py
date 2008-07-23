@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import math
 from osv import fields,osv
 import tools
@@ -14,4 +15,6 @@ class res_partner(osv.osv):
                   #'agent_rate': fields.float('Commission rate of Agent'),
                 }
 res_partner()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

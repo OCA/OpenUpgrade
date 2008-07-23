@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 
@@ -58,4 +59,6 @@ class wizard_event_tasks(wizard.interface):
         },
     }
 wizard_event_tasks("wizard_event_tasks")
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

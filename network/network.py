@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -162,3 +163,5 @@ class network_software_logpass(osv.osv):
                                     'Software', required=True),
     }
 network_software_logpass()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

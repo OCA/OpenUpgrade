@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -126,3 +127,5 @@ Tiny ERP
     }
     
 sandwich_order_recall_wizard('sandwich.order.recall.wizard')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

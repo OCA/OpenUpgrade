@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*-encoding: iso8859-1 -*-
 ##############################################################################
 #
@@ -157,4 +158,6 @@ class report_custom(report_rml):
 
 report_custom('report.huissier.pv', 'huissier.lots','', 'addons/huissier/report/pv.xsl')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

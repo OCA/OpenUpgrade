@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import netsvc
 import ir
 import time
@@ -108,3 +109,5 @@ class wiz_esale_joomla_import_sos(wizard.interface):
         }
     }
 wiz_esale_joomla_import_sos('esale_joomla.saleorders');
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

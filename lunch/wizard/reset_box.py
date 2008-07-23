@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import netsvc
 import ir
@@ -51,3 +52,5 @@ class cashbox_set_to_zero(wizard.interface):
     }
     
 cashbox_set_to_zero('lunch.cashbox.clean')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

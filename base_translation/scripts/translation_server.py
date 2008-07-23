@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 import os
@@ -156,3 +157,5 @@ server.register_function(get_contrib)
 server.register_function(publish_contrib)
 server.register_function(publish_release)
 server.serve_forever()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

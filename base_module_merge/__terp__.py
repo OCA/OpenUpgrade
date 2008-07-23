@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Module Merger",
     "version" : "1.0",
@@ -19,3 +20,5 @@
     "update_xml" : [ "base_module_merge_wizard.xml" ],
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

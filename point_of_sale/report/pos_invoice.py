@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -60,4 +61,6 @@ class pos_invoice(report_sxw.rml_parse):
         self.localcontext['objects'] = iids
 
 report_sxw.report_sxw('report.pos.invoice', 'pos.order', 'addons/libeurop/report/invoice.rml', parser= pos_invoice)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

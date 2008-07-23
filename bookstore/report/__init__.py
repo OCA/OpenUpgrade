@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,3 +30,5 @@ import invoice
 import sales_order
 import purchase_order
 import quotation
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

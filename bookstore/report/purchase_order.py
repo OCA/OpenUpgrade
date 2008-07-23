@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -122,3 +122,5 @@ class purchase_order(report_sxw.rml_parse):
         return res
 
 report_sxw.report_sxw('report.purchase.order.bookstore','purchase.order','addons/bookstore/report/purchase_order.rml',parser=purchase_order)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

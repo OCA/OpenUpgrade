@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import netsvc
 from osv import fields, osv
@@ -64,3 +65,5 @@ class sale_order_line(osv.osv):
                 create_ids.append(inv_id)
         return create_ids
 sale_order_line();
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

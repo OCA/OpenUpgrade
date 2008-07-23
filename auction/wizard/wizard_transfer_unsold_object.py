@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -97,3 +98,5 @@ class transfer_object(wizard.interface):
         },
     }
 transfer_object('auction.lots.transfer.unsold.object')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

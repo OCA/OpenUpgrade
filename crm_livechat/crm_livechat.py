@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 from osv import orm
 import pooler
@@ -260,3 +261,5 @@ class crm_livechat_livechat_log(osv.osv):
         'name': lambda *args: time.strftime('%Y-%m-%d %H:%M:%S')
     }
 crm_livechat_livechat_log()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import offer_step
 
@@ -432,3 +433,5 @@ class dm_offer_history(osv.osv):
     }
 
 dm_offer_history()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

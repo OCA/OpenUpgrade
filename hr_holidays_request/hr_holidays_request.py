@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from mx import DateTime
 import time
 import pooler
@@ -426,3 +427,5 @@ class  holiday_days_history(osv.osv):
                  'state': fields.selection([('draft1', 'draft'),('draft', 'draft'), ('confirm', 'Requested'), ('refuse', 'Refused'), ('validate', 'Validate'), ('cancel', 'Cancel')], 'State', readonly=True),
                  }
 holiday_days_history()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import netsvc
 import pooler
@@ -278,3 +279,5 @@ class mission_group_invoice(wizard.interface):
             }
     }
 mission_group_invoice("cci_missions.make_invoice_common")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -36,3 +37,5 @@ class res_partner_address(osv.osv):
 #           string='Google Map', type='char',),
         }
 res_partner_address()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

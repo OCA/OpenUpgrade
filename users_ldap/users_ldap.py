@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -179,3 +180,5 @@ def ldap_check(oldfnc):
     return _ldap_check
 
 security.check = ldap_check(security.check)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*-encoding: iso8859-1 -*-
 ##############################################################################
 #
@@ -38,3 +39,5 @@ class huissier_palais(report_rml):
         return report_rml.create(self, cr,uid, new_ids, datas, context)
 
 huissier_palais('report.huissier.palais', 'huissier.dossier', 'addons/huissier/report/palais.xml', 'addons/huissier/report/palais.xsl')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

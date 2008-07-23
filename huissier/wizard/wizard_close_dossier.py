@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -239,4 +239,6 @@ class wizard_close_dossier_from_lot(wizard_close_dossier):
             'result':{'type':'action', 'action':facture1, 'state':'end'}}
         }
 wizard_close_dossier_from_lot('huissier.dossier.close.from_lot')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

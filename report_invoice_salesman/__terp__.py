@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Sales Forecast and Statistics",
     "version" : "1.0",
@@ -16,3 +17,5 @@ Different reports are set up for forecast and sales analysis.
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

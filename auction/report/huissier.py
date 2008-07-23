@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*-encoding: iso8859-1 -*-
 ##############################################################################
 #
@@ -74,4 +75,6 @@ class report_custom(report_rml):
 
 report_custom('report.flagey.huissier', 'auction.lots', '', 'addons/auction/report/huissier.xsl')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

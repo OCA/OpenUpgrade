@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -122,3 +123,5 @@ class wiz_esale_osc_products(wizard.interface):
 
 
 wiz_esale_osc_products('esale_osc.products');
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

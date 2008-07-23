@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import pooler
 from report import report_sxw
@@ -172,3 +173,5 @@ class analytic_account_budget_report(report_sxw.rml_parse):
         return result
 
 report_sxw.report_sxw('report.account.analytic.account.budget', 'account.analytic.account', 'addons/account_budget_crossover/report/analytic_account_budget_report.rml',parser=analytic_account_budget_report,header=False)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -130,3 +131,5 @@ class wiz_esale_joomla_product_category(wizard.interface):
         }
     }
 wiz_esale_joomla_product_category('esale_joomla.product.category');
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

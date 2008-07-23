@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv, fields
 
 
@@ -39,3 +40,5 @@ class Product(osv.osv):
                 operator=operator, context=context, limit=limit)
 
 Product()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
         "name" : "Base Report Model", 
         "version" : "0.1",
@@ -11,3 +12,5 @@
         "update_xml" : ['base_report_model_view.xml'],
         "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

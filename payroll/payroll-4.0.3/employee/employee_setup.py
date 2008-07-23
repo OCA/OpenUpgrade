@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -107,3 +108,5 @@ class employee_specify_increment(osv.osv):
             self.write(cr, uid, ids, {'arrear':arrear} )
         return True
 employee_specify_increment()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

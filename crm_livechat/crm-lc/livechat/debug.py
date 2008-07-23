@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##   debug.py 
 ##
 ##   Copyright (C) 2003 Jacob Lundqvist
@@ -405,3 +406,5 @@ class Debug:
             if f not in unique_flags:
                 unique_flags.append(f)
         debug_flags = unique_flags
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

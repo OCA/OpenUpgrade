@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -94,4 +95,6 @@ class wiz_auc_lots_cancel(wizard.interface):
     }
 wiz_auc_lots_cancel('auction.lots.cancel');
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

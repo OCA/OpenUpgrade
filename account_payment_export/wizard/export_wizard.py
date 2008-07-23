@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*- encoding: latin-1 -*-
 ##############################################################################
 #
@@ -487,3 +488,5 @@ class wizard_pay_create(wizard.interface):
 
     }
 wizard_pay_create('account.payment_create')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

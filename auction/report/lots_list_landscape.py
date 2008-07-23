@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -38,4 +39,6 @@ class lots_list_llandscape(report_sxw.rml_parse):
         })
 
 report_sxw.report_sxw('report.lots.list.landscape', 'auction.lots', 'addons/auction/report/lots_list_landscape.rml', parser=lots_list_landscape)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

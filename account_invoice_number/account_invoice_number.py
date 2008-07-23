@@ -36,3 +36,5 @@ class account_invoice(osv.osv):
         'number': fields.char('Invoice Number', size=32, readonly=True, states={'draft':[('readonly',False)]}),
         }
 account_invoice()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -53,3 +54,5 @@ class task(osv.osv):
                 wf_service.trg_validate(uid, 'mrp.procurement', task.procurement_id.id, 'subflow.cancel', cr)
         return True
 task()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

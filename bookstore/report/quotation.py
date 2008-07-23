@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -120,3 +120,5 @@ class request_quotation(report_sxw.rml_parse):
         return res
 
 report_sxw.report_sxw('report.purchase.quotation.bookstore','purchase.order','addons/bookstore/report/quotation.rml',parser=request_quotation)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

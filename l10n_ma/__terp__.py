@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #
 # Plan comptable général pour le Maroc,
 # Mise en forme et paramétrage par http://sisatlas.com
@@ -15,3 +16,5 @@
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

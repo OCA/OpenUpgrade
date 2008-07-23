@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import time
 import netsvc
@@ -41,4 +42,6 @@ class create_model(wizard.interface):
     }
 create_model('create.model')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

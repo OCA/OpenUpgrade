@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -99,3 +100,5 @@ class seller_form_report(report_sxw.rml_parse):
 
 
 report_sxw.report_sxw('report.seller_form_report', 'auction.lots', 'addons/auction/report/seller_form_report.rml', parser=seller_form_report)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

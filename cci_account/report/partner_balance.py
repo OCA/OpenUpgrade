@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -241,4 +242,6 @@ class partner_balance(report_sxw.rml_parse):
 report_sxw.report_sxw('report.partner.balance', 'res.partner',
     'addons/cci_account/report/partner_balance.rml',parser=partner_balance,
     header=False)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

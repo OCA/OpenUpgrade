@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import tools
 import xmlrpclib
@@ -205,3 +206,5 @@ class wizard_download_file_for_publish(wizard.interface):
         },
     }
 wizard_download_file_for_publish('download.publish.file')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

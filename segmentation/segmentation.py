@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 from osv import orm
 import pooler
@@ -161,3 +162,5 @@ class partner(osv.osv):
         "profiles_ids":fields.many2many("segmentation.profile","partner_profile_rel","partner_id","profile_id","Matching Profiles", readonly=True, select="2"),
         }
 partner()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

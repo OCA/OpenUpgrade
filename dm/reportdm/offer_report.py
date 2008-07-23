@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -59,4 +60,6 @@ class offer_report(report_sxw.rml_parse):
 report_sxw.report_sxw('report.offer.report', 'dm.offer', 'addons/dm/report/dm_offer.rml', parser=offer_report)
 report_sxw.report_sxw('report.offer.model.report', 'dm.offer', 'addons/dm/report/dm_offer_model.rml', parser=offer_report)
 report_sxw.report_sxw('report.preoffer.report', 'dm.offer', 'addons/dm/report/dm_preoffer.rml', parser=offer_report)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

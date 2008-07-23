@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 
 
@@ -80,3 +81,5 @@ class report_account_analytic_planning(osv.osv):
         'stat_product_ids': fields.one2many('report_account_analytic.planning.stat.product', 'planning_id', 'Planning by Post / Product', readonly=True),
     }
 report_account_analytic_planning()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

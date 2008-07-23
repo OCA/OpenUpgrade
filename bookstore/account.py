@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 
 class Invoice(osv.osv):
@@ -21,3 +22,5 @@ class Invoice(osv.osv):
         return super(Invoice,self).write(cr, uid, ids, values, context)
 
 Invoice()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import pooler
 import wizard
 
@@ -44,3 +45,5 @@ class case_get_open(wizard.interface):
     }
 
 case_get_open('case_get_open')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

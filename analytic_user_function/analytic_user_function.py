@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 from osv import orm
 
@@ -117,4 +118,6 @@ class hr_analytic_timesheet(osv.osv):
         return res
 
 hr_analytic_timesheet()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 import psycopg
 import csv
@@ -381,3 +382,5 @@ import_sql(cr,
 
 
 cr.close()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

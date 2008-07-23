@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 '''Make case wizard'''
 ##############################################################################
 #
@@ -95,3 +96,5 @@ class MakeCase(wizard.interface):
     }
 
 MakeCase('sale_crm.make_case')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

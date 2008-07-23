@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Partial Payment on Invoices",
     "version" : "0.1",
@@ -17,3 +18,5 @@ Uses the partial reconciliation (>=4.3.0) system.
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

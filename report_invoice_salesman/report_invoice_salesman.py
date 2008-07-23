@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -123,3 +124,5 @@ class report_invoice_salesman_forecast_line(osv.osv):
     }
     
 report_invoice_salesman_forecast_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

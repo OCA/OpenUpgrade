@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Authenticate users with ldap server",
     "version" : "0.1",
@@ -16,3 +17,5 @@
     "active": False,
     "installable": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

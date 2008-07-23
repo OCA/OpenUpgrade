@@ -54,3 +54,5 @@ class account_invoice(osv.osv):
         'payment_ids': fields.function(_compute_lines, method=True, relation='account.move.line', type="many2many", string='Payments'),
     }
 account_invoice()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

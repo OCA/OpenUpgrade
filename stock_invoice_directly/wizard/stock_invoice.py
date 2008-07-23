@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 '''Make case wizard'''
 ##############################################################################
 #
@@ -79,3 +80,5 @@ class invoice_directly(wizard.interface):
         service._service.states['test_choice'] = self.choice
         service._service.states['end_final'] = self.end_final
 invoice_directly('stock.picking.invoice.directly')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 from osv import fields, osv
 
@@ -11,3 +12,5 @@ class account_invoice(osv.osv):
         'user_id': lambda self,cr,uid,ctx: uid
     }
 account_invoice()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

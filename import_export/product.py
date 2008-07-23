@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 import time
 import netsvc
@@ -102,3 +103,5 @@ class product_category(osv.osv):
     }
 #end class
 product_category()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

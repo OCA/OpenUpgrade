@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields
 from osv import osv
 
@@ -19,3 +20,5 @@ class mrp_bom(osv.osv):
         'child_complete_ids': fields.function(_child_compute,relation='mrp.bom', method=True, string="BoM Hyerarchy", type='many2many')
     }
 mrp_bom()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

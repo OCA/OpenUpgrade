@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -101,3 +102,5 @@ class buyer_list(report_sxw.rml_parse):
     def sum_buyer_price(self):
         return self.sum_buyer_price_val
 report_sxw.report_sxw('report.buyer.list', 'auction.lots', 'addons/auction/report/buyer_list.rml', parser=buyer_list)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

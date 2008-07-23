@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import time
 import datetime
@@ -77,4 +78,6 @@ class use_model(wizard.interface):
     }
 
 use_model("cci_use_model")
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

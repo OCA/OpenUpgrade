@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields, osv
 import time
 import datetime
@@ -61,3 +62,5 @@ class project_work(osv.osv):
 
 
 project_work()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

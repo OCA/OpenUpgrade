@@ -30,3 +30,5 @@
 
 import wizard_send_email
 import wizard_partial_picking
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -84,4 +85,5 @@ class wiz_edi_export(wizard.interface):
     }
 
 wiz_edi_export('edi.export')
-# vim:noexpandtab:
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

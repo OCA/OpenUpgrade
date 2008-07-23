@@ -127,3 +127,5 @@ class product_index(osv.osv):
         'index_date': lambda *args: time.strftime('%Y-%m-%d')
     }
 product_index()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

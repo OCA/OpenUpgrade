@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -82,3 +83,5 @@ class library_author(osv.osv):
         reads = self.read(cr, uid, ids, ['name','first_name'], context)
         return map(lambda x: (x['id'], x['name'] + (x['first_name'] and (', '+x['first_name']) or '')), reads)
 library_author()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

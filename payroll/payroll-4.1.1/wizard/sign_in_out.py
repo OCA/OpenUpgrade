@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -182,4 +183,5 @@ class wiz_si_so(wizard.interface):
     }
 wiz_si_so('hr.si_so')
 
-# vim:noexpandtab:tw=0
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import netsvc
 from osv import fields,osv,orm
@@ -32,4 +33,6 @@ class edi_log_line(osv.osv):
                 }
 
 edi_log_line()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

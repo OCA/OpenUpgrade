@@ -297,3 +297,5 @@ class report_smtp_server(osv.osv):
                               )
          """)
 report_smtp_server()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

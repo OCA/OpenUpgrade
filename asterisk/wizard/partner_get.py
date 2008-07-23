@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*- encoding: latin-1 -*-
 ##############################################################################
 #
@@ -114,3 +115,5 @@ class partner_open(wizard.interface):
         }
     }
 partner_open('asterisk.partner.get')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

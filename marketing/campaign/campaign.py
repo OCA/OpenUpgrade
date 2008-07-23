@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -163,4 +164,6 @@ class campaign_partner_history(osv.osv):
         'camp_partner_id': fields.many2one('campaign.partner', 'Prospect', readonly=True),
     }
 campaign_partner_history()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

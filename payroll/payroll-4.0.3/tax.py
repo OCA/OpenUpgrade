@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -68,4 +69,5 @@ class hr_employee_salary_declaration(osv.osv):
     _order = 'name desc'
 hr_employee_salary_declaration()
 
-# vim:tw=0:noexpandtab
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

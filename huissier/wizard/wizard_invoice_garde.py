@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -78,4 +78,6 @@ class wizard_invoice_deposit(wizard.interface):
     }
 wizard_invoice_deposit('huissier.deposit.invoice')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

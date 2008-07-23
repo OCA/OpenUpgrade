@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name":"Board for Auction",
     "version":"1.0",
@@ -21,4 +22,6 @@
 
 
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

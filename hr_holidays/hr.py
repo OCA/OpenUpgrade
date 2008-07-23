@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##################################################################################
 #
 # Copyright (c) 2005-2006 Axelor SARL. (http://www.axelor.com) All Rights Reserved.
@@ -200,4 +201,6 @@ class hr_holidays_per_user(osv.osv):
         return super(osv.osv,self).create(cr, uid, vals, *args, **kwargs)
 
 hr_holidays_per_user()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

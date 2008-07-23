@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 import wizard
 import netsvc
@@ -78,4 +79,6 @@ class wiz_auc_lots_pay(wizard.interface):
         }}
 wiz_auc_lots_pay('auction.pay.sel');
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

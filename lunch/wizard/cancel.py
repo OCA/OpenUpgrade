@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 import wizard
 import netsvc
@@ -28,4 +29,6 @@ class order_cancel(wizard.interface):
         }
     }
 order_cancel('lunch.order.cancel')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -94,3 +95,5 @@ class  report_timesheet_user (osv.osv):
         )
        """)
 report_timesheet_user()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

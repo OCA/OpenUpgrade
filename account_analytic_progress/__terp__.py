@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "account_analytic_progress",
     "description": """Progress bar for analytic accounts.
@@ -17,3 +18,5 @@ development projects on the Tiny ERP website.""",
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

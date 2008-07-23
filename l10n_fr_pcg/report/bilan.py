@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -33,4 +34,6 @@ class bilan(base_report.base_report):
         super(bilan, self).__init__(cr, uid, name, context)
 
 report_sxw.report_sxw('report.l10n.fr.pcg.bilan', 'account.move.line','addons/l10n_fr_pcg/report/bilan.rml', parser=bilan, header=False)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

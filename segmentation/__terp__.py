@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "segmentation management",
     "version" : "1.3",
@@ -20,3 +21,5 @@ NOTICE: This Module is Deprecated. Please install crm_profiling in order to have
     "active": False,
     "installable": False
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

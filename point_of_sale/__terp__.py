@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Point Of Sale",
     "version" : "1.0",
@@ -20,4 +21,6 @@ Main features :
     "update_xml": ["pos_report.xml", "pos_wizard.xml", "pos_view.xml", "pos_sequence.xml", "pos_data.xml", "pos_workflow.xml"],
     "installable": True,
 }
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

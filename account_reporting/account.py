@@ -130,3 +130,5 @@ class account_report_bs(osv.osv):
 account_report_bs()
 
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

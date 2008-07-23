@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import pooler
 import wizard
 import netsvc
@@ -78,4 +79,6 @@ class wizard_payment(wizard.interface):
     }
 wizard_payment('huissier.lots.payment')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

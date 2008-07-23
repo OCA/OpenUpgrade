@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##################################################################################
 #
 # Copyright (c) 2005-2006 Axelor SARL. (http://www.axelor.com) All Rights Reserved.
@@ -121,4 +122,6 @@ class hr_holidays_status(osv.osv):
         'color_name': lambda *args: 'red',
     }
 hr_holidays_status()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

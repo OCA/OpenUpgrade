@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -40,3 +41,5 @@ class sandwich_order_print(report_sxw.rml_parse):
         })
 
 report_sxw.report_sxw('report.sandwich.order.print','sandwich.order','addons/sandwich/report/sandwich_report.rml',parser=sandwich_order_print)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

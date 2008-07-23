@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv, fields
 
 class analytic_partners_account_analytic_account(osv.osv) :
@@ -8,3 +9,5 @@ class analytic_partners_account_analytic_account(osv.osv) :
     }
     
 analytic_partners_account_analytic_account()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

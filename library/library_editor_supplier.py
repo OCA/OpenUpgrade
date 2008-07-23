@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -103,3 +104,5 @@ class library_editor_supplier(osv.osv):
         raise osv.except_osv("Warning","Only creation and suppression are allowed in this form.")
 
 library_editor_supplier()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

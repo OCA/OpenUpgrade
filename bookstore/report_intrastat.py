@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv
 
 class report_intrastat_code(osv.osv):
@@ -18,3 +19,5 @@ class report_intrastat_code(osv.osv):
                  'Please provide at least a code or a description')]
 
 report_intrastat_code()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

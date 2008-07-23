@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -54,4 +55,6 @@ class wizard_report(wizard.interface):
         }
     }
 wizard_report('l10n.fr.pcg.bilan.report')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

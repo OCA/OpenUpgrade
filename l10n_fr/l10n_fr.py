@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -60,4 +61,6 @@ class l10n_fr_line(osv.osv):
         ('code_uniq', 'unique (code)','The variable name must be unique !')
     ]
 l10n_fr_line()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

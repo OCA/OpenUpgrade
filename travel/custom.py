@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv, fields
 
 class travel_hostel(osv.osv):
@@ -40,4 +41,6 @@ class travel_flight(osv.osv):
         'airport_to': fields.many2one('travel.airport', 'Airport Arrival'),
     }
 travel_flight()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 from osv import osv
 from osv import fields
@@ -61,3 +62,5 @@ class line(osv.osv):
         price = self.pool.get('tiny_purchase.product').read(cr, uid, [product_id], ['price'])[0]['price']
         return {'value':{'price': price * quantity,}}
 line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

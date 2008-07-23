@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -1409,4 +1410,6 @@ class report_unclassified_objects(osv.osv):
 group by al.obj_price,al.obj_num, al.lot_num, al.state, al.obj_comm,al.bord_vnd_id,al.ach_login,al.lot_est1,al.lot_est2,al.lot_type,al.auction_id,al.name)
              """)
 report_unclassified_objects()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

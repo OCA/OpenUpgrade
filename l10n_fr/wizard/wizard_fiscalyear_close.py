@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -228,4 +229,6 @@ class wiz_journal_close(wizard.interface):
         }
     }
 wiz_journal_close('l10n.fr.fiscalyear.close')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

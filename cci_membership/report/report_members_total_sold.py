@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 from report import report_sxw
 import pooler
@@ -37,3 +38,5 @@ class total_sold(report_sxw.rml_parse):
         return {'unmember':sum_non_member,'member':sum_member,'diff':diff}
 
 report_sxw.report_sxw('report.cci_membership_total_sold', 'res.partner', 'addons/cci_membership/report/report_members_total_sold.rml', parser=total_sold,header=False)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

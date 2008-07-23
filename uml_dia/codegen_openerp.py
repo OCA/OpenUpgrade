@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # PyDia Code Generation from UML Diagram
 # Copyright (c) 2008  Fabien Pinckaers <fp@tinyerp.com>
 
@@ -299,4 +300,6 @@ from osv import osv, fields
 
 # dia-python keeps a reference to the renderer class and uses it on demand
 dia.register_export ("PyDia Code Generation (OpenERP)", "zip", OpenERPRenderer())
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

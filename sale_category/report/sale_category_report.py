@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import pooler
 import time
 from report import report_sxw
@@ -35,3 +36,5 @@ report_sxw.report_sxw(
     'sale.order',
     'addons/sale_category/report/sale_category_report.rml',
     parser=sale_category_report)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

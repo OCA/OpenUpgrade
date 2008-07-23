@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import offer
 
@@ -268,4 +269,6 @@ class dm_campaign_delay(osv.osv):
     }
     
 dm_campaign_delay()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

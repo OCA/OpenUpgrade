@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -64,4 +65,6 @@ class enable_take_away(wizard.interface):
         },
 }
 enable_take_away('auction.lots.enable')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -50,4 +51,6 @@ class account_invoice_line(osv.osv):
             self.pool.get('account.asset.asset').validate(cr, uid, [line.asset_id.id], context)
         return res
 account_invoice_line()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

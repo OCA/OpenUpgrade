@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields
 import wizard
 import pooler
@@ -123,4 +124,6 @@ class wizard_invoice_membership(wizard.interface):
     }
 
 wizard_invoice_membership("wizard_invoice_membership")
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

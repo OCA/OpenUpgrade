@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 # -*-encoding: iso8859-1 -*-
 ##############################################################################
@@ -45,4 +46,6 @@ class report_custom(report_rml):
 
         return report_rml.create(self,cr, uid, new_ids, datas, context)
 report_custom('report.huissier.labels.print', 'huissier.vignettes', 'addons/huissier/report/labels.xml', 'addons/huissier/report/labels.xsl')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

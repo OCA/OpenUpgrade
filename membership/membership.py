@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 '''Membership'''
 ##############################################################################
 #
@@ -781,3 +782,5 @@ class ReportPartnerMemberYearNew(osv.osv):
     """)
 
 ReportPartnerMemberYearNew()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

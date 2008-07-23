@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields, osv
 import time
 
@@ -185,3 +186,5 @@ class account_invoice_line(osv.osv):
         'cci_special_reference': lambda *a : False,
     }
 account_invoice_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

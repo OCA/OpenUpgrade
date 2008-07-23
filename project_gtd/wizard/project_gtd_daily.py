@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -68,4 +69,5 @@ class wiz_timebox_open(wizard.interface):
     }
 wiz_timebox_open('project.gtd.timebox.daily')
 
-# vim:noexpandtab:tw=0
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import datetime
 import operator
 import pooler
@@ -88,3 +89,5 @@ class langreport(report_sxw.rml_parse):
             return emp_name
 
 report_sxw.report_sxw('report.langreport','hr.employee','addons/hr_skill/report/langreport.rml',parser=langreport,)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

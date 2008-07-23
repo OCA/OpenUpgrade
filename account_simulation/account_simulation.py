@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -88,3 +89,5 @@ class account_move_line(osv.osv):
             plus = " and ("+obj+".journal_id in (select id from account_journal where state='valid'))"
         return res+plus
 account_move_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
         "name" : "Idea Manager",
         "version" : "0.1",
@@ -11,3 +12,5 @@
         "update_xml" : ['idea_view.xml', 'idea_workflow.xml'],
         "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

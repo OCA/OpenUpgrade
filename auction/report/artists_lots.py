@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -56,4 +57,5 @@ class report_artistlot(report_int):
         return self._obj_report.result()
 
 report_artistlot('report.auction.artists_lots')
-# vim:noexpandtab:tw=0
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

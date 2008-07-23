@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -254,4 +255,5 @@ class partial_picking(wizard.interface):
 
 partial_picking('stock.partial_picking1')
 
-# vim:noexpandtab:
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

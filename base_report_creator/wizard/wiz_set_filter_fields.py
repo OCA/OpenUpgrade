@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -220,3 +221,5 @@ class set_filter_fields(wizard.interface):
         }
     }
 set_filter_fields("base_report_creator.report_filter.fields")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "CRM - Livechat Jabber Client",
     "version" : "1.3",
@@ -28,3 +29,5 @@ jabber user according to what you configured in the OpenERP interface.
     "active": False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

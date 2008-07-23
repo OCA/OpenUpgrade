@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -215,3 +216,5 @@ class esale_osc_saleorder(osv.osv):
         return True
 
 esale_osc_saleorder()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

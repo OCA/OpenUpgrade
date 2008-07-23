@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -38,3 +39,5 @@ class partner_sequence(osv.osv):
         'ref': fields.char('Code', size=64, readonly=True),
     }
 partner_sequence()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

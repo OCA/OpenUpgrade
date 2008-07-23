@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 
 
@@ -187,3 +188,5 @@ class account_invoice(osv.osv):
         'invoice_line': one2many_mod2('account.invoice.line', 'invoice_id', 'Invoice Lines',readonly=True, states={'draft':[('readonly',False)]}),
     }
 account_invoice()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

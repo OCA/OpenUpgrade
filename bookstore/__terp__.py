@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name" : "Bookstore Verticalisation",
     "version" : "1.0",
@@ -11,3 +12,5 @@
     "demo_xml" : ['book_data.xml'],
     "installable": True,
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

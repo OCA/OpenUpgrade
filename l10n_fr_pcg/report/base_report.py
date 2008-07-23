@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -123,3 +124,5 @@ class base_report(report_sxw.rml_parse):
                         break
                 
         self._set_variable(code, sum)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

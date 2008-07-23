@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import unittest
 import turbogears
 from turbogears import testutil
@@ -29,4 +30,6 @@ class TestPages(unittest.TestCase):
         testutil.createRequest("/")
         response = cherrypy.response.body[0].lower() 
         assert "<title>welcome to turbogears</title>" in response
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

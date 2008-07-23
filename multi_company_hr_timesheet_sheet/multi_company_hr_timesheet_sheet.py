@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -38,3 +39,5 @@ class hr_timesheet_sheet(osv.osv):
         'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
     }
 hr_timesheet_sheet()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

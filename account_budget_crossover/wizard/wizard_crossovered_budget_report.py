@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import wizard
 
@@ -30,3 +31,5 @@ class wizard_report(wizard.interface):
         }
     }
 wizard_report('wizard.crossovered.budget')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

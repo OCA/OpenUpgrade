@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -45,3 +46,5 @@ import auction_catalog_flagey
 #import wizard_lots_barcode
 import wizard_emporte
 import wizard_payer
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import wizard
 import datetime
@@ -97,3 +98,5 @@ class hr_holidays_report(wizard.interface):
         
     }
 hr_holidays_report('hr_holiday_req')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

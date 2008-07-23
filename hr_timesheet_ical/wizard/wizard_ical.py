@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import re
 import urllib2
 import datetime
@@ -128,3 +129,5 @@ class wizard_import_icalendar(wizard.interface):
         }
 
 wizard_import_icalendar('hr.ical_import')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

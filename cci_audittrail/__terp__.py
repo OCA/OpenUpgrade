@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #
 # you must set the depends variable on modules you plan to audit !
 #
@@ -15,3 +16,5 @@
     "active" : False,
     "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -172,4 +172,6 @@ class auction_catalog(report_rml):
                 xml1 = doc.toxml()
         return xml1
 auction_catalog('report.auction.cat_flagy', 'auction.dates','','addons/auction/report/catalog2.xsl')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

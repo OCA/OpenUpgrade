@@ -76,3 +76,5 @@ class account_cash_discount(osv.osv):
     }
 account_cash_discount()
 
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv, fields
 
 class PaymentMode(osv.osv):
@@ -9,3 +10,5 @@ class PaymentMode(osv.osv):
         cr.commit()
 
 PaymentMode()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
