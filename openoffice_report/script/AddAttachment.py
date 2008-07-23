@@ -42,11 +42,12 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             self.lstModel = self.win.getControl( "lstmodel" )
             self.dModel = {}
 
-            self.userInfo = docinfo.getUserFieldValue(1)
+            global passwd
+            self.password = passwd
             # Open a new connexion to the server
 
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            ids = sock.execute(database, uid, self.userInfo, 'ir.module.module', 'search', [('name','=','base_report_model'),('state', '=', 'installed')])
+            ids = sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_model'),('state', '=', 'installed')])
             if not len(ids):
                 # If the module 'base_report_model' is not installed, use the default model
                 self.dModel = {
@@ -54,9 +55,9 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
                 }
             else:
                 sock = xmlrpclib.ServerProxy( docinfo.getUserFieldValue(0) + '/xmlrpc/object' )
-                ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'base.report.model' , 'search', [])
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'base.report.model' , 'read', ids, ['name','model_id'])
-                models = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', map(lambda x:x['model_id'][0], res), ['model'])
+                ids = sock.execute(database, uid, self.password, 'base.report.model' , 'search', [])
+                res = sock.execute(database, uid, self.password, 'base.report.model' , 'read', ids, ['name','model_id'])
+                models = sock.execute(database, uid, self.password, 'ir.model' , 'read', map(lambda x:x['model_id'][0], res), ['model'])
                 models = dict(map(lambda x:(x['id'],x['model']), models))
                 self.dModel = dict(map(lambda x: (x['name'],models[x['model_id'][0]]), res))
 
@@ -93,7 +94,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
         docinfo=oDoc2.getDocumentInfo()
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.aSearchResult = sock.execute( database, uid, docinfo.getUserFieldValue(1), self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
+        self.aSearchResult = sock.execute( database, uid, self.password, self.dModel[modelSelectedItem], 'name_search', self.win.getEditText("txtSearchName"))
         self.win.removeListBoxItems("lstResource", 0, self.win.getListBoxItemCount("lstResource"))
         if self.aSearchResult == []:
             ErrorDialog("No search result found !!!", "", "Search ERROR" )
@@ -115,7 +116,7 @@ class AddAttachment(unohelper.Base, XJobExecutor ):
             'res_id' : int(res_id),
         }
 
-        return sock.execute( database, uid, docinfo.getUserFieldValue(1), 'ir.attachment', 'create', params )
+        return sock.execute( database, uid, self.password, 'ir.attachment', 'create', params )
 
     def send_attachment( self, model, resource_id ):
         desktop = getDesktop()
