@@ -37,7 +37,8 @@ class ModifyExistingReport(unohelper.Base, XJobExecutor):
         docinfo=doc.getDocumentInfo()
 
         self.hostname = docinfo.getUserFieldValue(0)
-        self.password = docinfo.getUserFieldValue(1)
+        global passwd
+        self.password = passwd
         # Open a new connexion to the server
         sock = xmlrpclib.ServerProxy( self.hostname +'/xmlrpc/object')
 

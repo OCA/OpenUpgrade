@@ -35,6 +35,9 @@ class Fields(unohelper.Base, XJobExecutor ):
         self.win.addButton('btnOK',-5 ,-5,45,15,'Ok' ,actionListenerProc = self.btnOk_clicked )
         self.win.addButton('btnCancel',-5 - 45 - 5 ,-5,45,15,'Cancel' ,actionListenerProc = self.btnCancel_clicked )
 
+        global passwd
+        self.password = passwd
+
         self.sValue=None
         self.sObj=None
         self.aSectionList=[]
@@ -104,9 +107,9 @@ class Fields(unohelper.Base, XJobExecutor ):
                 self.sValue= self.win.getListBoxItem("lstFields",self.aListFields.index(sFields))
             for var in self.aVariableList:
                     sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-                    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
+                    self.model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                     fields=['name','model']
-                    self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                    self.model_res = sock.execute(database, uid, self.password, 'ir.model', 'read', self.model_ids,fields)
                     if self.model_res <> []:
                         self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                     else:
@@ -129,8 +132,8 @@ class Fields(unohelper.Base, XJobExecutor ):
                     sItem = var
             sMain=self.aListFields[self.win.getListBoxSelectedItemPos("lstFields")]
 	    sObject=self.getRes(sock,sItem[sItem.find("(")+1:-1],sMain[1:])
-            ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject ,  'search', [])
-            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[ids[0]])
+            ids = sock.execute(database, uid, self.password, sObject ,  'search', [])
+            res = sock.execute(database, uid, self.password, sObject , 'read',[ids[0]])
 	    self.win.setEditText("txtUName",res[0][sMain[sMain.rfind("/")+1:]])
         except:
             import traceback;traceback.print_exc()
@@ -142,7 +145,7 @@ class Fields(unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        res = sock.execute(database, uid, self.password, sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None

@@ -40,6 +40,10 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
         self.win.addButton('btnOK',-2 ,-10,45,15,'Ok', actionListenerProc = self.btnOk_clicked )
 
         self.win.addButton('btnCancel',-2 - 45 - 5 ,-10,45,15,'Cancel', actionListenerProc = self.btnCancel_clicked )
+
+        global passwd
+        self.password = passwd
+
         # Variable Declaration
         self.sValue=None
         self.sObj=None
@@ -128,11 +132,11 @@ class RepeatIn( unohelper.Base, XJobExecutor ):
             for var in self.aVariableList:
                 sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
 		if var[:8] <> 'List of ':
-		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
+		    self.model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                 else:
-		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[8:])])
+		    self.model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[8:])])
                 fields=['name','model']
-                self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                self.model_res = sock.execute(database, uid, self.password, 'ir.model', 'read', self.model_ids,fields)
                 if self.model_res <> []:
 		    if var[:8]<>'List of ':
                         self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())

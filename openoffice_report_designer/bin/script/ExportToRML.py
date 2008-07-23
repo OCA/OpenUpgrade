@@ -43,9 +43,12 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
 	if not filename:
 	    exit(1)
 
+        global passwd
+        self.password = passwd
+
         try:
             sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
+            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'sxwtorml',base64.encodestring(data))
 	    if res['report_rml_content']:
 		write_data_to_file( get_absolute_file_path( filename[7:] ), res['report_rml_content'] )
         except Exception,e:

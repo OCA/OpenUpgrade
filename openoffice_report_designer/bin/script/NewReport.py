@@ -35,9 +35,12 @@ class NewReport(unohelper.Base, XJobExecutor):
         docinfo=doc.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
 
-        ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'search',[])
+        global passwd
+        self.password = passwd
+
+        ids = sock.execute(database, uid, self.password, 'ir.model' , 'search',[])
         fields = [ 'model','name']
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' , 'read', ids, fields)
+        res = sock.execute(database, uid, self.password, 'ir.model' , 'read', ids, fields)
         res.sort(lambda x, y: cmp(x['name'],y['name']))
 
 	for i in range(len(res)):

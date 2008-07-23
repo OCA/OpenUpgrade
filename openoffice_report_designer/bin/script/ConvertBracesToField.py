@@ -24,10 +24,14 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         if not loginstatus and __name__=="package":
             exit(1)
 
+        global passwd
+        self.password = passwd
+
         self.aReportSyntex=[]
         self.getBraces(self.aReportSyntex)
 
         self.setValue()
+
 
     def setValue(self):
 
@@ -76,7 +80,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                             elif type(res[0]) <> type(u''):
                                 sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) + '/xmlrpc/object')
                                 sObject = self.getRes(sock, docinfo.getUserFieldValue(3), res[0][0][res[0][0].find(".")+1:].replace(".","/"))
-                                r = sock.execute(database, uid, docinfo.getUserFieldValue(1), docinfo.getUserFieldValue(3) , 'fields_get')
+                                r = sock.execute(database, uid, self.password, docinfo.getUserFieldValue(3) , 'fields_get')
                                 sExpr="|-." + r[res[0][0][res[0][0].rfind(".")+1:]]["string"] + ".-|"
                                 oPar.Items=(sExpr.encode("utf-8"),oPar.Items[1])
                                 oPar.update()
@@ -88,7 +92,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
                                         obj=rl[1]
                                 try:
                                     sObject = self.getRes(sock, obj, res[0][res[0].find(".")+1:].replace(".","/"))
-                                    r = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[1])
+                                    r = sock.execute(database, uid, self.password, sObject , 'read',[1])
                                 except:
                                     r = "TTT"
                                 if len(r) <> 0:
@@ -134,7 +138,7 @@ class ConvertBracesToField( unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        res = sock.execute(database, uid, self.password, sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None

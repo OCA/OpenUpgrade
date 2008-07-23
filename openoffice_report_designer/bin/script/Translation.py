@@ -18,6 +18,9 @@ class AddLang(unohelper.Base, XJobExecutor ):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
+
+        global passwd
+        self.password = passwd
         self.win = DBModalDialog(60, 50, 180, 225, "Set Lang Builder")
 
         self.win.addFixedText("lblVariable", 27, 12, 60, 15, "Variable :")
@@ -93,9 +96,9 @@ class AddLang(unohelper.Base, XJobExecutor ):
 
             for var in self.aVariableList:
                     sock = xmlrpclib.ServerProxy(self.sMyHost + '/xmlrpc/object')
-		    self.model_ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
+		    self.model_ids = sock.execute(database, uid, self.password, 'ir.model' ,  'search', [('model','=',var[var.find("(")+1:var.find(")")])])
                     fields=['name','model']
-                    self.model_res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.model', 'read', self.model_ids,fields)
+                    self.model_res = sock.execute(database, uid, self.password, 'ir.model', 'read', self.model_ids,fields)
                     if self.model_res <> []:
 			self.insVariable.addItem(var[:var.find("(")+1] + self.model_res[0]['name'] + ")" ,self.insVariable.getItemCount())
                     else:
@@ -120,8 +123,8 @@ class AddLang(unohelper.Base, XJobExecutor ):
             t=sMain.rfind('/lang')
             if t!=-1:
 		sObject=self.getRes(sock,sItem[sItem.find("(")+1:-1],sMain[1:])
-                ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject ,  'search', [])
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'read',[ids[0]])
+                ids = sock.execute(database, uid, self.password, sObject ,  'search', [])
+                res = sock.execute(database, uid, self.password, sObject , 'read',[ids[0]])
 		self.win.setEditText("txtUName",res[0][sMain[sMain.rfind("/")+1:]])
             else:
                  ErrorDialog("Please select the Language Field") 
@@ -136,7 +139,7 @@ class AddLang(unohelper.Base, XJobExecutor ):
         desktop=getDesktop()
         doc =desktop.getCurrentComponent()
         docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sObject , 'fields_get')
+        res = sock.execute(database, uid, self.password, sObject , 'fields_get')
         key = res.keys()
         key.sort()
         myval=None

@@ -13,10 +13,8 @@ if __name__<>"package":
 def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur=[], root='', actualroot=""):
     try:
         sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
-        desktop=getDesktop()
-        doc =desktop.getCurrentComponent()
-        docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), object , 'fields_get')
+        global passwd
+        res = sock.execute(database, uid, passwd, object , 'fields_get')
         key = res.keys()
         key.sort()
         for k in key:
@@ -30,7 +28,6 @@ def genTree(object,aList,insField,host,level=3, ending=[], ending_excl=[], recur
 
 def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableName=""):
     if sTableName.find(".") != -1:
-        print sTableName,1
 	for i in range(len(aItemList)):
             if aComponentAdd[i]==sTableName:
 		sLVal=aItemList[i][1][aItemList[i][1].find(",'")+2:aItemList[i][1].find("')")]
@@ -44,7 +41,6 @@ def VariableScope(oTcur,insVariable,aObjectList,aComponentAdd,aItemList,sTableNa
 		sLVal=aItemList[i][1][aItemList[i][1].find(",'")+2:aItemList[i][1].find("')")]
                 for j in range(len(aObjectList)):
 		    if aObjectList[j][:aObjectList[j].find("(")] == sLVal and sLVal!="":
-                        print aObjectList[j]
                         insVariable.append(aObjectList[j])
 
 def getList(aObjectList,host,count):
@@ -82,10 +78,8 @@ def getList(aObjectList,host,count):
 
 def getRelation(sRelName, sItem, sObjName, aObjectList, host ):
         sock = xmlrpclib.ServerProxy(host+'/xmlrpc/object')
-        desktop=getDesktop()
-        doc =desktop.getCurrentComponent()
-        docinfo=doc.getDocumentInfo()
-        res = sock.execute(database, uid, docinfo.getUserFieldValue(1), sRelName , 'fields_get')
+        global passwd
+        res = sock.execute(database, uid, passwd, sRelName , 'fields_get')
         key = res.keys()
         for k in key:
             if sItem.find(".") == -1:
@@ -147,10 +141,8 @@ def getChildTable(oPar,aItemList,aComponentAdd,sTableName=""):
 
                 if oCur.supportsService("com.sun.star.text.TextTable"):
                     if sTableName=="":
-                        print 2
                         getChildTable(oCur,aItemList,aComponentAdd,oPar.Name)
                     else:
-                        print 1
                         getChildTable(oCur,aItemList,aComponentAdd,sTableName+"."+oPar.Name)
                 else:
                     oSecEnum = oCur.createEnumeration()

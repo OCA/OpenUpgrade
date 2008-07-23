@@ -32,11 +32,15 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         LoginTest()
         if not loginstatus and __name__=="package":
             exit(1)
+
+        global passwd
+        self.password = passwd
+
         desktop=getDesktop()
         oDoc2 = desktop.getCurrentComponent()
         docinfo=oDoc2.getDocumentInfo()
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        self.ids = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
+        self.ids = sock.execute(database, uid, self.password, 'ir.module.module', 'search', [('name','=','base_report_designer'),('state', '=', 'installed')])
         if not len(self.ids):
             ErrorDialog("Please Install base_report_designer module", "", "Module Uninstalled Error")
             exit(1)
@@ -46,7 +50,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         if docinfo.getUserFieldValue(2)<>"" :
             try:
                 fields=['name','report_name']
-                self.res_other = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
+                self.res_other = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'read', [docinfo.getUserFieldValue(2)],fields)
                 name = self.res_other[0]['name']
                 report_name = self.res_other[0]['report_name']
             except:
@@ -108,19 +112,19 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                     'key2': 'client_print_multi',
                     'object': True 
                 }
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'create',rec )
+                res = sock.execute(database, uid, self.password, 'ir.values' , 'create',rec )
             else:
                 id = docinfo.getUserFieldValue(2)
-                vId = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
+                vId = sock.execute(database, uid, self.password, 'ir.values' ,  'search', [('value','=','ir.actions.report.xml,'+str(id))])
                 rec = { 'name': self.win.getEditText("txtReportName") }
-                res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.values' , 'write',vId,rec)
+                res = sock.execute(database, uid, self.password, 'ir.values' , 'write',vId,rec)
 
             oDoc2.store()
             data = read_data_from_file( get_absolute_file_path( oDoc2.getURL()[7:] ) )
             self.getInverseFieldsRecord(0)
 
             #sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
+            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'upload_report', int(docinfo.getUserFieldValue(2)),base64.encodestring(data),{})
 
             params = {
                 'name': self.win.getEditText("txtName"),
@@ -129,7 +133,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
                 'header': (self.win.getCheckBoxState("chkHeader") <> 0),
                 'report_type': self.Kind[self.win.getListBoxSelectedItem("lstResourceType")],
             }
-            res = sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
+            res = sock.execute(database, uid, self.password, 'ir.actions.report.xml', 'write', int(docinfo.getUserFieldValue(2)), params)
             self.win.endExecute()
         else:
             ErrorDialog("Either Report Name or Technical Name is blank !!!\nPlease specify appropriate Name","","Blank Field ERROR")
@@ -145,7 +149,7 @@ class SendtoServer(unohelper.Base, XJobExecutor):
         }
 
         sock = xmlrpclib.ServerProxy(docinfo.getUserFieldValue(0) +'/xmlrpc/object')
-        id=sock.execute(database, uid, docinfo.getUserFieldValue(1), 'ir.actions.report.xml' ,'create', params)
+        id=sock.execute(database, uid, self.password, 'ir.actions.report.xml' ,'create', params)
         return id
 
     def getInverseFieldsRecord(self,nVal):
