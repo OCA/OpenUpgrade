@@ -3,7 +3,7 @@
 import csv
 
 
-#TODO: 
+#TODO:
 ##genere chart with parents :( => create a root with code = 0 then create the tree structure
 ##change it in order to run it server side
 ##remove close_method when mra's work is pushed
@@ -13,7 +13,7 @@ account_map = {
 	'id': lambda z:'',
 	'code': lambda x: x['AID,A,10'],
 	'name': lambda x: x['HEADING1,A,40'],
-	'note': lambda x: x['AMEMO,M,11'], 
+	'note': lambda x: x['AMEMO,M,11'],
 	'type': lambda x: {
 		'LIABILIT': 'cash',
 		'ASSETS': 'asset',
@@ -25,7 +25,7 @@ account_map = {
 		'': 'view',
 		'UNDEF': 'view',
 	}[x['ABALANCE,A,10']],
-	'sign': lambda x: 1, 
+	'sign': lambda x: 1,
 #	'company_id': lambda x: "Tiny sprl", #will be replaced by id of main company
 	'parent_id:id': lambda a: ''#'account_bob_import.account_bob_0'
 	#'close_method': lambda x: 'balance', #will be removed
@@ -34,10 +34,10 @@ account_map = {
 
 #this dict is used to know the header of each column
 account_headers = {
-	'id':'id', 
-	'code':'code', #'Code', 
-	'name':'name',# 'Name', 
-	'note': 'note',#'Note', 
+	'id':'id',
+	'code':'code', #'Code',
+	'name':'name',# 'Name',
+	'note': 'note',#'Note',
 	'type': 'type',#'Account Type',
 	'sign': 'sign', #'Sign',
 #	'company_id': 'Company',
@@ -46,27 +46,45 @@ account_headers = {
 	}
 
 journals_map = {
-	'id': ,
 	'code': lambda x: x['DBID,A,4'],
 	'name': lambda x: x['HEADING1,A,30'],
-	'view_id': , # journal view for all except the ones that are of type cash => cash journal view
-	'currency': lambda x: x['DBCURRENCY,A,3'], 
-	'sequence_id': , #entry journal for all
+	'view_id:id': lambda x: 'account.account_journal_view', # journal view for all except the ones that are of type cash => cash journal view
+	'currency:id': lambda x: x['DBCURRENCY,A,3'],#to be check
+	'sequence_id:id': lambda x: 'account.sequence_journal', #entry journal for all
 	'type': lambda x: {
 		'PUR': 'purchase',
 		'PUC': 'purchase',
 		'SAL': 'sale',
 		'SAC': 'sale',
 		'CAS': 'cash',
+		'ISB': 'general',#default
+		'PRI': 'general',#default
+		'ISD': 'general',#default
+		'ICO': 'general',#default
+		'ISO': 'general',#default
+		'PRO': 'general',#default
+		'COP': 'general',#default
+		'ISI': 'general',#default
+		'ISM': 'general',#default
+		'IDN': 'general',#default
+		'ICE': 'general'#default
 		#else should be of 'general' type
 
 	}[x['DBTYPE,A,3']],
-	'default_debit_account_id': #should be filled with the id of the account_account with code = x['DBACCOUNT,A,10'],
-	'default_credit_account_id': ,#should be filled with the id of the account_account with code = 
+	'default_debit_account_id:id':lambda x: x['DBACCOUNT,A,10'], #should be filled with the id of the account_account with code = x['DBACCOUNT,A,10'],
+	'default_credit_account_id:id':lambda x: x['DBACCOUNT,A,10'] ,#should be filled with the id of the account_account with code =
 }
 
 #this dict is used to know the header of each column
 journals_headers = {
+	'code': 'code',
+	'name': 'name',
+	'view_id:id': 'view_id:id', # journal view for all except the ones that are of type cash => cash journal view
+	'currency:id': 'currency:id',
+	'sequence_id:id': 'sequence_id:id', #entry journal for all
+	'type': 'type',
+	'default_debit_account_id:id':'default_debit_account_id:id', #should be filled with the id of the account_account with code = x['DBACCOUNT,A,10'],
+	'default_credit_account_id:id': 'default_credit_account_id:id' ,#should be filled with the id of the account_account with code =['DBACCOUNT,A,10'],
 	}
 
 def convert2utf(row):
@@ -120,9 +138,31 @@ def convert(reader, writer, mapping, column_headers):
 		writer.writerow(temp_dict[t])
 	return True
 
+def import_journal(reader_journal, writer_journal, journals_map, journals_headers):
+	record = {}
+	for key, column_name in journals_headers.items():
+		record[key] = column_name
+	writer_journal.writerow(record)
+	for row in reader_journal:
+		record = {}
+		for key,fnct in journals_map.items():
+			record[key] = fnct(convert2utf(row))
+		
+		if record['default_debit_account_id:id']:
+			record['default_debit_account_id:id'] = 'id' + str(record['default_debit_account_id:id'])
+		if record['default_credit_account_id:id']:
+			record['default_credit_account_id:id'] = 'id' + str(record['default_credit_account_id:id'])
+		if record['type']=='cash':
+			record['view_id:id']='account.account_journal_bank_view'
+		writer_journal.writerow(record)
+	return True
+
 reader = csv.DictReader(file('accounts.csv','rb'))
 writer = csv.DictWriter(file('account_bob/account.account.csv', 'wb'), account_map.keys())
+reader_journal = csv.DictReader(file('journals.csv','rb'))
+writer_journal = csv.DictWriter(file('account_bob/account.journal.csv', 'wb'), journals_map.keys())
 convert(reader, writer, account_map, account_headers)
+import_journal(reader_journal, writer_journal, journals_map, journals_headers)
 
 move_map = {
 	'id': lambda x: 'move_'+x['MID,A,40'],
@@ -152,3 +192,4 @@ move_map = {
 
 #~ if __name__=='__main__':
 	#~ pass
+
