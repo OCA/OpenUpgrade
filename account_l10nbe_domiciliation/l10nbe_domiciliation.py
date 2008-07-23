@@ -41,6 +41,7 @@ class res_partner(osv.osv):
     _inherit = 'res.partner'
     _description = 'Partner'
     _columns = {
-        'domiciliation' : fields.char('Domiciliation',size=32)
+        'domiciliation_bool':fields.boolean('Domiciliation'),
+        'domiciliation' : fields.char('Domiciliation Number',size=32)
         }
 res_partner()
