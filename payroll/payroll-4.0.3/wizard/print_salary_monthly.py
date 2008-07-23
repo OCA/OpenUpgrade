@@ -30,28 +30,28 @@ import time
 
 _date_form = '''<?xml version="1.0"?>
 <form string="Select employee and salary month">
-	<separator string="Salary Slip Information" colspan="4"/>
-	<field name="employee"/>
-	<field name="month"/>
-	<field name="year"/>	
+    <separator string="Salary Slip Information" colspan="4"/>
+    <field name="employee"/>
+    <field name="month"/>
+    <field name="year"/>    
 </form>'''
 
 _date_fields = {
-	'employee': {'string':'Employee', 'type':'many2one', 'relation':'hr.employee', 'required':True},
-	'month': {'string':'Month', 'type':'integer', 'default':lambda *a: time.gmtime()[1], 'required':True},
-	'year': {'string':'Year', 'type':'integer', 'default':lambda *a: time.gmtime()[0], 'required':True},
+    'employee': {'string':'Employee', 'type':'many2one', 'relation':'hr.employee', 'required':True},
+    'month': {'string':'Month', 'type':'integer', 'default':lambda *a: time.gmtime()[1], 'required':True},
+    'year': {'string':'Year', 'type':'integer', 'default':lambda *a: time.gmtime()[0], 'required':True},
 }
 
 class wiz_attendance(wizard.interface):
-	states = {
-		'init': {
-			'actions': [],
-			'result': {'type': 'form', 'arch':_date_form, 'fields':_date_fields, 'state':[('print','Print Salary Slip'),('end','Cancel') ]}
-		},
-		'print': {
-			'actions': [],
-			'result': {'type': 'print', 'report': 'payroll.salary.month', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [],
+            'result': {'type': 'form', 'arch':_date_form, 'fields':_date_fields, 'state':[('print','Print Salary Slip'),('end','Cancel') ]}
+        },
+        'print': {
+            'actions': [],
+            'result': {'type': 'print', 'report': 'payroll.salary.month', 'state':'end'}
+        }
+    }
 wiz_attendance('payroll.salary.month.report')
 

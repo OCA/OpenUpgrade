@@ -31,23 +31,23 @@ from osv import osv, fields
 import time
 
 class account_invoice(osv.osv):
-	_inherit = 'account.invoice'
-	def line_get_convert(self, cr, uid, x, part, date, context={}):
-		res = super(account_invoice, self).line_get_convert(cr, uid, x, part, date, context)
-		res['asset_id'] = x.get('asset_id', False)
-		return res
+    _inherit = 'account.invoice'
+    def line_get_convert(self, cr, uid, x, part, date, context={}):
+        res = super(account_invoice, self).line_get_convert(cr, uid, x, part, date, context)
+        res['asset_id'] = x.get('asset_id', False)
+        return res
 account_invoice()
 
 class account_invoice_line(osv.osv):
-	_inherit = 'account.invoice.line'
-	_columns = {
-		'asset_id': fields.many2one('account.asset.asset', 'Asset'),
-	}
-	def move_line_get_item(self, cr, uid, line, context={}):
-		res = super(account_invoice_line, self).move_line_get_item(cr, uid, line, context)
-		res['asset_id'] = line.asset_id.id or False
-		if line.asset_id.id and (line.asset_id.state=='draft'):
-			self.pool.get('account.asset.asset').validate(cr, uid, [line.asset_id.id], context)
-		return res
+    _inherit = 'account.invoice.line'
+    _columns = {
+        'asset_id': fields.many2one('account.asset.asset', 'Asset'),
+    }
+    def move_line_get_item(self, cr, uid, line, context={}):
+        res = super(account_invoice_line, self).move_line_get_item(cr, uid, line, context)
+        res['asset_id'] = line.asset_id.id or False
+        if line.asset_id.id and (line.asset_id.state=='draft'):
+            self.pool.get('account.asset.asset').validate(cr, uid, [line.asset_id.id], context)
+        return res
 account_invoice_line()
 

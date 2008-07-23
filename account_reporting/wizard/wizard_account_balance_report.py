@@ -39,17 +39,17 @@ from tools import config
 
 dates_form = '''<?xml version="1.0"?>
 <form string="Customize Report">
-	<field name="fiscalyear" colspan="4"/>
-	<field name="periods" colspan="4"/>
+    <field name="fiscalyear" colspan="4"/>
+    <field name="periods" colspan="4"/>
 </form>'''
 
-#	<field name="report_type" colspan="4"/>
+#   <field name="report_type" colspan="4"/>
 
 
 dates_fields = {
-	'fiscalyear': {'string': 'Fiscal year', 'type': 'many2one', 'relation': 'account.fiscalyear', 'required': True},
-	'periods': {'string': 'Periods', 'type': 'many2many', 'relation': 'account.period', 'help': 'All periods if empty'},
-#	'report_type': {'string': 'Report Type','type': 'selection','selection': [('only_obj', 'Report Objects Only'),('with_account', 'Report Objects With Accounts'),('acc_with_child', 'Report Objects With Accounts and child of Accounts'),],'required': True},
+    'fiscalyear': {'string': 'Fiscal year', 'type': 'many2one', 'relation': 'account.fiscalyear', 'required': True},
+    'periods': {'string': 'Periods', 'type': 'many2many', 'relation': 'account.period', 'help': 'All periods if empty'},
+#   'report_type': {'string': 'Report Type','type': 'selection','selection': [('only_obj', 'Report Objects Only'),('with_account', 'Report Objects With Accounts'),('acc_with_child', 'Report Objects With Accounts and child of Accounts'),],'required': True},
 }
 
 back_form='''<?xml version="1.0"?>
@@ -74,29 +74,29 @@ zero_fields={
 periods_form='''<?xml version="1.0"?>
 <form string="Set Periods">
 <separator string="Select Period(s) (All periods if empty)" colspan="4"/>
-			<field name="periods" colspan="4" nolabel="1"/>
+            <field name="periods" colspan="4" nolabel="1"/>
 </form>'''
 
 periods_fields={
-	'periods': {'string': 'Periods', 'type': 'many2many', 'relation': 'account.period', 'help': 'All periods if empty'}
+    'periods': {'string': 'Periods', 'type': 'many2many', 'relation': 'account.period', 'help': 'All periods if empty'}
 }
 
 class wizard_report(wizard.interface):
-	def _get_defaults(self, cr, uid, data, context):
-		fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
-		data['form']['fiscalyear'] = fiscalyear_obj.find(cr, uid)
-		data['form']['report_type'] = 'only_obj'
-		return data['form']
+    def _get_defaults(self, cr, uid, data, context):
+        fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
+        data['form']['fiscalyear'] = fiscalyear_obj.find(cr, uid)
+        data['form']['report_type'] = 'only_obj'
+        return data['form']
 
-	states = {
-		'init': {
-			'actions': [_get_defaults],
-			'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel'),('report','Print BalanceSheet')]}
-		},
-		'report': {
-			'actions': [],
-			'result': {'type':'print', 'report':'account.report.bs', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_get_defaults],
+            'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel'),('report','Print BalanceSheet')]}
+        },
+        'report': {
+            'actions': [],
+            'result': {'type':'print', 'report':'account.report.bs', 'state':'end'}
+        }
+    }
 wizard_report('account.account.balancesheet.report')
 

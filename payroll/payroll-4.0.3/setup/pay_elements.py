@@ -50,7 +50,7 @@ class payroll_setup_payelements(osv.osv):
         }
     _defaults = {
             'attendance' : lambda *a: True,
-			'formulae' : lambda *a: 'percent',
+            'formulae' : lambda *a: 'percent',
         }
     _order = 'name desc'
     def onchange_percent(self, cr, uid, ids, percent):

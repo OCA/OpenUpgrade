@@ -40,145 +40,145 @@ import ir
 
 
 class one2many_mod(fields.one2many):
-	def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
-		if not context:
-			context = {}
-		res = {}
-		num = name[4]
-		for obj in obj.browse(cr, user, ids, context=context):
-			res[obj.id] = []
-			v = getattr(obj,'context'+num+'_id').id
-			if v:
-				ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'=',obj.id),('context_id','=',v)], limit=self._limit)
-				for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
-					res[r[self._fields_id]].append( r['id'] )
-		return res
+    def get(self, cr, obj, ids, name, user=None, offset=0, context=None, values=None):
+        if not context:
+            context = {}
+        res = {}
+        num = name[4]
+        for obj in obj.browse(cr, user, ids, context=context):
+            res[obj.id] = []
+            v = getattr(obj,'context'+num+'_id').id
+            if v:
+                ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'=',obj.id),('context_id','=',v)], limit=self._limit)
+                for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
+                    res[r[self._fields_id]].append( r['id'] )
+        return res
 
 class project_gtd_context(osv.osv):
-	_name = "project.gtd.context"
-	_columns = {
-		'name': fields.char('Context', size=64, required=True, select=1),
-		'sequence': fields.integer('Sequence'),
-		'project_default_id': fields.many2one('project.project', 'Default Project', required=True),
-	}
-	_defaults = {
-		'sequence': lambda *args: 1
-	}
-	_order = "sequence, name"
+    _name = "project.gtd.context"
+    _columns = {
+        'name': fields.char('Context', size=64, required=True, select=1),
+        'sequence': fields.integer('Sequence'),
+        'project_default_id': fields.many2one('project.project', 'Default Project', required=True),
+    }
+    _defaults = {
+        'sequence': lambda *args: 1
+    }
+    _order = "sequence, name"
 project_gtd_context()
 
 
 class project_gtd_timebox(osv.osv):
-	_name = "project.gtd.timebox"
-	_columns = {
-		'name': fields.char('Timebox', size=64, required=True, select=1),
-		'user_id': fields.many2one('res.users', 'User', required=True, select=1),
-		'child_ids': fields.one2many('project.gtd.timebox', 'parent_id', 'Childs Timebox'),
-		'parent_id': fields.many2one('project.gtd.timebox', 'Parent Timebox'),
-		'task_ids': fields.one2many('project.task', 'timebox_id', 'Tasks'),
-		'type': fields.selection([('daily','Daily'),('weekly','Weekly'),('monthly','Monthly'),('other','Other')], 'Type', required=True),
-		'task1_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-		'task2_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-		'task3_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-		'task4_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-		'task5_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-		'task6_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
-		'context1_id': fields.many2one('project.gtd.context', 'Context 1', required=True),
-		'context2_id': fields.many2one('project.gtd.context', 'Context 2'),
-		'context3_id': fields.many2one('project.gtd.context', 'Context 3'),
-		'context4_id': fields.many2one('project.gtd.context', 'Context 4'),
-		'context5_id': fields.many2one('project.gtd.context', 'Context 5'),
-		'context6_id': fields.many2one('project.gtd.context', 'Context 6'),
-		'col_project': fields.boolean('Project'),
-		'col_date_start': fields.boolean('Date Start'),
-		'col_priority': fields.boolean('Priority'),
-		'col_deadline': fields.boolean('Deadline'),
-		'col_planned_hours': fields.boolean('Planned Hours'),
-		'col_effective_hours': fields.boolean('Effective Hours'),
-	}
-	def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
-		res = super(project_gtd_timebox,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
-		if (res['type']=='form') and ('record_id' in context):
-			if context['record_id']:
-				rec = self.browse(cr, uid, int(context['record_id']), context)
-			else:
-				iids = self.search(cr,uid, [('user_id','=',uid),('parent_id','=',False)], context=context)
-				if len(iids):
-					rec = self.browse(cr, uid, int(iids[0]), context=context)
-				else:
-					return res
-			res['arch'] = """
-	<form string="Daily Timebox">
-		<field name="name" readonly="1"/>
-		<notebook position="top">
-			"""
-			for i in range(1,7):
-				if not getattr(rec, 'context%d_id'%i):
-					continue
-				res['arch']+= """
-			<page string="%s">
-				<field name="%s" colspan="4" nolabel="1">
-					<tree editable="bottom" colors="grey:state in ('done','pending');red:state=='cancelled'" string="Tasks">
-						<field name="name"/>
-				""" % (getattr(rec, 'context%d_id'%(i,)).name, 'task%d_ids'%(i,))
-				if rec.col_project:
-					res['arch'] += '<field name="project_id" required="1"/>\n'
-				if rec.col_date_start:
-					res['arch'] += '<field name="date_start"/>\n'
-				if rec.col_priority:
-					res['arch'] += '<field name="priority"/>\n'
-				if rec.col_deadline:
-					res['arch'] += '<field name="date_deadline"/>\n'
-				if rec.col_planned_hours:
-					res['arch'] += '<field name="planned_hours"  widget="float_time" sum="Est. Hours"/>\n'
-				if rec.col_effective_hours:
-					res['arch'] += '<field name="effective_hours"  widget="float_time" sum="Eff. Hours"/>\n'
-				res['arch'] += """
-						<field name="state" readonly="1"/>
-					</tree>
-				</field>
-			</page>
-				"""
+    _name = "project.gtd.timebox"
+    _columns = {
+        'name': fields.char('Timebox', size=64, required=True, select=1),
+        'user_id': fields.many2one('res.users', 'User', required=True, select=1),
+        'child_ids': fields.one2many('project.gtd.timebox', 'parent_id', 'Childs Timebox'),
+        'parent_id': fields.many2one('project.gtd.timebox', 'Parent Timebox'),
+        'task_ids': fields.one2many('project.task', 'timebox_id', 'Tasks'),
+        'type': fields.selection([('daily','Daily'),('weekly','Weekly'),('monthly','Monthly'),('other','Other')], 'Type', required=True),
+        'task1_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
+        'task2_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
+        'task3_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
+        'task4_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
+        'task5_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
+        'task6_ids': one2many_mod('project.task', 'timebox_id', 'Tasks'),
+        'context1_id': fields.many2one('project.gtd.context', 'Context 1', required=True),
+        'context2_id': fields.many2one('project.gtd.context', 'Context 2'),
+        'context3_id': fields.many2one('project.gtd.context', 'Context 3'),
+        'context4_id': fields.many2one('project.gtd.context', 'Context 4'),
+        'context5_id': fields.many2one('project.gtd.context', 'Context 5'),
+        'context6_id': fields.many2one('project.gtd.context', 'Context 6'),
+        'col_project': fields.boolean('Project'),
+        'col_date_start': fields.boolean('Date Start'),
+        'col_priority': fields.boolean('Priority'),
+        'col_deadline': fields.boolean('Deadline'),
+        'col_planned_hours': fields.boolean('Planned Hours'),
+        'col_effective_hours': fields.boolean('Effective Hours'),
+    }
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        res = super(project_gtd_timebox,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+        if (res['type']=='form') and ('record_id' in context):
+            if context['record_id']:
+                rec = self.browse(cr, uid, int(context['record_id']), context)
+            else:
+                iids = self.search(cr,uid, [('user_id','=',uid),('parent_id','=',False)], context=context)
+                if len(iids):
+                    rec = self.browse(cr, uid, int(iids[0]), context=context)
+                else:
+                    return res
+            res['arch'] = """
+    <form string="Daily Timebox">
+        <field name="name" readonly="1"/>
+        <notebook position="top">
+            """
+            for i in range(1,7):
+                if not getattr(rec, 'context%d_id'%i):
+                    continue
+                res['arch']+= """
+            <page string="%s">
+                <field name="%s" colspan="4" nolabel="1">
+                    <tree editable="bottom" colors="grey:state in ('done','pending');red:state=='cancelled'" string="Tasks">
+                        <field name="name"/>
+                """ % (getattr(rec, 'context%d_id'%(i,)).name, 'task%d_ids'%(i,))
+                if rec.col_project:
+                    res['arch'] += '<field name="project_id" required="1"/>\n'
+                if rec.col_date_start:
+                    res['arch'] += '<field name="date_start"/>\n'
+                if rec.col_priority:
+                    res['arch'] += '<field name="priority"/>\n'
+                if rec.col_deadline:
+                    res['arch'] += '<field name="date_deadline"/>\n'
+                if rec.col_planned_hours:
+                    res['arch'] += '<field name="planned_hours"  widget="float_time" sum="Est. Hours"/>\n'
+                if rec.col_effective_hours:
+                    res['arch'] += '<field name="effective_hours"  widget="float_time" sum="Eff. Hours"/>\n'
+                res['arch'] += """
+                        <field name="state" readonly="1"/>
+                    </tree>
+                </field>
+            </page>
+                """
 
-			res['arch']+="""
-		</notebook>
-	</form>
-			"""
-		doc = dom.minidom.parseString(res['arch'])
-		xarch, xfields = self._view_look_dom_arch(cr, uid, doc, context=context)
-		res['arch'] = xarch
-		res['fields'] = xfields
-		return res
-	_defaults = {
-		'type': lambda *args: 'daily',
-		'col_project': lambda *args: True,
-		'col_date_start': lambda *args: True,
-		'col_priority': lambda *args: True,
-		'col_deadline': lambda *args: False,
-		'col_planned_hours': lambda *args: True,
-		'col_effective_hours': lambda *args: False
-	}
+            res['arch']+="""
+        </notebook>
+    </form>
+            """
+        doc = dom.minidom.parseString(res['arch'])
+        xarch, xfields = self._view_look_dom_arch(cr, uid, doc, context=context)
+        res['arch'] = xarch
+        res['fields'] = xfields
+        return res
+    _defaults = {
+        'type': lambda *args: 'daily',
+        'col_project': lambda *args: True,
+        'col_date_start': lambda *args: True,
+        'col_priority': lambda *args: True,
+        'col_deadline': lambda *args: False,
+        'col_planned_hours': lambda *args: True,
+        'col_effective_hours': lambda *args: False
+    }
 project_gtd_timebox()
 
 class project_task(osv.osv):
-	_inherit = "project.task"
-	_columns = {
-		'timebox_id': fields.many2one('project.gtd.timebox', "Timebox"),
-		'context_id': fields.many2one('project.gtd.context', "Context"),
-	 }
-	def copy(self, cr, uid, id, default=None, context=None):
-		if not default:
-			default = {}
-		default['timebox_id']=False
-		default['context_id']=False
-		return super(project_task,self).copy(cr, uid, id, default, context)
-	def _get_context(self,cr, uid, ctx):
-		ids = self.pool.get('project.gtd.context').search(cr, uid, [], context=ctx)
-		return ids and ids[0] or False
-	_defaults = {
-		'context_id': _get_context
-	}
-	# Override read for using this method if context set !!!
-	#_order = "((55-ascii(coalesce(priority,'2')))*2 +  coalesce((date_start::date-current_date)/2,8))"
+    _inherit = "project.task"
+    _columns = {
+        'timebox_id': fields.many2one('project.gtd.timebox', "Timebox"),
+        'context_id': fields.many2one('project.gtd.context', "Context"),
+     }
+    def copy(self, cr, uid, id, default=None, context=None):
+        if not default:
+            default = {}
+        default['timebox_id']=False
+        default['context_id']=False
+        return super(project_task,self).copy(cr, uid, id, default, context)
+    def _get_context(self,cr, uid, ctx):
+        ids = self.pool.get('project.gtd.context').search(cr, uid, [], context=ctx)
+        return ids and ids[0] or False
+    _defaults = {
+        'context_id': _get_context
+    }
+    # Override read for using this method if context set !!!
+    #_order = "((55-ascii(coalesce(priority,'2')))*2 +  coalesce((date_start::date-current_date)/2,8))"
 project_task()
 

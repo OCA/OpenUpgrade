@@ -40,93 +40,93 @@ from osv import osv
 
 _export_done_form = '''<?xml version="1.0"?>
 <form string="Initial import">
-	<separator string="Products Category exported" colspan="4" />
-	<field name="category_new"/>
-	<newline/>
-	<field name="category_update"/>
+    <separator string="Products Category exported" colspan="4" />
+    <field name="category_new"/>
+    <newline/>
+    <field name="category_update"/>
 </form>'''
 
 _export_done_fields = {
-	'category_new': {'string':'New Product Categories', 'type':'float', 'readonly': True},
-	'category_update': {'string':'Updated Product Categories', 'type':'float', 'readonly': True},
+    'category_new': {'string':'New Product Categories', 'type':'float', 'readonly': True},
+    'category_update': {'string':'Updated Product Categories', 'type':'float', 'readonly': True},
 
 }
 category_new = 0
 category_update = 0
 def _do_export(self, cr, uid, data, context):
-	self.pool = pooler.get_pool(cr.dbname)
-	ids = self.pool.get('esale_joomla.web').search(cr, uid, [])
-	self.category_new = 0
-	self.category_update = 0
+    self.pool = pooler.get_pool(cr.dbname)
+    ids = self.pool.get('esale_joomla.web').search(cr, uid, [])
+    self.category_new = 0
+    self.category_update = 0
 
-	for website in self.pool.get('esale_joomla.web').browse(cr, uid, ids):
-		logids = self.pool.get('esale_joomla.web.exportlog').search(cr,uid,[('web_id','=',website.id),('log_type','=','category')],order='log_date desc')
-		if len(logids):
-			lastExportDate = self.pool.get('esale_joomla.web.exportlog').browse(cr,uid,logids)[0].log_date
-		else:
-			lastExportDate = 'False'
-		server = xmlrpclib.ServerProxy("%s/tinyerp-synchro.php" % website.url)
-#		server.delete_product_categories()
-#		server.delete_products()
-		cat_ids=self.pool.get('product.category').search(cr, uid, [('parent_id','is',None)])
+    for website in self.pool.get('esale_joomla.web').browse(cr, uid, ids):
+        logids = self.pool.get('esale_joomla.web.exportlog').search(cr,uid,[('web_id','=',website.id),('log_type','=','category')],order='log_date desc')
+        if len(logids):
+            lastExportDate = self.pool.get('esale_joomla.web.exportlog').browse(cr,uid,logids)[0].log_date
+        else:
+            lastExportDate = 'False'
+        server = xmlrpclib.ServerProxy("%s/tinyerp-synchro.php" % website.url)
+#       server.delete_product_categories()
+#       server.delete_products()
+        cat_ids=self.pool.get('product.category').search(cr, uid, [('parent_id','is',None)])
 
-		def _add_category(category):
+        def _add_category(category):
 
-				esale_joomla_id2 = self.pool.get('esale_joomla.category').search(cr, uid, [('web_id','=',website.id),('category_id','=',category.id)])
-				esale_joomla_id = 0
-				if esale_joomla_id2:
-					esale_joomla_id = self.pool.get('esale_joomla.category').browse(cr, uid, esale_joomla_id2[0]).esale_joomla_id
+                esale_joomla_id2 = self.pool.get('esale_joomla.category').search(cr, uid, [('web_id','=',website.id),('category_id','=',category.id)])
+                esale_joomla_id = 0
+                if esale_joomla_id2:
+                    esale_joomla_id = self.pool.get('esale_joomla.category').browse(cr, uid, esale_joomla_id2[0]).esale_joomla_id
 
-				parent_id=0
-				if (category.parent_id):
-					parent_id2=self.pool.get('esale_joomla.category').search(cr, uid, [('web_id','=',website.id),('category_id','=',category.parent_id.id)])
-
-
-					if parent_id2 :
-						parent_id= self.pool.get('esale_joomla.category').browse(cr, uid, parent_id2[0]).esale_joomla_id
+                parent_id=0
+                if (category.parent_id):
+                    parent_id2=self.pool.get('esale_joomla.category').search(cr, uid, [('web_id','=',website.id),('category_id','=',category.parent_id.id)])
 
 
-				webcategory={
-					'esale_joomla_id': esale_joomla_id,
-					'name': category.name,
-					'parent_id': parent_id,
-
-				}
-				fr_cat=self.pool.get('product.category').browse(cr,uid,category.id,context={'lang':'fr_FR'})
-				if fr_cat:
-					webcategory["name:fr_FR"]=fr_cat.name
+                    if parent_id2 :
+                        parent_id= self.pool.get('esale_joomla.category').browse(cr, uid, parent_id2[0]).esale_joomla_id
 
 
-				osc_id=server.set_category(webcategory)
-				if osc_id!=esale_joomla_id:
-					if esale_joomla_id:
-						self.pool.get('esale_joomla.category').write(cr, uid, [esale_joomla_id], {'esale_joomla_id': osc_id})
-						self.category_update += 1
-					else:
-						self.pool.get('esale_joomla.category').create(cr, uid, {'category_id': category.id, 'web_id': website.id, 'esale_joomla_id': osc_id, 'name': category.name })
-						self.category_new += 1
-				else:
-					self.category_update += 1
+                webcategory={
+                    'esale_joomla_id': esale_joomla_id,
+                    'name': category.name,
+                    'parent_id': parent_id,
+
+                }
+                fr_cat=self.pool.get('product.category').browse(cr,uid,category.id,context={'lang':'fr_FR'})
+                if fr_cat:
+                    webcategory["name:fr_FR"]=fr_cat.name
 
 
-		def _recursive(category):
-			_add_category(category)
-			for child in category.child_id:
-				_recursive(child)
+                osc_id=server.set_category(webcategory)
+                if osc_id!=esale_joomla_id:
+                    if esale_joomla_id:
+                        self.pool.get('esale_joomla.category').write(cr, uid, [esale_joomla_id], {'esale_joomla_id': osc_id})
+                        self.category_update += 1
+                    else:
+                        self.pool.get('esale_joomla.category').create(cr, uid, {'category_id': category.id, 'web_id': website.id, 'esale_joomla_id': osc_id, 'name': category.name })
+                        self.category_new += 1
+                else:
+                    self.category_update += 1
 
-		for category in self.pool.get('product.category').browse(cr, uid, cat_ids, context=context):
-			_recursive(category)
 
-		self.pool.get('esale_joomla.web.exportlog').create(cr,uid,{'name': 'Category Export ' + time.strftime('%Y-%m-%d %H:%M:%S'),'web_id':website.id,'log_type':'category'})
+        def _recursive(category):
+            _add_category(category)
+            for child in category.child_id:
+                _recursive(child)
 
-	return {'category_new':self.category_new, 'category_update':self.category_update}
+        for category in self.pool.get('product.category').browse(cr, uid, cat_ids, context=context):
+            _recursive(category)
+
+        self.pool.get('esale_joomla.web.exportlog').create(cr,uid,{'name': 'Category Export ' + time.strftime('%Y-%m-%d %H:%M:%S'),'web_id':website.id,'log_type':'category'})
+
+    return {'category_new':self.category_new, 'category_update':self.category_update}
 
 
 class wiz_esale_joomla_product_category(wizard.interface):
-	states = {
-		'init': {
-			'actions': [_do_export],
-			'result': {'type': 'form', 'arch': _export_done_form, 'fields': _export_done_fields, 'state': [('end', 'End')] }
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_do_export],
+            'result': {'type': 'form', 'arch': _export_done_form, 'fields': _export_done_fields, 'state': [('end', 'End')] }
+        }
+    }
 wiz_esale_joomla_product_category('esale_joomla.product.category');

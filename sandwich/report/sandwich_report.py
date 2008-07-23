@@ -33,10 +33,10 @@ from report import report_sxw
 # sandwich command report
 #
 class sandwich_order_print(report_sxw.rml_parse):
-	def __init__(self, cr, uid, name, context):
-		super(sandwich_order_print, self).__init__(cr, uid, name, context)
-		self.localcontext.update( {
-			'time': time,
-		})
+    def __init__(self, cr, uid, name, context):
+        super(sandwich_order_print, self).__init__(cr, uid, name, context)
+        self.localcontext.update( {
+            'time': time,
+        })
 
 report_sxw.report_sxw('report.sandwich.order.print','sandwich.order','addons/sandwich/report/sandwich_report.rml',parser=sandwich_order_print)

@@ -27,5 +27,5 @@
 
 import sys
 if sys.version_info[:1] >= (2, 4):
-	import wizard_ical.py
+    import wizard_ical.py
 

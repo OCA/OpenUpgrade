@@ -31,18 +31,18 @@
 from report.interface import report_rml
 import pooler
 class report_custom(report_rml):
-	def create(self,cr, uid, ids, datas, context):
-		# select all ranges which contain some labels in the (start, stop) range
-		vignette_id=ids[0]
-		vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
-		vign=vignettes_obj.browse(cr,uid,vignette_id)
-		start=vign.first or 0.0
-		stop=vign.last or 0.0
+    def create(self,cr, uid, ids, datas, context):
+        # select all ranges which contain some labels in the (start, stop) range
+        vignette_id=ids[0]
+        vignettes_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
+        vign=vignettes_obj.browse(cr,uid,vignette_id)
+        start=vign.first or 0.0
+        stop=vign.last or 0.0
 
-		new_ids = vignettes_obj.search(cr, uid, [('first','<=',stop),('last','>=', start )])
-		
-#		file('/tmp/terp.xml','wb+').write(xml)
+        new_ids = vignettes_obj.search(cr, uid, [('first','<=',stop),('last','>=', start )])
+        
+#       file('/tmp/terp.xml','wb+').write(xml)
 
-		return report_rml.create(self,cr, uid, new_ids, datas, context)
+        return report_rml.create(self,cr, uid, new_ids, datas, context)
 report_custom('report.huissier.labels.print', 'huissier.vignettes', 'addons/huissier/report/labels.xml', 'addons/huissier/report/labels.xsl')
 

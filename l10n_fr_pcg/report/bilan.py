@@ -29,8 +29,8 @@ import base_report
 from report import report_sxw
 
 class bilan(base_report.base_report):
-	def __init__(self, cr, uid, name, context):
-		super(bilan, self).__init__(cr, uid, name, context)
+    def __init__(self, cr, uid, name, context):
+        super(bilan, self).__init__(cr, uid, name, context)
 
 report_sxw.report_sxw('report.l10n.fr.pcg.bilan', 'account.move.line','addons/l10n_fr_pcg/report/bilan.rml', parser=bilan, header=False)
 

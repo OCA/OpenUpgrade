@@ -188,8 +188,8 @@ class dm_customer_offer(osv.osv):
 #                                        change workitem
         
         if workitem_id : 
-#			if step.type == 'RL'
-#				propo = self.pool.get('dm.campaign.proposition')
+#           if step.type == 'RL'
+#               propo = self.pool.get('dm.campaign.proposition')
 
             print "DEBUG - updating workitem for customer"
             workitem.write(cr,uid,workitem_id,vals)

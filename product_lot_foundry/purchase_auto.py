@@ -32,13 +32,13 @@ import netsvc
 from osv import fields, osv
 
 class mrp_procurement(osv.osv):
-	_inherit = "mrp.procurement"
-	def action_po_assign(self,cr, uid, ids):
-		res = super(mrp_procurement,self).action_po_assign(cr, uid, ids)
-		wf_service = netsvc.LocalService("workflow")
-		wf_service.trg_validate(uid, 'purchase.order', res, 'purchase_confirm', cr)
-		wf_service.trg_validate(uid, 'purchase.order', res, 'purchase_approve', cr)
-		return res
+    _inherit = "mrp.procurement"
+    def action_po_assign(self,cr, uid, ids):
+        res = super(mrp_procurement,self).action_po_assign(cr, uid, ids)
+        wf_service = netsvc.LocalService("workflow")
+        wf_service.trg_validate(uid, 'purchase.order', res, 'purchase_confirm', cr)
+        wf_service.trg_validate(uid, 'purchase.order', res, 'purchase_approve', cr)
+        return res
 
 mrp_procurement()
 

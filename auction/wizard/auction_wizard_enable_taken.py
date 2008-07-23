@@ -34,34 +34,34 @@ import pooler
 
 take_form = """<?xml version="1.0"?>
 <form title="Confirm">
-	<separator string="Confirmation enable taken away" colspan="4"/>
-	<newline/>
+    <separator string="Confirmation enable taken away" colspan="4"/>
+    <newline/>
 </form>
 """
 
 take_fields = {
-	'confirm_en': {'string':'Catalog Number', 'type':'integer'},
+    'confirm_en': {'string':'Catalog Number', 'type':'integer'},
 }
 
 def _confirm_enable(self,cr,uid,data,context={}):
-	pool = pooler.get_pool(cr.dbname)
-	pool.get('auction.lots').write(cr,uid,data['ids'],{'ach_emp':False})
-	return {}
+    pool = pooler.get_pool(cr.dbname)
+    pool.get('auction.lots').write(cr,uid,data['ids'],{'ach_emp':False})
+    return {}
 
 class enable_take_away(wizard.interface):
-	states = {
-		'init' : {
-			'actions' : [],
-			'result' : {
-					'type' : 'form',
-				    'arch' : take_form,
-				    'fields' : take_fields,
-				    'state' : [ ('end', 'Cancel'),('go', 'Enable Taken away')]}
-		},
-			'go' : {
-			'actions' : [_confirm_enable],
-			'result' : {'type' : 'state', 'state' : 'end'}
-		},
+    states = {
+        'init' : {
+            'actions' : [],
+            'result' : {
+                    'type' : 'form',
+                    'arch' : take_form,
+                    'fields' : take_fields,
+                    'state' : [ ('end', 'Cancel'),('go', 'Enable Taken away')]}
+        },
+            'go' : {
+            'actions' : [_confirm_enable],
+            'result' : {'type' : 'state', 'state' : 'end'}
+        },
 }
 enable_take_away('auction.lots.enable')
 

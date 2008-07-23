@@ -32,70 +32,70 @@ import pooler
 
 _form = """<?xml version="1.0"?>
 <form string="Merge inventories">
-	<separator colspan="4" string="Merge inventories" />
-	<label string="Do you want to merge theses inventories ?"/>
+    <separator colspan="4" string="Merge inventories" />
+    <label string="Do you want to merge theses inventories ?"/>
 </form>
 """
 
 
 def do_merge(self, cr, uid, data, context):
 
-	invent_obj = pooler.get_pool(cr.dbname).get('stock.inventory')
-	invent_line_obj = pooler.get_pool(cr.dbname).get('stock.inventory.line')
+    invent_obj = pooler.get_pool(cr.dbname).get('stock.inventory')
+    invent_line_obj = pooler.get_pool(cr.dbname).get('stock.inventory.line')
 
-	invent_lines = {}
+    invent_lines = {}
 
-	if len(data['ids']) < 2:
-		raise wizard.except_wizard("Warning",
-								   "Please select at least two inventories.")
-
-
-
-	for inventory in invent_obj.browse(cr, uid, data['ids'], context=context):
-		if inventory.state == "done":
-			raise wizard.except_wizard("Warning",
-									   "Merging is only allowed on draft inventories.")
-
-		for line in inventory.inventory_line_id:
-			key = (line.location_id.id, line.product_id.id, line.product_uom.id)
-			if key in invent_lines:
-				invent_lines[key] += line.product_qty
-			else:
-				invent_lines[key] = line.product_qty
+    if len(data['ids']) < 2:
+        raise wizard.except_wizard("Warning",
+                                   "Please select at least two inventories.")
 
 
-	new_invent = invent_obj.create(cr, uid, {
-		'name': 'Merged inventory'
-		}, context=context)
 
-	for key, quantity in invent_lines.items():
-		invent_line_obj.create(cr, uid, {
-			'inventory_id': new_invent,
-			'location_id': key[0],
-			'product_id': key[1],
-			'product_uom': key[2],
-			'product_qty': quantity,
-			})
+    for inventory in invent_obj.browse(cr, uid, data['ids'], context=context):
+        if inventory.state == "done":
+            raise wizard.except_wizard("Warning",
+                                       "Merging is only allowed on draft inventories.")
 
-	return {}
+        for line in inventory.inventory_line_id:
+            key = (line.location_id.id, line.product_id.id, line.product_uom.id)
+            if key in invent_lines:
+                invent_lines[key] += line.product_qty
+            else:
+                invent_lines[key] = line.product_qty
+
+
+    new_invent = invent_obj.create(cr, uid, {
+        'name': 'Merged inventory'
+        }, context=context)
+
+    for key, quantity in invent_lines.items():
+        invent_line_obj.create(cr, uid, {
+            'inventory_id': new_invent,
+            'location_id': key[0],
+            'product_id': key[1],
+            'product_uom': key[2],
+            'product_qty': quantity,
+            })
+
+    return {}
 
 
 class merge_inventory(wizard.interface):
-	states = {
-		'init' : {
-			'actions' : [],
-			'result' : {'type' : 'form',
-				    'arch' : _form,
-				    'fields' : {},
-				    'state' : [('end', 'Cancel'),
-							   ('merge', 'Yes') ]}
-		},
-		'merge' : {
-			'actions' : [],
-			'result' : {'type' : 'action',
-						'action': do_merge,
-						'state' : 'end'}
-		},
-	}
+    states = {
+        'init' : {
+            'actions' : [],
+            'result' : {'type' : 'form',
+                    'arch' : _form,
+                    'fields' : {},
+                    'state' : [('end', 'Cancel'),
+                               ('merge', 'Yes') ]}
+        },
+        'merge' : {
+            'actions' : [],
+            'result' : {'type' : 'action',
+                        'action': do_merge,
+                        'state' : 'end'}
+        },
+    }
 merge_inventory("inventory.merge")
 

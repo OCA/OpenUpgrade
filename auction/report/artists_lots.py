@@ -31,29 +31,29 @@ from report.interface import report_int
 import netsvc
 
 class report_artistlot(report_int):
-	def __init__(self, name):
-		report_int.__init__(self, name)
+    def __init__(self, name):
+        report_int.__init__(self, name)
 
-	def create(self,cr, uid, ids, datas, context):
-		service = netsvc.LocalService("object_proxy")
-		lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['artist_id'])
-		print " THE VALUE GET BY THE ARTIST TABLE",lots;
-		artists = []
-		for lot in lots:
-			if lot['artist_id'] and lot['artist_id'] not in artists:
-				artists.append(lot['artist_id'][0])
+    def create(self,cr, uid, ids, datas, context):
+        service = netsvc.LocalService("object_proxy")
+        lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['artist_id'])
+        print " THE VALUE GET BY THE ARTIST TABLE",lots;
+        artists = []
+        for lot in lots:
+            if lot['artist_id'] and lot['artist_id'] not in artists:
+                artists.append(lot['artist_id'][0])
 
-		print "THE VALUES OF ARTIST LIST",artists;
-		if not len(artists):
-			raise 'UserError', 'Objects '
+        print "THE VALUES OF ARTIST LIST",artists;
+        if not len(artists):
+            raise 'UserError', 'Objects '
 
-		datas['ids'] = artists
+        datas['ids'] = artists
 
-		self._obj_report = netsvc.LocalService('report.report.auction.artists')
-		return self._obj_report.create(cr,uid, artists, datas, context)
+        self._obj_report = netsvc.LocalService('report.report.auction.artists')
+        return self._obj_report.create(cr,uid, artists, datas, context)
 
-	def result(self):
-		return self._obj_report.result()
+    def result(self):
+        return self._obj_report.result()
 
 report_artistlot('report.auction.artists_lots')
 # vim:noexpandtab:tw=0

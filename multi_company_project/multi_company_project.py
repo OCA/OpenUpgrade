@@ -30,21 +30,21 @@
 from osv import fields,osv
 
 class project(osv.osv):
-	_inherit = 'project.project'
-	_columns = {
-		'company_id': fields.many2one('res.company', 'Company'),
-	}
-	_defaults = {
-		'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
-	}
+    _inherit = 'project.project'
+    _columns = {
+        'company_id': fields.many2one('res.company', 'Company'),
+    }
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
+    }
 project()
 
 class project_task(osv.osv):
-	_inherit = 'project.task'
-	_columns = {
-		'company_id': fields.many2one('res.company', 'Company'),
-	}
-	_defaults = {
-		'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
-	}
+    _inherit = 'project.task'
+    _columns = {
+        'company_id': fields.many2one('res.company', 'Company'),
+    }
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
+    }
 project_task()

@@ -33,39 +33,39 @@ import time
 from osv import fields, osv
 
 class hr_employee_salary_allowance(osv.osv):
-	_name = "hr.employee.salary.allowance"
-	_description = "Employee Allowances"
-	_columns = {
+    _name = "hr.employee.salary.allowance"
+    _description = "Employee Allowances"
+    _columns = {
                 'allowance_id': fields.many2one('hr.employee', 'Allowance', select=True),
-		'name' : fields.char('Allowance', size=32, required=True),
+        'name' : fields.char('Allowance', size=32, required=True),
                 'value' : fields.float('Value', digits=(16,2)),
                 'taxable' : fields.boolean("Taxable"),
         }
-	_order = 'name desc'
+    _order = 'name desc'
 hr_employee_salary_allowance()
 
 class hr_employee_salary_deduction(osv.osv):
-	_name = "hr.employee.salary.deduction"
-	_description = "Employee Deductions"
-	_columns = {
+    _name = "hr.employee.salary.deduction"
+    _description = "Employee Deductions"
+    _columns = {
                 'deduction_id': fields.many2one('hr.employee', 'Deduction', select=True),
-		'name' : fields.char('Deduction', size=32, required=True),
+        'name' : fields.char('Deduction', size=32, required=True),
                 'value' : fields.float('Value', digits=(16,2)),
                 'remark' : fields.text('Remark'),
         }
-	_order = 'name desc'
+    _order = 'name desc'
 hr_employee_salary_deduction()
 
 class hr_employee_salary_declaration(osv.osv):
-	_name = "hr.employee.salary.declaration"
-	_description = "Employee Tax Declarations"
-	_columns = {
+    _name = "hr.employee.salary.declaration"
+    _description = "Employee Tax Declarations"
+    _columns = {
                 'declaration_id': fields.many2one('hr.employee', 'Declaration', select=True),
-		'name' : fields.char('Description', size=32, required=True),
+        'name' : fields.char('Description', size=32, required=True),
                 'value' : fields.float('Value', digits=(16,2)),
                 'remark' : fields.text('Remark'),
         }
-	_order = 'name desc'
+    _order = 'name desc'
 hr_employee_salary_declaration()
 
 # vim:tw=0:noexpandtab

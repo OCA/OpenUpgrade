@@ -34,29 +34,29 @@ import netsvc
 
 palais_form = '''<?xml version="1.0"?>
 <form title="Paid ?">
-	<field name="date1"/>
-	<field name="date2"/>
+    <field name="date1"/>
+    <field name="date2"/>
 </form>'''
 
 palais_fields = {
-	'date1': {'string':u'Début de période', 'type':'date', 'required':True},
-	'date2': {'string':u'Fin de période', 'type':'date', 'required':True},
+    'date1': {'string':u'Début de période', 'type':'date', 'required':True},
+    'date2': {'string':u'Fin de période', 'type':'date', 'required':True},
 }
 
 def _get_value(self,cr,uid,datas,context):
-	return {'date1':time.strftime('%Y-%m-%d'), 'date2':time.strftime('%Y-%m-%d')}
+    return {'date1':time.strftime('%Y-%m-%d'), 'date2':time.strftime('%Y-%m-%d')}
 
 class wizard_palais(wizard.interface):
-	states = {
-		'init': {
-			'actions': [_get_value], 
-			'result': {'type':'form', 'arch':palais_form, 'fields':palais_fields, 'state':[('palais','Imprimer le listing'), ('end','Annuler')]}
-		},
-		'palais': {
-			'actions': [],
-			'result': {'type':'print', 'report':'huissier.palais', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_get_value], 
+            'result': {'type':'form', 'arch':palais_form, 'fields':palais_fields, 'state':[('palais','Imprimer le listing'), ('end','Annuler')]}
+        },
+        'palais': {
+            'actions': [],
+            'result': {'type':'print', 'report':'huissier.palais', 'state':'end'}
+        }
+    }
 wizard_palais('huissier.palais')
 
 

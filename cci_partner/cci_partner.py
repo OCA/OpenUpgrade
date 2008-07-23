@@ -31,12 +31,12 @@ import time
 from osv import fields, osv
 
 class res_company(osv.osv):
-	_inherit = 'res.company'
-	_description = 'res.company'
-	
-	_columns = {
-		'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
-	}
+    _inherit = 'res.company'
+    _description = 'res.company'
+    
+    _columns = {
+        'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
+    }
 
 res_company()
 

@@ -112,22 +112,22 @@ def _do_export(self,cr,uid,data,context):
           if id not in product_ids:
               product_ids.append(id)
       if len(product_ids) == 0:
-      	continue
+        continue
       #code for unlink product
       unexport_products = self.pool.get('product.product').search(cr, uid, [('id','in',product_ids),('exportable','<>','True')])
       if len(unexport_products):
         unlink_pids = self.pool.get('esale_joomla.product').search(cr, uid, [('web_id','=',website.id),('product_id','in',unexport_products)])
         if len(unlink_pids):
-        	joomla_ids = []
-        	for webPro in self.pool.get('esale_joomla.product').read(cr,uid,unlink_pids):
-        		joomla_ids.append( webPro['esale_joomla_id'])
-			retIDS = webserver.unlink_products(joomla_ids)
-			prod_unlink_count = prod_unlink_count + len(joomla_ids)
+            joomla_ids = []
+            for webPro in self.pool.get('esale_joomla.product').read(cr,uid,unlink_pids):
+                joomla_ids.append( webPro['esale_joomla_id'])
+            retIDS = webserver.unlink_products(joomla_ids)
+            prod_unlink_count = prod_unlink_count + len(joomla_ids)
 
       export_products = self.pool.get('product.product').search(cr, uid, [('id','in',product_ids),('exportable','=','True')])
       #export_products = self.pool.get('product.product').search(cr, uid, [('categ_id','in',cat_ids)])
       for product in self.pool.get('product.product').browse(cr, uid, export_products, context=context):
-      	category_id=categ.esale_joomla_id
+        category_id=categ.esale_joomla_id
         esale_joomla_id2 = self.pool.get('esale_joomla.product').search(cr, uid, [('web_id','=',website.id),('product_id','=',product.id)])
         esale_joomla_id = 0
         if esale_joomla_id2:

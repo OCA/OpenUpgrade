@@ -30,16 +30,16 @@ from osv import fields,osv,orm
 
 
 class sale_order(osv.osv):
-	_inherit = 'sale.order'
-	_columns = {
-		'customer_pricelist_id':fields.many2one('product.pricelist', 'Customer Pricelist'),
-	}
+    _inherit = 'sale.order'
+    _columns = {
+        'customer_pricelist_id':fields.many2one('product.pricelist', 'Customer Pricelist'),
+    }
 sale_order()
 
 class sale_order_line(osv.osv):
-	_inherit = 'sale.order.line'
-	_columns = {
-		'price_unit_customer': fields.float('Customer Unit Price'),
-	}
+    _inherit = 'sale.order.line'
+    _columns = {
+        'price_unit_customer': fields.float('Customer Unit Price'),
+    }
 sale_order_line()
 

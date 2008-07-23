@@ -31,17 +31,17 @@
 from osv import fields, osv
 
 class res_partner(osv.osv):
-	_name = 'res.partner'
-	_inherit = 'res.partner'
-	_columns = {
-		'property_product_pricelist_customer': fields.property(
-		  'product.pricelist',
-		  type='many2one', 
-		  relation='product.pricelist', 
-		  string="Customer Pricelist", 
-		  method=True,
-		  view_load=True,
-		  group_name="Pricelists Properties"),
-	}
+    _name = 'res.partner'
+    _inherit = 'res.partner'
+    _columns = {
+        'property_product_pricelist_customer': fields.property(
+          'product.pricelist',
+          type='many2one', 
+          relation='product.pricelist', 
+          string="Customer Pricelist", 
+          method=True,
+          view_load=True,
+          group_name="Pricelists Properties"),
+    }
 res_partner()
 

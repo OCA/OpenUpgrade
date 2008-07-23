@@ -30,24 +30,24 @@
 from osv import fields,osv
 
 class product_product(osv.osv):
-	_inherit = 'product.product'
-	_name = 'product.product'
-	_columns = {
-		'manufacturer' : fields.many2one('res.partner', 'Manufacturer'),
-		'manufacturer_pname' : fields.char('Manufacturer product name', size=64),
-		'manufacturer_pref' : fields.char('Manufacturer product code', size=64),
-		'attribute_ids': fields.one2many('product.electronic.attribute', 'product_id', 'Attributes'),
-	}
+    _inherit = 'product.product'
+    _name = 'product.product'
+    _columns = {
+        'manufacturer' : fields.many2one('res.partner', 'Manufacturer'),
+        'manufacturer_pname' : fields.char('Manufacturer product name', size=64),
+        'manufacturer_pref' : fields.char('Manufacturer product code', size=64),
+        'attribute_ids': fields.one2many('product.electronic.attribute', 'product_id', 'Attributes'),
+    }
 product_product()
 
 class product_attribute(osv.osv):
-	_name = "product.electronic.attribute"
-	_description = "Product attributes"
-	_columns = {
-		'name' : fields.char('Attribute', size=64, required=True),
-		'value' : fields.char('Value', size=64),
-		'product_id': fields.many2one('product.product', 'Product', ondelete='cascade'),
-	}
+    _name = "product.electronic.attribute"
+    _description = "Product attributes"
+    _columns = {
+        'name' : fields.char('Attribute', size=64, required=True),
+        'value' : fields.char('Value', size=64),
+        'product_id': fields.many2one('product.product', 'Product', ondelete='cascade'),
+    }
 product_attribute()
 
 

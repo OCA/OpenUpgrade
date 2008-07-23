@@ -29,17 +29,17 @@
 from osv import fields, osv
 
 class productivity_analysis_models(osv.osv):
-	_name = "productivity_analysis.models"
-	_description = "Objects for Productivity Analysis"
-	_columns = {
-		'name': fields.char('Model Name', size=64, required=True),
-		'model': fields.char('Model', size=64, required=True),
-		'active': fields.boolean('Active')
-	}
-	_defaults = {
-		'active': lambda *a: 1,
-	}
-	_order = "name"
+    _name = "productivity_analysis.models"
+    _description = "Objects for Productivity Analysis"
+    _columns = {
+        'name': fields.char('Model Name', size=64, required=True),
+        'model': fields.char('Model', size=64, required=True),
+        'active': fields.boolean('Active')
+    }
+    _defaults = {
+        'active': lambda *a: 1,
+    }
+    _order = "name"
 productivity_analysis_models()
 
 

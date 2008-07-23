@@ -32,42 +32,42 @@ from osv import fields,osv
 import pooler
 
 class stock_production_lot(osv.osv):
-	_name = 'stock.production.lot'
-	_inherit = 'stock.production.lot'
+    _name = 'stock.production.lot'
+    _inherit = 'stock.production.lot'
 
-	def _get_date(dtype):
-		def calc_date(self, cr, uid, context={}):
-			if context.get('product_id', False):
-				product = pooler.get_pool(cr.dbname).get('product.product').browse(cr, uid, [context['product_id']])[0]
-				duree = getattr(product, dtype) or 0
-				date = datetime.datetime.today() + datetime.timedelta(days=duree)
-				return date.strftime('%Y-%m-%d %H:%M:%S')
-			else:
-				return False
-		return calc_date
+    def _get_date(dtype):
+        def calc_date(self, cr, uid, context={}):
+            if context.get('product_id', False):
+                product = pooler.get_pool(cr.dbname).get('product.product').browse(cr, uid, [context['product_id']])[0]
+                duree = getattr(product, dtype) or 0
+                date = datetime.datetime.today() + datetime.timedelta(days=duree)
+                return date.strftime('%Y-%m-%d %H:%M:%S')
+            else:
+                return False
+        return calc_date
 
-	_columns = {
-		'dlc': fields.datetime('Product usetime'),
-		'dluo': fields.datetime('DLUO'),
-		'removal_date': fields.datetime('Removal date'),
-		'alert_date': fields.datetime('Alert date'),
-	}
+    _columns = {
+        'dlc': fields.datetime('Product usetime'),
+        'dluo': fields.datetime('DLUO'),
+        'removal_date': fields.datetime('Removal date'),
+        'alert_date': fields.datetime('Alert date'),
+    }
 
-	_defaults = {
-		'dlc': _get_date('life_time'),
-		'dluo': _get_date('use_time'),
-		'removal_date': _get_date('removal_time'),
-		'alert_date': _get_date('alert_time'),
-	}
+    _defaults = {
+        'dlc': _get_date('life_time'),
+        'dluo': _get_date('use_time'),
+        'removal_date': _get_date('removal_time'),
+        'alert_date': _get_date('alert_time'),
+    }
 stock_production_lot()
 
 class product_product(osv.osv):
-	_inherit = 'product.product'
-	_name = 'product.product'
-	_columns = {
-		'life_time': fields.integer('Product lifetime'),
-		'use_time': fields.integer('Product usetime'),
-		'removal_time': fields.integer('Product removal time'),
-		'alert_time': fields.integer('Product alert time'),
-	}
+    _inherit = 'product.product'
+    _name = 'product.product'
+    _columns = {
+        'life_time': fields.integer('Product lifetime'),
+        'use_time': fields.integer('Product usetime'),
+        'removal_time': fields.integer('Product removal time'),
+        'alert_time': fields.integer('Product alert time'),
+    }
 product_product()

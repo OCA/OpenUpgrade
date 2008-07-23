@@ -25,26 +25,26 @@
 #
 ##############################################################################
 {
-	"name" : "French localisation",
-	"description" : """
+    "name" : "French localisation",
+    "description" : """
 French localisation module
 """,
-	"version" : "1.0",
-	"author" : "Simon JAILLET - CrysaLEAD",
-	"category" : "Localisation/Europe",
-	"website": "http://www.crysalead.com",
-	"depends" : [
-		"base", "account", "base_vat"
-	],
-	"init_xml" : [
-		"data.xml",
-		"tax.xml"
-	],
-	"update_xml" : [
-		"l10n_fr_view.xml",
+    "version" : "1.0",
+    "author" : "Simon JAILLET - CrysaLEAD",
+    "category" : "Localisation/Europe",
+    "website": "http://www.crysalead.com",
+    "depends" : [
+        "base", "account", "base_vat"
+    ],
+    "init_xml" : [
+        "data.xml",
+        "tax.xml"
+    ],
+    "update_xml" : [
+        "l10n_fr_view.xml",
                 "l10n_fr_wizard.xml"
-	],
-	"demo_xml" : [],
-	"active": False,
-	"installable": True,
+    ],
+    "demo_xml" : [],
+    "active": False,
+    "installable": True,
 }

@@ -34,34 +34,34 @@ import pooler
 
 class order(report_sxw.rml_parse):
 
-	def __init__(self, cr, uid, name, context):
-		super(order, self).__init__(cr, uid, name, context)
+    def __init__(self, cr, uid, name, context):
+        super(order, self).__init__(cr, uid, name, context)
 
-		user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, uid)
-		partner= user.company_id.partner_id
+        user = pooler.get_pool(cr.dbname).get('res.users').browse(cr, uid, uid)
+        partner= user.company_id.partner_id
 
-		self.localcontext.update({
-			'time': time,
-			'disc': self.discount,
-			'net': self.netamount,
-			'address': partner.address and partner.address[0] or False,
-		})
+        self.localcontext.update({
+            'time': time,
+            'disc': self.discount,
+            'net': self.netamount,
+            'address': partner.address and partner.address[0] or False,
+        })
 
-	def netamount(self, order_line_id):
-		sql = 'select (qty*price_unit) as net_price from pos_order_line where id = %d '
-		self.cr.execute(sql%(order_line_id))
-		res=self.cr.fetchone()
-		return res[0]
+    def netamount(self, order_line_id):
+        sql = 'select (qty*price_unit) as net_price from pos_order_line where id = %d '
+        self.cr.execute(sql%(order_line_id))
+        res=self.cr.fetchone()
+        return res[0]
 
-	def discount(self, order_id):
-		sql = 'select discount, price_unit, qty from pos_order_line where order_id  = %d '
-		self.cr.execute(sql%(order_id))
-		res=self.cr.fetchall()
-		sum = 0
-		for r in res:
-			if r[0]!=0:
-				sum = sum +(r[2] * (r[0]*r[1]/100))
-		return sum
+    def discount(self, order_id):
+        sql = 'select discount, price_unit, qty from pos_order_line where order_id  = %d '
+        self.cr.execute(sql%(order_id))
+        res=self.cr.fetchall()
+        sum = 0
+        for r in res:
+            if r[0]!=0:
+                sum = sum +(r[2] * (r[0]*r[1]/100))
+        return sum
 
 report_sxw.report_sxw('report.pos.receipt', 'pos.order', 'addons/point_of_sale/report/pos_receipt.rml', parser=order, header=False)
 

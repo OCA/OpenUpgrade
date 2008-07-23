@@ -32,66 +32,66 @@ import wizard
 
 picking_form = """<?xml version="1.0"?>
 <form string="Select an Open Sale Order">
-	<field name="picking_id" domain="[('state','in',('assigned','confirmed'))]" context="{'contact_display':'partner'}"/>
+    <field name="picking_id" domain="[('state','in',('assigned','confirmed'))]" context="{'contact_display':'partner'}"/>
 </form>
 """
 
 picking_fields = {
-	'picking_id': {'string': 'Sale Order', 'type': 'many2one', 'relation': 'stock.picking', 'required': True}
+    'picking_id': {'string': 'Sale Order', 'type': 'many2one', 'relation': 'stock.picking', 'required': True}
 }
 
 def _sale_complete(self, cr, uid, data, context):
-	# XXX test XXX
-	pool = pooler.get_pool(cr.dbname)
-	order = pool.get('pos.order').browse(cr, uid, data['id'], context)
+    # XXX test XXX
+    pool = pooler.get_pool(cr.dbname)
+    order = pool.get('pos.order').browse(cr, uid, data['id'], context)
 
-	pick = pool.get('stock.picking').browse(cr, uid, data['form']['picking_id'], context)
+    pick = pool.get('stock.picking').browse(cr, uid, data['form']['picking_id'], context)
 
-	order.write(cr, uid, data['id'], {
-		'last_out_picking': data['form']['picking_id'],
-		'partner_id': pick.address_id and pick.address_id.partner_id.id
-	})
+    order.write(cr, uid, data['id'], {
+        'last_out_picking': data['form']['picking_id'],
+        'partner_id': pick.address_id and pick.address_id.partner_id.id
+    })
 
-	order = pool.get('stock.picking').write(cr, uid, [data['form']['picking_id']], {
-		'invoice_state': 'none',
-		'pos_order': data['id']
-	})
+    order = pool.get('stock.picking').write(cr, uid, [data['form']['picking_id']], {
+        'invoice_state': 'none',
+        'pos_order': data['id']
+    })
 
-	for line in pick.move_lines:
-		pool.get('pos.order.line').create(cr, uid, {
-			'name': line.sale_line_id.name,
-			'order_id': data['id'],
-			'qty': line.product_qty,
-			'product_id': line.product_id.id,
-			'price_unit': line.sale_line_id.price_unit,
-			'discount': line.sale_line_id.discount,
-		})
+    for line in pick.move_lines:
+        pool.get('pos.order.line').create(cr, uid, {
+            'name': line.sale_line_id.name,
+            'order_id': data['id'],
+            'qty': line.product_qty,
+            'product_id': line.product_id.id,
+            'price_unit': line.sale_line_id.price_unit,
+            'discount': line.sale_line_id.discount,
+        })
 
-	return {}
+    return {}
 
 
 class pos_sale_get(wizard.interface):
-	states = {
-		'init': {
-			'actions': [],
-			'result': {
-				'type': 'form',
-				'arch': picking_form,
-				'fields': picking_fields,
-				'state':	(	('end', 'Cancel'),
-										('set', 'Confirm',
-										'gtk-ok', True)
-									)
-			}
-		},
-		'set': {
-			'actions': [_sale_complete],
-			'result': {
-				'type' : 'state',
-				'state': "end",
-			}
-		},
-	}
+    states = {
+        'init': {
+            'actions': [],
+            'result': {
+                'type': 'form',
+                'arch': picking_form,
+                'fields': picking_fields,
+                'state':    (   ('end', 'Cancel'),
+                                        ('set', 'Confirm',
+                                        'gtk-ok', True)
+                                    )
+            }
+        },
+        'set': {
+            'actions': [_sale_complete],
+            'result': {
+                'type' : 'state',
+                'state': "end",
+            }
+        },
+    }
 
 pos_sale_get('pos.sale.get')
 

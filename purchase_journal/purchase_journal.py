@@ -31,52 +31,52 @@ import netsvc
 import time
 
 class purchase_journal(osv.osv):
-	_name = 'purchase_journal.purchase.journal'
-	_description = 'purchase Journal'
-	_columns = {
-		'name': fields.char('Journal', size=64, required=True),
-		'code': fields.char('Code', size=16, required=True),
-		'user_id': fields.many2one('res.users', 'Responsible', required=True),
-		'date': fields.date('Journal date', required=True),
-		'date_created': fields.date('Creation date', readonly=True, required=True),
-		'date_validation': fields.date('Validation date', readonly=True),
-		'purchase_stats_ids': fields.one2many("purchase_journal.purchase.stats", "journal_id", 'purchase Stats', readonly=True),
-		'state': fields.selection([
-			('draft','Draft'),
-			('open','Open'),
-			('done','Done'),
-		], 'Creation date', required=True),
-		'note': fields.text('Note'),
-	}
-	_defaults = {
-		'date': lambda *a: time.strftime('%Y-%m-%d'),
-		'date_created': lambda *a: time.strftime('%Y-%m-%d'),
-		'user_id': lambda self,cr,uid,context: uid,
-		'state': lambda self,cr,uid,context: 'draft',
-	}
-	def button_purchase_cancel(self, cr, uid, ids, context={}):
-		for id in ids:
-			purchase_ids = self.pool.get('purchase.order').search(cr, uid, [('journal_id','=',id),('state','=','draft')])
-			for purchaseid in purchase_ids:
-				wf_service = netsvc.LocalService("workflow")
-				wf_service.trg_validate(uid, 'purchase.order', purchaseid, 'cancel', cr)
-		return True
-	def button_purchase_confirm(self, cr, uid, ids, context={}):
-		for id in ids:
-			purchase_ids = self.pool.get('purchase.order').search(cr, uid, [('journal_id','=',id),('state','=','draft')])
-			for purchaseid in purchase_ids:
-				wf_service = netsvc.LocalService("workflow")
-				wf_service.trg_validate(uid, 'purchase.order', purchaseid, 'order_confirm', cr)
-		return True
+    _name = 'purchase_journal.purchase.journal'
+    _description = 'purchase Journal'
+    _columns = {
+        'name': fields.char('Journal', size=64, required=True),
+        'code': fields.char('Code', size=16, required=True),
+        'user_id': fields.many2one('res.users', 'Responsible', required=True),
+        'date': fields.date('Journal date', required=True),
+        'date_created': fields.date('Creation date', readonly=True, required=True),
+        'date_validation': fields.date('Validation date', readonly=True),
+        'purchase_stats_ids': fields.one2many("purchase_journal.purchase.stats", "journal_id", 'purchase Stats', readonly=True),
+        'state': fields.selection([
+            ('draft','Draft'),
+            ('open','Open'),
+            ('done','Done'),
+        ], 'Creation date', required=True),
+        'note': fields.text('Note'),
+    }
+    _defaults = {
+        'date': lambda *a: time.strftime('%Y-%m-%d'),
+        'date_created': lambda *a: time.strftime('%Y-%m-%d'),
+        'user_id': lambda self,cr,uid,context: uid,
+        'state': lambda self,cr,uid,context: 'draft',
+    }
+    def button_purchase_cancel(self, cr, uid, ids, context={}):
+        for id in ids:
+            purchase_ids = self.pool.get('purchase.order').search(cr, uid, [('journal_id','=',id),('state','=','draft')])
+            for purchaseid in purchase_ids:
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, 'purchase.order', purchaseid, 'cancel', cr)
+        return True
+    def button_purchase_confirm(self, cr, uid, ids, context={}):
+        for id in ids:
+            purchase_ids = self.pool.get('purchase.order').search(cr, uid, [('journal_id','=',id),('state','=','draft')])
+            for purchaseid in purchase_ids:
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, 'purchase.order', purchaseid, 'order_confirm', cr)
+        return True
 
-	def button_open(self, cr, uid, ids, context={}):
-		self.write(cr, uid, ids, {'state':'open'})
-		return True
-	def button_draft(self, cr, uid, ids, context={}):
-		self.write(cr, uid, ids, {'state':'draft'})
-		return True
-	def button_close(self, cr, uid, ids, context={}):
-		self.write(cr, uid, ids, {'state':'done', 'date_validation':time.strftime('%Y-%m-%d')})
-		return True
+    def button_open(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'open'})
+        return True
+    def button_draft(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'draft'})
+        return True
+    def button_close(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'done', 'date_validation':time.strftime('%Y-%m-%d')})
+        return True
 purchase_journal()
 

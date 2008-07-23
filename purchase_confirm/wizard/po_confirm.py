@@ -32,20 +32,20 @@ import netsvc
 import pooler
 
 def _makePo(self, cr, uid, data, context):
-	wf_service = netsvc.LocalService("workflow")
-	for id in data['ids']:
-		wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
-		wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_approve', cr)
-	return {}
+    wf_service = netsvc.LocalService("workflow")
+    for id in data['ids']:
+        wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_confirm', cr)
+        wf_service.trg_validate(uid, 'purchase.order', id, 'purchase_approve', cr)
+    return {}
 
 class confirm_po(wizard.interface):
-	states = {
-		'init' : {
-			'actions' : [_makePo],
-			'result' : {
-				'type' : 'state',
-				'state' : 'end'
-			}
-		},
-	}
+    states = {
+        'init' : {
+            'actions' : [_makePo],
+            'result' : {
+                'type' : 'state',
+                'state' : 'end'
+            }
+        },
+    }
 confirm_po("purchase.order.confirm.all")

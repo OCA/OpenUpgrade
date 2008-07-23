@@ -30,26 +30,26 @@
 from osv import fields, osv
 
 class task(osv.osv):
-	_name = "project.task"
-	_inherit = "project.task"
-	_columns = {
-		'procurement_id': fields.many2one('mrp.procurement', 'Procurement', ondelete='set null')
-	}
-	def do_close(self, cr, uid, ids, *args):
-		res = super(task, self).do_close(cr, uid, ids, *args)
-		tasks = self.browse(cr, uid, ids)
-		for task in tasks:
-			if task.procurement_id:
-				wf_service = netsvc.LocalService("workflow")
-				wf_service.trg_validate(uid, 'mrp.procurement', task.procurement_id.id, 'subflow.done', cr)
-		return res
+    _name = "project.task"
+    _inherit = "project.task"
+    _columns = {
+        'procurement_id': fields.many2one('mrp.procurement', 'Procurement', ondelete='set null')
+    }
+    def do_close(self, cr, uid, ids, *args):
+        res = super(task, self).do_close(cr, uid, ids, *args)
+        tasks = self.browse(cr, uid, ids)
+        for task in tasks:
+            if task.procurement_id:
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, 'mrp.procurement', task.procurement_id.id, 'subflow.done', cr)
+        return res
 
-	def do_cancel(self, cr, uid, ids, *args):
-		res = super(task, self).do_cancel(cr, uid, ids, *args)
-		tasks = self.browse(cr, uid, ids)
-		for task in tasks:
-			if task.procurement_id:
-				wf_service = netsvc.LocalService("workflow")
-				wf_service.trg_validate(uid, 'mrp.procurement', task.procurement_id.id, 'subflow.cancel', cr)
-		return True
+    def do_cancel(self, cr, uid, ids, *args):
+        res = super(task, self).do_cancel(cr, uid, ids, *args)
+        tasks = self.browse(cr, uid, ids)
+        for task in tasks:
+            if task.procurement_id:
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, 'mrp.procurement', task.procurement_id.id, 'subflow.cancel', cr)
+        return True
 task()

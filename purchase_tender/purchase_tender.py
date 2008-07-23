@@ -29,19 +29,19 @@ from osv import fields,osv
 from osv import orm
 
 class purchase_tender(osv.osv):
-	_name = "purchase.tender"
-	_description="Purchase Tender"
-	_columns = {
-		'name': fields.char('Name', size=32,required=True),
-		'description': fields.text('Description'),
-		'purchase_ids' : fields.one2many('purchase.order','tender_id','Purchase Orders')
-	}
+    _name = "purchase.tender"
+    _description="Purchase Tender"
+    _columns = {
+        'name': fields.char('Name', size=32,required=True),
+        'description': fields.text('Description'),
+        'purchase_ids' : fields.one2many('purchase.order','tender_id','Purchase Orders')
+    }
 purchase_tender()
 
 class purchase_order(osv.osv):
-	_inherit = "purchase.order"
-	_description = "purchase order"
-	_columns = {
-		'tender_id' : fields.many2one('purchase.tender','Purchase Tender')
-	}
+    _inherit = "purchase.order"
+    _description = "purchase order"
+    _columns = {
+        'tender_id' : fields.many2one('purchase.tender','Purchase Tender')
+    }
 purchase_order()

@@ -29,8 +29,8 @@ import base_report
 from report import report_sxw
 
 class cdr(base_report.base_report):
-	def __init__(self, cr, uid, name, context):
-		super(cdr, self).__init__(cr, uid, name, context)
+    def __init__(self, cr, uid, name, context):
+        super(cdr, self).__init__(cr, uid, name, context)
 
 report_sxw.report_sxw('report.l10n.fr.pcg.cdr', 'account.move.line','addons/l10n_fr_pcg/report/cdr.rml', parser=cdr, header=False)
 

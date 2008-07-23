@@ -30,10 +30,10 @@
 from osv import osv, fields
 
 class address_ldap(osv.osv):
-	_inherit = 'res.partner.address'
+    _inherit = 'res.partner.address'
 
-	_columns = {
-			'dn' : fields.char('Distinguished name', size=128),
-			}
+    _columns = {
+            'dn' : fields.char('Distinguished name', size=128),
+            }
 
 address_ldap()

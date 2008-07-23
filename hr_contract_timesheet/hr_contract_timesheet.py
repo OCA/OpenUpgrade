@@ -33,35 +33,35 @@ from osv import fields, osv
 import time
 
 class hr_timesheet(osv.osv):
-	_name = "hr.analytic.timesheet"
-	_inherit = "hr.analytic.timesheet"
-	
-	def on_change_unit_amount(self, cr, uid, id, prod_id, unit_amount, unit, user_id=False, date=False, context={}):
-		if not date:
-			date = time.strftime('%Y-%m-%d')
-		if not user_id:
-			user_id = uid
+    _name = "hr.analytic.timesheet"
+    _inherit = "hr.analytic.timesheet"
+    
+    def on_change_unit_amount(self, cr, uid, id, prod_id, unit_amount, unit, user_id=False, date=False, context={}):
+        if not date:
+            date = time.strftime('%Y-%m-%d')
+        if not user_id:
+            user_id = uid
 
-		res = super(hr_timesheet, self).on_change_unit_amount(cr, uid, id, prod_id, unit_amount, unit, context)
-		if user_id:
-			sql_req= '''
-			SELECT -c.wage * cwt.factor_type / p.factor_days as hourlywage
-			FROM hr_contract c
-			  LEFT JOIN hr_employee emp on (c.employee_id=emp.id)
-			  LEFT JOIN hr_contract_wage_type cwt on (cwt.id = c.wage_type_id)
-			  LEFT JOIN hr_contract_wage_type_period p on (cwt.period_id = p.id)
-		    WHERE
-			  (emp.user_id=%d) AND
-			  (date_start <= %s) AND
-			  (date_end IS NULL OR date_end >= %s)
-		    LIMIT 1
-			'''
+        res = super(hr_timesheet, self).on_change_unit_amount(cr, uid, id, prod_id, unit_amount, unit, context)
+        if user_id:
+            sql_req= '''
+            SELECT -c.wage * cwt.factor_type / p.factor_days as hourlywage
+            FROM hr_contract c
+              LEFT JOIN hr_employee emp on (c.employee_id=emp.id)
+              LEFT JOIN hr_contract_wage_type cwt on (cwt.id = c.wage_type_id)
+              LEFT JOIN hr_contract_wage_type_period p on (cwt.period_id = p.id)
+            WHERE
+              (emp.user_id=%d) AND
+              (date_start <= %s) AND
+              (date_end IS NULL OR date_end >= %s)
+            LIMIT 1
+            '''
 
-			cr.execute(sql_req, (user_id,date,date))
-			contract_info = cr.dictfetchone()
-			if res and contract_info:
-				res['value']['amount'] = -contract_info['hourlywage'] * unit_amount
+            cr.execute(sql_req, (user_id,date,date))
+            contract_info = cr.dictfetchone()
+            if res and contract_info:
+                res['value']['amount'] = -contract_info['hourlywage'] * unit_amount
 
-		return res
+        return res
 hr_timesheet()
 

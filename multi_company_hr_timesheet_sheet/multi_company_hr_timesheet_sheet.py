@@ -30,11 +30,11 @@
 from osv import fields,osv
 
 class hr_timesheet_sheet(osv.osv):
-	_inherit = 'hr_timesheet_sheet.sheet'
-	_columns = {
-		'company_id': fields.many2one('res.company', 'Company'),
-	}
-	_defaults = {
-		'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
-	}
+    _inherit = 'hr_timesheet_sheet.sheet'
+    _columns = {
+        'company_id': fields.many2one('res.company', 'Company'),
+    }
+    _defaults = {
+        'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id
+    }
 hr_timesheet_sheet()

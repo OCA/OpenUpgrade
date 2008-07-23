@@ -28,36 +28,36 @@
 from osv import fields, osv
 
 class account_tax_code(osv.osv):
-	_name = 'account.tax.code'
-	_inherit = 'account.tax.code'
-	_columns = {
-		'code': fields.char('Case Code', size=256),
-	}
+    _name = 'account.tax.code'
+    _inherit = 'account.tax.code'
+    _columns = {
+        'code': fields.char('Case Code', size=256),
+    }
 account_tax_code()
 
 
 class l10n_fr_report(osv.osv):
-	_name = 'l10n.fr.report'
-	_columns = {
-		'code': fields.char('Code', size=64),
-		'name': fields.char('Name', size=128),
-		'line_ids': fields.one2many('l10n.fr.line', 'report_id', 'Lines'),
-	}
-	_sql_constraints = [
+    _name = 'l10n.fr.report'
+    _columns = {
+        'code': fields.char('Code', size=64),
+        'name': fields.char('Name', size=128),
+        'line_ids': fields.one2many('l10n.fr.line', 'report_id', 'Lines'),
+    }
+    _sql_constraints = [
                 ('code_uniq', 'unique (code)','The code report must be unique !')
         ]
 l10n_fr_report()
 
 class l10n_fr_line(osv.osv):
-	_name = 'l10n.fr.line'
-	_columns = {
-		'code': fields.char('Variable Name', size=64),
-		'definition': fields.char('Definition', size=512),
-		'name': fields.char('Name', size=256),
-		'report_id': fields.many2one('l10n.fr.report', 'Report'),
-	}
-        _sql_constraints = [
-                ('code_uniq', 'unique (code)','The variable name must be unique !')
-        ]
+    _name = 'l10n.fr.line'
+    _columns = {
+        'code': fields.char('Variable Name', size=64),
+        'definition': fields.char('Definition', size=512),
+        'name': fields.char('Name', size=256),
+        'report_id': fields.many2one('l10n.fr.report', 'Report'),
+    }
+    _sql_constraints = [
+        ('code_uniq', 'unique (code)','The variable name must be unique !')
+    ]
 l10n_fr_line()
 

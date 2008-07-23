@@ -31,27 +31,27 @@ from osv import fields, osv
 # Dimensions Definition
 #
 class product_variant_dimension_type(osv.osv):
-	_name = "product.variant.dimension.type"
-	_description = "Dimension Type"
-	_columns = {
-		'name' : fields.char('Dimension', size=64),
-		'sequence' : fields.integer('Sequence'),
-		'value_ids' : fields.one2many('product.variant.dimension.value', 'Dimension Values'),
-	}
-	_order = "sequence, name"
+    _name = "product.variant.dimension.type"
+    _description = "Dimension Type"
+    _columns = {
+        'name' : fields.char('Dimension', size=64),
+        'sequence' : fields.integer('Sequence'),
+        'value_ids' : fields.one2many('product.variant.dimension.value', 'Dimension Values'),
+    }
+    _order = "sequence, name"
 product_variant_dimension_type()
 
 class product_variant_dimension_value(osv.osv):
-	_name = "product.variant.dimension.value"
-	_description = "Dimension Type"
-	_columns = {
-		'name' : fields.char('Dimension Value', size=64),
-		'sequence' : fields.integer('Sequence'),
-		'price_extra' : fields.float('Dimension Values', size=64),
-		'price_margin' : fields.float('Dimension Values', size=64),
-		'dimension_id' : fields.many2one('product.product.dimension.type', 'Dimension', required=True),
-	}
-	_order = "sequence, name"
+    _name = "product.variant.dimension.value"
+    _description = "Dimension Type"
+    _columns = {
+        'name' : fields.char('Dimension Value', size=64),
+        'sequence' : fields.integer('Sequence'),
+        'price_extra' : fields.float('Dimension Values', size=64),
+        'price_margin' : fields.float('Dimension Values', size=64),
+        'dimension_id' : fields.many2one('product.product.dimension.type', 'Dimension', required=True),
+    }
+    _order = "sequence, name"
 product_variant_dimension_value()
 
 #
@@ -59,26 +59,26 @@ product_variant_dimension_value()
 #
 
 class product_product(osv.osv):
-	_name = "product.product"
-	_inherit = "product.product"
+    _name = "product.product"
+    _inherit = "product.product"
 
-	def _variant_name_get(self, cr, uid, ids, name, arg, context={}):
-		res = {}
-		for p in self.browse(cr, uid, ids, context):
-			r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), p.dimension_ids)
-			res[p.id] = ','.join(r)
-		return res
+    def _variant_name_get(self, cr, uid, ids, name, arg, context={}):
+        res = {}
+        for p in self.browse(cr, uid, ids, context):
+            r = map(lambda dim: (dim.dimension_id.name or '')+'/'+(dim.name or '-'), p.dimension_ids)
+            res[p.id] = ','.join(r)
+        return res
 
-	_columns = {
-		'dimension_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions'),
-		#
-		# TODO: compute price_extra and _margin based on variants
-		#
-		# 'price_extra': fields.function('Price Extra'),
-		# 'price_margin': fields.function('Price Margin'),
-		#
-		'variants': fields.function(_variant_name_get, method=True, type='char', string='Variants'),
-	}
+    _columns = {
+        'dimension_ids': fields.many2many('product.variant.dimension.value', 'product_product_dimension_rel', 'product_id','dimension_id', 'Dimensions'),
+        #
+        # TODO: compute price_extra and _margin based on variants
+        #
+        # 'price_extra': fields.function('Price Extra'),
+        # 'price_margin': fields.function('Price Margin'),
+        #
+        'variants': fields.function(_variant_name_get, method=True, type='char', string='Variants'),
+    }
 product_product()
 
 

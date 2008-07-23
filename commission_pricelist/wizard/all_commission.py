@@ -39,16 +39,16 @@ dates_fields = {
 }
 
 class wizard_report(wizard.interface):
-	states = {
-		'init': {
-			'actions': [], 
-			'result': {'type':'form', 'arch':dates_form, 'fields':'', 'state':[('end','Cancel'),('report','Print Commission.')]}
-		},
-		'report': {
-			'actions': [],
-			'result': {'type':'print', 'report':'sale.agent', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [], 
+            'result': {'type':'form', 'arch':dates_form, 'fields':'', 'state':[('end','Cancel'),('report','Print Commission.')]}
+        },
+        'report': {
+            'actions': [],
+            'result': {'type':'print', 'report':'sale.agent', 'state':'end'}
+        }
+    }
 wizard_report('sale.agent')
 
 

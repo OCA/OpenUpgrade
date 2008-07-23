@@ -15,7 +15,7 @@
                     "crm_lead_view.xml",
                     "crm_meeting_view.xml",
                     "crm_opportunity_view.xml",
-		            "crm_fund_view.xml"
+                    "crm_fund_view.xml"
                  ],
     "demo_xml" : [
                     "crm_bugs_data.xml",

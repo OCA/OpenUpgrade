@@ -30,13 +30,13 @@
 from report.interface import report_rml
 import pooler
 class huissier_labels(report_rml):
-	def create(self,cr, uid, ids, datas, context):
-		pool = pooler.get_pool(cr.dbname)
-		new_ids = pool.get('huissier.vignettes').search(cr, uid, [('first','<=',datas['form']['stop']),('last','>=', datas['form']['start'] )])
-#		file('/tmp/terp.xml','wb+').write(xml)
-		if not new_ids:
-			raise Exception, "Il n'y a pas de vignettes entre ces deux chiffres!"
-		return report_rml.create(self, cr,uid, new_ids, datas, context)
+    def create(self,cr, uid, ids, datas, context):
+        pool = pooler.get_pool(cr.dbname)
+        new_ids = pool.get('huissier.vignettes').search(cr, uid, [('first','<=',datas['form']['stop']),('last','>=', datas['form']['start'] )])
+#       file('/tmp/terp.xml','wb+').write(xml)
+        if not new_ids:
+            raise Exception, "Il n'y a pas de vignettes entre ces deux chiffres!"
+        return report_rml.create(self, cr,uid, new_ids, datas, context)
 
 huissier_labels('report.huissier.labels.reprint', 'huissier.vignettes', 'addons/huissier/report/labels.xml', 'addons/huissier/report/labels.xsl')
 

@@ -28,11 +28,11 @@
 from osv import fields,osv,orm
 
 class res_partner_address(osv.osv):
-	_description ='Partner Contact'
-	_name = 'res.partner.address'
-	_inherit = 'res.partner.address'
-	_columns = {
-#		'google_map': fields.function(_get_url, method=True,
-#			string='Google Map', type='char',),
-		}
+    _description ='Partner Contact'
+    _name = 'res.partner.address'
+    _inherit = 'res.partner.address'
+    _columns = {
+#       'google_map': fields.function(_get_url, method=True,
+#           string='Google Map', type='char',),
+        }
 res_partner_address()

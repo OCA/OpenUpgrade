@@ -32,31 +32,31 @@ import netsvc
 
 reprint_form = '''<?xml version="1.0"?>
 <form title="Paid ?">
-	<field name="start"/>
-	<field name="stop"/>
+    <field name="start"/>
+    <field name="stop"/>
 </form>'''
 
 reprint_fields = {
-	'start': {'string':u'De', 'type':'integer', 'required':True},
-	'stop': {'string':u'a', 'type':'integer', 'required':True},
+    'start': {'string':u'De', 'type':'integer', 'required':True},
+    'stop': {'string':u'a', 'type':'integer', 'required':True},
 }
 
 #def _get_value(self, uid, datas):
-#	return {}
+#   return {}
 
 
 class wizard_reprint(wizard.interface):
-	states = {
-		'init': {
-#			'actions': [_get_value], 
-			'actions': [], 
-			'result': {'type':'form', 'arch':reprint_form, 'fields':reprint_fields, 'state':[('reprint','Imprimer'), ('end','Annuler')]}
-		},
-		'reprint': {
-			'actions': [],
-			'result': {'type':'print', 'report':'huissier.labels.reprint', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+#           'actions': [_get_value], 
+            'actions': [], 
+            'result': {'type':'form', 'arch':reprint_form, 'fields':reprint_fields, 'state':[('reprint','Imprimer'), ('end','Annuler')]}
+        },
+        'reprint': {
+            'actions': [],
+            'result': {'type':'print', 'report':'huissier.labels.reprint', 'state':'end'}
+        }
+    }
 wizard_reprint('huissier.labels.reprint')
 
 

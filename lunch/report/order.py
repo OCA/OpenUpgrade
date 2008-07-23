@@ -33,19 +33,19 @@ from osv import osv
 
 class order(report_sxw.rml_parse):
 
-	def sum_price(self, orders):
-		res = 0.0
-		for o in orders:
-			res += o.price
-		return res
+    def sum_price(self, orders):
+        res = 0.0
+        for o in orders:
+            res += o.price
+        return res
 
-	def __init__(self, cr, uid, name, context):
-		super(order, self).__init__(cr, uid, name, context)
+    def __init__(self, cr, uid, name, context):
+        super(order, self).__init__(cr, uid, name, context)
 
-		self.localcontext.update({
-		'time': time,
-		'sum_price': self.sum_price,
-		})
+        self.localcontext.update({
+        'time': time,
+        'sum_price': self.sum_price,
+        })
 
 report_sxw.report_sxw('report.lunch.order', 'lunch.order',
-		'addons/lunch/report/order.rml',parser=order, header=False)
+        'addons/lunch/report/order.rml',parser=order, header=False)

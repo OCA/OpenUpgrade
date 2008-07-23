@@ -36,65 +36,65 @@ import pooler
 
 class make_sale(wizard.interface):
 
-	def _selectPartner(self, cr, uid, data, context):
-		case_obj = pooler.get_pool(cr.dbname).get('crm.case')
-		case = case_obj.read(cr, uid, data['ids'], ['partner_id'])
-		return {'partner_id': case[0]['partner_id']}
+    def _selectPartner(self, cr, uid, data, context):
+        case_obj = pooler.get_pool(cr.dbname).get('crm.case')
+        case = case_obj.read(cr, uid, data['ids'], ['partner_id'])
+        return {'partner_id': case[0]['partner_id']}
 
-	def _makeOrder(self, cr, uid, data, context):
-		pool = pooler.get_pool(cr.dbname)
-		purchase_obj = pool.get('purchase.order')
-		sale_obj = pool.get('sale.order')
+    def _makeOrder(self, cr, uid, data, context):
+        pool = pooler.get_pool(cr.dbname)
+        purchase_obj = pool.get('purchase.order')
+        sale_obj = pool.get('sale.order')
 
-		shop_obj = pool.get('sale.shop')
-		shop_id = shop_obj.search(cr, uid, [])[0]
+        shop_obj = pool.get('sale.shop')
+        shop_id = shop_obj.search(cr, uid, [])[0]
 
-		partner_obj = pool.get('res.partner')
-		sale_line_obj = pool.get('sale.order.line')
-
-
-		new_ids = []
-
-		user = pool.get('res.users').browse(cr, uid, uid)
-		partner_id = user.company_id.partner_id.id
-		partner_addr = partner_obj.address_get(cr, uid, [partner_id],
-				['invoice', 'delivery', 'contact'])
-		default_pricelist = partner_obj.browse(cr, uid, partner_id,
-					context).property_product_pricelist.id
+        partner_obj = pool.get('res.partner')
+        sale_line_obj = pool.get('sale.order.line')
 
 
-		for purchase in purchase_obj.browse(cr, uid, data['ids']):
-			vals = {
-				'origin': 'PO:%s' % str(purchase.name),
-				'picking_policy': 'direct',
-				'shop_id': shop_id,
-				'partner_id': partner_id,
-				'pricelist_id': default_pricelist,
-				'partner_invoice_id': partner_addr['invoice'],
-				'partner_order_id': partner_addr['contact'],
-				'partner_shipping_id': partner_addr['delivery'],
-				'order_policy': 'manual',
-				'date_order': now(),
-			}
-			new_id = sale_obj.create(cr, uid, vals)
+        new_ids = []
 
-			for line in purchase.order_line:
-				value = sale_line_obj.product_id_change(cr, uid, [], default_pricelist,
-						line.product_id.id, qty=line.product_qty, partner_id=partner_id)['value']
-				value['price_unit'] = line.price_unit
-				value['product_id'] = line.product_id.id
-				value['product_uos'] = value.get('product_uos', [False,False])[0]
-				value['product_uom_qty'] = line.product_qty
-				value['order_id'] = new_id
-				sale_line_obj.create(cr, uid, value)
+        user = pool.get('res.users').browse(cr, uid, uid)
+        partner_id = user.company_id.partner_id.id
+        partner_addr = partner_obj.address_get(cr, uid, [partner_id],
+                ['invoice', 'delivery', 'contact'])
+        default_pricelist = partner_obj.browse(cr, uid, partner_id,
+                    context).property_product_pricelist.id
 
-		return {}
 
-	states = {
-		'init': {
-			'actions': [_makeOrder],
-			'result': {'type': 'state', 'state': 'end'}
-		}
-	}
+        for purchase in purchase_obj.browse(cr, uid, data['ids']):
+            vals = {
+                'origin': 'PO:%s' % str(purchase.name),
+                'picking_policy': 'direct',
+                'shop_id': shop_id,
+                'partner_id': partner_id,
+                'pricelist_id': default_pricelist,
+                'partner_invoice_id': partner_addr['invoice'],
+                'partner_order_id': partner_addr['contact'],
+                'partner_shipping_id': partner_addr['delivery'],
+                'order_policy': 'manual',
+                'date_order': now(),
+            }
+            new_id = sale_obj.create(cr, uid, vals)
+
+            for line in purchase.order_line:
+                value = sale_line_obj.product_id_change(cr, uid, [], default_pricelist,
+                        line.product_id.id, qty=line.product_qty, partner_id=partner_id)['value']
+                value['price_unit'] = line.price_unit
+                value['product_id'] = line.product_id.id
+                value['product_uos'] = value.get('product_uos', [False,False])[0]
+                value['product_uom_qty'] = line.product_qty
+                value['order_id'] = new_id
+                sale_line_obj.create(cr, uid, value)
+
+        return {}
+
+    states = {
+        'init': {
+            'actions': [_makeOrder],
+            'result': {'type': 'state', 'state': 'end'}
+        }
+    }
 
 make_sale('purchase.order.interco')

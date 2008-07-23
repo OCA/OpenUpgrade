@@ -28,14 +28,14 @@
 
 
 {
-	"name":"Account CODA",
-	"version":"1.0",
-	"author":"Tiny",
-	"category":"Account Coda",
-	"depends":["base", "account","account_report","base_iban"],
-	"demo_xml":["coda_demo.xml"],
-	"init_xml":[],
-	"update_xml" : ["coda_wizard.xml","coda_view.xml"],
-	"active":False,
-	"installable":True,
+    "name":"Account CODA",
+    "version":"1.0",
+    "author":"Tiny",
+    "category":"Account Coda",
+    "depends":["base", "account","account_report","base_iban"],
+    "demo_xml":["coda_demo.xml"],
+    "init_xml":[],
+    "update_xml" : ["coda_wizard.xml","coda_view.xml"],
+    "active":False,
+    "installable":True,
 }

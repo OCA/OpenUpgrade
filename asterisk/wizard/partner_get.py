@@ -31,86 +31,86 @@ import wizard
 
 _arch_no_call = """<?xml version="1.0"?>
 <form string="Open Partner Info">
-	<label string="User not on the phone !"/>
+    <label string="User not on the phone !"/>
 </form>"""
 
 _arch_no_partner = """<?xml version="1.0"?>
 <form string="Open Partner Info">
-	<label string="No partner defined for this phone number !"/>
+    <label string="No partner defined for this phone number !"/>
 </form>"""
 
 def _find_partner(self,cr,uid,data,context):
-	pool = pooler.get_pool(cr.dbname)
-	phone_id = pool.get('asterisk.phone').search(cr, uid, [('user_id','=',uid)])
-	if not phone_id:
-		raise wizard.except_wizard('UserError', 'No IP Phone defined for your user %d !\nContact the administrator.' % (uid,))
-	phone = pool.get('asterisk.phone').browse(cr, uid, phone_id[0])
-	if not phone.current_callerid:
-		return 'no_call'
-	adr_ids = pool.get('res.partner.address').search(cr, uid, [('phone','=',phone.current_callerid)])
-	if not adr_ids:
-		return 'no_partner'
-	return 'open'
+    pool = pooler.get_pool(cr.dbname)
+    phone_id = pool.get('asterisk.phone').search(cr, uid, [('user_id','=',uid)])
+    if not phone_id:
+        raise wizard.except_wizard('UserError', 'No IP Phone defined for your user %d !\nContact the administrator.' % (uid,))
+    phone = pool.get('asterisk.phone').browse(cr, uid, phone_id[0])
+    if not phone.current_callerid:
+        return 'no_call'
+    adr_ids = pool.get('res.partner.address').search(cr, uid, [('phone','=',phone.current_callerid)])
+    if not adr_ids:
+        return 'no_partner'
+    return 'open'
 
 def _open_partner(obj, cr, uid, data, context):
-	pool = pooler.get_pool(cr.dbname)
-	phone_id = pool.get('asterisk.phone').search(cr, uid, [('user_id','=',uid)])
-	phone = pool.get('asterisk.phone').browse(cr, uid, phone_id[0])
-	adr_ids = pool.get('res.partner.address').search(cr, uid, [('phone','=',phone.current_callerid)])
-	partner_id = pool.get('res.partner.address').browse(cr, uid, adr_ids[0]).partner_id.id
-	result = {
-		'res_id': partner_id,
-		'name': 'Partner',
-		'view_type':'form',
-		'view_mode':'form,tree',
-		'res_model':'res.partner',
-		'view_id':False,
-		'type':'ir.actions.act_window',
-	}
-	return result
+    pool = pooler.get_pool(cr.dbname)
+    phone_id = pool.get('asterisk.phone').search(cr, uid, [('user_id','=',uid)])
+    phone = pool.get('asterisk.phone').browse(cr, uid, phone_id[0])
+    adr_ids = pool.get('res.partner.address').search(cr, uid, [('phone','=',phone.current_callerid)])
+    partner_id = pool.get('res.partner.address').browse(cr, uid, adr_ids[0]).partner_id.id
+    result = {
+        'res_id': partner_id,
+        'name': 'Partner',
+        'view_type':'form',
+        'view_mode':'form,tree',
+        'res_model':'res.partner',
+        'view_id':False,
+        'type':'ir.actions.act_window',
+    }
+    return result
 
 def _create_partner(obj, cr, uid, data, context):
-	return {
-		'name': 'Partner',
-		'view_type':'form',
-		'view_mode':'form,tree',
-		'res_model':'res.partner',
-		'view_id':False,
-		'type':'ir.actions.act_window',
-	}
+    return {
+        'name': 'Partner',
+        'view_type':'form',
+        'view_mode':'form,tree',
+        'res_model':'res.partner',
+        'view_id':False,
+        'type':'ir.actions.act_window',
+    }
 
 class partner_open(wizard.interface):
-	states = {
-		'init' : {
-			'result': {'type' : 'choice', 'next_state': _find_partner}
-		},
-		'no_call': {
-			'result': {
-				'type':'form', 'fields':{},
-				'arch':_arch_no_call,
-				'state': [ ('end','Exit'),('init','Retry') ]
-			}
-		},
-		'no_partner': {
-			'result': {
-				'type':'form', 'fields':{},
-				'arch':_arch_no_partner,
-				'state': [ ('end','Exit'),('create','Create a New Partner') ]
-			}
-		},
-		'create': {
-			'result': {
-				'type':'action',
-				'action': _create_partner,
-				'state': 'end'
-			}
-		},
-		'open': {
-			'result': {
-				'type':'action',
-				'action': _open_partner,
-				'state': 'end'
-			}
-		}
-	}
+    states = {
+        'init' : {
+            'result': {'type' : 'choice', 'next_state': _find_partner}
+        },
+        'no_call': {
+            'result': {
+                'type':'form', 'fields':{},
+                'arch':_arch_no_call,
+                'state': [ ('end','Exit'),('init','Retry') ]
+            }
+        },
+        'no_partner': {
+            'result': {
+                'type':'form', 'fields':{},
+                'arch':_arch_no_partner,
+                'state': [ ('end','Exit'),('create','Create a New Partner') ]
+            }
+        },
+        'create': {
+            'result': {
+                'type':'action',
+                'action': _create_partner,
+                'state': 'end'
+            }
+        },
+        'open': {
+            'result': {
+                'type':'action',
+                'action': _open_partner,
+                'state': 'end'
+            }
+        }
+    }
 partner_open('asterisk.partner.get')

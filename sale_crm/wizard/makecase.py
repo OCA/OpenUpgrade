@@ -30,68 +30,68 @@ import wizard
 import pooler
 
 def _get_default(obj, cursor, uid, data, context=None):
-	'''Get default value'''
-	return {'user': uid}
+    '''Get default value'''
+    return {'user': uid}
 
 def _make_case(obj, cursor, uid, data, context=None):
-	'''Create case'''
-	pool = pooler.get_pool(cursor.dbname)
-	case_obj = pool.get('crm.case')
-	mod_obj = pool.get('ir.model.data')
-	act_obj = pool.get('ir.actions.act_window')
+    '''Create case'''
+    pool = pooler.get_pool(cursor.dbname)
+    case_obj = pool.get('crm.case')
+    mod_obj = pool.get('ir.model.data')
+    act_obj = pool.get('ir.actions.act_window')
 
-	new_id = []
+    new_id = []
 
-	for partner_id in data['ids']:
-		new_id.append(case_obj.create(cursor, uid, {
-			'name': data['form']['name'],
-			'section_id': data['form']['section'],
-			'partner_id': partner_id,
-			'description': data['form']['description'],
-			}))
+    for partner_id in data['ids']:
+        new_id.append(case_obj.create(cursor, uid, {
+            'name': data['form']['name'],
+            'section_id': data['form']['section'],
+            'partner_id': partner_id,
+            'description': data['form']['description'],
+            }))
 
-	result = mod_obj._get_id(cursor, uid, 'crm', 'crm_case_categ0-act')
-	res_id = mod_obj.read(cursor, uid, [result], ['res_id'])[0]['res_id']
-	result = act_obj.read(cursor, uid, [res_id])[0]
-	result['domain'] = str([('id', 'in', new_id)])
-	return result
+    result = mod_obj._get_id(cursor, uid, 'crm', 'crm_case_categ0-act')
+    res_id = mod_obj.read(cursor, uid, [result], ['res_id'])[0]['res_id']
+    result = act_obj.read(cursor, uid, [res_id])[0]
+    result['domain'] = str([('id', 'in', new_id)])
+    return result
 
 
 class MakeCase(wizard.interface):
-	'''Wizard that create case on partner'''
+    '''Wizard that create case on partner'''
 
-	case_form = """<?xml version="1.0"?>
+    case_form = """<?xml version="1.0"?>
 <form string="Make Case">
-	<field name="name"/>
-	<field name="section"/>
-	<field name="user"/>
-	<field name="description" colspan="4"/>
+    <field name="name"/>
+    <field name="section"/>
+    <field name="user"/>
+    <field name="description" colspan="4"/>
 </form>"""
 
-	case_fields = {
-		'name': {'string': 'Case Description', 'type': 'char', 'size': 64,
-			'required': True},
-		'section': {'string': 'Case Section', 'type': 'many2one',
-			'relation': 'crm.case.section', 'required': True},
-		'user': {'string': 'User Responsible', 'type': 'many2one',
-			'relation': 'res.users'},
-		'description': {'string': 'Your action', 'type': 'text'},
-	}
+    case_fields = {
+        'name': {'string': 'Case Description', 'type': 'char', 'size': 64,
+            'required': True},
+        'section': {'string': 'Case Section', 'type': 'many2one',
+            'relation': 'crm.case.section', 'required': True},
+        'user': {'string': 'User Responsible', 'type': 'many2one',
+            'relation': 'res.users'},
+        'description': {'string': 'Your action', 'type': 'text'},
+    }
 
-	states = {
-		'init': {
-			'actions': [_get_default],
-			'result': {'type': 'form', 'arch': case_form, 'fields': case_fields,
-				'state': [
-					('end', 'Cancel'),
-					('create', 'Create')
-				]
-			}
-		},
-		'create': {
-			'actions': [],
-			'result': {'type': 'action', 'action': _make_case, 'state': 'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_get_default],
+            'result': {'type': 'form', 'arch': case_form, 'fields': case_fields,
+                'state': [
+                    ('end', 'Cancel'),
+                    ('create', 'Create')
+                ]
+            }
+        },
+        'create': {
+            'actions': [],
+            'result': {'type': 'action', 'action': _make_case, 'state': 'end'}
+        }
+    }
 
 MakeCase('sale_crm.make_case')

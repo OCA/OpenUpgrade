@@ -34,10 +34,10 @@ from mx import DateTime
 from tools import config
 
 class sale_order(osv.osv):
-	_name='sale.order'
-	_inherit='sale.order'
-	_columns={
-		'topnotes' : fields.text('Top Notes'),
-	}
-		
+    _name='sale.order'
+    _inherit='sale.order'
+    _columns={
+        'topnotes' : fields.text('Top Notes'),
+    }
+        
 sale_order()

@@ -28,25 +28,25 @@
 
 from osv import fields, osv
 class scrum_product_backlog(osv.osv):
-	_inherit = 'scrum.product.backlog'
+    _inherit = 'scrum.product.backlog'
 
-	def _get_partner(self, cr, uid, ids, name, args, context):
-		cr.execute('select b.id, p.partner from scrum_product_backlog b join project_project p on (b.project_id = p.id) where id in (%s)', ','.join(ids))
-		return dict(cr.fetchall())
+    def _get_partner(self, cr, uid, ids, name, args, context):
+        cr.execute('select b.id, p.partner from scrum_product_backlog b join project_project p on (b.project_id = p.id) where id in (%s)', ','.join(ids))
+        return dict(cr.fetchall())
 
-	def _search_partner(self, cr, uid, obj, name, args):
-		print args
-		if not len(args):
-			return []
+    def _search_partner(self, cr, uid, obj, name, args):
+        print args
+        if not len(args):
+            return []
 
-		pids= self.pool.get('project.project').search(cr,uid,args)
-		cr.execute('select id form scrum_product_backlog where project_id in (%s)', ','.join(pids) )
-		res= cr.fetchall()
-		if not res:
-			return [('id','=','0')]
-		return [('id','in',bids)]
-	
-	_columns = {
-		'partner_id': fields.function(_get_partner, method=True, string='Customer', fnct_search=_search_partner),
-		}
+        pids= self.pool.get('project.project').search(cr,uid,args)
+        cr.execute('select id form scrum_product_backlog where project_id in (%s)', ','.join(pids) )
+        res= cr.fetchall()
+        if not res:
+            return [('id','=','0')]
+        return [('id','in',bids)]
+    
+    _columns = {
+        'partner_id': fields.function(_get_partner, method=True, string='Customer', fnct_search=_search_partner),
+        }
 scrum_product_backlog()

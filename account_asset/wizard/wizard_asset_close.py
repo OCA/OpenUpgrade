@@ -31,26 +31,26 @@ import pooler
 
 asset_end_arch = '''<?xml version="1.0"?>
 <form string="Close asset">
-	<separator string="General information" colspan="4"/>
+    <separator string="General information" colspan="4"/>
 </form>'''
 
 asset_end_fields = {
 }
 
 class wizard_asset_close(wizard.interface):
-	states = {
-		'init': {
-			'actions': [],
-			'result': {'type':'form', 'arch':asset_end_arch, 'fields':asset_end_fields, 'state':[
-				('end','Cancel'),
-				('asset_close','End of asset')
-			]}
-		},
-		'asset_close': {
-			'actions': [],
-			'result': {'type' : 'state', 'state': 'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [],
+            'result': {'type':'form', 'arch':asset_end_arch, 'fields':asset_end_fields, 'state':[
+                ('end','Cancel'),
+                ('asset_close','End of asset')
+            ]}
+        },
+        'asset_close': {
+            'actions': [],
+            'result': {'type' : 'state', 'state': 'end'}
+        }
+    }
 wizard_asset_close('account.asset.close')
 
 

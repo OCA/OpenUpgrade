@@ -210,7 +210,7 @@ class SmtpClient(osv.osv):
                 return (False,Exception('Report name and Resources ids are required !!!'))
 
             try:
-            	ret_file_name = file_name+'.pdf'
+                ret_file_name = file_name+'.pdf'
                 service = netsvc.LocalService("report."+report_name);
                 (result,format) = service.create(cr,uid,res_ids,{},{})
                 fp = open(ret_file_name,'wb+');
@@ -226,7 +226,7 @@ class SmtpClient(osv.osv):
         file = create_report(self,cr,uid,resource_id,report_name,file_name)
         is_file = file[0]
         if is_file:
-        	file_name=file[1]
+            file_name=file[1]
         try:
             if self.server['state'] == 'confirm':
                 msg = MIMEMultipart()
@@ -236,9 +236,9 @@ class SmtpClient(osv.osv):
                 msg.attach(MIMEText(body or '', _charset='utf-8'))
                 part = MIMEBase('application', "octet-stream")
                 if is_file:
-	                part.set_payload( open(file_name,"rb").read())               
-	                part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file_name))
-	                msg.attach(part)
+                    part.set_payload( open(file_name,"rb").read())               
+                    part.add_header('Content-Disposition', 'attachment; filename="%s"' % os.path.basename(file_name))
+                    msg.attach(part)
                 Encoders.encode_base64(part)
                 self.smtpServer.sendmail(str(self.server['email']), emailto, msg.as_string())
                 

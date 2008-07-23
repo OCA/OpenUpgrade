@@ -34,147 +34,147 @@ import pooler
 from osv import fields, osv
 form = """<?xml version="1.0"?>
 <form string="Create invoices">
-	<newline />
-	<field name="inv_created"/>
-	<newline />
-	<field name="inv_rejected"/>
-	<newline />
-	<field name="inv_rej_reason" width="400"/>
+    <newline />
+    <field name="inv_created"/>
+    <newline />
+    <field name="inv_rejected"/>
+    <newline />
+    <field name="inv_rej_reason" width="400"/>
 </form>
 """
 fields = {
-	'inv_created': {'string':'Invoice Created', 'type':'char', 'readonly':True},
-	'inv_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
-	'inv_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
-		  }
+    'inv_created': {'string':'Invoice Created', 'type':'char', 'readonly':True},
+    'inv_rejected': {'string':'Invoice Rejected', 'type':'char', 'readonly':True},
+    'inv_rej_reason': {'string':'Error Messages', 'type':'text', 'readonly':True},
+          }
 
 def _makeInvoices(self, cr, uid, data, context):
-	invoices = {}
-	invoice_ids = []
-	create_ids=[]
-	tax_ids=[]
-	pool_obj=pooler.get_pool(cr.dbname)
+    invoices = {}
+    invoice_ids = []
+    create_ids=[]
+    tax_ids=[]
+    pool_obj=pooler.get_pool(cr.dbname)
 
-	inv_create = 0
-	inv_reject = 0
-	inv_rej_reason = ""
-	list_inv = []
-	obj_event_reg=pool_obj.get('event.registration')
-	data_event_reg=obj_event_reg.browse(cr,uid,data['ids'])
-	obj_lines=pool_obj.get('account.invoice.line')
+    inv_create = 0
+    inv_reject = 0
+    inv_rej_reason = ""
+    list_inv = []
+    obj_event_reg=pool_obj.get('event.registration')
+    data_event_reg=obj_event_reg.browse(cr,uid,data['ids'])
+    obj_lines=pool_obj.get('account.invoice.line')
 
-	for reg in data_event_reg:
-		if reg.state=='draft':
-			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(reg.id)+": Invoice cannot be created if the registration is in draft state. \n"
-			continue
-		if (not reg.tobe_invoiced):
-			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(reg.id)+": Registration Cannot Be Invoiced \n"
-			continue
-		if reg.invoice_id:
-			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(reg.id)+": Registration Already Has an Invoice Linked \n"
-			continue
-		if (reg.check_mode and reg.check_amount <= 0):
-			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(reg.id)+": No Checks \n"
-			continue
-		if not reg.event_id.product_id:
-			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(reg.id)+": Event Related Don't Have any Product \n"
-			continue
-		if not reg.partner_address_id:
-			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Contact \n"
-			continue
-		if not reg.partner_invoice_id:
-			inv_reject = inv_reject + 1
-			inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Partner to Invoice \n"
-			continue
+    for reg in data_event_reg:
+        if reg.state=='draft':
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": Invoice cannot be created if the registration is in draft state. \n"
+            continue
+        if (not reg.tobe_invoiced):
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": Registration Cannot Be Invoiced \n"
+            continue
+        if reg.invoice_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": Registration Already Has an Invoice Linked \n"
+            continue
+        if (reg.check_mode and reg.check_amount <= 0):
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": No Checks \n"
+            continue
+        if not reg.event_id.product_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": Event Related Don't Have any Product \n"
+            continue
+        if not reg.partner_address_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Contact \n"
+            continue
+        if not reg.partner_invoice_id:
+            inv_reject = inv_reject + 1
+            inv_rej_reason += "ID "+str(reg.id)+": Registration Don't Have any Partner to Invoice \n"
+            continue
 
-		inv_create = inv_create + 1
-		value=obj_lines.product_id_change(cr, uid, [], reg.event_id.product_id.id,uom =False, partner_id=reg.partner_invoice_id.id)
+        inv_create = inv_create + 1
+        value=obj_lines.product_id_change(cr, uid, [], reg.event_id.product_id.id,uom =False, partner_id=reg.partner_invoice_id.id)
 
-		data_product=pool_obj.get('product.product').browse(cr,uid,[reg.event_id.product_id.id])
-		a = reg.partner_invoice_id.property_account_receivable.id
+        data_product=pool_obj.get('product.product').browse(cr,uid,[reg.event_id.product_id.id])
+        a = reg.partner_invoice_id.property_account_receivable.id
 
-		for tax in data_product[0].taxes_id:
-			tax_ids.append(tax.id)
+        for tax in data_product[0].taxes_id:
+            tax_ids.append(tax.id)
 
-		note = ''
-		cci_special_reference = False
+        note = ''
+        cci_special_reference = False
 
-		if reg.check_mode:
-			note = 'Check payment for a total of ' + str(reg.check_amount)
-			cci_special_reference = "event.registration*" + str(reg.id)
+        if reg.check_mode:
+            note = 'Check payment for a total of ' + str(reg.check_amount)
+            cci_special_reference = "event.registration*" + str(reg.id)
 
-		inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
-				'name': reg.name,
-				'account_id':value['value']['account_id'],
-				'price_unit': reg.unit_price,
-				'quantity': reg.nb_register,
-				'discount': False,
-				'uos_id': value['value']['uos_id'],
-				'product_id': reg.event_id.product_id.id,
-				'invoice_line_tax_id': [(6,0,tax_ids)],
-				'note': note,
-				'cci_special_reference': cci_special_reference
-		})
+        inv_id =pool_obj.get('account.invoice.line').create(cr, uid, {
+                'name': reg.name,
+                'account_id':value['value']['account_id'],
+                'price_unit': reg.unit_price,
+                'quantity': reg.nb_register,
+                'discount': False,
+                'uos_id': value['value']['uos_id'],
+                'product_id': reg.event_id.product_id.id,
+                'invoice_line_tax_id': [(6,0,tax_ids)],
+                'note': note,
+                'cci_special_reference': cci_special_reference
+        })
 
-		inv = {
-			'name': reg.invoice_label,
-			'origin': reg.invoice_label,
-			'type': 'out_invoice',
-			'reference': False,
-			'account_id': reg.partner_invoice_id.property_account_receivable.id,
-			'partner_id': reg.partner_invoice_id.id,
-			'address_invoice_id':reg.partner_address_id.id,
-			'address_contact_id':reg.partner_address_id.id,
-			'invoice_line': [(6,0,[inv_id])],
-			'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
-			'comment': "",
-			'payment_term':reg.partner_invoice_id.property_payment_term.id,
-		}
+        inv = {
+            'name': reg.invoice_label,
+            'origin': reg.invoice_label,
+            'type': 'out_invoice',
+            'reference': False,
+            'account_id': reg.partner_invoice_id.property_account_receivable.id,
+            'partner_id': reg.partner_invoice_id.id,
+            'address_invoice_id':reg.partner_address_id.id,
+            'address_contact_id':reg.partner_address_id.id,
+            'invoice_line': [(6,0,[inv_id])],
+            'currency_id' :reg.partner_invoice_id.property_product_pricelist.currency_id.id,# 1,
+            'comment': "",
+            'payment_term':reg.partner_invoice_id.property_payment_term.id,
+        }
 
-		inv_obj = pool_obj.get('account.invoice')
-		inv_id = inv_obj.create(cr, uid, inv)
-		list_inv.append(inv_id)
-		obj_event_reg.write(cr, uid,reg.id, {'invoice_id' : inv_id,'state':'done'})
+        inv_obj = pool_obj.get('account.invoice')
+        inv_id = inv_obj.create(cr, uid, inv)
+        list_inv.append(inv_id)
+        obj_event_reg.write(cr, uid,reg.id, {'invoice_id' : inv_id,'state':'done'})
 
-		#FIXME: if the next line is commented/removed, tiny will crash. This is probably due to a bug into the orm
-		reg=pool_obj.get('event.registration').browse(cr,uid,[reg.id])[0]
+        #FIXME: if the next line is commented/removed, tiny will crash. This is probably due to a bug into the orm
+        reg=pool_obj.get('event.registration').browse(cr,uid,[reg.id])[0]
 
-		obj_event_reg._history(cr, uid,[reg], 'Invoiced', history=True)
+        obj_event_reg._history(cr, uid,[reg], 'Invoiced', history=True)
 
-	return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
+    return {'inv_created' : str(inv_create) , 'inv_rejected' : str(inv_reject) , 'invoice_ids':  list_inv, 'inv_rej_reason': inv_rej_reason}
 
 class make_invoice(wizard.interface):
-	def _list_invoice(self, cr, uid, data, context):
-		pool_obj = pooler.get_pool(cr.dbname)
-		model_data_ids = pool_obj.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','invoice_form')])
-		resource_id = pool_obj.get('ir.model.data').read(cr,uid,model_data_ids,fields=['res_id'])[0]['res_id']
-		return {
-			'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
-			'name': 'Invoices',
-			'view_type': 'form',
-			'view_mode': 'tree,form',
-			'res_model': 'account.invoice',
-			'views': [(False,'tree'),(resource_id,'form')],
-			'context': "{'type':'out_invoice'}",
-			'type': 'ir.actions.act_window'
-		}
-	states = {
-		'init' : {
-			'actions' : [_makeInvoices],
-			'result': {'type': 'form', 'arch': form, 'fields': fields, 'state':[('end','Ok'),('open','Open')]}
-		},
+    def _list_invoice(self, cr, uid, data, context):
+        pool_obj = pooler.get_pool(cr.dbname)
+        model_data_ids = pool_obj.get('ir.model.data').search(cr,uid,[('model','=','ir.ui.view'),('name','=','invoice_form')])
+        resource_id = pool_obj.get('ir.model.data').read(cr,uid,model_data_ids,fields=['res_id'])[0]['res_id']
+        return {
+            'domain': "[('id','in', ["+','.join(map(str,data['form']['invoice_ids']))+"])]",
+            'name': 'Invoices',
+            'view_type': 'form',
+            'view_mode': 'tree,form',
+            'res_model': 'account.invoice',
+            'views': [(False,'tree'),(resource_id,'form')],
+            'context': "{'type':'out_invoice'}",
+            'type': 'ir.actions.act_window'
+        }
+    states = {
+        'init' : {
+            'actions' : [_makeInvoices],
+            'result': {'type': 'form', 'arch': form, 'fields': fields, 'state':[('end','Ok'),('open','Open')]}
+        },
 
-		'open': {
-			'actions': [],
-			'result': {'type':'action', 'action':_list_invoice, 'state':'end'}
-		}
+        'open': {
+            'actions': [],
+            'result': {'type':'action', 'action':_list_invoice, 'state':'end'}
+        }
 
-	}
+    }
 
 make_invoice("cci_event.make_invoice")

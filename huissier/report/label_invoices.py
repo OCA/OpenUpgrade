@@ -31,13 +31,13 @@ import pooler
 import netsvc
 
 class label_invoices(report_int):
-	def create(self, uid, ids, datas, context):
-		datas['ids'] = datas['form']['ids']
-		self._obj_invoice = netsvc.LocalService('report.account.invoice')
-		return self._obj_invoice.create(uid, datas['ids'], datas, context)
+    def create(self, uid, ids, datas, context):
+        datas['ids'] = datas['form']['ids']
+        self._obj_invoice = netsvc.LocalService('report.account.invoice')
+        return self._obj_invoice.create(uid, datas['ids'], datas, context)
 
-	def result(self):
-		return self._obj_invoice.result()
+    def result(self):
+        return self._obj_invoice.result()
 
 
 label_invoices('report.huissier.label.invoices')

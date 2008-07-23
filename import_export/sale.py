@@ -21,20 +21,20 @@ class sale_order_line(osv.osv):
                         if line.order_id.partner_id.partner_location == 'local':
 
                             if line.product_id.product_tmpl_id.property_account_income:
-                        	    a =  line.product_id.product_tmpl_id.property_account_income[0];
+                                a =  line.product_id.product_tmpl_id.property_account_income[0];
                             else:
-                        	    a =  line.product_id.product_tmpl_id.categ_id.property_account_income_categ[0];
-                        	    #print "TEST .........",line.product_id.product_tmpl_id.categ_id.property_account_income;
+                                a =  line.product_id.product_tmpl_id.categ_id.property_account_income_categ[0];
+                                #print "TEST .........",line.product_id.product_tmpl_id.categ_id.property_account_income;
                             #end if
                         elif line.order_id.partner_id.partner_location == 'europe':
                             if line.product_id.product_tmpl_id.property_account_income_europe:
-                        	    a =  line.product_id.product_tmpl_id.property_account_income_europe[0];
+                                a =  line.product_id.product_tmpl_id.property_account_income_europe[0];
                             else:
-                        	    a =  line.product_id.product_tmpl_id.categ_id.property_account_income_europe[0];
+                                a =  line.product_id.product_tmpl_id.categ_id.property_account_income_europe[0];
                             #end if
                         elif line.order_id.partner_id.partner_location == 'outside':
                             if line.product_id.product_tmpl_id.property_account_income_world:
-                        	    a =  line.product_id.product_tmpl_id.property_account_income_world[0];
+                                a =  line.product_id.product_tmpl_id.property_account_income_world[0];
                             else:
                                 a =  line.product_id.product_tmpl_id.categ_id.property_account_income_world[0];
                             #end if

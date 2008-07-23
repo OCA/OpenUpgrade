@@ -128,75 +128,75 @@ class report_timesheet_affectation(osv.osv):
 
     def init(self, cr):
         cr.execute("""
-			create or replace view report_timesheet_affectation as (
-			SELECT 
-				line.id as id,
-				line.name as name, 
-				line.day_date as day_date, 
-				line.hour_from as hour_from, 
-				line.hour_to as hour_to, 
-				u.name as user_name, 
-				g.name as grant_name, 
-				line.timesheet_id as timesheet_id, 
-				line.description as description, 
-				(line.hour_to - line.hour_from) as diff_hours, 
-				affect.name as affectation_name, 
-				affect.percentage as th_percentage, 
-				affect.hours_per_week as hours_per_week, 
-				affect.date_from as date_from, 
-				affect.date_to as date_to, 
-				affect.rate as rate 
-			FROM 
-				cci_timesheet_line line, 
-				cci_timesheet_affectation affect,
-				res_users u,
-				cci_timesheet_grant g
-			WHERE 
-				line.user_id = affect.user_id 
-				AND line.user_id = u.id
-				AND line.grant_id = affect.grant_id 
-				AND line.grant_id = g.id
-				AND (line.day_date <= affect.date_to AND line.day_date >= affect.date_from)
-			)""")
+            create or replace view report_timesheet_affectation as (
+            SELECT 
+                line.id as id,
+                line.name as name, 
+                line.day_date as day_date, 
+                line.hour_from as hour_from, 
+                line.hour_to as hour_to, 
+                u.name as user_name, 
+                g.name as grant_name, 
+                line.timesheet_id as timesheet_id, 
+                line.description as description, 
+                (line.hour_to - line.hour_from) as diff_hours, 
+                affect.name as affectation_name, 
+                affect.percentage as th_percentage, 
+                affect.hours_per_week as hours_per_week, 
+                affect.date_from as date_from, 
+                affect.date_to as date_to, 
+                affect.rate as rate 
+            FROM 
+                cci_timesheet_line line, 
+                cci_timesheet_affectation affect,
+                res_users u,
+                cci_timesheet_grant g
+            WHERE 
+                line.user_id = affect.user_id 
+                AND line.user_id = u.id
+                AND line.grant_id = affect.grant_id 
+                AND line.grant_id = g.id
+                AND (line.day_date <= affect.date_to AND line.day_date >= affect.date_from)
+            )""")
 
 
 
 
 
-#	_columns = {
-#		'user_id' : fields.char('Employee',size=32),
-#		'grant_id' :fields.char('Grant',size=32),
-#		'th_hours_per_week' :fields.float('Hours/Week (Th)'),
-#		'th_percentage' : fields.float('% (Th)'),
-#		'prac_hours_per_week' :fields.float('Hours/Week (Prac)'),
-#		'prac_percentage' : fields.float('% (Prac)'),
-#		'date_from': fields.date('From Date'),
-##		'date_to': fields.date('To Date'),
-#		}
-#	def init(self, cr):
-#		cr.execute("""
-#			create or replace view report_timesheet_affectation as (
-#			SELECT 	temp.user_id as user_id, 
-#					temp.grant_id as grant_id, 
-#					temp.th_hours_per_week as th_hours_per_week,
-#					temp.th_percentage as th_percentage,
-#					temp.prac_hours_per_week as prac_hours_per_week,
-#					0 as prac_percentage,
-#					temp
-#			FROM
-#			(	SELECT 	users.name as user_id, 
-#						affect.grant_id as grant_id, 
-#						SUM(affect.hours_per_week) as th_hours_per_week,
-#						SUM(affect.percentage) as th_percentage,
-#						SUM(line.hour_to - line.hour_from) as prac_hours_per_week
-#				FROM res_users users 
-##				LEFT JOIN cci_timesheet_affectation affect on (affect.user_id = users.id)
-#				LEFT JOIN cci_timesheet_line line on (line.grant_id = affect.grant_id)
-	#			GROUP BY users.name, affect.grant_id
-#			) as temp,
+#   _columns = {
+#       'user_id' : fields.char('Employee',size=32),
+#       'grant_id' :fields.char('Grant',size=32),
+#       'th_hours_per_week' :fields.float('Hours/Week (Th)'),
+#       'th_percentage' : fields.float('% (Th)'),
+#       'prac_hours_per_week' :fields.float('Hours/Week (Prac)'),
+#       'prac_percentage' : fields.float('% (Prac)'),
+#       'date_from': fields.date('From Date'),
+##      'date_to': fields.date('To Date'),
+#       }
+#   def init(self, cr):
+#       cr.execute("""
+#           create or replace view report_timesheet_affectation as (
+#           SELECT  temp.user_id as user_id, 
+#                   temp.grant_id as grant_id, 
+#                   temp.th_hours_per_week as th_hours_per_week,
+#                   temp.th_percentage as th_percentage,
+#                   temp.prac_hours_per_week as prac_hours_per_week,
+#                   0 as prac_percentage,
+#                   temp
+#           FROM
+#           (   SELECT  users.name as user_id, 
+#                       affect.grant_id as grant_id, 
+#                       SUM(affect.hours_per_week) as th_hours_per_week,
+#                       SUM(affect.percentage) as th_percentage,
+#                       SUM(line.hour_to - line.hour_from) as prac_hours_per_week
+#               FROM res_users users 
+##              LEFT JOIN cci_timesheet_affectation affect on (affect.user_id = users.id)
+#               LEFT JOIN cci_timesheet_line line on (line.grant_id = affect.grant_id)
+    #           GROUP BY users.name, affect.grant_id
+#           ) as temp,
 
 
-#			)""")
+#           )""")
 
 
 #good one:
