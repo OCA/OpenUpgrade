@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import tools
 import csv
@@ -91,3 +92,5 @@ class wizard_review_proposed_contributions(wizard.interface):
         },
      }
 wizard_review_proposed_contributions('review.proposed.contributions')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

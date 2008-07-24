@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -33,40 +33,42 @@ import pooler
 
 # l'interet d'avoir un wizard pour ca est de pouvoir imprimer les vignettes directement
 def _invoice_labels(self,cr,uid,datas,context):
-#	service = netsvc.LocalService("object_proxy")
-#	invoice_id = service.execute(uid, 'huissier.vignettes', 'invoice', [datas['id']])
-	vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
-	ids = vign_obj.invoice(cr, uid, datas['ids'],context)
-	cr.commit()
-	print "Facturation finie"
-	print "ids",ids
-	return{}
+#   service = netsvc.LocalService("object_proxy")
+#   invoice_id = service.execute(uid, 'huissier.vignettes', 'invoice', [datas['id']])
+    vign_obj = pooler.get_pool(cr.dbname).get('huissier.vignettes')
+    ids = vign_obj.invoice(cr, uid, datas['ids'],context)
+    cr.commit()
+    print "Facturation finie"
+    print "ids",ids
+    return{}
 
 def facture(self, cr, uid, data, context):
-	id_vignette = pooler.get_pool(cr.dbname).get('huissier.vignettes').browse(cr,uid,data['ids'])
-	inv_vignette= id_vignette[0].invoice_id.id or false
-	if not inv_vignette: return {}
-	return {
-		'domain': str([('id', 'in', [inv_vignette])]),
-		'name': 'Factures de vignettes en attente',
-		'view_type': 'form',
-		'view_mode': 'tree,form',
-		'res_model': 'account.invoice',
-		'view_id': False,
-		'type': 'ir.actions.act_window'
-	}
+    id_vignette = pooler.get_pool(cr.dbname).get('huissier.vignettes').browse(cr,uid,data['ids'])
+    inv_vignette= id_vignette[0].invoice_id.id or false
+    if not inv_vignette: return {}
+    return {
+        'domain': str([('id', 'in', [inv_vignette])]),
+        'name': 'Factures de vignettes en attente',
+        'view_type': 'form',
+        'view_mode': 'tree,form',
+        'res_model': 'account.invoice',
+        'view_id': False,
+        'type': 'ir.actions.act_window'
+    }
 
 
 class wizard_invoice_labels(wizard.interface):
-	states = {
-		'init': {
-			'actions': [_invoice_labels],
-			'result': {'type': 'print', 'report':'huissier.labels', 'state': 'fin'}
-		},
-		'fin':{
-			'actions':[],
-			'result':{'type':'action', 'action':facture, 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_invoice_labels],
+            'result': {'type': 'print', 'report':'huissier.labels', 'state': 'fin'}
+        },
+        'fin':{
+            'actions':[],
+            'result':{'type':'action', 'action':facture, 'state':'end'}
+        }
+    }
 wizard_invoice_labels('huissier.labels.invoice')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

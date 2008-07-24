@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -50,27 +51,29 @@ _export_done_form = '''<?xml version="1.0"?>
 _export_done_fields = {}
 
 def _do_export(self, cr, uid, data, context):
-	self.pool = pooler.get_pool(cr.dbname)
-	ids = self.pool.get('esale_joomla.web').search(cr, uid, [])
-	for website in self.pool.get('esale_joomla.web').browse(cr, uid, ids):
-		server = xmlrpclib.ServerProxy("%s/tinyerp-synchro.php" % website.url)
-		for osc_product in website.product_ids:
-			if osc_product.esale_joomla_id:
-				webproduct={
-					'esale_joomla_id': osc_product.esale_joomla_id,
-					'quantity': pooler.get_pool(cr.dbname).get('product.product')._product_virtual_available(cr, uid, [osc_product.product_id.id], '', False, {'shop':website.shop_id.id})[osc_product.product_id.id],
-				}
-			osc_id=server.set_product_stock(webproduct)
-	return {}
+    self.pool = pooler.get_pool(cr.dbname)
+    ids = self.pool.get('esale_joomla.web').search(cr, uid, [])
+    for website in self.pool.get('esale_joomla.web').browse(cr, uid, ids):
+        server = xmlrpclib.ServerProxy("%s/tinyerp-synchro.php" % website.url)
+        for osc_product in website.product_ids:
+            if osc_product.esale_joomla_id:
+                webproduct={
+                    'esale_joomla_id': osc_product.esale_joomla_id,
+                    'quantity': pooler.get_pool(cr.dbname).get('product.product')._product_virtual_available(cr, uid, [osc_product.product_id.id], '', False, {'shop':website.shop_id.id})[osc_product.product_id.id],
+                }
+            osc_id=server.set_product_stock(webproduct)
+    return {}
 
 class wiz_esale_joomla_stocks(wizard.interface):
 
-	states = {
-		'init': {
-			'actions': [_do_export],
-			'result': { 'type': 'form', 'arch': _export_done_form, 'fields': _export_done_fields, 'state': [('end', 'End')]}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_do_export],
+            'result': { 'type': 'form', 'arch': _export_done_form, 'fields': _export_done_fields, 'state': [('end', 'End')]}
+        }
+    }
 
 
 wiz_esale_joomla_stocks('esale_joomla.stocks');
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

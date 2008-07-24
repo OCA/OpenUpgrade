@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import tools
 import csv
@@ -183,3 +184,5 @@ class wizard_download_file_for_contrib(wizard.interface):
                 },
             }
 wizard_download_file_for_contrib('download.contrib.file')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

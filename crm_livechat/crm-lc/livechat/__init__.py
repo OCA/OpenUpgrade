@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 def ustr(value):
     """This method is similar to the builtin `str` method, except
     it will return Unicode string.
@@ -20,3 +21,5 @@ def ustr(value):
     return unicode(value, 'utf-8')
 
 __builtins__['ustr'] = ustr
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

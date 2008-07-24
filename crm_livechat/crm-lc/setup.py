@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 
 from setuptools import setup, find_packages
 from turbogears.finddata import find_package_data
@@ -75,3 +75,5 @@ setup(
     # if you want to package a default configuration in your egg.
     #data_files = [('config', ['default.cfg'])],
     )
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

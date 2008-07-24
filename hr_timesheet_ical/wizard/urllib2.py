@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 """An extensible library for opening URLs using a variety of protocols
 
 The simplest way to use this module is to call the urlopen function,
@@ -1285,3 +1286,5 @@ class OpenerFactory:
             if inspect.isclass(ph):
                 ph = ph()
             opener.add_handler(ph)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

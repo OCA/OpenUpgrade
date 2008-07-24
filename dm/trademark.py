@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 
 from osv import fields
@@ -15,3 +16,5 @@ class dm_trademark(osv.osv):
     }
     
 dm_trademark()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 import netsvc
@@ -86,3 +87,5 @@ class create_embassy_folder(wizard.interface):
     }
 
 create_embassy_folder("cci_mission.create_embassy_folder")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

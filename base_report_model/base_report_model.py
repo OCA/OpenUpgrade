@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2008 Tiny SPRL (http://tiny.be) All Rights Reserved.
@@ -32,13 +33,15 @@ class base_report_model(osv.osv):
     _name = 'base.report.model'
     _description = 'Visible models for a tool'
     _columns = {
-	'name' : fields.char( 'Visible Name', size=64,required=True ),
-	'model_id' : fields.many2one('ir.model', 'Model', delete='oncascade',required=True),
+    'name' : fields.char( 'Visible Name', size=64,required=True ),
+    'model_id' : fields.many2one('ir.model', 'Model', delete='oncascade',required=True),
     }
     def model_change(self, cr,uid, ids, model_id, context={}):
-	return {
-		'value': {'name':self.pool.get('ir.model').browse(cr,uid,model_id).name}
-	}
+        return {
+            'value': {'name':self.pool.get('ir.model').browse(cr,uid,model_id).name}
+        }
     _order = 'name'
 base_report_model()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -57,3 +57,5 @@ class purchase_order(osv.osv):
         return res
 
 purchase_order()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

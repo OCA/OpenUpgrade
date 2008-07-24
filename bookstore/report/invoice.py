@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,68 +31,70 @@ from report import report_sxw
 from tools import amount_to_text
 
 class account_invoice(report_sxw.rml_parse):
-	def __init__(self, cr, uid, name, context):
-		super(account_invoice, self).__init__(cr, uid, name, context)
-		self.localcontext.update({
-			'time': time,
-			'qty':self.qty,
-			'convert':self.french_convert,
-			'author' : self.author,
-			'partner_ref':self.partner_ref
-		})
+    def __init__(self, cr, uid, name, context):
+        super(account_invoice, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+            'qty':self.qty,
+            'convert':self.french_convert,
+            'author' : self.author,
+            'partner_ref':self.partner_ref
+        })
 
-	def partner_ref(self,production_id):
+    def partner_ref(self,production_id):
 
-		sql = 'select order_id from sale_order_line where production_lot_id = %d '
+        sql = 'select order_id from sale_order_line where production_lot_id = %d '
 
-		self.cr.execute(sql%(production_id))
+        self.cr.execute(sql%(production_id))
 
-		res = [];
-		res=self.cr.fetchall();
-
-
-		sales_order = self.pool.get('sale.order').read(self.cr,self.uid,[res[0][0]]);
+        res = [];
+        res=self.cr.fetchall();
 
 
-		partner_ref = sales_order[0]['client_order_ref']
-		name = sales_order[0]['name']
+        sales_order = self.pool.get('sale.order').read(self.cr,self.uid,[res[0][0]]);
 
-		value ={'partner_ref':partner_ref,'name':name}
-		return value;
 
-	def author(self,product_id):
-		if not product_id : return ''
-		author_id = self.pool.get('product.product').read(self.cr,self.uid,[product_id])[0];
+        partner_ref = sales_order[0]['client_order_ref']
+        name = sales_order[0]['name']
 
-		author_name = self.pool.get('library.author').read(self.cr,self.uid,author_id['author_ids']);
+        value ={'partner_ref':partner_ref,'name':name}
+        return value;
 
-		name_list=[];
+    def author(self,product_id):
+        if not product_id : return ''
+        author_id = self.pool.get('product.product').read(self.cr,self.uid,[product_id])[0];
 
-		name="Authors -"
+        author_name = self.pool.get('library.author').read(self.cr,self.uid,author_id['author_ids']);
 
-		for a_name in author_name:
-			name_list.append(a_name['name']);
+        name_list=[];
 
-		return ', '.join(name_list)
+        name="Authors -"
 
-	# end def
+        for a_name in author_name:
+            name_list.append(a_name['name']);
 
-	def french_convert(self,amount):
-		amt = amount_to_text.amount_to_text_fr(amount,'Euro');
-		amt_en = amount_to_text.amount_to_text_en(amount,'Euro');
-		value={};
-		value= {'french':amt, 'english':amt_en}
-		return value;
+        return ', '.join(name_list)
 
-	# end def
+    # end def
 
-	def qty(self,invoice):
-		ret_qty = 0.0;
-		for invoice_line in invoice.invoice_line:
-			if invoice_line.product_id.type<>'service':
-				ret_qty = ret_qty + invoice_line.quantity;
-		return ret_qty;
-	# end def
+    def french_convert(self,amount):
+        amt = amount_to_text.amount_to_text_fr(amount,'Euro');
+        amt_en = amount_to_text.amount_to_text_en(amount,'Euro');
+        value={};
+        value= {'french':amt, 'english':amt_en}
+        return value;
+
+    # end def
+
+    def qty(self,invoice):
+        ret_qty = 0.0;
+        for invoice_line in invoice.invoice_line:
+            if invoice_line.product_id.type<>'service':
+                ret_qty = ret_qty + invoice_line.quantity;
+        return ret_qty;
+    # end def
 
 
 report_sxw.report_sxw('report.account.invoice.bookstore', 'account.invoice', 'addons/bookstore/report/invoice.rml', parser=account_invoice)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

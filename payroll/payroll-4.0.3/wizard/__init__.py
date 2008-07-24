@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -31,3 +32,5 @@ import print_attendance_error
 import print_salary_monthly
 
 import sign_in_out
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #                    Fabien Pinckaers <fp@tiny.Be>
@@ -163,3 +164,5 @@ class hotel_housekeeping_activity_type(osv.osv):
     }
 #end class
 hotel_housekeeping_activity_type()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -53,3 +54,5 @@ class account_journal(osv.osv):
                         result.append(journal.id)
             return result
 account_journal()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

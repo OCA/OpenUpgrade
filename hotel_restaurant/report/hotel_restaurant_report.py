@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 from report import report_sxw
 import datetime
@@ -22,3 +23,5 @@ report_sxw.report_sxw('report.hotel.kot', 'hotel.restaurant.order', 'addons/hote
 report_sxw.report_sxw('report.hotel.bill', 'hotel.restaurant.order', 'addons/hotel_restaurant/report/bill.rml',parser=hotel_restaurant_report)
 report_sxw.report_sxw('report.hotel.table.res', 'hotel.restaurant.reservation', 'addons/hotel_restaurant/report/res_table.rml',parser=hotel_restaurant_report)
      
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

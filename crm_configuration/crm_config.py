@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import tools
 from osv import fields,osv,orm
@@ -48,4 +49,6 @@ class crm_cases(osv.osv):
 
 crm_cases()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

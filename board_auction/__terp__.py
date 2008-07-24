@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name":"Board for Auction",
     "version":"1.0",
@@ -6,7 +7,7 @@
     "depends":[
         "board",
         "auction",
-#		"report_auction",
+#       "report_auction",
     ],
     "demo_xml":["board_auction_demo.xml"],
     "update_xml":["board_auction_view.xml","board_auction_manager_view.xml"],
@@ -21,4 +22,6 @@
 
 
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

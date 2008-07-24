@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -25,15 +26,17 @@
 #
 ##############################################################################
 {
-	"name" : "France - Régime réel de TVA",
-	"version" : "1.0",
-	"author" : "Simon JAILLET - CrysaLEAD",
-	"website": "http://www.crysalead.com",
-	"category" : "Localisation/VAT",
-	"depends" : ["base","account","account_chart","l10n_fr","l10n_fr_pcg"],
-	"init_xml" : [],
-	"demo_xml" : [],
-	"update_xml" : ['tax.xml'],
-	"active": False,
-	"installable": True
+    "name" : "France - Régime réel de TVA",
+    "version" : "1.0",
+    "author" : "Simon JAILLET - CrysaLEAD",
+    "website": "http://www.crysalead.com",
+    "category" : "Localisation/VAT",
+    "depends" : ["base","account","account_chart","l10n_fr","l10n_fr_pcg"],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : ['tax.xml'],
+    "active": False,
+    "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

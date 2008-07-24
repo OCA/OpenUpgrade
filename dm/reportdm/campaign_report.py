@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -39,3 +40,5 @@ class campaign_report(report_sxw.rml_parse):
         self.context = context
         
 report_sxw.report_sxw('report.dm.campaign.report', 'dm.campaign', 'addons/dm/report/dm_campagin.rml', parser=campaign_report,)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

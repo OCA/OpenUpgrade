@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -133,3 +134,5 @@ class sale_advance_payment(wizard.interface):
     }
 
 sale_advance_payment("sale.advance_payment_inv")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

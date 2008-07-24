@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -41,7 +42,7 @@ class payroll_setup_deductions(osv.osv):
             'description' : fields.char('Description', size=32),
             #'element_specific' : fields.boolean("Pay Element Specific"),
             #'taxable' : fields.boolean("Taxable"),
-			'loan_advances' : fields.boolean("Loan or Advances"),
+            'loan_advances' : fields.boolean("Loan or Advances"),
             'attendance' : fields.boolean("Attendance Specific"),
             'monthly_variable' : fields.boolean("Monthly Variable"),
             'emp_wise_posting' : fields.boolean("Employee Wise Posting"),
@@ -56,4 +57,6 @@ class payroll_setup_deductions(osv.osv):
     
 payroll_setup_deductions()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

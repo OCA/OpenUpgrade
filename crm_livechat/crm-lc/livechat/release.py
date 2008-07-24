@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # Release information about crn-lc
 
 version = "1.0"
@@ -12,3 +13,5 @@ version = "1.0"
 # url = "http://yourcool.site/"
 # download_url = "http://yourcool.site/download"
 # license = "MIT"
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -123,3 +124,5 @@ class wiz_esale_joomla_tax(wizard.interface):
         }
     }
 wiz_esale_joomla_tax('esale_joomla.tax');
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

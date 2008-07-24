@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 
 class report_commission_month(osv.osv):
@@ -68,4 +69,6 @@ S.name,I.number,A.id,AMR.name
 )
 ) """)
 report_commission_month()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

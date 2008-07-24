@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -28,11 +29,13 @@
 from osv import fields,osv,orm
 
 class res_partner_address(osv.osv):
-	_description ='Partner Contact'
-	_name = 'res.partner.address'
-	_inherit = 'res.partner.address'
-	_columns = {
-#		'google_map': fields.function(_get_url, method=True,
-#			string='Google Map', type='char',),
-		}
+    _description ='Partner Contact'
+    _name = 'res.partner.address'
+    _inherit = 'res.partner.address'
+    _columns = {
+#       'google_map': fields.function(_get_url, method=True,
+#           string='Google Map', type='char',),
+        }
 res_partner_address()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

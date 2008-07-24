@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 
 AVAILABLE_STATES = [
@@ -151,3 +152,5 @@ class report_crm_case_section_categ_categ2(osv.osv):
                 group by substring(c.create_date for 7), c.user_id, c.categ_id, c.category2_id, c.state, c.stage_id, c.section_id)""")
 
 report_crm_case_section_categ_categ2()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

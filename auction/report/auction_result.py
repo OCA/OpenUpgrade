@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -34,11 +35,13 @@ from report import report_sxw
 
 
 class auction_result(report_sxw.rml_parse):
-	def __init__(self, cr, uid, name, context):
-		super(auction_result, self).__init__(cr, uid, name, context)
-		self.localcontext.update({
-			'time': time,
+    def __init__(self, cr, uid, name, context):
+        super(auction_result, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
 
-		})
+        })
 report_sxw.report_sxw('report.auction.result', 'auction.lots', 'addons/auction/report/auction_result.rml',parser=auction_result)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

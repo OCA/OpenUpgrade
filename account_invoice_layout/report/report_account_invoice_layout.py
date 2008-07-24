@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import pooler
 from report import report_sxw
@@ -187,3 +188,5 @@ class account_invoice_1(report_sxw.rml_parse):
             result.append(res)
         return result
 report_sxw.report_sxw('report.account.invoice.layout', 'account.invoice', 'addons/account_invoice_layout/report/report_account_invoice_layout.rml', parser=account_invoice_1)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

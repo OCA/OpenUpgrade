@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ###############################################################################
 #
 # Copyright (c) 2007 TinyERP Pvt Ltd. (http://tinyerp.com) All Rights Reserved.
@@ -63,3 +64,5 @@ def message(msg):
 
 def to_xml(s):
     return s.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

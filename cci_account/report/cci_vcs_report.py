@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -73,3 +74,5 @@ class cci_vcs_report(report_sxw.rml_parse):
         return result
 
 report_sxw.report_sxw('report.cci.vcs', 'account.invoice', 'addons/cci_account/report/cci_vcs_report.rml',parser=cci_vcs_report,header=False)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

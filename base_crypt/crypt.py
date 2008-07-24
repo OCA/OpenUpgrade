@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # Notice:
 # ------
 #
@@ -233,3 +234,5 @@ class users(osv.osv):
         'input_pw': fields.function( get_pw, fnct_inv=set_pw, type='char', method=True, size=20, string='Password', invisible=True),
             }
 users()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

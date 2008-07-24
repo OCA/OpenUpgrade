@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -31,62 +32,64 @@ import pooler
 
 asset_end_arch = '''<?xml version="1.0"?>
 <form string="Modify asset">
-	<separator string="Asset properties to modify" colspan="4"/>
-	<field name="name" colspan="4"/>
-	<field name="method_delay"/>
-	<field name="method_period"/>
-	<separator string="Notes" colspan="4"/>
-	<field name="note" nolabel="1" colspan="4"/>
+    <separator string="Asset properties to modify" colspan="4"/>
+    <field name="name" colspan="4"/>
+    <field name="method_delay"/>
+    <field name="method_period"/>
+    <separator string="Notes" colspan="4"/>
+    <field name="note" nolabel="1" colspan="4"/>
 </form>'''
 
 asset_end_fields = {
-	'name': {'string':'Reason', 'type':'char', 'size':64, 'required':True},
-	'method_delay': {'string':'Number of interval', 'type':'float'},
-	'method_period': {'string':'Period per interval', 'type':'float'},
-	'note': {'string':'Notes', 'type':'text'},
+    'name': {'string':'Reason', 'type':'char', 'size':64, 'required':True},
+    'method_delay': {'string':'Number of interval', 'type':'float'},
+    'method_period': {'string':'Period per interval', 'type':'float'},
+    'note': {'string':'Notes', 'type':'text'},
 }
 
 def _asset_default(self, cr, uid, data, context={}):
-	pool = pooler.get_pool(cr.dbname)
-	prop = pool.get('account.asset.property').browse(cr, uid, data['id'], context)
-	return {
-		'name': prop.name,
-		'method_delay': prop.method_delay,
-		'method_period': prop.method_period
-	}
+    pool = pooler.get_pool(cr.dbname)
+    prop = pool.get('account.asset.property').browse(cr, uid, data['id'], context)
+    return {
+        'name': prop.name,
+        'method_delay': prop.method_delay,
+        'method_period': prop.method_period
+    }
 
 def _asset_modif(self, cr, uid, data, context={}):
-	pool = pooler.get_pool(cr.dbname)
-	prop = pool.get('account.asset.property').browse(cr, uid, data['id'], context)
-	pool.get('account.asset.property.history').create(cr, uid, {
-		'asset_property_id': data['id'],
-		'name': prop.name,
-		'method_delay': prop.method_delay,
-		'method_period': prop.method_period,
-		'note': data['form']['note'],
-	}, context)
-	pool.get('account.asset.property').write(cr, uid, [data['id']], {
-		'name': data['form']['name'],
-		'method_delay': data['form']['method_delay'],
-		'method_period': data['form']['method_period'],
-	}, context)
-	return {}
+    pool = pooler.get_pool(cr.dbname)
+    prop = pool.get('account.asset.property').browse(cr, uid, data['id'], context)
+    pool.get('account.asset.property.history').create(cr, uid, {
+        'asset_property_id': data['id'],
+        'name': prop.name,
+        'method_delay': prop.method_delay,
+        'method_period': prop.method_period,
+        'note': data['form']['note'],
+    }, context)
+    pool.get('account.asset.property').write(cr, uid, [data['id']], {
+        'name': data['form']['name'],
+        'method_delay': data['form']['method_delay'],
+        'method_period': data['form']['method_period'],
+    }, context)
+    return {}
 
 
 class wizard_asset_modify(wizard.interface):
-	states = {
-		'init': {
-			'actions': [_asset_default],
-			'result': {'type':'form', 'arch':asset_end_arch, 'fields':asset_end_fields, 'state':[
-				('end','Cancel'),
-				('asset_modify','Modify asset')
-			]}
-		},
-		'asset_modify': {
-			'actions': [_asset_modif],
-			'result': {'type' : 'state', 'state': 'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_asset_default],
+            'result': {'type':'form', 'arch':asset_end_arch, 'fields':asset_end_fields, 'state':[
+                ('end','Cancel'),
+                ('asset_modify','Modify asset')
+            ]}
+        },
+        'asset_modify': {
+            'actions': [_asset_modif],
+            'result': {'type' : 'state', 'state': 'end'}
+        }
+    }
 wizard_asset_modify('account.asset.modify')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

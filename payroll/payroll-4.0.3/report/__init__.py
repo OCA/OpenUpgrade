@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be)
@@ -31,3 +32,5 @@ import timesheet
 import bymonth
 import attendance_errors
 import salary_month
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 import tools
 import ir
@@ -20,3 +21,5 @@ class stock_production_lot(osv.osv):
     }
 
 stock_production_lot()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -40,47 +41,49 @@ _form = """<?xml version="1.0"?>
 """
 _fields = {
 
-	'product': {'string':'Product', 'type':'many2one',
-							'relation': 'product.product', 'required': True,
-				'default':False},
+    'product': {'string':'Product', 'type':'many2one',
+                            'relation': 'product.product', 'required': True,
+                'default':False},
 
-	'quantity': {'string':'Quantity', 'type':'integer',
-								'required': True, 'default':1},
-	}
+    'quantity': {'string':'Quantity', 'type':'integer',
+                                'required': True, 'default':1},
+    }
 
 def _add(self, cr, uid, data, context):
-	pool = pooler.get_pool(cr.dbname)
-	order_obj = pool.get('pos.order')
-	order_obj.add_product(cr, uid, data['id'], data['form']['product'],
-							data['form']['quantity'],context=context)
+    pool = pooler.get_pool(cr.dbname)
+    order_obj = pool.get('pos.order')
+    order_obj.add_product(cr, uid, data['id'], data['form']['product'],
+                            data['form']['quantity'],context=context)
 
-	return {}
+    return {}
 
 def _pre_init(self, cr, uid, data, context):
-	return {'product': False, 'quantity': 1}
+    return {'product': False, 'quantity': 1}
 
 class add_product(wizard.interface):
 
-	states = {
-		'init': {
-			'actions': [_pre_init],
-			'result': {
-				'type': 'form',
-				'arch': _form,
-				'fields': _fields,
-				'state':	[	('end', 'Cancel'),
-										('add', '_Add product', 'gtk-ok', True)
-									]
-			}
-		},
-		'add': {
-			'actions': [_add],
-			'result': {
-				'type': 'state',
-				'state': 'init',
-			}
-		},
-	}
+    states = {
+        'init': {
+            'actions': [_pre_init],
+            'result': {
+                'type': 'form',
+                'arch': _form,
+                'fields': _fields,
+                'state':    [   ('end', 'Cancel'),
+                                        ('add', '_Add product', 'gtk-ok', True)
+                                    ]
+            }
+        },
+        'add': {
+            'actions': [_add],
+            'result': {
+                'type': 'state',
+                'state': 'init',
+            }
+        },
+    }
 
 add_product('pos.add_product')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

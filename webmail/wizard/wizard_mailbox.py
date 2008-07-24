@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 
@@ -114,3 +115,5 @@ class wizard_mailbox(wizard.interface):
     }
     
 wizard_mailbox('webmail.mailbox')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

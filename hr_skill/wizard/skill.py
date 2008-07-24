@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 import time
@@ -25,3 +26,5 @@ class skillemployee(wizard.interface):
     }
 
 skillemployee('empskill')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 {
     'name': 'cci Account Data',
@@ -11,3 +12,5 @@
      'update_xml':['account_demo.xml','account.account.csv','account.journal.csv'],
      'installable': True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

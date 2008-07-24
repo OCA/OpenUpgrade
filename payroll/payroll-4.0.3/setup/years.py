@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -38,13 +39,13 @@ class payroll_setup_years(osv.osv):
     _columns = {
             'name' : fields.char('Year', size=32, required=True),
             'asses_from' : fields.date('Assessment year from'),
-			'asses_to' : fields.date('To'),
-			'pf_from' : fields.date('PF year from'),
-			'pf_to' : fields.date('To'),
-			'finance_from' : fields.date('Financial year from'),
-			'finance_to' : fields.date('To'),
-			'leave_from' : fields.date('Leave year from'),
-			'leave_to' : fields.date('To','%m%y'),
+            'asses_to' : fields.date('To'),
+            'pf_from' : fields.date('PF year from'),
+            'pf_to' : fields.date('To'),
+            'finance_from' : fields.date('Financial year from'),
+            'finance_to' : fields.date('To'),
+            'leave_from' : fields.date('Leave year from'),
+            'leave_to' : fields.date('To','%m%y'),
         }
     _defaults = {
             #'attendance' : lambda *a: True,
@@ -52,3 +53,5 @@ class payroll_setup_years(osv.osv):
     _order = 'name desc'
     
 payroll_setup_years()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

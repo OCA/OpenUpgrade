@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*-encoding: iso8859-1 -*-
 ##############################################################################
 #
@@ -34,44 +35,46 @@ from report.interface import report_rml
 from report.int_to_text import int_to_text
 
 def toxml(val):
-	return val.replace('&', '&amp;').replace('<','&lt;').replace('>','&gt;').decode('utf-8').encode('latin1', 'replace')
+    return val.replace('&', '&amp;').replace('<','&lt;').replace('>','&gt;').decode('utf-8').encode('latin1', 'replace')
 
 class report_custom(report_rml):
-	def __init__(self, name, table, tmpl, xsl):
-		report_rml.__init__(self, name, table, tmpl, xsl)
+    def __init__(self, name, table, tmpl, xsl):
+        report_rml.__init__(self, name, table, tmpl, xsl)
 
-	def create_xml(self,cr, uid, ids, datas, context={}):
-		pool= pooler.get_pool(cr.dbname)
-		lots = pool.get('auction.lots').browse(cr, uid, ids)
-		auction = lots[0].auction_id
+    def create_xml(self,cr, uid, ids, datas, context={}):
+        pool= pooler.get_pool(cr.dbname)
+        lots = pool.get('auction.lots').browse(cr, uid, ids)
+        auction = lots[0].auction_id
 
-		xml = '''<?xml version="1.0" encoding="ISO-8859-1"?>
+        xml = '''<?xml version="1.0" encoding="ISO-8859-1"?>
 <report>
-	<auction>
-		<name>%s</name>
-		<date-au1>%s</date-au1>
-	</auction>''' % (toxml(auction['name']), toxml(auction['auction1']))
-	
-		i = 0
-		for l in lots:
-#			l['id_cont'] = str(i)
-			if l['obj_price']==0:
-				price_french = 'retiré'
-			else:
-				price_french = int_to_text(int(l['obj_price'] or 0.0))+' eur'
-			i+=1
-			xml += '''	<object>
-		<number>%d</number>
-		<obj_num>%d</obj_num>
-		<lot_desc>%s</lot_desc>
-		<price>%s</price>
-		<obj_price>%s</obj_price>
-	</object>''' % (i, l['obj_num'], toxml(l['name']), price_french, str(l['obj_price'] or '/'))
-		xml += '</report>'
-		
-#		file('/tmp/terp.xml','wb+').write(xml)
-		return xml
+    <auction>
+        <name>%s</name>
+        <date-au1>%s</date-au1>
+    </auction>''' % (toxml(auction['name']), toxml(auction['auction1']))
+    
+        i = 0
+        for l in lots:
+#           l['id_cont'] = str(i)
+            if l['obj_price']==0:
+                price_french = 'retiré'
+            else:
+                price_french = int_to_text(int(l['obj_price'] or 0.0))+' eur'
+            i+=1
+            xml += '''  <object>
+        <number>%d</number>
+        <obj_num>%d</obj_num>
+        <lot_desc>%s</lot_desc>
+        <price>%s</price>
+        <obj_price>%s</obj_price>
+    </object>''' % (i, l['obj_num'], toxml(l['name']), price_french, str(l['obj_price'] or '/'))
+        xml += '</report>'
+        
+#       file('/tmp/terp.xml','wb+').write(xml)
+        return xml
 
 report_custom('report.flagey.huissier', 'auction.lots', '', 'addons/auction/report/huissier.xsl')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

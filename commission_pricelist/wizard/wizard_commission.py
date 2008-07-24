@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -31,24 +32,26 @@ import wizard
 
 dates_form = '''<?xml version="1.0"?>
 <form string="select a month for commision">
-	<field name="period_id"/>
+    <field name="period_id"/>
 </form>'''
 
 dates_fields = {
-	'period_id': {'string':'Period', 'type':'many2one', 'relation': 'account.period'},
+    'period_id': {'string':'Period', 'type':'many2one', 'relation': 'account.period'},
 }
 
 class wizard_report(wizard.interface):
-	states = {
-		'init': {
-			'actions': [], 
-			'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel'),('report','Print Commission.')]}
-		},
-		'report': {
-			'actions': [],
-			'result': {'type':'print', 'report':'sale.agent', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [], 
+            'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel'),('report','Print Commission.')]}
+        },
+        'report': {
+            'actions': [],
+            'result': {'type':'print', 'report':'sale.agent', 'state':'end'}
+        }
+    }
 wizard_report('sale.agent')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

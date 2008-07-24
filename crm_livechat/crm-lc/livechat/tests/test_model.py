@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # If your project uses a database, you can set up database tests
 # similar to what you see below. Be sure to set the db_uri to
 # an appropriate uri for your testing database. sqlite is a good
@@ -19,4 +20,6 @@ from turbogears import testutil, database
 #                       display_name = "Mr Creosote",
 #                       password = "Wafer-thin Mint")
 #         assert obj.display_name == "Mr Creosote"
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

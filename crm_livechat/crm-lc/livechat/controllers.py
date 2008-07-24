@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from turbogears import controllers, expose, flash, redirect, config
 import cherrypy
 from cherrypy import request, response
@@ -30,4 +31,6 @@ class Root(controllers.RootController):
         print "cherrypy.session[cherrypy.request.remoteAddr]::",cherrypy.session[cherrypy.request.remoteAddr],"::::",cherrypy.request.remoteAddr
         print "Redirecting to ChatFunc"
         raise redirect('chatfunc/index')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

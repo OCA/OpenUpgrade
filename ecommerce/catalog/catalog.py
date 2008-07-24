@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import datetime
 import time
 import netsvc
@@ -64,3 +65,5 @@ class shipping_service(osv.osv):
                'shipp_method':fields.many2one('ecommerce.shipping.method','Shipping Method')
                }
 shipping_service()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

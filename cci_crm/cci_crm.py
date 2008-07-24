@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -92,3 +93,5 @@ class event_event(osv.osv):
         'case_ids' : fields.many2many('crm.case','case_event_rel','event_id','case_id','Cases')
     }
 event_event()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

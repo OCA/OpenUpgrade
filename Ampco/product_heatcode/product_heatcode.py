@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import netsvc
 from osv import fields, osv
@@ -100,4 +101,6 @@ product_properties()
 #          'description' : field.char('Desciption',size=256,select=True,required=True),
 #      }
 #electrical_properties()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

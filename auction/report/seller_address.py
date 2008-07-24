@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,34 +31,36 @@ from report.interface import report_int
 import netsvc
 
 class auction_seller(report_int):
-	def __init__(self, name):
-		report_int.__init__(self, name)
+    def __init__(self, name):
+        report_int.__init__(self, name)
 
-	def create(self,cr, uid, ids, datas, context):
-		service = netsvc.LocalService("object_proxy")
-		lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['bord_vnd_id'])
+    def create(self,cr, uid, ids, datas, context):
+        service = netsvc.LocalService("object_proxy")
+        lots = service.execute(cr.dbname,uid, 'auction.lots', 'read', ids, ['bord_vnd_id'])
 
-		bords = {}
-		for l in lots:
-			if l['bord_vnd_id']:
-				bords[l['bord_vnd_id'][0]]=True
-		new_ids = bords.keys()
+        bords = {}
+        for l in lots:
+            if l['bord_vnd_id']:
+                bords[l['bord_vnd_id'][0]]=True
+        new_ids = bords.keys()
 
-		parts = {}
-		partners = service.execute(cr.dbname,uid, 'auction.deposit', 'read', new_ids, ['partner_id'])
-		for l in partners:
-			if l['partner_id']:
-				parts[l['partner_id'][0]]=True
-		new_ids = parts.keys()
-		if not len(new_ids):
-			raise 'UserError', 'No seller !'
+        parts = {}
+        partners = service.execute(cr.dbname,uid, 'auction.deposit', 'read', new_ids, ['partner_id'])
+        for l in partners:
+            if l['partner_id']:
+                parts[l['partner_id'][0]]=True
+        new_ids = parts.keys()
+        if not len(new_ids):
+            raise 'UserError', 'No seller !'
 
-		datas['ids'] = new_ids
+        datas['ids'] = new_ids
 
-		self._obj_invoice = netsvc.LocalService('report.res.partner.address')
-		return self._obj_invoice.create(cr,uid, new_ids, datas, context)
+        self._obj_invoice = netsvc.LocalService('report.res.partner.address')
+        return self._obj_invoice.create(cr,uid, new_ids, datas, context)
 
-	def result(self):
-		return self._obj_invoice.result()
+    def result(self):
+        return self._obj_invoice.result()
 
 auction_seller('report.auction.seller_labels')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

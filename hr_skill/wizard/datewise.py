@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 import time
@@ -29,4 +30,6 @@ class datewisecheck(wizard.interface):
         }
     }
 datewisecheck('employee.date.check')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

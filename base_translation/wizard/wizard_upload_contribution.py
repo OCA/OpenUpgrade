@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import tools
 import pooler
@@ -120,3 +121,5 @@ class wizard_upload_contrib(wizard.interface):
         },
     }
 wizard_upload_contrib('upload.contrib')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

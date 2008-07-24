@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -49,3 +50,5 @@ class project_project(osv.osv):
         return super(project_project,self).write(cr, uid, ids,vals, *args, **kwargs)
 
 project_project()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

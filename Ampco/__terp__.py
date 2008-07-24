@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name":"Ampco",
     "version":"1.0",
@@ -14,3 +15,5 @@
           ],
     "installable":True,
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

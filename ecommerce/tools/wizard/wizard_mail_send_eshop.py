@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import netsvc
 import pooler
@@ -113,4 +114,6 @@ class wiz_send_email_eshop(wizard.interface):
   
 wiz_send_email_eshop('customer.send.mail.eshop') 
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -54,4 +55,6 @@ class account_bank_statement(osv.osv):
         'coda_id':fields.many2one('account.coda','Coda'),
     }
 account_bank_statement()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

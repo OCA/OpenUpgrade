@@ -70,3 +70,5 @@ class sale_order(osv.osv):
                     (cr, uid, {'date_create':time.strftime('%Y-%m-%d %H:%M:%S'),'server_id' : smtpserver_id[0],'name':'The Email is not sent because the Partner have no Email','email':'','model':model_id,'resource_id':ids[0]})
         return result
 sale_order()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

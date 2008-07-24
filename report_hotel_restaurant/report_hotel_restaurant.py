@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -60,3 +61,5 @@ class report_hotel_restaurant_status(osv.osv):
                 group by c.state,c.reservation_id
             )""")
 report_hotel_restaurant_status()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

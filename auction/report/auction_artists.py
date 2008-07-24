@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -42,4 +43,6 @@ class auction_artists(report_sxw.rml_parse):
 
         })
 report_sxw.report_sxw('report.auction.artists', 'auction.lots', 'addons/auction/report/auction_artists.rml',parser=auction_artists)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

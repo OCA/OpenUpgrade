@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,3 +30,5 @@
 import purchase_journal
 import purchase_journal_inherit
 import purchase_journal_report
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

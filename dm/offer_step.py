@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import campaign
 
@@ -287,4 +288,6 @@ class dm_product(osv.osv):
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
     }
 dm_product()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

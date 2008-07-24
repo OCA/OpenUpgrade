@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -401,3 +402,5 @@ class hotel_restaurant_order_list(osv.osv):
         'price_subtotal': fields.function(_sub_total, method=True, string='Subtotal'),
          }
 hotel_restaurant_order_list()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

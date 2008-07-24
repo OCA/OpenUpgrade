@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -33,4 +34,6 @@ sock = xmlrpclib.ServerProxy('http://%s:%s/xmlrpc/object' % (sys.argv[3],sys.arg
 
 ids = sock.execute(sys.argv[5], 3, 'admin', 'asterisk.phone', 'search', [('phoneid','=',sys.argv[1])])
 sock.execute(sys.argv[5], 3, 'admin', 'asterisk.phone', 'write', ids, {'current_callerid': sys.argv[2]})
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

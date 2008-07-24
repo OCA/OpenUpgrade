@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -34,22 +35,24 @@ from osv import osv
 import netsvc
 
 def _confirm(self, cr, uid, data, context):
-	wf_service = netsvc.LocalService("workflow")
+    wf_service = netsvc.LocalService("workflow")
 
-	for i in data['ids']:
-		wf_service.trg_validate(uid, 'pos.order', i, 'done', cr)
-	return {}
+    for i in data['ids']:
+        wf_service.trg_validate(uid, 'pos.order', i, 'done', cr)
+    return {}
 
 
 class pos_confirm(wizard.interface):
-	states = {
-		'init' : {'actions' : [_confirm],
-			'result' : {
-				'type' : 'state',
-				'state': 'end',
-			}
-		},
-	}
+    states = {
+        'init' : {'actions' : [_confirm],
+            'result' : {
+                'type' : 'state',
+                'state': 'end',
+            }
+        },
+    }
 
 pos_confirm('pos.confirm')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
