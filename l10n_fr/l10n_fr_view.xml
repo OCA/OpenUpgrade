@@ -1,20 +1,21 @@
 <?xml version="1.0"?>
 <terp>
   <data>
-    <menuitem name="Financial Management/Reporting/Documents de synthèse" />
+    <menuitem name="Documents de synthèse" parent="account.menu_finance_reporting" id="menu_l10n_fr_report_doc"/>
+	<menuitem name="Configuration" parent="menu_l10n_fr_report_doc" id="menu_l10n_fr_report_con"/>
 
     <record model="ir.actions.act_window" id="action_l10n_fr_report_tree">
       <field name="name">Rapport</field>
       <field name="res_model">l10n.fr.report</field>
     </record>
-    <menuitem name="Financial Management/Reporting/Documents de synthèse/Configuration/Rapports" id="menu_l10n_fr_report_tree" action="action_l10n_fr_report_tree"/>
+    <menuitem name="Rapports" parent="menu_l10n_fr_report_con" id="menu_l10n_fr_report_tree" action="action_l10n_fr_report_tree"/>
 
     <record model="ir.actions.act_window" id="action_l10n_fr_line_tree">
       <field name="name">Entree</field>
       <field name="res_model">l10n.fr.line</field>
       <field name="view_mode">tree</field>
     </record>
-    <menuitem name="Financial Management/Reporting/Documents de synthèse/Configuration/Entrées" id="menu_l10n_fr_line_tree" action="action_l10n_fr_line_tree"/>
+    <menuitem name="Entrées" parent="menu_l10n_fr_report_con" id="menu_l10n_fr_line_tree" action="action_l10n_fr_line_tree"/>
 
     <record model="ir.ui.view" id="view_l10n_fr_line_tree">
       <field name="name">l10n.fr.line</field>

@@ -3,7 +3,8 @@
 	<data>
 
 		<menuitem name="Tools" id="menu_tools" icon="STOCK_PREFERENCES"/>
-		<menuitem name="Tools/Lunch/Configuration" id="menu_lunch_category_root" sequence="1"/>
+		<menuitem name="Lunch" parent="menu_tools" id="menu_lunch" />
+		<menuitem name="Configuration" parent="menu_lunch" id="menu_lunch_category_root" sequence="1"/>
 
 		<record model="ir.ui.view" id="view_lunch_order_form">
 			<field name="name">Order</field>	
@@ -47,7 +48,7 @@
 				<field name="res_model">lunch.order</field>
 				<field name="view_mode">form,tree</field>
 		</record>
-		<menuitem name="Tools/Lunch/Make order" id="menu_lunch_order_form" action="action_lunch_order_form"/>
+		<menuitem name="Make order" parent="menu_lunch" id="menu_lunch_order_form" action="action_lunch_order_form"/>
 		
 		<record model="ir.actions.act_window" id="action_lunch_order_day_form">
 				<field name="name"> Order of the day</field>
@@ -55,7 +56,7 @@
 				<field name="domain">[('date','=',time.strftime('%Y-%m-%d'))]</field>
 		
 		</record>
-		<menuitem name="Tools/Lunch/Make order/Order of the day" id="menu_lunch_order_day_form" action="action_lunch_order_day_form"/>
+		<menuitem name="Order of the day" parent="menu_lunch_order_form" id="menu_lunch_order_day_form" action="action_lunch_order_day_form"/>
 
 		<record model="ir.ui.view" id="view_lunch_cashbox_form">
 			<field name="name">CashBox</field>	
@@ -85,7 +86,7 @@
 				<field name="name"> CashBox </field>
 				<field name="res_model">lunch.cashbox</field>
 		</record>
-		<menuitem name="Tools/Lunch/Configuration/CashBox" id="menu_lunch_cashbox_form" action="action_lunch_cashbox_form"/>
+		<menuitem name="CashBox" parent="menu_lunch_category_root" id="menu_lunch_cashbox_form" action="action_lunch_cashbox_form"/>
 
 		<record model="ir.ui.view" id="view_lunch_cashmove_form">
 			<field name="name">CashMove</field>	
@@ -121,7 +122,7 @@
 				<field name="res_model">lunch.cashmove</field>
 		</record>
 
-		<menuitem name="Tools/Lunch/Cash Moves" id="menu_lunch_cashmove_form" action="action_lunch_cashmove_form"/>
+		<menuitem name="Cash Moves" parent="menu_lunch" id="menu_lunch_cashmove_form" action="action_lunch_cashmove_form"/>
 
 		<record model="ir.ui.view" id="view_lunch_category_form">
 			<field name="name"> Category of product </field>
@@ -152,7 +153,8 @@
 		</record>
 
 
-		<menuitem name="Tools/Lunch/Configuration/Products/Category of product" id="menu_lunch_category_form" action="action_lunch_category_form" />
+		<menuitem name="Products" parent="menu_lunch_category_root" id="menu_lunch_product_form" action="action_lunch_product_form"  sequence="1"/>
+		<menuitem name="Category of product" parent="menu_lunch_product_form" id="menu_lunch_category_form" action="action_lunch_category_form" />
 
 
 		<record model="ir.ui.view" id="view_lunch_product_form">
@@ -225,7 +227,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Tools/Lunch/Box Amount by User" action="action_report_lunch_amount_tree" id="menu_lunch_report_amount_tree"/>
+		<menuitem name="Box Amount by User" parent="menu_lunch" action="action_report_lunch_amount_tree" id="menu_lunch_report_amount_tree"/>
 	</data>
 </terp>
 

@@ -32,7 +32,9 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Tools/Configuration/Ideas/Categories" id="menu_idea_category" action="action_idea_category"/>
+	<menuitem name="Configuration" parent="menu_tools" id="menu_config"/>
+	<menuitem name="Ideas" parent="menu_config" id="menu_ideas"/>
+	<menuitem name="Categories" parent="menu_ideas" id="menu_idea_category" action="action_idea_category"/>
 
 	<record model="ir.actions.act_window" id="action_idea_category_tree">
 		<field name="name">Ideas by Categories</field>
@@ -40,8 +42,9 @@
 		<field name="view_type">tree</field>
 		<field name="domain">[('parent_id','=',False)]</field>
 	</record>
+	<menuitem name="Ideas" parent="menu_tools" id="menu_ideas1"/>
 	<menuitem 
-		name="Tools/Ideas/Ideas by Categories" 
+		name="Ideas by Categories" parent="menu_ideas1" 
 		id="menu_idea_category_tree" 
 		action="action_idea_category_tree"/>
 
@@ -180,7 +183,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Tools/Ideas/All Ideas" id="menu_idea_idea" action="action_idea_idea"/>
+	<menuitem name="All Ideas" parent="menu_ideas1" id="menu_idea_idea" action="action_idea_idea"/>
 
 	<record model="ir.actions.act_window" id="action_idea_idea_open">
 		<field name="name">Open Ideas</field>
@@ -189,7 +192,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
-	<menuitem name="Tools/Ideas/All Ideas/Open Ideas" id="menu_idea_idea_open" action="action_idea_idea_open"/>
+	<menuitem name="Open Ideas" parent="menu_idea_idea" id="menu_idea_idea_open" action="action_idea_idea_open"/>
 
 
 	<record model="ir.actions.act_window" id="action_idea_idea_my_idea">
@@ -199,7 +202,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('user_id', '=', uid)]</field>
 	</record>
-	<menuitem name="Tools/Ideas/My Ideas" id="menu_idea_idea_my_idea" action="action_idea_idea_my_idea" />
+	<menuitem name="My Ideas" parent="menu_ideas1" id="menu_idea_idea_my_idea" action="action_idea_idea_my_idea" />
 
 	<record model="ir.actions.act_window" id="action_idea_idea_draft_my">
 		<field name="name">My Draft Ideas</field>
@@ -209,7 +212,7 @@
 		<field name="domain">[('state','=','draft'),('user_id','=',uid)]</field>
 	</record>
 	<menuitem 
-		name="Tools/Ideas/My Ideas/" 
+		name="My Draft Ideas" parent="menu_idea_idea_my_idea"
 		id="menu_idea_idea_draft_my" 
 		action="action_idea_idea_draft_my"/>
 
@@ -222,7 +225,7 @@
 		<field name="domain">[('state','=','open'),('user_id','=',uid)]</field>
 	</record>
 	<menuitem 
-		name="Tools/Ideas/My Ideas/"
+		name="My Open Ideas" parent="menu_idea_idea_my_idea"
 		id="menu_idea_idea_open_my"
 		action="action_idea_idea_open_my"/>
 
@@ -269,12 +272,8 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 	</record>
-	<menuitem name="Tools/Ideas/Reporting/Vote Statistics" id="menu_idea_vote_stat" action="action_idea_vote_stat"/>
-
-
-
-
-
+	<menuitem name="Reporting" parent="menu_ideas1" id="menu_reporting"/>
+	<menuitem name="Vote Statistics" parent="menu_reporting" id="menu_idea_vote_stat" action="action_idea_vote_stat"/>
 
 
 	<record model="ir.actions.act_window" id="action_idea_vote">
@@ -283,7 +282,7 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Tools/Configuration/Ideas/All Votes" id="menu_idea_vote" action="action_idea_vote"/>
+	<menuitem name="All Votes" parent="menu_ideas" id="menu_idea_vote" action="action_idea_vote"/>
 
 	</data>
 </terp>
