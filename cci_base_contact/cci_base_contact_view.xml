@@ -174,7 +174,9 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_link_type_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Link Type/Contact Link Type" action="action_link_type" id="menu_link_type"/>
+		<menuitem name="Link Type" id="menu_link" parent="base.menu_base_config"/>
+		<menuitem name="Contact Link Type" action="action_link_type" id="menu_link_type" parent="menu_link"/>
+
 
 
 

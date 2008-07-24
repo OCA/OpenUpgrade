@@ -76,7 +76,7 @@
 			<field name="res_model">meeting.confidential.info</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Meeting Confidential Info" action="action_meeting_confidential_info" id="menu_meeting_confidential_info"/>
+		<menuitem name="Meeting Confidential Info" action="action_meeting_confidential_info" id="menu_meeting_confidential_info" parent="crm.menu_crm"/>
 
 <!-- Act window defining a shorcut on partners to open directly a new RSF -->
 		<act_window name="Open a New RSF"

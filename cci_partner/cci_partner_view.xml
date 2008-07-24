@@ -157,7 +157,8 @@ TODO: revoir la vue tree aussi
 			<field name="res_model">res.partner.state</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Partners/Configuration/States/Activity State" groups="base.group_admin" action="action_partner_state" id="menu_partner_state"/>
+		<menuitem name="States" groups="base.group_admin" id="menu_partner_state_main" parent="base.menu_base_config"/>
+		<menuitem  parent="menu_partner_state_main" groups="base.group_admin" action="action_partner_state" id="menu_partner_state"/>
 
 <!-- view for res.partner.state2 -->
 		<record model="ir.ui.view" id="view_partner_state2_form">
@@ -176,7 +177,7 @@ TODO: revoir la vue tree aussi
 			<field name="res_model">res.partner.state2</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Partners/Configuration/States/Customer State" groups="base.group_admin" action="action_partner_state2" id="menu_partner_state2"/>
+		<menuitem parent="menu_partner_state_main" groups="base.group_admin" action="action_partner_state2" id="menu_partner_state2"/>
 
         <!--
 	=====================
@@ -220,7 +221,8 @@ TODO: revoir la vue tree aussi
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_partner_activity_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Partner Activity/Activity" action="action_partner_activity" id="menu_partner_activity"/>
+		<menuitem name="Partner Activity" id="menu_partner_activity_main" parent="base.menu_base_config"/>
+		<menuitem name="Activity" action="action_partner_activity" id="menu_partner_activity" parent="menu_partner_activity_main"/>
 
 <!-- view for res.partner.activity.relation replaced frm res.partner.activity.code -->
 		<record model="ir.ui.view" id="view_partner_activity_relation_form">
@@ -254,7 +256,7 @@ TODO: revoir la vue tree aussi
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_partner_activity_relation_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Partner Activity/Activity Relation" action="action_partner_activity_relation" id="menu_partner_activity_relation"/>
+		<menuitem parent="menu_partner_activity_main" action="action_partner_activity_relation" id="menu_partner_activity_relation"/>
 
 <!-- view for res.partner.activity.list -->
 		<record model="ir.ui.view" id="view_partner_activity_list_form">
@@ -286,8 +288,7 @@ TODO: revoir la vue tree aussi
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_partner_activity_list_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Partner Activity/Activity List" action="action_partner_activity_list" id="menu_partner_activity_list"/>
-
+		<menuitem parent="menu_partner_activity_main" action="action_partner_activity_list" id="menu_partner_activity_list"/>
         <!--
 	=====================
 	Partner Zip
@@ -333,7 +334,8 @@ TODO: revoir la vue tree aussi
 			<field name="res_model">res.partner.zip</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Partners/Configuration/Zip/Zip" action="action_partner_zip" id="menu_partner_zip"/>
+		<menuitem name="Zip" id="menu_partner_zip_main" parent="base.menu_base_config"/>
+		<menuitem name="Zip" action="action_partner_zip" id="menu_partner_zip" parent="menu_partner_zip_main"/>
 
 <!-- view for res.partner.zip.group -->
 		<record model="ir.ui.view" id="view_partner_zip_group_form">
@@ -364,7 +366,7 @@ TODO: revoir la vue tree aussi
 			<field name="res_model">res.partner.zip.group</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Partners/Configuration/Zip/Zip Group" action="action_partner_zip_group" id="menu_partner_zip_group"/>
+		<menuitem parent="menu_partner_zip_main" action="action_partner_zip_group" id="menu_partner_zip_group"/>
 
 <!-- view for res.partner.zip.group,type -->
 		<record model="ir.ui.view" id="view_partner_zip_group_type_form">
@@ -393,8 +395,7 @@ TODO: revoir la vue tree aussi
 			<field name="res_model">res.partner.zip.group.type</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Partners/Configuration/Zip/Group Type" action="action_partner_zip_type_group" id="menu_partner_zip_group_type"/>
-
+		<menuitem parent="menu_partner_zip_main" action="action_partner_zip_type_group" id="menu_partner_zip_group_type"/>
         <!--
 	=====================
 	Partner Article
@@ -462,7 +463,8 @@ TODO: revoir la vue tree aussi
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_res_partner_article_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Article/Article" action="action_res_partner_article" id="menu_res_partner_article"/>
+		<menuitem name="Article" id="menu_res_partner_article_main" parent="base.menu_base_config"/>
+		<menuitem parent="menu_res_partner_article_main"  action="action_res_partner_article" id="menu_res_partner_article"/>
 
 <!-- view for res.partner.article.keywords -->
 		<record model="ir.ui.view" id="view_partner_article_keywords_form">
@@ -495,7 +497,8 @@ TODO: revoir la vue tree aussi
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_partner_article_keywords_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Article/Article Keywords" action="action_res_partner_article_keyoword" id="menu_res_partner_article_keyword"/>
+		<menuitem parent="menu_res_partner_article_main" action="action_res_partner_article_keyoword" id="menu_res_partner_article_keyword"/>
+
 
 <!-- view for res.partner.article.review -->
 		<record model="ir.ui.view" id="view_partner_article_review_form">
@@ -528,7 +531,8 @@ TODO: revoir la vue tree aussi
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_partner_article_review_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Article/Article Reviews" action="action_res_partner_article_review" id="menu_res_partner_article_review"/>
+		<menuitem name="Article Reviews" parent="menu_res_partner_article_main" action="action_res_partner_article_review" id="menu_res_partner_article_review"/>
+
 
         <!--
 	=====================
@@ -585,7 +589,7 @@ TODO: revoir la vue tree aussi
 			<field name="view_type">form</field>
 			<field name="view_id" ref="res_partner_relation_tree"/>
 		</record>
-		<menuitem name="Partners/Configuration/Link Type/Partner Link Type" action="action_partner_link_type" id="menu_partner_link_type"/>
+		<menuitem parent="cci_base_contact.menu_link" action="action_partner_link_type" id="menu_partner_link_type"/>
 
         <!--
 	=====================

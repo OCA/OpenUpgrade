@@ -79,7 +79,7 @@
 		<field name="view_id" ref="crm_case_tree_view_meet"/>
 		<field name="act_window_id" ref="crm_case_category_act_meetings"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings" id="menu_crm_case_category_act_meetings" action="crm_case_category_act_meetings"/>
+	<menuitem parent="crm.menu_crm" id="menu_crm_case_category_act_meetings" action="crm_case_category_act_meetings"/>
 
 	<!-- 
 		MY MEETINGS 
@@ -108,7 +108,8 @@
 		<field name="view_id" ref="crm_case_form_view_meet"/>
 		<field name="act_window_id" ref="crm_case_categ_meetmy"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/My Meetings" id="menu_crm_case_categ_meet_my" action="crm_case_categ_meetmy"/>
+	<menuitem name="My Meetings" id="menu_crm_case_categ_meet_my" action="crm_case_categ_meetmy" parent="menu_crm_case_category_act_meetings"/>
+
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_meetmy1">
 		<field name="name">Draft Meetings</field>
@@ -135,7 +136,8 @@
 		<field name="view_id" ref="crm_case_form_view_meet"/>
 		<field name="act_window_id" ref="crm_case_category_act_meetmy1"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/My Meetings/Draft Meetings" id="menu_crm_case_categ0_act_meetmy1" action="crm_case_category_act_meetmy1"/>
+	<menuitem name="Draft Meetings" id="menu_crm_case_categ0_act_meetmy1" action="crm_case_category_act_meetmy1" parent="menu_crm_case_categ_meet_my"/>
+
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_meetmy2">
 		<field name="name">Confirmed Meetings</field>
@@ -162,7 +164,8 @@
 		<field name="view_id" ref="crm_case_form_view_meet"/>
 		<field name="act_window_id" ref="crm_case_category_act_meetmy2"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/My Meetings/Confirmed Meetings" id="menu_crm_case_categ0_act_meetmy2" action="crm_case_category_act_meetmy2"/>
+	<menuitem  parent="menu_crm_case_categ_meet_my" name="Confirmed Meetings" id="menu_crm_case_categ0_act_meetmy2" action="crm_case_category_act_meetmy2"/>
+
 
 	<!-- 
 		ALL MEETINGS 
@@ -190,7 +193,7 @@
 		<field name="view_id" ref="crm_case_form_view_meet"/>
 		<field name="act_window_id" ref="crm_case_categ_meet"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings" id="menu_crm_case_categ_meet" action="crm_case_categ_meet"/>
+	<menuitem name="All Meetings" id="menu_crm_case_categ_meet" action="crm_case_categ_meet" parent="menu_crm_case_category_act_meetings"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_meetall1">
 		<field name="name">Draft Meetings</field>
@@ -217,7 +220,7 @@
 		<field name="view_id" ref="crm_case_form_view_meet"/>
 		<field name="act_window_id" ref="crm_case_category_act_meetall1"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/Draft Meetings" id="menu_crm_case_categ0_act_meetall1" action="crm_case_category_act_meetall1"/>
+	<menuitem name="Draft Meetings" id="menu_crm_case_categ0_act_meetall1" action="crm_case_category_act_meetall1" parent="menu_crm_case_categ_meet"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_meetall2">
 		<field name="name">Confirmed Meetings</field>
@@ -244,7 +247,7 @@
 		<field name="view_id" ref="crm_case_form_view_meet"/>
 		<field name="act_window_id" ref="crm_case_category_act_meetall2"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/Confirmed Meetings" id="menu_crm_case_categ0_act_meetall2" action="crm_case_category_act_meetall2"/>
+	<menuitem name="Confirmed Meetings" parent="menu_crm_case_categ_meet" id="menu_crm_case_categ0_act_meetall2" action="crm_case_category_act_meetall2"/>
 	
 	<record model="ir.actions.act_window" id="crm_case_category_act_meetall3">
 		<field name="name">Next Deadlines</field>
@@ -272,6 +275,6 @@
 		<field name="view_id" ref="crm_case_form_view_meet"/>
 		<field name="act_window_id" ref="crm_case_category_act_meetall3"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Meetings/All Meetings/Next Deadlines" id="menu_crm_case_categ0_act_meetall3" action="crm_case_category_act_meetall3"/>
+	<menuitem name="Next Deadlines" parent="menu_crm_case_categ_meet" id="menu_crm_case_categ0_act_meetall3" action="crm_case_category_act_meetall3"/>
 </data>
 </terp>

@@ -22,8 +22,9 @@
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Configuration/Segmentations/Questionnaires" id="menu_segm_questionnaire" 
+		<menuitem parent="crm.next_id_53" id="menu_segm_questionnaire" 
 				  action="open_questionnaires" />
+
 
 		<record model="ir.actions.act_window" id="open_questions">
 		  <field name="name">Questions</field>
@@ -31,7 +32,7 @@
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Configuration/Segmentations/Questions" id="menu_segm_answer" 
+		<menuitem parent="crm.next_id_53" id="menu_segm_answer" 
 				  action="open_questions" />
 
 <!--		<record model="ir.actions.act_window" id="open_crm_segmentations">

@@ -123,7 +123,8 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads" id="menu_crm_case_categ0_act_leads" action="crm_case_category_act_leads"/>
+	<menuitem parent="crm.menu_crm" id="menu_crm_case_categ0_act_leads" action="crm_case_category_act_leads"/>
+
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_all">
 		<field name="name">All Leads</field>
@@ -150,7 +151,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_all"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/All Leads" id="menu_crm_case_categ0_act_leads_all" action="crm_case_category_act_leads_all"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads" id="menu_crm_case_categ0_act_leads_all" action="crm_case_category_act_leads_all"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_all1">
 		<field name="name">All Unclosed Leads</field>
@@ -177,7 +178,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_all1"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/All Leads/All Unclosed Leads" id="menu_crm_case_categ0_act_leads_all1" action="crm_case_category_act_leads_all1"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_all" id="menu_crm_case_categ0_act_leads_all1" action="crm_case_category_act_leads_all1"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_all2">
 		<field name="name">All Draft Leads</field>
@@ -204,7 +205,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_all2"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/All Leads/All Unclosed Leads/All Draft Leads" id="menu_crm_case_categ0_act_leads_all2" action="crm_case_category_act_leads_all2"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_all1" id="menu_crm_case_categ0_act_leads_all2" action="crm_case_category_act_leads_all2"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_all3">
 		<field name="name">All Open Leads</field>
@@ -231,7 +232,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_all3"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/All Leads/All Unclosed Leads/All Open Leads" id="menu_crm_case_categ0_act_leads_all3" action="crm_case_category_act_leads_all3"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_all1" id="menu_crm_case_categ0_act_leads_all3" action="crm_case_category_act_leads_all3"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_all4">
 		<field name="name">All Pending Leads</field>
@@ -258,7 +259,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_all4"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/All Leads/All Unclosed Leads/All Pending Leads" id="menu_crm_case_categ0_act_leads_all4" action="crm_case_category_act_leads_all4"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_all1" id="menu_crm_case_categ0_act_leads_all4" action="crm_case_category_act_leads_all4"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_all5">
 		<field name="name">All Cancelled Leads</field>
@@ -285,7 +286,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_all5"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/All Leads/All Cancelled Leads" id="menu_crm_case_categ0_act_leads_all5" action="crm_case_category_act_leads_all5"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_all" id="menu_crm_case_categ0_act_leads_all5" action="crm_case_category_act_leads_all5"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_all6">
 		<field name="name">Calendar Of All Leads Meetings</field>
@@ -312,7 +313,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_all6"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/All Leads/Calendar Of All Leads Meetings" id="menu_crm_case_categ0_act_leads_all6" action="crm_case_category_act_leads_all6"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_all" id="menu_crm_case_categ0_act_leads_all6" action="crm_case_category_act_leads_all6"/>
 
 <!-- =================================================================== -->
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_my">
@@ -340,7 +341,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_my"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/My Leads" id="menu_crm_case_categ0_act_leads_my" action="crm_case_category_act_leads_my"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads" id="menu_crm_case_categ0_act_leads_my" action="crm_case_category_act_leads_my"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_my1">
 		<field name="name">My Unclosed Leads</field>
@@ -367,7 +368,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_my1"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/My Leads/My Unclosed Leads" id="menu_crm_case_categ0_act_leads_my1" action="crm_case_category_act_leads_my1"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_my" id="menu_crm_case_categ0_act_leads_my1" action="crm_case_category_act_leads_my1"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_my2">
 		<field name="name">My Draft Leads</field>
@@ -394,7 +395,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_my2"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/My Leads/My Unclosed Leads/My Draft Leads" id="menu_crm_case_categ0_act_leads_my2" action="crm_case_category_act_leads_my2"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_my1" id="menu_crm_case_categ0_act_leads_my2" action="crm_case_category_act_leads_my2"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_my3">
 		<field name="name">My Open Leads</field>
@@ -421,7 +422,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_my3"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/My Leads/My Unclosed Leads/My Open Leads" id="menu_crm_case_categ0_act_leads_my3" action="crm_case_category_act_leads_my3"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_my1" id="menu_crm_case_categ0_act_leads_my3" action="crm_case_category_act_leads_my3"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_my4">
 		<field name="name">My Pending Leads</field>
@@ -448,7 +449,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_my4"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/My Leads/My Unclosed Leads/My Pending Leads" id="menu_crm_case_categ0_act_leads_my4" action="crm_case_category_act_leads_my4"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_my1" id="menu_crm_case_categ0_act_leads_my4" action="crm_case_category_act_leads_my4"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_my5">
 		<field name="name">My Cancelled Leads</field>
@@ -475,7 +476,7 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_my5"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/My Leads/My Cancelled Leads" id="menu_crm_case_categ0_act_leads_my5" action="crm_case_category_act_leads_my5"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_my" id="menu_crm_case_categ0_act_leads_my5" action="crm_case_category_act_leads_my5"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_leads_my6">
 		<field name="name">Calendar Of My Leads Meetings</field>
@@ -502,17 +503,21 @@
 		<field name="view_id" ref="crm_case_form_view_leads"/>
 		<field name="act_window_id" ref="crm_case_category_act_leads_my6"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Leads/My Leads/Calendar Of My Leads Meetings" id="menu_crm_case_category_act_leads_my6" action="crm_case_category_act_leads_my6"/>
+	<menuitem parent="menu_crm_case_categ0_act_leads_my" id="menu_crm_case_category_act_leads_my6" action="crm_case_category_act_leads_my6"/>
 
 
-<!--		REPORTS		-->	
+
+<!--		REPORTS		-->
+	<menuitem name="Leads"  id="menu_action_report_crm_case_lead" parent="report_crm.next_id_64"/>	
+
 	<record model="ir.actions.act_window" id="action_report_crm_case_lead_user">
 		<field name="res_model">report.crm.case.user</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Leads and User" action="action_report_crm_case_lead_user" id="menu_action_report_crm_case_lead_user"/>
+	<menuitem name="Cases by Leads and User" parent="menu_action_report_crm_case_lead" action="action_report_crm_case_lead_user" id="menu_action_report_crm_case_lead_user"/>
+
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_lead_categ">
 		<field name="res_model">report.crm.case.section.categ2</field>
@@ -520,7 +525,7 @@
 		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Leads and Category2" action="action_report_crm_case_lead_categ" id="menu_action_report_crm_case_lead_categ"/>
+	<menuitem parent="menu_action_report_crm_case_lead" name="Cases by Leads and Category2" action="action_report_crm_case_lead_categ" id="menu_action_report_crm_case_lead_categ"/>
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_lead_stage">
 		<field name="res_model">report.crm.case.section.stage</field>
@@ -528,7 +533,7 @@
 		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Leads and Stage" action="action_report_crm_case_lead_stage" id="menu_action_report_crm_case_lead_stage"/>
+	<menuitem name="Cases by Leads and Stage" parent="menu_action_report_crm_case_lead" action="action_report_crm_case_lead_stage" id="menu_action_report_crm_case_lead_stage"/>
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_lead_categ_stage">
 		<field name="res_model">report.crm.case.section.categ.stage</field>
@@ -536,7 +541,7 @@
 		<field name="view_mode">tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Section, Category and Stage" action="action_report_crm_case_lead_categ_stage" id="menu_action_report_crm_case_lead_categ_stage"/>
+	<menuitem name="Cases by Section, Category and Stage" parent="menu_action_report_crm_case_lead"  action="action_report_crm_case_lead_categ_stage" id="menu_action_report_crm_case_lead_categ_stage"/>
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_lead_categ_categ2">
 		<field name="res_model">report.crm.case.section.categ.categ2</field>
@@ -544,7 +549,7 @@
 		<field name="view_mode">tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support2)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Leads/Cases by Section, Category and Category2" action="action_report_crm_case_lead_categ_categ2" id="menu_action_report_crm_case_lead_categ_categ2"/>
+	<menuitem name="Cases by Section, Category and Category2" parent="menu_action_report_crm_case_lead" action="action_report_crm_case_lead_categ_categ2" id="menu_action_report_crm_case_lead_categ_categ2"/>
 
 </data>
 </terp>

@@ -80,7 +80,8 @@
 		<field name="section_id" ref="section_support3"/>
 	</record>
 
-	<menuitem name="CRM &amp; SRM/Opportunities" id="menu_crm_case_opp"/>
+<menuitem name="Opportunities" id="menu_crm_case_opp" parent="crm.menu_crm"/>
+
 
 <!--		MENU		-->
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor11">
@@ -108,7 +109,7 @@
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor11"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Opportunities/All Opportunities" id="menu_crm_case_categ0_act_oppor11" action="crm_case_category_act_oppor11"/>
+	<menuitem parent="menu_crm_case_opp" id="menu_crm_case_categ0_act_oppor11" action="crm_case_category_act_oppor11"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor">
 		<field name="name">Opportunity</field>
@@ -130,7 +131,7 @@
 		<field name="view_id" ref="crm_case_tree_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Opportunities/All Opportunities/New Opportunity" id="menu_crm_case_categ0_act_oppor" action="crm_case_category_act_oppor"/>
+	<menuitem name="New Opportunity" parent="menu_crm_case_categ0_act_oppor11" id="menu_crm_case_categ0_act_oppor" action="crm_case_category_act_oppor"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor1">
 		<field name="name">All Open Opportunities</field>
@@ -157,7 +158,8 @@
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor1"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Opportunities/All Opportunities/All Open Opportunities" id="menu_crm_case_categ0_act_oppor1" action="crm_case_category_act_oppor1"/>
+	<menuitem parent="menu_crm_case_categ0_act_oppor11" id="menu_crm_case_categ0_act_oppor1" action="crm_case_category_act_oppor1"/>
+
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor_all2">
 		<field name="name">All Pending Opportunities</field>
@@ -184,7 +186,8 @@
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor_all2"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Opportunities/All Opportunities/All Pending Opportunities" id="menu_crm_case_categ0_act_oppor_all2" action="crm_case_category_act_oppor_all2"/>
+	<menuitem parent="menu_crm_case_categ0_act_oppor11" id="menu_crm_case_categ0_act_oppor_all2" action="crm_case_category_act_oppor_all2"/>
+
 
 <!-- ======================================================== -->
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor22">
@@ -212,7 +215,8 @@
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor22"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Opportunities/My Opportunities" id="menu_crm_case_categ0_act_oppor22" action="crm_case_category_act_oppor22"/>
+	<menuitem parent="menu_crm_case_opp" id="menu_crm_case_categ0_act_oppor22" action="crm_case_category_act_oppor22"/>
+
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor2">
 		<field name="name">My Open Opportunities</field>
@@ -239,7 +243,7 @@
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor2"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Opportunities/My Opportunities/My Open Opportunities" id="menu_crm_case_categ0_act_oppor2" action="crm_case_category_act_oppor2"/>
+	<menuitem parent="menu_crm_case_categ0_act_oppor22" id="menu_crm_case_categ0_act_oppor2" action="crm_case_category_act_oppor2"/>
 
 	<record model="ir.actions.act_window" id="crm_case_category_act_oppor_my2">
 		<field name="name">My Pending Opportunities</field>
@@ -266,7 +270,7 @@
 		<field name="view_id" ref="crm_case_form_view_oppor"/>
 		<field name="act_window_id" ref="crm_case_category_act_oppor_my2"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Opportunities/My Opportunities/My Pending Opportunities" id="menu_crm_case_categ0_act_oppor_my2" action="crm_case_category_act_oppor_my2"/>
+	<menuitem parent="menu_crm_case_categ0_act_oppor22" id="menu_crm_case_categ0_act_oppor_my2" action="crm_case_category_act_oppor_my2"/>
 
 <!--		REPORTS			-->
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_user">
@@ -275,7 +279,8 @@
 		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and User" action="action_report_crm_case_oppor_user" id="menu_action_report_crm_case_oppor_user"/>
+	  <menuitem name="Opportunity" 	parent="report_crm.next_id_64" id="menu_action_report_crm_case_oppor"/>
+	<menuitem name="Cases by Opportunities and User" parent="menu_action_report_crm_case_oppor" action="action_report_crm_case_oppor_user" id="menu_action_report_crm_case_oppor_user"/>
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_categ">
 		<field name="res_model">report.crm.case.section.categ2</field>
@@ -283,7 +288,7 @@
 		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and Category2" action="action_report_crm_case_oppor_categ" id="menu_action_report_crm_case_oppor_categ"/>
+	<menuitem name="Cases by Opportunities and Category2"  parent="menu_action_report_crm_case_oppor" action="action_report_crm_case_oppor_categ" id="menu_action_report_crm_case_oppor_categ"/>
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_stage">
 		<field name="res_model">report.crm.case.section.stage</field>
@@ -291,7 +296,7 @@
 		<field name="view_mode">graph,tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Opportunities and Stage" action="action_report_crm_case_oppor_stage" id="menu_action_report_crm_case_oppor_stage"/>
+	<menuitem name="Cases by Opportunities and Stage" parent="menu_action_report_crm_case_oppor"  action="action_report_crm_case_oppor_stage" id="menu_action_report_crm_case_oppor_stage"/>
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_categ_stage">
 		<field name="res_model">report.crm.case.section.categ.stage</field>
@@ -299,7 +304,7 @@
 		<field name="view_mode">tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Section, Category and Stage" action="action_report_crm_case_oppor_categ_stage" id="menu_action_report_crm_case_oppor_categ_stage"/>
+	<menuitem name="Cases by Section, Category and Stage" parent="menu_action_report_crm_case_oppor" action="action_report_crm_case_oppor_categ_stage" id="menu_action_report_crm_case_oppor_categ_stage"/>
 
 	<record model="ir.actions.act_window" id="action_report_crm_case_oppor_categ_categ2">
 		<field name="res_model">report.crm.case.section.categ.categ2</field>
@@ -307,7 +312,7 @@
 		<field name="view_mode">tree</field>
 		<field name="domain" eval="'[(\'section_id\',\'=\','+str(section_support3)+')]'"/>
 	</record>
-	<menuitem name="CRM &amp; SRM/Reporting/Opportunity/Cases by Section, Category and Category2" action="action_report_crm_case_oppor_categ_categ2" id="menu_action_report_crm_case_oppor_categ_categ2"/>
+	<menuitem name="Cases by Section, Category and Category2" parent="menu_action_report_crm_case_oppor" action="action_report_crm_case_oppor_categ_categ2" id="menu_action_report_crm_case_oppor_categ_categ2"/>
 
 </data>
 </terp>
