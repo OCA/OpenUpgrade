@@ -120,7 +120,7 @@
 		id="account_analytic_instance_model_open"/>
 
 	<menuitem 
-		name="Financial Management/Configuration/Models/Analytic Distribution's models" 
+		name="Analytic Distribution's models" parent="account.next_id_32"
 		id="menu_account_analytic_plan_instance_action" 
 		action="account_analytic_plan_instance_action"/>
 
@@ -184,7 +184,7 @@
 	</record>
 
 	<menuitem 
-		name="Financial Management/Configuration/Analytic Accounts/Analytic Plans"
+		parent="account.next_id_39"
 		id="menu_account_analytic_plan_action" 
 		action="account_analytic_plan_form_action"/>
 
