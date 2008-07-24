@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-
+	<menuitem id="menu_finance_config_Assets" name="Assets" parent="account.menu_finance_configuration"/>
 	<record model="ir.ui.view" id="view_account_asset_category_form">
 		<field name="name">account.asset.category.form</field>
 		<field name="model">account.asset.category</field>
@@ -33,7 +33,7 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 	<menuitem 
-		name="Financial Management/Configuration/Assets/" 
+		parent="menu_finance_config_Assets"
 		id="menu_action_account_asset_category_form"
 		action="action_account_asset_category_form"/>
 
@@ -218,7 +218,7 @@
 		<field name="view_type">form</field>
 	</record>
 	<menuitem 
-		name="Financial Management/Configuration/Assets/" 
+		parent="menu_finance_config_Assets" 
 		id="menu_action_account_asset_asset_form"
 		action="action_account_asset_asset_form"/>
 
@@ -229,8 +229,9 @@
 		<field name="domain">[('parent_id','=',False)]</field>
 		<field name="view_id" ref="view_account_asset_asset_tree"/>
 	</record>
+	<menuitem id="menu_finance_Assets" name="Assets" parent="account.menu_finance"/>
 	<menuitem
-		name="Financial Management/Assets/"
+		parent="menu_finance_Assets"
 		id="menu_action_account_asset_asset_tree"
 		action="action_account_asset_asset_tree"/>
 
@@ -241,7 +242,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 	<menuitem
-		name="Financial Management/Assets/Assets"
+		parent="menu_finance_Assets"
 		id="menu_action_account_asset_asset_list"
 		action="action_account_asset_asset_list"/>
 
@@ -253,10 +254,9 @@
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
 	<menuitem
-		name="Financial Management/Assets/Assets/"
+		parent="menu_action_account_asset_asset_list"
 		id="menu_action_account_asset_asset_list_draft"
 		action="action_account_asset_asset_list_draft"/>
-
 
 	<record model="ir.actions.act_window" id="action_account_asset_asset_list_normal">
 		<field name="name">Open Assets</field>
@@ -266,7 +266,7 @@
 		<field name="domain">[('state','=','normal')]</field>
 	</record>
 	<menuitem
-		name="Financial Management/Assets/Assets/"
+		parent="menu_action_account_asset_asset_list"
 		id="menu_action_account_asset_asset_list_normal"
 		action="action_account_asset_asset_list_normal"/>
 
