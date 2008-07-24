@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <terp>
 <data>
+	<menuitem name="Edi" parent="sale.menu_sale_root" id="menu_edi_id"/>
 	<record model="ir.ui.view" id="view_edi_log_line">
 		<field name="name">edi.log.line.tree</field>
 		<field name="model">edi.log.line</field>
@@ -45,7 +46,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" eval="False" />
 	</record>
-	<menuitem name="Sales Management/Edi/View Logs" action="action_edi_tree" id="menu_edi_log"/>
+	<menuitem name="View Logs" parent="menu_edi_id" action="action_edi_tree" id="menu_edi_log"/>
 
 </data>
 </terp>
