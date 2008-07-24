@@ -63,7 +63,10 @@
 		
 	</record>
 
-	<menuitem name="Hotel Restaurant/Reporting/This Month/States By restaurant" action="action_report_hotel_restaurant_status_tree_graph" id="menu_hotel_restaurant_status_tree_graph"/>
+	<menuitem name="Hotel Restaurant" id="menu_hotel_restaurant"/>
+	<menuitem name="Reporting" id="menu_hotel_restaurant_reporting" parent="menu_hotel_restaurant"/>
+	<menuitem name="This Month" id="menu_hotel_restaurant_reporting_this" parent="menu_hotel_restaurant_reporting"/>
+	<menuitem name="States By restaurant" id="menu_hotel_restaurant_reporting_this_restaurant" parent="menu_hotel_restaurant_reporting_this" action="action_report_hotel_restaurant_status_tree_graph"/>
 
 	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph_bar">
 			<field name="name">States By Restaurant</field>
@@ -73,7 +76,8 @@
 			<field name = "view_id" ref="view_hotel_restaurant_status_graph_bar"/>
 			
 		</record>
-	
-		<menuitem name="Hotel Restaurant/Reporting/This Month/States By Restaurant" action="action_report_hotel_restaurant_status_tree_graph_bar" id="menu_hotel_restaurant_status_tree_graph_bar"/>
+		
+	<menuitem name="States By Restaurant" id="menu_hotel_restaurant_reporting_this_Restaurant" parent="menu_hotel_restaurant_reporting_this" action="action_report_hotel_restaurant_status_tree_graph_bar"/>	
+		
 </data>
 </terp>

@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-	<menuitem name="Auction Management/Reporting/Manager" groups="admin"/>
+	<menuitem name="Manager" id="menu_auction_reporting_manager" parent="auction.menu_auction_reporting" groups="base.group_admin"/>
+
 =============================
 Auction adjudication
 ==============================
@@ -55,13 +56,14 @@ Auction adjudication
 		<field name="view_mode">graph,tree</field>
 		<!--<field name="domain">[('paid','Paid'),('invoiced','Invoiced')]</field>-->
 	</record>
-	<menuitem name="Auction Management/Reporting/Manager/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree"/>
-
-	<menuitem name="Auction Management/Reporting/Member/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree1"/>
-
-	<menuitem name="Auction Management/Reporting/Member/Auction Adjudication" action="action_report_auction_adjudication_tree" id="menu_report_auction_adjudication_tree_member"/>
-
-
+	
+	<menuitem name="Auction Adjudication" id="menu_auction_reporting_manager_adjustification" parent="menu_auction_reporting_manager" action="action_report_auction_adjudication_tree"/>
+	
+	<menuitem name="Member" id="menu_auction_reporting_member" parent="auction.menu_auction_reporting"/>
+	
+	<menuitem name="Auction Adjudication" id="menu_report_auction_adjudication_tree1" parent="menu_auction_reporting_member" action="action_report_auction_adjudication_tree"/>
+	
+	<menuitem name="Auction Adjudication" id="menu_report_auction_adjudication_tree_member" parent="menu_auction_reporting_member" action="action_report_auction_adjudication_tree"/>
 
 =============================
 Customer/Supplier
@@ -111,7 +113,8 @@ Customer/Supplier
 		<field name="view_type">form</field>
 		<field name="view_mode">graph,tree</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Manager/Customer Per Seller" action="action_per_seller_customer_tree" id="menu_per_seller_customer_tree"/>
+	<menuitem name="Customer Per Seller" id="menu_auction_reporting_manager_customer" parent="menu_auction_reporting_manager" action="action_per_seller_customer_tree"/>	
+
 =============================
 My Latest 10 Deposit
 ==============================
@@ -152,8 +155,8 @@ My Latest 10 Deposit
 		<field name="view_mode">tree</field>
 		<!--<field name="domain">[('user_id','=',uid)]</field>-->
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/My Latest 10 Deposit" action="action_report_latest_doposit_tree" id="menu_report_latest_doposit_tree"/>
-
+	
+	<menuitem name="My Latest 10 Deposit" id="menu_report_latest_doposit_tree" parent="menu_auction_reporting_member" action="action_report_latest_doposit_tree"/>
 
 ==============================
 My Latest 10 Objects
@@ -198,7 +201,9 @@ My Latest 10 Objects
 		<field name="view_mode">tree</field>
 		<!--<field name="domain">[('user_id','=',uid)]</field>-->
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/My Latest 10 Objects" action="action_report_latest_objects_tree" id="menu_report_latest_objects_tree"/>
+	
+	<menuitem name="My Latest 10 Objects" id="menu_report_latest_objects_tree" parent="menu_auction_reporting_member" action="action_report_latest_objects_tree"/>
+	
 =============================
 Objects per Day
 ==============================
@@ -250,9 +255,9 @@ Objects per Day
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree"/>
-	<menuitem name="Auction Management/Reporting/Manager/Object Per Day" action="action_report_auction_object_date_tree" id="menu_report_auction_object_date_tree1"/>
-
+	<menuitem name="Object Per Day" id="menu_report_auction_object_date_tree" parent="menu_auction_reporting_member" action="action_report_auction_object_date_tree"/>
+	<menuitem name="Object Per Day" id="menu_report_auction_object_date_tree1" parent="menu_auction_reporting_manager" action="action_report_auction_object_date_tree"/>
+	
 =============================
 estimation.adj.category
 ==============================
@@ -294,9 +299,14 @@ estimation.adj.category
 		<field name="view_mode">graph,tree</field>
 		<field name="domain">[('date','=',time.strftime('%Y-%m-01'))]</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/This Month/Estimation/Adjudication" action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_member"/>
-	<menuitem name="Auction Management/Reporting/Manager/This Month/Estimation/Adjudication"  action="action_report_auction_estimation_adj_category_tree" id="menu_report_auction_estimation_adj_category_manager"/>
+	
+	<menuitem name="This Month" id="menu_report_auction_this_month" parent="menu_auction_reporting_member"/>
+	<menuitem name="Estimation" id="menu_report_auction_this_month_estimation" parent="menu_report_auction_this_month"/>
+	<menuitem name="Adjudication" id="menu_report_auction_this_month_adjustication" parent="menu_report_auction_this_month_estimation" action="action_report_auction_estimation_adj_category_tree"/>
 
+	<menuitem name="This Month" id="menu_report_auction_manager_this" parent="menu_auction_reporting_manager"/>
+	<menuitem name="Estimation" id="menu_report_auction_manager_this_estimation" parent="menu_report_auction_manager_this"/>
+	<menuitem name="Adjudication" id="menu_report_auction_manager_this_adjustication" parent="menu_report_auction_manager_this_estimation" action="action_report_auction_estimation_adj_category_tree"/>
 
 =============================
 sign in sign out report by user
@@ -341,9 +351,8 @@ sign in sign out report by user
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,graph</field>
 	</record>
-	<menuitem name="Auction Management/Reporting/Member/Summury of Sign_in Sign_out" action="action_report_auction_sign_in_out_member_tree" id="menu_report_auction_sign_in_out_member_tree"/>
-	<menuitem name="Auction Management/Reporting/Manager/Summury of Sign_in Sign_out"  action="action_report_auction_sign_in_out_manager_tree" id="menu_report_auction_sign_in_out_manager_tree"/>
-
+	<menuitem name="Summury of Sign_in Sign_out" id="menu_report_auction_sign_in_out_member_tree" parent="menu_auction_reporting_member" action="action_report_auction_sign_in_out_member_tree"/>
+	<menuitem name="Summury of Sign_in Sign_out" id="menu_report_auction_sign_in_out_manager_tree" parent="menu_auction_reporting_manager" action="action_report_auction_sign_in_out_manager_tree"/>
 
 </data>
 </terp>
