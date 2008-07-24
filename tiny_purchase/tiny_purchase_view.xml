@@ -2,8 +2,10 @@
 <terp>
 	<data>
 
-		<menuitem name="Tools/Tiny Purchase" id="menu_tiny_purchase_root"/>
-
+		<menuitem name="Tools" id="menu_tiny_purchase_tool"/>
+		
+		<menuitem name="Tiny Purchase" id="menu_tiny_purchase_root" parent="menu_tiny_purchase_tool"/>
+		
 		<record model="ir.ui.view" id="line_form">
 			<field name="name">tiny_purchase.line.form</field>
 			<field name="model">tiny_purchase.line</field>
@@ -26,7 +28,7 @@
 			<field name="view_mode">form,tree</field>
 		</record>
 
-		<menuitem name="Tools/Tiny Purchase/Purchase line" id="menu_line_form_action" action="line_form_action"/>
+		<menuitem name="Purchase line" id="menu_tiny_purchase_line" parent="menu_tiny_purchase_root" action="line_form_action"/>
 
 		<record model="ir.ui.view" id="product_form">
 			<field name="name">tiny_purchase.product.form</field>
@@ -46,8 +48,10 @@
 			<field name="view_mode">form,tree</field>
 		</record>
 
-		<menuitem name="Tools/Tiny Purchase/Configuration/Purchase product" id="menu_product_form_action" action="product_form_action"/>
-
+		<menuitem name="Configuration" id="menu_tiny_purchase_configuration_line" parent="menu_tiny_purchase_root"/>
+		
+		<menuitem name="Purchase product" id="menu_tiny_purchase_product_line" parent="menu_tiny_purchase_configuration_line" action="product_form_action"/>
+		
 		<record model="ir.ui.view" id="order_form">
 			<field name="name">tiny_purchase.order.form</field>
 			<field name="model">tiny_purchase.order</field>
@@ -85,8 +89,7 @@
 			<field name="view_mode">form,tree</field>
 		</record>
 
-		<menuitem name="Tools/Tiny Purchase/Purchase Order" id="menu_order_form_action" action="order_form_action"/>
-
-
+		<menuitem name="Purchase Order" id="menu_tiny_purchase_order_line" parent="menu_tiny_purchase_root" action="order_form_action"/>
+		
 	</data>
 </terp>

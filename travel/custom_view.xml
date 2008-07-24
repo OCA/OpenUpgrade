@@ -4,13 +4,17 @@
 		<field name="res_model">travel.hostel</field>
 		<field name="domain">[]</field>
 	</record>
-	<menuitem name="Travel Agency/Hostels" id="menu_travel_hostel_form" action="action_travel_hostel_form"/>
-
+	
+	<menuitem name="Travel Agency" id="menu_travel_form"/>
+	
+	<menuitem name="Hostels" id="menu_travel_hostel_form" parent="travel.menu_travel_form" action="action_travel_hostel_form"/>
+	
 	<record model="ir.actions.act_window" id="action_travel_room_form">
 		<field name="res_model">travel.room</field>
 	</record>
-	<menuitem name="Travel Agency/Rooms" id="menu_travel_room_form" action="action_travel_room_form"/>
-
+	
+	<menuitem name="Rooms" id="menu_travel_rooms_form" parent="travel.menu_travel_form" action="action_travel_room_form"/>
+	
 	<record model="ir.actions.act_window" id="action_travel_hostel_form2">
 		<field name="name">Single rooms</field>
 		<field name="res_model">travel.hostel</field>
@@ -18,8 +22,9 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Travel Agency/Rooms/Single Rooms" id="menu_travel_hostel_form2" action="action_travel_hostel_form2"/>
-
+	
+	<menuitem name="Single Rooms" id="menu_travel_singleroom_form" parent="travel.menu_travel_rooms_form" action="action_travel_hostel_form2"/>
+	
 	<record model="ir.actions.act_window" id="action_travel_hostel_form3">
 		<field name="name">Double rooms</field>
 		<field name="res_model">travel.room</field>
@@ -27,19 +32,22 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Travel Agency/Rooms/Double Rooms" id="menu_travel_hostel_form3" action="action_travel_hostel_form3"/>
-
+	
+	<menuitem name="Double Rooms" id="menu_travel_doubleroom_form" parent="travel.menu_travel_rooms_form" action="action_travel_hostel_form3"/>
+	
 	<record model="ir.actions.act_window" id="action_travel_airport_form">
 		<field name="res_model">travel.airport</field>
 	</record>
-	<menuitem name="Travel Agency/Airports" id="menu_travel_airport_form" action="action_travel_airport_form"/>
-
+	
+	<menuitem name="Airports" id="menu_travel_airport_form" parent="travel.menu_travel_form" action="action_travel_airport_form"/>
+	
 	<record model="ir.actions.act_window" id="action_travel_flight_form">
 		<field name="res_model">travel.flight</field>
 		<field name="domain">[]</field>
 	</record>
-	<menuitem name="Travel Agency/Flights" id="menu_travel_flight_form" action="action_travel_flight_form"/>
-
+	
+	<menuitem name="Flights" id="menu_travel_flight_form" parent="travel.menu_travel_form" action="action_travel_flight_form"/>
+	
 	<record model="ir.ui.view" id="view_travel_flight_form">
 		<field name="name">travel.flight</field>
 		<field name="model">travel.flight</field>
