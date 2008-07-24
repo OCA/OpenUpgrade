@@ -125,11 +125,12 @@
 			<field name="view_id" ref="board_crm_form"/>
 		</record>
 
-		<menuitem
-			name="Dashboards/CRM Configuration/Connecting Dashboard"
+		<menuitem 
+			name="Connecting Dashboard" parent="menu_board_crm_config"
 			action="open_board_crm"
 			sequence="1"
 			id="menu_board_crm" icon="terp-graph"/>
+
 
 	</data>
 </terp>

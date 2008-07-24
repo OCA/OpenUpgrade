@@ -110,8 +110,11 @@
 			<field name="view_id" ref="board_crm_statistical_form"/>
 		</record>
 
+		<menuitem 
+			name="CRM Configuration" parent="board.dashboard_menu"
+			id="menu_board_crm_config" />
 		<menuitem
-			name="Dashboards/CRM Configuration/Statistics Dashboard"
+			name="Statistics Dashboard" parent="menu_board_crm_config"
 			action="open_board_statistical_dash"
 			sequence="2"
 			id="menu_board_statistics_dash"

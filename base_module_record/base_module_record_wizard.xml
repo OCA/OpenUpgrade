@@ -9,13 +9,19 @@
 			name="base_module_record.module_record"/>
 
 		<menuitem
-			name="Administration/Modules Management/Module Recording/Start Recording"
+			parent="base.menu_management"
+			name="Module Recording"
+			id="menu_wizard_base_mod_rec"/>
+		<menuitem
+			parent="menu_wizard_base_mod_rec"
+			name="Start Recording"
 			type="wizard"
 			action="wizard_base_module_record"
 			id="menu_wizard_base_module_record"/>
 
 		<menuitem
-			name="Administration/Modules Management/Module Recording/Stop Recording"
+			parent="menu_wizard_base_mod_rec"
+			name="Stop Recording"
 			type="wizard"
 			action="wizard_base_module_record"
 			id="menu_wizard_base_module_record_stop"/>
@@ -29,7 +35,8 @@
 			name="base_module_record.module_save"/>
 
 		<menuitem
-			name="Administration/Modules Management/Module Recording/Save Recorded Module"
+			parent="menu_wizard_base_mod_rec"
+			name="Save Recorded Module"
 			type="wizard"
 			action="wizard_base_module_save"
 			id="menu_wizard_base_module_save"/>

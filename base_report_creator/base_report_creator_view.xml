@@ -103,7 +103,7 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 	<menuitem 
-		name="Dashboards/Configuration/Custom Reports"
+		name="Custom Reports" parent="board.next_id_50"
 		id="menu_base_report_creator_action_config" 
 		action="base_report_creator_action"/>
 
@@ -122,7 +122,7 @@
 		<field name="view_type">tree</field>
 	</record>
 	<menuitem 
-		name="Dashboards/Custom Reports"
+		name="Custom Reports" parent="board.dashboard_menu"
 		id="menu_base_report_creator_action" 
 		action="base_report_creator_action_tree"/>
 

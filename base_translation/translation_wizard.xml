@@ -1,12 +1,13 @@
 <?xml version="1.0"?>
 <terp>
-	<data>		
+	<data>	
+		<menuitem name="Contributors" id="menu_action_translation_contrib" parent="menu_action_translation_mgmt"/>	
 		<record model="ir.actions.wizard" id="wizard_downlaod_file_for_contib">
 			<field name="name">Install language file for Contributor</field>
 			<field name="wiz_name">download.contrib.file</field>
 		</record>
 		<menuitem
-			name="Administration/Translations/Translations Management/Contributors/Download New Version"
+			name="Download New Version" parent="menu_action_translation_contrib"
 			action="wizard_downlaod_file_for_contib"
 			id="menuwizard_downlaod_file_for_contib"
 			type="wizard"/>
@@ -15,7 +16,7 @@
 			<field name="wiz_name">download.publish.file</field>
 		</record>
 		<menuitem
-			name="Administration/Translations/Translations Management/Maintainer/Download Contributor's Proposition"
+			name="Download Contributor's Proposition" parent="menu_action_translation_maintainer"
 			action="wizard_downlaod_file_for_publish"
 			id="menuwizard_downlaod_file_for_publish"
 			sequence="5"
@@ -25,7 +26,7 @@
 			<field name="wiz_name">review.proposed.contributions</field>
 		</record>
 		<menuitem
-			name="Administration/Translations/Translations Management/Contributors/Review Proposed Contributions"
+			name="Review Proposed Contributions" parent="menu_action_translation_contrib"
 			action="wizard_review_proposed_contributions"
 			id="menuwizardwizard_review_proposed_contributions"
 			type="wizard"/>
@@ -34,7 +35,7 @@
 			<field name="wiz_name">upload.contrib</field>
 		</record>
 		<menuitem
-			name="Administration/Translations/Translations Management/Contributors/Upload Contributions"
+			name="Upload Contributions" parent="menu_action_translation_contrib"
 			action="wizard_upload_contrib"
 			id="menuwizard_upload_contrib"
 			type="wizard"/>			
@@ -43,7 +44,7 @@
 			<field name="wiz_name">publish.new.version</field>
 		</record>
 		<menuitem
-			name="Administration/Translations/Translations Management/Maintainer/Publish New Version"
+			name="Publish New Version" parent="menu_action_translation_maintainer"
 			action="wizard_publish_new_version"
 			id="menuwizard_publish_new_version"
 			sequence="10"			

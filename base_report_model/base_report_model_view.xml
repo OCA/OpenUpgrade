@@ -32,6 +32,7 @@
 	    <field name="view_mode">tree,form</field>
 	</record>
         
-        <menuitem name="Administration/Custom/Low Level/Base/OpenOffice Attachment Available Models" id="menu_base_report_model_visible_models" action="base_report_model_act"/>
+       <menuitem name="Base" id="menu_base_report_model" parent="base.next_id_4"/>
+        <menuitem name="OpenOffice Attachment Available Models" id="menu_base_report_model_visible_models" action="base_report_model_act" parent="menu_base_report_model"/>
     </data>
 </terp>

@@ -1,16 +1,17 @@
 <?xml version="1.0"?>
 <terp>
 	<data>
+		<menuitem id="menu_wizard_url_menu_main" parent="base.menu_custom" name="Menu Management"/>
 		<wizard
 			id="wizard_url_menu"
 			string="Create URL Menus"
 			model="url.menu"
 			name="url.menu.menu"/>
   		<menuitem 
-			id="menu_wizard_url_menu" 
-			name="Administration/Custom/Menu Management/Create a menu that links to an URL" 
+			id="menu_wizard_url_menu" parent="menu_wizard_url_menu_main"
+			name="Create a menu that links to an URL" 
 			action="wizard_url_menu"  
 			type="wizard"
-            groups="admin"/> 
+            groups="base.group_admin"/> 
 	</data>
 </terp>

@@ -48,7 +48,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_translation_contribution_tree"/>
 	</record>
-	<menuitem name="Administration/Translations/Translations Management/All Contribution" action="action_translation_contribution" id="menu_action_translation_contribution"/>
+	<menuitem name="Translations Management" id="menu_action_translation_mgmt" parent="base.menu_translation"/>
+	<menuitem action="action_translation_contribution" id="menu_action_translation_contribution" parent="menu_action_translation_mgmt"/>
 
 	<record model="ir.actions.act_window" id="action_translation_contribution_propose">
 		<field name="name">All Proposed Contribution</field>
@@ -58,7 +59,7 @@
 		<field name="view_id" ref="view_translation_contribution_tree"/>
 	</record>
 
-	<menuitem name="Administration/Translations/Translations Management/Maintainer/Review Proposed Contribution" action="action_translation_contribution_propose" id="menu_action_translation_contribution_propose" sequence="7"/>
-	
+	<menuitem name="Maintainer" id="menu_action_translation_maintainer" parent="menu_action_translation_mgmt"/>
+	<menuitem name="Review Proposed Contribution" action="action_translation_contribution_propose" id="menu_action_translation_contribution_propose" sequence="7" parent="menu_action_translation_maintainer"/>
 </data>
 </terp>			
