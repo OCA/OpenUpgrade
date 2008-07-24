@@ -55,11 +55,9 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem
-		name="Inventory Control/Configuration/Packings Journals"
-		id="menu_definition_journal_pickings"
-		action="action_definition_picking_journal"/>
-
+	
+	<menuitem name="Configuration" id="menu_definition_journal_configuration" parent="sale_wo_production.menu_sale_wo_inventory"/>
+	<menuitem name="Packings Journals" id="menu_definition_journal_picking" parent="menu_definition_journal_configuration" action="action_definition_picking_journal"/>
 
 	<record model="ir.actions.act_window" id="action_definition_picking_journal_tree">
 		<field name="name">Packings by journal</field>
@@ -68,10 +66,9 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[]</field>
 	</record>
-	<menuitem
-		name="Inventory Control/Packing Lists/Packings by Journal"
-		id="menu_definition_journal_picking_by_journal"
-		action="action_definition_picking_journal_tree"/>
+	
+	<menuitem name="Packing Lists" id="menu_definition_journal_packing_lists" parent="sale_wo_production.menu_sale_wo_inventory"/>
+	<menuitem name="Packings by Journal" id="menu_definition_journal_picking_byjournal" parent="menu_definition_journal_packing_lists" action="action_definition_picking_journal_tree"/>
 
 	<record model="ir.actions.act_window" id="action_definition_picking_journal_tree_my">
 		<field name="name">My open packing journals</field>
@@ -80,11 +77,9 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('user_id','=',uid),('state','=','open')]</field>
 	</record>
-	<menuitem
-		name="Inventory Control/Packing Lists/Packings by Journal/My Open Journals"
-		id="menu_definition_journal_pickings_my_open"
-		action="action_definition_picking_journal_tree_my"/>
-
+	
+	<menuitem name="My Open Journals" id="menu_definition_journal_picking_byjournal_my" parent="menu_definition_journal_picking_byjournal" action="action_definition_picking_journal_tree_my"/>
+	
 	<record model="ir.actions.act_window" id="action_definition_picking_journal_tree_all">
 		<field name="name">Packings by journal</field>
 		<field name="res_model">sale_journal.picking.journal</field>
@@ -92,11 +87,8 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
-	<menuitem
-		name="Inventory Control/Packing Lists/Packings by Journal/All Open Journals"
-		id="menu_definition_journal_pickings_all_open"
-		action="action_definition_picking_journal_tree_all"/>
-
+	
+	<menuitem name="All Open Journals" id="menu_definition_journal_picking_byjournal_all" parent="menu_definition_journal_picking_byjournal" action="action_definition_picking_journal_tree_all"/>
 
 	<record model="ir.actions.act_window" id="action_invoice_type_tree">
 		<field name="name">Packings by invoice_method</field>
@@ -105,11 +97,11 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="view_type">tree</field>
 	</record>
-	<menuitem
-		name="Inventory Control/Packing Lists/Sending Goods/Packings to Invoice/Packings by Invoice Method"
-		id="menu_action_invoice_type_tree"
-		action="action_invoice_type_tree"/>
-
+	
+	<menuitem name="Sending Goods" id="menu_definition_journal_picking_sending_goods" parent="menu_definition_journal_packing_lists"/>
+	<menuitem name="Packings to Invoice" id="menu_definition_journal_picking_invoice" parent="menu_definition_journal_picking_sending_goods"/>
+	<menuitem name="Packings by Invoice Method" id="menu_definition_journal_picking_invoice_method" parent="menu_definition_journal_picking_invoice" action="action_invoice_type_tree"/>
+	
 	<record model="ir.actions.act_window" id="action_invoice_type_picking_open">
 		<field name="name">Packings to invoice</field>
 		<field name="res_model">stock.picking</field>

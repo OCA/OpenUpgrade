@@ -99,8 +99,10 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="sale_advertising_issue_tree"/>
 		</record>
-		<menuitem name="Sales Management/Advertising/Advertising Issue" action="action_sale_advertising_issue" id="menu_sale_advertising_issue"/>
-
+		
+		<menuitem name="Advertising" id="menu_sale_advertising" parent="sale.menu_sale_root"/>
+		<menuitem name="Advertising Issue" id="menu_sale_advertising_issue" parent="menu_sale_advertising" action="action_sale_advertising_issue"/>
+		
 <!-- View for sale.advertising.proof object -->
 	<record model="ir.ui.view" id="sale_advertising_proof_form">
 			<field name="name">sale.advertising.proof.form</field>
@@ -134,8 +136,9 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="sale_advertising_proof_tree"/>
 		</record>
-		<menuitem name="Sales Management/Advertising/Advertising Proof" action="action_sale_advertising_proof" id="menu_sale_advertising_proof"/>
-
+		
+		<menuitem name="Advertising Proof" id="menu_sale_advertising_proof" parent="menu_sale_advertising" action="action_sale_advertising_proof"/>
+		
 <!-- View for product.product object inherit -->
 	<record model="ir.ui.view" id="product_normal_form_view_inherit">
 			<field name="name">product.product.form.inherit</field>
@@ -159,7 +162,8 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('published_customer','&lt;&gt;', False)]</field>
 	</record>
-	<menuitem name="Sales Management/Advertising/All Advertising Sale Orders" id="menu_advertising_sale_order" action="advertising_sale_order_action"/>
-
+	
+	<menuitem name="All Advertising Sale Orders" id="menu_sale_advertising_sale_order" parent="menu_sale_advertising" action="advertising_sale_order_action"/>
+	
 	</data>
 </terp>
