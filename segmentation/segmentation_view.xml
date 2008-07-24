@@ -21,27 +21,28 @@
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Partners/Configuration/Profiling/Questionnaires" id="menu_segm_questionnaire" 
-				  action="open_questionnaires" />
-
+		
+		<menuitem name="Profiling" id="menu_segmentation_profile" parent="base.menu_base_config"/>
+		<menuitem name="Questionnaires" id="menu_segmentation_profile_questionnair" parent="menu_segmentation_profile" action="open_questionnaires"/>
+		
 		<record model="ir.actions.act_window" id="open_questions">
 		  <field name="name">Questions</field>
 		  <field name="res_model">segmentation.question</field>
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Partners/Configuration/Profiling/Questions" id="menu_segm_answer" 
-				  action="open_questions" />
-
+		
+		<menuitem name="Questions" id="menu_segmentation_profile_question" parent="menu_segmentation_profile" action="open_questions"/>
+		
 		<record model="ir.actions.act_window" id="open_profiles">
 		  <field name="name">Profiles</field>
 		  <field name="res_model">segmentation.profile</field>
 		  <field name="view_type">form</field>
 		  <field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Partners/Configuration/Profiling/Profiles" id="menu_segm_profile"
-				  action="open_profiles" />
-
+		
+		<menuitem name="Profiles" id="menu_segmentation_profile_profile" parent="menu_segmentation_profile" action="open_profiles"/>
+		
 	<record model="ir.ui.view" id="view_questionnaire_tree">
 		<field name="name">Questionnaires</field>
 		<field name="model">segmentation.questionnaire</field>
@@ -237,11 +238,7 @@
 		<field name="domain">[('parent_id','=',False)]</field>
 	</record>
 
-	<menuitem
-		name="Partners/Partners by Profile" 
-		sequence="1"
-		action="action_partner_profile" 
-		id="menu_partner_profile_main"/>
+	<menuitem name="Partners by Profile" id="menu_partner_profile_main" parent="base.menu_base_partner" action="action_partner_profile"/>
 
 	<record model="ir.values" id="ir_action_partner_by_profile">
 		<field name="key2" eval="'tree_but_open'"/>

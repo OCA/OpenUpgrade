@@ -1,6 +1,8 @@
 <terp>
 	<data>
+		
 		<menuitem name="Tools" id="menu_tools" icon="STOCK_PREFERENCES"/>
+		
 		<record model="ir.ui.view" id="sandwich_product_type_view_form">
 			<field name="name">sandwich.product.type</field>
 			<field name="model">sandwich.product.type</field>
@@ -30,9 +32,11 @@
 			<field name="view_mode">form,tree</field>
 			<field name="domain">[]</field>
 		</record>
-		<menuitem name="Tools/Sandwich/Configuration/Type of Product" id="menu_action_sandwich_product_type" action="action_sandwich_product_type"/>
-	
-	
+		
+		<menuitem name="Sandwich" id="menu_tools_sandwich" parent="menu_tools"/>
+		<menuitem name="Configuration" id="menu_tools_sandwich_configuration" parent="menu_tools_sandwich"/>
+		<menuitem name="Type of Product" id="menu_tools_sandwich_type_product" parent="menu_tools_sandwich_configuration" action="action_sandwich_product_type"/>
+		
 		<record model="ir.ui.view" id="sandwich_product_view_tree">
 			<field name="name">sandwich.product</field>
 			<field name="model">sandwich.product</field>
@@ -64,8 +68,8 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[]</field>
 		</record>
-		<menuitem name="Tools/Sandwich/Configuration/Product" id="menu_action_sandwich_product" action="action_sandwich_product"/>
 
+		<menuitem name="Product" id="menu_tools_sandwich_product" parent="menu_tools_sandwich_configuration" action="action_sandwich_product"/>
 
 		<record model="ir.ui.view" id="sandwich_order_line_view_tree">
 			<field name="name">sandwich.order.line.tree</field>
@@ -103,8 +107,8 @@
 			<field name="domain">[]</field>
 			<field name="view_id" ref="sandwich_order_line_view_form"/>
 		</record>
-		<menuitem name="Tools/Sandwich/Order Lines" id="menu_action_sandwich_order_line" action="action_sandwich_order_line"/>
 		
+		<menuitem name="Order Lines" id="menu_tools_sandwich_orderlines" parent="menu_tools_sandwich" action="action_sandwich_order_line"/>		
 		
 		<record model="ir.actions.act_window" id="action_sandwich_my_order_line">
 			<field name="name">My order lines</field>
@@ -113,8 +117,8 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('user_id','=',uid)]</field>
 		</record>
-		<menuitem name="Tools/Sandwich/Order Lines/My Order Lines" id="menu_action_sandwich_my_order_line" action="action_sandwich_my_order_line"/>
 		
+		<menuitem name="My Order Lines" id="menu_tools_sandwich_my_orderlines" parent="menu_tools_sandwich_orderlines" action="action_sandwich_my_order_line"/>		
 		
 		<record model="ir.actions.act_window" id="action_sandwich_my_order_line_of_the_day">
 			<field name="name">My order lines of the day</field>
@@ -123,8 +127,8 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('user_id','=',uid),('date','=',time.strftime('%Y-%m-%d'))]</field>
 		</record>
-		<menuitem name="Tools/Sandwich/Order Lines/My Order Lines/My Order Lines of the Day" id="menu_action_sandwich_my_order_line_of_the_day" action="action_sandwich_my_order_line_of_the_day"/>
 		
+		<menuitem name="My Order Lines of the Day" id="menu_tools_sandwich_my_orderlines_day" parent="menu_tools_sandwich_my_orderlines" action="action_sandwich_my_order_line_of_the_day"/>		
 		
 		<record model="ir.actions.act_window" id="action_sandwich_order_line_of_the_day">
 			<field name="name">Order lines of the day</field>
@@ -133,8 +137,8 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('date','=',time.strftime('%Y-%m-%d'))]</field>
 		</record>
-		<menuitem name="Tools/Sandwich/Order Lines/Order Lines of the Day" id="menu_action_sandwich_order_line_of_the_day" action="action_sandwich_order_line_of_the_day"/>
-
+		
+		<menuitem name="Order Lines of the Day" id="menu_tools_sandwich_orderlines_day" parent="menu_tools_sandwich_orderlines" action="action_sandwich_order_line_of_the_day"/>
 
 		<record model="ir.ui.view" id="sandwich_order_view_tree">
 			<field name="name">sandwich.order.tree</field>
@@ -179,7 +183,9 @@
 			<field name="view_id" eval="False"/>
 			<field name="domain">[('date','=',time.strftime('%Y-%m-%d'))]</field>
 		</record>
-		<menuitem name="Tools/Sandwich/Today's Orders" id="menu_action_sandwich_order" action="action_sandwich_order"/>
+		
+		<menuitem name="Today's Orders" id="menu_tools_sandwich_today_order" parent="menu_tools_sandwich" action="action_sandwich_order"/>
+
 	</data>
 </terp>
 

@@ -200,11 +200,13 @@
 			<field name="view_mode">form,tree</field>
 			<field name="view_id" ref="email_smtpclient_tree" />
 		</record>
-		<menuitem
-			name="Administration/Configuration/Servers/SMTP Server"
-			id="menu_action_email_smtpclient_tree"
-			action="action_email_smtpclient_tree" />
-
+		
+		<menuitem name="Configuration" id="menu_smtpclient_administration_cofiguration" parent="base.menu_administration"/>
+		
+		<menuitem name="Servers" id="menu_smtpclient_administration_server" parent="menu_smtpclient_administration_cofiguration"/>
+		
+		<menuitem name="SMTP Server" id="menu_smtpclient_administration_smtp_server" parent="menu_smtpclient_administration_server" action="action_email_smtpclient_tree"/>
+		
 		<record model="ir.ui.view" id="email_smtpclient_history_tree">
 			<field name="name">email.smtpclient.history.tree</field>
 			<field name="model">email.smtpclient.history</field>
