@@ -5,7 +5,7 @@
     'category': 'Data Module',
      'init_xml':[],
      'author': 'Tiny',
-     'depends': ['account','base_contact','account_l10n_be_domiciliation'],
+     'depends': ['account','base_contact','account_l10nbe_domiciliation'],
      'version': '1.0',
      'active': False,
      'demo_xml': [],
