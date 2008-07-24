@@ -32,7 +32,7 @@
 		<field name="domain">[('state','=','open')]</field>
 		<field name="view_id" ref="account_analytic_progress_graph"/>
 	</record>
-	<menuitem name="Financial Management/Reporting/Analytic/Remainging Turnover by Account"
+	<menuitem parent="account.next_id_40"
 		id="menu_account_analytic_progress_graph"
 		action="action_account_analytic_progress_graph"/> 
 
