@@ -35,10 +35,10 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Live Chat/Configuration/Jabber Accounts"
-			id="menu_action_jabber_account"
-			action="action_jabber_account"/>
-
+		
+		<menuitem name="Live Chat" id="menu_crm_livechat" parent="crm.menu_crm"/>
+		<menuitem name="Configuration" id="menu_crm_livechat_config" parent="menu_crm_livechat"/>
+		<menuitem name="Jabber Accounts" id="menu_crm_livechat_config_jabber" parent="menu_crm_livechat_config" action="action_jabber_account"/>
 
 		<record model="ir.ui.view" id="view_jabber_livechat">
 			<field name="name">LiveChat Sessions</field>
@@ -113,10 +113,8 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Live Chat/Configuration/Live Chat Sessions"
-			id="menu_action_jabber_livechat"
-			action="action_jabber_livechat"/>
-
+		
+		<menuitem name="Live Chat Sessions" id="menu_crm_livechat_config_session" parent="menu_crm_livechat_config" action="action_jabber_livechat"/>
 
 		<record model="ir.ui.view" id="view_livechat_partner">
 			<field name="name">partners Accounts</field>
@@ -159,10 +157,8 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Live Chat/Configuration/Visitors Accounts"
-			id="menu_action_jabber_livechat_partner"
-			action="action_jabber_livechat_partner"/>
-
+		
+		<menuitem name="Visitors Accounts" id="menu_crm_livechat_config_visitor" parent="menu_crm_livechat_config" action="action_jabber_livechat_partner"/>
 
 		<record model="ir.ui.view" id="view_livechat_user">
 			<field name="name">Users Accounts</field>
@@ -205,12 +201,9 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Live Chat/Configuration/Users Accounts"
-			id="menu_action_jabber_livechat_user"
-			action="action_jabber_livechat_user"/>
-
-
-
+		
+		<menuitem name="Users Accounts" id="menu_crm_livechat_config_user" parent="menu_crm_livechat_config" action="action_jabber_livechat_user"/>
+		
 		<record model="ir.ui.view" id="view_livechat_log">
 			<field name="name">log Accounts</field>
 			<field name="model">crm_livechat.log</field>
@@ -242,10 +235,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="CRM &amp; SRM/Live Chat/Live Chat Logs"
-			id="menu_action_jabber_livechat_log"
-			action="action_jabber_livechat_log"/>
-
+		<menuitem name="Live Chat Logs" id="menu_crm_livechat_config_log" parent="menu_crm_livechat" action="action_jabber_livechat_log"/>
 
 	</data>
 </terp>

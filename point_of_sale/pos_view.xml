@@ -141,8 +141,9 @@
 		</field>
 	</record>
 
-	<menuitem name="Point of Sale/Point of Sale" action="action_pos_pos_form" sequence="1"/>
-
+	<menuitem name="Point of Sale" id="menu_point_sale"/>
+	<menuitem name="Point of Sale" id="menu_point_sale1" parent="menu_point_sale" action="action_pos_pos_form"/> 
+	
 	<wizard 
 		string="Wizard default journals"
 		model="pos.config.journal"
@@ -150,13 +151,8 @@
 		menu="False"
 		id="wizard_default_journal"/>
 
-	<menuitem name="Point of Sale/Configuration" />
-	<menuitem
-		name="Point of Sale/Configuration/Default journals"
-		string="Default journals"
-		action="wizard_default_journal"
-		type="wizard"
-		id="menu_wizard_default_journal" />
+	<menuitem name="Configuration" id="menu_point_sale_configuration" parent="menu_point_sale"/>
+	<menuitem name="Default journals" id="menu_point_sale_configuration_default" parent="menu_point_sale_configuration" action="wizard_default_journal" type="wizard"/>
 
 <!-- 	<record model="ir.actions.act_window" id="action_pos_order_tree"> -->
 <!-- 		<field name="name">pos.order</field> -->
@@ -178,8 +174,9 @@
 		<field name="view_id" ref="view_pos_order_tree"/>
 		<field name="domain">[('date_order','=', time.strftime('%Y-%m-%d'))]</field>
 	</record>
-	<menuitem name="Point of Sale/Point of Sale/Orders of the day" id="menu_action_pos_order_tree2" action="action_pos_order_tree2"/>
-
+	
+	<menuitem name="Orders of the day" id="menu_point_sale_order_day" parent="menu_point_sale1" action="action_pos_order_tree2"/>
+	
 	<record model="ir.actions.act_window" id="action_pos_order_tree3">
 		<field name="name">Point of Sale</field>
 		<field name="type">ir.actions.act_window</field>
@@ -188,8 +185,8 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_pos_order_tree"/>
 	</record>
-	<menuitem name="Point of Sale/Point of Sale/All orders" id="menu_action_pos_order_tree3" action="action_pos_order_tree3"/>
-
+	
+	<menuitem name="All orders" id="menu_point_sale_order_all" parent="menu_point_sale1" action="action_pos_order_tree3"/>
 
 	<record model="ir.ui.view" id="view_pos_order_line">
 		<field name="name">Sale lines</field>
@@ -231,8 +228,9 @@
 		<field name="view_mode">tree</field>
 		<field name="view_id" ref="view_pos_order_line"/>
 	</record>
-	<menuitem name="Point of Sale/POS Lines" id="menu_action_pos_order_line" action="action_pos_order_line"/>
-
+	
+	<menuitem name="POS Lines" id="menu_point_sale_pos" parent="menu_point_sale" action="action_pos_order_line"/>
+	
 	<record model="ir.actions.act_window" id="action_pos_order_line_day">
 		<field name="name">Sale line</field>
 		<field name="type">ir.actions.act_window</field>
@@ -242,8 +240,8 @@
 		<field name="view_id" ref="view_pos_order_line"/>
 		<field name="domain">[('create_date','like',time.strftime('%Y-%m-%d'))]</field>
 	</record>
-	<menuitem name="Point of Sale/POS Lines/POS Lines of the day" id="menu_action_pos_order_line_day" action="action_pos_order_line_day"/>
-
+	
+	<menuitem name="POS Lines of the day" id="menu_point_sale_pos_day" parent="menu_point_sale_pos" action="action_pos_order_line_day"/>
 
 	<!-- report -->
 
@@ -286,7 +284,10 @@
 		<field name="view_mode">tree</field>
 		<field name="domain">[('date_create','=',time.strftime('%Y-%m-%d'))]</field>
 	</record>
-	<menuitem name="Point of Sale/Reporting/Sales of the day" action="action_trans_pos_tree_today" id="menu_trans_pos_tree_today"/>
+	
+	<menuitem name="Reporting" id="menu_point_sale_reporting" parent="menu_point_sale"/>
+	<menuitem name="Sales of the day" id="menu_point_sale_reporting_sales" parent="menu_point_sale_reporting" action="action_trans_pos_tree_today"/>
+	
 <!-- 	<record model="ir.actions.act_window" id="action_trans_pos_user_tree_today"> -->
 <!-- 		<field name="name">Sales by user</field> -->
 <!-- 		<field name="res_model">report.transaction.pos</field> -->
@@ -304,7 +305,9 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('date_create','like',time.strftime('%Y-%m'))]</field>
 	</record>
-	<menuitem name="Point of Sale/Reporting/Sales of the month" action="action_trans_pos_tree_month" id="menu_trans_pos_tree_month"/>
+	
+	<menuitem name="Sales of the month" id="menu_point_sale_reporting_sales_month" parent="menu_point_sale_reporting" action="action_trans_pos_tree_month"/>
+	
 <!-- 	<record model="ir.actions.act_window" id="action_trans_pos_user_tree_month"> -->
 <!-- 		<field name="name">Sales by user</field> -->
 <!-- 		<field name="res_model">report.transaction.pos</field> -->
@@ -321,7 +324,9 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-	<menuitem name="Point of Sale/Reporting/All the sales" action="action_trans_pos_tree" id="menu_trans_pos_tree"/>
+	
+	<menuitem name="All the sales" id="menu_point_sale_reporting_sales_all" parent="menu_point_sale_reporting" action="action_trans_pos_tree"/>
+	
 <!-- 	<record model="ir.actions.act_window" id="action_trans_pos_user_tree"> -->
 <!-- 		<field name="name">Sales by user</field> -->
 <!-- 		<field name="res_model">report.transaction.pos</field> -->
