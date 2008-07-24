@@ -60,12 +60,13 @@
 		</record>
 
 		<menuitem
-			name="Financial Management/Configuration/Payment Export"
+			name="Payment Export" parent="account.menu_finance_configuration"
 			id="menu_action_action_account_pay" />
 
 		<menuitem
-			name="Financial Management/Configuration/Payment Export/Payment Export Logs"
+			parent="menu_action_action_account_pay"
 			id="menu_action_action_account_pay_tree" action="action_account_pay_tree"/>
+
 
 	<record model="ir.ui.view" id="view_res_bank_form_inherit">
 			<field name="name">res.bank.form.inherit</field>
@@ -110,7 +111,7 @@
 		</record>
 
 	<menuitem
-			name="Financial Management/Configuration/Payment/Payment Method"
+			 parent="account_payment.next_id_44"
 			id="menu_action_payment_method_tree" action="action_payment_method_tree"/>
 
 	<record model="ir.ui.view" id="view_charges_code_tree">
@@ -143,7 +144,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 	<menuitem
-			name="Financial Management/Configuration/Payment/Charges Code"
+			parent="account_payment.next_id_44"
 			id="menu_action_charges_code_tree" action="action_charges_code_tree"/>
 
 </data>

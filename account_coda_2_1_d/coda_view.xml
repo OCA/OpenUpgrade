@@ -39,9 +39,9 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
-	<menuitem name="Financial Management/Reporting/Coda Statements" id="menu_account_coda_21d" action="action_account_coda_21d" sequence="12"/>
+	<menuitem name="Coda Statements" parent="account.menu_finance_reporting" id="menu_account_coda_21d" action="action_account_coda_21d" sequence="12"/>
 
-	<menuitem name="Financial Management/Periodical Processing/Import Coda Statements" action="wizard_account_coda_21d_import"
+	<menuitem name="Import Coda Statements" action="wizard_account_coda_21d_import" parent="account.menu_finance_periodical_processing"
 	type="wizard"  id="menu_account_coda_21d_wizard" sequence="15"/>
 
 	<act_window name="CODA Import"

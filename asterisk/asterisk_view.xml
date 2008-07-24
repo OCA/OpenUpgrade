@@ -34,10 +34,9 @@
 			<field name="res_model">asterisk.server</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Sys Admin/Configuration/Asterisk Servers" 
-			id="menu_asterisk_server" 
-			action="action_asterisk_server"/>
-
+		<menuitem name="Sys Admin" id="menu_asterisk_server_main"/>
+		<menuitem name="Configuration" id="menu_asterisk_server_config" parent="menu_asterisk_server_main"/>
+		<menuitem id="menu_asterisk_server"	action="action_asterisk_server" parent="menu_asterisk_server_config"/>
 
 		<record model="ir.ui.view" id="asterisk_phone_tree">
 			<field name="name">IP Phone</field>
@@ -72,7 +71,7 @@
 			<field name="res_model">asterisk.phone</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Sys Admin/Configuration/IP Phones" 
+		<menuitem name="IP Phones" parent="menu_asterisk_server_config"
 			id="menu_asterisk_phone" 
 			action="action_asterisk_phone"/>
 
