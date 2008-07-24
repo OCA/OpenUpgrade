@@ -2,8 +2,6 @@
 <terp>
 <data>
 
-
-
 	<record model="ir.ui.view" id="view_commission_month_form">
 		<field name="name">commission.month.form</field>
 		<field name="model">report.commission.month</field>
@@ -53,10 +51,12 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 		<field name="domain">[('in_date','like',time.strftime('%Y-%m'))]</field>
-
 	</record>
-	<menuitem name="Sales Management/Commissions/Reporting/This Month/Commissions of This Month " action="action_sales agent commission_tree_month" id="menu_commission_tree_month"/>
-
+	
+	<menuitem name="Reporting" id="menu_sale_commisions_reporting" parent="menu_sale_commisions"/>
+	<menuitem name="This Month" id="menu_sale_commisions_reporting_this" parent="menu_sale_commisions_reporting"/>
+	<menuitem name="Commissions of This Month" id="menu_sale_commisions_reporting_this_of_commision" parent="menu_sale_commisions_reporting_this" action="action_sales agent commission_tree_month"/>
+	
 	<record model="ir.ui.view" id="view_commission_all_form">
 		<field name="name">commission.all.form</field>
 		<field name="model">report.commission.month</field>
@@ -77,7 +77,6 @@
 			</form>
 		</field>
 	</record>
-
 
 	<record model="ir.ui.view" id="view_commission_all_tree">
 		<field name="name">commission.all.form.tree</field>
@@ -106,7 +105,8 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree</field>
 	</record>
-<menuitem name="Sales Management/Commissions/Reporting/All Commissions/Commissions" action="action_sales agent commission_tree_all" id="menu_commission_tree_all"/>
-
+	<menuitem name="All Commissions" id="menu_sale_commisions_reporting_all_com" parent="menu_sale_commisions_reporting"/>
+	<menuitem name="Commissions" id="menu_sale_commisions_reporting_all_of_commision" parent="menu_sale_commisions_reporting_all_com" action="action_sales agent commission_tree_all"/>
+	
 </data>
 </terp>

@@ -2,8 +2,7 @@
 <terp>
 	<data>
 		<menuitem name="Timesheet" id="menu_hr_root"/>
-		<menuitem name="Timesheet/Configuration" groups="base.group_admin"/>
-
+		<menuitem name="Configuration" id="menu_time_configuration" groups="base.group_admin" parent="menu_hr_root"/>
 
 	<!-- Timesheet Grant -->
 		<record model="ir.ui.view" id="view_cci_timesheet_grant_form">
@@ -35,8 +34,8 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 
-		<menuitem name="Timesheet/Configuration/Grant" id="menu_action_grant_tree" action="action_grant_tree" groups="base.group_admin" />
-
+		<menuitem name="Grant" id="menu_time_config_grant" parent="menu_time_configuration" action="action_grant_tree" groups="base.group_admin" />
+		
 	<!-- Timesheet -->
 		<record model="ir.ui.view" id="view_cci_timesheet_form">
 			<field name="name">cci_timesheet.form</field>
@@ -119,9 +118,8 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-
-		<menuitem name="Timesheet/Timesheet" id="menu_action_timesheet_tree" action="action_timesheet_tree" />
-
+		<menuitem name="Timesheet" id="menu_time_timesheet" groups="base.group_admin" parent="menu_hr_root" action="action_timesheet_tree"/>
+		
 	<!-- Timesheet Lines -->
 
 		<record model="ir.ui.view" id="view_cci_timesheet_line_form">
@@ -217,9 +215,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Timesheet/Timesheet Affectation" id="menu_action_timesheet_affectation_tree" action="action_timesheet_affectation_tree" />
-
-
+		<menuitem name="Timesheet Affectation" id="menu_time_timesheet_affect" groups="base.group_admin" parent="menu_hr_root" action="action_timesheet_affectation_tree"/>
 
 <!-- Timesheet reporting -->
 
@@ -294,7 +290,8 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,graph</field>
 		</record>
-		<menuitem name="Timesheet/Reporting/Timesheets per Employee" action="action_report_timesheet_affectation" id="menu_report_timesheet_affectation"/>
-
+		<menuitem name="Reporting" id="menu_time_reporting" groups="base.group_admin" parent="menu_hr_root"/>
+		<menuitem name="Timesheets per Employee" id="menu_time_reporting_employee" parent="menu_time_reporting" action="action_report_timesheet_affectation"/>
+		
 	</data>
 </terp>

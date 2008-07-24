@@ -49,8 +49,9 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_translation_folder_tree"/>
 		</record>
-		<menuitem name="Translation/Translation Dossier" action="action_translation_folder" id="menu_translation_folder"/>
-
+		<menuitem name="Translation" id="menu_translation_root"/>
+		<menuitem name="Translation Dossier" id="menu_translation_root_dossier" parent="menu_translation_root" action="action_translation_folder"/>
+		
 <!-- view for credit.line ... -->
 		<record model="ir.ui.view" id="view_credit_line_form">
 			<field name="name">credit.line.form</field>
@@ -87,8 +88,8 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_credit_line_tree"/>
 		</record>
-		<menuitem name="Translation/Credit Line" action="action_credit_line" id="menu_credit_line"/>
-
+		<menuitem name="Credit Line" id="menu_translation_root_credit" parent="menu_translation_root" action="action_credit_line"/>
+		
 <!-- view for letter.credence ... -->
 		<record model="ir.ui.view" id="view_letter_credence_form">
 			<field name="name">letter.credence.form</field>
@@ -119,8 +120,7 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_letter_credence_tree"/>
 		</record>
-		<menuitem name="Translation/Letter of Credence" action="action_letter_credence" id="menu_letter_credence"/>
-
+		<menuitem name="Letter of Credence" id="menu_translation_root_letter" parent="menu_translation_root" action="action_letter_credence"/>
 
 <!-- view for res.partner inherited ... -->
 	<record model="ir.ui.view" id="view_partner_form_inherit_translation">
