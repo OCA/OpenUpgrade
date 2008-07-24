@@ -48,7 +48,7 @@ from osv import orm
 class question(osv.osv):
     _inherit="crm_profiling.question"
     _columns={
-        'target':fields.selection([('res.partner','Partner'),('res.partner.contact','Contact'),('res.partner.address','Address')], 'Target', required=True),
+        'target':fields.selection([('res.partner','Partner'),('res.partner.contact','Contact'),('res.partner.address','Address'),('res.partner.job','Function')], 'Target', required=True),
         'open_question':fields.boolean('Open Question'),
         }
     _defaults = {
@@ -77,6 +77,13 @@ class res_partner_address(osv.osv):
         "answers_ids": fields.many2many("crm_profiling.answer","address_question_rel","address","answer","Answers",domain=[('question_id.target','=','res.partner.address')]),
         }
 res_partner_address()
+
+class res_partner_job(osv.osv):
+    _inherit="res.partner.job"
+    _columns={
+        "answers_ids": fields.many2many("crm_profiling.answer","jobs_question_rel","address","answer","Answers",domain=[('question_id.target','=','res.partner.job')]),
+        }
+res_partner_job()
 
 class partner(osv.osv):
     _inherit="res.partner"

@@ -174,5 +174,23 @@
 		</field>
 	</record>
 
+
+<!-- Add new page for Tags in parent notebook -->
+
+	<record model="ir.ui.view" id="view_partner_job_form_inherited">
+		<field name="name">res.partner.job.form</field>
+		<field name="model">res.partner.job</field>
+		<field name="inherit_id" ref="base_contact.view_partner_job_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Tags">
+					<newline/>
+					<field name="answers_ids" colspan="4" nolabel="1"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
 	</data>
 </terp>
