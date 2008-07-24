@@ -1,7 +1,6 @@
 <?xml version="1.0" ?>
 <terp>	
 	<!-- Ecommerce Shop 0 -->
-	
 <data>
 		<record id="ecommerce_shop_0" model="ecommerce.shop">
 			<field name="name">tinyerp</field>
@@ -46,20 +45,20 @@
 		<field name="parent_id" ref="product_category_accesories"/>
 		<field name="name">Mother Board</field>
 		</record>
-	
+		
 		<!-- Ecommerce Category with parent child relation -->
 	
   		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
 			<field name="shop_id" ref="sale.shop"/>
 			<field name="company_id" ref="base.main_company"/>
 		</record>
+		
 		<record id="ecommerce_category_tinycomputers0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Tiny Computers&quot;" name="name"/>
 		</record>
-	
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
+		
 		<record id="ecommerce_category_basiccomputers0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="product.product_category_pc"/>
@@ -67,8 +66,7 @@
 			<field eval="&quot;Basic Computers&quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
-	
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
+		
 		<record id="ecommerce_category_newlaptop0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_laptop0"/>
@@ -77,7 +75,6 @@
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
 		
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
 		<record id="ecommerce_category_compaq0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_compaq"/>
@@ -86,7 +83,6 @@
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
 		</record>
 		
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
 		<record id="ecommerce_category_acer0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_acer"/>
@@ -95,7 +91,6 @@
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
 		</record>
 		
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
 		<record id="ecommerce_category_accesories0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_accesories"/>
@@ -104,7 +99,6 @@
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
 		
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
 		<record id="ecommerce_category_ram1" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_ram"/>
@@ -113,7 +107,6 @@
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
 		</record>
 		
-		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
 		<record id="ecommerce_category_hdisk" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_hdd"/>
@@ -122,7 +115,6 @@
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
 		</record>
 		
-	   <record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop"/>
 		<record id="ecommerce_category_peripheral" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="product.product_category_10"/>
@@ -131,7 +123,7 @@
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
 		
-	<!-- Ecommerce Shop 0 Product  -->
+		<!-- Ecommerce Shop 0 Product  -->
 	
 	<record id="product_product_ecom1" model="product.product">
 		<field name="default_code">cq1</field>
@@ -352,7 +344,7 @@
 		<field name="name">120gb harddisk</field>
 		<field name="categ_id" ref="product_category_hdd"/>
 	</record>
-			
+	
 	<!-- State Demo -->
 	 
 	 	<record model="res.country.state" id="in-ap">
@@ -762,6 +754,7 @@
 			<field eval="35.0" name="rate"/>
 			<field eval="&quot;2008-05-31&quot;" name="name"/>
 		</record>
-</data>
+
 	
+</data>
 </terp>
