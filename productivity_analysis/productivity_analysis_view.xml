@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
-		<menuitem name="Reporting" groups="admin"/>
+		<menuitem name="Reporting" groups="base.group_admin" id="menu_productivity_reporting"/>
 
 		<record model="ir.ui.view" id="view_productivity_analysis_models_form">
 			<field name="name">productivity_analysis.models.form</field>
@@ -21,6 +21,10 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="view_productivity_analysis_models_form" />
 		</record>
-		<menuitem name="Reporting/Productivity Analysis/Definition/Available Models" id="menu_action_pa_models_form" action="action_productivity_analysis_models_form"/>
+		
+		<menuitem name="Productivity Analysis" id="menu_productivity_reporting_analysis" parent="menu_productivity_reporting"/>
+		<menuitem name="Definition" id="menu_productivity_reporting_def" parent="menu_productivity_reporting_analysis"/>
+		<menuitem name="Available Models" id="menu_productivity_reporting_models" parent="menu_productivity_reporting_def" action="action_productivity_analysis_models_form"/>
+		
 	</data>
 </terp>

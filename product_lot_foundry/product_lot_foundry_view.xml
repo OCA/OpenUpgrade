@@ -103,19 +103,17 @@
 		<field name="res_model">product.lot.foundry.heatcode</field>
 		<field name="view_type">form</field>
 	</record>
-	<menuitem name="Inventory Control/Heat Codes"
-		id="menu_action_heatcode_all"
-		action="action_heatcode_all"/> 
-
+	
+	<menuitem name="Inventory Control" id="menu_action_inventory"/>
+	<menuitem name="Heat Codes" id="menu_action_inventory_heat" parent="menu_action_inventory" action="action_heatcode_all"/>
+	
 	<record model="ir.actions.act_window" id="action_heatcode_draft">
 		<field name="name">Draft Heat Codes</field>
 		<field name="res_model">product.lot.foundry.heatcode</field>
 		<field name="view_type">form</field>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
-	<menuitem name="Inventory Control/Heat Codes/"
-		id="menu_action_heatcode_draft"
-		action="action_heatcode_draft"/> 
+	<menuitem name="Draft Heat Codes" id="menu_action_inventory_draft_heat" parent="menu_action_inventory_heat" action="action_heatcode_draft"/>
 
 	<record model="ir.ui.view" id="view_product_form_expiry">
 		<field name="name">product.normal.form</field>

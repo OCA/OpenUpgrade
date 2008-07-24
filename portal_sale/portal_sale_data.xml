@@ -52,9 +52,9 @@
 		<field name="view_id" ref="portal_sale_form"/>
 		<field name="act_window_id" ref="portal_action_sale_order"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Order/Sale Order"
-              id="portal_menu_sale_order" 
-			  action="portal_action_sale_order"/>
+	
+	<menuitem name="Order" id="menu_portal_customer_order" parent="portal.menu_portal_customer"/>
+	<menuitem name="Sale Order" id="menu_portal_customer_order_sale" parent="menu_portal_customer_order"  action="portal_action_sale_order"/>
 
 </data>
 </terp>

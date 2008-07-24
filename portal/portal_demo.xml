@@ -2,7 +2,8 @@
 <terp>
 <data noupdate="1">
 
-	<menuitem name="Portal/Customer Portal" id="portal_customer_root" />
+	<menuitem name="Portal"  id="menu_portal_root"/>
+    <menuitem name="Customer Portal" id="menu_portal_customer" parent="portal.menu_portal_root"/>
 
 	<record model="ir.actions.act_window" id="portal_customer_action_menu">
 		<field name="name">Portal Customer Menu</field>

@@ -88,12 +88,11 @@
 		<field name="view_id" ref="portal_invoice_form"/>
 		<field name="act_window_id" ref="portal_action_customer_invoice"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Account/Invoices/Your Invoices"
-		id="portal_menu_customer_invoice" 
-		action="portal_action_customer_invoice"/>
-
-
-
+	
+	<menuitem name="Account" id="menu_portal_configuration_account" parent="portal.menu_portal_customer"/>
+	<menuitem name="Invoices" id="menu_portal_configuration_account_invoice" parent="menu_portal_configuration_account"/>
+	<menuitem name="Your Invoices" id="menu_portal_configuration_account_your" parent="menu_portal_configuration_account_invoice" action="portal_action_customer_invoice"/>
+	
 	<record model="ir.actions.act_window" id="portal_action_refund_invoice">
 		<field name="name">Your Refunds</field>
 		<field name="res_model">account.invoice</field>
@@ -113,13 +112,8 @@
 		<field name="view_id" ref="portal_invoice_form"/>
 		<field name="act_window_id" ref="portal_action_refund_invoice"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Account/Invoices/Customer Refund"
-		id="portal_menu_refund_invoice" 
-		action="portal_action_refund_invoice"/>
-
-
-
-
+	
+	<menuitem name="Customer Refund" id="menu_portal_configuration_account_refund" parent="menu_portal_configuration_account_invoice" action="portal_action_refund_invoice"/>
 
 	<record model="ir.actions.act_window" id="portal_action_account_move">
 		<field name="name">Payables &amp; Receivables</field>
@@ -138,9 +132,8 @@
 		<field name="view_id" ref="portal_move_line_form"/>
 		<field name="act_window_id" ref="portal_action_account_move"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Account/Payables &amp; Receivables"
-              id="portal_menu_move_line_unreconcilied" 
-			  action="portal_action_account_move"/>
+	
+	<menuitem name="Payables &amp; Receivables" id="menu_portal_configuration_account_payable" parent="menu_portal_configuration_account" action="portal_action_account_move"/>
 
 	<record model="ir.model.access" id="model_access_journal">
 		<field name="name">Journal Portal</field>

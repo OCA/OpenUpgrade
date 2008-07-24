@@ -8,12 +8,10 @@
 			multi="True"
 			id="open_gtd_timebox_daily"/>
 
-		<menuitem name="Project Management/Time Management/My Daily Timebox"
-			id="menu_open_gtd_task_daily"
-			action="open_gtd_timebox_daily"
-			icon="STOCK_JUSTIFY_FILL"
-			type="wizard"/>
-
+		<menuitem name="My Daily Timebox" id="menu_open_time_daily_inbox" 
+				parent="menu_open_time" action="open_gtd_timebox_daily"
+				 icon="STOCK_JUSTIFY_FILL" type="wizard"/>
+				 
 		<wizard string="Plannify Timebox"
 			model="project.gtd.timebox"
 			name="project.gtd.timebox.fill"

@@ -40,8 +40,9 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
-	<menuitem name="Portal/Configuration/Portals"  id="menu_portal_portal" action="action_portal_form"/>
-
+	<menuitem name="Configuration" id="menu_portal_configuration" parent="portal.menu_portal_root"/>
+	<menuitem name="Portals" id="menu_portal_configuration_portals" parent="portal.menu_portal_configuration" action="action_portal_form"/>
+	
 	<record model="ir.actions.act_window" id="action_portal_model_form">
 		<field name="name">Portal Model</field>
 		<field name="type">ir.actions.act_window</field>
@@ -49,15 +50,9 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Portal/Configuration/Available Models"  id="menu_portal_model" action="action_portal_model_form"/>
-
-	<menuitem
-		name="Portal/Configuration/Create Menu"
-		action="wizard_portal_create_menu"
-		type="wizard"
-		id="menu_wizard_create_menu"/>
-
-
+	
+	<menuitem name="Available Models" id="menu_portal_configuration_models" parent="portal.menu_portal_configuration" action="action_portal_model_form"/>
+	
 	<record model="ir.ui.view" id="view_model_form">
 		<field name="name">Portal Model</field>
 		<field name="model">portal.model</field>

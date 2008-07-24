@@ -53,7 +53,9 @@
 		<field name="view_id" ref="portal_edit_project"/>
 		<field name="act_window_id" ref="portal_action_project"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Your Projects/Your Projects" id="portal_menu_project" action="portal_service.portal_action_project"/>
-
+	
+	<menuitem name="Your Projects" id="menu_portal_customer_your" parent="portal.menu_portal_customer"/>
+	<menuitem name="Your Projects" id="menu_portal_customer_your_projects" parent="menu_portal_customer_your" action="portal_service.portal_action_project"/>
+	
 </data>
 </terp>

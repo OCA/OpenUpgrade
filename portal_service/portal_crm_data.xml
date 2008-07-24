@@ -72,8 +72,9 @@
 		<field name="act_window_id" ref="portal_action_crm_case_all"/>
 	</record>
 
-	<menuitem name="Portal/Customer Portal/Support/All Support Cases" id="portal_menu_crm_case_all" action="portal_action_crm_case_all"/>
-
+	<menuitem name="Support" id="menu_portal_customer_support" parent="portal.menu_portal_customer"/>
+	<menuitem name="All Support Cases" id="menu_portal_customer_all_cases" parent="menu_portal_customer_support" action="portal_action_crm_case_all"/>
+	
 	<record model="ir.actions.act_window" id="portal_action_crm_case_open">
 		<field name="name">My opened cases</field>
 		<field name="res_model">crm.case</field>
@@ -93,9 +94,8 @@
 		<field name="view_id" ref="portal_crm_case_view"/>
 		<field name="act_window_id" ref="portal_action_crm_case_open"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Support/All Support Cases/Opened Cases" 
-              id="portal_menu_crm_case_opened" 
-			  action="portal_action_crm_case_open"/>
+	
+	<menuitem name="Opened Cases" id="menu_portal_customer_all_cases_open" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_open"/>
 
 	<record model="ir.actions.act_window" id="portal_action_crm_case_closed">
 		<field name="name">My closed cases</field>
@@ -117,12 +117,7 @@
 		<field name="act_window_id" ref="portal_action_crm_case_closed"/>
 	</record>
 
-	<menuitem name="Portal/Customer Portal/Support/All Support Cases/Closed Cases" 
-              id="portal_menu_crm_case_closed" 
-			  action="portal_action_crm_case_closed"/>
-
-
-
+	<menuitem name="Closed Cases" id="menu_portal_customer_all_cases_close" parent="menu_portal_customer_all_cases" action="portal_action_crm_case_closed"/>
 
 	<record model="ir.model.access" id="model_access_employee">
 		<field name="name">Employee Portal</field>

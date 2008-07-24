@@ -57,9 +57,8 @@
 		<field name="act_window_id" ref="portal_action_analytic_account_opened"/>
 	</record>
 
-	<menuitem name="Portal/Customer Portal/Contracts/Open Contracts" 
-	          id="portal_menu_analytic_account_opened" action="portal_action_analytic_account_opened"/>
-
+	<menuitem name="Contracts" id="menu_portal_configuration_contract" parent="portal.menu_portal_customer"/>
+	<menuitem name="Open Contracts" id="menu_portal_configuration_contract_open" parent="menu_portal_configuration_contract" action="portal_action_analytic_account_opened"/>
 
 	<record model="ir.actions.act_window" id="portal_action_analytic_account_closed">
 		<field name="name">Closed Contracts</field>
@@ -81,8 +80,8 @@
 		<field name="view_id" ref="portal_analytic_account_form"/>
 		<field name="act_window_id" ref="portal_action_analytic_account_closed"/>
 	</record>
-	<menuitem name="Portal/Customer Portal/Contracts/Closed Contracts" id="portal_menu_analytic_account_closed" 
-	          action="portal_action_analytic_account_closed"/>
+	
+	<menuitem name="Closed Contracts" id="menu_portal_configuration_contract_close" parent="menu_portal_configuration_contract" action="portal_action_analytic_account_closed"/>
 
 </data>
 </terp>

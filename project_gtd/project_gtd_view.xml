@@ -35,15 +35,10 @@
 			<field name="res_model">project.gtd.context</field>
 			<field name="domain">[('user_id','=',uid)]</field>
 		</record>
-		<menuitem
-			name="Project Management/Configuration/Time Management/Contexts"
-			action="open_gtd_context_tree"
-			id="menu_open_gtd_context_tree"/>
-		<menuitem
-			name="Project Management/Configuration/Time Management/Contexts/"
-			action="open_gtd_context_tree_my"
-			id="menu_open_gtd_context_tree_my"/>
-
+		
+		<menuitem name="Time Management" id="menu_open_gtd_time" parent="project.menu_definitions"/>
+		<menuitem name="Contexts" id="menu_open_gtd_time_contexts" parent="menu_open_gtd_time" action="open_gtd_context_tree"/>		
+		<menuitem name="My Contexts" id="menu_open_gtd_time_my_contexts" parent="menu_open_gtd_time_contexts" action="open_gtd_context_tree_my"/>	
 
 		<record model="ir.ui.view" id="view_gtd_timebox_tree">
 			<field name="name">project.gtd.timebox.tree</field>
@@ -100,20 +95,10 @@
 			<field name="res_model">project.gtd.timebox</field>
 			<field name="domain">[('user_id','=',uid)]</field>
 		</record>
-		<menuitem
-			name="Project Management/Configuration/Time Management/Timeboxes"
-			action="open_gtd_timebox_tree"
-			id="menu_open_gtd_timebox_tree"/>
-		<menuitem
-			name="Project Management/Configuration/Time Management/Timeboxes/"
-			action="open_gtd_timebox_tree_my"
-			id="menu_open_gtd_timebox_tree_my"/>
-
-		<menuitem
-			name="Project Management/Time Management"
-			id="menu_open_gtd_task"/>
-
 		
+		<menuitem name="Timeboxes" id="menu_open_gtd_time_timeboxes" parent="menu_open_gtd_time" action="open_gtd_timebox_tree"/>		
+		<menuitem name="My Timeboxes" id="menu_open_gtd_time_my_timeboxes" parent="menu_open_gtd_time_timeboxes" action="open_gtd_timebox_tree_my"/>	
+
 		<record model="ir.ui.view" id="task_inbox_view">
 			<field name="name">project.task.gtd.inbox.tree</field>
 			<field name="model">project.task</field>
@@ -139,11 +124,9 @@
 			<field name="context">{'gtd_sort':True}</field>
 			<field name="view_id" ref="task_inbox_view"/>
 		</record>
-		<menuitem
-			name="Project Management/Time Management/My Inbox"
-			action="open_gtd_task_inbox"
-			id="menu_open_gtd_task_inbox"/>
-
+		
+		<menuitem name="Time Management" id="menu_open_time" parent="project.menu_main"/>
+		<menuitem name="My Inbox" id="menu_open_time_myinbox" parent="menu_open_time" action="open_gtd_task_inbox"/>
 
 		<record model="ir.ui.view" id="view_gtd_timebox_treelist">
 			<field name="name">project.gtd.timebox.treelist</field>
@@ -166,10 +149,8 @@
 			<field name="view_id" ref="view_gtd_timebox_treelist"/>
 			<field name="context">{'record_id':False}</field>
 		</record>
-		<menuitem
-			name="Project Management/Time Management/All My Timeboxes"
-			action="open_gtd_timebox_all"
-			id="menu_open_gtd_timebox_all"/>
+		
+		<menuitem name="All My Timeboxes" id="menu_open_time_allinbox" parent="menu_open_time" action="open_gtd_timebox_all"/>
 
 	<record model="ir.ui.view" id="project_task">
 		<field name="name">project.task.form.timebox</field>
@@ -184,8 +165,6 @@
 			</field>
 		</field>
 	</record>
-
-
 
 	<act_window name="My Inbox"
 		domain="[('user_id', '=', uid),('timebox_id','=',False),('state','in',('draft','open'))]"
