@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ###############################################################################
 #
 # Copyright (c) 2007 TinyERP Pvt Ltd. (http://tinyerp.com) All Rights Reserved.
@@ -464,4 +465,6 @@ if __name__=="__main__":
 
     res = RPCProxy('ir.values').get('action', 'tree_but_open', [('ir.ui.menu', 73)], False, {})
     print res
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import time
 import datetime
@@ -194,3 +195,5 @@ class wizard_cert_fed_send(wizard.interface):
     }
 
 wizard_cert_fed_send('cci_mission.send_certificates_federation')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

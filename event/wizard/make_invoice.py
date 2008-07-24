@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -161,3 +162,5 @@ class make_invoice(wizard.interface):
     }
 
 make_invoice("event.reg_make_invoice")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

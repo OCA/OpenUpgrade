@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,3 +30,5 @@
 
 import payment_export
 import wizard
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

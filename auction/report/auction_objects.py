@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,29 +31,31 @@ import time
 from report import report_sxw
 
 class auction_objects(report_sxw.rml_parse):
-	def __init__(self, cr, uid, name, context):
-		print "int the report objects"
-		super(auction_objects, self).__init__(cr, uid, name, context)
-		self.localcontext.update({
-			'time': time,
-			#'lines': self.lines
-			#'get_data' : self.get_data
-		})
+    def __init__(self, cr, uid, name, context):
+        print "int the report objects"
+        super(auction_objects, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+            #'lines': self.lines
+            #'get_data' : self.get_data
+        })
 
-#	def lines(self, auction_id):
-#		 print " in the lines fuction"
-#		 print "value of  auction_id",auction_id.id,auction_id.name........................
+#   def lines(self, auction_id):
+#        print " in the lines fuction"
+#        print "value of  auction_id",auction_id.id,auction_id.name........................
 #
-#		 cr.execute('select ad.name from auction_dates ad, a1uction_lots al where ad.id=al.%d group by ad.name',(auction_id))
-#		 print "value of query",cr.fetchone()
-#		 return self.cr.fetchone()[0]
-#	def get_data(self, auction_id):
-#		res = self.pool.get('auction.bid.lines').read(self.cr,self.uid,[lot_id])
-#		print res;
-#		print "=================================================="
-#		return True
+#        cr.execute('select ad.name from auction_dates ad, a1uction_lots al where ad.id=al.%d group by ad.name',(auction_id))
+#        print "value of query",cr.fetchone()
+#        return self.cr.fetchone()[0]
+#   def get_data(self, auction_id):
+#       res = self.pool.get('auction.bid.lines').read(self.cr,self.uid,[lot_id])
+#       print res;
+#       print "=================================================="
+#       return True
 
 
 
 report_sxw.report_sxw('report.auction.objects', 'auction.lots', 'addons/auction/report/auction_objects.rml', parser=auction_objects)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

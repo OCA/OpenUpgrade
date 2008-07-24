@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 
 class EmailAddress(osv.osv):
@@ -15,3 +16,5 @@ class Company(osv.osv):
         'addresses': fields.one2many('res.company.address', 'company_id', 'Email Addresses'),
     }
 Company()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

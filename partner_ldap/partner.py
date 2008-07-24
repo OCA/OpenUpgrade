@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,10 +31,12 @@
 from osv import osv, fields
 
 class address_ldap(osv.osv):
-	_inherit = 'res.partner.address'
+    _inherit = 'res.partner.address'
 
-	_columns = {
-			'dn' : fields.char('Distinguished name', size=128),
-			}
+    _columns = {
+            'dn' : fields.char('Distinguished name', size=128),
+            }
 
 address_ldap()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

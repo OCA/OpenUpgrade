@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -35,33 +36,35 @@ import pooler
 from osv import osv
 
 class wiz_timebox_empty(wizard.interface):
-	def _empty(self, cr, uid, data, context):
-		pool = pooler.get_pool(cr.dbname)
-		ids = pool.get('project.gtd.timebox').search(cr, uid, [('parent_id','=',data['id'])])
-		if not len(ids):
-			raise wizard.except_wizard('Error !', 'No timebox child of this one !')
-		tids = pool.get('project.task').search(cr, uid, [('timebox_id','=',data['id'])])
-		close = []
-		up = []
-		for task in pool.get('project.task').browse(cr, uid, tids, context):
-			if (task.state in ('cancel','done')) or (task.user_id.id<>uid):
-				close.append(task.id)
-			else:
-				up.append(task.id)
-		if up:
-			print 'UP', up
-			pool.get('project.task').write(cr, uid, up, {'timebox_id':ids[0]})
-		if close:
-			print 'CLOSE', close
-			pool.get('project.task').write(cr, uid, close, {'timebox_id':False})
-		return {}
+    def _empty(self, cr, uid, data, context):
+        pool = pooler.get_pool(cr.dbname)
+        ids = pool.get('project.gtd.timebox').search(cr, uid, [('parent_id','=',data['id'])])
+        if not len(ids):
+            raise wizard.except_wizard('Error !', 'No timebox child of this one !')
+        tids = pool.get('project.task').search(cr, uid, [('timebox_id','=',data['id'])])
+        close = []
+        up = []
+        for task in pool.get('project.task').browse(cr, uid, tids, context):
+            if (task.state in ('cancel','done')) or (task.user_id.id<>uid):
+                close.append(task.id)
+            else:
+                up.append(task.id)
+        if up:
+            print 'UP', up
+            pool.get('project.task').write(cr, uid, up, {'timebox_id':ids[0]})
+        if close:
+            print 'CLOSE', close
+            pool.get('project.task').write(cr, uid, close, {'timebox_id':False})
+        return {}
 
-	states = {
-		'init' : {
-			'actions' : [_empty],
-			'result' : {'type':'state', 'state':'end'}
-		}
-	}
+    states = {
+        'init' : {
+            'actions' : [_empty],
+            'result' : {'type':'state', 'state':'end'}
+        }
+    }
 wiz_timebox_empty('project.gtd.timebox.empty')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

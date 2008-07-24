@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 
@@ -31,3 +32,5 @@ class wizard_offer_documents(wizard.interface):
         },
     }
 wizard_offer_documents("wizard_offer_documents")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

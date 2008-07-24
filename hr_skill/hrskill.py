@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 
 
@@ -67,3 +68,5 @@ class employee_status(osv.osv):
                 'name' : fields.char('Status Name', size=128, required=True)
                }
 employee_status()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

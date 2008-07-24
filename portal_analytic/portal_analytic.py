@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,9 +30,11 @@
 from osv import fields, osv
 
 class portal_analytic_account(osv.osv):
-	_name = "portal.analytic.account"
-	_inherit = "account.analytic.account"
-	_table = "account_analytic_account"
-	_columns = {
-	}
+    _name = "portal.analytic.account"
+    _inherit = "account.analytic.account"
+    _table = "account_analytic_account"
+    _columns = {
+    }
 portal_analytic_account()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

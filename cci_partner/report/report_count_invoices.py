@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -74,3 +75,5 @@ class cci_count_invoices(report_sxw.rml_parse):
 
 
 report_sxw.report_sxw('report.cci.count.invoice', 'res.partner', 'addons/cci_partner/report/report_count_invoices.rml', parser=cci_count_invoices,header=False)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

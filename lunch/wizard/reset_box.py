@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import netsvc
 import ir
@@ -5,7 +6,7 @@ import pooler
 
 set_to_zero_form = """<?xml version="1.0"?>
 <form string="Reset cashbox">
-	<label string="Are you sure you want to reset this cashbox ?"/>
+    <label string="Are you sure you want to reset this cashbox ?"/>
 </form>"""
 
 
@@ -34,20 +35,22 @@ def _set_to_zero(self,cr,uid,data,context):
 
 class cashbox_set_to_zero(wizard.interface):
 
-	states = {
+    states = {
             
-		'init': {
+        'init': {
                         'action':[],
                         'result':{'type' : 'form',
                           'arch' : set_to_zero_form,
-			  'fields' : confirm_setting_zero_fields,
+              'fields' : confirm_setting_zero_fields,
                           'state' : [('end', 'Cancel'),('zero', 'Set to Zero') ]},
-	
-		},
-		'zero' : {
-			'actions' : [_set_to_zero],
-			'result' : {'type' : 'state', 'state' : 'end'}
-		},
-	}
-	
+    
+        },
+        'zero' : {
+            'actions' : [_set_to_zero],
+            'result' : {'type' : 'state', 'state' : 'end'}
+        },
+    }
+    
 cashbox_set_to_zero('lunch.cashbox.clean')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

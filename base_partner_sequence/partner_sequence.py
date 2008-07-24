@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,12 +30,14 @@
 from osv import osv, fields
 
 class partner_sequence(osv.osv):
-	_inherit = 'res.partner'
-	def create(self, cr, uid, vals, context={}):
-		vals['ref'] = self.pool.get('ir.sequence').get(cr, uid, 'res.partner')
-		res = super(partner_sequence, self).create(cr, uid, vals, context)
-		return res
-	_columns = {
-		'ref': fields.char('Code', size=64, readonly=True),
-	}
+    _inherit = 'res.partner'
+    def create(self, cr, uid, vals, context={}):
+        vals['ref'] = self.pool.get('ir.sequence').get(cr, uid, 'res.partner')
+        res = super(partner_sequence, self).create(cr, uid, vals, context)
+        return res
+    _columns = {
+        'ref': fields.char('Code', size=64, readonly=True),
+    }
 partner_sequence()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -45,3 +46,5 @@ class res_partner(osv.osv):
         'domiciliation' : fields.char('Domiciliation Number',size=32)
         }
 res_partner()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

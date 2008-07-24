@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,16 +31,18 @@ from osv import fields,osv,orm
 
 
 class sale_order(osv.osv):
-	_inherit = 'sale.order'
-	_columns = {
-		'customer_pricelist_id':fields.many2one('product.pricelist', 'Customer Pricelist'),
-	}
+    _inherit = 'sale.order'
+    _columns = {
+        'customer_pricelist_id':fields.many2one('product.pricelist', 'Customer Pricelist'),
+    }
 sale_order()
 
 class sale_order_line(osv.osv):
-	_inherit = 'sale.order.line'
-	_columns = {
-		'price_unit_customer': fields.float('Customer Unit Price'),
-	}
+    _inherit = 'sale.order.line'
+    _columns = {
+        'price_unit_customer': fields.float('Customer Unit Price'),
+    }
 sale_order_line()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

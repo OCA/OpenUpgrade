@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2007 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -35,37 +36,39 @@ import pooler
 import tools
 
 class report_xml(osv.osv):
-	_inherit = 'ir.actions.report.xml'
+    _inherit = 'ir.actions.report.xml'
 
-	def sxwtorml(self,cr, uid, file_sxw):
-		'''
-		The use of this function is to get rml file from sxw file.
-		'''
-		sxwval = StringIO(base64.decodestring(file_sxw))
-		fp = tools.file_open('normalized_oo2rml.xsl',
-				subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
-		return  {'report_rml_content': str(sxw2rml(sxwval, xsl=fp.read()))}
+    def sxwtorml(self,cr, uid, file_sxw):
+        '''
+        The use of this function is to get rml file from sxw file.
+        '''
+        sxwval = StringIO(base64.decodestring(file_sxw))
+        fp = tools.file_open('normalized_oo2rml.xsl',
+                subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
+        return  {'report_rml_content': str(sxw2rml(sxwval, xsl=fp.read()))}
 
-	def upload_report(self, cr, uid, report_id, file_sxw, context):
-		'''
-		Untested function
-		'''
-		pool = pooler.get_pool(cr.dbname)
-		sxwval = StringIO(base64.decodestring(file_sxw))
-		fp = tools.file_open('normalized_oo2rml.xsl',
-				subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
-		report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
-			'report_sxw_content': base64.decodestring(file_sxw),
-			'report_rml_content': str(sxw2rml(sxwval, xsl=fp.read()))
-		})
-		cr.commit()
-		db = pooler.get_db_only(cr.dbname)
-		interface.register_all(db)
-		return True
-	def report_get(self, cr, uid, report_id, context={}):
-		report = self.browse(cr, uid, report_id, context)
-		return {
-			'report_sxw_content': report.report_sxw_content and base64.encodestring(report.report_sxw_content) or False,
-			'report_rml_content': report.report_rml_content and base64.encodestring(report.report_rml_content) or False
-		}
+    def upload_report(self, cr, uid, report_id, file_sxw, context):
+        '''
+        Untested function
+        '''
+        pool = pooler.get_pool(cr.dbname)
+        sxwval = StringIO(base64.decodestring(file_sxw))
+        fp = tools.file_open('normalized_oo2rml.xsl',
+                subdir='addons/base_report_designer/wizard/tiny_sxw2rml')
+        report = pool.get('ir.actions.report.xml').write(cr, uid, [report_id], {
+            'report_sxw_content': base64.decodestring(file_sxw),
+            'report_rml_content': str(sxw2rml(sxwval, xsl=fp.read()))
+        })
+        cr.commit()
+        db = pooler.get_db_only(cr.dbname)
+        interface.register_all(db)
+        return True
+    def report_get(self, cr, uid, report_id, context={}):
+        report = self.browse(cr, uid, report_id, context)
+        return {
+            'report_sxw_content': report.report_sxw_content and base64.encodestring(report.report_sxw_content) or False,
+            'report_rml_content': report.report_rml_content and base64.encodestring(report.report_rml_content) or False
+        }
 report_xml()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

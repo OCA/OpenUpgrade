@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -29,17 +30,19 @@
 from osv import fields, osv
 
 class productivity_analysis_models(osv.osv):
-	_name = "productivity_analysis.models"
-	_description = "Objects for Productivity Analysis"
-	_columns = {
-		'name': fields.char('Model Name', size=64, required=True),
-		'model': fields.char('Model', size=64, required=True),
-		'active': fields.boolean('Active')
-	}
-	_defaults = {
-		'active': lambda *a: 1,
-	}
-	_order = "name"
+    _name = "productivity_analysis.models"
+    _description = "Objects for Productivity Analysis"
+    _columns = {
+        'name': fields.char('Model Name', size=64, required=True),
+        'model': fields.char('Model', size=64, required=True),
+        'active': fields.boolean('Active')
+    }
+    _defaults = {
+        'active': lambda *a: 1,
+    }
+    _order = "name"
 productivity_analysis_models()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

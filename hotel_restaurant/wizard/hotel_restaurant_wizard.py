@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -131,3 +132,5 @@ class get_reservation_list(wizard.interface):
         },
     }
 get_reservation_list("hotel.table.reservation")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

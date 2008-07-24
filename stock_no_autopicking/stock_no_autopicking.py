@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -31,17 +32,19 @@ import netsvc
 from osv import fields,osv
 
 class product(osv.osv):
-	_inherit = "product.product"
-	_columns = {
-		'auto_pick': fields.boolean('Auto Picking', help="Auto picking for raw materials of production orders.")
-	}
-	_defaults = {
-		'auto_pick': lambda *args: True
-	}
+    _inherit = "product.product"
+    _columns = {
+        'auto_pick': fields.boolean('Auto Picking', help="Auto picking for raw materials of production orders.")
+    }
+    _defaults = {
+        'auto_pick': lambda *args: True
+    }
 product()
 
 class mrp_production(osv.osv):
-	_inherit = "mrp.production"
-	def _get_auto_picking(self, cr, uid, production):
-		return production.product_id.auto_pick
+    _inherit = "mrp.production"
+    def _get_auto_picking(self, cr, uid, production):
+        return production.product_id.auto_pick
 mrp_production()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -28,14 +29,16 @@
 
 
 {
-	"name":"Account CODA",
-	"version":"1.0",
-	"author":"Tiny",
-	"category":"Account Coda",
-	"depends":["base", "account","account_report","base_iban"],
-	"demo_xml":["coda_demo.xml"],
-	"init_xml":[],
-	"update_xml" : ["coda_wizard.xml","coda_view.xml"],
-	"active":False,
-	"installable":True,
+    "name":"Account CODA",
+    "version":"1.0",
+    "author":"Tiny",
+    "category":"Account Coda",
+    "depends":["base", "account","account_report","base_iban"],
+    "demo_xml":["coda_demo.xml"],
+    "init_xml":[],
+    "update_xml" : ["coda_wizard.xml","coda_view.xml"],
+    "active":False,
+    "installable":True,
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

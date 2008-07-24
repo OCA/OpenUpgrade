@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# -*- encoding: utf-8 -*-
 
 from SimpleXMLRPCServer import SimpleXMLRPCServer
 import os
@@ -119,9 +120,9 @@ def get_contrib(user,password,lang,version,profile,fname,c=None):
     if not verify_user(user,password,lang):
         return None
     if c:
-    	path = '/'.join([publish,lang,version,profile])
+        path = '/'.join([publish,lang,version,profile])
     else:
-    	path = contrib+'/'+'/'.join([lang,version,profile])
+        path = contrib+'/'+'/'.join([lang,version,profile])
     return file_dict_reader(path+'/'+fname)
 
 
@@ -156,3 +157,5 @@ server.register_function(get_contrib)
 server.register_function(publish_contrib)
 server.register_function(publish_release)
 server.serve_forever()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

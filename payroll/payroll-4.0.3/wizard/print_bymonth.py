@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,26 +31,28 @@ import time
 
 _date_form = '''<?xml version="1.0"?>
 <form string="Select a month">
-	<separator string="Select a month" colspan="4"/>
-	<field name="month"/>
-	<field name="year"/>
+    <separator string="Select a month" colspan="4"/>
+    <field name="month"/>
+    <field name="year"/>
 </form>'''
 
 _date_fields = {
-	'month' : {'string' : 'Month', 'type' : 'selection', 'selection' : [(1, 'January'), (2, 'February'), (3, 'March'), (4, 'April'), (5, 'May'), (6, 'June'), (7, 'July'), (8, 'August'), (9, 'September'), (10, 'October'), (11, 'November'), (12, 'December')], 'required':True },
-	'year' : {'string' : 'Year', 'type' : 'integer', 'required':True, 'default' : lambda *a: time.gmtime()[0]},
+    'month' : {'string' : 'Month', 'type' : 'selection', 'selection' : [(1, 'January'), (2, 'February'), (3, 'March'), (4, 'April'), (5, 'May'), (6, 'June'), (7, 'July'), (8, 'August'), (9, 'September'), (10, 'October'), (11, 'November'), (12, 'December')], 'required':True },
+    'year' : {'string' : 'Year', 'type' : 'integer', 'required':True, 'default' : lambda *a: time.gmtime()[0]},
 }
 
 class wiz_bymonth(wizard.interface):
-	states = {
-		'init': {
-			'actions': [],
-			'result': {'type': 'form', 'arch':_date_form, 'fields':_date_fields, 'state':[('print','Print Timesheet'),('end','Cancel')]}
-		},
-		'print': {
-			'actions': [],
-			'result': {'type': 'print', 'report': 'hr.timesheet.bymonth', 'state': 'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [],
+            'result': {'type': 'form', 'arch':_date_form, 'fields':_date_fields, 'state':[('print','Print Timesheet'),('end','Cancel')]}
+        },
+        'print': {
+            'actions': [],
+            'result': {'type': 'print', 'report': 'hr.timesheet.bymonth', 'state': 'end'}
+        }
+    }
 wiz_bymonth('hr.print_month')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

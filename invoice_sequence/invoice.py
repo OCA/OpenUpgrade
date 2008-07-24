@@ -29,9 +29,11 @@
 from osv import fields, osv
 
 class account_invoice_line(osv.osv):
-	_inherit = "account.invoice.line"
-	_order = "sequence"
-	_columns = {
-		'sequence': fields.integer('Sequence'),
-		}
+    _inherit = "account.invoice.line"
+    _order = "sequence"
+    _columns = {
+        'sequence': fields.integer('Sequence'),
+        }
 account_invoice_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

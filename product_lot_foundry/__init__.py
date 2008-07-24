@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,3 +31,5 @@
 import product_lot_foundry
 import sale_order
 import purchase_auto
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

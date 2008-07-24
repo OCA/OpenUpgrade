@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -38,42 +38,44 @@ from tools.misc import UpdateableStr
 
 _lot_arch = """<?xml version="1.0"?>
 <form string="Mark Lots" height="500" width="1000">
-	<label string="Selectionner les lots qui sont livres" colspan="4"/>
-	<field name="lot_ids" nolabel="1" colspan="4" domain="[('state','=','sold')]"/>
+    <label string="Selectionner les lots qui sont livres" colspan="4"/>
+    <field name="lot_ids" nolabel="1" colspan="4" domain="[('state','=','sold')]"/>
 </form>
 """
 _lot_fields = {
-	'lot_ids': {'string':'Lots Emportes','relation':'auction.lots','type':'many2many'}
+    'lot_ids': {'string':'Lots Emportes','relation':'auction.lots','type':'many2many'}
 }
 
 def _to_xml(s):
-	return s.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
+    return s.replace('&','&amp;').replace('<','&lt;').replace('>','&gt;')
 
 def _process(self, cr, uid, data, context):
-	pool = pooler.get_pool(cr.dbname)
-	lot_obj = pool.get('auction.lots')
-	if data['form']['lot_ids']:
-		lot_obj.write(cr, uid, data['form']['lot_ids'][0][2], {'state':'taken_away'})
-	return {'lot_ids': []}
+    pool = pooler.get_pool(cr.dbname)
+    lot_obj = pool.get('auction.lots')
+    if data['form']['lot_ids']:
+        lot_obj.write(cr, uid, data['form']['lot_ids'][0][2], {'state':'taken_away'})
+    return {'lot_ids': []}
 
 class wizard_reprint(wizard.interface):
-	states = {
-		'valid': {
-			'actions': [_process],
-			'result': {'type':'state', 'state':'init'}
-		},
-		'init': {
-			'actions': [],
-			'result': {
-				'type':'form', 
-				'arch': _lot_arch,
-				'fields': _lot_fields,
-				'state': [
-					('valid','       Valider       ')
-				],
-			}
-		}
-	}
+    states = {
+        'valid': {
+            'actions': [_process],
+            'result': {'type':'state', 'state':'init'}
+        },
+        'init': {
+            'actions': [],
+            'result': {
+                'type':'form', 
+                'arch': _lot_arch,
+                'fields': _lot_fields,
+                'state': [
+                    ('valid','       Valider       ')
+                ],
+            }
+        }
+    }
 wizard_reprint('auction.taken')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

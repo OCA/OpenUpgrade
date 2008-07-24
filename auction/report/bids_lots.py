@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 
 ##############################################################################
@@ -42,4 +43,6 @@ class bids_lots(report_sxw.rml_parse):
             'time': time,
         })
 report_sxw.report_sxw('report.bids.lots', 'auction.lots', 'addons/auction/report/bids_lots.rml',parser=bids_lots)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

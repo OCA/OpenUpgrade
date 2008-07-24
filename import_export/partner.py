@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 from osv import fields, osv
 import ir
@@ -12,3 +13,5 @@ class res_partner(osv.osv):
     }
 #end class
 res_partner()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

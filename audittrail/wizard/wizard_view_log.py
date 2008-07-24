@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import pooler
 import time
@@ -56,3 +57,5 @@ class wizard_view_log(wizard.interface):
         }
     }
 wizard_view_log('audittrail.view.log')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

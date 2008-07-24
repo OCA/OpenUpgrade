@@ -31,12 +31,12 @@ import time
 from osv import fields, osv
 
 class res_company(osv.osv):
-	_inherit = 'res.company'
-	_description = 'res.company'
-	
-	_columns = {
-		'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
-	}
+    _inherit = 'res.company'
+    _description = 'res.company'
+    
+    _columns = {
+        'federation_key' : fields.char('ID for the Federation',size=50,help="ID key for the sending of data to the belgian CCI's Federation"),
+    }
 
 res_company()
 
@@ -540,7 +540,7 @@ class res_partner_country_relation(osv.osv):
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
         'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),
+        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation')],'Types'),
     }
 res_partner_country_relation()
 
@@ -550,4 +550,6 @@ class res_partner_contact(osv.osv):
         'article_ids':fields.many2many('res.partner.article','res_partner_contact_article_rel','contact_id','article_id','Articles'),
     }
 res_partner_contact()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 from report import report_sxw
 import datetime
@@ -29,3 +30,5 @@ class folio_report(report_sxw.rml_parse):
         return self.temp
         
 report_sxw.report_sxw('report.folio.total', 'hotel.folio', 'addons/hotel/report/total_folio.rml',parser= folio_report)                              
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

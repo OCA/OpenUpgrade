@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 {
     "name":"Dashboard for CRM Configuration",
     "version":"1.0",
@@ -20,3 +21,5 @@ This module implements a dashboard for CRM that includes:
     "active":False,
     "installable":True,
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

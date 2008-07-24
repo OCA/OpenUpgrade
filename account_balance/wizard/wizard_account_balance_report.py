@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -39,37 +40,37 @@ from tools import config
 
 dates_form = '''<?xml version="1.0"?>
 <form string="Customize Report">
-	<notebook tabpos="up">
-		<page string="Report Options">
-			<separator string="Select Fiscal Year(s)(Maximum Three Years)" colspan="4"/>
-			<field name="fiscalyear" colspan="5" nolabel="1"/>
-			<field name="landscape" colspan="4"/>
-			<field name="show_columns" colspan="4"/>
-			<field name="format_perc" colspan="4"/>
-			<field name="select_account" colspan="4"/>
-			<field name="account_choice" colspan="4"/>
-			<field name="compare_pattern" colspan="4"/>
+    <notebook tabpos="up">
+        <page string="Report Options">
+            <separator string="Select Fiscal Year(s)(Maximum Three Years)" colspan="4"/>
+            <field name="fiscalyear" colspan="5" nolabel="1"/>
+            <field name="landscape" colspan="4"/>
+            <field name="show_columns" colspan="4"/>
+            <field name="format_perc" colspan="4"/>
+            <field name="select_account" colspan="4"/>
+            <field name="account_choice" colspan="4"/>
+            <field name="compare_pattern" colspan="4"/>
 
-		</page>
+        </page>
 
-		<page string="Select Period">
-			<field name="select_periods" colspan="4"/>
-			<separator string="Select Period(s)" colspan="4"/>
-			<field name="periods" colspan="4" nolabel="1"/>
-		</page>
-	</notebook>
+        <page string="Select Period">
+            <field name="select_periods" colspan="4"/>
+            <separator string="Select Period(s)" colspan="4"/>
+            <field name="periods" colspan="4" nolabel="1"/>
+        </page>
+    </notebook>
 </form>'''
 
 dates_fields = {
-	'fiscalyear': {'string': 'Fiscal year', 'type': 'many2many', 'relation': 'account.fiscalyear'},
-	'select_account': {'string': 'Select Reference Account(for  % comparision)', 'type': 'many2one', 'relation': 'account.account','help': 'Keep empty for comparision to its parent'},
-	'account_choice': {'string': 'Show Accounts', 'type': 'selection','selection':[('all','All accounts'),('bal_zero','With balance is not equal to 0'),('moves','With movements')]},
-	'show_columns': {'string': 'Show Debit/Credit Information', 'type': 'boolean'},
-	'landscape': {'string': 'Show Report in Landscape Form', 'type': 'boolean'},
-	'format_perc': {'string': 'Show Comparision in %', 'type': 'boolean'},
-	'compare_pattern':{'string':"Compare Selected Years In Terms Of",'type':'selection','selection':[('bal_cash','Cash'),('bal_perc','Percentage'),('none','Don'+ "'" +'t Compare')]},
-	'select_periods':{'string':"Select Invoices Based on Their",'type':'selection','selection':[('actual','Actual Period (Duration)'),('created','Creation Date')]},
-	'periods': {'string': 'Periods', 'type': 'many2many', 'relation': 'account.period', 'help': 'All periods if empty'}
+    'fiscalyear': {'string': 'Fiscal year', 'type': 'many2many', 'relation': 'account.fiscalyear'},
+    'select_account': {'string': 'Select Reference Account(for  % comparision)', 'type': 'many2one', 'relation': 'account.account','help': 'Keep empty for comparision to its parent'},
+    'account_choice': {'string': 'Show Accounts', 'type': 'selection','selection':[('all','All accounts'),('bal_zero','With balance is not equal to 0'),('moves','With movements')]},
+    'show_columns': {'string': 'Show Debit/Credit Information', 'type': 'boolean'},
+    'landscape': {'string': 'Show Report in Landscape Form', 'type': 'boolean'},
+    'format_perc': {'string': 'Show Comparision in %', 'type': 'boolean'},
+    'compare_pattern':{'string':"Compare Selected Years In Terms Of",'type':'selection','selection':[('bal_cash','Cash'),('bal_perc','Percentage'),('none','Don'+ "'" +'t Compare')]},
+    'select_periods':{'string':"Select Invoices Based on Their",'type':'selection','selection':[('actual','Actual Period (Duration)'),('created','Creation Date')]},
+    'periods': {'string': 'Periods', 'type': 'many2many', 'relation': 'account.period', 'help': 'All periods if empty'}
 }
 
 back_form='''<?xml version="1.0"?>
@@ -96,83 +97,85 @@ zero_fields={
 
 def _check(self, cr, uid, data, context):
 
-		if (len(data['form']['fiscalyear'][0][2])==0) or (len(data['form']['fiscalyear'][0][2])>1 and (data['form']['compare_pattern']!='none') and (data['form']['format_perc']==1) and (data['form']['show_columns']==1) and (data['form']['landscape']!=1)):
-			return 'zero_years'
+        if (len(data['form']['fiscalyear'][0][2])==0) or (len(data['form']['fiscalyear'][0][2])>1 and (data['form']['compare_pattern']!='none') and (data['form']['format_perc']==1) and (data['form']['show_columns']==1) and (data['form']['landscape']!=1)):
+            return 'zero_years'
 
-		if ((len(data['form']['fiscalyear'][0][2])==3) and (data['form']['format_perc']!=1) and (data['form']['show_columns']!=1)):
-			if data['form']['landscape']==1:
-				return 'report_landscape'
-			else:
-				return 'report'
+        if ((len(data['form']['fiscalyear'][0][2])==3) and (data['form']['format_perc']!=1) and (data['form']['show_columns']!=1)):
+            if data['form']['landscape']==1:
+                return 'report_landscape'
+            else:
+                return 'report'
 
 
-		if data['form']['format_perc']==1:
-			if len(data['form']['fiscalyear'][0][2])<=2:
-				if data['form']['landscape']==1:
-					return 'report_landscape'
-				else:
-					return 'report'
-			else:
-				if len(data['form']['fiscalyear'][0][2])==3:
-					if data['form']['landscape']==1:
-						return 'report_landscape'
-					else:
-						return 'backtoinit'
-				else:
-					return 'backtoinit'
+        if data['form']['format_perc']==1:
+            if len(data['form']['fiscalyear'][0][2])<=2:
+                if data['form']['landscape']==1:
+                    return 'report_landscape'
+                else:
+                    return 'report'
+            else:
+                if len(data['form']['fiscalyear'][0][2])==3:
+                    if data['form']['landscape']==1:
+                        return 'report_landscape'
+                    else:
+                        return 'backtoinit'
+                else:
+                    return 'backtoinit'
 
-		else:
-			if len(data['form']['fiscalyear'][0][2])>2:
-				if data['form']['landscape']==1:
-					return 'report_landscape'
-				else:
-					return 'backtoinit'
-			else:
-				if data['form']['landscape']==1:
-					return 'report_landscape'
-				else:
-					return 'report'
+        else:
+            if len(data['form']['fiscalyear'][0][2])>2:
+                if data['form']['landscape']==1:
+                    return 'report_landscape'
+                else:
+                    return 'backtoinit'
+            else:
+                if data['form']['landscape']==1:
+                    return 'report_landscape'
+                else:
+                    return 'report'
 
 
 
 
 class wizard_report(wizard.interface):
-	def _get_defaults(self, cr, uid, data, context):
-		fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
-		data['form']['fiscalyear']=[fiscalyear_obj.find(cr, uid)]
-#		p_ids=pooler.get_pool(cr.dbname).get('account.period').search(cr,uid,[('fiscalyear_id','=',fiscalyear_obj.find(cr, uid))])
-#		data['form']['periods']=p_ids
-		data['form']['compare_pattern']='none'
-		data['form']['account_choice']='moves'
-		data['form']['select_periods']='actual'
-		return data['form']
+    def _get_defaults(self, cr, uid, data, context):
+        fiscalyear_obj = pooler.get_pool(cr.dbname).get('account.fiscalyear')
+        data['form']['fiscalyear']=[fiscalyear_obj.find(cr, uid)]
+#       p_ids=pooler.get_pool(cr.dbname).get('account.period').search(cr,uid,[('fiscalyear_id','=',fiscalyear_obj.find(cr, uid))])
+#       data['form']['periods']=p_ids
+        data['form']['compare_pattern']='none'
+        data['form']['account_choice']='moves'
+        data['form']['select_periods']='actual'
+        return data['form']
 
 
-	states = {
-		'init': {
-			'actions': [_get_defaults],
-			'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel'),('checkyear','Print')]}
-		},
-		'backtoinit': {
-			'actions': [],
-			'result': {'type':'form','arch':back_form,'fields':back_fields,'state':[('end','Ok')]}
-		},
-		'zero_years': {
-			'actions': [],
-			'result': {'type':'form','arch':zero_form,'fields':zero_fields,'state':[('end','Ok')]}
-		},
-		'checkyear': {
-			'actions': [],
-			'result': {'type':'choice','next_state':_check}
-		},
-		'report_landscape': {
-			'actions': [],
-			'result': {'type':'print', 'report':'account.account.balance.landscape', 'state':'end'}
-		},
-		'report': {
-			'actions': [],
-			'result': {'type':'print', 'report':'account.balance.account.balance', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [_get_defaults],
+            'result': {'type':'form', 'arch':dates_form, 'fields':dates_fields, 'state':[('end','Cancel'),('checkyear','Print')]}
+        },
+        'backtoinit': {
+            'actions': [],
+            'result': {'type':'form','arch':back_form,'fields':back_fields,'state':[('end','Ok')]}
+        },
+        'zero_years': {
+            'actions': [],
+            'result': {'type':'form','arch':zero_form,'fields':zero_fields,'state':[('end','Ok')]}
+        },
+        'checkyear': {
+            'actions': [],
+            'result': {'type':'choice','next_state':_check}
+        },
+        'report_landscape': {
+            'actions': [],
+            'result': {'type':'print', 'report':'account.account.balance.landscape', 'state':'end'}
+        },
+        'report': {
+            'actions': [],
+            'result': {'type':'print', 'report':'account.balance.account.balance', 'state':'end'}
+        }
+    }
 wizard_report('account.balance.account.balance.report')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

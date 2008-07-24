@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from turbogears.database import PackageHub
 # import some basic SQLObject classes for declaring the data model
 # (see http://www.sqlobject.org/SQLObject.html#declaring-the-class)
@@ -15,4 +16,6 @@ __connection__ = hub = PackageHub('livechat')
 # class YourDataClass(SQLObject):
 #     pass
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

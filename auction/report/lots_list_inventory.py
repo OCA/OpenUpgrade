@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,16 +31,18 @@ import time
 from report import report_sxw
 
 class lots_list_inventory(report_sxw.rml_parse):
-	def __init__(self, cr, uid, name, context):
-		super(lots_list_inventory, self).__init__(cr, uid, name, context)
-		self.localcontext.update({
-			'time': time,
-			'bid_line' : self.bid_line
-		})
-	def bid_line(self, lot_id):
-		res = self.pool.get('auction.bid.lines').read(self.cr,self.uid,[lot_id])
-		print res;
-		print "=================================================="
-		return True
+    def __init__(self, cr, uid, name, context):
+        super(lots_list_inventory, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+            'bid_line' : self.bid_line
+        })
+    def bid_line(self, lot_id):
+        res = self.pool.get('auction.bid.lines').read(self.cr,self.uid,[lot_id])
+        print res;
+        print "=================================================="
+        return True
 report_sxw.report_sxw('report.lots.list.inventory', 'auction.lots', 'addons/auction/report/lots_list_inventory.rml', parser=lots_list_inventory)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,34 +31,36 @@ import wizard
 
 pa_form = '''<?xml version="1.0"?>
 <form string="Select period">
-	<field name="date1"/>
-	<field name="date2"/>
-	<field name="model"/>
-	<field name="type"/>
-	<field name="type2"/>
-	<field name="users_id" colspan="3"/>
+    <field name="date1"/>
+    <field name="date2"/>
+    <field name="model"/>
+    <field name="type"/>
+    <field name="type2"/>
+    <field name="users_id" colspan="3"/>
 </form>'''
 
 pa_fields = {
-	'date1': {'string':'Start of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-01')},
-	'date2': {'string':'End of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
-	'users_id': {'string':'Users', 'type':'many2many', 'relation':'res.users', 'required':True},
-	'model': {'string':'Object', 'type':'selection', 'selection':[('res.partner','Partners'),('sale.order', 'Sale Order'),('account.invoice','Invoices')], 'required':True},
-	'type': {'string':'Period', 'type':'selection', 'selection':[('month', 'Month'),('week','Week'),('day','Day')], 'required':True, 'default': lambda *a: 'create'},
-	'type2': {'string':'Analysis Value', 'type':'selection', 'selection':[('create', 'Creations'),('update','Modifications')], 'required':True},
+    'date1': {'string':'Start of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-01')},
+    'date2': {'string':'End of period', 'type':'date', 'required':True, 'default': lambda *a: time.strftime('%Y-%m-%d')},
+    'users_id': {'string':'Users', 'type':'many2many', 'relation':'res.users', 'required':True},
+    'model': {'string':'Object', 'type':'selection', 'selection':[('res.partner','Partners'),('sale.order', 'Sale Order'),('account.invoice','Invoices')], 'required':True},
+    'type': {'string':'Period', 'type':'selection', 'selection':[('month', 'Month'),('week','Week'),('day','Day')], 'required':True, 'default': lambda *a: 'create'},
+    'type2': {'string':'Analysis Value', 'type':'selection', 'selection':[('create', 'Creations'),('update','Modifications')], 'required':True},
 }
 
 class wizard_report(wizard.interface):
-	states = {
-		'init': {
-			'actions': [], 
-			'result': {'type':'form', 'arch':pa_form, 'fields':pa_fields, 'state':[('end','Cancel'),('report','Print Analysis') ]}
-		},
-		'report': {
-			'actions': [],
-			'result': {'type':'print', 'report':'productivity_analysis.report', 'state':'end'}
-		}
-	}
+    states = {
+        'init': {
+            'actions': [], 
+            'result': {'type':'form', 'arch':pa_form, 'fields':pa_fields, 'state':[('end','Cancel'),('report','Print Analysis') ]}
+        },
+        'report': {
+            'actions': [],
+            'result': {'type':'print', 'report':'productivity_analysis.report', 'state':'end'}
+        }
+    }
 wizard_report('productivity_analysis.models.print')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -31,14 +32,16 @@ import pooler
 import netsvc
 
 class label_invoices(report_int):
-	def create(self, uid, ids, datas, context):
-		datas['ids'] = datas['form']['ids']
-		self._obj_invoice = netsvc.LocalService('report.account.invoice')
-		return self._obj_invoice.create(uid, datas['ids'], datas, context)
+    def create(self, uid, ids, datas, context):
+        datas['ids'] = datas['form']['ids']
+        self._obj_invoice = netsvc.LocalService('report.account.invoice')
+        return self._obj_invoice.create(uid, datas['ids'], datas, context)
 
-	def result(self):
-		return self._obj_invoice.result()
+    def result(self):
+        return self._obj_invoice.result()
 
 
 label_invoices('report.huissier.label.invoices')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

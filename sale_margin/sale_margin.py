@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -33,44 +34,46 @@ from tools import config
 import time
 
 class sale_order_line(osv.osv):
-	_name = "sale.order.line"
-	_inherit = "sale.order.line"
-	def _product_margin(self, cr, uid, ids, field_name, arg, context):
-		res = {}
-		for line in self.browse(cr, uid, ids):
-			res[line.id] = 0
-			if line.product_id:
-				res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.product_id.standard_price*line.product_uos_qty),2)
-		return res
+    _name = "sale.order.line"
+    _inherit = "sale.order.line"
+    def _product_margin(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        for line in self.browse(cr, uid, ids):
+            res[line.id] = 0
+            if line.product_id:
+                res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.product_id.standard_price*line.product_uos_qty),2)
+        return res
 
-	_columns = {
-		'margin': fields.function(_product_margin, method=True, string='Margin'),
-	}
+    _columns = {
+        'margin': fields.function(_product_margin, method=True, string='Margin'),
+    }
 sale_order_line()
 
 class sale_order(osv.osv):
-	_name = "sale.order"
-	_inherit = "sale.order"
+    _name = "sale.order"
+    _inherit = "sale.order"
 
-	def _product_margin(self, cr, uid, ids, field_name, arg, context):
-		id_set = ",".join(map(str, ids))
-		cr.execute("""
-			SELECT
-				s.id,
-				COALESCE(SUM(l.price_unit*l.product_uos_qty*(100-l.discount)/100.0 - t.standard_price * l.product_uos_qty),0)::decimal(16,2) AS amount
-			FROM
-				sale_order s
-			LEFT OUTER JOIN sale_order_line l ON (s.id=l.order_id)
-			LEFT JOIN product_product p ON (p.id=l.product_id)
-			LEFT JOIN product_template t ON (t.id=p.product_tmpl_id)
-			WHERE
-				s.id IN ("""+id_set+""") GROUP BY s.id """)
-		res = dict(cr.fetchall())
-		return res
+    def _product_margin(self, cr, uid, ids, field_name, arg, context):
+        id_set = ",".join(map(str, ids))
+        cr.execute("""
+            SELECT
+                s.id,
+                COALESCE(SUM(l.price_unit*l.product_uos_qty*(100-l.discount)/100.0 - t.standard_price * l.product_uos_qty),0)::decimal(16,2) AS amount
+            FROM
+                sale_order s
+            LEFT OUTER JOIN sale_order_line l ON (s.id=l.order_id)
+            LEFT JOIN product_product p ON (p.id=l.product_id)
+            LEFT JOIN product_template t ON (t.id=p.product_tmpl_id)
+            WHERE
+                s.id IN ("""+id_set+""") GROUP BY s.id """)
+        res = dict(cr.fetchall())
+        return res
 
-	_columns = {
-		'margin': fields.function(_product_margin, method=True, string='Margin'),
-	}
+    _columns = {
+        'margin': fields.function(_product_margin, method=True, string='Margin'),
+    }
 sale_order()
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

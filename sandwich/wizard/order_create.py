@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -36,44 +37,46 @@ import pooler
 
 sale_form = """<?xml version="1.0"?>
 <form string="Make an order">
-	<field name="name" required="True" />
-	<field name="partner_id" required="True" />
+    <field name="name" required="True" />
+    <field name="partner_id" required="True" />
 </form>"""
 
 sale_fields = {
-	'name' : {'string' : 'Order name', 'type': 'char'},
-	'partner_id' : {'string':'Suplier', 'relation':'res.partner', 'type':'many2one'},
+    'name' : {'string' : 'Order name', 'type': 'char'},
+    'partner_id' : {'string':'Suplier', 'relation':'res.partner', 'type':'many2one'},
 }
 
 class make_sale(wizard.interface):
-	def _makeOrder(self, cr, uid, data, context):
-		order = pooler.get_pool(cr.dbname).get('sandwich.order')
-		line = pooler.get_pool(cr.dbname).get('sandwich.order.line')
-		oid = order.create(cr, uid, {
-			'name': data['form']['name'],
-			'partner': data['form']['partner_id'],
-		})
-		cr.execute('update sandwich_order_line set order_id=%d where order_id is null', (oid,))
-		value = {
-			'domain': "[('id','in',["+str(oid)+"])]",
-			'name': 'Create Sandwich Orders',
-			'view_type': 'form',
-			'view_mode': 'form,tree',
-			'res_model': 'sandwich.order',
-			'view_id': False,
-			'type': 'ir.actions.act_window',
-			'res_id': oid
-		}
-		return value
+    def _makeOrder(self, cr, uid, data, context):
+        order = pooler.get_pool(cr.dbname).get('sandwich.order')
+        line = pooler.get_pool(cr.dbname).get('sandwich.order.line')
+        oid = order.create(cr, uid, {
+            'name': data['form']['name'],
+            'partner': data['form']['partner_id'],
+        })
+        cr.execute('update sandwich_order_line set order_id=%d where order_id is null', (oid,))
+        value = {
+            'domain': "[('id','in',["+str(oid)+"])]",
+            'name': 'Create Sandwich Orders',
+            'view_type': 'form',
+            'view_mode': 'form,tree',
+            'res_model': 'sandwich.order',
+            'view_id': False,
+            'type': 'ir.actions.act_window',
+            'res_id': oid
+        }
+        return value
 
-	states = {
-		'init' : {
-			'actions' : [],
-			'result' : {'type' : 'form', 'arch' : sale_form, 'fields' : sale_fields, 'state' : [('end', 'Cancel'),('order', 'Make an order')]}
-		},
-		'order' : {
-			'actions': [],
-			'result': {'type': 'action', 'action': _makeOrder, 'state':'end'},
-		}
-	}
+    states = {
+        'init' : {
+            'actions' : [],
+            'result' : {'type' : 'form', 'arch' : sale_form, 'fields' : sale_fields, 'state' : [('end', 'Cancel'),('order', 'Make an order')]}
+        },
+        'order' : {
+            'actions': [],
+            'result': {'type': 'action', 'action': _makeOrder, 'state':'end'},
+        }
+    }
 make_sale('sandwich.order_create')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

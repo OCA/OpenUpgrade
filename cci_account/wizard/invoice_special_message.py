@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import time
 import datetime
@@ -26,4 +27,6 @@ class wizard_report(wizard.interface):
     }
 
 wizard_report('wizard.cci_account_message')
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

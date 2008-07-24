@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import netsvc
 import pooler
@@ -103,3 +104,5 @@ class receive_encode_cash(wizard.interface):
     }
 
 receive_encode_cash("cci_missions.rec_enc_cash")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

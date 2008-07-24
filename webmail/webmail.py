@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import netsvc
 from osv import fields, osv
 import pooler
@@ -203,3 +204,5 @@ class webmail_email(osv.osv):
         pass
     
 webmail_email()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

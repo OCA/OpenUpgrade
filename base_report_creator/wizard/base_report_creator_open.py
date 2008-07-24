@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -38,31 +39,33 @@ from osv import osv
 
 
 class report_creator_open(wizard.interface):
-	def _open_report(self, cr, uid, data, context):
-		pool = pooler.get_pool(cr.dbname)
-		rep = pool.get('base_report_creator.report').browse(cr, uid, data['id'], context)
-		view_mode = rep.view_type1
-		if rep.view_type2:
-			view_mode += ','+rep.view_type2
-		if rep.view_type3:
-			view_mode += ','+rep.view_type3
-		value = {
-			'name': rep.name,
-			'view_type': 'form',
-			'view_mode': view_mode,
-			'res_model': 'base_report_creator.report',
-			'context': {'report_id': data['id']},
-			'view_id': False,
-			'type': 'ir.actions.act_window'
-		}
-		return value
+    def _open_report(self, cr, uid, data, context):
+        pool = pooler.get_pool(cr.dbname)
+        rep = pool.get('base_report_creator.report').browse(cr, uid, data['id'], context)
+        view_mode = rep.view_type1
+        if rep.view_type2:
+            view_mode += ','+rep.view_type2
+        if rep.view_type3:
+            view_mode += ','+rep.view_type3
+        value = {
+            'name': rep.name,
+            'view_type': 'form',
+            'view_mode': view_mode,
+            'res_model': 'base_report_creator.report',
+            'context': {'report_id': data['id']},
+            'view_id': False,
+            'type': 'ir.actions.act_window'
+        }
+        return value
 
-	states = {
-		'init' : {
-			'actions' : [],
-			'result' : {'type':'action', 'action':_open_report, 'state':'end'}
-		}
-	}
+    states = {
+        'init' : {
+            'actions' : [],
+            'result' : {'type':'action', 'action':_open_report, 'state':'end'}
+        }
+    }
 report_creator_open('base_report_creator.report.open')
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

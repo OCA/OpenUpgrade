@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import fields,osv
 from mx import DateTime
 
@@ -257,4 +258,6 @@ report_auction_user_pointing()
 
 # Report for Seller and Buyer Reporting Menu
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

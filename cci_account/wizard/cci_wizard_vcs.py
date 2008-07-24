@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 import wizard
 import pooler
@@ -33,3 +34,5 @@ class wizard_report(wizard.interface):
         }
     }
 wizard_report('wizard.cci.vcs')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

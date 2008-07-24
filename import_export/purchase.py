@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import netsvc
 from osv import fields, osv
@@ -69,3 +70,5 @@ class purchase_order(osv.osv):
 #end class
 
 purchase_order()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

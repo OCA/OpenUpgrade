@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from turbogears import controllers, expose, flash, redirect,config
 import cherrypy
 from cherrypy import request, response
@@ -406,3 +407,5 @@ class ChatFunc(controllers.RootController):
     uid = []
     logininfo = {}
     logflag = False
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

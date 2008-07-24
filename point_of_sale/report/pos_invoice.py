@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -32,32 +33,34 @@ from osv import osv
 
 class pos_invoice(report_sxw.rml_parse):
 
-	def __init__(self, cr, uid, name, context):
-		super(pos_invoice, self).__init__(cr, uid, name, context)
-		self.localcontext.update({
-			'time': time,
-		})
+    def __init__(self, cr, uid, name, context):
+        super(pos_invoice, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+        })
 
-	def preprocess(self, objects, data, ids):
-		super(pos_invoice, self).preprocess(objects, data, ids)
-		iids = []
-		nids = []
+    def preprocess(self, objects, data, ids):
+        super(pos_invoice, self).preprocess(objects, data, ids)
+        iids = []
+        nids = []
 
-		for order in objects:
-			order.write(self.cr, self.uid, [order.id], {'nb_print': order.nb_print + 1})
+        for order in objects:
+            order.write(self.cr, self.uid, [order.id], {'nb_print': order.nb_print + 1})
 
-			if order.invoice_id and order.invoice_id not in iids:
-				if not order.invoice_id:
-					raise osv.except_osv('Error !', 'Please create an invoice for this sale.')
-				iids.append(order.invoice_id)
-				nids.append(order.invoice_id.id)
-		self.cr.commit()
-		data['ids'] = nids
-		self.datas = data
-		self.ids = nids
-		self.objects = iids
-		self.localcontext['data'] = data
-		self.localcontext['objects'] = iids
+            if order.invoice_id and order.invoice_id not in iids:
+                if not order.invoice_id:
+                    raise osv.except_osv('Error !', 'Please create an invoice for this sale.')
+                iids.append(order.invoice_id)
+                nids.append(order.invoice_id.id)
+        self.cr.commit()
+        data['ids'] = nids
+        self.datas = data
+        self.ids = nids
+        self.objects = iids
+        self.localcontext['data'] = data
+        self.localcontext['objects'] = iids
 
 report_sxw.report_sxw('report.pos.invoice', 'pos.order', 'addons/libeurop/report/invoice.rml', parser= pos_invoice)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

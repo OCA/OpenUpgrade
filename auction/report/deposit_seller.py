@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -41,4 +42,6 @@ class deposit_seller(report_sxw.rml_parse):
 
         })
 report_sxw.report_sxw('report.deposit.seller', 'auction.lots', 'addons/auction/report/deposit_seller.rml', parser=deposit_seller)
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

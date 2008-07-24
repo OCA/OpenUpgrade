@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,21 +31,23 @@
 from osv import fields, osv, orm
 
 class mrp_procurement(osv.osv):
-	_name = "mrp.procurement"
-	_inherit = "mrp.procurement"
-	
-	def action_produce_assign_service(self, cr, uid, ids, context={}):
-		for procurement in self.browse(cr, uid, ids):
-			self.write(cr, uid, [procurement.id], {'state':'running'})
-			task_id = self.pool.get('project.task').create(cr, uid, {
-				'name': procurement.name,
-				'date_deadline': procurement.date_planned,
-				'state': 'open',
-				'planned_hours': procurement.product_qty,
-				'user_id': procurement.product_id.product_manager.id,
-				'notes': procurement.origin,
-				'procurement_id': procurement.id
-			})
-		return task_id
+    _name = "mrp.procurement"
+    _inherit = "mrp.procurement"
+    
+    def action_produce_assign_service(self, cr, uid, ids, context={}):
+        for procurement in self.browse(cr, uid, ids):
+            self.write(cr, uid, [procurement.id], {'state':'running'})
+            task_id = self.pool.get('project.task').create(cr, uid, {
+                'name': procurement.name,
+                'date_deadline': procurement.date_planned,
+                'state': 'open',
+                'planned_hours': procurement.product_qty,
+                'user_id': procurement.product_id.product_manager.id,
+                'notes': procurement.origin,
+                'procurement_id': procurement.id
+            })
+        return task_id
 mrp_procurement()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

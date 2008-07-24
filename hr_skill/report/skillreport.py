@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import datetime
 import operator
 import pooler
@@ -37,3 +38,5 @@ class skillreport(report_sxw.rml_parse):
                 return final
 
 report_sxw.report_sxw('report.skillreport','hr_skill.evaluation','addons/hr_skill/report/skillreport.rml',parser=skillreport,)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

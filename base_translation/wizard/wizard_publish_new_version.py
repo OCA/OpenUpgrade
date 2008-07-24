@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import tools
 import xmlrpclib
@@ -100,3 +101,5 @@ class wizard_publish_new_version(wizard.interface):
         },
     }
 wizard_publish_new_version('publish.new.version')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -69,7 +69,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="crossovered_budget_view_tree"/>
 		</record>
-		<menuitem name="Financial Management/Configuration/Budgets/Budgets"
+		<menuitem parent="account.next_id_31"
 			id="menu_act_crossovered_budget_view"
 			action="act_crossovered_budget_view" />
 
@@ -119,7 +119,11 @@
 			<field name="view_id" ref="view_crossovered_budget_line_tree"/>
 		</record>
 
-		<menuitem name="Financial Management/Reporting/Budgets/Budgets/Entries"
+		<menuitem name="Budgets" parent="account.menu_action_account_budget_post_tree"
+			id="menu_financial_reporting_budget_budget"/>
+		<menuitem name="Entries" parent="menu_financial_reporting_budget_budget"
+			id="menu_financial_reporting_budget_budget_entries"/>
+		<menuitem parent="menu_financial_reporting_budget_budget_entries"
 			id="menu_act_crossovered_budget_lines_view"
 			action="act_crossovered_budget_lines_view" />
 

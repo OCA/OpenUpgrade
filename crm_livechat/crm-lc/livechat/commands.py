@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 """This module contains functions called from console script entry points."""
 
 import os
@@ -50,3 +50,5 @@ def start():
     from livechat.controllers import Root
 
     turbogears.start_server(Root())
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

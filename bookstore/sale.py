@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -34,24 +35,26 @@ import ir
 from mx import DateTime
 
 class sale_order_line(osv.osv):
-	_name = 'sale.order.line'
-	_description = 'New Sale Order line'
-	_inherit = 'sale.order.line'
+    _name = 'sale.order.line'
+    _description = 'New Sale Order line'
+    _inherit = 'sale.order.line'
 
 
-	def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
-			uom=False, qty_uos=0, uos=False, name='', partner_id=False,
-			lang=False, update_tax=True, date_order=False):
+    def product_id_change(self, cr, uid, ids, pricelist, product, qty=0,
+            uom=False, qty_uos=0, uos=False, name='', partner_id=False,
+            lang=False, update_tax=True, date_order=False):
 
 
-		result = super(sale_order_line, self).product_id_change(cr, uid, ids,
-			pricelist, product, qty, uom, qty_uos, uos, name, partner_id,lang,
-			update_tax,date_order)
+        result = super(sale_order_line, self).product_id_change(cr, uid, ids,
+            pricelist, product, qty, uom, qty_uos, uos, name, partner_id,lang,
+            update_tax,date_order)
 
-		if not product:
-			return {'value': {'price_unit': 0.0, 'notes':'', 'weight' : 0}, 'domain':{'product_uom':[]}}
-		product_res = self.pool.get('product.product').read(cr,uid,[product])[0];
-		if product_res['virtual_available']>=qty and qty!=0.0:
-			result['value']['type']='make_to_stock';
-		return result;
+        if not product:
+            return {'value': {'price_unit': 0.0, 'notes':'', 'weight' : 0}, 'domain':{'product_uom':[]}}
+        product_res = self.pool.get('product.product').read(cr,uid,[product])[0];
+        if product_res['virtual_available']>=qty and qty!=0.0:
+            result['value']['type']='make_to_stock';
+        return result;
 sale_order_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

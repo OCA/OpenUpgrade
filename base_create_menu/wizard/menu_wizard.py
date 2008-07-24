@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import wizard
 import osv
 import pooler
@@ -197,3 +198,5 @@ class wizard_create_menu(wizard.interface):
         }
     }
 wizard_create_menu('create.menu.wizard')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

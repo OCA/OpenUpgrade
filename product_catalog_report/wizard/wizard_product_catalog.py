@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -69,3 +70,5 @@ class wiz_productCatalog(wizard.interface):
         }
     }
 wiz_productCatalog('res.partner.product_catalog')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

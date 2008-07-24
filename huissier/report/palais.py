@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 # -*-encoding: iso8859-1 -*-
 ##############################################################################
 #
@@ -32,9 +33,11 @@ import pooler
 from osv import osv
 
 class huissier_palais(report_rml):
-	def create(self, cr, uid, ids, datas, context):
-		pool = pooler.get_pool(cr.dbname)
-		new_ids = pool.get('huissier.dossier').search(cr, uid, [('tolist', '=', True), ('date_reelle','>=',datas['form']['date1']), ('date_reelle','<=',datas['form']['date2'])])
-		return report_rml.create(self, cr,uid, new_ids, datas, context)
+    def create(self, cr, uid, ids, datas, context):
+        pool = pooler.get_pool(cr.dbname)
+        new_ids = pool.get('huissier.dossier').search(cr, uid, [('tolist', '=', True), ('date_reelle','>=',datas['form']['date1']), ('date_reelle','<=',datas['form']['date2'])])
+        return report_rml.create(self, cr,uid, new_ids, datas, context)
 
 huissier_palais('report.huissier.palais', 'huissier.dossier', 'addons/huissier/report/palais.xml', 'addons/huissier/report/palais.xsl')
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

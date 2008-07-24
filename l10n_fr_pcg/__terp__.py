@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
@@ -25,22 +26,24 @@
 #
 ##############################################################################
 {
-	"name" : "France - Plan Comptable Général",
-	"version" : "1.0",
-	"author" : "Simon JAILLET - CrysaLEAD",
-	"website": "http://www.crysalead.com",
-	"category" : "Localisation/Account charts",
-	"depends" : ["base", "account","l10n_fr", "account_chart"],
-	"init_xml" : [
-		"report.xml",
-		"pcg.xml"
-	],
-	"update_xml" : [
-		"l10n_fr_pcg_report.xml",
+    "name" : "France - Plan Comptable Général",
+    "version" : "1.0",
+    "author" : "Simon JAILLET - CrysaLEAD",
+    "website": "http://www.crysalead.com",
+    "category" : "Localisation/Account charts",
+    "depends" : ["base", "account","l10n_fr", "account_chart"],
+    "init_xml" : [
+        "report.xml",
+        "pcg.xml"
+    ],
+    "update_xml" : [
+        "l10n_fr_pcg_report.xml",
                 "l10n_fr_pcg_wizard.xml",
-		"l10n_fr_pcg_view.xml"
-	],
-	"demo_xml" : [],
-	"active": False,
-	"installable": True
+        "l10n_fr_pcg_view.xml"
+    ],
+    "demo_xml" : [],
+    "active": False,
+    "installable": True
 }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

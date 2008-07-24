@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import netsvc
 from osv import fields, osv
@@ -76,3 +77,5 @@ class ir_translation_contribution(osv.osv):
         return super(ir_translation_contribution, self).write(cr, uid, ids, vals, context=context)
 
 ir_translation_contribution()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##   xmlstream.py
 ##
 ##   Copyright (C) 2001 Matthew Allum
@@ -609,3 +610,5 @@ class Server:
             if s.getSocket() == sock:
                 return s
         return None
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

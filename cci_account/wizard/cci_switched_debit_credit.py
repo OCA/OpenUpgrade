@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #cci_debit_credit_switch
 import wizard
 import netsvc
@@ -72,3 +73,5 @@ class switch_debit_credit(wizard.interface):
     }
 
 switch_debit_credit("cci_debit_credit_switch")
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

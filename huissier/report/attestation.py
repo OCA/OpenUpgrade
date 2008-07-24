@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 ##############################################################################
 #
@@ -47,4 +48,6 @@ report_sxw.report_sxw('report.huissier.lots_attestation', 'huissier.lots', 'addo
 
 report_sxw.report_sxw('report.huissier.lots_attestation2', 'huissier.lots', 'addons/huissier/report/attestation2.rml',parser=huissier_attestation, header= False)
 
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -33,10 +34,12 @@ import netsvc
 
 class stock_picking(osv.osv):
 
-	_inherit = 'stock.picking'
-	_columns = {
-		'pos_order': fields.many2one('pos.order', 'Pos order'),
-	}
+    _inherit = 'stock.picking'
+    _columns = {
+        'pos_order': fields.many2one('pos.order', 'Pos order'),
+    }
 
 stock_picking()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

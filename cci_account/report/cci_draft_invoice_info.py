@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 import pooler
 from report import report_sxw
@@ -111,3 +112,5 @@ class account_invoice_draft(report_sxw.rml_parse):
         return self.sum_tot
 
 report_sxw.report_sxw('report.partner.draft_invoices', 'res.partner', 'addons/cci_account/report/cci_draft_invoice_info.rml', parser=account_invoice_draft,header=False)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

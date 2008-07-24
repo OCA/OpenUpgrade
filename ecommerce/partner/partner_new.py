@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 from osv import osv, fields
 import pooler
 
@@ -86,3 +87,5 @@ class ecommerce_partner_address(osv.osv):
         'mobile': fields.char('Mobile', size=64),
             }
 ecommerce_partner_address()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

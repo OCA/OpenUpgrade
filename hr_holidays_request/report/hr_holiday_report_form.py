@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 import time
 from report import report_sxw
 import calendar
@@ -56,3 +57,5 @@ class hr_holiday_report_form(report_sxw.rml_parse):
     def _total_hourly(self,object,emp):
         return self.hl
 report_sxw.report_sxw('report.hr_holiday_report_form', 'hr.holidays', 'addons/hr_holidays_request/report/hrreport_form.rml' ,parser=hr_holiday_report_form)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -30,9 +31,11 @@ from osv import fields,osv
 
 
 class account_invoice_line(osv.osv):
-	_inherit = 'account.invoice.line'
-	_columns = { 
-		'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot', relate= True),
-		'customer_ref': fields.char('Customer reference', size=64),
-	}
+    _inherit = 'account.invoice.line'
+    _columns = { 
+        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot', relate= True),
+        'customer_ref': fields.char('Customer reference', size=64),
+    }
 account_invoice_line()
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+

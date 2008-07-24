@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
 # Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
@@ -37,3 +38,5 @@ class workcenter_code(report_sxw.rml_parse):
             'time': time,
         })
 report_sxw.report_sxw('report.mrp.wc.barcode', 'mrp.workcenter', 'addons/mrp_operations/report/mrp_wc_barcode.rml',parser=workcenter_code,header=False)
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
