@@ -35,7 +35,9 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Restaurant/Configuration/Tables"
+		<menuitem name="Hotel Restaurant" id="menu_hotel_res"/>
+		<menuitem name="Configuration" parent="menu_hotel_res" id="menu_hotel_config"/>
+		<menuitem name="Tables" parent="menu_hotel_config"
 		          id="menu_open_view_hotel_restaurant_tables_form_tree" 
 				  action="open_view_hotel_restaurant_tables_form_tree"/>
 				  
@@ -94,7 +96,8 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Restaurant/Reservation/Table Booking"
+		<menuitem name="Reservation" parent="menu_hotel_res" id="menu_reserv"/>
+		<menuitem name="Table Booking" parent="menu_reserv"
 		          id="menu_open_view_hotel_restaurant_reservation_form_tree" 
 				  action="open_view_hotel_restaurant_reservation_form_tree"/>
 	
@@ -165,7 +168,7 @@
 			<field name="view_mode">tree,form</field>
 			
 		</record> 
-		<menuitem name="Hotel Restaurant/Reservation/Orders"
+		<menuitem name="Orders" parent="menu_reserv"
 		          id="menu_open_view_hotel_reservation_order_form_tree" 
 				  action="open_view_hotel_reservation_order_form_tree"/>
 	
@@ -237,7 +240,7 @@
 			<field name="view_mode">tree,form</field>
 			
 		</record> 
-		<menuitem name="Hotel Restaurant/Table Order"
+		<menuitem name="Table Order" parent="menu_hotel_res"
 		          id="menu_open_view_hotel_restaurant_order_form_tree" 
 				  action="open_view_hotel_restaurant_order_form_tree"
 				  sequence="11"/>
@@ -301,7 +304,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Restaurant/KOT"
+		<menuitem name="KOT"  parent="menu_hotel_res"
 		          id="menu_open_view_hotel_restaurant_kitchen_order_tickets_form_tree" 
 				  action="open_view_hotel_restaurant_kitchen_order_tickets_form_tree"
 				  sequence="12"/>
@@ -337,7 +340,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 	   	</record>
-		<menuitem name="Hotel Restaurant/Configuration/FoodItem Types"
+		<menuitem name="FoodItem Types" parent="menu_hotel_config"
 				  id="menu_action_hotel_menucard_type_view_form"
 				  action="action_hotel_menucard_type_view_form"/> 
 		
@@ -416,7 +419,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		 
-		<menuitem name="Hotel Restaurant/Configuration/Menucard"
+		<menuitem name="Menucard" parent="menu_hotel_config"
 					 id="menu_open_hotel_menucard_form" 
 					 action="action_hotel_menucard_form"/>
 					 

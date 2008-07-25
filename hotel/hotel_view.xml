@@ -33,7 +33,9 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Management/Configuration/Floor"
+		<menuitem name="Hotel Management" id="menu_hotel_mgt"/>
+		<menuitem name="Configuration" parent="menu_hotel_mgt" id="menu_config"/>
+		<menuitem name="Floor" parent="menu_config"
 		          id="menu_open_hotel_floor_form_tree" 
 				  action="open_hotel_floor_form_tree"/>
 	
@@ -69,7 +71,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 	   	</record>
-		<menuitem name="Hotel Management/Configuration/Amenities Types"
+		<menuitem name="Amenities Types" parent="menu_config"
 				  id="menu_action_hotel_room_amenities_type_view_form"
 				  action="action_hotel_room_amenities_type_view_form"/> 
 	
@@ -160,7 +162,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_hotel_room_amenities_list"/>
 		</record>
-		<menuitem name="Hotel Management/Amenities"
+		<menuitem name="Amenities" parent="menu_hotel_mgt"
 				  id="menu_action_hotel_room_amenities_view_form"
 				  action="action_hotel_room_amenities_view_form"/>	
 		
@@ -194,7 +196,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Management/Configuration/Room Type"
+		<menuitem name="Room Type" parent="menu_config"
 				 id="menu_open_hotel_room_type_form_tree" 
 				 action="open_hotel_room_type_form_tree"/>
 				 
@@ -290,7 +292,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		 
-		<menuitem name="Hotel Management/Rooms"
+		<menuitem name="Rooms" parent="menu_hotel_mgt"
 					 id="menu_open_hotel_room_form" 
 					 action="action_hotel_room_form"/>
 					  
@@ -323,7 +325,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Management/Configuration/Services Type"
+		<menuitem name="Services Type" parent="menu_config"
 				 id="menu_open_hotel_service_type_form_tree" 
 				 action="open_hotel_service_type_form_tree"/>
 				 
@@ -406,7 +408,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		 
-		<menuitem name="Hotel Management/Services"
+		<menuitem name="Services" parent="menu_hotel_mgt"
 					 id="menu_open_hotel_services_form" 
 					 action="action_hotel_services_form"/>
 					 
@@ -617,7 +619,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record>
-		<menuitem name="Hotel Management/Generate Folio"
+		<menuitem name="Generate Folio" parent="menu_hotel_mgt"
 				  id="menu_open_hotel_folio1_form_tree"
 				  action="open_hotel_folio1_form_tree"/>
 		
@@ -627,7 +629,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Hotel Management/Generate Folio/All Folio"
+		<menuitem name="All Folio" parent="menu_open_hotel_folio1_form_tree"
 				  id="menu_open_hotel_folio1_form_tree_all"
 				  action="open_hotel_folio1_form_tree_all"/>		  			 
 					 
@@ -640,7 +642,8 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="product.product_category_tree_view"/>
 		</record>
-		<menuitem name="Hotel Management/Configuration/Room Type/Room by Category" id="menu_hotel_room_category_action" action="hotel_room_category_action"/>
+		<menuitem name="Room Type" parent="menu_config" id="menu_room_type"/>
+		<menuitem name="Room by Category" parent="menu_room_type" id="menu_hotel_room_category_action" action="hotel_room_category_action"/>
 		
 		<record model="ir.actions.act_window" id="hotel_amenity_category_action">
 			<field name="type">ir.actions.act_window</field>
@@ -649,7 +652,8 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="product.product_category_tree_view"/>
 		</record>
-		<menuitem name="Hotel Management/Configuration/Amenities Types/Amenities by Category" id="menu_hotel_amenity_category_action" action="hotel_amenity_category_action"/>
+		<menuitem name="Amenities Types" parent="menu_config" id="menu_amenities"/>
+		<menuitem name="Amenities by Category" parent="menu_amenities" id="menu_hotel_amenity_category_action" action="hotel_amenity_category_action"/>
 	
 		<record model="ir.actions.act_window" id="hotel_service_category_action">
 			<field name="type">ir.actions.act_window</field>
@@ -658,7 +662,7 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="product.product_category_tree_view"/>
 		</record>
-		<menuitem name="Hotel Management/Configuration/Services Type/Services by Category" id="menu_hotel_service_category_action" action="hotel_service_category_action"/>
+		<menuitem name="Services by Category" parent="menu_open_hotel_service_type_form_tree" id="menu_hotel_service_category_action" action="hotel_service_category_action"/>
 	
 	</data>
 </terp>

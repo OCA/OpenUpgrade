@@ -83,9 +83,10 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_hotel_housekeeping_tree"/>
 		</record> 
-		<menuitem name="Hotel Housekeeping/Housekeeping"
+		<menuitem name="Hotel Housekeeping" id="menu_hotel_housekeeping"/>
+		<menuitem name="Housekeeping" parent="menu_hotel_housekeeping"
 		          id="menu_open_hotel_housekeeping_form_tree" 
-				  action="open_hotel_housekeeping_form_tree"/>
+				  action="open_hotel_housekeeping_form_tree"/>>
 				  
 		<!-- Housekeeping activity -->		  
 		
@@ -121,7 +122,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record> 
-		<menuitem name="Hotel Housekeeping/Activity List"
+		<menuitem name="Activity List" parent="menu_hotel_housekeeping"
 		          id="menu_open_housekeeping_activity_form_tree" 
 				  action="open_housekeeping_activity_form_tree"/>
 		<!-- 
@@ -156,7 +157,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 	   	</record>
-		<menuitem name="Hotel Housekeeping/Activity Types"
+		<menuitem name="Activity Types" parent="menu_hotel_housekeeping"
 				  id="menu_action_hotel_housekeeping_activity_type_view_form"
 				  action="action_hotel_housekeeping_activity_type_view_form"/>  
 	</data>
