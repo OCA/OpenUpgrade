@@ -43,7 +43,8 @@
 			
 		</record>
 		
-		<menuitem name="Human Resources/Courses/Courses"
+		<menuitem name="Courses" parent="menu_hr_root" id="menu_courses_md"/>
+		<menuitem name="Courses" parent="menu_courses_md"
 					id="menu_open_view_md_hr_course_tree" 
 					action="open_view_md_hr_course_tree"/>
 		
@@ -92,7 +93,7 @@
 			
 		</record>
 		
-		<menuitem name="Human Resources/Courses/Courses by employee"
+		<menuitem name="Courses by Employee" parent="menu_courses_md"
 					id="menu_open_view_md_hr_course_student_tree" 
 					action="open_view_md_hr_course_student_tree"/>
 	</data>

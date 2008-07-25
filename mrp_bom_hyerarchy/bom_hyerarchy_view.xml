@@ -39,7 +39,7 @@
 		<field name="domain">[('bom_id','=',False)]</field>
 		<field name="view_id" ref="mrp_bom_tree_complete_view"/>
 	</record>
-	<menuitem name="Production Management/Configuration/Bill of Materials/BoM Detailed Structure" action="mrp_bom_tree_action_complete" id="menu_bom_tree_complete"/>
+	<menuitem name="BoM Detailed Structure" parent="mrp.menu_mrp_bom_form_action" action="mrp_bom_tree_action_complete" id="menu_bom_tree_complete"/>
 
 
 </data>

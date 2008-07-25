@@ -91,9 +91,9 @@
 
 	</record>
 
-	<menuitem name="Production Management/All Operations" id="menu_mrp_production_wc_action" action="mrp_production_wc_action"/>
-	<menuitem name="Production Management/All Operations/Production Orders to Do" action="mrp_production_wc_confirm_action" id="menu_mrp_production_wc_confirm_action"/>
-	<menuitem name="Production Management/All Operations/Waiting Production Orders" action="mrp_production_wc_draft_action" id="menu_mrp_production_wc_draft_action"/>
+	<menuitem name="All Operations" parent="mrp.menu_mrp_root" id="menu_mrp_production_wc_action" action="mrp_production_wc_action"/>
+	<menuitem name="Production Orders to Do" parent="menu_mrp_production_wc_action" action="mrp_production_wc_confirm_action" id="menu_mrp_production_wc_confirm_action"/>
+	<menuitem name="Waiting Production Orders" parent="menu_mrp_production_wc_action" action="mrp_production_wc_draft_action" id="menu_mrp_production_wc_draft_action"/>
 
 <!-- Operation codes -->
 
@@ -132,7 +132,7 @@
 		<field name="view_id" ref="mrp_production_code_tree_view"/>
 	</record>
 
-	<menuitem name="Production Management/Configuration/Start - Stop Codes" id="menu_mrp_production_code_action" action="mrp_production_code_action"/>
+	<menuitem name="Start - Stop Codes" parent="mrp.menu_mrp_configuration" id="menu_mrp_production_code_action" action="mrp_production_code_action"/>
 
 <!-- Operations -->
 
@@ -170,7 +170,7 @@
 		<field name="view_id" ref="mrp_production_operation_tree_view"/>
 	</record>
 
-	<menuitem name="Production Management/Configuration/Operations" id="menu_mrp_production_operation_action" action="mrp_production_operation_action"/>
+	<menuitem name="Operations" parent="mrp.menu_mrp_configuration" id="menu_mrp_production_operation_action" action="mrp_production_operation_action"/>
 
 
 </data>
