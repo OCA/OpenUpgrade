@@ -9,7 +9,7 @@
      'version': '1.0',
      'active': False,
      'demo_xml': [],
-     'update_xml':['account_demo.xml','account.account.csv','account.journal.csv'],
+     'update_xml':['account_demo.xml','account.account.csv','account.journal.csv','account.fiscalyear.csv','account.period.csv'],
      'installable': True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -1,7 +1,9 @@
 #!/usr/bin/python
 # -*- encoding: utf-8 -*-
 import csv
-
+import datetime
+import time
+from datetime import date, timedelta
 
 #TODO:
 ##genere chart with parents :( => create a root with code = 0 then create the tree structure
@@ -87,44 +89,129 @@ journals_headers = {
     'default_credit_account_id:id': 'default_credit_account_id:id' ,#should be filled with the id of the account_account with code =['DBACCOUNT,A,10'],
     }
 
-partners_map = {
+#~ partners_map = {
 
-	'id': ,
-	'code': lambda x: x['CID,A,10'],
-	'name': lambda x: x['CNAME1,A,40'],
-	'lang': lambda x: {
-		'E': 'en_US', #'E' for English
-		'D': ?? #'D' for German
-		'F': ??#'F' for French
-		'N': ??#'N' for Dutch
+    #~ 'id': ,
+    #~ 'code': lambda x: x['CID,A,10'],
+    #~ 'name': lambda x: x['CNAME1,A,40'],
+    #~ 'lang': lambda x: {
+        #~ 'E': 'en_US', #'E' for English
+        #~ 'D': ?? #'D' for German
+        #~ 'F': ??#'F' for French
+        #~ 'N': ??#'N' for Dutch
 
-		#/!\ if a lang isn't installed, the value should be filled with ''
-	}[x['CLANGUAGE,A,2']],
-	'vat': lambda x: x['CVATNO,A,12'],
-	'website': lambda x: x['HTTPADDRESS,A,60'],
-	'comment': lambda x: x['CMEMO,M,11'],
-	'domiciliation_bool': lambda x : x['CBANKORDERPAY,L,1'],
-	'domiciliation': lambda x : x['CBANKORDERPAYNO,A,15'],
+        #~ #/!\ if a lang isn't installed, the value should be filled with ''
+    #~ }[x['CLANGUAGE,A,2']],
+    #~ 'vat': lambda x: x['CVATNO,A,12'],
+    #~ 'website': lambda x: x['HTTPADDRESS,A,60'],
+    #~ 'comment': lambda x: x['CMEMO,M,11'],
+    #~ 'domiciliation_bool': lambda x : x['CBANKORDERPAY,L,1'],
+    #~ 'domiciliation': lambda x : x['CBANKORDERPAYNO,A,15'],
 
-#have to create one res.partner.adress for this partner with 
-'city' : lambda x: x['CLOCALITY,A,40'],
-'fax': lambda x: x['CFAXNO,A,25'],
-'zip' :  lambda x: x['CZIPCODE,A,10'],
-'country_id' #should be filled with id of res.country that have code == x['CCOUNTRY,A,6']
-'phone' : lambda x: x['CTELNO,A,25'],
-'street' : lambda x: x['CADDRESS1,A,40'],
-'type' : lambda x: 'default',
+#~ #have to create one res.partner.adress for this partner with 
+#~ 'city' : lambda x: x['CLOCALITY,A,40'],
+#~ 'fax': lambda x: x['CFAXNO,A,25'],
+#~ 'zip' :  lambda x: x['CZIPCODE,A,10'],
+#~ 'country_id' #should be filled with id of res.country that have code == x['CCOUNTRY,A,6']
+#~ 'phone' : lambda x: x['CTELNO,A,25'],
+#~ 'street' : lambda x: x['CADDRESS1,A,40'],
+#~ 'type' : lambda x: 'default',
 
 
-#have to put the partner into category suppliers if CSUPTYPE,A,1 == 'S'
-#have to put the partner into category customers if CCUSTYPE,A,1 == 'C'
+#~ #have to put the partner into category suppliers if CSUPTYPE,A,1 == 'S'
+#~ #have to put the partner into category customers if CCUSTYPE,A,1 == 'C'
 
-#have to create res.partner.bank if x['CBANKNO,A,20'] <> False
-'state': #should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
-'acc_number': lambda x: x['CBANKNO,A,20'],
+#~ #have to create res.partner.bank if x['CBANKNO,A,20'] <> False
+#~ 'state': #should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
+#~ 'acc_number': lambda x: x['CBANKNO,A,20'],
 
+#~ }
+
+
+#~ contacts_map = {
+
+    #~ 'id': ,
+    #~ 'first_name': lambda x: x['PFIRSTNAME,A,30'],
+    #~ 'name': lambda x: x['PNAME,A,30'],
+    #~ 'title': lambda x: {
+        #~ '0': #keep empty
+        #~ '1': #should be the id of res.partner.title where name == 'Miss'
+        #~ '2': #should be the id of res.partner.title where name == 'Madam'
+        #~ '3': #should be the id of res.partner.title where name == 'Sir'
+        #~ '': #keep empty
+
+        #~ #/!\ if an id cannot be found, the value should be ''
+    #~ }[x['PMF,A,1']],
+    #~ 'mobile': lambda x: x['PGSM,A,25'],
+    #~ 'lang_id': lambda x: {
+        #~ 'E': #should be the id of res.lang where name == 'English'
+        #~ 'D': #should be the id of res.lang where name == 'German'
+        #~ 'F': #should be the id of res.lang where name == 'French'
+        #~ 'N': #should be the id of res.lang where name == 'Dutch'
+
+        #~ #/!\ if an id cannot be found, the value should be ''
+    #~ }[x['PLANGUAGE,A,2']],
+
+#~ #have to be linked to the default adress of the partner with code == x['PCID,A,10']
+#~ }
+
+
+#with the periods.csv you have to create fiscal years and periods
+fyear_map = {
+#have to create fiscal year with x['YEAR,I,4'] if not created yet
+'id':  lambda x: 'FY'+x['YEAR,I,4'],
+'date_stop': lambda x: x['YEAR,I,4']+'-12-31', #should be the last day of x['YEAR,I,4']
+'date_start': lambda x: x['YEAR,I,4']+'-01-01',#should be the first day of x['YEAR,I,4']
+'code': lambda x: 'FY'+x['YEAR,I,4'],
+'name': lambda x: 'Fiscal Year '+x['YEAR,I,4'],
+'state': lambda x: 'draft',
 }
 
+fyear_headers = {
+    'id': 'id',
+    'date_stop': 'date_stop',
+    'date_start': 'date_start',
+    'code': 'code', 
+    'name': 'name',
+    'state': 'state', 
+    }
+
+
+
+
+def get_first_day(dt, d_years=0, d_months=0):
+    # d_years, d_months are "deltas" to apply to dt
+    y, m = dt.year + d_years, dt.month + d_months
+    a, m = divmod(m-1, 12)
+    return date(y+a, m+1, 1)
+
+def get_last_day(dt):
+    return get_first_day(dt, 0, 1) + timedelta(-1)
+
+def mkDateTime(dateString,strFormat="%Y-%m-%d"):
+    # Expects "YYYY-MM-DD" string
+    # returns a datetime object
+    eSeconds = time.mktime(time.strptime(dateString,strFormat))
+    return datetime.datetime.fromtimestamp(eSeconds)
+
+
+periods_map = {
+#    'id': ,
+    'date_stop': lambda x: get_last_day(mkDateTime(x['YEAR,I,4']+"-"+x['MONTH,I,4']+"-01")).strftime("%Y-%m-%d"),#should be the last day of x['MONTH,I,4']
+    'date_start': lambda x:get_first_day(mkDateTime(x['YEAR,I,4']+"-"+x['MONTH,I,4']+"-01")).strftime("%Y-%m-%d"), #should be the first day of x['MONTH,I,4']
+
+    'name': lambda x: x['LABEL,A,8'],
+    'state': lambda x: 'draft',
+    'fiscalyear_id:id': lambda x: 'FY'+x['YEAR,I,4'],#should be the id of account.fiscalyear for x['YEAR,I,4']
+}
+
+periods_headers = {
+    'date_stop': 'date_stop',
+    'date_start': 'date_start',
+    'name': 'name',
+    'state': 'state',
+    'fiscalyear_id:id': 'fiscalyear_id:id',
+}
 
 def convert2utf(row):
     if row:
@@ -133,7 +220,8 @@ def convert2utf(row):
             retRow[k] = v.decode('latin1').encode('utf8').strip()
         return retRow
     return row
-def convert(reader, writer, mapping, column_headers):
+
+def import_account(reader, writer, mapping, column_headers):
     record = {}
     for key, column_name in column_headers.items():
         record[key] = column_name
@@ -196,12 +284,62 @@ def import_journal(reader_journal, writer_journal, journals_map, journals_header
         writer_journal.writerow(record)
     return True
 
-reader = csv.DictReader(file('accounts.csv','rb'))
-writer = csv.DictWriter(file('account_bob/account.account.csv', 'wb'), account_map.keys())
-reader_journal = csv.DictReader(file('journals.csv','rb'))
-writer_journal = csv.DictWriter(file('account_bob/account.journal.csv', 'wb'), journals_map.keys())
-convert(reader, writer, account_map, account_headers)
+
+def import_fyear(reader_fyear, writer_fyear, fyear_map, fyear_headers):
+    record = {}
+    for key, column_name in fyear_headers.items():
+        record[key] = column_name
+    writer_fyear.writerow(record)
+    fyear_rows = []
+    fyear_rows_ref = []
+    #parse the period csv file to know what are the fiscal years that need to be created
+    for row in reader_fyear:
+        if row['YEAR,I,4'] not in fyear_rows_ref:
+            fyear_rows_ref.append(row['YEAR,I,4'])
+            fyear_rows.append(row)
+
+    #create the fiscal years
+    for fyear in fyear_rows:
+        record = {}
+        for key,fnct in fyear_map.items():
+            record[key] = fnct(convert2utf(fyear))
+        writer_fyear.writerow(record)
+    return True
+
+def import_period(reader_period, writer_period, period_map, period_headers):
+    record = {}
+    for key, column_name in period_headers.items():
+        record[key] = column_name
+    writer_period.writerow(record)
+    period_rows = []
+    for row in reader_period:
+        #only create periods if x['MONTH,I,4'] != 0
+        if row['MONTH,I,4'] != "0": 
+            record = {}
+            for key,fnct in period_map.items():
+                record[key] = fnct(convert2utf(row))
+            writer_period.writerow(record)
+    return True
+
+
+#importing chart of accounts
+reader_account = csv.DictReader(file('original_csv/accounts.csv','rb'))
+writer_account = csv.DictWriter(file('account.account.csv', 'wb'), account_map.keys())
+import_account(reader_account, writer_account, account_map, account_headers)
+
+#importing financial journals
+reader_journal = csv.DictReader(file('original_csv/journals.csv','rb'))
+writer_journal = csv.DictWriter(file('account.journal.csv', 'wb'), journals_map.keys())
 import_journal(reader_journal, writer_journal, journals_map, journals_headers)
+
+#importing periods and fiscal years
+reader_fyear = csv.DictReader(file('original_csv/periods.csv','rb'))
+writer_fyear = csv.DictWriter(file('account.fiscalyear.csv', 'wb'), fyear_map.keys())
+import_fyear(reader_fyear, writer_fyear, fyear_map, fyear_headers)
+
+reader_period = csv.DictReader(file('original_csv/periods.csv','rb'))
+writer_period = csv.DictWriter(file('account.period.csv', 'wb'), periods_map.keys())
+import_period(reader_period, writer_period, periods_map, periods_headers)
 
 move_map = {
     'id': lambda x: 'move_'+x['MID,A,40'],
