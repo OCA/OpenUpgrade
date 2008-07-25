@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <terp>
 <data>
-	<menuitem name="Sales Management/Internet Sales" id="menu_esale_osc_root"/>
+	<menuitem name="Internet Sales" parent="sale.menu_sale_root" id="menu_esale_osc_root"/>
 
 	<record model="ir.ui.view" id="view_esale_osc_form">
 		<field name="name">esale_osc.web.form</field>
@@ -45,7 +45,7 @@
 		<field name="view_id" ref="view_esale_osc_form"/>
 	</record>
 
-	<menuitem name="Sales Management/Internet Sales/Websites" id="menu_action_esale_osc_web" action="action_esale_osc_form" groups="base.group_admin"/>
+	<menuitem name="Websites" parent="menu_esale_osc_root" id="menu_action_esale_osc_web" action="action_esale_osc_form" groups="base.group_admin"/>
 
 	<record model="ir.ui.view" id="esale_osc_language_web_form">
 		<field name="name">esale_osc.language.web.form</field>
@@ -193,7 +193,7 @@
 		<field name="view_id" ref="esale_osc_saleorder_form"/>
 		<field name="domain">[('esale_osc_id','!=', 0)]</field>
 	</record>
-	<menuitem name="Sales Management/Internet Sales/Sale Orders" id="menu_action_esale_osc_saleorder" action="action_saleorder_form" groups="base.group_admin"/>
+	<menuitem name="Sale Orders" parent="menu_esale_osc_root" id="menu_action_esale_osc_saleorder" action="action_saleorder_form" groups="base.group_admin"/>
 
 
 </data>

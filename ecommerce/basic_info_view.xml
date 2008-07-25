@@ -72,7 +72,9 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_shop_basic_tree"/>
 	</record>
-	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
+	<menuitem name="E-Commerce" id="menu_ecomm"/>
+	<menuitem name="Configuration" parent="menu_ecomm" id="menu_ecomm_config"/>
+	<menuitem name="Web Shop" parent="menu_ecomm_config" action="action_shop_basic_form" id="menu_shop_basic_form"/>
 	
 	<!-- TREE VIEW OF THE CATEGORY -->
 
@@ -109,7 +111,9 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="ecommerce_product_category_tree_view"/>
 		</record>
-		<menuitem name="ecommerce/Products/Products by Category" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
+		<menuitem name="Products" parent="menu_ecomm" id="menu_products"/>
+		<menuitem name="Products by Category" parent="menu_products" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
+		
 
 </data>
 </terp>

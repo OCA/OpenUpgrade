@@ -9,7 +9,7 @@
 			id="wizard_esale_joomla_product_category"/>
 
 		<menuitem
-			name="Sales Management/eSale/Synchronisation/Export Product categories"
+			name="Export Product Categories" parent="menu_esale_synch"
 			action="wizard_esale_joomla_product_category"
 			type="wizard"
 			sequence="1"
@@ -23,7 +23,7 @@
 			id="wizard_esale_joomla_tax"/>
 
 		<menuitem
-			name="Sales Management/eSale/Synchronisation/Export Tax"
+			name="Export Tax" parent="menu_esale_synch"
 			action="wizard_esale_joomla_tax"
 			type="wizard"
 			sequence="2"
@@ -37,7 +37,7 @@
 			id="wizard_esale_joomla_products"/>
 
 		<menuitem
-			name="Sales Management/eSale/Synchronisation/Export Products"
+			name="Export Products" parent="menu_esale_synch"
 			action="wizard_esale_joomla_products"
 			type="wizard"
 			sequence="3"
@@ -50,7 +50,7 @@
 			menu="False"
 			id="wizard_esale_joomla_stocks"/>
 		<menuitem
-			name="Sales Management/eSale/Synchronisation/Export Inventory Level"
+			name="Export Inventory Level" parent="menu_esale_synch"
 			action="wizard_esale_joomla_stocks"
 			type="wizard"
 			id="menu_wizard_esale_joomla_stocks"/>
@@ -62,7 +62,7 @@
 			menu="False"
 			id="wizard_esale_joomla_saleorders"/>
 		<menuitem
-			name="Sales Management/eSale/Synchronisation/Import eSales Orders"
+			name="Import eSales Orders" parent="menu_esale_synch"
 			action="wizard_esale_joomla_saleorders"
 			type="wizard"
 			id="menu_esale_joomla_saleorders"/>

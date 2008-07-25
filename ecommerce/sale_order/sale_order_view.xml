@@ -54,7 +54,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="sale_order_tree"/>
 	</record>
-	<menuitem name="ecommerce/Sale Order/sale order" id="menu_sale_order_form" action="action_sale_order_form"/>  
+	<menuitem name="Sale Order" parent="ecommerce.menu_ecomm" id="menu_ecomm_sale_order"/>
+	<menuitem name="Sale Order" parent="menu_ecomm_sale_order" id="menu_sale_order_form" action="action_sale_order_form"/>    
 	
 	<!-- Sale Order Line -->	
 	  

@@ -34,7 +34,9 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	<menuitem name="Esales/Configuration/Ecommerce Website" id="menu_action_shop_tree" action="action_shop_tree" groups="admin"/>
+	<menuitem name="Esales" id="menu_esales"/>
+	<menuitem name="Configuration" parent="menu_esales" id="menu_esales_config"/>
+	<menuitem name="E-Commerce Website" parent="menu_esales_config" id="menu_action_shop_tree" action="action_shop_tree"/>
 
 
 	<record model="ir.ui.view" id="view_order_tree">
@@ -84,7 +86,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_order_form"/>
 	</record>
-	<menuitem name="Esales/Esales Order" id="menu_action_order_form" action="action_order_form" groups="admin"/>
+	<menuitem name="Esales Order" parent="menu_esales" id="menu_action_order_form" action="action_order_form"/>
 
 	<record model="ir.actions.act_window" id="action_order_tree">
 		<field name="type">ir.actions.act_window</field>
@@ -93,8 +95,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
-	<menuitem name="Esales/Esales Order/Draft Esales Order" id="menu_action_order_tree" action="action_order_tree" groups="admin"/>
-
+	<menuitem name="Draft Esales Order" parent="menu_action_order_form" id="menu_action_order_tree" action="action_order_tree"/>
 
 	<record model="ir.ui.view" id="view_order_line_form">
 		<field name="name">esale.order.line.form</field>

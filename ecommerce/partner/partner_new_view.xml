@@ -67,7 +67,8 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_partner_ecommerce_tree"/>
 	</record>
-	<menuitem name="ecommerce/Partner/partners" action="action_partner_ecommerce_form" id="menu_partner_ecommerce_form"/>
+	<menuitem name="Partner" parent="ecommerce.menu_ecomm" id="menu_ecomm_partner"/>
+	<menuitem name="Partners" parent="menu_ecomm_partner" action="action_partner_ecommerce_form" id="menu_partner_ecommerce_form"/>
 	
 	<!-- partner Address -->
 	
@@ -121,6 +122,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_partner_ecommerce_address_tree"/>
 	</record>
-	<menuitem name="ecommerce/Partner/partner Contacts" action="action_partner_ecommerce_address_form" id="menu_action_partner_ecommerce_address_form"/>
+	
+	<menuitem name="Partner Contacts" parent="menu_ecomm_partner" action="action_partner_ecommerce_address_form" id="menu_action_partner_ecommerce_address_form"/>
 	</data>
 </terp>
