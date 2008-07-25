@@ -1,7 +1,7 @@
 <terp>
 <data>
 
- 	<menuitem name="Human Resources/Configuration/Skills Management"/>
+ 	<menuitem name="Skills Management" parent="hr.menu_hr_configuration" id="menu_hr_skill_mgt"/>
 
 <!-- defini le formulaire skill -->
 	<record model="ir.ui.view" id="view_skill_form">
@@ -26,7 +26,8 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree skill ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Skills" id="menu_open_view_skill_form" action="open_view_skill_form"/>
+	
+	<menuitem name="Skills" parent="menu_hr_skill_mgt" id="menu_open_view_skill_form" action="open_view_skill_form"/>
 
 
 
@@ -52,7 +53,7 @@
 		<field name="domain">[('parent_id','=',False)]</field>
 	</record>
 <!-- ajoute une entree "skill tree" dans le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Skills Structure" id="menu_open_view_skill_tree" action="open_view_skill_tree"/>
+	<menuitem name="Skills Structure" parent="menu_hr_skill_mgt" id="menu_open_view_skill_tree" action="open_view_skill_tree"/>
 
 
 
@@ -82,7 +83,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree position ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Positions" id="menu_open_view_position_form" action="open_view_position_form"/>
+	<menuitem name="Positions" parent="menu_hr_skill_mgt" id="menu_open_view_position_form" action="open_view_position_form"/>
 
 
 
@@ -118,7 +119,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree profiles ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Profiles" id="menu_open_view_profiles_form" action="open_view_profile_form"/>
+	<menuitem name="Profiles" parent="menu_hr_skill_mgt" id="menu_open_view_profiles_form" action="open_view_profile_form"/>
 
 
 
@@ -140,7 +141,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree weight categories ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Weight Categories" id="menu_open_view_weight_category_form" action="open_view_weight_category_form"/>
+	<menuitem name="Weight Categories" parent="menu_hr_skill_mgt" id="menu_open_view_weight_category_form" action="open_view_weight_category_form"/>
 
 
 <!-- defini le formulaire weight -->
@@ -165,11 +166,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree weight categories ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Weights" id="menu_open_view_weight_form" action="open_view_weight_form"/>
-
-
-
-
+	<menuitem name="Weights" parent="menu_hr_skill_mgt" id="menu_open_view_weight_form" action="open_view_weight_form"/>
 
 
 
@@ -191,7 +188,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree experience categories ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Experience Categories" id="menu_open_view_experience_category_form" action="open_view_experience_category_form"/>
+	<menuitem name="Experience Categories" parent="menu_hr_skill_mgt" id="menu_open_view_experience_category_form" action="open_view_experience_category_form"/>
 
 
 
@@ -228,7 +225,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree position ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Experiences" id="menu_open_view_experience_form" action="open_view_experience_form"/>
+	<menuitem name="Experiences" parent="menu_hr_skill_mgt" id="menu_open_view_experience_form" action="open_view_experience_form"/>
 
 
 
@@ -318,7 +315,7 @@
 		<field name="view_mode">form,tree</field>
 	</record>
 <!-- defini l'entree evaluations ds le menu principal -->
-	<menuitem name="Human Resources/Configuration/Skills Management/Evaluations" id="menu_open_view_evaluation_form" action="open_view_evaluation_form"/>
+	<menuitem name="Evaluations" parent="menu_hr_skill_mgt" id="menu_open_view_evaluation_form" action="open_view_evaluation_form"/>
 
 	<act_window name="Skill weight"
 		domain="[('category_id', '=', active_id)]"

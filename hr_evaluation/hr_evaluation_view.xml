@@ -76,8 +76,10 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record>
+		<menuitem name="Evaluations" parent="hr.menu_hr_root" id="menu_eval_hr"/>
+		<menuitem name="HR Responsible" parent="menu_eval_hr" id="menu_resp_hr"/>
 		<menuitem
-			name="Human Resources/Evaluations/hr Responsible/Evaluations"
+			name="Evaluations" parent="menu_resp_hr"
 			id="menu_open_view_employee_evaluation_form"
 			action="open_view_employee_evaluation_form"/>
 
@@ -89,7 +91,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
-			name="Human Resources/Evaluations/hr Responsible/Next Evaluations"
+			name="Next Evaluations" parent="menu_resp_hr"
 			id="menu_open_view_employee_evaluation_next_list"
 			action="open_view_employee_evaluation_next_list"/>
 
@@ -101,7 +103,7 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 		<menuitem
-			name="Human Resources/Evaluations/hr Responsible/My Next Evaluations"
+			name="My Next Evaluations" parent="menu_resp_hr"
 			id="menu_open_view_employee_evaluation_next_my_list"
 			action="open_view_employee_evaluation_next_my_list"
 			/>
@@ -149,7 +151,7 @@
 			<field name="view_id" ref="view_employee_evaluation_form_ro"/>
 		</record>
 		<menuitem
-			name="Human Resources/Evaluations/My Preceeding Evaluations"
+			name="My Preceeding Evaluations" parent="menu_eval_hr"
 			id="menu_open_view_employee_my_old_evaluation_list"
 			action="open_view_employee_evaluation_my_old_list"/>
 
@@ -198,8 +200,9 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record>
+		<menuitem name="Configuration" parent="menu_eval_hr" id="menu_eval_config"/>
 		<menuitem
-			name="Human Resources/Evaluations/Configuration/Evaluation Criterions"
+			name="Evaluation Criterions" parent="menu_eval_config"
 			id="menu_open_view_evaluation_type_form"
 			action="open_view_evaluation_type_form"/>
 

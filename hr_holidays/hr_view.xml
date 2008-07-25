@@ -131,7 +131,7 @@
 			<field name="view_type">form</field>
 			<field name="view_id" ref="edit_holiday_inherit_new" />
 		</record>
-		<menuitem name="Human Resources/Holidays Request" id="menu_open_ask_holidays" action="open_ask_holidays"/>
+		<menuitem name="Holidays Request" parent="hr.menu_hr_root" id="menu_open_ask_holidays" action="open_ask_holidays"/>
 
 		<record model="ir.actions.act_window" id="action_all_holiday">
 			<field name="type">ir.actions.act_window</field>
@@ -139,7 +139,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
-		<menuitem name="Human Resources/Holidays Request/All Holidays Requests" id="menu_action_all_holiday" action="action_all_holiday" />
+		<menuitem name="All Holidays Requests" parent="menu_open_ask_holidays" id="menu_action_all_holiday" action="action_all_holiday" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday">
 			<field name="name">My Holidays Request</field>
@@ -149,7 +149,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('user_id','=',uid)]</field>
 		</record>
-		<menuitem name="Human Resources/Holidays Request/My Holidays Requests" id="menu_action_my_holiday" action="action_my_holiday" />
+		<menuitem name="My Holidays Requests" parent="menu_open_ask_holidays" id="menu_action_my_holiday" action="action_my_holiday" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_draft">
 			<field name="name">My Holidays Request Draft</field>
@@ -159,7 +159,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('user_id','=',uid), ('state','=','draft')]</field>
 		</record>
-		<menuitem name="Human Resources/Holidays Request/My Holidays Requests/My Draft Holidays Requests" id="menu_action_my_holiday_draft" action="action_my_holiday_draft" />
+		<menuitem name="My Draft Holidays Requests" parent="menu_action_my_holiday" id="menu_action_my_holiday_draft" action="action_my_holiday_draft" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_waiting">
 			<field name="name">My Holidays Request Waiting confirmation</field>
@@ -169,7 +169,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('user_id','=',uid), ('state','=','confirm')]</field>
 		</record>
-		<menuitem name="Human Resources/Holidays Request/My Holidays Requests/My Awaiting Confirmation Holidays Requests" id="menu_action_my_holiday_waiting" action="action_my_holiday_waiting" />
+		<menuitem name="My Awaiting Confirmation Holidays Requests" parent="menu_action_my_holiday" id="menu_action_my_holiday_waiting" action="action_my_holiday_waiting" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_validate">
 			<field name="name">My Holidays Request Validated</field>
@@ -179,7 +179,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('user_id','=',uid), ('state','=','validate')]</field>
 		</record>
-		<menuitem name="Human Resources/Holidays Request/My Holidays Requests/My Validated Holidays Requests" id="menu_action_my_holiday_validate" action="action_my_holiday_validate" />
+		<menuitem name="My Validated Holidays Requests" parent="menu_action_my_holiday" id="menu_action_my_holiday_validate" action="action_my_holiday_validate" />
 
 		<record model="ir.actions.act_window" id="action_my_holiday_refuse">
 			<field name="name">My Holidays Request Refused</field>
@@ -189,7 +189,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('user_id','=',uid), ('state','=','refuse')]</field>
 		</record>
-		<menuitem name="Human Resources/Holidays Request/My Holidays Requests/My Refused Holidays Requests" id="menu_action_my_holiday_refuse" action="action_my_holiday_refuse" />
+		<menuitem name="My Refused Holidays Requests" parent="menu_action_my_holiday" id="menu_action_my_holiday_refuse" action="action_my_holiday_refuse" />
 
 		<record model="ir.actions.act_window" id="action_holiday_waiting">
 			<field name="name">Requests Awaiting for Validation</field>
@@ -199,7 +199,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="domain">[('state','=','confirm')]</field>
 		</record>
-		<menuitem name="Human Resources/Holidays Request/All Holidays Requests/Holidays Requests Awaiting for Validation" id="menu_action_holiday_waiting" action="action_holiday_waiting" />
+		<menuitem name="Holidays Requests Awaiting for Validation" parent="menu_action_all_holiday" id="menu_action_holiday_waiting" action="action_holiday_waiting" />
 
 		<record model="ir.actions.act_window" id="action_holidays_per_user">
 			<field name="name">Holidays Per Employee</field>
@@ -208,7 +208,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form,graph</field>
 		</record>
-		<menuitem name="Human Resources/Configuration/Holidays Per Employee" id="menu_open_holidays_per_user" action="action_holidays_per_user"	groups="base.group_admin"/>
+		<menuitem name="Holidays Per Employee" parent="hr.menu_hr_configuration" id="menu_open_holidays_per_user" action="action_holidays_per_user"	groups="base.group_admin"/>
 
 		<record model="ir.actions.act_window" id="action_my_holiday_available">
 			<field name="name">My Available Holidays</field>
@@ -218,7 +218,7 @@
 			<field name="view_mode">tree</field>
 			<field name="domain">[('user_id','=',uid)]</field>
 		</record>
-		<menuitem name="Human Resources/Reporting/My Available Holidays" id="menu_action_my_holiday_available" action="action_my_holiday_available" />
+		<menuitem name="My Available Holidays" parent="hr.menu_hr_reporting" id="menu_action_my_holiday_available" action="action_my_holiday_available" />
 
 
 	<!--  Shortcuts -->
