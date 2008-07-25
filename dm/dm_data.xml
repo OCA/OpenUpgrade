@@ -114,7 +114,7 @@
 		</record>		
 
 		<record id="dm_campaign_0" model="dm.campaign">
-			<field eval="&quot;general&quot;" name="campaign_type"/>
+			<field eval="&quot;model&quot;" name="campaign_type"/>
 			<field eval="&quot;campaign01&quot;" name="name"/>
 			<field name="country_id" ref="base.be"/>
 			<field eval="&quot;pending&quot;" name="planning_state"/>

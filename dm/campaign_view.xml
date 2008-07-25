@@ -2,8 +2,8 @@
 <terp>
 <data>
 	<menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
-	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="Offer Admin,Offer Manager,Campaign Admin,Campaign Manager"/>
-	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="Offer Admin,Campaign Admin,Campaign Manager"/>	
+	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager"/>
+	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>	
 	<menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
 
 <record id="res_groups_campaignadmin" model="res.groups">
@@ -577,44 +577,6 @@
 		<field name="view_id" ref="view_campaign_proposition_segment_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
-
-	<!--
-	=======================================================
-	Campaign group
-	=======================================================
-	-->
-
-	<record model="ir.ui.view" id="view_campaign_group_form">
-		<field name="name">dm.campaign.group.form</field>
-		<field name="model">dm.campaign.group</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Group">
-				<field name="name" colspan="4" select="1"/>
-				<field name="campaign_ids" colspan="4" select="2"/>
-			</form>
-		</field>
-	</record>
-	
-	<record model="ir.ui.view" id="view_campaign_group_tree">
-		<field name="name">dm.campaign.group.tree</field>
-		<field name="model">dm.campaign.group</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Groups">
-				<field name="name"/>
-			</tree>
-		</field>
-	</record>	
-	
-	<record model="ir.actions.act_window" id="action_campaign_group_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.group</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_group_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
 
 	<!--
 	=======================================================

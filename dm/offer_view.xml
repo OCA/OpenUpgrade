@@ -618,7 +618,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offers/Customers" groups="Offer Admin" id="menu_dm_customer_menu" sequence="1" />
+	<menuitem name="Direct Marketing/Offers/Customers" groups="res_groups_offeradmin" id="menu_dm_customer_menu" sequence="1" />
 	<menuitem name="Direct Marketing/Offers/Customers/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
 		
 	<!--
