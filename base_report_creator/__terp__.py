@@ -12,7 +12,7 @@ for and users.
 After installing the module, it adds a menu to define custom report in
 the "Dashboard" menu.
 """,
-    "depends" : ["base"],
+    "depends" : ["base","board"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["base_report_creator_wizard.xml","base_report_creator_view.xml"],
