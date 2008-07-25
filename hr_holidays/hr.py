@@ -33,6 +33,7 @@ import time
 import pooler
 import netsvc
 import datetime
+import time
 from osv import fields, osv
 
 
@@ -84,7 +85,6 @@ class hr_holidays(osv.osv):
         }
         ids2 = self.pool.get('hr.employee').search(cr, uid, [('user_id','=', uid)])
         if ids2:
-            print ids2
             vals['manager_id'] = ids2[0]
 
         self.write(cr, uid, ids, vals)
@@ -141,10 +141,10 @@ class hr_holidays(osv.osv):
                     vals={}
                     vals['name']=record.name
                     vals['section_id']=record.holiday_status.section_id.id
-
-                    c= time.strptime(record.date_to,'%Y-%m-%d %H:%M:%S').tm_mday
-                    d= time.strptime(record.date_from,'%Y-%m-%d %H:%M:%S').tm_mday
-                    vals['duration']= (c-d) * 8
+                    epoch_c = time.mktime(time.strptime(record.date_to,'%Y-%m-%d %H:%M:%S'))
+                    epoch_d = time.mktime(time.strptime(record.date_from,'%Y-%m-%d %H:%M:%S'))
+                    diff_day = (epoch_c - epoch_d)/(3600*24)
+                    vals['duration']= (diff_day) * 8
                     vals['note']=record.notes
                     vals['user_id']=record.user_id.id
                     vals['date']=record.date_from
