@@ -87,6 +87,7 @@ class dm_campaign(osv.osv):
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
     }
+    
 
     _defaults = {
         'state': lambda *a: 'draft',
@@ -149,8 +150,9 @@ class dm_campaign(osv.osv):
     def copy_campaign(self,cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
         default={}
-        default['name']='New offer from model %s' % camp.name
+        default['name']='New campaign from model %s' % camp.name
 #Need to change        default['campaign_type'] = ''
+        default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
         
