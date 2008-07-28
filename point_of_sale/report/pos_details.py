@@ -84,9 +84,12 @@ class pos_details(report_sxw.rml_parse):
                                     [o for o in objects if o.invoice_id and o.invoice_id.number],
                                     0.0)
 
-    def _ellipsis(self, string, maxlen=100, ellipsis = '...'):
-        ellipsis = ellipsis or ''
-        return string[:maxlen - len(ellipsis) ] + (ellipsis, '')[len(string) < maxlen]
+    def _ellipsis(self, s, maxlen=100, ellipsis = '...'):
+        maxlen = maxlen - len(ellipsis)
+        if maxlen <= 0:
+            maxlen = 1
+        _s = s[:maxlen]
+        return _s
 
     def _strip_name(self, name, maxlen=50):
         return self._ellipsis(name, maxlen, ' ...')
