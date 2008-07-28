@@ -131,6 +131,7 @@ class dm_offer_step(osv.osv):
         'planning_note' : fields.text('Planning Notes'),
         'purchase_note' : fields.text('Purchase Notes'),
         'mailing_at_dates' : fields.boolean('Mailing at dates'),
+        'floating date' : fields.boolean('Floating date'),
         'interactive' : fields.boolean('Interactive'),
 #        'wrkitem_id' : fields.one2many('dm.offer.step.workitem','step_id', 'WorkItems'),
         'notes' : fields.text('Notes'),
@@ -142,6 +143,7 @@ class dm_offer_step(osv.osv):
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
+        'doc_number' : fields.integer('Number of documents'),
     }
 
     _defaults = {
