@@ -89,6 +89,79 @@ journals_headers = {
     'default_credit_account_id:id': 'default_credit_account_id:id' ,#should be filled with the id of the account_account with code =['DBACCOUNT,A,10'],
     }
 
+#===============================================Partner=====================================================================
+partners_map = {
+    'id':lambda a:'',
+    'ref': lambda x: x['CID,A,10'],
+    'name': lambda x: x['CNAME1,A,40'],
+    'lang': lambda x: {
+        'E': 'en_US', #'E' for English
+        'D': 'de_DE',#'de_DE',#?? #'D' for German....de_DE
+        'F': 'fr_FR',#'fr_FR',#??#'F' for French..fr_FR
+        'N': 'nl_NL',#'nl_NL',#??#'N' for Dutch....nl_NL
+        'A': '',#no lang
+        '' : ''
+        #/!\ if a lang isn't installed, the value should be filled with ''
+    }[x['CLANGUAGE,A,2']],
+    'vat': lambda x: x['CVATNO,A,12'],
+    'website': lambda x: x['HTTPADDRESS,A,60'],
+    'comment': lambda x: x['CMEMO,M,11'],
+    'domiciliation_bool': lambda x : x['CBANKORDERPAY,L,1'],
+    'domiciliation': lambda x : x['CBANKORDERPAYNO,A,15'],
+    }
+
+partners_headers = {
+    'id': 'id' ,
+    'ref': 'ref',
+    'name': 'name',
+    'lang': 'lang',
+    'vat': 'vat',
+    'website': 'website',
+    'comment': 'comment',
+    'domiciliation_bool': 'domiciliation_bool',
+    'domiciliation': 'domiciliation',
+    }
+
+
+#===============================================Partner Address=====================================================================
+partner_add_map = {
+#have to create one res.partner.adress for this partner with
+'city' : lambda x: x['CLOCALITY,A,40'],
+'fax': lambda x: x['CFAXNO,A,25'],
+'zip' :  lambda x: x['CZIPCODE,A,10'],
+'country_id:id':lambda a:'', #should be filled with id of res.country that have code == x['CCOUNTRY,A,6']
+'phone' : lambda x: x['CTELNO,A,25'],
+'street' : lambda x: x['CADDRESS1,A,40'],
+'type' : lambda x: 'default',
+'partner_id:id':lambda x: ''
+    }
+partner_add_headers = {
+#have to create one res.partner.adress for this partner with
+'city' : 'city',
+'fax': 'fax',
+'zip' :  'zip',
+'country_id:id' : 'country_id:id',#should be filled with id of res.country that have code == x['CCOUNTRY,A,6']
+'phone' : 'phone',
+'street' : 'street',
+'type' : 'type',
+'partner_id:id':'partner_id:id'
+    }
+
+#have to put the partner into category suppliers if CSUPTYPE,A,1 == 'S'
+#have to put the partner into category customers if CCUSTYPE,A,1 == 'C'
+
+#===============================================Partner Bank=====================================================================
+#have to create res.partner.bank if x['CBANKNO,A,20'] <> False
+partner_bank_map = {
+'state': '',#should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
+'acc_number': lambda x: x['CBANKNO,A,20'],
+}
+partner_bank_map = {
+'state': 'state',#should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
+'acc_number': 'acc_number',
+}
+
+
 #~ partners_map = {
 
     #~ 'id': ,
@@ -108,7 +181,7 @@ journals_headers = {
     #~ 'domiciliation_bool': lambda x : x['CBANKORDERPAY,L,1'],
     #~ 'domiciliation': lambda x : x['CBANKORDERPAYNO,A,15'],
 
-#~ #have to create one res.partner.adress for this partner with 
+#~ #have to create one res.partner.adress for this partner with
 #~ 'city' : lambda x: x['CLOCALITY,A,40'],
 #~ 'fax': lambda x: x['CFAXNO,A,25'],
 #~ 'zip' :  lambda x: x['CZIPCODE,A,10'],
@@ -171,9 +244,9 @@ fyear_headers = {
     'id': 'id',
     'date_stop': 'date_stop',
     'date_start': 'date_start',
-    'code': 'code', 
+    'code': 'code',
     'name': 'name',
-    'state': 'state', 
+    'state': 'state',
     }
 
 
@@ -274,7 +347,7 @@ def import_journal(reader_journal, writer_journal, journals_map, journals_header
         record = {}
         for key,fnct in journals_map.items():
             record[key] = fnct(convert2utf(row))
-        
+
         if record['default_debit_account_id:id']:
             record['default_debit_account_id:id'] = 'id' + str(record['default_debit_account_id:id'])
         if record['default_credit_account_id:id']:
@@ -284,6 +357,36 @@ def import_journal(reader_journal, writer_journal, journals_map, journals_header
         writer_journal.writerow(record)
     return True
 
+def import_partner(reader_partner, writer_partner, partners_map, partners_headers, writer_address, partner_add_map, partner_add_headers):
+    record = {}
+    record_address = {}
+    list_partners = []
+    for key, column_name in partners_headers.items():
+        record[key] = column_name
+    for key, column_name in partner_add_headers.items():
+        record_address[key] = column_name
+    writer_partner.writerow(record)
+    writer_address.writerow(record_address)
+    for row in reader_partner:
+        record = {}
+        for key,fnct in partners_map.items():
+            record[key] = fnct(convert2utf(row))
+        for key,fnct in partner_add_map.items():
+            record_address[key] = fnct(convert2utf(row))
+        partner_name = record['name']
+        if partner_name.find('.')!=-1:
+            partner_name = partner_name.replace('.','')
+        record['id'] = partner_name
+        if record['name'] in list_partners:
+            record_address['type'] = 'other'
+            record_address['partner_id:id'] = partner_name
+            writer_address.writerow(record_address)
+        else:
+            list_partners.append(record['name'])
+            record_address['partner_id:id'] = partner_name
+            writer_partner.writerow(record)
+            writer_address.writerow(record_address)
+    return True
 
 def import_fyear(reader_fyear, writer_fyear, fyear_map, fyear_headers):
     record = {}
@@ -314,7 +417,7 @@ def import_period(reader_period, writer_period, period_map, period_headers):
     period_rows = []
     for row in reader_period:
         #only create periods if x['MONTH,I,4'] != 0
-        if row['MONTH,I,4'] != "0": 
+        if row['MONTH,I,4'] != "0":
             record = {}
             for key,fnct in period_map.items():
                 record[key] = fnct(convert2utf(row))
@@ -331,6 +434,14 @@ import_account(reader_account, writer_account, account_map, account_headers)
 reader_journal = csv.DictReader(file('original_csv/journals.csv','rb'))
 writer_journal = csv.DictWriter(file('account.journal.csv', 'wb'), journals_map.keys())
 import_journal(reader_journal, writer_journal, journals_map, journals_headers)
+
+#importing Partners and its addresses
+reader_partner = csv.DictReader(file('original_csv/partners.csv','rb'))
+writer_partner = csv.DictWriter(file('res.partner.csv', 'wb'), partners_map.keys())
+writer_address = csv.DictWriter(file('res.partner.address.csv','wb'), partner_add_map.keys())
+import_partner(reader_partner, writer_partner, partners_map, partners_headers, writer_address, partner_add_map, partner_add_headers)
+
+
 
 #importing periods and fiscal years
 reader_fyear = csv.DictReader(file('original_csv/periods.csv','rb'))
