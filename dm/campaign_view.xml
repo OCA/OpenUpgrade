@@ -14,7 +14,6 @@
 </record>
 
 
-
 	<!--
 	=======================================================
 	Campaign Group Views
@@ -92,8 +91,8 @@
 						<field name="code1" string="Code" select="2"/>
 <!--						<field name="parent_id" string="Category" domain="[('type','=','view')]"/>-->
 						<field name="country_id" select="1" on_change="onchange_offer(offer_id,country_id)"/>
-						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)"/>
-						<field name="lang_id"/>
+						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)" select="1"/>
+						<field name="lang_id" select="2"/>
 						<field name="campaign_type" select="2"/>
 						<field name="date_start"/>
 						<field name="date"/>
@@ -466,19 +465,15 @@
 				<field name="initial_proposition_id" select="1"/>
 				<newline/>
 				<field name="starting_mail_price"/>
-<!--				<field name="customer_pricelist_id"/>-->
-<!--				<field name="requirer_pricelist_id"/>-->
-<!--				<newline/>-->
 				<field name="quantity_max" string="Quantity"/>
 				<field name="sale_rate"/>
 				<newline/>
-<!--				<field name="delay_ids" colspan="4"/>-->
 				<separator string="Payment Methods" colspan="4"/>
-				<field name="payment_methods" colspan="4" nolabel="1"/>								
+				<field name="payment_methods" colspan="4" nolabel="1"/>
 				<field name="segment_ids" colspan="4" nolabel="1">
 					<form string="Segments">
 						<field name="name" string="Name" select="1"/>
-						<field name="sequence" />						
+						<field name="sequence" />
 						<field name="action_code" string="Action Code" select="2"/>
 						<field name="qty"/>
 						<field name="note" colspan="4"/>
@@ -502,6 +497,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Propositions">
+				<field name="camp_id"/>
 				<field name="name" string="Name"/>
 				<field name="code1" string="Code"/>
 				<field name="date_start" colspan="4"/>
@@ -579,9 +575,44 @@
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
 
 	<!--
-	=======================================================
+	Campaign group
+	-->
+
+	<record model="ir.ui.view" id="view_campaign_group_form">
+		<field name="name">dm.campaign.group.form</field>
+		<field name="model">dm.campaign.group</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Group">
+				<field name="name" colspan="4" select="1"/>
+				<separator string="Campaign groups" colspan="4"/>
+				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_campaign_group_tree">
+		<field name="name">dm.campaign.group.tree</field>
+		<field name="model">dm.campaign.group</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Groups">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>	
+	
+	<record model="ir.actions.act_window" id="action_campaign_group_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.group</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_group_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
+
+	<!--
 	Campaign type
-	=======================================================
 	-->
 
 	<record model="ir.ui.view" id="view_campaign_type_form">
