@@ -69,7 +69,8 @@ journals_map = {
         'ISI': 'general',#default
         'ISM': 'general',#default
         'IDN': 'general',#default
-        'ICE': 'general'#default
+        'ICE': 'general',#default
+        '':'general'
         #else should be of 'general' type
 
     }[x['DBTYPE,A,3']],
@@ -90,6 +91,14 @@ journals_headers = {
     }
 
 #===============================================Partner=====================================================================
+def _get_cat(record):
+    res=[]
+    if 'CSUPTYPE,A,1' in record and record['CSUPTYPE,A,1'].upper() in ['S'] :
+        res.append('base.res_partner_category_8')
+    if 'CCUSTYPE,A,1' in record and record['CCUSTYPE,A,1'].upper() in ['C']:
+        res.append('base.res_partner_category_0')
+    return ','.join(res)
+
 partners_map = {
     'id':lambda a:'',
     'ref': lambda x: x['CID,A,10'],
@@ -108,6 +117,8 @@ partners_map = {
     'comment': lambda x: x['CMEMO,M,11'],
     'domiciliation_bool': lambda x : x['CBANKORDERPAY,L,1'],
     'domiciliation': lambda x : x['CBANKORDERPAYNO,A,15'],
+    'category_id:id':lambda x:_get_cat(x),#['CSUPTYPE,A,1'],CCUSTYPE,A
+
     }
 
 partners_headers = {
@@ -120,6 +131,7 @@ partners_headers = {
     'comment': 'comment',
     'domiciliation_bool': 'domiciliation_bool',
     'domiciliation': 'domiciliation',
+    'category_id:id':'category_id:id',
     }
 
 
@@ -129,7 +141,7 @@ partner_add_map = {
 'city' : lambda x: x['CLOCALITY,A,40'],
 'fax': lambda x: x['CFAXNO,A,25'],
 'zip' :  lambda x: x['CZIPCODE,A,10'],
-'country_id:id':lambda a:'', #should be filled with id of res.country that have code == x['CCOUNTRY,A,6']
+'country_id:id':lambda a:a['CCOUNTRY,A,6'], #should be filled with id of res.country that have code == x['CCOUNTRY,A,6']
 'phone' : lambda x: x['CTELNO,A,25'],
 'street' : lambda x: x['CADDRESS1,A,40'],
 'type' : lambda x: 'default',
@@ -153,12 +165,14 @@ partner_add_headers = {
 #===============================================Partner Bank=====================================================================
 #have to create res.partner.bank if x['CBANKNO,A,20'] <> False
 partner_bank_map = {
-'state': '',#should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
+'state': lambda s:'bank',#should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
 'acc_number': lambda x: x['CBANKNO,A,20'],
+'partner_id:id':lambda x:''
 }
-partner_bank_map = {
+partner_bank_headers = {
 'state': 'state',#should be filled with id of res.Partner.bank.type that have name == 'Bank Account'
 'acc_number': 'acc_number',
+'partner_id:id':'partner_id:id'
 }
 
 
@@ -347,28 +361,39 @@ def import_journal(reader_journal, writer_journal, journals_map, journals_header
         record = {}
         for key,fnct in journals_map.items():
             record[key] = fnct(convert2utf(row))
-
         if record['default_debit_account_id:id']:
             record['default_debit_account_id:id'] = 'id' + str(record['default_debit_account_id:id'])
         if record['default_credit_account_id:id']:
             record['default_credit_account_id:id'] = 'id' + str(record['default_credit_account_id:id'])
         if record['type']=='cash':
             record['view_id:id']='account.account_journal_bank_view'
+        cur = ''
+        if record['currency:id']:
+            cur = 'base.' + record['currency:id'].upper()
+        record['currency:id'] = cur
         writer_journal.writerow(record)
     return True
 
-def import_partner(reader_partner, writer_partner, partners_map, partners_headers, writer_address, partner_add_map, partner_add_headers):
+def import_partner(reader_partner, writer_partner, partners_map, partners_headers, writer_address, partner_add_map, partner_add_headers, writer_bank, partner_bank_map, partner_bank_headers):
     record = {}
     record_address = {}
+    record_bank = {}
     list_partners = []
+
     for key, column_name in partners_headers.items():
         record[key] = column_name
     for key, column_name in partner_add_headers.items():
         record_address[key] = column_name
+    for key, column_name in partner_bank_headers.items():
+        record_bank[key] = column_name
+
     writer_partner.writerow(record)
     writer_address.writerow(record_address)
+    writer_bank.writerow(record_bank)
     for row in reader_partner:
         record = {}
+        record_address = {}
+        record_bank = {}
         for key,fnct in partners_map.items():
             record[key] = fnct(convert2utf(row))
         for key,fnct in partner_add_map.items():
@@ -377,13 +402,28 @@ def import_partner(reader_partner, writer_partner, partners_map, partners_header
         if partner_name.find('.')!=-1:
             partner_name = partner_name.replace('.','')
         record['id'] = partner_name
+
+        if row.has_key('CBANKNO,A,20') and row['CBANKNO,A,20']:
+            for key,fnct in partner_bank_map.items():
+                record_bank[key] = fnct(convert2utf(row))
+            record_bank['partner_id:id'] = partner_name
+            writer_bank.writerow(record_bank)
+        address = ''
+        if record_address['country_id:id']:
+                address = 'base.'+record_address['country_id:id'].lower()
+
+        if not record['domiciliation_bool']=='1':
+            record['domiciliation_bool'] = ''
+
         if record['name'] in list_partners:
             record_address['type'] = 'other'
             record_address['partner_id:id'] = partner_name
+            record_address['country_id:id'] = address
             writer_address.writerow(record_address)
         else:
             list_partners.append(record['name'])
             record_address['partner_id:id'] = partner_name
+            record_address['country_id:id'] = address
             writer_partner.writerow(record)
             writer_address.writerow(record_address)
     return True
@@ -439,7 +479,8 @@ import_journal(reader_journal, writer_journal, journals_map, journals_headers)
 reader_partner = csv.DictReader(file('original_csv/partners.csv','rb'))
 writer_partner = csv.DictWriter(file('res.partner.csv', 'wb'), partners_map.keys())
 writer_address = csv.DictWriter(file('res.partner.address.csv','wb'), partner_add_map.keys())
-import_partner(reader_partner, writer_partner, partners_map, partners_headers, writer_address, partner_add_map, partner_add_headers)
+writer_bank = csv.DictWriter(file('res.partner.bank.csv','wb'), partner_bank_map.keys())
+import_partner(reader_partner, writer_partner, partners_map, partners_headers, writer_address, partner_add_map, partner_add_headers, writer_bank,  partner_bank_map, partner_bank_headers)
 
 
 
