@@ -159,7 +159,7 @@ class pos_order(osv.osv):
                                         method=True),
         'lines': fields.one2many('pos.order.line', 'order_id',
             'Order Lines', states={'draft': [('readonly', False)]},
-            readonly=True ),
+            readonly=True),
         'payments': fields.one2many('pos.payment', 'order_id',
             'Order Payments', states={'draft': [('readonly', False)]},
             readonly=True),
@@ -366,8 +366,7 @@ class pos_order(osv.osv):
         picking_obj = self.pool.get('stock.picking')
         stock_move_obj = self.pool.get('stock.move')
         payment_obj = self.pool.get('pos.payment')
-        picking_ids = picking_obj.search(
-            cr, uid, [('pos_order', 'in', ids), ('state', '=', 'done')])
+        picking_ids = picking_obj.search(cr, uid, [('pos_order', 'in', ids), ('state', '=', 'done')])
         clone_list = []
 
         # Copy all the picking and blank the last_out_picking

@@ -28,11 +28,9 @@
 ##############################################################################
 
 
-import pooler
-
 import wizard
-from osv import osv
 import netsvc
+
 
 def _confirm(self, cr, uid, data, context):
     wf_service = netsvc.LocalService("workflow")
@@ -44,9 +42,9 @@ def _confirm(self, cr, uid, data, context):
 
 class pos_confirm(wizard.interface):
     states = {
-        'init' : {'actions' : [_confirm],
-            'result' : {
-                'type' : 'state',
+        'init': {'actions' : [_confirm],
+            'result': {
+                'type': 'state',
                 'state': 'end',
             }
         },

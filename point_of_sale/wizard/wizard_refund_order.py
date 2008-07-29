@@ -3,7 +3,7 @@
 #
 # Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #
-# $Id: 
+# $Id:
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -35,7 +35,6 @@
 #import pooler
 import wizard
 import pooler
-from osv import osv
 
 
 warning_form = '''<?xml version="1.0"?>
@@ -47,26 +46,27 @@ warning_form = '''<?xml version="1.0"?>
 '''
 
 warning_fields = {
-    'date_validity': {'string':'Validity Date', 'type':'date'}
+    'date_validity': {'string': 'Validity Date', 'type': 'date'}
 }
 
 
 def _get_date(self, cr, uid, data, context):
     order_ref = pooler.get_pool(cr.dbname).get('pos.order')
-    order= order_ref.browse(cr, uid, data['id'], context)
+    order = order_ref.browse(cr, uid, data['id'], context)
     return {'date_validity': order.date_validity}
 
+
 def _refunding(self, cr, uid, data, context):
-    order_ref= pooler.get_pool(cr.dbname).get('pos.order')
-    clone_list= order_ref.refund(cr, uid, data['ids'], context)
+    order_ref = pooler.get_pool(cr.dbname).get('pos.order')
+    clone_list = order_ref.refund(cr, uid, data['ids'], context)
 
     if data['form']['date_validity']:
-        order_ref.write(cr,uid,clone_list,{
-            'date_validity':data['form']['date_validity']
+        order_ref.write(cr, uid, clone_list, {
+            'date_validity': data['form']['date_validity']
             })
 
     return {
-        'domain': "[('id','in',["+','.join(map(str,clone_list))+"])]",
+        'domain': "[('id','in',["+','.join(map(str, clone_list))+"])]",
         'name': 'Refunded Orders',
         'view_type': 'form',
         'view_mode': 'tree,form',
@@ -79,17 +79,22 @@ def _refunding(self, cr, uid, data, context):
 
 class refund_order(wizard.interface):
     states = {
-        'init' : {
-            'actions' : [_get_date],
-            'result' : {
-                'type' : 'form',
-                'arch' : warning_form,
-                'fields' : warning_fields,
-                'state' : [('end', 'Cancel','gtk-no'),('refund_n_quit', 'Ok','gtk-yes') ]}
+        'init': {
+            'actions': [_get_date],
+            'result': {
+                'type': 'form',
+                'arch': warning_form,
+                'fields': warning_fields,
+                'state': [('end', 'Cancel', 'gtk-no'), ('refund_n_quit', 'Ok', 'gtk-yes')]
+            }
         },
         'refund_n_quit': {
-            'actions' : [],
-            'result': {'type': 'action', 'action':_refunding, 'state':'end'}
+            'actions': [],
+            'result': {
+                'type': 'action',
+                'action': _refunding,
+                'state': 'end'
+            }
         },
     }
 

@@ -41,8 +41,8 @@ picking_fields = {
     'picking_id': {'string': 'Sale Order', 'type': 'many2one', 'relation': 'stock.picking', 'required': True}
 }
 
+
 def _sale_complete(self, cr, uid, data, context):
-    # XXX test XXX
     pool = pooler.get_pool(cr.dbname)
     order = pool.get('pos.order').browse(cr, uid, data['id'], context)
 
@@ -79,16 +79,15 @@ class pos_sale_get(wizard.interface):
                 'type': 'form',
                 'arch': picking_form,
                 'fields': picking_fields,
-                'state':    (   ('end', 'Cancel'),
-                                        ('set', 'Confirm',
-                                        'gtk-ok', True)
-                                    )
+                'state': (('end', 'Cancel'),
+                          ('set', 'Confirm', 'gtk-ok', True)
+                         )
             }
         },
         'set': {
             'actions': [_sale_complete],
             'result': {
-                'type' : 'state',
+                'type': 'state',
                 'state': "end",
             }
         },

@@ -39,7 +39,7 @@ class pos_details(report_sxw.rml_parse):
                                                 lambda sum_qty, line:
                                                         sum_qty + line.qty,
                                                 object.lines,
-                                                0 ),
+                                                0),
                                     objects,
                                     0)
 
@@ -48,11 +48,11 @@ class pos_details(report_sxw.rml_parse):
         return reduce(lambda acc, object:
                                         acc + reduce(
                                                 lambda sum_dis, line:
-                                                        sum_dis + ((line.price_unit * line.qty ) * (line.discount / 100)),
+                                                        sum_dis + ((line.price_unit * line.qty) * (line.discount / 100)),
                                                 object.lines,
                                                 0.0),
                                     objects,
-                                    0.0 )
+                                    0.0)
 
     def _get_payments(self, objects, ignore_gift=False):
         gift_journal_id = None
@@ -80,16 +80,16 @@ class pos_details(report_sxw.rml_parse):
 
     def _sum_invoice(self, objects):
         return reduce(lambda acc, obj:
-                                                acc + obj.invoice_id.amount_total,
-                                    [o for o in objects if o.invoice_id and o.invoice_id.number],
-                                    0.0)
+                        acc + obj.invoice_id.amount_total,
+                        [o for o in objects if o.invoice_id and o.invoice_id.number],
+                        0.0)
 
-    def _ellipsis(self, s, maxlen=100, ellipsis = '...'):
+    def _ellipsis(self, orig_str, maxlen=100, ellipsis='...'):
         maxlen = maxlen - len(ellipsis)
         if maxlen <= 0:
             maxlen = 1
-        _s = s[:maxlen]
-        return _s
+        new_str = orig_str[:maxlen]
+        return new_str
 
     def _strip_name(self, name, maxlen=50):
         return self._ellipsis(name, maxlen, ' ...')

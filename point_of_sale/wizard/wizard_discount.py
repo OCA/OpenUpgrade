@@ -68,9 +68,9 @@ class discount_wizard(wizard.interface):
                 'type': 'form',
                 'arch': _form,
                 'fields': _fields,
-                'state': ( ('end', 'Cancel'),
-                                        ('apply_discount', 'Apply Discount', 'gtk-ok', True)
-                                    )
+                'state': (('end', 'Cancel'),
+                          ('apply_discount', 'Apply Discount', 'gtk-ok', True)
+                         )
             }
         },
         'apply_discount': {

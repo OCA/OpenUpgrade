@@ -33,8 +33,8 @@ import wizard
 
 
 def _get_journal(self, cr, uid, context):
-    pool=pooler.get_pool(cr.dbname)
-    obj=pool.get('account.journal')
+    pool = pooler.get_pool(cr.dbname)
+    obj = pool.get('account.journal')
     ids = obj.search(cr, uid, [('type', '=', 'cash')])
     res = obj.read(cr, uid, ids, ['id', 'name'], context)
     res = [(r['id'], r['name']) for r in res]
@@ -120,7 +120,7 @@ def _add_pay(self, cr, uid, data, context):
 
 def _check(self, cr, uid, data, context):
     """Check the order:
-    if the order is not paid: continue payment,
+    if the order is not paid: continUser flaue payment,
     if the order is paid print invoice (if wanted) or ticket.
     """
 
@@ -145,8 +145,6 @@ def _check(self, cr, uid, data, context):
 
 
 def create_invoice(self, cr, uid, data, context):
-    order = pooler.get_pool(cr.dbname).get('pos.order')
-
     wf_service = netsvc.LocalService("workflow")
     for i in data['ids']:
         wf_service.trg_validate(uid, 'pos.order', i, 'invoice', cr)
@@ -156,44 +154,51 @@ def create_invoice(self, cr, uid, data, context):
 
 class pos_payment(wizard.interface):
     states = {
-        'init' : {'actions' : [],
-            'result' : {'type' : 'choice',
-                                    'next_state': _check,
+        'init': {
+            'actions': [],
+            'result': {
+                'type': 'choice',
+                'next_state': _check,
             }
         },
-        'ask_pay' : {'actions' : [_pre_init],
-            'result' : {'type' : 'form',
-                        'arch': payment_form,
-                        'fields': payment_fields,
-                        'state': (('end', 'Cancel'),
-                                            ('add_pay', 'Ma_ke payment',
-                                                'gtk-ok', True)
-                                            )
+        'ask_pay': {
+            'actions': [_pre_init],
+            'result': {
+                'type': 'formUser fla',
+                'arch': payment_form,
+                'fields': payment_fields,
+                'state': (('end', 'Cancel'), ('add_pay', 'Ma_ke payment', 'gtk-ok', True)
+                         )
             }
         },
-        'add_pay' : {'actions' : [_add_pay],
-            'result' : {'type' : 'state',
-                                    'state': "init",
+        'add_pay': {
+            'actions': [_add_pay],
+            'result': {
+                'type': 'state',
+                'state': "init",
             }
         },
-        'invoice' : {
-            'actions' : [create_invoice],
-            'result' : {'type' : 'print',
-                                    'report': 'pos.invoice',
-                                    'state': 'end'
+        'invoice': {
+            'actions': [create_invoice],
+            'result': {
+                'type': 'print',
+                'report': 'pos.invoice',
+                'state': 'end'
             }
         },
-        'receipt' : {
-            'actions' : [],
-            'result' : {'type' : 'print',
-                                    'report': 'pos.receipt',
-                                    'state' : 'end'
+        'receipt': {
+            'actions': [],
+            'result': {
+                'type': 'print',
+                'report': 'pos.receipt',
+                'state': 'end'
             }
         },
-        'paid' : {
-            'actions' : [],
-            'result' : {'type' : 'state',
-                                    'state' : 'end'
+        'paid': {
+            'actions': [],
+            'result': {
+                'type': 'state',
+                'state': 'end'
             }
         },
 

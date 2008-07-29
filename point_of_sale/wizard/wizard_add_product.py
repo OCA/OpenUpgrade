@@ -30,7 +30,6 @@
 
 import pooler
 import wizard
-from osv import osv
 
 
 _form = """<?xml version="1.0"?>
@@ -40,25 +39,34 @@ _form = """<?xml version="1.0"?>
 </form>
 """
 _fields = {
+    'product': {
+        'string': 'Product',
+        'type': 'many2one',
+        'relation': 'product.product',
+        'required': True,
+        'default': False
+    },
 
-    'product': {'string':'Product', 'type':'many2one',
-                            'relation': 'product.product', 'required': True,
-                'default':False},
-
-    'quantity': {'string':'Quantity', 'type':'integer',
-                                'required': True, 'default':1},
+    'quantity': {
+        'string': 'Quantity',
+        'type': 'integer',
+        'required': True,
+        'default': 1},
     }
+
 
 def _add(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
     order_obj = pool.get('pos.order')
     order_obj.add_product(cr, uid, data['id'], data['form']['product'],
-                            data['form']['quantity'],context=context)
+                            data['form']['quantity'], context=context)
 
     return {}
 
+
 def _pre_init(self, cr, uid, data, context):
     return {'product': False, 'quantity': 1}
+
 
 class add_product(wizard.interface):
 
@@ -69,9 +77,8 @@ class add_product(wizard.interface):
                 'type': 'form',
                 'arch': _form,
                 'fields': _fields,
-                'state':    [   ('end', 'Cancel'),
-                                        ('add', '_Add product', 'gtk-ok', True)
-                                    ]
+                'state': [('end', 'Cancel'), ('add', '_Add product', 'gtk-ok', True)
+                ]
             }
         },
         'add': {

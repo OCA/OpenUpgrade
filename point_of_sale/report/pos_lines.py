@@ -28,7 +28,6 @@
 
 import time
 from report import report_sxw
-from osv import osv
 
 
 class pos_lines(report_sxw.rml_parse):
@@ -41,10 +40,10 @@ class pos_lines(report_sxw.rml_parse):
                 'total_quantity': self.__total_quantity__,
         })
 
-    def __total_quantity__(self, o):
-        tot=0
-        for line in o.lines:
-                tot+=line.qty
+    def __total_quantity__(self, obj):
+        tot = 0
+        for line in obj.lines:
+            tot += line.qty
         self.total = tot
         return self.total
 
