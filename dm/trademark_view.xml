@@ -14,6 +14,7 @@
 		<field name="arch" type="xml">
 			<tree string="Trademarks">
 				<field name="name"/>
+				<field name="code"/>
 				<field name="partner_id"/>
 			</tree>
 		</field>
@@ -26,13 +27,16 @@
 			<form string="Trademarks">
 				<notebook>
 				<page string="General">
-					<field name="name" select="1" colspan="4"/>
+					<field name="name" select="1"/>
+					<field name="code"/>
 					<field name="partner_id" select="2" colspan="4"/>				
 				</page>
 				<page string="Layout">
-					<field name="signature" colspan="4" widget="image"/>
 					<field name="header" colspan="4" />
-					<field name="logo" colspan="4" widget="image"/>
+					<separator string="Signature" colspan="4"/>
+					<field name="signature" widget="image" nolabel="1" colspan="4"/> 
+					<separator string="Logo" colspan="4"/>
+					<field name="logo" widget="image" nolabel="1" colspan="4"/>
 				</page>
 				</notebook>
 			</form>

@@ -10,7 +10,7 @@ class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
     _columns = {
         'name': fields.char('Campaign group name', size=64, required=True),
-        'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns'),
+        'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns', domain=[('campaign_group_id','=',False)]),
     }
 dm_campaign_group()
 
@@ -39,19 +39,19 @@ class dm_campaign(osv.osv):
                 result[id]='MOC%%0%sd'%3 %id
             else :
                 offer_code = camp.offer_id and camp.offer_id.code or ''
-                trademark = camp.trademark_id and camp.trademark_id.name or ''
-                partner =camp.partner_id and camp.partner_id.code or ''
+                trademark_code = camp.trademark_id and camp.trademark_id.code or ''
+                dealer_code =camp.dealer_id and camp.dealer_id.code or ''
                 date_start = camp.date_start or ''
-                code = camp.country_id.code or ''
+                country_code = camp.country_id.code or ''
                 date = date_start.split('-')
                 year = month = ''
                 if len(date)==3:
                     year = date[0][2:] 
                     month = date[1]
-                code1='-'.join([offer_code ,partner ,trademark ,month ,year ,code])
+                final_date=month+year
+                code1='-'.join([offer_code ,dealer_code ,trademark_code ,final_date ,country_code])
                 result[id]=code1
         return result
-
     def _get_campaign_type(self,cr,uid,context={}):
         campaign_type = self.pool.get('dm.campaign.type')
         type_ids = campaign_type.search(cr,uid,[])
@@ -86,6 +86,11 @@ class dm_campaign(osv.osv):
         'dtp_notes' : fields.text('Notes'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
+        'deduplicator_id' : fields.many2one('res.partner','Duplicator',domain=[('category_id','=','Deduplicator')]),
+        'dedup_order_date' : fields.date('Order Date'),
+        'dedup_validity_date' : fields.date('Validity Date'),
+        'dedup_delivery_date' : fields.date('Delivery Date'),
+        'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),      
     }
     
 
@@ -100,15 +105,21 @@ class dm_campaign(osv.osv):
     def onchange_offer(self, cr, uid, ids, offer_id,country_id):
         if not country_id:
             raise osv.except_osv("Error!!","Country can't be empty ,First select Country")
+        value = {}
+        country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
+        value['lang_id'] = country.main_currency.id 
+        value['currency_id'] = country.main_language.id
+        print "-----------------------------------",value        
         if not offer_id:
-            return {}
+            return {'value':value}
         res = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
         forbidden_state_ids = map(lambda x:x.country_id.id ,res.forbidden_state_ids)
         forbidden_country_ids = map(lambda x:x.id ,res.forbidden_country_ids)
         forbidden_country_ids.extend(forbidden_state_ids)
         if country_id in forbidden_country_ids:
             raise osv.except_osv("Error!!","You cannot use this offer in this country")
-        return {'value':{'name':res.name}}
+        value['name']=res.name
+        return {'value':value}
 
     def state_draft_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
@@ -195,17 +206,18 @@ class dm_campaign_proposition(osv.osv):
             
             pro = self.browse(cr,uid,[id])[0]
             offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
-            trademark = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
-            partner_code =pro.camp_id.partner_id and pro.camp_id.partner_id.code or ''
+            trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
+            dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.code or ''
             date_start = pro.date_start or ''
             date = date_start.split('-')
             year = month = ''
             if len(date)==3:
                 year = date[0][2:] 
                 month = date[1]
-            code = pro.camp_id.country_id.code or '' 
-            seq = '%%0%sd' % 3 % id
-            code1='-'.join([offer_code, partner_code ,trademark ,month ,year ,code ,seq])
+            country_code = pro.camp_id.country_id.code or '' 
+            seq = '%%0%sd' % 2 % id
+            final_date = month+year
+            code1='-'.join([offer_code, dealer_code ,trademark_code ,final_date ,country_code ,seq])
             result[id]=code1
         return result
         
@@ -271,6 +283,15 @@ class dm_campaign_delay(osv.osv):
     }
     
 dm_campaign_delay()
+
+class Country(osv.osv):
+    _name = 'res.country'
+    _inherit = 'res.country'
+    _columns = {
+                'main_language' : fields.many2one('res.lang','Main Language',ondelete='cascade',),
+                'main_currency' : fields.many2one('res.currency','Main Currency',ondelete='cascade'),
+                }
+Country()    
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
