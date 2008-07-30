@@ -209,7 +209,7 @@ class pos_order(osv.osv):
         'nb_print': lambda *a: 0,
         'sale_journal': _sale_journal_get,
         'account_receivable': _receivable_get,
-        'invoice_wanted': lambda *a: True
+        'invoice_wanted': lambda *a: False
     }
 
     def test_order_lines(self, cr, uid, order, context={}):

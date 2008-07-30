@@ -99,7 +99,8 @@ def _pre_init(self, cr, uid, data, context):
     journal = _get_journal(pool, order)
 
     # check if an invoice is wanted:
-    invoice_wanted_checked = not not order.partner_id # not not -> boolean
+    #invoice_wanted_checked = not not order.partner_id # not not -> boolean
+    invoice_wanted_checked = False
 
     return {'journal': journal, 'amount': amount, 'invoice_wanted': invoice_wanted_checked}
 
@@ -120,7 +121,7 @@ def _add_pay(self, cr, uid, data, context):
 
 def _check(self, cr, uid, data, context):
     """Check the order:
-    if the order is not paid: continUser flaue payment,
+    if the order is not paid: continue payment,
     if the order is paid print invoice (if wanted) or ticket.
     """
 
@@ -164,7 +165,7 @@ class pos_payment(wizard.interface):
         'ask_pay': {
             'actions': [_pre_init],
             'result': {
-                'type': 'formUser fla',
+                'type': 'form',
                 'arch': payment_form,
                 'fields': payment_fields,
                 'state': (('end', 'Cancel'), ('add_pay', 'Ma_ke payment', 'gtk-ok', True)
