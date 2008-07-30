@@ -60,11 +60,11 @@
 -						<field name="dealer_id"/>
 						<field name="trademark_id"/>
 						<field name="responsible_id" />
-						<separator string="Tasks Management" colspan="4"/>
-						<group colspan="4">
-						<field name="project_id"/>
-						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
-						</group>
+<!--						<separator string="Tasks Management" colspan="4"/>-->
+<!--						<group colspan="4">-->
+<!--						<field name="project_id"/>-->
+<!--						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>-->
+<!--						</group>-->
 						<separator string="Process State" colspan="4"/>
 						<field name="planning_state" select="2" nolabel="0"/>
 						<field name="manufacturing_state" select="2" nolabel="0"/>
@@ -557,6 +557,11 @@
 		<field name="arch" type="xml">
 			<form string="Group">
 				<field name="name" select="1"/>
+				<separator string="Tasks Management" colspan="4"/>
+					<group colspan="4">
+					<field name="project_id"/>
+					<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
+					</group>
 				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
 			</form>
 		</field>

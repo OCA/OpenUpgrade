@@ -35,7 +35,7 @@ import wizard
 import pooler
 
 parameter_form = '''<?xml version="1.0"?>
-<form string="Campaign" colspan="4">
+<form string="Campaign Group" colspan="4">
     <field name="project_id"
 />
 </form>'''
@@ -45,11 +45,11 @@ parameter_fields = {
 }
 
 def _create_duplicate(self, cr, uid, data, context):
-    campaign_obj=pooler.get_pool(cr.dbname).get('dm.campaign')
+    campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign.group')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
     duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True})
     project_obj.write(cr, uid, duplicate_project_id, {'name': "copy of " + project_obj.browse(cr, uid, duplicate_project_id, context).name})
-    campaign_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
+    campaign_group_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}
 
 class wizard_campaign_project(wizard.interface):

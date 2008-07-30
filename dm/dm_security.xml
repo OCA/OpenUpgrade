@@ -17,7 +17,8 @@
 		<field name="name">Campaign Manager</field>
 	</record>
 	<record id="ir_model_access_campaignforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_campaign"/>
+<!--		<field name="model_id" ref="dm.model_dm_campaign"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;campaign  for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -26,7 +27,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_campaigndelayforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_campaign_delay"/>
+<!--		<field name="model_id" ref="dm.model_dm_campaign_delay"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.delay')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;campaign delay for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -35,7 +37,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_campaigngroupforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_campaign_group"/>
+<!--		<field name="model_id" ref="dm.model_dm_campaign_group"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.group')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;campaign group for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -44,7 +47,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_campaignpropositionforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_campaign_proposition"/>
+<!--		<field name="model_id" ref="dm.model_dm_campaign_proposition"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;campaign proposition for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -53,7 +57,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_campaignpropositionsegmentforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_campaign_proposition_segment"/>
+<!--		<field name="model_id" ref="dm.model_dm_campaign_proposition_segment"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.segment')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;campaign proposition segment for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -62,7 +67,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_campaignstatisticsforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_campaign_statistics"/>
+<!--		<field name="model_id" ref="dm.model_dm_campaign_statistics"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;campaign statistics for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -71,7 +77,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_campaigntypeforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_campaign_type"/>
+<!--		<field name="model_id" ref="dm.model_dm_campaign_type"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;campaign type for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -80,7 +87,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_dmcumstomerforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_customer"/>
+<!--		<field name="model_id" ref="dm.model_dm_customer"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;dm cumstomer for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -89,7 +97,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_customerofferforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_customer_offer"/>
+<!--		<field name="model_id" ref="dm.model_dm_customer_offer"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;customer offer for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -98,7 +107,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_dmmediaforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_media"/>
+<!--		<field name="model_id" ref="dm.model_dm_media"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.media')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;dm media for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -107,7 +117,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_offerforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;offer for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -116,7 +127,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_offercategoryforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer_category"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer_category"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.category')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;offer category for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -125,7 +137,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_offerhistoryforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer_history"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer_history"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.history')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;offer history for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -134,7 +147,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_offerstepforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer_step"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer_step"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;offer step for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -143,7 +157,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_offerstephistoryforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer_step_history"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer_step_history"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.history')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;offer step history for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -152,7 +167,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_offersteptransitionforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer_step_transition"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer_step_transition"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.transition')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;offer step transition for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -161,7 +177,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_steptypeforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer_step_type"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer_step_type"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.type')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;step type for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -170,7 +187,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_offerstepworkitemforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_offer_step_workitem"/>
+<!--		<field name="model_id" ref="dm.model_dm_offer_step_workitem"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.workitem')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;offer step workitem for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -179,7 +197,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_dmproductforofferadmin1" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_product"/>
+<!--		<field name="model_id" ref="dm.model_dm_product"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.product')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;dm product for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -188,7 +207,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_dmtrademarkforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="dm.model_dm_trademark"/>
+<!--		<field name="model_id" ref="dm.model_dm_trademark"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;dm trademark for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -197,7 +217,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_partnercontactforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="base.model_res_partner_address"/>
+<!--		<field name="model_id" ref="base.model_res_partner_address"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;partner contact for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -206,7 +227,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_projectforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="project.model_project_project"/>
+<!--		<field name="model_id" ref="project.model_project_project"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'project.project')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;project for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -215,7 +237,8 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
 	<record id="ir_model_access_partnerforofferadmin0" model="ir.model.access">
-		<field name="model_id" ref="base.model_res_partner"/>
+<!--		<field name="model_id" ref="base.model_res_partner"/>-->
+		<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner')]"/>
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;project for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -224,7 +247,7 @@
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>	
 		<record id="ir_model_access_campaignforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_campaign"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign  for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -233,7 +256,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_campaigndelayforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_campaign_delay"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.delay')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign delay for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -242,7 +265,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_campaigngroupforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_campaign_group"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.group')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign group for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -251,7 +274,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_campaignpropositionforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_campaign_proposition"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign proposition for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -260,7 +283,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_campaignpropositionsegmentforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_campaign_proposition_segment"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.segment')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign proposition segment for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -269,7 +292,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_campaignstatisticsforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_campaign_statistics"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign statistics for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -278,7 +301,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_campaigntypeforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_campaign_type"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign type for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -287,7 +310,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_dmcumstomerforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_customer"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;dm cumstomer for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -296,7 +319,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_customerofferforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_customer_offer"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;customer offer for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -305,7 +328,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_dmmediaforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_media"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.media')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;dm media for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -314,7 +337,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_offerforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;offer for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -323,7 +346,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_offercategoryforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer_category"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.category')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;offer category for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -332,7 +355,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_offerhistoryforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer_history"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.history')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;offer history for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -341,7 +364,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_offerstepforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer_step"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;offer step for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -350,7 +373,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_offerstephistoryforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer_step_history"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.history')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;offer step history for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -359,7 +382,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_offersteptransitionforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer_step_transition"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.transition')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;offer step transition for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -368,7 +391,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_steptypeforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer_step_type"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.type')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;step type for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -377,7 +400,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_offerstepworkitemforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_offer_step_workitem"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.workitem')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;offer step workitem for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -386,7 +409,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_dmproductforoffermanager1" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_product"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.product')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;dm product for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -395,7 +418,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_dmtrademarkforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="dm.model_dm_trademark"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;dm trademark for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -404,7 +427,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_partnercontactforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="base.model_res_partner_address"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;partner contact for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -413,7 +436,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_projectforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="project.model_project_project"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'project.project')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;project for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -422,7 +445,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_partnerforoffermanager0" model="ir.model.access">
-			<field name="model_id" ref="base.model_res_partner"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;project for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -431,7 +454,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>				
 			<record id="ir_model_access_campaignforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_campaign"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;campaign  for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -440,7 +463,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_campaigndelayforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_campaign_delay"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.delay')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;campaign delay for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -449,7 +472,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_campaigngroupforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_campaign_group"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.group')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;campaign group for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -458,7 +481,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_campaignpropositionforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_campaign_proposition"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;campaign proposition for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -467,7 +490,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_campaignpropositionsegmentforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_campaign_proposition_segment"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.segment')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;campaign proposition segment for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -476,7 +499,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_campaignstatisticsforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_campaign_statistics"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;campaign statistics for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -485,7 +508,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_campaigntypeforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_campaign_type"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;campaign type for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -494,7 +517,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_dmcumstomerforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_customer"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;dm cumstomer for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -503,7 +526,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_customerofferforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_customer_offer"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;customer offer for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -512,7 +535,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_dmmediaforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_media"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.media')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;dm media for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -521,7 +544,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_offerforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;offer for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -530,7 +553,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_offercategoryforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer_category"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.category')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;offer category for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -539,7 +562,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_offerhistoryforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer_history"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.history')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;offer history for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -548,7 +571,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_offerstepforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer_step"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;offer step for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -557,7 +580,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_offerstephistoryforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer_step_history"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.history')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;offer step history for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -566,7 +589,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_offersteptransitionforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer_step_transition"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.transition')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;offer step transition for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -575,7 +598,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_steptypeforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer_step_type"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.type')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;step type for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -584,7 +607,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_offerstepworkitemforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_offer_step_workitem"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.workitem')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;offer step workitem for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -593,7 +616,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_dmproductforcampaignadmin1" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_product"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.product')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;dm product for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -602,7 +625,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_dmtrademarkforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="dm.model_dm_trademark"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;dm trademark for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -611,7 +634,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_partnercontactforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="base.model_res_partner_address"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;partner contact for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -620,7 +643,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_projectforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="project.model_project_project"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'project.project')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;project for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -629,7 +652,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
 			<record id="ir_model_access_partnerforcampaignadmin0" model="ir.model.access">
-				<field name="model_id" ref="base.model_res_partner"/>
+				<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;project for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
@@ -638,7 +661,7 @@
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>					
 				<record id="ir_model_access_campaignforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_campaign"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;campaign  for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -647,7 +670,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_campaigndelayforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_campaign_delay"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.delay')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;campaign delay for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -656,7 +679,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_campaigngroupforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_campaign_group"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.group')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;campaign group for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -665,7 +688,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_campaignpropositionforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_campaign_proposition"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;campaign proposition for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -674,7 +697,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_campaignpropositionsegmentforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_campaign_proposition_segment"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.segment')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;campaign proposition segment for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -683,7 +706,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_campaignstatisticsforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_campaign_statistics"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;campaign statistics for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -692,7 +715,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_campaigntypeforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_campaign_type"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;campaign type for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -701,7 +724,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_dmcumstomerforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_customer"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;dm cumstomer for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -710,7 +733,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_customerofferforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_customer_offer"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;customer offer for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -719,7 +742,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_dmmediaforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_media"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.media')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;dm media for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -728,7 +751,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_offerforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;offer for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -737,7 +760,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_offercategoryforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer_category"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.category')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;offer category for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -746,7 +769,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_offerhistoryforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer_history"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.history')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;offer history for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -755,7 +778,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_offerstepforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer_step"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;offer step for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -764,7 +787,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_offerstephistoryforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer_step_history"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.history')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;offer step history for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -773,7 +796,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_offersteptransitionforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer_step_transition"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.transition')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;offer step transition for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -782,7 +805,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_steptypeforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer_step_type"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.type')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;step type for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -791,7 +814,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_offerstepworkitemforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_offer_step_workitem"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.workitem')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;offer step workitem for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -800,7 +823,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_dmproductforcampaignmanager1" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_product"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.product')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;dm product for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -809,7 +832,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_dmtrademarkforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="dm.model_dm_trademark"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;dm trademark for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -818,7 +841,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_partnercontactforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="base.model_res_partner_address"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;partner contact for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -827,7 +850,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_projectforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="project.model_project_project"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'project.project')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;project for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -836,7 +859,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
 				<record id="ir_model_access_partnerforcampaignmanager0" model="ir.model.access">
-					<field name="model_id" ref="base.model_res_partner"/>
+					<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;project for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
@@ -845,7 +868,7 @@
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>		
 					<record id="ir_model_access_campaignforalluser0" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_campaign"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign  for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -854,7 +877,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_campaigndelayforalluser0" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_campaign_delay"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.delay')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign delay for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -863,7 +886,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_campaigngroupforalluser0" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_campaign_group"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.group')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign group for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -872,7 +895,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_campaignpropositionforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_campaign_proposition"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign proposition for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -881,7 +904,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_campaignpropositionsegmentforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_campaign_proposition_segment"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.segment')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign proposition segment for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -890,7 +913,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_campaignstatisticsforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_campaign_statistics"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign statistics for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -899,7 +922,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_campaigntypeforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_campaign_type"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign type for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -908,7 +931,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_dmcumstomerforalluser0" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_customer"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;dm cumstomer for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -917,7 +940,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_customerofferforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_customer_offer"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.offer')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;customer offer for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -926,7 +949,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_dmmediaforalluser0" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_media"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.media')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;dm media for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -935,7 +958,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_offerforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;offer for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -944,7 +967,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_offercategoryforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer_category"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.category')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;offer category for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -953,7 +976,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_offerhistoryforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer_history"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.history')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;offer history for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -962,7 +985,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_offerstepforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer_step"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;offer step for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -971,7 +994,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_offerstephistoryforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer_step_history"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.history')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;offer step history for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -980,7 +1003,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_offersteptransitionforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer_step_transition"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.transition')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;offer step transition for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -989,7 +1012,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_steptypeforalluser0" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer_step_type"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.type')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;step type for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -998,7 +1021,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_offerstepworkitemforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_offer_step_workitem"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.workitem')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;offer step workitem for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -1007,7 +1030,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_dmproductforalluser1" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_product"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.product')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;dm product for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -1016,7 +1039,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_dmtrademarkforalluser0" model="ir.model.access">
-						<field name="model_id" ref="dm.model_dm_trademark"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;dm trademark for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -1025,7 +1048,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_partnercontactforalluser0" model="ir.model.access">
-						<field name="model_id" ref="base.model_res_partner_address"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;partner contact for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -1034,7 +1057,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_projectforalluser0" model="ir.model.access">
-						<field name="model_id" ref="project.model_project_project"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'project.project')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;project for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
@@ -1043,7 +1066,7 @@
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
 					<record id="ir_model_access_partnerforalluser0" model="ir.model.access">
-						<field name="model_id" ref="base.model_res_partner"/>
+						<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;project for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>

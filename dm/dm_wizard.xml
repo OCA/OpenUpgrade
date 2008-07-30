@@ -2,14 +2,14 @@
 <terp>
 	<data>
 		<wizard string="Project"
-			model="dm.campaign"
+			model="dm.campaign.group"
 			name="campaign.project"
 			id="campaign_wiz"
 			menu="False"/>
 
 		<wizard
 			string="View Tasks"
-			model="dm.campaign"
+			model="dm.campaign.group"
 			name="wizard_campaign_tasks"
 			id="wizard_campaign_task"/>
 			
@@ -21,7 +21,7 @@
 			
 		<wizard
 			string="Organise in Group"
-			model="dm.campaign"
+			model="dm.campaign.group"
 			name="wizard_campaign_group"
 			id="wizard_campaign_group"/>			
 

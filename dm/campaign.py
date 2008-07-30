@@ -10,6 +10,7 @@ class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
     _columns = {
         'name': fields.char('Campaign group name', size=64, required=True),
+        'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns', domain=[('campaign_group_id','=',False)]),
     }
 dm_campaign_group()
@@ -61,7 +62,7 @@ class dm_campaign(osv.osv):
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
-        'project_id' : fields.many2one('project.project', 'Project', readonly=True),
+#        'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
