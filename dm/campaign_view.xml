@@ -580,7 +580,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_group_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
 
 	<!--
 	Campaign type
@@ -617,7 +617,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_type_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
 
         <record id="view_country_form_inherit" model="ir.ui.view">
             <field name="name">res.country.form.inherit</field>

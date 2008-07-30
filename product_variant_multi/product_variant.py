@@ -37,7 +37,7 @@ class product_variant_dimension_type(osv.osv):
     _columns = {
         'name' : fields.char('Dimension', size=64),
         'sequence' : fields.integer('Sequence'),
-        'value_ids' : fields.one2many('product.variant.dimension.value', 'Dimension Values'),
+        'value_ids' : fields.one2many('product.variant.dimension.value', 'dimension_id', 'Dimension Values'),
     }
     _order = "sequence, name"
 product_variant_dimension_type()
@@ -50,7 +50,7 @@ class product_variant_dimension_value(osv.osv):
         'sequence' : fields.integer('Sequence'),
         'price_extra' : fields.float('Dimension Values', size=64),
         'price_margin' : fields.float('Dimension Values', size=64),
-        'dimension_id' : fields.many2one('product.product.dimension.type', 'Dimension', required=True),
+        'dimension_id' : fields.many2one('product.variant.dimension.type', 'Dimension', required=True),
     }
     _order = "sequence, name"
 product_variant_dimension_value()
