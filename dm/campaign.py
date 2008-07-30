@@ -35,22 +35,19 @@ class dm_campaign(osv.osv):
         result ={}
         for id in ids:
             camp = self.browse(cr,uid,[id])[0]
-            if camp.campaign_type=='model':
-                result[id]='MOC%%0%sd'%3 %id
-            else :
-                offer_code = camp.offer_id and camp.offer_id.code or ''
-                trademark_code = camp.trademark_id and camp.trademark_id.code or ''
-                dealer_code =camp.dealer_id and camp.dealer_id.code or ''
-                date_start = camp.date_start or ''
-                country_code = camp.country_id.code or ''
-                date = date_start.split('-')
-                year = month = ''
-                if len(date)==3:
-                    year = date[0][2:] 
-                    month = date[1]
-                final_date=month+year
-                code1='-'.join([offer_code ,dealer_code ,trademark_code ,final_date ,country_code])
-                result[id]=code1
+            offer_code = camp.offer_id and camp.offer_id.code or ''
+            trademark_code = camp.trademark_id and camp.trademark_id.code or ''
+            dealer_code =camp.dealer_id and camp.dealer_id.code or ''
+            date_start = camp.date_start or ''
+            country_code = camp.country_id.code or ''
+            date = date_start.split('-')
+            year = month = ''
+            if len(date)==3:
+                year = date[0][2:] 
+                month = date[1]
+            final_date=month+year
+            code1='-'.join([offer_code ,dealer_code ,trademark_code ,final_date ,country_code])
+            result[id]=code1
         return result
     def _get_campaign_type(self,cr,uid,context={}):
         campaign_type = self.pool.get('dm.campaign.type')
@@ -109,7 +106,6 @@ class dm_campaign(osv.osv):
         country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
         value['lang_id'] = country.main_currency.id 
         value['currency_id'] = country.main_language.id
-        print "-----------------------------------",value        
         if not offer_id:
             return {'value':value}
         res = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
@@ -162,7 +158,7 @@ class dm_campaign(osv.osv):
         camp = self.browse(cr,uid,ids)[0]
         default={}
         default['name']='New campaign from model %s' % camp.name
-#Need to change        default['campaign_type'] = ''
+        default['campaign_type'] = 'recruiting'
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
