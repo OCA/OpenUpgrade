@@ -175,6 +175,40 @@ partner_bank_headers = {
 'partner_id:id':'partner_id:id'
 }
 
+#===============================================contacts=====================================================================
+contacts_map = {
+    #'id':'' ,
+    'first_name': lambda x: x['PFIRSTNAME,A,30'],
+    'name': lambda x: x['PNAME,A,30'],
+    'title': lambda x: {
+        '0':'', #keep empty
+        '1':'Mss', #should be the id of res.partner.title where name == 'Miss'
+        '2':'Ms.', #should be the id of res.partner.title where name == 'Madam'
+        '3':'M.', #should be the id of res.partner.title where name == 'Sir'
+        '':'', #keep empty
+        #~ #/!\ if an id cannot be found, the value should be ''
+     }[x['PMF,A,1']],
+    'mobile': lambda x: x['PGSM,A,25'],
+#    'lang_id': lambda x: {
+#        'E': 'English',#should be the id of res.lang where name == 'English'
+#        'D': 'German',#should be the id of res.lang where name == 'German'
+#        'F': 'French',#should be the id of res.lang where name == 'French'
+#        'N': 'Dutch',#should be the id of res.lang where name == 'Dutch'
+#        '': ''#for empty data.....
+#
+#        #~ #/!\ if an id cannot be found, the value should be ''
+#     }[x['PLANGUAGE,A,2']],
+#~ #have to be linked to the default adress of the partner with code == x['PCID,A,10']
+     }
+contacts_headers = {
+    #'id':'' ,
+    'first_name': 'first_name',
+    'name': 'name',
+    'title': 'title',
+    'mobile': 'mobile',
+    #'lang_id': 'lang_id',
+#~ #have to be linked to the default adress of the partner with code == x['PCID,A,10']
+     }
 
 #~ partners_map = {
 
@@ -428,6 +462,18 @@ def import_partner(reader_partner, writer_partner, partners_map, partners_header
             writer_address.writerow(record_address)
     return True
 
+def import_contact(reader_contact, writer_contact, contacts_map, contacts_headers):
+    record = {}
+    for key, column_name in contacts_headers.items():
+        record[key] = column_name
+    writer_contact.writerow(record)
+    for row in reader_contact:
+        record = {}
+        for key,fnct in contacts_map.items():
+            record[key] = fnct(convert2utf(row))
+        writer_contact.writerow(record)
+    return True
+
 def import_fyear(reader_fyear, writer_fyear, fyear_map, fyear_headers):
     record = {}
     for key, column_name in fyear_headers.items():
@@ -482,7 +528,10 @@ writer_address = csv.DictWriter(file('res.partner.address.csv','wb'), partner_ad
 writer_bank = csv.DictWriter(file('res.partner.bank.csv','wb'), partner_bank_map.keys())
 import_partner(reader_partner, writer_partner, partners_map, partners_headers, writer_address, partner_add_map, partner_add_headers, writer_bank,  partner_bank_map, partner_bank_headers)
 
-
+#importing Contacts.....
+reader_contact = csv.DictReader(file('original_csv/contacts.csv','rb'))
+writer_contact = csv.DictWriter(file('res.partner.contact.csv','wb'),contacts_map.keys())
+import_contact(reader_contact, writer_contact, contacts_map, contacts_headers)
 
 #importing periods and fiscal years
 reader_fyear = csv.DictReader(file('original_csv/periods.csv','rb'))
