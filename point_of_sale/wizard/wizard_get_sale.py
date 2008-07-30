@@ -30,10 +30,15 @@
 import pooler
 import wizard
 
+## picking_form = """<?xml version="1.0"?>
+## <form string="Select an Open Sale Order">
+##     <field name="picking_id" domain="[('state','in',('assigned','confirmed'))]" context="{'contact_display':'partner'}"/>
+## </form>
+## """
 
 picking_form = """<?xml version="1.0"?>
 <form string="Select an Open Sale Order">
-    <field name="picking_id" domain="[('state','in',('assigned','confirmed'))]" context="{'contact_display':'partner'}"/>
+    <field name="picking_id" domain="[('state','in',('assigned','confirmed')), ('type', '=', 'out')]" context="{'contact_display':'partner'}"/>
 </form>
 """
 
