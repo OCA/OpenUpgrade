@@ -187,7 +187,6 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 	</record>
-<!--
 	<record model="ir.actions.act_window.view" id="action_campaign_form_all_view">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
@@ -200,10 +199,11 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all"/>
 	</record>
--->
+
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
 
-	<record model="ir.actions.act_window" id="action_campaign_form_all1">
+
+	<record model="ir.actions.act_window" id="action_campaign_form_all_open">
 		<field name="name">Open Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
@@ -212,7 +212,20 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all1" action="action_campaign_form_all1"/>
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_open_view">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_all_open"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_open_view">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_all_open"/>
+	</record>	
+	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all_open" action="action_campaign_form_all_open"/>
+
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all2">
 		<field name="name">Draft Campaigns</field>
@@ -223,7 +236,20 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_draft_view">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_all2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_draft_view">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_all2"/>
+	</record>	
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
+
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all3">
 		<field name="name">Closed Campaigns</field>
@@ -234,10 +260,23 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_closed_view">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_all3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_closed_view">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_all3"/>
+	</record>	
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
 
         <!-- My Campaings -->
 
+	
 	<record model="ir.actions.act_window" id="action_campaign_form_my">
 		<field name="name">My Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
@@ -247,7 +286,21 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('responsible_id','=',uid)]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_campaign_tree">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_my"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_campaign_form">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_my"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
+
+
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my1">
 		<field name="name">My Open Campaigns</field>
@@ -258,7 +311,20 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open'),('responsible_id','=',uid)]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_open_campaign_tree">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_my1"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_open_campaign_form">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_my1"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
+
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my2">
 		<field name="name">My Draft Campaigns</field>
@@ -269,7 +335,20 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','draft'),('responsible_id','=',uid)]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_draft_campaign_tree">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_my2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_draft_campaign_form">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_my2"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
+
 
 	<record model="ir.actions.act_window" id="action_campaign_form_my3">
 		<field name="name">My Closed Campaigns</field>
@@ -279,6 +358,18 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_closed_campaign_tree">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_my3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_closed_campaign_form">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_my3"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
 	
