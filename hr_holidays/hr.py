@@ -33,7 +33,6 @@ import time
 import pooler
 import netsvc
 import datetime
-import time
 from osv import fields, osv
 
 
@@ -91,8 +90,13 @@ class hr_holidays(osv.osv):
         return True
 
     def holidays_confirm(self, cr, uid, ids, *args):
+        user = False
+        for id in self.browse(cr, uid, ids):
+            if id.employee_id.user_id:
+                user = id.employee_id.user_id.id
         self.write(cr, uid, ids, {
-            'state':'confirm'
+            'state':'confirm',
+            'user_id': user,
         })
         return True
 
