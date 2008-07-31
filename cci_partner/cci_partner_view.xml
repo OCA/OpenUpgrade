@@ -137,7 +137,7 @@ TODO: revoir la vue tree aussi
 
         <!--
 	===============
-	Partner States 
+	Partner States
 	===============
 	-->
 <!-- view for res.partner.state -->
@@ -630,7 +630,7 @@ TODO: revoir la vue tree aussi
 		<field name="arch" type="xml">
 			<field name="job_ids" position="replace">
 				<field name="job_ids" colspan="4" nolabel="1" mode="tree, form">
-					<form string="Functions"> 
+					<form string="Functions">
 						<field name="sequence_contact"/>
 						<newline/>
 						<field name="function_label" />
@@ -716,7 +716,7 @@ TODO: revoir la vue tree aussi
 		<field name="arch" type="xml">
 			<field name="job_ids" position="replace">
 				<field name="job_ids" colspan="4" nolabel="1" mode="tree, form">
-					<form string="Functions"> 
+					<form string="Functions">
 						<field name="contact_id"/>
 						<field name="function_label" />
 						<field name="function_code_label" />
@@ -982,6 +982,17 @@ TODO: revoir la vue tree aussi
 			</field>
 		</record>
 
+<!-- don't display the categories label-->
+		<record model="ir.ui.view" id="view_partner_form_inherit_label">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<separator colspan="4" string="Categories" position="replace"/>
+			</field>
+		</record>
+
 <!-- don't display the domiciliation, since it is displayed in an other tab-->
 		<record model="ir.ui.view" id="view_partner_form_inherit6">
 			<field name="name">res.partner.form</field>
@@ -1015,7 +1026,7 @@ TODO: revoir la vue tree aussi
 		<field name="arch" type="xml">
 			<field name="job_ids" position="replace">
 				<field name="job_ids" mode="tree, form" colspan="4">
-					<form string="Contacts"> 
+					<form string="Contacts">
 						<field name="contact_id"/>
 						<field name="function_label" />
 						<field name="function_code_label" />
