@@ -490,7 +490,7 @@
 						<field name="date" select="2"/>
 						<field name="type_id" select="1" domain="[('section','=','certificate')]"/>
 						<field name="destination_id" select="1" />
-						<field name="order_partner_id" on_change="get_certification_details(order_partner_id)" />
+						<field name="order_partner_id" on_change="get_certification_details(order_partner_id)" select="1"/>
 						<newline/>
 						<field name="asker_name" />
 						<newline/>
@@ -501,7 +501,7 @@
 						<field name="sender_name" />
 						<field name="special_reason"/>
 						<newline/>
-						<field name="goods" select="1"/>
+						<field name="goods" select="2"/>
 						<field name="to_bill" />
 						<newline/>
 						<field name="goods_value" />

@@ -359,7 +359,7 @@ cci_missions_dossier()
 
 class cci_missions_custom_code(osv.osv):
     _name= 'cci_missions.custom_code'
-    _desctiption = 'cci_missions.custom_code'
+    _description = 'cci_missions.custom_code'
     _columns = {
         'name' : fields.char('Name',size=8,required=True),
         'meaning' : fields.char('Meaning',size=250,required=True),
@@ -612,7 +612,7 @@ class cci_missions_courier_log(osv.osv):
         'documents_invoice' : fields.text('List of Invoices'),
         'documents_others' : fields.text('Others'),
         'message' : fields.text('Message to the Courier'),
-        'return_address' : fields.selection([('A la CCI','A la CCI'),('Au clent','Au client')],'Address of Return',required=True),
+        'return_address' : fields.selection([('A la CCI','A la CCI'),('Au client','Au client')],'Address of Return',required=True),
         'address_name_1' : fields.char('Company Name',size=80),
         'address_name_2' : fields.char('Contact Name',size=80),
         'address_street' : fields.char('Street',size=80),
