@@ -9,7 +9,9 @@
      'version': '1.0',
      'active': False,
      'demo_xml': [],
-     'update_xml':['account_demo.xml','account.account.csv','account.journal.csv','account.fiscalyear.csv','account.period.csv','res.partner.csv','res.partner.address.csv','res.partner.bank.csv','res.partner.contact.csv'],
+     'update_xml':['account_demo.xml','account.account.csv','account.journal.csv','account.fiscalyear.csv','account.period.csv','res.partner.csv','res.partner.address.csv','res.partner.bank.csv','account.move.csv','account.move.line.csv'],
+#'res.partner.contact.csv'
+
      'installable': True
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
