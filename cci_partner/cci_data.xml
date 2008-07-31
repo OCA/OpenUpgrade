@@ -1,7 +1,19 @@
 <?xml version="1.0" ?>
 <terp>
 	<data>
-		<record id="res_partner_ccilv0" model="res.partner">
+
+        <record id="base.main_address" model="res.partner.address">
+            <field name="partner_id" ref="base.main_partner"/>
+            <field name="name">Philippe Vandermeer</field>
+            <field name="street">Esplanade de l'Europe, 2</field>
+            <field name="zip">4020</field>
+            <field name="city">Liege</field>
+            <field name="phone">+32 4 341 91 70</field>
+            <field name="type">default</field>
+            <field model="res.country" name="country_id" ref="base.be"/>
+        </record>
+		<!--<record id="res_partner_ccilv0" model="res.partner">-->
+		<record id="base.main_partner" model="res.partner">
 			<field eval="0" name="alert_legalisations"/>
 			<field eval="0" name="alert_events"/>
 			<field eval="0" name="invoice_special"/>

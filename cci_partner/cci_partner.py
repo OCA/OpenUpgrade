@@ -132,26 +132,33 @@ class res_partner(osv.osv):
                     self.write(cr,uid,[new_id],{'user_id':saleman_id})
         return new_id
 
-    def write(self, cr, uid, ids,vals, *args, **kwargs):
-        super(res_partner,self).write(cr, uid, ids,vals, *args, **kwargs)
-        list=[]
-        if not self.pool.get('res.partner').browse(cr, uid, ids)[0].user_id.id:
-            if 'address' in vals:
-                for add in vals['address']:
-                    if add[2] and (add[2]['zip_id'] and add[2]['type']=='default'):
-                        data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
-                        saleman_id = data.user_id.id
-                        self.write(cr,uid,ids,{'user_id':saleman_id})
-                    else:
-                        data_partner=self.browse(cr, uid,ids)
-                        for d in data_partner:
-                            for i in d.address:
-                                list.append(i.type)
-                                if i.type=='default' and (not i.zip_id):
-                                    self.write(cr,uid,ids,{'user_id':False})
-                            if (not d.address) or (not 'default' in list):
-                                self.write(cr,uid,ids,{'user_id':False})
-        return True
+#    def write(self, cr, uid, ids,vals, *args, **kwargs):
+#        print "vals: ", vals
+#        print "IDS: ", ids
+#        print "args: ", args
+#        print "kwargs: ", kwargs
+
+#        list=[]
+#        for partner in self.browse(cr, uid, ids):
+#            if not partner.user_id:
+#        #if not self.pool.get('res.partner').browse(cr, uid, ids)[0].user_id.id:
+#                if 'address' in vals:
+#                    for add in vals['address']:
+#                        if add[2] and (add[2]['zip_id'] and add[2]['type']=='default'):
+#                            data=self.pool.get('res.partner.zip').browse(cr, uid, add[2]['zip_id'])
+#                            saleman_id = data.user_id.id
+#                            self.write(cr,uid,[partner.id],{'user_id':saleman_id})
+#                        else:
+#                           # data_partner=self.browse(cr, uid,ids)
+#                           # for d in data_partner:
+#                            for i in partner.address:
+#                                list.append(i.type)
+#                                if i.type=='default' and (not i.zip_id):
+#                                    self.write(cr,uid,[partner.id],{'user_id':False})
+#                            if (not partner.address) or (not 'default' in list):
+ #                               self.write(cr,uid,[partner.id],{'user_id':False})
+#        return super(res_partner,self).write(cr, uid, ids,vals, *args, **kwargs)
+
 
     def check_address(self, cr, uid, ids):
         #constraints to ensure that there is only one default address by partner.
@@ -177,13 +184,13 @@ class res_partner(osv.osv):
                     main_list.append(list_id)
         return True
 
-    def _get_partner_state(self, cr, uid, ids):
+    def _get_partner_state(self, cr, uid, ctx):
         ids = self.pool.get('res.partner.state').search(cr, uid, [('name','like', 'Imputable')])
         if ids:
             return ids[0]
         return False
 
-    def _get_customer_state(self, cr, uid, ids):
+    def _get_customer_state(self, cr, uid, ctx):
         ids = self.pool.get('res.partner.state2').search(cr, uid, [('name','like', 'En Activité')])
         if ids:
             return ids[0]
@@ -430,7 +437,7 @@ class res_partner_address(osv.osv):
                         data_zip=self.pool.get('res.partner.zip').browse(cr, uid,[zip_id])
                         for data1 in data_zip:
                              if data1.user_id:
-                                 self.pool.get('res.partner').write(cr, uid,data.partner_id.id,{'user_id':data1.user_id.id})
+                                 self.pool.get('res.partner').write(cr, uid,[data.partner_id.id],{'user_id':data1.user_id.id})
         return {}
 
 #    def onchange_contact_id(self, cr, uid, ids, contact_id):
@@ -540,7 +547,7 @@ class res_partner_country_relation(osv.osv):
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
         'country_id':fields.many2one('res.country','Country'),
-        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation')],'Types'),
+        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation'),('expert','Expert')],'Types'),
     }
 res_partner_country_relation()
 

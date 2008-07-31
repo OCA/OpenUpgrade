@@ -47,7 +47,8 @@
 		</record>
 	</data>
 	<data noupdate="1">
-		<record id="res_company_ccilv0" model="res.company">
+		<!--<record id="base.main_company" model="res.company">-->
+		<record model="res.company" id="base.main_company">
 			<field eval="&quot;CCILV&quot;" name="name"/>
 			<field name="currency_id" ref="base.EUR"/>
 			<field name="federation_key">35a448ab3abe067fc24ee1cb</field>
@@ -59,7 +60,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Simon Micha&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;micha&quot;" name="login"/>
@@ -72,7 +73,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Amalia Patsioras&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;patsioras&quot;" name="login"/>
@@ -85,7 +86,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Myriam Szepetiuk&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;szepetiuk&quot;" name="login"/>
@@ -97,7 +98,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Xavier Minguet&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;minguet&quot;" name="login"/>
@@ -109,7 +110,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Jean-Pierre Tresegnie&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;tresegnie&quot;" name="login"/>
@@ -121,7 +122,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Jean-Marc Lhuire&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;lhuire&quot;" name="login"/>
@@ -133,7 +134,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Christophe Mausen&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;mausen&quot;" name="login"/>
@@ -145,7 +146,7 @@
 			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
 			<field eval="[(6,0,[])]" name="groups_id"/>
 			<field eval="&quot;Patricia Schils&quot;" name="name"/>
-			<field name="company_id" ref="res_company_ccilv0"/>
+			<field name="company_id" ref="base.main_company"/>
 			<field eval="[(6,0,[])]" name="roles_id"/>
 			<field eval="1" name="active"/>
 			<field eval="&quot;schils&quot;" name="login"/>
