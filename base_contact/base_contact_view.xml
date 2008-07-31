@@ -291,6 +291,12 @@
             <field name="view_type">form</field>
         </record>
         <menuitem name="Partners/Functions" action="action_res_partner_job" id="menu_action_res_partner_job"/>
-
+<!-- Act window defining a shorcut on partners to open all his contacts -->
+        <act_window name="Open all Partner's Function"
+            domain="[('name', '=', active_id)]"
+            res_model="res.partner.job"
+            src_model="res.partner"
+            view_mode='tree,form'
+            id="act_res_partner_jobs"/>
 </data>
 </terp>
