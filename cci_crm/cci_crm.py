@@ -49,13 +49,13 @@ class meeting_confidential_info(osv.osv):
         return super(meeting_confidential_info, self).write(cr, uid, *args)
 
     def create(self, cr, uid, *args):
-        print args
         if 'group' in args[0] and args[0]['group']:
             if args[0]['group'] == "group1":
                 args[0]['name'] ="Confidential Info of Group 1"
             else:
                 args[0]['name'] ="Confidential Info of Group 2"
         return super(meeting_confidential_info, self).create(cr, uid, *args)
+
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
@@ -70,7 +70,7 @@ meeting_confidential_info()
 class crm_case(osv.osv):
 
     _inherit = 'crm.case'
-    _desctiption = 'crm case'
+    _description = 'crm case'
     _columns = {
         'meeting_id' : fields.many2one('meeting.confidential.info','Meeting confidential'),
         'event_ids' : fields.many2many('event.event','case_event_rel','case_id','event_id','Events'),
