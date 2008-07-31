@@ -187,7 +187,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_view">
+	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_view">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
 		<field name="view_id" ref="view_campaign_tree"/>
@@ -212,7 +212,7 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_open_view">
+	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_open_view">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
 		<field name="view_id" ref="view_campaign_tree"/>
@@ -236,7 +236,7 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','draft')]</field>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_draft_view">
+	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_draft_view">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
 		<field name="view_id" ref="view_campaign_tree"/>
@@ -260,7 +260,7 @@
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close')]</field>
 	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_closed_view">
+	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_closed_view">
 		<field name="sequence" eval="1"/>
 		<field name="view_mode">tree</field>
 		<field name="view_id" ref="view_campaign_tree"/>
