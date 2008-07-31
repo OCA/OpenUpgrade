@@ -132,7 +132,20 @@
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form"/>
+	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers" id="menu_action_offer_form" action="action_offer_form"/>
+
 
 	<record model="ir.actions.act_window" id="action_offer_form_all1">
 		<field name="name">Open Offer</field>	
@@ -143,7 +156,21 @@
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('state','=','open'),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_open_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form_all1"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_open_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form_all1"/>
+	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Open Offers" id="menu_action_offer_form_all1" action="action_offer_form_all1"/>
+
+
 
 	<record model="ir.actions.act_window" id="action_offer_form_all2">
 		<field name="name">Draft Offer</field>	
@@ -154,7 +181,21 @@
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('state','=','draft'),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_draft_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form_all2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_draft_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form_all2"/>
+	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Draft Offers" id="menu_action_offer_form_all2" action="action_offer_form_all2"/>
+
+
 
 	<record model="ir.actions.act_window" id="action_offer_form_all3">
 		<field name="name">Closed Offer</field>	
@@ -164,6 +205,18 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('state','=','closed'),('type','!=','model'),('type','!=','preoffer')]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_closed_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form_all3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_closed_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form_all3"/>
 	</record>
 	<menuitem name="Direct Marketing/Offers/All Offers/Closed Offers" id="menu_action_offer_form_all3" action="action_offer_form_all3"/>
 
@@ -179,7 +232,21 @@
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form_my"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form_my"/>
+	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
+ 
+ 
  
 	<record model="ir.actions.act_window" id="action_offer_form_my1">
 		<field name="name">My Open Offer</field>
@@ -190,7 +257,21 @@
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('state','=','open'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_open_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form_my1"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_open_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form_my1"/>
+	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Open Offers" id="menu_action_offer_form_my1" action="action_offer_form_my1"/>
+
+
 
 	<record model="ir.actions.act_window" id="action_offer_form_my2">
 		<field name="name">My Draft Offer</field>	
@@ -201,7 +282,21 @@
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('state','=','draft'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_draft_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form_my2"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_draft_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form_my2"/>
+	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Draft Offers" id="menu_action_offer_form_my2" action="action_offer_form_my2"/>
+
+
 
 	<record model="ir.actions.act_window" id="action_offer_form_my3">
 		<field name="name">My Closed Offer</field>	
@@ -211,6 +306,18 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_offer_tree" />
 		<field name="domain">[('state','=','closed'),('offer_responsible_id','=',uid),('type','!=','model'),('type','!=','preoffer')]</field>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_closed_offer_tree_view">
+		<field name="view_mode">tree</field>
+		<field name="sequence">1</field>
+		<field name="view_id" ref="view_offer_tree"/>
+		<field name="act_window_id" ref="action_offer_form_my3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_closed_offer_form_view">
+		<field name="view_mode">form</field>
+		<field name="sequence">10</field>
+		<field name="view_id" ref="view_offer_form"/>
+		<field name="act_window_id" ref="action_offer_form_my3"/>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers/Closed Offers" id="menu_action_offer_form_my3" action="action_offer_form_my3"/>
 
