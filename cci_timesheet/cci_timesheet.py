@@ -9,6 +9,8 @@ class cci_timesheet_grant(osv.osv):
     _description="CCI Timesheet Grant"
     _columns = {
         'name': fields.char('Grant Name', size=128, required=True),
+        'line_ids': fields.one2many('cci_timesheet.line', 'grant_id', 'Timesheet Lines',),
+        'affectation_ids': fields.one2many('cci_timesheet.affectation', 'grant_id', 'Affectation Lines',),
     }
 cci_timesheet_grant()
 
@@ -73,7 +75,7 @@ class cci_timesheet_line(osv.osv):
         'hour_from' : fields.float('Hour From', required=True),
         'hour_to' : fields.float('Hour To',required=True),
         'user_id': fields.many2one('res.users', 'User', required=True),
-        'grant_id': fields.many2one('cci_timesheet.grant', 'Grant', required=True),
+        'grant_id': fields.many2one('cci_timesheet.grant', 'Grant',),
         'timesheet_id': fields.many2one('cci.timesheet', 'Timesheet', ondelete='cascade'),
         'zip_id': fields.many2one('res.partner.zip', 'Zip'),
         'partner_id': fields.many2one('res.partner', 'Partner'),
@@ -160,54 +162,73 @@ class report_timesheet_affectation(osv.osv):
                 AND (line.day_date <= affect.date_to AND line.day_date >= affect.date_from)
             )""")
 
-
-
-
-
-#   _columns = {
-#       'user_id' : fields.char('Employee',size=32),
-#       'grant_id' :fields.char('Grant',size=32),
-#       'th_hours_per_week' :fields.float('Hours/Week (Th)'),
-#       'th_percentage' : fields.float('% (Th)'),
-#       'prac_hours_per_week' :fields.float('Hours/Week (Prac)'),
-#       'prac_percentage' : fields.float('% (Prac)'),
-#       'date_from': fields.date('From Date'),
-##      'date_to': fields.date('To Date'),
-#       }
-#   def init(self, cr):
-#       cr.execute("""
-#           create or replace view report_timesheet_affectation as (
-#           SELECT  temp.user_id as user_id, 
-#                   temp.grant_id as grant_id, 
-#                   temp.th_hours_per_week as th_hours_per_week,
-#                   temp.th_percentage as th_percentage,
-#                   temp.prac_hours_per_week as prac_hours_per_week,
-#                   0 as prac_percentage,
-#                   temp
-#           FROM
-#           (   SELECT  users.name as user_id, 
-#                       affect.grant_id as grant_id, 
-#                       SUM(affect.hours_per_week) as th_hours_per_week,
-#                       SUM(affect.percentage) as th_percentage,
-#                       SUM(line.hour_to - line.hour_from) as prac_hours_per_week
-#               FROM res_users users 
-##              LEFT JOIN cci_timesheet_affectation affect on (affect.user_id = users.id)
-#               LEFT JOIN cci_timesheet_line line on (line.grant_id = affect.grant_id)
-    #           GROUP BY users.name, affect.grant_id
-#           ) as temp,
-
-
-#           )""")
-
-
-#good one:
-#select users.name as user_id, affect.grant_id as grant_id, SUM(affect.hours_per_week) as th_hours_per_week,SUM(affect.percentage) as th_percentage from res_users users LEFT JOIN cci_timesheet_affectation affect on (affect.user_id = users.id) group by users.name, grant_id;
-
-
-
-#test one:
-#SELECT users.name as user_id, affect.grant_id as grant_id, SUM(affect.hours_per_week) as th_hours_per_week, SUM(affect.percentage) as th_percentage, SUM(line.hour_to - line.hour_from) as prac_hours_per_week FROM res_users users LEFT JOIN cci_timesheet_affectation affect on (affect.user_id = users.id) LEFT JOIN cci_timesheet_line line on (line.grant_id = affect.grant_id) GROUP BY users.name, affect.grant_id;
-
 report_timesheet_affectation()
+
+class crm_case(osv.osv):
+
+    _inherit = 'crm.case'
+    _description = 'crm case'
+    _columns = {
+        'grant_id' : fields.many2one('cci_timesheet.grant','Grant'),
+        'zip_id' : fields.many2one('res.partner.zip','Zip'),
+    }
+
+    def onchange_partner_id(self, cr, uid, ids, part, email=False):
+        data = super(crm_case, self).onchange_partner_id(cr, uid, ids, part, email)
+        if not part:
+            return data
+        addr = self.pool.get('res.partner').address_get(cr, uid, [part])
+        data['value']['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, addr['default']).zip_id.id
+        return data
+crm_case()
+
+class project_work(osv.osv):
+    _inherit = "project.task.work"
+    _description = "Task Work"
+
+    def create(self, cr, uid, vals, *args, **kwargs):
+        res = super(project_work, self).create(cr, uid, vals)
+        self.write(cr, uid, [res], vals)
+        return res
+
+    def write(self, cr, uid, ids, vals, *args, **kwargs):
+        res = {}
+        if not ids:
+            return res
+        print vals
+        for work in self.browse(cr, uid, ids):
+            print "here we go"
+            if (not work.zip_id) and ('zip_id' not in vals or not vals['zip_id']):
+                print "changing zip"
+                temp = self.pool.get('res.partner').address_get(cr, uid, [work.task_id.project_id.partner_id.id])
+                vals['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, temp['default']).zip_id.id
+            if (not work.partner_id) and ('partner_id' not in vals or not vals['partner_id']):
+                print "changing partner"
+
+                vals['partner_id'] = work.task_id.project_id.partner_id.id
+
+            if (not work.contact_id) and ('contact_id' not in vals or not vals['contact_id']):
+                print "changing contact"
+
+                vals['contact_id'] = work.task_id.project_id.contact_id2.id
+        print "vals: ", vals
+        return super(project_work, self).write(cr, uid, ids, vals)
+
+
+    _columns = {
+        'grant_id' : fields.many2one('cci_timesheet.grant','Grant'),
+        'zip_id' : fields.many2one('res.partner.zip','Zip'),
+        'partner_id' : fields.many2one('res.partner','Partner'),
+        'contact_id' : fields.many2one('res.partner.contact','Contact'),
+    }
+    _defaults = {
+#        'zip_id': _get_zip_id,
+ #       'partner_id': _get_partner_id,
+  #      'contact_id': _get_contact_id,
+    }
+project_work()
+
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

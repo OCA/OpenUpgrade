@@ -8,7 +8,7 @@
     "description": """
         A Customized timesheet module.
     """,
-    "depends" : ["base","cci_partner"],
+    "depends" : ["base","cci_partner","cci_crm","cci_base_contact"],
     "init_xml" : [],
     "demo_xml" : [],
     "update_xml" : ["cci_timesheet_view.xml"],
