@@ -51,6 +51,7 @@ class res_partner_contact(osv.osv):
         'password': fields.char('Password',size=32), 
         'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
         'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
+        'old_id':fields.integer('Old Datman ID'),
     }
     _defaults = {
         'data_private' : lambda *a : False,
@@ -72,13 +73,20 @@ class res_partner_contact_link(osv.osv):
     _name = "res.partner.contact.link"
     _description = "res.partner.contact.link"
     _columns = {
-        'name':fields.char('Name',size=20,required=True),
+        'name':fields.char('Name',size=40,required=True),
         'type_id' : fields.many2one('res.partner.contact.link.type','Type',required=True),
         'contact_id' : fields.many2one('res.partner.contact','Contact',required=True),
         'current_contact_id': fields.many2one('res.partner.contact','Current contact',required=True),
    }
 res_partner_contact_link()
 
+class project(osv.osv):
+    _inherit = "project.project"
+    _description = "Project"
+    _columns = {
+        'contact_id2': fields.many2one('res.partner.contact','Contact'),
+    }
+project()
 #class res_contact_relation_type(osv.osv):
 #    _name = "res.contact.relation.type"
 #    _description ='res.contact.relation.type'

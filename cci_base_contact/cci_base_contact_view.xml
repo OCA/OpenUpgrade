@@ -2,19 +2,6 @@
 <terp>
 <data>
 
-<!-- unused?
-	<record model="ir.ui.view" id="view_partner_contact_tree">
-		<field name="name">res.partner.contact.tree</field>
-		<field name="model">res.partner.contact</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Partner Contact">
-				<field name="name"/>
-			</tree>
-		</field>
-	</record>
--->
-
 <!-- res.partner.country.relation views -->
 	<record model="ir.ui.view" id="view_partner_country_relation_tree">
 		<field name="name">res.partner.country.relation.tree</field>
@@ -177,8 +164,18 @@
 		<menuitem name="Link Type" id="menu_link" parent="base.menu_base_config"/>
 		<menuitem name="Contact Link Type" action="action_link_type" id="menu_link_type" parent="menu_link"/>
 
-
-
+<!-- view for project form -->
+	<record model="ir.ui.view" id="view_project_form_inherit">
+		<field name="name">project.project.form.inherit</field>
+		<field name="model">project.project</field>
+		<field name="inherit_id" ref="project.edit_project"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="contact_id" position="after">
+				<field name="contact_id2"/>
+			</field>
+		</field>
+	</record>
 
 
 </data>
