@@ -128,64 +128,46 @@
 					</page>
 					<page string="Desktop Publishing">
 						
-						<group col="10" colspan="4">
-							<separator string="                               " />
-							<separator string="Theorical Dates" />
-							<separator string="Reviewed Dates" />
-							<separator string="Real Dates" />
-						</group>
+						<group colspan="4">
+							<separator string="                           " colspan="1"/>
+							<separator string="Theorical Dates" colspan="1"/>
+							<separator string="Reviewed Dates" colspan="1"/>
+							<separator string="Real Dates" colspan="1"/>
 						<separator string="DTP Request" colspan="4"/>
-						<group col="10" colspan="4">
-											   
-							<separator string="DTP Request Date                   " colspan="4"/>
-							<field name="theorical_dtp_request_date" nolabel="1"/>
-							<field name="reviewed_dtp_request_date" nolabel="1"/>
-							<field name="read_dtp_request_date" nolabel="1"/>
-						</group>
+							<label string="DTP Request Date" width="200" colspan="1"/>
+							<field name="theorical_dtp_request_date" nolabel="1" colspan="1"/>
+							<field name="reviewed_dtp_request_date" nolabel="1" colspan="1"/>
+							<field name="real_dtp_request_date" nolabel="1" colspan="1"/>
 						<separator string="Translation Dates" colspan="4"/>
-						<group col="10" colspan="4">
-											  
-							<separator string="Translation Delivery Date            "/>
-							<field name="theorical_translation_delivery_date" nolabel="1"/>
-							<field name="reviewed_translation_delivery_date" nolabel="1"/>
-							<field name="read_translation_delivery_date" nolabel="1"/>
-						</group>
-						<group col="10" colspan="4">
-											  
-							<separator string="Translation Rereading Sent Date"/>
-							<field name="theorical_translation_rereading_date" nolabel="1"/>
-							<field name="reviewed_translation_rereading_date" nolabel="1"/>
-							<field name="read_translation_rereading_date" nolabel="1"/>
-						</group>
+							<label string="Translation Delivery Date" width="200" colspan="1"/>
+							<field name="theorical_translation_delivery_date" nolabel="1" colspan="1"/>
+							<field name="reviewed_translation_delivery_date" nolabel="1" colspan="1"/>
+							<field name="real_translation_delivery_date" nolabel="1" colspan="1"/>
+							<label string="Translation Rereading Date" width="200" colspan="1"/>
+							<field name="theorical_translation_rereading_date" nolabel="1" colspan="1"/>
+							<field name="reviewed_translation_rereading_date" nolabel="1" colspan="1"/>
+							<field name="real_translation_rereading_date" nolabel="1" colspan="1"/>
 						<separator string="First Draft Delivery" colspan="4"/>
-						<group col="10" colspan="4">
-											   
-							<separator string="Delivery Date                          " colspan="4"/>
-							<field name="theorical_draft_delivery_date" nolabel="1"/>
-							<field name="reviewed_draft_delivery_date" nolabel="1"/>
-							<field name="read_draft_delivery_date" nolabel="1"/>
-						</group>
+							<label string="Delivery Date" colspan="1"/>
+							<field name="theorical_draft_delivery_date" width="200" nolabel="1" colspan="1"/>
+							<field name="reviewed_draft_delivery_date" nolabel="1" colspan="1"/>
+							<field name="real_draft_delivery_date" nolabel="1" colspan="1"/>
 						<separator string="Final Corrected Proof" colspan="4"/>
-						<group col="10" colspan="4">
-											  
-							<separator string="Validation Date                       " colspan="4"/>
-							<field name="theorical_fcp_validation_date" nolabel="1"/>
-							<field name="reviewed_fcp_validation_date" nolabel="1"/>
-							<field name="read_fcp_validation_date" nolabel="1"/>
+							<label string="Validation Date" width="200" colspan="1"/>
+							<field name="theorical_fcp_validation_date" nolabel="1" colspan="1"/>
+							<field name="reviewed_fcp_validation_date" nolabel="1" colspan="1"/>
+							<field name="real_fcp_validation_date" nolabel="1" colspan="1"/>
+							<label string="DTP Suplier Delivery Date" colspan="1"/>
+							<field name="theorical_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
+							<field name="reviewed_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
+							<field name="real_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
 						</group>
-						<group col="10" colspan="4">
-											  
-							<separator string="DTP Suplier Delivery Date           "/>
-							<field name="theorical_dtp_sup_delivery_date" nolabel="1"/>
-							<field name="reviewed_dtp_sup_delivery_date" nolabel="1"/>
-							<field name="read_dtp_sup_delivery_date" nolabel="1"/>
-						</group>													
 					</page>
 					<page string="Customers Files">
 						<field name="deduplicator_id"/>
 						<field name="dedup_order_date"/>
 						<field name="dedup_validity_date"/>
-						<field name="dedup_delivery_date"/>        
+						<field name="dedup_delivery_date"/>
 					</page>
 					<page string="Notes">
 						<separator string="Notes" colspan="4"/>
@@ -205,6 +187,20 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 	</record>
+<!--
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_view">
+		<field name="sequence" eval="1"/>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_campaign_tree"/>
+		<field name="act_window_id" ref="action_campaign_form_all"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_form_all_view">
+		<field name="sequence" eval="2"/>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_all"/>
+	</record>
+-->
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all1">
