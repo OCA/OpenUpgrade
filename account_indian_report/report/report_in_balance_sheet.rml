@@ -184,28 +184,28 @@
     <blockTable colWidths="57.0,52.0,170.0,67.0,57.0,52.0,170.0,67.0" style="Table6">
       <tr>
         <td>
-          <para style="Table Contents"><font fontName="Times-Bold">[[ get_pl()['date'] ]]</font></para>
+          <para style="Table Contents"><font fontName="Times-Bold">[[ repeatIn(get_pl(),'p') ]]</font><font fontName="Times-Bold">[[ p['date'] ]]</font></para>
         </td>
         <td>
-          <para style="Table Contents"><font fontName="Times-Bold">[[ get_pl()['code'] ]]</font></para>
+          <para style="Table Contents"><font fontName="Times-Bold">[[ p['code'] ]]</font></para>
         </td>
         <td>
-          <para style="Table Contents"><font fontName="Times-Bold">[[ get_pl()['name'] ]]</font></para>
+          <para style="Table Contents"><font fontName="Times-Bold">[[ p['name'] ]]</font></para>
         </td>
         <td>
-        <para style="P4">[[ get_pl()['balance'] ]]</para>
+        <para style="P4">[[ p['balance'] ]]</para>
         </td>
         <td>
-          <para style="Table Contents"><font fontName="Times-Bold">[[ get_pl()['date1'] ]]</font> </para>
+          <para style="Table Contents"><font fontName="Times-Bold">[[ p['date1'] ]]</font> </para>
         </td>
          <td>
-          <para style="Table Contents"> <font fontName="Times-Bold">[[ get_pl()['code1'] ]]</font> </para>
+          <para style="Table Contents"> <font fontName="Times-Bold">[[ p['code1'] ]]</font> </para>
         </td>
         <td>
-          <para style="Table Contents"><font fontName="Times-Bold">[[ get_pl()['name1'] ]]</font> </para>
+          <para style="Table Contents"><font fontName="Times-Bold">[[ p['name1'] ]]</font> </para>
         </td>
         <td>
-        <para style="P4">[[ get_pl()['balance1'] ]]</para>
+        <para style="P4">[[ p['balance1'] ]]</para>
         </td>
       </tr>
     </blockTable>

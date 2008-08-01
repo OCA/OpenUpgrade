@@ -117,7 +117,7 @@ class report_balance_sheet(report_sxw.rml_parse):
             res['balance']=self.pl
             res['date']=time.strftime('%Y-%m-%d')
        
-        return res  
+        return [res]  
 report_sxw.report_sxw(
     'report.report.balance.sheet',
     'account.account',
