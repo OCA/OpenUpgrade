@@ -97,13 +97,22 @@
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
-										<field name="action_code" string="Action Code" select="2"/>
-										<field name="qty"/>
+										<field name="file_id" />
+										<field name="sequence"/>
+										<field name="active" />
+										<field name="qty" select="2"/>
+										<field name="raw_quantity" select="2"/>
+						<!--				<field name="split_id" />-->
+						<!--				<field name="reuse_id" />-->
+										<field name="start_census"/>
+										<field name="end_census"/>
+										<field name="deduplication_level"/>
+						<!--				<field name="action_code" string="Action Code" select="2"/>-->
 										<field name="note" colspan="4"/>
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
-										<field name="action_code" string="Action Code" select="2"/>
+<!--										<field name="action_code" string="Action Code" select="2"/>-->
 										<field name="qty"/>
 									</tree>
 								</field>
@@ -437,13 +446,22 @@
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
-										<field name="action_code" string="Action Code" select="2"/>
-										<field name="qty"/>
+										<field name="file_id" />
+										<field name="sequence"/>
+										<field name="active" />
+										<field name="qty" select="2"/>
+										<field name="raw_quantity" select="2"/>
+						<!--				<field name="split_id" />-->
+						<!--				<field name="reuse_id" />-->
+										<field name="start_census"/>
+										<field name="end_census"/>
+										<field name="deduplication_level"/>
+						<!--				<field name="action_code" string="Action Code" select="2"/>-->
 										<field name="note" colspan="4"/>
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
-										<field name="action_code" string="Action Code" select="2"/>
+<!--										<field name="action_code" string="Action Code" select="2"/>-->
 										<field name="qty"/>
 									</tree>
 								</field>
@@ -558,15 +576,24 @@
 				<field name="segment_ids" colspan="4" nolabel="1">
 					<form string="Segments">
 						<field name="name" string="Name" select="1"/>
-						<field name="sequence" />
-						<field name="action_code" string="Action Code" select="2"/>
-						<field name="qty"/>
+						<field name="file_id" />
+						<field name="sequence"/>
+						<field name="active" />
+						<field name="qty" select="2"/>
+						<field name="raw_quantity" select="2"/>
+		<!--				<field name="split_id" />-->
+		<!--				<field name="reuse_id" />-->
+						<field name="start_census"/>
+						<field name="end_census"/>
+						<field name="deduplication_level"/>
+						<field name="sequence"/>
+		<!--				<field name="action_code" string="Action Code" select="2"/>-->
 						<field name="note" colspan="4"/>
 					</form>
 					<tree string="Segments">
 						<field name="name" string="Name" select="1"/>
 						<field name="sequence" />
-						<field name="action_code" string="Action Code" select="2"/>
+<!--						<field name="action_code" string="Action Code" select="2"/>-->
 						<field name="qty"/>
 					</tree>
 				</field>
@@ -628,9 +655,17 @@
 			<form string="Segments">
 				<field name="name" string="Name" select="1"/>
 				<field name="proposition_id" />
+				<field name="file_id" />
 				<field name="sequence"/>
-				<field name="action_code" string="Action Code" select="2"/>
+				<field name="active" />
 				<field name="qty" select="2"/>
+				<field name="raw_quantity" select="2"/>
+<!--				<field name="split_id" />-->
+<!--				<field name="reuse_id" />-->
+				<field name="start_census"/>
+				<field name="end_census"/>
+				<field name="deduplication_level"/>
+<!--				<field name="action_code" string="Action Code" select="2"/>-->
 				<field name="note" colspan="4"/>
 			</form>
 		</field>
@@ -644,7 +679,7 @@
 			<tree string="Segments">
 				<field name="name" string="Name"/>
 				<field name="sequence" />				
-				<field name="action_code" string="Action Code"/>
+<!--				<field name="action_code" string="Action Code"/>-->
 				<field name="qty"/>
 			</tree>
 		</field>

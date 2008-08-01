@@ -796,5 +796,46 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Medias" id="menu_action_dm_media_form" sequence="2" action="action_dm_media_form"/>	
 	
+	<!--
+	=======================================================
+	Customer File
+	=======================================================
+	-->
+	
+	<record model="ir.ui.view" id="view_dm_customer_file_form">
+		<field name="name">dm.customer.file.form</field>
+		<field name="model">dm.customer.file</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Customer File">
+				<field name="name" select="1"/>
+				<field name="code" select="2"/>
+				<field name="broker_id" select="1"/>
+				<field name="delivery_date" select="2"/>
+				<field name="segment_ids" colspan="4"/>
+			</form>
+		</field>
+	</record>	
+	<record model="ir.ui.view" id="view_dm_customer_file_tree">
+		<field name="name">dm.customer.file.tree</field>
+		<field name="model">dm.customer.file</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Customer Files">
+				<field name="name"/>
+				<field name="code"/>
+				<field name="broker_id"/>
+				<field name="delivery_date"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_dm_customer_file">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.customer.file</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_dm_customer_file_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Offers/Customers/All Customer Files" id="menu_action_dm_customer_file" sequence="3" action="action_dm_customer_file"/>	
+	
 	</data>
 </terp>

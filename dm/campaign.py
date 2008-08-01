@@ -279,9 +279,17 @@ class dm_campaign_proposition_segment(osv.osv):
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _description = "Segment"
     _columns = {
-        'action_code': fields.char('Code',size=16, required=True),
+#        'action_code': fields.char('Code',size=16, required=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', required=True, ondelete='cascade'),
+        'file_id': fields.many2one('dm.customer.file','Files'),
         'qty': fields.integer('Qty'),
+#        'split_id' : fields.
+        'start_census' :fields.integer('Start Census'),
+        'end_census' : fields.integer('End Census'),
+        'deduplication_level' : fields.integer('Deduplication Level'),
+        'active' : fields.boolean('Active'),
+        'raw_quantity' : fields.integer('Raw Quantity'),
+#        'reuse_id'        man2one
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),
         'sequence' : fields.integer('Sequence'),
