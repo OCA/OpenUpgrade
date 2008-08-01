@@ -27,14 +27,14 @@ class Change:
         self.win.addButton( 'btnCancel', -2 - 30 - 5 ,-5, 30, 15, 'Cancel', actionListenerProc = self.btnOkOrCancel_clicked )
         self.aVal=aVal
         self.protocol = { 
-	    'XML-RPC': 'http://', 
-	    'XML-RPC secure': 'https://', 
-	    'NET-RPC (faster)': 'socket://',
-	}
-	
-	sValue=self.protocol.keys()[0]
+            'XML-RPC': 'http://', 
+            'XML-RPC secure': 'https://', 
+            'NET-RPC (faster)': 'socket://',
+        }
+
+        sValue=self.protocol.keys()[0]
         if sURL<>"":
-	    sValue=self.protocol.keys()[self.protocol.values().index(sURL[:sURL.find("/")+2])]
+            sValue=self.protocol.keys()[self.protocol.values().index(sURL[:sURL.find("/")+2])]
 
         self.win.doModalDialog( "lstProtocol", sValue)
 
@@ -51,7 +51,7 @@ class Change:
                 self.aVal.append("No Database found !!!")
             else:
                 self.aVal.append(url)
-	    self.aVal.append(res)
+            self.aVal.append(res)
             self.win.endExecute()
         elif oActionEvent.Source.getModel().Name =="btnCancel":
             self.win.endExecute()
