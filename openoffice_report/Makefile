@@ -9,6 +9,7 @@ create:
 	    script/lib/functions.py \
 	    script/lib/gui.py \
 	    script/lib/tools.py \
+	    script/Change.py \
 	    script/LoginTest.py \
 	    script/AddAttachment.py \
 	    script/ServerParameter.py \
