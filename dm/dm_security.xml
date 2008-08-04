@@ -16,6 +16,11 @@
 	<record id="res_groups_campaignmanager" model="res.groups">
 		<field name="name">Campaign Manager</field>
 	</record>
+
+	<record id="base.user_admin" model="res.users">
+	    <field eval="[(4, ref('res_groups_offeradmin')), (4, ref('res_groups_campaignadmin'))]" name="groups_id"/>
+	</record>	
+	
 	<record id="ir_model_access_campaignforofferadmin0" model="ir.model.access">
 <!--		<field name="model_id" ref="dm.model_dm_campaign"/>-->
 		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign')]"/>

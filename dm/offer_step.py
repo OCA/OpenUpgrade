@@ -149,6 +149,7 @@ class dm_offer_step(osv.osv):
     _defaults = {
         'state': lambda *a : 'open',
         'split_mode' : lambda *a : 'or',
+        'media_ids' : lambda *a :  [1]
     }
 
     def onchange_type(self,cr,uid,ids,type,offer_id):
