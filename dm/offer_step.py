@@ -149,7 +149,6 @@ class dm_offer_step(osv.osv):
     _defaults = {
         'state': lambda *a : 'open',
         'split_mode' : lambda *a : 'or',
-        'media_ids' : lambda *a :  [1]
     }
 
     def onchange_type(self,cr,uid,ids,type,offer_id):
@@ -193,7 +192,7 @@ class dm_offer_step_transition(osv.osv):
         'delay' : fields.integer('Offer Delay' ,required=True),
         'step_from' : fields.many2one('dm.offer.step','From Offer Step',required=True, ondelete="cascade"),
         'step_to' : fields.many2one('dm.offer.step','To Offer Step',required=True, ondelete="cascade"),
-        'media_id' : fields.many2one('dm.media','Media')
+        'media_id' : fields.many2one('dm.media','Media',required=True)
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
