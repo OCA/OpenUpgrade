@@ -8,10 +8,10 @@ class Change:
 
         self.win.addFixedText("lblVariable", 38, 12, 60, 15, "Server")
 
-	self.win.addEdit("txtHost",-2,9,60,15,sURL[sURL.find("/")+2:sURL.rfind(":")])
+        self.win.addEdit("txtHost",-2,9,60,15,sURL[sURL.find("/")+2:sURL.rfind(":")])
 
         self.win.addFixedText("lblReportName",45 , 31, 60, 15, "Port")
-	self.win.addEdit("txtPort",-2,28,60,15,sURL[sURL.rfind(":")+1:])
+        self.win.addEdit("txtPort",-2,28,60,15,sURL[sURL.rfind(":")+1:])
 
         self.win.addFixedText("lblLoginName", 2, 51, 60, 15, "Protocol Connection")
 

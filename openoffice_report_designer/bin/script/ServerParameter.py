@@ -64,31 +64,31 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         #self.win.doModalDialog("lstDatabase",docinfo.getUserFieldValue(2))
 
     def btnOk_clicked(self,oActionEvent):
-            sock = xmlrpclib.ServerProxy(self.win.getEditText("txtHost")+'/xmlrpc/common')
-            sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
-            sLogin=self.win.getEditText("txtLoginName")
-            sPassword=self.win.getEditText("txtPassword")
-            UID = sock.login(sDatabase,sLogin,sPassword)
-            if not UID:
-                ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
-            else:
-                desktop=getDesktop()
-                doc = desktop.getCurrentComponent()
-                docinfo=doc.getDocumentInfo()
-                docinfo.setUserFieldValue(0,self.win.getEditText("txtHost"))
-                docinfo.setUserFieldValue(1,self.win.getEditText("txtLoginName"))
-                global passwd
-                passwd=self.win.getEditText("txtPassword")
-                global loginstatus
-                loginstatus=True
-                global database
-                database=sDatabase
-                global uid
-                uid=UID
-                #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
-                #docinfo.setUserFieldValue(3,"")
-                ErrorDialog(" You can start creating your report in \nthe current document.","Take care to save it as a .SXW file \nbefore sending to the server.","Message")
-                self.win.endExecute()
+        sock = xmlrpclib.ServerProxy(self.win.getEditText("txtHost")+'/xmlrpc/common')
+        sDatabase=self.win.getListBoxSelectedItem("lstDatabase")
+        sLogin=self.win.getEditText("txtLoginName")
+        sPassword=self.win.getEditText("txtPassword")
+        UID = sock.login(sDatabase,sLogin,sPassword)
+        if not UID:
+            ErrorDialog("Connection Refuse...","Please enter valid Login/Password")
+        else:
+            desktop=getDesktop()
+            doc = desktop.getCurrentComponent()
+            docinfo=doc.getDocumentInfo()
+            docinfo.setUserFieldValue(0,self.win.getEditText("txtHost"))
+            docinfo.setUserFieldValue(1,self.win.getEditText("txtLoginName"))
+            global passwd
+            passwd=self.win.getEditText("txtPassword")
+            global loginstatus
+            loginstatus=True
+            global database
+            database=sDatabase
+            global uid
+            uid=UID
+            #docinfo.setUserFieldValue(2,self.win.getListBoxSelectedItem("lstDatabase"))
+            #docinfo.setUserFieldValue(3,"")
+            ErrorDialog(" You can start creating your report in \nthe current document.","Take care to save it as a .SXW file \nbefore sending to the server.","Message")
+            self.win.endExecute()
 
     def btnCancel_clicked( self, oActionEvent ):
         self.win.endExecute()
@@ -104,15 +104,12 @@ class ServerParameter( unohelper.Base, XJobExecutor ):
         else:
             self.win.setEditText("txtHost",aVal[0])
             self.win.removeListBoxItems("lstDatabase", 0, self.win.getListBoxItemCount("lstDatabase"))
-	    for i in range(len(aVal[1])):
+            for i in range(len(aVal[1])):
                 self.lstDatabase.addItem(aVal[1][i],i)
 
 
 if __name__<>"package" and __name__=="__main__":
     ServerParameter(None)
 elif __name__=="package":
-    g_ImplementationHelper.addImplementation( \
-            ServerParameter,
-            "org.openoffice.openerp.report.serverparam",
-            ("com.sun.star.task.Job",),)
+    g_ImplementationHelper.addImplementation( ServerParameter, "org.openoffice.openerp.report.serverparam", ("com.sun.star.task.Job",),)
 
