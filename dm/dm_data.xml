@@ -74,7 +74,6 @@
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
 			<field eval="&quot;or&quot;" name="split_mode"/>
-			<field eval="[(6,0,[ref('dm.media_paper')])]" name="media_ids"/>
 			<field eval="[(6,0,[])]" name="product_ids"/>
 			<field eval="&quot;1&quot;" name="flow_start"/>
 			<field eval="&quot;SM&quot;" name="type"/>
@@ -85,7 +84,6 @@
 			<field name="name">Step1</field>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
-			<field eval="[(6,0,[ref('dm.media_paper')])]" name="media_ids"/>
 			<field eval="&quot;or&quot;" name="split_mode"/>
 			<field eval="[(6,0,[])]" name="product_ids"/>
 			<field eval="&quot;IM&quot;" name="type"/>
@@ -94,6 +92,7 @@
 		<record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
 			<field name="step_from" ref="dm_offer_step_0"/>
 			<field name="step_to" ref="dm_offer_step_1"/>
+			<field ref='media_paper' name="media_id"/>
 			<field eval="&quot;automatic&quot;" name="condition"/>
 			<field name="delay" eval="1"/>
 		</record>
