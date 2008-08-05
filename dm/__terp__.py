@@ -8,7 +8,7 @@
     "description": """
     
                     """,
-    "depends" : ["project"],
+    "depends" : ["project","partner_layout"],
     "init_xml" : [ ],
     "demo_xml" : [
                   "campaign_data.xml",

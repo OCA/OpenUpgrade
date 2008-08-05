@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<terp>
+<data>
+	<!--
+	=======================================================
+	Layout view
+	=======================================================
+	-->
+
+	<record model="ir.ui.view" id="view_partner_layout_form">
+		<field name="name">partner.layout.form</field>
+		<field name="model">partner.layout</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Partner Layout">
+				<separator string="Signature" colspan="4"/>
+				<field name="signature" widget="image" nolabel="1" colspan="4"/>
+				<separator string="Logo" colspan="4"/>
+				<field name="logo" widget="image" nolabel="1" colspan="4"/>
+				<separator string="Header" colspan="4"/>
+				<field name="header" colspan="4" />
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_layout_tree">
+		<field name="name">partner.layout.tree</field>
+		<field name="model">partner.layout</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Partner Layout" >
+				<field name="header" colspan="4" />
+			</tree>
+		</field>
+	</record>	
+
+</data>
+</terp>

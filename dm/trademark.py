@@ -9,11 +9,8 @@ class dm_trademark(osv.osv):
     _name = "dm.trademark"
     _inherit = "res.partner"
     _columns = {
-        'header' : fields.binary('Header (.odt)'),
-        'logo' : fields.binary('Logo'),
-        'signature' : fields.binary('Signature')
+        'partner_layout':fields.many2one('partner.layout','Layout')
     }
-    
 dm_trademark()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

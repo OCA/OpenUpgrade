@@ -124,8 +124,8 @@ class dm_campaign(osv.osv):
             raise osv.except_osv("Error!!","Country can't be empty ,First select Country")
         value = {}
         country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
-        value['lang_id'] = country.main_currency.id 
-        value['currency_id'] = country.main_language.id
+        value['lang_id'] =  country.main_language.id
+        value['currency_id'] = country.main_currency.id
         if not offer_id:
             return {'value':value}
         res = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
