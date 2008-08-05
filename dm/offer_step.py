@@ -159,7 +159,10 @@ class dm_offer_step(osv.osv):
                 }
         if offer_id :
             offer = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
-            value['name'] = "%s for %s"% (step_type.code,offer.name) 
+            if offer.type == 'model':
+                value['name'] = step_type.name
+            else :
+                value['name'] = "%s for %s"% (step_type.code,offer.name) 
         return {'value':value}
 
     def state_close_set(self, cr, uid, ids, *args):
