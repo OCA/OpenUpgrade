@@ -45,6 +45,9 @@ def _sale_complete(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
     order = pool.get('pos.order').browse(cr, uid, data['id'], context)
 
+    if order.state in ('paid', 'invoiced'):
+        raise wizard.except_wizard('UserError', "You can't modify this order. It has already been paid")
+
     pick = pool.get('stock.picking').browse(cr, uid, data['form']['picking_id'], context)
 
     order.write(cr, uid, data['id'], {
