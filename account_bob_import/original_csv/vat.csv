@@ -1,228 +1,246 @@
-"VSTORED,A,15","VSALPUR,A,1","VTITLE,A,1","VTYPE,A,1","VNAT1,A,3","VNAT2,A,3","VCOMPUTE,N,8","VMULTI,A,2","VKIND,A,1","HEADING1,A,40","HEADING2,A,40","VISVISIBLE,L,1","VIMPINV,A,10","VIMPINVDBL,A,10","VIMPCRE,A,10","VIMPCREDBL,A,10","VCODINV,A,15","VCODINVDBL,A,15","VCODCRE,A,15","VCODCREDBL,A,15","VVATLIST,L,1","VCOMLIST,L,1","VSTATLIST,L,1","VTRAVFA,L,1","VBASE,A,1","VTAX,A,1","VLBAINV,A,30","VLBACRE,A,30","VLTAINV,A,30","VLTACRE,A,30","VDEDUC,N,8","VBEGDATE,D,4","VENDDATE,D,4","VDBL,L,1","VMTYPE1,A,1","VMNAT11,A,3","VMNAT12,A,3","VMCMP1,N,8","VMPRC1,N,8","VMTYPE2,A,1","VMNAT21,A,3","VMNAT22,A,3","VMCMP2,N,8","VMPRC2,N,8","VVATTURN,L,1","VIMPDEDUC,A,10","VTRIANG,L,1"
-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0,,0
-ESDLI0,S,S,E,LVI,LVI,0.000000,,S,Livraison avec installation,Leveringen met installatie,1,,,,,,,,,0,0,1,,Y,N,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESGD 0,P,S,E,BD,G,0.000000,,D,Biens déductibles,Goederen aftrekbaar,1,,,,,,,,,0,1,1,,U,N,+A82;+A86,-A82;+A84;-A86,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESGD 12,P,S,E,BD,G,12.000000,,D,Biens déductibles,Goederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A82;+A86,-A82;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESGD 19.5,P,S,E,BD,*BD,19.500000,,D,Biens déductibles,*Biens déductibles,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A82;+A86,-A82;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-ESGD 20.5,P,S,E,BD,*BD,20.500000,,D,Biens déductibles,*Biens déductibles,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A82;+A86,-A82;+A84;-A86,+A55;+A59,,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-ESGD 21,P,S,E,BD,G,21.000000,,D,Biens déductibles,Goederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A82;+A86,-A82;+A84;-A86,+A55;+A59,,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESGD 6,P,S,E,BD,G,6.000000,,D,Biens déductibles,Goederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A82;+A86,-A82;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESGD 99.99,P,S,E,BD,G,99.990000,,D,Biens déductibles,Goederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A82;+A86,-A82;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESIGD0,P,S,E,IBD,IG,0.000000,,D,Invest. biens déductibles,InvesteringsGoederen aftrekbaar,1,,,,,,,,,0,1,1,,Y,N,+A83;+A86,-A83;+A84;-A86,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESIGD99.99,P,S,E,IBD,IG,99.990000,,D,Invest. biens déductibles,InvesteringsGoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A83;+A86,-A83;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESIGN99.99,P,S,E,IBN,IGN,99.990000,,D,Invest. biens non déduct.,InvesteringsGoederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,1,1,,U,Y,+A83;+A86,-A83;+A84;-A86,+A55;+A83;+A86,+A62C;-A83;-A86,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESIOS99.99,P,S,E,ISO,IDO,99.990000,,S,Invest. services taxés à l'origine,Invest. Diensten belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,0,0,,U,Y,+A83,-A83;+A85,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESISD0,P,S,E,ISD,ID,0.000000,,D,Invest. services divers déduct.,Investeringen Diensten aftrekbaar,1,,,,,,,,,0,0,0,,Y,N,+A83;+A88,-A83;+A85;-A88,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESISD99.99,P,S,E,ISD,ID,99.990000,,D,Invest. services divers déduct.,Investeringen Diensten aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A83;+A88,-A83;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESISN99.99,P,S,E,ISN,IDN,99.990000,,D,Invest. services div. non déduct.,Investeringen Diensten Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,0,0,,U,Y,+A83;+A88,-A83;+A85;-A88,+A56;+A83;+A88,+A62C;-A83;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESPRT0,S,S,E,PRT,DBB,0.000000,,S,Prestations hors Belgique,Diensten Buiten België,1,,,,,,,,,0,0,0,,Y,N,+A47,+A49,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSAT20,S,S,E,VAT,VOO,20.000000,,S,Ventes soumises à TVA Autriche,Verkopen BTW Oostenrijk,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSCY15,S,S,E,VCY,VCY,15.000000,,S,Ventes soumises à TVA Chypre,Verkopen BTW Cyprus,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSCZ22,S,S,E,VCZ,VCZ,22.000000,,S,Ventes soumises à TVA Rép. Tchèque,Verkopen BTW Tsjechië,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSDD0,P,S,E,SDD,DD,0.000000,,D,Services divers déductibles,Diverse Diensten aftrekbaar,1,,,,,,,,,0,0,0,,Y,N,+A82;+A88,-A82;+A85;-A88,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDD12,P,S,E,SDD,DD,12.000000,,D,Services divers déductibles,Diverse Diensten aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDD19.5,P,S,E,SDD,*SD,19.500000,,D,Services divers déductibles,*Services divers déductibles,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-ESSDD20.5,P,S,E,SDD,*SD,20.500000,,D,Services divers déductibles,*Services divers déductibles,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A59,,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-ESSDD21,P,S,E,SDD,DD,21.000000,,D,Services divers déductibles,Diverse Diensten aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A59,,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDD6,P,S,E,SDD,DD,6.000000,,D,Services divers déductibles,Diverse Diensten aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDD99.99,P,S,E,SDD,DD,99.990000,,D,Services divers déductibles,Diverse Diensten aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDE14,S,S,E,VDE,VDU,14.000000,,S,Ventes soumises à TVA Allemagne,Verkopen BTW Duitsland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDK25,S,S,E,VDK,VDK,25.000000,,S,Ventes soumises à TVA Danemark,Verkopen BTW Denemarken,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDN99.99,P,S,E,SDN,DDN,99.990000,,D,Services divers non déductibles,Diverse Diensten Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A82;+A88,+A62C;-A82;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSDO99.99,P,S,E,SDO,DO,99.990000,,S,Services taxés à l'origine,Diensten belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,0,0,,U,Y,+A82,-A82;+A85,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSEE18,S,S,E,VEE,VEE,18.000000,,S,Ventes soumises à TVA Estonie,Verkopen BTW Estland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSEL18,S,S,E,VEL,VEL,18.000000,,S,Ventes soumises à TVA Grèce,Verkopen BTW Griekenland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSES13,S,S,E,VES,VSP,13.000000,,S,Ventes soumises à TVA Espagne,Verkopen BTW Spanje,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSEX0,S,S,E,VEX,VVG,0.000000,,S,Ventes exonérées marchandises et biens,Vrijgestelde Verkopen van Goederen,1,,,,,,,,,0,1,1,,Y,N,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSFI22,S,S,E,VFI,VFI,22.000000,,S,Ventes soumises à TVA Finlande,Verkopen BTW Finland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSFR18.60,S,S,E,VFR,VFR,18.600000,,S,Ventes soumises à TVA France,Verkopen BTW Frankrijk,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSGB17.50,S,S,E,VGB,VGB,17.500000,,S,Ventes soumises à TVA Grande-Bret.,Verkopen BTW G.B.,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSGN99.99,P,S,E,BN,GN,99.990000,,D,Biens non déductibles,Goederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,1,1,,U,Y,+A82;+A86,-A82;+A84;-A86,+A55;+A82;+A86,+A62C;-A82;-A86,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSGO99.99,P,S,E,BO,GO,99.990000,,S,Biens taxés à l'origine,Goederen belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,0,0,,U,Y,+A82,-A82;+A85,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSHU25,S,S,E,VHU,VHU,25.000000,,S,Ventes soumises à TVA Hongrie,Verkopen BTW Hongarije,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSIE16,S,S,E,VIE,VIE,16.000000,,S,Ventes soumises à TVA Irlande,Verkopen BTW Ierland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSIT19,S,S,E,VIT,VIT,19.000000,,S,Ventes soumises à TVA Italie,Verkopen BTW Italië,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSLT18,S,S,E,VLT,VLT,18.000000,,S,Ventes soumises à TVA Lituanie,Verkopen BTW Litouwen,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSLU15,S,S,E,VLU,VLU,15.000000,,S,Ventes soumises à TVA Luxembourg,Verkopen BTW Luxemburg,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSLV18,S,S,E,VLV,VLV,18.000000,,S,Ventes soumises à TVA Lettonie,Verkopen BTW Letland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSMT18,S,S,E,VMT,VMT,18.000000,,S,Ventes soumises à TVA Malte,Verkopen BTW Malta,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSNL18.5,S,S,E,VNL,VNL,18.500000,,S,Ventes soumises à TVA Pays-Bas,Verkopen BTW Nederland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSPL22,S,S,E,VPL,VPL,22.000000,,S,Ventes soumises à TVA Pologne,Verkopen BTW Polen,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSPT16,S,S,E,VPT,VPT,16.000000,,S,Ventes soumises à TVA Portugal,Verkopen BTW Portugal,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSSE25,S,S,E,VSE,VZW,25.000000,,S,Ventes soumises à TVA Suède,Verkopen BTW Zweden,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESSSI20,S,S,E,VSI,VSI,20.000000,,S,Ventes soumises à TVA Slovénie,Verkopen BTW Slovenië,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSSK20,S,S,E,VSK,VSK,20.000000,,S,Ventes soumises à TVA Rép. Slovaque,Verkopen BTW Slowakije,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,U,Y,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-ESSTT99.99,P,S,E,SST,OTC,99.990000,,D,Sous-traitance transport/consult.,Onderaannemingen Transport/Consult.,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A81;+A88,-A81;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTD 0,P,S,E,MD,HG,0.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,,,,,,,,,0,1,1,,Y,N,+A81;+A86,-A81;+A84;-A86,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTD 12,P,S,E,MD,HG,12.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A81;+A86,-A81;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTD 19.5,P,S,E,MD,*MD,19.500000,,D,Marchandises déductibles,*Marchandises déductibles,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A81;+A86,-A81;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-ESTD 20.5,P,S,E,MD,*MD,20.500000,,D,Marchandises déductibles,*Marchandises déductibles,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A81;+A86,-A81;+A84;-A86,+A55;+A59,,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-ESTD 21,P,S,E,MD,HG,21.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A81;+A86,-A81;+A84;-A86,+A55;+A59,,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTD 6,P,S,E,MD,HG,6.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A81;+A86,-A81;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTD 99.99,P,S,E,MD,HG,99.990000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,1,1,,U,Y,+A81;+A86,-A81;+A84;-A86,+A55;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTN 99.99,P,S,E,MN,HGN,99.990000,,D,Marchandises non déductibles,Handelsgoederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,1,1,,U,Y,+A81;+A86,-A81;+A84;-A86,+A55;+A81;+A86,+A62C;-A81;-A86,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTO 99.99,P,S,E,MO,HGO,99.990000,,S,Marchandises taxées à l'origine,Handelsgoederen belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,0,0,,U,Y,+A81,-A81;+A85,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESTRF0,S,S,E,TRF,OG,0.000000,,S,Transfert de biens,Overdracht van Goederen,1,,,,,,,,,0,1,1,,Y,N,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESWIN99.99,P,S,E,SFA,ZFA,99.990000,,D,Intracommunautaire sans facture,Intracommunautaire Zonder Faktuur,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,0,0,,U,Y,+A86,+A86,+A55,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ESWRK0,S,S,E,TRV,MW,0.000000,,S,Travail à façon,Maakloonwerk,1,,,,,,,,,0,1,1,,Y,N,+A46,+A48,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISEXP0,S,S,I,EXP,EXP,0.000000,,S,Exportations,Export,1,,,,,,,,,0,0,0,,Y,N,+A47,+A49,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISIGS0,P,S,I,IBS,IGD,0.000000,,S,Importation de biens et services,Import van Goederen en Diensten,1,,,,,,,,,0,0,0,,Y,N,+A82,-A82,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISII 0,P,S,I,II,II,0.000000,,S,Importation d'investissements,Import van Investeringen,1,,,,,,,,,0,0,0,,Y,N,+A83,-A83,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISIT 0,P,S,I,IM,IHG,0.000000,,S,Importation de marchandises,Import van Handelsgoederen,1,,,,,,,,,0,0,0,,Y,N,+A81,-A81,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRDG99.99,P,S,I,RDB,VTD,99.990000,,D,Report Serv. taxes dues/le preneur (BS),Verl. Dienst Taks te betalen bij klant,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRDI99.99,P,S,I,RDI,VTI,99.990000,,D,Report Serv. taxes dues/le preneur (I),Verl. Invest.Taks te betalen bij klant,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,0,0,,U,Y,+A83;+A88,-A83;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRDT99.99,P,S,I,RDM,VTH,99.990000,,D,Report Serv. taxes dues/le preneur (M),Verl. Handelsg Taks te betalen bij klant,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,0,0,,U,Y,+A81;+A88,-A81;+A85;-A88,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRGD99.99,P,S,I,RBD,VG,99.990000,,D,Report Biens déductibles,Verlegging Goederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A57;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRGN99.99,P,S,I,RBN,VGN,99.990000,,D,Report Biens non déductibles,Verlegging Goederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A57;+A82;+A88,+A62C;-A82;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRID99.99,P,S,I,RID,VI,99.990000,,D,Report Investissement déductible,Verlegging Investeringen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,0,0,,U,Y,+A83;+A88,-A83;+A85;-A88,+A57;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRIN99.99,P,S,I,RIN,VIN,99.990000,,D,Report Investissement non déductible,Verlegging Investeringen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,0,0,,U,Y,+A83;+A88,-A83;+A85;-A88,+A57;+A83;+A88,+A62C;-A83;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRTD99.99,P,S,I,RMD,VHG,99.990000,,D,Report Marchandises déductibles,Verlegging Handelsgoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,0,0,,U,Y,+A81;+A88,-A81;+A85;-A88,+A57;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRTG99.99,P,S,I,RTB,VND,99.990000,,D,Report Serv. taxes/le preneur ND. (BS),Verl. Dienst. Taks/klant Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,0,0,,U,Y,+A82;+A88,-A82;+A85;-A88,+A56;+A82;+A88,+A62C;-A82;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRTI99.99,P,S,I,RTI,VNI,99.990000,,D,Report Serv. taxes/le preneur ND. (I),Verl. Invest. Taks/klant Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,0,0,,U,Y,+A83;+A88,-A83;+A85;-A88,+A56;+A83;+A88,+A62C;-A83;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRTN99.99,P,S,I,RMN,VHN,99.990000,,D,Report Marchandises non déductibles,Verlegging Handelsgoederen Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,0,0,,U,Y,+A81;+A88,-A81;+A85;-A88,+A57;+A81;+A88,+A62C;-A81;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISRTT99.99,P,S,I,RTM,VNH,99.990000,,D,Report Serv. taxes /le preneur ND. (M),Verl. Handelsg Taks/klant Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,0,0,,U,Y,+A81;+A88,-A81;+A85;-A88,+A56;+A81;+A88,+A62C;-A81;-A88,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-ISWIV99.99,P,S,I,SFA,ZFA,99.990000,,D,Hors CEE sans facture,Buiten EEG  Zonder Faktuur,1,411000,451000,411000,451000,VAT_TOREC,VAT_TOPAY,VAT_TOREC,VAT_TOPAY,0,0,0,,U,Y,+A87,-A87,+A57,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSCAR21,P,S,N,V50,A50,21.000000,,S,Frais de voiture TVA 50 % récupérable,Autokosten 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A82,-A82;+A85,+A59,+A63,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSCGD0,P,S,N,CMD,MI,0.000000,,D,Cocontractant immobilier déductible,Medecontractant  Immobiliën aftrekbaar,1,,,,,,,,,0,0,0,,Y,N,+A82;+A87,-A82;+A85;-A87,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSCGD19.5,P,S,N,CMD,*CM,19.500000,,D,Cocontractant immobilier déductible,*Cocontractant immobilier déductible,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,0,0,,U,Y,+A82;+A87,-A82;+A85;-A87,+A56;+A59,,100.000000,1900-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSCGD20.5,P,S,N,CMD,*CM,20.500000,,D,Cocontractant immobilier déductible,*Cocontractant immobilier déductible,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,0,0,,U,Y,+A82;+A87,-A82;+A85;-A87,+A56;+A59,,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSCGD21,P,S,N,CMD,MI,21.000000,,D,Cocontractant immobilier déductible,Medecontractant  Immobiliën aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,0,0,,U,Y,+A82;+A87,-A82;+A85;-A87,+A56;+A59,,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSCGN20.5,P,S,N,CMN,*CM,20.500000,,D,Cocontractant immobilier non déductible,*Cocontractant immobilier non déductible,1,640120,451000,640120,451000,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,0,0,0,,U,Y,+A82;+A87,-A82;+A85;-A87,+A56;+A82;+A87,+A62C;-A82;-A87,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSCGN21,P,S,N,CMN,MIN,21.000000,,D,Cocontractant immobilier non déductible,Medecontractant  Immobiliën Niet aftrek.,1,640120,451000,640120,451000,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,0,0,0,,U,Y,+A82;+A87,-A82;+A85;-A87,+A56;+A82;+A87,+A62C;-A82;-A87,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSCS 0,S,S,N,CV,VM,0.000000,,S,Ventes Cocontractants,Verkopen Medekontraktant,1,,,,,,,,,1,0,0,,Y,N,+A45,+A49,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSDIP0,P,S,N,ESP,DIS,0.000000,,S,Escompte,Diskonto,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-NSDIS0,S,S,N,ESS,DIV,0.000000,,S,Escompte,Diskonto,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-NSEGS99.99,S,S,N,EGV,EB,99.990000,,S,Ventes Taxe d'égalisation,Verkopen Egalisatiebelasting,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,0,0,,N,Y,,,+A58,-A64,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSEPX0,P,S,N,XMP,VR,0.000000,,S,Autres exemptions,andere Vrijstell.,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-NSEXS0,S,S,N,EXS,AV,0.000000,,S,Autres exemptions,Andere Vrijstellingen,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-NSGSD0,P,S,N,BSD,GD,0.000000,,S,Biens et Services divers déductibles,Goederen en Diensten aftrekbaar,1,,,,,,,,,0,0,0,,Y,N,+A82,-A82;+A85,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSGSD12,P,S,N,BSD,GD,12.000000,,S,Biens et Services divers déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A82,-A82;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSGSD19.5,P,S,N,BSD,*BS,19.500000,,S,Biens et Services divers déductibles,*Biens et Services divers déductibles,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A82,-A82;+A85,+A59,+A63,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSGSD20.5,P,S,N,BSD,*BS,20.500000,,S,Biens et Services divers déductibles,*Biens et Services divers déductibles,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A82,-A82;+A85,+A59,+A63,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSGSD21,P,S,N,BSD,GD,21.000000,,S,Biens et Services divers déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A82,-A82;+A85,+A59,+A63,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSGSD6,P,S,N,BSD,GD,6.000000,,S,Biens et Services divers déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A82,-A82;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSGSD99.99,P,S,N,BSD,GD,99.990000,,S,Biens et Services divers déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A82,-A82;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSGSN99.99,P,S,N,BSN,GDN,99.990000,,S,Biens et Services divers non déductibles,Goederen en Diensten Niet aftrekbaar,1,640120,,640120,,VAT_NODED,,VAT_NODED,,0,0,0,,U,Y,+A82,-A82;+A85,+A82,-A82;,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSICD0,P,S,N,ICD,IMI,0.000000,,D,Invest. Cocontractant immob. déductible,Invest. Medekontraktant Immo aftrekbaar,1,,,,,,,,,0,0,0,,Y,N,+A83;+A87,-A83;+A85;-A87,,,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSICD19.5,P,S,N,ICD,*IC,19.500000,,D,Invest. Cocontractant immob. déductible,*Invest. Cocontractant immob. déductible,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,0,0,,U,Y,+A83;+A87,-A83;+A85;-A87,+A56;+A59,,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSICD20.5,P,S,N,ICD,*IC,20.500000,,D,Invest. Cocontractant immob. déductible,*Invest. Cocontractant immob. déductible,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,0,0,,U,Y,+A83;+A87,-A83;+A85;-A87,+A56;+A59,,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSICD21,P,S,N,ICD,IMI,21.000000,,D,Invest. Cocontractant immob. déductible,Invest. Medekontraktant Immo aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,0,0,,U,Y,+A83;+A87,-A83;+A85;-A87,+A56;+A59,,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSICN19.5,P,S,N,ICN,*IC,19.500000,,D,Invest. Cocontractant immob. non déduct.,*Invest. Cocontractant immob. non déduct,1,640120,451000,640120,451000,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,0,0,0,,U,Y,+A83;+A87,-A83;+A85;-A87,+A56;+A83;+A87,+A62C;-A83;-A87,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSICN20.5,P,S,N,ICN,*IC,20.500000,,D,Invest. Cocontractant immob. non déduct.,*Invest. Cocontractant immob. non déduct,1,640120,451000,640120,451000,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,0,0,0,,U,Y,+A83;+A87,-A83;+A85;-A87,+A56;+A83;+A87,+A62C;-A83;-A87,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSICN21,P,S,N,ICN,IMN,21.000000,,D,Invest. Cocontractant immob. non déduct.,Invest. Medekontraktant immo Niet aftrek,1,640120,451000,640120,451000,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,0,0,0,,U,Y,+A83;+A87,-A83;+A85;-A87,+A56;+A83;+A87,+A62C;-A83;-A87,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSID 0,P,S,N,ID,INV,0.000000,,S,Invest. déductibles,Investeringen aftrekbaar,1,,,,,,,,,0,0,0,,Y,N,+A83,-A83;+A85,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSID 12,P,S,N,ID,INV,12.000000,,S,Invest. déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A83,-A83;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSID 19.5,P,S,N,ID,*ID,19.500000,,S,Invest. déductibles,*Invest. déductibles,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A83,-A83;+A85,+A59,+A63,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSID 20.5,P,S,N,ID,*ID,20.500000,,S,Invest. déductibles,*Invest. déductibles,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A83,-A83;+A85,+A59,+A63,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSID 21,P,S,N,ID,INV,21.000000,,S,Invest. déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A83,-A83;+A85,+A59,+A63,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSID 6,P,S,N,ID,INV,6.000000,,S,Invest. déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A83,-A83;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSID 99.99,P,S,N,ID,INV,99.990000,,S,Invest. déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A83,-A83;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSIN 99.99,P,S,N,IN,INN,99.990000,,S,Invest. non déductibles,Investeringen Niet aftrekbaar,1,640120,,640120,,VAT_NODED,,VAT_NODED,,0,0,0,,U,Y,+A83,-A83;+A85,+A83,-A83,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSINV21,P,S,N,I50,I50,21.000000,,S,Investissements 50 % récupérable,Investeringen 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A83,-A83;+A85,+A59,+A63,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,
-NSPKP0,P,S,N,EMP,LV,0.000000,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-NSPKS0,S,S,N,EMS,LVP,0.000000,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-NSS  0,S,S,N,V,V,0.000000,,S,Ventes,Verkopen,1,,,,,,,,,1,0,0,,Y,N,+A00,+A49,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSS  12,S,S,N,V,V,12.000000,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,0,0,,U,Y,+A02,+A49,+A54,+A64,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSS  19.5,S,S,N,V,*V,19.500000,,S,Ventes,*Ventes,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,0,0,,U,Y,+A03,+A49,+A54,+A64,100.000000,1900-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSS  20.5,S,S,N,V,*V,20.500000,,S,Ventes,*Ventes,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,0,0,,U,Y,+A03,+A49,+A54,+A64,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSS  21,S,S,N,V,V,21.000000,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,0,0,,U,Y,+A03,+A49,+A54,+A64,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSS  6,S,S,N,V,V,6.000000,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,0,0,,U,Y,+A01,+A49,+A54,+A64,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSST 99.99,P,S,N,ST,OA,99.990000,,S,Prestations de sous-traitance,Onderaannemingen,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A81,-A81;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSSTM99.99,P,S,N,STM,OAI,99.990000,,D,Prestations de sous-traitance immobilier,Onderaannemingen Immobiliën,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,0,0,,U,Y,+A81;+A87,-A81;+A85;-A87,+A56;+A59,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTF 0,P,S,N,MD,HG,0.000000,,S,Marchandises déductibles,Handelsgoederen aftrekbaar,1,,,,,,,,,0,0,0,,Y,N,+A81,-A81;+A85,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTF 12,P,S,N,MD,HG,12.000000,,S,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A81,-A81;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTF 19.5,P,S,N,MD,*MD,19.500000,,S,Marchandises déductibles,*Marchandises déductibles,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A81,-A81;+A85,+A59,+A63,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,1,,0
-NSTF 20.5,P,S,N,MD,*MD,20.500000,,S,Marchandises déductibles,*Marchandises déductibles,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A81,-A81;+A85,+A59,+A63,100.000000,1994-01-01,1995-12-31,,,,,,,,,,,,1,,0
-NSTF 21,P,S,N,MD,HG,21.000000,,S,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A81,-A81;+A85,+A59,+A63,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTF 6,P,S,N,MD,HG,6.000000,,S,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A81,-A81;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTF 99.99,P,S,N,MD,HG,99.990000,,S,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,Y,+A81,-A81;+A85,+A59,+A63,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTM 99.99,P,S,N,MN,HGN,99.990000,,S,Marchandises non déductibles,Handelsgoederen Niet aftrekbaar,1,640120,,640120,,VAT_NODED,,VAT_NODED,,0,0,0,,U,Y,+A81,-A81;+A85,+A81,-A81,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTOP0,P,S,N,SCA,VOM,0.000000,,S,Autres exemptions avec MAJ du C.A.,andere Vrijstell. met UPD v/d Omzet,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-NSTOS0,S,S,N,SCA,VVO,0.000000,,S,Autres exemptions avec MAJ du C.A.,Andere vrijstell. met UPD v/d omzet,1,,,,,,,,,1,0,0,,Y,N,,,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SCAR,P,T,N,V50,A50,,,S,Frais de voiture TVA 50 % récupérable,Autokosten 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,,,,,,,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SCGD,P,T,N,CMD,MI,,,D,Cocontractant immobilier déductible,Medecontractant  Immobiliën aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SCGN,P,T,N,CMN,MIN,,,D,Cocontractant immobilier non déductible,Medecontractant  Immobiliën Niet aftrek.,1,640120,451000,640120,451000,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SCS,S,T,N,CV,VM,,,S,Ventes Cocontractants,Verkopen Medekontraktant,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SDIP,P,T,N,ESP,DIS,,,S,Escompte,Diskonto,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-SDIS,S,T,N,ESS,DIV,,,S,Escompte,Diskonto,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-SDLI,S,T,E,LVI,LVI,,,S,Livraison avec installation,Leveringen met installatie,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SEGS,S,T,N,EGV,EB,,,S,Ventes Taxe d'égalisation,Verkopen EgalisatieBelasting,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SEPX,P,T,N,XMP,VR,,,S,Autres exemptions,andere Vrijstell.,1,,,,,,,,,0,0,0,,Y,N,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-SEXP,S,T,I,EXP,EXP,,,S,Exportations,Export,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SEXS,S,T,N,EXS,AV,,,S,Autres exemptions,Andere Vrijstellingen,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-SGD,P,T,E,BD,G,,,D,Biens déductibles,Goederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SGSD,P,T,N,BSD,GD,,,S,Biens et Services divers déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SGSN,P,T,N,BSN,GDN,,,S,Biens et Services divers non déductibles,Goederen en Diensten Niet aftrekbaar,1,640120,,640120,,VAT_NODED,,VAT_NODED,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SICD,P,T,N,ICD,IMI,,,D,Invest. Cocontractant immob. déductible,Invest. Medekontraktant Immo aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SICN,P,T,N,ICN,IMN,,,D,Invest. Cocontractant immob. non déduct.,Invest. Medekontraktant immo Niet aftrek,1,640120,451000,640120,451000,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SID,P,T,N,ID,INV,,,S,Invest. déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SIGD,P,T,E,IBD,IG,,,D,Invest. biens déductibles,InvesteringsGoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SIGN,P,T,E,IBN,IGN,,,D,Invest. biens non déduct.,InvesteringsGoederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SIGS,P,T,I,IBS,IGD,,,S,Importation de biens et services,Import van Goederen en Diensten,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SII,P,T,I,II,II,,,S,Importation d'investissements,Import van Investeringen,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SIN,P,T,N,IN,INN,,,S,Invest. non déductibles,Investeringen Niet aftrekbaar,1,640120,,640120,,VAT_NODED,,VAT_NODED,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SINV,P,T,N,I50,I50,,,S,Investissements 50 % récupérable,Investeringen 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,,,,,,,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,
-SIOS,P,T,E,ISO,IDO,,,S,Invest. services taxés à l'origine,Invest. Diensten belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SISD,P,T,E,ISD,ID,,,D,Invest. services divers déduct.,Investeringen Diensten aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SISN,P,T,E,ISN,IDN,,,D,Invest. services div. non déduct.,Investeringen Diensten Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SIT,P,T,I,IM,IHG,,,S,Importation de marchandises,Import van HandelsGoederen,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SPKP,P,T,N,EMP,LV,,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-SPKS,S,T,N,EMS,LVP,,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,0,,0
-SPRT,S,T,E,PRT,DBB,,,S,Prestations hors Belgique,Diensten buiten België,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRDG,P,T,I,RDB,VTD,,,D,Report Serv. taxes dues/le preneur (BS),Verl. Dienst. Taks te betalen bij klant,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRDI,P,T,I,RDI,VTI,,,D,Report Serv. taxes dues/le preneur (I),Verl. Invest. Taks te betalen bij klant,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRDT,P,T,I,RDM,VTH,,,D,Report Serv. taxes dues/le preneur (M),Verl. Handelsg Taks te betalen bij klant,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRGD,P,T,I,RBD,VG,,,D,Report Biens déductibles,Verlegging Goederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRGN,P,T,I,RBN,VGN,,,D,Report Biens non déductibles,Verlegging Goederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRID,P,T,I,RID,VI,,,D,Report Investissement déductible,Verlegging Investeringen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRIN,P,T,I,RIN,VIN,,,D,Report Investissement non déductible,Verlegging Investeringen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRTD,P,T,I,RMD,VHG,,,D,Report Marchandises déductibles,Verlegging Handelsgoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRTG,P,T,I,RTB,VND,,,D,Report Serv. taxes/le preneur ND. (BS),Verl. Dienst. Taks/klant Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRTI,P,T,I,RTI,VNI,,,D,Report Serv. taxes/le preneur ND. (I),Verl. Invest. Taks/klant Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRTN,P,T,I,RMN,VHN,,,D,Report Marchandises non déductibles,Verlegging HandelsGoederen Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SRTT,P,T,I,RTM,VNH,,,D,Report Serv. taxes /le preneur ND. (M),Verl. Handelsg Taks/klant Niet aftrekb.,1,640120,451000,640120,451000,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SS,S,T,N,V,V,,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSAT,S,T,E,VAT,VAT,,,S,Ventes soumises à TVA Autriche,Verkopen BTW Oostenrijk,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSCY,S,T,E,VCY,VCY,,,S,Ventes soumises à TVA Chypre,Verkopen BTW Cyprus,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSCZ,S,T,E,VCZ,VCZ,,,S,Ventes soumises à TVA Rép. Tchèque,Verkopen BTW Tsjechië,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSDD,P,T,E,SDD,DD,,,D,Services divers déductibles,Diverse Diensten aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSDE,S,T,E,VDE,VDU,,,S,Ventes soumises à TVA Allemagne,Verkopen BTW Duitsland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSDK,S,T,E,VDK,VDK,,,S,Ventes soumises à TVA Danemark,Verkopen BTW Denemarken,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSDN,P,T,E,SDN,DDN,,,D,Services divers non déductibles,Diverse Diensten Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSDO,P,T,E,SDO,DO,,,S,Services taxés à l'origine,Diensten belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSEE,S,T,E,VEE,VEE,,,S,Ventes soumises à TVA Estonie,Verkopen BTW Estaland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSEL,S,T,E,VEL,VEL,,,S,Ventes soumises à TVA Grèce,Verkopen BTW Griekenland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSES,S,T,E,VES,VSP,,,S,Ventes soumises à TVA Espagne,Verkopen BTW Spanje,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSEX,S,T,E,VEX,VVG,,,S,Ventes exonérées marchandises et biens,Vrijgestelde Verkopen van Goederen,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSFI,S,T,E,VFI,VFI,,,S,Ventes soumises à TVA Finlande,Verkopen BTW Finland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSFR,S,T,E,VFR,VFR,,,S,Ventes soumises à TVA France,Verkopen BTW Frankrijk,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSGB,S,T,E,VGB,VGB,,,S,Ventes soumises à TVA Grande-Bret.,Verkopen BTW G.B.,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSGN,P,T,E,BN,GN,,,D,Biens non déductibles,Goederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSGO,P,T,E,BO,GO,,,S,Biens taxés à l'origine,Goederen belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSHU,S,T,E,VHU,VHU,,,S,Ventes soumises à TVA Hongrie,Verkopen BTW Hongarije,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSIE,S,T,E,VIE,VIE,,,S,Ventes soumises à TVA Irlande,Verkopen BTW Ierland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSIT,S,T,E,VIT,VIT,,,S,Ventes soumises à TVA Italie,Verkopen BTW Italië,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSLT,S,T,E,VLT,VLT,,,S,Ventes soumises à TVA Lituanie,Verkopen BTW Litouwen,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSLU,S,T,E,VLU,VLU,,,S,Ventes soumises à TVA Luxembourg,Verkopen BTW Luxemburg,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSLV,S,T,E,VLV,VLV,,,S,Ventes soumises à TVA Lettonie,Verkopen BTW Letland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSMT,S,T,E,VMT,VMT,,,S,Ventes soumises à TVA Malte,Verkopen BTW Malta,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSNL,S,T,E,VNL,VNL,,,S,Ventes soumises à TVA Pays-Bas,Verkopen BTW Nederland,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSPL,S,T,E,VPL,VPL,,,S,Ventes soumises à TVA Pologne,Verkopen BTW Polen,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSPT,S,T,E,VPT,VPT,,,S,Ventes soumises à TVA Portugal,Verkopen BTW Portugal,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSSE,S,T,E,VSE,VZW,,,S,Ventes soumises à TVA Suède,Verkopen BTW Zweden,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSSI,S,T,E,VSI,VSI,,,S,Ventes soumises à TVA Slovénie,Verkopen BTW Slovenië,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SSSK,S,T,E,VSK,VSK,,,S,Ventes soumises à TVA Rép. Slovaque,Verkopen BTW Slowakije,1,412800,,412800,,VAT_ORISAL,,VAT_ORISAL,,0,0,0,,,,,,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,1,,
-SST,P,T,N,ST,OA,,,S,Prestations de sous-traitance,Onderaannemingen,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSTM,P,T,N,STM,OAI,,,D,Prestations de sous-traitance immobilier,Onderaannemingen Immobiliën,1,411000,451000,411000,451000,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SSTT,P,T,E,SST,OTC,,,D,Sous-traitance transport/consult.,Onderaannemingen Transport/Consult.,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STD,P,T,E,MD,HG,,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STF,P,T,N,MD,HG,,,S,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,0,0,0,,U,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STM,P,T,N,MN,HGN,,,S,Marchandises non déductibles,Handelsgoederen Niet aftrekbaar,1,640120,,640120,,VAT_NODED,,VAT_NODED,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STN,P,T,E,MN,HGN,,,D,Marchandises non déductibles,Handelsgoederen Niet aftrekbaar,1,640120,451000,640120,451000,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STO,P,T,E,MO,HGO,,,S,Marchandises taxées à l'origine,Handelsgoederen belast bij de bron,1,452800,,452800,,VAT_ORIPUR,,VAT_ORIPUR,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STOP,P,T,N,SCA,VOM,,,S,Autres exemptions avec MAJ du C.A.,andere Vrijstell. met UPD v/d Omzet,1,,,,,,,,,0,,,,,,,,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STOS,S,T,N,SCA,VVO,,,S,Autres exemptions avec MAJ du C.A.,Andere vrijstell. met UPD v/d omzet,1,,,,,,,,,1,,,,,,,,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-STRF,S,T,E,TRF,OG,,,S,Transfert de biens,Overdracht van Goederen,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SWIN,P,T,E,SFA,ZFA,,,D,Intracommunautaire sans facture,Intracommunautaire Zonder Faktuur,1,411000,451000,411000,451000,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,0,,,,,,,,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SWIV,P,T,I,SFA,ZFA,,,D,Hors CEE sans facture,Buiten EEG   Zonder Faktuur,1,411000,451000,411000,451000,VAT_TOREC,VAT_TOPAY,VAT_TOREC,VAT_TOPAY,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
-SWRK,S,T,E,TRV,MW,,,S,Travail à façon,Maakloonwerk,1,,,,,,,,,0,,,,,,,,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,1,,0
+"VSTORED,A,15","VSALPUR,A,1","VTITLE,A,1","VTYPE,A,1","VNAT1,A,3","VNAT2,A,3","VCOMPUTE,N,8","VMULTI,A,2","VKIND,A,1","HEADING1,A,40","HEADING2,A,40","VISVISIBLE,L,1","VIMPINV,A,10","VIMPINVDBL,A,10","VIMPCRE,A,10","VIMPCREDBL,A,10","VCODINV,A,15","VCODINVDBL,A,15","VCODCRE,A,15","VCODCREDBL,A,15","VVATTURN,L,1","VVATLIST,L,1","VCOMLIST,L,1","VTRAVFA,L,1","VSTATLIST,L,1","VBASE,A,1","VTAX,A,1","VDEDUC,N,8","VBEGDATE,D,4","VENDDATE,D,4","VDBL,L,1","VMTYPE1,A,1","VMNAT11,A,3","VMNAT12,A,3","VMCMP1,N,8","VMPRC1,N,8","VMTYPE2,A,1","VMNAT21,A,3","VMNAT22,A,3","VMCMP2,N,8","VMPRC2,N,8","VIMPDEDUC,A,10","VTRIANG,L,1"
+,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+ESDIM0,P,S,E,ESP,DIS,0.000000,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ESDIV0,S,S,E,ESC,DIS,0.000000,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ESDLI0,S,S,E,LVI,LVI,0.000000,,S,Livraison avec installation,Leveringen met installatie,1,,,,,,,,,1,0,0,,1,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESGD 0,P,S,E,BD,G,0.000000,,D,Biens Déductibles,Goederen aftrekbaar,1,,,,,,,,,1,0,1,,1,U,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESGD 12,P,S,E,BD,G,12.000000,,D,Biens Déductibles,Goederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESGD 21,P,S,E,BD,G,21.000000,,D,Biens Déductibles,Goederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+ESGD 6,P,S,E,BD,G,6.000000,,D,Biens Déductibles,Goederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESGD 99.99,P,S,E,BD,G,99.990000,,D,Biens Déductibles,Goederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESIGD0,P,S,E,IBD,IG,0.000000,,D,Investissements biens déductibles,InvesteringsGoederen aftrekbaar,1,,,,,,,,,1,0,1,,1,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESIGD21,P,S,E,IBD,IG,21.000000,,D,Investissements biens déductibles,InvesteringsGoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESIGD99.99,P,S,E,IBD,IG,99.990000,,D,Investissements biens déductibles,InvesteringsGoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESIGN21,P,S,E,IBN,IGN,21.000000,,D,Invest. biens non déduct.,InvesteringsGoederen Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESIGN99.99,P,S,E,IBN,IGN,99.990000,,D,Invest. biens non déduct.,InvesteringsGoederen Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESIOS21,P,S,E,ISO,IDO,21.000000,,S,Invest. services taxés à l'origine,Invest. Diensten belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESIOS99.99,P,S,E,ISO,IDO,99.990000,,S,Invest. services taxés à l'origine,Invest. Diensten belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESISD0,P,S,E,ISD,ID,0.000000,,D,Investissements Services divers déduct.,Investeringen Diensten aftrekbaar,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESISD21,P,S,E,ISD,ID,21.000000,,D,Investissements Services divers déduct.,Investeringen Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESISD99.99,P,S,E,ISD,ID,99.990000,,D,Investissements Services divers déduct.,Investeringen Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESISN21,P,S,E,ISN,IDN,21.000000,,D,Invest. Services div. Non déduct.,Investeringen Diensten Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESISN99.99,P,S,E,ISN,IDN,99.990000,,D,Invest. Services div. Non déduct.,Investeringen Diensten Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESLVD0,P,S,E,EMP,LV,0.000000,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ESLVP0,S,S,E,EMS,LVP,0.000000,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ESPRT0,S,S,E,PRT,DBB,0.000000,,S,Prestations hors Belgique,Diensten Buiten België,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSAT20,S,S,E,VAT,VOO,20.000000,,S,Ventes soumises à TVA Autriche,Verkopen BTW Oostenrijk,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSCY15,S,S,E,VCY,VCY,15.000000,,S,Ventes soumises à TVA Chypre,Verkopen BTW Cyprus,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSCZ22,S,S,E,VCZ,VCZ,22.000000,,S,Ventes soumises à TVA Rép. Tchèque,Verkopen BTW Tsjechië,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSDD0,P,S,E,SDD,DD,0.000000,,D,Services Divers Déductibles,Diverse Diensten aftrekbaar,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSDD12,P,S,E,SDD,DD,12.000000,,D,Services Divers Déductibles,Diverse Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSDD21,P,S,E,SDD,DD,21.000000,,D,Services Divers Déductibles,Diverse Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+ESSDD6,P,S,E,SDD,DD,6.000000,,D,Services Divers Déductibles,Diverse Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSDD99.99,P,S,E,SDD,DD,99.990000,,D,Services Divers Déductibles,Diverse Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSDE14,S,S,E,VDE,VDU,14.000000,,S,Ventes soumises à TVA Allemagne,Verkopen BTW Duitsland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1983-07-01,1992-12-31,,,,,,,,,,,,,
+ESSDE15,S,S,E,VDE,VDU,15.000000,,S,Ventes soumises à TVA Allemagne,Verkopen BTW Duitsland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,1998-03-31,,,,,,,,,,,,,
+ESSDE16,S,S,E,VDE,VDU,16.000000,,S,Ventes soumises à TVA Allemagne,Verkopen BTW Duitsland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1998-04-01,2100-12-31,,,,,,,,,,,,,
+ESSDK25,S,S,E,VDK,VDK,25.000000,,S,Ventes soumises à TVA Danemark,Verkopen BTW Denemarken,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSDN99.99,P,S,E,SDN,DDN,99.990000,,D,Services Divers Non déductibles,Diverse Diensten Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSDO99.99,P,S,E,SDO,DO,99.990000,,S,Services taxés à l'origine,Diensten belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSEE18,S,S,E,VEE,VEE,18.000000,,S,Ventes soumises à TVA Estonie,Verkopen BTW Estland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSEL18,S,S,E,VEL,VEL,18.000000,,S,Ventes soumises à TVA Grèce,Verkopen BTW Griekenland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSES13,S,S,E,VES,VSP,13.000000,,S,Ventes soumises à TVA Espagne,Verkopen BTW Spanje,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,1992-07-31,,,,,,,,,,,,,
+ESSES15,S,S,E,VES,VSP,15.000000,,S,Ventes soumises à TVA Espagne,Verkopen BTW Spanje,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1992-08-01,1994-12-31,,,,,,,,,,,,,
+ESSES16,S,S,E,VES,VSP,16.000000,,S,Ventes soumises à TVA Espagne,Verkopen BTW Spanje,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1995-01-01,2100-12-31,,,,,,,,,,,,,
+ESSEX0,S,S,E,VEX,VVG,0.000000,,S,Ventes exonérées marchandises et biens,Vrijgestelde Verkopen van Goederen,1,,,,,,,,,1,0,1,,1,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSFI22,S,S,E,VFI,VFI,22.000000,,S,Ventes soumises à TVA Finlande,Verkopen BTW Finland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSFR18.60,S,S,E,VFR,VFR,18.600000,,S,Ventes soumises à TVA France,Verkopen BTW Frankrijk,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,1995-07-31,,,,,,,,,,,,,
+ESSFR19.60,S,S,E,VFR,VFR,19.600000,,S,Ventes soumises à TVA France,Verkopen BTW Frankrijk,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2000-04-01,2100-12-31,,,,,,,,,,,,,
+ESSFR20.60,S,S,E,VFR,VFR,20.600000,,S,Ventes soumises à TVA France,Verkopen BTW Frankrijk,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1995-08-01,2000-03-31,,,,,,,,,,,,,
+ESSGB17.50,S,S,E,VGB,VGB,17.500000,,S,Ventes soumises à TVA Grande-Bret.,Verkopen BTW G.B.,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSGN99.99,P,S,E,BN,GN,99.990000,,D,Biens Non déductibles,Goederen Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSGO99.99,P,S,E,BO,GO,99.990000,,S,Biens taxés à l'origine,Goederen belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSHU25,S,S,E,VHU,VHU,25.000000,,S,Ventes soumises à TVA Hongrie,Verkopen BTW Hongarije,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSIE16,S,S,E,VIE,VIE,16.000000,,S,Ventes soumises à TVA Irlande,Verkopen BTW Ierland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2002-02-28,,,,,,,,,,,,,
+ESSIE21,S,S,E,VIE,VIE,21.000000,,S,Ventes soumises à TVA Irlande,Verkopen BTW Ierland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2002-03-01,2100-12-31,,,,,,,,,,,,,
+ESSIT19,S,S,E,VIT,VIT,19.000000,,S,Ventes soumises à TVA Italie,Verkopen BTW Italië,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,1997-09-30,,,,,,,,,,,,,
+ESSIT20,S,S,E,VIT,VIT,20.000000,,S,Ventes soumises à TVA Italie,Verkopen BTW Italië,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1997-10-01,2100-12-31,,,,,,,,,,,,,
+ESSLT18,S,S,E,VLT,VLT,18.000000,,S,Ventes soumises à TVA Lituanie,Verkopen BTW Litouwen,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSLU15,S,S,E,VLU,VLU,15.000000,,S,Ventes soumises à TVA Luxembourg,Verkopen BTW Luxemburg,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSLV18,S,S,E,VLV,VLV,18.000000,,S,Ventes soumises à TVA Lettonie,Verkopen BTW Letland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSMT18,S,S,E,VMT,VMT,18.000000,,S,Ventes soumises à TVA Malte,Verkopen BTW Malta,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSNL18.5,S,S,E,VNL,VNL,18.500000,,S,Ventes soumises à TVA Pays-Bas,Verkopen BTW Nederland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2000-12-31,,,,,,,,,,,,,
+ESSNL19,S,S,E,VNL,VNL,19.000000,,S,Ventes soumises à TVA Pays-Bas,Verkopen BTW Nederland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2001-01-01,2100-12-31,,,,,,,,,,,,,
+ESSPL22,S,S,E,VPL,VPL,22.000000,,S,Ventes soumises à TVA Pologne,Verkopen BTW Polen,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSPT16,S,S,E,VPT,VPT,16.000000,,S,Ventes soumises à TVA Portugal,Verkopen BTW Portugal,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,1994-12-31,,,,,,,,,,,,,
+ESSPT17,S,S,E,VPT,VPT,17.000000,,S,Ventes soumises à TVA Portugal,Verkopen BTW Portugal,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1995-01-01,2100-12-31,,,,,,,,,,,,,
+ESSSE25,S,S,E,VSE,VZW,25.000000,,S,Ventes soumises à TVA Suède,Verkopen BTW Zweden,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESSSI20,S,S,E,VSI,VSI,20.000000,,S,Ventes soumises à TVA Slovénie,Verkopen BTW Slovenië,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSSK20,S,S,E,VSK,VSK,20.000000,,S,Ventes soumises à TVA Rép. Slovaque,Verkopen BTW Slowakije,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,U,Y,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+ESSTT99.99,P,S,E,SST,OTC,99.990000,,D,Sous-traitance transport/consult.,Onderaannemingen Transport/Consult.,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESTD 0,P,S,E,MD,HG,0.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,,,,,,,,,1,0,1,,1,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESTD 12,P,S,E,MD,HG,12.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESTD 21,P,S,E,MD,HG,21.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+ESTD 6,P,S,E,MD,HG,6.000000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESTD 99.99,P,S,E,MD,HG,99.990000,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESTN 99.99,P,S,E,MN,HGN,99.990000,,D,Marchandises non déductibles,Handelsgoederen Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,1,,1,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESTO 99.99,P,S,E,MO,HGO,99.990000,,S,Marchandises taxées à l'origine,Handelsgoederen belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESTRF0,S,S,E,TRF,OG,0.000000,,S,Transfert de biens,Overdracht van Goederen,1,,,,,,,,,1,0,1,,1,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESWIN99.99,P,S,E,SFA,ZFA,99.990000,,D,Intracommunautaire sans facture,Intracommunautaire Zonder Faktuur,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ESWRK0,S,S,E,TRV,MW,0.000000,,S,Travail à façon,Maakloonwerk,1,,,,,,,,,1,0,1,,1,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISDIK0,S,S,I,ESC,DIS,0.000000,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ISDIT0,P,S,I,ESP,DIS,0.000000,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ISEXP0,S,S,I,EXP,EXP,0.000000,,S,Exportations,Export,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISIGS0,P,S,I,IBS,IGD,0.000000,,S,Importation de biens et services,Import van Goederen en Diensten,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISII 0,P,S,I,II,II,0.000000,,S,Importation d'investissements,Import van Investeringen,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISIT 0,P,S,I,IM,IHG,0.000000,,S,Importation de marchandises,Import van Handelsgoederen,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISLVV0,P,S,I,EMP,LV,0.000000,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ISRDG99.99,P,S,I,RDB,VTD,99.990000,,D,Report Serv. taxes dues/le preneur (BS),Verl. Dienst Taks te betalen bij klant,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRDI99.99,P,S,I,RDI,VTI,99.990000,,D,Report Invest. taxes dues/le preneur (I),Verl. Invest.Taks te betalen bij klant,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRDT99.99,P,S,I,RDM,VTH,99.990000,,D,Report March. taxes dues/le preneur (M),Verl. Handelsg Taks te betalen bij klant,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRGD99.99,P,S,I,RBD,VG,99.990000,,D,Report Biens déductibles,Verlegging Goederen aftrekbaar,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRGN99.99,P,S,I,RBN,VGN,99.990000,,D,Report Biens non déductibles,Verlegging Goederen Niet aftrekbaar,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRID99.99,P,S,I,RID,VI,99.990000,,D,Report Investissement déductible,Verlegging Investeringen aftrekbaar,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRIN99.99,P,S,I,RIN,VIN,99.990000,,D,Report Investissement non déductible,Verlegging Investeringen Niet aftrekbaar,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRTD99.99,P,S,I,RMD,VHG,99.990000,,D,Report Marchandises déductibles,Verlegging Handelsgoederen aftrekbaar,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRTG99.99,P,S,I,RTB,VND,99.990000,,D,Report Serv. taxes/le preneur ND. (BS),Verl. Dienst. Taks/klant Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRTI99.99,P,S,I,RTI,VNI,99.990000,,D,Report Invest. taxes/le preneur ND. (I),Verl. Invest. Taks/klant Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRTN99.99,P,S,I,RMN,VHN,99.990000,,D,Report Marchandises non déductibles,Verlegging Handelsgoederen Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISRTT99.99,P,S,I,RTM,VNH,99.990000,,D,Report Serv. taxes /le preneur ND. (M),Verl. Handelsg Taks/klant Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+ISVPL0,S,S,I,EMS,LVP,0.000000,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+ISWIV99.99,P,S,I,SFA,ZFA,99.990000,,D,Hors CEE sans facture,Buiten EEG  Zonder Faktuur,1,411000,451000,411000,451000,VAT_TOREC,VAT_TOPAY,VAT_TOREC,VAT_TOPAY,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSCAR21,P,S,N,V50,A50,21.000000,,S,Frais de voiture TVA 50 % récupérable,Autokosten 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSCGD0,P,S,N,CMD,MI,0.000000,,D,Cocontractant immobilier Déductible,Medecontractant  Immobiliën aftrekbaar,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSCGD21,P,S,N,CMD,MI,21.000000,,D,Cocontractant immobilier Déductible,Medecontractant  Immobiliën aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSCGD6,P,S,N,CMD,MI,6.000000,,D,Cocontractant immobilier Déductible,Medecontractant  Immobiliën aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSCGD99.99,P,S,N,CMD,MI,99.990000,,D,Cocontractant immobilier Déductible,Medecontractant  Immobiliën aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1900-01-01,1993-12-31,,,,,,,,,,,,,
+NSCGN21,P,S,N,CMN,MIN,21.000000,,D,Cocontractant immobilier Non déductible,Medecontractant  Immobiliën Niet aftrek.,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSCGN6,P,S,N,CMN,MIN,6.000000,,D,Cocontractant immobilier Non déductible,Medecontractant  Immobiliën Niet aftrek.,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSCGN99.99,P,S,N,CMN,MIN,99.990000,,D,Cocontractant immobilier Non déductible,Medecontractant  Immobiliën Niet aftrek.,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSCS 0,S,S,N,CV,VM,0.000000,,S,Ventes Cocontractants,Verkopen Medekontraktant,1,,,,,,,,,1,1,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSDIP0,P,S,N,ESP,DIS,0.000000,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSDIS0,S,S,N,ESS,DIV,0.000000,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSEGS99.99,S,S,N,EGV,EB,99.990000,,S,Ventes Taxe d'égalisation,Verkopen Egalisatiebelasting,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,1,0,,0,N,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSEPX0,P,S,N,XMP,VR,0.000000,,S,Autres exemptions,andere Vrijstell.,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSEXS0,S,S,N,EXS,AV,0.000000,,S,Autres exemptions,Andere Vrijstellingen,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSGSD0,P,S,N,BSD,GD,0.000000,,S,Biens et Services divers Déductibles,Goederen en Diensten aftrekbaar,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSGSD12,P,S,N,BSD,GD,12.000000,,S,Biens et Services divers Déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSGSD21,P,S,N,BSD,GD,21.000000,,S,Biens et Services divers Déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSGSD6,P,S,N,BSD,GD,6.000000,,S,Biens et Services divers Déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSGSD99.99,P,S,N,BSD,GD,99.990000,,S,Biens et Services divers Déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSGSN99.99,P,S,N,BSN,GDN,99.990000,,S,Biens et Services divers Non déductibles,Goederen en Diensten Niet aftrekbaar,1,640500,,640500,,VAT_NODED,,VAT_NODED,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSICD0,P,S,N,ICD,IMI,0.000000,,D,Invest. Cocontractant immob. Déductible,Invest. Medekontraktant Immo aftrekbaar,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,,
+NSICD21,P,S,N,ICD,IMI,21.000000,,D,Invest. Cocontractant immob. Déductible,Invest. Medekontraktant Immo aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSICD6,P,S,N,ICD,IMI,6.000000,,D,Invest. Cocontractant immob. Déductible,Invest. Medekontraktant Immo aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSICD99.99,P,S,N,ICD,IMI,99.990000,,D,Invest. Cocontractant immob. Déductible,Invest. Medekontraktant Immo aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,,
+NSICN21,P,S,N,ICN,IMN,21.000000,,D,Invest. Cocontractant immob. Non déduct.,Invest. Medekontraktant immo Niet aftrek,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSICN6,P,S,N,ICN,IMN,6.000000,,D,Invest. Cocontractant immob. Non déduct.,Invest. Medekontraktant immo Niet aftrek,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSICN99.99,P,S,N,ICN,IMN,99.990000,,D,Invest. Cocontractant immob. Non déduct.,Invest. Medekontraktant immo Niet aftrek,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1993-01-01,1993-12-31,,,,,,,,,,,,,
+NSID 0,P,S,N,ID,INV,0.000000,,S,Investissements Déductibles,Investeringen aftrekbaar,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSID 12,P,S,N,ID,INV,12.000000,,S,Investissements Déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSID 21,P,S,N,ID,INV,21.000000,,S,Investissements Déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSID 6,P,S,N,ID,INV,6.000000,,S,Investissements Déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSID 99.99,P,S,N,ID,INV,99.990000,,S,Investissements Déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSIN 99.99,P,S,N,IN,INN,99.990000,,S,Investissements Non déductibles,Investeringen Niet aftrekbaar,1,640500,,640500,,VAT_NODED,,VAT_NODED,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSINV21,P,S,N,I50,I50,21.000000,,S,Investissements 50 % récupérable,Investeringen 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSPKP0,P,S,N,EMP,LV,0.000000,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSPKS0,S,S,N,EMS,LVP,0.000000,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSS  0,S,S,N,V,V,0.000000,,S,Ventes,Verkopen,1,,,,,,,,,1,1,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSS  12,S,S,N,V,V,12.000000,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,1,0,,0,U,Y,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSS  21,S,S,N,V,V,21.000000,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,1,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSS  6,S,S,N,V,V,6.000000,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,1,0,,0,U,Y,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+NSST 99.99,P,S,N,ST,OA,99.990000,,S,Prestations de sous-traitance,Onderaannemingen,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSSTM99.99,P,S,N,STM,OAI,99.990000,,D,Prestations de sous-traitance immobilier,Onderaannemingen Immobiliën,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSTF 0,P,S,N,MD,HG,0.000000,,S,Marchandises Déductibles,Handelsgoederen aftrekbaar,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSTF 12,P,S,N,MD,HG,12.000000,,S,Marchandises Déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSTF 21,P,S,N,MD,HG,21.000000,,S,Marchandises Déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1996-01-01,2100-12-31,,,,,,,,,,,,,
+NSTF 6,P,S,N,MD,HG,6.000000,,S,Marchandises Déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSTF 99.99,P,S,N,MD,HG,99.990000,,S,Marchandises Déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSTM 99.99,P,S,N,MN,HGN,99.990000,,S,Marchandises Non déductibles,Handelsgoederen Niet aftrekbaar,1,640500,,640500,,VAT_NODED,,VAT_NODED,,1,0,0,,0,U,Y,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSTOP0,P,S,N,SCA,VOM,0.000000,,S,Autres exemptions avec MAJ du C.A.,andere Vrijstell. met UPD v/d Omzet,1,,,,,,,,,1,0,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+NSTOS0,S,S,N,SCV,VVO,0.000000,,S,Autres exemptions avec MAJ du C.A.,Andere vrijstell. met UPD v/d omzet,1,,,,,,,,,1,1,0,,0,Y,N,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+SCAR,P,T,N,V50,A50,,,S,Frais de voiture TVA 50 % récupérable,Autokosten 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,,,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+SCGD,P,T,N,CMD,MI,,,D,Cocontractant immobilier Déductible,Medecontractant  Immobiliën aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SCGN,P,T,N,CMN,MIN,,,D,Cocontractant immobilier Non déductible,Medecontractant  Immobiliën Niet aftrek.,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SCS,S,T,N,CV,VM,,,S,Ventes Cocontractants,Verkopen Medekontraktant,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SDIK,S,T,I,ESC,DIS,,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SDIM,P,T,E,ESP,DIS,,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SDIP,P,T,N,ESP,DIS,,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SDIS,S,T,N,ESS,DIV,,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SDIT,P,T,I,ESP,DIS,,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SDIV,S,T,E,ESC,DIS,,,S,Escompte,Disconto,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SDLI,S,T,E,LVI,LVI,,,S,Livraison avec installation,Leveringen met installatie,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SEGS,S,T,N,EGV,EB,,,S,Ventes Taxe d'égalisation,Verkopen EgalisatieBelasting,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,1,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SEPX,P,T,N,XMP,VR,,,S,Autres exemptions,andere Vrijstell.,1,,,,,,,,,0,0,0,,0,Y,N,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SEXP,S,T,I,EXP,EXP,,,S,Exportations,Export,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SEXS,S,T,N,EXS,AV,,,S,Autres exemptions,Andere Vrijstellingen,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SGD,P,T,E,BD,G,,,D,Biens Déductibles,Goederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SGSD,P,T,N,BSD,GD,,,S,Biens et Services divers Déductibles,Goederen en Diensten aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SGSN,P,T,N,BSN,GDN,,,S,Biens et Services divers Non déductibles,Goederen en Diensten Niet aftrekbaar,1,640500,,640500,,VAT_NODED,,VAT_NODED,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SICD,P,T,N,ICD,IMI,,,D,Invest. Cocontractant immob. Déductible,Invest. Medekontraktant Immo aftrekbaar,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SICN,P,T,N,ICN,IMN,,,D,Invest. Cocontractant immob. Non déduct.,Invest. Medekontraktant immo Niet aftrek,1,640500,451300,640500,451300,VAT_NODED,VAT_COCONCT,VAT_NODED,VAT_COCONCT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SID,P,T,N,ID,INV,,,S,Investissements Déductibles,Investeringen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SIGD,P,T,E,IBD,IG,,,D,Investissements biens déductibles,InvesteringsGoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SIGN,P,T,E,IBN,IGN,,,D,Invest. biens non déduct.,InvesteringsGoederen Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SIGS,P,T,I,IBS,IGD,,,S,Importation de biens et services,Import van Goederen en Diensten,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SII,P,T,I,II,II,,,S,Importation d'investissements,Import van Investeringen,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SIN,P,T,N,IN,INN,,,S,Investissements Non déductibles,Investeringen Niet aftrekbaar,1,640500,,640500,,VAT_NODED,,VAT_NODED,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SINV,P,T,N,I50,I50,,,S,Investissements 50 % récupérable,Investeringen 50 % aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,,,50.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+SIOS,P,T,E,ISO,IDO,,,S,Invest. services taxés à l'origine,Invest. Diensten belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SISD,P,T,E,ISD,ID,,,D,Investissements Services divers déduct.,Investeringen Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SISN,P,T,E,ISN,IDN,,,D,Invest. Services div. Non déduct.,Investeringen Diensten Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SIT,P,T,I,IM,IHG,,,S,Importation de marchandises,Import van HandelsGoederen,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SLVD,P,T,E,EMP,LV,,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SLVP,S,T,E,EMS,LVP,,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SLVV,P,T,I,EMP,LV,,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SPKP,P,T,N,EMP,LV,,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SPKS,S,T,N,EMS,LVP,,,S,Vidanges-Emballages,Leeggoed-Verpakking,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SPRT,S,T,E,PRT,DBB,,,S,Prestations hors Belgique,Diensten buiten België,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRDG,P,T,I,RDB,VTD,,,D,Report Serv. taxes dues/le preneur (BS),Verl. Dienst. Taks te betalen bij klant,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRDI,P,T,I,RDI,VTI,,,D,Report Invest. taxes dues/le preneur (I),Verl. Invest. Taks te betalen bij klant,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRDT,P,T,I,RDM,VTH,,,D,Report March. taxes dues/le preneur (M),Verl. Handelsg Taks te betalen bij klant,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRGD,P,T,I,RBD,VG,,,D,Report Biens déductibles,Verlegging Goederen aftrekbaar,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRGN,P,T,I,RBN,VGN,,,D,Report Biens non déductibles,Verlegging Goederen Niet aftrekbaar,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRID,P,T,I,RID,VI,,,D,Report Investissement déductible,Verlegging Investeringen aftrekbaar,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRIN,P,T,I,RIN,VIN,,,D,Report Investissement non déductible,Verlegging Investeringen Niet aftrekbaar,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRTD,P,T,I,RMD,VHG,,,D,Report Marchandises déductibles,Verlegging Handelsgoederen aftrekbaar,1,411000,451500,411000,451500,VAT_TOREC,VAT_REPORT,VAT_TOREC,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRTG,P,T,I,RTB,VND,,,D,Report Serv. taxes/le preneur ND. (BS),Verl. Dienst. Taks/klant Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRTI,P,T,I,RTI,VNI,,,D,Report Invest. taxes/le preneur ND. (I),Verl. Invest. Taks/klant Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRTN,P,T,I,RMN,VHN,,,D,Report Marchandises non déductibles,Verlegging HandelsGoederen Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SRTT,P,T,I,RTM,VNH,,,D,Report Serv. taxes /le preneur ND. (M),Verl. Handelsg Taks/klant Niet aftrekb.,1,640500,451500,640500,451500,VAT_NODED,VAT_REPORT,VAT_NODED,VAT_REPORT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SS,S,T,N,V,V,,,S,Ventes,Verkopen,1,451000,,451000,,VAT_TOPAY,,VAT_TOPAY,,1,1,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSAT,S,T,E,VAT,VAT,,,S,Ventes soumises à TVA Autriche,Verkopen BTW Oostenrijk,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSCY,S,T,E,VCY,VCY,,,S,Ventes soumises à TVA Chypre,Verkopen BTW Cyprus,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSCZ,S,T,E,VCZ,VCZ,,,S,Ventes soumises à TVA Rép. Tchèque,Verkopen BTW Tsjechië,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSDD,P,T,E,SDD,DD,,,D,Services Divers Déductibles,Diverse Diensten aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSDE,S,T,E,VDE,VDU,,,S,Ventes soumises à TVA Allemagne,Verkopen BTW Duitsland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSDK,S,T,E,VDK,VDK,,,S,Ventes soumises à TVA Danemark,Verkopen BTW Denemarken,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSDN,P,T,E,SDN,DDN,,,D,Services Divers Non déductibles,Diverse Diensten Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSDO,P,T,E,SDO,DO,,,S,Services taxés à l'origine,Diensten belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSEE,S,T,E,VEE,VEE,,,S,Ventes soumises à TVA Estonie,Verkopen BTW Estaland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSEL,S,T,E,VEL,VEL,,,S,Ventes soumises à TVA Grèce,Verkopen BTW Griekenland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSES,S,T,E,VES,VSP,,,S,Ventes soumises à TVA Espagne,Verkopen BTW Spanje,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSEX,S,T,E,VEX,VVG,,,S,Ventes exonérées marchandises et biens,Vrijgestelde Verkopen van Goederen,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSFI,S,T,E,VFI,VFI,,,S,Ventes soumises à TVA Finlande,Verkopen BTW Finland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSFR,S,T,E,VFR,VFR,,,S,Ventes soumises à TVA France,Verkopen BTW Frankrijk,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSGB,S,T,E,VGB,VGB,,,S,Ventes soumises à TVA Grande-Bret.,Verkopen BTW G.B.,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSGN,P,T,E,BN,GN,,,D,Biens Non déductibles,Goederen Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSGO,P,T,E,BO,GO,,,S,Biens taxés à l'origine,Goederen belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSHU,S,T,E,VHU,VHU,,,S,Ventes soumises à TVA Hongrie,Verkopen BTW Hongarije,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSIE,S,T,E,VIE,VIE,,,S,Ventes soumises à TVA Irlande,Verkopen BTW Ierland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSIT,S,T,E,VIT,VIT,,,S,Ventes soumises à TVA Italie,Verkopen BTW Italië,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSLT,S,T,E,VLT,VLT,,,S,Ventes soumises à TVA Lituanie,Verkopen BTW Litouwen,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSLU,S,T,E,VLU,VLU,,,S,Ventes soumises à TVA Luxembourg,Verkopen BTW Luxemburg,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSLV,S,T,E,VLV,VLV,,,S,Ventes soumises à TVA Lettonie,Verkopen BTW Letland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSMT,S,T,E,VMT,VMT,,,S,Ventes soumises à TVA Malte,Verkopen BTW Malta,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSNL,S,T,E,VNL,VNL,,,S,Ventes soumises à TVA Pays-Bas,Verkopen BTW Nederland,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSPL,S,T,E,VPL,VPL,,,S,Ventes soumises à TVA Pologne,Verkopen BTW Polen,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSPT,S,T,E,VPT,VPT,,,S,Ventes soumises à TVA Portugal,Verkopen BTW Portugal,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSSE,S,T,E,VSE,VZW,,,S,Ventes soumises à TVA Suède,Verkopen BTW Zweden,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSSI,S,T,E,VSI,VSI,,,S,Ventes soumises à TVA Slovénie,Verkopen BTW Slovenië,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SSSK,S,T,E,VSK,VSK,,,S,Ventes soumises à TVA Rép. Slovaque,Verkopen BTW Slowakije,1,451600,,451600,,VAT_ORISAL,,VAT_ORISAL,,1,0,0,,0,,,100.000000,2004-05-01,2100-12-31,,,,,,,,,,,,,
+SST,P,T,N,ST,OA,,,S,Prestations de sous-traitance,Onderaannemingen,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSTM,P,T,N,STM,OAI,,,D,Prestations de sous-traitance immobilier,Onderaannemingen Immobiliën,1,411000,451300,411000,451300,VAT_TOREC,VAT_COCONCT,VAT_TOREC,VAT_COCONCT,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SSTT,P,T,E,SST,OTC,,,D,Sous-traitance transport/consult.,Onderaannemingen Transport/Consult.,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+STD,P,T,E,MD,HG,,,D,Marchandises déductibles,Handelsgoederen aftrekbaar,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+STF,P,T,N,MD,HG,,,S,Marchandises Déductibles,Handelsgoederen aftrekbaar,1,411000,,411000,,VAT_TOREC,,VAT_TOREC,,1,0,0,,0,U,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+STM,P,T,N,MN,HGN,,,S,Marchandises Non déductibles,Handelsgoederen Niet aftrekbaar,1,640500,,640500,,VAT_NODED,,VAT_NODED,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+STN,P,T,E,MN,HGN,,,D,Marchandises non déductibles,Handelsgoederen Niet aftrekbaar,1,640500,451100,640500,451100,VAT_NODED,VAT_EEC,VAT_NODED,VAT_EEC,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+STO,P,T,E,MO,HGO,,,S,Marchandises taxées à l'origine,Handelsgoederen belast bij de bron,1,411600,,411600,,VAT_ORIPUR,,VAT_ORIPUR,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+STOP,P,T,N,SCA,VOM,,,S,Autres exemptions avec MAJ du C.A.,andere Vrijstell. met UPD v/d Omzet,1,,,,,,,,,1,0,0,,0,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+STOS,S,T,N,SCV,VVO,,,S,Autres exemptions avec MAJ du C.A.,Andere vrijstell. met UPD v/d omzet,1,,,,,,,,,1,1,0,,0,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+STRF,S,T,E,TRF,OG,,,S,Transfert de biens,Overdracht van Goederen,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SVPL,S,T,I,EMS,LVP,,,S,Vidanges-Emballages,Leeggoed - verpakking,1,,,,,,,,,0,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SWIN,P,T,E,SFA,ZFA,,,D,Intracommunautaire sans facture,Intracommunautaire Zonder Faktuur,1,411000,451100,411000,451100,VAT_TOREC,VAT_EEC,VAT_TOREC,VAT_EEC,1,0,0,,0,,,100.000000,1993-01-01,2100-12-31,,,,,,,,,,,,,
+SWIV,P,T,I,SFA,ZFA,,,D,Hors CEE sans facture,Buiten EEG   Zonder Faktuur,1,411000,451000,411000,451000,VAT_TOREC,VAT_TOPAY,VAT_TOREC,VAT_TOPAY,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
+SWRK,S,T,E,TRV,MW,,,S,Travail à façon,Maakloonwerk,1,,,,,,,,,1,0,0,,0,,,100.000000,1900-01-01,2100-12-31,,,,,,,,,,,,,
