@@ -2,9 +2,9 @@
 <terp>
 	<data noupdate="1">
 
-	<record model="res.partner.category" id="cat_copywriter">
+			<record model="res.partner.category" id="cat_copywriter">
 				<field name="name" eval="&quot;Copywriter&quot;"/>
-		</record>
+			</record>
 	 
 			<record model="res.partner.category" id="cat_dealer">
 				<field name="name" eval="&quot;Dealer&quot;"/>
@@ -14,16 +14,14 @@
 				<field name="name" eval="&quot;Broker&quot;"/>
 			</record>
 			
-			<record model="res.partner.category" id="cat_broker">
+			<record model="res.partner.category" id="cat_duplicator">
 				<field name="name" eval="&quot;Deduplicator&quot;"/>
 			</record>			
 	
-			<!--
-	 		<record model="res.partner.category" id="cat_trademark">
+			<record model="res.partner.category" id="cat_trademark">
 	 			<field name="name" eval="&quot;Trademark&quot;"/>
 	 		</record>
-	 		-->
-	 
+	 			 
 			<record model="dm.media" id="media_paper">
 				<field name="name" eval="&quot;Paper&quot;"/>
 			</record>
