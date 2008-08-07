@@ -101,7 +101,7 @@
 										<field name="file_id" />
 										<field name="sequence"/>
 										<field name="active" />
-										<field name="qty" select="2"/>
+										<field name="quantity" select="2"/>
 										<field name="raw_quantity" select="2"/>
 										<newline/>
 										<field name="split_id" />
@@ -452,7 +452,7 @@
 										<field name="file_id" />
 										<field name="sequence"/>
 										<field name="active" />
-										<field name="qty" select="2"/>
+										<field name="quantity" select="2"/>
 										<field name="raw_quantity" select="2"/>
 										<newline/>
 										<field name="split_id" />
@@ -465,7 +465,7 @@
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
 <!--										<field name="code" string="Action Code" select="2"/>-->
-										<field name="qty"/>
+										<field name="quantity"/>
 									</tree>
 								</field>
 								<newline/>
@@ -583,7 +583,7 @@
 						<field name="file_id" />
 						<field name="sequence"/>
 						<field name="active" />
-						<field name="qty" select="2"/>
+						<field name="quantity" select="2"/>
 						<field name="raw_quantity" select="2"/>
 						<newline/>
 						<field name="split_id" />
@@ -599,7 +599,7 @@
 						<field name="name" string="Name" select="1"/>
 						<field name="sequence" />
 						<field name="code" string="Action Code" select="2"/>
-						<field name="qty"/>
+						<field name="quantity"/>
 					</tree>
 				</field>
 				<separator string="Notes" colspan="4"/>
@@ -664,7 +664,7 @@
 				<field name="file_id" />
 				<field name="sequence"/>
 				<field name="active" />
-				<field name="qty" select="2"/>
+				<field name="quantity" select="2"/>
 				<field name="raw_quantity" select="2"/>
 				<field name="split_id" />
 				<field name="reuse_id" />
@@ -686,7 +686,7 @@
 				<field name="name" string="Name"/>
 				<field name="sequence" />				
 				<field name="code" string="Action Code"/>
-				<field name="qty"/>
+				<field name="quantity"/>
 			</tree>
 		</field>
 	</record>	

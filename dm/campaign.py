@@ -281,13 +281,13 @@ class dm_campaign_proposition_segment(osv.osv):
     
     def _check_char(self, cr, uid, ids):
         segment = self.browse(cr,uid,ids)[0]
-        print segment.qty.isdigit() or segment.qty=='AAA'
-        return segment.qty.isdigit() or segment.qty=='AAA'
+        return segment.quantity.isdigit() or segment.quantity=='AAA'
     _columns = {
 #        'action_code': fields.char('Code',size=16, required=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', required=True, ondelete='cascade'),
         'file_id': fields.many2one('dm.customer.file','Files'),
-        'qty': fields.char('Qty',size=16),
+        'qty': fields.int('Qty',size=16),
+        'quantity' : fields.char('Quantity',size=16),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
         'start_census' :fields.integer('Start Census'),
         'end_census' : fields.integer('End Census'),
