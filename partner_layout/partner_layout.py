@@ -5,12 +5,12 @@ from osv import fields
 from osv import osv
 
 
-class partner_layout(osv.osv):
-    _name = "partner.layout"
+class res_partner(osv.osv):
+    _name = "res.partner"
     _columns = {
         'header' : fields.binary('Header (.odt)'),
         'logo' : fields.binary('Logo'),
         'signature' : fields.binary('Signature')
     }
     
-partner_layout()
+res_partner()

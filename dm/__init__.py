@@ -28,7 +28,7 @@
 #
 ##############################################################################
 
-import trademark
+#import trademark
 import offer_step
 import offer
 import campaign
