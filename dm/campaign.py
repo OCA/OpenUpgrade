@@ -281,13 +281,13 @@ class dm_campaign_proposition_segment(osv.osv):
     
     def _check_char(self, cr, uid, ids):
         segment = self.browse(cr,uid,ids)[0]
-        return segment.quantity.isdigit() or segment.quantity=='AAA'
+        return segment.quantity_add.isdigit() or segment.quantity_add=='AAA'
     _columns = {
 #        'action_code': fields.char('Code',size=16, required=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', required=True, ondelete='cascade'),
         'file_id': fields.many2one('dm.customer.file','Files'),
-        'qty': fields.integer('Qty',size=16),
-        'quantity' : fields.char('Quantity',size=16),
+        'qty': fields.integer('Qty'),
+        'quantity_add' : fields.char('Quantity',size=16),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
         'start_census' :fields.integer('Start Census'),
         'end_census' : fields.integer('End Census'),
@@ -302,7 +302,7 @@ class dm_campaign_proposition_segment(osv.osv):
     _order = 'sequence'
     
     _constraints = [
-        (_check_char, "Error ! You only use integer and 'AAA'", ['quantity'])
+        (_check_char, "Error ! Quantity of segment can only be integer or 'AAA'", ['quantity_add'])
     ]    
     
 dm_campaign_proposition_segment()
