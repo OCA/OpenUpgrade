@@ -286,7 +286,7 @@ class dm_campaign_proposition_segment(osv.osv):
 #        'action_code': fields.char('Code',size=16, required=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', required=True, ondelete='cascade'),
         'file_id': fields.many2one('dm.customer.file','Files'),
-        'qty': fields.int('Qty',size=16),
+        'qty': fields.integer('Qty',size=16),
         'quantity' : fields.char('Quantity',size=16),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
         'start_census' :fields.integer('Start Census'),
