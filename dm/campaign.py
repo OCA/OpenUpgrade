@@ -302,7 +302,7 @@ class dm_campaign_proposition_segment(osv.osv):
     _order = 'sequence'
     
     _constraints = [
-        (_check_char, "Error ! You only use integer and 'AAA'", ['qty'])
+        (_check_char, "Error ! You only use integer and 'AAA'", ['quantity'])
     ]    
     
 dm_campaign_proposition_segment()
