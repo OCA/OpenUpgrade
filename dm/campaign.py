@@ -61,7 +61,7 @@ class dm_campaign(osv.osv):
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open')]),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
-        'trademark_id' : fields.many2one('dm.trademark', 'Trademark', help="TO CHECK : trademark"),
+        'trademark_id' : fields.many2one('res.partner', 'Trademark', help="TO CHECK : trademark"),
 #        'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
@@ -156,7 +156,7 @@ class dm_campaign(osv.osv):
         forbidden_country_ids.extend(forbidden_state_ids)
         if camp.offer_id.forbidden_country_ids and camp.country_id.id  in  forbidden_country_ids :
             raise osv.except_osv("Error!!","This offer is not valid in this country")
-        if not camp.date_start or not camp.partner_id or not camp.trademark_id :
+        if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing.Check Date,Associated Partner,Trademark ")
         self.write(cr, uid, ids, {'state':'open'})
         return True

@@ -1,32 +1,19 @@
 <?xml version="1.0"?>
 <terp>
-<data>
-	<menuitem name="Direct Marketing/Trademark" id="menu_dm_trademark" sequence="3"/>
-	<!--
-	=======================================================
-	Trademark Views
-	=======================================================
-	-->
-
-	<record model="ir.ui.view" id="view_trademark_form">
-		<field name="name">dm.trademark.form</field>
-		<field name="model">dm.trademark</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="comment" position="after">
-				<field name="partner_layout" colspan="4"/>
+	<data>
+		<record model="ir.ui.view" id="view_partner_form">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Layout">
+						<separator string="Layout" colspan="4"/>
+						<field name="partner_layout_id" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
 			</field>
-		</field>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_trademark_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.trademark</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="base.view_partner_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Trademark/All Trademarks" id="menu_action_trademark_form" action="action_trademark_form"/>
-</data>
+		</record>
+	</data>
 </terp>

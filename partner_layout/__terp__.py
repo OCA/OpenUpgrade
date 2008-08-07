@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 {
-    "name" : "Project Layout",
+    "name" : "Partner Layout",
     "version" : "1.0",
     "author" : "Tiny",
     "website" : "http://tinyerp.com",

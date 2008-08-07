@@ -210,9 +210,9 @@
 		<field eval="1" name="perm_write"/>
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
-	</record>
+	</record><!--
 	<record id="ir_model_access_dmtrademarkforofferadmin0" model="ir.model.access">
-<!--		<field name="model_id" ref="dm.model_dm_trademark"/>-->
+		<field name="model_id" ref="dm.model_dm_trademark"/>
 		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;dm trademark for offer admin&quot;&quot;&quot;" name="name"/>
@@ -221,7 +221,7 @@
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
-	<record id="ir_model_access_partnercontactforofferadmin0" model="ir.model.access">
+	--><record id="ir_model_access_partnercontactforofferadmin0" model="ir.model.access">
 <!--		<field name="model_id" ref="base.model_res_partner_address"/>-->
 		<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 		<field eval="1" name="perm_read"/>
@@ -440,7 +440,7 @@
 			<field eval="1" name="perm_write"/>
 			<field eval="1" name="perm_create"/>
 			<field name="group_id" ref="res_groups_offermanager"/>
-		</record>
+		</record><!--
 		<record id="ir_model_access_dmtrademarkforoffermanager0" model="ir.model.access">
 			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 			<field eval="1" name="perm_read"/>
@@ -450,7 +450,7 @@
 			<field eval="1" name="perm_create"/>
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
-		<record id="ir_model_access_partnercontactforoffermanager0" model="ir.model.access">
+		--><record id="ir_model_access_partnercontactforoffermanager0" model="ir.model.access">
 			<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;partner contact for offer manager&quot;&quot;&quot;" name="name"/>
@@ -665,7 +665,7 @@
 				<field eval="1" name="perm_write"/>
 				<field eval="1" name="perm_create"/>
 				<field name="group_id" ref="res_groups_campaignadmin"/>
-			</record>
+			</record><!--
 			<record id="ir_model_access_dmtrademarkforcampaignadmin0" model="ir.model.access">
 				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 				<field eval="1" name="perm_read"/>
@@ -675,7 +675,7 @@
 				<field eval="1" name="perm_create"/>
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
-			<record id="ir_model_access_partnercontactforcampaignadmin0" model="ir.model.access">
+			--><record id="ir_model_access_partnercontactforcampaignadmin0" model="ir.model.access">
 				<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;partner contact for campaign admin&quot;&quot;&quot;" name="name"/>
@@ -890,7 +890,7 @@
 					<field eval="1" name="perm_write"/>
 					<field eval="1" name="perm_create"/>
 					<field name="group_id" ref="res_groups_campaignmanager"/>
-				</record>
+				</record><!--
 				<record id="ir_model_access_dmtrademarkforcampaignmanager0" model="ir.model.access">
 					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 					<field eval="1" name="perm_read"/>
@@ -900,7 +900,7 @@
 					<field eval="1" name="perm_create"/>
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
-				<record id="ir_model_access_partnercontactforcampaignmanager0" model="ir.model.access">
+				--><record id="ir_model_access_partnercontactforcampaignmanager0" model="ir.model.access">
 					<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;partner contact for campaign manager&quot;&quot;&quot;" name="name"/>
@@ -1115,7 +1115,7 @@
 						<field eval="1" name="perm_write"/>
 						<field eval="1" name="perm_create"/>
 						<field name="group_id" ref="res_groups_alluser"/>
-					</record>
+					</record><!--
 					<record id="ir_model_access_dmtrademarkforalluser0" model="ir.model.access">
 						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 						<field eval="1" name="perm_read"/>
@@ -1125,7 +1125,7 @@
 						<field eval="1" name="perm_create"/>
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
-					<record id="ir_model_access_partnercontactforalluser0" model="ir.model.access">
+					--><record id="ir_model_access_partnercontactforalluser0" model="ir.model.access">
 						<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner.address')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;partner contact for all user&quot;&quot;&quot;" name="name"/>
