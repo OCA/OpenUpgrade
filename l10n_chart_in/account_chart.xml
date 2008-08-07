@@ -32,7 +32,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[root])]" />
+			<field name="parent_id" ref="root"/>
 		</record>
 		# sub type
 
@@ -43,7 +43,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0])]" />
+			<field name="parent_id" ref="IA_AC0"/>
 		</record>
 		# sub type
 
@@ -54,7 +54,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01])]" />
+			<field name="parent_id" ref="IA_AC01"/>
 		</record>
 		# Accounts
 
@@ -65,7 +65,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC011])]" />
+			<field name="parent_id" ref="IA_AC011" />
 		</record>
 		# sub type
 
@@ -76,7 +76,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0111])]" />
+			<field name="parent_id" ref="IA_AC0111" />
 		</record>
 
 		<record model="account.account" id="IA_AC01112">
@@ -86,7 +86,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0111])]" />
+			<field name="parent_id" ref="IA_AC0111" />
 		</record>
 
 		<record model="account.account" id="IA_AC01113">
@@ -96,7 +96,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0111])]" />
+			<field name="parent_id" ref="IA_AC0111" />
 		</record>
 
 		<record model="account.account" id="IA_AC0112">
@@ -106,7 +106,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC011])]" />
+			<field name="parent_id" ref="IA_AC011" />
 		</record>
 		# sub type
 
@@ -117,7 +117,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0112])]" />
+			<field name="parent_id" ref="IA_AC0112" />
 		</record>
 
 		<record model="account.account" id="IA_AC01122">
@@ -127,7 +127,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0112])]" />
+			<field name="parent_id" ref="IA_AC0112" />
 		</record>
 
 		<record model="account.account" id="IA_AC01123">
@@ -137,7 +137,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0112])]" />
+			<field name="parent_id" ref="IA_AC0112" />
 		</record>
 		<record model="account.account" id="IA_AC012">
 			<field name="name">Investment</field>
@@ -146,7 +146,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01])]" />
+			<field name="parent_id" ref="IA_AC01" />
 		</record>
 		# sub type
 
@@ -157,7 +157,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC012])]" />
+			<field name="parent_id" ref="IA_AC012" />
 		</record>
 
 		<record model="account.account" id="IA_AC0122">
@@ -167,7 +167,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC012])]" />
+			<field name="parent_id" ref="IA_AC012" />
 		</record>
 
 		<record model="account.account" id="IA_AC013">
@@ -177,7 +177,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01])]" />
+			<field name="parent_id" ref="IA_AC01" />
 		</record>
 		# sub type
 
@@ -188,7 +188,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013])]" />
+			<field name="parent_id" ref="IA_AC013" />
 		</record>
 		# sub type
 
@@ -199,7 +199,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0131])]" />
+			<field name="parent_id" ref="IA_AC0131"/>
 		</record>
 
 		<record model="account.account" id="IA_AC01312">
@@ -209,7 +209,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0131])]" />
+			<field name="parent_id" ref="IA_AC0131"/>
 		</record>
 		# sub type
 
@@ -220,7 +220,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01312])]" />
+			<field name="parent_id" ref="IA_AC01312" />
 		</record>
 
 		<record model="account.account" id="IA_AC013122">
@@ -230,7 +230,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01312])]" />
+			<field name="parent_id" ref="IA_AC01312" />
 		</record>
 
 		<record model="account.account" id="IA_AC01313">
@@ -240,7 +240,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0131])]" />
+			<field name="parent_id" ref="IA_AC0131"/>
 		</record>
 		# sub type
 
@@ -251,7 +251,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01313])]" />
+			<field name="parent_id" ref="IA_AC01313"/>
 		</record>
 
 		<record model="account.account" id="IA_AC013132">
@@ -261,7 +261,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01313])]" />
+			<field name="parent_id" ref="IA_AC01313" />
 		</record>
 
 		<record model="account.account" id="IA_AC013133">
@@ -271,7 +271,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01313])]" />
+			<field name="parent_id" ref="IA_AC01313" />
 		</record>
 
 		<record model="account.account" id="IA_AC01314">
@@ -281,7 +281,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0131])]" />
+			<field name="parent_id" ref="IA_AC0131"/>
 		</record>
 		# sub type
 
@@ -292,7 +292,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01314])]" />
+			<field name="parent_id" ref="IA_AC01314"/>
 		</record>
 		# sub type
 
@@ -303,7 +303,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013141])]" />
+			<field name="parent_id" ref="IA_AC013141"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0131412">
@@ -313,7 +313,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013141])]" />
+			<field name="parent_id" ref="IA_AC013141"/>
 		</record>
 
 		<record model="account.account" id="IA_AC013142">
@@ -323,7 +323,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01314])]" />
+			<field name="parent_id" ref="IA_AC01314"/>
 		</record>
 		# sub type
 
@@ -334,7 +334,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013142])]" />
+			<field name="parent_id" ref="IA_AC013142"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0131422">
@@ -344,7 +344,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013142])]" />
+			<field name="parent_id" ref="IA_AC013142"/>
 		</record>
 
 
@@ -355,7 +355,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013142])]" />
+			<field name="parent_id" ref="IA_AC013142"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0131424">
@@ -365,7 +365,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013142])]" />
+			<field name="parent_id" ref="IA_AC013142"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0132">
@@ -375,7 +375,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC013])]" />
+			<field name="parent_id" ref="IA_AC013" />
 		</record>
 		# sub type
 
@@ -386,7 +386,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0132])]" />
+			<field name="parent_id" ref="IA_AC0132"/>
 		</record>
 
 		<record model="account.account" id="IA_AC01322">
@@ -396,7 +396,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0132])]" />
+			<field name="parent_id" ref="IA_AC0132"/>
 		</record>
 		# sub type
 
@@ -407,7 +407,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01322])]" />
+			<field name="parent_id" ref="IA_AC01322"/>
 		</record>
 
 		<record model="account.account" id="IA_AC013222">
@@ -417,7 +417,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01322])]" />
+			<field name="parent_id" ref="IA_AC01322"/>
 		</record>
 
 		<record model="account.account" id="IA_AC013223">
@@ -427,7 +427,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01322])]" />
+			<field name="parent_id" ref="IA_AC01322"/>
 		</record>
 
 		<record model="account.account" id="IA_AC013224">
@@ -437,7 +437,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01322])]" />
+			<field name="parent_id" ref="IA_AC01322"/>
 		</record>
 
 		<record model="account.account" id="IA_AC013225">
@@ -447,7 +447,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01322])]" />
+			<field name="parent_id" ref="IA_AC01322"/>
 		</record>
 
 		<record model="account.account" id="IA_AC013226">
@@ -457,7 +457,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01322])]" />
+			<field name="parent_id" ref="IA_AC01322"/>
 		</record>
 
 		<record model="account.account" id="IA_AC01323">
@@ -467,7 +467,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0132])]" />
+			<field name="parent_id" ref="IA_AC0132"/>
 		</record>
 
 		<record model="account.account" id="IA_AC01324">
@@ -477,7 +477,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="True" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0132])]" />
+			<field name="parent_id" ref="IA_AC0132"/>
 		</record>
 
 		<record model="account.account" id="IA_AC014">
@@ -487,7 +487,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC01])]" />
+			<field name="parent_id" ref="IA_AC01" />
 		</record>
 		# sub type
 
@@ -500,7 +500,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC014])]" />
+			<field name="parent_id" ref="IA_AC014"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0142">
@@ -510,7 +510,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC014])]" />
+			<field name="parent_id" ref="IA_AC014"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0143">
@@ -520,7 +520,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC014])]" />
+			<field name="parent_id" ref="IA_AC014"/>
 		</record>
 
 		<record model="account.account" id="IA_AC02">
@@ -530,7 +530,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0])]" />
+			<field name="parent_id" ref="IA_AC0"/>
 		</record>
 		# sub type
 
@@ -541,7 +541,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC02])]" />
+			<field name="parent_id" ref="IA_AC02"/>
 		</record>
 		# sub type
 
@@ -552,7 +552,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC021])]" />
+			<field name="parent_id" ref="IA_AC021"/>
 		</record>
 		# sub type
 
@@ -563,7 +563,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0211])]" />
+			<field name="parent_id" ref="IA_AC0211"/>
 		</record>
 
 		<record model="account.account" id="IA_AC02112">
@@ -573,7 +573,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0211])]" />
+			<field name="parent_id" ref="IA_AC0211"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0212">
@@ -583,7 +583,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC021])]" />
+			<field name="parent_id" ref="IA_AC021"/>
 		</record>
 		# sub type
 
@@ -594,7 +594,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0212])]" />
+			<field name="parent_id" ref="IA_AC0212"/>
 		</record>
 
 		<record model="account.account" id="IA_AC02122">
@@ -604,7 +604,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC0212])]" />
+			<field name="parent_id" ref="IA_AC0212"/>
 		</record>
 
 		<record model="account.account" id="IA_AC022">
@@ -614,7 +614,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC02])]" />
+			<field name="parent_id" ref="IA_AC02"/>
 		</record>
 		# sub type
 
@@ -625,7 +625,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC022])]" />
+			<field name="parent_id" ref="IA_AC022"/>
 		</record>
 
 		<record model="account.account" id="IA_AC0222">
@@ -635,7 +635,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC022])]" />
+			<field name="parent_id" ref="IA_AC022"/>
 		</record>
 
 
@@ -646,7 +646,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[root])]" />
+			<field name="parent_id" ref="root"/>
 		</record>
 		# sub type
 
@@ -657,7 +657,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1])]" />
+			<field name="parent_id" ref="IA_AC1"/>
 		</record>
 		# sub type
 
@@ -668,7 +668,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC11])]" />
+			<field name="parent_id" ref="IA_AC11"/>
 		</record>
 
 		<record model="account.account" id="IA_AC112">
@@ -678,7 +678,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC11])]" />
+			<field name="parent_id" ref="IA_AC11"/>
 		</record>
 
 		<record model="account.account" id="IA_AC12">
@@ -688,7 +688,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1])]" />
+			<field name="parent_id" ref="IA_AC1"/>
 		</record>
 		# sub type
 
@@ -699,7 +699,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC12])]" />
+			<field name="parent_id" ref="IA_AC12"/>
 		</record>
 		# sub type
 
@@ -710,7 +710,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC121])]" />
+			<field name="parent_id" ref="IA_AC121"/>
 		</record>
 
 		<record model="account.account" id="IA_AC1212">
@@ -720,7 +720,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC121])]" />
+			<field name="parent_id" ref="IA_AC121"/>
 		</record>
 
 		<record model="account.account" id="IA_AC1213">
@@ -730,7 +730,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC121])]" />
+			<field name="parent_id" ref="IA_AC121"/>
 		</record>
 
 		<record model="account.account" id="IA_AC1214">
@@ -740,7 +740,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC121])]" />
+			<field name="parent_id" ref="IA_AC121"/>
 		</record>
 
 		<record model="account.account" id="IA_AC122">
@@ -750,7 +750,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC12])]" />
+			<field name="parent_id" ref="IA_AC12"/>
 		</record>
 		# sub type
 
@@ -761,7 +761,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC122])]" />
+			<field name="parent_id" ref="IA_AC122"/>
 		</record>
 
 		<record model="account.account" id="IA_AC1221">
@@ -771,7 +771,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC122])]" />
+			<field name="parent_id" ref="IA_AC122"/>
 		</record>
 		# sub type
 
@@ -782,7 +782,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1221])]" />
+			<field name="parent_id" ref="IA_AC1221"/>
 		</record>
 
 		<record model="account.account" id="IA_AC12212">
@@ -792,7 +792,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1221])]" />
+			<field name="parent_id" ref="IA_AC1221"/>
 		</record>
 
 		<record model="account.account" id="IA_AC1222">
@@ -802,7 +802,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC122])]" />
+			<field name="parent_id" ref="IA_AC122"/>
 		</record>
 		# sub type
 
@@ -813,7 +813,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1222])]" />
+			<field name="parent_id" ref="IA_AC1222"/>
 		</record>
 
 		<record model="account.account" id="IA_AC12222">
@@ -823,7 +823,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1222])]" />
+			<field name="parent_id" ref="IA_AC1222"/>
 		</record>
 
 		<record model="account.account" id="IA_AC1223">
@@ -833,7 +833,7 @@
 			<field name="close_method">none</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC122])]" />
+			<field name="parent_id" ref="IA_AC122"/>
 		</record>
 		# sub type
 
@@ -844,7 +844,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1223])]" />
+			<field name="parent_id" ref="IA_AC1223"/>
 		</record>
 
 		<record model="account.account" id="IA_AC12232">
@@ -854,7 +854,7 @@
 			<field name="close_method">balance</field>
 			<field name="reconcile" eval="False" />
 			<field name="currency_id" ref="base.IDR" />
-			<field name="parent_id" eval="[(6,0,[IA_AC1223])]" />
+			<field name="parent_id" ref="IA_AC1223"/>
 		</record>
 
 	</data>
