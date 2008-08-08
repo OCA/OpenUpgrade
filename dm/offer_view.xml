@@ -819,7 +819,7 @@
 					<field name="proposition_id" />
 					<field name="sequence"/>
 					<field name="active" />
-					<field name="qty" select="2"/>
+					<field name="quantity" select="2"/>
 					<field name="raw_quantity" select="2"/>
 					<newline/>
 					<field name="split_id" />
@@ -833,7 +833,7 @@
 					<field name="name" string="Name"/>
 					<field name="sequence" />				
 					<field name="code" string="Action Code"/>
-					<field name="qty"/>
+					<field name="quantity"/>
 				</tree>
 				</field>
 			</form>
@@ -858,7 +858,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_file_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Offers/Customers/All Customer Files" id="menu_action_dm_customer_file" sequence="3" action="action_dm_customer_file"/>	
-	
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Customer Files" id="menu_action_dm_customer_file" sequence="3" action="action_dm_customer_file"/>	
+	Configuration ->Campaigns
 	</data>
 </terp>

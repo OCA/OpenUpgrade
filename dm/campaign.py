@@ -157,7 +157,7 @@ class dm_campaign(osv.osv):
         if camp.offer_id.forbidden_country_ids and camp.country_id.id  in  forbidden_country_ids :
             raise osv.except_osv("Error!!","This offer is not valid in this country")
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
-            raise osv.except_osv("Error!!","Informations are missing.Check Date,Associated Partner,Trademark ")
+            raise osv.except_osv("Error!!","Informations are missing.Check Date Start, Dealer and Trademark")
         self.write(cr, uid, ids, {'state':'open'})
         return True
     
@@ -281,6 +281,8 @@ class dm_campaign_proposition_segment(osv.osv):
     
     def _check_char(self, cr, uid, ids):
         segment = self.browse(cr,uid,ids)[0]
+        if not segment.quantity_add:
+            return True
         return segment.quantity_add.isdigit() or segment.quantity_add=='AAA'
     _columns = {
 #        'action_code': fields.char('Code',size=16, required=True),
