@@ -5,7 +5,7 @@
     'category': 'Data Module 1',
     'init_xml':[],
     'author': 'OpenERP',
-    'depends': ['base'],
+    'depends': ['base','cci_partner'],
     'version': '1.0',
     'active': False,
     'demo_xml': [],

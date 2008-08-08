@@ -5,11 +5,22 @@
     'category': 'Data Module',
      'init_xml':[],
      'author': 'Tiny',
-     'depends': ['account','base_contact','account_l10nbe_domiciliation'],
+     'depends': ['account','base_contact','account_l10nbe_domiciliation','l10n_be'],
      'version': '1.0',
      'active': False,
      'demo_xml': [],
-     'update_xml':['account_demo.xml','account.account.csv','account.journal.csv','account.fiscalyear.csv','account.period.csv','res.partner.csv','res.partner.address.csv','res.partner.bank.csv','account.move.csv','account.move.line.csv'],
+     'update_xml':[
+'misc_data.xml',
+'account.account.csv',
+'account.journal.csv',
+'account.fiscalyear.csv',
+'account.period.csv',
+'res.partner.csv',
+#'res.partner.address.csv',
+#'res.partner.bank.csv',
+'account.move.csv',
+'account.move.line.csv',
+],
 #'res.partner.contact.csv'
 
      'installable': True

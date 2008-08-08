@@ -5,6 +5,12 @@ import datetime
 import time
 from datetime import date, timedelta
 
+partner_dict = {}
+partner_dict[''] = ''
+
+def _get_partner_id(char):
+    return char
+
 def convert2utf(row):
     if row:
         retRow = {}
@@ -233,6 +239,7 @@ def import_journal(reader_journal, writer_journal, journals_map):
 
 
 # -= C. Partners Data =-
+#TODO: attention, si 2 partners ont le même nom, il s'agit de plusieurs adresses du même partenaire mais cela pose soucis lors de l'import des écritures comptables car il ne reconnait pas le 2ème code => utiliser un dictionnaire pour matcher les ID ?
 
 def _get_cat(record):
 #have to put the partner into category suppliers if CSUPTYPE,A,1 == 'S'
@@ -245,7 +252,7 @@ def _get_cat(record):
     return ','.join(res)
 
 partners_map = {
-    'id':lambda x: 'partner_'+x['CID,A,10'],
+    'id':lambda x: x['CID,A,10'],
     'ref': lambda x: x['CID,A,10'],
     'name': lambda x: x['CNAME1,A,40'],
     'lang': lambda x: {
@@ -275,7 +282,7 @@ partner_add_map = {
     'phone' : lambda x: x['CTELNO,A,25'],
     'street' : lambda x: x['CADDRESS1,A,40'],
     'type' : lambda x: 'default',
-    'partner_id:id':lambda x: x['CID,A,10'],
+    'partner_id:id':lambda x: ''#_get_partner_id(partner_dict[x['CID,A,10']],
 }
 
 #have to create res.partner.bank if x['CBANKNO,A,20'] <> False
@@ -290,7 +297,7 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
     record = {}
     record_address = {}
     record_bank = {}
-    list_partners = []
+    list_partners = {}
 
     for key, column_name in partners_map.items():
         record[key] = key
@@ -317,29 +324,34 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
             #    partner_name = partner_name.replace('.','')
             #record['id'] = partner_name
 
+            #partner already exists
+            if list_partners.has_key(record['name']):
+                record_address['type'] = 'other'
+                partner_dict[row['CID,A,10']] = list_partners[record['name']]
+
+            else:
+                #record it
+                list_partners[record['name']] = row['CID,A,10']
+                partner_dict[row['CID,A,10']] = record['id']
+                if not record['domiciliation_bool'] == '1':
+                    record['domiciliation_bool'] = ''
+                writer_partner.writerow(record)
+
+            #create bank account if necessary
             if row.has_key('CBANKNO,A,20') and row['CBANKNO,A,20']:
                 for key,fnct in partner_bank_map.items():
                     record_bank[key] = fnct(convert2utf(row))
-                record_bank['partner_id:id'] = record['id']
+                record_bank['partner_id:id'] = _get_partner_id(partner_dict[row['CID,A,10']])
                 writer_bank.writerow(record_bank)
+
+            #create address in all cases ('default' address if partner didn't exist before, 'other' otherwise)
             address = ''
             if record_address['country_id:id']:
                     address = 'base.'+record_address['country_id:id'].lower()
 
-            if not record['domiciliation_bool']=='1':
-                record['domiciliation_bool'] = ''
-
-            if record['name'] in list_partners:
-                record_address['type'] = 'other'
-                record_address['partner_id:id'] = record['id']
-                record_address['country_id:id'] = address
-                writer_address.writerow(record_address)
-            else:
-                list_partners.append(record['name'])
-                record_address['partner_id:id'] = record['id']
-                record_address['country_id:id'] = address
-                writer_partner.writerow(record)
-                writer_address.writerow(record_address)
+            record_address['partner_id:id'] = _get_partner_id(partner_dict[row['CID,A,10']])
+            record_address['country_id:id'] = address
+            writer_address.writerow(record_address)
 
             #if partner_name.find('.')!=-1:
             #    partner_name = partner_name.replace('.','')
@@ -562,23 +574,23 @@ def _create_vat_move(x, vat_dict, count):
         'id': 'move_line_'+x['HDBK,A,4']+'/'+x['HFYEAR,A,5']+'/'+x['HDOCNO,I,4']+'/'+x['HORDERNO,I,4']+'/'+str(count),
         'currency_id': x['HCURRENCY,A,3'],
         'date_maturity': x['HDUEDATE,D,4'],
-        'partner_id:id': x['HCUSSUP,A,10'],
+        'partner_id:id': _get_partner_id(partner_dict[x['HCUSSUP,A,10']]),
         'journal_id:id': 'journal_'+x['HDBK,A,4'],
         'tax_code_id:id': _pick_vat_code(x,vat_dict,True),
         'tax_amount': x['HTAX,$,8'],
         'state': 'draft',
 
-        'debit': _check_debit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8']), 
-        'credit': _check_credit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8']),
+        'debit': str(_check_debit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8'])), 
+        'credit': str(_check_credit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8'])),
         'ref':  x['HDOCNO,I,4'],
-        'account_id:id': 'account_'+_pick_vat_account(x, vat_dict),
+        'account_id:id': _pick_vat_account(x, vat_dict),
         'period_id:id': 'period_'+x['HFYEAR,A,5']+"/"+x['HMONTH,I,4'],
         'date': x['HDOCDATE,D,4'],
         'move_id:id': 'move_'+x['HDBK,A,4']+'/'+x['HFYEAR,A,5']+'/'+x['HDOCNO,I,4'],
 #@    'reconcile_id':
 #TODO: voir si la réconcliation automatique réussit bien
         'name': x['HREM,A,40'] or '/',
-        'amount_currency': _get_ammount_currency_vat(x),
+        'amount_currency': str(_get_ammount_currency_vat(x)),
     }
 
 #check if the movement is a VAT movement: return TRUE if the account code begins with '450' or '451'
@@ -591,7 +603,7 @@ move_line_map = {
     'id': lambda x: 'move_line_'+x['HDBK,A,4']+'/'+x['HFYEAR,A,5']+'/'+x['HDOCNO,I,4']+'/'+x['HORDERNO,I,4'],
     'currency_id': lambda x: x['HCURRENCY,A,3'],
     'date_maturity': lambda x: x['HDUEDATE,D,4'],
-    'partner_id:id': lambda x: x['HCUSSUP,A,10'],
+    'partner_id:id': lambda x: _get_partner_id(partner_dict[x['HCUSSUP,A,10']]),
 #    'reconcile_partial_id':
 #    'blocked':
 #    'centralisation':
@@ -605,8 +617,8 @@ move_line_map = {
 
         #qd vente: <0 c'est credit et >0 c'est debit
         #qd achat: <0 c'est le credit et >0 c'est debit
-    'debit': lambda x: _check_debit(x['HAMOUNT,$,8']), 
-    'credit': lambda x: _check_credit(x['HAMOUNT,$,8']),
+    'debit': lambda x: str(_check_debit(x['HAMOUNT,$,8'])), 
+    'credit': lambda x: str(_check_credit(x['HAMOUNT,$,8'])),
     'ref': lambda x: x['HDOCNO,I,4'],
     'account_id:id': lambda x: 'account_'+x['HID,A,10'],
     'period_id:id': lambda x: 'period_'+x['HFYEAR,A,5']+"/"+x['HMONTH,I,4'],
@@ -616,7 +628,7 @@ move_line_map = {
 #@    'reconcile_id':
 #TODO: voir si la réconcliation automatique réussit bien
     'name': lambda x: x['HREM,A,40'] or '/',
-    'amount_currency': lambda x: _get_ammount_currency(x),
+    'amount_currency': lambda x: str(_get_ammount_currency(x)),
 #TODO (bugfix): create one currency BEF with value: 1 EUR = 40.3399 BEF
 #    'quantity':
 }
@@ -662,8 +674,8 @@ def import_move_line(reader, writer, map, ):
             record = {}
             for key,fnct in map.items():
                 record[key] = fnct(convert2utf(row))
-            if record['partner_id:id']:
-                record['partner_id:id'] = 'partner_' + str(record['partner_id:id'])
+            #if record['partner_id:id']:
+            #    record['partner_id:id'] = _get_partner_id(partner_dict[record['partner_id:id']])
 
             #if this move line is taxed
             if row['HVATCODE,A,10']:
@@ -671,7 +683,9 @@ def import_move_line(reader, writer, map, ):
                 record['tax_code_id:id'] = _pick_vat_code(row, vat_dict, False)
                 #generate the vat movement
                 vat_move = _create_vat_move(row, vat_dict, count)
-                writer.writerow(vat_move)
+                #if vat_move['partner_id:id']:
+                #    vat_move['partner_id:id'] = _get_partner_id(partner_dict[vat_move['partner_id:id']])
+                writer.writerow(convert2utf(vat_move))
 
             writer.writerow(record)
 
@@ -680,9 +694,22 @@ def import_move_line(reader, writer, map, ):
 
 
 
-# -====================-
+# -=====================-
 # -= 2. Importing DATA =-
 # -=====================-
+
+#specific part for CCI
+reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb')) 
+bob_conv_matching = {}
+bob_conv_matching[''] = ''
+for row in reader_partner_matching:
+    bob_conv_matching[row['bob']] = row['partner']
+
+def _get_partner_id(char):
+    if bob_conv_matching.has_key(char):
+        return bob_conv_matching[char]
+    return 'account_bob_import.res_partner_destroyed' #or char ?
+#end of specific part
 
 print 'importing chart of accounts'
 reader_account = csv.DictReader(file('original_csv/account.csv','rb')) #TODO: pxview IFACCOUN.DB (?)-c > ....../account_bob_import/original_csv/account.csv
