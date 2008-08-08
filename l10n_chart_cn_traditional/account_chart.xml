@@ -5,7 +5,7 @@
 	<field name="code">0</field>
 	<field name="name">Account Chart</field>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[]"/>
+<!--	<field name="parent_id" eval="[]"/>-->
 	<field name="type">view</field>
 
 </record>
@@ -13,349 +13,349 @@
 	<field name="code">1000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¬y°Ê¸ê²£</field>
+	<field name="name">ï¿½yï¿½Ê¸ê²£</field>
 
 </record>
 <record id="account.a_cash" model="account.account">
 	<field name="code">1061</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">¤ä²¼¤áÀY</field>
+	<field name="name">ï¿½ä²¼ï¿½ï¿½ï¿½Y</field>
 
 </record>
 <record id="chart1065" model="account.account">
 	<field name="code">1065</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">¹s¥Îª÷</field>
+	<field name="name">ï¿½sï¿½Îªï¿½</field>
 
 </record>
 <record id="chart1200" model="account.account">
 	<field name="code">1200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">À³¦¬±b´Ú</field>
+	<field name="name">3ï¿½ï¿½ï¿½bï¿½ï¿½</field>
 
 </record>
 <record id="chart1205" model="account.account">
 	<field name="code">1205</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">§b±b³Æ©è</field>
+	<field name="name">ï¿½bï¿½bï¿½Æ©ï¿½</field>
 
 </record>
 <record id="chart1500" model="account.account">
 	<field name="code">1500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¦s³f¸ê²£</field>
+	<field name="name">ï¿½sï¿½fï¿½ê²£</field>
 
 </record>
 <record id="chart1520" model="account.account">
 	<field name="code">1520</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">®w¦s / µwÅé</field>
+	<field name="name">ï¿½wï¿½s / ï¿½wï¿½ï¿½</field>
 
 </record>
 <record id="chart1530" model="account.account">
 	<field name="code">1530</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">®w¦s / ³nÅé</field>
+	<field name="name">ï¿½wï¿½s / ï¿½nï¿½ï¿½</field>
 
 </record>
 <record id="chart1540" model="account.account">
 	<field name="code">1540</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">®w¦s / ¤G¯Å¥«³õ¹s¥ó</field>
+	<field name="name">ï¿½wï¿½s / ï¿½Gï¿½Å¥ï¿½ï¿½ï¿½sï¿½ï¿½</field>
 
 </record>
 <record id="chart1800" model="account.account">
 	<field name="code">1800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¸ê¥»¸ê²£</field>
+	<field name="name">ï¿½ê¥»ï¿½ê²£</field>
 
 </record>
 <record id="chart1820" model="account.account">
 	<field name="code">1820</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">¿ì¤½«Ç¸Ë¿X¤Î³]³Æ</field>
+	<field name="name">ï¿½ì¤½ï¿½Ç¸Ë¿Xï¿½Î³]ï¿½ï¿½</field>
 
 </record>
 <record id="chart1825" model="account.account">
 	<field name="code">1825</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">²Ö­p¤À´Á¥I´Ú - ¸Ë¿X¤Î³]³Æ.</field>
+	<field name="name">ï¿½Ö­pï¿½4eIï¿½ï¿½ - ï¿½Ë¿Xï¿½Î³]ï¿½ï¿½.</field>
 
 </record>
 <record id="chart1840" model="account.account">
 	<field name="code">1840</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">¹B¿é¤u¨ã</field>
+	<field name="name">ï¿½Bï¿½ï¿½uï¿½ï¿½</field>
 
 </record>
 <record id="chart1845" model="account.account">
 	<field name="code">1845</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
-	<field name="name">²Ö­p¤À´Á¥I´Ú - ¹B¿é¤u¨ã</field>
+	<field name="name">ï¿½Ö­pï¿½4eIï¿½ï¿½ - ï¿½Bï¿½ï¿½uï¿½ï¿½</field>
 
 </record>
 <record id="chart2000" model="account.account">
 	<field name="code">2000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¬y°Ê­t¶Å</field>
+	<field name="name">ï¿½yï¿½Ê­tï¿½ï¿½</field>
 
 </record>
 <record id="chart2100" model="account.account">
 	<field name="code">2100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">À³¥I±b´Ú</field>
+	<field name="name">3ï¿½Iï¿½bï¿½ï¿½</field>
 
 </record>
 <record id="chart2160" model="account.account">
 	<field name="code">2160</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">À³¥I¤½¥qµ|</field>
+	<field name="name">3ï¿½Iï¿½ï¿½ï¿½qï¿½|</field>
 
 </record>
 <record id="chart2190" model="account.account">
 	<field name="code">2190</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">À³¥I©Ò±oµ|</field>
+	<field name="name">3ï¿½Iï¿½Ò±oï¿½|</field>
 
 </record>
 <record id="chart2310" model="account.account">
 	<field name="code">2310</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">°Ó«~ªA°Èµ|</field>
+	<field name="name">ï¿½Ó«~ï¿½Aï¿½Èµ|</field>
 
 </record>
 <record id="chart2311" model="account.account">
 	<field name="code">2311</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">¦a¤èµ|</field>
+	<field name="name">ï¿½aï¿½ï¿½|</field>
 
 </record>
 <record id="chart2600" model="account.account">
 	<field name="code">2600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">ªø´Á­t¶Å</field>
+	<field name="name">ï¿½ï¿½mtï¿½ï¿½</field>
 
 </record>
 <record id="chart2620" model="account.account">
 	<field name="code">2620</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">»È¦æ­É´Ú</field>
+	<field name="name">ï¿½È¦ï¿½É´ï¿½</field>
 
 </record>
 <record id="chart2680" model="account.account">
 	<field name="code">2680</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">ªÑªF¶U´Ú</field>
+	<field name="name">ï¿½ÑªFï¿½Uï¿½ï¿½</field>
 
 </record>
 <record id="chart3300" model="account.account">
 	<field name="code">3300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">ªÑ¥÷¸ê¥»</field>
+	<field name="name">ï¿½Ñ¥ï¿½ê¥»</field>
 
 </record>
 <record id="chart3350" model="account.account">
 	<field name="code">3350</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">tax</field>
-	<field name="name">´¶³qªÑ¥÷</field>
+	<field name="name">ï¿½ï¿½ï¿½qï¿½Ñ¥ï¿½</field>
 
 </record>
 <record id="chart3500" model="account.account">
 	<field name="code">3500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">«O¯d¬Õ¾l</field>
+	<field name="name">ï¿½Oï¿½dï¿½Õ¾l</field>
 
 </record>
 <record id="chart3590" model="account.account">
 	<field name="code">3590</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">tax</field>
-	<field name="name">«O¯d¬Õ¾l - ¥h¦~«×</field>
+	<field name="name">ï¿½Oï¿½dï¿½Õ¾l - ï¿½hï¿½~ï¿½ï¿½</field>
 
 </record>
 <record id="chart3600" model="account.account">
 	<field name="code">3600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">tax</field>
-	<field name="name">¬y°Ê¬Õ¾l</field>
+	<field name="name">ï¿½yï¿½Ê¬Õ¾l</field>
 
 </record>
 <record id="chart4000" model="account.account">
 	<field name="code">4000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¾P°â¬Õ¾l</field>
+	<field name="name">ï¿½Pï¿½ï¿½Õ¾l</field>
 
 </record>
 <record id="account.a_income" model="account.account">
 	<field name="code">4020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
-	<field name="name">¾P°â / µwÅé</field>
+	<field name="name">ï¿½Pï¿½ï¿½ / ï¿½wï¿½ï¿½</field>
 
 </record>
 <record id="chart4030" model="account.account">
 	<field name="code">4030</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
-	<field name="name">¾P°â / ³nÅé</field>
+	<field name="name">ï¿½Pï¿½ï¿½ / ï¿½nï¿½ï¿½</field>
 
 </record>
 <record id="chart4040" model="account.account">
 	<field name="code">4040</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
-	<field name="name">¾P°â / ¤G¯Å¥«³õ¹s¥ó</field>
+	<field name="name">ï¿½Pï¿½ï¿½ / ï¿½Gï¿½Å¥ï¿½ï¿½ï¿½sï¿½ï¿½</field>
 
 </record>
 <record id="chart4300" model="account.account">
 	<field name="code">4300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¿Ô¸ß¬Õ¾l</field>
+	<field name="name">ï¿½Ô¸ß¬Õ¾l</field>
 
 </record>
 <record id="chart4320" model="account.account">
 	<field name="code">4320</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
-	<field name="name">¿Ô¸ß</field>
+	<field name="name">ï¿½Ô¸ï¿½</field>
 
 </record>
 <record id="chart4330" model="account.account">
 	<field name="code">4330</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
-	<field name="name">µ{¦¡³]­p</field>
+	<field name="name">ï¿½{ï¿½ï¿½ï¿½]ï¿½p</field>
 
 </record>
 <record id="chart4400" model="account.account">
 	<field name="code">4400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¨ä¥¦¬Õ¾l</field>
+	<field name="name">ï¿½ä¥¦ï¿½Õ¾l</field>
 
 </record>
 <record id="chart4430" model="account.account">
 	<field name="code">4430</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
-	<field name="name">¹B¾P¶O</field>
+	<field name="name">ï¿½Bï¿½Pï¿½O</field>
 
 </record>
 <record id="chart4440" model="account.account">
 	<field name="code">4440</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
-	<field name="name">§Q®§</field>
+	<field name="name">ï¿½Qï¿½ï¿½</field>
 
 </record>
 <record id="account.a_recv" model="account.account">
 	<field name="code">4450</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
 	<field name="name">Foreign Exchange Gain</field>
 
@@ -364,268 +364,268 @@
 	<field name="code">5000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">³f¾P¦¨¥»</field>
+	<field name="name">ï¿½fï¿½Pï¿½ï¿½ï¿½ï¿½</field>
 
 </record>
 <record id="account.a_expense" model="account.account">
 	<field name="code">5010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">±ÄÁÊ</field>
+	<field name="name">ï¿½ï¿½ï¿½ï¿½</field>
 
 </record>
 <record id="chart5020" model="account.account">
 	<field name="code">5020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">³f¾P¦¨¥» / µwÅé</field>
+	<field name="name">ï¿½fï¿½Pï¿½ï¿½ï¿½ï¿½ / ï¿½wï¿½ï¿½</field>
 
 </record>
 <record id="chart5030" model="account.account">
 	<field name="code">5030</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">³f¾P¦¨¥» / ³nÅé</field>
+	<field name="name">ï¿½fï¿½Pï¿½ï¿½ï¿½ï¿½ / ï¿½nï¿½ï¿½</field>
 
 </record>
 <record id="chart5040" model="account.account">
 	<field name="code">5040</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">³f¾P¦¨¥» / ¤G¯Å¥«³õ¹s¥ó</field>
+	<field name="name">ï¿½fï¿½Pï¿½ï¿½ï¿½ï¿½ / ï¿½Gï¿½Å¥ï¿½ï¿½ï¿½sï¿½ï¿½</field>
 
 </record>
 <record id="chart5100" model="account.account">
 	<field name="code">5100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¹B¶O</field>
+	<field name="name">ï¿½Bï¿½O</field>
 
 </record>
 <record id="chart5400" model="account.account">
 	<field name="code">5400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">Á~¸ê¤ä¥X</field>
+	<field name="name">ï¿½~ï¿½ï¿½ï¿½X</field>
 
 </record>
 <record id="chart5410" model="account.account">
 	<field name="code">5410</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Á~¸ê</field>
+	<field name="name">ï¿½~ï¿½ï¿½</field>
 
 </record>
 <record id="chart5420" model="account.account">
 	<field name="code">5420</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">«OÀI¤ä¥X</field>
+	<field name="name">ï¿½Oï¿½Iï¿½ï¿½X</field>
 
 </record>
 <record id="chart5430" model="account.account">
 	<field name="code">5430</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">°h¥ðª÷¤ä¥X</field>
+	<field name="name">ï¿½hï¿½ï¿½ï¿½ï¿½X</field>
 
 </record>
 <record id="chart5440" model="account.account">
 	<field name="code">5440</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¸ÉÀvª÷¤ä¥X</field>
+	<field name="name">ï¿½ï¿½ï¿½vï¿½ï¿½ï¿½X</field>
 
 </record>
 <record id="chart5470" model="account.account">
 	<field name="code">5470</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">­û¤uºÖ§Q</field>
+	<field name="name">ï¿½ï¿½uï¿½Ö§Q</field>
 
 </record>
 <record id="chart5600" model="account.account">
 	<field name="code">5600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">¤é±`¤ÎºÞ²z¤ä¥X</field>
+	<field name="name">ï¿½ï¿½`ï¿½ÎºÞ²zï¿½ï¿½X</field>
 
 </record>
 <record id="chart5610" model="account.account">
 	<field name="code">5610</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">·|­pªk°È</field>
+	<field name="name">ï¿½|ï¿½pï¿½kï¿½ï¿½</field>
 
 </record>
 <record id="chart5615" model="account.account">
 	<field name="code">5615</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¼s§i¦æ¾P</field>
+	<field name="name">ï¿½sï¿½iï¿½ï¿½P</field>
 
 </record>
 <record id="chart5620" model="account.account">
 	<field name="code">5620</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Ãa±b</field>
+	<field name="name">ï¿½aï¿½b</field>
 
 </record>
 <record id="chart5660" model="account.account">
 	<field name="code">5660</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¤À´Á¤ä¥X</field>
+	<field name="name">ï¿½4dï¿½X</field>
 
 </record>
 <record id="chart5680" model="account.account">
 	<field name="code">5680</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">©Ò±oµ|</field>
+	<field name="name">ï¿½Ò±oï¿½|</field>
 
 </record>
 <record id="chart5685" model="account.account">
 	<field name="code">5685</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">«OÀI</field>
+	<field name="name">ï¿½Oï¿½I</field>
 
 </record>
 <record id="chart5690" model="account.account">
 	<field name="code">5690</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">§Q®§¤Î»È¦æ¤âÄò¶O</field>
+	<field name="name">ï¿½Qï¿½ï¿½ï¿½Î»È¦ï¿½ï¿½ï¿½ï¿½O</field>
 
 </record>
 <record id="chart5700" model="account.account">
 	<field name="code">5700</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¿ì¤½¥Î«~</field>
+	<field name="name">ï¿½ì¤½ï¿½Î«~</field>
 
 </record>
 <record id="chart5760" model="account.account">
 	<field name="code">5760</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¯²ª÷</field>
+	<field name="name">ï¿½ï¿½ï¿½ï¿½</field>
 
 </record>
 <record id="chart5765" model="account.account">
 	<field name="code">5765</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">ºû­×ºÞ²z¶O</field>
+	<field name="name">ï¿½ï¿½×ºÞ²zï¿½O</field>
 
 </record>
 <record id="chart5780" model="account.account">
 	<field name="code">5780</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¹q«H¶O</field>
+	<field name="name">ï¿½qï¿½Hï¿½O</field>
 
 </record>
 <record id="chart5781" model="account.account">
 	<field name="code">5781</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">ºô¸ô³s½u¶O</field>
+	<field name="name">ï¿½ï¿½ï¿½sï¿½uï¿½O</field>
 
 </record>
 <record id="chart5785" model="account.account">
 	<field name="code">5785</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">®È¶O¤Î®T¼Ö</field>
+	<field name="name">ï¿½È¶Oï¿½Î®Tï¿½ï¿½</field>
 
 </record>
 <record id="chart5790" model="account.account">
 	<field name="code">5790</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">¤u¨ã</field>
+	<field name="name">ï¿½uï¿½ï¿½</field>
 
 </record>
 <record id="chart5795" model="account.account">
 	<field name="code">5795</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">µù¥U¶O</field>
+	<field name="name">ï¿½ï¿½Uï¿½O</field>
 
 </record>
 <record id="chart5800" model="account.account">
 	<field name="code">5800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Åv§Qª÷</field>
+	<field name="name">ï¿½vï¿½Qï¿½ï¿½</field>
 
 </record>
 <record id="account.a_pay" model="account.account">
 	<field name="code">5810</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Foreign Exchange Loss</field>
 
