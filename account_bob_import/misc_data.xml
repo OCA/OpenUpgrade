@@ -31,6 +31,13 @@
 		<field eval="0" name="dir_exclude"/>
 	</record>
 
+	<!-- address of missing partner -->
+	<record id="res_partner_address_bob" model="res.partner.address">
+            <field name="name">Missing Partners Address</field>
+            <field name="type">default</field>
+            <field name="partner_id" ref="res_partner_destroyed"/>
+     </record>
+
 	<!-- function missing -->
 	<record id="res_partner_function_bob" model="res.partner.function">
 		<field eval="&quot;Unknown Function&quot;" name="name"/>
