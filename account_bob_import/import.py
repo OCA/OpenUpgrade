@@ -8,6 +8,8 @@ from datetime import date, timedelta
 partner_dict = {}
 partner_dict[''] = ''
 
+dict_partner = {}
+
 def _get_partner_id(char):
     return char
 
@@ -275,6 +277,7 @@ partners_map = {
 
 #have to create one res.partner.adress for this partner with this
 partner_add_map = {
+    'id' : lambda x: '',
     'city' : lambda x: x['CLOCALITY,A,40'],
     'fax': lambda x: x['CFAXNO,A,25'],
     'zip' :  lambda x: x['CZIPCODE,A,10'],
@@ -309,6 +312,7 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
     writer_partner.writerow(record)
     writer_address.writerow(record_address)
     writer_bank.writerow(record_bank)
+    count_address = 0
     for row in reader_partner:
         record = {}
         record_address = {}
@@ -325,6 +329,8 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
             #record['id'] = partner_name
 
             #partner already exists
+            count_address = count_address + 1
+            record_address['id'] = 'add' + str(count_address)
             if list_partners.has_key(record['name']):
                 record_address['type'] = 'other'
                 partner_dict[row['CID,A,10']] = list_partners[record['name']]
@@ -333,6 +339,7 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
                 #record it
                 list_partners[record['name']] = row['CID,A,10']
                 partner_dict[row['CID,A,10']] = record['id']
+                dict_partner[record['ref']] = record_address['id']
                 if not record['domiciliation_bool'] == '1':
                     record['domiciliation_bool'] = ''
                 writer_partner.writerow(record)
@@ -348,6 +355,7 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
             address = ''
             if record_address['country_id:id']:
                     address = 'base.'+record_address['country_id:id'].lower()
+
 
             record_address['partner_id:id'] = _get_partner_id(partner_dict[row['CID,A,10']])
             record_address['country_id:id'] = address
@@ -415,7 +423,7 @@ def import_partner(reader_partner, writer_partner, partners_map, writer_address,
 # -= D. Contacts Data =-
 
 contacts_map = {
-    #'id':'' ,
+    'id': lambda x:'' ,
     'first_name': lambda x: x['PFIRSTNAME,A,30'],
     'name': lambda x: x['PNAME,A,30'],
     'title': lambda x: {
@@ -438,17 +446,37 @@ contacts_map = {
 #     }[x['PLANGUAGE,A,2']],
 #~ #have to be linked to the default adress of the partner with code == x['PCID,A,10']
     }
-
-def import_contact(reader_contact, writer_contact, contacts_map):
+job_map = {
+       #'id' : lambda x : '',
+       'address_id:id' : lambda x:'',
+       'contact_id:id' : lambda x:'',
+       'function_id:id': lambda x:'account_bob_import.res_partner_function_bob',
+       #'function_label' : lambda x:'' ...should be check...for cci users
+}
+def import_contact(reader_contact, writer_contact, contacts_map, writer_job, job_map):
     record = {}
+    record_job = {}
     for key, column_name in contacts_map.items():
         record[key] = key
+    for key, column_name in job_map.items():
+        record_job[key] = key
     writer_contact.writerow(record)
+    writer_job.writerow(record_job)
+    count_contact = 0
     for row in reader_contact:
         record = {}
+        record_job = {}
         for key,fnct in contacts_map.items():
             record[key] = fnct(convert2utf(row))
+        for key,fnct in job_map.items():
+            record_job[key] = fnct(convert2utf(row))
+        count_contact = count_contact + 1
+        record['id'] = "cont" + str(count_contact)
+        record_job['contact_id:id'] = record['id']
+        if dict_partner.has_key(row['PCID,A,10']):
+            record_job['address_id:id'] = dict_partner[row['PCID,A,10']]
         writer_contact.writerow(record)
+        writer_job.writerow(record_job)
     return True
 
 
@@ -513,7 +541,7 @@ def import_period(reader_period, writer_period, period_map):
 # -= F. Move and Move_line =-
 
 move_map = {
-    'id': lambda x: 'move_'+x['HDBK,A,4']+'/'+x['HFYEAR,A,5']+'/'+x['HDOCNO,I,4'], 
+    'id': lambda x: 'move_'+x['HDBK,A,4']+'/'+x['HFYEAR,A,5']+'/'+x['HDOCNO,I,4'],
 #    'name': #should be filled with sequence number,
     'journal_id:id': lambda x: 'journal_'+x['HDBK,A,4'],
     'state': lambda x: 'draft',
@@ -580,7 +608,7 @@ def _create_vat_move(x, vat_dict, count):
         'tax_amount': x['HTAX,$,8'],
         'state': 'draft',
 
-        'debit': str(_check_debit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8'])), 
+        'debit': str(_check_debit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8'])),
         'credit': str(_check_credit_vat(x['HTAX,$,8'],x['HAMOUNT,$,8'])),
         'ref':  x['HDOCNO,I,4'],
         'account_id:id': _pick_vat_account(x, vat_dict),
@@ -617,7 +645,7 @@ move_line_map = {
 
         #qd vente: <0 c'est credit et >0 c'est debit
         #qd achat: <0 c'est le credit et >0 c'est debit
-    'debit': lambda x: str(_check_debit(x['HAMOUNT,$,8'])), 
+    'debit': lambda x: str(_check_debit(x['HAMOUNT,$,8'])),
     'credit': lambda x: str(_check_credit(x['HAMOUNT,$,8'])),
     'ref': lambda x: x['HDOCNO,I,4'],
     'account_id:id': lambda x: 'account_'+x['HID,A,10'],
@@ -699,7 +727,7 @@ def import_move_line(reader, writer, map, ):
 # -=====================-
 
 #specific part for CCI
-reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb')) 
+reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb'))
 bob_conv_matching = {}
 bob_conv_matching[''] = ''
 for row in reader_partner_matching:
@@ -731,7 +759,8 @@ import_partner(reader_partner, writer_partner, partners_map, writer_address, par
 print 'importing contacts'
 reader_contact = csv.DictReader(file('original_csv/contacts.csv','rb')) #TODO: pxview IFcontacts.DB (?)-c > ....../account_bob_import/original_csv/contacts.csv
 writer_contact = csv.DictWriter(file('res.partner.contact.csv','wb'),contacts_map.keys())
-import_contact(reader_contact, writer_contact, contacts_map)
+writer_job = csv.DictWriter(file('res.partner.job.csv','wb'),job_map.keys())
+import_contact(reader_contact, writer_contact, contacts_map, writer_job, job_map)
 
 print 'importing fiscal years'
 reader_fyear = csv.DictReader(file('original_csv/period.csv','rb')) #TODO: pxview IFperiod.DB (?)-c > ....../account_bob_import/original_csv/period.csv
@@ -762,4 +791,3 @@ import_move_line(reader_move_line, writer_move_line, move_line_map)
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
