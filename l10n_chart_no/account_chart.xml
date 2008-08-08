@@ -5,7 +5,7 @@
 	<field name="code">0</field>
 	<field name="name">Account Chart</field>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[]"/>
+<!--	<field name="parent_id" eval="[]"/>-->
 	<field name="type">view</field>
 
 </record>
@@ -13,7 +13,7 @@
 	<field name="code">3</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Salgs- og driftsinntekter</field>
 
@@ -22,7 +22,7 @@
 	<field name="code">4</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Varekostnad</field>
 
@@ -31,16 +31,16 @@
 	<field name="code">5</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
-	<field name="name">Lønnskostnader</field>
+	<field name="name">Lï¿½nnskostnader</field>
 
 </record>
 <record id="chart6" model="account.account">
 	<field name="code">6</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Andre driftskostnader, av- og nedskrivninger</field>
 
@@ -49,7 +49,7 @@
 	<field name="code">8</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Finansinntekter og -kostnader, skatter, m.m.</field>
 
@@ -58,7 +58,7 @@
 	<field name="code">10</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Immaterielle eiendeler</field>
 
@@ -67,7 +67,7 @@
 	<field name="code">11</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Varige driftsmidler</field>
 
@@ -76,7 +76,7 @@
 	<field name="code">12</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Transportmidler, inventar, maskiner o.l.</field>
 
@@ -85,7 +85,7 @@
 	<field name="code">13</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Finansielle anleggsmidler</field>
 
@@ -94,7 +94,7 @@
 	<field name="code">14</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Varer</field>
 
@@ -103,7 +103,7 @@
 	<field name="code">15</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Fordringer</field>
 
@@ -112,7 +112,7 @@
 	<field name="code">17</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Andre fordringer</field>
 
@@ -121,7 +121,7 @@
 	<field name="code">18</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Investeringer</field>
 
@@ -130,7 +130,7 @@
 	<field name="code">19</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Bankinnskudd, kontanter o.l.</field>
 
@@ -139,7 +139,7 @@
 	<field name="code">20</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Egenkapital</field>
 
@@ -148,16 +148,16 @@
 	<field name="code">40</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart4')])]"/>
+	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
-	<field name="name">Råvarer og halvfabrikata</field>
+	<field name="name">Rï¿½varer og halvfabrikata</field>
 
 </record>
 <record id="chart43" model="account.account">
 	<field name="code">43</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart4')])]"/>
+	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Varer for videresalg</field>
 
@@ -166,7 +166,7 @@
 	<field name="code">62</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Energi, brensel o.l. vedr. produksjon</field>
 
@@ -175,7 +175,7 @@
 	<field name="code">63</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Kostnader. vedr. lokaler</field>
 
@@ -184,7 +184,7 @@
 	<field name="code">64</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Leie av maskiner, inventar o.l.</field>
 
@@ -193,7 +193,7 @@
 	<field name="code">200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart20')])]"/>
+	<field name="parent_id" ref="chart20"/>
 	<field name="type">view</field>
 	<field name="name">Innskutt egenkapital</field>
 
@@ -202,7 +202,7 @@
 	<field name="code">204</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart20')])]"/>
+	<field name="parent_id" ref="chart20"/>
 	<field name="type">view</field>
 	<field name="name">Opptj. egenkapital</field>
 
@@ -211,7 +211,7 @@
 	<field name="code">210</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Avsetninger for forpliktelser</field>
 
@@ -220,7 +220,7 @@
 	<field name="code">220</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Annen langsiktig gjeld</field>
 
@@ -229,7 +229,7 @@
 	<field name="code">230</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">Kortsiktig gjeld</field>
 
@@ -238,7 +238,7 @@
 	<field name="code">880</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">view</field>
 	<field name="name">Fond for vurderingsforskjeller</field>
 
@@ -247,7 +247,7 @@
 	<field name="code">891</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">view</field>
 	<field name="name">Annen egenkapital</field>
 
@@ -256,7 +256,7 @@
 	<field name="code">892</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">view</field>
 	<field name="name">Utbytte</field>
 
@@ -265,7 +265,7 @@
 	<field name="code">893</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">view</field>
 	<field name="name">Konsernbidrag</field>
 
@@ -274,7 +274,7 @@
 	<field name="code">1000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart10')])]"/>
+	<field name="parent_id" ref="chart10"/>
 	<field name="type">asset</field>
 	<field name="name">Forskning og utvikling</field>
 
@@ -283,7 +283,7 @@
 	<field name="code">1030</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart10')])]"/>
+	<field name="parent_id" ref="chart10"/>
 	<field name="type">asset</field>
 	<field name="name">Patenter</field>
 
@@ -292,7 +292,7 @@
 	<field name="code">1040</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart10')])]"/>
+	<field name="parent_id" ref="chart10"/>
 	<field name="type">asset</field>
 	<field name="name">Lisenser</field>
 
@@ -301,7 +301,7 @@
 	<field name="code">1050</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart10')])]"/>
+	<field name="parent_id" ref="chart10"/>
 	<field name="type">asset</field>
 	<field name="name">Varemerker</field>
 
@@ -310,7 +310,7 @@
 	<field name="code">1060</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart10')])]"/>
+	<field name="parent_id" ref="chart10"/>
 	<field name="type">asset</field>
 	<field name="name">Andre rettigheter</field>
 
@@ -319,7 +319,7 @@
 	<field name="code">1070</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart10')])]"/>
+	<field name="parent_id" ref="chart10"/>
 	<field name="type">asset</field>
 	<field name="name">Utsatt skattefordel</field>
 
@@ -328,7 +328,7 @@
 	<field name="code">1080</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart10')])]"/>
+	<field name="parent_id" ref="chart10"/>
 	<field name="type">asset</field>
 	<field name="name">Goodwill</field>
 
@@ -337,7 +337,7 @@
 	<field name="code">1100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart11')])]"/>
+	<field name="parent_id" ref="chart11"/>
 	<field name="type">asset</field>
 	<field name="name">Bygninger</field>
 
@@ -346,7 +346,7 @@
 	<field name="code">1120</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart11')])]"/>
+	<field name="parent_id" ref="chart11"/>
 	<field name="type">asset</field>
 	<field name="name">Bygningsmessige anlegg</field>
 
@@ -355,7 +355,7 @@
 	<field name="code">1140</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart11')])]"/>
+	<field name="parent_id" ref="chart11"/>
 	<field name="type">asset</field>
 	<field name="name">Jord- og skogbrukseiendommer</field>
 
@@ -364,7 +364,7 @@
 	<field name="code">1150</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart11')])]"/>
+	<field name="parent_id" ref="chart11"/>
 	<field name="type">asset</field>
 	<field name="name">Tomter og andre grunnarealer</field>
 
@@ -373,7 +373,7 @@
 	<field name="code">1200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
 	<field name="name">Maskiner og anlegg</field>
 
@@ -382,16 +382,16 @@
 	<field name="code">1210</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
-	<field name="name">Maskiner og anlegg under utførelse</field>
+	<field name="name">Maskiner og anlegg under utfï¿½relse</field>
 
 </record>
 <record id="chart1230" model="account.account">
 	<field name="code">1230</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
 	<field name="name">Biler</field>
 
@@ -400,7 +400,7 @@
 	<field name="code">1240</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
 	<field name="name">Andre transportmidler</field>
 
@@ -409,7 +409,7 @@
 	<field name="code">1250</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
 	<field name="name">Inventar</field>
 
@@ -418,7 +418,7 @@
 	<field name="code">1260</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
 	<field name="name">Fast bygningsinventar med annen avskrivning</field>
 
@@ -427,16 +427,16 @@
 	<field name="code">1270</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
-	<field name="name">Verktøy mv.</field>
+	<field name="name">Verktï¿½y mv.</field>
 
 </record>
 <record id="chart1280" model="account.account">
 	<field name="code">1280</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart12')])]"/>
+	<field name="parent_id" ref="chart12"/>
 	<field name="type">asset</field>
 	<field name="name">Kontormaskiner</field>
 
@@ -445,7 +445,7 @@
 	<field name="code">1300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart13')])]"/>
+	<field name="parent_id" ref="chart13"/>
 	<field name="type">asset</field>
 	<field name="name">Investeringer i datterselskaper</field>
 
@@ -454,7 +454,7 @@
 	<field name="code">1350</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart13')])]"/>
+	<field name="parent_id" ref="chart13"/>
 	<field name="type">asset</field>
 	<field name="name">Investeringer i aksjer og andeler</field>
 
@@ -463,7 +463,7 @@
 	<field name="code">1360</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart13')])]"/>
+	<field name="parent_id" ref="chart13"/>
 	<field name="type">asset</field>
 	<field name="name">Obligasjoner</field>
 
@@ -472,25 +472,25 @@
 	<field name="code">1370</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart13')])]"/>
+	<field name="parent_id" ref="chart13"/>
 	<field name="type">asset</field>
-	<field name="name">Fordringer på eiere, styremedlemmer mv.</field>
+	<field name="name">Fordringer pï¿½ eiere, styremedlemmer mv.</field>
 
 </record>
 <record id="chart1380" model="account.account">
 	<field name="code">1380</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart13')])]"/>
+	<field name="parent_id" ref="chart13"/>
 	<field name="type">asset</field>
-	<field name="name">Fordringer på ansatte</field>
+	<field name="name">Fordringer pï¿½ ansatte</field>
 
 </record>
 <record id="chart1390" model="account.account">
 	<field name="code">1390</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart13')])]"/>
+	<field name="parent_id" ref="chart13"/>
 	<field name="type">asset</field>
 	<field name="name">Andre langsiktige fordringer</field>
 
@@ -499,16 +499,16 @@
 	<field name="code">1400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart14')])]"/>
+	<field name="parent_id" ref="chart14"/>
 	<field name="type">asset</field>
-	<field name="name">Råvarer og innkjøpte halvfabrikata</field>
+	<field name="name">Rï¿½varer og innkjï¿½pte halvfabrikata</field>
 
 </record>
 <record id="chart1420" model="account.account">
 	<field name="code">1420</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart14')])]"/>
+	<field name="parent_id" ref="chart14"/>
 	<field name="type">asset</field>
 	<field name="name">Varer under tilvirkning</field>
 
@@ -517,7 +517,7 @@
 	<field name="code">1440</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart14')])]"/>
+	<field name="parent_id" ref="chart14"/>
 	<field name="type">asset</field>
 	<field name="name">Ferdige egentilvirkede varer</field>
 
@@ -526,25 +526,25 @@
 	<field name="code">1460</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart14')])]"/>
+	<field name="parent_id" ref="chart14"/>
 	<field name="type">asset</field>
-	<field name="name">Innkjøpte varer for videresalg</field>
+	<field name="name">Innkjï¿½pte varer for videresalg</field>
 
 </record>
 <record id="chart1480" model="account.account">
 	<field name="code">1480</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart14')])]"/>
+	<field name="parent_id" ref="chart14"/>
 	<field name="type">asset</field>
-	<field name="name">Forskuddsbetaling til leverandører</field>
+	<field name="name">Forskuddsbetaling til leverandï¿½rer</field>
 
 </record>
 <record id="chart1500" model="account.account">
 	<field name="code">1500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart15')])]"/>
+	<field name="parent_id" ref="chart15"/>
 	<field name="type">asset</field>
 	<field name="name">Kundefordringer</field>
 
@@ -553,7 +553,7 @@
 	<field name="code">1520</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart15')])]"/>
+	<field name="parent_id" ref="chart15"/>
 	<field name="type">asset</field>
 	<field name="name">Andre kortsiktige fordringer</field>
 
@@ -562,7 +562,7 @@
 	<field name="code">1530</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart15')])]"/>
+	<field name="parent_id" ref="chart15"/>
 	<field name="type">asset</field>
 	<field name="name">Opptjente, ikke fakturerte driftsinntekter</field>
 
@@ -571,7 +571,7 @@
 	<field name="code">1570</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart15')])]"/>
+	<field name="parent_id" ref="chart15"/>
 	<field name="type">asset</field>
 	<field name="name">Andre kortsiktige fordringer</field>
 
@@ -580,16 +580,16 @@
 	<field name="code">1580</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart15')])]"/>
+	<field name="parent_id" ref="chart15"/>
 	<field name="type">asset</field>
-	<field name="name">Avsetning tap på fordringer</field>
+	<field name="name">Avsetning tap pï¿½ fordringer</field>
 
 </record>
 <record id="chart1700" model="account.account">
 	<field name="code">1700</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart17')])]"/>
+	<field name="parent_id" ref="chart17"/>
 	<field name="type">asset</field>
 	<field name="name">Forskuddsbetalt leie</field>
 
@@ -598,7 +598,7 @@
 	<field name="code">1710</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart17')])]"/>
+	<field name="parent_id" ref="chart17"/>
 	<field name="type">asset</field>
 	<field name="name">Forskuddsbetalt rente</field>
 
@@ -607,43 +607,43 @@
 	<field name="code">1720</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart17')])]"/>
+	<field name="parent_id" ref="chart17"/>
 	<field name="type">asset</field>
-	<field name="name">Forskuddsbetalt lønn</field>
+	<field name="name">Forskuddsbetalt lï¿½nn</field>
 
 </record>
 <record id="chart1750" model="account.account">
 	<field name="code">1750</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart17')])]"/>
+	<field name="parent_id" ref="chart17"/>
 	<field name="type">asset</field>
-	<field name="name">Påløpte leieinntekter</field>
+	<field name="name">Pï¿½lï¿½pte leieinntekter</field>
 
 </record>
 <record id="chart1760" model="account.account">
 	<field name="code">1760</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart17')])]"/>
+	<field name="parent_id" ref="chart17"/>
 	<field name="type">asset</field>
-	<field name="name">Påløpte renteinntekter</field>
+	<field name="name">Pï¿½lï¿½pte renteinntekter</field>
 
 </record>
 <record id="chart1780" model="account.account">
 	<field name="code">1780</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart17')])]"/>
+	<field name="parent_id" ref="chart17"/>
 	<field name="type">asset</field>
-	<field name="name">Krav på innbetaling av selskapskapital</field>
+	<field name="name">Krav pï¿½ innbetaling av selskapskapital</field>
 
 </record>
 <record id="chart1800" model="account.account">
 	<field name="code">1800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Aksjer &amp; andeler i foretak i samme kons.</field>
 
@@ -652,7 +652,7 @@
 	<field name="code">1810</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Markesdbaserte aksjer</field>
 
@@ -661,7 +661,7 @@
 	<field name="code">1820</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Andre aksjer</field>
 
@@ -670,7 +670,7 @@
 	<field name="code">1830</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Markedsbaserte obligasjoner</field>
 
@@ -679,7 +679,7 @@
 	<field name="code">1840</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Andre obligasjoner</field>
 
@@ -688,7 +688,7 @@
 	<field name="code">1850</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Markedsbaserte sertifikater</field>
 
@@ -697,7 +697,7 @@
 	<field name="code">1860</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Andre sertifikater</field>
 
@@ -706,7 +706,7 @@
 	<field name="code">1880</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart18')])]"/>
+	<field name="parent_id" ref="chart18"/>
 	<field name="type">asset</field>
 	<field name="name">Andre finansielle instrumenter</field>
 
@@ -715,7 +715,7 @@
 	<field name="code">1900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart19')])]"/>
+	<field name="parent_id" ref="chart19"/>
 	<field name="type">asset</field>
 	<field name="name">Kontanter</field>
 
@@ -724,7 +724,7 @@
 	<field name="code">1910</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart19')])]"/>
+	<field name="parent_id" ref="chart19"/>
 	<field name="type">asset</field>
 	<field name="name">Kasse</field>
 
@@ -733,7 +733,7 @@
 	<field name="code">1920</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart19')])]"/>
+	<field name="parent_id" ref="chart19"/>
 	<field name="type">asset</field>
 	<field name="name">Bankinnskudd</field>
 
@@ -742,7 +742,7 @@
 	<field name="code">1950</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart19')])]"/>
+	<field name="parent_id" ref="chart19"/>
 	<field name="type">asset</field>
 	<field name="name">Bankinnskudd for skattetrekk</field>
 
@@ -751,7 +751,7 @@
 	<field name="code">2000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart200')])]"/>
+	<field name="parent_id" ref="chart200"/>
 	<field name="type">tax</field>
 	<field name="name">Aksjekapital</field>
 
@@ -760,7 +760,7 @@
 	<field name="code">2010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart20')])]"/>
+	<field name="parent_id" ref="chart20"/>
 	<field name="type">tax</field>
 	<field name="name">Egne aksjer</field>
 
@@ -769,7 +769,7 @@
 	<field name="code">2020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart20')])]"/>
+	<field name="parent_id" ref="chart20"/>
 	<field name="type">tax</field>
 	<field name="name">Overkursfond</field>
 
@@ -778,7 +778,7 @@
 	<field name="code">2040</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart204')])]"/>
+	<field name="parent_id" ref="chart204"/>
 	<field name="type">tax</field>
 	<field name="name">Fond for vurderingsforskjeller</field>
 
@@ -787,7 +787,7 @@
 	<field name="code">2050</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart20')])]"/>
+	<field name="parent_id" ref="chart20"/>
 	<field name="type">tax</field>
 	<field name="name">Annen egenkapital</field>
 
@@ -796,7 +796,7 @@
 	<field name="code">2080</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart20')])]"/>
+	<field name="parent_id" ref="chart20"/>
 	<field name="type">tax</field>
 	<field name="name">Udisponert overskudd</field>
 
@@ -805,7 +805,7 @@
 	<field name="code">2090</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart20')])]"/>
+	<field name="parent_id" ref="chart20"/>
 	<field name="type">tax</field>
 	<field name="name">Udekket tap</field>
 
@@ -814,7 +814,7 @@
 	<field name="code">2100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart210')])]"/>
+	<field name="parent_id" ref="chart210"/>
 	<field name="type">cash</field>
 	<field name="name">Pensjonsforpliktelser</field>
 
@@ -823,7 +823,7 @@
 	<field name="code">2120</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Utsatt skatt</field>
 
@@ -832,7 +832,7 @@
 	<field name="code">2140</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Avsetn. for garanti- &amp; serviceforpl.</field>
 
@@ -841,7 +841,7 @@
 	<field name="code">2180</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Andre avsetninger for forpiktelser</field>
 
@@ -850,25 +850,25 @@
 	<field name="code">2200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart220')])]"/>
+	<field name="parent_id" ref="chart220"/>
 	<field name="type">cash</field>
-	<field name="name">Konvertible lån</field>
+	<field name="name">Konvertible lï¿½n</field>
 
 </record>
 <record id="chart2210" model="account.account">
 	<field name="code">2210</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Obligsjonslån</field>
+	<field name="name">Obligsjonslï¿½n</field>
 
 </record>
 <record id="chart2220" model="account.account">
 	<field name="code">2220</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Gjeld til kredittinstitusjoner</field>
 
@@ -877,16 +877,16 @@
 	<field name="code">2240</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Pantelån</field>
+	<field name="name">Pantelï¿½n</field>
 
 </record>
 <record id="chart2260" model="account.account">
 	<field name="code">2260</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Gjeld til selskap i samme konsern</field>
 
@@ -895,52 +895,52 @@
 	<field name="code">2270</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Andre valutalån</field>
+	<field name="name">Andre valutalï¿½n</field>
 
 </record>
 <record id="chart2300" model="account.account">
 	<field name="code">2300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart230')])]"/>
+	<field name="parent_id" ref="chart230"/>
 	<field name="type">cash</field>
-	<field name="name">Konvertible lån</field>
+	<field name="name">Konvertible lï¿½n</field>
 
 </record>
 <record id="chart2320" model="account.account">
 	<field name="code">2320</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Sertifikatlån</field>
+	<field name="name">Sertifikatlï¿½n</field>
 
 </record>
 <record id="chart2340" model="account.account">
 	<field name="code">2340</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Andre valutalån</field>
+	<field name="name">Andre valutalï¿½n</field>
 
 </record>
 <record id="chart2360" model="account.account">
 	<field name="code">2360</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Byggelån</field>
+	<field name="name">Byggelï¿½n</field>
 
 </record>
 <record id="chart2380" model="account.account">
 	<field name="code">2380</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Kassakreditt</field>
 
@@ -949,16 +949,16 @@
 	<field name="code">2400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Leverandørgjeld</field>
+	<field name="name">Leverandï¿½rgjeld</field>
 
 </record>
 <record id="chart2500" model="account.account">
 	<field name="code">2500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Avsatt betalbar skatt</field>
 
@@ -967,7 +967,7 @@
 	<field name="code">2510</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Skattebetaling</field>
 
@@ -976,7 +976,7 @@
 	<field name="code">2600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Skattetrekk</field>
 
@@ -985,16 +985,16 @@
 	<field name="code">2620</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Påleggstrekk</field>
+	<field name="name">Pï¿½leggstrekk</field>
 
 </record>
 <record id="chart2630" model="account.account">
 	<field name="code">2630</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Bidragstrekk</field>
 
@@ -1003,7 +1003,7 @@
 	<field name="code">2640</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Trygdetrekk</field>
 
@@ -1012,7 +1012,7 @@
 	<field name="code">2650</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Forsikringstrekk</field>
 
@@ -1021,7 +1021,7 @@
 	<field name="code">2660</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Fagforeningstrekk</field>
 
@@ -1030,7 +1030,7 @@
 	<field name="code">2690</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Andre trekk</field>
 
@@ -1039,25 +1039,25 @@
 	<field name="code">2710</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Utgående 24% mva</field>
+	<field name="name">Utgï¿½ende 24% mva</field>
 
 </record>
 <record id="chart2715" model="account.account">
 	<field name="code">2715</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Utgående 12% mva</field>
+	<field name="name">Utgï¿½ende 12% mva</field>
 
 </record>
 <record id="chart2717" model="account.account">
 	<field name="code">2717</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Beregnet avgift utlandet</field>
 
@@ -1066,25 +1066,25 @@
 	<field name="code">2720</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Inngående 24% mva</field>
+	<field name="name">Inngï¿½ende 24% mva</field>
 
 </record>
 <record id="chart2725" model="account.account">
 	<field name="code">2725</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Inngående 12% mva</field>
+	<field name="name">Inngï¿½ende 12% mva</field>
 
 </record>
 <record id="chart2745" model="account.account">
 	<field name="code">2745</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Grunnlag 1 tjenester utlandet</field>
 
@@ -1093,7 +1093,7 @@
 	<field name="code">2746</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Grunnlag 2 tjenester utlandet</field>
 
@@ -1102,25 +1102,25 @@
 	<field name="code">2750</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Oppgjørskonto merverdiavgift</field>
+	<field name="name">Oppgjï¿½rskonto merverdiavgift</field>
 
 </record>
 <record id="chart2770" model="account.account">
 	<field name="code">2770</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Påløpt arbeidsgiveravgift</field>
+	<field name="name">Pï¿½lï¿½pt arbeidsgiveravgift</field>
 
 </record>
 <record id="chart2780" model="account.account">
 	<field name="code">2780</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Skyldig arbeidsgiveravgift</field>
 
@@ -1129,16 +1129,16 @@
 	<field name="code">2781</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Arb.giv.avg. pål. feriep.</field>
+	<field name="name">Arb.giv.avg. pï¿½l. feriep.</field>
 
 </record>
 <record id="chart2800" model="account.account">
 	<field name="code">2800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Avsatt utbytte</field>
 
@@ -1147,7 +1147,7 @@
 	<field name="code">2900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Forskudd fra kunder</field>
 
@@ -1156,16 +1156,16 @@
 	<field name="code">2910</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Skyldig lønn</field>
+	<field name="name">Skyldig lï¿½nn</field>
 
 </record>
 <record id="chart2920" model="account.account">
 	<field name="code">2920</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Skyldig feriepenger</field>
 
@@ -1174,34 +1174,34 @@
 	<field name="code">2930</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Gjeld til ansatte og aksjonærer</field>
+	<field name="name">Gjeld til ansatte og aksjonï¿½rer</field>
 
 </record>
 <record id="chart2950" model="account.account">
 	<field name="code">2950</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Påløpte renter</field>
+	<field name="name">Pï¿½lï¿½pte renter</field>
 
 </record>
 <record id="chart2960" model="account.account">
 	<field name="code">2960</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
-	<field name="name">Påløpte kostn. og forskuddsbet. inskudd</field>
+	<field name="name">Pï¿½lï¿½pte kostn. og forskuddsbet. inskudd</field>
 
 </record>
 <record id="account.a_income" model="account.account">
 	<field name="code">3010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Salgsinntekter, 24% mva</field>
 
@@ -1210,7 +1210,7 @@
 	<field name="code">3019</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Frakt</field>
 
@@ -1219,7 +1219,7 @@
 	<field name="code">3020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Salgsinntekter, 12% mva</field>
 
@@ -1228,7 +1228,7 @@
 	<field name="code">3060</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Uttak av varer</field>
 
@@ -1237,7 +1237,7 @@
 	<field name="code">3080</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Rabatter og andre salgsinntektsreduksjon</field>
 
@@ -1246,16 +1246,16 @@
 	<field name="code">3099</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
-	<field name="name">Miljøavgift</field>
+	<field name="name">Miljï¿½avgift</field>
 
 </record>
 <record id="chart3110" model="account.account">
 	<field name="code">3110</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Salgsinntekter, avgiftsfrie</field>
 
@@ -1264,7 +1264,7 @@
 	<field name="code">3160</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Uttak av varer</field>
 
@@ -1273,7 +1273,7 @@
 	<field name="code">3180</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Rabatter og andre salgsinntektsreduksjon</field>
 
@@ -1282,7 +1282,7 @@
 	<field name="code">3300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Spes. offent. avg. tilvirk./solgte varer</field>
 
@@ -1291,7 +1291,7 @@
 	<field name="code">3400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Spes. offent. avg. tilvirk./solgte varer</field>
 
@@ -1300,7 +1300,7 @@
 	<field name="code">3440</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Spes. offentlige tilskudd for tjenester</field>
 
@@ -1309,7 +1309,7 @@
 	<field name="code">3500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Uopptjente inntekter garanti</field>
 
@@ -1318,7 +1318,7 @@
 	<field name="code">3510</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Uopptjente inntekter service</field>
 
@@ -1327,7 +1327,7 @@
 	<field name="code">3600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Leieinntekter fast eiendom</field>
 
@@ -1336,7 +1336,7 @@
 	<field name="code">3610</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Leieinntekter andre varige driftsmidler</field>
 
@@ -1345,7 +1345,7 @@
 	<field name="code">3620</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Andre leieinntekter</field>
 
@@ -1354,7 +1354,7 @@
 	<field name="code">3700</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Provisjonsinntekter</field>
 
@@ -1363,7 +1363,7 @@
 	<field name="code">3800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Gevinst ved avgang av anleggsmidler</field>
 
@@ -1372,7 +1372,7 @@
 	<field name="code">3900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart3')])]"/>
+	<field name="parent_id" ref="chart3"/>
 	<field name="type">income</field>
 	<field name="name">Andre driftsrelaterte inntekter</field>
 
@@ -1381,34 +1381,34 @@
 	<field name="code">4010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart40')])]"/>
+	<field name="parent_id" ref="chart40"/>
 	<field name="type">expense</field>
-	<field name="name">Innkjøp varer, avgiftspliktig 24% mva</field>
+	<field name="name">Innkjï¿½p varer, avgiftspliktig 24% mva</field>
 
 </record>
 <record id="chart4020" model="account.account">
 	<field name="code">4020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart40')])]"/>
+	<field name="parent_id" ref="chart40"/>
 	<field name="type">expense</field>
-	<field name="name">Innkjøp varer, avgiftspliktig 12% mva</field>
+	<field name="name">Innkjï¿½p varer, avgiftspliktig 12% mva</field>
 
 </record>
 <record id="chart4060" model="account.account">
 	<field name="code">4060</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart40')])]"/>
+	<field name="parent_id" ref="chart40"/>
 	<field name="type">expense</field>
-	<field name="name">Innkjøpsprisreduksjoner</field>
+	<field name="name">Innkjï¿½psprisreduksjoner</field>
 
 </record>
 <record id="chart4070" model="account.account">
 	<field name="code">4070</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart40')])]"/>
+	<field name="parent_id" ref="chart40"/>
 	<field name="type">expense</field>
 	<field name="name">Frakt, toll og spedisjon</field>
 
@@ -1417,7 +1417,7 @@
 	<field name="code">4090</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart40')])]"/>
+	<field name="parent_id" ref="chart40"/>
 	<field name="type">expense</field>
 	<field name="name">Beholdningsendring</field>
 
@@ -1426,16 +1426,16 @@
 	<field name="code">4110</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart4')])]"/>
+	<field name="parent_id" ref="chart4"/>
 	<field name="type">expense</field>
-	<field name="name">Innkjøp varer, avgiftsfritt</field>
+	<field name="name">Innkjï¿½p varer, avgiftsfritt</field>
 
 </record>
 <record id="chart4160" model="account.account">
 	<field name="code">4160</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart4')])]"/>
+	<field name="parent_id" ref="chart4"/>
 	<field name="type">expense</field>
 	<field name="name">Frakt, toll og spedisjon</field>
 
@@ -1444,7 +1444,7 @@
 	<field name="code">4170</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart4')])]"/>
+	<field name="parent_id" ref="chart4"/>
 	<field name="type">expense</field>
 	<field name="name">Frakt, toll og spedisjon, avgiftsfritt</field>
 
@@ -1453,16 +1453,16 @@
 	<field name="code">4180</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart4')])]"/>
+	<field name="parent_id" ref="chart4"/>
 	<field name="type">expense</field>
-	<field name="name">Innkjøpsprisreduksjoner</field>
+	<field name="name">Innkjï¿½psprisreduksjoner</field>
 
 </record>
 <record id="chart4190" model="account.account">
 	<field name="code">4190</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart4')])]"/>
+	<field name="parent_id" ref="chart4"/>
 	<field name="type">expense</field>
 	<field name="name">Beholdningsendring</field>
 
@@ -1471,43 +1471,43 @@
 	<field name="code">4310</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart43')])]"/>
+	<field name="parent_id" ref="chart43"/>
 	<field name="type">expense</field>
-	<field name="name">Innkjøp av varer for videresalg, 24% mva</field>
+	<field name="name">Innkjï¿½p av varer for videresalg, 24% mva</field>
 
 </record>
 <record id="chart4320" model="account.account">
 	<field name="code">4320</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart43')])]"/>
+	<field name="parent_id" ref="chart43"/>
 	<field name="type">expense</field>
-	<field name="name">Innkjøp av varer for videresalg, 12% mva</field>
+	<field name="name">Innkjï¿½p av varer for videresalg, 12% mva</field>
 
 </record>
 <record id="chart4360" model="account.account">
 	<field name="code">4360</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart43')])]"/>
+	<field name="parent_id" ref="chart43"/>
 	<field name="type">expense</field>
-	<field name="name">Frakt, toll m.m. vedr. innkjøp av varer for videresalg</field>
+	<field name="name">Frakt, toll m.m. vedr. innkjï¿½p av varer for videresalg</field>
 
 </record>
 <record id="chart4370" model="account.account">
 	<field name="code">4370</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart43')])]"/>
+	<field name="parent_id" ref="chart43"/>
 	<field name="type">expense</field>
-	<field name="name">Rabatter m.m. vedr. innkjøp av varer for videresalg</field>
+	<field name="name">Rabatter m.m. vedr. innkjï¿½p av varer for videresalg</field>
 
 </record>
 <record id="chart4380" model="account.account">
 	<field name="code">4380</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart43')])]"/>
+	<field name="parent_id" ref="chart43"/>
 	<field name="type">expense</field>
 	<field name="name">Varekostnad</field>
 
@@ -1516,7 +1516,7 @@
 	<field name="code">4390</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart43')])]"/>
+	<field name="parent_id" ref="chart43"/>
 	<field name="type">expense</field>
 	<field name="name">Beholdningsendring varer for videresalg</field>
 
@@ -1525,34 +1525,34 @@
 	<field name="code">5010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
-	<field name="name">Faste lønninger</field>
+	<field name="name">Faste lï¿½nninger</field>
 
 </record>
 <record id="chart5090" model="account.account">
 	<field name="code">5090</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
-	<field name="name">Periodiseringskonto lønn</field>
+	<field name="name">Periodiseringskonto lï¿½nn</field>
 
 </record>
 <record id="chart5190" model="account.account">
 	<field name="code">5190</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
-	<field name="name">Påløpne feriepenger</field>
+	<field name="name">Pï¿½lï¿½pne feriepenger</field>
 
 </record>
 <record id="chart5210" model="account.account">
 	<field name="code">5210</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Fri bil</field>
 
@@ -1561,7 +1561,7 @@
 	<field name="code">5220</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Fri telefon</field>
 
@@ -1570,7 +1570,7 @@
 	<field name="code">5230</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Fri avis</field>
 
@@ -1579,7 +1579,7 @@
 	<field name="code">5240</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Fri losji og bolig</field>
 
@@ -1588,7 +1588,7 @@
 	<field name="code">5250</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Rentefordel</field>
 
@@ -1597,7 +1597,7 @@
 	<field name="code">5260</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Smusstillegg</field>
 
@@ -1606,7 +1606,7 @@
 	<field name="code">5280</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Andre fordeler i arbeidsforhold</field>
 
@@ -1615,7 +1615,7 @@
 	<field name="code">5291</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Motkonto for gruppe 52</field>
 
@@ -1624,7 +1624,7 @@
 	<field name="code">5330</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Godtgj. til styre- og bedriftsforsamling</field>
 
@@ -1633,7 +1633,7 @@
 	<field name="code">5410</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Arbeidsgiveravgift</field>
 
@@ -1642,16 +1642,16 @@
 	<field name="code">5411</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
-	<field name="name">Arb.giv.avg. pål. feriep.</field>
+	<field name="name">Arb.giv.avg. pï¿½l. feriep.</field>
 
 </record>
 <record id="chart5420" model="account.account">
 	<field name="code">5420</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Innberetningspliktige pensjonskostnader</field>
 
@@ -1660,7 +1660,7 @@
 	<field name="code">5430</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Premie pensjonsordning</field>
 
@@ -1669,16 +1669,16 @@
 	<field name="code">5500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
-	<field name="name">Andre kostnadsgodtgjørelser</field>
+	<field name="name">Andre kostnadsgodtgjï¿½relser</field>
 
 </record>
 <record id="chart5510" model="account.account">
 	<field name="code">5510</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Overtidsmat etter regning</field>
 
@@ -1687,7 +1687,7 @@
 	<field name="code">5520</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Kantinekostnader</field>
 
@@ -1696,7 +1696,7 @@
 	<field name="code">5800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Refusjon av sykepenger</field>
 
@@ -1705,7 +1705,7 @@
 	<field name="code">5820</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Refusjon av arbeidsgiveravgift</field>
 
@@ -1714,7 +1714,7 @@
 	<field name="code">5920</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Yrkesskadeforsikring</field>
 
@@ -1723,7 +1723,7 @@
 	<field name="code">5930</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Andre ikke arb.giv.avg.pliktige forsikr.</field>
 
@@ -1732,7 +1732,7 @@
 	<field name="code">5950</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Personalforsikring</field>
 
@@ -1741,7 +1741,7 @@
 	<field name="code">5960</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart5')])]"/>
+	<field name="parent_id" ref="chart5"/>
 	<field name="type">expense</field>
 	<field name="name">Gaver til ansatte</field>
 
@@ -1750,34 +1750,34 @@
 	<field name="code">6000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Avskrivning på bygn. &amp; annen fast eiend.</field>
+	<field name="name">Avskrivning pï¿½ bygn. &amp; annen fast eiend.</field>
 
 </record>
 <record id="chart6010" model="account.account">
 	<field name="code">6010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Avskrivning på transportmidler, maskiner</field>
+	<field name="name">Avskrivning pï¿½ transportmidler, maskiner</field>
 
 </record>
 <record id="chart6020" model="account.account">
 	<field name="code">6020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Avskrivning på immaterielle eiendeler</field>
+	<field name="name">Avskrivning pï¿½ immaterielle eiendeler</field>
 
 </record>
 <record id="chart6050" model="account.account">
 	<field name="code">6050</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Nedskr. varige driftsmidl. &amp; imat. eiend</field>
 
@@ -1786,7 +1786,7 @@
 	<field name="code">6100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Frakter, transportkostnader og forsikring</field>
 
@@ -1795,7 +1795,7 @@
 	<field name="code">6110</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Toll og spedisjonskostnader ved forsend</field>
 
@@ -1804,7 +1804,7 @@
 	<field name="code">6200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart62')])]"/>
+	<field name="parent_id" ref="chart62"/>
 	<field name="type">expense</field>
 	<field name="name">Elektrisitet</field>
 
@@ -1813,7 +1813,7 @@
 	<field name="code">6260</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart62')])]"/>
+	<field name="parent_id" ref="chart62"/>
 	<field name="type">expense</field>
 	<field name="name">Vann</field>
 
@@ -1822,7 +1822,7 @@
 	<field name="code">6300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart63')])]"/>
+	<field name="parent_id" ref="chart63"/>
 	<field name="type">expense</field>
 	<field name="name">Leie lokaler</field>
 
@@ -1831,16 +1831,16 @@
 	<field name="code">6320</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart63')])]"/>
+	<field name="parent_id" ref="chart63"/>
 	<field name="type">expense</field>
-	<field name="name">Renovasjon, vann, avløp mv.</field>
+	<field name="name">Renovasjon, vann, avlï¿½p mv.</field>
 
 </record>
 <record id="chart6340" model="account.account">
 	<field name="code">6340</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart63')])]"/>
+	<field name="parent_id" ref="chart63"/>
 	<field name="type">expense</field>
 	<field name="name">Lys, varme</field>
 
@@ -1849,7 +1849,7 @@
 	<field name="code">6360</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart63')])]"/>
+	<field name="parent_id" ref="chart63"/>
 	<field name="type">expense</field>
 	<field name="name">Renhold</field>
 
@@ -1858,7 +1858,7 @@
 	<field name="code">6400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart64')])]"/>
+	<field name="parent_id" ref="chart64"/>
 	<field name="type">expense</field>
 	<field name="name">Leie av driftsmidler</field>
 
@@ -1867,7 +1867,7 @@
 	<field name="code">6430</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart64')])]"/>
+	<field name="parent_id" ref="chart64"/>
 	<field name="type">expense</field>
 	<field name="name">Leie andre kontormaskiner</field>
 
@@ -1876,7 +1876,7 @@
 	<field name="code">6540</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Inventar</field>
 
@@ -1885,7 +1885,7 @@
 	<field name="code">6550</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Driftsmaterialer</field>
 
@@ -1894,7 +1894,7 @@
 	<field name="code">6560</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Rekvisita</field>
 
@@ -1903,16 +1903,16 @@
 	<field name="code">6570</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Arbeidsklær og verneutstyr</field>
+	<field name="name">Arbeidsklï¿½r og verneutstyr</field>
 
 </record>
 <record id="chart6600" model="account.account">
 	<field name="code">6600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Reparasjoner og vedlikehold bygninger</field>
 
@@ -1921,7 +1921,7 @@
 	<field name="code">6620</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Reparasjoner og vedlikehold utstyr</field>
 
@@ -1930,7 +1930,7 @@
 	<field name="code">6700</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Revisjonshonorar</field>
 
@@ -1939,25 +1939,25 @@
 	<field name="code">6720</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Honorar for økonomisk &amp; juridisk bistand</field>
+	<field name="name">Honorar for ï¿½konomisk &amp; juridisk bistand</field>
 
 </record>
 <record id="chart6750" model="account.account">
 	<field name="code">6750</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Honorar regnskapsfører</field>
+	<field name="name">Honorar regnskapsfï¿½rer</field>
 
 </record>
 <record id="chart6800" model="account.account">
 	<field name="code">6800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Kontorrekvisita</field>
 
@@ -1966,7 +1966,7 @@
 	<field name="code">6820</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Trykksaker</field>
 
@@ -1975,25 +1975,25 @@
 	<field name="code">6840</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Aviser, tidsskrifter, bøker mv.</field>
+	<field name="name">Aviser, tidsskrifter, bï¿½ker mv.</field>
 
 </record>
 <record id="chart6860" model="account.account">
 	<field name="code">6860</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
-	<field name="name">Møter, kurs, oppdatering mv.</field>
+	<field name="name">Mï¿½ter, kurs, oppdatering mv.</field>
 
 </record>
 <record id="chart6900" model="account.account">
 	<field name="code">6900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Telefon</field>
 
@@ -2002,7 +2002,7 @@
 	<field name="code">6940</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart6')])]"/>
+	<field name="parent_id" ref="chart6"/>
 	<field name="type">expense</field>
 	<field name="name">Porto</field>
 
@@ -2011,7 +2011,7 @@
 	<field name="code">7000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Drivstoff</field>
 
@@ -2020,7 +2020,7 @@
 	<field name="code">7020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Vedlikehold</field>
 
@@ -2029,7 +2029,7 @@
 	<field name="code">7040</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Forsikringer</field>
 
@@ -2038,25 +2038,25 @@
 	<field name="code">7100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Bilgodtgjørelse, oppgavepliktig</field>
+	<field name="name">Bilgodtgjï¿½relse, oppgavepliktig</field>
 
 </record>
 <record id="chart7105" model="account.account">
 	<field name="code">7105</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Øreavrunding</field>
+	<field name="name">ï¿½reavrunding</field>
 
 </record>
 <record id="chart7130" model="account.account">
 	<field name="code">7130</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Reisekostnader, oppgavepliktige</field>
 
@@ -2065,7 +2065,7 @@
 	<field name="code">7140</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Reisekostnader, ikke oppgavepliktig</field>
 
@@ -2074,7 +2074,7 @@
 	<field name="code">7150</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Diettkostnader, oppgaveplikig</field>
 
@@ -2083,7 +2083,7 @@
 	<field name="code">7160</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Diettkostnader, ikke oppgavepliktig</field>
 
@@ -2092,7 +2092,7 @@
 	<field name="code">7200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Provisjonskostnader, oppgavepliktige</field>
 
@@ -2101,7 +2101,7 @@
 	<field name="code">7210</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Provisjonskostnader, ikke oppgavepliktig</field>
 
@@ -2110,7 +2110,7 @@
 	<field name="code">7300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Salgskostnader</field>
 
@@ -2119,7 +2119,7 @@
 	<field name="code">7320</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Reklamekostnader</field>
 
@@ -2128,7 +2128,7 @@
 	<field name="code">7350</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Representasjon, fradragsberettiget</field>
 
@@ -2137,7 +2137,7 @@
 	<field name="code">7360</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Representasjon, ikke fradragsberettiget</field>
 
@@ -2146,7 +2146,7 @@
 	<field name="code">7400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Kontingenter og gaver</field>
 
@@ -2155,7 +2155,7 @@
 	<field name="code">7500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Forsikringspremier</field>
 
@@ -2164,7 +2164,7 @@
 	<field name="code">7550</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Garanti- og servicekostnader</field>
 
@@ -2173,7 +2173,7 @@
 	<field name="code">7600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Lisenesavgifter og royalties</field>
 
@@ -2182,16 +2182,16 @@
 	<field name="code">7700</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Styre- og bedriftsforsamlingsmøter</field>
+	<field name="name">Styre- og bedriftsforsamlingsmï¿½ter</field>
 
 </record>
 <record id="chart7710" model="account.account">
 	<field name="code">7710</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Generalforsamling</field>
 
@@ -2200,7 +2200,7 @@
 	<field name="code">7730</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Kostnader ved egne aksjer</field>
 
@@ -2209,7 +2209,7 @@
 	<field name="code">7750</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Eiendoms- og festeavgift</field>
 
@@ -2218,7 +2218,7 @@
 	<field name="code">7770</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Bank og kortgebyrer</field>
 
@@ -2227,7 +2227,7 @@
 	<field name="code">7800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Tap ved avgang anleggsmidler</field>
 
@@ -2236,25 +2236,25 @@
 	<field name="code">7820</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Innkommet på tidligere nedskrevne fordri</field>
+	<field name="name">Innkommet pï¿½ tidligere nedskrevne fordri</field>
 
 </record>
 <record id="chart7830" model="account.account">
 	<field name="code">7830</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Tap på fordringer</field>
+	<field name="name">Tap pï¿½ fordringer</field>
 
 </record>
 <record id="chart7850" model="account.account">
 	<field name="code">7850</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Tap pga. brannskade</field>
 
@@ -2263,25 +2263,25 @@
 	<field name="code">7860</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Tap på kontrakter</field>
+	<field name="name">Tap pï¿½ kontrakter</field>
 
 </record>
 <record id="chart7900" model="account.account">
 	<field name="code">7900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
-	<field name="name">Beholdningsendring anlegg under utførels</field>
+	<field name="name">Beholdningsendring anlegg under utfï¿½rels</field>
 
 </record>
 <record id="chart7990" model="account.account">
 	<field name="code">7990</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Andre driftskostnader</field>
 
@@ -2290,16 +2290,16 @@
 	<field name="code">8000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
-	<field name="name">Inntekter på investeringer i datterselskap</field>
+	<field name="name">Inntekter pï¿½ investeringer i datterselskap</field>
 
 </record>
 <record id="chart8040" model="account.account">
 	<field name="code">8040</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Renteinntekter, skattefrie</field>
 
@@ -2308,7 +2308,7 @@
 	<field name="code">8050</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Annen renteinntekt</field>
 
@@ -2317,7 +2317,7 @@
 	<field name="code">8060</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Purregebyr, kunder</field>
 
@@ -2326,7 +2326,7 @@
 	<field name="code">8070</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Renteinntekter, kunder</field>
 
@@ -2335,7 +2335,7 @@
 	<field name="code">8080</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Agio gevinst</field>
 
@@ -2344,7 +2344,7 @@
 	<field name="code">8090</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Andre finansinntekter</field>
 
@@ -2353,25 +2353,25 @@
 	<field name="code">8100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
-	<field name="name">Verdired. av markedsbas.finans. omløps.</field>
+	<field name="name">Verdired. av markedsbas.finans. omlï¿½ps.</field>
 
 </record>
 <record id="chart8110" model="account.account">
 	<field name="code">8110</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
-	<field name="name">Nedskrivn. av andre finansielle omløps.</field>
+	<field name="name">Nedskrivn. av andre finansielle omlï¿½ps.</field>
 
 </record>
 <record id="chart8120" model="account.account">
 	<field name="code">8120</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Nedskrivning av finansielle anleggsmidl.</field>
 
@@ -2380,7 +2380,7 @@
 	<field name="code">8140</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Rentekostnader, ikke fradragsberettigede</field>
 
@@ -2389,7 +2389,7 @@
 	<field name="code">8150</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Annen rentekostnad</field>
 
@@ -2398,16 +2398,16 @@
 	<field name="code">8160</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
-	<field name="name">Purregebyr. leverandør</field>
+	<field name="name">Purregebyr. leverandï¿½r</field>
 
 </record>
 <record id="account.a_pay" model="account.account">
 	<field name="code">8180</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Agio tap</field>
 
@@ -2416,7 +2416,7 @@
 	<field name="code">8300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Betalbar skatt</field>
 
@@ -2425,7 +2425,7 @@
 	<field name="code">8320</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Utsatt skatt</field>
 
@@ -2434,7 +2434,7 @@
 	<field name="code">8350</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Skattekostnad</field>
 
@@ -2443,7 +2443,7 @@
 	<field name="code">8600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Betalbar skatt</field>
 
@@ -2452,7 +2452,7 @@
 	<field name="code">8620</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Utsatt skatt</field>
 
@@ -2461,43 +2461,43 @@
 	<field name="code">8800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart880')])]"/>
+	<field name="parent_id" ref="chart880"/>
 	<field name="type">expense</field>
-	<field name="name">Årsresultat</field>
+	<field name="name">ï¿½rsresultat</field>
 
 </record>
 <record id="chart8900" model="account.account">
 	<field name="code">8900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
-	<field name="name">Overføringer fond for vurderingsforskjel</field>
+	<field name="name">Overfï¿½ringer fond for vurderingsforskjel</field>
 
 </record>
 <record id="chart8910" model="account.account">
 	<field name="code">8910</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart891')])]"/>
+	<field name="parent_id" ref="chart891"/>
 	<field name="type">expense</field>
-	<field name="name">Overføringer felleseid andelskapital for</field>
+	<field name="name">Overfï¿½ringer felleseid andelskapital for</field>
 
 </record>
 <record id="chart8920" model="account.account">
 	<field name="code">8920</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart892')])]"/>
+	<field name="parent_id" ref="chart892"/>
 	<field name="type">expense</field>
-	<field name="name">Avsatt utbytte/renter på grunnfondsbevis</field>
+	<field name="name">Avsatt utbytte/renter pï¿½ grunnfondsbevis</field>
 
 </record>
 <record id="chart8930" model="account.account">
 	<field name="code">8930</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart893')])]"/>
+	<field name="parent_id" ref="chart893"/>
 	<field name="type">expense</field>
 	<field name="name">Konsernbidrag</field>
 
@@ -2506,16 +2506,16 @@
 	<field name="code">8940</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
-	<field name="name">Aksjonærbidrag</field>
+	<field name="name">Aksjonï¿½rbidrag</field>
 
 </record>
 <record id="chart8950" model="account.account">
 	<field name="code">8950</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Fondsemisjon</field>
 
@@ -2524,16 +2524,16 @@
 	<field name="code">8960</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
-	<field name="name">Overføringer annen egenkapital</field>
+	<field name="name">Overfï¿½ringer annen egenkapital</field>
 
 </record>
 <record id="chart8980" model="account.account">
 	<field name="code">8980</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Avsatt til fri egenkapital</field>
 
@@ -2542,7 +2542,7 @@
 	<field name="code">8990</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart8')])]"/>
+	<field name="parent_id" ref="chart8"/>
 	<field name="type">expense</field>
 	<field name="name">Udekket tap</field>
 
