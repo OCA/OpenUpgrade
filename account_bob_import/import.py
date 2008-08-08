@@ -475,6 +475,8 @@ def import_contact(reader_contact, writer_contact, contacts_map, writer_job, job
         record_job['contact_id:id'] = record['id']
         if dict_partner.has_key(row['PCID,A,10']):
             record_job['address_id:id'] = dict_partner[row['PCID,A,10']]
+        else:
+            record_job['address_id:id'] = 'account_bob_import.res_partner_address_bob'
         writer_contact.writerow(record)
         writer_job.writerow(record_job)
     return True
