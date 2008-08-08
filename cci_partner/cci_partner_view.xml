@@ -730,7 +730,7 @@ TODO: revoir la vue tree aussi
 	<record model="ir.ui.view" id="view_partner_address_form_inherited1">
 		<field name="name">Partner addresses inherited</field>
 		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
+		<field name="inherit_id" ref="base_contact.view_partner_address_form_inherited5"/>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<field name="job_ids" mode="tree, form" colspan="4" position="replace">
