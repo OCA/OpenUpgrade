@@ -5,7 +5,7 @@
 	<field name="code">0</field>
 	<field name="name">Account Chart</field>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[]"/>
+<!--	<field name="parent_id" eval="[]"/>-->
 	<field name="type">view</field>
 
 </record>
@@ -13,7 +13,7 @@
 	<field name="code">0010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Freehold Property</field>
 
@@ -22,7 +22,7 @@
 	<field name="code">0011</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Goodwill</field>
 
@@ -31,7 +31,7 @@
 	<field name="code">0012</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Goodwill Amortisation</field>
 
@@ -40,7 +40,7 @@
 	<field name="code">0020</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Plant and Machinery</field>
 
@@ -49,7 +49,7 @@
 	<field name="code">0021</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Plant/Machinery Depreciation</field>
 
@@ -58,7 +58,7 @@
 	<field name="code">0030</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Office Equipment</field>
 
@@ -67,7 +67,7 @@
 	<field name="code">0031</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Office Equipment Depreciation</field>
 
@@ -76,7 +76,7 @@
 	<field name="code">0040</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Furniture and Fixtures</field>
 
@@ -85,7 +85,7 @@
 	<field name="code">0041</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Furniture/Fixture Depreciation</field>
 
@@ -94,7 +94,7 @@
 	<field name="code">0050</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Motor Vehicles</field>
 
@@ -103,7 +103,7 @@
 	<field name="code">0051</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">asset</field>
 	<field name="name">Motor Vehicles Depreciation</field>
 
@@ -112,7 +112,7 @@
 	<field name="code">1001</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('account.a_cash')])]"/>
+	<field name="parent_id" ref="account.a_cash"/>
 	<field name="type">asset</field>
 	<field name="name">Stock</field>
 
@@ -121,7 +121,7 @@
 	<field name="code">1002</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('account.a_cash')])]"/>
+	<field name="parent_id" ref="account.a_cash"/>
 	<field name="type">asset</field>
 	<field name="name">Work in Progress</field>
 
@@ -130,7 +130,7 @@
 	<field name="code">1100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0011')])]"/>
+	<field name="parent_id" ref="chart0011"/>
 	<field name="type">asset</field>
 	<field name="name">Debtors Control Account</field>
 
@@ -139,7 +139,7 @@
 	<field name="code">1102</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0011')])]"/>
+	<field name="parent_id" ref="chart0011"/>
 	<field name="type">asset</field>
 	<field name="name">Other Debtors</field>
 
@@ -148,7 +148,7 @@
 	<field name="code">1103</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0011')])]"/>
+	<field name="parent_id" ref="chart0011"/>
 	<field name="type">asset</field>
 	<field name="name">Prepayments</field>
 
@@ -157,7 +157,7 @@
 	<field name="code">1200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0012')])]"/>
+	<field name="parent_id" ref="chart0012"/>
 	<field name="type">asset</field>
 	<field name="name">Bank Current Account</field>
 
@@ -166,7 +166,7 @@
 	<field name="code">1210</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0012')])]"/>
+	<field name="parent_id" ref="chart0012"/>
 	<field name="type">asset</field>
 	<field name="name">Bank Deposit Account</field>
 
@@ -175,7 +175,7 @@
 	<field name="code">1220</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0012')])]"/>
+	<field name="parent_id" ref="chart0012"/>
 	<field name="type">asset</field>
 	<field name="name">Building Society Account</field>
 
@@ -184,7 +184,7 @@
 	<field name="code">1230</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0012')])]"/>
+	<field name="parent_id" ref="chart0012"/>
 	<field name="type">asset</field>
 	<field name="name">Petty Cash</field>
 
@@ -193,7 +193,7 @@
 	<field name="code">1240</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0012')])]"/>
+	<field name="parent_id" ref="chart0012"/>
 	<field name="type">cash</field>
 	<field name="name">Company Credit Card</field>
 
@@ -202,7 +202,7 @@
 	<field name="code">2100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0021')])]"/>
+	<field name="parent_id" ref="chart0021"/>
 	<field name="type">cash</field>
 	<field name="name">Creditors Control Account</field>
 
@@ -211,7 +211,7 @@
 	<field name="code">2102</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0021')])]"/>
+	<field name="parent_id" ref="chart0021"/>
 	<field name="type">cash</field>
 	<field name="name">Other Creditors</field>
 
@@ -220,7 +220,7 @@
 	<field name="code">2109</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0021')])]"/>
+	<field name="parent_id" ref="chart0021"/>
 	<field name="type">cash</field>
 	<field name="name">Accruals</field>
 
@@ -229,7 +229,7 @@
 	<field name="code">2200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">VAT (17.5%)</field>
 
@@ -238,7 +238,7 @@
 	<field name="code">2205</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">VAT (5%)</field>
 
@@ -247,7 +247,7 @@
 	<field name="code">2210</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">P.A.Y.E. &amp; National Insurance</field>
 
@@ -256,7 +256,7 @@
 	<field name="code">2220</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Net Wages</field>
 
@@ -265,7 +265,7 @@
 	<field name="code">2250</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Corporation Tax</field>
 
@@ -274,7 +274,7 @@
 	<field name="code">2300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Bank Loan</field>
 
@@ -283,7 +283,7 @@
 	<field name="code">2305</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Directors loan account</field>
 
@@ -292,7 +292,7 @@
 	<field name="code">2310</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Hire Purchase</field>
 
@@ -301,7 +301,7 @@
 	<field name="code">2330</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">cash</field>
 	<field name="name">Mortgages</field>
 
@@ -310,7 +310,7 @@
 	<field name="code">3000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0030')])]"/>
+	<field name="parent_id" ref="chart0030"/>
 	<field name="type">tax</field>
 	<field name="name">Ordinary Shares</field>
 
@@ -319,7 +319,7 @@
 	<field name="code">3010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0030')])]"/>
+	<field name="parent_id" ref="chart0030"/>
 	<field name="type">tax</field>
 	<field name="name">Preference Shares</field>
 
@@ -328,7 +328,7 @@
 	<field name="code">3100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0031')])]"/>
+	<field name="parent_id" ref="chart0031"/>
 	<field name="type">tax</field>
 	<field name="name">Share Premium Account</field>
 
@@ -337,7 +337,7 @@
 	<field name="code">3200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">balance</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">tax</field>
 	<field name="name">Profit and Loss Account</field>
 
@@ -346,7 +346,7 @@
 	<field name="code">4000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0040')])]"/>
+	<field name="parent_id" ref="chart0040"/>
 	<field name="type">income</field>
 	<field name="name">Sales</field>
 
@@ -355,7 +355,7 @@
 	<field name="code">4009</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0040')])]"/>
+	<field name="parent_id" ref="chart0040"/>
 	<field name="type">income</field>
 	<field name="name">Discounts Allowed</field>
 
@@ -364,7 +364,7 @@
 	<field name="code">4010</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0040')])]"/>
+	<field name="parent_id" ref="chart0040"/>
 	<field name="type">income</field>
 	<field name="name">Export Sales</field>
 
@@ -373,7 +373,7 @@
 	<field name="code">4900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
 	<field name="name">Miscellaneous Income</field>
 
@@ -382,7 +382,7 @@
 	<field name="code">4904</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
 	<field name="name">Rent Income</field>
 
@@ -391,7 +391,7 @@
 	<field name="code">4906</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
 	<field name="name">Interest received</field>
 
@@ -400,7 +400,7 @@
 	<field name="code">4920</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">income</field>
 	<field name="name">Foreign Exchange Gain</field>
 
@@ -409,7 +409,7 @@
 	<field name="code">5000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0050')])]"/>
+	<field name="parent_id" ref="chart0050"/>
 	<field name="type">expense</field>
 	<field name="name">Materials Purchased</field>
 
@@ -418,7 +418,7 @@
 	<field name="code">5001</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0050')])]"/>
+	<field name="parent_id" ref="chart0050"/>
 	<field name="type">expense</field>
 	<field name="name">Materials Imported</field>
 
@@ -427,7 +427,7 @@
 	<field name="code">5002</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0050')])]"/>
+	<field name="parent_id" ref="chart0050"/>
 	<field name="type">expense</field>
 	<field name="name">Opening Stock</field>
 
@@ -436,7 +436,7 @@
 	<field name="code">5003</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0050')])]"/>
+	<field name="parent_id" ref="chart0050"/>
 	<field name="type">expense</field>
 	<field name="name">Closing Stock</field>
 
@@ -445,7 +445,7 @@
 	<field name="code">5200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Packaging</field>
 
@@ -454,7 +454,7 @@
 	<field name="code">5201</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Discounts Taken</field>
 
@@ -463,7 +463,7 @@
 	<field name="code">5202</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Carriage</field>
 
@@ -472,7 +472,7 @@
 	<field name="code">5203</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Import Duty</field>
 
@@ -481,7 +481,7 @@
 	<field name="code">5204</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Transport Insurance</field>
 
@@ -490,7 +490,7 @@
 	<field name="code">5205</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Equipment Hire</field>
 
@@ -499,7 +499,7 @@
 	<field name="code">5220</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Foreign Exchange Loss</field>
 
@@ -508,7 +508,7 @@
 	<field name="code">6000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Productive Labour</field>
 
@@ -517,7 +517,7 @@
 	<field name="code">6001</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Cost of Sales Labour</field>
 
@@ -526,7 +526,7 @@
 	<field name="code">6002</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Sub-Contractors</field>
 
@@ -535,7 +535,7 @@
 	<field name="code">7000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Staff wages &amp; salaries</field>
 
@@ -544,7 +544,7 @@
 	<field name="code">7002</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Directors Remuneration</field>
 
@@ -553,7 +553,7 @@
 	<field name="code">7006</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Employers N.I.</field>
 
@@ -562,7 +562,7 @@
 	<field name="code">7007</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Employers Pensions</field>
 
@@ -571,7 +571,7 @@
 	<field name="code">7008</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Recruitment Expenses</field>
 
@@ -580,7 +580,7 @@
 	<field name="code">7100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Rent</field>
 
@@ -589,7 +589,7 @@
 	<field name="code">7102</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Water Rates</field>
 
@@ -598,7 +598,7 @@
 	<field name="code">7103</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">General Rates</field>
 
@@ -607,7 +607,7 @@
 	<field name="code">7104</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Premises Insurance</field>
 
@@ -616,7 +616,7 @@
 	<field name="code">7200</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Light &amp; heat</field>
 
@@ -625,7 +625,7 @@
 	<field name="code">7300</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Motor expenses</field>
 
@@ -634,7 +634,7 @@
 	<field name="code">7350</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Travelling</field>
 
@@ -643,7 +643,7 @@
 	<field name="code">7400</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Advertising</field>
 
@@ -652,7 +652,7 @@
 	<field name="code">7402</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">P.R. (Literature &amp; Brochures)</field>
 
@@ -661,7 +661,7 @@
 	<field name="code">7403</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">U.K. Entertainment</field>
 
@@ -670,7 +670,7 @@
 	<field name="code">7404</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Overseas Entertainment</field>
 
@@ -679,7 +679,7 @@
 	<field name="code">7500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Postage and Carriage</field>
 
@@ -688,7 +688,7 @@
 	<field name="code">7501</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Office Stationery</field>
 
@@ -697,7 +697,7 @@
 	<field name="code">7502</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Telephone</field>
 
@@ -706,7 +706,7 @@
 	<field name="code">7506</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Web Site costs</field>
 
@@ -715,7 +715,7 @@
 	<field name="code">7600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Legal Fees</field>
 
@@ -724,7 +724,7 @@
 	<field name="code">7601</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Audit and Accountancy Fees</field>
 
@@ -733,7 +733,7 @@
 	<field name="code">7603</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Professional Fees</field>
 
@@ -742,7 +742,7 @@
 	<field name="code">7701</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Office Machine Maintenance</field>
 
@@ -751,7 +751,7 @@
 	<field name="code">7710</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Computer expenses</field>
 
@@ -760,7 +760,7 @@
 	<field name="code">7800</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Repairs and Renewals</field>
 
@@ -769,7 +769,7 @@
 	<field name="code">7801</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Cleaning</field>
 
@@ -778,7 +778,7 @@
 	<field name="code">7802</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Laundry</field>
 
@@ -787,7 +787,7 @@
 	<field name="code">7900</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Bank Interest Paid</field>
 
@@ -796,7 +796,7 @@
 	<field name="code">7901</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Bank Charges</field>
 
@@ -805,7 +805,7 @@
 	<field name="code">7903</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Loan Interest Paid</field>
 
@@ -814,7 +814,7 @@
 	<field name="code">7904</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">H.P. Interest</field>
 
@@ -823,7 +823,7 @@
 	<field name="code">8000</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Depreciation</field>
 
@@ -832,7 +832,7 @@
 	<field name="code">8005</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Goodwill Amortisation</field>
 
@@ -841,7 +841,7 @@
 	<field name="code">8100</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Bad Debt Write Off</field>
 
@@ -850,7 +850,7 @@
 	<field name="code">8201</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Subscriptions</field>
 
@@ -859,7 +859,7 @@
 	<field name="code">8202</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Clothing Costs</field>
 
@@ -868,7 +868,7 @@
 	<field name="code">8203</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Training Costs</field>
 
@@ -877,7 +877,7 @@
 	<field name="code">8204</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Insurance</field>
 
@@ -886,7 +886,7 @@
 	<field name="code">8205</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Refreshments</field>
 
@@ -895,7 +895,7 @@
 	<field name="code">8500</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Dividends</field>
 
@@ -904,7 +904,7 @@
 	<field name="code">8600</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Corporation Tax</field>
 
@@ -913,7 +913,7 @@
 	<field name="code">9999</field>
 	<field name="reconcile" eval="False"/>
 	<field name="close_method">none</field>
-	<field name="parent_id" eval="[(6, 0, [ref('chart0')])]"/>
+	<field name="parent_id" ref="chart0"/>
 	<field name="type">expense</field>
 	<field name="name">Suspense Account</field>
 
