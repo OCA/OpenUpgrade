@@ -66,6 +66,33 @@ answer()
 
 class res_partner_contact(osv.osv):
     _inherit="res.partner.contact"
+
+    def _questionnaire_compute(self, cr, uid, data, context):
+        temp = []
+
+        for x in data['form']:
+            if x.startswith("quest_form") and data['form'][x] != 0 :
+                question_id = x.lstrip('quest_form')
+                question_rec = self.pool.get('crm_profiling.question').browse(cr, uid, int(question_id))
+
+                if question_rec.open_question:
+                    vals = {
+                        'name': '/',
+                        'question_id': question_rec.id,
+                        'text': data['form'][x]
+                    }
+                    data['form'][x] = self.pool.get('crm_profiling.answer').create(cr, uid, vals, context)
+                temp.append(data['form'][x])
+
+        query = """
+        select distinct(answer) from contact_question_rel
+        where contact =%d"""% data['id']
+        cr.execute(query)
+        for x in cr.fetchall():
+            temp.append(x[0])
+
+        self.write(cr, uid, [data['id']],{'answers_ids':[[6,0,temp]]}, context)
+        return {}
     _columns={
         "answers_ids": fields.many2many("crm_profiling.answer","contact_question_rel","contact","answer","Answers", domain=[('question_id.target','=','res.partner.contact')]),
         }
@@ -73,6 +100,33 @@ res_partner_contact()
 
 class res_partner_address(osv.osv):
     _inherit="res.partner.address"
+
+    def _questionnaire_compute(self, cr, uid, data, context):
+        temp = []
+
+        for x in data['form']:
+            if x.startswith("quest_form") and data['form'][x] != 0 :
+                question_id = x.lstrip('quest_form')
+                question_rec = self.pool.get('crm_profiling.question').browse(cr, uid, int(question_id))
+
+                if question_rec.open_question:
+                    vals = {
+                        'name': '/',
+                        'question_id': question_rec.id,
+                        'text': data['form'][x]
+                    }
+                    data['form'][x] = self.pool.get('crm_profiling.answer').create(cr, uid, vals, context)
+                temp.append(data['form'][x])
+
+        query = """
+        select distinct(answer) from address_question_rel
+        where address =%d"""% data['id']
+        cr.execute(query)
+        for x in cr.fetchall():
+            temp.append(x[0])
+
+        self.write(cr, uid, [data['id']],{'answers_ids':[[6,0,temp]]}, context)
+        return {}
     _columns={
         "answers_ids": fields.many2many("crm_profiling.answer","address_question_rel","address","answer","Answers",domain=[('question_id.target','=','res.partner.address')]),
         }
@@ -80,6 +134,33 @@ res_partner_address()
 
 class res_partner_job(osv.osv):
     _inherit="res.partner.job"
+
+    def _questionnaire_compute(self, cr, uid, data, context):
+        temp = []
+
+        for x in data['form']:
+            if x.startswith("quest_form") and data['form'][x] != 0 :
+                question_id = x.lstrip('quest_form')
+                question_rec = self.pool.get('crm_profiling.question').browse(cr, uid, int(question_id))
+
+                if question_rec.open_question:
+                    vals = {
+                        'name': '/',
+                        'question_id': question_rec.id,
+                        'text': data['form'][x]
+                    }
+                    data['form'][x] = self.pool.get('crm_profiling.answer').create(cr, uid, vals, context)
+                temp.append(data['form'][x])
+
+        query = """
+        select distinct(answer) from jobs_question_rel
+        where job =%d"""% data['id']
+        cr.execute(query)
+        for x in cr.fetchall():
+            temp.append(x[0])
+
+        self.write(cr, uid, [data['id']],{'answers_ids':[[6,0,temp]]}, context)
+        return {}
     _columns={
         "answers_ids": fields.many2many("crm_profiling.answer","jobs_question_rel","address","answer","Answers",domain=[('question_id.target','=','res.partner.job')]),
         }

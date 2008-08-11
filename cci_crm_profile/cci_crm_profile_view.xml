@@ -128,6 +128,7 @@
 		<field name="arch" type="xml">
 			<notebook position="inside">
 				<page string="Tags">
+					<button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
 					<newline/>
 					<field name="answers_ids" colspan="4" nolabel="1"/>
 				</page>
@@ -167,6 +168,8 @@
 						<field name="email" select="2"/>
 					</page>
 					<page string="Tags">
+						<button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
+						<newline/>
 						<field name="answers_ids" colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
@@ -185,6 +188,7 @@
 		<field name="arch" type="xml">
 			<notebook position="inside">
 				<page string="Tags">
+					<button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
 					<newline/>
 					<field name="answers_ids" colspan="4" nolabel="1"/>
 				</page>
