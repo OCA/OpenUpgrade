@@ -9,7 +9,7 @@ _QUEST_FIELDS=UpdateableDict()
 class open_questionnaire(wizard.interface):
 
     def _questionnaire_compute(self, cr, uid, data, context):
-        pooler.get_pool(cr.dbname).get('res.partner')._questionnaire_compute(cr, uid, data, context)
+        pooler.get_pool(cr.dbname).get(data['model'])._questionnaire_compute(cr, uid, data, context)
         return {}
 
 
