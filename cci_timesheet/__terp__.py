@@ -11,7 +11,7 @@
     "depends" : ["base","cci_partner","cci_crm","cci_base_contact"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["cci_timesheet_view.xml"],
+    "update_xml" : ["cci_timesheet_view.xml", "cci_timesheet_wizard.xml"],
     "active": False,
     "installable": True
 }
