@@ -71,7 +71,7 @@ class dm_campaign(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
-        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','=','Dealer')]),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')]),
 #
 #                        desktop publication
 #
@@ -103,7 +103,7 @@ class dm_campaign(osv.osv):
 #        'dtp_notes' : fields.text('Notes'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
-        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','=','Deduplicator')]),
+        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')]),
         'dedup_order_date' : fields.date('Order Date'),
         'dedup_validity_date' : fields.date('Validity Date'),
         'dedup_delivery_date' : fields.date('Delivery Date'),
