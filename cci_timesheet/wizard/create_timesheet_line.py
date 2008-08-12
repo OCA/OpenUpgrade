@@ -5,6 +5,10 @@ import pooler
 import time
 from osv import fields, osv
 
+import time
+import datetime
+import math
+
 form = """<?xml version="1.0"?>
 <form string="Timesheet Line">
     <field name="grant" colspan="4"/>
@@ -19,31 +23,56 @@ fields = {
   'date2': {'string': 'Date2','type': 'datetime','required': False},
           }
 
+def conv_hours(value, date):
+     minutes,hours = math.modf(value)
+     minutes = int(minutes*100)
+     hours = int(hours)
+     if minutes:
+          minutes = (minutes*60)/100
+     b = (hours,minutes)
+     time_format = "%Y-%m-%d %H:%M:%S"
+     d = time.strptime(date,time_format)
+     c = datetime.timedelta(hours=d[3],minutes=d[4]) + datetime.timedelta(hours=b[0],minutes=b[1])
+     if c.days > 0:
+         c = datetime.timedelta(seconds=c.seconds)
+     return c
+
 def create_lines(self, cr, uid, data, context):
     pool_obj=pooler.get_pool(cr.dbname)
     ids_meeting = pool_obj.get('crm.case').search(cr, uid, [('grant_id','in',data['form']['grant'][0][2]), ('date','>=',data['form']['date1']), ('date','<=',data['form']['date2'])])
     ids_task_work = pool_obj.get('project.task.work').search(cr, uid, [('grant_id','in',data['form']['grant'][0][2]), ('date','>=',data['form']['date1']), ('date','<=',data['form']['date2'])])
     data_meeting = pool_obj.get('crm.case').browse(cr, uid, ids_meeting)
     data_task_work = pool_obj.get('project.task.work').browse(cr, uid, ids_task_work)
+    time_format = "%Y-%m-%d %H:%M:%S"
     for meeting in data_meeting:
+        to = conv_hours(meeting.duration, meeting.date)
+        frm = time.strptime(meeting.date,time_format)
+        frm1 = datetime.timedelta(hours=frm[3],minutes=frm[4])
+        hour_from = '.'.join(str(frm1).split(':')[:2])
+        hour_to = '.'.join(str(to).split(':')[:2])
         vals = { 'name':meeting.name,
                  'grant_id':meeting.grant_id.id,
                  'user_id':meeting.user_id.id,
                  'day_date':meeting.date,
                  'partner_id':meeting.partner_id.id,
-                 'hour_from':'0.0',
-                 'hour_to':'0.0',
+                 'hour_from':hour_from,
+                 'hour_to':hour_to,
                  'zip_id':meeting.zip_id.id,
         }
         pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
     for task in data_task_work:
+        to = conv_hours(task.hours, task.date)
+        frm = time.strptime(task.date,time_format)
+        frm1 = datetime.timedelta(hours=frm[3],minutes=frm[4])
+        hour_from = '.'.join(str(frm1).split(':')[:2])
+        hour_to = '.'.join(str(to).split(':')[:2])
         vals = { 'name':task.name,
                  'grant_id':task.grant_id.id,
                  'user_id':task.user_id.id,
                  'day_date':task.date,
                  'partner_id':task.partner_id.id,
-                 'hour_from':'0.0',
-                 'hour_to':'0.0',
+                 'hour_from':hour_from,
+                 'hour_to':hour_to,
                  'zip_id':task.zip_id.id,
         }
         pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
