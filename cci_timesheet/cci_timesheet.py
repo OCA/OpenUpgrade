@@ -61,10 +61,10 @@ class cci_timesheet_line(osv.osv):
         res={}
         for line in self.browse(cr, uid, ids, context):
             res[line.id] = line.hour_to - line.hour_from
-        print "res: ", res
+
         return res
 
-    #TODO: by default, the grant_id should be the grant defined on the timesheet 
+    #TODO: by default, the grant_id should be the grant defined on the timesheet
 
     _name="cci_timesheet.line"
     _description="CCI Timesheet Line"
@@ -132,32 +132,32 @@ class report_timesheet_affectation(osv.osv):
     def init(self, cr):
         cr.execute("""
             create or replace view report_timesheet_affectation as (
-            SELECT 
+            SELECT
                 line.id as id,
-                line.name as name, 
-                line.day_date as day_date, 
-                line.hour_from as hour_from, 
-                line.hour_to as hour_to, 
-                u.name as user_name, 
-                g.name as grant_name, 
-                line.timesheet_id as timesheet_id, 
-                line.description as description, 
-                (line.hour_to - line.hour_from) as diff_hours, 
-                affect.name as affectation_name, 
-                affect.percentage as th_percentage, 
-                affect.hours_per_week as hours_per_week, 
-                affect.date_from as date_from, 
-                affect.date_to as date_to, 
-                affect.rate as rate 
-            FROM 
-                cci_timesheet_line line, 
+                line.name as name,
+                line.day_date as day_date,
+                line.hour_from as hour_from,
+                line.hour_to as hour_to,
+                u.name as user_name,
+                g.name as grant_name,
+                line.timesheet_id as timesheet_id,
+                line.description as description,
+                (line.hour_to - line.hour_from) as diff_hours,
+                affect.name as affectation_name,
+                affect.percentage as th_percentage,
+                affect.hours_per_week as hours_per_week,
+                affect.date_from as date_from,
+                affect.date_to as date_to,
+                affect.rate as rate
+            FROM
+                cci_timesheet_line line,
                 cci_timesheet_affectation affect,
                 res_users u,
                 cci_timesheet_grant g
-            WHERE 
-                line.user_id = affect.user_id 
+            WHERE
+                line.user_id = affect.user_id
                 AND line.user_id = u.id
-                AND line.grant_id = affect.grant_id 
+                AND line.grant_id = affect.grant_id
                 AND line.grant_id = g.id
                 AND (line.day_date <= affect.date_to AND line.day_date >= affect.date_from)
             )""")
@@ -178,7 +178,9 @@ class crm_case(osv.osv):
         if not part:
             return data
         addr = self.pool.get('res.partner').address_get(cr, uid, [part])
-        data['value']['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, addr['default']).zip_id.id
+
+        if addr['default']:
+            data['value']['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, addr['default']).zip_id.id
         return data
 crm_case()
 
