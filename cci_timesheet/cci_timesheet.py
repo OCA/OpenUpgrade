@@ -34,6 +34,16 @@ class cci_timesheet(osv.osv):
         'state' : lambda *a: 'draft',
     }
 
+    def check_timesheet_line(self, cr, uid, ids):
+        if not ids:
+            return True
+        for data in self.browse(cr, uid, ids):
+            for lines in data.line_ids:
+                if not lines.grant_id:
+                    return False
+                if (data.grant_id.id != lines.grant_id.id) or lines.day_date < data.date_from or lines.day_date > data.date_to:
+                    return False
+        return True
 
     def set_to_draft(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
@@ -52,6 +62,7 @@ class cci_timesheet(osv.osv):
         self.write(cr, uid, ids, {'state':'cancelled'})
         return True
 
+    _constraints = [(check_timesheet_line, 'Warning: Date of Timesheet Line should be bewteen the Two dates of the Timesheet and Grant of Timesheet Line should be the same as the Timesheet', ['Timesheet lines'])]
 cci_timesheet()
 
 class cci_timesheet_line(osv.osv):
@@ -63,6 +74,18 @@ class cci_timesheet_line(osv.osv):
             res[line.id] = line.hour_to - line.hour_from
 
         return res
+
+    def check_timesheet(self, cr, uid, ids):
+        if not ids:
+            return True
+        for lines in self.browse(cr, uid, ids):
+            if lines.timesheet_id:
+                if not lines.grant_id:
+                    return False
+                if (lines.timesheet_id.grant_id.id != lines.grant_id.id) or lines.day_date < lines.timesheet_id.date_from or lines.day_date > lines.timesheet_id.date_to:
+                    return False
+        return True
+
 
     #TODO: by default, the grant_id should be the grant defined on the timesheet
 
@@ -85,6 +108,8 @@ class cci_timesheet_line(osv.osv):
         'kms' : fields.integer('Kilometers'),
         'diff_hours' : fields.function(_get_diff_hours, method=True, string='Hour To - Hour From',type='float'),
     }
+
+    _constraints = [(check_timesheet, 'Warning: Date of Timesheet Line should be bewteen the Two dates of the Timesheet and Grant of Timesheet Line should be the same as the Timesheet', ['Timesheet lines'])]
 
 cci_timesheet_line()
 
