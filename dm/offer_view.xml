@@ -411,7 +411,8 @@
 						<field name="name" select="1"/>
 						<field name="code"/>
 						<field name="lang_orig"/>
-						<field name="copywriter_id"  select="2" on_change="change_code(preoffer_type,copywriter_id)"/>
+<!--						<field name="copywriter_id"  select="2" on_change="change_code(preoffer_type,copywriter_id)"/>-->
+						<field name="copywriter_id" select="2"/>
 						<field name="recommended_trademark"/>
 						<field name="preoffer_type" select="2"/>
 						<field name="preoffer_offer_id" select="2"/>
@@ -774,7 +775,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Offer Media">
-				<field name="name"/>
+				<field name="name" select="1"/>
 			</form>
 		</field>
 	</record>	

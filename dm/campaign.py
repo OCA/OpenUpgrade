@@ -15,6 +15,7 @@ class dm_campaign_group(osv.osv):
     }
 dm_campaign_group()
 
+
 class dm_campaign_type(osv.osv):
     _name = "dm.campaign.type"
 
@@ -37,8 +38,8 @@ class dm_campaign(osv.osv):
         for id in ids:
             camp = self.browse(cr,uid,[id])[0]
             offer_code = camp.offer_id and camp.offer_id.code or ''
-            trademark_code = camp.trademark_id and camp.trademark_id.code or ''
-            dealer_code =camp.dealer_id and camp.dealer_id.code or ''
+            trademark_code = camp.trademark_id and camp.trademark_id.ref or ''
+            dealer_code =camp.dealer_id and camp.dealer_id.ref or ''
             date_start = camp.date_start or ''
             country_code = camp.country_id.code or ''
             date = date_start.split('-')
@@ -223,7 +224,7 @@ class dm_campaign_proposition(osv.osv):
             pro = self.browse(cr,uid,[id])[0]
             offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
             trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
-            dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.code or ''
+            dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.ref or ''
             date_start = pro.date_start or ''
             date = date_start.split('-')
             year = month = ''
