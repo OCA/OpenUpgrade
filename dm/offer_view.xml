@@ -402,6 +402,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Copywriter')]</field>
+		<field name="context">{'category_id':'Copywriter'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offers/All Copywriters" id="menu_action_offer_copywriter_form" action="action_offer_copywriter_form"/>
 

@@ -778,6 +778,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Trademark')]</field>
+		<field name="context">{'category_id':'Trademark'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_campaign_trademark_form" action="action_campaign_trademark_form"/>
 
@@ -788,6 +789,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Dealer')]</field>
+		<field name="context">{'category_id':'Dealer'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Dealers" id="menu_action_campaign_dealer_form" action="action_campaign_dealer_form"/>
 
@@ -798,6 +800,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Broker')]</field>
+		<field name="context">{'category_id':'Broker'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
 
@@ -808,6 +811,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Deduplicator')]</field>
+		<field name="context">{'category_id':'Deduplicator'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
