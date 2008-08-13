@@ -87,35 +87,7 @@ class project(osv.osv):
         'contact_id2': fields.many2one('res.partner.contact','Contact'),
     }
 project()
-#class res_contact_relation_type(osv.osv):
-#    _name = "res.contact.relation.type"
-#    _description ='res.contact.relation.type'
-#    _columns = {
-#        'name': fields.char('Contact',size=50, required=True),
-#    }
-#res_contact_relation_type()
 
-#class res_contact_relation(osv.osv):
-#    _name = "res.contact.relation"
-#    _description ='res.contact.relation'
-#    _columns = {
-#        'contact_id': fields.many2one('res.partner.contact','Contact'),
-#        'contact_relation_id':fields.char('Relation',size=50),#should be corect
-#        'description':fields.text('Description'),
-#        'type_id':fields.many2one('res.contact.relation.type','Type'),
-#    }
-#res_contact_relation()
-
-#class res_partner_country_relation(osv.osv):
-#    _name = "res.partner.country.relation"
-#    _description = 'res.partner.country.relation'
-#    _columns = {
-#        'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
-#        'country_id':fields.many2one('res.country','Country'),
-#        'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon')],'Types'),#should be corect
-#    }
-
-#res_partner_country_relation()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
