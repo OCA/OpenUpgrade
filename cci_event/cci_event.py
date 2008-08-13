@@ -106,13 +106,13 @@ class event(osv.osv):
     _columns={
             'state': fields.selection([('draft','Draft'),('fixed','Fixed'),('open','Open'),('confirm','Confirmed'),('running','Running'),('done','Done'),('cancel','Canceled'),('closed','Closed')], 'State', readonly=True, required=True),
             'agreement_nbr':fields.char('Agreement Nbr',size=16),
-            'check_accept':fields.many2one('event.check.type','Allowed checks'),
             'note':fields.text('Note'),
             'fse_code':fields.char('FSE code',size=64),
             'fse_hours':fields.integer('FSE Hours'),
             'signet_type':fields.selection(_group_names, 'Signet type'),
             'localisation':fields.char('Localisation',size=20),
-            'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),           'check_type': fields.many2one('event.check.type','Check Type'),
+            'account_analytic_id':fields.many2one('account.analytic.account','Analytic Account'),
+            'check_type': fields.many2one('event.check.type','Check Type'),
             }
 event()
 
