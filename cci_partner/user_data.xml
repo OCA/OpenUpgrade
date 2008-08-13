@@ -47,7 +47,6 @@
 		</record>
 	</data>
 	<data noupdate="1">
-		<!--<record id="base.main_company" model="res.company">-->
 		<record model="res.company" id="base.main_company">
 			<field eval="&quot;CCILV&quot;" name="name"/>
 			<field name="currency_id" ref="base.EUR"/>
@@ -154,3 +153,4 @@
 		</record>
 	</data>
 </terp>
+

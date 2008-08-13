@@ -184,13 +184,13 @@ class res_partner(osv.osv):
                     main_list.append(list_id)
         return True
 
-    def _get_partner_state(self, cr, uid, ctx):
+    def _get_customer_state(self, cr, uid, ctx):
         ids = self.pool.get('res.partner.state').search(cr, uid, [('name','like', 'Imputable')])
         if ids:
             return ids[0]
         return False
 
-    def _get_customer_state(self, cr, uid, ctx):
+    def _get_partner_state(self, cr, uid, ctx):
         ids = self.pool.get('res.partner.state2').search(cr, uid, [('name','like', 'En Activité')])
         if ids:
             return ids[0]
@@ -199,7 +199,7 @@ class res_partner(osv.osv):
     _columns = {
         'employee_nbr': fields.integer('Nbr of Employee (Area)',help="Nbr of Employee in the area of the CCI"),
         'employee_nbr_total':fields.integer('Nbr of Employee (Tot)',help="Nbr of Employee all around the world"),
-        'invoice_paper':fields.selection([('transfer belgian','Transfer belgian'),('transfer iban ','Transfer iban'),('none','No printed transfert')], 'Bank Transfer Type'),
+        'invoice_paper':fields.selection([('transfert belgian','Transfer belgian'),('transfert iban','Transfer iban'),('none','No printed transfert')], 'Bank Transfer Type', size=32),
         'invoice_public':fields.boolean('Invoice Public'),
         'invoice_special':fields.boolean('Invoice Special'),
         'state_id':fields.many2one('res.partner.state','Partner State',help='status of activity of the partner'),
@@ -520,13 +520,13 @@ class res_partner_function(osv.osv):
         return res
 res_partner_function()
 
-class res_contact_relation_type(osv.osv):
-    _name = "res.contact.relation.type"
-    _description ='res.contact.relation.type'
+class res_partner_relation_type(osv.osv):
+    _name = "res.partner.relation.type"
+    _description ='res.partner.relation.type'
     _columns = {
         'name': fields.char('Contact',size=50, required=True),
     }
-res_contact_relation_type()
+res_partner_relation_type()
 
 class res_partner_relation(osv.osv):
     _name = "res.partner.relation"
@@ -537,7 +537,7 @@ class res_partner_relation(osv.osv):
         'current_partner_id':fields.many2one('res.partner','Partner', required=True),
         'description':fields.text('Description'),
         'percent':fields.float('Ownership'),
-        'type_id':fields.many2one('res.contact.relation.type','Type', required=True),
+        'type_id':fields.many2one('res.partner.relation.type','Type', required=True),
     }
 res_partner_relation()
 
