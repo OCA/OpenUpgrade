@@ -39,8 +39,14 @@ def conv_hours(value, date):
 
 def create_lines(self, cr, uid, data, context):
     pool_obj=pooler.get_pool(cr.dbname)
-    ids_meeting = pool_obj.get('crm.case').search(cr, uid, [('grant_id','in',data['form']['grant'][0][2]), ('date','>=',data['form']['date1']), ('date','<=',data['form']['date2'])])
-    ids_task_work = pool_obj.get('project.task.work').search(cr, uid, [('grant_id','in',data['form']['grant'][0][2]), ('date','>=',data['form']['date1']), ('date','<=',data['form']['date2'])])
+    list_temp = []
+    list_temp.append(('grant_id','in',data['form']['grant'][0][2]))
+    if data['form']['date1']:
+        list_temp.append(('date','>=',data['form']['date1']))
+    if data['form']['date2']:
+        list_temp.append(('date','<=',data['form']['date2']))
+    ids_meeting = pool_obj.get('crm.case').search(cr, uid, list_temp)
+    ids_task_work = pool_obj.get('project.task.work').search(cr, uid, list_temp)
     data_meeting = pool_obj.get('crm.case').browse(cr, uid, ids_meeting)
     data_task_work = pool_obj.get('project.task.work').browse(cr, uid, ids_task_work)
     time_format = "%Y-%m-%d %H:%M:%S"
