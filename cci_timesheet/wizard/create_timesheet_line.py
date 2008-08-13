@@ -5,12 +5,11 @@ import pooler
 import time
 from osv import fields, osv
 
-import time
 import datetime
 import math
 
 form = """<?xml version="1.0"?>
-<form string="Timesheet Line">
+<form string="Create Timesheet Line">
     <field name="grant" colspan="4"/>
     <newline/>
     <field name="date1"/>
@@ -39,16 +38,19 @@ def conv_hours(value, date):
 
 def create_lines(self, cr, uid, data, context):
     pool_obj=pooler.get_pool(cr.dbname)
+    case_obj = pool_obj.get('crm.case')
+    work_obj = pool_obj.get('project.task.work')
     list_temp = []
+
     list_temp.append(('grant_id','in',data['form']['grant'][0][2]))
     if data['form']['date1']:
         list_temp.append(('date','>=',data['form']['date1']))
     if data['form']['date2']:
         list_temp.append(('date','<=',data['form']['date2']))
-    ids_meeting = pool_obj.get('crm.case').search(cr, uid, list_temp)
-    ids_task_work = pool_obj.get('project.task.work').search(cr, uid, list_temp)
-    data_meeting = pool_obj.get('crm.case').browse(cr, uid, ids_meeting)
-    data_task_work = pool_obj.get('project.task.work').browse(cr, uid, ids_task_work)
+    ids_meeting = case_obj.search(cr, uid, list_temp)
+    ids_task_work = work_obj.search(cr, uid, list_temp)
+    data_meeting = case_obj.browse(cr, uid, ids_meeting)
+    data_task_work = work_obj.browse(cr, uid, ids_task_work)
     time_format = "%Y-%m-%d %H:%M:%S"
     for meeting in data_meeting:
         if not meeting.timesheet_line_id:
@@ -67,7 +69,7 @@ def create_lines(self, cr, uid, data, context):
                      'zip_id':meeting.zip_id.id,
             }
             id_line = pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
-            pool_obj.get('crm.case').write(cr, uid, meeting.id, {'timesheet_line_id':id_line})
+            case_obj.write(cr, uid, meeting.id, {'timesheet_line_id':id_line})
     for task in data_task_work:
         if not task.timesheet_line_id:
             to = conv_hours(task.hours, task.date)
@@ -85,7 +87,7 @@ def create_lines(self, cr, uid, data, context):
                      'zip_id':task.zip_id.id,
             }
             id_line1 = pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
-            pool_obj.get('project.task.work').write(cr, uid, [task.id] , {'timesheet_line_id':id_line1})
+            work_obj.write(cr, uid, [task.id] , {'timesheet_line_id':id_line1})
     return {}
 class create_timesheet_lines(wizard.interface):
     states = {
