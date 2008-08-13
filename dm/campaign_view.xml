@@ -706,7 +706,7 @@
 				<field name="name" select="1"/>
 				<separator string="Tasks Management" colspan="4"/>
 					<group colspan="4">
-					<field name="project_id"/>
+					<field name="project_id" label="Retro Planning"/>
 					<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
 					</group>
 				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
