@@ -52,14 +52,14 @@
 		<!-- Group Definition -->
 		<record id="res_groups_group0" model="res.groups">
 			<field eval="[(6,0,[])]" name="rule_groups"/>
-			<field eval="[(6,0,[ref('base.user_admin'),ref('cci_partner.res_users_simonmicha0')])]" name="users"/>
+			<field eval="[(6,0,[ref('base.user_admin')])]" name="users"/>
 			<field eval="&quot;&quot;&quot;group1&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="menu_access"/>
 			<field eval="[(6,0,[ref('ir_rule_group_rule0')])]" name="rule_groups"/>
 		</record>
 		<record id="res_groups_group1" model="res.groups">
 			<field eval="[(6,0,[ref('ir_rule_group_rule1')])]" name="rule_groups"/>
-			<field eval="[(6,0,[ref('base.user_admin'),ref('cci_partner.res_users_myriamszepetiuk0'),ref('cci_partner.res_users_xavierminguet0')])]" name="users"/>
+			<field eval="[(6,0,[ref('base.user_admin')])]" name="users"/>
 			<field eval="&quot;&quot;&quot;group2&quot;&quot;&quot;" name="name"/>
 			<field eval="[(6,0,[])]" name="menu_access"/>
 		</record>
