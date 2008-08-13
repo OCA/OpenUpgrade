@@ -51,37 +51,41 @@ def create_lines(self, cr, uid, data, context):
     data_task_work = pool_obj.get('project.task.work').browse(cr, uid, ids_task_work)
     time_format = "%Y-%m-%d %H:%M:%S"
     for meeting in data_meeting:
-        to = conv_hours(meeting.duration, meeting.date)
-        frm = time.strptime(meeting.date,time_format)
-        frm1 = datetime.timedelta(hours=frm[3],minutes=frm[4])
-        hour_from = '.'.join(str(frm1).split(':')[:2])
-        hour_to = '.'.join(str(to).split(':')[:2])
-        vals = { 'name':meeting.name,
-                 'grant_id':meeting.grant_id.id,
-                 'user_id':meeting.user_id.id,
-                 'day_date':meeting.date,
-                 'partner_id':meeting.partner_id.id,
-                 'hour_from':hour_from,
-                 'hour_to':hour_to,
-                 'zip_id':meeting.zip_id.id,
-        }
-        pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
+        if not meeting.timesheet_line_id:
+            to = conv_hours(meeting.duration, meeting.date)
+            frm = time.strptime(meeting.date,time_format)
+            frm1 = datetime.timedelta(hours=frm[3],minutes=frm[4])
+            hour_from = '.'.join(str(frm1).split(':')[:2])
+            hour_to = '.'.join(str(to).split(':')[:2])
+            vals = { 'name':meeting.name,
+                     'grant_id':meeting.grant_id.id,
+                     'user_id':meeting.user_id.id,
+                     'day_date':meeting.date,
+                     'partner_id':meeting.partner_id.id,
+                     'hour_from':hour_from,
+                     'hour_to':hour_to,
+                     'zip_id':meeting.zip_id.id,
+            }
+            id_line = pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
+            pool_obj.get('crm.case').write(cr, uid, meeting.id, {'timesheet_line_id':id_line})
     for task in data_task_work:
-        to = conv_hours(task.hours, task.date)
-        frm = time.strptime(task.date,time_format)
-        frm1 = datetime.timedelta(hours=frm[3],minutes=frm[4])
-        hour_from = '.'.join(str(frm1).split(':')[:2])
-        hour_to = '.'.join(str(to).split(':')[:2])
-        vals = { 'name':task.name,
-                 'grant_id':task.grant_id.id,
-                 'user_id':task.user_id.id,
-                 'day_date':task.date,
-                 'partner_id':task.partner_id.id,
-                 'hour_from':hour_from,
-                 'hour_to':hour_to,
-                 'zip_id':task.zip_id.id,
-        }
-        pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
+        if not task.timesheet_line_id:
+            to = conv_hours(task.hours, task.date)
+            frm = time.strptime(task.date,time_format)
+            frm1 = datetime.timedelta(hours=frm[3],minutes=frm[4])
+            hour_from = '.'.join(str(frm1).split(':')[:2])
+            hour_to = '.'.join(str(to).split(':')[:2])
+            vals = { 'name':task.name,
+                     'grant_id':task.grant_id.id,
+                     'user_id':task.user_id.id,
+                     'day_date':task.date,
+                     'partner_id':task.partner_id.id,
+                     'hour_from':hour_from,
+                     'hour_to':hour_to,
+                     'zip_id':task.zip_id.id,
+            }
+            id_line1 = pool_obj.get('cci_timesheet.line').create(cr, uid, vals)
+            pool_obj.get('project.task.work').write(cr, uid, [task.id] , {'timesheet_line_id':id_line1})
     return {}
 class create_timesheet_lines(wizard.interface):
     states = {

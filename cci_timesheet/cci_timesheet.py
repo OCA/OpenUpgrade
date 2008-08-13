@@ -63,6 +63,7 @@ class cci_timesheet(osv.osv):
         return True
 
     _constraints = [(check_timesheet_line, 'Warning: Date of Timesheet Line should be bewteen the Two dates of the Timesheet and Grant of Timesheet Line should be the same as the Timesheet', ['Timesheet lines'])]
+
 cci_timesheet()
 
 class cci_timesheet_line(osv.osv):
@@ -72,7 +73,6 @@ class cci_timesheet_line(osv.osv):
         res={}
         for line in self.browse(cr, uid, ids, context):
             res[line.id] = line.hour_to - line.hour_from
-
         return res
 
     def check_timesheet(self, cr, uid, ids):
@@ -85,7 +85,6 @@ class cci_timesheet_line(osv.osv):
                 if (lines.timesheet_id.grant_id.id != lines.grant_id.id) or lines.day_date < lines.timesheet_id.date_from or lines.day_date > lines.timesheet_id.date_to:
                     return False
         return True
-
 
     #TODO: by default, the grant_id should be the grant defined on the timesheet
 
@@ -108,9 +107,7 @@ class cci_timesheet_line(osv.osv):
         'kms' : fields.integer('Kilometers'),
         'diff_hours' : fields.function(_get_diff_hours, method=True, string='Hour To - Hour From',type='float'),
     }
-
     _constraints = [(check_timesheet, 'Warning: Date of Timesheet Line should be bewteen the Two dates of the Timesheet and Grant of Timesheet Line should be the same as the Timesheet', ['Timesheet lines'])]
-
 cci_timesheet_line()
 
 class cci_timesheet_affectation(osv.osv):
@@ -196,6 +193,7 @@ class crm_case(osv.osv):
     _columns = {
         'grant_id' : fields.many2one('cci_timesheet.grant','Grant'),
         'zip_id' : fields.many2one('res.partner.zip','Zip'),
+        'timesheet_line_id':fields.many2one('cci_timesheet.line','Timesheet Line')
     }
 
     def onchange_partner_id(self, cr, uid, ids, part, email=False):
@@ -203,9 +201,7 @@ class crm_case(osv.osv):
         if not part:
             return data
         addr = self.pool.get('res.partner').address_get(cr, uid, [part])
-
-        if addr['default']:
-            data['value']['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, addr['default']).zip_id.id
+        data['value']['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, addr['default']).zip_id.id
         return data
 crm_case()
 
@@ -222,23 +218,15 @@ class project_work(osv.osv):
         res = {}
         if not ids:
             return res
-        print vals
         for work in self.browse(cr, uid, ids):
-            print "here we go"
             if (not work.zip_id) and ('zip_id' not in vals or not vals['zip_id']):
-                print "changing zip"
                 temp = self.pool.get('res.partner').address_get(cr, uid, [work.task_id.project_id.partner_id.id])
                 vals['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, temp['default']).zip_id.id
             if (not work.partner_id) and ('partner_id' not in vals or not vals['partner_id']):
-                print "changing partner"
-
                 vals['partner_id'] = work.task_id.project_id.partner_id.id
 
             if (not work.contact_id) and ('contact_id' not in vals or not vals['contact_id']):
-                print "changing contact"
-
                 vals['contact_id'] = work.task_id.project_id.contact_id2.id
-        print "vals: ", vals
         return super(project_work, self).write(cr, uid, ids, vals)
 
 
@@ -247,6 +235,7 @@ class project_work(osv.osv):
         'zip_id' : fields.many2one('res.partner.zip','Zip'),
         'partner_id' : fields.many2one('res.partner','Partner'),
         'contact_id' : fields.many2one('res.partner.contact','Contact'),
+        'timesheet_line_id':fields.many2one('cci_timesheet.line','Timesheet Line')
     }
     _defaults = {
 #        'zip_id': _get_zip_id,

@@ -37,7 +37,7 @@
         </record>
 
         <menuitem name="Grant" id="menu_time_config_grant" parent="menu_hr_root" action="action_grant_tree" />
-        
+
     <!-- Timesheet -->
         <record model="ir.ui.view" id="view_cci_timesheet_form">
             <field name="name">cci_timesheet.form</field>
@@ -121,7 +121,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         <menuitem name="Timesheet" id="menu_time_timesheet" parent="menu_hr_root" action="action_timesheet_tree"/>
-        
+
     <!-- Timesheet Lines -->
 
         <record model="ir.ui.view" id="view_cci_timesheet_line_form">
@@ -305,21 +305,33 @@
         </record>
         <menuitem name="Reporting" id="menu_time_reporting" parent="menu_hr_root"/>
         <menuitem name="Timesheets per Employee" id="menu_time_reporting_employee" parent="menu_time_reporting" action="action_report_timesheet_affectation"/>
-        
+
 
 <!-- view for crm.case inherit -->
-    <record model="ir.ui.view" id="crm_case-view_inherit2">
-            <field name="name">crm.case.form.confidential2</field>
-            <field name="type">form</field>
-            <field name="model">crm.case</field>
-            <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
-            <field name="arch" type="xml">
-                <field name="partner_address_id" position="after">
-                    <field name="zip_id" select="2" />
-                    <field name="grant_id" select="1"/>
-                </field>
-            </field>
-        </record>
+	    <record model="ir.ui.view" id="crm_case-view_inherit2">
+	        <field name="name">crm.case.form.confidential2</field>
+	        <field name="type">form</field>
+	        <field name="model">crm.case</field>
+	        <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
+	        <field name="arch" type="xml">
+	            <field name="partner_address_id" position="after">
+	                <field name="zip_id" select="2" />
+	                <field name="grant_id" select="1"/>
+	            </field>
+	        </field>
+	    </record>
+
+	    <record model="ir.ui.view" id="crm_case-view_inherit3">
+	        <field name="name">crm.case.form.confidential3</field>
+	        <field name="type">form</field>
+	        <field name="model">crm.case</field>
+	        <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
+	        <field name="arch" type="xml">
+	            <field name="date_deadline" position="after">
+	                <field name="timesheet_line_id" select="2"/>
+	            </field>
+	        </field>
+	   </record>
 
 
 <!-- view for project task work done -->
@@ -334,6 +346,18 @@
                     <field name="partner_id" select="1"/>
                     <field name="zip_id"/>
                     <field name="contact_id" select="2"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_task_work_form_inherit1" model="ir.ui.view">
+            <field name="name">project.task.work.form1</field>
+            <field name="model">project.task.work</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="project.view_task_work_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                	<field name="timesheet_line_id" select="2"/>
                 </field>
             </field>
         </record>
