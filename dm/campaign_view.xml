@@ -4,6 +4,7 @@
 	<menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
 	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager"/>
 	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>	
+	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files" id="menu_dm_config_camp_custfiles" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
 	<menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
 
 <record id="res_groups_campaignadmin" model="res.groups">
@@ -769,6 +770,46 @@
 		<field name="view_id" ref="view_campaign_type_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_trademark_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="base.view_partner_tree"/>
+		<field name="domain">[('category_id','like','Trademark')]</field>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_campaign_trademark_form" action="action_campaign_trademark_form"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_dealer_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="base.view_partner_tree"/>
+		<field name="domain">[('category_id','like','Dealer')]</field>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Dealers" id="menu_action_campaign_dealer_form" action="action_campaign_dealer_form"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_broker_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="base.view_partner_tree"/>
+		<field name="domain">[('category_id','like','Broker')]</field>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
+
+	<record model="ir.actions.act_window" id="action_campaign_duplicator_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="base.view_partner_tree"/>
+		<field name="domain">[('category_id','like','Deduplicator')]</field>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
         <record id="view_country_form_inherit" model="ir.ui.view">
             <field name="name">res.country.form.inherit</field>
