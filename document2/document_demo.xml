@@ -16,6 +16,45 @@
 		<field name="ressource_id" eval="0"/>
 	</record>
 
+	<record model="document.directory" id="dir_partner_category">
+		<field name="name">Partner Category</field>
+		<field name="parent_id" ref="dir_root"/>
+		<field name="type">ressource</field>
+		<field name="ressource_tree">1</field>
+		<field name="ressource_type_id" search="[('model','=','res.partner.category')]" />
+		<field name="user_id" ref="base.user_admin"/>
+		<field name="ressource_id" eval="0"/>
+	</record>
+
+
+
+	<record model="document.directory" id="dir_partner">
+		<field name="name">Partner</field>
+		<field name="type">ressource</field>
+		<field name="domain">[('category_id','in',[active_id])]</field>
+		<field name="ressource_type_id" search="[('model','=','res.partner')]" />
+		<field name="ressource_parent_type_id" search="[('model','=','res.partner.category')]" />
+		<field name="user_id" ref="base.user_admin"/>
+		<field name="ressource_id" eval="0"/>
+	</record>
+
+	<record model="document.directory" id="dir_partner_contacts">
+		<field name="name">Contacts</field>
+		<field name="type">ressource</field>
+		<field name="domain">[('partner_id','=',active_id)]</field>
+		<field name="ressource_type_id" search="[('model','=','res.partner.address')]" />
+		<field name="ressource_parent_type_id" search="[('model','=','res.partner')]" />
+		<field name="user_id" ref="base.user_admin"/>
+		<field name="ressource_id" eval="0"/>
+	</record>
+
+	<record model="document.directory" id="dir_my_partner">
+		<field name="name">My Folder</field>
+		<field name="user_id" ref="base.user_admin"/>
+		<field name="ressource_parent_type_id" search="[('model','=','res.partner')]" />
+		<field name="ressource_id" eval="0"/>
+	</record>
+
 	<record model="document.directory" id="dir_personnal_folder">
 		<field name="name">Personnal Folders</field>
 		<field name="parent_id" ref="dir_root"/>
