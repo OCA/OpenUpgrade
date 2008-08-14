@@ -5,12 +5,17 @@ from osv import fields
 from osv import osv
 
 
-class res_partner(osv.osv):
-    _name = 'res.partner'
-    _inherit = "res.partner"
+class dm_trademark(osv.osv):
+    _name = "dm.trademark"
     _columns = {
-        'partner_layout_id':fields.many2one('partner.layout','Layout')
+        'name' : fields.char('Name', size=64, required=True),
+        'code' : fields.char('Code', size=6, required=True),
+        'partner_id' : fields.many2one('res.partner', 'Partner', required=True),
+        'header' : fields.binary('Header (.odt)'),
+        'logo' : fields.binary('Logo'),
+        'signature' : fields.binary('Signature')
     }
-res_partner()
+
+dm_trademark()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

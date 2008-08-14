@@ -61,11 +61,11 @@
 -						<field name="dealer_id"/>
 						<field name="trademark_id"/>
 						<field name="responsible_id" />
-<!--						<separator string="Tasks Management" colspan="4"/>-->
-<!--						<group colspan="4">-->
-<!--						<field name="project_id"/>-->
-<!--						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>-->
-<!--						</group>-->
+						<separator string="Tasks Management" colspan="4"/>
+						<group colspan="4">
+						<field name="project_id" string="Retro Planning"/>
+						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
+						</group>-->
 						<separator string="Process State" colspan="4"/>
 						<field name="planning_state" select="2" nolabel="0"/>
 						<field name="manufacturing_state" select="2" nolabel="0"/>
@@ -88,25 +88,24 @@
 								<field name="proposition_type"/>
 								<newline/>
 								<field name="starting_mail_price"/>
-<!--								<field name="customer_pricelist_id"/>-->
-<!--								<field name="requirer_pricelist_id"/>-->
-<!--								<newline/>-->
+								<field name="forwarding_charges"/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
 								<separator string="Payment Methods" colspan="4"/>
-								<field name="payment_methods" colspan="4" nolabel="1"/>								
+								<field name="payment_methods" colspan="4" nolabel="1"/>
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
 										<field name="code" string="Action Code"/>
 										<field name="file_id" />
-										<field name="sequence"/>
+						<!--				<field name="sequence"/>-->
 										<field name="active" />
 										<field name="quantity_add" select="2"/>
 										<field name="raw_quantity" select="2"/>
 										<newline/>
 										<field name="split_id" />
 										<field name="reuse_id" />
+										<newine/>
 										<field name="start_census"/>
 										<field name="end_census"/>
 										<field name="deduplication_level"/>
@@ -443,13 +442,14 @@
 										<field name="name" string="Name" select="1"/>
 										<field name="code" string="Action Code"/>
 										<field name="file_id" />
-										<field name="sequence"/>
+						<!--				<field name="sequence"/>-->
 										<field name="active" />
 										<field name="quantity_add" select="2"/>
 										<field name="raw_quantity" select="2"/>
 										<newline/>
 										<field name="split_id" />
 										<field name="reuse_id" />
+										<newline/>
 										<field name="start_census"/>
 										<field name="end_census"/>
 										<field name="deduplication_level"/>
@@ -457,7 +457,8 @@
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
-										<field name="sequence" />
+						<!--				<field name="sequence" />-->
+										<field name="deduplication_level"/>
 										<field name="code" string="Action Code" select="2"/>
 										<field name="quantity_add"/>
 									</tree>
@@ -564,7 +565,8 @@
 				<field name="initial_proposition_id" select="1"/>
 				<newline/>
 				<field name="starting_mail_price"/>
-				<field name="quantity_max" string="Quantity"/>
+				<field name="forwarding_charges"/>
+				<field name="quantity_max" string="Addresses Quantity"/>
 				<field name="sale_rate"/>
 				<newline/>
 				<separator string="Payment Methods" colspan="4"/>
@@ -574,13 +576,13 @@
 						<field name="name" string="Name" select="1"/>
 						<field name="code" string="Action Code"/>
 						<field name="file_id" />
-						<field name="sequence"/>
 						<field name="active" />
 						<field name="quantity_add" select="2"/>
 						<field name="raw_quantity" select="2"/>
 						<newline/>
 						<field name="split_id" />
 						<field name="reuse_id" />
+						<newline/>
 						<field name="start_census"/>
 						<field name="end_census"/>
 						<field name="deduplication_level"/>
@@ -588,7 +590,7 @@
 					</form>
 					<tree string="Segments">
 						<field name="name" string="Name" select="1"/>
-						<field name="sequence" />
+						<field name="deduplication_level" />
 						<field name="code" string="Action Code" select="2"/>
 						<field name="quantity_add"/>
 					</tree>
@@ -653,12 +655,13 @@
 				<field name="code" string="Action Code"/>
 				<field name="proposition_id" />
 				<field name="file_id" />
-				<field name="sequence"/>
+<!--				<field name="sequence"/>-->
 				<field name="active" />
 				<field name="quantity_add" select="2"/>
 				<field name="raw_quantity" select="2"/>
 				<field name="split_id" />
 				<field name="reuse_id" />
+				<newline/>
 				<field name="start_census"/>
 				<field name="end_census"/>
 				<field name="deduplication_level"/>
@@ -675,7 +678,7 @@
 		<field name="arch" type="xml">
 			<tree string="Segments">
 				<field name="name" string="Name"/>
-				<field name="sequence" />				
+<!--				<field name="sequence" />-->
 				<field name="code" string="Action Code"/>
 				<field name="quantity_add"/>
 			</tree>
@@ -706,7 +709,7 @@
 				<field name="name" select="1"/>
 				<separator string="Tasks Management" colspan="4"/>
 					<group colspan="4">
-					<field name="project_id" label="Retro Planning"/>
+					<field name="project_id" string="Retro Planning"/>
 					<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
 					</group>
 				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
@@ -771,6 +774,7 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
 
+	<!--
 	<record model="ir.actions.act_window" id="action_campaign_trademark_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">res.partner</field>
@@ -781,6 +785,7 @@
 		<field name="context">{'category_id':'Trademark'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_campaign_trademark_form" action="action_campaign_trademark_form"/>
+	-->
 
 	<record model="ir.actions.act_window" id="action_campaign_dealer_form">
 		<field name="type">ir.actions.act_window</field>

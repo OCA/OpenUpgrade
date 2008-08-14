@@ -51,6 +51,7 @@ class dm_campaign(osv.osv):
             code1='-'.join([offer_code ,dealer_code ,trademark_code ,final_date ,country_code])
             result[id]=code1
         return result
+
     def _get_campaign_type(self,cr,uid,context={}):
         campaign_type = self.pool.get('dm.campaign.type')
         type_ids = campaign_type.search(cr,uid,[])
@@ -62,8 +63,8 @@ class dm_campaign(osv.osv):
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])]),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
-        'trademark_id' : fields.many2one('res.partner', 'Trademark', help="TO CHECK : trademark"),
-#        'project_id' : fields.many2one('project.project', 'Project', readonly=True),
+        'trademark_id' : fields.many2one('dm.trademark', 'Trademark'),
+        'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
         'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
@@ -94,14 +95,6 @@ class dm_campaign(osv.osv):
         'theorical_dtp_sup_delivery_date' : fields.date('Theorical Dtp Sup Delivery Date'),
         'reviewed_dtp_sup_delivery_date' : fields.date('Reviewed Dtp Sup Delivery Date'),
         'real_dtp_sup_delivery_date' : fields.date('Real Dtp Sup Delivery Date'),
-        
-#        'dtp_date_delivery' : fields.date('Delivery Date'),
-#        'dtp_date_real_delivery' : fields.date('Real Delivery Date'),
-#        'dtp_intervention_type' : fields.date('Intervention Date'),
-#        'dtp_making' : fields.char('Making',size=64),
-#        'dtp_operator' : fields.many2one('res.partner','Operator'),
-#        'dtp_date_recovered' : fields.date('Recovered Date'),
-#        'dtp_notes' : fields.text('Notes'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
         'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')]),
@@ -110,7 +103,6 @@ class dm_campaign(osv.osv):
         'dedup_delivery_date' : fields.date('Delivery Date'),
         'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),      
     }
-    
 
     _defaults = {
         'state': lambda *a: 'draft',
@@ -216,11 +208,11 @@ dm_campaign_statistics()
 class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
-    
+
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
-            
+
             pro = self.browse(cr,uid,[id])[0]
             offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
             trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
@@ -237,7 +229,7 @@ class dm_campaign_proposition(osv.osv):
             code1='-'.join([offer_code, dealer_code ,trademark_code ,final_date ,country_code ,seq])
             result[id]=code1
         return result
-        
+
     _columns = {
         'code1' : fields.function(_proposition_code,string='Code',type="char",method=True,readonly=True),
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
@@ -249,6 +241,7 @@ class dm_campaign_proposition(osv.osv):
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
 #        'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
 #        'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
+        'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')])
@@ -275,11 +268,11 @@ class dm_campaign_proposition(osv.osv):
 dm_campaign_proposition()
 
 class dm_campaign_proposition_segment(osv.osv):
-    
+
     _name = "dm.campaign.proposition.segment"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
     _description = "Segment"
-    
+
     def _check_char(self, cr, uid, ids):
         segment = self.browse(cr,uid,ids)[0]
         if not segment.quantity_add:
@@ -300,14 +293,14 @@ class dm_campaign_proposition_segment(osv.osv):
         'reuse_id' : fields.many2one('dm.campaign.proposition.segment','Reuse'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),
-        'sequence' : fields.integer('Sequence'),
+#        'sequence' : fields.integer('Sequence'),
     }
-    _order = 'sequence'
-    
+    _order = 'deduplication_level'
+
     _constraints = [
         (_check_char, "Error ! Quantity of segment can only be integer or 'AAA'", ['quantity_add'])
-    ]    
-    
+    ]
+
 dm_campaign_proposition_segment()
 
 class dm_campaign_delay(osv.osv):
@@ -317,7 +310,7 @@ class dm_campaign_delay(osv.osv):
         'value' : fields.integer('Value'),
         'proposition_id' : fields.many2one('dm.campaign.proposition', 'Proposition')
     }
-    
+
 dm_campaign_delay()
 
 class Country(osv.osv):
@@ -327,7 +320,7 @@ class Country(osv.osv):
                 'main_language' : fields.many2one('res.lang','Main Language',ondelete='cascade',),
                 'main_currency' : fields.many2one('res.currency','Main Currency',ondelete='cascade'),
                 }
-Country()    
+Country()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
