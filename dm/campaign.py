@@ -1,5 +1,6 @@
 # -*- encoding: utf-8 -*-
 import time
+import datetime
 import offer
 
 from osv import fields
@@ -32,7 +33,7 @@ class dm_campaign(osv.osv):
 
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
         return name
-
+    
     def _campaign_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -120,8 +121,14 @@ class dm_campaign(osv.osv):
         value['lang_id'] =  country.main_language.id
         value['currency_id'] = country.main_currency.id
         if not offer_id:
+            res = {'trademark_id':0}
             return {'value':value}
-        res = self.pool.get('dm.offer').browse(cr,uid,[offer_id])[0]
+        else:
+            id = self.pool.get('dm.offer').read(cr, uid, [offer_id])
+            if id:
+                value = {'trademark_id':id[0]['recommended_trademark']}
+            return {'value':value}
+                    
         forbidden_state_ids = map(lambda x:x.country_id.id ,res.forbidden_state_ids)
         forbidden_country_ids = map(lambda x:x.id ,res.forbidden_country_ids)
         forbidden_country_ids.extend(forbidden_state_ids)
@@ -157,7 +164,15 @@ class dm_campaign(osv.osv):
     def create(self,cr,uid,vals,context={}):
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type']='model'
-        return super(dm_campaign,self).create(cr,uid,vals,context)
+        id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
+        data_cam = self.browse(cr, uid, id_camp)
+        if (data_cam.date_start) and (not data_cam.date):
+            time_format = "%Y-%m-%d"
+            d = time.strptime(data_cam.date_start,time_format)
+            d = datetime.date(d[0], d[1], d[2])
+            date_end = d + datetime.timedelta(days=365)
+            self.write(cr, uid, id_camp, {'date':date_end})
+        return id_camp
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
         result = super(dm_campaign,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
@@ -208,6 +223,24 @@ dm_campaign_statistics()
 class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
+    
+    def onchange_date(self, cr, uid, ids, camp_id):
+        res = {} 
+        if camp_id:
+            id = self.pool.get('dm.campaign').read(cr, uid, [camp_id])
+            if id:
+                res = {'date_start':id[0]['date_start']}
+            
+        else:
+           res = {'date_start':0}   
+        return {'value': res}
+    
+    def create(self, cr, user, vals, context=None):
+        
+       if 'keep_segments' in  vals  and vals['keep_segments'] == False :
+            vals['segment_ids'] = []
+       return super(dm_campaign_proposition,self).create(cr, user, vals, context=None)
+       
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
         result ={}
@@ -244,7 +277,8 @@ class dm_campaign_proposition(osv.osv):
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
-        'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')])
+        'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
+        'keep_segments' : fields.boolean('Keep Segments')
     }
 
     _defaults = {
@@ -323,4 +357,5 @@ class Country(osv.osv):
 Country()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+
 

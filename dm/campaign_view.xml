@@ -559,8 +559,8 @@
 			<form string="Propositions">
 				<field name="name" string="Name" select="1"/>
 				<field name="code1" string="Code" select="2"/>
-				<field name="camp_id"/>
-				<field name="date_start" select="2"/>
+				<field name="camp_id" on_change="onchange_date(camp_id)"/>
+				<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
 				<field name="proposition_type" select="1"/>
 				<field name="initial_proposition_id" select="1"/>
 				<newline/>
@@ -568,6 +568,7 @@
 				<field name="forwarding_charges"/>
 				<field name="quantity_max" string="Addresses Quantity"/>
 				<field name="sale_rate"/>
+				<field name="keep_segments"/>
 				<newline/>
 				<separator string="Payment Methods" colspan="4"/>
 				<field name="payment_methods" colspan="4" nolabel="1"/>
@@ -774,7 +775,7 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
 
-	<!--
+<!-- 
 	<record model="ir.actions.act_window" id="action_campaign_trademark_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">res.partner</field>
@@ -785,7 +786,7 @@
 		<field name="context">{'category_id':'Trademark'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_campaign_trademark_form" action="action_campaign_trademark_form"/>
-	-->
+-->
 
 	<record model="ir.actions.act_window" id="action_campaign_dealer_form">
 		<field name="type">ir.actions.act_window</field>
