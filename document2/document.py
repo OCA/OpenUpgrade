@@ -328,6 +328,13 @@ class document_directory(osv.osv):
 			raise except_orm('ValidateError', 'Directory name must be unique!')
 		return super(document_directory,self).write(cr,uid,ids,vals,context=context)
 
+	def copy(self, cr, uid, id, default=None, context=None):
+		if not default:
+			default ={}
+		name = self.read(cr, uid, [id])[0]['name']
+		default.update({'name': name+ " (copy)"})
+		return super(document_directory,self).copy(cr,uid,id,default,context)
+
 	def create(self, cr, uid, vals, context=None):
 		if not self._check_duplication(cr,uid,vals):
 			raise except_orm('ValidateError', 'Directory name must be unique!')
