@@ -71,7 +71,7 @@
 			<field name="arch" type="xml">
 				<form string="Vacations requests" position="replace">
 				<form string="Vacations requests">
-				<group col="4" solspan="4">
+				<group col="4" colspan="4">
 					<field name="name" select="1"/>
 					<field name="employee_id" select="1"/>
 				</group>
@@ -128,7 +128,7 @@
 			<field name="arch" type="xml">
 
 				<form string="Vacations requests">
-				<group col="4" solspan="4">
+				<group col="4" colspan="4">
 					<field name="name" select="1"/>
 					<field name="employee_id" select="1"/>
 				</group>
@@ -333,7 +333,7 @@
 				<field name="type">form</field>
 				<field name="arch" type="xml">
 					<form string="Holiday History">
-							<group col ="6" copspan="4">
+							<group col ="6" colspan="4">
 							<field name="validated_id"/>
 							<field name="name" select="1"/>
 							<field name="employee_id" select="1" />
@@ -354,7 +354,7 @@
 									<field name="total_hour"/>
 								</group>
 								<newline/>
-							<group col="2" colpans="4">
+							<group col="2" colspan="4">
 							<field name="state" select="1"/>
 							</group>
 					</form>
