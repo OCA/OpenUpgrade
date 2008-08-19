@@ -17,13 +17,19 @@
 			string="View Documents"
 			model="dm.offer"
 			name="wizard_offer_documents"
-			id="wizard_offer_documents"/>			
+			id="wizard_offer_documents"/>
 			
 		<wizard
 			string="Add to Campaign group"
 			model="dm.campaign"
 			name="wizard_campaign_group"
-			id="wizard_campaign_group"/>			
+			id="wizard_campaign_group"/>
+
+		<wizard string="Get Products"
+			model="dm.campaign.proposition"
+			name="wizard_proposition_products"
+			id="wizard_proposition_products"
+			menu="False"/>
 
 	</data>
 </terp>

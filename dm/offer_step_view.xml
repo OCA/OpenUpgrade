@@ -403,9 +403,10 @@
 		<field name="arch" type="xml">
 			<tree string="Products">
 				<field name="product_id"/>
+				<field name="price"/>
+				<field name="main_product"/>
 				<field name="qty_planned"/>
 				<field name="qty_real"/>
-				<field name="price"/>
 			</tree>
 		</field>
 	</record>
@@ -416,9 +417,10 @@
 		<field name="arch" type="xml">
 			<form string="Product">
 				<field name="product_id" select="1"/>
+				<field name="price" select="2"/>
 				<field name="qty_planned"/>
 				<field name="qty_real" select="1"/>
-				<field name="price" select="2"/>
+				<field name="main_product"/>
 			</form>
 		</field>
 	</record>

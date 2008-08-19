@@ -145,26 +145,31 @@
 							<separator string="Reviewed Dates" colspan="1"/>
 							<separator string="Real Dates" colspan="1"/>
 						<separator string="DTP Request" colspan="4"/>
-							<label string="DTP Request Date" width="200" colspan="1"/>
+<!--							<label string="DTP Request Date" width="200" colspan="1"/>-->
+							<label string="DTP Request Date" colspan="1"/>
 							<field name="theorical_dtp_request_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_dtp_request_date" nolabel="1" colspan="1"/>
 							<field name="real_dtp_request_date" nolabel="1" colspan="1"/>
 						<separator string="Translation Dates" colspan="4"/>
-							<label string="Translation Delivery Date" width="200" colspan="1"/>
+<!--							<label string="Translation Delivery Date" width="200" colspan="1"/>-->
+							<label string="Translation Delivery Date" colspan="1"/>
 							<field name="theorical_translation_delivery_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_translation_delivery_date" nolabel="1" colspan="1"/>
 							<field name="real_translation_delivery_date" nolabel="1" colspan="1"/>
-							<label string="Translation Rereading Date" width="200" colspan="1"/>
+<!--							<label string="Translation Rereading Date" width="200" colspan="1"/>-->
+							<label string="Translation Rereading Date" colspan="1"/>
 							<field name="theorical_translation_rereading_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_translation_rereading_date" nolabel="1" colspan="1"/>
 							<field name="real_translation_rereading_date" nolabel="1" colspan="1"/>
 						<separator string="First Draft Delivery" colspan="4"/>
 							<label string="Delivery Date" colspan="1"/>
-							<field name="theorical_draft_delivery_date" width="200" nolabel="1" colspan="1"/>
+<!--							<field name="theorical_draft_delivery_date" width="200" nolabel="1" colspan="1"/>-->
+							<field name="theorical_draft_delivery_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_draft_delivery_date" nolabel="1" colspan="1"/>
 							<field name="real_draft_delivery_date" nolabel="1" colspan="1"/>
 						<separator string="Final Corrected Proof" colspan="4"/>
-							<label string="Validation Date" width="200" colspan="1"/>
+<!--							<label string="Validation Date" width="200" colspan="1"/>-->
+							<label string="Validation Date" colspan="1"/>
 							<field name="theorical_fcp_validation_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_fcp_validation_date" nolabel="1" colspan="1"/>
 							<field name="real_fcp_validation_date" nolabel="1" colspan="1"/>
@@ -436,7 +441,7 @@
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
 								<separator string="Payment Methods" colspan="4"/>
-								<field name="payment_methods" colspan="4" nolabel="1"/>								
+								<field name="payment_methods" colspan="4" nolabel="1"/>	
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
@@ -512,6 +517,7 @@
 	Delays Views
 	=======================================================
 	-->
+	<!--
 	<record model="ir.ui.view" id="view_campaign_delay">
 		<field name="name">dm.campaign.delay.form</field>
 		<field name="model">dm.campaign.delay</field>
@@ -544,8 +550,9 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_delay_tree"/>
 	</record>
+-->
 <!--	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>-->
-
+	
 	<!--
 	=======================================================
 	Proposition Views
@@ -557,21 +564,44 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Propositions">
-				<field name="name" string="Name" select="1"/>
-				<field name="code1" string="Code" select="2"/>
-				<field name="camp_id" on_change="onchange_date(camp_id)"/>
-				<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
-				<field name="proposition_type" select="1"/>
-				<field name="initial_proposition_id" select="1"/>
-				<newline/>
-				<field name="starting_mail_price"/>
-				<field name="forwarding_charges"/>
-				<field name="quantity_max" string="Addresses Quantity"/>
-				<field name="sale_rate"/>
-				<field name="keep_segments"/>
-				<newline/>
-				<separator string="Payment Methods" colspan="4"/>
-				<field name="payment_methods" colspan="4" nolabel="1"/>
+			<notebook colspan="4">
+				<page string="General">
+					<field name="name" string="Name" select="1"/>
+					<field name="code1" string="Code" select="2"/>
+					<field name="camp_id" on_change="onchange_date(camp_id)"/>
+					<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+					<field name="proposition_type" select="1"/>
+					<field name="initial_proposition_id" select="1"/>
+					<newline/>
+					<field name="forwarding_charges"/>
+					<field name="quantity_max" string="Addresses Quantity"/>
+					<field name="sale_rate"/>
+					<separator string="Notes" colspan="4"/>
+					<field name="notes" colspan="4" nolabel="1"/>
+				</page>
+				<page string="Prices">
+					<separator string="Prices policy" colspan="4"/>
+					<field name="customer_pricelist_id"/>
+					<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+					<field name="product_ids" colspan="4" nolabel="1">
+						<form string="Catalogue">
+							<field name="offer_step_type"/>
+							<field name="product_id"/>
+							<field name="price"/>
+							<field name="main_product"/>
+						</form>
+						<tree string="Catalogue">
+							<field name="offer_step_type"/>
+							<field name="product_id"/>
+							<field name="price"/>
+							<field name="main_product"/>
+						</tree>
+					</field>
+<!--					<field name="starting_mail_price"/>-->
+					<separator string="Payment Methods" colspan="4"/>
+					<field name="payment_methods" colspan="4" nolabel="1"/>
+				</page>
+				<page string="Segments">
 				<field name="segment_ids" colspan="4" nolabel="1">
 					<form string="Segments">
 						<field name="name" string="Name" select="1"/>
@@ -596,8 +626,9 @@
 						<field name="quantity_add"/>
 					</tree>
 				</field>
-				<separator string="Notes" colspan="4"/>
-				<field name="notes" colspan="4" nolabel="1"/>
+				<field name="keep_segments" string="Keep Segments at Duplication"/>
+				</page>
+			</notebook>
 			</form>
 		</field>
 	</record>
@@ -654,7 +685,7 @@
 			<form string="Segments">
 				<field name="name" string="Name" select="1"/>
 				<field name="code" string="Action Code"/>
-				<field name="proposition_id" />
+<!--				<field name="proposition_id" />-->
 				<field name="file_id" />
 <!--				<field name="sequence"/>-->
 				<field name="active" />

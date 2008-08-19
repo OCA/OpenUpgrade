@@ -82,7 +82,6 @@ dm_offer_step_type()
 
 class dm_offer_step(osv.osv):
     _name = "dm.offer.step"
-    #_rec_name = 'type'
 
     def __history(self, cr, uid, ids, keyword, context={}):
         for id in ids:
@@ -118,7 +117,6 @@ class dm_offer_step(osv.osv):
         'legal_state' : fields.char('Legal State', size=32),
         'code' : fields.function(_offer_code,string='Code',type="char",method=True,readonly=True),
         'quotation' : fields.char('Quotation', size=16),
-        #'media_id' : fields.many2one('dm.media', 'Media'),
         'media_ids' : fields.many2many('dm.media', 'dm_offer_step_media_rel','step_id','media_id', 'Medias'),
         'type' : fields.selection(_get_offer_step_type,'Type',required=True),
         'origin_id' : fields.many2one('dm.offer.step', 'Origin'),
@@ -284,6 +282,13 @@ dm_offer_step_workitem()
 
 class dm_product(osv.osv):
     _name = "dm.product"
+
+    def _step_type(self, cr, uid, ids, name, args, context={}):
+        result={}
+        for id in ids:
+            resutl[id] = self.browse(cr, uid, id)[0].offer_step_id.type
+        return result
+
     _rec_name = 'product_id'
     _columns = {
         'product_id' : fields.many2one('product.product', 'Product', required=True),
@@ -291,6 +296,9 @@ class dm_product(osv.osv):
         'qty_real' : fields.float('Real Quantity'),
         'price' : fields.float('Sale Price'),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
+        'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
+        'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
+        'main_product': fields.boolean('Main product'),
     }
 dm_product()
 
