@@ -570,14 +570,14 @@ TODO: revoir la vue tree aussi
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Partner Link">
-					<field name="current_partner_id" select="1" cospan="4"/>
+					<field name="current_partner_id" select="1" colspan="4"/>
 					<newline/>
 					<field name="type_id" select="1"/>
 					<field name="percent" />
 					<newline/>
-					<field name="partner_id" select="1"  cospan="4"/>
+					<field name="partner_id" select="1"  colspan="4"/>
 					<newline/>
-					<field name="description" cospan="4"/>
+					<field name="description" colspan="4"/>
 				</form>
 			</field>
 		</record>
@@ -906,9 +906,9 @@ TODO: revoir la vue tree aussi
 								<field name="type_id" select="1"/>
 								<field name="percent" />
 								<newline/>
-								<field name="partner_id" select="1" cospan="4"/>
+								<field name="partner_id" select="1" colspan="4"/>
 								<newline/>
-								<field name="description" cospan="4"/>
+								<field name="description" colspan="4"/>
 							</form>
 							<tree string="Partner Link">
 								<field name="type_id" select="1"/>
