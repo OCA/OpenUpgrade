@@ -58,14 +58,14 @@
 						<field name="date_start"/>
 						<field name="date"/>
 <!--						<field name="partner_id"/>-->
--						<field name="dealer_id"/>
+						<field name="dealer_id"/>
 						<field name="trademark_id"/>
 						<field name="responsible_id" />
 						<separator string="Tasks Management" colspan="4"/>
 						<group colspan="4">
 						<field name="project_id" string="Retro Planning"/>
 						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
-						</group>-->
+						</group>
 						<separator string="Process State" colspan="4"/>
 						<field name="planning_state" select="2" nolabel="0"/>
 						<field name="manufacturing_state" select="2" nolabel="0"/>
@@ -105,7 +105,7 @@
 										<newline/>
 										<field name="split_id" />
 										<field name="reuse_id" />
-										<newine/>
+										<newline/>
 										<field name="start_census"/>
 										<field name="end_census"/>
 										<field name="deduplication_level"/>
