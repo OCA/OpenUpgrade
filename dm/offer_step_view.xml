@@ -176,7 +176,16 @@
 <!--						<field name="code"/>-->
 <!--						<field name="origin_id" colspan="4"/>-->
 						<separator string="Products" colspan="4"/>
-						<field name="product_ids" colspan="4" nolabel="1"/>
+						<field name="product_ids" colspan="4" nolabel="1">
+							<form string="Item">
+								<field name="product_id"/>
+								<field name="item_type"/>
+							</form>
+							<tree string="Items" editable="bottom">
+								<field name="product_id"/>
+								<field name="item_type"/>
+							</tree>
+						</field>
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
 							<field name="state" select="1" nolabel="1"/>
@@ -401,36 +410,32 @@
 		<field name="model">dm.product</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Products">
+			<tree string="Items">
 				<field name="product_id"/>
-				<field name="price"/>
-				<field name="main_product"/>
-				<field name="qty_planned"/>
-				<field name="qty_real"/>
+				<field name="offer_step_id" select="1"/>
+				<field name="item_type"/>
 			</tree>
 		</field>
 	</record>
 	<record model="ir.ui.view" id="view_product_form">
-		<field name="name">dm.product.form</field>
-		<field name="model">dm.product</field>
+		<field name="name">dm.step.product.form</field>
+		<field name="model">dm.step.product</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Product">
+			<form string="Item">
 				<field name="product_id" select="1"/>
-				<field name="price" select="2"/>
-				<field name="qty_planned"/>
-				<field name="qty_real" select="1"/>
-				<field name="main_product"/>
+				<field name="offer_step_id" select="1"/>
+				<field name="item_type"/>
 			</form>
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_offer_step_product">
 		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.product</field>
+		<field name="res_model">dm.step.product</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_product_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Products" id="menu_action_offer_step_product" action="action_offer_step_product" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Items" id="menu_action_offer_step_product" action="action_offer_step_product" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
 
 	<act_window name="Products"
 		res_model="dm.product"
@@ -444,7 +449,7 @@
 		src_model="dm.campaign.proposition"
 		view_type="form"
 		view_mode="tree,form"
-		id="act_offer_product_opened"/>		
+		id="act_offer_product_opened"/>
 		
 </data>
 </terp>

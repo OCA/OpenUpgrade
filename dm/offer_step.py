@@ -13,6 +13,10 @@ AVAILABLE_STATES = [
     ('closed', 'Close')
 ]
 
+AVAILABLE_ITEM_TYPES = [
+    ('main','Main Item'),
+    ('standart','Standart Item'),
+]
 
 #class dm_offer_document_category(osv.osv):
 #    _name = "dm.offer.document.category"
@@ -136,7 +140,7 @@ class dm_offer_step(osv.osv):
 #        'document_ids' : fields.many2many('dm.offer.document', 'dm_offer_step_rel', 'step_id', 'doc_id', 'Documents'),
         'flow_start' : fields.boolean('Flow Start'),
         'history_ids' : fields.one2many('dm.offer.step.history', 'step_id', 'History'),
-        'product_ids' : fields.one2many('dm.product', 'offer_step_id', 'Products'),
+        'product_ids' : fields.one2many('dm.step.product', 'offer_step_id', 'Products'),
         'state' : fields.selection(AVAILABLE_STATES, 'Status', size=16, readonly=True),
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
@@ -280,25 +284,40 @@ class dm_offer_step_workitem(osv.osv):
 dm_offer_step_workitem()
 
 
-class dm_product(osv.osv):
-    _name = "dm.product"
+class dm_step_product(osv.osv):
+    _name = "dm.step.product"
 
     def _step_type(self, cr, uid, ids, name, args, context={}):
         result={}
         for id in ids:
-            resutl[id] = self.browse(cr, uid, id)[0].offer_step_id.type
+            result[id] = self.browse(cr, uid, id).offer_step_id.type
+            print "DM - result[id]",result[id]
         return result
 
     _rec_name = 'product_id'
     _columns = {
         'product_id' : fields.many2one('product.product', 'Product', required=True),
-        'qty_planned' : fields.integer('Planned Quantity'),
-        'qty_real' : fields.float('Real Quantity'),
-        'price' : fields.float('Sale Price'),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
         'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
-        'main_product': fields.boolean('Main product'),
+        'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
+        'notes' : fields.text('Notes'),
+    }
+dm_step_product()
+
+
+class dm_product(osv.osv):
+    _name = "dm.product"
+    _rec_name = 'product_id'
+    _columns = {
+        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'qty_planned' : fields.integer('Planned Quantity'),
+        'qty_real' : fields.integer('Real Quantity'),
+        'price' : fields.float('Sale Price'),
+        'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
+        'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
+        'offer_step_type': fields.char(string='Offer Step Type',type="char",size=64), 
+        'notes' : fields.text('Notes'),
     }
 dm_product()
 
