@@ -74,7 +74,7 @@ class dm_campaign(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
-        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')]),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category_id':'Dealer'}),
 #
 #                        desktop publication
 #
@@ -98,7 +98,7 @@ class dm_campaign(osv.osv):
         'real_dtp_sup_delivery_date' : fields.date('Real Dtp Sup Delivery Date'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
-        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')]),
+        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')], context={'category_id':'Deduplicator'}),
         'dedup_order_date' : fields.date('Order Date'),
         'dedup_validity_date' : fields.date('Validity Date'),
         'dedup_delivery_date' : fields.date('Delivery Date'),
@@ -230,18 +230,24 @@ class dm_campaign_proposition(osv.osv):
             id = self.pool.get('dm.campaign').read(cr, uid, [camp_id])
             if id:
                 res = {'date_start':id[0]['date_start']}
-            
         else:
            res = {'date_start':0}   
         return {'value': res}
-    
-    def create(self, cr, user, vals, context=None):
-        
-       if 'keep_segments' in  vals  and vals['keep_segments'] == False :
-            vals['segment_ids'] = []
-       return super(dm_campaign_proposition,self).create(cr, user, vals, context=None)
-       
 
+    def copy(self, cr, uid, id, default=None, context={}):
+        """
+        Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
+        """
+        prp_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
+        data = self.browse(cr, uid, prp_id, context)
+        if data.keep_segments == False:
+            l = []
+            for i in data.segment_ids:
+                l.append(i.id)
+            self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
+            self.write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
+        return prp_id
+    
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
