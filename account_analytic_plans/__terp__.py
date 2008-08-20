@@ -2,7 +2,7 @@
 {
     "name" : "Multiple-plans management in analytic accounting",
     "version" : "1.0",
-    "depends" : ["account", "base"],
+    "depends" : ["account", "base","product_analytic_default"],
     "author" : "Tiny",
     "description": """The goal is to allow several analytic plans, according to the general journal,
      so that multiple analytic lines are created when the invoice is confirmed.

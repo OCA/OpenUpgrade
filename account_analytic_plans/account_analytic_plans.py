@@ -372,6 +372,24 @@ class account_analytic_plan(osv.osv):
     }
 account_analytic_plan()
 
+class product_product(osv.osv):
+    _name = 'product.product'
+    _inherit = 'product.product'
+    _description = 'Product'
 
+    _columns = {
+        'property_account_analytic': fields.property(
+            'account.analytic.plan.instance',
+            type='many2one',
+            relation='account.analytic.plan.instance',
+            string="Analytic Distribution",
+            method=True,
+            view_load=True,
+            group_name="Accounting Properties",
+            help="This Analytic Distribution will be use in sale order line and invoice lines",
+            required=True),
+                }
+
+product_product()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
