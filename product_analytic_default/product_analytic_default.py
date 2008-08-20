@@ -31,8 +31,8 @@ from osv import fields,osv
 from osv import orm
 
 class product_product(osv.osv):
-    _name = 'product.product'
-    _inherit = 'product.product'
+    _name = 'product.template'
+    _inherit = 'product.template'
     _description = 'Product'
 
     _columns = {
