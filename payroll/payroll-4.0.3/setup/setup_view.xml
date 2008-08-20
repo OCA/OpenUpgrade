@@ -49,7 +49,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_pay_elements" />
 		</record>
-		<menuitem name="Payroll/Configuration/Pay Elements" id="list_pay_elements" action="open_view_pay_elements" groups="admin"/>
+		<menuitem name="Payroll/Configuration/Pay Elements" id="list_pay_elements" action="open_view_pay_elements" groups="base.group_admin"/>
 		
 		<!--
 		<record model="ir.ui.view" id="edit_deductions">
@@ -99,7 +99,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_deductions" />
 		</record>
-		<menuitem name="Payroll/Configuration/Deductions" id="list_deductions" action="open_view_deductions" groups="admin"/>
+		<menuitem name="Payroll/Configuration/Deductions" id="list_deductions" action="open_view_deductions" groups="base.group_admin"/>
 		
 		
 		<record model="ir.ui.view" id="edit_reimbursements">
@@ -145,7 +145,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_reimbursements" />
 		</record>
-		<menuitem name="Payroll/Configuration/Reimbursements" id="list_reimbursements" action="open_view_reimbursements" groups="admin"/>
+		<menuitem name="Payroll/Configuration/Reimbursements" id="list_reimbursements" action="open_view_reimbursements" groups="base.group_admin"/>
 		
 		
 		<record model="ir.ui.view" id="edit_elements">
@@ -221,7 +221,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="edit_years" />
 		</record>
-		<menuitem name="Payroll/Configuration/Years" id="list_years" action="open_view_years" groups="admin"/>
+		<menuitem name="Payroll/Configuration/Years" id="list_years" action="open_view_years" groups="base.group_admin"/>
 		-->
 		<!-- payroll setup -->
 		<record model="ir.ui.view" id="edit_payroll_setup">
@@ -289,6 +289,6 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_payroll_setup" />
 		</record>
-		<menuitem name="Payroll/Configuration/Payroll Setup" id="list_payroll_setup" action="open_view_payroll_setup" groups="admin"/>
+		<menuitem name="Payroll/Configuration/Payroll Setup" id="list_payroll_setup" action="open_view_payroll_setup" groups="base.group_admin"/>
 	</data>
 </terp>
