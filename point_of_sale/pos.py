@@ -64,7 +64,7 @@ class pos_order(osv.osv):
                 ) AS amount
         FROM pos_order p
             LEFT OUTER JOIN pos_order_line l ON (p.id=l.order_id)
-        WHERE p.id IN ("""+id_set+""") GROUP BY p.id """)
+        WHERE p.id IN (""" + id_set  +""") GROUP BY p.id """)
         res = dict(cr.fetchall())
 
         for rec in self.browse(cr, uid, ids, context):
@@ -121,8 +121,7 @@ class pos_order(osv.osv):
 
     def _receivable_get(self, cr, uid, context=None):
         prop_obj = self.pool.get('ir.property')
-        res = prop_obj.get(cr, uid, 'property_account_receivable',
-            'res.partner', context=context)
+        res = prop_obj.get(cr, uid, 'property_account_receivable', 'res.partner', context=context)
         return res
 
     def copy(self, cr, uid, id, default=None, context={}):
@@ -263,7 +262,7 @@ class pos_order(osv.osv):
             'name': self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.out'), # increment the sequence
         }
 
-        new_picking_id = picking_model.copy(cr, uid, old_picking.id, defaults)
+        new_picking_id = picking_model.copy(cr, uid, old_picking.id, defaults) # state = 'draft'
         new_picking = picking_model.browse(cr, uid, new_picking_id, context)
 
         for line in new_picking.move_lines:
@@ -288,6 +287,9 @@ class pos_order(osv.osv):
                 else: # product hasn't changed (customer took it without any change):
                     # delete this product from new picking:
                     line.unlink(cr, uid, [line.id], context)
+            else:
+                # delete it in the new picking:
+                line.unlink(cr, uid, [line.id], context)
 
     def create_picking(self, cr, uid, ids, context={}):
         """Create a picking for each order and validate it."""
@@ -707,10 +709,8 @@ class pos_order(osv.osv):
                     'period_id': period,
                 }, context=context))
 
-            account_move_obj.button_validate(cr, uid, [move_id, payment_move_id],
-                                        context=context)
-            account_move_line_obj.reconcile(cr, uid, to_reconcile, type='manual',
-                                        context=context)
+            account_move_obj.button_validate(cr, uid, [move_id, payment_move_id], context=context)
+            account_move_line_obj.reconcile(cr, uid, to_reconcile, type='manual', context=context)
         return True
 
     def action_paid(self, cr, uid, ids, context=None):
@@ -765,8 +765,7 @@ class pos_order_line(osv.osv):
 
     _columns = {
         'name': fields.char('Line Description', size=512),
-        'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], required=True,
-                                    change_default=True),
+        'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok', '=', True)], required=True, change_default=True),
         'price_unit': fields.float('Unit Price', required=True),
         'qty': fields.float('Quantity'),
         'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal'),

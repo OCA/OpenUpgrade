@@ -1,8 +1,8 @@
 # -*- encoding: utf-8 -*-
 {
-    "name" : "Point Of Sale",
-    "version" : "1.0",
-    "author" : "Tiny",
+    "name": "Point Of Sale",
+    "version": "1.0",
+    "author": "Tiny",
 
     "description": """
 Main features :
