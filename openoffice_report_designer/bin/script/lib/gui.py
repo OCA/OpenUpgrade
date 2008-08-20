@@ -312,7 +312,7 @@ class DBModalDialog:
                        actionListenerProc=None,
                        nTabIndex=None ):
         self.addControl( "com.sun.star.awt.UnoControlButtonModel",
-                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight, bDropdown=None,
+                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight, bDropdown=None, bMultiSelection=None,
                          cLabel=cLabel,
                          nTabIndex=nTabIndex )
         if actionListenerProc != None:
@@ -352,7 +352,7 @@ class DBModalDialog:
                        itemListenerProc=None,
                        nTabIndex=None ):
         self.addControl( "com.sun.star.awt.UnoControlCheckBoxModel",
-                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight, bDropdown=None,
+                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight, bDropdown=None,  bMultiSelection=None,
                          cLabel=cLabel,
                          nTabIndex=nTabIndex )
         if itemListenerProc != None:
@@ -397,10 +397,10 @@ class DBModalDialog:
                         cLabel=None ):
         self.addControl( "com.sun.star.awt.UnoControlFixedTextModel",
                          cCtrlName, nPositionX, nPositionY, nWidth, nHeight,
-                         bDropdown=None,
+                         bDropdown=None, bMultiSelection=None,
                          cLabel=cLabel )
 
-	return self.getControl( cCtrlName )
+        return self.getControl( cCtrlName )
 
     #--------------------------------------------------
     #   Add Controls to dialog
@@ -409,13 +409,13 @@ class DBModalDialog:
     def addControl( self, cCtrlServiceName,
                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight,
                         bDropdown=None,
+                        bMultiSelection=None,
                         cLabel=None,
                         nTabIndex=None,
                         sImagePath=None,
                          ):
         oControlModel = self.oDialogModel.createInstance( cCtrlServiceName )
         self.oDialogModel.insertByName( cCtrlName, oControlModel )
-
         # if negative coordinates are given for X or Y position,
         #  then make that coordinate be relative to the right/bottom
         #  edge of the dialog box instead of to the left/top.
@@ -429,6 +429,9 @@ class DBModalDialog:
 
         if bDropdown != None:
             oControlModel.Dropdown = bDropdown
+
+        if bMultiSelection!=None:
+            oControlModel.MultiSelection=bMultiSelection
 
         if cLabel != None:
             oControlModel.Label = cLabel
@@ -449,10 +452,14 @@ class DBModalDialog:
 
     def addComboListBox( self, cCtrlName, nPositionX, nPositionY, nWidth, nHeight,
                         bDropdown=True,
+                        bMultiSelection=False,
                         itemListenerProc=None,
-                        actionListenerProc=None ):
+                        actionListenerProc=None,
+                        ):
+
         mod = self.addControl( "com.sun.star.awt.UnoControlListBoxModel",
-                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight,bDropdown)
+                         cCtrlName, nPositionX, nPositionY, nWidth, nHeight,bDropdown,bMultiSelection )
+
         if itemListenerProc != None:
             self.addItemListenerProc( cCtrlName, itemListenerProc )
 
@@ -496,6 +503,15 @@ class DBModalDialog:
         oControl = self.getControl( cCtrlName )
         return oControl.getSelectedItemPos()
 
+    def getListBoxSelectedItems(self,cCtrlName):
+        oControl = self.getControl( cCtrlName )
+        return oControl.getSelectedItems()
+
+    def getListBoxSelectedItemsPos(self,cCtrlName):
+
+        oControl = self.getControl( cCtrlName )
+        return oControl.getSelectedItemsPos()
+
     #--------------------------------------------------
     #   com.sun.star.awt.UnoControlComboBoxModel
     #--------------------------------------------------
@@ -506,7 +522,6 @@ class DBModalDialog:
 
         mod = self.addControl( "com.sun.star.awt.UnoControlComboBoxModel",
                          cCtrlName, nPositionX, nPositionY, nWidth, nHeight,bDropdown)
-
         if itemListenerProc != None:
             self.addItemListenerProc( cCtrlName, itemListenerProc )
         if actionListenerProc != None:
@@ -754,5 +769,4 @@ class DBModalDialog:
         For instance, the listener on your OK or Cancel button would call this to end the dialog.
         """
         self.oDialogControl.endExecute()
-
 
