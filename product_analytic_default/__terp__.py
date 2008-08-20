@@ -11,7 +11,7 @@
     "depends" : ['base','account'],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : [],
+    "update_xml" : ["product_analytic_default.xml"],
     "active": False,
     "installable": True
 }

@@ -60,7 +60,7 @@ class dm_campaign(osv.osv):
         return map(lambda x : [x.code,x.name],type)
 
     _columns = {
-        'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),                
+        'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])]),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
@@ -272,11 +272,12 @@ class dm_campaign_proposition(osv.osv):
         'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
-#        'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
-#        'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
+        'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'product_ids' : fields.one2many('dm.product', 'proposition_id', 'Catalogue'),
+#        'product_ids' : fields.many2many('dm.product', 'proposition_product_rel', 'proposition_id', 'product_id', 'Catalogue'),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments')
     }
@@ -353,8 +354,32 @@ class Country(osv.osv):
     _columns = {
                 'main_language' : fields.many2one('res.lang','Main Language',ondelete='cascade',),
                 'main_currency' : fields.many2one('res.currency','Main Currency',ondelete='cascade'),
-                }
+    }
 Country()
+
+class dm_campaign_prices_progression(osv.osv):
+    _name = 'dm.campaign.proposition.prices_progression'
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'fixed_prog' : fields.float('Fixed Prices Progression'),
+        'percent_prog' : fields.float('Percentage Prices Progression'),
+    }
+dm_campaign_prices_progression()
+
+class res_partner(osv.osv):
+    _name = "res.partner"
+    _inherit="res.partner"
+    
+    def _default_category(self, cr, uid, context={}):
+        if 'category_id' in context and context['category_id']:
+            id_cat = self.pool.get('res.partner.category').search(cr,uid,[('name','ilike',context['category_id'])])[0]
+            return [id_cat]
+        return []
+   
+    _defaults = {
+        'category_id': _default_category,
+    }
+res_partner()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
