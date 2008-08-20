@@ -366,6 +366,20 @@ class dm_campaign_prices_progression(osv.osv):
     }
 dm_campaign_prices_progression()
 
+class res_partner(osv.osv):
+    _name = "res.partner"
+    _inherit="res.partner"
+    
+    def _default_category(self, cr, uid, context={}):
+        if 'category_id' in context and context['category_id']:
+            id_cat = self.pool.get('res.partner.category').search(cr,uid,[('name','ilike',context['category_id'])])[0]
+            return [id_cat]
+        return []
+   
+    _defaults = {
+        'category_id': _default_category,
+    }
+res_partner()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
