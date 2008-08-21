@@ -3,7 +3,7 @@
 <data>
 	<menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
 	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager"/>
-	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>	
+	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files" id="menu_dm_config_camp_custfiles" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
 	<menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
 
@@ -53,19 +53,19 @@
 						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)" select="1"/>
 						<field name="lang_id" select="2"/>
 						<field name="currency_id" select="2"/>
-						
+
 						<field name="campaign_type" select="2"/>
 						<field name="date_start"/>
 						<field name="date"/>
 <!--						<field name="partner_id"/>-->
--						<field name="dealer_id"/>
+						<field name="dealer_id"/>
 						<field name="trademark_id"/>
 						<field name="responsible_id" />
 						<separator string="Tasks Management" colspan="4"/>
 						<group colspan="4">
 						<field name="project_id" string="Retro Planning"/>
 						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
-						</group>-->
+						</group>
 						<separator string="Process State" colspan="4"/>
 						<field name="planning_state" select="2" nolabel="0"/>
 						<field name="manufacturing_state" select="2" nolabel="0"/>
@@ -82,50 +82,79 @@
 					<page string="Propositions">
 						<field name="proposition_ids" nolabel="1">
 							<form string="Propositions">
-								<field name="name" string="Name"/>
-								<field name="code1" string="Code"/>
-								<field name="date_start"/>
-								<field name="proposition_type"/>
-								<newline/>
-								<field name="starting_mail_price"/>
-								<field name="forwarding_charges"/>
-								<field name="quantity_max" string="Quantity"/>
-								<field name="sale_rate"/>
-								<separator string="Payment Methods" colspan="4"/>
-								<field name="payment_methods" colspan="4" nolabel="1"/>
+							<notebook colspan="4">
+								<page string="General">
+									<field name="name" string="Name" select="1"/>
+									<field name="code1" string="Code" select="2"/>
+<!--									<field name="camp_id" on_change="onchange_date(camp_id)"/>-->
+									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+									<field name="proposition_type" select="1"/>
+									<field name="initial_proposition_id" select="1"/>
+									<field name="forwarding_charges"/>
+									<field name="quantity_max" string="Addresses Quantity"/>
+									<field name="sale_rate"/>
+									<separator string="Notes" colspan="4"/>
+									<field name="notes" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Prices">
+									<separator string="Prices policy" colspan="4"/>
+									<field name="customer_pricelist_id"/>
+									<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+									<field name="product_ids" colspan="4" nolabel="1">
+										<form string="Catalogue">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+											<field name="item_type"/>
+											<field name="notes"/>
+										</form>
+										<tree string="Catalogue" editable="bottom">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+				<!--							<field name="qty_planned"/>
+											<field name="qty_real"/>-->
+											<field name="item_type"/>
+											<field name="notes"/>
+										</tree>
+									</field>
+				<!--					<field name="starting_mail_price"/>-->
+									<separator string="Payment Methods" colspan="4"/>
+									<field name="payment_methods" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Segments">
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
 										<field name="code" string="Action Code"/>
 										<field name="file_id" />
-						<!--				<field name="sequence"/>-->
 										<field name="active" />
 										<field name="quantity_add" select="2"/>
 										<field name="raw_quantity" select="2"/>
 										<newline/>
 										<field name="split_id" />
 										<field name="reuse_id" />
-										<newine/>
+										<newline/>
 										<field name="start_census"/>
 										<field name="end_census"/>
 										<field name="deduplication_level"/>
-						<!--				<field name="action_code" string="Action Code" select="2"/>-->
 										<field name="note" colspan="4"/>
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
+										<field name="deduplication_level" />
 										<field name="code" string="Action Code" select="2"/>
-										<field name="qty"/>
+										<field name="quantity_add"/>
 									</tree>
 								</field>
-								<newline/>
-					<!--				<field name="delay_ids" colspan="4"/>-->
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
+								<field name="keep_segments" string="Keep Segments at Duplication"/>
+								</page>
+							</notebook>
 							</form>
 							<tree string="Propositions">
+<!--								<field name="camp_id"/>-->
 								<field name="name" string="Name"/>
-								<field name="code" string="Code"/>
+								<field name="code1" string="Code"/>
 								<field name="date_start" colspan="4"/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
@@ -138,33 +167,38 @@
 						<field name="campaign_group_id" colspan="2"/>
 					</page>
 					<page string="Desktop Publishing">
-						
+
 						<group colspan="4">
 							<separator string="                           " colspan="1"/>
 							<separator string="Theorical Dates" colspan="1"/>
 							<separator string="Reviewed Dates" colspan="1"/>
 							<separator string="Real Dates" colspan="1"/>
 						<separator string="DTP Request" colspan="4"/>
-							<label string="DTP Request Date" width="200" colspan="1"/>
+<!--							<label string="DTP Request Date" width="200" colspan="1"/>-->
+							<label string="DTP Request Date" colspan="1"/>
 							<field name="theorical_dtp_request_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_dtp_request_date" nolabel="1" colspan="1"/>
 							<field name="real_dtp_request_date" nolabel="1" colspan="1"/>
 						<separator string="Translation Dates" colspan="4"/>
-							<label string="Translation Delivery Date" width="200" colspan="1"/>
+<!--							<label string="Translation Delivery Date" width="200" colspan="1"/>-->
+							<label string="Translation Delivery Date" colspan="1"/>
 							<field name="theorical_translation_delivery_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_translation_delivery_date" nolabel="1" colspan="1"/>
 							<field name="real_translation_delivery_date" nolabel="1" colspan="1"/>
-							<label string="Translation Rereading Date" width="200" colspan="1"/>
+<!--							<label string="Translation Rereading Date" width="200" colspan="1"/>-->
+							<label string="Translation Rereading Date" colspan="1"/>
 							<field name="theorical_translation_rereading_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_translation_rereading_date" nolabel="1" colspan="1"/>
 							<field name="real_translation_rereading_date" nolabel="1" colspan="1"/>
 						<separator string="First Draft Delivery" colspan="4"/>
 							<label string="Delivery Date" colspan="1"/>
-							<field name="theorical_draft_delivery_date" width="200" nolabel="1" colspan="1"/>
+<!--							<field name="theorical_draft_delivery_date" width="200" nolabel="1" colspan="1"/>-->
+							<field name="theorical_draft_delivery_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_draft_delivery_date" nolabel="1" colspan="1"/>
 							<field name="real_draft_delivery_date" nolabel="1" colspan="1"/>
 						<separator string="Final Corrected Proof" colspan="4"/>
-							<label string="Validation Date" width="200" colspan="1"/>
+<!--							<label string="Validation Date" width="200" colspan="1"/>-->
+							<label string="Validation Date" colspan="1"/>
 							<field name="theorical_fcp_validation_date" nolabel="1" colspan="1"/>
 							<field name="reviewed_fcp_validation_date" nolabel="1" colspan="1"/>
 							<field name="real_fcp_validation_date" nolabel="1" colspan="1"/>
@@ -188,7 +222,7 @@
 			</form>
 		</field>
 	</record>
-        
+
         <!-- All Campaigns -->
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all">
@@ -234,7 +268,7 @@
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all_open"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all_open" action="action_campaign_form_all_open"/>
 
 
@@ -258,7 +292,7 @@
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all2"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
 
 
@@ -282,12 +316,12 @@
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all3"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
 
         <!-- My Campaings -->
 
-	
+
 	<record model="ir.actions.act_window" id="action_campaign_form_my">
 		<field name="name">My Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
@@ -383,7 +417,7 @@
 		<field name="act_window_id" ref="action_campaign_form_my3"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
-	
+
 	<!--
 	=======================================================
 	Campaign Model Views
@@ -422,27 +456,56 @@
 						</group>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4" nolabel="1"/>
-						<button name="copy_campaign" string="Create Campaign" type="object"/>						
+						<button name="copy_campaign" string="Create Campaign" type="object"/>
 					</page>
 					<page string="Propositions">
 						<field name="proposition_ids" nolabel="1">
 							<form string="Propositions">
-								<field name="name" string="Name"/>
-								<field name="code1" string="Code"/>
-								<field name="date_start"/>
-								<field name="proposition_type"/>
-								<newline/>
-								<field name="starting_mail_price"/>
-								<field name="quantity_max" string="Quantity"/>
-								<field name="sale_rate"/>
-								<separator string="Payment Methods" colspan="4"/>
-								<field name="payment_methods" colspan="4" nolabel="1"/>								
+							<notebook colspan="4">
+								<page string="General">
+									<field name="name" string="Name" select="1"/>
+									<field name="code1" string="Code" select="2"/>
+									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+									<field name="proposition_type" select="1"/>
+									<field name="initial_proposition_id" select="1"/>
+									<field name="forwarding_charges"/>
+									<field name="quantity_max" string="Addresses Quantity"/>
+									<field name="sale_rate"/>
+									<separator string="Notes" colspan="4"/>
+									<field name="notes" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Prices">
+									<separator string="Prices policy" colspan="4"/>
+									<field name="customer_pricelist_id"/>
+									<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+									<field name="product_ids" colspan="4" nolabel="1">
+										<form string="Catalogue">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+											<field name="item_type"/>
+											<field name="notes"/>
+										</form>
+										<tree string="Catalogue" editable="bottom">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+				<!--							<field name="qty_planned"/>
+											<field name="qty_real"/>-->
+											<field name="item_type"/>
+											<field name="notes"/>
+										</tree>
+									</field>
+				<!--					<field name="starting_mail_price"/>-->
+									<separator string="Payment Methods" colspan="4"/>
+									<field name="payment_methods" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Segments">
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
 										<field name="code" string="Action Code"/>
 										<field name="file_id" />
-						<!--				<field name="sequence"/>-->
 										<field name="active" />
 										<field name="quantity_add" select="2"/>
 										<field name="raw_quantity" select="2"/>
@@ -457,19 +520,19 @@
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
-						<!--				<field name="sequence" />-->
-										<field name="deduplication_level"/>
+										<field name="deduplication_level" />
 										<field name="code" string="Action Code" select="2"/>
 										<field name="quantity_add"/>
 									</tree>
 								</field>
-								<newline/>
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
+								<field name="keep_segments" string="Keep Segments at Duplication"/>
+								</page>
+							</notebook>
 							</form>
 							<tree string="Propositions">
+<!--								<field name="camp_id"/>-->
 								<field name="name" string="Name"/>
-								<field name="code" string="Code"/>
+								<field name="code1" string="Code"/>
 								<field name="date_start" colspan="4"/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
@@ -481,7 +544,7 @@
 			</form>
 		</field>
 	</record>
-        
+
 	<record model="ir.actions.act_window" id="action_campaign_model_form">
 		<field name="name">Campaign Model</field>
 		<field name="type">ir.actions.act_window</field>
@@ -491,20 +554,20 @@
 		<field name="domain">[('campaign_type','=','model')]</field>
 		<field name="context">{'campaign_type':'model'}</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window.view" id="action_campaign_model_tree_view">
 		<field name="view_mode">tree</field>
 		<field name="sequence">1</field>
 		<field name="view_id" ref="view_campaign_model_tree"/>
 		<field name="act_window_id" ref="action_campaign_model_form"/>
 	</record>
-	
+
 	<record model="ir.actions.act_window.view" id="action_campaign_model_form_view">
 		<field name="view_mode">form</field>
 		<field name="sequence">10</field>
 		<field name="view_id" ref="view_campaign_model_form"/>
 		<field name="act_window_id" ref="action_campaign_model_form"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Model" id="menu_action_campaign_model_form" action="action_campaign_model_form"/>
 
 	<!--
@@ -512,6 +575,7 @@
 	Delays Views
 	=======================================================
 	-->
+	<!--
 	<record model="ir.ui.view" id="view_campaign_delay">
 		<field name="name">dm.campaign.delay.form</field>
 		<field name="model">dm.campaign.delay</field>
@@ -535,8 +599,8 @@
 				<field name="value"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_delay">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.delay</field>
@@ -544,6 +608,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="view_campaign_delay_tree"/>
 	</record>
+-->
 <!--	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>-->
 
 	<!--
@@ -557,21 +622,48 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Propositions">
-				<field name="name" string="Name" select="1"/>
-				<field name="code1" string="Code" select="2"/>
-				<field name="camp_id" on_change="onchange_date(camp_id)"/>
-				<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
-				<field name="proposition_type" select="1"/>
-				<field name="initial_proposition_id" select="1"/>
-				<newline/>
-				<field name="starting_mail_price"/>
-				<field name="forwarding_charges"/>
-				<field name="quantity_max" string="Addresses Quantity"/>
-				<field name="sale_rate"/>
-				<field name="keep_segments"/>
-				<newline/>
-				<separator string="Payment Methods" colspan="4"/>
-				<field name="payment_methods" colspan="4" nolabel="1"/>
+			<notebook colspan="4">
+				<page string="General">
+					<field name="name" string="Name" select="1"/>
+					<field name="code1" string="Code" select="2"/>
+					<field name="camp_id" on_change="onchange_date(camp_id)"/>
+					<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+					<field name="proposition_type" select="1"/>
+					<field name="initial_proposition_id" select="1"/>
+					<newline/>
+					<field name="forwarding_charges"/>
+					<field name="quantity_max" string="Addresses Quantity"/>
+					<field name="sale_rate"/>
+					<separator string="Notes" colspan="4"/>
+					<field name="notes" colspan="4" nolabel="1"/>
+				</page>
+				<page string="Prices">
+					<separator string="Prices policy" colspan="4"/>
+					<field name="customer_pricelist_id"/>
+					<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+					<field name="product_ids" colspan="4" nolabel="1">
+						<form string="Catalogue">
+							<field name="offer_step_type"/>
+							<field name="product_id" string="Item"/>
+							<field name="price"/>
+							<field name="item_type"/>
+							<field name="notes"/>
+						</form>
+						<tree string="Catalogue" editable="bottom">
+							<field name="offer_step_type"/>
+							<field name="product_id" string="Item"/>
+							<field name="price"/>
+<!--							<field name="qty_planned"/>
+							<field name="qty_real"/>-->
+							<field name="item_type"/>
+							<field name="notes"/>
+						</tree>
+					</field>
+<!--					<field name="starting_mail_price"/>-->
+					<separator string="Payment Methods" colspan="4"/>
+					<field name="payment_methods" colspan="4" nolabel="1"/>
+				</page>
+				<page string="Segments">
 				<field name="segment_ids" colspan="4" nolabel="1">
 					<form string="Segments">
 						<field name="name" string="Name" select="1"/>
@@ -596,12 +688,13 @@
 						<field name="quantity_add"/>
 					</tree>
 				</field>
-				<separator string="Notes" colspan="4"/>
-				<field name="notes" colspan="4" nolabel="1"/>
+				<field name="keep_segments" string="Keep Segments at Duplication"/>
+				</page>
+			</notebook>
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_proposition_tree">
 		<field name="name">dm.campaign.proposition.tree</field>
 		<field name="model">dm.campaign.proposition</field>
@@ -617,7 +710,7 @@
 				<field name="proposition_type"/>
 			</tree>
 		</field>
-	</record>	
+	</record>
 
 	<record model="ir.actions.act_window" id="action_campaign_proposition">
 		<field name="name">All Campaigns Propositions</field>
@@ -654,7 +747,7 @@
 			<form string="Segments">
 				<field name="name" string="Name" select="1"/>
 				<field name="code" string="Action Code"/>
-				<field name="proposition_id" />
+<!--				<field name="proposition_id" />-->
 				<field name="file_id" />
 <!--				<field name="sequence"/>-->
 				<field name="active" />
@@ -671,7 +764,7 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_proposition_segment_tree">
 		<field name="name">dm.campaign.proposition.segment.tree</field>
 		<field name="model">dm.campaign.proposition.segment</field>
@@ -684,8 +777,8 @@
 				<field name="quantity_add"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_proposition_segment_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition.segment</field>
@@ -696,9 +789,9 @@
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
 
 	<!--
-	=======================================================	
+	=======================================================
 	Campaign group
-	=======================================================	
+	=======================================================
 	-->
 
 	<record model="ir.ui.view" id="view_campaign_group_form">
@@ -711,13 +804,13 @@
 				<separator string="Tasks Management" colspan="4"/>
 					<group colspan="4">
 					<field name="project_id" string="Retro Planning"/>
-					<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
+					<button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action"/>
 					</group>
 				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_group_tree">
 		<field name="name">dm.campaign.group.tree</field>
 		<field name="model">dm.campaign.group</field>
@@ -727,8 +820,8 @@
 				<field name="name"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_group_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.group</field>
@@ -753,7 +846,7 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_type_tree">
 		<field name="name">dm.campaign.type.tree</field>
 		<field name="model">dm.campaign.type</field>
@@ -764,8 +857,8 @@
 				<field name="code"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_type_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.type</field>
@@ -775,7 +868,7 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
 
-<!-- 
+<!--
 	<record model="ir.actions.act_window" id="action_campaign_trademark_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">res.partner</field>
@@ -834,6 +927,6 @@
             </field>
         </record>
 
-	
+
 </data>
 </terp>

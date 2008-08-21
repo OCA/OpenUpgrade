@@ -2,7 +2,7 @@
 <terp>
 	<data>
 		<!-- Holidays -->
-			
+
 		<record model="ir.ui.view" id="edit_holiday_inherit_new">
              <field name="name">Holidays</field>
 			<field name="model">hr.holidays</field>
@@ -41,8 +41,8 @@
 				</form>
 			</field>
                 </record>
-		
-		
+
+
 		<record model="ir.ui.view" id="view_holiday">
 			<field name="name">hr.holidays.tree</field>
 			<field name="model">hr.holidays</field>
@@ -59,19 +59,19 @@
 				</tree>
 			</field>
 		</record>
-		
-		
-		
+
+
+
 		<record model="ir.ui.view" id="ask_holiday">
 			<field name="name">Holidays</field>
 			<field name="model">hr.holidays</field>
 			<field name="inherit_id" ref="hr.ask_holiday"/>
 			<field name="type">form</field>
-			
+
 			<field name="arch" type="xml">
 				<form string="Vacations requests" position="replace">
 				<form string="Vacations requests">
-				<group col="4" solspan="4">
+				<group col="4" colspan="4">
 					<field name="name" select="1"/>
 					<field name="employee_id" select="1"/>
 				</group>
@@ -119,16 +119,16 @@
 					</tree>
 				</field>
 			</record>
-			
+
 			<record model="ir.ui.view" id="ask_holiday_hr">
 			<field name="name">Holidays_hr</field>
 			<field name="model">hr.holidays</field>
-			
+
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				
+
 				<form string="Vacations requests">
-				<group col="4" solspan="4">
+				<group col="4" colspan="4">
 					<field name="name" select="1"/>
 					<field name="employee_id" select="1"/>
 				</group>
@@ -136,7 +136,7 @@
 					<group col="6" colspan="4">
 						<field name="date_from1" on_change="_onchange_from_date(date_from1, date_to1)"/>
 						<field name="date_to1"/>
-						
+
 					</group>
 					<field name="holiday_id" mode="tree" colspan="4" nolabel="1">
 							<tree>
@@ -176,14 +176,14 @@
 						<button string="Set to Draft" name="set_to_draft" states="cancel" type="object"/>
 					</group>
 				</form>
-				
+
 			</field>
 		</record>
-		
+
 		<record model="ir.actions.act_window" id="action_all_holiday_hr">
 			<field name="name">All Validated Holidays</field>
 			<field name="type">ir.actions.act_window</field>
-			
+
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
@@ -210,7 +210,7 @@
 		</record>
 		<menuitem name="Holidays Request" parent="hr.menu_hr_root" id="menu_open_ask_holidays" action="open_ask_holidays" />
 		<menuitem name="All Validated Holidays" parent="menu_open_ask_holidays" id="menu_all_holiday_hr" action="action_all_holiday_hr" />
-		
+
 			<record model="ir.ui.view" id="holidays_days_list_history">
 				<field name="name">holidays.days.history.list</field>
 				<field name="model">days.holidays.days.history</field>
@@ -269,7 +269,7 @@
 					</form>
 				</field>
 			</record>
-			
+
 			<record model="ir.actions.act_window" id="public_action_all_holiday_days">
 				<field name="name">Public Holidays</field>
 				<field name="type">ir.actions.act_window</field>
@@ -278,7 +278,7 @@
 				<field name="view_mode">tree</field>
 				<field name="view_id" ref="public_holidays_days_list_list"/>
 		</record>
-			
+
 			<menuitem name="Public Holidays" parent="menu_open_ask_holidays" id="menu_public_holiday_days" action="public_action_all_holiday_days" />
 			<record model="ir.actions.act_window" id="action_all_holiday_days">
 				<field name="name">holidays day</field>
@@ -288,8 +288,8 @@
 				<field name="view_mode">tree</field>
 				<field name="view_id" ref="holidays_days_list"/>
 		</record>
-		
-		
+
+
 		<record model="ir.ui.view" id="holiday_tree_2">
                         <field name="name">hr.holidays.tree.2</field>
                         <field name="model">hr.holidays</field>
@@ -313,7 +313,7 @@
                         <field name="type">tree</field>
                         <field name="arch" type="xml">
                                 <tree string="Holiday Hisroty">
-                                		
+
                                         <field name="employee_id"/>
                                         <group colspan="2">
                                                 <field name="date_from1"/>
@@ -333,11 +333,11 @@
 				<field name="type">form</field>
 				<field name="arch" type="xml">
 					<form string="Holiday History">
-							<group col ="6" copspan="4">
+							<group col ="6" colspan="4">
 							<field name="validated_id"/>
 							<field name="name" select="1"/>
 							<field name="employee_id" select="1" />
-							</group>					
+							</group>
 							<newline/>
 							<group col="4" colspan="4">
 								<field name="date_from1"/>
@@ -347,16 +347,16 @@
 							<separator string="Reason(s) for taaking leave(s)" colspan="4" />
 								<field name="notes" colspan="4" nolabel="1"/>
 							<separator string="Contact Number/s during leave period:" colspan="4" />
-								<group col="8" colsapn="4">
+								<group col="8" colspan="4">
 									<field name="contactno"/>
 									<field name="total_half"/>
 									<field name="total_full"/>
 									<field name="total_hour"/>
 								</group>
 								<newline/>
-							<group col="2" colpans="4">
+							<group col="2" colspan="4">
 							<field name="state" select="1"/>
-							</group>	
+							</group>
 					</form>
 				</field>
 			</record>
@@ -366,7 +366,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">hr.holidays</field>
 			<field name="view_type">form</field>
-			
+
 		</record>
 		<record model="ir.actions.act_window.view" id="action_all_holiday1">
 			<field name="sequence" eval="10"/>
@@ -380,10 +380,10 @@
 			<field name="view_id" ref="ask_holiday"/>
 			<field name="act_window_id" ref="action_all_holiday"/>
 		</record>
-		
+
 		<menuitem name="All Holidays Requests" parent="menu_open_ask_holidays" id="menu_action_all_holiday" action="action_all_holiday" />
 		<menuitem name="All Holidays Requests" parent="menu_open_ask_holidays" id="menu_action_all_holiday1" action="action_all_holiday" />
-		
+
 			<record model="ir.actions.act_window" id="action_my_holiday">
                         <field name="name">My Holidays</field>
                         <field name="type">ir.actions.act_window</field>
@@ -403,7 +403,7 @@
             </record>
           <menuitem name="Holiday History" parent="menu_open_ask_holidays" id="menu_action_my_holiday_history" action="action_my_holiday_history"  />
           <menuitem name="My Holidays Request" parent="menu_open_ask_holidays" id="menu_action_my_holiday" action="action_my_holiday" />
-         
+
 		<record model="ir.actions.act_window" id="action_my_holiday_draft">
                         <field name="name">Draft Holidays</field>
                         <field name="type">ir.actions.act_window</field>
@@ -458,6 +458,6 @@
                         <field name="domain">[('state','=','confirm'),('employee_id',"=",[])]</field>
                 </record>
                 <menuitem name="Request waiting validation" parent="menu_action_my_holiday" id="menu_action_holiday_waiting" action="action_holiday_waiting" />
-			
+
 	</data>
 </terp>

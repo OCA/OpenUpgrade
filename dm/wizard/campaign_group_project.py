@@ -45,14 +45,15 @@ parameter_fields = {
 }
 
 def _create_duplicate(self, cr, uid, data, context):
-    campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign')
+    print context,"---------------------------------------------------------------------"
+    campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign.group')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
     duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True})
     project_obj.write(cr, uid, duplicate_project_id, {'name': "copy of " + project_obj.browse(cr, uid, duplicate_project_id, context).name})
     campaign_group_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}
 
-class wizard_campaign_project(wizard.interface):
+class wizard_campaign_group_project(wizard.interface):
     states = {
         'init': {
             'actions': [],
@@ -64,7 +65,6 @@ class wizard_campaign_project(wizard.interface):
                 'result' : {'type':'state', 'state':'end'}
                 }
     }
-wizard_campaign_project('campaign.project')
+wizard_campaign_group_project('campaign.group.project')
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

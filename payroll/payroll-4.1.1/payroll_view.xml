@@ -3,8 +3,8 @@
 	<data>
 		<menuitem name="Payroll" id="menu_hr_root" icon="terp-hr"/>
 		<menuitem name="Payroll/HR" icon="terp-hr"/>
-		<menuitem name="Payroll/HR/Configuration" groups="admin"/>
-		<menuitem name="Payroll/Configuration" groups="admin"/>
+		<menuitem name="Payroll/HR/Configuration" groups="base.group_admin"/>
+		<menuitem name="Payroll/Configuration" groups="base.group_admin"/>
 
 		<!--
 		==========
@@ -99,7 +99,7 @@
 			<field name="view_id" ref="view_employee_tree"/>
 			<field name="domain">[('parent_id','=',False)]</field>
 		</record>
-		<menuitem name="Payroll/HR/Hierarchical view of Employees" id="menu_open_view_employee_tree" action="open_view_employee_tree" groups="admin"/>
+		<menuitem name="Payroll/HR/Hierarchical view of Employees" id="menu_open_view_employee_tree" action="open_view_employee_tree" groups="base.group_admin"/>
 
 		<record model="ir.ui.view" id="view_employee_list">
 			<field name="name">hr.employee.tree</field>
@@ -123,7 +123,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_employee_list"/>
 		</record>
-		<menuitem name="Payroll/HR/List of Employees" id="menu_open_view_employee_list" action="open_view_employee_list" groups="admin"/>
+		<menuitem name="Payroll/HR/List of Employees" id="menu_open_view_employee_list" action="open_view_employee_list" groups="base.group_admin"/>
 
 		<!--
 		=======================
@@ -302,7 +302,7 @@
 			<field name="view_type">form</field>
 			<field name="view_mode">form,tree</field>
 		</record>
-		<menuitem name="Payroll/HR/Attendances/Attendances" id="menu_open_view_attendance" action="open_view_attendance" groups="admin"/>
+		<menuitem name="Payroll/HR/Attendances/Attendances" id="menu_open_view_attendance" action="open_view_attendance" groups="base.group_admin"/>
 
 
 		<!-- Holidays -->
@@ -356,7 +356,7 @@
 			<field name="view_id" ref="ask_holiday" />
 		</record>
 		<menuitem name="Payroll/HR/Attendances/Vacation request"
-			id="menu_open_ask_holidays" action="open_ask_holidays" groups="admin"/>
+			id="menu_open_ask_holidays" action="open_ask_holidays" groups="base.group_admin"/>
 
 		<!-- Some Configuration (holiday type, attendance reasons) -->
 
@@ -422,7 +422,7 @@
 			<field name="view_id" ref="view_attendance_reason" />
 		</record>
 		<menuitem name="Payroll/HR/Configuration/Attendance Reasons"
-			id="menu_open_view_attendance_reason" action="open_view_attendance_reason" groups="admin"/>
+			id="menu_open_view_attendance_reason" action="open_view_attendance_reason" groups="base.group_admin"/>
 		
 	</data>
 </terp>

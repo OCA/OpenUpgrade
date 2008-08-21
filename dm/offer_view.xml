@@ -352,8 +352,7 @@
 						</group>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4"  nolabel="1"/>
-<!--						<field name="state" nolabel="1" select="1"/>-->
-						<button name="go_to_offer" string="Create Offers" states="draft" type="object"/>
+						<button name="go_to_offer" string="Create Offers" type="object"/>
 					</page>
 					<!--
 					<page string="Description">
@@ -364,8 +363,8 @@
 					<page string="History">
 						<separator string="History" />
 						<field name="history_ids" nolabel="1" colspan="4"/>
-					</page>				
-				</notebook>	
+					</page>
+				</notebook>
 			</form>
 		</field>
 	</record>	
@@ -829,7 +828,7 @@
 					<field name="name" string="Name" select="1"/>
 					<field name="code" string="Action Code"/>
 					<field name="proposition_id" />
-					<field name="sequence"/>
+<!--					<field name="sequence"/>-->
 					<field name="active" />
 					<field name="quantity" select="2"/>
 					<field name="raw_quantity" select="2"/>
@@ -843,7 +842,7 @@
 				</form>
 				<tree string="Segments">
 					<field name="name" string="Name"/>
-					<field name="sequence" />				
+<!--					<field name="sequence" />				-->
 					<field name="code" string="Action Code"/>
 					<field name="quantity"/>
 				</tree>
@@ -871,6 +870,6 @@
 		<field name="view_id" ref="view_dm_customer_file_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Customer Files" id="menu_action_dm_customer_file" sequence="1" action="action_dm_customer_file"/>	
-	Configuration ->Campaigns
+
 	</data>
 </terp>

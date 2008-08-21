@@ -441,6 +441,15 @@
 			<field eval="1" name="perm_create"/>
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
+		<record id="ir_model_access_dmstepproductforoffermanager1" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.step.product')]"/>
+			<field eval="1" name="perm_read"/>
+			<field eval="&quot;&quot;&quot;dm step product for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field name="group_id" ref="res_groups_offermanager"/>
+		</record>
 		<record id="ir_model_access_dmtrademarkforoffermanager0" model="ir.model.access">
 			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 			<field eval="1" name="perm_read"/>

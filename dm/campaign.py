@@ -33,7 +33,7 @@ class dm_campaign(osv.osv):
 
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
         return name
-    
+
     def _campaign_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -46,7 +46,7 @@ class dm_campaign(osv.osv):
             date = date_start.split('-')
             year = month = ''
             if len(date)==3:
-                year = date[0][2:] 
+                year = date[0][2:]
                 month = date[1]
             final_date=month+year
             code1='-'.join([offer_code ,dealer_code ,trademark_code ,final_date ,country_code])
@@ -60,7 +60,7 @@ class dm_campaign(osv.osv):
         return map(lambda x : [x.code,x.name],type)
 
     _columns = {
-        'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),                
+        'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])]),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
@@ -74,7 +74,7 @@ class dm_campaign(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
-        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')]),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category_id':'Dealer'}),
 #
 #                        desktop publication
 #
@@ -83,7 +83,7 @@ class dm_campaign(osv.osv):
         'real_dtp_request_date' :fields.date('Real Request Date'),
         'theorical_translation_delivery_date' :fields.date('Theorical Translation Delivery Date'),
         'reviewed_translation_delivery_date' :fields.date('Reviewed Translation Delivery Date'),
-        'real_translation_delivery_date' :fields.date('Real Translation Date'), 
+        'real_translation_delivery_date' :fields.date('Real Translation Date'),
         'theorical_translation_rereading_date' : fields.date('Theorical Translation Rereading Date'),
         'reviewed_translation_rereading_date' :fields.date('Reviewed Translation Rereading Date'),
         'real_translation_rereading_date' :fields.date('Real Translation Rereading Date'),
@@ -98,11 +98,11 @@ class dm_campaign(osv.osv):
         'real_dtp_sup_delivery_date' : fields.date('Real Dtp Sup Delivery Date'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
-        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')]),
+        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')], context={'category_id':'Deduplicator'}),
         'dedup_order_date' : fields.date('Order Date'),
         'dedup_validity_date' : fields.date('Validity Date'),
         'dedup_delivery_date' : fields.date('Delivery Date'),
-        'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),      
+        'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),
     }
 
     _defaults = {
@@ -128,7 +128,7 @@ class dm_campaign(osv.osv):
             if id:
                 value = {'trademark_id':id[0]['recommended_trademark']}
             return {'value':value}
-                    
+
         forbidden_state_ids = map(lambda x:x.country_id.id ,res.forbidden_state_ids)
         forbidden_country_ids = map(lambda x:x.id ,res.forbidden_country_ids)
         forbidden_country_ids.extend(forbidden_state_ids)
@@ -139,11 +139,11 @@ class dm_campaign(osv.osv):
 
     def state_draft_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
-        return True  
+        return True
 
     def state_close_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'close'})
-        return True  
+        return True
 
     def state_pending_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'pending'})
@@ -160,7 +160,14 @@ class dm_campaign(osv.osv):
             raise osv.except_osv("Error!!","Informations are missing.Check Date Start, Dealer and Trademark")
         self.write(cr, uid, ids, {'state':'open'})
         return True
-    
+
+
+    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
+        if 'date_start' in vals and vals['date_start']:
+            camp = self.browse(cr,uid,ids)[0]
+            self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
+        return super(dm_campaign,self).write(cr, uid, ids,vals, context)
+
     def create(self,cr,uid,vals,context={}):
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type']='model'
@@ -190,7 +197,7 @@ class dm_campaign(osv.osv):
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
-        
+
 dm_campaign()
 
 #Postgres view
@@ -223,24 +230,30 @@ dm_campaign_statistics()
 class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
-    
+
     def onchange_date(self, cr, uid, ids, camp_id):
-        res = {} 
+        res = {}
         if camp_id:
             id = self.pool.get('dm.campaign').read(cr, uid, [camp_id])
             if id:
                 res = {'date_start':id[0]['date_start']}
-            
         else:
-           res = {'date_start':0}   
+           res = {'date_start':0}
         return {'value': res}
-    
-    def create(self, cr, user, vals, context=None):
-        
-       if 'keep_segments' in  vals  and vals['keep_segments'] == False :
-            vals['segment_ids'] = []
-       return super(dm_campaign_proposition,self).create(cr, user, vals, context=None)
-       
+
+    def copy(self, cr, uid, id, default=None, context={}):
+        """
+        Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
+        """
+        prp_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
+        data = self.browse(cr, uid, prp_id, context)
+        if data.keep_segments == False:
+            l = []
+            for i in data.segment_ids:
+                 l.append(i.id)
+                 self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
+                 self.write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
+            return prp_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
         result ={}
@@ -254,9 +267,9 @@ class dm_campaign_proposition(osv.osv):
             date = date_start.split('-')
             year = month = ''
             if len(date)==3:
-                year = date[0][2:] 
+                year = date[0][2:]
                 month = date[1]
-            country_code = pro.camp_id.country_id.code or '' 
+            country_code = pro.camp_id.country_id.code or ''
             seq = '%%0%sd' % 2 % id
             final_date = month+year
             code1='-'.join([offer_code, dealer_code ,trademark_code ,final_date ,country_code ,seq])
@@ -272,13 +285,15 @@ class dm_campaign_proposition(osv.osv):
         'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
-#        'customer_pricelist_id':fields.many2one('product.pricelist','Customer Pricelist'),
-#        'requirer_pricelist_id' : fields.many2one('product.pricelist','Requirer Pricelist'),
+        'customer_pricelist_id':fields.many2one('product.pricelist','Items Pricelist', required=False),
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
         'notes':fields.text('Notes'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
+        'product_ids' : fields.one2many('dm.product', 'proposition_id', 'Catalogue'),
+#        'product_ids' : fields.many2many('dm.product', 'proposition_product_rel', 'proposition_id', 'product_id', 'Catalogue'),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
-        'keep_segments' : fields.boolean('Keep Segments')
+        'keep_segments' : fields.boolean('Keep Segments'),
+#        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
     }
 
     _defaults = {
@@ -353,8 +368,32 @@ class Country(osv.osv):
     _columns = {
                 'main_language' : fields.many2one('res.lang','Main Language',ondelete='cascade',),
                 'main_currency' : fields.many2one('res.currency','Main Currency',ondelete='cascade'),
-                }
+    }
 Country()
+
+class dm_campaign_proposition_prices_progression(osv.osv):
+    _name = 'dm.campaign.proposition.prices_progression'
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'fixed_prog' : fields.float('Fixed Prices Progression', digits=(16,2)),
+        'percent_prog' : fields.float('Percentage Prices Progression', digits=(16,2)),
+    }
+dm_campaign_proposition_prices_progression()
+
+class res_partner(osv.osv):
+    _name = "res.partner"
+    _inherit="res.partner"
+
+    def _default_category(self, cr, uid, context={}):
+        if 'category_id' in context and context['category_id']:
+            id_cat = self.pool.get('res.partner.category').search(cr,uid,[('name','ilike',context['category_id'])])[0]
+            return [id_cat]
+        return []
+
+    _defaults = {
+        'category_id': _default_category,
+    }
+res_partner()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

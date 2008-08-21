@@ -32,7 +32,7 @@
 			<field name="res_model">event.type</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="Configuration" id="menu_event_config" parent="menu_event_main" />		
+		<menuitem name="Configuration" id="menu_event_config" parent="menu_event_main" />
 		<menuitem name="Types of Events" id="menu_event_type" action="action_event_type" parent="menu_event_config"/>
 
 		<!-- The base section for all events -->
@@ -198,7 +198,7 @@
 				<form string="Registration">
 					<notebook>
 					<page string="General">
-						<field name="event_id" select="1" on_change="onchange_event(event_id, partner_invoice_id)" colsap="1"/>
+						<field name="event_id" select="1" on_change="onchange_event(event_id, partner_invoice_id)" colspan="1"/>
 						<field name="nb_register"/>
 						<newline/>
 						<field name="partner_id" required="1" select="1" on_change="onchange_partner_id(partner_id,event_id, email_from)" />

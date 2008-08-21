@@ -265,6 +265,15 @@ class account_invoice_line(osv.osv):
         res= super(account_invoice_line,self).move_line_get_item(cr, uid, line, context={})
         res ['analytics_id']=line.analytics_id and line.analytics_id.id or False
         return res
+
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, price_unit=False, address_invoice_id=False, context={}):
+        res_prod = super(account_invoice_line,self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, price_unit, address_invoice_id, context)
+        if product:
+            res = self.pool.get('product.product').browse(cr, uid, product, context=context)
+            res_prod['value'].update({'analytics_id':res.property_account_distribution.id})
+        return res_prod
+
+
 account_invoice_line()
 
 class account_move_line(osv.osv):
@@ -372,6 +381,24 @@ class account_analytic_plan(osv.osv):
     }
 account_analytic_plan()
 
+class product_product(osv.osv):
+    _name = 'product.product'
+    _inherit = 'product.product'
+    _description = 'Product'
 
+    _columns = {
+        'property_account_distribution': fields.property(
+            'account.analytic.plan.instance',
+            type='many2one',
+            relation='account.analytic.plan.instance',
+            string="Analytic Distribution",
+            method=True,
+            view_load=True,
+            group_name="Accounting Properties",
+            help="This Analytic Distribution will be use in sale order line and invoice lines",
+            ),
+                }
+
+product_product()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

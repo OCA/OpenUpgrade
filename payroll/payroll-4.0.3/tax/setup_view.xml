@@ -77,7 +77,7 @@
 			<field name="view_mode">tree,form</field>
 			<field name="view_id" ref="view_tax_rebate_sections"/>
 		</record>
-		<menuitem name="Payroll/Configuration/Tax Rebate Sections" id="menu_open_tax_rebate_sections_tree" action="open_tax_rebate_sections" groups="admin"/>
+		<menuitem name="Payroll/Configuration/Tax Rebate Sections" id="menu_open_tax_rebate_sections_tree" action="open_tax_rebate_sections" groups="base.group_admin"/>
 		
 		<!-- tax rebates -->
 		<record model="ir.ui.view" id="edit_tax_rebates">
