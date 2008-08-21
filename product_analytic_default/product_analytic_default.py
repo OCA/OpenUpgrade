@@ -31,8 +31,8 @@ from osv import fields,osv
 from osv import orm
 
 class product_product(osv.osv):
-    _name = 'product.template'
-    _inherit = 'product.template'
+    _name = 'product.product'
+    _inherit = 'product.product'
     _description = 'Product'
 
     _columns = {
@@ -45,9 +45,22 @@ class product_product(osv.osv):
             view_load=True,
             group_name="Accounting Properties",
             help="This Analytic Account will be use in sale order line and invoice lines",
-            required=True),
+            ),
                 }
 
 product_product()
+
+class account_invoice_line(osv.osv):
+    _inherit = 'account.invoice.line'
+    _description = 'account invoice line'
+
+    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, price_unit=False, address_invoice_id=False, context={}):
+        res_prod = super(account_invoice_line,self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, price_unit, address_invoice_id, context)
+        if product:
+            res = self.pool.get('product.product').browse(cr, uid, product, context=context)
+            res_prod['value'].update({'account_analytic_id':res.property_account_analytic.id})
+        return res_prod
+
+account_invoice_line()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
