@@ -45,7 +45,7 @@ parameter_fields = {
 }
 
 def _create_duplicate(self, cr, uid, data, context):
-    campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign.group')
+    campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
     duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True})
     project_obj.write(cr, uid, duplicate_project_id, {'name': "copy of " + project_obj.browse(cr, uid, duplicate_project_id, context).name})

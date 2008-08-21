@@ -3,7 +3,7 @@
 <data>
 	<menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
 	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager"/>
-	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>	
+	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files" id="menu_dm_config_camp_custfiles" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
 	<menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
 
@@ -53,7 +53,7 @@
 						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)" select="1"/>
 						<field name="lang_id" select="2"/>
 						<field name="currency_id" select="2"/>
-						
+
 						<field name="campaign_type" select="2"/>
 						<field name="date_start"/>
 						<field name="date"/>
@@ -167,7 +167,7 @@
 						<field name="campaign_group_id" colspan="2"/>
 					</page>
 					<page string="Desktop Publishing">
-						
+
 						<group colspan="4">
 							<separator string="                           " colspan="1"/>
 							<separator string="Theorical Dates" colspan="1"/>
@@ -222,7 +222,7 @@
 			</form>
 		</field>
 	</record>
-        
+
         <!-- All Campaigns -->
 
 	<record model="ir.actions.act_window" id="action_campaign_form_all">
@@ -268,7 +268,7 @@
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all_open"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all_open" action="action_campaign_form_all_open"/>
 
 
@@ -292,7 +292,7 @@
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all2"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
 
 
@@ -316,12 +316,12 @@
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all3"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
 
         <!-- My Campaings -->
 
-	
+
 	<record model="ir.actions.act_window" id="action_campaign_form_my">
 		<field name="name">My Campaigns</field>
 		<field name="type">ir.actions.act_window</field>
@@ -417,7 +417,7 @@
 		<field name="act_window_id" ref="action_campaign_form_my3"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
-	
+
 	<!--
 	=======================================================
 	Campaign Model Views
@@ -456,7 +456,7 @@
 						</group>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4" nolabel="1"/>
-						<button name="copy_campaign" string="Create Campaign" type="object"/>						
+						<button name="copy_campaign" string="Create Campaign" type="object"/>
 					</page>
 					<page string="Propositions">
 						<field name="proposition_ids" nolabel="1">
@@ -544,7 +544,7 @@
 			</form>
 		</field>
 	</record>
-        
+
 	<record model="ir.actions.act_window" id="action_campaign_model_form">
 		<field name="name">Campaign Model</field>
 		<field name="type">ir.actions.act_window</field>
@@ -554,20 +554,20 @@
 		<field name="domain">[('campaign_type','=','model')]</field>
 		<field name="context">{'campaign_type':'model'}</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window.view" id="action_campaign_model_tree_view">
 		<field name="view_mode">tree</field>
 		<field name="sequence">1</field>
 		<field name="view_id" ref="view_campaign_model_tree"/>
 		<field name="act_window_id" ref="action_campaign_model_form"/>
 	</record>
-	
+
 	<record model="ir.actions.act_window.view" id="action_campaign_model_form_view">
 		<field name="view_mode">form</field>
 		<field name="sequence">10</field>
 		<field name="view_id" ref="view_campaign_model_form"/>
 		<field name="act_window_id" ref="action_campaign_model_form"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Model" id="menu_action_campaign_model_form" action="action_campaign_model_form"/>
 
 	<!--
@@ -599,8 +599,8 @@
 				<field name="value"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_delay">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.delay</field>
@@ -610,7 +610,7 @@
 	</record>
 -->
 <!--	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>-->
-	
+
 	<!--
 	=======================================================
 	Proposition Views
@@ -694,7 +694,7 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_proposition_tree">
 		<field name="name">dm.campaign.proposition.tree</field>
 		<field name="model">dm.campaign.proposition</field>
@@ -710,7 +710,7 @@
 				<field name="proposition_type"/>
 			</tree>
 		</field>
-	</record>	
+	</record>
 
 	<record model="ir.actions.act_window" id="action_campaign_proposition">
 		<field name="name">All Campaigns Propositions</field>
@@ -764,7 +764,7 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_proposition_segment_tree">
 		<field name="name">dm.campaign.proposition.segment.tree</field>
 		<field name="model">dm.campaign.proposition.segment</field>
@@ -777,8 +777,8 @@
 				<field name="quantity_add"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_proposition_segment_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition.segment</field>
@@ -789,9 +789,9 @@
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
 
 	<!--
-	=======================================================	
+	=======================================================
 	Campaign group
-	=======================================================	
+	=======================================================
 	-->
 
 	<record model="ir.ui.view" id="view_campaign_group_form">
@@ -804,13 +804,13 @@
 				<separator string="Tasks Management" colspan="4"/>
 					<group colspan="4">
 					<field name="project_id" string="Retro Planning"/>
-					<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action"/>
+					<button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action"/>
 					</group>
 				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_group_tree">
 		<field name="name">dm.campaign.group.tree</field>
 		<field name="model">dm.campaign.group</field>
@@ -820,8 +820,8 @@
 				<field name="name"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_group_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.group</field>
@@ -846,7 +846,7 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_campaign_type_tree">
 		<field name="name">dm.campaign.type.tree</field>
 		<field name="model">dm.campaign.type</field>
@@ -857,8 +857,8 @@
 				<field name="code"/>
 			</tree>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_type_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.type</field>
@@ -868,7 +868,7 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
 
-<!-- 
+<!--
 	<record model="ir.actions.act_window" id="action_campaign_trademark_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">res.partner</field>
@@ -927,6 +927,6 @@
             </field>
         </record>
 
-	
+
 </data>
 </terp>
