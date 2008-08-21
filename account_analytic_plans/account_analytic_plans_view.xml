@@ -119,9 +119,9 @@
 		src_model="account.analytic.plan"
 		id="account_analytic_instance_model_open"/>
 
-	<menuitem 
+	<menuitem
 		name="Analytic Distribution's models" parent="account.next_id_32"
-		id="menu_account_analytic_plan_instance_action" 
+		id="menu_account_analytic_plan_instance_action"
 		action="account_analytic_plan_instance_action"/>
 
 	<record model="ir.ui.view" id="account_analytic_plan_instance_line_form">
@@ -183,9 +183,9 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
-	<menuitem 
+	<menuitem
 		parent="account.next_id_39"
-		id="menu_account_analytic_plan_action" 
+		id="menu_account_analytic_plan_action"
 		action="account_analytic_plan_form_action"/>
 
 	<record model="ir.ui.view" id="account_analytic_plan_line_form">
@@ -218,6 +218,31 @@
 			</tree>
 		</field>
 	</record>
+
+	<!-- add property field on product -->
+
+	<record model="ir.ui.view" id="view_template_property_distribution_form">
+			<field name="name">product.template.property.distribution.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_form_view"/>
+			<field name="arch" type="xml">
+				<field name="property_account_analytic" position="replace">
+					<field name="property_account_distribution"/>
+				</field>
+			</field>
+		</record>
+	<record model="ir.ui.view" id="view_normal_property_distribution_form">
+			<field name="name">product.normal.property.distribution.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<field name="property_account_analytic" position="replace">
+					<field name="property_account_distribution"/>
+				</field>
+			</field>
+		</record>
 
 </data>
 </terp>
