@@ -267,7 +267,6 @@ class account_invoice_line(osv.osv):
         return res
 
     def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, price_unit=False, address_invoice_id=False, context={}):
-        print "hi here ifgdft is...produc chagne"
         res_prod = super(account_invoice_line,self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, price_unit, address_invoice_id, context)
         if product:
             res = self.pool.get('product.product').browse(cr, uid, product, context=context)
