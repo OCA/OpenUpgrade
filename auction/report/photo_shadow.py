@@ -1,5 +1,4 @@
 # -*- encoding: utf-8 -*-
-import Image, ImageDraw, ImageFilter
 
 def convert_catalog(from_file, to_file, size=220) :
     return __convert(from_file, to_file, size)
@@ -9,6 +8,7 @@ def convert(from_file, to_file):
     __convert(from_file, to_file, size=95)
 
 def __convert(from_file, to_file, size=95):
+    import Image, ImageDraw, ImageFilter
     im = Image.open(from_file)
     if float(im.size[1]/im.size[0])>2:
         im = im.resize((im.size[0]*size/im.size[1], size))
