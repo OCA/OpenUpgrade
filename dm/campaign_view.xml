@@ -82,23 +82,52 @@
 					<page string="Propositions">
 						<field name="proposition_ids" nolabel="1">
 							<form string="Propositions">
-								<field name="name" string="Name"/>
-								<field name="code1" string="Code"/>
-								<field name="date_start"/>
-								<field name="proposition_type"/>
-								<newline/>
-								<field name="starting_mail_price"/>
-								<field name="forwarding_charges"/>
-								<field name="quantity_max" string="Quantity"/>
-								<field name="sale_rate"/>
-								<separator string="Payment Methods" colspan="4"/>
-								<field name="payment_methods" colspan="4" nolabel="1"/>
+							<notebook colspan="4">
+								<page string="General">
+									<field name="name" string="Name" select="1"/>
+									<field name="code1" string="Code" select="2"/>
+<!--									<field name="camp_id" on_change="onchange_date(camp_id)"/>-->
+									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+									<field name="proposition_type" select="1"/>
+									<field name="initial_proposition_id" select="1"/>
+									<field name="forwarding_charges"/>
+									<field name="quantity_max" string="Addresses Quantity"/>
+									<field name="sale_rate"/>
+									<separator string="Notes" colspan="4"/>
+									<field name="notes" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Prices">
+									<separator string="Prices policy" colspan="4"/>
+									<field name="customer_pricelist_id"/>
+									<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+									<field name="product_ids" colspan="4" nolabel="1">
+										<form string="Catalogue">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+											<field name="item_type"/>
+											<field name="notes"/>
+										</form>
+										<tree string="Catalogue" editable="bottom">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+				<!--							<field name="qty_planned"/>
+											<field name="qty_real"/>-->
+											<field name="item_type"/>
+											<field name="notes"/>
+										</tree>
+									</field>
+				<!--					<field name="starting_mail_price"/>-->
+									<separator string="Payment Methods" colspan="4"/>
+									<field name="payment_methods" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Segments">
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
 										<field name="code" string="Action Code"/>
 										<field name="file_id" />
-						<!--				<field name="sequence"/>-->
 										<field name="active" />
 										<field name="quantity_add" select="2"/>
 										<field name="raw_quantity" select="2"/>
@@ -109,23 +138,23 @@
 										<field name="start_census"/>
 										<field name="end_census"/>
 										<field name="deduplication_level"/>
-						<!--				<field name="action_code" string="Action Code" select="2"/>-->
 										<field name="note" colspan="4"/>
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
+										<field name="deduplication_level" />
 										<field name="code" string="Action Code" select="2"/>
-										<field name="qty"/>
+										<field name="quantity_add"/>
 									</tree>
 								</field>
-								<newline/>
-					<!--				<field name="delay_ids" colspan="4"/>-->
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
+								<field name="keep_segments" string="Keep Segments at Duplication"/>
+								</page>
+							</notebook>
 							</form>
 							<tree string="Propositions">
+<!--								<field name="camp_id"/>-->
 								<field name="name" string="Name"/>
-								<field name="code" string="Code"/>
+								<field name="code1" string="Code"/>
 								<field name="date_start" colspan="4"/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
@@ -432,22 +461,51 @@
 					<page string="Propositions">
 						<field name="proposition_ids" nolabel="1">
 							<form string="Propositions">
-								<field name="name" string="Name"/>
-								<field name="code1" string="Code"/>
-								<field name="date_start"/>
-								<field name="proposition_type"/>
-								<newline/>
-								<field name="starting_mail_price"/>
-								<field name="quantity_max" string="Quantity"/>
-								<field name="sale_rate"/>
-								<separator string="Payment Methods" colspan="4"/>
-								<field name="payment_methods" colspan="4" nolabel="1"/>	
+							<notebook colspan="4">
+								<page string="General">
+									<field name="name" string="Name" select="1"/>
+									<field name="code1" string="Code" select="2"/>
+									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+									<field name="proposition_type" select="1"/>
+									<field name="initial_proposition_id" select="1"/>
+									<field name="forwarding_charges"/>
+									<field name="quantity_max" string="Addresses Quantity"/>
+									<field name="sale_rate"/>
+									<separator string="Notes" colspan="4"/>
+									<field name="notes" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Prices">
+									<separator string="Prices policy" colspan="4"/>
+									<field name="customer_pricelist_id"/>
+									<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+									<field name="product_ids" colspan="4" nolabel="1">
+										<form string="Catalogue">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+											<field name="item_type"/>
+											<field name="notes"/>
+										</form>
+										<tree string="Catalogue" editable="bottom">
+											<field name="offer_step_type"/>
+											<field name="product_id" string="Item"/>
+											<field name="price"/>
+				<!--							<field name="qty_planned"/>
+											<field name="qty_real"/>-->
+											<field name="item_type"/>
+											<field name="notes"/>
+										</tree>
+									</field>
+				<!--					<field name="starting_mail_price"/>-->
+									<separator string="Payment Methods" colspan="4"/>
+									<field name="payment_methods" colspan="4" nolabel="1"/>
+								</page>
+								<page string="Segments">
 								<field name="segment_ids" colspan="4" nolabel="1">
 									<form string="Segments">
 										<field name="name" string="Name" select="1"/>
 										<field name="code" string="Action Code"/>
 										<field name="file_id" />
-						<!--				<field name="sequence"/>-->
 										<field name="active" />
 										<field name="quantity_add" select="2"/>
 										<field name="raw_quantity" select="2"/>
@@ -462,19 +520,19 @@
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
-						<!--				<field name="sequence" />-->
-										<field name="deduplication_level"/>
+										<field name="deduplication_level" />
 										<field name="code" string="Action Code" select="2"/>
 										<field name="quantity_add"/>
 									</tree>
 								</field>
-								<newline/>
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
+								<field name="keep_segments" string="Keep Segments at Duplication"/>
+								</page>
+							</notebook>
 							</form>
 							<tree string="Propositions">
+<!--								<field name="camp_id"/>-->
 								<field name="name" string="Name"/>
-								<field name="code" string="Code"/>
+								<field name="code1" string="Code"/>
 								<field name="date_start" colspan="4"/>
 								<field name="quantity_max" string="Quantity"/>
 								<field name="sale_rate"/>
