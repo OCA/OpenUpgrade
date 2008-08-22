@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<terp>
+    <data>
+
+	<record id="view_config_bob_import_form" model="ir.ui.view">
+		<field name="name">Configure BOB Import</field>
+        <field name="model">config.bob.import</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Configure Your BOB Import Options">
+                <separator col="4" colspan="4" string="Configure BOB Import Path"/>
+                <field name="company_id"/>
+                <newline/>
+                <field name="path" colspan="4"/>
+				<newline/>
+                <group col="4" colspan="4">
+                    <button icon="gtk-cancel" special="cancel" string="Cancel" type="object"/>
+                    <button icon="gtk-ok" name="action_create" string="Next" type="object"/>
+                </group>
+            </form>
+        </field>
+	</record>
+
+    <record id="action_config_bob_import_form" model="ir.actions.act_window">
+            <field name="name">Configure BOB Import</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">config.bob.import</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    </record>
+
+    <record id="config_bob_import" model="ir.module.module.configuration.step">
+            <field name="name">Specify BOB Import Options</field>
+            <field name="note">Specify the company name,path and folder for BOB Import.</field>
+            <field name="action_id" ref="action_config_bob_import_form"/>
+            <field name="state">open</field>
+    </record>
+
+    <record id="view_config_path_folder_form" model="ir.ui.view">
+		<field name="name">Select Folder for BOB Import</field>
+        <field name="model">config.path.folder</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Select Folder">
+            	<separator col="4" colspan="4" string="Select the BOB folder out of the list given below."/>
+            	<label string="If the given list appears to be empty,click Back and select a valid path." colspan="4" />
+            	<newline/>
+				<field name="folder"/>
+                <group col="4" colspan="4">
+                	<button icon="gtk-cancel" name="action_back" string="Back" type="object"/>
+                    <button icon="gtk-cancel" special="cancel" string="Cancel" type="object"/>
+                    <button icon="gtk-ok" name="action_create" string="Go" type="object"/>
+                </group>
+            </form>
+        </field>
+	</record>
+
+    <record id="action_config_path_folder_form" model="ir.actions.act_window">
+            <field name="name">Select Folder</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">config.path.folder</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    </record>
+
+    <record id="config_path_folder" model="ir.module.module.configuration.step">
+            <field name="name">Select Folder</field>
+            <field name="note">Select Folder.</field>
+            <field name="action_id" ref="action_config_path_folder_form"/>
+            <field name="state">open</field>
+    </record>
+
+    </data>
+</terp>
