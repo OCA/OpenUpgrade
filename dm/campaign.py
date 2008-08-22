@@ -329,7 +329,7 @@ class dm_campaign_proposition_segment(osv.osv):
         return segment.quantity_add.isdigit() or segment.quantity_add=='AAA'
     _columns = {
 #        'action_code': fields.char('Code',size=16, required=True),
-        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', required=True, ondelete='cascade'),
+        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', readonly=True, ondelete='cascade'),
         'file_id': fields.many2one('dm.customer.file','Files'),
         'qty': fields.integer('Qty'),
         'quantity_add' : fields.char('Quantity',size=16),

@@ -296,7 +296,7 @@ class dm_step_product(osv.osv):
 
     _rec_name = 'product_id'
     _columns = {
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
         'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
@@ -310,7 +310,7 @@ class dm_product(osv.osv):
     _name = "dm.product"
     _rec_name = 'product_id'
     _columns = {
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
         'qty_planned' : fields.integer('Planned Quantity'),
         'qty_real' : fields.integer('Real Quantity'),
         'price' : fields.float('Sale Price'),
@@ -320,6 +320,27 @@ class dm_product(osv.osv):
         'notes' : fields.text('Notes'),
     }
 dm_product()
+
+
+class product_product(osv.osv):
+    _name = "product.product"
+    _inherit = "product.product"
+
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+        result=super(product_product,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+        if 'flag' in context:
+            if result['type']=='form':
+                for k,v in result['fields'].items():
+                    if not (k=='name' or k=='default_code' or k=='categ_id' or k=='list_price' or k=='standard_price' or k=='description' \
+                        or k=='description_sale'  or k=='description_purchase'):
+                        del result['fields'][k]
+                
+                result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Product">\n<notebook>\n<page string="Information">\n<field name="name" select="1"/>\n<field name="default_code" select="1"/>\n<field name="categ_id" select="1"/>\n</page>\n
+                    <page string="Descriptions">\n<field name="list_price"/>\n<field name="standard_price"/>\n<separator string="Description" colspan="4"/>\n<field colspan="4" name="description" nolabel="1"/>\n<separator string="Sale Description" colspan="4"/>\n
+                    <field colspan="4" name="description_sale" nolabel="1"/>\n<separator string="Purchase Description" colspan="4"/>\n<field colspan="4" name="description_purchase" nolabel="1"/>\n</page>\n</notebook>\n</form>"""
+        return result
+           
+product_product()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
