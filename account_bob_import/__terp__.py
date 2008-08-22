@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 {
-    'name': 'cci Account Data',
+    'name': 'CCI Account Data',
     'category': 'Data Module',
      'init_xml':[],
      'author': 'Tiny',
@@ -11,6 +11,7 @@
      'demo_xml': [],
      'update_xml':[
 'misc_data.xml',
+'account_bob_import_config.xml',
 'account.account.csv',
 'account.journal.csv',
 'account.fiscalyear.csv',
