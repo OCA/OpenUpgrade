@@ -331,12 +331,12 @@ class product_product(osv.osv):
         if 'flag' in context:
             if result['type']=='form':
                 for k,v in result['fields'].items():
-                    if not (k=='name' or k=='default_code' or k=='categ_id' or k=='list_price' or k=='standard_price' or k=='description' \
-                        or k=='description_sale'  or k=='description_purchase'):
+                    if not (k=='name' or k=='default_code' or k=='categ_id' or k=='list_price' or k=='standard_price' or k=='seller_ids' \
+                        or k=='description' or k=='description_sale'  or k=='description_purchase'):
                         del result['fields'][k]
                 
-                result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Product">\n<notebook>\n<page string="Information">\n<field name="name" select="1"/>\n<field name="default_code" select="1"/>\n<field name="categ_id" select="1"/>\n</page>\n
-                    <page string="Descriptions">\n<field name="list_price"/>\n<field name="standard_price"/>\n<separator string="Description" colspan="4"/>\n<field colspan="4" name="description" nolabel="1"/>\n<separator string="Sale Description" colspan="4"/>\n
+                result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Product">\n<notebook>\n<page string="General">\n<field name="name" select="1"/>\n<field name="default_code" select="1"/>\n<field name="categ_id" select="1"/>\n<field name="list_price"/>\n<field name="standard_price"/>\n<field colspan="4" name="seller_ids" nolabel="1" widget="one2many_list"/>\n</page>\n
+                    <page string="Descriptions">\n<separator string="Description" colspan="4"/>\n<field colspan="4" name="description" nolabel="1"/>\n<separator string="Sale Description" colspan="4"/>\n
                     <field colspan="4" name="description_sale" nolabel="1"/>\n<separator string="Purchase Description" colspan="4"/>\n<field colspan="4" name="description_purchase" nolabel="1"/>\n</page>\n</notebook>\n</form>"""
         return result
            
