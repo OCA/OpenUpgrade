@@ -1,5 +1,6 @@
 from osv import fields, osv
 from osv import orm
+import os
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
@@ -27,26 +28,22 @@ class config_bob_import(osv.osv_memory):
     }
 
     def action_create(self, cr, uid,ids, context=None):
-#        res=self.read(cr,uid,ids)[0]
-#        if 'date1' in res and 'date2' in res:
-#            res_obj = self.pool.get('account.fiscalyear')
-#            start_date=res['date1']
-#            end_date=res['date2']
-#            name=res['name']#DateTime.strptime(start_date, '%Y-%m-%d').strftime('%m.%Y') + '-' + DateTime.strptime(end_date, '%Y-%m-%d').strftime('%m.%Y')
-#            vals={
-#                'name':name,
-#                'code':name,
-#                'date_start':start_date,
-#                'date_stop':end_date,
-#            }
-#            new_id=res_obj.create(cr, uid, vals, context=context)
-#            res_obj.create_period(cr,uid,[new_id])
+        ids=self.search(cr, uid, [])
+        path=self.read(cr, uid, [ids[len(ids)-1]], ['path'], context)
+        path_bob=path[-1]['path']
+
+        if not os.path.exists(path_bob):
+            raise osv.except_osv(_('User Error'), _('The Path "%s" doesn''t exist.Please provide a valid one.') % path[-1]['path'] )
+
+        if 'bob.exe' not in os.listdir(path_bob):
+            raise osv.except_osv(_('User Error'), _('The Path "%s" is not a valid BOB Folder.It doesn''t have bob.exe.') % path[-1]['path'] )
+
         return {
-                'view_type': 'form',
-                "view_mode": 'form',
-                'res_model': 'config.path.folder',
-                'type': 'ir.actions.act_window',
-                'target':'new',
+            'view_type': 'form',
+            "view_mode": 'form',
+            'res_model': 'config.path.folder',
+            'type': 'ir.actions.act_window',
+            'target':'new',
         }
 config_bob_import()
 
@@ -54,14 +51,19 @@ def _folders_get(self, cr, uid, context={}):
     acc_type_obj = self.pool.get('config.bob.import')
     ids = acc_type_obj.search(cr, uid, [])
     path=[]
+    res=[(0,'')]
+    seq=0
     if ids:
         path=acc_type_obj.read(cr, uid, [ids[len(ids)-1]], ['path'], context)
+        list_folders=os.listdir(path[-1]['path'])
 
-    if path[-1]['path']=='temp':
-        res=[{'name':'jay','j':'vora'},{'name':'Non-jay','j':'non-Vora'}]
-        res=[(r['j'], r['name']) for r in res]
-    else:
-        res=[(0,'')]
+        # under developmnt
+        if path[-1]['path']=='temp':
+            res=[{'name':'jay','j':'vora'},{'name':'Non-jay','j':'non-Vora'}]
+            res=[(r['j'], r['name']) for r in res]
+        else:
+            res=[(0,'')]
+
     return res
 #    return [(r['j'], r['name']) for r in res]
 
