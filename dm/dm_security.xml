@@ -51,6 +51,15 @@
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
+		<record id="ir_model_access_manufacturingconstraintforofferadmin0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.manufacturing_constraint')]"/>
+			<field eval="1" name="perm_read"/>
+			<field eval="&quot;&quot;&quot;project for offer admin&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field name="group_id" ref="res_groups_offeradmin"/>
+		</record>
 	<record id="ir_model_access_campaignpropositionforofferadmin1" model="ir.model.access">
 <!--		<field name="model_id" ref="dm.model_dm_campaign_proposition"/>-->
 		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition')]"/>
@@ -203,7 +212,7 @@
 	</record>
 	<record id="ir_model_access_dmproductforofferadmin1" model="ir.model.access">
 <!--		<field name="model_id" ref="dm.model_dm_product"/>-->
-		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.product')]"/>		
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.step.product')]"/>		
 		<field eval="1" name="perm_read"/>
 		<field eval="&quot;&quot;&quot;dm product for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
@@ -433,7 +442,7 @@
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
 		<record id="ir_model_access_dmproductforoffermanager1" model="ir.model.access">
-			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.product')]"/>
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.step.product')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;dm product for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
@@ -499,6 +508,15 @@
 		</record>
 		<record id="ir_model_access_partnerforoffermanager0" model="ir.model.access">
 			<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner')]"/>
+			<field eval="1" name="perm_read"/>
+			<field eval="&quot;&quot;&quot;project for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field name="group_id" ref="res_groups_offermanager"/>
+		</record>
+		<record id="ir_model_access_manufacturingconstraintforoffermanager0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.step.manufacturing_constraint')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;project for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>

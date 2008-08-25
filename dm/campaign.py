@@ -103,6 +103,8 @@ class dm_campaign(osv.osv):
         'dedup_validity_date' : fields.date('Validity Date'),
         'dedup_delivery_date' : fields.date('Delivery Date'),
         'currency_id' : fields.many2one('res.currency','Currency',ondelete='cascade'),
+        'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
+        'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
     }
 
     _defaults = {
@@ -196,6 +198,12 @@ class dm_campaign(osv.osv):
         default['campaign_type'] = 'recruiting'
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
+        return True
+
+    def po_generate(self,cr, uid, ids, *args):
+
+
+
         return True
 
 dm_campaign()
@@ -294,6 +302,7 @@ class dm_campaign_proposition(osv.osv):
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
 #        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
+        'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
     }
 
     _defaults = {
@@ -343,6 +352,7 @@ class dm_campaign_proposition_segment(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),
 #        'sequence' : fields.integer('Sequence'),
+        'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
     }
     _order = 'deduplication_level'
 

@@ -165,6 +165,11 @@
 					<page string="Manufacturing">
 						<separator string="Manufacturing" colspan="4"/>
 						<field name="campaign_group_id" colspan="2"/>
+						<separator string="Costs" colspan="4"/>
+						<field name="manufacturing_costs" colspan="2"/>
+						<separator string="Purchase orders" colspan="4"/>
+						<field name="manufacturing_product" colspan="2"/>
+						<button name="po_generate" string="Generate Purchase Orders" type="object"/>
 					</page>
 					<page string="Desktop Publishing">
 

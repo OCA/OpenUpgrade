@@ -146,6 +146,7 @@ class dm_offer_step(osv.osv):
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
         'doc_number' : fields.integer('Number of documents'),
+        'manufacturing_constraint_ids': fields.one2many('dm.offer.step.manufacturing_constraint', 'offer_step_id', 'Manufacturing Constraints'),
     }
 
     _defaults = {
@@ -299,7 +300,6 @@ class dm_step_product(osv.osv):
         'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
         'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
-        'proposition_id': fields.many2one('dm.campaign.proposition', 'Commercial Proposition'),
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
         'notes' : fields.text('Notes'),
     }
@@ -321,6 +321,16 @@ class dm_product(osv.osv):
     }
 dm_product()
 
+class dm_offer_step_manufacturing_constaint(osv.osv):
+    _name = "dm.offer.step.manufacturing_constraint"
+    _columns = {
+        'name': fields.char('Constraint Name', size=64, required=True),
+        'country_id': fields.many2one('res.country','Country'),
+        'constraint': fields.text('Manufacturing Constraint'),
+        'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
+    }
+dm_offer_step_manufacturing_constaint()
+
 
 class product_product(osv.osv):
     _name = "product.product"
@@ -339,7 +349,7 @@ class product_product(osv.osv):
                     <page string="Descriptions">\n<separator string="Description" colspan="4"/>\n<field colspan="4" name="description" nolabel="1"/>\n<separator string="Sale Description" colspan="4"/>\n
                     <field colspan="4" name="description_sale" nolabel="1"/>\n<separator string="Purchase Description" colspan="4"/>\n<field colspan="4" name="description_purchase" nolabel="1"/>\n</page>\n</notebook>\n</form>"""
         return result
-           
+
 product_product()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
