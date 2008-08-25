@@ -46,7 +46,7 @@ from email.Utils import COMMASPACE, formatdate
 
 import netsvc
 import random
-import hashlib
+from md5 import md5
 
 
 
@@ -121,7 +121,7 @@ class SmtpClient(osv.osv):
                 if code:
                     key = code
                 else:
-                    key = hashlib.md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
+                    key = md5(time.strftime('%Y-%m-%d %H:%M:%S') + toemail).hexdigest();
                     
                 body = body.replace("__code__", key)
                 

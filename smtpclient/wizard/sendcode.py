@@ -28,7 +28,7 @@
 
 import wizard
 import pooler
-import hashlib
+from md5 import md5
 import time
 
 form = '''<?xml version="1.0"?>
@@ -44,7 +44,7 @@ class sendcode(wizard.interface):
     
     def send_code(self, cr, uid, data, context):
         
-        key = hashlib.md5(time.strftime('%Y-%m-%d %H:%M:%S') + data['form']['emailto']).hexdigest();
+        key = md5(time.strftime('%Y-%m-%d %H:%M:%S') + data['form']['emailto']).hexdigest();
         
         smtpserver = pooler.get_pool(cr.dbname).get('email.smtpclient').browse(cr, uid, data['id'], context)
         state = smtpserver.test_verivy_email(cr, uid, [data['id']], data['form']['emailto'], code=key)
