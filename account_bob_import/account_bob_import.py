@@ -55,17 +55,19 @@ def _folders_get(self, cr, uid, context={}):
     seq=0
     if ids:
         path=acc_type_obj.read(cr, uid, [ids[len(ids)-1]], ['path'], context)
-        list_folders=os.listdir(path[-1]['path'])
+        path_bob=path[-1]['path']
+        list_folders=os.listdir(path_bob)
 
-        # under developmnt
-        if path[-1]['path']=='temp':
-            res=[{'name':'jay','j':'vora'},{'name':'Non-jay','j':'non-Vora'}]
-            res=[(r['j'], r['name']) for r in res]
-        else:
-            res=[(0,'')]
+#        The structure of BOB folder has non DDHMOT Files as codes
+#        Data,Documents, Help, Message,Office, Tools.
+        main_folders=['Data','Documents', 'Help', 'Message','Office', 'Tools']
 
+        for item in list_folders:
+            if item not in main_folders:
+                if os.path.isdir(path_bob+"/"+item):
+                    seq +=1
+                    res.append((seq,item))
     return res
-#    return [(r['j'], r['name']) for r in res]
 
 class config_path_folder(osv.osv_memory):
     _name="config.path.folder"
@@ -81,6 +83,7 @@ class config_path_folder(osv.osv_memory):
                 'type': 'ir.actions.act_window',
                 'target':'new',
         }
+
 
 config_path_folder()
 
