@@ -17,7 +17,7 @@
 			string="View Tasks"
 			model="dm.campaign.group"
 			name="wizard_campaign_tasks"
-			id="wizard_campaign_task"/>
+			id="wizard_campaign_group_task"/>
 
 		<wizard
 			string="View Documents"
@@ -36,6 +36,12 @@
 			name="wizard_proposition_products"
 			id="wizard_proposition_products"
 			menu="False"/>
+
+		<wizard
+			string="View Tasks"
+			model="dm.campaign"
+			name="wizard_campaign_tasks"
+			id="wizard_campaign_task"/>
 
 	</data>
 </terp>
