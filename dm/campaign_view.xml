@@ -49,8 +49,8 @@
 						<field name="name" string="Name" select="1"/>
 						<field name="code1" string="Code" select="2"/>
 <!--						<field name="parent_id" string="Category" domain="[('type','=','view')]"/>-->
-						<field name="country_id" select="1" on_change="onchange_offer(offer_id,country_id)"/>
-						<field name="offer_id" on_change="onchange_offer(offer_id,country_id)" select="1"/>
+						<field name="country_id" select="1"/>
+						<field name="offer_id" select="1"/>
 						<field name="lang_id" select="2"/>
 						<field name="currency_id" select="2"/>
 
@@ -456,8 +456,8 @@
 							<field name="code1" string="Code" select="2"/>
 						</group>
 						<group col="10" colspan="4">
-							<field name="country_id" select="1" on_change="onchange_offer(offer_id,country_id)"/>
-							<field name="offer_id" on_change="onchange_offer(offer_id,country_id)"/>
+							<field name="country_id" select="1"/>
+							<field name="offer_id"/>
 						</group>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4" nolabel="1"/>

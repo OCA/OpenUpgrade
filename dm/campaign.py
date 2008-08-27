@@ -39,7 +39,7 @@ class dm_campaign(osv.osv):
         for id in ids:
             camp = self.browse(cr,uid,[id])[0]
             offer_code = camp.offer_id and camp.offer_id.code or ''
-            trademark_code = camp.trademark_id and camp.trademark_id.ref or ''
+            trademark_code = camp.trademark_id and camp.trademark_id.code or ''
             dealer_code =camp.dealer_id and camp.dealer_id.ref or ''
             date_start = camp.date_start or ''
             country_code = camp.country_id.code or ''
@@ -163,12 +163,34 @@ class dm_campaign(osv.osv):
         self.write(cr, uid, ids, {'state':'open'})
         return True
 
+    def write(self, cr, uid, ids, vals, context=None):
+        camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
+        if 'offer_id' in vals and vals['offer_id']:
+            d = vals['offer_id']
+        else:
+            d = camp.offer_id.id
+        
+        if 'country_id' in vals and vals['country_id']:
+            c = vals['country_id']
+        else:
+            c = camp.country_id.id
 
-    def write(self, cr, uid, ids, vals, context=None, check=True, update_check=True):
-        if 'date_start' in vals and vals['date_start']:
-            camp = self.browse(cr,uid,ids)[0]
-            self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
-        return super(dm_campaign,self).write(cr, uid, ids,vals, context)
+        offers = self.pool.get('dm.offer').browse(cr, uid, d)
+        list_off = []
+        for off in offers.forbidden_country_ids:
+            list_off.append(off.id)
+        if c in list_off:
+            raise osv.except_osv("Error!!","You cannot use this offer in this country")
+            
+        vals['trademark_id'] = offers.recommended_trademark.id
+        vals['lang_id'] =  camp.country_id.main_language.id
+        vals['currency_id'] = camp.country_id.main_currency.id
+
+#        if 'date_start' in vals and vals['date_start']:
+#            camp = self.browse(cr,uid,ids)[0]
+#            self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
+
+        return super(dm_campaign,self).write(cr, uid, ids, vals, context)
 
     def create(self,cr,uid,vals,context={}):
         if context.has_key('campaign_type') and context['campaign_type']=='model':
@@ -180,7 +202,7 @@ class dm_campaign(osv.osv):
             d = time.strptime(data_cam.date_start,time_format)
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
-            self.write(cr, uid, id_camp, {'date':date_end})
+            super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
         return id_camp
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
