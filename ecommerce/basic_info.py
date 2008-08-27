@@ -12,24 +12,14 @@ class ecommerce_shop(osv.osv):
     _columns = {
         'name': fields.char('Name', size=256),
         'company_id': fields.many2one('res.company', 'Company'),
-        'shop_id': fields.many2one('sale.shop', 'Sale Shop'),     
-        'display_search_keyword':fields.boolean('Display  Quick Search'),
-        'display_category_cnt': fields.boolean('Display Category Count'),
-        'price_with_tax': fields.boolean('Price with Tax'),
-        'tell_to_friend': fields.boolean('Tell To Friend'),
-        'display_cart': fields.boolean('Display Cart After Shopping'),
-        'display_product_name_new': fields.boolean('Display Product Name'),
-        'display_manufacturer_name_new': fields.boolean('Display Manufacturer Name'),
-        'display_product_image': fields.boolean('Display Product Image'),
-        'display_product_price': fields.boolean('Display Product Price'),
-        'display_product_quantity': fields.boolean('Display Product Quantity'),
-        'display_product_weight': fields.boolean('Display Product Weight'),
-        'display_partner_logo':fields.boolean('Display Partner Logo'),
-        'display_category_context':fields.boolean('Require Category Context'),
-        'display_page_offset':fields.boolean('Require Page Offset'),
-        'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories'),
+        'shop_id': fields.many2one('sale.shop', 'Sale Shop'),
+        'chequepay_to':fields.many2one('ecommerce.payment', 'Cheque Payable to'),
+        'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories', translate=True),
         'products':fields.many2many('product.product','ecommerce_new_product_rel','product','ecommerce_product','Products',readonly=True),
-     
+        'currency_id': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency'),
+        'language': fields.many2many('res.lang', 'lang_rel', 'language','ecommerce_lang', 'Language'),
+        'delivery': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery')
+        
     }   
 ecommerce_shop()
 
@@ -74,17 +64,25 @@ class ecommerce_category(osv.osv):
             'name': fields.char('E-commerce Category', size=64, required=True),
             'web_id': fields.many2one('ecommerce.shop', 'Webshop'),
             'category_id': fields.many2one('product.category', 'Tiny Category'),
-            'include_childs': fields.boolean('Include Childs'),
             'parent_category_id':fields.many2one('ecommerce.category','Parent Category'),
             'child_id': fields.one2many('ecommerce.category', 'parent_category_id', string='Childs Categories'),        
     }
-ecommerce_category()
+       
+ecommerce_category() 
+       
+class ecommerce_payment(osv.osv):
+    
+        _name = "ecommerce.payment"
+        _description = "ecommerce Payment"
+        _columns = {
+            'name': fields.char('Cheque Payable to', size=256),
+            'street': fields.char('Street', size=128),
+            'street2': fields.char('Street2', size=128),
+            'zip': fields.char('Zip', change_default=True, size=24),
+            'city': fields.char('City', size=128),
+            'state_id': fields.many2one("res.country.state", 'State'),
+            'country_id': fields.many2one('res.country', 'Country'),
+             }
+ecommerce_payment()
 
-class product_category(osv.osv):
-    _inherit = "product.category"
-    _columns = {
-        'category_image': fields.binary('Category Image')
-    }
-
-product_category()
 
