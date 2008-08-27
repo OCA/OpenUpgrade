@@ -240,7 +240,7 @@ class ecommerce_partner(osv.osv):
                 msg.add_header('Content-Disposition', 'attachment', filename='invoice.pdf');
                
                 outer.attach(msg);
-                outer.attach(MIMEText(body, 'html'));
+                outer.attach(MIMEText(body));
                 composed = outer.as_string();
                 s.sendmail(mail_from, mail_to, composed);
                 
