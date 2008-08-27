@@ -75,7 +75,7 @@ class config_path_folder(osv.osv_memory):
         'folder': fields.selection(_folders_get,'Folder'),
     }
 
-    def action_back(self,cr,uid,ids,conect=None):
+    def action_back(self,cr,uid,ids,context=None):
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
@@ -83,7 +83,15 @@ class config_path_folder(osv.osv_memory):
                 'type': 'ir.actions.act_window',
                 'target':'new',
         }
-
+    def action_generate(self,cr,uid,ids,context=None):
+        # TODO: Check for PXVIEW availabilty and convert .db to .csv
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'ir.module.module.configuration.wizard',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+            }
 
 config_path_folder()
 
