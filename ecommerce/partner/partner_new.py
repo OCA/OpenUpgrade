@@ -1,7 +1,10 @@
 # -*- encoding: utf-8 -*-
 from osv import osv, fields
 import pooler
-
+import xmlrpclib
+import tools
+import base64
+import email
 
 def _lang_get(self, cr, uid, context={}):
     obj = self.pool.get('res.lang')
@@ -11,6 +14,7 @@ def _lang_get(self, cr, uid, context={}):
     return res + [(False, '')]
 
 class ecommerce_partner(osv.osv):
+    
     _description='Partner Ecommerce'
     _name = "ecommerce.partner"
     _order = "name"
@@ -60,51 +64,188 @@ class ecommerce_partner(osv.osv):
       
         return result
     
-    def delivery_grid(self, cr, uid, id , product_list, context={}):
-        
-        prd_list_ids = []
+    def delivery_grid(self, cr, uid, shop_id, adr_dict, context={}):
+        delivery_grid_ids = []
         res_add = self.pool.get('ecommerce.partner.address')
+        if(adr_dict['type'] == 'delivery'):
+                address_delivery = adr_dict['type']
+                add_id = adr_dict['address_id']
+                 
+        if (not adr_dict['type']=='delivery') and (adr_dict['type'] == 'default'):
+                address_delivery = adr_dict['type']
+                add_id = adr_dict['address_id']
+              
         delivery_carrier = self.pool.get('delivery.carrier')
-        prt_add_id =res_add.search(cr,uid,[('partner_id','in',[id])])
-        res_prt_add = res_add.read(cr,uid,prt_add_id,['id','type'],context)
-        for tmp_addr_var in res_prt_add:
-            if(tmp_addr_var['type'] == 'delivery'):
-                address_delivery = tmp_addr_var['type']
-                add_id = tmp_addr_var['id']
-               
-        for prd_ids in product_list:
-            prd_list_ids.append(prd_ids[0]) 
-       
-        deli_carr_ids = delivery_carrier.search(cr,uid,[('product_id','in',prd_list_ids)])
-        grid_id = self.grid_get(cr, uid,deli_carr_ids,add_id,{},from_web=True)       
-       
-        return {'grid_id':grid_id}
+        delivery_ecommerce_car = self.pool.get('ecommerce.shop').browse(cr, uid, [shop_id])
+        for i in delivery_ecommerce_car[0].delivery:
+            delivery_grid_ids.append(i.id)
 
-    def grid_get(self, cr, uid, ids, contact_id, context={},from_web=False):
+        grid_id = self.grid_get(cr, uid, delivery_grid_ids, add_id,{}, from_web=True)       
+        get_data = delivery_carrier.read(cr, uid, grid_id, ['name'], context)
+        return get_data
+
+    def grid_get(self, cr, uid, ids, contact_id, context={}, from_web=False):
+      
+        add_grid_list = []
         if from_web:
             contact = self.pool.get('ecommerce.partner.address').browse(cr, uid, [contact_id])[0]
             delivery_carrier = self.pool.get('delivery.carrier')
+            
+            if ids:
+                for carrier in self.pool.get('delivery.carrier').browse(cr, uid, ids):
+                 
+                    for grid in carrier.grids_id:
+                        
+                        get_id = lambda x: x.id
+                        country_ids = map(get_id, grid.country_ids)
+                        state_ids = map(get_id, grid.state_ids)
+                       
+                        if country_ids and not contact.country_id.id in country_ids:
+                            continue
+                        if state_ids and not contact.state_id.id in state_ids:
+                            continue
+                        if grid.zip_from and (contact.zip or '')< grid.zip_from:
+                            continue
+                        if grid.zip_to and (contact.zip or '')> grid.zip_to:
+                            continue
+                        
+                        add_grid_list.append(grid.id)
+                    
+                return add_grid_list
+            
         else:    
             contact = self.pool.get('res.partner.address').browse(cr, uid, [contact_id])[0]
-            
-        for carrier in self.pool.get('delivery.carrier').browse(cr, uid, ids):
-           
-            for grid in carrier.grids_id:
-                get_id = lambda x: x.id
-                country_ids = map(get_id, grid.country_ids)
-                state_ids = map(get_id, grid.state_ids)
-                if country_ids and not contact.country_id.id in country_ids:
-                    continue
-                if state_ids and not contact.state_id.id in state_ids:
-                    continue
-                if grid.zip_from and (contact.zip or '')< grid.zip_from:
-                    continue
-                if grid.zip_to and (contact.zip or '')> grid.zip_to:
-                    continue
-                return grid.id
-        return False
-   
+            for carrier in self.browse(cr, uid, ids):
+                for grid in carrier.grids_id:
+                    get_id = lambda x: x.id
+                    country_ids = map(get_id, grid.country_ids)
+                    state_ids = map(get_id, grid.state_ids)
+                    if country_ids and not contact.country_id.id in country_ids:
+                        continue
+                    if state_ids and not contact.state_id.id in state_ids:
+                        continue
+                    if grid.zip_from and (contact.zip or '')< grid.zip_from:
+                        continue
+                    if grid.zip_to and (contact.zip or '')> grid.zip_to:
+                        continue
+                    return grid.id
+            return False
   
+        
+    def delivery_get_price(self, cr, uid, grid_id, product_list, context):
+         
+            prd_list_ids = []
+            taxes_list_ids = []
+            total = 0
+            weight = 0
+            volume = 0
+            final_tax_amt = 0
+           
+            tax_obj = self.pool.get('account.tax')
+            for prd_ids in product_list:
+                prd_list_ids.append(prd_ids['id']) 
+            for prd in product_list:
+                p = self.pool.get('product.product').browse(cr, uid, prd['id'])
+                sub_total = round(prd['price'] * prd['quantity'])
+                if not prd:
+                    continue
+                total  += sub_total or 0.0
+                weight += (p.product_tmpl_id.weight or 0.0) * prd['quantity']
+                volume += (p.product_tmpl_id.volume or 0.0) * prd['quantity']
+              
+                if p.taxes_id:
+                    for tax in tax_obj.compute(cr, uid,p.taxes_id, prd['price'], prd['quantity'], product=prd['id']):
+                        final_tax_amt += tax['amount']
+                    
+            get_ship_price = self.get_price_from_picking_ecommerce(cr, uid, grid_id, total, weight, volume, context)
+          
+            return dict(get_ship_price=get_ship_price,final_tax_amt=final_tax_amt)
+   
+           
+    def _price_unit_default(self, cr, uid, tax_id_list, prd_list,  context={}):
+        if 'check_total' in context:
+            t = context['check_total']
+            for l in context.get('invoice_line', {}):
+                if len(l) >= 3 and l[2]:
+                    tax_obj = self.pool.get('account.tax')
+                    p = l[2].get('price_unit', 0) * (1-l[2].get('discount', 0)/100.0)
+                    t = t - (p * l[2].get('quantity'))
+                    taxes = l[2].get('invoice_line_tax_id')
+                    if len(taxes[0]) >= 3 and taxes[0][2]:
+                        taxes=tax_obj.browse(cr, uid, taxes[0][2])
+                        for tax in tax_obj.compute(cr, uid, taxes, p,l[2].get('quantity'), context.get('address_invoice_id', False), l[2].get('product_id', False), context.get('partner_id', False)):
+                            t = t - tax['amount']
+            return t
+        return 0
+    
+    def get_price_from_picking_ecommerce(self, cr, uid, id, total, weight, volume, context={}):
+        
+        grid = self.pool.get('delivery.grid')
+        grid_get = grid.browse(cr, uid, int(id))
+        price = 0.0
+        ok = False
+
+        for line in grid_get.line_ids:
+            price_dict = {'price': total, 'volume':volume, 'weight': weight, 'wv':volume*weight}
+            test = eval(line.type+line.operator+str(line.max_value), price_dict)
+            
+            if test:
+                if line.price_type=='variable':
+                    price = line.list_price * price_dict[line.variable_factor]
+                else:
+                    price = line.list_price
+                ok = True
+                break
+        if not ok:
+            raise except_osv(_('No price avaible !'), _('No line matched this order in the choosed delivery grids !'))
+       
+        return price   
+    
+    def ecom_send_email(self, cr, uid, mail_to, subject, body, attachment=None, context = {}):
+        
+        if(attachment == None):
+            mail_to = mail_to;
+            mail_from= 'priteshmodi.eiffel@yahoo.co.in'
+            tools.email_send(mail_from, mail_to, subject, body)
+            
+        else:
+            
+            import smtplib
+            from email.MIMEText import MIMEText
+            from email.MIMEBase import MIMEBase
+            from email.MIMEMultipart import MIMEMultipart
+            from email.Header import Header
+            from email.Utils import formatdate, COMMASPACE
+            from email import Encoders
+            
+            mail_from= 'priteshmodi.eiffel@yahoo.co.in'
+            s = smtplib.SMTP()
+          
+            s.debuglevel = 5
+            s.connect('smtp.mail.yahoo.co.in','587')
+            s.login('priteshmodi.eiffel', '123456')
+            outer = MIMEMultipart()
+            outer['Subject'] = 'Invoice:'
+            outer['To'] = mail_to
+            outer['From'] = "noreply"
+            outer.preamble = 'You will not see this in a MIME-aware mail reader.\n'
+          
+            msg = MIMEText(body or '', _charset='utf-8')
+            msg.set_payload(attachment)
+            
+            Encoders.encode_base64(msg);
+            
+            msg.add_header('Content-Disposition', 'attachment', filename='invoice.pdf');
+           
+            outer.attach(msg);
+            outer.attach(MIMEText(body, 'html'));
+            composed = outer.as_string();
+                     
+            s.sendmail(mail_from, mail_to, composed);
+            s.close();
+        
+        return True 
+        
 ecommerce_partner()
 
 class ecommerce_partner_address(osv.osv):

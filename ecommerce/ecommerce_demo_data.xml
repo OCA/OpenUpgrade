@@ -55,14 +55,12 @@
 		
 		<record id="ecommerce_category_tinycomputers0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Tiny Computers&quot;" name="name"/>
 		</record>
 		
 		<record id="ecommerce_category_basiccomputers0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="product.product_category_pc"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Basic Computers&quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
@@ -70,7 +68,6 @@
 		<record id="ecommerce_category_newlaptop0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_laptop0"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Laptop&quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
@@ -78,7 +75,6 @@
 		<record id="ecommerce_category_compaq0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_compaq"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Compaq&quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
 		</record>
@@ -86,7 +82,6 @@
 		<record id="ecommerce_category_acer0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_acer"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Acer&quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_newlaptop0"/>
 		</record>
@@ -94,7 +89,6 @@
 		<record id="ecommerce_category_accesories0" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_accesories"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;All Acessories&quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
@@ -102,7 +96,6 @@
 		<record id="ecommerce_category_ram1" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_ram"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;RAM &quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
 		</record>
@@ -110,7 +103,6 @@
 		<record id="ecommerce_category_hdisk" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="ecommerce.product_category_hdd"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Hard Disk &quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_accesories0"/>
 		</record>
@@ -118,7 +110,6 @@
 		<record id="ecommerce_category_peripheral" model="ecommerce.category">
 			<field name="web_id" ref="ecommerce.ecommerce_shop_0"/>
 			<field name="category_id" ref="product.product_category_10"/>
-			<field eval="0" name="include_childs"/>
 			<field eval="&quot;Computer Peripherals&quot;" name="name"/>
 			<field name="parent_category_id" ref="ecommerce.ecommerce_category_tinycomputers0"/>
 		</record>
@@ -691,7 +682,6 @@
 			<field eval="&quot;SO/005&quot;" name="name"/>
 			<field name="epartner_shipping_id" ref="ecommerce.ecommerce_partner_address_1"/>
 			<field name="epartner_add_id" ref="ecommerce.ecommerce_partner_address_1"/>
-			<field eval="&quot;draft&quot;" name="state"/>
 			<field name="epartner_id" ref="ecommerce.ecommerce_partner_name2"/>
 			<field name="pricelist_id" ref="purchase.list0"/>
 			<field eval="&quot;2008-05-31&quot;" name="date_order"/>
@@ -723,7 +713,6 @@
 			<field eval="&quot;SO/007&quot;" name="name"/>
 			<field name="epartner_shipping_id" ref="ecommerce.ecommerce_partner_address_12"/>
 			<field name="epartner_add_id" ref="ecommerce.ecommerce_partner_address_13"/>
-			<field eval="&quot;draft&quot;" name="state"/>
 			<field name="epartner_id" ref="ecommerce.ecommerce_partner_name4"/>
 			<field name="pricelist_id" ref="purchase.list0"/>
 			<field eval="&quot;2008-05-31&quot;" name="date_order"/>
@@ -755,6 +744,5 @@
 			<field eval="&quot;2008-05-31&quot;" name="name"/>
 		</record>
 
-	
 </data>
 </terp>
