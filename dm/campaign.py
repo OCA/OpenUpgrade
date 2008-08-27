@@ -165,24 +165,25 @@ class dm_campaign(osv.osv):
 
     def write(self, cr, uid, ids, vals, context=None):
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
-        if 'offer_id' in vals and vals['offer_id']:
-            d = vals['offer_id']
-        else:
-            d = camp.offer_id.id
-        
         if 'country_id' in vals and vals['country_id']:
             c = vals['country_id']
         else:
             c = camp.country_id.id
-
-        offers = self.pool.get('dm.offer').browse(cr, uid, d)
-        list_off = []
-        for off in offers.forbidden_country_ids:
-            list_off.append(off.id)
-        if c in list_off:
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")
-            
-        vals['trademark_id'] = offers.recommended_trademark.id
+        flag = False
+        if 'offer_id' in vals and vals['offer_id']:
+            d = vals['offer_id']
+            flag = True
+        elif camp.offer_id:
+            d = camp.offer_id.id
+            flag = True
+        if flag:
+            offers = self.pool.get('dm.offer').browse(cr, uid, d)
+            list_off = []
+            for off in offers.forbidden_country_ids:
+                list_off.append(off.id)
+            if c in list_off:
+                raise osv.except_osv("Error!!","You cannot use this offer in this country")
+            vals['trademark_id'] = offers.recommended_trademark.id
         vals['lang_id'] =  camp.country_id.main_language.id
         vals['currency_id'] = camp.country_id.main_currency.id
 
