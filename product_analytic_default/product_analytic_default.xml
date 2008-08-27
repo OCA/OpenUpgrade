@@ -7,11 +7,10 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="product.product_template_form_view"/>
             <field name="arch" type="xml">
-                <page string="Properties" position="inside">
-                    <separator string="Account Properties" colspan="2"/>
-                    <newline/>
+                <separator string="Sales" colspan="2" position="before">
                     <field name="property_account_analytic"/>
-                </page>
+                    <newline/>
+				</separator>
             </field>
         </record>
 
@@ -21,11 +20,10 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
-                <page string="Properties" position="inside">
-                    <separator string="Account Properties" colspan="2"/>
-                    <newline/>
+                 <separator string="Sales" colspan="2" position="before">
                     <field name="property_account_analytic"/>
-                </page>
+                    <newline/>
+               	</separator>
             </field>
         </record>
 
