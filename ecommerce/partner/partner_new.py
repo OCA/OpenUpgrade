@@ -202,23 +202,18 @@ class ecommerce_partner(osv.osv):
         return price   
     
     def ecom_send_email(self, cr, uid, mail_to, subject, body, attachment=None, context = {}):
+    
+        import smtplib
+        from email.MIMEText import MIMEText
+        from email.MIMEBase import MIMEBase
+        from email.MIMEMultipart import MIMEMultipart
+        from email.Header import Header
+        from email.Utils import formatdate, COMMASPACE
+        from email import Encoders
         
-        if(attachment == None):
-            mail_to = mail_to;
+        try:
             mail_from= 'priteshmodi.eiffel@yahoo.co.in'
-            tools.email_send(mail_from, mail_to, subject, body)
             
-        else:
-            
-            import smtplib
-            from email.MIMEText import MIMEText
-            from email.MIMEBase import MIMEBase
-            from email.MIMEMultipart import MIMEMultipart
-            from email.Header import Header
-            from email.Utils import formatdate, COMMASPACE
-            from email import Encoders
-            
-            mail_from= 'priteshmodi.eiffel@yahoo.co.in'
             s = smtplib.SMTP()
           
             s.debuglevel = 5
@@ -231,18 +226,29 @@ class ecommerce_partner(osv.osv):
             outer.preamble = 'You will not see this in a MIME-aware mail reader.\n'
           
             msg = MIMEText(body or '', _charset='utf-8')
-            msg.set_payload(attachment)
-            
-            Encoders.encode_base64(msg);
-            
-            msg.add_header('Content-Disposition', 'attachment', filename='invoice.pdf');
-           
-            outer.attach(msg);
-            outer.attach(MIMEText(body, 'html'));
-            composed = outer.as_string();
-                     
-            s.sendmail(mail_from, mail_to, composed);
+         
+            if(attachment == None):
+                
+                msg['Subject'] = Header(subject.decode('utf8'), 'utf-8')
+                msg['From'] = "noreply"
+                s.sendmail(mail_from, mail_to,  msg.as_string());
+                
+            else:
+                
+                msg.set_payload(attachment)
+                Encoders.encode_base64(msg);
+                msg.add_header('Content-Disposition', 'attachment', filename='invoice.pdf');
+               
+                outer.attach(msg);
+                outer.attach(MIMEText(body, 'html'));
+                composed = outer.as_string();
+                s.sendmail(mail_from, mail_to, composed);
+                
             s.close();
+        
+        except Exception, e:
+            import logging
+            logging.getLogger().error(str(e))
         
         return True 
         
