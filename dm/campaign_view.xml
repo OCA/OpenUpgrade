@@ -49,7 +49,7 @@
 						<field name="name" string="Name" select="1"/>
 						<field name="code1" string="Code" select="2"/>
 <!--						<field name="parent_id" string="Category" domain="[('type','=','view')]"/>-->
-						<field name="country_id" select="1"/>
+						<field name="country_id" select="1" on_change="onchange_lang_currency(country_id)"/>
 						<field name="offer_id" select="1"/>
 						<field name="lang_id" select="2"/>
 						<field name="currency_id" select="2"/>

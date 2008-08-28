@@ -26,6 +26,7 @@ class dm_campaign_type(osv.osv):
     }
 dm_campaign_type()
 
+
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
@@ -58,7 +59,19 @@ class dm_campaign(osv.osv):
         type_ids = campaign_type.search(cr,uid,[])
         type = campaign_type.browse(cr,uid,type_ids)
         return map(lambda x : [x.code,x.name],type)
-
+    
+    def onchange_lang_currency(self, cr, uid, ids, country_id):
+        value = {}
+        if country_id:
+            country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
+            value['lang_id'] =  country.main_language.id
+            value['currency_id'] = country.main_currency.id
+        else:
+            value['lang_id']=0
+            value['currency_id']=0
+        return {'value':value}
+            
+   
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])]),
@@ -115,29 +128,29 @@ class dm_campaign(osv.osv):
         'responsible_id' : lambda obj, cr, uid, context: uid,
     }
 
-    def onchange_offer(self, cr, uid, ids, offer_id,country_id):
-        if not country_id:
-            raise osv.except_osv("Error!!","Country can't be empty ,First select Country")
-        value = {}
-        country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
-        value['lang_id'] =  country.main_language.id
-        value['currency_id'] = country.main_currency.id
-        if not offer_id:
-            res = {'trademark_id':0}
-            return {'value':value}
-        else:
-            id = self.pool.get('dm.offer').read(cr, uid, [offer_id])
-            if id:
-                value = {'trademark_id':id[0]['recommended_trademark']}
-            return {'value':value}
-
-        forbidden_state_ids = map(lambda x:x.country_id.id ,res.forbidden_state_ids)
-        forbidden_country_ids = map(lambda x:x.id ,res.forbidden_country_ids)
-        forbidden_country_ids.extend(forbidden_state_ids)
-        if country_id in forbidden_country_ids:
-            raise osv.except_osv("Error!!","You cannot use this offer in this country")
-        value['name']=res.name
-        return {'value':value}
+#    def onchange_offer(self, cr, uid, ids, offer_id,country_id):
+#        if not country_id:
+#            raise osv.except_osv("Error!!","Country can't be empty ,First select Country")
+#        value = {}
+#        country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
+#        value['lang_id'] =  country.main_language.id
+#        value['currency_id'] = country.main_currency.id
+#        if not offer_id:
+#            res = {'trademark_id':0}
+#            return {'value':value}
+#        else:
+#            id = self.pool.get('dm.offer').read(cr, uid, [offer_id])
+#            if id:
+#                value = {'trademark_id':id[0]['recommended_trademark']}
+#            return {'value':value}
+#
+#        forbidden_state_ids = map(lambda x:x.country_id.id ,res.forbidden_state_ids)
+#        forbidden_country_ids = map(lambda x:x.id ,res.forbidden_country_ids)
+#        forbidden_country_ids.extend(forbidden_state_ids)
+#        if country_id in forbidden_country_ids:
+#            raise osv.except_osv("Error!!","You cannot use this offer in this country")
+#        value['name']=res.name
+#        return {'value':value}
 
     def state_draft_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
@@ -153,45 +166,39 @@ class dm_campaign(osv.osv):
 
     def state_open_set(self, cr, uid, ids, *args):
         camp = self.browse(cr,uid,ids)[0]
-        forbidden_state_ids = [state_id.country_id.id for state_id in camp.offer_id.forbidden_state_ids]
-        forbidden_country_ids = [country_id.id for country_id in camp.offer_id.forbidden_country_ids]
-        forbidden_country_ids.extend(forbidden_state_ids)
-        if camp.offer_id.forbidden_country_ids and camp.country_id.id  in  forbidden_country_ids :
-            raise osv.except_osv("Error!!","This offer is not valid in this country")
+        if camp.offer_id:
+            forbidden_state_ids = [state_id.country_id.id for state_id in camp.offer_id.forbidden_state_ids]
+            forbidden_country_ids = [country_id.id for country_id in camp.offer_id.forbidden_country_ids]
+            forbidden_country_ids.extend(forbidden_state_ids)
+            if camp.offer_id.forbidden_country_ids and camp.country_id.id  in  forbidden_country_ids :
+                raise osv.except_osv("Error!!","This offer is not valid in this country")
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing.Check Date Start, Dealer and Trademark")
-        self.write(cr, uid, ids, {'state':'open'})
+        super(dm_campaign,self).write(cr, uid, ids, {'state':'open'})
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
+        res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
-        if 'country_id' in vals and vals['country_id']:
-            c = vals['country_id']
-        else:
-            c = camp.country_id.id
-        flag = False
-        if 'offer_id' in vals and vals['offer_id']:
-            d = vals['offer_id']
-            flag = True
-        elif camp.offer_id:
+        c = camp.country_id.id
+        if camp.offer_id:
             d = camp.offer_id.id
-            flag = True
-        if flag:
             offers = self.pool.get('dm.offer').browse(cr, uid, d)
             list_off = []
             for off in offers.forbidden_country_ids:
                 list_off.append(off.id)
-            if c in list_off:
-                raise osv.except_osv("Error!!","You cannot use this offer in this country")
-            vals['trademark_id'] = offers.recommended_trademark.id
-        vals['lang_id'] =  camp.country_id.main_language.id
-        vals['currency_id'] = camp.country_id.main_currency.id
+                if c in list_off:
+                    raise osv.except_osv("Error!!","You cannot use this offer in this country")
+
+            """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
+            if not camp.trademark_id:
+                super(osv.osv, self).write(cr, uid, camp.id, {'trademark_id':offers.recommended_trademark.id})
 
 #        if 'date_start' in vals and vals['date_start']:
 #            camp = self.browse(cr,uid,ids)[0]
 #            self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
 
-        return super(dm_campaign,self).write(cr, uid, ids, vals, context)
+        return res
 
     def create(self,cr,uid,vals,context={}):
         if context.has_key('campaign_type') and context['campaign_type']=='model':
