@@ -3,6 +3,7 @@ import tools
 import urllib,urllib2
 import time
 from xml.dom import minidom
+import pooler
 
 class res_currency(osv.osv):
     _inherit = "res.currency"
