@@ -1,0 +1,96 @@
+<terp>
+<data>
+    <record model="ir.actions.act_window" id="action_report_pagesize_form">
+        <field name="name">Page Sizes</field>
+        <field name="res_model">report.pagesize</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Partners/Configuration/Page Sizes" id="menu_report_pagesize_form" action="action_report_pagesize_form"/>
+
+    <record model="ir.actions.act_window" id="action_report_label_manufacturer_form">
+        <field name="name">Label Manufacturers</field>
+        <field name="res_model">report.label.manufacturer</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Partners/Configuration/Label Manufacturers" id="menu_report_label_manufacturer_form" action="action_report_label_manufacturer_form"/>
+
+    <record model="ir.actions.act_window" id="action_report_label_form">
+        <field name="name">Label Formats</field>
+        <field name="res_model">report.label</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <menuitem name="Partners/Configuration/Label Formats" id="menu_report_label_form" action="action_report_label_form"/>
+
+
+    <record model="ir.ui.view" id="view_report_pagesize_view">
+        <field name="name">report.pagesize.tree</field>
+        <field name="model">report.pagesize</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Page Sizes">
+                <field name="name"/>
+                <field name="width"/>
+                <field name="height"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_report_pagesize_form">
+        <field name="name">report.pagesize</field>
+        <field name="model">report.pagesize</field>
+        <field name="arch" type="xml">
+            <form string="Page Sizes">
+                <field name="name" select="1"/>
+                <newline/>
+                <field name="width" select="1"/>
+                <field name="height" select="1"/>
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="view_report_label_view">
+        <field name="name">report.label.tree</field>
+        <field name="model">report.label</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Label Formats">
+                <field name="name"/>
+                <field name="manufacturer_id"/>
+                <field name="pagesize_id"/>
+                <field name="landscape"/>
+                <field name="rows"/>
+                <field name="cols"/>
+                <field name="label_width"/>
+                <field name="label_height"/>
+                <field name="description"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_report_label_form">
+        <field name="name">report.label</field>
+        <field name="model">report.label</field>
+        <field name="arch" type="xml">
+            <form string="Label Formats">
+                <field name="name" select="1"/>
+                <field name="manufacturer_id" select="1"/>
+                <field name="pagesize_id" select="1"/>
+                <field name="landscape" select="1"/>
+                <field name="rows" select="2"/>
+                <field name="cols" select="2"/>
+                <field name="label_width"/>
+                <field name="label_height"/>
+                <field name="width_incr"/>
+                <field name="height_incr"/>
+                <field name="margin_top"/>
+                <field name="margin_left"/>
+                <!--<field name="margin_bottom"/>-->
+                <!--<field name="margin_right"/>-->
+                <field name="description" select="2" colspan="4"/>
+            </form>
+        </field>
+    </record>
+
+</data>
+</terp>
