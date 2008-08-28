@@ -130,11 +130,20 @@ class account_invoice(osv.osv):
     #raise an error when we try to invoice a membership product to a partner with the 'alert_membership' warning set to TRUE
     def create(self, cr, uid, vals, *args, **kwargs):
         product_ids = []
+        line_ids = []
         flag = False
+        inv_line_obj = self.pool.get('account.invoice.line')
+        if 'invoice_line' in vals and vals['invoice_line']:
+            for line in vals['invoice_line']:
+                if line[2].has_key('product_id') and line[2]['product_id']:
+                    product_ids.append(line[2]['product_id'])
         if 'abstract_line_ids' in vals:
             for lines in vals['abstract_line_ids']:
-                if lines[2].has_key('product_id') and lines[2]['product_id']:
-                    product_ids.append(lines[2]['product_id'])
+                line_ids.append(lines[1])
+            data_lines = inv_line_obj.browse(cr, uid, line_ids)
+            for line in data_lines:
+                    if line.product_id:
+                        product_ids.append(line.product_id.id)
         if product_ids:
             data_product = self.pool.get('product.product').browse(cr,uid,product_ids)
             for product in data_product:
