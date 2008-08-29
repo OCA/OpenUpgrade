@@ -4,7 +4,7 @@
     "author" : "Axelor",
     "category" : "Generic Modules",
     "website": "http://www.axelor.com",
-    "depends" : ["base"],
+    "depends" : ["base", "multi_company_currency"],
     "init_xml" : [],
     "update_xml" : [
                     "currency_data.xml",
