@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<terp>
+	<data>
+
+		<wizard
+			string="Copy broadcasts from a day to other"
+			name="radiotv.broadcast.copy"
+			id="wizard_copy_broadcast"/>
+
+		<menuitem
+			name="Radio TV/Copy broadcasts from a day to other"
+			action="wizard_copy_broadcast"
+			type="wizard"
+			id="menu_wizard_copy_broadcast"/>
+
+		<wizard
+			string="Export channels and programs"
+			name="radiotv.channel_program.export"
+			id="wizard_export_channel_program"/>
+
+		<menuitem
+			name="Radio TV/Export channels and programs"
+			action="wizard_export_channel_program"
+			type="wizard"
+			id="menu_wizard_export_channel_program"/>
+
+		<wizard
+			string="Export broadcasts"
+			name="radiotv.broadcast.export"
+			id="wizard_export_broadcast"/>
+
+		<menuitem
+			name="Radio TV/Export broadcasts"
+			action="wizard_export_broadcast"
+			type="wizard"
+			id="menu_wizard_export_broadcast"/>
+
+		<wizard
+			string="Export podcasts"
+			name="radiotv.podcast.export"
+			id="wizard_export_podcast"/>
+
+		<menuitem
+			name="Radio TV/Export podcasts"
+			action="wizard_export_podcast"
+			type="wizard"
+			id="menu_wizard_export_podcast"/>
+
+		<wizard
+			string="Broadcasts compact report"
+			model="radiotv.broadcast"
+			name="radiotv.broadcast.compact.report"
+			id="wizard_broadcast_compact_report"/>
+
+		<menuitem
+			name="Radio TV/Broadcasts compact report"
+			action="wizard_broadcast_compact_report"
+			type="wizard"
+			id="menu_wizard_broadcast_compact_report"/>
+
+		<wizard
+			string="Broadcasts declaration report"
+			model="radiotv.broadcast"
+			name="radiotv.broadcast.declaration.report"
+			id="wizard_broadcast_declaration_report"/>
+
+		<menuitem
+			name="Radio TV/Broadcasts declaration report"
+			action="wizard_broadcast_declaration_report"
+			type="wizard"
+			id="menu_wizard_broadcast_declaration_report"/>
+
+	</data>
+</terp>

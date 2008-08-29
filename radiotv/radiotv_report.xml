@@ -1,0 +1,33 @@
+<terp>
+    <data>
+        <report id="radiotv_broadcast_report"
+            string="Radio TV broadcast report"
+            model="radiotv.broadcast"
+            name="radiotv.broadcast.report"
+            rml="radiotv/report/broadcast_report.rml"
+            auto="False"
+            header="False" />
+    </data>
+
+    <data>
+        <report id="radiotv_broadcast_compact_report"
+            string="Radio TV broadcast compact report"
+            model="radiotv.broadcast"
+            name="radiotv.broadcast.compact.report"
+            rml="radiotv/report/broadcast_compact_report.rml"
+            auto="False"
+            header="False"
+            menu="False" />
+    </data>
+
+    <data>
+        <report id="radiotv_broadcast_declaration_report"
+            string="Radio TV broadcast declaration report"
+            model="radiotv.broadcast"
+            name="radiotv.broadcast.declaration.report"
+            rml="radiotv/report/broadcast_declaration_report.rml"
+            auto="False"
+            header="False"
+            menu="False" />
+    </data>
+</terp>
