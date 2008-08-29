@@ -9,37 +9,34 @@ class res_currency(osv.osv):
     _inherit = "res.currency"
    
     def get_currency_rate(self, cr, uid, ids=[], context={}):
-        try:            
-            cur_obj = pooler.get_pool(cr.dbname).get('res.currency')
-            cur_rate_obj = pooler.get_pool(cr.dbname).get('res.currency.rate')
-            com_obj = pooler.get_pool(cr.dbname).get('res.company')
+        cur_obj = pooler.get_pool(cr.dbname).get('res.currency')
+        cur_rate_obj = pooler.get_pool(cr.dbname).get('res.currency.rate')
+        com_obj = pooler.get_pool(cr.dbname).get('res.company')
+        
+        companies = com_obj.search(cr, uid, [])
+        for company in companies:
+            code = com_obj.browse(cr, uid, company).currency_id.code
             
-            code='EUR'
-            com_id = com_obj.search(cr, uid, [('parent_id','=',False)])
-            if com_id:
-                code = com_obj.browse(cr, uid, com_id[0]).currency_id.code
-            
-            cur_ids = cur_obj.search(cr, uid, [])
+            cur_ids = cur_obj.search(cr, uid, [('company_id','=',company)])
             for cur in cur_obj.browse(cr, uid, cur_ids):
-                try:
-                    if code==cur.code:
-                        continue
-                    urldata = {'FromCurrency':code, 'ToCurrency':cur.code ,'method':'GET'}
-                    data = urllib.urlencode(urldata)
-                    req = urllib2.Request('http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate',data)
-                    response = urllib2.urlopen(req)
-                
-                    data = response.read()
-                    xmldoc = minidom.parseString(data)
-                    rate = xmldoc.documentElement.firstChild.nodeValue
-            
-                    if rate:
-                        date = time.strftime('%Y-%m-%d')
-                        cur_rate_obj.create(cr, uid, {'name': date , 'rate':rate, 'currency_id': cur.id})
-                except:
+                if code==cur.code:
                     continue
-        except Exception,e:
-            print e
+                urldata = {'FromCurrency':code, 'ToCurrency':cur.code ,'method':'GET'}
+                data = urllib.urlencode(urldata)
+                req = urllib2.Request('http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate',data)
+                
+                try:
+                    response = urllib2.urlopen(req)
+                except Exception, e:
+                    print 'Error : ', e
+                
+                data = response.read()
+                xmldoc = minidom.parseString(data)
+                rate = xmldoc.documentElement.firstChild.nodeValue
+        
+                if rate:
+                    date = time.strftime('%Y-%m-%d')
+                    cur_rate_obj.create(cr, uid, {'name': date , 'rate':rate, 'currency_id': cur.id})
         return True
     
 res_currency()
