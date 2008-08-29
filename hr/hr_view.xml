@@ -93,15 +93,30 @@
             <field name="res_model">hr.employee</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
+            <field name="view_id" eval="False"/>
         </record>
         <menuitem
+<<<<<<< TREE
 			action="open_view_employee_list"
 			id="menu_open_view_employee_list"
 			parent="hr.menu_hr_root"/>
+=======
+            action="open_view_employee_list"
+            groups="base.group_admin"
+            id="menu_open_view_employee_list"
+            parent="hr.menu_hr_root"/>
+>>>>>>> MERGE-SOURCE
         <menuitem
+<<<<<<< TREE
 			action="open_view_employee_tree"
 			id="menu_open_view_employee_tree"
 			parent="menu_open_view_employee_list"/>
+=======
+            action="open_view_employee_tree"
+            groups="base.group_admin"
+            id="menu_open_view_employee_tree"
+            parent="menu_open_view_employee_list"/>
+>>>>>>> MERGE-SOURCE
 
        <record id="open_view_employee_list_my" model="ir.actions.act_window">
             <field name="name">My Employees</field>
@@ -111,9 +126,9 @@
             <field name="domain">[('parent_id.user_id','=',uid)]</field>
         </record>
         <menuitem
-			action="open_view_employee_list_my"
-			id="menu_open_view_employee_list_my"
-			parent="menu_open_view_employee_list"/>
+            action="open_view_employee_list_my"
+            id="menu_open_view_employee_list_my"
+            parent="menu_open_view_employee_list"/>
 
         <record id="open_view_employee_new" model="ir.actions.act_window">
             <field name="name">New Employee</field>
@@ -122,9 +137,16 @@
             <field name="view_mode">form,tree</field>
         </record>
         <menuitem
+<<<<<<< TREE
 			action="open_view_employee_new"
 			id="menu_open_view_employee_new" 
 			parent="menu_open_view_employee_list"/>
+=======
+            action="open_view_employee_new"
+            groups="base.group_admin"
+            id="menu_open_view_employee_new" 
+            parent="menu_open_view_employee_list"/>
+>>>>>>> MERGE-SOURCE
 
         <!--
         =======================
