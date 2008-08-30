@@ -107,8 +107,10 @@ def _mass_mail_send(cr, uid, data, context, adr):
         if text and field[2:-2]=='function': # functions field
             text = text.name
         texts.append(text or '')
+    data['form']['text'] = data['form']['text'].replace('%', '%%')
     mail = str(pattern.sub('%s', data['form']['text']))
     mail = mail % tuple(texts)
+    mail = mail.replace('%%', '%')
     #print mail
 
     # The adr.email field can contain several email addresses separated by ,
