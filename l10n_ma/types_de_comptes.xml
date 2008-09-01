@@ -3,7 +3,7 @@
 <data noupdate="True">
 <!--
 #
-# Plan comptable général 
+# Plan comptable général
 # Mise en forme et paramétrage par http://sisatlas.com
 # Des types sont commentés au profit des types prédéfinis dans TinyERP de base
 # version du fichier : 01-02-2007
@@ -29,6 +29,7 @@
 <record model="account.account.type" id="account_type_dettes">
 	<field name="name">dettes long terme</field>
 	<field name="code">dettes</field>
+	<field name="close_method">balance</field>
 	</record>
 <!--record model="account.account.type" id="account_type_financier">
 	<field name="name">financier</field>
@@ -41,6 +42,7 @@
 <record model="account.account.type" id="account_type_immobilisations">
 	<field name="name">immobilisations</field>
 	<field name="code">immobilisations</field>
+	<field name="close_method">balance</field>
 	</record>
 <!--record model="account.account.type" id="account_type_produits">
 	<field name="name">produits</field>
@@ -49,6 +51,7 @@
 <record model="account.account.type" id="account_type_stocks">
 	<field name="name">stocks</field>
 	<field name="code">stocks</field>
+	<field name="close_method">balance</field>
 	</record>
 <!--record model="account.account.type" id="account_type_vue">
 	<field name="name">vue</field>
