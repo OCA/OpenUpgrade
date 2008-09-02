@@ -96,27 +96,13 @@
             <field name="view_id" eval="False"/>
         </record>
         <menuitem
-<<<<<<< TREE
 			action="open_view_employee_list"
 			id="menu_open_view_employee_list"
 			parent="hr.menu_hr_root"/>
-=======
-            action="open_view_employee_list"
-            groups="base.group_admin"
-            id="menu_open_view_employee_list"
-            parent="hr.menu_hr_root"/>
->>>>>>> MERGE-SOURCE
         <menuitem
-<<<<<<< TREE
 			action="open_view_employee_tree"
 			id="menu_open_view_employee_tree"
 			parent="menu_open_view_employee_list"/>
-=======
-            action="open_view_employee_tree"
-            groups="base.group_admin"
-            id="menu_open_view_employee_tree"
-            parent="menu_open_view_employee_list"/>
->>>>>>> MERGE-SOURCE
 
        <record id="open_view_employee_list_my" model="ir.actions.act_window">
             <field name="name">My Employees</field>
@@ -137,16 +123,9 @@
             <field name="view_mode">form,tree</field>
         </record>
         <menuitem
-<<<<<<< TREE
 			action="open_view_employee_new"
 			id="menu_open_view_employee_new" 
 			parent="menu_open_view_employee_list"/>
-=======
-            action="open_view_employee_new"
-            groups="base.group_admin"
-            id="menu_open_view_employee_new" 
-            parent="menu_open_view_employee_list"/>
->>>>>>> MERGE-SOURCE
 
         <!--
         =======================
