@@ -1,0 +1,17 @@
+<terp>
+<data>
+  <act_window name="Contacts"
+    domain="[('partner_id', '=', active_id)]"
+    context="{'partner_id': active_id}"
+    res_model="res.partner.address"
+    src_model="res.partner"
+    id="act_partner_2_contacts"/>
+
+  <act_window name="Partner"
+    domain="[('id', '=', partner_id)]"
+    context="{'id': partner_id}"
+    res_model="res.partner"
+    src_model="res.partner.address"
+    id="act_contact_2_partner"/>
+</data>
+</terp>

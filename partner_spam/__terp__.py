@@ -36,7 +36,7 @@ Improved SMS and Email spam to partner:
 	"depends" : ["base",],
 	"init_xml" : ["report_label_data.xml",],
 	"demo_xml" : [],
-	"update_xml" : ["partner_wizard.xml", "report_label_view.xml",],
+	"update_xml" : ["partner_wizard.xml", "report_label_view.xml", "partner_contact_view.xml",],
 	"active": False,
 	"installable": True
 }

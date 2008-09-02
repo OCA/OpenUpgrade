@@ -135,9 +135,9 @@ def _mass_mail_send(cr, uid, data, context, adr):
     c_id = pooler.get_pool(cr.dbname).get('res.partner.canal').search(cr ,uid, [('name','ilike','EMAIL'),('active','=',True)])
     c_id = c_id and c_id[0] or False
     pooler.get_pool(cr.dbname).get('res.partner.event').create(cr, uid,
-            {'name': 'Email sent through mass mailing',
+            {'name': 'Email sent to ' + ', '.join(to),
              'partner_id': adr.partner_id.id,
-             'description': mail,
+             'description': data['form']['subject'] + '\n\n' + mail,
              'canal_id': c_id,
              'user_id': uid, })
 #TODO: log number of message sent

@@ -119,7 +119,7 @@ def _sms_send(cr, uid, data, context, adr):
 	c_id = pooler.get_pool(cr.dbname).get('res.partner.canal').search(cr ,uid, [('name','ilike','SMS'),('active','=',True)])
 	c_id = c_id and c_id[0] or False
 	pooler.get_pool(cr.dbname).get('res.partner.event').create(cr, uid,
-			{'name': 'SMS sent',
+			{'name': 'SMS sent to ' + adr.mobile,
 			 'partner_id': adr.partner_id.id,
 			 'description': sms,
 			 'canal_id': c_id,
