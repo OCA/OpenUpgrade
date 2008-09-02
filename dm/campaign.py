@@ -87,7 +87,7 @@ class dm_campaign(osv.osv):
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
-        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category_id':'Dealer'}),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}),
 #
 #                        desktop publication
 #
@@ -111,7 +111,7 @@ class dm_campaign(osv.osv):
         'real_dtp_sup_delivery_date' : fields.date('Real Dtp Sup Delivery Date'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
-        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')], context={'category_id':'Deduplicator'}),
+        'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')], context={'category':'Deduplicator'}),
         'dedup_order_date' : fields.date('Order Date'),
         'dedup_validity_date' : fields.date('Validity Date'),
         'dedup_delivery_date' : fields.date('Delivery Date'),
@@ -230,6 +230,13 @@ class dm_campaign(osv.osv):
         self.copy(cr,uid,ids[0],default)
         return True
 
+    def copy(self, cr, uid, id, default=None, context={}):
+        cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
+        data = self.browse(cr, uid, cmp_id, context)
+        if data.date_start:
+            super(dm_campaign, self).write(cr, uid, cmp_id, {'date_start':0})
+        return cmp_id
+        
     def po_generate(self,cr, uid, ids, *args):
 
 
@@ -269,15 +276,14 @@ class dm_campaign_proposition(osv.osv):
     _name = "dm.campaign.proposition"
     _inherits = {'account.analytic.account': 'analytic_account_id'}
 
-    def onchange_date(self, cr, uid, ids, camp_id):
-        res = {}
-        if camp_id:
-            id = self.pool.get('dm.campaign').read(cr, uid, [camp_id])
-            if id:
-                res = {'date_start':id[0]['date_start']}
-        else:
-           res = {'date_start':0}
-        return {'value': res}
+    def write(self, cr, uid, ids, vals, context=None):
+        res = super(dm_campaign_proposition,self).write(cr, uid, ids, vals, context)
+        camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
+        c = camp.camp_id.id
+        id = self.pool.get('dm.campaign').browse(cr, uid, c)
+        if id:
+            super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
+        return res
 
     def copy(self, cr, uid, id, default=None, context={}):
         """
@@ -285,13 +291,16 @@ class dm_campaign_proposition(osv.osv):
         """
         prp_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, prp_id, context)
+        if data.date_start:
+            super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'date_start':0})
         if data.keep_segments == False:
             l = []
             for i in data.segment_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-                 self.write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
+                 super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
             return prp_id
+        return prp_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
         result ={}
@@ -425,8 +434,8 @@ class res_partner(osv.osv):
     _inherit="res.partner"
 
     def _default_category(self, cr, uid, context={}):
-        if 'category_id' in context and context['category_id']:
-            id_cat = self.pool.get('res.partner.category').search(cr,uid,[('name','ilike',context['category_id'])])[0]
+        if 'category' in context and context['category']:
+            id_cat = self.pool.get('res.partner.category').search(cr,uid,[('name','ilike',context['category'])])[0]
             return [id_cat]
         return []
 

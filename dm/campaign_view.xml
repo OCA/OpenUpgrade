@@ -55,7 +55,7 @@
 						<field name="currency_id" select="2"/>
 
 						<field name="campaign_type" select="2"/>
-						<field name="date_start"/>
+						<field name="date_start" select="2"/>
 						<field name="date"/>
 <!--						<field name="partner_id"/>-->
 						<field name="dealer_id"/>
@@ -86,8 +86,8 @@
 								<page string="General">
 									<field name="name" string="Name" select="1"/>
 									<field name="code1" string="Code" select="2"/>
-<!--									<field name="camp_id" on_change="onchange_date(camp_id)"/>-->
-									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+<!--									<field name="camp_id"/>-->
+									<field name="date_start" select="2"/>
 									<field name="proposition_type" select="1"/>
 									<field name="initial_proposition_id" select="1"/>
 									<field name="forwarding_charges"/>
@@ -470,7 +470,7 @@
 								<page string="General">
 									<field name="name" string="Name" select="1"/>
 									<field name="code1" string="Code" select="2"/>
-									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+									<field name="date_start" select="2"/>
 									<field name="proposition_type" select="1"/>
 									<field name="initial_proposition_id" select="1"/>
 									<field name="forwarding_charges"/>
@@ -631,8 +631,8 @@
 				<page string="General">
 					<field name="name" string="Name" select="1"/>
 					<field name="code1" string="Code" select="2"/>
-					<field name="camp_id" on_change="onchange_date(camp_id)"/>
-					<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+					<field name="camp_id"/>
+					<field name="date_start" select="2"/>
 					<field name="proposition_type" select="1"/>
 					<field name="initial_proposition_id" select="1"/>
 					<newline/>
@@ -893,7 +893,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Dealer')]</field>
-		<field name="context">{'category_id':'Dealer'}</field>
+		<field name="context">{'category':'Dealer'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Dealers" id="menu_action_campaign_dealer_form" action="action_campaign_dealer_form"/>
 
@@ -904,7 +904,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Broker')]</field>
-		<field name="context">{'category_id':'Broker'}</field>
+		<field name="context">{'category':'Broker'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
 
@@ -915,7 +915,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Deduplicator')]</field>
-		<field name="context">{'category_id':'Deduplicator'}</field>
+		<field name="context">{'category':'Deduplicator'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 

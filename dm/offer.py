@@ -97,7 +97,7 @@ class dm_customer_file(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=16, required=True),
         'code' : fields.char('Code', size=16, required=True),
-        'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category_id':'Broker'}),
+        'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
         'delivery_date' : fields.date('Delivery Date'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'file_id', 'Segments'),
     }
@@ -258,7 +258,7 @@ class dm_offer(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'lang_orig' : fields.many2one('res.lang', 'Original Language'),
-        'copywriter_id' : fields.many2one('res.partner', 'Copywriter',domain=[('category_id','ilike','Copywriter')], context={'category_id':'Copywriter'}),
+        'copywriter_id' : fields.many2one('res.partner', 'Copywriter',domain=[('category_id','ilike','Copywriter')], context={'category':'Copywriter'}),
         'step_ids' : fields.one2many('dm.offer.step','offer_id','Offer Steps'),
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
