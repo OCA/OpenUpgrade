@@ -59,7 +59,7 @@ class dm_campaign(osv.osv):
         type_ids = campaign_type.search(cr,uid,[])
         type = campaign_type.browse(cr,uid,type_ids)
         return map(lambda x : [x.code,x.name],type)
-    
+
     def onchange_lang_currency(self, cr, uid, ids, country_id):
         value = {}
         if country_id:
@@ -70,8 +70,8 @@ class dm_campaign(osv.osv):
             value['lang_id']=0
             value['currency_id']=0
         return {'value':value}
-            
-   
+
+
     _columns = {
         'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])]),
@@ -181,6 +181,8 @@ class dm_campaign(osv.osv):
         res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
         c = camp.country_id.id
+        if 'date_start' in vals and vals['date_start'] and camp.project_id:
+            self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
         if camp.offer_id:
             d = camp.offer_id.id
             offers = self.pool.get('dm.offer').browse(cr, uid, d)
@@ -193,11 +195,6 @@ class dm_campaign(osv.osv):
             """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
             if not camp.trademark_id:
                 super(osv.osv, self).write(cr, uid, camp.id, {'trademark_id':offers.recommended_trademark.id})
-
-#        if 'date_start' in vals and vals['date_start']:
-#            camp = self.browse(cr,uid,ids)[0]
-#            self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
-
         return res
 
     def create(self,cr,uid,vals,context={}):
@@ -236,7 +233,7 @@ class dm_campaign(osv.osv):
         if data.date_start:
             super(dm_campaign, self).write(cr, uid, cmp_id, {'date_start':0})
         return cmp_id
-        
+
     def po_generate(self,cr, uid, ids, *args):
 
 

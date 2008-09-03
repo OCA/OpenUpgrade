@@ -6,9 +6,9 @@
     "website" : "http://tinyerp.com",
     "category" : "Generic Modules/Direct Marketing",
     "description": """
-    
+
                     """,
-    "depends" : ["project"],
+    "depends" : ["project","project_retro_planning"],
     "init_xml" : [ ],
     "demo_xml" : [
                   "campaign_data.xml",
