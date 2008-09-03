@@ -34,7 +34,7 @@
 				<field name="name" eval="&quot;Phone&quot;"/>
 			</record>
 
-
+<!--
 		<record id="dm_offer_step_type_startingmail0" model="dm.offer.step.type">
 			<field eval="&quot;SM&quot;" name="code"/>
 			<field eval="&quot;Starting Mail&quot;" name="name"/>
@@ -67,7 +67,6 @@
 		</record>
 
 		<record id="dm_offer_step_0" model="dm.offer.step">
-<!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
 			<field name="name">Step0</field>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
@@ -78,7 +77,6 @@
 		</record>
 
 		<record id="dm_offer_step_1" model="dm.offer.step">
-<!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
 			<field name="name">Step1</field>
 			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
 			<field eval="&quot;draft&quot;" name="state"/>
@@ -94,7 +92,7 @@
 			<field eval="&quot;automatic&quot;" name="condition"/>
 			<field name="delay" eval="1"/>
 		</record>
-
+-->
 		<record id="dm_campaign_type_loyalty" model="dm.campaign.type">
 			<field name="code">loyalty</field>
 			<field name="name">Development of customer loyalty</field>
@@ -119,7 +117,7 @@
 			<field name="code">model</field>
 			<field name="name">Model</field>
 		</record>		
-
+<!--
 		<record id="dm_campaign_0" model="dm.campaign">
 			<field eval="&quot;model&quot;" name="campaign_type"/>
 			<field eval="&quot;campaign01&quot;" name="name"/>
@@ -136,9 +134,9 @@
 		</record>
 		<record id="dm_campaign_proposition_segment_0" model="dm.campaign.proposition.segment">
 			<field eval="&quot;segment01&quot;" name="name"/>
-<!--			<field eval="&quot;SEG01&quot;" name="action_code"/>-->
 			<field name="proposition_id" ref="dm_campaign_proposition_0"/>
 			<field eval="1000" name="quantity_add"/>
 		</record>
+-->
 	</data>
 </terp>
