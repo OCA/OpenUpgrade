@@ -6,7 +6,7 @@ import tempfile
 import base64
 import sys
 reload(sys)
-sys.setdefaultencoding("latin1")
+sys.setdefaultencoding("utf8")
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
