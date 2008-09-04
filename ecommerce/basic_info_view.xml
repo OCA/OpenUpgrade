@@ -30,28 +30,15 @@
 						<field name="name" select="1"/>
 						<field name="company_id" select="1"/>
 						<field name="shop_id" select="1"></field>
-						<separator string="Other Information" colspan="4"/>
 						<newline/>
-						<field name="display_search_keyword"/>
-						<field name="display_cart"/>
-						<field name="price_with_tax"/>
-						<field name="tell_to_friend"/>
-						<field name="display_partner_logo"/>
-						<field name="display_product_name_new"/>
-						<field name="display_manufacturer_name_new"/>
-						<field name="display_product_image"/>
-						<field name="display_product_price"/>
-						<field name="display_product_quantity"/>
-						<field name="display_product_weight"/>
-						<field name="display_category_context"/>
+						<field name="chequepay_to"/>
 					</page>
 					<page string="Categories">
 					<seperator string="Category" colspan="4"/>
 					<field colspan="4" name="category_ids" nolabel="1" >
-							<tree editable="bottom">
+							<tree  string="Categories" editable="bottom">
 								<field name="name"/>
 								<field name="category_id"/>
-								<field name="include_childs"/>
 								<field name="parent_category_id"/>
 							</tree>
 						</field>
@@ -59,6 +46,15 @@
 					<page string="Products">
 					<seperator string="Products" colspan="4"/>
 					<field name="products" colspan="4" nolabel="1"/>
+					</page>
+					<page string="Setting">
+					<seperator string="Setting" colspan='4'/>
+					<field name="currency_id" colspan="4" nolabel='1'/>
+					<field name="language" colspan="4" nolabel='1'/>
+					</page>
+					<page string="Delivery">
+					<seperator string="Delivery" colspan='4'/>
+					<field name="delivery" colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>
@@ -72,9 +68,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_shop_basic_tree"/>
 	</record>
-	<menuitem name="E-Commerce" id="menu_ecomm"/>
-	<menuitem name="Configuration" parent="menu_ecomm" id="menu_ecomm_config"/>
-	<menuitem name="Web Shop" parent="menu_ecomm_config" action="action_shop_basic_form" id="menu_shop_basic_form"/>
+	<menuitem name="ecommerce/Configuration/Web Shop" action="action_shop_basic_form" id="menu_shop_basic_form"/>
 	
 	<!-- TREE VIEW OF THE CATEGORY -->
 
@@ -86,9 +80,7 @@
 				<form string="Product Categories">
 					<field name="name" select="1"/>
 					<field name="category_id"/>
-					<field name="include_childs"/>
 					<field name="parent_category_id"/>
-					
 				</form>
 			</field>
 		</record>
@@ -111,9 +103,46 @@
 			<field name="view_type">tree</field>
 			<field name="view_id" ref="ecommerce_product_category_tree_view"/>
 		</record>
-		<menuitem name="Products" parent="menu_ecomm" id="menu_products"/>
-		<menuitem name="Products by Category" parent="menu_products" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
+		<menuitem name="ecommerce/Products/Products by Category" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
 		
+<!--		PAYMENT ADDRESS -->
+		
+		<record model="ir.ui.view" id="view_payment_address">
+		<field name="name">ecommerce.payment.tree</field>
+		<field name="model">ecommerce.payment</field>
+		<field name="type">tree</field>
+		<field name="priority" eval="8"/>
+		<field name="arch" type="xml">
+			<tree string="Payment Address">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_payment_ecommerce_form">
+		<field name="name">ecommerce.payment.form</field>
+		<field name="model">ecommerce.payment</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Payment Address">
+				<field name="name" select="1" colsapn="2"/>
+				<newline/>
+				<field name="street" select="2" colsapn="2"/>
+				<field name="street2" select="2"/>
+				<field name="zip" select="2"></field>
+				<field name="city" />
+				<field name="state_id"/>
+				<field name="country_id"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_payment_ecommerce_form">
+		<field name="name">Make payment to</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">ecommerce.payment</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_payment_address"/>
+	</record>
+	<menuitem name="ecommerce/Configuration/Payment Make to" action="action_payment_ecommerce_form" id="menu_payment_ecommerce_form"/>
 
 </data>
 </terp>

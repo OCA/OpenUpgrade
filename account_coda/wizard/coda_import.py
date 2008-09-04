@@ -91,7 +91,6 @@ result_fields = {
 
 
 def _coda_parsing(self, cr, uid, data, context):
-    print "Coda Parsing is start here..........."
     pool = pooler.get_pool(cr.dbname)
     codafile = data['form']['coda']
     jur_id = data['form']['journal_id']

@@ -5,5 +5,6 @@ import offer_document
 import campaign_group
 import proposition_products
 import campaign_group_project
+import campaign_group_tasks
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

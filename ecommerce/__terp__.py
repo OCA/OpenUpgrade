@@ -17,9 +17,10 @@
                     "tools/tools_wizard.xml",
                     "partner/partner_new_view.xml",
                     "sale_order/sale_order_view.xml",
-                    "sale_order/saleorder_workflow.xml"
-                    
-    ],
+                    "sale_order/sale_order_sequence.xml",
+                    "report_shipping.xml"     
+                          
+   ],
     "active": False,
     "installable": True
 }

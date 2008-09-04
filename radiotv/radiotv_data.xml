@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<terp>
+	<data noupdate="1">
+		<record model="ir.cron" id="ir_cron_crm_action">
+			<field name="name">RadioTV copy broadcasts</field>
+			<field name="interval_number">1</field>
+			<field name="interval_type">days</field>
+			<field name="numbercall">-1</field>
+			<field name="doall" eval="False"/>
+			<field name="model" eval="'radiotv.broadcast'"/>
+			<field name="function" eval="'_copy_broadcasts'"/>
+			<field name="doall" eval="False"/>
+			<field name="args" eval="'([7])'"/>
+			<field name="active" eval="False"/>
+		</record>
+	</data>
+</terp>

@@ -3,8 +3,8 @@ import wizard
 import pooler
 
 def _campaign_tasks(self, cr, uid, data, context):
-    campaign_group_id = data['id']
-    cr.execute('''SELECT project_id FROM dm_campaign_group WHERE id = %d '''% (campaign_group_id, ))
+    campaign_id = data['id']
+    cr.execute('''SELECT project_id FROM dm_campaign WHERE id = %d '''% (campaign_id, ))
     res = cr.fetchone()
     if not res[0]:
         raise wizard.except_wizard('Error !', 'No project defined for this campaign. You can create one with the retro-planning button !')

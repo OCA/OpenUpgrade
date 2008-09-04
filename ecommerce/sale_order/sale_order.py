@@ -5,17 +5,14 @@ import pooler
 import datetime
 import time
 from tools import config
+import netsvc
+import ir
 
 class ecommerce_sale_order(osv.osv):
 
     _name='ecommerce.saleorder'
     _columns = {
         'name': fields.char('Order Description',size=64, required=True),
-        'state': fields.selection([
-            ('draft','Draft'),
-            ('done','Done'),
-            ('cancel','Cancel')
-        ], 'Order State',readonly=True),
         'date_order':fields.date('Date Ordered', required=True),
         'epartner_id':fields.many2one('ecommerce.partner', 'Ecommerce Partner', required=True),
         'epartner_add_id':fields.many2one('ecommerce.partner.address', 'Contact Address'),
@@ -28,22 +25,16 @@ class ecommerce_sale_order(osv.osv):
         'note': fields.text('Notes'),
     }
     _defaults = {
+        'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'ecommerce.saleorder'),
         'date_order': lambda *a: time.strftime('%Y-%m-%d'),
-        'state': lambda *a: 'draft',
         'epartner_invoice_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['invoice'])['invoice'],
         'epartner_add_id': lambda self, cr, uid, context: context.get('partner_id', False) and  self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['contact'])['contact'],
         'epartner_shipping_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('ecommerce.partner').address_get(cr, uid, [context['partner_id']], ['delivery'])['deliver']
     }
-
-    def order_draft(self,cr,uid,ids):
-        self.write(cr, uid, ids, {'state':'draft'})
-        return True
-    
-    def order_cancel(self, cr, uid, ids, context={}):
-        self.write(cr, uid, ids, {'state':'cancel'})
-        return True
     
     def order_create_function(self, cr, uid, ids, context={}):
+       
+        get_ids = []
         for order in self.browse(cr, uid, ids, context):
             addid = []  
             if not (order.epartner_id and order.epartner_invoice_id and order.epartner_shipping_id):
@@ -127,10 +118,11 @@ class ecommerce_sale_order(osv.osv):
                 val.update( val_new )
                 val['tax_id'] = 'tax_id' in val and [(6,0,val['tax_id'])] or False
                 order_lines.append((0,0,val))
-                      
+           
+            search_shop_id = self.pool.get('ecommerce.shop').browse(cr, uid, order.web_id.id)
             order_id = self.pool.get('sale.order').create(cr, uid, {
                 'name': order.name,
-                'shop_id': order.web_id.id,
+                'shop_id': search_shop_id.shop_id.id,
                 'user_id': uid,
                 'note': order.note or '',
                 'partner_id': partner_id,
@@ -139,9 +131,11 @@ class ecommerce_sale_order(osv.osv):
                 'partner_shipping_id':address_delivery,  
                 'pricelist_id': order.pricelist_id.id,
                 'order_line':order_lines
-            })
-            self.write(cr, uid, [order.id], {'state':'done', 'order_id': order_id})
-        return True
+            })      
+            get_ids.extend(ids)
+            get_ids.append(order_id)
+
+        return get_ids
 
     def address_set(self, cr, uid, ids, *args):
         
@@ -165,6 +159,47 @@ class ecommerce_sale_order(osv.osv):
         addr = self.pool.get('ecommerce.partner').address_get(cr, uid, [part], ['delivery','invoice','contact'])
         return {'value':{'epartner_invoice_id': addr['invoice'], 'epartner_add_id':addr['contact'], 'epartner_shipping_id':addr['delivery']}}
     
+    def confirm_sale_order(self, cr, uid, so_ids, email_id, shipping_charge, context={}):
+       
+        wf_service = netsvc.LocalService("workflow")
+        ids = []
+        inv_id = []
+        datas = {}
+        ids.append(so_ids)
+        create_wf = self.order_create_function(cr, uid, ids, context={})
+        ecom_soid = create_wf[0]
+        sale_orderid = create_wf[1]
+     
+        wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'order_confirm', cr)
+        wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'manual_invoice', cr)
+        
+        get_data = self.pool.get('sale.order').browse(cr,uid,sale_orderid)
+        invoice_id = get_data.invoice_ids[0].id
+        wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
+        inv_id.append(invoice_id)
+     
+        id = uid
+        get_uiddata = self.pool.get('res.users').browse(cr,uid,id)
+        
+        key = ('dbname', cr.dbname)
+        datas = {'model' : 'account.invoice', 'id' : invoice_id, 'report_type': 'pdf'}
+     
+        obj = netsvc.LocalService('report.'+'account.invoice.ecom')
+        context={'price':shipping_charge}
+        (result, format) = obj.create(cr, uid, inv_id, datas, context)
+    
+        subject = str('Send Invoice')
+        body =     str('Dear  Subscriber,' + '\n'+'\n' + 
+                   'Your Payment Process finish..'+'\n' +
+                   'Your invoice send it to you.' + '\n' + '\n' +'\n' +
+                   'Thank you for using Ecommerce!' + '\n' +
+                   'The Ecommerce Team')
+
+        data = self.pool.get('ecommerce.partner')
+        data.ecom_send_email(cr, uid, email_id, subject, body, attachment=result, context={})
+        
+        return dict()
+   
 ecommerce_sale_order()
 
 class ecommerce_order_line(osv.osv):
@@ -180,8 +215,6 @@ class ecommerce_order_line(osv.osv):
     }
    
 ecommerce_order_line()
-
-
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

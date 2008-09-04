@@ -1,0 +1,327 @@
+<terp>
+<data>
+	<record model="ir.actions.act_window" id="action_radiotv_channel_form">
+		<field name="name">Channel</field>
+		<field name="res_model">radiotv.channel</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Radio TV/Channels" id="menu_radiotv_channel_form" action="action_radiotv_channel_form"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_category_form">
+		<field name="name">Program category</field>
+		<field name="res_model">radiotv.category</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Radio TV/Program categories" id="menu_radiotv_category_form" action="action_radiotv_category_form"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_program_form">
+		<field name="name">Program</field>
+		<field name="res_model">radiotv.program</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Radio TV/Programs" id="menu_radiotv_program_form" action="action_radiotv_program_form"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_program_form1">
+		<field name="name">Archive programs</field>
+		<field name="res_model">radiotv.program</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','0')]</field>
+	</record>
+	<menuitem name="Radio TV/Programs/Archive programs" id="menu_radiotv_program_form1" action="action_radiotv_program_form1"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_program_form2">
+		<field name="name">Published programs</field>
+		<field name="res_model">radiotv.program</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','1')]</field>
+	</record>
+	<menuitem name="Radio TV/Programs/Published programs" id="menu_radiotv_program_form2" action="action_radiotv_program_form2"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_program_form3">
+		<field name="name">Unpublished programs</field>
+		<field name="res_model">radiotv.program</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('state','=','-1')]</field>
+	</record>
+	<menuitem name="Radio TV/Programs/Unpublished programs" id="menu_radiotv_program_form3" action="action_radiotv_program_form3"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_broadcast_form">
+		<field name="name">Broadcast</field>
+		<field name="res_model">radiotv.broadcast</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">500</field>
+	</record>
+	<menuitem name="Radio TV/Broadcasts" id="menu_radiotv_broadcast_form" action="action_radiotv_broadcast_form"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_broadcast_form11">
+		<field name="name">Yesterday broadcasts</field>
+		<field name="res_model">radiotv.broadcast</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">500</field>
+		<field name="domain">[('dt_start','&gt;=',time.strftime('%Y-%m-%d 00:00:00',time.localtime(time.time()-24*60*60))), ('dt_start','&lt;=',time.strftime('%Y-%m-%d 23:59:59',time.localtime(time.time()-24*60*60)))]</field>
+	</record>
+	<menuitem name="Radio TV/Broadcasts/Yesterday broadcasts" id="menu_radiotv_broadcast_form11" action="action_radiotv_broadcast_form11"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_broadcast_form12">
+		<field name="name">Today broadcasts</field>
+		<field name="res_model">radiotv.broadcast</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">500</field>
+		<field name="domain">[('dt_start','&gt;=',time.strftime('%Y-%m-%d 00:00:00')), ('dt_start','&lt;=',time.strftime('%Y-%m-%d 23:59:59'))]</field>
+	</record>
+	<menuitem name="Radio TV/Broadcasts/Today broadcasts" id="menu_radiotv_broadcast_form12" action="action_radiotv_broadcast_form12"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_broadcast_form13">
+		<field name="name">Tomorrow broadcasts</field>
+		<field name="res_model">radiotv.broadcast</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">500</field>
+		<field name="domain">[('dt_start','&gt;=',time.strftime('%Y-%m-%d 00:00:00',time.localtime(time.time()+24*60*60))), ('dt_start','&lt;=',time.strftime('%Y-%m-%d 23:59:59',time.localtime(time.time()+24*60*60)))]</field>
+	</record>
+	<menuitem name="Radio TV/Broadcasts/Tomorrow broadcasts" id="menu_radiotv_broadcast_form13" action="action_radiotv_broadcast_form13"/>
+
+	<!--becareful! The "domain" field is varchar(250) and the length of the expression to compute the first/last day of the week is almost 250-->
+	<record model="ir.actions.act_window" id="action_radiotv_broadcast_form21">
+		<field name="name">Previous week broadcasts</field>
+		<field name="res_model">radiotv.broadcast</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">500</field>
+		<field name="domain">[('dt_start','&gt;=',time.strftime('%Y-%m-%d 00:00:00',time.localtime(time.time()-(7+((int(time.strftime('%w'))-1)%7))*86400))),('dt_start','&lt;=',time.strftime('%Y-%m-%d 23:59:59',time.localtime(time.time()-(1+((int(time.strftime('%w'))-1)%7))*86400)))]</field>
+	</record>
+	<menuitem name="Radio TV/Broadcasts/Previous week broadcasts" id="menu_radiotv_broadcast_form21" action="action_radiotv_broadcast_form21"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_broadcast_form22">
+		<field name="name">This week broadcasts</field>
+		<field name="res_model">radiotv.broadcast</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">500</field>
+		<field name="domain">[('dt_start','&gt;=',time.strftime('%Y-%m-%d 00:00:00',time.localtime(time.time()+(0-((int(time.strftime('%w'))-1)%7))*86400))),('dt_start','&lt;=',time.strftime('%Y-%m-%d 23:59:59',time.localtime(time.time()+(6-((int(time.strftime('%w'))-1)%7))*86400)))]</field>
+	</record>
+	<menuitem name="Radio TV/Broadcasts/This week broadcasts" id="menu_radiotv_broadcast_form22" action="action_radiotv_broadcast_form22"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_broadcast_form23">
+		<field name="name">Next week broadcasts</field>
+		<field name="res_model">radiotv.broadcast</field>
+		<field name="view_mode">tree,form</field>
+		<field name="limit">500</field>
+		<field name="domain">[('dt_start','&gt;=',time.strftime('%Y-%m-%d 00:00:00',time.localtime(time.time()+(7-((int(time.strftime('%w'))-1)%7))*86400))),('dt_start','&lt;=',time.strftime('%Y-%m-%d 23:59:59',time.localtime(time.time()+(13-((int(time.strftime('%w'))-1)%7))*86400)))]</field>
+	</record>
+	<menuitem name="Radio TV/Broadcasts/Next week broadcasts" id="menu_radiotv_broadcast_form23" action="action_radiotv_broadcast_form23"/>
+
+        <record model="ir.actions.act_window" id="action_radiotv_podcast_form">
+                <field name="name">Podcast</field>
+                <field name="res_model">radiotv.podcast</field>
+                <field name="view_mode">tree,form</field>
+                <field name="limit">500</field>
+        </record>
+        <menuitem name="Radio TV/Podcasts" id="menu_radiotv_podcast_form" action="action_radiotv_podcast_form"/>
+
+	<record model="ir.actions.act_window" id="action_radiotv_web_form">
+		<field name="name">RadioTV Website</field>
+		<field name="res_model">radiotv.web</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	<menuitem name="Radio TV/Configuration" groups="admin" sequence="1"/>
+	<menuitem name="Radio TV/Configuration/Website configuration" id="menu_radiotv_web_form" action="action_radiotv_web_form" groups="admin"/>
+
+	<record model="ir.ui.view" id="view_radiotv_channel_view">
+		<field name="name">radiotv.channel.tree</field>
+		<field name="model">radiotv.channel</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Channels">
+				<field name="name"/>
+				<field name="description"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_channel_form">
+		<field name="name">radiotv.channel</field>
+		<field name="model">radiotv.channel</field>
+		<field name="arch" type="xml">
+			<form string="Channel">
+				<field name="name" select="1"/>
+				<field name="description" select="1" colspan="4"/>
+				<newline/>
+				<separator string="Programs" colspan="4"/>
+				<field name="program_ids" nolabel="1" colspan="4" string="Programs"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_program_view">
+		<field name="name">radiotv.program.tree</field>
+		<field name="model">radiotv.program</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Programs">
+				<field name="name"/>
+				<field name="category_id" />
+				<field name="state" />
+				<field name="email" />
+				<field name="introduction"/>
+				<field name="description"/>
+				<field name="team"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_program_form">
+		<field name="name">radiotv.program</field>
+		<field name="model">radiotv.program</field>
+		<field name="arch" type="xml">
+			<form string="Program">
+				<field name="name" select="1"/>
+				<field name="category_id" select="1"/>
+				<field name="state" select="1"/>
+				<field name="email" select="1"/>
+				<field name="introduction" select="1"/>
+				<field name="description" select="1"/>
+				<field name="team" select="1"/>
+				<field name="channel_ids"  select="1"/>
+				<field name="editor"  select="2"/>
+				<field name="approx_duration"  select="2"/>
+				<field name="original_language"  select="2"/>
+				<field name="broadcast_language"  select="2"/>
+				<field name="production_country_id"  select="2"/>
+				<field name="production_year"  select="2"/>
+				<field name="production_type"  select="2"/>
+				<field name="classification"  select="2"/>
+				<!--<field name="broadcast_ids" colspan="4"/>-->
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_category_view">
+		<field name="name">radiotv.category.tree</field>
+		<field name="model">radiotv.category</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Categories">
+				<field name="name"/>
+				<field name="description"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_category_form">
+		<field name="name">radiotv.category</field>
+		<field name="model">radiotv.category</field>
+		<field name="arch" type="xml">
+			<form string="Category">
+				<field name="name" select="1"/>
+				<field name="description" select="1" colspan="4"/>
+				<separator string="Programs" colspan="4"/>
+				<field name="program_ids" nolabel="1" colspan="4" string="" widget="many2many"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_broadcast_view">
+		<field name="name">radiotv.broadcast.tree</field>
+		<field name="model">radiotv.broadcast</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Broadcasts">
+				<field name="dt_start"/>
+				<!--<field name="dt_end"/>-->
+				<field name="channel_id"/>
+				<field name="program_id"/>
+				<field name="url"/>
+				<field name="description"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_broadcast_form">
+		<field name="name">radiotv.broadcast</field>
+		<field name="model">radiotv.broadcast</field>
+		<field name="arch" type="xml">
+			<form string="Broadcast">
+				<separator string="Date/time" colspan="4"/>
+				<field name="dt_start" select="1"/>
+				<field name="dt_end" select="2" readonly="1"/>
+				<field name="channel_id" select="1"/>
+				<field name="program_id" select="1" domain="[('channel_ids','in',[channel_id or 0]),('state','=','1')]"/>
+				<field name="description" select="1" colspan="4"/>
+				<field name="url" select="2" colspan="4"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_podcast_view">
+		<field name="name">radiotv.podcast.tree</field>
+		<field name="model">radiotv.podcast</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Podcasts">
+				<field name="name"/>
+				<field name="file_name"/>
+				<field name="broadcast_id"/>
+				<field name="description"/>
+				<field name='block'/>
+				<field name='explicit'/>
+				<field name='pub_date'/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_podcast_form">
+		<field name="name">radiotv.podcast</field>
+		<field name="model">radiotv.podcast</field>
+		<field name="arch" type="xml">
+			<form string="Podcast">
+				<field name="name" select="1"/>
+				<field name="file_name" select="1"/>
+				<field name="broadcast_id" on_change="onchange_broadcast_id(broadcast_id)" select="1" />
+				<field name="description" select="1" colspan="4"/>
+				<field name='author' select="2"/>
+				<field name='category'/>
+				<field name='duration'/>
+				<field name='keywords' select="2"/>
+				<field name='subtitle' select="2"/>
+				<field name='block'/>
+				<field name='pub_date' select="2"/>
+				<field name='explicit'/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_radiotv_web_view">
+		<field name="name">radiotv.web.tree</field>
+		<field name="model">radiotv.web</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Website">
+				<field name="name"/>
+				<field name="url"/>
+				<field name="active"/>
+				<field name="sync"/>
+			</tree>
+		</field>
+	</record>
+
+	<act_window name="Channel broadcasts"
+		domain="[('channel_id', '=', active_id)]"
+		context="{'channel_id': active_id}"
+		res_model="radiotv.broadcast"
+		src_model="radiotv.channel"
+		id="act_channel_2_broadcasts"/>
+
+	<act_window name="Program broadcasts"
+		    domain="[('program_id', '=', active_id)]"
+		    context="{'program_id': active_id}"
+		    res_model="radiotv.broadcast"
+		    src_model="radiotv.program"
+		    id="act_program_2_broadcasts"/>
+
+	<act_window name="Podcasts"
+		    domain="[('broadcast_id', '=', active_id)]"
+		    context="{'broadcast_id': active_id}"
+		    res_model="radiotv.podcast"
+		    src_model="radiotv.broadcast"
+		    id="act_broadcast_2_podcasts"/>
+
+</data>
+</terp>

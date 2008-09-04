@@ -16,12 +16,12 @@ class wizard_campaign_group(wizard.interface):
     
     message ='''<?xml version="1.0"?>
     <form string="Create Group">
-        <label align="0.0" colspan="4" string="Selected campaign has been added in the group.Campaign which are already in some gorup will not be added in new group and will remain in same group"/>
+        <label align="0.0" colspan="4" string="Selected campaign has been added in the group.Campaigns that are already in some group will not be added in new group and will remain in same group"/>
     </form>'''
     
     error_message = '''<?xml version="1.0"?>
     <form string="Error!!!">
-        <label align="0.0" colspan="4" string="Group name cant be none.You have to select any avilable group or create new"/>
+        <label align="0.0" colspan="4" string="Group name can't be none.You have to select any avilable group or create new"/>
     </form>'''
     
     def _add_group(self, cr, uid, data, context):
@@ -33,7 +33,7 @@ class wizard_campaign_group(wizard.interface):
         camp_obj = pool.get('dm.campaign')
         for r in camp_obj.browse(cr,uid,data['ids']):
             if not r.campaign_group_id:
-                camp_obj.write(cr,uid,r.id,{'campaign_group_id':group_id})
+                camp_obj.write(cr,uid,[r.id],{'campaign_group_id':group_id})
         return {}
 
     def _new_group(self, cr, uid, data, context):
@@ -70,11 +70,11 @@ class wizard_campaign_group(wizard.interface):
     states = {
         'init': {
             'actions': [],
-            'result': {'type':'form', 'arch':group_form, 'fields':group_fields, 'state':[('end','Cancel'),('name_group','Create New Gorup'),('next','Add in Group'),]}
+            'result': {'type':'form', 'arch':group_form, 'fields':group_fields, 'state':[('end','Cancel'),('name_group','Create New Group'),('next','Add in Group'),]}
             },
         'name_group': {
             'actions': [],
-            'result': {'type':'form', 'arch':new_group, 'fields':new_group_fields, 'state':[('end','Cancel'),('new','Create Gorup')]}
+            'result': {'type':'form', 'arch':new_group, 'fields':new_group_fields, 'state':[('end','Cancel'),('new','Create Group')]}
             },            
         'new': {
             'actions': [_new_group],
