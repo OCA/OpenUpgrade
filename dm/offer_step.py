@@ -325,32 +325,12 @@ class dm_offer_step_manufacturing_constaint(osv.osv):
     _name = "dm.offer.step.manufacturing_constraint"
     _columns = {
         'name': fields.char('Constraint Name', size=64, required=True),
-        'country_id': fields.many2one('res.country','Country'),
+        'country_id': fields.many2many('res.country','dm_manuf_constraint_country_rel','manuf_constraint_id','country_id','Country'),
         'constraint': fields.text('Manufacturing Constraint'),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
     }
 dm_offer_step_manufacturing_constaint()
 
-
-class product_product(osv.osv):
-    _name = "product.product"
-    _inherit = "product.product"
-
-    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
-        result=super(product_product,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
-        if 'flag' in context:
-            if result['type']=='form':
-                for k,v in result['fields'].items():
-                    if not (k=='name' or k=='default_code' or k=='categ_id' or k=='list_price' or k=='standard_price' or k=='seller_ids' \
-                        or k=='description' or k=='description_sale'  or k=='description_purchase'):
-                        del result['fields'][k]
-                
-                result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Product">\n<notebook>\n<page string="General">\n<field name="name" select="1"/>\n<field name="default_code" select="1"/>\n<field name="categ_id" select="1"/>\n<field name="list_price"/>\n<field name="standard_price"/>\n<field colspan="4" name="seller_ids" nolabel="1" widget="one2many_list"/>\n</page>\n
-                    <page string="Descriptions">\n<separator string="Description" colspan="4"/>\n<field colspan="4" name="description" nolabel="1"/>\n<separator string="Sale Description" colspan="4"/>\n
-                    <field colspan="4" name="description_sale" nolabel="1"/>\n<separator string="Purchase Description" colspan="4"/>\n<field colspan="4" name="description_purchase" nolabel="1"/>\n</page>\n</notebook>\n</form>"""
-        return result
-
-product_product()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

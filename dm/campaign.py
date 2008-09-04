@@ -120,6 +120,7 @@ class dm_campaign(osv.osv):
         'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
         'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
+        'dtp_dates_ids': fields.one2many('dm.campaign.dtp_dates','campaign_id','DTP Dates'),
     }
 
     _defaults = {
@@ -202,8 +203,16 @@ class dm_campaign(osv.osv):
     def create(self,cr,uid,vals,context={}):
         if context.has_key('campaign_type') and context['campaign_type']=='model':
             vals['campaign_type']='model'
+
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
+
+        # Create dtp_date from template
+        dtp_dates_ids = self.pool.get('dm.campaign.dtp_dates').search(cr, uid, [('template','=',True)])
+        for dtp_dates_id in dtp_dates_ids:
+            self.pool.get('dm.campaign.dtp_dates').copy(cr, uid, dtp_dates_id, {'campaign_id':id_camp,'template':False})
+
         data_cam = self.browse(cr, uid, id_camp)
+        # Set campaign end date at one year after start date
         if (data_cam.date_start) and (not data_cam.date):
             time_format = "%Y-%m-%d"
             d = time.strptime(data_cam.date_start,time_format)
@@ -422,7 +431,6 @@ class dm_campaign_purchase_line(osv.osv):
 
     def po_generate(self,cr, uid, ids, *args):
         plines = self.browse(cr, uid ,ids)
-
         for pline in plines:
             if pline.state != 'done':
                 for supplier in pline.product_id.seller_ids:
@@ -434,34 +442,55 @@ class dm_campaign_purchase_line(osv.osv):
                     price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
                     newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
 
-                    print "DEBUG - newdate : ",newdate.strftime('%Y-%m-%d')
+                    # Get manufacturing constraints
+                    constraints = []
+                    if pline.constraint == 'manufacturing':
+                        print "DEBUG - constraints : manufacturing"
+                        for step in pline.campaign_id.offer_id.step_ids:
+                            print "DEBUG - step : ",step.name
+                            for const in step.manufacturing_constraint_ids:
+                                constraints.append("---------------------------------------------------------------------------")
+                                constraints.append(const.name)
+                                constraints.append(const.constraint)
+                        print "DEBUG - constraints : ",constraints
 
-                    line = {
-                       'name': pline.product_id.name,
-                       'product_qty': pline.quantity,
-                       'product_id': pline.product_id.id,
-                       'product_uom': pline.uom_id,
-                       'price_unit': price,
-                       'date_planned': newdate.strftime('%Y-%m-%d'),
-#                       'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
-#                       'move_dest_id': res_id,
-                    }
-
-                    print "DEBUG - partner_id",partner_id
-                    print "DEBUG - pricelist_id",pricelist_id
-                    print 'partner_address_id',address_id
+                    # Create po
                     purchase_id = self.pool.get('purchase.order').create(cr, uid, {
 #                        'origin': procurement.origin,
                         'partner_id': partner_id,
                         'partner_address_id': address_id,
                         'location_id': 1,
                         'pricelist_id': pricelist_id,
-                        'order_line': [(0,0,line)]
+                        'notes': "\n".join(constraints),
                     })
                     print "DEBUG - purchase_id",purchase_id
-#                    self.write(cr, uid, [pline.id], {'state':'done'})
 
-        return purchase_id
+                    # Create po lines
+                    lines = []
+                    for propo in pline.campaign_id.proposition_ids:
+                        line = self.pool.get('purchase.order.line').create(cr, uid, {
+                           'order_id': purchase_id,
+                           'name': propo.name,
+                           'product_qty': pline.quantity,
+                           'product_id': pline.product_id.id,
+                           'product_uom': pline.uom_id.id,
+                           'price_unit': price,
+                           'date_planned': newdate.strftime('%Y-%m-%d'),
+                           'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
+                           'account_analytic_id': propo.analytic_account_id.id,
+#                       'move_dest_id': res_id,
+                        })
+                        lines.append(line)
+
+                    print "DEBUG - lines",lines
+                    print "DEBUG - partner_id",partner_id
+                    print "DEBUG - pricelist_id",pricelist_id
+                    print 'DEBUG - partner_address_id',address_id
+
+                    self.write(cr, uid, [pline.id], {'state':'done'})
+
+#        return purchase_id
+        return True
 
     _columns = {
         'campaign_id': fields.many2one('dm.campaign', 'Campaign'),
@@ -492,6 +521,21 @@ class dm_campaign_proposition_prices_progression(osv.osv):
     }
 dm_campaign_proposition_prices_progression()
 
+class dm_campaign_dtp_dates(osv.osv):
+    _name = 'dm.campaign.dtp_dates'
+    _columns = {
+        'name' : fields.char('Name', size=64, required=True),
+        'theorical_date' : fields.date('Theorical Dates'),
+        'reviewed_date' : fields.date('Reviewed Dates'),
+        'real_date' : fields.date('Real Dates'),
+        'planned_date' : fields.date('Planned Dates'),
+        'campaign_id' : fields.many2one('dm.campaign','Campaign'),
+        'template' : fields.boolean('Set as default for new campaigns'),
+    }
+    _defaults = {
+        'template': lambda *a: False,
+    }
+dm_campaign_dtp_dates()
 
 class Country(osv.osv):
     _name = 'res.country'

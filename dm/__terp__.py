@@ -14,7 +14,6 @@
                   "campaign_data.xml",
                   ],
     "update_xml" : [
-                    "dm_data.xml",
                     "dm_wizard.xml",
                     "dm_security.xml",
                     "offer_view.xml",
@@ -23,6 +22,7 @@
                     "campaign_view.xml",
                     "dm_report.xml",
                     "offer_sequence.xml",
+                    "dm_data.xml",
                     ],
     "active": False,
     "installable": True

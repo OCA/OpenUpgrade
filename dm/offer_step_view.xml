@@ -262,8 +262,9 @@
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
 							<form string="Manufacturing Constraint">
 								<field name="name" select="1"/>
-								<field name="country_id"/>
+								<separator string="Manufacturing Constraints" colspan="4"/>
 								<field name="constraint" colspan="4" nolabel="1"/>
+								<field name="country_id"/>
 							</form>
 							<tree string="Manufacturing Constraint">
 								<field name="name"/>
@@ -474,9 +475,9 @@
 			<form string="Manufacturing Constraint">
 				<field name="name" select="1"/>
 				<field name="offer_step_id"/>
-				<field name="country_id"/>
 				<separator string="Manufacturing Constraint" colspan="4"/>
 				<field name="constraint" colspan="4" nolabel="1"/>
+				<field name="country_id" colspan="4"/>
 			</form>
 		</field>
 	</record>
@@ -487,9 +488,9 @@
 		<field name="arch" type="xml">	
 			<tree string="Manufacturing Constraints">
 				<field name="name" select="1"/>
-				<field name="country_id"/>
 				<field name="constraint"/>
 				<field name="offer_step_id"/>
+				<field name="country_id"/>
 			</tree>
 		</field>
 	</record>

@@ -196,45 +196,23 @@
 						</field>
 					</page>
 					<page string="Desktop Publishing">
-						<group colspan="4">
-							<separator string="                           " colspan="1"/>
-							<separator string="Theorical Dates" colspan="1"/>
-							<separator string="Reviewed Dates" colspan="1"/>
-							<separator string="Real Dates" colspan="1"/>
-						<separator string="DTP Request" colspan="4"/>
-<!--							<label string="DTP Request Date" width="200" colspan="1"/>-->
-							<label string="DTP Request Date" colspan="1"/>
-							<field name="theorical_dtp_request_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_dtp_request_date" nolabel="1" colspan="1"/>
-							<field name="real_dtp_request_date" nolabel="1" colspan="1"/>
-						<separator string="Translation Dates" colspan="4"/>
-<!--							<label string="Translation Delivery Date" width="200" colspan="1"/>-->
-							<label string="Translation Delivery Date" colspan="1"/>
-							<field name="theorical_translation_delivery_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_translation_delivery_date" nolabel="1" colspan="1"/>
-							<field name="real_translation_delivery_date" nolabel="1" colspan="1"/>
-<!--							<label string="Translation Rereading Date" width="200" colspan="1"/>-->
-							<label string="Translation Rereading Date" colspan="1"/>
-							<field name="theorical_translation_rereading_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_translation_rereading_date" nolabel="1" colspan="1"/>
-							<field name="real_translation_rereading_date" nolabel="1" colspan="1"/>
-						<separator string="First Draft Delivery" colspan="4"/>
-							<label string="Delivery Date" colspan="1"/>
-<!--							<field name="theorical_draft_delivery_date" width="200" nolabel="1" colspan="1"/>-->
-							<field name="theorical_draft_delivery_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_draft_delivery_date" nolabel="1" colspan="1"/>
-							<field name="real_draft_delivery_date" nolabel="1" colspan="1"/>
-						<separator string="Final Corrected Proof" colspan="4"/>
-<!--							<label string="Validation Date" width="200" colspan="1"/>-->
-							<label string="Validation Date" colspan="1"/>
-							<field name="theorical_fcp_validation_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_fcp_validation_date" nolabel="1" colspan="1"/>
-							<field name="real_fcp_validation_date" nolabel="1" colspan="1"/>
-							<label string="DTP Suplier Delivery Date" colspan="1"/>
-							<field name="theorical_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
-							<field name="real_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
-						</group>
+							<field name="dtp_dates_ids" nolabel="1" colspan="4">
+								<form string="DTP date">
+									<field name="name" colspan="3"/>
+									<field name="theorical_date"/>
+									<field name="reviewed_date"/>
+									<field name="planned_date"/>
+									<field name="real_date"/>
+									<field name="template"/>
+								</form>
+								<tree string="DTP dates" editable="bottom">
+									<field name="name"/>
+									<field name="theorical_date"/>
+									<field name="reviewed_date"/>
+									<field name="planned_date"/>
+									<field name="real_date"/>
+								</tree>
+							</field>
 					</page>
 					<page string="Customers Files">
 						<field name="deduplicator_id"/>
