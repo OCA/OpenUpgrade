@@ -4,6 +4,9 @@ import unohelper
 import string
 import tempfile
 import base64
+import sys
+reload(sys)
+sys.setdefaultencoding("latin1")
 from com.sun.star.task import XJobExecutor
 if __name__<>"package":
     from lib.gui import *
@@ -74,5 +77,5 @@ class ExportToRML( unohelper.Base, XJobExecutor ):
 
 if __name__<>"package" and __name__=="__main__":
     ExportToRML(None)
-elif __name__=="package": 
+elif __name__=="package":
     g_ImplementationHelper.addImplementation( ExportToRML, "org.openoffice.openerp.report.exporttorml", ("com.sun.star.task.Job",),)
