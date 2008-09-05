@@ -34,7 +34,10 @@ class dm_campaign(osv.osv):
     _rec_name = 'name'
 
     def dtp_making_time_get(self, cr, uid, ids, name, arg, context={}):
-        return name
+        result={}
+        for i in ids:
+            result[i]=0.0
+        return result
 
     def _campaign_code(self, cr, uid, ids, name, args, context={}):
         result ={}
@@ -239,7 +242,7 @@ class dm_campaign(osv.osv):
         return True
 
     def copy(self, cr, uid, id, default=None, context={}):
-        cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
+        cmp_id = super(dm_campaign, self).copy(cr, uid, id, default)
         data = self.browse(cr, uid, cmp_id, context)
         if data.date_start:
             super(dm_campaign, self).write(cr, uid, cmp_id, {'date_start':0})
@@ -272,21 +275,27 @@ class dm_campaign_proposition(osv.osv):
             super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
         return res
 
+    def create(self,cr,uid,vals,context={}):
+        id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+        if id.date_start:
+            vals['date_start']=id.date_start
+        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
+    
     def copy(self, cr, uid, id, default=None, context={}):
-        """
-        Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
-        """
+#        """
+#        Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
+#        """
         prp_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, prp_id, context)
         if data.date_start:
             super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'date_start':0})
-        if data.keep_segments == False:
-            l = []
-            for i in data.segment_ids:
-                 l.append(i.id)
-                 self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-                 super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
-            return prp_id
+#        if data.keep_segments == False:
+#            l = []
+#            for i in data.segment_ids:
+#                 l.append(i.id)
+#                 self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
+#                 super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
+#            return prp_id
         return prp_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
