@@ -285,10 +285,10 @@ class dm_campaign_proposition(osv.osv):
 #        """
 #        Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
 #        """
-        prp_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
-        data = self.browse(cr, uid, prp_id, context)
+        proposition_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
+        data = self.browse(cr, uid, proposition_id, context)
         if data.date_start:
-            super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'date_start':0})
+            super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'date_start':0})
 #        if data.keep_segments == False:
 #            l = []
 #            for i in data.segment_ids:
@@ -296,7 +296,7 @@ class dm_campaign_proposition(osv.osv):
 #                 self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
 #                 super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
 #            return prp_id
-        return prp_id
+        return proposition_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
         result ={}

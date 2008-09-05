@@ -28,7 +28,7 @@ def _copy_segment(self, cr, uid, data, context):
                 for i in camp_prop.segment_ids:
                     l.append(i.id)
                     pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-            return prp_id
+            return {'PRP_ID':prp_id}
     return {'PRP_ID':prp_id}
 
 class wizard_campaign_copy(wizard.interface):

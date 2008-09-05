@@ -17,15 +17,15 @@ def _copy_prp(self, cr, uid, data, context):
     prop_id = data['id']
     pool = pooler.get_pool(cr.dbname)
     prp_id = pool.get('dm.campaign.proposition').copy(cr, uid, prop_id, context=context)
+    datas = pool.get('dm.campaign.proposition').browse(cr, uid, prp_id, context)
     seg = data['form']['keep_segments']
-    if not seg:
-        datas = pool.get('dm.campaign.proposition').browse(cr, uid, prp_id, context)
-        l = []
-        if datas.segment_ids:
+    if datas.segment_ids:
+        if not seg:
+            l = []
             for i in datas.segment_ids:
                 l.append(i.id)
                 pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-            return prp_id
+            return {'PRP_ID':prp_id}
     return {'PRP_ID':prp_id}
 
 class wizard_prop_copy(wizard.interface):
