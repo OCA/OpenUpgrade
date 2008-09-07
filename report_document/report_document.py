@@ -58,7 +58,7 @@ class report_document_user(osv.osv):
                      f.user_id as user_id,
                      u.name as user,
                      count(*) as nbr,
-                     substring(f.create_date for 7)||'-'||'01' as name,
+                     to_char(f.create_date,'YYYY-MM')||'-'||'01' as name,
                      d.name as directory,
                      f.create_date as create_date,
                      f.file_size as file_size,
@@ -92,7 +92,7 @@ class report_files_partenr(osv.osv):
     def init(self, cr):
          cr.execute("""
             create or replace view report_files_partenr as (
-                select min(f.id) as id,count(*) as nbr,min(substring(f.create_date for 7)||'-'||'01') as name,min(f.title) as file_title,p.name as partner from ir_attachment f inner join res_partner p on (f.partner_id=p.id) group by p.name
+                select min(f.id) as id,count(*) as nbr,min(to_char(f.create_date,'YYYY-MM')||'-'||'01') as name,min(f.title) as file_title,p.name as partner from ir_attachment f inner join res_partner p on (f.partner_id=p.id) group by p.name
              )
          """)
 report_files_partenr()
