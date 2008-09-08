@@ -7,7 +7,6 @@ class wizard_proposition_products(wizard.interface):
     new_prices_prog = '''<?xml version="1.0"?>
     <form string="Select Prices Progression">
         <field name="prices_prog_name"/>
-        <field name="sm_based"/>
         <field name="fixed_prog"/>
         <field name="percent_prog"/>
     </form>'''
@@ -30,7 +29,6 @@ class wizard_proposition_products(wizard.interface):
     
     new_prices_prog_fields = {
         'prices_prog_name': {'string': 'Name', 'type': 'char', 'size':64, 'required':True },
-        'sm_based': {'string': 'Based on Starting Mail price', 'type': 'boolean'},
         'fixed_prog': {'string': 'Fixed Progression', 'type': 'float', 'digits':(16,2)},
         'percent_prog': {'string': 'Percent Progression Name', 'type': 'float', 'digits':(16,2)},
         }

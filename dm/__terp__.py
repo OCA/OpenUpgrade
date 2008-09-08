@@ -7,8 +7,24 @@
     "category" : "Generic Modules/Direct Marketing",
     "description": """
 
-                    """,
-    "depends" : ["project","project_retro_planning"],
+        Marketing campaign Management Module
+
+        This allows to manage :
+
+        * Commercial Offers :
+            - Create Commercial Offers
+            - Multimedia 
+            - Graphical View of the Offer Steps
+
+        * Marketing Campaign
+            - Marketing Campaign Plannification
+            - Retro planning generation (automaticaly creates all the tasks necessary to launch your campaign)
+            - Assign automatic price progression for the campaign products
+            - Auto generate the pruchase orders for all the products of the campaign
+            - Manage Customers segments and segmentation criteria
+
+            """,
+    "depends" : ["project_retro_planning","purchase"],
     "init_xml" : [ ],
     "demo_xml" : [
                   "campaign_data.xml",
