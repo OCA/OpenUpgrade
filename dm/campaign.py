@@ -503,7 +503,7 @@ class dm_campaign_purchase_line(osv.osv):
 
     _columns = {
         'campaign_id': fields.many2one('dm.campaign', 'Campaign'),
-        'product_id' : fields.many2one('product.product', 'Product', required=True),
+        'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
         'quantity' : fields.integer('Quantity', required=True),
         'uom_id' : fields.many2one('product.uom','UOM', required=True),
         'date_planned': fields.date('Scheduled date', required=True),
