@@ -447,33 +447,57 @@ class dm_campaign_purchase_line(osv.osv):
 
     def po_generate(self,cr, uid, ids, *args):
         plines = self.browse(cr, uid ,ids)
+        if not plines:
+            raise  osv.except_osv('Warning', "There's no purchase lines defined for this campaign")
         for pline in plines:
             if pline.state != 'done':
+                if not pline.product_id.seller_ids:
+                    raise  osv.except_osv('Warning', "There's no supplier defined for this product : %s" % (pline.product_id.name,) )
+
                 for supplier in pline.product_id.seller_ids:
                     partner_id = supplier.id
                     partner = supplier.name
+                    print "DEBUG - Parner : ",partner
 
-                    address_id = self.pool.get('res.partner').address_get(cr, uid, [partner_id], ['delivery'])['delivery']
+                    address_id = self.pool.get('res.partner').address_get(cr, uid, [partner.id], ['default'])['default']
+                    if not address_id:
+                        raise osv.except_osv('Warning', "There's no delivery address defined for this partner : %s" % (partner.name,) )
                     pricelist_id = partner.property_product_pricelist_purchase.id
+                    if not pricelist_id:
+                        raise osv.except_osv('Warning', "There's no purchase pricelist defined for this partner : %s" % (partner.name,) )
                     price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
                     newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
+
+                    if not pline.campaign_id.offer_id:
+                        raise osv.except_osv('Warning', "There's no offer defined for this campaign : %s" % (pline.campaign_id.name,) )
+                    if not pline.campaign_id.proposition_ids:
+                        raise osv.except_osv('Warning', "There's no proposition defined for this campaign : %s" % (pline.campaign_id.name,) )
 
                     # Get manufacturing constraints
                     constraints = []
                     if pline.constraint == 'manufacturing':
                         print "DEBUG - constraints : manufacturing"
                         for step in pline.campaign_id.offer_id.step_ids:
-                            print "DEBUG - step : ",step.name
                             for const in step.manufacturing_constraint_ids:
                                 constraints.append("---------------------------------------------------------------------------")
                                 constraints.append(const.name)
                                 constraints.append(const.constraint)
-                        print "DEBUG - constraints : ",constraints
+                    elif pline.constraint == 'items':
+                        print "DEBUG - constraints : item"
+                        for step in pline.campaign_id.offer_id.step_ids:
+                            for item in step.product_ids:
+                                constraints.append("---------------------------------------------------------------------------")
+                                constraints.append(item.product_id.name)
+                                constraints.append(item.purchase_constraints)
+                    elif pline.constraint == 'customer_file':
+                        print "DEBUG - constraints : customer file"
+                        raise osv.except_osv('Warning', "Purchase of customers files is not yet implemented")
+
 
                     # Create po
                     purchase_id = self.pool.get('purchase.order').create(cr, uid, {
 #                        'origin': procurement.origin,
-                        'partner_id': partner_id,
+                        'partner_id': partner.id,
                         'partner_address_id': address_id,
                         'location_id': 1,
                         'pricelist_id': pricelist_id,
@@ -498,11 +522,6 @@ class dm_campaign_purchase_line(osv.osv):
                         })
                         lines.append(line)
 
-                    print "DEBUG - lines",lines
-                    print "DEBUG - partner_id",partner_id
-                    print "DEBUG - pricelist_id",pricelist_id
-                    print 'DEBUG - partner_address_id',address_id
-
                     self.write(cr, uid, [pline.id], {'state':'done'})
 
 #        return purchase_id
@@ -516,7 +535,8 @@ class dm_campaign_purchase_line(osv.osv):
         'date_planned': fields.date('Scheduled date', required=True),
         'trigger' : fields.selection(PURCHASE_LINE_TRIGGERS, 'Trigger'),
         'constraint' : fields.selection(PURCHASE_LINE_CONSTRAINTS, 'Constraints'),
-        'state' : fields.selection(PURCHASE_LINE_STATES, 'State'),
+        'notes': fields.text('Notes'),
+        'state' : fields.selection(PURCHASE_LINE_STATES, 'State',readonly=True),
     }
 
     _defaults = {

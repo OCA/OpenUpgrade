@@ -192,10 +192,11 @@
 								<field name="uom_id"/>
 								<field name="constraint"/>
 								<field name="date_planned"/>
-								<field name="trigger"/>
+<!--								<field name="trigger"/>-->
+<!--								<field name="notes" colspan="4" nolabel="1"/>-->
 								<group colspan="4">
 									<field name="state"/>
-									<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
+<!--									<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>-->
 								</group>
 							</form>
 <!--							<tree string="Purchase Lines" editable="bottom">-->
@@ -205,8 +206,9 @@
 								<field name="uom_id"/>
 								<field name="constraint"/>
 								<field name="date_planned"/>
-								<field name="trigger"/>
+<!--								<field name="trigger"/>-->
 								<field name="state"/>
+								<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
 							</tree>
 						</field>
 					</page>
@@ -973,6 +975,63 @@
             </field>
         </record>
 
+	<record model="ir.ui.view" id="view_campaign_purchase_line_tree">
+		<field name="name">dm.campaign.purchase_line_tree</field>
+		<field name="model">dm.campaign_purchase_line</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Campaigns">
+				<tree string="Purchase Lines">
+					<field name="product_id"/>
+					<field name="quantity"/>
+					<field name="uom_id"/>
+					<field name="constraint"/>
+					<field name="date_planned"/>
+					<field name="trigger"/>
+					<field name="state"/>
+					<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
+				</tree>
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_campaign_purchase_line_form">
+		<field name="name">dm.campaign.purchase_line_form</field>
+		<field name="model">dm.campaign_purchase_line</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Purchase line">
+				<field name="product_id"/>
+				<newline/>
+				<field name="quantity"/>
+				<field name="uom_id"/>
+				<field name="constraint"/>
+				<field name="date_planned"/>
+				<field name="trigger"/>
+				<field name="notes" colspan="4" nolabel="1"/>
+				<group colspan="4">
+					<field name="state"/>
+				</group>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_campaign_purchase_line_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.purchase_line</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_purchase_line_form"/>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_campaign_purchase_line_tree">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.purchase_line</field>
+		<field name="view_type">tree</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_campaign_purchase_line_tree"/>
+	</record>
 
 </data>
 </terp>

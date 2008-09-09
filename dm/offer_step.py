@@ -302,6 +302,7 @@ class dm_step_product(osv.osv):
         'offer_step_type': fields.function(_step_type,string='Offer Step Type',type="char",method=True,readonly=True), 
         'item_type': fields.selection(AVAILABLE_ITEM_TYPES, 'Item Type', size=64),
         'notes' : fields.text('Notes'),
+        'purchase_constraints' : fields.text('Purchase Constraints'),
     }
 dm_step_product()
 
