@@ -20,6 +20,19 @@
 	=======================================================
 	-->
 
+	<record model="ir.ui.view" id="view_campaign_calendar">
+		<field name="name">dm.campaign.calendar</field>
+		<field name="model">dm.campaign</field>
+		<field name="type">calendar</field>
+		<field eval="2" name="priority"/>
+		<field name="arch" type="xml">
+			<calendar color="responsible_id" date_start="date_start" string="Campaigns">
+				<field name="name" string="Name"/>
+				<field name="country_id" />
+			</calendar>
+		</field>
+	</record>
+
 	<record model="ir.ui.view" id="view_campaign_tree">
 		<field name="name">dm.campaign.tree</field>
 		<field name="model">dm.campaign</field>
@@ -82,7 +95,7 @@
 						</group>
 					</page>
 					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1">
+						<field name="proposition_ids" nolabel="1" context="date1=date_start">
 							<form string="Propositions">
 							<notebook colspan="4">
 								<page string="General">
@@ -237,7 +250,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_view">
@@ -252,6 +265,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_all"/>
+	</record>
 
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
 
@@ -261,7 +280,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
@@ -275,6 +294,12 @@
 		<field name="sequence" eval="2"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_all_open"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_open_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
 		<field name="act_window_id" ref="action_campaign_form_all_open"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all_open" action="action_campaign_form_all_open"/>
@@ -301,6 +326,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all2"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_draft_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_all2"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
 
 
@@ -309,7 +340,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close')]</field>
 	</record>
@@ -325,6 +356,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all3"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_closed_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_all3"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
 
         <!-- My Campaings -->
@@ -335,7 +372,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('responsible_id','=',uid)]</field>
 	</record>
@@ -351,6 +388,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_my"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_my"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
 
 
@@ -360,7 +403,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open'),('responsible_id','=',uid)]</field>
 	</record>
@@ -376,6 +419,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_my1"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_open_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_my1"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
 
 
@@ -384,7 +433,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','draft'),('responsible_id','=',uid)]</field>
 	</record>
@@ -400,6 +449,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_my2"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_draft_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_my2"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
 
 
@@ -408,7 +463,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
 	</record>
@@ -422,6 +477,12 @@
 		<field name="sequence" eval="2"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_my3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_closed_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
 		<field name="act_window_id" ref="action_campaign_form_my3"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
@@ -684,12 +745,25 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_campaign_proposition_calendar">
+		<field name="name">dm.campaign.proposition.calendar</field>
+		<field name="model">dm.campaign.proposition</field>
+		<field name="type">calendar</field>
+		<field eval="2" name="priority"/>
+		<field name="arch" type="xml">
+			<calendar color="camp_id" date_start="date_start" string="Propositions">
+				<field name="name"/>
+				<field name="proposition_type"/>
+			</calendar>
+		</field>
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_proposition">
 		<field name="name">All Campaigns Propositions</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_proposition_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns Propositions" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
@@ -699,7 +773,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_proposition_tree"/>
 		<field name="domain">[('user_id','=',uid)]</field>
 	</record>

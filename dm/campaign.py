@@ -275,11 +275,11 @@ class dm_campaign_proposition(osv.osv):
             super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
         return res
 
-    def create(self,cr,uid,vals,context={}):
-        id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
-        if id.date_start:
-            vals['date_start']=id.date_start
-        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
+#    def create(self,cr,uid,vals,context={}):
+#        id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+#        if id.date_start:
+#            vals['date_start']=id.date_start
+#        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
     
     def copy(self, cr, uid, id, default=None, context={}):
 #        """
@@ -319,6 +319,12 @@ class dm_campaign_proposition(osv.osv):
             result[id]=code1
         return result
 
+    def _default_camp_date(self, cr, uid, context={}):
+        if 'date1' in context and context['date1']:
+            dd = context['date1']
+            return dd
+        return []
+
     _columns = {
         'code1' : fields.function(_proposition_code,string='Code',type="char",method=True,readonly=True),
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
@@ -344,6 +350,7 @@ class dm_campaign_proposition(osv.osv):
 
     _defaults = {
         'proposition_type' : lambda *a : 'init',
+        'date_start' : _default_camp_date,
     }
 
     def _check(self, cr, uid, ids=False, context={}):
