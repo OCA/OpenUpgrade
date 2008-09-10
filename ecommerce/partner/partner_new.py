@@ -1,10 +1,11 @@
 # -*- encoding: utf-8 -*-
-from osv import osv, fields
+from osv import osv, fields, orm
 import pooler
 import xmlrpclib
 import tools
 import base64
 import email
+from tools.translate import _
 
 def _lang_get(self, cr, uid, context={}):
     obj = self.pool.get('res.lang')
@@ -15,7 +16,7 @@ def _lang_get(self, cr, uid, context={}):
 
 class ecommerce_partner(osv.osv):
     
-    _description='Partner Ecommerce'
+    _description='ecommerce partner'
     _name = "ecommerce.partner"
     _order = "name"
     _columns = {
@@ -65,8 +66,10 @@ class ecommerce_partner(osv.osv):
         return result
     
     def delivery_grid(self, cr, uid, shop_id, adr_dict, context={}):
+
         delivery_grid_ids = []
         res_add = self.pool.get('ecommerce.partner.address')
+
         if(adr_dict['type'] == 'delivery'):
                 address_delivery = adr_dict['type']
                 add_id = adr_dict['address_id']
@@ -77,7 +80,7 @@ class ecommerce_partner(osv.osv):
               
         delivery_carrier = self.pool.get('delivery.carrier')
         delivery_ecommerce_car = self.pool.get('ecommerce.shop').browse(cr, uid, [shop_id])
-        for i in delivery_ecommerce_car[0].delivery:
+        for i in delivery_ecommerce_car[0].delivery_ids:
             delivery_grid_ids.append(i.id)
 
         grid_id = self.grid_get(cr, uid, delivery_grid_ids, add_id,{}, from_web=True)       
@@ -241,6 +244,7 @@ class ecommerce_partner(osv.osv):
                
                 outer.attach(msg);
                 outer.attach(MIMEText(body));
+
                 composed = outer.as_string();
                 s.sendmail(mail_from, mail_to, composed);
                 
@@ -255,7 +259,7 @@ class ecommerce_partner(osv.osv):
 ecommerce_partner()
 
 class ecommerce_partner_address(osv.osv):
-    _description="Partner Address"
+    _description="ecommerce partner address"
     _rec_name = "username"
     _name="ecommerce.partner.address"
     _columns={

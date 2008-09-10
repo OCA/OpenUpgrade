@@ -2,8 +2,28 @@
 <terp>	
 	<!-- Ecommerce Shop 0 -->
 <data>
-		<record id="ecommerce_shop_0" model="ecommerce.shop">
-			<field name="name">tinyerp</field>
+			
+		<record id="ecommerce_payment_tinysprl0" model="ecommerce.payment">
+			<field eval="&quot;&quot;&quot;washington&quot;&quot;&quot;" name="city"/>
+			<field eval="&quot;&quot;&quot;Tiny SPRL&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;3490913&quot;&quot;&quot;" name="zip"/>
+			<field eval="&quot;&quot;&quot;street2&quot;&quot;&quot;" name="street2"/>
+			<field name="country_id" ref="base.us"/>
+			<field eval="&quot;&quot;&quot;oppo Townhall&quot;&quot;&quot;" name="street"/>
+			<field name="state_id" ref="base.us-co"/>
+			<field eval="&quot;&quot;&quot;mansur_1219385380_biz@gmail.com&quot;&quot;&quot;" name="biz_account"/>
+			<field eval="&quot;&quot;&quot;http://192.168.0.102:8080/eshop/cancel_msg&quot;&quot;&quot;" name="cancel_url"/>
+			<field eval="&quot;&quot;&quot;http://192.168.0.102:8080/eshop/get_data&quot;&quot;&quot;" name="return_url"/>
+		</record>
+		
+		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+			<field eval="[(6,0,[])]" name="delivery_ids"/>
+			<field name="chequepay_to" ref="ecommerce_payment_tinysprl0"/>
+			<field eval="&quot;&quot;&quot;tinyerp&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="language_ids"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="currency_ids"/>
+			<field name="shop_id" ref="sale.shop"/>
 		</record>
 		
 		<!-- Ecommerce Category Demo 0 -->
@@ -49,6 +69,7 @@
 		<!-- Ecommerce Category with parent child relation -->
 	
   		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+  			<field name="chequepay_to" ref="ecommerce_payment_tinysprl0"/>
 			<field name="shop_id" ref="sale.shop"/>
 			<field name="company_id" ref="base.main_company"/>
 		</record>
@@ -742,6 +763,13 @@
 			<field name="currency_id" ref="res_currency_aud0"/>
 			<field eval="35.0" name="rate"/>
 			<field eval="&quot;2008-05-31&quot;" name="name"/>
+		</record>
+		
+		
+		<record id="ecommerce.ecommerce_shop_0" model="ecommerce.shop">
+			<field eval="[(6,0,[ref('base.EUR'),ref('ecommerce.res_currency_aud0'),ref('base.EUR'),ref('base.CAD'),ref('base.USD')])]" name="currency_ids"/>
+			<field eval="[(6,0,[ref('base.lang_en')])]" name="language_ids"/>
+			<field eval="[(6,0,[ref('delivery.delivery_grid')])]" name="delivery_ids"/>
 		</record>
 
 </data>

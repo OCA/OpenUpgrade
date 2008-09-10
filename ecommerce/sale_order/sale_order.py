@@ -11,6 +11,7 @@ import ir
 class ecommerce_sale_order(osv.osv):
 
     _name='ecommerce.saleorder'
+    _description = 'ecommerce sale order'
     _columns = {
         'name': fields.char('Order Description',size=64, required=True),
         'date_order':fields.date('Date Ordered', required=True),
@@ -204,7 +205,7 @@ ecommerce_sale_order()
 
 class ecommerce_order_line(osv.osv):
     _name = 'ecommerce.order.line'
-    _description = 'eSale Order line'
+    _description = 'ecommerce order line'
     _columns = {
         'name': fields.char('Order Line', size=64, required=True),
         'order_id': fields.many2one('ecommerce.saleorder', 'eOrder Ref'),

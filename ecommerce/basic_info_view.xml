@@ -49,12 +49,12 @@
 					</page>
 					<page string="Setting">
 					<seperator string="Setting" colspan='4'/>
-					<field name="currency_id" colspan="4" nolabel='1'/>
-					<field name="language" colspan="4" nolabel='1'/>
+					<field name="currency_ids" colspan="4" nolabel='1'/>
+					<field name="language_ids" colspan="4" nolabel='1'/>
 					</page>
 					<page string="Delivery">
 					<seperator string="Delivery" colspan='4'/>
-					<field name="delivery" colspan="4" nolabel="1"/>
+					<field name="delivery_ids" colspan="4" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>
@@ -124,25 +124,39 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Payment Address">
-				<field name="name" select="1" colsapn="2"/>
-				<newline/>
-				<field name="street" select="2" colsapn="2"/>
-				<field name="street2" select="2"/>
-				<field name="zip" select="2"></field>
-				<field name="city" />
-				<field name="state_id"/>
-				<field name="country_id"/>
+				<notebook>
+					<page string="Payment by Cheque">
+						<separator string="Payment by Cheque" colspan="4"/>
+						<newline/>
+						<field name="name" select="1" colsapn="2"/>
+						<newline/>
+						<field name="street" select="2" colsapn="2"/>
+						<field name="street2" select="2"/>
+						<field name="zip" select="2"></field>
+						<field name="city" />
+						<field name="state_id"/>
+						<field name="country_id"/>
+					</page>
+					<page string="Payment by Paypal">
+						<separator string="Payment by Paypal" colspan="4"/>
+						<newline/>
+						<field name="biz_account" select="2"/>
+						<newline/>
+						<field name="return_url" select="2"/>
+						<field name="cancel_url" select="2"/>
+					</page>
+				</notebook>
 			</form>
 		</field>
 	</record>
 	<record model="ir.actions.act_window" id="action_payment_ecommerce_form">
-		<field name="name">Make payment to</field>
+		<field name="name">Payment Configuration</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">ecommerce.payment</field>
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_payment_address"/>
 	</record>
-	<menuitem name="ecommerce/Configuration/Payment Make to" action="action_payment_ecommerce_form" id="menu_payment_ecommerce_form"/>
+	<menuitem name="ecommerce/Configuration/Payment Configuration" action="action_payment_ecommerce_form" id="menu_payment_ecommerce_form"/>
 
 </data>
 </terp>
