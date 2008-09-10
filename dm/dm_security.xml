@@ -268,6 +268,15 @@
 		<field eval="1" name="perm_write"/>
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
+	</record>
+	<record id="ir_model_access_production_costforofferadmin0" model="ir.model.access">
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.production.cost')]"/>
+		<field eval="1" name="perm_read"/>
+		<field eval="&quot;&quot;&quot;Production cost for offer admin&quot;&quot;&quot;" name="name"/>
+		<field eval="1" name="perm_unlink"/>
+		<field eval="1" name="perm_write"/>
+		<field eval="1" name="perm_create"/>
+		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record><!--		
 	<record id="ir_model_access_partnerlayoutforofferadmin0" model="ir.model.access">
 		<field name="model_id" ref="dm.model_dm_trademark"/>
@@ -527,7 +536,16 @@
 		<record id="ir_model_access_customer_fileforoffermanager0" model="ir.model.access">
 			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
 			<field eval="1" name="perm_read"/>
-			<field eval="&quot;&quot;&quot;Customer file for offer admin&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Customer file for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field name="group_id" ref="res_groups_offermanager"/>
+		</record>
+		<record id="ir_model_access_production_costforoffermanager0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.production.cost')]"/>
+			<field eval="1" name="perm_read"/>
+			<field eval="&quot;&quot;&quot;Production cost for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
 			<field eval="1" name="perm_write"/>
 			<field eval="1" name="perm_create"/>
@@ -752,7 +770,34 @@
 			<record id="ir_model_access_customer_fileforcampaignadmin0" model="ir.model.access">
 				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
 				<field eval="1" name="perm_read"/>
-				<field eval="&quot;&quot;&quot;Customer file for offer admin&quot;&quot;&quot;" name="name"/>
+				<field eval="&quot;&quot;&quot;Customer file for campaign admin&quot;&quot;&quot;" name="name"/>
+				<field eval="1" name="perm_unlink"/>
+				<field eval="1" name="perm_write"/>
+				<field eval="1" name="perm_create"/>
+				<field name="group_id" ref="res_groups_campaignadmin"/>
+			</record>
+			<record id="ir_model_access_purchase_lineforcampaignadmin0" model="ir.model.access">
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.purchase_line')]"/>
+				<field eval="1" name="perm_read"/>
+				<field eval="&quot;&quot;&quot;Purchase line for campaign admin&quot;&quot;&quot;" name="name"/>
+				<field eval="1" name="perm_unlink"/>
+				<field eval="1" name="perm_write"/>
+				<field eval="1" name="perm_create"/>
+				<field name="group_id" ref="res_groups_campaignadmin"/>
+			</record>
+			<record id="ir_model_access_prices_progressionforcampaignadmin0" model="ir.model.access">
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.prices_progression')]"/>
+				<field eval="1" name="perm_read"/>
+				<field eval="&quot;&quot;&quot;Prices progression for campaign admin&quot;&quot;&quot;" name="name"/>
+				<field eval="1" name="perm_unlink"/>
+				<field eval="1" name="perm_write"/>
+				<field eval="1" name="perm_create"/>
+				<field name="group_id" ref="res_groups_campaignadmin"/>
+			</record>
+			<record id="ir_model_access_dtp_datesforcampaignadmin0" model="ir.model.access">
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dtp_dates')]"/>
+				<field eval="1" name="perm_read"/>
+				<field eval="&quot;&quot;&quot;Campaign dtp dates for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
 				<field eval="1" name="perm_write"/>
 				<field eval="1" name="perm_create"/>
@@ -977,7 +1022,43 @@
 				<record id="ir_model_access_customer_fileforcampaignmanager0" model="ir.model.access">
 					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
 					<field eval="1" name="perm_read"/>
-					<field eval="&quot;&quot;&quot;Customer file for offer admin&quot;&quot;&quot;" name="name"/>
+					<field eval="&quot;&quot;&quot;Customer file for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="1" name="perm_unlink"/>
+					<field eval="1" name="perm_write"/>
+					<field eval="1" name="perm_create"/>
+					<field name="group_id" ref="res_groups_campaignmanager"/>
+				</record>
+				<record id="ir_model_access_customer_fileforalluser0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
+					<field eval="1" name="perm_read"/>
+					<field eval="&quot;&quot;&quot;Customer file for all user&quot;&quot;&quot;" name="name"/>
+					<field eval="1" name="perm_unlink"/>
+					<field eval="1" name="perm_write"/>
+					<field eval="1" name="perm_create"/>
+					<field name="group_id" ref="res_groups_alluser"/>
+				</record>
+				<record id="ir_model_access_purchase_lineforcampaignmanager0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.purchase_line')]"/>
+					<field eval="1" name="perm_read"/>
+					<field eval="&quot;&quot;&quot;Purchase line for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="1" name="perm_unlink"/>
+					<field eval="1" name="perm_write"/>
+					<field eval="1" name="perm_create"/>
+					<field name="group_id" ref="res_groups_campaignmanager"/>
+				</record>
+				<record id="ir_model_access_prices_progressionforcampaignmanager0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.prices_progression')]"/>
+					<field eval="1" name="perm_read"/>
+					<field eval="&quot;&quot;&quot;Prices progression for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="1" name="perm_unlink"/>
+					<field eval="1" name="perm_write"/>
+					<field eval="1" name="perm_create"/>
+					<field name="group_id" ref="res_groups_campaignmanager"/>
+				</record>
+				<record id="ir_model_access_dtp_datesforcampaignmanager0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dtp_dates')]"/>
+					<field eval="1" name="perm_read"/>
+					<field eval="&quot;&quot;&quot;Campaign dtp dates for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
 					<field eval="1" name="perm_write"/>
 					<field eval="1" name="perm_create"/>
@@ -1194,15 +1275,6 @@
 						<field model="ir.model" name="model_id" search="[('model', '=', 'res.partner')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;project for all user&quot;&quot;&quot;" name="name"/>
-						<field eval="1" name="perm_unlink"/>
-						<field eval="1" name="perm_write"/>
-						<field eval="1" name="perm_create"/>
-						<field name="group_id" ref="res_groups_alluser"/>
-					</record>
-					<record id="ir_model_access_customer_fileforalluser0" model="ir.model.access">
-						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
-						<field eval="1" name="perm_read"/>
-						<field eval="&quot;&quot;&quot;Customer file for offer admin&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
 						<field eval="1" name="perm_write"/>
 						<field eval="1" name="perm_create"/>
