@@ -257,7 +257,7 @@ class dm_campaign_proposition(osv.osv):
         camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
         c = camp.camp_id.id
         id = self.pool.get('dm.campaign').browse(cr, uid, c)
-        if id:
+        if not camp.date_start:
             super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
         return res
 

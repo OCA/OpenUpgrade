@@ -964,6 +964,17 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
+	<record model="ir.actions.act_window" id="action_campaign_translator_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">res.partner</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="base.view_partner_tree"/>
+		<field name="domain">[('category_id','like','Translator')]</field>
+		<field name="context">{'category':'Translator'}</field>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Translators" id="menu_action_campaign_translator_form" action="action_campaign_translator_form"/>
+
         <record id="view_country_form_inherit" model="ir.ui.view">
             <field name="name">res.country.form.inherit</field>
             <field name="model">res.country</field>
