@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
-<terp>
+<openerp>
 	<data>
 
 	<!--
 	=======================================================
 	Campaigns
 	=======================================================
-	-->	
+	-->
  		<record id="dm_campaign_0" model="dm.campaign">
 			<field eval="&quot;Promoting further studies&quot;" name="name"/>
 			<field eval="time.strftime('%Y-%m-01')" name="date_start"/>
@@ -119,7 +119,7 @@
 
 	<!--
 	=======================================================
-	Campaign - Delays 
+	Campaign - Delays
 	=======================================================
 	-->
 		<record id="dm_campaign_delay_0" model="dm.campaign.delay">
@@ -132,10 +132,10 @@
 			<field name="proposition_id" ref="dm_campaign_proposition_1"/>
 			<field eval="10" name="value"/>
 		</record>
-					
+
 	<!--
 	=======================================================
-	Campaign - Segment 
+	Campaign - Segment
 	=======================================================
 	-->
 		<record id="dm_campaign_proposition_segment_0" model="dm.campaign.proposition.segment">
@@ -190,6 +190,6 @@
 			<field eval="&quot;Donating funds &amp; furniture to schools&quot;" name="name"/>
 			<field eval="[(6,0,[ref('dm.dm_campaign_0'),ref('dm.dm_campaign_1')])]" name="campaign_ids"/>
 		</record>
-		
+
 	</data>
-</terp>
+</openerp>

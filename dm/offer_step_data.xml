@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
-		<record model="ir.cron" id="ir_cron_update_wrkitem">		
+		<record model="ir.cron" id="ir_cron_update_wrkitem">
 			<field name="name">Update Workitem</field>
 			<field name="interval_number">1</field>
 			<field name="interval_type">minutes</field>
 			<field name='numbercall'>-1</field>
-			<field name="doall" eval="False"/>			
+			<field name="doall" eval="False"/>
 			<field name='model' eval="'dm.offer.step.workitem'"/>
 			<field name='function' eval="'_update_workitem'"/>
 			<field name="args" eval="'()'"/>
 		</record>
 </data>
-</terp>
+</openerp>
