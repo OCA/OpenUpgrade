@@ -325,9 +325,9 @@ dm_product()
 class dm_offer_step_manufacturing_constaint(osv.osv):
     _name = "dm.offer.step.manufacturing_constraint"
     _columns = {
-        'name': fields.char('Constraint Name', size=64, required=True),
-        'country_id': fields.many2many('res.country','dm_manuf_constraint_country_rel','manuf_constraint_id','country_id','Country'),
-        'constraint': fields.text('Manufacturing Constraint'),
+        'name': fields.char('Description', size=64, required=True),
+        'country_ids': fields.many2many('res.country','dm_manuf_constraint_country_rel','manuf_constraint_id','country_id','Country'),
+        'constraint': fields.text('Manufacturing Description'),
         'offer_step_id': fields.many2one('dm.offer.step', 'Offer Step'),
     }
 dm_offer_step_manufacturing_constaint()

@@ -260,15 +260,15 @@
 					</page>
 					<page string="Manufacturing">
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
-							<form string="Manufacturing Constraint">
+							<form string="Manufacturing Description">
 								<field name="name" select="1"/>
-								<separator string="Manufacturing Constraints" colspan="4"/>
+								<separator string="Manufacturing Description" colspan="4"/>
 								<field name="constraint" colspan="4" nolabel="1"/>
-								<field name="country_id"/>
+								<field name="country_ids"/>
 							</form>
-							<tree string="Manufacturing Constraint">
+							<tree string="Manufacturing Descriptions">
 								<field name="name"/>
-								<field name="country_id"/>
+								<field name="country_ids"/>
 								<field name="constraint"/>
 							</tree>
 						</field>
@@ -471,13 +471,13 @@
 		<field name="name">dm.offer.step.manufacturing_constraint.form</field>
 		<field name="model">dm.offer.step.manufacturing_constraint</field>
 		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Manufacturing Constraint">
+		<field name="arch" type="xml">	
+			<form string="Manufacturing Description">
 				<field name="name" select="1"/>
 				<field name="offer_step_id"/>
-				<separator string="Manufacturing Constraint" colspan="4"/>
+				<separator string="Manufacturing Description" colspan="4"/>
 				<field name="constraint" colspan="4" nolabel="1"/>
-				<field name="country_id" colspan="4"/>
+				<field name="country_ids" colspan="4"/>
 			</form>
 		</field>
 	</record>
@@ -485,12 +485,12 @@
 		<field name="name">dm.offer.step.manufacturing_constraint.tree</field>
 		<field name="model">dm.offer.step.manufacturing_constraint</field>
 		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Manufacturing Constraints">
+		<field name="arch" type="xml">	
+			<tree string="Manufacturing Descriptions">
 				<field name="name" select="1"/>
 				<field name="constraint"/>
 				<field name="offer_step_id"/>
-				<field name="country_id"/>
+				<field name="country_ids"/>
 			</tree>
 		</field>
 	</record>

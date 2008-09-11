@@ -53,8 +53,6 @@ class wizard_proposition_products(wizard.interface):
         for step in step_obj:
             product_ids=pool.get('dm.step.product').search(cr, uid, [('offer_step_id','=',step.id)])
             product_obj=pool.get('dm.step.product').browse(cr, uid, product_ids)
-            print "DM - data : ",data['ids']
-            print "DM - product_ids : ",product_ids
             for product in product_obj:
                 if product:
                     if prop_obj.force_sm_price :
@@ -63,7 +61,6 @@ class wizard_proposition_products(wizard.interface):
                         pu = pool.get('product.pricelist').price_get(cr, uid,
                             [prop_obj.customer_pricelist_id.id], product.product_id.id,1.0,
                             context=context)[prop_obj.customer_pricelist_id.id]
-                        print "DM - item price ",pu
 
                     price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
 
@@ -74,7 +71,6 @@ class wizard_proposition_products(wizard.interface):
                             'offer_step_type':product.offer_step_id.type
                             }
                     new_id=pool.get('dm.product').create(cr, uid, vals)
-                    print "DM - new product : ",new_id
             stp=stp+1
 
         """

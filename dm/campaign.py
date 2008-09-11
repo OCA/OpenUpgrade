@@ -58,6 +58,13 @@ class dm_campaign(osv.osv):
             result[id]=code1
         return result
 
+    def po_check(self,cr, uid, ids, *args):
+        for pline in self.browse(cr, uid, ids)[0].purchase_line_ids:
+            if pline.state == 'requested':
+                for po in pline.purchase_order_ids:
+                        pline.write({'state':'ordered'})
+        return True
+
     def _get_campaign_type(self,cr,uid,context={}):
         campaign_type = self.pool.get('dm.campaign.type')
         type_ids = campaign_type.search(cr,uid,[])
@@ -92,27 +99,6 @@ class dm_campaign(osv.osv):
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
         'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
         'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}),
-#
-#                        desktop publication
-#
-        'theorical_dtp_request_date' :fields.date('Theorical Request Date'),
-        'reviewed_dtp_request_date' :fields.date('Reviewed Request Date'),
-        'real_dtp_request_date' :fields.date('Real Request Date'),
-        'theorical_translation_delivery_date' :fields.date('Theorical Translation Delivery Date'),
-        'reviewed_translation_delivery_date' :fields.date('Reviewed Translation Delivery Date'),
-        'real_translation_delivery_date' :fields.date('Real Translation Date'),
-        'theorical_translation_rereading_date' : fields.date('Theorical Translation Rereading Date'),
-        'reviewed_translation_rereading_date' :fields.date('Reviewed Translation Rereading Date'),
-        'real_translation_rereading_date' :fields.date('Real Translation Rereading Date'),
-        'theorical_draft_delivery_date' :fields.date('Theorical Draft Delivery Date'),
-        'reviewed_draft_delivery_date' : fields.date('Reviewed Draft Delivery Date'),
-        'real_draft_delivery_date' : fields.date('Real Draft Delivery Date'),
-        'theorical_fcp_validation_date' : fields.date('Theorical Fcp Validation Date'),
-        'reviewed_fcp_validation_date' : fields.date('Reviewed Fcp Validation Date'),
-        'real_fcp_validation_date' : fields.date('Real Fcp Validation Date'),
-        'theorical_dtp_sup_delivery_date' : fields.date('Theorical Dtp Sup Delivery Date'),
-        'reviewed_dtp_sup_delivery_date' : fields.date('Reviewed Dtp Sup Delivery Date'),
-        'real_dtp_sup_delivery_date' : fields.date('Real Dtp Sup Delivery Date'),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
         'deduplicator_id' : fields.many2one('res.partner','Deduplicator',domain=[('category_id','ilike','Deduplicator')], context={'category':'Deduplicator'}),
@@ -427,13 +413,15 @@ PURCHASE_LINE_TRIGGERS = [
 
 PURCHASE_LINE_STATES = [
     ('pending','Pending'),
-    ('done','Ordered'),
+    ('requested','Quotations Requested'),
+    ('ordered','Ordered'),
 ]
 
 PURCHASE_LINE_CONSTRAINTS = [
     ('manufacturing','Manufacturing'),
     ('items','Items'),
     ('customer_file','Customer Files'),
+    ('translation','Translation'),
 ]
 
 class dm_campaign_purchase_line(osv.osv):
@@ -492,6 +480,12 @@ class dm_campaign_purchase_line(osv.osv):
                     elif pline.constraint == 'customer_file':
                         print "DEBUG - constraints : customer file"
                         raise osv.except_osv('Warning', "Purchase of customers files is not yet implemented")
+                    elif pline.constraint == 'translation':
+                        print "DEBUG - constraints : translation"
+                        constraints.append(pline.notes)
+                    elif pline.constraint == False:
+                        print "DEBUG - constraints : None"
+                        constraints.append(pline.notes)
 
 
                     # Create po
@@ -502,6 +496,7 @@ class dm_campaign_purchase_line(osv.osv):
                         'location_id': 1,
                         'pricelist_id': pricelist_id,
                         'notes': "\n".join(constraints),
+                        'dm_campaign_purchase_line': pline.id
                     })
                     print "DEBUG - purchase_id",purchase_id
 
@@ -522,10 +517,11 @@ class dm_campaign_purchase_line(osv.osv):
                         })
                         lines.append(line)
 
-                    self.write(cr, uid, [pline.id], {'state':'done'})
+                    self.write(cr, uid, [pline.id], {'state':'requested'})
 
 #        return purchase_id
         return True
+
 
     _columns = {
         'campaign_id': fields.many2one('dm.campaign', 'Campaign'),
@@ -534,7 +530,8 @@ class dm_campaign_purchase_line(osv.osv):
         'uom_id' : fields.many2one('product.uom','UOM', required=True),
         'date_planned': fields.date('Scheduled date', required=True),
         'trigger' : fields.selection(PURCHASE_LINE_TRIGGERS, 'Trigger'),
-        'constraint' : fields.selection(PURCHASE_LINE_CONSTRAINTS, 'Constraints'),
+        'constraint' : fields.selection(PURCHASE_LINE_CONSTRAINTS, 'Type'),
+        'purchase_order_ids' : fields.one2many('purchase.order','dm_campaign_purchase_line','DM Campaign Purchase Line'),
         'notes': fields.text('Notes'),
         'state' : fields.selection(PURCHASE_LINE_STATES, 'State',readonly=True),
     }
@@ -596,5 +593,13 @@ class res_partner(osv.osv):
         'category_id': _default_category,
     }
 res_partner()
+
+class purchase_order(osv.osv):
+    _name = 'purchase.order'
+    _inherit = 'purchase.order'
+    _columns = {
+        'dm_campaign_purchase_line' : fields.many2one('dm.campaign.purchase_line','DM Campaign Purchase Line'),
+    }
+purchase_order()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
