@@ -19,19 +19,7 @@
 			</notebook>
 		</field>
 	</record>
-	
-	<record model="ir.ui.view" id="view_product_currency">
-		<field name="name">product.form.currency</field>
-		<field name="model">product.product</field>
-		<field name="inherit_id" ref="product.product_normal_form_view"/>   
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="volume" position="after">
-	 			<field name="currency_id"/> 
-	 		</field>
- 		</field>
-	</record>
-		
+
 	<!--  Special Offers -->
 		<record model="ir.ui.view" id="ecommerce_pricelist_version">
 		<field name="name">ecommerce.pricelist.version</field>

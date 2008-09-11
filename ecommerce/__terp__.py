@@ -4,7 +4,7 @@
     "version" : "1.0",
     "author" : "e-tiny",
     "website" : "http://www.etiny.com",
-    "depends" : ["base", "product","sale","delivery"],
+    "depends" : ["delivery","base", "product","sale"],
     "category" : "Generic Modules/E-Commerce Shop",
     "init_xml" : [],
     "demo_xml" : ["ecommerce_demo_data.xml"],

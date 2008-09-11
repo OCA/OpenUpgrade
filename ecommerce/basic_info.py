@@ -18,7 +18,7 @@ class ecommerce_payment(osv.osv):
             'city': fields.char('City', size=128, required=True),
             'state_id': fields.many2one("res.country.state", 'State', required=True),
             'country_id': fields.many2one('res.country', 'Country', required=True),
-	    'biz_account': fields.char('Your Business E-mail Id', required=True, size=128),
+	    	'biz_account': fields.char('Your Business E-mail Id', required=True, size=128),
             'return_url' : fields.char('Return URL', required=True, size=128),
             'cancel_url' : fields.char('Cancel URL', required=True, size=128)
              }
