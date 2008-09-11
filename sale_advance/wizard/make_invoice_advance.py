@@ -36,13 +36,15 @@ form = """<?xml version="1.0"?>
 <form string="Advance Payment">
     <field name="product_id"/>
     <newline />
+    <field name="qtty"/>
     <field name="amount"/>
     <newline />
 </form>
 """
 fields = {
         'product_id': {'string':'Product', 'type':'many2one','relation':'product.product','required':True},
-        'amount': {'string':'Amount', 'type':'float','required':True},
+        'amount': {'string':'Unit Price', 'type':'float', 'size':(16,2),'required':True},
+        'qtty': {'string':'Quantity', 'type':'float', 'size':(16,2),'required':True, 'default': lambda *a: 1},
 }
 
 form_msg = """<?xml version="1.0"?>
@@ -57,24 +59,26 @@ def _createInvoices(self, cr, uid, data, context={}):
     pool_obj = pooler.get_pool(cr.dbname)
     obj_sale = pool_obj.get('sale.order')
     data_sale = obj_sale.browse(cr,uid,data['ids'])
-    obj_lines=pool_obj.get('account.invoice.line')
+    obj_lines = pool_obj.get('account.invoice.line')
     for sale in data_sale:
         address_contact = False
         address_invoice = False
         create_ids = []
         ids_inv = []
-        val = obj_lines.product_id_change(cr, uid, [], data['form']['product_id'],uom =False, partner_id=sale.partner_id.id)
-        taxes = []
-        taxes = pool_obj.get('product.product').browse(cr,uid,data['form']['product_id']).taxes_id
+        if sale.order_policy == 'postpaid':
+            raise osv.except_osv(
+                _('Error'),
+                _('You must cannot make an advance on a sale order that is defined as \'Automatic Invoice after delivery\'.'))
+        val = obj_lines.product_id_change(cr, uid, [], data['form']['product_id'],uom = False, partner_id = sale.partner_id.id)
         line_id =obj_lines.create(cr, uid, {
         'name': val['value']['name'],
         'account_id':val['value']['account_id'],
         'price_unit': data['form']['amount'],
-        'quantity': 1,
+        'quantity': data['form']['qtty'],
         'discount': False,
         'uos_id': val['value']['uos_id'],
         'product_id':data['form']['product_id'],
-        'invoice_line_tax_id': [(6,0,taxes)],
+        'invoice_line_tax_id': [(6,0,val['value']['invoice_line_tax_id'])],
         'note':'',
         })
         create_ids.append(line_id)
@@ -88,7 +92,7 @@ def _createInvoices(self, cr, uid, data, context={}):
             'address_invoice_id':sale.partner_invoice_id.id,
             'address_contact_id':sale.partner_order_id.id,
             'invoice_line': [(6,0,create_ids)],
-            'currency_id' :sale.partner_id.property_product_pricelist.currency_id.id,
+            'currency_id' :sale.pricelist_id.currency_id.id,
             'comment': '',
             'payment_term':sale.partner_id.property_payment_term.id,
             }
