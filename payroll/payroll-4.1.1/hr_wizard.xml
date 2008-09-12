@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<terp>
+<openerp>
 	<data>
 		<wizard string="Print Monthly Salary" model="hr.employee" name="payroll.salary.month.report" id="mth_sal"/>
 		<menuitem name="Payroll/Print Salary" action="mth_sal" type="wizard" groups="base.group_admin" id="menu_mth_sal"/>
@@ -10,4 +10,4 @@
 		<wizard string="Print Attendance Report" model="hr.employee" name="hr.timesheet.attendance.report" keyword="client_print_multi" id="wizard_attendance_error" />
  		<wizard string="Print Attendance Error Report" model="hr.employee" name="hr.timesheet.attendance.report" keyword="client_print_multi" id="wizard_attendance_error" />-->
 	</data>
-</terp>
+</openerp>

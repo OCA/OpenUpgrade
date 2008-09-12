@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 	<data>
 		<record id="act_proforma2" model="workflow.activity">
             <field name="wkf_id" ref="account.wkf"/>
@@ -34,4 +34,4 @@
             <field name="signal">invoice_cancel</field>
         </record>
 	</data>
-</terp>
+</openerp>

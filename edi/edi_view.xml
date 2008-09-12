@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
 	<menuitem name="Edi" parent="sale.menu_sale_root" id="menu_edi_id"/>
 	<record model="ir.ui.view" id="view_edi_log_line">
@@ -49,4 +49,4 @@
 	<menuitem name="View Logs" parent="menu_edi_id" action="action_edi_tree" id="menu_edi_log"/>
 
 </data>
-</terp>
+</openerp>

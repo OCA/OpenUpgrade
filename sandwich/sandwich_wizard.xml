@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 	<data>
 		<wizard string="Reload / Complete  order" id="sandwich_order_wizard" model="sandwich.order" name="sandwich.order.wizard"/>
 		<wizard string="Send remind request" id="sandwich_order_recall_wizard" model="sandwich.order" name="sandwich.order.recall.wizard"/>
@@ -12,5 +12,5 @@
 		<menuitem name="Create Order" id="menu_tools_sandwich_createorder" parent="menu_tools_sandwich" action="wiz_sandwich_create" type="wizard"/>
 	
 	</data>
-</terp>
+</openerp>
 
