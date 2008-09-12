@@ -17,7 +17,6 @@
         "account_budget",
         "account_l10nbe_domiciliation",
         "hr_holidays",
-        "invoice_payment_tab",
         "cci_base_contact",
         "cci_partner",
         "cci_crm_profile",
