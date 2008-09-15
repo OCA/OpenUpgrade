@@ -33,10 +33,10 @@ class config_bob_import(osv.osv_memory):
         path_bob=path[-1]['path']
 
         if not os.path.exists(path_bob):
-            raise osv.except_osv(_('User Error'), _('The Path "%s" doesn''t exist.Please provide a valid one.') % path[-1]['path'] )
+            raise osv.except_osv(_('User Error'), _('The Path "%s" doesn''\'t exist.Please provide a valid one.') % path[-1]['path'] )
 
         if 'bob.exe' not in os.listdir(path_bob):
-            raise osv.except_osv(_('User Error'), _('The Path "%s" is not a valid BOB Folder.It doesn''t have bob.exe.') % path[-1]['path'] )
+            raise osv.except_osv(_('User Error'), _('The Path "%s" is not a valid BOB Folder.It doesn''\'t have bob.exe.') % path[-1]['path'] )
 
         return {
             'view_type': 'form',
