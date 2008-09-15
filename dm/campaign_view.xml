@@ -1045,6 +1045,35 @@
 		<field name="view_mode">form,tree</field>
 		<field name="view_id" ref="view_campaign_purchase_line_tree"/>
 	</record>
+<!--
+       
+        <record id="view_config_fiscalyear_form" model="ir.ui.view">
+            <field name="name">Duplicate</field>
+            <field name="model">prop_config_copy</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Duplication">
+                    <field name="keep_segments"/>
+                    <separator string="" colspan="4"/>
+                    <label string="" colspan="2"/>
+                    <group col="4" colspan="4">
+                        <button icon="gtk-cancel" special="cancel" string="Cancel" name="action_cancel" type="object"/>
+                        <button icon="gtk-ok" name="action_create" string="Copy" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_config_fiscalyear_form" model="ir.actions.act_window">
+            <field name="name">Configure Fiscal Year</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">prop_config_copy</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="target">new</field>
+        </record>
+
+		<menuitem name="Direct Marketing/Duplication Wizard" id="menu_action_config_fiscalyear_form" action="action_config_fiscalyear_form"/>-->
 
 </data>
 </openerp>

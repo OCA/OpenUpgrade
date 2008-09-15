@@ -602,4 +602,38 @@ class purchase_order(osv.osv):
     }
 purchase_order()
 
+#class prop_config_copy(osv.osv_memory):
+#    _name = 'prop.config.copy'
+#    _columns = {
+#        'keep_segments':fields.boolean('Keep Segments At Duplication'),
+#    }
+#    _defaults = {
+#        'keep_segments': lambda *a: True,
+#    }
+#    def action_cancel(self,cr,uid,ids,conect=None):
+#        return {
+#                'view_type': 'form',
+#                "view_mode": 'form',
+#                'res_model': 'ir.module.module.configuration.wizard',
+#                'type': 'ir.actions.act_window',
+#                'target':'new',
+#        }
+#    def action_create(self, cr, uid,ids, context=None):
+#            res=self.read(cr,uid,ids)[0]
+#            segment=res['keep_segments']
+#            vals={
+#                'keep_segments':segment,
+#            }
+#            new_id=res_obj.create(cr, uid, vals, context=context)
+##            res_obj.create_period(cr,uid,[new_id])
+#            return {
+#                    'view_type': 'form',
+#                    "view_mode": 'form',
+#                    'res_model': 'dm.campaign.proposition',
+#                    'type': 'ir.actions.act_window',
+#                    'target':'new',
+#            }
+#
+#prop_config_copy()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
