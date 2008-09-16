@@ -62,7 +62,21 @@ class dm_campaign(osv.osv):
         for pline in self.browse(cr, uid, ids)[0].purchase_line_ids:
             if pline.state == 'requested':
                 for po in pline.purchase_order_ids:
+                    if po.state == 'confirmed' or po.state == 'approved':
                         pline.write({'state':'ordered'})
+            if pline.state == 'ordered':
+                for po in pline.purchase_order_ids:
+                    if po.shipped :
+                        pline.write({'state':'delivered','date_delivery':time.strftime('%Y-%m-%d')})
+                        if pline.type == 'translation':
+                            trans_id = self.pool.get('dm.offer.translation').create(cr, uid,
+                                {'offer_id': pline.campaign_id.offer_id.id,
+                                 'date': pline.date_delivery,
+                                 'language_id': pline.campaign_id.lang_id.id,
+                                 'translator_id':  po.partner_id.id,
+                                 'notes': pline.notes,
+                                 })
+
         return True
 
     def _get_campaign_type(self,cr,uid,context={}):
@@ -257,7 +271,7 @@ class dm_campaign_proposition(osv.osv):
         camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
         c = camp.camp_id.id
         id = self.pool.get('dm.campaign').browse(cr, uid, c)
-        if not camp.date_start:
+        if id:
             super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
         return res
 
@@ -266,7 +280,7 @@ class dm_campaign_proposition(osv.osv):
 #        if id.date_start:
 #            vals['date_start']=id.date_start
 #        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
-    
+
     def copy(self, cr, uid, id, default=None, context={}):
         """
         Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
@@ -363,31 +377,35 @@ class dm_campaign_proposition_segment(osv.osv):
 
     def _check_char(self, cr, uid, ids):
         segment = self.browse(cr,uid,ids)[0]
-        if not segment.quantity_add:
+        if not segment.quantity_ordered:
             return True
-        return segment.quantity_add.isdigit() or segment.quantity_add=='AAA'
+        return segment.quantity_ordered.isdigit() or segment.quantity_ordered=='AAA'
+
     _columns = {
-#        'action_code': fields.char('Code',size=16, required=True),
         'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', readonly=True, ondelete='cascade'),
-        'file_id': fields.many2one('dm.customer.file','Files'),
-        'qty': fields.integer('Qty'),
-        'quantity_add' : fields.char('Quantity',size=16),
+        'file_id': fields.many2one('dm.customer.file','File'),
+        'quantity_ordered' : fields.char('Ordered Quantity', size=16),
+        'quantity_delivered' : fields.integer('Delivered Quantity'),
+        'quantity_real' : fields.integer('Real Quantity'),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
         'start_census' :fields.integer('Start Census'),
         'end_census' : fields.integer('End Census'),
         'deduplication_level' : fields.integer('Deduplication Level'),
         'active' : fields.boolean('Active'),
-        'raw_quantity' : fields.integer('Raw Quantity'),
         'reuse_id' : fields.many2one('dm.campaign.proposition.segment','Reuse'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),
-#        'sequence' : fields.integer('Sequence'),
         'manufacturing_costs': fields.float('Manufacturing Costs',digits=(16,2)),
+        'segmentation_criteria': fields.text('Segmentation Criteria'),
     }
     _order = 'deduplication_level'
 
+    _default = {
+        'quantity_ordered': lambda *a: '0',
+    }
+
     _constraints = [
-        (_check_char, "Error ! Quantity of segment can only be integer or 'AAA'", ['quantity_add'])
+        (_check_char, "Error ! Quantity of segment can only be integer or 'AAA'", ['quantity_ordered'])
     ]
 
 dm_campaign_proposition_segment()
@@ -415,9 +433,10 @@ PURCHASE_LINE_STATES = [
     ('pending','Pending'),
     ('requested','Quotations Requested'),
     ('ordered','Ordered'),
+    ('delivered','Delivered'),
 ]
 
-PURCHASE_LINE_CONSTRAINTS = [
+PURCHASE_LINE_TYPES = [
     ('manufacturing','Manufacturing'),
     ('items','Items'),
     ('customer_file','Customer Files'),
@@ -433,6 +452,43 @@ class dm_campaign_purchase_line(osv.osv):
         res = cr.fetchone()
         return res and res[0] or False
 
+    def quantity_get(self,cr, uid, ids, *args):
+        value = {}
+        quantity = 0
+
+        pline = self.browse(cr, uid, ids)[0]
+        if not pline.campaign_id:
+            raise  osv.except_osv('Warning', "You must first save this Purchase Line and the campaign before using this button")
+
+        if pline.type == 'customer_file':
+            for propo in pline.campaign_id.proposition_ids:
+                for segment in propo.segment_ids:
+                    if segment.quantity_ordered:
+                        if segment.quantity_ordered != 'AAA':
+                            quantity += int(segment.quantity_ordered)
+                        else:
+                            quantity = 999999
+                            break
+        elif pline.type == 'manufacturing' or pline.type == 'items':
+            for propo in pline.campaign_id.proposition_ids:
+                if not propo.segment_ids:
+                    raise osv.except_osv('Warning',
+                        "There's no segment defined for this commercial proposition: %s" % (propo.name,) )
+                for segment in propo.segment_ids:
+                    if not segment.quantity_real:
+                        raise osv.except_osv('Warning',
+                            "There's no real quantity defined for this segment : %s" % (segment.name,) )
+                    quantity += int(segment.quantity_real)
+        elif pline.type == 'translation':
+            for step in pline.campaign_id.offer_id.step_ids:
+                if step.doc_number:
+                    quantity += step.doc_number
+
+        pline.write({'quantity':quantity})
+
+        return True
+
+
     def po_generate(self,cr, uid, ids, *args):
         plines = self.browse(cr, uid ,ids)
         if not plines:
@@ -445,7 +501,6 @@ class dm_campaign_purchase_line(osv.osv):
                 for supplier in pline.product_id.seller_ids:
                     partner_id = supplier.id
                     partner = supplier.name
-                    print "DEBUG - Parner : ",partner
 
                     address_id = self.pool.get('res.partner').address_get(cr, uid, [partner.id], ['default'])['default']
                     if not address_id:
@@ -461,36 +516,40 @@ class dm_campaign_purchase_line(osv.osv):
                     if not pline.campaign_id.proposition_ids:
                         raise osv.except_osv('Warning', "There's no proposition defined for this campaign : %s" % (pline.campaign_id.name,) )
 
-                    # Get manufacturing constraints
+                    # Get constraints
                     constraints = []
-                    if pline.constraint == 'manufacturing':
-                        print "DEBUG - constraints : manufacturing"
+                    if pline.type == 'manufacturing':
                         for step in pline.campaign_id.offer_id.step_ids:
                             for const in step.manufacturing_constraint_ids:
                                 constraints.append("---------------------------------------------------------------------------")
                                 constraints.append(const.name)
                                 constraints.append(const.constraint)
-                    elif pline.constraint == 'items':
-                        print "DEBUG - constraints : item"
+                    elif pline.type == 'items':
+                        raise osv.except_osv('Warning', "Purchase of items is not yet implemented")
                         for step in pline.campaign_id.offer_id.step_ids:
                             for item in step.product_ids:
                                 constraints.append("---------------------------------------------------------------------------")
                                 constraints.append(item.product_id.name)
                                 constraints.append(item.purchase_constraints)
-                    elif pline.constraint == 'customer_file':
-                        print "DEBUG - constraints : customer file"
+                    elif pline.type == 'customer_file':
                         raise osv.except_osv('Warning', "Purchase of customers files is not yet implemented")
-                    elif pline.constraint == 'translation':
-                        print "DEBUG - constraints : translation"
-                        constraints.append(pline.notes)
-                    elif pline.constraint == False:
-                        print "DEBUG - constraints : None"
-                        constraints.append(pline.notes)
+                    elif pline.type == 'translation':
+                        if not pline.campaign_id.lang_id:
+                            raise osv.except_osv('Warning', "There's no language defined for this campaign : %s" % (pline.campaign_id.name,) )
+                        if pline.notes:
+                            constraints.append(pline.notes)
+                        else:
+                            constraints.append(' ')
+                    elif pline.type == False:
+                        if pline.notes:
+                            constraints.append(pline.notes)
+                        else:
+                            constraints.append(' ')
 
 
                     # Create po
                     purchase_id = self.pool.get('purchase.order').create(cr, uid, {
-#                        'origin': procurement.origin,
+                        'origin': pline.campaign_id.name,
                         'partner_id': partner.id,
                         'partner_address_id': address_id,
                         'location_id': 1,
@@ -498,45 +557,88 @@ class dm_campaign_purchase_line(osv.osv):
                         'notes': "\n".join(constraints),
                         'dm_campaign_purchase_line': pline.id
                     })
-                    print "DEBUG - purchase_id",purchase_id
 
-                    # Create po lines
-                    lines = []
-                    for propo in pline.campaign_id.proposition_ids:
+                    ''' If Translation Order => Get Number of documents in Offer '''
+                    if pline.type == 'translation':
+                        if pline.quantity == 0:
+                            raise osv.except_osv('Warning',
+                                "There's no documents for this offer: %s" % (pline.campaign_id.offer_id.name,) )
                         line = self.pool.get('purchase.order.line').create(cr, uid, {
                            'order_id': purchase_id,
-                           'name': propo.name,
+                           'name': pline.campaign_id.name,
                            'product_qty': pline.quantity,
                            'product_id': pline.product_id.id,
                            'product_uom': pline.uom_id.id,
                            'price_unit': price,
                            'date_planned': newdate.strftime('%Y-%m-%d'),
                            'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
-                           'account_analytic_id': propo.analytic_account_id.id,
-#                       'move_dest_id': res_id,
+                           'account_analytic_id': pline.campaign_id.analytic_account_id,
                         })
-                        lines.append(line)
+                    else:
+                        ''' Create po lines for each proposition'''
+                        lines = []
+                        for propo in pline.campaign_id.proposition_ids:
+                            quantity = 0
+                            ''' If Customer File Order => Get Ordered Quantity '''
+                            ''' If Manufacturing or Items Order => Get Real Quantity '''
+                            if pline.type == 'customer_file':
+                                for segment in propo.segment_ids:
+                                    if segment.quantity_ordered:
+                                        if segment.quantity_ordered != 'AAA':
+                                            quantity += int(segment.quantity_ordered)
+                                        else:
+                                            quantity = 999999
+                                            break
+                            elif pline.type == 'manufacturing' or pline.type == 'items':
+                                if not propo.segment_ids:
+                                    raise osv.except_osv('Warning',
+                                        "There's no segment defined for this commercial proposition: %s" % (propo.name,) )
+                                for segment in propo.segment_ids:
+                                    if not segment.quantity_real:
+                                        raise osv.except_osv('Warning',
+                                            "There's no real quantity defined for this segment : %s" % (segment.name,) )
+                                    quantity += int(segment.quantity_real)
+                            print "DEBUG - Segment Quantity : ",quantity
+
+                            line = self.pool.get('purchase.order.line').create(cr, uid, {
+                               'order_id': purchase_id,
+                               'name': propo.name,
+                               'product_qty': quantity,
+                               'product_id': pline.product_id.id,
+                               'product_uom': pline.uom_id.id,
+                               'price_unit': price,
+                               'date_planned': newdate.strftime('%Y-%m-%d'),
+                               'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
+                               'account_analytic_id': propo.analytic_account_id.id,
+#                       'move_dest_id': res_id,
+                            })
+
 
                     self.write(cr, uid, [pline.id], {'state':'requested'})
-
-#        return purchase_id
         return True
 
+    def _default_date(self, cr, uid, context={}):
+        if 'date1' in context and context['date1']:
+            dd = context['date1']
+            return dd
+        return []
 
     _columns = {
         'campaign_id': fields.many2one('dm.campaign', 'Campaign'),
         'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
-        'quantity' : fields.integer('Quantity', required=True),
+        'quantity' : fields.integer('Quantity', readonly=True, required=True),
         'uom_id' : fields.many2one('product.uom','UOM', required=True),
         'date_planned': fields.date('Scheduled date', required=True),
+        'date_delivery': fields.date('Delivery date', readonly=True),
         'trigger' : fields.selection(PURCHASE_LINE_TRIGGERS, 'Trigger'),
-        'constraint' : fields.selection(PURCHASE_LINE_CONSTRAINTS, 'Type'),
+        'type' : fields.selection(PURCHASE_LINE_TYPES, 'Type'),
         'purchase_order_ids' : fields.one2many('purchase.order','dm_campaign_purchase_line','DM Campaign Purchase Line'),
         'notes': fields.text('Notes'),
         'state' : fields.selection(PURCHASE_LINE_STATES, 'State',readonly=True),
     }
 
     _defaults = {
+        'date_planned' : _default_date,
         'quantity' : lambda *a : 0,
         'uom_id' : _get_uom_id,
         'trigger': lambda *a : 'manual',

@@ -113,8 +113,12 @@
 								</page>
 								<page string="Prices">
 									<separator string="Prices policy" colspan="4"/>
-									<field name="customer_pricelist_id"/>
-									<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+										<group colspan="4">
+										<field name="customer_pricelist_id"/>
+										<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+										</group>
+										<field name="force_sm_price"/>
+										<field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
 									<field name="product_ids" colspan="4" nolabel="1">
 										<form string="Catalogue">
 											<field name="offer_step_type"/>
@@ -139,27 +143,36 @@
 								</page>
 								<page string="Segments">
 								<field name="segment_ids" colspan="4" nolabel="1">
-									<form string="Segments">
+									<form string="Segment">
+										<separator string="General" colspan="4"/>
 										<field name="name" string="Name" select="1"/>
-										<field name="code" string="Action Code"/>
+										<field name="code" string="Code"/>
+										<field name="proposition_id" />
 										<field name="file_id" />
 										<field name="active" />
-										<field name="quantity_add" select="2"/>
-										<field name="raw_quantity" select="2"/>
-										<newline/>
 										<field name="split_id" />
 										<field name="reuse_id" />
+										<separator string="Quantities" colspan="4"/>
+										<field name="quantity_ordered" select="2"/>
+										<field name="quantity_delivered" select="2"/>
+										<field name="quantity_real" select="2"/>
 										<newline/>
+										<separator string="Segmentation" colspan="4"/>
 										<field name="start_census"/>
 										<field name="end_census"/>
 										<field name="deduplication_level"/>
-										<field name="note" colspan="4"/>
+										<separator string="Segmentation Criteria" colspan="4"/>
+										<field name="segmentation_criteria" colspan="4" nolabel="1"/>
+										<separator string="Notes" colspan="4"/>
+										<field name="note" colspan="4" nolabel="1"/>
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
 										<field name="deduplication_level" />
-										<field name="code" string="Action Code" select="2"/>
-										<field name="quantity_add"/>
+										<field name="code" string="Code" select="2"/>
+										<field name="quantity_ordered" select="2"/>
+										<field name="quantity_delivered" select="2"/>
+										<field name="quantity_real" select="2"/>
 									</tree>
 								</field>
 								<field name="keep_segments" string="Keep Segments at Duplication"/>
@@ -167,7 +180,6 @@
 							</notebook>
 							</form>
 							<tree string="Propositions">
-<!--								<field name="camp_id"/>-->
 								<field name="name" string="Name"/>
 								<field name="code1" string="Code"/>
 								<field name="date_start" colspan="4"/>
@@ -179,35 +191,34 @@
 					</page>
 					<page string="Manufacturing">
 						<separator string="Manufacturing" colspan="4"/>
-						<field name="campaign_group_id" colspan="2"/>
+						<field name="campaign_group_id"/>
 						<separator string="Costs" colspan="4"/>
-						<field name="manufacturing_costs" colspan="2"/>
+						<field name="manufacturing_costs"/>
 					</page>
 					<page string="Supplying">
-						<field name="purchase_line_ids" colspan="4" nolabel="1">
+						<field name="purchase_line_ids" colspan="4" nolabel="1" context="date1=date_start">
 							<form string="Purchase Line">
 							<group colspan="4">
 								<field name="product_id"/>
-								<newline/>
-								<field name="quantity"/>
 								<field name="uom_id"/>
-								<field name="constraint"/>
+								<field name="quantity"/>
+								<field name="type"/>
+								<newline/>
 								<field name="date_planned"/>
-<!--								<field name="trigger"/>-->
+								<field name="date_delivery"/>
 							</group>
 								<separator string="Notes" colspan="4"/>
 								<field name="notes" colspan="4" nolabel="1"/>
 								<field name="purchase_order_ids" colspan="4" nolabel="1"/>
 								<field name="state" nolabel="1"/>
 							</form>
-<!--							<tree string="Purchase Lines" editable="bottom">-->
 							<tree string="Purchase Lines">
 								<field name="product_id"/>
+								<field name="type"/>
 								<field name="quantity"/>
-								<field name="uom_id"/>
-								<field name="constraint"/>
+								<button name="quantity_get" string="Get Quantity" states="pending" type="object"/>
 								<field name="date_planned"/>
-<!--								<field name="trigger"/>-->
+								<field name="date_delivery"/>
 								<field name="state"/>
 								<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
 							</tree>
@@ -575,27 +586,37 @@
 								</page>
 								<page string="Segments">
 								<field name="segment_ids" colspan="4" nolabel="1">
-									<form string="Segments">
+									<form string="Segment">
+										<separator string="General" colspan="4"/>
 										<field name="name" string="Name" select="1"/>
-										<field name="code" string="Action Code"/>
+										<field name="code" string="Code"/>
+										<field name="proposition_id" />
 										<field name="file_id" />
 										<field name="active" />
-										<field name="quantity_add" select="2"/>
-										<field name="raw_quantity" select="2"/>
 										<newline/>
 										<field name="split_id" />
 										<field name="reuse_id" />
+										<separator string="Quantities" colspan="4"/>
+										<field name="quantity_ordered" select="2"/>
+										<field name="quantity_delivered" select="2"/>
+										<field name="quantity_real" select="2"/>
 										<newline/>
+										<separator string="Segmentation" colspan="4"/>
 										<field name="start_census"/>
 										<field name="end_census"/>
 										<field name="deduplication_level"/>
-										<field name="note" colspan="4"/>
+										<separator string="Segmentation Criteria" colspan="4"/>
+										<field name="segmentation_criteria" colspan="4" nolabel="1"/>
+										<separator string="Notes" colspan="4"/>
+										<field name="note" colspan="4" nolabel="1"/>
 									</form>
 									<tree string="Segments">
 										<field name="name" string="Name" select="1"/>
 										<field name="deduplication_level" />
-										<field name="code" string="Action Code" select="2"/>
-										<field name="quantity_add"/>
+										<field name="code" string="Code" select="2"/>
+										<field name="quantity_ordered"/>
+										<field name="quantity_delivered" select="2"/>
+										<field name="quantity_real" select="2"/>
 									</tree>
 								</field>
 								<field name="keep_segments" string="Keep Segments at Duplication"/>
@@ -702,27 +723,37 @@
 				</page>
 				<page string="Segments">
 				<field name="segment_ids" colspan="4" nolabel="1">
-					<form string="Segments">
+					<form string="Segment">
+						<separator string="General" colspan="4"/>
 						<field name="name" string="Name" select="1"/>
-						<field name="code" string="Action Code"/>
+						<field name="code" string="Code"/>
+						<field name="proposition_id" />
 						<field name="file_id" />
 						<field name="active" />
-						<field name="quantity_add" select="2"/>
-						<field name="raw_quantity" select="2"/>
 						<newline/>
 						<field name="split_id" />
 						<field name="reuse_id" />
+						<separator string="Quantities" colspan="4"/>
+						<field name="quantity_ordered" select="2"/>
+						<field name="quantity_delivered" select="2"/>
+						<field name="quantity_real" select="2"/>
 						<newline/>
+						<separator string="Segmentation" colspan="4"/>
 						<field name="start_census"/>
 						<field name="end_census"/>
 						<field name="deduplication_level"/>
-						<field name="note" colspan="4"/>
+						<separator string="Segmentation Criteria" colspan="4"/>
+						<field name="segmentation_criteria" colspan="4" nolabel="1"/>
+						<separator string="Notes" colspan="4"/>
+						<field name="note" colspan="4" nolabel="1"/>
 					</form>
 					<tree string="Segments">
 						<field name="name" string="Name" select="1"/>
 						<field name="deduplication_level" />
-						<field name="code" string="Action Code" select="2"/>
-						<field name="quantity_add"/>
+						<field name="code" string="Code" select="2"/>
+						<field name="quantity_ordered" select="2"/>
+						<field name="quantity_delivered" select="2"/>
+						<field name="quantity_real" select="2"/>
 					</tree>
 				</field>
 				<field name="keep_segments" string="Keep Segments at Duplication"/>
@@ -794,23 +825,29 @@
 		<field name="model">dm.campaign.proposition.segment</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Segments">
+			<form string="Segment">
+				<separator string="General" colspan="4"/>
 				<field name="name" string="Name" select="1"/>
-				<field name="code" string="Action Code"/>
+				<field name="code" string="Code"/>
 				<field name="proposition_id" />
 				<field name="file_id" />
-<!--				<field name="sequence"/>-->
 				<field name="active" />
-				<field name="quantity_add" select="2"/>
-				<field name="raw_quantity" select="2"/>
+				<newline/>
 				<field name="split_id" />
 				<field name="reuse_id" />
+				<separator string="Quantities" colspan="4"/>
+				<field name="quantity_ordered" select="2"/>
+				<field name="quantity_delivered" select="2"/>
+				<field name="quantity_real" select="2"/>
 				<newline/>
+				<separator string="Segmentation" colspan="4"/>
 				<field name="start_census"/>
 				<field name="end_census"/>
 				<field name="deduplication_level"/>
-<!--				<field name="action_code" string="Action Code" select="2"/>-->
-				<field name="note" colspan="4"/>
+				<separator string="Segmentation Criteria" colspan="4"/>
+				<field name="segmentation_criteria" colspan="4" nolabel="1"/>
+				<separator string="Notes" colspan="4"/>
+				<field name="note" colspan="4" nolabel="1"/>
 			</form>
 		</field>
 	</record>
@@ -822,9 +859,10 @@
 		<field name="arch" type="xml">
 			<tree string="Segments">
 				<field name="name" string="Name"/>
-<!--				<field name="sequence" />-->
-				<field name="code" string="Action Code"/>
-				<field name="quantity_add"/>
+				<field name="code" string="Code"/>
+				<field name="quantity_ordered" select="2"/>
+				<field name="quantity_delivered" select="2"/>
+				<field name="quantity_real" select="2"/>
 			</tree>
 		</field>
 	</record>
@@ -964,6 +1002,7 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
+<!--
 	<record model="ir.actions.act_window" id="action_campaign_translator_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">res.partner</field>
@@ -974,7 +1013,7 @@
 		<field name="context">{'category':'Translator'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Translators" id="menu_action_campaign_translator_form" action="action_campaign_translator_form"/>
-
+-->
         <record id="view_country_form_inherit" model="ir.ui.view">
             <field name="name">res.country.form.inherit</field>
             <field name="model">res.country</field>
@@ -998,9 +1037,8 @@
 					<field name="product_id"/>
 					<field name="quantity"/>
 					<field name="uom_id"/>
-					<field name="constraint"/>
+					<field name="type" />
 					<field name="date_planned"/>
-					<field name="trigger"/>
 					<field name="state"/>
 					<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
 				</tree>
@@ -1019,9 +1057,7 @@
 				<newline/>
 				<field name="quantity"/>
 				<field name="uom_id"/>
-				<field name="constraint"/>
 				<field name="date_planned"/>
-				<field name="trigger"/>
 				<field name="notes" colspan="4" nolabel="1"/>
 				<group colspan="4">
 					<field name="state"/>
