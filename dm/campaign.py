@@ -268,20 +268,20 @@ class dm_campaign_proposition(osv.osv):
 #        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
     
     def copy(self, cr, uid, id, default=None, context={}):
-#        """
-#        Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
-#        """
+        """
+        Function to duplicate segments only if 'keep_segments' is set to yes else not to duplicate segments
+        """
         proposition_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, proposition_id, context)
         if data.date_start:
             super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'date_start':0})
-#        if data.keep_segments == False:
-#            l = []
-#            for i in data.segment_ids:
-#                 l.append(i.id)
-#                 self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
-#                 super(dm_campaign_proposition, self).write(cr, uid, prp_id, {'segment_ids':[(6,0,[])]})
-#            return prp_id
+        if data.keep_segments == False:
+            l = []
+            for i in data.segment_ids:
+                 l.append(i.id)
+                 self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
+                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
+            return proposition_id
         return proposition_id
 
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
@@ -601,39 +601,5 @@ class purchase_order(osv.osv):
         'dm_campaign_purchase_line' : fields.many2one('dm.campaign.purchase_line','DM Campaign Purchase Line'),
     }
 purchase_order()
-
-#class prop_config_copy(osv.osv_memory):
-#    _name = 'prop.config.copy'
-#    _columns = {
-#        'keep_segments':fields.boolean('Keep Segments At Duplication'),
-#    }
-#    _defaults = {
-#        'keep_segments': lambda *a: True,
-#    }
-#    def action_cancel(self,cr,uid,ids,conect=None):
-#        return {
-#                'view_type': 'form',
-#                "view_mode": 'form',
-#                'res_model': 'ir.module.module.configuration.wizard',
-#                'type': 'ir.actions.act_window',
-#                'target':'new',
-#        }
-#    def action_create(self, cr, uid,ids, context=None):
-#            res=self.read(cr,uid,ids)[0]
-#            segment=res['keep_segments']
-#            vals={
-#                'keep_segments':segment,
-#            }
-#            new_id=res_obj.create(cr, uid, vals, context=context)
-##            res_obj.create_period(cr,uid,[new_id])
-#            return {
-#                    'view_type': 'form',
-#                    "view_mode": 'form',
-#                    'res_model': 'dm.campaign.proposition',
-#                    'type': 'ir.actions.act_window',
-#                    'target':'new',
-#            }
-#
-#prop_config_copy()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
