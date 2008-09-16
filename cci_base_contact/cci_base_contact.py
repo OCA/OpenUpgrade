@@ -47,8 +47,6 @@ class res_partner_contact(osv.osv):
         'link_ids':fields.one2many('res.partner.contact.link','current_contact_id','Contact Link'),
         'canal_id': fields.many2one('res.partner.canal', 'Favourite Channel'),
         'national_number' : fields.char( 'National Number',size=15), 
-        'login_name': fields.char('Login Name',size=32), 
-        'password': fields.char('Password',size=32), 
         'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
         'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
         'old_id':fields.integer('Old Datman ID'),
@@ -87,6 +85,16 @@ class project(osv.osv):
         'contact_id2': fields.many2one('res.partner.contact','Contact'),
     }
 project()
+
+class res_partner_job(osv.osv):
+    _inherit = 'res.partner.job'
+    _columns = {
+        'login_name': fields.char('Login Name',size=80), 
+        'password': fields.char('Password',size=50),
+        'token': fields.char('Token',size=40),
+    }
+
+res_partner_job()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
