@@ -157,8 +157,8 @@ TODO: revoir la vue tree aussi
 			<field name="res_model">res.partner.state</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem name="States" groups="base.group_admin" id="menu_partner_state_main" parent="base.menu_base_config"/>
-		<menuitem  parent="menu_partner_state_main" groups="base.group_admin" action="action_partner_state" id="menu_partner_state"/>
+		<menuitem name="States" groups="base.group_system" id="menu_partner_state_main" parent="base.menu_base_config"/>
+		<menuitem  parent="menu_partner_state_main" groups="base.group_system" action="action_partner_state" id="menu_partner_state"/>
 
 <!-- view for res.partner.state2 -->
 		<record model="ir.ui.view" id="view_partner_state2_form">
@@ -177,7 +177,7 @@ TODO: revoir la vue tree aussi
 			<field name="res_model">res.partner.state2</field>
 			<field name="view_type">form</field>
 		</record>
-		<menuitem parent="menu_partner_state_main" groups="base.group_admin" action="action_partner_state2" id="menu_partner_state2"/>
+		<menuitem parent="menu_partner_state_main" groups="base.group_system" action="action_partner_state2" id="menu_partner_state2"/>
 
         <!--
 	=====================
