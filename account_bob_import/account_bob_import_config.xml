@@ -2,6 +2,82 @@
 <openerp>
     <data>
 
+	<!-- Selecting the Type of Location for BOB -->
+
+	<record id="view_check_bob_form" model="ir.ui.view">
+		<field name="name">Select The Location of BOB Installation</field>
+        <field name="model">check.bob.installation</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Select Folder">
+            	<separator col="4" colspan="4" string="Select the BOB Installation location type."/>
+            	<newline/>
+				<field name="location"/>
+                <group col="4" colspan="4">
+                    <button icon="gtk-cancel" special="cancel" string="Cancel" type="object"/>
+                    <button icon="gtk-ok" name="action_next" string="GO" type="object"/>
+                </group>
+            </form>
+        </field>
+	</record>
+
+    <record id="action_config_check_bob_form" model="ir.actions.act_window">
+            <field name="name">Select Location Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">check.bob.installation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    </record>
+
+    <record id="config_check_bob_location" model="ir.module.module.configuration.step">
+            <field name="name">Select Type of BOB Installation</field>
+            <field name="note">If the BOB is installed locally, select 'locally' as the location.If the BOB is not installed on this machine, create a zip of the 'Bob' folder placed in Root(Drive Letter)://Program Files/Bob.Upload it and follow the further instructions. </field>
+            <field name="action_id" ref="action_config_check_bob_form"/>
+            <field name="state">open</field>
+    </record>
+
+	<!-- For Remote BOB Installation -->
+
+    <record id="view_remote_bob_form" model="ir.ui.view">
+		<field name="name">Upload a .zip file containing information of BOB Installation</field>
+        <field name="model">remote.bob.location</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Upload a Zip File">
+            	<separator col="4" colspan="4" string="Here, you are supposed to upload a .zip file."/>
+            	<newline/>
+            	<label string="Go to the following path : Root Drive Letter://Program Files/Bob (e.g.C://Program files/Bob). Right Click on that folder-> Archieve it to a zip.Name it as bob.zip" colspan="4" />
+				<field name="company_id"/>
+				<newline/>
+				<field name="zipped_file"/>
+                <group col="4" colspan="4">
+                	<button icon="gtk-cancel" name="action_back" string="Back" type="object"/>
+                    <button icon="gtk-cancel" special="cancel" string="Cancel" type="object"/>
+                    <button icon="gtk-ok" name="action_next" string="Upload" type="object"/>
+                </group>
+            </form>
+        </field>
+	</record>
+
+    <record id="action_config_remote_bob_form" model="ir.actions.act_window">
+            <field name="name">Upload a Zip File</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">remote.bob.location</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+    </record>
+
+    <record id="config_remote_bob_location" model="ir.module.module.configuration.step">
+            <field name="name">Upload a zip file of BOB Installation</field>
+            <field name="note">Create a zip of the 'Bob' folder placed in Root Drive Letter://Program Files/Bob.Upload it and follow the further instructions. </field>
+            <field name="action_id" ref="action_config_remote_bob_form"/>
+            <field name="state">open</field>
+    </record>
+
+	<!-- For Local BOB Installation -->
+
 	<record id="view_config_bob_import_form" model="ir.ui.view">
 		<field name="name">Configure BOB Import</field>
         <field name="model">config.bob.import</field>
@@ -14,7 +90,8 @@
                 <field name="path" colspan="4"/>
 				<newline/>
                 <group col="4" colspan="4">
-                    <button icon="gtk-cancel" special="cancel" string="Cancel" type="object"/>
+                	<button icon="gtk-cancel" name="action_back" string="Back" type="object"/>
+                    <button icon="gtk-cancel" name="action_cancel" special="cancel" string="Cancel" type="object"/>
                     <button icon="gtk-ok" name="action_create" string="Next" type="object"/>
                 </group>
             </form>
@@ -36,6 +113,8 @@
             <field name="action_id" ref="action_config_bob_import_form"/>
             <field name="state">open</field>
     </record>
+
+	<!-- Operating for conversion of .db to .csv -->
 
     <record id="view_config_path_folder_form" model="ir.ui.view">
 		<field name="name">Select Folder for BOB Import</field>

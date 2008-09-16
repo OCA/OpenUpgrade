@@ -1,6 +1,10 @@
 from osv import fields, osv
 from osv import orm
 import os
+import base64
+import tools
+import StringIO
+import zipfile
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
@@ -19,6 +23,94 @@ class res_partner(osv.osv):
 
 res_partner()
 
+class check_bob_installation(osv.osv_memory):
+    _name="check.bob.installation"
+    _columns ={
+        'location': fields.selection([('locally','Locally'),('remotely','Remotely')], 'Location', required=True),
+    }
+
+    def action_next(self,cr,uid,ids,context=None):
+        res_model='remote.bob.location'
+        obj_self=self.read(cr,uid,ids)[0]
+        if 'location' in obj_self:
+            if obj_self['location']=='locally':
+                res_model='config.bob.import'
+
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': res_model,
+                'type': 'ir.actions.act_window',
+                'target':'new',
+            }
+
+check_bob_installation()
+
+class remote_bob_location(osv.osv_memory):
+    _name="remote.bob.location"
+    _columns ={
+        'company_id':fields.many2one('res.company','Company', required=True),
+        'zipped_file': fields.binary('Upload a Zip File',filters=['*.zip']),
+#        'zipped_file': fields.binary('Upload a Zip File',filters=['*.zip','*.tar','*.tar.gz','*.tar.bz2','*.ar','*.ear','*.jar','*.war']),
+    }
+
+    def action_back(self,cr,uid,ids,context=None):
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'check.bob.installation',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+        }
+
+    def action_next(self,cr,uid,ids,context=None):
+        # Saving the uploaded zip file, unzipping it, and classifying the bob code folders.
+        ids=self.search(cr, uid, [])
+        file=self.read(cr, uid, [ids[len(ids)-1]])
+        zipped_file=file[-1]['zipped_file']
+        file_contents=base64.decodestring(zipped_file)
+
+        rt_path=tools.config['root_path']
+
+        fp = StringIO.StringIO(file_contents)
+        fdata = zipfile.ZipFile(fp, 'r')
+        fname = fdata.namelist()
+
+        # TODO
+#        print rt_path,module_name
+#        fname = os.path.join(rt_path,module_name+'.zip')
+#        print fname
+#        os.makedirs(rt_path+'/'+'temp_bob')
+#
+#        bob_path=rt_path+'/'+'temp_bob'
+#        zipfile=open(bob_path+'/'+'bob.zip', 'wb')
+#        zipfile.write(zipped_file)
+
+
+#        fh = open('/home/jvo/Desktop/jay.zip', 'rb')
+#        z = zipfile.ZipFile(fh)
+#        dirname=os.path.dirname('/home/jvo/Desktop/jay.zip')
+#        for name in z.namelist():
+#            path=name.split('/')
+#            print "path",path
+#            if len(path)>1:
+#                name1=str('/'.join(x for x in path[:-1]))
+#            if not os.path.exists(dirname+'/'+name1):
+#                os.makedirs(dirname+'/'+name1)
+#            print "nameeeeee",name
+#            outfile = open(dirname+'/'+name, 'wb')
+#            outfile.write(z.read(name))
+#            outfile.close()
+#        fh.close()
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'config.path.folder',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+            }
+
+remote_bob_location()
 
 class config_bob_import(osv.osv_memory):
     _name = 'config.bob.import'
@@ -26,6 +118,24 @@ class config_bob_import(osv.osv_memory):
         'company_id':fields.many2one('res.company','Company', required=True),
         'path':fields.char('Path for BOB Folder',required=True,size=200),
     }
+
+    def action_cancel(self,cr,uid,ids,context=None):
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'ir.module.module.configuration.wizard',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+            }
+
+    def action_back(self,cr,uid,ids,context=None):
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'check.bob.installation',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+        }
 
     def action_create(self, cr, uid,ids, context=None):
         ids=self.search(cr, uid, [])
@@ -79,7 +189,7 @@ class config_path_folder(osv.osv_memory):
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
-                'res_model': 'config.bob.import',
+                'res_model': 'check.bob.installation',
                 'type': 'ir.actions.act_window',
                 'target':'new',
         }
