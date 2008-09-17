@@ -1,5 +1,6 @@
 from osv import fields, osv
 from osv import orm
+import time
 import os
 import base64
 import tools
@@ -70,38 +71,34 @@ class remote_bob_location(osv.osv_memory):
         zipped_file=file[-1]['zipped_file']
         file_contents=base64.decodestring(zipped_file)
 
-        rt_path=tools.config['root_path']
-
         fp = StringIO.StringIO(file_contents)
         fdata = zipfile.ZipFile(fp, 'r')
         fname = fdata.namelist()
+        module_name=fname[0].split("/")[0]
 
-        # TODO
-#        print rt_path,module_name
-#        fname = os.path.join(rt_path,module_name+'.zip')
-#        print fname
-#        os.makedirs(rt_path+'/'+'temp_bob')
-#
-#        bob_path=rt_path+'/'+'temp_bob'
-#        zipfile=open(bob_path+'/'+'bob.zip', 'wb')
-#        zipfile.write(zipped_file)
+        if 'Bob/bob.exe' not in fname:
+            raise osv.except_osv(_('User Error'), _('The Zip file doesn''\'t contain a valid Bob folder.It doesn''\'t have bob.exe.'))
 
 
-#        fh = open('/home/jvo/Desktop/jay.zip', 'rb')
-#        z = zipfile.ZipFile(fh)
-#        dirname=os.path.dirname('/home/jvo/Desktop/jay.zip')
-#        for name in z.namelist():
-#            path=name.split('/')
-#            print "path",path
-#            if len(path)>1:
-#                name1=str('/'.join(x for x in path[:-1]))
-#            if not os.path.exists(dirname+'/'+name1):
-#                os.makedirs(dirname+'/'+name1)
-#            print "nameeeeee",name
-#            outfile = open(dirname+'/'+name, 'wb')
-#            outfile.write(z.read(name))
-#            outfile.close()
-#        fh.close()
+        root_path=tools.config['root_path']
+        rt_path=root_path+'/'+'bob_'+str(time.strftime('%d-%m-%y-%H:%M:%S'))
+        os.makedirs(rt_path)
+
+        for name in fname:
+            path=name.split('/')
+            name1=''
+            if len(path)>1:
+                name1=str('/'.join(x for x in path[:-1]))
+
+            if not os.path.exists(rt_path+'/'+name1):
+                os.makedirs(rt_path+'/'+name1)
+
+            if not os.path.isdir(rt_path+'/'+name):
+                outfile = open(rt_path+'/'+name, 'wb')
+                outfile.write(fdata.read(name))
+                outfile.close()
+        fp.close()
+
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
@@ -192,6 +189,14 @@ class config_path_folder(osv.osv_memory):
                 'res_model': 'check.bob.installation',
                 'type': 'ir.actions.act_window',
                 'target':'new',
+        }
+    def action_cancel(self,cr,uid,ids,context=None):
+        return {
+            'view_type': 'form',
+            "view_mode": 'form',
+            'res_model': 'ir.module.module.configuration.wizard',
+            'type': 'ir.actions.act_window',
+            'target':'new',
         }
     def action_generate(self,cr,uid,ids,context=None):
         # TODO: Check for PXVIEW availabilty and convert .db to .csv
