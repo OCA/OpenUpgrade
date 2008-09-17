@@ -920,7 +920,9 @@
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
 
 	<!--
-	Campaign type
+	=======================================================
+	Campaign Type
+	=======================================================
 	-->
 
 	<record model="ir.ui.view" id="view_campaign_type_form">
@@ -955,6 +957,49 @@
 		<field name="view_id" ref="view_campaign_type_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
+
+	<!--
+	=======================================================
+	DM Overlay
+	=======================================================
+	-->
+
+	<record model="ir.ui.view" id="view_dm_overlay_form">
+		<field name="name">dm.overlay.form</field>
+		<field name="model">dm.overlay</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Overlay">
+				<field name="trademark_id" select="1"/>
+				<field name="dealer_id" select="2"/>
+				<field name="country_id" select="1"/>
+				<field name="bank_account_id" select="2"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_dm_overlay_tree">
+		<field name="name">dm.overlay.tree</field>
+		<field name="model">dm.overlay</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Overlays">
+				<field name="trademark_id"/>
+				<field name="dealer_id"/>
+				<field name="country_id"/>
+				<field name="bank_account_id"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_dm_overlay_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.overlay</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_dm_overlay_tree"/>
+	</record>
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Overlays" id="menu_action_dm_overlay_form" action="action_dm_overlay_form"/>
 
 <!--
 	<record model="ir.actions.act_window" id="action_campaign_trademark_form">

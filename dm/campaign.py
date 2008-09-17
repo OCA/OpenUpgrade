@@ -244,8 +244,8 @@ class dm_campaign(osv.osv):
     def copy(self, cr, uid, id, default=None, context={}):
         cmp_id = super(dm_campaign, self).copy(cr, uid, id, default)
         data = self.browse(cr, uid, cmp_id, context)
-        if data.date_start:
-            super(dm_campaign, self).write(cr, uid, cmp_id, {'date_start':0})
+        default='Copy of %s' % data.name
+        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':default, 'date_start':0})
         return cmp_id
 
 dm_campaign()
@@ -271,15 +271,16 @@ class dm_campaign_proposition(osv.osv):
         camp = self.pool.get('dm.campaign.proposition').browse(cr,uid,ids)[0]
         c = camp.camp_id.id
         id = self.pool.get('dm.campaign').browse(cr, uid, c)
-        if id:
+        if not camp.date_start:
             super(osv.osv, self).write(cr, uid, camp.id, {'date_start':id.date_start})
         return res
 
-#    def create(self,cr,uid,vals,context={}):
-#        id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
-#        if id.date_start:
-#            vals['date_start']=id.date_start
-#        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
+    def create(self,cr,uid,vals,context={}):
+        id = self.pool.get('dm.campaign').browse(cr, uid, vals['camp_id'])
+        if not vals['date_start']:
+            if id.date_start:
+                vals['date_start']=id.date_start
+        return super(dm_campaign_proposition, self).create(cr, uid, vals, context)
 
     def copy(self, cr, uid, id, default=None, context={}):
         """
@@ -287,8 +288,8 @@ class dm_campaign_proposition(osv.osv):
         """
         proposition_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, proposition_id, context)
-        if data.date_start:
-            super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'date_start':0})
+        default='Copy of %s' % data.name
+        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default, 'date_start':0})
         if data.keep_segments == False:
             l = []
             for i in data.segment_ids:
@@ -303,6 +304,7 @@ class dm_campaign_proposition(osv.osv):
         for id in ids:
 
             pro = self.browse(cr,uid,[id])[0]
+            camp_code = pro.camp_id.code1 or ''
             offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
             trademark_code = pro.camp_id.trademark_id and pro.camp_id.trademark_id.name or ''
             dealer_code =pro.camp_id.dealer_id and pro.camp_id.dealer_id.ref or ''
@@ -315,7 +317,8 @@ class dm_campaign_proposition(osv.osv):
             country_code = pro.camp_id.country_id.code or ''
             seq = '%%0%sd' % 2 % id
             final_date = month+year
-            code1='-'.join([offer_code, dealer_code ,trademark_code ,final_date ,country_code ,seq])
+#            code1='-'.join([offer_code, dealer_code ,trademark_code ,final_date ,country_code ,seq])
+            code1='-'.join([camp_code, seq])
             result[id]=code1
         return result
 
@@ -671,6 +674,17 @@ class dm_campaign_dtp_dates(osv.osv):
         'template': lambda *a: False,
     }
 dm_campaign_dtp_dates()
+
+class dm_overlay(osv.osv):
+    _name = 'dm.overlay'
+    _rec_name = 'trademark_id'
+    _columns = {
+        'trademark_id' : fields.many2one('dm.trademark', 'Trademark', required=True),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
+        'country_id' : fields.many2one('res.country', 'Country', required=True),
+        'bank_account_id' : fields.many2one('account.account', 'Account'),
+    }
+dm_overlay()
 
 class Country(osv.osv):
     _name = 'res.country'
