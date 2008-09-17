@@ -222,6 +222,11 @@ class dm_campaign(osv.osv):
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
             super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
+            
+        # Set trademark to offer's trademark only if trademark is null
+        if vals['offer_id'] and (not vals['trademark_id']):
+            offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
+            super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
         return id_camp
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):

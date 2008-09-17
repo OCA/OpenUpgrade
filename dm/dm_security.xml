@@ -268,6 +268,15 @@
 		<field eval="1" name="perm_write"/>
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
+	</record>
+	<record id="ir_model_access_translationforofferadmin0" model="ir.model.access">
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.translation')]"/>
+		<field eval="1" name="perm_read"/>
+		<field eval="&quot;&quot;&quot;Translation for offer admin&quot;&quot;&quot;" name="name"/>
+		<field eval="1" name="perm_unlink"/>
+		<field eval="1" name="perm_write"/>
+		<field eval="1" name="perm_create"/>
+		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record><!--
 	<record id="ir_model_access_partnerlayoutforofferadmin0" model="ir.model.access">
 		<field name="model_id" ref="dm.model_dm_trademark"/>
@@ -563,7 +572,16 @@
 		<record id="ir_model_access_customer_fileforoffermanager0" model="ir.model.access">
 			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
 			<field eval="1" name="perm_read"/>
-			<field eval="&quot;&quot;&quot;Customer file for offer admin&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Customer file for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field name="group_id" ref="res_groups_offermanager"/>
+		</record>
+		<record id="ir_model_access_translationforoffermanager0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.translation')]"/>
+			<field eval="1" name="perm_read"/>
+			<field eval="&quot;&quot;&quot;Translation for offer admin&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
 			<field eval="1" name="perm_write"/>
 			<field eval="1" name="perm_create"/>
@@ -824,7 +842,16 @@
 			<record id="ir_model_access_customer_fileforcampaignadmin0" model="ir.model.access">
 				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
 				<field eval="1" name="perm_read"/>
-				<field eval="&quot;&quot;&quot;Customer file for offer admin&quot;&quot;&quot;" name="name"/>
+				<field eval="&quot;&quot;&quot;Customer file for campaign admin&quot;&quot;&quot;" name="name"/>
+				<field eval="1" name="perm_unlink"/>
+				<field eval="1" name="perm_write"/>
+				<field eval="1" name="perm_create"/>
+				<field name="group_id" ref="res_groups_campaignadmin"/>
+			</record>
+			<record id="ir_model_access_overlayforcampaignadmin0" model="ir.model.access">
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.overlay')]"/>
+				<field eval="1" name="perm_read"/>
+				<field eval="&quot;&quot;&quot;Overlay for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
 				<field eval="1" name="perm_write"/>
 				<field eval="1" name="perm_create"/>
@@ -1086,6 +1113,15 @@
 					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.customer.file')]"/>
 					<field eval="1" name="perm_read"/>
 					<field eval="&quot;&quot;&quot;Customer file for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="1" name="perm_unlink"/>
+					<field eval="1" name="perm_write"/>
+					<field eval="1" name="perm_create"/>
+					<field name="group_id" ref="res_groups_campaignmanager"/>
+				</record>
+				<record id="ir_model_access_overlayforcampaignmanager0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.overlay')]"/>
+					<field eval="1" name="perm_read"/>
+					<field eval="&quot;&quot;&quot;Overlay for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
 					<field eval="1" name="perm_write"/>
 					<field eval="1" name="perm_create"/>
