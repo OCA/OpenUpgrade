@@ -45,7 +45,9 @@ class config_bob_import(osv.osv_memory):
 
     def action_create(self, cr, uid,ids, context=None):
         ids=self.search(cr, uid, [])
-        path=self.read(cr, uid, [ids[len(ids)-1]],[], context)
+        ctx = context and context.copy() or {}
+        ctx['get_binary_size'] = False
+        path=self.read(cr, uid, [ids[len(ids)-1]],[], ctx)
 
         if path[-1]['location']=='locally':
             path_bob=path[-1]['path']
@@ -151,4 +153,6 @@ class config_path_folder(osv.osv_memory):
             }
 
 config_path_folder()
+
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
