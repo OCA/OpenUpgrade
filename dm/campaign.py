@@ -683,7 +683,22 @@ dm_campaign_dtp_dates()
 class dm_overlay(osv.osv):
     _name = 'dm.overlay'
     _rec_name = 'trademark_id'
+    
+    def _overlay_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+
+            overlay = self.browse(cr,uid,[id])[0]
+            trademark_code = overlay.trademark_id.name or ''
+            dealer_code = overlay.dealer_id.ref or ''
+            country_code = overlay.country_id.code or ''
+            
+            code1='-'.join([trademark_code, dealer_code, country_code])
+            result[id]=code1
+        return result
+
     _columns = {
+        'code' : fields.function(_overlay_code,string='Code',type="char",method=True,readonly=True),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', required=True),
         'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
         'country_id' : fields.many2one('res.country', 'Country', required=True),

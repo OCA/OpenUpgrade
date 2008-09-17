@@ -970,6 +970,7 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Overlay">
+				<field name="code"/>
 				<field name="trademark_id" select="1"/>
 				<field name="dealer_id" select="2"/>
 				<field name="country_id" select="1"/>
@@ -984,6 +985,7 @@
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Overlays">
+				<field name="code"/>
 				<field name="trademark_id"/>
 				<field name="dealer_id"/>
 				<field name="country_id"/>
