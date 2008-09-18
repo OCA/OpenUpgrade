@@ -92,7 +92,8 @@ class config_bob_import(osv.osv_memory):
         return {
             'view_type': 'form',
             "view_mode": 'form',
-            'res_model': 'config.path.folder',
+#            'res_model': 'config.path.folder',
+            'res_model':'ir.module.module.configuration.wizard',
             'type': 'ir.actions.act_window',
             'target':'new',
         }
@@ -117,23 +118,23 @@ def _folders_get(self, cr, uid, context={}):
             if item not in main_folders:
                 if os.path.isdir(path_bob+"/"+item):
                     seq +=1
-                    res.append((seq,item))
+                    res.append((path_bob+"/"+item,item))
     return res
 
 class config_path_folder(osv.osv_memory):
     _name="config.path.folder"
     _columns ={
-        'folder': fields.selection(_folders_get,'Folder'),
+        'folder': fields.selection(_folders_get,'Folder',required=True),
     }
 
-    def action_back(self,cr,uid,ids,context=None):
-        return {
-                'view_type': 'form',
-                "view_mode": 'form',
-                'res_model': 'config.bob.import',
-                'type': 'ir.actions.act_window',
-                'target':'new',
-        }
+#    def action_back(self,cr,uid,ids,context=None):
+#        return {
+#                'view_type': 'form',
+#                "view_mode": 'form',
+#                'res_model': 'config.bob.import',
+#                'type': 'ir.actions.act_window',
+#                'target':'new',
+#        }
     def action_cancel(self,cr,uid,ids,context=None):
         return {
             'view_type': 'form',
@@ -144,6 +145,7 @@ class config_path_folder(osv.osv_memory):
         }
     def action_generate(self,cr,uid,ids,context=None):
         # TODO: Check for PXVIEW availabilty and convert .db to .csv
+
         return {
                 'view_type': 'form',
                 "view_mode": 'form',

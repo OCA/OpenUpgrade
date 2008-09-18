@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 {
-    'name': 'CCI Account Data',
+    'name': 'Importing BOB made CSVs:CCI',
     'category': 'Data Module',
      'init_xml':[],
      'author': 'Tiny',
