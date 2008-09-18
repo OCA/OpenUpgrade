@@ -52,12 +52,15 @@ def _rec_enc_cash(self, cr, uid, data, context):
         res['amount']=data['form']['amt']
         if 'order_partner_id' in item:
             res['partner_id']=item.order_partner_id.id
+            if not res['partner_id']:
+                raise wizard.except_wizard(_('Warning'), _('No Partner Defined on Embassy folder'))
             data_account=pool_link.get('account.bank.statement.line').onchange_partner_id(cr,uid,line_id=[],partner_id=item.order_partner_id.id,type='general',currency_id=False)
-            res['account_id']=data_account['value']['account_id']
         else:
             res['partner_id']=item.partner_id.id
+            if not res['partner_id']:
+                raise wizard.except_wizard(_('Warning'), _('No Partner Defined on Embassy folder'))
             data_account=pool_link.get('account.bank.statement.line').onchange_partner_id(cr,uid,line_id=[],partner_id=item.partner_id.id,type='general',currency_id=False)
-            res['account_id']=data_account['value']['account_id']
+        res['account_id']=data_account['value']['account_id']
         statements_lines.append([0,0,res])
 
     vals['line_ids']=statements_lines
