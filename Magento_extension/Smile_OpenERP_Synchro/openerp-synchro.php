@@ -217,7 +217,18 @@
 	}
 
 
-//script when page loads, either from XML/RPC, either browser HTTP
+//script when page loads, either from XML/RPC, either browser HTTP (to check the installation)
+
+if (!function_exists('getallheaders')) {//dirty fix (but not critical) when running in CGI mode; see: http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=12
+	function getallheaders() {
+	   foreach($_SERVER as $name => $value)
+	       if(substr($name, 0, 5) == 'HTTP_')
+	           $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', 
+	substr($name, 5)))))] = $value;
+	   return $headers;
+	}
+}
+
 $headers = getallheaders();
 //echo stripos($headers['Accept'], 'text');
 if (isset($headers['Accept'])) {
