@@ -8,9 +8,9 @@
 			<field name="name">res.partner.form</field>
 			<field name="type">form</field>
 			<field name="model">res.partner</field>
-			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="inherit_id" ref="cci_partner.view_partner_form_inherit2"/>
 			<field name="arch" type="xml">
-				<field name="awex_eligible" position="after">
+				<field name="canal_id" position="after">
 					<field name="insurer_id" />
 					<separator string="ATA infos" colspan="4"/>
 					<field name="sender_name"/>
@@ -846,7 +846,7 @@
 			<field name="act_window_id" ref="action_certificates_incompleted"/>
 		</record>
 
-		<menuitem name="Missions/Incompleted Certificates" 
+		<menuitem name="Missions/Incompleted Certificates"
 			id="menu_incompleted_certificates"
 			action="action_certificates_incompleted"/>
 
