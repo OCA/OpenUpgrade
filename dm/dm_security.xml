@@ -80,16 +80,6 @@
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
-	<record id="ir_model_access_campaignstatisticsforofferadmin1" model="ir.model.access">
-<!--		<field name="model_id" ref="dm.model_dm_campaign_statistics"/>-->
-		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
-		<field eval="1" name="perm_read"/>
-		<field eval="&quot;&quot;&quot;campaign statistics for offer admin&quot;&quot;&quot;" name="name"/>
-		<field eval="1" name="perm_unlink"/>
-		<field eval="1" name="perm_write"/>
-		<field eval="1" name="perm_create"/>
-		<field name="group_id" ref="res_groups_offeradmin"/>
-	</record>
 	<record id="ir_model_access_campaigntypeforofferadmin1" model="ir.model.access">
 <!--		<field name="model_id" ref="dm.model_dm_campaign_type"/>-->
 		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>
@@ -328,15 +318,6 @@
 			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.segment')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;campaign proposition segment for offer manager&quot;&quot;&quot;" name="name"/>
-			<field eval="1" name="perm_unlink"/>
-			<field eval="1" name="perm_write"/>
-			<field eval="1" name="perm_create"/>
-			<field name="group_id" ref="res_groups_offermanager"/>
-		</record>
-		<record id="ir_model_access_campaignstatisticsforoffermanager1" model="ir.model.access">
-			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
-			<field eval="1" name="perm_read"/>
-			<field eval="&quot;&quot;&quot;campaign statistics for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
 			<field eval="1" name="perm_write"/>
 			<field eval="1" name="perm_create"/>
@@ -677,15 +658,6 @@
 				<field eval="1" name="perm_create"/>
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
-			<record id="ir_model_access_campaignstatisticsforcampaignadmin1" model="ir.model.access">
-				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
-				<field eval="1" name="perm_read"/>
-				<field eval="&quot;&quot;&quot;campaign statistics for campaign admin&quot;&quot;&quot;" name="name"/>
-				<field eval="1" name="perm_unlink"/>
-				<field eval="1" name="perm_write"/>
-				<field eval="1" name="perm_create"/>
-				<field name="group_id" ref="res_groups_campaignadmin"/>
-			</record>
 			<record id="ir_model_access_campaigntypeforcampaignadmin1" model="ir.model.access">
 				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>
 				<field eval="1" name="perm_read"/>
@@ -947,15 +919,6 @@
 					<field eval="1" name="perm_create"/>
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
-				<record id="ir_model_access_campaignstatisticsforcampaignmanager1" model="ir.model.access">
-					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
-					<field eval="1" name="perm_read"/>
-					<field eval="&quot;&quot;&quot;campaign statistics for campaign manager&quot;&quot;&quot;" name="name"/>
-					<field eval="1" name="perm_unlink"/>
-					<field eval="1" name="perm_write"/>
-					<field eval="1" name="perm_create"/>
-					<field name="group_id" ref="res_groups_campaignmanager"/>
-				</record>
 				<record id="ir_model_access_campaigntypeforcampaignmanager1" model="ir.model.access">
 					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.type')]"/>
 					<field eval="1" name="perm_read"/>
@@ -1212,15 +1175,6 @@
 						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.segment')]"/>
 						<field eval="1" name="perm_read"/>
 						<field eval="&quot;&quot;&quot;campaign proposition segment for all user&quot;&quot;&quot;" name="name"/>
-						<field eval="1" name="perm_unlink"/>
-						<field eval="1" name="perm_write"/>
-						<field eval="1" name="perm_create"/>
-						<field name="group_id" ref="res_groups_alluser"/>
-					</record>
-					<record id="ir_model_access_campaignstatisticsforalluser1" model="ir.model.access">
-						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.statistics')]"/>
-						<field eval="1" name="perm_read"/>
-						<field eval="&quot;&quot;&quot;campaign statistics for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
 						<field eval="1" name="perm_write"/>
 						<field eval="1" name="perm_create"/>

@@ -82,8 +82,12 @@
 						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('state','!=','open'),('project_id','!=',False)]}"/>
 						</group>
 						<separator string="Process State" colspan="4"/>
-						<field name="planning_state" select="2" nolabel="0"/>
-						<field name="manufacturing_state" select="2" nolabel="0"/>
+						<group colspan="8">
+						<field name="manufacturing_state" select="2"/>
+						<field name="customer_file_state" select="2"/>
+						<field name="items_state" select="2"/>
+						<field name="translation_state" select="2"/>
+						</group>
 <!--						<field name="campaign_stat_ids"/>-->
 						<separator string="Campaign Status" colspan="4"/>
 						<group col="10" colspan="4">
@@ -101,7 +105,6 @@
 								<page string="General">
 									<field name="name" string="Name" select="1"/>
 									<field name="code1" string="Code" select="2"/>
-<!--									<field name="camp_id"/>-->
 									<field name="date_start" select="2"/>
 									<field name="proposition_type" select="1"/>
 									<field name="initial_proposition_id" select="1"/>
@@ -183,7 +186,9 @@
 								<field name="name" string="Name"/>
 								<field name="code1" string="Code"/>
 								<field name="date_start" colspan="4"/>
-								<field name="quantity_max" string="Quantity"/>
+								<field name="quantity_ordered" select="2"/>
+								<field name="quantity_delivered" select="2"/>
+								<field name="quantity_real" select="2"/>
 								<field name="sale_rate"/>
 								<field name="proposition_type"/>
 							</tree>

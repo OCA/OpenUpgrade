@@ -27,6 +27,32 @@ class dm_campaign_type(osv.osv):
     }
 dm_campaign_type()
 
+class dm_overlay(osv.osv):
+    _name = 'dm.overlay'
+    _rec_name = 'trademark_id'
+
+    def _overlay_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+
+            overlay = self.browse(cr,uid,[id])[0]
+            trademark_code = overlay.trademark_id.name or ''
+            dealer_code = overlay.dealer_id.ref or ''
+            country_code = overlay.country_id.code or ''
+
+            code1='-'.join([trademark_code, dealer_code, country_code])
+            result[id]=code1
+        return result
+
+    _columns = {
+        'code' : fields.function(_overlay_code,string='Code',type="char",method=True,readonly=True),
+        'trademark_id' : fields.many2one('dm.trademark', 'Trademark', required=True),
+        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
+        'country_id' : fields.many2one('res.country', 'Country', required=True),
+        'bank_account_id' : fields.many2one('account.account', 'Account'),
+    }
+dm_overlay()
+
 
 class dm_campaign(osv.osv):
     _name = "dm.campaign"
@@ -67,7 +93,7 @@ class dm_campaign(osv.osv):
             if pline.state == 'ordered':
                 for po in pline.purchase_order_ids:
                     if po.shipped :
-                        pline.write({'state':'delivered','date_delivery':time.strftime('%Y-%m-%d')})
+                        pline.write({'state':'delivered','date_delivery':time.strftime('%Y-%m-%d %H:%M:%S')})
                         if pline.type == 'translation':
                             trans_id = self.pool.get('dm.offer.translation').create(cr, uid,
                                 {'offer_id': pline.campaign_id.offer_id.id,
@@ -98,7 +124,7 @@ class dm_campaign(osv.osv):
 
 
     _columns = {
-        'code1' : fields.function(_campaign_code,string='Code',type="char",method=True,readonly=True),
+        'code1' : fields.function(_campaign_code,string='Code',type="char",size="64",method=True,readonly=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',domain=[('state','=','open'),('type','in',['new','standart','rewrite'])]),
         'country_id' : fields.many2one('res.country', 'Country',required=True),
         'lang_id' : fields.many2one('res.lang', 'Language'),
@@ -106,12 +132,14 @@ class dm_campaign(osv.osv):
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
-        'campaign_stat_ids' : fields.one2many('dm.campaign.statistics','camp_id','Statistics'),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
         'campaign_type' : fields.selection(_get_campaign_type,'Type',required=True),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
-        'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status'),
-        'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status'),
+        'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status',readonly=True),
+        'items_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Items Status',readonly=True),
+        'translation_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Translation Status',readonly=True),
+        'manufacturing_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Manufacturing Status',readonly=True),
+        'customer_file_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Customers Files Status',readonly=True),
         'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}),
         'responsible_id' : fields.many2one('res.users','Responsible'),
         'dtp_making_time' : fields.function(dtp_making_time_get, method=True, type='float', string='Making Time'),
@@ -124,12 +152,15 @@ class dm_campaign(osv.osv):
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
         'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'dtp_dates_ids': fields.one2many('dm.campaign.dtp_dates','campaign_id','DTP Dates'),
+        'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
     }
 
     _defaults = {
         'state': lambda *a: 'draft',
-        'planning_state': lambda *a: 'pending',
         'manufacturing_state': lambda *a: 'pending',
+        'items_state': lambda *a: 'pending',
+        'translation_state': lambda *a: 'pending',
+        'customer_file_state': lambda *a: 'pending',
         'campaign_type': lambda *a: 'general',
         'responsible_id' : lambda obj, cr, uid, context: uid,
     }
@@ -180,7 +211,7 @@ class dm_campaign(osv.osv):
                 raise osv.except_osv("Error!!","This offer is not valid in this country")
         if not camp.date_start or not camp.dealer_id or not camp.trademark_id :
             raise osv.except_osv("Error!!","Informations are missing. Check Date Start, Dealer and Trademark")
-        super(dm_campaign,self).write(cr, uid, ids, {'state':'open'})
+        super(dm_campaign,self).write(cr, uid, ids, {'state':'open','planning_state':'inprogress'})
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
@@ -209,7 +240,11 @@ class dm_campaign(osv.osv):
 
         id_camp = super(dm_campaign,self).create(cr,uid,vals,context)
 
-        # Create dtp_date from template
+        # Create dtp_dates from template
+        if self.pool.get('dm.campaign').browse(cr, uid, [id_camp])[0].dtp_dates_ids:
+            dtp_dates_to_del_ids = self.pool.get('dm.campaign.dtp_dates').search(cr, uid, [('campaign_id','=',id_camp)])
+            self.pool.get('dm.campaign.dtp_dates').unlink(cr, uid, dtp_dates_to_del_ids)
+
         dtp_dates_ids = self.pool.get('dm.campaign.dtp_dates').search(cr, uid, [('template','=',True)])
         for dtp_dates_id in dtp_dates_ids:
             self.pool.get('dm.campaign.dtp_dates').copy(cr, uid, dtp_dates_id, {'campaign_id':id_camp,'template':False})
@@ -222,7 +257,7 @@ class dm_campaign(osv.osv):
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
             super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
-            
+
         # Set trademark to offer's trademark only if trademark is null
         if vals['offer_id'] and (not vals['trademark_id']):
             offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
@@ -250,21 +285,10 @@ class dm_campaign(osv.osv):
         cmp_id = super(dm_campaign, self).copy(cr, uid, id, default)
         data = self.browse(cr, uid, cmp_id, context)
         default='Copy of %s' % data.name
-        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':default, 'date_start':0})
+        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':default, 'date_start':0, 'date':0})
         return cmp_id
 
 dm_campaign()
-
-#Postgres view
-class dm_campaign_statistics(osv.osv):
-    _name = "dm.campaign.statistics"
-    _columns = {
-        'kind' : fields.char('Kind', size=16),
-        'qty' : fields.integer('Quantity'),
-        'rate' : fields.float('Rate', digits=(16,2)),
-        'camp_id' : fields.many2one('dm.campaign', 'Campaign')
-    }
-dm_campaign_statistics()
 
 
 class dm_campaign_proposition(osv.osv):
@@ -334,13 +358,16 @@ class dm_campaign_proposition(osv.osv):
         return []
 
     _columns = {
-        'code1' : fields.function(_proposition_code,string='Code',type="char",method=True,readonly=True),
+        'code1' : fields.function(_proposition_code,string='Code',type="char",size="64",method=True,readonly=True),
         'camp_id' : fields.many2one('dm.campaign','Campaign',ondelete = 'cascade',required=True),
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
         'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
+        'quantity_ordered' : fields.char('Ordered Quantity', size=16),
+        'quantity_delivered' : fields.integer('Delivered Quantity'),
+        'quantity_real' : fields.integer('Real Quantity'),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
         'customer_pricelist_id':fields.many2one('product.pricelist','Items Pricelist', required=False),
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
@@ -506,6 +533,7 @@ class dm_campaign_purchase_line(osv.osv):
                 if not pline.product_id.seller_ids:
                     raise  osv.except_osv('Warning', "There's no supplier defined for this product : %s" % (pline.product_id.name,) )
 
+                # Create a po / supplier
                 for supplier in pline.product_id.seller_ids:
                     partner_id = supplier.id
                     partner = supplier.name
@@ -517,7 +545,10 @@ class dm_campaign_purchase_line(osv.osv):
                     if not pricelist_id:
                         raise osv.except_osv('Warning', "There's no purchase pricelist defined for this partner : %s" % (partner.name,) )
                     price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
-                    newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
+                    print "pline.date_planned : ",pline.date_planned
+                    newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S')
+                    #newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
+                    print "newdate :",newdate.strftime('%Y-%m-%d %H:%M:%S')
 
                     if not pline.campaign_id.offer_id:
                         raise osv.except_osv('Warning', "There's no offer defined for this campaign : %s" % (pline.campaign_id.name,) )
@@ -529,9 +560,10 @@ class dm_campaign_purchase_line(osv.osv):
                     if pline.type == 'manufacturing':
                         for step in pline.campaign_id.offer_id.step_ids:
                             for const in step.manufacturing_constraint_ids:
-                                constraints.append("---------------------------------------------------------------------------")
-                                constraints.append(const.name)
-                                constraints.append(const.constraint)
+                                if pline.campaign_id.country_id in const.country_ids or not const.country_ids:
+                                    constraints.append("---------------------------------------------------------------------------")
+                                    constraints.append(const.name)
+                                    constraints.append(const.constraint)
                     elif pline.type == 'items':
                         raise osv.except_osv('Warning', "Purchase of items is not yet implemented")
                         for step in pline.campaign_id.offer_id.step_ids:
@@ -553,7 +585,6 @@ class dm_campaign_purchase_line(osv.osv):
                             constraints.append(pline.notes)
                         else:
                             constraints.append(' ')
-
 
                     # Create po
                     purchase_id = self.pool.get('purchase.order').create(cr, uid, {
@@ -578,7 +609,7 @@ class dm_campaign_purchase_line(osv.osv):
                            'product_id': pline.product_id.id,
                            'product_uom': pline.uom_id.id,
                            'price_unit': price,
-                           'date_planned': newdate.strftime('%Y-%m-%d'),
+                           'date_planned': newdate.strftime('%Y-%m-%d %H:%M:%S'),
                            'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
                            'account_analytic_id': pline.campaign_id.analytic_account_id,
                         })
@@ -615,29 +646,43 @@ class dm_campaign_purchase_line(osv.osv):
                                'product_id': pline.product_id.id,
                                'product_uom': pline.uom_id.id,
                                'price_unit': price,
-                               'date_planned': newdate.strftime('%Y-%m-%d'),
+                               'date_planned': newdate.strftime('%Y-%m-%d %H:%M:%S'),
                                'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
                                'account_analytic_id': propo.analytic_account_id.id,
 #                       'move_dest_id': res_id,
                             })
-
-
                     self.write(cr, uid, [pline.id], {'state':'requested'})
+
+                    '''
+                    # Set campaign supervision states
+                    if pline.type == 'translation':
+                        pline.campaign_id.write({'translation_state':'inprogress'})
+                    elif pline.type == 'manufacturing':
+                        pline.campaign_id.write({'manufacturing_state':'inprogress'})
+                    elif pline.type == 'items':
+                        pline.campaign_id.write({'items_state':'inprogress'})
+                    elif pline.type == 'customer_file':
+                        pline.campaign_id.write({'customer_file_state':'inprogress'})
+                    '''
+
         return True
 
     def _default_date(self, cr, uid, context={}):
         if 'date1' in context and context['date1']:
             dd = context['date1']
-            return dd
+            newdate =  DateTime.strptime(dd + ' 09:00:00','%Y-%m-%d %H:%M:%S')
+            print "From _default_date : ",newdate.strftime('%Y-%m-%d %H:%M:%S')
+            return newdate.strftime('%Y-%m-%d %H:%M:%S')
         return []
 
     _columns = {
         'campaign_id': fields.many2one('dm.campaign', 'Campaign'),
         'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
-        'quantity' : fields.integer('Quantity', readonly=True, required=True),
+        'quantity' : fields.integer('Quantity', readonly=False, required=True),
         'uom_id' : fields.many2one('product.uom','UOM', required=True),
-        'date_planned': fields.date('Scheduled date', required=True),
-        'date_delivery': fields.date('Delivery date', readonly=True),
+        'date_order': fields.datetime('Order date', readonly=True),
+        'date_planned': fields.datetime('Scheduled date', required=True),
+        'date_delivery': fields.datetime('Delivery date', readonly=True),
         'trigger' : fields.selection(PURCHASE_LINE_TRIGGERS, 'Trigger'),
         'type' : fields.selection(PURCHASE_LINE_TYPES, 'Type'),
         'purchase_order_ids' : fields.one2many('purchase.order','dm_campaign_purchase_line','DM Campaign Purchase Line'),
@@ -646,7 +691,7 @@ class dm_campaign_purchase_line(osv.osv):
     }
 
     _defaults = {
-        'date_planned' : _default_date,
+#        'date_planned' : _default_date,
         'quantity' : lambda *a : 0,
         'uom_id' : _get_uom_id,
         'trigger': lambda *a : 'manual',
@@ -679,32 +724,6 @@ class dm_campaign_dtp_dates(osv.osv):
         'template': lambda *a: False,
     }
 dm_campaign_dtp_dates()
-
-class dm_overlay(osv.osv):
-    _name = 'dm.overlay'
-    _rec_name = 'trademark_id'
-    
-    def _overlay_code(self, cr, uid, ids, name, args, context={}):
-        result ={}
-        for id in ids:
-
-            overlay = self.browse(cr,uid,[id])[0]
-            trademark_code = overlay.trademark_id.name or ''
-            dealer_code = overlay.dealer_id.ref or ''
-            country_code = overlay.country_id.code or ''
-            
-            code1='-'.join([trademark_code, dealer_code, country_code])
-            result[id]=code1
-        return result
-
-    _columns = {
-        'code' : fields.function(_overlay_code,string='Code',type="char",method=True,readonly=True),
-        'trademark_id' : fields.many2one('dm.trademark', 'Trademark', required=True),
-        'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
-        'country_id' : fields.many2one('res.country', 'Country', required=True),
-        'bank_account_id' : fields.many2one('account.account', 'Account'),
-    }
-dm_overlay()
 
 class Country(osv.osv):
     _name = 'res.country'
