@@ -201,7 +201,7 @@ class crm_case(osv.osv):
         if not part:
             return data
         addr = self.pool.get('res.partner').address_get(cr, uid, [part])
-        if add['default']:
+        if addr['default']:
             data['value']['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, addr['default']).zip_id.id
         return data
 crm_case()
