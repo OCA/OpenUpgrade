@@ -109,7 +109,9 @@
 									<field name="proposition_type" select="1"/>
 									<field name="initial_proposition_id" select="1"/>
 									<field name="forwarding_charges"/>
-									<field name="quantity_max" string="Addresses Quantity"/>
+									<field name="quantity_ordered"/>
+									<field name="quantity_delivered"/>
+									<field name="quantity_real"/>
 									<field name="sale_rate"/>
 									<separator string="Notes" colspan="4"/>
 									<field name="notes" colspan="4" nolabel="1"/>
@@ -558,7 +560,9 @@
 									<field name="proposition_type" select="1"/>
 									<field name="initial_proposition_id" select="1"/>
 									<field name="forwarding_charges"/>
-									<field name="quantity_max" string="Addresses Quantity"/>
+									<field name="quantity_ordered"/>
+									<field name="quantity_delivered"/>
+									<field name="quantity_real"/>
 									<field name="sale_rate"/>
 									<separator string="Notes" colspan="4"/>
 									<field name="notes" colspan="4" nolabel="1"/>
@@ -691,7 +695,9 @@
 					<field name="initial_proposition_id" select="1"/>
 					<newline/>
 					<field name="forwarding_charges"/>
-					<field name="quantity_max" string="Addresses Quantity"/>
+					<field name="quantity_ordered"/>
+					<field name="quantity_delivered"/>
+					<field name="quantity_real"/>
 					<field name="sale_rate"/>
 					<separator string="Notes" colspan="4"/>
 					<field name="notes" colspan="4" nolabel="1"/>

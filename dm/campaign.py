@@ -165,30 +165,6 @@ class dm_campaign(osv.osv):
         'responsible_id' : lambda obj, cr, uid, context: uid,
     }
 
-#    def onchange_offer(self, cr, uid, ids, offer_id,country_id):
-#        if not country_id:
-#            raise osv.except_osv("Error!!","Country can't be empty ,First select Country")
-#        value = {}
-#        country = self.pool.get('res.country').browse(cr,uid,[country_id])[0]
-#        value['lang_id'] =  country.main_language.id
-#        value['currency_id'] = country.main_currency.id
-#        if not offer_id:
-#            res = {'trademark_id':0}
-#            return {'value':value}
-#        else:
-#            id = self.pool.get('dm.offer').read(cr, uid, [offer_id])
-#            if id:
-#                value = {'trademark_id':id[0]['recommended_trademark']}
-#            return {'value':value}
-#
-#        forbidden_state_ids = map(lambda x:x.country_id.id ,res.forbidden_state_ids)
-#        forbidden_country_ids = map(lambda x:x.id ,res.forbidden_country_ids)
-#        forbidden_country_ids.extend(forbidden_state_ids)
-#        if country_id in forbidden_country_ids:
-#            raise osv.except_osv("Error!!","You cannot use this offer in this country")
-#        value['name']=res.name
-#        return {'value':value}
-
     def state_draft_set(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
@@ -350,7 +326,6 @@ class dm_campaign_proposition(osv.osv):
     def _proposition_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
-
             pro = self.browse(cr,uid,[id])[0]
             camp_code = pro.camp_id.code1 or ''
             offer_code = pro.camp_id.offer_id and pro.camp_id.offer_id.code or ''
@@ -365,9 +340,62 @@ class dm_campaign_proposition(osv.osv):
             country_code = pro.camp_id.country_id.code or ''
             seq = '%%0%sd' % 2 % id
             final_date = month+year
-#            code1='-'.join([offer_code, dealer_code ,trademark_code ,final_date ,country_code ,seq])
             code1='-'.join([camp_code, seq])
             result[id]=code1
+        return result
+
+    def _quantity_ordered_get(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for propo in self.browse(cr,uid,ids):
+            if not propo.segment_ids:
+                result[propo.id]='No segments defined'
+                continue
+            qty = 0
+            numeric=True
+            for segment in propo.segment_ids:
+                if not segment.quantity_ordered:
+                    result[propo.id]='Ordered Quantity missing in a Segment'
+                    numeric=False
+                    continue
+                if segment.quantity_ordered == 'AAA':
+                    result[propo.id]='AAA for a Segment'
+                    numeric=False
+                    continue
+                qty += int(segment.quantity_ordered)
+            if numeric:
+                result[propo.id]=str(qty)
+        return result
+
+    def _quantity_delivered_get(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for propo in self.browse(cr,uid,ids):
+            if not propo.segment_ids:
+                result[propo.id]='No segments defined'
+                continue
+            qty = 0
+            for segment in propo.segment_ids:
+                if segment.quantity_delivered == 0:
+                    result[propo.id]='Delivered Quantity missing in a Segment'
+                    numeric=False
+                    continue
+                qty += segment.quantity_delivered
+            result[propo.id]=str(qty)
+        return result
+
+    def _quantity_real_get(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for propo in self.browse(cr,uid,ids):
+            if not propo.segment_ids:
+                result[propo.id]='No segments defined'
+                continue
+            qty = 0
+            for segment in propo.segment_ids:
+                if segment.quantity_real == 0:
+                    result[propo.id]='Real Quantity missing in a Segment'
+                    numeric=False
+                    continue
+                qty += segment.quantity_real
+            result[propo.id]=str(qty)
         return result
 
     def _default_camp_date(self, cr, uid, context={}):
@@ -384,9 +412,9 @@ class dm_campaign_proposition(osv.osv):
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
         'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
-        'quantity_ordered' : fields.char('Ordered Quantity', size=16),
-        'quantity_delivered' : fields.integer('Delivered Quantity'),
-        'quantity_real' : fields.integer('Real Quantity'),
+        'quantity_ordered' : fields.function(_quantity_ordered_get,string='Ordered Quantity',type="char",size="64",method=True,readonly=True),
+        'quantity_delivered' : fields.function(_quantity_delivered_get,string='Delivered Quantity',type="char",size="64",method=True,readonly=True),
+        'quantity_real' : fields.function(_quantity_real_get,string='Real Quantity',type="char",size="64",method=True,readonly=True),
         'starting_mail_price' : fields.float('Starting Mail Price',digits=(16,2)),
         'customer_pricelist_id':fields.many2one('product.pricelist','Items Pricelist', required=False),
         'forwarding_charges' : fields.float('Forwarding Charges', digits=(16,2)),
@@ -565,8 +593,7 @@ class dm_campaign_purchase_line(osv.osv):
                         raise osv.except_osv('Warning', "There's no purchase pricelist defined for this partner : %s" % (partner.name,) )
                     price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist_id], pline.product_id.id, pline.quantity, False, {'uom': pline.uom_id.id})[pricelist_id]
                     print "pline.date_planned : ",pline.date_planned
-                    newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S')
-                    #newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
+                    newdate = DateTime.strptime(pline.date_planned, '%Y-%m-%d %H:%M:%S') - DateTime.RelativeDateTime(days=pline.product_id.product_tmpl_id.seller_delay or 0.0)
                     print "newdate :",newdate.strftime('%Y-%m-%d %H:%M:%S')
 
                     if not pline.campaign_id.offer_id:
@@ -654,7 +681,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 for segment in propo.segment_ids:
                                     if not segment.quantity_real:
                                         raise osv.except_osv('Warning',
-                                            "There's no real quantity defined for this segment : %s" % (segment.name,) )
+                                            "There's no Ordered Quantity defined for the segment %s in proposition %s" % (segment.name,propo.name,) )
                                     quantity += int(segment.quantity_real)
                             print "DEBUG - Segment Quantity : ",quantity
 
