@@ -152,7 +152,7 @@ class dm_campaign(osv.osv):
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
         'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'dtp_dates_ids': fields.one2many('dm.campaign.dtp_dates','campaign_id','DTP Dates'),
-        'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
+        'overlay_id': fields.many2one('dm.overlay', 'Overlay', ondelete='cascade'),
     }
 
     _defaults = {
@@ -232,6 +232,15 @@ class dm_campaign(osv.osv):
             """ In campaign, if no trademark is given, it gets the 'recommended trademark' from offer """
             if not camp.trademark_id:
                 super(osv.osv, self).write(cr, uid, camp.id, {'trademark_id':offers.recommended_trademark.id})
+        
+        # check if an overlay exists else create it
+        overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',camp.trademark_id.id), ('dealer_id','=',camp.dealer_id.id), ('country_id','=',camp.country_id.id)])
+        if overlay:
+            super(osv.osv, self).write(cr, uid, camp.id, {'overlay_id':overlay[0]}, context)  
+        else:
+            overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':camp.trademark_id.id, 'dealer_id':camp.dealer_id.id, 'country_id':camp.country_id.id}, context)
+            super(osv.osv, self).write(cr, uid, camp.id, {'overlay_id':overlay_ids1}, context)
+        
         return res
 
     def create(self,cr,uid,vals,context={}):
@@ -262,6 +271,16 @@ class dm_campaign(osv.osv):
         if vals['offer_id'] and (not vals['trademark_id']):
             offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
             super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
+        
+        # check if an overlay exists else create it
+        data_cam1 = self.browse(cr, uid, id_camp)
+        overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id), ('country_id','=',data_cam1.country_id.id)])
+        if overlay:
+            super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)  
+        else:
+            overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_id':data_cam1.country_id.id}, context)
+            super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
+
         return id_camp
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
