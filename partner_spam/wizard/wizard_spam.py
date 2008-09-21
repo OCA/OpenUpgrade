@@ -42,11 +42,11 @@ email_send_form = '''<?xml version="1.0"?>
 
     <separator string="Attached files:" colspan="4"/>
     <field name="name1"/>
-    <field name="file1"/>
+    <field name="file1" fname_widget="name1"/>
     <field name="name2"/>
-    <field name="file2"/>
+    <field name="file2" fname_widget="name2"/>
     <field name="name3"/>
-    <field name="file3"/>
+    <field name="file3" fname_widget="name3"/>
 
     <separator colspan="4"/>
     <label string="Message:"/>
@@ -76,9 +76,9 @@ email_send_fields = {
     'subject': {'string':'Subject', 'type':'char', 'size':64, 'required':True},
     'default': {'string':'Only send to default addresses', 'type':'boolean'},
     'text': {'string':'Message', 'type':'text', 'required':True},
-    'name1': {'string':"File name 1", 'type':'char', 'size':32},
-    'name2': {'string':"File name 2", 'type':'char', 'size':32},
-    'name3': {'string':"File name 3", 'type':'char', 'size':32},
+    'name1': {'string':"File name 1", 'type':'char', 'size':64},
+    'name2': {'string':"File name 2", 'type':'char', 'size':64},
+    'name3': {'string':"File name 3", 'type':'char', 'size':64},
     'file1': {'string':'File 1', 'type':'binary'},
     'file2': {'string':'File 2', 'type':'binary'},
     'file3': {'string':'File 3', 'type':'binary'},
