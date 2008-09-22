@@ -33,7 +33,7 @@ from osv import fields,osv
 class account_invoice_line(osv.osv):
     _inherit = 'account.invoice.line'
     _columns = { 
-        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot', relate= True),
+        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot'),
         'customer_ref': fields.char('Customer reference', size=64),
     }
 account_invoice_line()

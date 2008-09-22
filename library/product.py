@@ -114,7 +114,7 @@ class product_product(osv.osv):
         #'number': fields.char('Number', size=64, readonly=True), # ancien numero interne
         'author_om_ids': fields.one2many('author.book.rel','product_id','Authors'),
         'lang': fields.many2many('res.lang','lang_book_rel','product_id','lang_id', 'Language'),
-        'editor': fields.many2one('res.partner','Editor', change_default=True, relate=True),
+        'editor': fields.many2one('res.partner','Editor', change_default=True),
         'code': fields.function(_product_code, method=True, type='char', string='Acronym'),
         'catalog_num': fields.char('Catalog number', size=64),
         'date_parution': fields.date('Release date'),

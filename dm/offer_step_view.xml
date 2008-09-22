@@ -166,22 +166,22 @@
 				<field name="code"/>
 				<notebook colspan="4">
 					<page string="General">
-<!--						<field name="offer_id"/>-->
 						<field name="name"/>
 						<field name="type" select="2" on_change="onchange_type(type,offer_id)"/>
 						<field name="quotation"/>
 						<field name="legal_state"/>
 						<newline/>
 						<field name="media_ids" colspan="4" nolabel="1" select="1"/>
-<!--						<field name="code"/>-->
-<!--						<field name="origin_id" colspan="4"/>-->
-						<separator string="Products" colspan="4"/>
-						<field name="product_ids" colspan="4" nolabel="1">
+						<field name="product_ids" colspan="4" nolabel="1" readonly="1">
 							<form string="Item">
-								<field name="product_id"/>
+									<field name="product_id"/>
 								<field name="item_type"/>
+								<separator string="Purchase constraints" colspan="4"/>
+								<field name="purchase_constraints" colspan="4" nolabel="1"/>
+								<separator string="Notes" colspan="4"/>
+								<field name="notes" colspan="4" nolabel="1"/>
 							</form>
-							<tree string="Items" editable="bottom">
+							<tree string="Items">
 								<field name="product_id"/>
 								<field name="item_type"/>
 							</tree>
@@ -262,8 +262,9 @@
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
 							<form string="Manufacturing Constraint">
 								<field name="name" select="1"/>
-								<field name="country_id"/>
+								<separator string="Manufacturing Constraints" colspan="4"/>
 								<field name="constraint" colspan="4" nolabel="1"/>
+								<field name="country_id"/>
 							</form>
 							<tree string="Manufacturing Constraint">
 								<field name="name"/>
@@ -474,9 +475,9 @@
 			<form string="Manufacturing Constraint">
 				<field name="name" select="1"/>
 				<field name="offer_step_id"/>
-				<field name="country_id"/>
 				<separator string="Manufacturing Constraint" colspan="4"/>
 				<field name="constraint" colspan="4" nolabel="1"/>
+				<field name="country_id" colspan="4"/>
 			</form>
 		</field>
 	</record>
@@ -487,9 +488,9 @@
 		<field name="arch" type="xml">	
 			<tree string="Manufacturing Constraints">
 				<field name="name" select="1"/>
-				<field name="country_id"/>
 				<field name="constraint"/>
 				<field name="offer_step_id"/>
+				<field name="country_id"/>
 			</tree>
 		</field>
 	</record>

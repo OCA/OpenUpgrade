@@ -33,9 +33,15 @@ class purchase_tender(osv.osv):
     _name = "purchase.tender"
     _description="Purchase Tender"
     _columns = {
-        'name': fields.char('Name', size=32,required=True),
+        'name': fields.char('Tender Reference', size=32,required=True),
+        'date_start': fields.datetime('Date Start'),
+        'date_end': fields.datetime('Date End'),
         'description': fields.text('Description'),
         'purchase_ids' : fields.one2many('purchase.order','tender_id','Purchase Orders')
+    }
+    _defaults = {
+        'date_start': lambda *args: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'purchase.order.tender'),
     }
 purchase_tender()
 
@@ -45,6 +51,12 @@ class purchase_order(osv.osv):
     _columns = {
         'tender_id' : fields.many2one('purchase.tender','Purchase Tender')
     }
+    def wkf_confirm_order(self, cr, uid, ids, context={}):
+        res = super(purchase_order, self).wkf_confirm_order(cr, uid, ids, context)
+        for po in self.browse(cr, uid, ids, context):
+            for order in po.tender_id.purchase_ids:
+                if order.id<>po.id:
+                    wf_service = netsvc.LocalService("workflow")
+                    wf_service.trg_validate(uid, 'purchase.order', order.id, 'purchase_cancel', cr)
+        return res
 purchase_order()
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

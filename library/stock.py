@@ -75,8 +75,8 @@ class stock_picking(osv.osv):
     _inherit = 'stock.picking'
     _order = "create_date desc"
     _columns = {
-        'sale_id': fields.many2one('sale.order', 'Sale Order', ondelete='set null', select=True, readonly=True, relate=True),
-        'purchase_id': fields.many2one('purchase.order', 'Purchase Order', ondelete='set null', readonly=True,relate=True, select=True),
+        'sale_id': fields.many2one('sale.order', 'Sale Order', ondelete='set null', select=True, readonly=True),
+        'purchase_id': fields.many2one('purchase.order', 'Purchase Order', ondelete='set null', readonly=True,select=True),
         'date_done': fields.datetime('Picking date', readonly=True),
     }
     _defaults = {

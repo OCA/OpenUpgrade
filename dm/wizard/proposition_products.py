@@ -18,7 +18,7 @@ class wizard_proposition_products(wizard.interface):
     
     message ='''<?xml version="1.0"?>
     <form string="Create Prices Progression">
-        <label align="0.0" colspan="4" string="test"/>
+        <label align="0.0" colspan="4" string="Price Progresson Assigned"/>
     </form>'''
     
     error_message = '''<?xml version="1.0"?>
@@ -51,21 +51,22 @@ class wizard_proposition_products(wizard.interface):
 
         # Creates proposition items
         for step in step_obj:
-            stp=stp+1
             product_ids=pool.get('dm.step.product').search(cr, uid, [('offer_step_id','=',step.id)])
             product_obj=pool.get('dm.step.product').browse(cr, uid, product_ids)
             print "DM - data : ",data['ids']
             print "DM - product_ids : ",product_ids
             for product in product_obj:
                 if product:
-                    pu = pool.get('product.pricelist').price_get(cr, uid,
-                        [prop_obj.customer_pricelist_id.id], product.product_id.id,1.0,
-                        context=context)[prop_obj.customer_pricelist_id.id]
-                    print "DM - item price ",pu
+                    if prop_obj.force_sm_price :
+                        pu = prop_obj.sm_price
+                    else :
+                        pu = pool.get('product.pricelist').price_get(cr, uid,
+                            [prop_obj.customer_pricelist_id.id], product.product_id.id,1.0,
+                            context=context)[prop_obj.customer_pricelist_id.id]
+                        print "DM - item price ",pu
 
                     price = pu * (1 + (stp * pprog_obj.percent_prog)) + (stp * pprog_obj.fixed_prog)
 
-                    product.product_id.price
                     vals = {'product_id':product.product_id.id,
                             'proposition_id':data['ids'][0],
                             'item_type':product.item_type,
@@ -74,6 +75,7 @@ class wizard_proposition_products(wizard.interface):
                             }
                     new_id=pool.get('dm.product').create(cr, uid, vals)
                     print "DM - new product : ",new_id
+            stp=stp+1
 
         """
         pool=pooler.get_pool(cr.dbname)
@@ -83,6 +85,7 @@ class wizard_proposition_products(wizard.interface):
                 camp_obj.write(cr,uid,r.id,{'campaign_group_id':group_id})
         """
         return {}
+
 
     def _new_prices_prog(self, cr, uid, data, context):
         pool=pooler.get_pool(cr.dbname)
@@ -110,7 +113,7 @@ class wizard_proposition_products(wizard.interface):
         return 'select'
 
     prices_prog_fields = {
-        'prices_progression': {'string': 'Select Prices Progression', 'type': 'selection', 'selection':_get_prices_progs, }
+        'prices_progression': {'string': 'Select Prices Progression', 'type': 'selection', 'selection':_get_prices_progs},
         }
 
 

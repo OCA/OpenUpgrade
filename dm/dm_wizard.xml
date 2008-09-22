@@ -43,5 +43,16 @@
 			name="wizard_campaign_tasks"
 			id="wizard_campaign_task"/>
 
+		<wizard
+			string="Duplicate"
+			model="dm.campaign.proposition"
+			name="wizard_prop_copy"
+			id="wizard_prop_copy"/>
+
+		<wizard
+			string="Duplicate"
+			model="dm.campaign"
+			name="wizard_campaign_copy"
+			id="wizard_campaign_copy"/>			
 	</data>
 </terp>

@@ -62,6 +62,6 @@ class wizard_qty(wizard.interface):
         }
 
     }
-wizard_qty('product.price_list')
+wizard_qty('product.price_list.print')
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

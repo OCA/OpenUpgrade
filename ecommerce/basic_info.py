@@ -7,30 +7,28 @@ import ir
 
 
 class ecommerce_payment(osv.osv):
-    
-        _name = "ecommerce.payment"
-        _description = "ecommerce Payment"
-        _columns = {
-            'name': fields.char('Cheque Payable to', size=256, required=True),
-            'street': fields.char('Street', size=128, required=True),
-            'street2': fields.char('Street2', size=128, required=True),
-            'zip': fields.char('Zip', change_default=True, size=24, required=True),
-            'city': fields.char('City', size=128, required=True),
-            'state_id': fields.many2one("res.country.state", 'State', required=True),
-            'country_id': fields.many2one('res.country', 'Country', required=True),
-             }
+    _name = "ecommerce.payment"
+    _description = "ecommerce Payment"
+    _columns = {
+        'name': fields.char('Cheque Payable to', size=256, required=True),
+        'street': fields.char('Street', size=128, required=True),
+        'street2': fields.char('Street2', size=128, required=True),
+        'zip': fields.char('Zip', change_default=True, size=24, required=True),
+        'city': fields.char('City', size=128, required=True),
+        'state_id': fields.many2one("res.country.state", 'State', required=True),
+        'country_id': fields.many2one('res.country', 'Country', required=True),
+    }
 ecommerce_payment()
 
 
 class ecommerce_shop(osv.osv):
-        
     _name = "ecommerce.shop"
     _description = "Shop Basic Info"
     _columns = {
         'name': fields.char('Name', size=256),
         'company_id': fields.many2one('res.company', 'Company'),
         'shop_id': fields.many2one('sale.shop', 'Sale Shop'),
-        'chequepay_to':fields.many2one('ecommerce.payment', 'Cheque Payable to', required=True),
+        'chequepay_to':fields.many2one('ecommerce.payment', 'Cheque Payable to'),
         'category_ids': fields.one2many('ecommerce.category', 'web_id','Categories', translate=True),
         'products':fields.many2many('product.product','ecommerce_new_product_rel','product','ecommerce_product','Products',readonly=True),
         'currency_id': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency'),

@@ -5,95 +5,35 @@
 			<record model="res.partner.category" id="cat_copywriter">
 				<field name="name" eval="&quot;Copywriter&quot;"/>
 			</record>
-	 
+ 
 			<record model="res.partner.category" id="cat_dealer">
 				<field name="name" eval="&quot;Dealer&quot;"/>
 			</record>
-	
+
 			<record model="res.partner.category" id="cat_broker">
 				<field name="name" eval="&quot;Broker&quot;"/>
 			</record>
 			
 			<record model="res.partner.category" id="cat_duplicator">
 				<field name="name" eval="&quot;Deduplicator&quot;"/>
-			</record>			
-	
+			</record>
+
 			<record model="res.partner.category" id="cat_trademark">
 	 			<field name="name" eval="&quot;Trademark&quot;"/>
 	 		</record>
-	 			 
+
 			<record model="dm.media" id="media_paper">
 				<field name="name" eval="&quot;Paper&quot;"/>
 			</record>
-	 
+ 
 			<record model="dm.media" id="media_email">
 				<field name="name" eval="&quot;Email&quot;"/>
 			</record>
-	 
+ 
 			<record model="dm.media" id="media_phone">
 				<field name="name" eval="&quot;Phone&quot;"/>
 			</record>
 
-
-		<record id="dm_offer_step_type_startingmail0" model="dm.offer.step.type">
-			<field eval="&quot;SM&quot;" name="code"/>
-			<field eval="&quot;Starting Mail&quot;" name="name"/>
-			<field eval="&quot;1&quot;" name="flow_start"/>
-		</record>
-
-		<record id="dm_offer_step_type_intermediatemail0" model="dm.offer.step.type">
-			<field eval="&quot;IM&quot;" name="code"/>
-			<field eval="&quot;Intermediate Mail&quot;" name="name"/>
-		</record>
-
-		<record id="dm_offer_step_type_relaunching0" model="dm.offer.step.type">
-			<field eval="&quot;RL&quot;" name="code"/>
-			<field eval="&quot;Relaunching&quot;" name="name"/>
-		</record>
-
-		<record id="dm_offer_testoffermodel0" model="dm.offer">
-			<field eval="&quot;TOM&quot;" name="code"/>
-			<field eval="[(6,0,[])]" name="trademark_country_ids"/>
-			<field eval="[(6,0,[])]" name="forbidden_state_ids"/>
-			<field name="copywriter_id" ref="base.main_partner"/>
-			<field name="lang_orig" ref="base.lang_en"/>
-			<field eval="[(6,0,[])]" name="category_ids"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field eval="&quot;model&quot;" name="type"/>
-			<field eval="&quot;1&quot;" name="active"/>
-			<field eval="&quot;validated&quot;" name="legal_state"/>
-			<field eval="&quot;Testoffermodel&quot;" name="name"/>
-			<field eval="[(6,0,[])]" name="forbidden_country_ids"/>
-		</record>
-
-		<record id="dm_offer_step_0" model="dm.offer.step">
-<!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
-			<field name="name">Step0</field>
-			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field eval="&quot;or&quot;" name="split_mode"/>
-			<field eval="[(6,0,[])]" name="product_ids"/>
-			<field eval="&quot;1&quot;" name="flow_start"/>
-			<field eval="&quot;SM&quot;" name="type"/>
-		</record>
-
-		<record id="dm_offer_step_1" model="dm.offer.step">
-<!--			<field eval="[(6,0,[])]" name="document_ids"/>-->
-			<field name="name">Step1</field>
-			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
-			<field eval="&quot;draft&quot;" name="state"/>
-			<field eval="&quot;or&quot;" name="split_mode"/>
-			<field eval="[(6,0,[])]" name="product_ids"/>
-			<field eval="&quot;IM&quot;" name="type"/>
-		</record>
-
-		<record id="dm_offer_step_transition_0" model="dm.offer.step.transition">
-			<field name="step_from" ref="dm_offer_step_0"/>
-			<field name="step_to" ref="dm_offer_step_1"/>
-			<field ref='media_paper' name="media_id"/>
-			<field eval="&quot;automatic&quot;" name="condition"/>
-			<field name="delay" eval="1"/>
-		</record>
 
 		<record id="dm_campaign_type_loyalty" model="dm.campaign.type">
 			<field name="code">loyalty</field>
@@ -118,27 +58,37 @@
 		<record id="dm_campaign_type_model" model="dm.campaign.type">
 			<field name="code">model</field>
 			<field name="name">Model</field>
-		</record>		
-
-		<record id="dm_campaign_0" model="dm.campaign">
-			<field eval="&quot;model&quot;" name="campaign_type"/>
-			<field eval="&quot;campaign01&quot;" name="name"/>
-			<field name="country_id" ref="base.be"/>
-			<field eval="&quot;pending&quot;" name="planning_state"/>
-			<field name="offer_id" ref="dm_offer_testoffermodel0"/>
-			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
 		</record>
 
-		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
-			<field eval="&quot;campaignpropo01&quot;" name="name"/>
-			<field name="camp_id" ref="dm_campaign_0"/>
-			<field eval="&quot;init&quot;" name="proposition_type"/>
+		<record id="dm_campaign_dtp_dates_1" model="dm.campaign.dtp_dates">
+			<field name="name">DTP Request</field>
+			<field name="template">1</field>
 		</record>
-		<record id="dm_campaign_proposition_segment_0" model="dm.campaign.proposition.segment">
-			<field eval="&quot;segment01&quot;" name="name"/>
-<!--			<field eval="&quot;SEG01&quot;" name="action_code"/>-->
-			<field name="proposition_id" ref="dm_campaign_proposition_0"/>
-			<field eval="1000" name="quantity_add"/>
+
+		<record id="dm_campaign_dtp_dates_2" model="dm.campaign.dtp_dates">
+			<field name="name">Translation Delivery</field>
+			<field name="template">1</field>
 		</record>
+
+		<record id="dm_campaign_dtp_dates_3" model="dm.campaign.dtp_dates">
+			<field name="name">Translation Rereading</field>
+			<field name="template">1</field>
+		</record>
+
+		<record id="dm_campaign_dtp_dates_4" model="dm.campaign.dtp_dates">
+			<field name="name">First Draft Delivery</field>
+			<field name="template">1</field>
+		</record>
+
+		<record id="dm_campaign_dtp_dates_5" model="dm.campaign.dtp_dates">
+			<field name="name">Final corrected Proof Validation</field>
+			<field name="template">1</field>
+		</record>
+
+		<record id="dm_campaign_dtp_dates_6" model="dm.campaign.dtp_dates">
+			<field name="name">Final corrected Proof DTP Supplier Delivery</field>
+			<field name="template">1</field>
+		</record>
+
 	</data>
 </terp>

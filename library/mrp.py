@@ -34,8 +34,8 @@ from mx import DateTime
 class mrp_procurement(osv.osv):
     _inherit = "mrp.procurement"
     _columns = {
-        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot', relate= True),
-        'customer_ref': fields.char('Customer reference', size=64),     
+        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot'),
+        'customer_ref': fields.char('Customer reference', size=64),
  }
 
     def action_po_assign(self, cr, uid, ids):

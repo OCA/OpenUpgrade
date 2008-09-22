@@ -4,7 +4,7 @@
 <record id="chart0" model="account.account">
 	<field name="code">0</field>
 	<field name="name">Account Chart</field>
-	<field name="close_method">none</field>
+
 <!--	<field name="parent_id" eval="[]"/>-->
 	<field name="type">view</field>
 
@@ -12,7 +12,7 @@
 <record id="chart1" model="account.account">
 	<field name="code">1</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">CLASSE 1 -- CAPITAL PROPRE, ... - EIGEN VERMOGEN, ...</field>
@@ -21,7 +21,7 @@
 <record id="chart2" model="account.account">
 	<field name="code">2</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">CLASSE 2 -- FRAIS D'ETABLISSEMENT, ACTIFS IMMOBILISES, ... - OPRICHTINGSKOSTEN, VASTE ACTIVA, ...</field>
@@ -30,7 +30,7 @@
 <record id="chart3" model="account.account">
 	<field name="code">3</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">CLASSE 3 -- STOCK ET COMMANDES EN COURS - GRONDSTOFFEN</field>
@@ -39,7 +39,7 @@
 <record id="chart4" model="account.account">
 	<field name="code">4</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">CLASSE 4 -- CREANCES ET DETTES A UN AN AU PLUS - VORDERINGEN EN SCHULDEN OP TEN HOOGTE EEN JAAR</field>
@@ -48,7 +48,7 @@
 <record id="chart5" model="account.account">
 	<field name="code">5</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">CLASSE 5 - PLACEMENTS DE TRESORIERIE - LIQUIDE MIDDELEN / GELDBELEGGINGEN</field>
@@ -57,7 +57,7 @@
 <record id="chart6" model="account.account">
 	<field name="code">6</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">CLASSE 6 -- CHARGES - KOSTEN</field>
@@ -66,7 +66,7 @@
 <record id="chart7" model="account.account">
 	<field name="code">7</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart0"/>
 	<field name="type">view</field>
 	<field name="name">CLASSE 7 -- PRODUITS - OPBRENGSTEN</field>
@@ -75,7 +75,7 @@
 <record id="chart10" model="account.account">
 	<field name="code">10</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">Capital - Kapitaal</field>
@@ -84,7 +84,7 @@
 <record id="chart11" model="account.account">
 	<field name="code">11</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">Primes d'�mission - Uitgiftepremies</field>
@@ -93,7 +93,7 @@
 <record id="chart12" model="account.account">
 	<field name="code">12</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">Plus-values de r��valuation - Herwaarderingsmeerwaarde</field>
@@ -102,7 +102,7 @@
 <record id="chart13" model="account.account">
 	<field name="code">13</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">R�serves - Reserves</field>
@@ -111,7 +111,7 @@
 <record id="chart14" model="account.account">
 	<field name="code">14</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">B�n�fice/perte report�(e) - Overgedragen winst/verlies</field>
@@ -120,7 +120,7 @@
 <record id="chart15" model="account.account">
 	<field name="code">15</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">Subsides en capital - Kapitaalsubsidies</field>
@@ -129,7 +129,7 @@
 <record id="chart16" model="account.account">
 	<field name="code">16</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">Provisions et imp�ts diff�r�s - Voorz. en uitgestelde belastingen</field>
@@ -138,7 +138,7 @@
 <record id="chart17" model="account.account">
 	<field name="code">17</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart1"/>
 	<field name="type">view</field>
 	<field name="name">Dettes � plus d'un an - Schulden op meer dan een jaar</field>
@@ -147,7 +147,7 @@
 <record id="chart20" model="account.account">
 	<field name="code">20</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Frais d'�tablissement - Oprichtingskosten</field>
@@ -156,7 +156,7 @@
 <record id="chart21" model="account.account">
 	<field name="code">21</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Immobilisations incorporelles - Immateriele vaste activa</field>
@@ -165,7 +165,7 @@
 <record id="chart22" model="account.account">
 	<field name="code">22</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Terrains et constructions - Terreinen en gebouwen</field>
@@ -174,7 +174,7 @@
 <record id="chart23" model="account.account">
 	<field name="code">23</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Installations, machines et outillage - Installaties, machines en uitrusting</field>
@@ -183,7 +183,7 @@
 <record id="chart24" model="account.account">
 	<field name="code">24</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Mobilier et mat�riel roulant - Meubilair en rollend materieel</field>
@@ -192,7 +192,7 @@
 <record id="chart25" model="account.account">
 	<field name="code">25</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Immobilis. en loc-financement - Vaste activa in leasing of op grond</field>
@@ -201,7 +201,7 @@
 <record id="chart26" model="account.account">
 	<field name="code">26</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Autres immobilisations corp. - Andere materiele vaste activa</field>
@@ -210,7 +210,7 @@
 <record id="chart27" model="account.account">
 	<field name="code">27</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Immo. corp. en cours et acomptes vers�s - V. activa in aanbouw en vooruit�</field>
@@ -219,7 +219,7 @@
 <record id="chart28" model="account.account">
 	<field name="code">28</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Immobilisations financiers - Financiele vaste activa</field>
@@ -228,7 +228,7 @@
 <record id="chart29" model="account.account">
 	<field name="code">29</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart2"/>
 	<field name="type">view</field>
 	<field name="name">Cr�ances � plus d'un an - Vorderingen op meer dan een jaar</field>
@@ -237,7 +237,7 @@
 <record id="chart30" model="account.account">
 	<field name="code">30</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart3"/>
 	<field name="type">view</field>
 	<field name="name">Approv. mati�res premi�res - Grondstoffen</field>
@@ -246,7 +246,7 @@
 <record id="chart31" model="account.account">
 	<field name="code">31</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart3"/>
 	<field name="type">view</field>
 	<field name="name">Approv. et fournitures - Hulpstoffen</field>
@@ -255,7 +255,7 @@
 <record id="chart32" model="account.account">
 	<field name="code">32</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart3"/>
 	<field name="type">view</field>
 	<field name="name">Encours de fabrication - Goederen in bewerking</field>
@@ -264,7 +264,7 @@
 <record id="chart33" model="account.account">
 	<field name="code">33</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart3"/>
 	<field name="type">view</field>
 	<field name="name">Produits finis - Gereed Product</field>
@@ -273,7 +273,7 @@
 <record id="chart34" model="account.account">
 	<field name="code">34</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart3"/>
 	<field name="type">view</field>
 	<field name="name">Marchandises - Handelsgoederen</field>
@@ -282,7 +282,7 @@
 <record id="chart35" model="account.account">
 	<field name="code">35</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart3"/>
 	<field name="type">view</field>
 	<field name="name">Immeubles destin�s vente - Onroerende goederen bestemd. v. verk.</field>
@@ -291,7 +291,7 @@
 <record id="chart40" model="account.account">
 	<field name="code">40</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Cr�ances commerciales - Handelsvorderingen</field>
@@ -300,7 +300,7 @@
 <record id="chart41" model="account.account">
 	<field name="code">41</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Autres cr�ances - Overige vorderingen</field>
@@ -309,7 +309,7 @@
 <record id="chart42" model="account.account">
 	<field name="code">42</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Dettes � plus d'un an �cheant dans l'ann�e - Schulden op meer dan ��n jaar die binnen het jaar verfallen</field>
@@ -318,7 +318,7 @@
 <record id="chart43" model="account.account">
 	<field name="code">43</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Dettes financi�res - Financi�le schulden</field>
@@ -327,7 +327,7 @@
 <record id="chart44" model="account.account">
 	<field name="code">44</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Dettes commerciales - Handelsschulden</field>
@@ -336,7 +336,7 @@
 <record id="chart45" model="account.account">
 	<field name="code">45</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Dettes fiscales, salariales, sociales - Schulden m. betrekking tot belastingen, bezoldingen en sociale lasten</field>
@@ -345,7 +345,7 @@
 <record id="chart46" model="account.account">
 	<field name="code">46</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Acomptes re�us sur commandes</field>
@@ -354,7 +354,7 @@
 <record id="chart47" model="account.account">
 	<field name="code">47</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Dettes affectation r�sultat - Schulden besteming resultaat</field>
@@ -363,7 +363,7 @@
 <record id="chart48" model="account.account">
 	<field name="code">48</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Dettes diverses - Diverse schulden</field>
@@ -372,7 +372,7 @@
 <record id="chart49" model="account.account">
 	<field name="code">49</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart4"/>
 	<field name="type">view</field>
 	<field name="name">Comptes de r�gularisation - Overlopende- en wachtrekeningen</field>
@@ -381,7 +381,7 @@
 <record id="chart50" model="account.account">
 	<field name="code">50</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Actions propres - Eigen aandelen</field>
@@ -390,7 +390,7 @@
 <record id="chart51" model="account.account">
 	<field name="code">51</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Actions et parts - Aandelen</field>
@@ -399,7 +399,7 @@
 <record id="chart52" model="account.account">
 	<field name="code">52</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Titres � revenu fixe - Vastrentende Effecten</field>
@@ -408,7 +408,7 @@
 <record id="chart53" model="account.account">
 	<field name="code">53</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">D�p�ts � terme - Termijndeposito's</field>
@@ -417,7 +417,7 @@
 <record id="chart54" model="account.account">
 	<field name="code">54</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Valeurs �chues � encaissement - Te incasseren verfallen waarden</field>
@@ -426,7 +426,7 @@
 <record id="chart55" model="account.account">
 	<field name="code">55</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Banque - Rekening-courant</field>
@@ -435,7 +435,7 @@
 <record id="chart56" model="account.account">
 	<field name="code">56</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Office des ch�ques postaux - Postch�que en girodienst</field>
@@ -444,7 +444,7 @@
 <record id="chart57" model="account.account">
 	<field name="code">57</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Caisses - Kassen</field>
@@ -453,7 +453,7 @@
 <record id="chart58" model="account.account">
 	<field name="code">58</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart5"/>
 	<field name="type">view</field>
 	<field name="name">Virements interns - Interne overboekingen</field>
@@ -462,7 +462,7 @@
 <record id="chart60" model="account.account">
 	<field name="code">60</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Approv. et marchandises</field>
@@ -471,7 +471,7 @@
 <record id="chart61" model="account.account">
 	<field name="code">61</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Services et biens divers</field>
@@ -480,7 +480,7 @@
 <record id="chart62" model="account.account">
 	<field name="code">62</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">R�mun�rations, charges sociales et pensions</field>
@@ -489,7 +489,7 @@
 <record id="chart63" model="account.account">
 	<field name="code">63</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Amortissements, r�d. val., provi. risques et charges - Afschrijvingen waardevermin. en voorzieningen v. risico's kost.</field>
@@ -498,7 +498,7 @@
 <record id="chart64" model="account.account">
 	<field name="code">64</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Autres charges exploitation - Andere bedrijfskosten</field>
@@ -507,7 +507,7 @@
 <record id="chart65" model="account.account">
 	<field name="code">65</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Charges financi�res</field>
@@ -516,7 +516,7 @@
 <record id="chart66" model="account.account">
 	<field name="code">66</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Charges exceptionnelles</field>
@@ -525,7 +525,7 @@
 <record id="chart67" model="account.account">
 	<field name="code">67</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Imp�t sur le r�sultat</field>
@@ -534,7 +534,7 @@
 <record id="chart68" model="account.account">
 	<field name="code">68</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Transferts comptes immunis�es et imp�ts diff�r�s</field>
@@ -543,7 +543,7 @@
 <record id="chart69" model="account.account">
 	<field name="code">69</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart6"/>
 	<field name="type">view</field>
 	<field name="name">Affectations et pr�l�vements</field>
@@ -552,7 +552,7 @@
 <record id="chart70" model="account.account">
 	<field name="code">70</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Chiffre d'affaires - Omzet</field>
@@ -561,7 +561,7 @@
 <record id="chart71" model="account.account">
 	<field name="code">71</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Variation stocks et commandes en cours - Wijzigingen vorraden en in de bestellingen in uitvoering</field>
@@ -570,7 +570,7 @@
 <record id="chart72" model="account.account">
 	<field name="code">72</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Production immobilis�e - Geproduceerde vaste activa</field>
@@ -579,7 +579,7 @@
 <record id="chart74" model="account.account">
 	<field name="code">74</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Autres produits exploitation - Andere bedrijfsopbrengsten</field>
@@ -588,7 +588,7 @@
 <record id="chart75" model="account.account">
 	<field name="code">75</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Produits financiers - Financi�le opbrengsten</field>
@@ -597,7 +597,7 @@
 <record id="chart76" model="account.account">
 	<field name="code">76</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Produits exceptionnels - Uitzonderlijke opbrengsten</field>
@@ -606,7 +606,7 @@
 <record id="chart77" model="account.account">
 	<field name="code">77</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">R�gularisation d'imp�ts, reprises provisions fiscales - Regul. belastingen en terugneming fiscale voorz.</field>
@@ -615,7 +615,7 @@
 <record id="chart78" model="account.account">
 	<field name="code">78</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Pr�l�vements r�serves immunis�es et imp�ts diff�r�s - Onttrek. belast.vrije reserves en de uitgestelde belastingen</field>
@@ -624,7 +624,7 @@
 <record id="chart79" model="account.account">
 	<field name="code">79</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart7"/>
 	<field name="type">view</field>
 	<field name="name">Affectations et pr�l�vements - Resultaatverwerking</field>
@@ -633,7 +633,7 @@
 <record id="account.a_cash" model="account.account">
 	<field name="code">100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart10"/>
 	<field name="type">cash</field>
 	<field name="name">Capital souscrit - Geplaatst kapitaal</field>
@@ -642,7 +642,7 @@
 <record id="chart101" model="account.account">
 	<field name="code">101</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart10"/>
 	<field name="type">cash</field>
 	<field name="name">Capital non appel� (-) - Niet opgevraagd kapitaal (-)</field>
@@ -651,7 +651,7 @@
 <record id="chart110" model="account.account">
 	<field name="code">110</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart11"/>
 	<field name="type">cash</field>
 	<field name="name">Primes d'�mission - Uitgiftepremies</field>
@@ -660,7 +660,7 @@
 <record id="chart120" model="account.account">
 	<field name="code">120</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart12"/>
 	<field name="type">cash</field>
 	<field name="name">Plus-values de r��valuation sur immo. incorp. - Herwaarderingsmeerwaarde</field>
@@ -669,7 +669,7 @@
 <record id="chart121" model="account.account">
 	<field name="code">121</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart12"/>
 	<field name="type">cash</field>
 	<field name="name">Plus-values de r��valuation sur immo. corp. - Herwaarderingsmeerwaarde</field>
@@ -678,7 +678,7 @@
 <record id="chart122" model="account.account">
 	<field name="code">122</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart12"/>
 	<field name="type">cash</field>
 	<field name="name">Plus-values de r��valuation sur immo. financiers - Herwaarderingsmeerwaarde</field>
@@ -687,7 +687,7 @@
 <record id="chart123" model="account.account">
 	<field name="code">123</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart12"/>
 	<field name="type">cash</field>
 	<field name="name">Plus-values de r��valuation sur stocks - Herwaarderingsmeerwaarde</field>
@@ -696,7 +696,7 @@
 <record id="chart124" model="account.account">
 	<field name="code">124</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart12"/>
 	<field name="type">cash</field>
 	<field name="name">Reprises de r�duction de valeur sur placements tr�sorerie - Herwaarderingsmeerwaarde</field>
@@ -705,7 +705,7 @@
 <record id="chart130" model="account.account">
 	<field name="code">130</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart13"/>
 	<field name="type">cash</field>
 	<field name="name">R�serve l�gale - Wettelijke reserve</field>
@@ -714,7 +714,7 @@
 <record id="chart131" model="account.account">
 	<field name="code">131</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart13"/>
 	<field name="type">cash</field>
 	<field name="name">R�serves indisponibles - Onbeschikbare reserves</field>
@@ -723,7 +723,7 @@
 <record id="chart132" model="account.account">
 	<field name="code">132</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart13"/>
 	<field name="type">cash</field>
 	<field name="name">R�serves immunis�es - Belastingvrije reserves</field>
@@ -732,7 +732,7 @@
 <record id="chart133" model="account.account">
 	<field name="code">133</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart13"/>
 	<field name="type">cash</field>
 	<field name="name">R�serves disponibles - Beschikbare reserves</field>
@@ -741,7 +741,7 @@
 <record id="chart140" model="account.account">
 	<field name="code">140</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart14"/>
 	<field name="type">tax</field>
 	<field name="name">B�n�fice/perte report�(e) - Overgedragen winst/verlies</field>
@@ -750,7 +750,7 @@
 <record id="chart150" model="account.account">
 	<field name="code">150</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart15"/>
 	<field name="type">cash</field>
 	<field name="name">Montants obtenus - Kapitaalsubsidies</field>
@@ -759,7 +759,7 @@
 <record id="chart160" model="account.account">
 	<field name="code">160</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Provisions pensions et obligations - Voorz. pensioenen en soortg. verplichtingen</field>
@@ -768,7 +768,7 @@
 <record id="chart161" model="account.account">
 	<field name="code">161</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Provisions charges fiscales - Voorz. belastingen</field>
@@ -777,7 +777,7 @@
 <record id="chart162" model="account.account">
 	<field name="code">162</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Provisions gros entretiens et r�parations - Voorz. grote herstel/onderh.</field>
@@ -786,7 +786,7 @@
 <record id="chart163" model="account.account">
 	<field name="code">163</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Provisions autres risques-charges - Voorzieningen voor Lijfrente</field>
@@ -795,7 +795,7 @@
 <record id="chart174" model="account.account">
 	<field name="code">174</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart17"/>
 	<field name="type">cash</field>
 	<field name="name">Autres emprunts - Overige schulden</field>
@@ -804,7 +804,7 @@
 <record id="chart176" model="account.account">
 	<field name="code">176</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart17"/>
 	<field name="type">cash</field>
 	<field name="name">Acomptes re�us sur commandes</field>
@@ -813,7 +813,7 @@
 <record id="chart178" model="account.account">
 	<field name="code">178</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart17"/>
 	<field name="type">cash</field>
 	<field name="name">Cautionnements re�u en num�raire - Borgtocht. ontvang. in contanten</field>
@@ -822,7 +822,7 @@
 <record id="chart179" model="account.account">
 	<field name="code">179</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart17"/>
 	<field name="type">cash</field>
 	<field name="name">Dettes diverses - Overige schulden</field>
@@ -831,7 +831,7 @@
 <record id="chart200" model="account.account">
 	<field name="code">200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart20"/>
 	<field name="type">asset</field>
 	<field name="name">Frais de constitution - Kosten van oprichting</field>
@@ -840,7 +840,7 @@
 <record id="chart201" model="account.account">
 	<field name="code">201</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart20"/>
 	<field name="type">asset</field>
 	<field name="name">Frais d'�mission d'emprunts - Kosten bij uitgifte van leningen</field>
@@ -849,7 +849,7 @@
 <record id="chart202" model="account.account">
 	<field name="code">202</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart20"/>
 	<field name="type">asset</field>
 	<field name="name">Autres frais d'�tablissement - Overige oprichtingskosten</field>
@@ -858,7 +858,7 @@
 <record id="chart204" model="account.account">
 	<field name="code">204</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart20"/>
 	<field name="type">asset</field>
 	<field name="name">Frais de restructuration - Herstructureringskosten</field>
@@ -867,7 +867,7 @@
 <record id="chart210" model="account.account">
 	<field name="code">210</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart21"/>
 	<field name="type">asset</field>
 	<field name="name">Frais de recherches et developpement - Kosten van onderzoek en ontwikkeling</field>
@@ -876,7 +876,7 @@
 <record id="chart211" model="account.account">
 	<field name="code">211</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart21"/>
 	<field name="type">asset</field>
 	<field name="name">Concessions, brevets, licences, ... - Consessies, octrooien, licenties, ...</field>
@@ -885,7 +885,7 @@
 <record id="chart212" model="account.account">
 	<field name="code">212</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart21"/>
 	<field name="type">asset</field>
 	<field name="name">Goodwill</field>
@@ -894,7 +894,7 @@
 <record id="chart213" model="account.account">
 	<field name="code">213</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart21"/>
 	<field name="type">asset</field>
 	<field name="name">Acomptes vers�s - Vooruitbetalingen</field>
@@ -903,7 +903,7 @@
 <record id="chart214" model="account.account">
 	<field name="code">214</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart21"/>
 	<field name="type">asset</field>
 	<field name="name">Surprix aff�rents acquisition d'une participation</field>
@@ -912,7 +912,7 @@
 <record id="chart220" model="account.account">
 	<field name="code">220</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart22"/>
 	<field name="type">asset</field>
 	<field name="name">Terrains - Terreinen</field>
@@ -921,7 +921,7 @@
 <record id="chart221" model="account.account">
 	<field name="code">221</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart22"/>
 	<field name="type">asset</field>
 	<field name="name">Constructions - Gebouwen</field>
@@ -930,7 +930,7 @@
 <record id="chart222" model="account.account">
 	<field name="code">222</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart22"/>
 	<field name="type">asset</field>
 	<field name="name">Terrains b�tis - Bebouwde terreinen</field>
@@ -939,7 +939,7 @@
 <record id="chart223" model="account.account">
 	<field name="code">223</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart22"/>
 	<field name="type">asset</field>
 	<field name="name">Autres droits r�els sur immeubles - Overige zakelijke rechten op onroe.</field>
@@ -948,7 +948,7 @@
 <record id="chart230" model="account.account">
 	<field name="code">230</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart23"/>
 	<field name="type">asset</field>
 	<field name="name">Installations - Installaties</field>
@@ -957,7 +957,7 @@
 <record id="chart231" model="account.account">
 	<field name="code">231</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart23"/>
 	<field name="type">asset</field>
 	<field name="name">Machines</field>
@@ -966,7 +966,7 @@
 <record id="chart237" model="account.account">
 	<field name="code">237</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart23"/>
 	<field name="type">asset</field>
 	<field name="name">Outillage - Uitrusting</field>
@@ -975,7 +975,7 @@
 <record id="chart241" model="account.account">
 	<field name="code">241</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart24"/>
 	<field name="type">asset</field>
 	<field name="name">Voiture - Rollend materieel (wagen)</field>
@@ -984,7 +984,7 @@
 <record id="chart242" model="account.account">
 	<field name="code">242</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart24"/>
 	<field name="type">asset</field>
 	<field name="name">Camions - Rollend materieel (vrachtwagen)</field>
@@ -993,7 +993,7 @@
 <record id="chart250" model="account.account">
 	<field name="code">250</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart25"/>
 	<field name="type">asset</field>
 	<field name="name">Terreins loc-fin - Terreinen in leasing</field>
@@ -1002,7 +1002,7 @@
 <record id="chart251" model="account.account">
 	<field name="code">251</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart25"/>
 	<field name="type">asset</field>
 	<field name="name">Install., machines loc-fin - Installaties, machines in leasing</field>
@@ -1011,7 +1011,7 @@
 <record id="chart252" model="account.account">
 	<field name="code">252</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart25"/>
 	<field name="type">asset</field>
 	<field name="name">Mobilier en loc-fin - Meubilair in leasing</field>
@@ -1020,7 +1020,7 @@
 <record id="chart253" model="account.account">
 	<field name="code">253</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart25"/>
 	<field name="type">asset</field>
 	<field name="name">Mat�riel en loc-fin - Uitrusting in leasing</field>
@@ -1029,7 +1029,7 @@
 <record id="chart254" model="account.account">
 	<field name="code">254</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart25"/>
 	<field name="type">asset</field>
 	<field name="name">Mat. inform. en loc-fin- Hardware in leasing</field>
@@ -1038,7 +1038,7 @@
 <record id="chart255" model="account.account">
 	<field name="code">255</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart25"/>
 	<field name="type">asset</field>
 	<field name="name">Mat. roulant en loc-fin - Rollend materieel leasing</field>
@@ -1047,7 +1047,7 @@
 <record id="chart260" model="account.account">
 	<field name="code">260</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart26"/>
 	<field name="type">asset</field>
 	<field name="name">Amenagement locaux lou�s - Inrichtingskost. gehuurde gebouw</field>
@@ -1056,7 +1056,7 @@
 <record id="chart270" model="account.account">
 	<field name="code">270</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart27"/>
 	<field name="type">asset</field>
 	<field name="name">Immo. corp. en cours et acomptes vers�s - V. activa in aanbouw en vooruit</field>
@@ -1065,7 +1065,7 @@
 <record id="chart280" model="account.account">
 	<field name="code">280</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart28"/>
 	<field name="type">asset</field>
 	<field name="name">Participations entreprises li�es - Aanschaffingsw. deeln. verb. ond.</field>
@@ -1074,7 +1074,7 @@
 <record id="chart281" model="account.account">
 	<field name="code">281</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart28"/>
 	<field name="type">asset</field>
 	<field name="name">Cr�ances s/entreprises li�es - Vorderingen op rekening</field>
@@ -1083,7 +1083,7 @@
 <record id="chart283" model="account.account">
 	<field name="code">283</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart28"/>
 	<field name="type">asset</field>
 	<field name="name">Cr�ances s/entr. avec lien de part.</field>
@@ -1092,7 +1092,7 @@
 <record id="chart284" model="account.account">
 	<field name="code">284</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart28"/>
 	<field name="type">asset</field>
 	<field name="name">Autres actions et parts - Aanschaffingsw. and. aand.</field>
@@ -1101,7 +1101,7 @@
 <record id="chart285" model="account.account">
 	<field name="code">285</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart28"/>
 	<field name="type">asset</field>
 	<field name="name">Autres cr�ances -  Overige vorderingen</field>
@@ -1110,7 +1110,7 @@
 <record id="chart288" model="account.account">
 	<field name="code">288</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart28"/>
 	<field name="type">asset</field>
 	<field name="name">Cautions vers�s en numeraire - Borgtocht. betaald in contanten</field>
@@ -1119,7 +1119,7 @@
 <record id="chart290" model="account.account">
 	<field name="code">290</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart29"/>
 	<field name="type">asset</field>
 	<field name="name">Cr�ances commerciales - Commerciele vorderingen</field>
@@ -1128,7 +1128,7 @@
 <record id="chart291" model="account.account">
 	<field name="code">291</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart29"/>
 	<field name="type">asset</field>
 	<field name="name">Autres Cr�ances &gt; 1 an - Over. vorderingen op rekening &gt; 1 j.</field>
@@ -1137,7 +1137,7 @@
 <record id="chart300" model="account.account">
 	<field name="code">300</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart30"/>
 	<field name="type">asset</field>
 	<field name="name">Approv. mati�re premi�re - Grondstoffen</field>
@@ -1146,7 +1146,7 @@
 <record id="chart309" model="account.account">
 	<field name="code">309</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart30"/>
 	<field name="type">asset</field>
 	<field name="name">R�duction val. act. mat. premi�res (-) - Geboekte waardev. grondst. (-)</field>
@@ -1155,7 +1155,7 @@
 <record id="chart310" model="account.account">
 	<field name="code">310</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart31"/>
 	<field name="type">asset</field>
 	<field name="name">Valeur d'acquisition - Aanschaffingswaarde hulpstoffen</field>
@@ -1164,7 +1164,7 @@
 <record id="chart319" model="account.account">
 	<field name="code">319</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart31"/>
 	<field name="type">asset</field>
 	<field name="name">R�duction valeur act�es (-) - Geboekte waardev. hulpstoffen (-)</field>
@@ -1173,7 +1173,7 @@
 <record id="chart320" model="account.account">
 	<field name="code">320</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart32"/>
 	<field name="type">asset</field>
 	<field name="name">Valeur d'acquisition - Aanschaffingsw. goed. bewerking</field>
@@ -1182,7 +1182,7 @@
 <record id="chart329" model="account.account">
 	<field name="code">329</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart32"/>
 	<field name="type">asset</field>
 	<field name="name">R�duction valuer act�e (-) - Geboekte waardeverminderingen (-) </field>
@@ -1191,7 +1191,7 @@
 <record id="chart330" model="account.account">
 	<field name="code">330</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart33"/>
 	<field name="type">asset</field>
 	<field name="name">Produits finis - Gereed product</field>
@@ -1200,7 +1200,7 @@
 <record id="chart339" model="account.account">
 	<field name="code">339</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart33"/>
 	<field name="type">asset</field>
 	<field name="name">R�ductions de valeur act�es (-) - Geboekte waardeverminderingen (-) </field>
@@ -1209,7 +1209,7 @@
 <record id="chart340" model="account.account">
 	<field name="code">340</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart34"/>
 	<field name="type">asset</field>
 	<field name="name">Marchandises - Handelsgoederen</field>
@@ -1218,7 +1218,7 @@
 <record id="chart349" model="account.account">
 	<field name="code">349</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart34"/>
 	<field name="type">asset</field>
 	<field name="name">R�duct. valeur act�es (-) - Geboekte waardeverminderingen (-) </field>
@@ -1227,7 +1227,7 @@
 <record id="chart350" model="account.account">
 	<field name="code">350</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart35"/>
 	<field name="type">asset</field>
 	<field name="name">Immeubles - Aanschaffingsw. onr. goed. verkoop</field>
@@ -1236,7 +1236,7 @@
 <record id="chart359" model="account.account">
 	<field name="code">359</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart35"/>
 	<field name="type">asset</field>
 	<field name="name">R�ductions valeur act�es (-) - Geboekte waardeverminderingen (-) </field>
@@ -1245,7 +1245,7 @@
 <record id="chart400" model="account.account">
 	<field name="code">400</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart40"/>
 	<field name="type">asset</field>
 	<field name="name">Clients - Handelsdebiteuren</field>
@@ -1254,7 +1254,7 @@
 <record id="chart401" model="account.account">
 	<field name="code">401</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart40"/>
 	<field name="type">asset</field>
 	<field name="name">Effets � recevoir - Te innen wissels</field>
@@ -1263,7 +1263,7 @@
 <record id="chart404" model="account.account">
 	<field name="code">404</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart40"/>
 	<field name="type">asset</field>
 	<field name="name">Produits � recevoir - Te innen opbrengsten</field>
@@ -1272,7 +1272,7 @@
 <record id="chart406" model="account.account">
 	<field name="code">406</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart40"/>
 	<field name="type">asset</field>
 	<field name="name">Acomptes vers�s - Vooruitbetalingen</field>
@@ -1281,7 +1281,7 @@
 <record id="chart407" model="account.account">
 	<field name="code">407</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart40"/>
 	<field name="type">asset</field>
 	<field name="name">Cr�ances douteuses - Dubieuze debiteuren</field>
@@ -1290,7 +1290,7 @@
 <record id="chart409" model="account.account">
 	<field name="code">409</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart40"/>
 	<field name="type">asset</field>
 	<field name="name">R�ductions de valeur act�es (-) - Geboekte waardevermindering</field>
@@ -1299,7 +1299,7 @@
 <record id="chart410" model="account.account">
 	<field name="code">410</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">asset</field>
 	<field name="name">Capital appel�, non vers� - Opgevraagd, niet-gestort kapitaal</field>
@@ -1308,7 +1308,7 @@
 <record id="chart411" model="account.account">
 	<field name="code">411</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">view</field>
 	<field name="name">TVA A RECUPERER - TERUG TE VORDEREN BTW</field>
@@ -1317,7 +1317,7 @@
 <record id="chart412" model="account.account">
 	<field name="code">412</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">asset</field>
 	<field name="name">Imp�ts, pr�comptes � r�cup�rer - Terug te vorderen belast. en voorheffingen</field>
@@ -1326,7 +1326,7 @@
 <record id="chart414" model="account.account">
 	<field name="code">414</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">asset</field>
 	<field name="name">Produits � recevoir - Te innen opbrengsten</field>
@@ -1335,7 +1335,7 @@
 <record id="chart416" model="account.account">
 	<field name="code">416</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">view</field>
 	<field name="name">Cr�ances diverses - Diverse vorderingen </field>
@@ -1344,7 +1344,7 @@
 <record id="chart417" model="account.account">
 	<field name="code">417</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">asset</field>
 	<field name="name">Cr�ances douteuses - Dubieuze debiteuren</field>
@@ -1353,7 +1353,7 @@
 <record id="chart418" model="account.account">
 	<field name="code">418</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">asset</field>
 	<field name="name">Cautionnements vers�s en num�raire - Borgtochten betaald in contanten</field>
@@ -1362,7 +1362,7 @@
 <record id="chart419" model="account.account">
 	<field name="code">419</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart41"/>
 	<field name="type">asset</field>
 	<field name="name">R�ductions de valeur act�es (-) - Geboekte waardevermindering (-)</field>
@@ -1371,7 +1371,7 @@
 <record id="chart430" model="account.account">
 	<field name="code">430</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart43"/>
 	<field name="type">cash</field>
 	<field name="name">Emprunts en compte � terme fixe - Leningen op rekeningen vaste termijn</field>
@@ -1380,7 +1380,7 @@
 <record id="chart431" model="account.account">
 	<field name="code">431</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart43"/>
 	<field name="type">cash</field>
 	<field name="name">Etabli. cr�dit, promesses - Kreditinstellingen, promessen</field>
@@ -1389,7 +1389,7 @@
 <record id="chart432" model="account.account">
 	<field name="code">432</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart43"/>
 	<field name="type">cash</field>
 	<field name="name">Etabli. cr�dit, cr�dits d'acceptation - Acceptkrediten</field>
@@ -1398,7 +1398,7 @@
 <record id="chart433" model="account.account">
 	<field name="code">433</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart43"/>
 	<field name="type">cash</field>
 	<field name="name">Etabl. cr�dit, dettes cpt. courant - Schulden rekening courant</field>
@@ -1407,7 +1407,7 @@
 <record id="chart440" model="account.account">
 	<field name="code">440</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart44"/>
 	<field name="type">cash</field>
 	<field name="name">Fournisseurs - Leveranciers</field>
@@ -1416,7 +1416,7 @@
 <record id="chart441" model="account.account">
 	<field name="code">441</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart44"/>
 	<field name="type">cash</field>
 	<field name="name">Effets � payer - Te betalen wissels</field>
@@ -1425,7 +1425,7 @@
 <record id="chart444" model="account.account">
 	<field name="code">444</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart44"/>
 	<field name="type">cash</field>
 	<field name="name">Factures � recevoir - Te ontvangen facturen</field>
@@ -1434,7 +1434,7 @@
 <record id="chart450" model="account.account">
 	<field name="code">450</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">cash</field>
 	<field name="name">Dettes fiscales estim�es - Geramd bedrag der belastingschulden</field>
@@ -1443,7 +1443,7 @@
 <record id="chart451" model="account.account">
 	<field name="code">451</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">view</field>
 	<field name="name">TVA A PAYER - TE BETALEN BTW</field>
@@ -1452,7 +1452,7 @@
 <record id="chart452" model="account.account">
 	<field name="code">452</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">cash</field>
 	<field name="name">Imp�ts et taxes � payer</field>
@@ -1461,7 +1461,7 @@
 <record id="chart453" model="account.account">
 	<field name="code">453</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">cash</field>
 	<field name="name">Pr�compte retenus - Ingehouden voorheffingen</field>
@@ -1470,7 +1470,7 @@
 <record id="chart454" model="account.account">
 	<field name="code">454</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">cash</field>
 	<field name="name">O.N.S.S. - R.S.Z.</field>
@@ -1479,7 +1479,7 @@
 <record id="chart455" model="account.account">
 	<field name="code">455</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">cash</field>
 	<field name="name">R�munerations - Bezoldigingen</field>
@@ -1488,7 +1488,7 @@
 <record id="chart456" model="account.account">
 	<field name="code">456</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">cash</field>
 	<field name="name">P�cules de vacances - Vakantiegeld</field>
@@ -1497,7 +1497,7 @@
 <record id="chart459" model="account.account">
 	<field name="code">459</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart45"/>
 	<field name="type">cash</field>
 	<field name="name">Autres dettes sociales - Andere sociale schulden</field>
@@ -1506,7 +1506,7 @@
 <record id="chart460" model="account.account">
 	<field name="code">460</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart46"/>
 	<field name="type">cash</field>
 	<field name="name">Acomptes re�us sur commandes</field>
@@ -1515,7 +1515,7 @@
 <record id="chart500" model="account.account">
 	<field name="code">500</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart50"/>
 	<field name="type">asset</field>
 	<field name="name">Action propres - Eigen aandelen</field>
@@ -1524,7 +1524,7 @@
 <record id="chart540" model="account.account">
 	<field name="code">540</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart54"/>
 	<field name="type">asset</field>
 	<field name="name">Ch�ques � encaisser - Te incasseren ch�ques</field>
@@ -1533,7 +1533,7 @@
 <record id="chart600" model="account.account">
 	<field name="code">600</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Achats mati�res premi�res - Aankopen van grondstoffen</field>
@@ -1542,7 +1542,7 @@
 <record id="chart601" model="account.account">
 	<field name="code">601</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Achat des fournitures - Aankoop van hulpstoffen</field>
@@ -1551,7 +1551,7 @@
 <record id="chart602" model="account.account">
 	<field name="code">602</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Achats services, travaux, �tudes - Aankopen diensten, werk, studies</field>
@@ -1560,7 +1560,7 @@
 <record id="chart603" model="account.account">
 	<field name="code">603</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Sous-traitances g�n�rales - Algemene onderaanemingen</field>
@@ -1569,7 +1569,7 @@
 <record id="account.a_expense" model="account.account">
 	<field name="code">604</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Achats marchandises - Aankopen van handelsgoederen</field>
@@ -1578,7 +1578,7 @@
 <record id="chart605" model="account.account">
 	<field name="code">605</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Achats d'immeubles destin�s vente - Aankopen onroer. goederen bestemd v. verkoop</field>
@@ -1587,7 +1587,7 @@
 <record id="chart608" model="account.account">
 	<field name="code">608</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Remises ristournes rabais obtenus - Ontvangen kortingen ristorno's en rabatten (-)</field>
@@ -1596,7 +1596,7 @@
 <record id="chart609" model="account.account">
 	<field name="code">609</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart60"/>
 	<field name="type">expense</field>
 	<field name="name">Variation de stock - Voorraadwijzigingen</field>
@@ -1605,7 +1605,7 @@
 <record id="chart610" model="account.account">
 	<field name="code">610</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Loyers et charges locatives</field>
@@ -1614,7 +1614,7 @@
 <record id="chart617" model="account.account">
 	<field name="code">617</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Personnel int�rimaire - Uitzendkrachten</field>
@@ -1623,7 +1623,7 @@
 <record id="chart618" model="account.account">
 	<field name="code">618</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Divers</field>
@@ -1632,7 +1632,7 @@
 <record id="chart620" model="account.account">
 	<field name="code">620</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart62"/>
 	<field name="type">expense</field>
 	<field name="name">R�munerations et avant. sociaux directs - Bezolgingen en rechts. sociale voordelen</field>
@@ -1641,7 +1641,7 @@
 <record id="chart621" model="account.account">
 	<field name="code">621</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart62"/>
 	<field name="type">expense</field>
 	<field name="name">Cotisation patronales d'assur. sociales - Werkgeversbijdragen soc. verzekeringen</field>
@@ -1650,7 +1650,7 @@
 <record id="chart630" model="account.account">
 	<field name="code">630</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart63"/>
 	<field name="type">expense</field>
 	<field name="name">Dotations amort., r�duction valeur s/immo. - Afschr., waardeverm. op v. a., toevoeging</field>
@@ -1659,7 +1659,7 @@
 <record id="chart640" model="account.account">
 	<field name="code">640</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart64"/>
 	<field name="type">expense</field>
 	<field name="name">Charges fiscales de l'exploitation - Bedrijfsbelastingen</field>
@@ -1668,7 +1668,7 @@
 <record id="chart641" model="account.account">
 	<field name="code">641</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart64"/>
 	<field name="type">expense</field>
 	<field name="name">Moins-values s/r�alis. cour. d'immo. corp. - Minderwa. courante realis. vaste activa</field>
@@ -1677,7 +1677,7 @@
 <record id="chart642" model="account.account">
 	<field name="code">642</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart64"/>
 	<field name="type">expense</field>
 	<field name="name">Moins-values s/r�alis. cr�ances com. - Minderwa. realis. handelsvorderingen</field>
@@ -1686,7 +1686,7 @@
 <record id="chart643" model="account.account">
 	<field name="code">643</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart64"/>
 	<field name="type">view</field>
 	<field name="name">643-648 Charges d'exploitation diverses - Diverse berijfskosten</field>
@@ -1695,7 +1695,7 @@
 <record id="chart649" model="account.account">
 	<field name="code">649</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart64"/>
 	<field name="type">expense</field>
 	<field name="name">Ch. exploit. port�es actif c. frais de restruct. (-) - Als herstruct.kost. geactiv. bedrijfsk. (-)</field>
@@ -1704,7 +1704,7 @@
 <record id="chart654" model="account.account">
 	<field name="code">654</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Diff�rence de change</field>
@@ -1713,7 +1713,7 @@
 <record id="chart708" model="account.account">
 	<field name="code">708</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart70"/>
 	<field name="type">income</field>
 	<field name="name">Remis. rabais ristourn. accord�s (-) - Toegek. korting. ristorno's rabat. (-) </field>
@@ -1722,7 +1722,7 @@
 <record id="chart712" model="account.account">
 	<field name="code">712</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart71"/>
 	<field name="type">income</field>
 	<field name="name">Des encours de fabrication - In de vooraad goederen in bewerking</field>
@@ -1731,7 +1731,7 @@
 <record id="chart713" model="account.account">
 	<field name="code">713</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart71"/>
 	<field name="type">income</field>
 	<field name="name">Des Produits finis - In de voorraad gereed product</field>
@@ -1740,7 +1740,7 @@
 <record id="chart715" model="account.account">
 	<field name="code">715</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart71"/>
 	<field name="type">income</field>
 	<field name="name">Des immeubles constr. dest. � la vente - In de voorr. onroe. goederen best. v. verkoop</field>
@@ -1749,7 +1749,7 @@
 <record id="chart717" model="account.account">
 	<field name="code">717</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart71"/>
 	<field name="type">income</field>
 	<field name="name">Des commandes en cours ex�cution - In de bestelling in uitvoering</field>
@@ -1758,7 +1758,7 @@
 <record id="chart740" model="account.account">
 	<field name="code">740</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart74"/>
 	<field name="type">income</field>
 	<field name="name">Subsides et montants compensat. - Subsidies en compens. bedragen</field>
@@ -1767,7 +1767,7 @@
 <record id="chart741" model="account.account">
 	<field name="code">741</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart74"/>
 	<field name="type">income</field>
 	<field name="name">Plus-values r�alis. cour. immo. corp. -  Meerwaar. cour. realis. materi�le v.a.</field>
@@ -1776,7 +1776,7 @@
 <record id="chart742" model="account.account">
 	<field name="code">742</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart74"/>
 	<field name="type">income</field>
 	<field name="name">Plus-values cr�ances com. - Meerwaarden realis. handelsvorderingen</field>
@@ -1785,7 +1785,7 @@
 <record id="chart743" model="account.account">
 	<field name="code">743</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart74"/>
 	<field name="type">view</field>
 	<field name="name">743-749 Produits d'exploitation divers - Diverse bedrijfsopbrengsten</field>
@@ -1794,7 +1794,7 @@
 <record id="chart750" model="account.account">
 	<field name="code">750</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart75"/>
 	<field name="type">income</field>
 	<field name="name">Produits immo. financi�res - Opbrengsten financi�le vaste activa</field>
@@ -1803,7 +1803,7 @@
 <record id="chart751" model="account.account">
 	<field name="code">751</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart75"/>
 	<field name="type">income</field>
 	<field name="name">Produits actifs circulants - Opbrengsten uit vlottende activa</field>
@@ -1812,7 +1812,7 @@
 <record id="chart752" model="account.account">
 	<field name="code">752</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart75"/>
 	<field name="type">income</field>
 	<field name="name">Plus-values r�alis. d'actifs circulants - Meerwaar. realis. v. vlottende activa</field>
@@ -1821,7 +1821,7 @@
 <record id="chart753" model="account.account">
 	<field name="code">753</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart75"/>
 	<field name="type">income</field>
 	<field name="name">Subsides en capital et int�r�ts - Kapitaal- en interestsubsidies</field>
@@ -1830,7 +1830,7 @@
 <record id="chart756" model="account.account">
 	<field name="code">756</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart75"/>
 	<field name="type">view</field>
 	<field name="name">756-759 Produits financiers divers - Diverse financi�le opbrengsten</field>
@@ -1839,7 +1839,7 @@
 <record id="chart760" model="account.account">
 	<field name="code">760</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart76"/>
 	<field name="type">expense</field>
 	<field name="name">Reprises amort. et r�duct. valeur - Terugneming afschr. en waardeverm.</field>
@@ -1848,7 +1848,7 @@
 <record id="chart761" model="account.account">
 	<field name="code">761</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart76"/>
 	<field name="type">income</field>
 	<field name="name">Reprises r�duct. valeur immo. fin. - Terugneming waardeverm. fin. v. a.</field>
@@ -1857,7 +1857,7 @@
 <record id="chart762" model="account.account">
 	<field name="code">762</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart76"/>
 	<field name="type">income</field>
 	<field name="name">Reprises provisions risq. charg. except. - Terugn. voorz. uitz. risico en kosten</field>
@@ -1866,7 +1866,7 @@
 <record id="chart763" model="account.account">
 	<field name="code">763</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart76"/>
 	<field name="type">income</field>
 	<field name="name">Plus-values s/r�alis. actifs immo. - Meerwaar. realis. vaste a.</field>
@@ -1875,7 +1875,7 @@
 <record id="chart764" model="account.account">
 	<field name="code">764</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart76"/>
 	<field name="type">view</field>
 	<field name="name">764-769 Autres produits execptionnels - Andere uitz. opbrengsten</field>
@@ -1884,7 +1884,7 @@
 <record id="chart771" model="account.account">
 	<field name="code">771</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart77"/>
 	<field name="type">income</field>
 	<field name="name">Imp�ts belges sur le r�sultat - Belgische belasting op het resultaat</field>
@@ -1893,7 +1893,7 @@
 <record id="chart773" model="account.account">
 	<field name="code">773</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart77"/>
 	<field name="type">income</field>
 	<field name="name">Imp�ts �trangers s/r�sultat - Buitenl. belasting op resultaat</field>
@@ -1902,7 +1902,7 @@
 <record id="chart780" model="account.account">
 	<field name="code">780</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart78"/>
 	<field name="type">income</field>
 	<field name="name">Pr�l�vements s/imp�ts diff�r�s - Onttrekking a. uitgesteld. belast.</field>
@@ -1911,7 +1911,7 @@
 <record id="chart789" model="account.account">
 	<field name="code">789</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart78"/>
 	<field name="type">income</field>
 	<field name="name">Pr�l�vements s/r�serves immunis�es - Onttrekking a. belast.vrije reserves</field>
@@ -1920,7 +1920,7 @@
 <record id="chart790" model="account.account">
 	<field name="code">790</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart79"/>
 	<field name="type">income</field>
 	<field name="name">B�n�fice report� exercice pr�c�d. - Overgedragen winst vorige boekj.</field>
@@ -1929,7 +1929,7 @@
 <record id="chart791" model="account.account">
 	<field name="code">791</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart79"/>
 	<field name="type">income</field>
 	<field name="name">Pr�l�vement s/capital et primes �missions - Onttrek. kapitaal e. uitgiftepre.</field>
@@ -1938,7 +1938,7 @@
 <record id="chart792" model="account.account">
 	<field name="code">792</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart79"/>
 	<field name="type">income</field>
 	<field name="name">Pr�l�vements r�serves - Onttrekking reserves</field>
@@ -1947,7 +1947,7 @@
 <record id="chart793" model="account.account">
 	<field name="code">793</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart79"/>
 	<field name="type">income</field>
 	<field name="name">Perte � reporter - Over te dragen verlies</field>
@@ -1956,7 +1956,7 @@
 <record id="chart794" model="account.account">
 	<field name="code">794</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart79"/>
 	<field name="type">income</field>
 	<field name="name">Intervention associ� perte - Tussenkomst vennoten verlies</field>
@@ -1965,7 +1965,7 @@
 <record id="chart2400" model="account.account">
 	<field name="code">2400</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart24"/>
 	<field name="type">asset</field>
 	<field name="name">Mobilier - Meubilair</field>
@@ -1974,7 +1974,7 @@
 <record id="chart2401" model="account.account">
 	<field name="code">2401</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart24"/>
 	<field name="type">asset</field>
 	<field name="name">Mat�riel de bureau - Bureaumaterieel</field>
@@ -1983,7 +1983,7 @@
 <record id="chart2402" model="account.account">
 	<field name="code">2402</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart24"/>
 	<field name="type">asset</field>
 	<field name="name">Mat�riel informatique - Hardware</field>
@@ -1992,7 +1992,7 @@
 <record id="chart4168" model="account.account">
 	<field name="code">4168</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart416"/>
 	<field name="type">asset</field>
 	<field name="name">Rabais, ristournes, remises � obtenir et autres avoirs non encore re�us</field>
@@ -2001,7 +2001,7 @@
 <record id="chart4529" model="account.account">
 	<field name="code">4529</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart452"/>
 	<field name="type">view</field>
 	<field name="name">453 - 459 Dettes salariales et sociales - Bezoldigingen en sociale schulden</field>
@@ -2010,7 +2010,7 @@
 <record id="chart131000" model="account.account">
 	<field name="code">131000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart131"/>
 	<field name="type">cash</field>
 	<field name="name">R�serves pour actions propres - Reserve voor eigen aandelen</field>
@@ -2019,7 +2019,7 @@
 <record id="chart131100" model="account.account">
 	<field name="code">131100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart131"/>
 	<field name="type">cash</field>
 	<field name="name">Autres r�serves indisponibles - Andere onbeschikbare reserves</field>
@@ -2028,7 +2028,7 @@
 <record id="chart168000" model="account.account">
 	<field name="code">168000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Imp�ts diff. s/subsides en capital - Uitgest. belast./Kapitaalsubsidie</field>
@@ -2037,7 +2037,7 @@
 <record id="chart168100" model="account.account">
 	<field name="code">168100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Imp�ts diff. s/+value immo. incorp. - Uitg. belast./meerwa./immat. v.a.</field>
@@ -2046,7 +2046,7 @@
 <record id="chart168200" model="account.account">
 	<field name="code">168200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Imp�ts diff. s/+value immo. corp. - Uitg. belast./meerwa./mat. v.a.</field>
@@ -2055,7 +2055,7 @@
 <record id="chart168700" model="account.account">
 	<field name="code">168700</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Imp�ts diff. s/+value fonds publ. belges - Uitg. bel./meerwa./belg. effecten</field>
@@ -2064,7 +2064,7 @@
 <record id="chart168800" model="account.account">
 	<field name="code">168800</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart16"/>
 	<field name="type">cash</field>
 	<field name="name">Imp�ts diff�r�s �trangers - Uitg. belast. buitenland</field>
@@ -2073,7 +2073,7 @@
 <record id="chart172000" model="account.account">
 	<field name="code">172000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart17"/>
 	<field name="type">cash</field>
 	<field name="name">Dettes location fin. et assimil�es - Leasingschuld. van vaste activa</field>
@@ -2082,7 +2082,7 @@
 <record id="chart173100" model="account.account">
 	<field name="code">173100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart17"/>
 	<field name="type">cash</field>
 	<field name="name">Promesses banque - Promessen bank</field>
@@ -2091,7 +2091,7 @@
 <record id="chart200000" model="account.account">
 	<field name="code">200000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart200"/>
 	<field name="type">asset</field>
 	<field name="name">Fr. const. acquis. anterieurs - Kost. opricht./kapitaalverhoging</field>
@@ -2100,7 +2100,7 @@
 <record id="chart200010" model="account.account">
 	<field name="code">200010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart200"/>
 	<field name="type">asset</field>
 	<field name="name">Fr. const. acquis. de l'exercice - Kost. opricht./kap.verh. dit boekjaar</field>
@@ -2109,7 +2109,7 @@
 <record id="chart200900" model="account.account">
 	<field name="code">200900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart200"/>
 	<field name="type">asset</field>
 	<field name="name">Fr. const. amort. anterieur - Afschr. kost. opricht./kap.verh. vorig</field>
@@ -2118,7 +2118,7 @@
 <record id="chart200910" model="account.account">
 	<field name="code">200910</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart200"/>
 	<field name="type">asset</field>
 	<field name="name">Fr. const. amort. de l'exercice - Afschr. kost. opricht./kap.verh. dit</field>
@@ -2127,7 +2127,7 @@
 <record id="chart221000" model="account.account">
 	<field name="code">221000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart221"/>
 	<field name="type">asset</field>
 	<field name="name">Constructions acquis. anterieurs - Geb. aanschaffingsprijs vorig. boekj.</field>
@@ -2136,7 +2136,7 @@
 <record id="chart221010" model="account.account">
 	<field name="code">221010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart221"/>
 	<field name="type">asset</field>
 	<field name="name">Construction acquis. de l'exercice - Geb. aanschaffingsprijs dit boekj.</field>
@@ -2145,7 +2145,7 @@
 <record id="chart221900" model="account.account">
 	<field name="code">221900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart221"/>
 	<field name="type">asset</field>
 	<field name="name">Constructions amort. anterieurs - Afschr. op gebouwen vorig boekj.</field>
@@ -2154,7 +2154,7 @@
 <record id="chart221910" model="account.account">
 	<field name="code">221910</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart221"/>
 	<field name="type">asset</field>
 	<field name="name">Constructions amort. de l'exercice - Afschr. op gebouwen dit boekj.</field>
@@ -2163,7 +2163,7 @@
 <record id="chart230000" model="account.account">
 	<field name="code">230000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart230"/>
 	<field name="type">asset</field>
 	<field name="name">Inst. techniques acquis. anterieurs - Installaties m.b.t. vorig boekj.</field>
@@ -2172,7 +2172,7 @@
 <record id="chart230010" model="account.account">
 	<field name="code">230010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart230"/>
 	<field name="type">asset</field>
 	<field name="name">Inst. techniques acquis. exercice - Installaties m.b.t. dit boekj.</field>
@@ -2181,7 +2181,7 @@
 <record id="chart230900" model="account.account">
 	<field name="code">230900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart230"/>
 	<field name="type">asset</field>
 	<field name="name">Inst. techniques amort. anterieurs - Afschr. op installaties vorig boekj.</field>
@@ -2190,7 +2190,7 @@
 <record id="chart230910" model="account.account">
 	<field name="code">230910</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart230"/>
 	<field name="type">asset</field>
 	<field name="name">Inst. techniques amort. exercice - Afschr. op installaties dit boekj.</field>
@@ -2199,7 +2199,7 @@
 <record id="chart231000" model="account.account">
 	<field name="code">231000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart231"/>
 	<field name="type">asset</field>
 	<field name="name">Mach. et gros mat. acquis anterieurs - Machines m.b.t. vorig boekj.</field>
@@ -2208,7 +2208,7 @@
 <record id="chart231010" model="account.account">
 	<field name="code">231010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart231"/>
 	<field name="type">asset</field>
 	<field name="name">Mach. et gros mat. acquis. exercice - Machines m.b.t. dit boekj.</field>
@@ -2217,7 +2217,7 @@
 <record id="chart231900" model="account.account">
 	<field name="code">231900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart231"/>
 	<field name="type">asset</field>
 	<field name="name">Mach. et gros mat. amort. anterieurs - Afschr. op machines vorig boekj.</field>
@@ -2226,7 +2226,7 @@
 <record id="chart231910" model="account.account">
 	<field name="code">231910</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart231"/>
 	<field name="type">asset</field>
 	<field name="name">Mach. et gros mat. amort. exercice - Afschr. op machines dit boekj.</field>
@@ -2235,7 +2235,7 @@
 <record id="chart237000" model="account.account">
 	<field name="code">237000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart237"/>
 	<field name="type">asset</field>
 	<field name="name">Outillage acquis. anterieurs - Uitrusting m.b.t. vorig boekj.</field>
@@ -2244,7 +2244,7 @@
 <record id="chart237010" model="account.account">
 	<field name="code">237010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart237"/>
 	<field name="type">asset</field>
 	<field name="name">Outillage acquisition exercice - Uitrusting m.b.t. dit boekj.</field>
@@ -2253,7 +2253,7 @@
 <record id="chart237900" model="account.account">
 	<field name="code">237900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart237"/>
 	<field name="type">asset</field>
 	<field name="name">Outillage amort. anterieurs - Afschr. op uitrusting vorig boekj.</field>
@@ -2262,7 +2262,7 @@
 <record id="chart237910" model="account.account">
 	<field name="code">237910</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart237"/>
 	<field name="type">asset</field>
 	<field name="name">Outillage amort. exercice - Afschr. op uitrusting dit boekj.</field>
@@ -2271,7 +2271,7 @@
 <record id="chart240000" model="account.account">
 	<field name="code">240000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2400"/>
 	<field name="type">asset</field>
 	<field name="name">Mobilier acquis. anterieurs - Meubilair m.b.t. vorig boekj.</field>
@@ -2280,7 +2280,7 @@
 <record id="chart240010" model="account.account">
 	<field name="code">240010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2400"/>
 	<field name="type">asset</field>
 	<field name="name">Mobilier acquis. exercice - Meubilair m.b.t. dit boekj.</field>
@@ -2289,7 +2289,7 @@
 <record id="chart240090" model="account.account">
 	<field name="code">240090</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2400"/>
 	<field name="type">asset</field>
 	<field name="name">Mobilier amort. anter. - Afschr. op meubilair vorig boekj.</field>
@@ -2298,7 +2298,7 @@
 <record id="chart240091" model="account.account">
 	<field name="code">240091</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2400"/>
 	<field name="type">asset</field>
 	<field name="name">Mobilier amort. exercice - Afschr. op meubilair dit boekj.</field>
@@ -2307,7 +2307,7 @@
 <record id="chart240100" model="account.account">
 	<field name="code">240100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2401"/>
 	<field name="type">asset</field>
 	<field name="name">Mat. bureau acquis. anterieurs - Bureaumaterieel m.b.t. vorig boekj.</field>
@@ -2316,7 +2316,7 @@
 <record id="chart240110" model="account.account">
 	<field name="code">240110</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2401"/>
 	<field name="type">asset</field>
 	<field name="name">Mat. bureau acquis. exercice - Bureaumaterieel m.b.t. dit boekj.</field>
@@ -2325,7 +2325,7 @@
 <record id="chart240190" model="account.account">
 	<field name="code">240190</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2401"/>
 	<field name="type">asset</field>
 	<field name="name">Mat�riel bureau amort. anterieurs - Afschr. op bureaumaterieel vorig boekj.</field>
@@ -2334,7 +2334,7 @@
 <record id="chart240191" model="account.account">
 	<field name="code">240191</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2401"/>
 	<field name="type">asset</field>
 	<field name="name">Mat�riel bureau amort. exercice - Afschr. op bureaumaterieel dit boekj.</field>
@@ -2343,7 +2343,7 @@
 <record id="chart240200" model="account.account">
 	<field name="code">240200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2402"/>
 	<field name="type">asset</field>
 	<field name="name">Mat. informatique acquis anterieurs - Hardware m.b.t. vorig boekj.</field>
@@ -2352,7 +2352,7 @@
 <record id="chart240210" model="account.account">
 	<field name="code">240210</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2402"/>
 	<field name="type">asset</field>
 	<field name="name">Mat�riel informatique acquis. exercice - Hardware m.b.t. dit boekj.</field>
@@ -2361,7 +2361,7 @@
 <record id="chart240290" model="account.account">
 	<field name="code">240290</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2402"/>
 	<field name="type">asset</field>
 	<field name="name">Materiel Informatique amort. anter. - Afschr. op hardware vorig boekj.</field>
@@ -2370,7 +2370,7 @@
 <record id="chart240291" model="account.account">
 	<field name="code">240291</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart2402"/>
 	<field name="type">asset</field>
 	<field name="name">Mat. informat. amort. exercice - Afschr. op hardware dit boekj.</field>
@@ -2379,7 +2379,7 @@
 <record id="chart241000" model="account.account">
 	<field name="code">241000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart241"/>
 	<field name="type">asset</field>
 	<field name="name">Voiture acquis. anterieurs - Wagen m.b.t. vorig boekj.</field>
@@ -2388,7 +2388,7 @@
 <record id="chart241010" model="account.account">
 	<field name="code">241010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart241"/>
 	<field name="type">asset</field>
 	<field name="name">Voiture acquis. exercice - Wagen m.b.t. dit boekj. </field>
@@ -2397,7 +2397,7 @@
 <record id="chart241900" model="account.account">
 	<field name="code">241900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart241"/>
 	<field name="type">asset</field>
 	<field name="name">Voiture amort. anter. - Afschr. op wagen vorig boekj.</field>
@@ -2406,7 +2406,7 @@
 <record id="chart241910" model="account.account">
 	<field name="code">241910</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart241"/>
 	<field name="type">asset</field>
 	<field name="name">Voiture amort. exercice - Afschr. op wagen dit boekj. </field>
@@ -2415,7 +2415,7 @@
 <record id="chart260000" model="account.account">
 	<field name="code">260000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart260"/>
 	<field name="type">asset</field>
 	<field name="name">Amenagement locaux lou�s acquis anterieurs - Inrichtingskost. m.b.t. vorig boekj.</field>
@@ -2424,7 +2424,7 @@
 <record id="chart260900" model="account.account">
 	<field name="code">260900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart260"/>
 	<field name="type">asset</field>
 	<field name="name">Amen. loc. lou�s amort. anter. - Inrichtingskost. vorig boekj.</field>
@@ -2433,7 +2433,7 @@
 <record id="chart260910" model="account.account">
 	<field name="code">260910</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart260"/>
 	<field name="type">asset</field>
 	<field name="name">Amen. loc. lou�s amort. exercice - Inrichtingskost. dit boekj.</field>
@@ -2442,7 +2442,7 @@
 <record id="chart290000" model="account.account">
 	<field name="code">290000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart290"/>
 	<field name="type">asset</field>
 	<field name="name">Clients &gt; 1 an - Handelsdebiteuren &gt; 1 jaar</field>
@@ -2451,7 +2451,7 @@
 <record id="chart290100" model="account.account">
 	<field name="code">290100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart290"/>
 	<field name="type">asset</field>
 	<field name="name">Effects � recevoir &gt;1 an - Te innen wissels &gt; 1 jaar</field>
@@ -2460,7 +2460,7 @@
 <record id="chart290600" model="account.account">
 	<field name="code">290600</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart290"/>
 	<field name="type">asset</field>
 	<field name="name">Acptes vers�s s/immo. financ. &gt; 1 an - Vooruitbetalingen &gt; 1 jaar</field>
@@ -2469,7 +2469,7 @@
 <record id="chart290700" model="account.account">
 	<field name="code">290700</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart290"/>
 	<field name="type">asset</field>
 	<field name="name">Cr�ances douteuses - Dubieuze debiteuren &gt;1 jaar</field>
@@ -2478,7 +2478,7 @@
 <record id="chart290900" model="account.account">
 	<field name="code">290900</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart290"/>
 	<field name="type">asset</field>
 	<field name="name">R�duction valeur act�e cr.dout. - Geboekte waardevermindering (-)</field>
@@ -2487,7 +2487,7 @@
 <record id="chart411000" model="account.account">
 	<field name="code">411000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">Cpt. curr. TVA � r�cuperer - Terug te vord. BTW: saldo BTW r/c</field>
@@ -2496,7 +2496,7 @@
 <record id="chart411590" model="account.account">
 	<field name="code">411590</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA ACHATS 6%</field>
@@ -2505,7 +2505,7 @@
 <record id="chart411591" model="account.account">
 	<field name="code">411591</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA ACHATS 21%</field>
@@ -2514,7 +2514,7 @@
 <record id="chart411593" model="account.account">
 	<field name="code">411593</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA RECUP. 1ER TRIMESTRE TOTAL (case 59)</field>
@@ -2523,7 +2523,7 @@
 <record id="chart411594" model="account.account">
 	<field name="code">411594</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA RECUP. 2E TRIMESTRE TOTAL</field>
@@ -2532,7 +2532,7 @@
 <record id="chart411595" model="account.account">
 	<field name="code">411595</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA RECUP. 3E TRIMESTRE TOTAL</field>
@@ -2541,7 +2541,7 @@
 <record id="chart411596" model="account.account">
 	<field name="code">411596</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA RECUP. 4E TRIMESTRE TOTAL</field>
@@ -2550,7 +2550,7 @@
 <record id="chart411620" model="account.account">
 	<field name="code">411620</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA � r�gulariser (case 62)</field>
@@ -2559,7 +2559,7 @@
 <record id="chart411640" model="account.account">
 	<field name="code">411640</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart411"/>
 	<field name="type">asset</field>
 	<field name="name">TVA � recup�rer s/NDC �mises (case 64)</field>
@@ -2568,7 +2568,7 @@
 <record id="chart414100" model="account.account">
 	<field name="code">414100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart414"/>
 	<field name="type">asset</field>
 	<field name="name">Indeminit�s s/sinistres � recevoir - Te ontvang. schadevergoed.</field>
@@ -2577,7 +2577,7 @@
 <record id="chart414200" model="account.account">
 	<field name="code">414200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart414"/>
 	<field name="type">asset</field>
 	<field name="name">Subsides en capital � recevoir - Te ontv. kapitaalsubsidies</field>
@@ -2586,7 +2586,7 @@
 <record id="chart416200" model="account.account">
 	<field name="code">416200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart416"/>
 	<field name="type">asset</field>
 	<field name="name">Cpt. courant associ�s - Rekening-courant vennoten</field>
@@ -2595,7 +2595,7 @@
 <record id="chart442001" model="account.account">
 	<field name="code">442001</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart44"/>
 	<field name="type">cash</field>
 	<field name="name">Fournisseurs essence</field>
@@ -2604,7 +2604,7 @@
 <record id="chart442004" model="account.account">
 	<field name="code">442004</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart44"/>
 	<field name="type">cash</field>
 	<field name="name">VISA - d�compte mensuel</field>
@@ -2613,7 +2613,7 @@
 <record id="chart442005" model="account.account">
 	<field name="code">442005</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart44"/>
 	<field name="type">cash</field>
 	<field name="name">AMERICAN EXPRESS - d�compte mensuel</field>
@@ -2622,7 +2622,7 @@
 <record id="chart451000" model="account.account">
 	<field name="code">451000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">COMPTE COURANT TVA DUE</field>
@@ -2631,7 +2631,7 @@
 <record id="chart451500" model="account.account">
 	<field name="code">451500</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA DUE ACHATS INCO</field>
@@ -2640,7 +2640,7 @@
 <record id="chart451540" model="account.account">
 	<field name="code">451540</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA DUE VENTES 6%</field>
@@ -2649,7 +2649,7 @@
 <record id="chart451541" model="account.account">
 	<field name="code">451541</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA DUE VENTES 21%</field>
@@ -2658,7 +2658,7 @@
 <record id="chart451542" model="account.account">
 	<field name="code">451542</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA due 1er trimestre (case 54)</field>
@@ -2667,7 +2667,7 @@
 <record id="chart451543" model="account.account">
 	<field name="code">451543</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA due 2e trimestre</field>
@@ -2676,7 +2676,7 @@
 <record id="chart451544" model="account.account">
 	<field name="code">451544</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA due 3e trimestre</field>
@@ -2685,7 +2685,7 @@
 <record id="chart451545" model="account.account">
 	<field name="code">451545</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA due 4e trimestre</field>
@@ -2694,7 +2694,7 @@
 <record id="chart451560" model="account.account">
 	<field name="code">451560</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA DUE CO-CONTRACTANT</field>
@@ -2703,7 +2703,7 @@
 <record id="chart451570" model="account.account">
 	<field name="code">451570</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA DUE SUR IMPORTATIONS</field>
@@ -2712,7 +2712,7 @@
 <record id="chart451610" model="account.account">
 	<field name="code">451610</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA � r�gulariser (case 61)</field>
@@ -2721,7 +2721,7 @@
 <record id="chart451630" model="account.account">
 	<field name="code">451630</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA sur NDC re�ues (case 63)</field>
@@ -2730,7 +2730,7 @@
 <record id="chart451640" model="account.account">
 	<field name="code">451640</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart451"/>
 	<field name="type">cash</field>
 	<field name="name">TVA � recup�rer s/NDC �mises</field>
@@ -2739,7 +2739,7 @@
 <record id="chart452500" model="account.account">
 	<field name="code">452500</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart452"/>
 	<field name="type">cash</field>
 	<field name="name">Pr�compte immobilier - Onroerende voorhoeffing</field>
@@ -2748,7 +2748,7 @@
 <record id="chart482200" model="account.account">
 	<field name="code">482200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart48"/>
 	<field name="type">cash</field>
 	<field name="name">ASSOCIES - MEMBRES</field>
@@ -2757,7 +2757,7 @@
 <record id="chart499000" model="account.account">
 	<field name="code">499000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart49"/>
 	<field name="type">cash</field>
 	<field name="name">Compte d'attente - Wachtrekening</field>
@@ -2766,7 +2766,7 @@
 <record id="chart499100" model="account.account">
 	<field name="code">499100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart49"/>
 	<field name="type">cash</field>
 	<field name="name">Compte de repartition - Verdelingsrekening</field>
@@ -2775,7 +2775,7 @@
 <record id="chart499200" model="account.account">
 	<field name="code">499200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart49"/>
 	<field name="type">cash</field>
 	<field name="name">Compte de repartition NDC - Verdelingsrekening CN</field>
@@ -2784,7 +2784,7 @@
 <record id="chart510000" model="account.account">
 	<field name="code">510000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart51"/>
 	<field name="type">asset</field>
 	<field name="name">Titres cot�s - Aandelen op beurs</field>
@@ -2793,7 +2793,7 @@
 <record id="chart510010" model="account.account">
 	<field name="code">510010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart51"/>
 	<field name="type">asset</field>
 	<field name="name">Montants non-appel�s (-) - Niet opgevraagde bedragen aan. (-)</field>
@@ -2802,7 +2802,7 @@
 <record id="chart510090" model="account.account">
 	<field name="code">510090</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart51"/>
 	<field name="type">asset</field>
 	<field name="name">R�duct. valeur act�es (-) - Geb. waardev. aandelen (-)</field>
@@ -2811,7 +2811,7 @@
 <record id="chart510200" model="account.account">
 	<field name="code">510200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart51"/>
 	<field name="type">asset</field>
 	<field name="name">Titr�s non-cot�s - Aandelen niet op beurs</field>
@@ -2820,7 +2820,7 @@
 <record id="chart510210" model="account.account">
 	<field name="code">510210</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart51"/>
 	<field name="type">asset</field>
 	<field name="name">	Montants non-appel�s (-) - Niet opgevraagde bedragen aan. (-)</field>
@@ -2829,7 +2829,7 @@
 <record id="chart510290" model="account.account">
 	<field name="code">510290</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart51"/>
 	<field name="type">asset</field>
 	<field name="name">R�duct. valeur act�es (-) - Geb. waardev. aandelen (-) </field>
@@ -2838,7 +2838,7 @@
 <record id="chart552000" model="account.account">
 	<field name="code">552000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart55"/>
 	<field name="type">asset</field>
 	<field name="name">KBC56</field>
@@ -2847,7 +2847,7 @@
 <record id="chart553000" model="account.account">
 	<field name="code">553000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart55"/>
 	<field name="type">asset</field>
 	<field name="name">KBC40</field>
@@ -2856,7 +2856,7 @@
 <record id="chart554000" model="account.account">
 	<field name="code">554000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart55"/>
 	<field name="type">asset</field>
 	<field name="name">KBC83</field>
@@ -2865,7 +2865,7 @@
 <record id="chart555000" model="account.account">
 	<field name="code">555000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart55"/>
 	<field name="type">asset</field>
 	<field name="name">DEX02</field>
@@ -2874,7 +2874,7 @@
 <record id="chart570000" model="account.account">
 	<field name="code">570000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart57"/>
 	<field name="type">asset</field>
 	<field name="name">CAISSE ESPECES - CONTANTEN</field>
@@ -2883,7 +2883,7 @@
 <record id="chart580000" model="account.account">
 	<field name="code">580000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">balance</field>
+
 	<field name="parent_id" ref="chart58"/>
 	<field name="type">asset</field>
 	<field name="name">TRANSFERTS INTERNES DES FONDS - TRANSFERTEN</field>
@@ -2892,7 +2892,7 @@
 <record id="chart601000" model="account.account">
 	<field name="code">601000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart601"/>
 	<field name="type">expense</field>
 	<field name="name">Emballages perdus</field>
@@ -2901,7 +2901,7 @@
 <record id="chart601010" model="account.account">
 	<field name="code">601010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart601"/>
 	<field name="type">expense</field>
 	<field name="name">Emballages recuperables</field>
@@ -2910,7 +2910,7 @@
 <record id="chart609000" model="account.account">
 	<field name="code">609000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart609"/>
 	<field name="type">expense</field>
 	<field name="name">de mati�res premi�res - van grondstofen</field>
@@ -2919,7 +2919,7 @@
 <record id="chart609100" model="account.account">
 	<field name="code">609100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart609"/>
 	<field name="type">expense</field>
 	<field name="name">de fourniture - van hulpstoffen</field>
@@ -2928,7 +2928,7 @@
 <record id="chart609400" model="account.account">
 	<field name="code">609400</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart609"/>
 	<field name="type">expense</field>
 	<field name="name">de marchandises - van handelsgoederen</field>
@@ -2937,7 +2937,7 @@
 <record id="chart609500" model="account.account">
 	<field name="code">609500</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart609"/>
 	<field name="type">expense</field>
 	<field name="name">d'immeubles ach�t�s destin�s � vente - van gek. onroer. goederen best. v. verkoop</field>
@@ -2946,7 +2946,7 @@
 <record id="chart611150" model="account.account">
 	<field name="code">611150</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Charges locatives voitures</field>
@@ -2955,7 +2955,7 @@
 <record id="chart611151" model="account.account">
 	<field name="code">611151</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Charges locatives camions/camionnettes</field>
@@ -2964,7 +2964,7 @@
 <record id="chart611152" model="account.account">
 	<field name="code">611152</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Locations machines et outils</field>
@@ -2973,7 +2973,7 @@
 <record id="chart611340" model="account.account">
 	<field name="code">611340</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Entretiens &amp; r�parations locaux</field>
@@ -2982,7 +2982,7 @@
 <record id="chart611350" model="account.account">
 	<field name="code">611350</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Entr. &amp; Repar. Voitures &amp; Veh. Mixtes</field>
@@ -2991,7 +2991,7 @@
 <record id="chart611351" model="account.account">
 	<field name="code">611351</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Pneus Voitures &amp; Vehic. Mixtes</field>
@@ -3000,7 +3000,7 @@
 <record id="chart611362" model="account.account">
 	<field name="code">611362</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Control technique voitures</field>
@@ -3009,7 +3009,7 @@
 <record id="chart612000" model="account.account">
 	<field name="code">612000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Eau</field>
@@ -3018,7 +3018,7 @@
 <record id="chart612010" model="account.account">
 	<field name="code">612010</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Chauffage</field>
@@ -3027,7 +3027,7 @@
 <record id="chart612020" model="account.account">
 	<field name="code">612020</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Electricit�</field>
@@ -3036,7 +3036,7 @@
 <record id="chart612100" model="account.account">
 	<field name="code">612100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Telephone</field>
@@ -3045,7 +3045,7 @@
 <record id="chart612120" model="account.account">
 	<field name="code">612120</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">GSM</field>
@@ -3054,7 +3054,7 @@
 <record id="chart612140" model="account.account">
 	<field name="code">612140</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Internet</field>
@@ -3063,7 +3063,7 @@
 <record id="chart612150" model="account.account">
 	<field name="code">612150</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Frais postaux</field>
@@ -3072,7 +3072,7 @@
 <record id="chart612200" model="account.account">
 	<field name="code">612200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Carburants voitures</field>
@@ -3081,7 +3081,7 @@
 <record id="chart612300" model="account.account">
 	<field name="code">612300</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Abonnements &amp; Documentations</field>
@@ -3090,7 +3090,7 @@
 <record id="chart612400" model="account.account">
 	<field name="code">612400</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Imprim�s &amp; fournitures de bureau</field>
@@ -3099,7 +3099,7 @@
 <record id="chart612410" model="account.account">
 	<field name="code">612410</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Fournitures informatiques</field>
@@ -3108,7 +3108,7 @@
 <record id="chart612450" model="account.account">
 	<field name="code">612450</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Photocopies-Photographies</field>
@@ -3117,7 +3117,7 @@
 <record id="chart612520" model="account.account">
 	<field name="code">612520</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Emballages perdus</field>
@@ -3126,7 +3126,7 @@
 <record id="chart612530" model="account.account">
 	<field name="code">612530</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Petit outillage &amp; petit mat�riel</field>
@@ -3135,7 +3135,7 @@
 <record id="chart612540" model="account.account">
 	<field name="code">612540</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Petit mat�riel informatique</field>
@@ -3144,7 +3144,7 @@
 <record id="chart613100" model="account.account">
 	<field name="code">613100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Assurance incendie</field>
@@ -3153,7 +3153,7 @@
 <record id="chart613110" model="account.account">
 	<field name="code">613110</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Assurance vol</field>
@@ -3162,7 +3162,7 @@
 <record id="chart613130" model="account.account">
 	<field name="code">613130</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Assurance cr�dit</field>
@@ -3171,7 +3171,7 @@
 <record id="chart613150" model="account.account">
 	<field name="code">613150</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Assurance tous risques mat�riel �lec.</field>
@@ -3180,7 +3180,7 @@
 <record id="chart613180" model="account.account">
 	<field name="code">613180</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Assurance RC professionnelle</field>
@@ -3189,7 +3189,7 @@
 <record id="chart613210" model="account.account">
 	<field name="code">613210</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Honoraires avocats</field>
@@ -3198,7 +3198,7 @@
 <record id="chart613220" model="account.account">
 	<field name="code">613220</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Honoraires notaires</field>
@@ -3207,7 +3207,7 @@
 <record id="chart613230" model="account.account">
 	<field name="code">613230</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Honoraires huissiers de justice</field>
@@ -3216,7 +3216,7 @@
 <record id="chart613250" model="account.account">
 	<field name="code">613250</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Honoraires s�cretariat social</field>
@@ -3225,7 +3225,7 @@
 <record id="chart613265" model="account.account">
 	<field name="code">613265</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Honoraires d'autres</field>
@@ -3234,7 +3234,7 @@
 <record id="chart613275" model="account.account">
 	<field name="code">613275</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Publications l�gales</field>
@@ -3243,7 +3243,7 @@
 <record id="chart613300" model="account.account">
 	<field name="code">613300</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Deplacements Belg. train, taxi, etc</field>
@@ -3252,7 +3252,7 @@
 <record id="chart613303" model="account.account">
 	<field name="code">613303</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Restaurants</field>
@@ -3261,7 +3261,7 @@
 <record id="chart613304" model="account.account">
 	<field name="code">613304</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Traiteurs-r�ception client�le</field>
@@ -3270,7 +3270,7 @@
 <record id="chart613305" model="account.account">
 	<field name="code">613305</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Collations</field>
@@ -3279,7 +3279,7 @@
 <record id="chart613311" model="account.account">
 	<field name="code">613311</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Deplacements �tranger train, taxi, etc</field>
@@ -3288,7 +3288,7 @@
 <record id="chart613313" model="account.account">
 	<field name="code">613313</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Restaurants �tranger</field>
@@ -3297,7 +3297,7 @@
 <record id="chart613400" model="account.account">
 	<field name="code">613400</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Seminaires &amp; Recyclages</field>
@@ -3306,7 +3306,7 @@
 <record id="chart614100" model="account.account">
 	<field name="code">614100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">income</field>
 	<field name="name">Catalogues et imprim�es</field>
@@ -3315,7 +3315,7 @@
 <record id="chart614400" model="account.account">
 	<field name="code">614400</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Entr�e aux foires</field>
@@ -3324,7 +3324,7 @@
 <record id="chart614700" model="account.account">
 	<field name="code">614700</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Frais de bonne politique</field>
@@ -3333,7 +3333,7 @@
 <record id="chart615000" model="account.account">
 	<field name="code">615000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart61"/>
 	<field name="type">expense</field>
 	<field name="name">Sous-traitants</field>
@@ -3342,7 +3342,7 @@
 <record id="chart620000" model="account.account">
 	<field name="code">620000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart620"/>
 	<field name="type">expense</field>
 	<field name="name">Administrateurs ou g�rants - Bestuurders of zaakvoerders</field>
@@ -3351,7 +3351,7 @@
 <record id="chart620100" model="account.account">
 	<field name="code">620100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart620"/>
 	<field name="type">expense</field>
 	<field name="name">Personnel de direction - Directiepersoneel</field>
@@ -3360,7 +3360,7 @@
 <record id="chart620200" model="account.account">
 	<field name="code">620200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart620"/>
 	<field name="type">expense</field>
 	<field name="name">Employ�s - Bedienden</field>
@@ -3369,7 +3369,7 @@
 <record id="chart620300" model="account.account">
 	<field name="code">620300</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart620"/>
 	<field name="type">expense</field>
 	<field name="name">Ouvriers - Arbeiders</field>
@@ -3378,7 +3378,7 @@
 <record id="chart620400" model="account.account">
 	<field name="code">620400</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart620"/>
 	<field name="type">expense</field>
 	<field name="name">Autres membres du personnel - Andere personeelsleden</field>
@@ -3387,7 +3387,7 @@
 <record id="chart620800" model="account.account">
 	<field name="code">620800</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart620"/>
 	<field name="type">expense</field>
 	<field name="name">Assurance revenus garantis</field>
@@ -3396,7 +3396,7 @@
 <record id="chart623600" model="account.account">
 	<field name="code">623600</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart62"/>
 	<field name="type">expense</field>
 	<field name="name">V�tements de travail employ�s</field>
@@ -3405,7 +3405,7 @@
 <record id="chart630000" model="account.account">
 	<field name="code">630000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/frais.constit.&amp;aug.capi - Afschr.o.opricht./kapitaalverhoging</field>
@@ -3414,7 +3414,7 @@
 <record id="chart630200" model="account.account">
 	<field name="code">630200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/installations - Afschr. op installaties</field>
@@ -3423,7 +3423,7 @@
 <record id="chart630210" model="account.account">
 	<field name="code">630210</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/constructions - Afschr. op gebouwen</field>
@@ -3432,7 +3432,7 @@
 <record id="chart630220" model="account.account">
 	<field name="code">630220</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/machines - Afschr. op machines</field>
@@ -3441,7 +3441,7 @@
 <record id="chart630221" model="account.account">
 	<field name="code">630221</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/outillage - Afschr. op uitrusting</field>
@@ -3450,7 +3450,7 @@
 <record id="chart630222" model="account.account">
 	<field name="code">630222</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/mobilier - Afschr. op meubilair</field>
@@ -3459,7 +3459,7 @@
 <record id="chart630223" model="account.account">
 	<field name="code">630223</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/mat.bureau - Afschr. op bureaumaterieel</field>
@@ -3468,7 +3468,7 @@
 <record id="chart630224" model="account.account">
 	<field name="code">630224</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/mat.informatique - Afschr. op hardware</field>
@@ -3477,7 +3477,7 @@
 <record id="chart630225" model="account.account">
 	<field name="code">630225</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/am�n. locaux - Afschr. op inrichtingskost</field>
@@ -3486,7 +3486,7 @@
 <record id="chart630230" model="account.account">
 	<field name="code">630230</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart630"/>
 	<field name="type">expense</field>
 	<field name="name">Amort.s/voitures - Afschr. op wagens</field>
@@ -3495,7 +3495,7 @@
 <record id="chart640000" model="account.account">
 	<field name="code">640000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart640"/>
 	<field name="type">expense</field>
 	<field name="name">Taxes circl. voitures - Belasting wagens</field>
@@ -3504,7 +3504,7 @@
 <record id="chart640020" model="account.account">
 	<field name="code">640020</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart640"/>
 	<field name="type">expense</field>
 	<field name="name">Pr�compte immoblier - Onroerende voorhoeffing</field>
@@ -3513,7 +3513,7 @@
 <record id="chart640100" model="account.account">
 	<field name="code">640100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart640"/>
 	<field name="type">expense</field>
 	<field name="name">Timbres fiscaux</field>
@@ -3522,7 +3522,7 @@
 <record id="chart640230" model="account.account">
 	<field name="code">640230</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart640"/>
 	<field name="type">expense</field>
 	<field name="name">Raccordement aux egouts</field>
@@ -3531,7 +3531,7 @@
 <record id="chart640310" model="account.account">
 	<field name="code">640310</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart640"/>
 	<field name="type">expense</field>
 	<field name="name">Cotisation d�pannage</field>
@@ -3540,7 +3540,7 @@
 <record id="chart640700" model="account.account">
 	<field name="code">640700</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart640"/>
 	<field name="type">expense</field>
 	<field name="name">TVA non-deductible</field>
@@ -3549,7 +3549,7 @@
 <record id="chart650000" model="account.account">
 	<field name="code">650000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Int�r�ts comm. &amp; frais s/decouvert</field>
@@ -3558,7 +3558,7 @@
 <record id="chart652000" model="account.account">
 	<field name="code">652000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Moins-value sur r�alisation d'actifs circulants</field>
@@ -3567,7 +3567,7 @@
 <record id="account.a_pay" model="account.account">
 	<field name="code">655000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Ecarts de conversion de devises</field>
@@ -3576,7 +3576,7 @@
 <record id="chart656100" model="account.account">
 	<field name="code">656100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Frais de banque</field>
@@ -3585,7 +3585,7 @@
 <record id="chart656300" model="account.account">
 	<field name="code">656300</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Int�r�ts de retards fiscaux - Fiscale achterst. interest</field>
@@ -3594,7 +3594,7 @@
 <record id="chart656500" model="account.account">
 	<field name="code">656500</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Int�r�ts retards sociaux - Sociale achterst. interest</field>
@@ -3603,7 +3603,7 @@
 <record id="chart656600" model="account.account">
 	<field name="code">656600</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart65"/>
 	<field name="type">expense</field>
 	<field name="name">Int�r�ts r�tards com. - Com. achterst. interest</field>
@@ -3612,7 +3612,7 @@
 <record id="chart663750" model="account.account">
 	<field name="code">663750</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart66"/>
 	<field name="type">expense</field>
 	<field name="name">-Val.s/materiel informatique</field>
@@ -3621,7 +3621,7 @@
 <record id="chart665000" model="account.account">
 	<field name="code">665000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart66"/>
 	<field name="type">expense</field>
 	<field name="name">Pertes et charges diverses</field>
@@ -3630,7 +3630,7 @@
 <record id="chart665200" model="account.account">
 	<field name="code">665200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart66"/>
 	<field name="type">expense</field>
 	<field name="name">Perte d�finitive cr�ance douteuse</field>
@@ -3639,7 +3639,7 @@
 <record id="chart693000" model="account.account">
 	<field name="code">693000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart69"/>
 	<field name="type">expense</field>
 	<field name="name">B�n�fice � reporter</field>
@@ -3648,7 +3648,7 @@
 <record id="chart705000" model="account.account">
 	<field name="code">705000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart70"/>
 	<field name="type">income</field>
 	<field name="name">Prestations de services - Verkopen en dienstprestaties</field>
@@ -3657,7 +3657,7 @@
 <record id="chart705100" model="account.account">
 	<field name="code">705100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart70"/>
 	<field name="type">income</field>
 	<field name="name">DNS REGISTRY</field>
@@ -3666,7 +3666,7 @@
 <record id="chart705200" model="account.account">
 	<field name="code">705200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart70"/>
 	<field name="type">income</field>
 	<field name="name">WEB HOSTING</field>
@@ -3675,7 +3675,7 @@
 <record id="chart717000" model="account.account">
 	<field name="code">717000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart717"/>
 	<field name="type">income</field>
 	<field name="name">Valeur d'acquisition - Aanschaffingswaarde</field>
@@ -3684,7 +3684,7 @@
 <record id="chart717100" model="account.account">
 	<field name="code">717100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart717"/>
 	<field name="type">income</field>
 	<field name="name">B�n�fice pris en compte - Toegerekende winst</field>
@@ -3693,7 +3693,7 @@
 <record id="chart743000" model="account.account">
 	<field name="code">743000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart743"/>
 	<field name="type">income</field>
 	<field name="name">Ventes diverses - Diverse bedrijfsopbrengsten</field>
@@ -3702,7 +3702,7 @@
 <record id="account.a_income" model="account.account">
 	<field name="code">743200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart743"/>
 	<field name="type">income</field>
 	<field name="name">COTISATION DE MEMBRE</field>
@@ -3711,7 +3711,7 @@
 <record id="chart743300" model="account.account">
 	<field name="code">743300</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart743"/>
 	<field name="type">income</field>
 	<field name="name">Intervention assurance salaires garant.</field>
@@ -3720,7 +3720,7 @@
 <record id="chart754000" model="account.account">
 	<field name="code">754000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart75"/>
 	<field name="type">income</field>
 	<field name="name">Diff�rence de change - Wisselresultaten</field>
@@ -3729,7 +3729,7 @@
 <record id="account.a_recv" model="account.account">
 	<field name="code">755000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart75"/>
 	<field name="type">income</field>
 	<field name="name">Ecarts de convers. devises - Resultats omrekening vreemde valuta</field>
@@ -3738,7 +3738,7 @@
 <record id="chart756000" model="account.account">
 	<field name="code">756000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart756"/>
 	<field name="type">income</field>
 	<field name="name">Produits financiers divers</field>
@@ -3747,7 +3747,7 @@
 <record id="chart760000" model="account.account">
 	<field name="code">760000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart760"/>
 	<field name="type">income</field>
 	<field name="name">sur immobilisations incorp. - op immateri�le vaste activa</field>
@@ -3756,7 +3756,7 @@
 <record id="chart760100" model="account.account">
 	<field name="code">760100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart760"/>
 	<field name="type">income</field>
 	<field name="name">sur immobilisations corp. - op materi�le vaste activa</field>
@@ -3765,7 +3765,7 @@
 <record id="chart763750" model="account.account">
 	<field name="code">763750</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart763"/>
 	<field name="type">income</field>
 	<field name="name">+Val.s/mat.informatique</field>
@@ -3774,7 +3774,7 @@
 <record id="chart771000" model="account.account">
 	<field name="code">771000</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart771"/>
 	<field name="type">income</field>
 	<field name="name">R�gularisations imp�ts dus vers�s - Regularisiering versch. of betaal. belast.</field>
@@ -3783,7 +3783,7 @@
 <record id="chart771100" model="account.account">
 	<field name="code">771100</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart771"/>
 	<field name="type">income</field>
 	<field name="name">R�gul. d'imp�ts estim�s - Regul. geraamde belasting</field>
@@ -3792,7 +3792,7 @@
 <record id="chart771200" model="account.account">
 	<field name="code">771200</field>
 	<field name="reconcile" eval="False"/>
-	<field name="close_method">none</field>
+
 	<field name="parent_id" ref="chart771"/>
 	<field name="type">income</field>
 	<field name="name">Reprises de provisions fiscales - Terugn. fiscale voorz.</field>

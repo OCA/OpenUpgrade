@@ -11,7 +11,7 @@
     "depends" : ["purchase"],
     "init_xml" : [],
     "demo_xml" : [],
-    "update_xml" : ["purchase_tender_view.xml",],
+    "update_xml" : ["purchase_tender_view.xml","purchase_tender_sequence.xml"],
     "active": False,
     "installable": True
 }

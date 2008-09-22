@@ -35,7 +35,7 @@ class purchase_order_line(osv.osv):
     _inherit = 'purchase.order.line'
     _columns = {
         'origin': fields.char('Origin', size=1024),
-        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot', relate= True),
+        'production_lot_id':fields.many2one('stock.production.lot', 'Production Lot'),
         'customer_ref': fields.char('Customer reference', size=64),
     }
 

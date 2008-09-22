@@ -85,7 +85,7 @@ class hr_holidays(osv.osv):
         'date_from1' : fields.date('From', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'date_to1' : fields.date('To', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'employee_id' : fields.many2one('hr.employee', 'Employee', select=True, readonly=True, required=True),
-        'user_id':fields.many2one('res.users', 'User_id', states={'draft':[('readonly',False)],'draft1':[('readonly',False)]}, relate=True, select=True, readonly=True),
+        'user_id':fields.many2one('res.users', 'User_id', states={'draft':[('readonly',False)],'draft1':[('readonly',False)]}, select=True, readonly=True),
         'manager_id' : fields.many2one('hr.employee', 'Holiday manager', invisible=False, readonly=True),
         'notes' : fields.text('Notes', readonly=True,states={'draft':[('readonly',False)],'draft1':[('readonly',False)]}),
         'contactno':fields.char("Contact no",size=64 , required=True, readonly=True,states={'draft':[('readonly',False)],'draft1':[('readonly',False)]}),

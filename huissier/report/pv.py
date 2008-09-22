@@ -30,8 +30,6 @@
 import pooler
 from report.interface import report_rml
 from tools.amount_to_text import amount_to_text
-print "HERE"*100
-
 
 def toxml(val):
     return val.replace('&', '&amp;').replace('<','&lt;').replace('>','&gt;').decode('utf8').encode('iso-8859-1')

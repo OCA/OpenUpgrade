@@ -20,6 +20,19 @@
 	=======================================================
 	-->
 
+	<record model="ir.ui.view" id="view_campaign_calendar">
+		<field name="name">dm.campaign.calendar</field>
+		<field name="model">dm.campaign</field>
+		<field name="type">calendar</field>
+		<field eval="2" name="priority"/>
+		<field name="arch" type="xml">
+			<calendar color="responsible_id" date_start="date_start" string="Campaigns">
+				<field name="name" string="Name"/>
+				<field name="country_id" />
+			</calendar>
+		</field>
+	</record>
+
 	<record model="ir.ui.view" id="view_campaign_tree">
 		<field name="name">dm.campaign.tree</field>
 		<field name="model">dm.campaign</field>
@@ -43,11 +56,13 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Campaigns">
+				<group colspan="4" col="4">
+					<field name="name" string="Name" select="1"/>
+					<field name="code1" string="Code" select="2"/>
+				</group>
 				<notebook colspan="4">
 					<page string="General">
 						<separator string="Global Information" colspan="4"/>
-						<field name="name" string="Name" select="1"/>
-						<field name="code1" string="Code" select="2"/>
 <!--						<field name="parent_id" string="Category" domain="[('type','=','view')]"/>-->
 						<field name="country_id" select="1" on_change="onchange_lang_currency(country_id)"/>
 						<field name="offer_id" select="1"/>
@@ -55,7 +70,7 @@
 						<field name="currency_id" select="2"/>
 
 						<field name="campaign_type" select="2"/>
-						<field name="date_start"/>
+						<field name="date_start" select="2"/>
 						<field name="date"/>
 <!--						<field name="partner_id"/>-->
 						<field name="dealer_id"/>
@@ -80,14 +95,14 @@
 						</group>
 					</page>
 					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1">
+						<field name="proposition_ids" nolabel="1" context="date1=date_start">
 							<form string="Propositions">
 							<notebook colspan="4">
 								<page string="General">
 									<field name="name" string="Name" select="1"/>
 									<field name="code1" string="Code" select="2"/>
-<!--									<field name="camp_id" on_change="onchange_date(camp_id)"/>-->
-									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+<!--									<field name="camp_id"/>-->
+									<field name="date_start" select="2"/>
 									<field name="proposition_type" select="1"/>
 									<field name="initial_proposition_id" select="1"/>
 									<field name="forwarding_charges"/>
@@ -147,7 +162,7 @@
 										<field name="quantity_add"/>
 									</tree>
 								</field>
-								<field name="keep_segments" string="Keep Segments at Duplication"/>
+<!--								<field name="keep_segments" string="Keep Segments at Duplication"/>-->
 								</page>
 							</notebook>
 							</form>
@@ -167,51 +182,54 @@
 						<field name="campaign_group_id" colspan="2"/>
 						<separator string="Costs" colspan="4"/>
 						<field name="manufacturing_costs" colspan="2"/>
-						<separator string="Purchase orders" colspan="4"/>
-						<field name="manufacturing_product" colspan="2"/>
-						<button name="po_generate" string="Generate Purchase Orders" type="object"/>
+					</page>
+					<page string="Supplying">
+						<field name="purchase_line_ids" colspan="4" nolabel="1">
+							<form string="Purchase Line">
+								<field name="product_id"/>
+								<newline/>
+								<field name="quantity"/>
+								<field name="uom_id"/>
+								<field name="constraint"/>
+								<field name="date_planned"/>
+<!--								<field name="trigger"/>-->
+<!--								<field name="notes" colspan="4" nolabel="1"/>-->
+								<group colspan="4">
+									<field name="state"/>
+<!--									<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>-->
+								</group>
+							</form>
+<!--							<tree string="Purchase Lines" editable="bottom">-->
+							<tree string="Purchase Lines">
+								<field name="product_id"/>
+								<field name="quantity"/>
+								<field name="uom_id"/>
+								<field name="constraint"/>
+								<field name="date_planned"/>
+<!--								<field name="trigger"/>-->
+								<field name="state"/>
+								<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
+							</tree>
+						</field>
 					</page>
 					<page string="Desktop Publishing">
-
-						<group colspan="4">
-							<separator string="                           " colspan="1"/>
-							<separator string="Theorical Dates" colspan="1"/>
-							<separator string="Reviewed Dates" colspan="1"/>
-							<separator string="Real Dates" colspan="1"/>
-						<separator string="DTP Request" colspan="4"/>
-<!--							<label string="DTP Request Date" width="200" colspan="1"/>-->
-							<label string="DTP Request Date" colspan="1"/>
-							<field name="theorical_dtp_request_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_dtp_request_date" nolabel="1" colspan="1"/>
-							<field name="real_dtp_request_date" nolabel="1" colspan="1"/>
-						<separator string="Translation Dates" colspan="4"/>
-<!--							<label string="Translation Delivery Date" width="200" colspan="1"/>-->
-							<label string="Translation Delivery Date" colspan="1"/>
-							<field name="theorical_translation_delivery_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_translation_delivery_date" nolabel="1" colspan="1"/>
-							<field name="real_translation_delivery_date" nolabel="1" colspan="1"/>
-<!--							<label string="Translation Rereading Date" width="200" colspan="1"/>-->
-							<label string="Translation Rereading Date" colspan="1"/>
-							<field name="theorical_translation_rereading_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_translation_rereading_date" nolabel="1" colspan="1"/>
-							<field name="real_translation_rereading_date" nolabel="1" colspan="1"/>
-						<separator string="First Draft Delivery" colspan="4"/>
-							<label string="Delivery Date" colspan="1"/>
-<!--							<field name="theorical_draft_delivery_date" width="200" nolabel="1" colspan="1"/>-->
-							<field name="theorical_draft_delivery_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_draft_delivery_date" nolabel="1" colspan="1"/>
-							<field name="real_draft_delivery_date" nolabel="1" colspan="1"/>
-						<separator string="Final Corrected Proof" colspan="4"/>
-<!--							<label string="Validation Date" width="200" colspan="1"/>-->
-							<label string="Validation Date" colspan="1"/>
-							<field name="theorical_fcp_validation_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_fcp_validation_date" nolabel="1" colspan="1"/>
-							<field name="real_fcp_validation_date" nolabel="1" colspan="1"/>
-							<label string="DTP Suplier Delivery Date" colspan="1"/>
-							<field name="theorical_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
-							<field name="reviewed_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
-							<field name="real_dtp_sup_delivery_date" nolabel="1" colspan="1"/>
-						</group>
+							<field name="dtp_dates_ids" nolabel="1" colspan="4">
+								<form string="DTP date">
+									<field name="name" colspan="3"/>
+									<field name="theorical_date"/>
+									<field name="reviewed_date"/>
+									<field name="planned_date"/>
+									<field name="real_date"/>
+									<field name="template"/>
+								</form>
+								<tree string="DTP dates" editable="bottom">
+									<field name="name"/>
+									<field name="theorical_date"/>
+									<field name="reviewed_date"/>
+									<field name="planned_date"/>
+									<field name="real_date"/>
+								</tree>
+							</field>
 					</page>
 					<page string="Customers Files">
 						<field name="deduplicator_id"/>
@@ -234,7 +252,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 	</record>
 	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_view">
@@ -249,6 +267,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_all"/>
+	</record>
 
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
 
@@ -258,7 +282,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open')]</field>
 	</record>
@@ -272,6 +296,12 @@
 		<field name="sequence" eval="2"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_all_open"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_open_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
 		<field name="act_window_id" ref="action_campaign_form_all_open"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all_open" action="action_campaign_form_all_open"/>
@@ -298,6 +328,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all2"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_draft_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_all2"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
 
 
@@ -306,7 +342,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close')]</field>
 	</record>
@@ -322,6 +358,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_all3"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_closed_view">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_all3"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
 
         <!-- My Campaings -->
@@ -332,7 +374,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('responsible_id','=',uid)]</field>
 	</record>
@@ -348,6 +390,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_my"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_my"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
 
 
@@ -357,7 +405,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','open'),('responsible_id','=',uid)]</field>
 	</record>
@@ -373,6 +421,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_my1"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_open_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_my1"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
 
 
@@ -381,7 +435,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','draft'),('responsible_id','=',uid)]</field>
 	</record>
@@ -397,6 +451,12 @@
 		<field name="view_id" ref="view_campaign_form"/>
 		<field name="act_window_id" ref="action_campaign_form_my2"/>
 	</record>
+	<record model="ir.actions.act_window.view" id="action_my_draft_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
+		<field name="act_window_id" ref="action_campaign_form_my2"/>
+	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
 
 
@@ -405,7 +465,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_tree"/>
 		<field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
 	</record>
@@ -419,6 +479,12 @@
 		<field name="sequence" eval="2"/>
 		<field name="view_mode">form</field>
 		<field name="view_id" ref="view_campaign_form"/>
+		<field name="act_window_id" ref="action_campaign_form_my3"/>
+	</record>
+	<record model="ir.actions.act_window.view" id="action_my_closed_campaign_calendar">
+		<field name="sequence" eval="3"/>
+		<field name="view_mode">calendar</field>
+		<field name="view_id" ref="view_campaign_calendar"/>
 		<field name="act_window_id" ref="action_campaign_form_my3"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
@@ -470,7 +536,7 @@
 								<page string="General">
 									<field name="name" string="Name" select="1"/>
 									<field name="code1" string="Code" select="2"/>
-									<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+									<field name="date_start" select="2"/>
 									<field name="proposition_type" select="1"/>
 									<field name="initial_proposition_id" select="1"/>
 									<field name="forwarding_charges"/>
@@ -530,7 +596,7 @@
 										<field name="quantity_add"/>
 									</tree>
 								</field>
-								<field name="keep_segments" string="Keep Segments at Duplication"/>
+<!--								<field name="keep_segments" string="Keep Segments at Duplication"/>-->
 								</page>
 							</notebook>
 							</form>
@@ -575,46 +641,6 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Model" id="menu_action_campaign_model_form" action="action_campaign_model_form"/>
 
-	<!--
-	=======================================================
-	Delays Views
-	=======================================================
-	-->
-	<!--
-	<record model="ir.ui.view" id="view_campaign_delay">
-		<field name="name">dm.campaign.delay.form</field>
-		<field name="model">dm.campaign.delay</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Delay">
-				<field name="make" select="1"/>
-				<field name="value" select="1"/>
-				<field name="proposition_id" select="2"/>
-			</form>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_campaign_delay_tree">
-		<field name="name">dm.campaign.delay.tree</field>
-		<field name="model">dm.campaign.delay</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Delay">
-				<field name="name"/>
-				<field name="value"/>
-			</tree>
-		</field>
-	</record>
-
-	<record model="ir.actions.act_window" id="action_campaign_delay">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.delay</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_delay_tree"/>
-	</record>
--->
-<!--	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Delays" id="menu_action_campaign_delay" action="action_campaign_delay"/>-->
 
 	<!--
 	=======================================================
@@ -631,8 +657,8 @@
 				<page string="General">
 					<field name="name" string="Name" select="1"/>
 					<field name="code1" string="Code" select="2"/>
-					<field name="camp_id" on_change="onchange_date(camp_id)"/>
-					<field name="date_start" select="2" domain="[('camp_id', '=', 'date_start')]"/>
+					<field name="camp_id"/>
+					<field name="date_start" select="2"/>
 					<field name="proposition_type" select="1"/>
 					<field name="initial_proposition_id" select="1"/>
 					<newline/>
@@ -644,8 +670,12 @@
 				</page>
 				<page string="Prices">
 					<separator string="Prices policy" colspan="4"/>
+					<group colspan="4">
 					<field name="customer_pricelist_id"/>
 					<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+					</group>
+					<field name="force_sm_price"/>
+					<field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
 					<field name="product_ids" colspan="4" nolabel="1">
 						<form string="Catalogue">
 							<field name="offer_step_type"/>
@@ -693,7 +723,7 @@
 						<field name="quantity_add"/>
 					</tree>
 				</field>
-				<field name="keep_segments" string="Keep Segments at Duplication"/>
+<!--				<field name="keep_segments" string="Keep Segments at Duplication"/>-->
 				</page>
 			</notebook>
 			</form>
@@ -717,12 +747,25 @@
 		</field>
 	</record>
 
+	<record model="ir.ui.view" id="view_campaign_proposition_calendar">
+		<field name="name">dm.campaign.proposition.calendar</field>
+		<field name="model">dm.campaign.proposition</field>
+		<field name="type">calendar</field>
+		<field eval="2" name="priority"/>
+		<field name="arch" type="xml">
+			<calendar color="camp_id" date_start="date_start" string="Propositions">
+				<field name="name"/>
+				<field name="proposition_type"/>
+			</calendar>
+		</field>
+	</record>
+
 	<record model="ir.actions.act_window" id="action_campaign_proposition">
 		<field name="name">All Campaigns Propositions</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_proposition_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Campaigns/All Campaigns Propositions" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
@@ -732,7 +775,7 @@
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.campaign.proposition</field>
 		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
+		<field name="view_mode">tree,form,calendar</field>
 		<field name="view_id" ref="view_campaign_proposition_tree"/>
 		<field name="domain">[('user_id','=',uid)]</field>
 	</record>
@@ -893,7 +936,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Dealer')]</field>
-		<field name="context">{'category_id':'Dealer'}</field>
+		<field name="context">{'category':'Dealer'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Dealers" id="menu_action_campaign_dealer_form" action="action_campaign_dealer_form"/>
 
@@ -904,7 +947,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Broker')]</field>
-		<field name="context">{'category_id':'Broker'}</field>
+		<field name="context">{'category':'Broker'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
 
@@ -915,7 +958,7 @@
 		<field name="view_mode">tree,form</field>
 		<field name="view_id" ref="base.view_partner_tree"/>
 		<field name="domain">[('category_id','like','Deduplicator')]</field>
-		<field name="context">{'category_id':'Deduplicator'}</field>
+		<field name="context">{'category':'Deduplicator'}</field>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
@@ -932,6 +975,63 @@
             </field>
         </record>
 
+	<record model="ir.ui.view" id="view_campaign_purchase_line_tree">
+		<field name="name">dm.campaign.purchase_line_tree</field>
+		<field name="model">dm.campaign_purchase_line</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Campaigns">
+				<tree string="Purchase Lines">
+					<field name="product_id"/>
+					<field name="quantity"/>
+					<field name="uom_id"/>
+					<field name="constraint"/>
+					<field name="date_planned"/>
+					<field name="trigger"/>
+					<field name="state"/>
+					<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
+				</tree>
+			</tree>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_campaign_purchase_line_form">
+		<field name="name">dm.campaign.purchase_line_form</field>
+		<field name="model">dm.campaign_purchase_line</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Purchase line">
+				<field name="product_id"/>
+				<newline/>
+				<field name="quantity"/>
+				<field name="uom_id"/>
+				<field name="constraint"/>
+				<field name="date_planned"/>
+				<field name="trigger"/>
+				<field name="notes" colspan="4" nolabel="1"/>
+				<group colspan="4">
+					<field name="state"/>
+				</group>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_campaign_purchase_line_form">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.purchase_line</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_campaign_purchase_line_form"/>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_campaign_purchase_line_tree">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">dm.campaign.purchase_line</field>
+		<field name="view_type">tree</field>
+		<field name="view_mode">form,tree</field>
+		<field name="view_id" ref="view_campaign_purchase_line_tree"/>
+	</record>
 
 </data>
 </terp>

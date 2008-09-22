@@ -108,7 +108,7 @@ def _data_save(self, cr, uid, data, context):
                     'period_id': period_id,
                     'account_id': line['account_id']
                 }, {'journal_id': closing_journal.id, 'period_id':period_id})
-        
+
         pool.get('account.move.line').create(cr, uid, {
             'debit': profit_and_loss>0 and profit_and_loss,
             'credit': profit_and_loss<0 and -profit_and_loss,
@@ -119,7 +119,7 @@ def _data_save(self, cr, uid, data, context):
             'account_id': profit_and_loss>0 and data['form']['pl_debit'] or data['form']['pl_credit']
         }, {'journal_id': closing_journal.id, 'period_id':period_id})
 
-        
+
         #Opening
 
         period = pool.get('account.fiscalyear').browse(cr, uid, data['form']['fy2_id']).period_ids[0]
@@ -134,8 +134,9 @@ def _data_save(self, cr, uid, data, context):
         query_line = pool.get('account.move.line')._query_get(cr, uid,
                 obj='account_move_line', context={'fiscalyear': fy_id})
 
-        query = "SELECT aa.code, aml.account_id, SUM(aml.debit) AS debit, SUM(aml.credit) AS credit, aa.type, aa.close_method FROM account_move_line aml LEFT JOIN account_account aa ON aa.id=aml.account_id WHERE period_id IN "+str(period_query_cond)+" GROUP BY aa.code, aml.account_id, aa.type, aa.close_method"
-
+        #query = "SELECT aa.code, aml.account_id, SUM(aml.debit) AS debit, SUM(aml.credit) AS credit, aa.type, aa.close_method FROM account_move_line aml LEFT JOIN account_account aa ON aa.id=aml.account_id WHERE period_id IN "+str(period_query_cond)+" GROUP BY aa.code, aml.account_id, aa.type, aa.close_method"
+        # modify query because of deferral method removed from account object now it wll take deferral method from account-type object
+        query = "SELECT aa.code, aml.account_id, SUM(aml.debit) AS debit, SUM(aml.credit) AS credit, aa.type, aat.close_method FROM account_move_line aml LEFT JOIN account_account aa ON aa.id=aml.account_id LEFT JOIN account_account_type aat ON aat.code=aa.type WHERE period_id IN "+str(period_query_cond)+" GROUP BY aa.code, aml.account_id, aa.type, aat.close_method"
         cr.execute(query)
         lines=cr.dictfetchall()
 
