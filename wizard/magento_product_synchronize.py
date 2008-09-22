@@ -61,20 +61,36 @@ def _do_export(self, cr, uid, data, context):
     prod_update = 0
     logger = netsvc.Logger()
     pool = pooler.get_pool(cr.dbname)
-    prod_ids = pool.get('product.product').search(cr, uid, [('exportable','=',True)]) #NB uid is the user id to enforce the rights accesses
-    
+
+    if data['model'] == 'ir.ui.menu':
+        prod_ids = pool.get('product.product').search(cr, uid, [('exportable','=',True)])
+    else:
+        prod_ids=[]
+        prod_not=[]
+        for id in data['ids']:
+            exportable_product=pool.get('product.product').search(cr, uid, [('id','=',id),('exportable','=',True)]) 
+            if len(exportable_product)==1: prod_ids.append(exportable_product[0])
+            else : prod_not.append(id)   
+            
+        if len(prod_not) > 0: raise wizard.except_wizard("Error", "you asked to export non-exportable products : IDs %s" % prod_not)
+
+    #===============================================================================
     # Server communication
+    #===============================================================================
+    
     magento_web_id=pool.get('magento.web').search(cr,uid,[('magento_id','=',1)])
     try:
         magento_web=pool.get('magento.web').browse(cr,uid,magento_web_id[0])
         server = xmlrpclib.ServerProxy("%sindex.php/api/xmlrpc" % magento_web.magento_url)   
     except:
-        raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL; using %sindex.php/api/xmlrpc" % magento_web.magento_url)
-    
+        raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL, a Magento username and password")
     try:
-        session=server.login(magento_web.api_user, magento_web.api_pwd)
-    except xmlrpclib.Fault,error:
-        raise wizard.except_wizard("MagentoError", "Magento returned %s" % error)
+        try:
+            session=server.login(magento_web.api_user, magento_web.api_pwd)
+        except xmlrpclib.Fault,error:
+            raise wizard.except_wizard("MagentoError", "Magento returned %s" % error)
+    except:
+        raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
         
     #===============================================================================
     #  Product packaging

@@ -30,6 +30,8 @@
 import xmlrpclib
 import pooler
 import wizard
+import netsvc
+from xml.parsers.expat import ExpatError
 
 #===============================================================================
 #    Information Form & Fields
@@ -57,8 +59,11 @@ def _do_correct(self, cr, uid, data, context):
     corrected = 0
     has_error = 0
     self.pool = pooler.get_pool(cr.dbname)
-    
-    # server communication
+    logger = netsvc.Logger()
+
+    #===============================================================================
+    #  Server communication
+    #===============================================================================
     magento_web_id=self.pool.get('magento.web').search(cr,uid,[('magento_id','=',1)])
     try:
         magento_web=self.pool.get('magento.web').browse(cr,uid,magento_web_id[0])
@@ -77,7 +82,16 @@ def _do_correct(self, cr, uid, data, context):
     # sale orders processing
     for so_id in has_error_so_array:
         error_so=self.pool.get('sale.order').browse(cr, uid, so_id)
-        mag_so=server.get_sale_order(error_so.magento_id)
+        
+        try:
+            try:
+                mag_so=server.get_sale_order(error_so.magento_id)
+            except ExpatError, error:
+                logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
+                raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders correct, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % magento_web.magento_url)
+        except :
+            raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
+
         error_counter = 0
         
         for mag_line in mag_so['lines']:

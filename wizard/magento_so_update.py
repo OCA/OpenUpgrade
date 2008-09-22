@@ -31,6 +31,7 @@ import xmlrpclib
 import pooler
 import wizard
 import netsvc
+from xml.parsers.expat import ExpatError
 
 #===============================================================================
 #    Information Form & Fields
@@ -73,14 +74,23 @@ def _do_update(self, cr, uid, data, context):
     to_update_array=self.pool.get('sale.order').search(cr, uid,[('magento_id','>',0)])
 
     for so_id in to_update_array:
-        
+        #Packaging 
         update_so=self.pool.get('sale.order').browse(cr, uid, so_id)
         web_so={
                 'magento_id': update_so.magento_id or int(0),
                 'status': update_so.state or int(0),
         }
-        updated_id=server.update_sale_order([web_so])
-    
+        #Update
+        try:
+            try:
+                updated_id=server.update_sale_order([web_so])
+            except ExpatError, error:
+                logger.notifyChannel("Magento Import", netsvc.LOG_ERROR, "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!\nError %s" % error)
+                raise wizard.except_wizard("Magento Import", "Error occured during Sales Orders update, See your debug.xmlrpc.log in the Smile_OpenERP_Synch folder in your Apache!" % magento_web.magento_url)
+        except :
+            raise wizard.except_wizard("ConnectionError", "Couldn't connect to Magento with URL %sindex.php/api/xmlrpc" % magento_web.magento_url)
+
+        #Report
         if int(updated_id) != int(update_so.magento_id) :
             logger.notifyChannel("Magento SO update", netsvc.LOG_ERROR, "Sale Order ID %s wrong update !" % updated_id)
         else:
