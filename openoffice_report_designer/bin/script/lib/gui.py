@@ -1,5 +1,6 @@
 import uno
 import unohelper
+import pythonloader
 if __name__<>"package":
     from actions import *
 
@@ -14,12 +15,14 @@ if __name__<>"package":
 # The ServiceManager of the running OOo.
 # It is cached in a global variable.
 goServiceManager = False
+pythonloader.DEBUG = 0
 def getServiceManager( cHost="localhost", cPort="2002" ):
     """Get the ServiceManager from the running OpenOffice.org.
         Then retain it in the global variable goServiceManager for future use.
         This is similar to the GetProcessServiceManager() in OOo Basic.
     """
     global goServiceManager
+    global pythonloader
     if not goServiceManager:
         # Get the uno component context from the PyUNO runtime
         oLocalContext = uno.getComponentContext()
