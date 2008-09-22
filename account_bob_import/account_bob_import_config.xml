@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<terp>
+<openerp>
     <data>
+
+	<!-- For BOB Installation -->
 
 	<record id="view_config_bob_import_form" model="ir.ui.view">
 		<field name="name">Configure BOB Import</field>
@@ -8,13 +10,15 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Configure Your BOB Import Options">
-                <separator col="4" colspan="4" string="Configure BOB Import Path"/>
-                <field name="company_id"/>
+                <separator col="4" colspan="4" string="Configure BOB Import Options"/>
+                <field name="company_id" colspan="2"/>
+                <field name="location" colspan="2"/>
                 <newline/>
-                <field name="path" colspan="4"/>
+                <field name="path" colspan="4" attrs="{'readonly':[('location','=','remotely')],'required':[('location','=','locally')]}"/>
 				<newline/>
+				<field name="zipped_file" colspan="4" attrs="{'readonly':[('location','=','locally')],'required':[('location','=','remotely')]}"/>
                 <group col="4" colspan="4">
-                    <button icon="gtk-cancel" special="cancel" string="Cancel" type="object"/>
+                    <button icon="gtk-cancel" name="action_cancel" special="cancel" string="Cancel" type="object"/>
                     <button icon="gtk-ok" name="action_create" string="Next" type="object"/>
                 </group>
             </form>
@@ -32,10 +36,12 @@
 
     <record id="config_bob_import" model="ir.module.module.configuration.step">
             <field name="name">Specify BOB Import Options</field>
-            <field name="note">Specify the company name,path and folder for BOB Import.</field>
+            <field name="note">Specify the company name,type of the BOB installation and Path or a zip containing the BOB Installation Folder.</field>
             <field name="action_id" ref="action_config_bob_import_form"/>
             <field name="state">open</field>
     </record>
+
+	<!-- Operating for conversion of .db to .csv -->
 
     <record id="view_config_path_folder_form" model="ir.ui.view">
 		<field name="name">Select Folder for BOB Import</field>
@@ -48,8 +54,7 @@
             	<newline/>
 				<field name="folder"/>
                 <group col="4" colspan="4">
-                	<button icon="gtk-cancel" name="action_back" string="Back" type="object"/>
-                    <button icon="gtk-cancel" special="cancel" string="Cancel" type="object"/>
+                    <button icon="gtk-cancel" name="action_cancel" special="cancel" string="Cancel" type="object" context="Back"/>
                     <button icon="gtk-ok" name="action_generate" string="Generate CSV" type="object"/>
                 </group>
             </form>
@@ -73,4 +78,4 @@
     </record>
 
     </data>
-</terp>
+</openerp>

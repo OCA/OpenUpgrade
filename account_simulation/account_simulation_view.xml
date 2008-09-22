@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
 
 	<record model="ir.ui.view" id="view_account_journal_simulation_tree">
@@ -31,9 +31,9 @@
 		<field name="res_model">account.journal.simulation</field>
 		<field name="view_type">form</field>
 	</record>
-	<menuitem 
-		parent="account.next_id_25" 
-		id="menu_action_view_account_journal_simulation_form" 
+	<menuitem
+		parent="account.menu_action_account_journal_form"
+		id="menu_action_view_account_journal_simulation_form"
 		action="action_view_account_journal_simulation_form"/>
 
 	<record model="ir.ui.view" id="view_account_journal_form_inherit_simul">
@@ -67,11 +67,11 @@
 		<field name="view_type">tree</field>
 	</record>
 	<menuitem
-		parent="account.next_id_25"
+		parent="account.menu_action_account_journal_form"
 		id="menu_action_account_journal_tree"
 		action="action_account_journal_tree"/>
 	<wizard string="Accounts Charts" menu="False" model="account.account" name="account.simulation.chart" id="account.wizard_account_chart"/>
 
 </data>
-</terp>
+</openerp>
 

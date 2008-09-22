@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<terp>
+<openerp>
 	<data noupdate="1">
 
 	<!-- Data for account_account -->
@@ -8,9 +8,10 @@
 			<field eval="&quot;Creances AWEX - Cheques Formations et Cheques Langues&quot;" name="name"/>
 			<field name="company_id" ref="base.main_company"/>
 			<!--<field eval="&quot;1&quot;" name="sign"/>-->
-			<field ref="l10n_be.a5" name="parent_id"/>
+			<field name="parent_id" search="[('name','=','CLASSE 5. PLACEMENTS DE TRESORERIE ET DE VALEURS DISPONIBLES')]" />
 			<field eval="1" name="active"/>
-			<field eval="&quot;cash&quot;" name="type"/>
+			<field ref="account.account_type_cash_moves" name="user_type"/>
+			<field eval="&quot;other&quot;" name="type"/>
 			<field eval="0" name="reconcile"/>
 			<field eval="[(6,0,[])]" name="tax_ids"/>
 		</record>
@@ -47,5 +48,5 @@
 			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
 		</record>
 	</data>
-</terp>
+</openerp>
 

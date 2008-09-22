@@ -3,7 +3,7 @@
     "name" : "Document Management - Reporting",
     "version" : "1.0",
     "author" : "Tiny",
-    "depends" : ["document"],
+    "depends" : ["document2"],
     "category" : "Generic Modules/Document Management",
     "description": """
     Reporting for the Document Management module:

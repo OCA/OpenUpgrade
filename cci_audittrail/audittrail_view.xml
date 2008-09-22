@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<terp>
+<openerp>
 	<data>
 		<menuitem name="Audittrails" id="menu_audittrail" parent="base.menu_administration"/>
 		<record model="ir.ui.view" id="view_audittrail_rule_form">
@@ -120,4 +120,4 @@
 		<wizard string="View log" menu="False" model="audittrail.log" name="audittrail.view.log2" id="wizard_audittrail_log"/>
 		<menuitem name="View Logs" id="menu_action_log_tree2" action="wizard_audittrail_log" type="wizard" parent="menu_audittrail"/>
 </data>
-</terp>
+</openerp>

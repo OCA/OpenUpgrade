@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 	<data>
 		<wizard id="ical_import" name="hr.ical_import" string="Import iCalendar" model="hr.employee" />
 		<menuitem name="Hours Encoding" parent="hr.menu_hr_root" id="menu_hr_hour_encod"/>
 		<menuitem id="ical_import_menu" name="Import Icalendar" parent="menu_hr_hour_encod" type="wizard" action="ical_import" />
 	</data>
-</terp>
+</openerp>

@@ -201,7 +201,7 @@ class crm_case(osv.osv):
         if not part:
             return data
         addr = self.pool.get('res.partner').address_get(cr, uid, [part])
-        if add['default']:
+        if addr['default']:
             data['value']['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, addr['default']).zip_id.id
         return data
 crm_case()
@@ -221,13 +221,16 @@ class project_work(osv.osv):
             return res
         for work in self.browse(cr, uid, ids):
             if (not work.zip_id) and ('zip_id' not in vals or not vals['zip_id']):
-                temp = self.pool.get('res.partner').address_get(cr, uid, [work.task_id.project_id.partner_id.id])
-                vals['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, temp['default']).zip_id.id
+                if work.task_id.project_id.partner_id:
+                    temp = self.pool.get('res.partner').address_get(cr, uid, [work.task_id.project_id.partner_id.id])
+                    vals['zip_id'] = self.pool.get('res.partner.address').browse(cr, uid, temp['default']).zip_id.id
             if (not work.partner_id) and ('partner_id' not in vals or not vals['partner_id']):
-                vals['partner_id'] = work.task_id.project_id.partner_id.id
+                if work.task_id.project_id.partner_id:
+                    vals['partner_id'] = work.task_id.project_id.partner_id.id
 
             if (not work.contact_id) and ('contact_id' not in vals or not vals['contact_id']):
-                vals['contact_id'] = work.task_id.project_id.contact_id2.id
+                if work.task_id.project_id.contact_id2:
+                    vals['contact_id'] = work.task_id.project_id.contact_id2.id
         return super(project_work, self).write(cr, uid, ids, vals)
 
 

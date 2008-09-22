@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
 	<!--
 	=======================================================
@@ -24,13 +24,13 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Trademarks">
-					<field name="partner_id" select="2" colspan="4"/>
 					<field name="name" select="1"/>
 					<field name="code"/>
+					<field name="partner_id" select="2" colspan="4"/>
 					<separator string="Layout" colspan="4"/>
 					<field name="header" colspan="4" />
 					<separator string="Signature" colspan="4"/>
-					<field name="signature" widget="image" nolabel="1" colspan="4"/> 
+					<field name="signature" widget="image" nolabel="1" colspan="4"/>
 					<separator string="Logo" colspan="4"/>
 					<field name="logo" widget="image" nolabel="1" colspan="4"/>
 			</form>
@@ -45,4 +45,4 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_trademark_form" action="action_trademark_form"/>
 </data>
-</terp>
+</openerp>

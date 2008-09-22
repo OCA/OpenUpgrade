@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<terp>
+<openerp>
 	<data>
 		<record id="dm_media_contacts0" model="dm.media">
 			<field eval="&quot;Contacts&quot;" name="name"/>
@@ -7,10 +7,10 @@
 		<record id="dm_media_newspapers0" model="dm.media">
 			<field eval="&quot;Newspapers&quot;" name="name"/>
 		</record>
-	
+
 	<!--
 	=======================================================
-	Offer - Category 
+	Offer - Category
 	=======================================================
 	-->
 		<record id="dm_offer_category_consumablegoods0" model="dm.offer.category">
@@ -49,9 +49,9 @@
 
 	<!--
 	=======================================================
-	Offers 
+	Offers
 	=======================================================
-	-->		
+	-->
 		<record id="dm_offer_discountsforeducationalloan0" model="dm.offer">
 			<field name="copywriter_id" ref="base.res_partner_2"/>
 			<field name="category_ids" eval="[(6,0,[ref('dm.dm_offer_category_serviceable0')])]"/>
@@ -66,7 +66,7 @@
 			<field eval="&quot;Discounts for Educational Loan&quot;" name="name"/>
 			<field name="offer_responsible_id" ref="base.user_admin"/>
 		</record>
-		
+
 		<record id="dm_offer_specialdiscountsforgirlseduloan0" model="dm.offer">
 			<field name="copywriter_id" ref="base.res_partner_c2c"/>
 			<field name="category_ids" eval="[(6,0,[ref('dm.dm_offer_category_longterm1')])]"/>
@@ -98,7 +98,7 @@
 			<field eval="&quot;Bidding of furniture&quot;" name="name"/>
 			<field name="offer_responsible_id" ref="base.user_demo"/>
 		</record>
-		
+
 		<record id="dm_offer_test0" model="dm.offer">
 			<field name="copywriter_id" ref="base.res_partner_2"/>
 			<field eval="&quot;Testing to convert preoffer into offer &quot;" name="notes"/>
@@ -114,4 +114,4 @@
 			<field eval="time.strftime('%Y-09-01')" name="delivery_date"/>
 		</record>
 	</data>
-</terp>
+</openerp>

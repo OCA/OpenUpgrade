@@ -196,14 +196,14 @@ class OpenERPRenderer(ObjRenderer) :
 
     def view_get(self):
         result = """<?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
 """
         for sk in self.klass_names:
             result += self.view_class_get(sk, self.klasses[sk])
         result += """
 </data>
-</terp>"""
+</openerp>"""
         return result
 
     def code_get(self):

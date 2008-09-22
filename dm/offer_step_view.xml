@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
 	<!--
 	=======================================================
@@ -10,7 +10,7 @@
 		<field name="name">dm.offer.document.category.form</field>
 		<field name="model">dm.offer.document.category</field>
 		<field name="type">form</field>
-		<field name="arch" type="xml">	
+		<field name="arch" type="xml">
 			<form string="Document Category">
 				<field name="name" select="1"/>
 				<field name="parent_id"/>
@@ -22,12 +22,12 @@
 		<field name="name">dm.offer.document.category.tree</field>
 		<field name="model">dm.offer.document.category</field>
 		<field name="type">tree</field>
-		<field name="arch" type="xml">	
+		<field name="arch" type="xml">
 			<tree string="Document Category">
 				<field name="complete_name"/>
 			</tree>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.actions.act_window" id="action_doc_categ_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.document.category</field>
@@ -37,11 +37,11 @@
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents" id="menu_action_offer_doc" sequence="2" />
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/Edit document categories" id="menu_action_offer_doc_categ_form" action="action_doc_categ_form" sequence="2"/>
 
-	
+
 	=======================================================
 	Offer Step Document Views
 	=======================================================
-	
+
 
 
 	<record model="ir.ui.view" id="view_offer_step_document_form">
@@ -104,7 +104,7 @@
 		<field name="name">dm.offer.step.type.form</field>
 		<field name="model">dm.offer.step.type</field>
 		<field name="type">form</field>
-		<field name="arch" type="xml">	
+		<field name="arch" type="xml">
 			<form string="Offer Step Type">
 				<field name="name" select="1"/>
 				<field name="code"/>
@@ -117,7 +117,7 @@
 		<field name="name">dm.offer.step.type.tree</field>
 		<field name="model">dm.offer.step.type</field>
 		<field name="type">tree</field>
-		<field name="arch" type="xml">	
+		<field name="arch" type="xml">
 			<tree string="Offer Step Type">
 				<field name="name" select="1"/>
 				<field name="code"/>
@@ -125,7 +125,7 @@
 				<field name="flow_stop" />
 			</tree>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.actions.act_window" id="action_step_type_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step.type</field>
@@ -133,13 +133,13 @@
 		<field name="view_id" ref="view_offer_step_type_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Step Types" id="menu_action_step_type_form" action="action_step_type_form" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager,res_groups_offermanager"/>
-	
+
 	<!--
 	=======================================================
 	Offer Step Views
 	=======================================================
 	-->
-	
+
 	<record model="ir.ui.view" id="view_offer_step_tree">
 		<field name="name">dm.offer.step.tree</field>
 		<field name="model">dm.offer.step</field>
@@ -226,7 +226,7 @@
 								<field name="condition"/>
 								<field name="media_id"/>
 								<field name="delay" string="Delay(In Days)"/>
-							</tree>	
+							</tree>
 						</field>
 					</page>
 					<page string="Description">
@@ -260,15 +260,15 @@
 					</page>
 					<page string="Manufacturing">
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
-							<form string="Manufacturing Constraint">
+							<form string="Manufacturing Description">
 								<field name="name" select="1"/>
-								<separator string="Manufacturing Constraints" colspan="4"/>
+								<separator string="Manufacturing Description" colspan="4"/>
 								<field name="constraint" colspan="4" nolabel="1"/>
-								<field name="country_id"/>
+								<field name="country_ids"/>
 							</form>
-							<tree string="Manufacturing Constraint">
+							<tree string="Manufacturing Descriptions">
 								<field name="name"/>
-								<field name="country_id"/>
+								<field name="country_ids"/>
 								<field name="constraint"/>
 							</tree>
 						</field>
@@ -277,7 +277,7 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window" id="action_offer_step_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step</field>
@@ -298,7 +298,7 @@
 	Offer Step Transition Views
 	=======================================================
 	-->
-		
+
 	<!--<record model="ir.ui.view" id="view_offer_step_transition_form">
 		<field name="name">dm.offer.step.transition.form</field>
 		<field name="model">dm.offer.step.transition</field>
@@ -331,13 +331,13 @@
 		<field name="view_id" ref="view_offer_step_transition_tree"/>
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Transitions" id="menu_action_offer_step_transition" action="action_offer_step_transition" groups="res_groups_offeradmin,,res_groups_campaignadmin,res_groups_campaignmanager"/>-->
-   
+
    <!--
 	=======================================================
 	Offer Step Workitem Views
 	=======================================================
 	-->
-	
+
 	<record model="ir.ui.view" id="view_offer_step_workitem_form">
 		<field name="name">dm.offer.step.workitem.form</field>
 		<field name="model">dm.offer.step.workitem</field>
@@ -365,7 +365,7 @@
 				<field name="purchase_amount"/>
 			</tree>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.actions.act_window" id="action_offer_step_workitem">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.step.workitem</field>
@@ -387,7 +387,7 @@
 	Offer Step History Views
 	=======================================================
 	-->
-	
+
 	<record model="ir.ui.view" id="view_offer_step_history_form">
 		<field name="name">dm.offer.step.history.form</field>
 		<field name="model">dm.offer.step.history</field>
@@ -465,19 +465,19 @@
 		view_type="form"
 		view_mode="tree,form"
 		id="act_offer_product_opened"/>
-		
+
 
 	<record model="ir.ui.view" id="view_offer_step_manufacturing_constraint_form">
 		<field name="name">dm.offer.step.manufacturing_constraint.form</field>
 		<field name="model">dm.offer.step.manufacturing_constraint</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">	
-			<form string="Manufacturing Constraint">
+			<form string="Manufacturing Description">
 				<field name="name" select="1"/>
 				<field name="offer_step_id"/>
-				<separator string="Manufacturing Constraint" colspan="4"/>
+				<separator string="Manufacturing Description" colspan="4"/>
 				<field name="constraint" colspan="4" nolabel="1"/>
-				<field name="country_id" colspan="4"/>
+				<field name="country_ids" colspan="4"/>
 			</form>
 		</field>
 	</record>
@@ -486,11 +486,11 @@
 		<field name="model">dm.offer.step.manufacturing_constraint</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">	
-			<tree string="Manufacturing Constraints">
+			<tree string="Manufacturing Descriptions">
 				<field name="name" select="1"/>
 				<field name="constraint"/>
 				<field name="offer_step_id"/>
-				<field name="country_id"/>
+				<field name="country_ids"/>
 			</tree>
 		</field>
 	</record>
@@ -502,4 +502,4 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Manufacturing Constraints" id="menu_action_step_manufacturing_constraint_form" action="action_step_manufacturing_constraint_form" groups="res_groups_offeradmin,res_groups_campaignadmin"/>
 </data>
-</terp>
+</openerp>

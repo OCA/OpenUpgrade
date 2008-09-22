@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
 	<record model="ir.ui.view" id="view_translation_contribution_form">
 		<field name="name">Translations Contrib</field>
@@ -62,4 +62,4 @@
 	<menuitem name="Maintainer" id="menu_action_translation_maintainer" parent="menu_action_translation_mgmt"/>
 	<menuitem name="Review Proposed Contribution" action="action_translation_contribution_propose" id="menu_action_translation_contribution_propose" sequence="7" parent="menu_action_translation_maintainer"/>
 </data>
-</terp>			
+</openerp>			

@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<terp>
+<openerp>
 	<data>
 		<wizard string="Project"
 			model="dm.campaign.group"
@@ -43,7 +43,7 @@
 			name="wizard_campaign_tasks"
 			id="wizard_campaign_task"/>
 
-		<wizard
+<!-- 		<wizard
 			string="Duplicate"
 			model="dm.campaign.proposition"
 			name="wizard_prop_copy"
@@ -53,6 +53,6 @@
 			string="Duplicate"
 			model="dm.campaign"
 			name="wizard_campaign_copy"
-			id="wizard_campaign_copy"/>			
+			id="wizard_campaign_copy"/> -->
 	</data>
-</terp>
+</openerp>

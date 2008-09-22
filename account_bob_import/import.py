@@ -241,7 +241,9 @@ def import_journal(reader_journal, writer_journal, journals_map):
 
 
 # -= C. Partners Data =-
-#TODO: attention, si 2 partners ont le même nom, il s'agit de plusieurs adresses du même partenaire mais cela pose soucis lors de l'import des écritures comptables car il ne reconnait pas le 2ème code => utiliser un dictionnaire pour matcher les ID ?
+#Beware: If 2 partners have the same name, we have to create only one partner with several adresses. 
+#We also have to record all their old names because they can be referenced in another files (e.g. the account_move_line one). 
+#That's the reason why we keep a dictionary to match the IDS.
 
 def _get_cat(record):
 #have to put the partner into category suppliers if CSUPTYPE,A,1 == 'S'
@@ -625,7 +627,7 @@ def _create_vat_move(x, vat_dict, count):
 
 #check if the movement is a VAT movement: return TRUE if the account code begins with '450' or '451'
 def _is_vat_movement(x):
-    return x['HID,A,10'].startswith(('450','451'))
+    return x['HID,A,10'].startswith(('450','451','411'))
 
 
 move_line_map = {
@@ -711,13 +713,15 @@ def import_move_line(reader, writer, map, ):
             if row['HVATCODE,A,10']:
                 count = count + 1
                 record['tax_code_id:id'] = _pick_vat_code(row, vat_dict, False)
+            writer.writerow(record)
+
+            if row['HVATCODE,A,10']:
                 #generate the vat movement
                 vat_move = _create_vat_move(row, vat_dict, count)
                 #if vat_move['partner_id:id']:
                 #    vat_move['partner_id:id'] = _get_partner_id(partner_dict[vat_move['partner_id:id']])
                 writer.writerow(convert2utf(vat_move))
 
-            writer.writerow(record)
 
     return True
 

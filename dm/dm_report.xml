@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 	<data>
-	
+
 		<report id="dm_offer_report"
 			string="Offer"
 			model="dm.offer"
@@ -9,7 +9,7 @@
 			rml="dm/reportdm/dm_offer.rml"
 			auto="False"
 			/>
-			
+
 		<report id="dm_offer_model_report"
 			string="Offer Model"
 			model="dm.offer"
@@ -17,15 +17,15 @@
 			rml="dm/reportdm/dm_offer_model.rml"
 			auto="False"
 			/>
-			
+
 		<report id="dm_preoffer_report"
 			string="PreOffer"
 			model="dm.offer"
 			name="preoffer.report"
 			rml="dm/reportdm/dm_preoffer.rml"
 			auto="False"
-			/> 		
-			
+			/>
+
 		<report id="dm_offer_report_graph"
 			string="Offer Graph"
 			model="dm.offer"
@@ -40,4 +40,4 @@
 			auto="False"
 			/>
 	</data>
-</terp>
+</openerp>

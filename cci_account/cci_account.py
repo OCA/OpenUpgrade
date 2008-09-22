@@ -135,8 +135,14 @@ class account_invoice(osv.osv):
         inv_line_obj = self.pool.get('account.invoice.line')
         if 'invoice_line' in vals and vals['invoice_line']:
             for line in vals['invoice_line']:
-                if line[2].has_key('product_id') and line[2]['product_id']:
-                    product_ids.append(line[2]['product_id'])
+                if type(line[2])==type([]):
+                    data_lines = inv_line_obj.browse(cr, uid, line[2])
+                    for line in data_lines:
+                        if line.product_id:
+                            product_ids.append(line.product_id.id)
+                else:
+                    if line[2].has_key('product_id') and line[2]['product_id']:
+                        product_ids.append(line[2]['product_id'])
         if 'abstract_line_ids' in vals:
             for lines in vals['abstract_line_ids']:
                 line_ids.append(lines[1])

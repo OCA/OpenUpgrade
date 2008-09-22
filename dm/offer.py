@@ -26,13 +26,13 @@ class dm_media(osv.osv):
     _columns = {
         'name' : fields.char('Media', size=64, required=True),
     }
-    
+
 dm_media()
 
 class dm_offer_category(osv.osv):
     _name = "dm.offer.category"
     _rec_name = "name"
-    
+
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
@@ -48,7 +48,7 @@ class dm_offer_category(osv.osv):
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, unknow_dict):
         res = self.name_get(cr, uid, ids)
         return dict(res)
-    
+
     def _check_recursion(self, cr, uid, ids):
         level = 100
         while len(ids):
@@ -65,19 +65,19 @@ class dm_offer_category(osv.osv):
         'name' : fields.char('Name', size=64, required=True),
         'child_ids': fields.one2many('dm.offer.category', 'parent_id', 'Childs Category'),
     }
-    
+
     _constraints = [
         (_check_recursion, 'Error ! You can not create recursive categories.', ['parent_id'])
     ]
-        
+
 dm_offer_category()
 
 class dm_offer_production_cost(osv.osv):
     _name = "dm.offer.production.cost"
     _columns = {
         'name' : fields.char('Name', size=32, required=True)
-    }               
-    
+    }
+
 dm_offer_production_cost()
 
 class dm_customer(osv.osv):
@@ -141,7 +141,7 @@ class dm_customer_offer(osv.osv):
             if dm_customer:
                 value['customer_id']=dm_customer[0]
         return {'value':value}
-    
+
     def set_confirm(self, cr, uid, ids, *args):
         res = self.browse(cr,uid,ids)[0]
 #        if res.customer_id:
@@ -152,9 +152,9 @@ class dm_customer_offer(osv.osv):
 #            if res.customer_number != customer.customer_number:
 #                 vals['customer_number'] = customer.customer_number
         customer_id = res.customer_id.id
-        
+
 #                                    Create Customer
- 
+
         if not res.customer_id:
               vals={}
               vals['customer_number']=res.customer_number
@@ -181,24 +181,24 @@ class dm_customer_offer(osv.osv):
         workitem = self.pool.get('dm.offer.step.workitem')
         workitem_id = workitem.search(cr,uid,[('customer_id','=',res.customer_id.id),('segment_id','=',segment_id[0])])
         vals={}
-        
+
         segment_obj = segment.browse(cr,uid,segment_id)[0]
         offer_id = segment_obj.proposition_id.camp_id.offer_id.id
         offer_step = self.pool.get('dm.offer.step')
         step_id = offer_step.search(cr,uid,[('offer_id','=',offer_id),('type','=',res.offer_step)])
-        
+
         vals['step_id'] =step_id[0]
-        
+
         step = offer_step.browse(cr,uid,step_id)[0]
-        
+
 #    change the loop
         amount = 0
         for p in step.product_ids:
             amount+=p.price
         vals['purchase_amount']= amount
-        
+
 #                                        change workitem
-        
+
         if workitem_id : 
 #           if step.type == 'RL'
 #               propo = self.pool.get('dm.campaign.proposition')
@@ -215,7 +215,7 @@ class dm_customer_offer(osv.osv):
 
         self.write(cr,uid,ids,{'state':'done','customer_id':customer_id})
         return True
-    
+
 dm_customer_offer()
 
 class dm_offer(osv.osv):
@@ -253,7 +253,7 @@ class dm_offer(osv.osv):
             if len(preoffer_id) > 1 :
                 return False
         return True
-          
+
     _columns = {
         'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
@@ -278,21 +278,19 @@ class dm_offer(osv.osv):
         'purchase_note' : fields.text('Purchase Notes'),
         'purchase_category_ids' : fields.many2many('dm.offer.category','dm_offer_purchase_category','offer_id','offer_purchase_categ_id', 'Purchase Categories', domain="[('domain','=','purchase')]"),
         'history_ids' : fields.one2many('dm.offer.history', 'offer_id', 'History', ondelete="cascade"),
+        'translation_ids' : fields.one2many('dm.offer.translation', 'offer_id', 'Translations', ondelete="cascade", readonly=True),
         'order_date' : fields.date('Order Date'),
         'last_modification_date' : fields.function(dtp_last_modification_date, method=True,type="char", string='Last Modification Date',readonly=True),
         'planned_delivery_date' : fields.date('Planned Delivery Date'),
         'delivery_date' : fields.date('Delivery Date'),
         'fixed_date' : fields.date('Fixed Date'),
-        'trademark_sex' : fields.selection([('all','All'),('female','Female'),('male','male')],"Sex"), 
-        'trademark_age' : fields.integer('Age'),        
-        'trademark_country_ids' : fields.many2many('res.country','dm_offer_trademark_country', 'offer_id', 'country_id', 'Nationality'),
         'forbidden_country_ids' : fields.many2many('res.country','dm_offer_forbidden_country', 'offer_id', 'country_id', 'Forbidden Countries'),
         'forbidden_state_ids' : fields.many2many('res.country.state','dm_offer_forbidden_state', 'offer_id', 'state_id', 'Forbidden States'),
         'keywords' :fields.text('Keywords'),
         'version' : fields.float('Version'),
         'child_ids': fields.one2many('dm.offer', 'offer_origin_id', 'Childs Category'),
     }
-    
+
     _defaults = {
         'active': lambda *a: 1,
         'state': lambda *a: 'draft',
@@ -301,11 +299,11 @@ class dm_offer(osv.osv):
         'legal_state': lambda *a: 'validated',
         'offer_responsible_id' : lambda obj, cr, uid, context: uid,
     }
-    
+
     _constraints = [
         (_check_preoffer, 'Error ! this preoffer is already assigned to an offer',['preoffer_original_id'])
     ]
-        
+
 
 #    def change_code(self,cr,uid,ids,type,copywriter_id) :
 #        if type=='model' and ids:
@@ -404,14 +402,14 @@ class dm_offer(osv.osv):
         default['name']='New offer from model %s' % offer.name
         print default['name']
         default['step_ids']=[]
-#            offer is copied
+        #            offer is copied
         offer_id = super(dm_offer, self).copy(cr, uid, id, default, context)
         offer_step_obj = self.pool.get('dm.offer.step')
         offer_step_ids = offer_step_obj.search(cr,uid,[('offer_id','=',id)])
         print "DEBUG - offer_step_ids : ",offer_step_ids
         offer_steps = offer_step_obj.browse(cr,uid,offer_step_ids)
         print "DEBUG - offer_steps :",offer_steps
-#            offer step are copied
+        #            offer step are copied
         new_steps = []
         for step in offer_steps :
             nid = offer_step_obj.copy(cr,uid,step.id,{'offer_id':offer_id,'outgoing_transition_ids':[],'incoming_transition_ids':[]})#,'document_ids':[]})
@@ -420,15 +418,28 @@ class dm_offer(osv.osv):
             print "DEBUG - step transition :",step.outgoing_transition_ids
 
         print "DEBUG new_steps : ",new_steps
-#            transitions are copied
+        #            transitions are copied
         for step in new_steps : 
             if step['o_trans_id']:
                 for trans in step['o_trans_id']:
                     step_to =[nid['new_id'] for nid in new_steps if nid['old_id']==trans.step_to.id][0]
                     self.pool.get('dm.offer.step.transition').copy(cr,uid,trans.id,{'step_to':step_to,'step_from':step['new_id']})
-        return offer_id    
-    
+        return offer_id
+
 dm_offer()
+
+class dm_offer_translation(osv.osv):
+    _name = "dm.offer.translation"
+    _rec_name = "offer_id"
+    _order = "date"
+    _columns = {
+        'offer_id' : fields.many2one('dm.offer', 'Offer', required=True),
+        'language_id' : fields.many2one('res.lang','Language'),
+        'translator_id' : fields.many2one('res.partner', 'Translator'),
+        'date' : fields.date('Date'),
+        'notes' : fields.text('Notes'),
+    }
+dm_offer_translation()
 
 class dm_offer_history(osv.osv):
     _name = "dm.offer.history"
@@ -442,7 +453,6 @@ class dm_offer_history(osv.osv):
     _defaults = {
         'date': lambda *a: time.strftime('%Y-%m-%d'),
     }
-
 dm_offer_history()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

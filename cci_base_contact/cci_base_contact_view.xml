@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" ?>
-<terp>
+<openerp>
 <data>
 
 <!-- res.partner.country.relation views -->
@@ -176,7 +176,20 @@
 			</field>
 		</field>
 	</record>
-
+<!-- res.partner.job.. -->
+	<record model="ir.ui.view" id="view_job_form_inherit">
+		<field name="name">res.partner.job.form.inherit</field>
+		<field name="model">res.partner.job</field>
+		<field name="inherit_id" ref="base_contact.view_partner_job_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="name" position="after">
+				<field name="token"/>
+				<field name="password"/>
+				<field name="login_name"/>
+			</field>
+		</field>
+	</record>
 
 </data>
-</terp>
+</openerp>

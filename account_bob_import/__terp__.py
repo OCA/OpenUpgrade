@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 
 {
-    'name': 'CCI Account Data',
+    'name': 'Importing BOB made CSVs:CCI',
     'category': 'Data Module',
      'init_xml':[],
      'author': 'Tiny',
-     'depends': ['account','base_contact','account_l10nbe_domiciliation','l10n_be'],
+     'depends': ['base_contact','account_l10nbe_domiciliation','l10n_be'],
      'version': '1.0',
      'active': False,
      'demo_xml': [],

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 <data>
 	<!--
 	<record id="res_groups_developer" model="res.groups">
@@ -93,21 +93,30 @@
 					<page string="History">
 						<separator string="History" />
 						<field name="history_ids" nolabel="1" colspan="4"/>
+						<field name="translation_ids" nolabel="1" colspan="4">
+							<form string="Translation">
+								<field name="language_id"/>
+								<field name="translator_id"/>
+								<field name="date"/>
+								<field name="notes" nolabel="1" colspan="4"/>
+							</form>
+							<tree string="Translations">
+								<field name="language_id"/>
+								<field name="translator_id"/>
+								<field name="date"/>
+							</tree>
+						</field>
 					</page>
 					<page string="Dates">
 						<field name="order_date"/>
 						<field name="last_modification_date"/>
 						<field name="planned_delivery_date"/>
-						<field name="delivery_date"/>	
+						<field name="delivery_date"/>
 						<newline />
 <!--						<field name="fixed_date"/>-->
 <!--						<field name="buffer_delay"/>-->
 					</page>
 					<page string="Criteria">
-						<separator string="Trademark Criteria" colspan="4"/>
-						<field name="trademark_sex"/>
-						<field name="trademark_age"/>
-						<field name="trademark_country_ids" colspan="4"/>
 						<separator string="Geographical Criteria" colspan="4"/>
 						<field name="forbidden_country_ids" colspan="4"/>
 						<field name="forbidden_state_ids" colspan="4" />
@@ -115,15 +124,15 @@
 					<page string="Keywords" >
 						<separator string="Keywords" colspan="4"/>
 						<field name="keywords" colspan="4"  nolabel="1" select="1"/>
-					</page>				
+					</page>
 <!--					<page string="Statistics" >-->
 <!--						still not define -->
 <!--					</page>-->
-				</notebook>	
+				</notebook>
 			</form>
 		</field>
-	</record>	
-	
+	</record>
+
         <!-- All Offers -->
 	<record model="ir.actions.act_window" id="action_offer_form">
 		<field name="name">All Offers</field>
@@ -150,7 +159,7 @@
 
 
 	<record model="ir.actions.act_window" id="action_offer_form_all1">
-		<field name="name">Open Offer</field>	
+		<field name="name">Open Offer</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -175,7 +184,7 @@
 
 
 	<record model="ir.actions.act_window" id="action_offer_form_all2">
-		<field name="name">Draft Offer</field>	
+		<field name="name">Draft Offer</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -200,7 +209,7 @@
 
 
 	<record model="ir.actions.act_window" id="action_offer_form_all3">
-		<field name="name">Closed Offer</field>	
+		<field name="name">Closed Offer</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -247,9 +256,9 @@
 		<field name="act_window_id" ref="action_offer_form_my"/>
 	</record>
 	<menuitem name="Direct Marketing/Offers/My Offers" id="menu_action_offer_form_my" action="action_offer_form_my"/>
- 
- 
- 
+
+
+
 	<record model="ir.actions.act_window" id="action_offer_form_my1">
 		<field name="name">My Open Offer</field>
 		<field name="type">ir.actions.act_window</field>
@@ -276,7 +285,7 @@
 
 
 	<record model="ir.actions.act_window" id="action_offer_form_my2">
-		<field name="name">My Draft Offer</field>	
+		<field name="name">My Draft Offer</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -301,7 +310,7 @@
 
 
 	<record model="ir.actions.act_window" id="action_offer_form_my3">
-		<field name="name">My Closed Offer</field>	
+		<field name="name">My Closed Offer</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
@@ -339,7 +348,7 @@
 			</tree>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_offer_model_form">
 		<field name="name">dm.offer.model.form</field>
 		<field name="model">dm.offer</field>
@@ -369,8 +378,8 @@
 				</notebook>
 			</form>
 		</field>
-	</record>	
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_offer_model_form">
 		<field name="name">Offers Model</field>
 		<field name="type">ir.actions.act_window</field>
@@ -380,20 +389,20 @@
 		<field name="domain">[('type','=','model')]</field>
 		<field name="context">{'type':'model'}</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window.view" id="action_offer_model_tree_view">
 		<field name="view_mode">tree</field>
 		<field name="sequence">1</field>
 		<field name="view_id" ref="view_offer_model_tree"/>
 		<field name="act_window_id" ref="action_offer_model_form"/>
 	</record>
-	
+
 	<record model="ir.actions.act_window.view" id="action_offer_model_form_view">
 		<field name="view_mode">form</field>
 		<field name="sequence">10</field>
 		<field name="view_id" ref="view_offer_model_form"/>
 		<field name="act_window_id" ref="action_offer_model_form"/>
-	</record>	
+	</record>
 	<menuitem name="Direct Marketing/Configuration/Offers/All Offers Model" id="menu_action_offer_model_form" action="action_offer_model_form"/>
 
 	<record model="ir.actions.act_window" id="action_offer_copywriter_form">
@@ -453,7 +462,7 @@
 					<page string="Keywords" >
 						<separator string="Keywords" colspan="4"/>
 						<field name="keywords" colspan="4"  nolabel="1" select="1"/>
-					</page>	
+					</page>
 					<page string="Dates">
 						<field name="order_date"/>
 						<field name="last_modification_date"/>
@@ -466,8 +475,8 @@
 				</notebook>
 			</form>
 		</field>
-	</record>		
-	
+	</record>
+
 	<record model="ir.actions.act_window" id="action_preoffer_form">
 		<field name="name">PreOffers</field>
 		<field name="type">ir.actions.act_window</field>
@@ -483,15 +492,15 @@
 		<field name="view_id" ref="view_offer_tree"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
 	</record>
-	
+
 	<record model="ir.actions.act_window.view" id="action_preoffer_form_view">
 		<field name="view_mode">form</field>
 		<field name="sequence">10</field>
 		<field name="view_id" ref="view_preoffer_form"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
-	</record>		
+	</record>
 	<menuitem name="Direct Marketing/Offers/All PreOffers" id="menu_action_preoffer_form" action="action_preoffer_form"/>
-	
+
 	<!--
 	======================
 	Categories
@@ -508,7 +517,7 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_offer_category_list">
 		<field name="name">dm.offer.category.list</field>
 		<field name="model">dm.offer.category</field>
@@ -520,7 +529,7 @@
 			</tree>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_offer_category_tree">
 		<field name="name">dm.offer.category.tree</field>
 		<field name="model">dm.offer.category</field>
@@ -532,7 +541,7 @@
 			</tree>
 		</field>
 	</record>
-	
+
 	<record model="ir.actions.act_window" id="action_offer_categ_main">
 		<field name="name">Offer Categories</field>
 		<field name="type">ir.actions.act_window</field>
@@ -546,31 +555,31 @@
 	-->
 
 	<record model="ir.actions.act_window" id="action_offer_categ_form">
-		<field name="name">All Offers</field>	
+		<field name="name">All Offers</field>
 		<field name="name">Edit Categories</field>
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.offer.category</field>
 		<field name="view_type">form</field>
 	</record>
-	
+
 	<menuitem name="Direct Marketing/Configuration/Offers/Edit Categories" sequence="1" id="menu_action_offer_categ_main_form" action="action_offer_categ_form"/>
-	
+
 	<record model="ir.actions.act_window" id="action_offer_by_category">
-		<field name="name">Offer by Categories</field>	
+		<field name="name">Offer by Categories</field>
 		<field name="res_model">dm.offer</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('category_ids','child_of', [active_id])]</field>
 	</record>
-  	
+
 	<record model="ir.values" id="ir_action_offer_by_category">
 		<field name="key2" eval="'tree_but_open'"/>
 		<field name="model" eval="'dm.offer.category'"/>
 		<field name="name">Open Offer</field>
 		<field name="value" eval="'ir.actions.act_window,%d'%action_offer_by_category"/>
 		<field name="object" eval="True"/>
-	</record>	
-	
+	</record>
+
 	<menuitem name="Direct Marketing/Offers/Offers By Category" id="menu_action_offer_by_category" action="action_offer_categ_main"/>
 
 	<!--
@@ -589,13 +598,13 @@
 	</record>
 
 	<record model="ir.actions.act_window" id="action_steps_by_offer_form">
-		<field name="name">Offer Steps</field>	
+		<field name="name">Offer Steps</field>
 		<field name="res_model">dm.offer.step</field>
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 		<field name="domain">[('offer_id','child_of', [active_id])]</field>
 	</record>
-  	
+
 	<record model="ir.values" id="ir_action_offer_by_step">
 		<field name="key2" eval="'tree_but_open'"/>
 		<field name="model" eval="'dm.offer'"/>
@@ -641,13 +650,13 @@
 	======================
 	Customer
 	======================
-	-->		
-		
+	-->
+
 	<record model="ir.ui.view" id="view_dm_customer_form">
 		<field name="name">dm.customer.form</field>
 		<field name="model">dm.customer</field>
 		<field name="type">form</field>
-		<field name="arch" type="xml">	
+		<field name="arch" type="xml">
 			<form string="Customer">
 			<notebook>
 				<page string="General">
@@ -695,19 +704,19 @@
 			</form>
 		</field>
 	</record>
-	
+
 	<record model="ir.ui.view" id="view_dm_customer_tree">
 		<field name="name">dm.customer.tree</field>
 		<field name="model">dm.customer</field>
 		<field name="type">tree</field>
-		<field name="arch" type="xml">	
+		<field name="arch" type="xml">
 			<tree string="Customers">
 				<field name="customer_number" select="1"/>
 				<field name="name" colspan="4" select="1"/>
 				<field name="language_id"  select="2"/>
 			</tree>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.actions.act_window" id="action_dm_customer_form">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.customer</field>
@@ -716,13 +725,13 @@
 	</record>
 	<menuitem name="Direct Marketing/Offers/Customers" groups="res_groups_offeradmin" id="menu_dm_customer_menu" sequence="1" />
 	<menuitem name="Direct Marketing/Offers/Customers/All Customers" id="menu_dm_customer_form" sequence="1" action="action_dm_customer_form"/>
-		
+
 	<!--
 	=======================================================
 	Customer Order Views
 	=======================================================
-	-->	
-	
+	-->
+
 	<record model="ir.ui.view" id="view_dm_customer_offer_form">
 		<field name="name">dm.customer.offer.form</field>
 		<field name="model">dm.customer.offer</field>
@@ -751,7 +760,7 @@
 				<button string="Confirm" name="set_confirm" type="object" states="draft" colspan="2"/>
 			</form>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.ui.view" id="view_dm_customer_offer_tree">
 		<field name="name">dm.customer.offer.tree</field>
 		<field name="model">dm.customer.offer</field>
@@ -779,8 +788,8 @@
 	=======================================================
 	Offer Media Views
 	=======================================================
-	-->	
-	
+	-->
+
 	<record model="ir.ui.view" id="view_dm_media_form">
 		<field name="name">dm.media.form</field>
 		<field name="model">dm.media</field>
@@ -790,7 +799,7 @@
 				<field name="name" select="1"/>
 			</form>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.ui.view" id="view_dm_media_tree">
 		<field name="name">dm.meida.tree</field>
 		<field name="model">dm.media</field>
@@ -807,14 +816,14 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_media_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Medias" id="menu_action_dm_media_form" sequence="2" action="action_dm_media_form"/>	
-	
+	<menuitem name="Direct Marketing/Configuration/Offer Steps/All Offer Medias" id="menu_action_dm_media_form" sequence="2" action="action_dm_media_form"/>
+
 	<!--
 	=======================================================
 	Customer File
 	=======================================================
 	-->
-	
+
 	<record model="ir.ui.view" id="view_dm_customer_file_form">
 		<field name="name">dm.customer.file.form</field>
 		<field name="model">dm.customer.file</field>
@@ -840,7 +849,7 @@
 					<field name="start_census"/>
 					<field name="end_census"/>
 					<field name="deduplication_level"/>
-					<field name="note" colspan="4"/>				
+					<field name="note" colspan="4"/>
 				</form>
 				<tree string="Segments">
 					<field name="name" string="Name"/>
@@ -851,7 +860,7 @@
 				</field>
 			</form>
 		</field>
-	</record>	
+	</record>
 	<record model="ir.ui.view" id="view_dm_customer_file_tree">
 		<field name="name">dm.customer.file.tree</field>
 		<field name="model">dm.customer.file</field>
@@ -871,7 +880,7 @@
 		<field name="view_type">form</field>
 		<field name="view_id" ref="view_dm_customer_file_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Customer Files" id="menu_action_dm_customer_file" sequence="1" action="action_dm_customer_file"/>	
+	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Customer Files" id="menu_action_dm_customer_file" sequence="1" action="action_dm_customer_file"/>
 
 	</data>
-</terp>
+</openerp>

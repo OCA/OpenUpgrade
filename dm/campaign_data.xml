@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<terp>
+<openerp>
 	<data>
 
 		<record model="ir.cron" id="ir_cron_campaign_proposition">
@@ -11,8 +11,8 @@
 			<field name="model" eval="'dm.campaign.proposition'"/>
 			<field name="function" eval="'_check'"/>
 			<field name="args" eval="'()'"/>
-		</record>		
-		
+		</record>
+
 		<record model="ir.cron" id="ir_cron_update_wrkitem">
 			<field name="name">Update Workitem</field>
 			<field name="interval_number">1</field>
@@ -25,4 +25,4 @@
 		</record>
 
 	</data>
-</terp>
+</openerp>
