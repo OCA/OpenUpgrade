@@ -211,12 +211,16 @@ class dm_campaign(osv.osv):
                 super(osv.osv, self).write(cr, uid, camp.id, {'trademark_id':offers.recommended_trademark.id})
         
         # check if an overlay exists else create it
-        overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',camp.trademark_id.id), ('dealer_id','=',camp.dealer_id.id), ('country_id','=',camp.country_id.id)])
-        if overlay:
-            super(osv.osv, self).write(cr, uid, camp.id, {'overlay_id':overlay[0]}, context)  
+        camp1 = self.browse(cr, uid, camp.id)
+        if camp1.trademark_id and camp1.dealer_id and camp1.country_id:
+            overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',camp1.trademark_id.id), ('dealer_id','=',camp1.dealer_id.id), ('country_id','=',camp1.country_id.id)])
+            if overlay:
+                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay[0]}, context)  
+            else:
+                overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':camp1.trademark_id.id, 'dealer_id':camp1.dealer_id.id, 'country_id':camp1.country_id.id}, context)
+                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay_ids1}, context)
         else:
-            overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':camp.trademark_id.id, 'dealer_id':camp.dealer_id.id, 'country_id':camp.country_id.id}, context)
-            super(osv.osv, self).write(cr, uid, camp.id, {'overlay_id':overlay_ids1}, context)
+            raise osv.except_osv("Error!!","Information missing. Check Country, Dealer and Trademark")
         
         return res
 
@@ -250,14 +254,17 @@ class dm_campaign(osv.osv):
             super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
         
         # check if an overlay exists else create it
-        data_cam1 = self.browse(cr, uid, id_camp)
-        overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id), ('country_id','=',data_cam1.country_id.id)])
-        if overlay:
-            super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)  
+        if vals['trademark_id'] and vals['dealer_id'] and vals['country_id']:
+            data_cam1 = self.browse(cr, uid, id_camp)
+            overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id), ('country_id','=',data_cam1.country_id.id)])
+            if overlay:
+                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)  
+            else:
+                overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_id':data_cam1.country_id.id}, context)
+                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
         else:
-            overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_id':data_cam1.country_id.id}, context)
-            super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
-
+            raise osv.except_osv("Error!!","Information missing. Check Country, Dealer and Trademark")
+        
         return id_camp
 
     def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
