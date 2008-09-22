@@ -546,7 +546,7 @@ class res_partner_country_relation(osv.osv):
     _description = 'res.partner.country.relation'
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
-        'country_id':fields.many2one('res.country','Country'),
+        'country_id':fields.many2one('cci_country.cci_country','Country'),
         'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation'),('expert','Expert')],'Types'),
     }
 res_partner_country_relation()
