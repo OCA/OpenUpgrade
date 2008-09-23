@@ -95,7 +95,7 @@ class portal_portal(osv.osv):
         vids = []
         i = 0
         ## Fetch the views:
-        for view in action_obj.browse(cr,uid,action_id,context={'get_binary_size':False}).views:
+        for view in action_obj.browse(cr,uid,action_id,context=context).views:
             vids.append((0,0, {
                 'sequence':i,
                 'view_id': available_view.get(view[1], view[0]),
@@ -163,7 +163,7 @@ class portal_portal(osv.osv):
             'name': menu_name,
             'view_ids': vids,
             'view_type': v[0]
-            },context={'get_binary_size':False})
+            },context=context)
 
         ## Create the values:
         value_id = self.pool.get('ir.values').create(cr, uid, {

@@ -45,9 +45,7 @@ class config_bob_import(osv.osv_memory):
 
     def action_create(self, cr, uid,ids, context=None):
         ids=self.search(cr, uid, [])
-        ctx = context and context.copy() or {}
-        ctx['get_binary_size'] = False
-        path=self.read(cr, uid, [ids[len(ids)-1]],[], ctx)
+        path=self.read(cr, uid, [ids[len(ids)-1]],[], context)
 
         if path[-1]['location']=='locally':
             path_bob=path[-1]['path']
