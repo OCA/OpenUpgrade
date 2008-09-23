@@ -46,7 +46,7 @@
 		<field name="rule_groups" eval="[(4,ref('invoice_rule_group'))]"/>
 	</record>
 
-	<record model="res.groups" id="portal.portal_group">## ('account_id','=','partner:'+str(active_id)) 
+	<record model="res.groups" id="portal.portal_group">
 		<field name="rule_groups" eval="[(4,ref('move_line_rule_group'))]"/>
 	</record>
 

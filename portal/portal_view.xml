@@ -1,7 +1,19 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<menuitem name="Portal"  id="menu_portal_root"/>
+	<menuitem name="Portal"  id="menu_portal_root"/>	
+	<menuitem name="Configuration" id="menu_portal_configuration" parent="portal.menu_portal_root"/>
+    <menuitem name="Customer Portal" id="menu_portal_customer" parent="portal.menu_portal_root"/>
+
+	<record model="ir.actions.act_window" id="portal_customer_action_menu">
+		<field name="name">Portal Customer Menu</field>
+		<field name="usage">menu</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="view_id" ref="base.view_menu"/>
+		<field name="res_model">ir.ui.menu</field>
+		<field name="view_type">tree</field>
+		<field name="domain" eval="[('parent_id','=',ref('menu_portal_customer'))]"/>
+	</record>
 
 	<record model="ir.ui.view" id="view_portal_form">
 		<field name="name">Portal</field>
@@ -40,7 +52,7 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
-	<menuitem name="Configuration" id="menu_portal_configuration" parent="portal.menu_portal_root"/>
+	
 	<menuitem name="Portals" id="menu_portal_configuration_portals" parent="portal.menu_portal_configuration" action="action_portal_form"/>
 	
 	<record model="ir.actions.act_window" id="action_portal_model_form">
@@ -121,6 +133,45 @@
 			</form>
 		</field>
 	</record>
+
+<!-- configuration wizard -->
+	<record id="view_confirm_install_module_form" model="ir.ui.view">
+            <field name="name">Portal : Install extra modules</field>
+            <field name="model">portal.config.install_modules_wizard</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Portal : Install Extra Module">  
+					<separator string="Portal Management" colspan="4"/>                  
+                    <field name="portal_sale"/>
+                    <field name="portal_service"/>
+                    <field name="portal_account"/>                    
+                    <field name="portal_analytic"/>                    
+                    <separator string="" colspan="4"/>
+                    <label string="" colspan="2"/>
+                    <group col="4" colspan="2">
+                        <button special="cancel" string="Cancel" name="action_cancel" type="object" icon='gtk-cancel'/>
+                        <button name="action_install" string="Install" icon='gtk-ok' type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_config_install_module" model="ir.actions.act_window">
+            <field name="name">Portal : Install Extra Modules</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">portal.config.install_modules_wizard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+      <record model="ir.module.module.configuration.step"
+            id="config_install_module">
+            <field name="name">portal : Install Extra modules</field>
+            <field name="note">A few modules are proposed according to portal you selected.</field>
+            <field name="action_id" ref="action_config_install_module"/>
+            <field name="state">open</field>
+        </record>
 
 
 </data>

@@ -27,7 +27,7 @@
 ##############################################################################
 
 from osv import fields, osv
-
+import pooler
 
 class portal_portal(osv.osv):
     _name = "portal.portal"
@@ -63,7 +63,7 @@ class portal_portal(osv.osv):
             vals['menu_action_id']= self.create_action_menu(cr,user,vals['menu_id'], vals['name'],context)
         return super(portal_portal, self).create(cr, user, vals, context)
 
-    def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,view_ids=None,view_type=False,context=None):
+    def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,view_ids=None,view_type=False,context=None):        
         """
         Create a menuitem for the given portal and model whith the given name and action.
         """
@@ -80,7 +80,8 @@ class portal_portal(osv.osv):
 
         portal= self.pool.get('portal.portal').browse(cr,uid,portal_id)
         model= self.pool.get('portal.model').browse(cr,uid,portal_model_id)
-        action= self.pool.get('ir.actions.act_window').browse(cr,uid,action_id)
+        action_obj= self.pool.get('ir.actions.act_window')
+        action= action_obj.browse(cr,uid,action_id)
         ## Create the menu:
         menu_id=self.pool.get('ir.ui.menu').create(cr, uid, {
             'name': menu_name,
@@ -94,7 +95,7 @@ class portal_portal(osv.osv):
         vids = []
         i = 0
         ## Fetch the views:
-        for view in self.pool.get('ir.actions.act_window').browse(cr,uid,action_id).views:
+        for view in action_obj.browse(cr,uid,action_id,context={'get_binary_size':False}).views:
             vids.append((0,0, {
                 'sequence':i,
                 'view_id': available_view.get(view[1], view[0]),
@@ -158,11 +159,11 @@ class portal_portal(osv.osv):
                     vids[1]=temp
 
         ## Duplicate the action and give the fetched views to the new one:
-        action_id = action.copy(cr,uid, action.id,{
+        action_id = action_obj.copy(cr,uid, action.id,{
             'name': menu_name,
             'view_ids': vids,
             'view_type': v[0]
-            })
+            },context={'get_binary_size':False})
 
         ## Create the values:
         value_id = self.pool.get('ir.values').create(cr, uid, {
@@ -231,5 +232,41 @@ class ir_actions_act_window(osv.osv):
         'portal_visible': lambda *a: True,
     }
 ir_actions_act_window()
+
+class portal_config_install_modules_wizard(osv.osv_memory):
+    _name='portal.config.install_modules_wizard'
+    _columns = {
+        'portal_sale':fields.boolean('Portal for Sale Module'),
+        'portal_service':fields.boolean('Portal for Service Module'),
+        'portal_account':fields.boolean('Portal for Account Module'),
+        'portal_analytic':fields.boolean('Portal for Analytic Account Module'),        
+    }
+    def action_cancel(self,cr,uid,ids,conect=None):
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'ir.module.module.configuration.wizard',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+         }
+    def action_install(self, cr, uid, ids, context=None):
+        result=self.read(cr,uid,ids)        
+        mod_obj = self.pool.get('ir.module.module')
+        for res in result:
+            for r in res:
+                if r<>'id' and res[r]:
+                    ids = mod_obj.search(cr, uid, [('name', '=', r)])
+                    mod_obj.action_install(cr, uid, ids, context=context)
+        cr.commit()
+        db, pool = pooler.restart_pool(cr.dbname,force_demo=True, update_module=True)
+        return {
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'ir.module.module.configuration.wizard',
+                'type': 'ir.actions.act_window',
+                'target':'new',
+            }
+portal_config_install_modules_wizard()
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
