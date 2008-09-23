@@ -993,8 +993,9 @@
 				<field name="code"/>
 				<field name="trademark_id" select="1"/>
 				<field name="dealer_id" select="2"/>
-				<field name="country_id" select="1"/>
 				<field name="bank_account_id" select="2"/>
+				<separator string="Countries" colspan="4"/>
+				<field name="country_ids" colspan="4" nolabel="1"/>
 			</form>
 		</field>
 	</record>
@@ -1008,7 +1009,6 @@
 				<field name="code"/>
 				<field name="trademark_id"/>
 				<field name="dealer_id"/>
-				<field name="country_id"/>
 				<field name="bank_account_id"/>
 			</tree>
 		</field>
