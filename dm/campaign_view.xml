@@ -81,13 +81,13 @@
 						<field name="project_id" string="Retro Planning"/>
 						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('state','!=','open'),('project_id','!=',False)]}"/>
 						</group>
-						<separator string="Process State" colspan="4"/>
+<!--						<separator string="Process State" colspan="4"/>
 						<group colspan="8">
 						<field name="manufacturing_state" select="2"/>
 						<field name="customer_file_state" select="2"/>
 						<field name="items_state" select="2"/>
 						<field name="translation_state" select="2"/>
-						</group>
+						</group>-->
 <!--						<field name="campaign_stat_ids"/>-->
 						<separator string="Campaign Status" colspan="4"/>
 						<group col="10" colspan="4">
@@ -203,19 +203,20 @@
 						<field name="manufacturing_costs"/>
 					</page>
 					<page string="Supplying">
-						<field name="purchase_line_ids" colspan="4" nolabel="1" context="date1=date_start">
+<!--						<field name="purchase_line_ids" colspan="4" nolabel="1" context="date1=date_start">-->
+						<field name="purchase_line_ids" colspan="4" nolabel="1" attrs="{'readonly':[('campaign_group_id','!=',0)]}">
 							<form string="Purchase Line">
-							<group colspan="4">
-								<field name="product_id"/>
-								<field name="uom_id"/>
-								<field name="quantity"/>
-								<field name="type"/>
-								<newline/>
-								<field name="date_planned"/>
-								<field name="date_delivery"/>
-							</group>
+								<group colspan="4">
+									<field name="product_id"/>
+									<field name="uom_id"/>
+									<field name="quantity"/>
+									<field name="type"/>
+									<newline/>
+									<field name="date_planned"/>
+									<field name="date_delivery"/>
+								</group>
 								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
+								<field name="notes" colspan="4" nolabel="1"/>-->
 								<field name="purchase_order_ids" colspan="4" nolabel="1"/>
 								<field name="state" nolabel="1"/>
 							</form>
@@ -229,8 +230,8 @@
 								<field name="state"/>
 								<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
 							</tree>
-						</field>
-						<button name="po_check" string="Check Purchase Orders Status" type="object" colspan="2" col="2"/>
+						</field>-->
+<!--						<button name="po_check" string="Check Purchase Orders Status" type="object" colspan="2" col="2"/>-->
 					</page>
 					<page string="Desktop Publishing">
 							<field name="dtp_dates_ids" nolabel="1" colspan="4">
@@ -898,14 +899,22 @@
 		<field name="model">dm.campaign.group</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
-			<form string="Group">
+			<form string="Campaign Group">
 				<field name="name" select="1"/>
+				<field name="code" select="1"/>
+				<notebook colspan="4">
+				<page string="General">
 				<separator string="Tasks Management" colspan="4"/>
 					<group colspan="4">
 					<field name="project_id" string="Retro Planning"/>
 					<button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action"/>
 					</group>
 				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
+				</page>
+				<page string="Supplying">
+<!--					<field name="purchase_line_ids" colspan="4" nolabel="1"/>-->
+				</page>
+				</notebook>
 			</form>
 		</field>
 	</record>
@@ -984,8 +993,9 @@
 				<field name="code"/>
 				<field name="trademark_id" select="1"/>
 				<field name="dealer_id" select="2"/>
-				<field name="country_id" select="1"/>
 				<field name="bank_account_id" select="2"/>
+				<separator string="Countries" colspan="4"/>
+				<field name="country_ids" colspan="4" nolabel="1"/>
 			</form>
 		</field>
 	</record>
@@ -999,7 +1009,6 @@
 				<field name="code"/>
 				<field name="trademark_id"/>
 				<field name="dealer_id"/>
-				<field name="country_id"/>
 				<field name="bank_account_id"/>
 			</tree>
 		</field>
@@ -1087,7 +1096,7 @@
 
 	<record model="ir.ui.view" id="view_campaign_purchase_line_tree">
 		<field name="name">dm.campaign.purchase_line_tree</field>
-		<field name="model">dm.campaign_purchase_line</field>
+		<field name="model">dm.campaign.purchase_line</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
 			<tree string="Campaigns">
@@ -1107,7 +1116,7 @@
 
 	<record model="ir.ui.view" id="view_campaign_purchase_line_form">
 		<field name="name">dm.campaign.purchase_line_form</field>
-		<field name="model">dm.campaign_purchase_line</field>
+		<field name="model">dm.campaign.purchase_line</field>
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Purchase line">
@@ -1140,5 +1149,6 @@
 		<field name="view_id" ref="view_campaign_purchase_line_tree"/>
 	</record>
 
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_form" action="action_campaign_purchase_line_form"/>
 </data>
 </openerp>

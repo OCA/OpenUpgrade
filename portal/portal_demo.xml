@@ -1,24 +1,11 @@
 <?xml version="1.0"?>
 <openerp>
-<data noupdate="1">
-
-	<menuitem name="Portal"  id="menu_portal_root"/>
-    <menuitem name="Customer Portal" id="menu_portal_customer" parent="portal.menu_portal_root"/>
-
-	<record model="ir.actions.act_window" id="portal_customer_action_menu">
-		<field name="name">Portal Customer Menu</field>
-		<field name="usage">menu</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="view_id" ref="base.view_menu"/>
-		<field name="res_model">ir.ui.menu</field>
-		<field name="view_type">tree</field>
-		<field name="domain" eval="[('parent_id','=',ref('portal_customer_root'))]"/>
-	</record>
+<data noupdate="1">	
 
 	<record model="portal.portal" id="portal_customer">
 		<field name="name">Portal Customer</field>
 		<field name="group_id" ref="portal_group"/>
-		<field name="menu_id" ref="portal_customer_root"/>
+		<field name="menu_id" ref="menu_portal_customer"/>
 		<field name="menu_action_id" ref="portal_customer_action_menu"/>
 		<field name="home_action_id" ref="portal_customer_action_menu"/>
 		<field name="company_id" ref="base.main_company"/>
