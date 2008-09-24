@@ -185,21 +185,12 @@ class dm_overlay(osv.osv):
             overlay = self.browse(cr,uid,id)
             trademark_code = overlay.trademark_id.code or ''
             dealer_code = overlay.dealer_id.ref or ''
-#            for i in overlay.country_ids:
-#                country_code = ''
-#                overlay_country_ids = [country_ids.id for country_ids in overlay.country_ids]
-#                for i in overlay_country_ids:
-#                    ids1 = self.pool.get('res.country').read(cr, uid, i)
-#                    country_code += ids1['code'] + '-' 
-
-#        code1='-'.join([trademark_code, dealer_code, country_code])
-#        code1=code1[:-1]
         code1='-'.join([trademark_code, dealer_code])
         result[id]=code1
         return result
 
     _columns = {
-        'code' : fields.function(_overlay_code,string='Code',type="char",method=True,readonly=True, size=64),
+        'code' : fields.function(_overlay_code,string='Code',type='char',method=True,readonly=True),
         'trademark_id' : fields.many2one('dm.trademark', 'Trademark', required=True),
         'dealer_id' : fields.many2one('res.partner', 'Dealer',domain=[('category_id','ilike','Dealer')], context={'category':'Dealer'}, required=True),
         'country_ids' : fields.many2many('res.country', 'overlay_country_rel', 'overlay_id', 'country_id', 'Country', required=True),
@@ -379,6 +370,10 @@ class dm_campaign(osv.osv):
             
             if overlay and (camp1.country_id.id in overlay_country_ids):
                 super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay[0]}, context)  
+            elif overlay and not (camp1.country_id.id in overlay_country_ids):
+                overlay_country_ids.append(camp1.country_id.id)
+                self.pool.get('dm.overlay').write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
+                super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay[0]}, context)
             else:
                 overlay_country_ids.append(camp1.country_id.id)
                 overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':camp1.trademark_id.id, 'dealer_id':camp1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
@@ -418,21 +413,22 @@ class dm_campaign(osv.osv):
             super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
         
         # check if an overlay exists else create it
+        data_cam1 = self.browse(cr, uid, id_camp)
         overlay_country_ids = []
-        if vals['trademark_id'] and vals['dealer_id'] and vals['country_id']:
-            data_cam1 = self.browse(cr, uid, id_camp)
+        if data_cam1.trademark_id and data_cam1.dealer_id and data_cam1.country_id:
             overlay = self.pool.get('dm.overlay').search(cr, uid, [('trademark_id','=',data_cam1.trademark_id.id), ('dealer_id','=',data_cam1.dealer_id.id)])
             for o_id in overlay:
                 browse_overlay = self.pool.get('dm.overlay').browse(cr, uid, o_id)
                 overlay_country_ids = [country_ids.id for country_ids in browse_overlay.country_ids]
-
             if overlay and (data_cam1.country_id.id in overlay_country_ids):
                 super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)  
+            elif overlay and not (data_cam1.country_id.id in overlay_country_ids):
+                overlay_country_ids.append(data_cam1.country_id.id)
+                self.pool.get('dm.overlay').write(cr, uid, browse_overlay.id, {'country_ids':[[6,0,overlay_country_ids]]}, context)
+                super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay[0]}, context)
             else:
                 overlay_country_ids.append(data_cam1.country_id.id)
-                print "OOOOOOOOOOOOO", overlay_country_ids
                 overlay_ids1 = self.pool.get('dm.overlay').create(cr, uid, {'trademark_id':data_cam1.trademark_id.id, 'dealer_id':data_cam1.dealer_id.id, 'country_ids':[[6,0,overlay_country_ids]]}, context)
-                print ")))))))))", overlay_ids1
                 super(osv.osv, self).write(cr, uid, data_cam1.id, {'overlay_id':overlay_ids1}, context)
 
         return id_camp
