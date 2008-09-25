@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 {
         "name" : "Association Verticalisation",
-        "version" : "Association Verticalisation",
+        "version" : "0.1",
         "author" : "Tiny",
         "website" : "http://tinyerp.com",
         "category" : "Vertical Modules/Parametrization",
