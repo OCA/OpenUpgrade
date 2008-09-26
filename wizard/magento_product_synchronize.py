@@ -133,8 +133,8 @@ def _do_export(self, cr, uid, data, context):
         }
         
         stock_data={
-            'qty': 10, #product.virtual_available,
-            'is_in_stock':1,#product.virtual_available,
+            'qty': product.virtual_available,
+            'is_in_stock': product.virtual_available,
         }
         
         #===============================================================================
@@ -143,7 +143,7 @@ def _do_export(self, cr, uid, data, context):
         try:
             if(product.magento_id == 0):
                 new_id=server.call(session, 'product.create', ['simple',attr_set_id, sku, product_data])
-                pool.get('product.product').write(cr, uid, product.id, {'magento_id': new_id})
+                pool.get('product.product').write_magento_id(cr, uid, product.id, {'magento_id': new_id})
                 server.call(session,'product_stock.update',[sku,stock_data])
                 prod_new += 1
             else:

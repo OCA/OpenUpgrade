@@ -44,6 +44,20 @@ class product_product(osv.osv):
     _defaults = {
          'exportable':lambda *a: True,
     }
+    
+    def write(self, cr, uid, ids, datas = {}, context = {} ):
+        super(osv.osv, self).write(cr, uid, ids, datas, context)
+        datas['model']='product.product'
+        datas['ids']=ids
+        import wizard.magento_product_synchronize
+        wizard.magento_product_synchronize.do_export(self, cr, uid, datas, context)
+        del datas['model']
+        del datas['ids']
+        return 1 
+
+    def write_magento_id(self, cr, uid, ids, datas = {}, context = {} ):
+        return super(osv.osv, self).write(cr, uid, ids, datas, context)
+
 product_product()
 
 
@@ -78,6 +92,19 @@ class product_category(osv.osv):
     _defaults = {
          'exportable':lambda *a: True,
     }
+    def write(self, cr, uid, ids, datas = {}, context = {} ):
+        super(osv.osv, self).write(cr, uid, ids, datas, context)
+        datas['model']='product.category'
+        datas['ids']=ids
+        import wizard.magento_category_synchronize
+        wizard.magento_category_synchronize.do_export(self, cr, uid, datas, context)
+        del datas['model']
+        del datas['ids']
+        return 1 
+
+    def write_magento_id(self, cr, uid, ids, datas = {}, context = {} ):
+        return super(osv.osv, self).write(cr, uid, ids, datas, context)
+    
 product_category()
 
 

@@ -67,7 +67,7 @@ def _do_correct(self, cr, uid, data, context):
     magento_web_id=self.pool.get('magento.web').search(cr,uid,[('magento_id','=',1)])
     try:
         magento_web=self.pool.get('magento.web').browse(cr,uid,magento_web_id[0])
-        server = xmlrpclib.ServerProxy("%sapp/code/community/Smile_OpenERP_Synchro/openerp-synchro.php" % magento_web.magento_url)# % website.url)
+        server = xmlrpclib.ServerProxy("%sapp/code/local/Smile_OpenERP_Synchro/openerp-synchro.php" % magento_web.magento_url)# % website.url)
     except:
         raise wizard.except_wizard("UserError", "You must have a declared website with a valid URL! provided URL: %s/openerp-synchro.php" % magento_web.magento_url)
     

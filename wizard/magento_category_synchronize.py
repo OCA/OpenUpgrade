@@ -95,7 +95,6 @@ def _do_export(self, cr, uid, data, context):
     #===============================================================================
     #  Category packaging
     #===============================================================================
-    categ_ids = pool.get('product.category').search(cr, uid, [('exportable','=',True)]) #NB uid is the user id to enforce the rights accesses
     for category in pool.get('product.category').browse(cr, uid, categ_ids, context=context):
     
         path=''             #construct path
@@ -129,7 +128,7 @@ def _do_export(self, cr, uid, data, context):
         try:
             if(category.magento_id == 0):
                 new_id=server.call(session,'category.create',[magento_parent_id, category_data])
-                pool.get('product.category').write(cr, uid, category.id, {'magento_id': new_id})
+                pool.get('product.category').write_magento_id(cr, uid, category.id, {'magento_id': new_id})
                 categ_new += 1
                 
             else:

@@ -1,4 +1,24 @@
-0.9.7 - Sep 15, 2008
+0.9.8 - Sep 15, 2008
+	enhancements:
+		Added synchronize per item on products and categories.
+		You can now synchronize :
+			- On the main menu, all you items
+			- On a tree view, the selected items
+			- On a form view, the current item
+		Also, when you save an item, it is automatically updated on Magento
+		RFE #10 : URL http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=10
+		
+	bug fixes:
+		URL troubles for the orders wizards, the url will look now in your 
+		http://MagentoHost/app/code/local , instead of community.
+		Bug #11 : URL http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=11 
+		
+		Fix an issue on CGI environment
+		Bug #12 : URL  http://code.google.com/p/magento-openerp-smile-synchro/issues/detail?id=12
+	
+
+
+0.9.7 - Sep 15, 2008 - 85 downloads
 	enhancements:
 		added webservices login API fields on Magento interface
 		use native Magento API for products and categories exports (drop lot of PHP code)
@@ -10,7 +30,7 @@
 	
 
 
-0.9.6 - Aug 25, 2008 - 96 downloads
+0.9.6 - Aug 25, 2008 - 101 downloads
 	enhancements:
 		added one click category export from OpenERP to Magento.
 		added flag on OpenERP categories to state if they are exportable or not
