@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <openerp>
 <data>
 
@@ -36,6 +37,34 @@
 		</field>
 	</record>
 
-
+	<record model="ir.ui.view" id="view_picking_margin_out_form">
+		<field name="name">picking.margin.view.form</field>
+		<field name="type">form</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_out_form" />
+		<field name="arch" type="xml">
+			<field name="move_type" position="after">
+			<field name="invoice_ids" colspan="4" nolabel="1"/>
+				<separator string="Invoices" colspan="4"/>
+			</field>
+		</field>
+	</record>
+	
+    <wizard id="wizard_picking_invoice_create" model="stock.picking" name="stock.invoice_onshipping" string="Create invoice"/>
+    
+	<record model="ir.ui.view" id="view_picking_margin_out_form1">
+		<field name="name">picking.margin.view.form1</field>
+		<field name="type">form</field>
+		<field name="model">stock.picking</field>
+		<field name="inherit_id" ref="stock.view_picking_out_form" />
+		<field name="arch" type="xml">
+			<field name="move_lines" position="after">
+				<group col="2" colspan="2">
+				<button name="create_invoice" string="Create Invoice" type="object"/>
+				</group>
+			</field>
+		</field>
+	</record>
+	
 </data>
 </openerp>

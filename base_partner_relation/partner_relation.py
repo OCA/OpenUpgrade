@@ -78,6 +78,19 @@ class res_partner(osv.osv):
             result.update(super(res_partner, self).address_get(cr, uid, ids, todo))
         return result
 
+    def property_get(self, cr, uid, ids,property_pref=[],rel_name=["'invoice'"]):
+        result = {}
+        cr.execute('select name,relation_id,partner_id from res_partner_relation where name in ('+",".join(map(str,rel_name))+') and partner_id in ('+','.join(map(str,ids))+')')
+        rels = cr.fetchall()
+        result= super(res_partner, self).property_get(cr, uid, ids,property_pref)
+        for res in result:
+            for (rel_name,rel_id,part_id) in rels:
+                if res['id']==part_id:
+                    prps=self.read(cr,uid,rel_id,property_pref)
+                    for prt in property_pref:
+                        res[prt] = prps[prt] and prps[prt][0] or False
+        return result
+
 res_partner()
 
 
@@ -85,12 +98,16 @@ class PartnerAddress(osv.osv):
     _inherit = 'res.partner.address'
 
     def _where_calc(self, cursor, user, args, active_test=True, context=None):
+        if not args:
+            args=[]
         partner_obj = self.pool.get('res.partner')
 
         args = args[:]
 
         i = 0
         while i < len(args):
+            if type(arg)==tuple:
+                continue
             if args[i][0] == 'partner_id' and args[i][1] == '=':
                 partner = partner_obj.browse(cursor, user, args[i][2],
                         context=context)

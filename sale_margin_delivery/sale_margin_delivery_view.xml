@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+	<record id="view_sale_delivery_form1" model="ir.ui.view">
+            <field name="name">sale.delivery.form.inherit1</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                    <page string="Deliveries" position="replace">
+                    	<page string="Deliveries">
+                      <field colspan="4" mode="tree,from" name="delivery_line" nolabel="1" widget="one2many_list" editable="bottom">
+                                <form string="Delivery Lines">
+	                                <field name="product_id"
+	                                on_change="product_id_change(product_id,product_qty,product_uom,packaging_id)" 
+	                                />
+									<field name="product_qty"
+									on_change="product_id_change(product_id,product_qty,product_uom,packaging_id)" 
+									/>
+									<field name="product_uom"
+									on_change="product_id_change(product_id,product_qty,product_uom,packaging_id)" 
+									/>
+									<field name="packaging_id"
+									on_change="product_id_change(product_id,product_qty,product_uom,packaging_id)" 
+									/>
+									<field name="date_planned"/>
+									<field name="priority"/>
+									<field name="margin"/>
+									<separator colspan="4" string="Notes"/>
+									<field name="note" colspan="4" nolabel="1"/>
+                                </form>
+                                <tree string="Delivery Lines">
+	                                <field name="product_id"/>
+									<field name="product_qty"/>
+									<field name="product_uom"/>
+									<field name="packaging_id"/>
+									<field name="date_planned"/>
+									<field name="priority"/>
+									<field name="margin"/>
+									<field name="note"/>
+                                </tree> 
+                            </field>
+                      </page>      
+                </page>
+            </field>
+        </record>
+	
+</data>
+</openerp>
