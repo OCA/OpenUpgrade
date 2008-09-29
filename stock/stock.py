@@ -959,8 +959,8 @@ class stock_move(osv.osv):
                     result[m.picking_id].append( (m, dest) )
         return result
 
-    def action_confirm(self, cr, uid, moves, context={}):
-        ids = map(lambda m: m.id, moves)
+    def action_confirm(self, cr, uid, ids, context={}):
+        moves = self.browse(cr,uid,ids)
         self.write(cr, uid, ids, {'state':'confirmed'})
         for picking, todo in self._chain_compute(cr, uid, moves, context).items():
             ptype = self.pool.get('stock.location').picking_type_get(cr, uid, todo[0][0].location_dest_id, todo[0][1][0])
