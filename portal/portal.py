@@ -46,7 +46,7 @@ class portal_portal(osv.osv):
         """
         Create default menu for the users of the portal.
         """
-        menu_action_id = self.pool.get('ir.actions.act_window').create(cr,uid, { 
+        menu_action_id = self.pool.get('ir.actions.act_window').create(cr,uid, {
             'name': action_name+ ' main menu',
             'usage': 'menu',
             'type':'ir.actions.act_window',
@@ -57,19 +57,19 @@ class portal_portal(osv.osv):
             })
         return menu_action_id
 
-    
+
     def create(self, cr, user, vals, context={}):
         if not vals.get('menu_action_id') :
             vals['menu_action_id']= self.create_action_menu(cr,user,vals['menu_id'], vals['name'],context)
         return super(portal_portal, self).create(cr, user, vals, context)
 
-    def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,view_ids=None,view_type=False,context=None):        
+    def create_menu(self, cr, uid,portal_id, portal_model_id, menu_name, action_id,parent_menu_id=None,view_ids=None,view_type=False,context=None):
         """
         Create a menuitem for the given portal and model whith the given name and action.
         """
-        
+
         assert portal_id and portal_model_id and menu_name and action_id, "Create_menu does not accept null values"
-        
+
         v=[]
         if view_type:
             v.append('form')
@@ -178,10 +178,10 @@ class portal_portal(osv.osv):
         if model.rule_group_id:
             portal.group_id.write(cr,uid,[portal.group_id.id],{'rule_groups': [(4,model.rule_group_id.id)]})
         return action_id
-    
+
 portal_portal()
 
-    
+
 class portal_model(osv.osv):
     _name = "portal.model"
     _description = "Portal Model"
@@ -239,18 +239,18 @@ class portal_config_install_modules_wizard(osv.osv_memory):
         'portal_sale':fields.boolean('Portal for Sale Module'),
         'portal_service':fields.boolean('Portal for Service Module'),
         'portal_account':fields.boolean('Portal for Account Module'),
-        'portal_analytic':fields.boolean('Portal for Analytic Account Module'),        
+        'portal_analytic':fields.boolean('Portal for Analytic Account Module'),
     }
     def action_cancel(self,cr,uid,ids,conect=None):
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
-                'res_model': 'ir.module.module.configuration.wizard',
+                'res_model': 'ir.actions.configuration.wizard',
                 'type': 'ir.actions.act_window',
                 'target':'new',
          }
     def action_install(self, cr, uid, ids, context=None):
-        result=self.read(cr,uid,ids)        
+        result=self.read(cr,uid,ids)
         mod_obj = self.pool.get('ir.module.module')
         for res in result:
             for r in res:
@@ -262,7 +262,7 @@ class portal_config_install_modules_wizard(osv.osv_memory):
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
-                'res_model': 'ir.module.module.configuration.wizard',
+                'res_model': 'ir.actions.configuration.wizard',
                 'type': 'ir.actions.act_window',
                 'target':'new',
             }

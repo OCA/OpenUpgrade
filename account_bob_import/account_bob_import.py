@@ -38,7 +38,7 @@ class config_bob_import(osv.osv_memory):
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
-                'res_model': 'ir.module.module.configuration.wizard',
+                'res_model': 'ir.actions.configuration.wizard',
                 'type': 'ir.actions.act_window',
                 'target':'new',
             }
@@ -91,7 +91,7 @@ class config_bob_import(osv.osv_memory):
             'view_type': 'form',
             "view_mode": 'form',
 #            'res_model': 'config.path.folder',
-            'res_model':'ir.module.module.configuration.wizard',
+            'res_model':'ir.actions.configuration.wizard',
             'type': 'ir.actions.act_window',
             'target':'new',
         }
@@ -137,7 +137,7 @@ class config_path_folder(osv.osv_memory):
         return {
             'view_type': 'form',
             "view_mode": 'form',
-            'res_model': 'ir.module.module.configuration.wizard',
+            'res_model': 'ir.actions.configuration.wizard',
             'type': 'ir.actions.act_window',
             'target':'new',
         }
@@ -147,7 +147,7 @@ class config_path_folder(osv.osv_memory):
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
-                'res_model': 'ir.module.module.configuration.wizard',
+                'res_model': 'ir.actions.configuration.wizard',
                 'type': 'ir.actions.act_window',
                 'target':'new',
             }
