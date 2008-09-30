@@ -105,7 +105,7 @@
 		</record>
 		<menuitem name="ecommerce/Products/Products by Category" id="menu_ecommerce_product_category_action" action="ecommerce_product_category_action"/>
 		
-<!--		PAYMENT ADDRESS -->
+<!--		Payment Address -->
 		
 		<record model="ir.ui.view" id="view_payment_address">
 		<field name="name">ecommerce.payment.tree</field>
@@ -145,6 +145,11 @@
 						<field name="return_url" select="2"/>
 						<field name="cancel_url" select="2"/>
 					</page>
+					<page string="Payment History">
+						<seperator string="Payment History" colspan='4'/>
+						<newline/>
+						<field name="transaction_detail" colspan="4" nolabel="1"/>
+					</page>
 				</notebook>
 			</form>
 		</field>
@@ -158,6 +163,48 @@
 	</record>
 	<menuitem name="ecommerce/Configuration/Payment Configuration" action="action_payment_ecommerce_form" id="menu_payment_ecommerce_form"/>
 
+<!--		Payment Received -->
+
+		<record model="ir.ui.view" id="view_payment_received">
+				<field name="name">ecommerce.payment.received.tree</field>
+				<field name="model">ecommerce.payment.received</field>
+				<field name="type">tree</field>
+				<field name="arch" type="xml">
+					<tree string="Payment Received Details">
+						<field name="transaction_id"/>
+						<field name="saleorder_id"/>
+						<field name="invoice_id"/>
+						<field name="transaction_date"/>
+						<field name="partner" select="2"/>
+					</tree>
+				</field>
+		</record>
+		<record model="ir.ui.view" id="view_payment_received_form">
+			<field name="name">ecommerce.payment.received.form</field>
+			<field name="model">ecommerce.payment.received</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Payment Received Details">
+					<field name="transaction_id" select="1" colsapn="2"/>
+					<field name="saleorder_id" select="2" colsapn="2"/>
+					<field name="invoice_id" select="2"/>
+					<field name="transaction_date" select="2"/>
+					<field name="partner" select="2"/>
+					<field name="paypal_acc"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_payment_received_form">
+			<field name="name">Payment Received</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ecommerce.payment.received</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_payment_received"/>
+		</record>
+		<menuitem name="ecommerce/Configuration/Payment Received" action="action_payment_received_form" id="menu_payment_received_form"/>
+<!--	<menuitem parent="ecommerce.menu_payment_ecommerce_form" action="action_payment_received_form" id="menu_payment_received_form"/>-->
+	
 </data>
 </terp>
 
