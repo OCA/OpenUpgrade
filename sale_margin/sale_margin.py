@@ -54,18 +54,22 @@ class sale_order(osv.osv):
     _inherit = "sale.order"
 
     def _product_margin(self, cr, uid, ids, field_name, arg, context):
-        id_set = ",".join(map(str, ids))
+        # need to check with new requirement
+        id_set = ",".join(map(str, ids))        
         cr.execute("""
             SELECT
                 s.id,
-                COALESCE(SUM(l.price_unit*l.product_uos_qty*(100-l.discount)/100.0 - t.standard_price * l.product_uos_qty),0)::decimal(16,2) AS amount
+                COALESCE(SUM(l.price_unit*l.product_uos_qty*(100-l.discount)/100.0 - t.standard_price * l.product_uos_qty) - i.amount_untaxed,0)::decimal(16,2) AS amount
             FROM
                 sale_order s
             LEFT OUTER JOIN sale_order_line l ON (s.id=l.order_id)
             LEFT JOIN product_product p ON (p.id=l.product_id)
             LEFT JOIN product_template t ON (t.id=p.product_tmpl_id)
+            LEFT JOIN stock_picking sp on (s.id = sp.sale_id)
+            LEFT JOIN picking_invoice_rel r on (sp.id = r.picking_id)
+            LEFT JOIN account_invoice i on (i.id = r.invoice_id)
             WHERE
-                s.id IN ("""+id_set+""") GROUP BY s.id """)
+                s.id IN ("""+id_set+""") GROUP BY s.id,i.amount_untaxed """)
         res = dict(cr.fetchall())
         return res
 
@@ -78,10 +82,11 @@ class stock_picking(osv.osv):
     _inherit = 'stock.picking'
     
     _columns = {
-        'invoice_ids': fields.many2many('account.invoice', 'picking_invoice_rel', 'picking_id', 'invoice_id', 'Invoices'),
+        'invoice_ids': fields.many2many('account.invoice', 'picking_invoice_rel', 'picking_id', 'invoice_id', 'Invoices', domain=[('type','=','in_invoice')]),
     }
     
     def create_invoice(self, cr, uid, ids, *args):
+        # need to carify with new requirement
         res = False
         invoice_ids = []
         margin_deduce = 0.0

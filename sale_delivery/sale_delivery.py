@@ -13,7 +13,7 @@
 # Service Company
 #
 # This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
+# modify it under the terms of the General Public License
 # as published by the Free Software Foundation; either version 2
 # of the License, or (at your option) any later version.
 #
@@ -111,79 +111,14 @@ class sale_order(osv.osv):
                 sale_product_qty = cr.fetchall()[0][0]
                 cr.execute('select sum(product_qty) from sale_delivery_line where order_id = %d and product_id = %d',(delivery.order_id,delivery.product_id))
                 product_qty = cr.fetchall()[0][0]
-                if  sale_product_qty < product_qty:
-                    raise osv.except_osv(_('Error !'), _('The quanitties plannified in Deliveries (%d) for Product : %s must be equals to or less then the quantities in the Sale Order lines (%d)') % (product_qty,delivery.product_id.name,sale_product_qty))
+                if  sale_product_qty != product_qty:
+                    raise osv.except_osv(_('Error !'), _('The quanitties plannified in Deliveries (%d) for Product : %s must be equals to the quantities in the Sale Order lines (%d)') % (product_qty,delivery.product_id.name,sale_product_qty))
                 
             location_id = order.shop_id.warehouse_id.lot_stock_id.id
             output_id = order.shop_id.warehouse_id.lot_output_id.id
             if not order.delivery_line:
                 return super(sale_order, self).action_ship_create(cr, uid, ids)
             picking_id = False
-            for line in order.order_line:
-                if line.product_id and line.product_id.product_tmpl_id.type in ('product', 'consu'):
-                    product_qty = line.product_uom_qty-line.deliveries
-                    if product_qty:
-                        date_planned = DateTime.now() + DateTime.RelativeDateTime(days=line.delay or 0.0)
-                        date_planned = (date_planned - DateTime.RelativeDateTime(days=company.security_lead)).strftime('%Y-%m-%d %H:%M:%S')
-                        if not picking_id:
-                            picking_id = self.pool.get('stock.picking').create(cr, uid, {
-                                        'origin': order.name,
-                                        'type': 'out',
-                                        'state': 'confirmed',
-                                        'move_type': order.picking_policy,
-                                        'sale_id': order.id,
-                                        'address_id': order.partner_shipping_id.id,
-                                        'note': order.note,
-                                        'invoice_state': (order.order_policy=='picking' and '2binvoiced') or 'none',
-                                    })
-                        move_id = self.pool.get('stock.move').create(cr, uid, {
-                                'name': line.name[:64],
-                                'picking_id': picking_id,
-                                'product_id': line.product_id.id,
-                                'date_planned': date_planned,
-                                'product_qty': product_qty,
-                                'product_uom': line.product_uom.id,
-                                'product_uos_qty': product_qty,
-                                'product_uos': (line.product_uos and line.product_uos.id)\
-                                        or line.product_uom.id,
-                                'product_packaging' : line.product_packaging.id,
-                                'address_id' : line.address_allotment_id.id or order.partner_shipping_id.id,
-                                'location_id': location_id,
-                                'location_dest_id': output_id,
-                                'sale_line_id': line.id,
-                                'tracking_id': False,
-                                'state': 'waiting',
-                                'note': line.notes,
-                            })
-                        proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
-                            'name': order.name,
-                            'origin': order.name,
-                            'date_planned': date_planned,
-                            'product_id': line.product_id.id,
-                            'product_qty': product_qty,
-                            'product_uom': line.product_uom.id,
-                            'product_uos_qty': product_qty,
-                            'product_uos': line.product_uom.id,
-                            'location_id': order.shop_id.warehouse_id.lot_stock_id.id,
-                            'procure_method': line.type,
-                            'move_id': move_id,
-                            'property_ids': [(6, 0, [x.id for x in line.property_ids])],
-                        })
-                    
-                elif line.product_id and line.product_id.product_tmpl_id.type=='service':
-                    proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
-                        'name': line.name,
-                        'origin': order.name,
-                        'date_planned': date_planned,
-                        'product_id': line.product_id.id,
-                        'product_qty': line.product_uom_qty,
-                        'product_uom': line.product_uom.id,
-                        'location_id': order.shop_id.warehouse_id.lot_stock_id.id,
-                        'procure_method': line.type,
-                        'property_ids': [(6, 0, [x.id for x in line.property_ids])],
-                    })
-                    wf_service = netsvc.LocalService("workflow")
-                    wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
                     
             for line in order.delivery_line:
                 cr.execute('select id from sale_order_line where order_id = %d and product_id = %d',(ids[0],line.product_id.id))
@@ -242,9 +177,24 @@ class sale_order(osv.osv):
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
                     
+                elif line.product_id and line.product_id.product_tmpl_id.type=='service':
+                    proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
+                        'name': line.name,
+                        'origin': order.name,
+                        'date_planned': date_planned,
+                        'product_id': line.product_id.id,
+                        'product_qty': line.product_uom_qty,
+                        'product_uom': line.product_uom.id,
+                        'location_id': order.shop_id.warehouse_id.lot_stock_id.id,
+                        'procure_method': line.type,
+                        'property_ids': [(6, 0, [x.id for x in line.property_ids])],
+                    })
+                    wf_service = netsvc.LocalService("workflow")
+                    wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
+
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'stock.picking', picking[date_planned], 'button_confirm', cr)
-
+                
             val = {}
                 
             if order.state=='shipping_except':

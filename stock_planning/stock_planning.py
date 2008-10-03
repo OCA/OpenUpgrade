@@ -44,12 +44,51 @@ class stock_planning_period(osv.osv):
         'date_stop': fields.date('End Date', required=True),
         'period_ids': fields.one2many('stock.period', 'planning_id', 'Periods'),
     }
-    
+    def _check_date(self, cursor, user, ids):
+        for period in self.browse(cursor, user, ids):
+            cursor.execute('SELECT id ' \
+                    'FROM stock_planning_period ' \
+                    'WHERE ((date_start >= %s AND date_stop <= %s ) OR ' \
+                    '(date_start < %s AND date_stop > %s ) OR ' \
+                    '(date_start BETWEEN %s AND %s ) OR ' \
+                    '(date_stop BETWEEN %s AND %s )) ' \
+                    'AND id <> %d', (
+                            period.date_start,
+                            period.date_stop,
+                            period.date_start,
+                            period.date_stop,
+                            period.date_start,
+                            period.date_stop,
+                            period.date_start,
+                            period.date_stop,
+                            period.id
+                            ))
+            ret = cursor.fetchall()
+            if ret:
+                return False
+        return True
+
+    _constraints = [
+        (_check_date, 'You can not have 2 Periods that overlaps!',
+            ['date_start', 'date_stop'])
+    ]
     def create_period_weekly(self,cr, uid, ids, context={}):
         return self.create_period(cr, uid, ids, context, 7)
     
-    def create_period_monthly(self,cr, uid, ids, context={}):
-        return self.create_period(cr, uid, ids, context, 30)
+    def create_period_monthly(self,cr, uid, ids, context={},interval=1):
+        for p in self.browse(cr, uid, ids, context):
+            dt = p.date_start
+            ds = mx.DateTime.strptime(p.date_start, '%Y-%m-%d')
+            while ds.strftime('%Y-%m-%d')<p.date_stop:
+                de = ds + RelativeDateTime(months=interval, days=-1)
+                self.pool.get('stock.period').create(cr, uid, {
+                    'name': ds.strftime('%m/%Y'),
+                    'date_start': ds.strftime('%Y-%m-%d'),
+                    'date_stop': de.strftime('%Y-%m-%d'),
+                    'planning_id': p.id,
+                })
+                ds = ds + RelativeDateTime(months=interval)
+        return True
 
     def create_period(self,cr, uid, ids, context={}, interval=1):
         for p in self.browse(cr, uid, ids, context):
@@ -183,11 +222,10 @@ class stock_planning(osv.osv):
     
     def procure_incomming_left(self, cr, uid, ids, context, *args):
         result = {}
-        for obj in self.browse(cr, uid, ids):       
-            if not obj.warehouse_id:
-                raise osv.except_osv('Error', "select warehouse")
-            location_id = obj.warehouse_id and obj.warehouse_id.lot_stock_id.id or False
-            output_id = obj.warehouse_id and obj.warehouse_id.lot_output_id.id or False
+        # need to check with requirement
+        for obj in self.browse(cr, uid, ids):
+            location_id = obj.warehouse_id.lot_stock_id.id
+            output_id = obj.warehouse_id.lot_output_id.id
             move_id = self.pool.get('stock.move').create(cr, uid, {
                             'name': obj.product_id.name[:64],
                             'product_id': obj.product_id.id,
@@ -209,7 +247,7 @@ class stock_planning(osv.osv):
                             'product_uom': obj.product_uom.id,
                             'product_uos_qty': obj.stock_incoming_left,
                             'product_uos': obj.product_uom.id,
-                            'location_id': location_id,
+                            'location_id': obj.warehouse_id.lot_stock_id.id,
                             'procure_method': obj.product_id.product_tmpl_id.procure_method,
                             'move_id': move_id,
                         })

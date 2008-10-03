@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 {
-    "name":"Stock Planning",
+    "name":"Compute procurement based on sales previsions",
     "version":"1.0",
     "author":"Tiny",
     "category":"Custom",

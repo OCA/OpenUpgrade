@@ -17,11 +17,6 @@
                             <field name="date_start"/>
                             <field name="date_stop"/>
                         </form>
-						<tree string="Period">
-                            <field name="name" select="1"/>
-                            <field name="date_start"/>
-                            <field name="date_stop"/>
-                        </tree>
                     </field>
                     <group col="3" colspan="4">
                         <button name="create_period" string="Create Daily Periods" type="object"/>
@@ -52,7 +47,7 @@
             <field name="view_mode">tree,form</field>
         </record>
         
-        <menuitem id="menu_stock_planning_period" name="Stock Planning Period" parent="sale.menu_shop_configuration" action="action_stock_planning_period_form"/>
+        <menuitem id="menu_stock_planning_period" name="Sales Periods" parent="sale.menu_shop_configuration" action="action_stock_planning_period_form"/>
         
 	<record id="view_stock_planning_prevision_form" model="ir.ui.view">
             <field name="name">stock.planning.sale.prevision.form</field>
@@ -91,8 +86,17 @@
             <field name="view_mode">tree,form</field>
         </record>
         
-        <menuitem id="menu_stock_prevision" name="Stock Planning Prevision" parent="sale.menu_shop_configuration" action="action_view_stock_planning_prevision_form"/>
+        <record id="action_view_stock_planning_prevision_form_my" model="ir.actions.act_window">
+            <field name="name">My Sales Previsions</field>
+            <field name="res_model">stock.planning.sale.prevision</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('user_id','=',uid)]</field>
+        </record>
         
+        <menuitem id="menu_stock_prevision" name="Sales Previsions" parent="sale.menu_sale_root" action="action_view_stock_planning_prevision_form"/>
+ 
+        <menuitem id="menu_stock_prevision_my" name="My Sales Previsions" parent="menu_stock_prevision" action="action_view_stock_planning_prevision_form_my"/>
         
         <record id="view_stock_planning_form" model="ir.ui.view">
             <field name="name">stock.planning.form</field>
@@ -135,10 +139,7 @@
                     <field name="outgoing_left"/>
                     <field name="outgoing"/>
                     <field name="planned_outgoing"/>
-                    <field name="planned_sale"/>
-                    <group col="1" colspan="3">
-                        <button name="procure_incomming_left" string="Procure Incoming Left" type="object"/>
-                    </group>
+                    <field name="planned_sale"/>                    
                 </tree>
             </field>
         </record>
