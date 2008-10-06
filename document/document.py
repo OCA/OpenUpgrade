@@ -194,13 +194,6 @@ class node_class(object):
 			path = self.path[1:]
 		return path
 
-class document_directory_node(osv.osv):
-	_inherit = 'process.node'
-	_columns = {
-		'directory_id':  fields.many2one('document.directory', 'Document directory', ondelete="set null"),
-	}
-document_directory_node()
-
 class document_directory(osv.osv):
 	_name = 'document.directory'
 	_description = 'Document directory'
@@ -233,6 +226,28 @@ class document_directory(osv.osv):
 		('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)', 'The directory name must be unique !')
 	]
 
+	def get_resource_path(self,cr,uid,dir_id,res_model,res_id):
+		# this method will be used in process module
+		# to be need test and Improvement if resource dir has parent resource (link resource)
+		path=[]
+		def _parent(dir_id,path):
+			parent=self.browse(cr,uid,dir_id)
+			if parent.parent_id and not parent.ressource_parent_type_id:				
+				_parent(parent.parent_id.id,path)
+				path.append(parent.name)
+			else:		
+				path.append(parent.name)		
+				return path
+
+		directory=self.browse(cr,uid,dir_id)								
+		model_ids=self.pool.get('ir.model').search(cr,uid,[('model','=',res_model)])		
+		if directory:
+			_parent(dir_id,path)			
+			path.append(self.pool.get(directory.ressource_type_id.model).browse(cr,uid,res_id).name)
+			user=self.pool.get('res.users').browse(cr,uid,uid)
+			#print "ftp://%s:%s@localhost:8021/%s/%s"%(user.login,user.password,cr.dbname,'/'.join(path))		
+			return "ftp://%s:%s@localhost:8021/%s/%s"%(user.login,user.password,cr.dbname,'/'.join(path))
+		return False
 	def _check_duplication(self, cr, uid,vals):
 		if 'name' in vals:
 			where=" name='%s'"% (vals['name'])
@@ -331,8 +346,9 @@ class document_directory(osv.osv):
 		return result
 
 	def write(self, cr, uid, ids, vals, context=None):
-		if not self._check_duplication(cr,uid,vals):
-			raise except_orm('ValidateError', 'Directory name must be unique!')
+		# need to make constraints to checking duplicate
+		#if not self._check_duplication(cr,uid,vals):
+		#	raise except_orm('ValidateError', 'Directory name must be unique!')
 		return super(document_directory,self).write(cr,uid,ids,vals,context=context)
 
 	def copy(self, cr, uid, id, default=None, context=None):
@@ -350,6 +366,13 @@ class document_directory(osv.osv):
 		return super(document_directory,self).create(cr, uid, vals, context)
 
 document_directory()
+
+class document_directory_node(osv.osv):
+	_inherit = 'process.node'
+	_columns = {
+		'directory_id':  fields.many2one('document.directory', 'Document directory', ondelete="set null"),
+	}
+document_directory_node()
 
 class document_directory_content(osv.osv):
 	_name = 'document.directory.content'
@@ -572,4 +595,4 @@ class document_file(osv.osv):
 				except:
 					pass
 		return super(document_file, self).unlink(cr, uid, ids, context)
-document_file()
+document_file()		
