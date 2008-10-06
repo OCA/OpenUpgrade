@@ -1099,16 +1099,14 @@
 		<field name="model">dm.campaign.purchase_line</field>
 		<field name="type">tree</field>
 		<field name="arch" type="xml">
-			<tree string="Campaigns">
-				<tree string="Purchase Lines">
-					<field name="product_id"/>
-					<field name="quantity"/>
-					<field name="uom_id"/>
-					<field name="type" />
-					<field name="date_planned"/>
-					<field name="state"/>
-					<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
-				</tree>
+			<tree string="Purchase Lines">
+				<field name="product_id"/>
+				<field name="quantity"/>
+				<field name="uom_id"/>
+				<field name="type" />
+				<field name="date_planned"/>
+				<field name="state"/>
+				<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
 			</tree>
 		</field>
 	</record>
