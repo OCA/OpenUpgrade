@@ -39,8 +39,8 @@
                     <newline/>
                    <field name="line_ids" colspan="4" nolabel="1"/>
                     <newline/>
-                    <field name="state" readonly="1"/>
-                    <group col="2" colspan="4">
+					<group col="10" colspan="4">
+                     <field name="state" readonly="1"/>                    
                      <button name="action_open" states="draft" string="Open"/>
                      <button name="action_cancel" states="draft" string="Cancel"/>
                      <button name="action_done" states="open" string="Done"/>
@@ -81,12 +81,13 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Discount Campaign Lines">
-	                <field name="name" select="1"/>
-                    <field name="condition_sale" select="1"/>
+	                <field name="name" select="1"/>      
+                    <field name="sequence"/>              
                     <field name="condition_category_id"/>
                     <field name="condition_product_id"/>
                     <field name="condition_quantity"/>
                     <field name="discount"/>
+                    
                 </form>
             </field>
         </record>
@@ -97,8 +98,8 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Discount Campaign Lines">
-                	<field name="name" select="1"/>
-                    <field name="condition_sale" select="1"/>
+                	<field name="name" select="1"/> 
+                    <field name="sequence"/>                   
                     <field name="condition_category_id"/>
                     <field name="condition_product_id"/>
                     <field name="condition_quantity"/>

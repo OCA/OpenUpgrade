@@ -50,58 +50,99 @@ class discount_campaign(osv.osv):
     def action_open(self, cr, uid, ids, *args):
         return True
     
-    def action_done(self, cr, uid, ids, context=None):
-		# need to make perfect checking
-		# remaining to check sale condition
-		# need Improvement
+    def action_done(self, cr, uid, ids,group=True,type='out_refund', context=None):
+        # need to make perfect checking
+        # remaining to check sale condition
+        # need Improvement
+        invoice_obj = self.pool.get('account.invoice')
+        invoice_line_obj = self.pool.get('account.invoice.line')
+        tax_obj=self.pool.get('account.invoice.tax')        
+        res = {}
         for campaign in self.browse(cr, uid, ids):	
-	        invoice_obj = self.pool.get('account.invoice')
-	        cr.execute("SELECT id from account_invoice where (date_invoice BETWEEN %s AND %s) AND type = 'out_invoice' AND state = 'open'" , (campaign.date_start,campaign.date_stop,))
-	        invoice_ids = cr.fetchall()
-	        for invoice_id in invoice_ids:
-	            invoice = invoice_obj.browse(cr, uid, invoice_id[0])
-	            if invoice.partner_id.discount_campaign.id == campaign.id:
-	                for line in invoice.invoice_line:
-	                    for discount_line in campaign.line_ids:							
-	                        if discount_line.condition_category_id.id== line.product_id.categ_id.id or discount_line.condition_product_id.id== line.product_id.id or discount_line.condition_quantity >= line.quantiny:	
-	                            invoice_vals = {
-	                                    'name': discount_line.name,
-	                                    'origin': discount_line.name ,
-	                                    'type': 'out_refund',
-	                                    'account_id': invoice.account_id.id,
-	                                    'partner_id': invoice.partner_id.id,
-	                                    'address_invoice_id': invoice.address_invoice_id.id,
-	                                    'address_contact_id': invoice.address_contact_id.id,
-	                                    'comment': invoice.comment,
-	                                    }
-	                            new_invoice_id = invoice_obj.create(cr, uid, invoice_vals,
-	                        context=context)
-	                            invoice_line_id = self.pool.get('account.invoice.line').create(cr, uid,  {
-	                                 'name': line.name,
-	                                'invoice_id': new_invoice_id,
-	                                'uos_id': line.uos_id.id,
-	                                'product_id': line.product_id.id,
-	                                'account_id': line.account_id.id,
-	                                'price_unit': line.price_unit *(discount_line.discount /100) ,
-	                                'discount': 0.0,
-	                                'quantity': line.quantity,
-	                                'account_analytic_id': line.account_analytic_id.id,
-	                                }, context=context)
+            invoices_group = {}
+            invoices_line_group={}
+            res[campaign.id]=[]
+            cr.execute("""
+                 SELECT invoice.id from account_invoice invoice
+                 left join res_partner partner on invoice.partner_id=partner.id
+                 where partner.discount_campaign=%d and (invoice.date_invoice BETWEEN %s AND %s) AND invoice.type = 'out_invoice' AND state = 'open'
+                 """ , (campaign.id,campaign.date_start,campaign.date_stop,))
+            invoice_ids = map(lambda x:x[0],cr.fetchall())           
+            
+            for invoice in invoice_obj.browse(cr, uid, invoice_ids):
+                for line in invoice.invoice_line:
+                    if group and line.product_id.id in invoices_line_group:
+                        invoice_line_id=invoices_line_group[line.product_id.id]
+                        invoice_line=invoice_line_obj.browse(cr,uid,invoice_line_id)
+                        quantity=invoice_line.quantity+line.quantity
+                    else:
+                        quantity=line.quantity
+                    cr.execute("""
+                        SELECT discount_line.discount from discount_campaign_line discount_line	where 
+                        (discount_line.discount_id = %d ) and
+                        (discount_line.condition_product_id is null or discount_line.condition_product_id=%d ) and 
+                        (discount_line.condition_category_id is null or discount_line.condition_category_id=%d ) and
+                        (discount_line.condition_quantity is null or discount_line.condition_quantity <=%f ) ORDER BY sequence
+                        """ , (campaign.id,line.product_id.id,line.product_id.categ_id.id,quantity))
+                    res_discount = cr.dictfetchone()
+                    discount=res_discount and res_discount['discount'] or False        
+                    
+                    if discount:	  
+                        if group and invoice.partner_id.id in invoices_group:
+                            invoice_id = invoices_group[invoice.partner_id.id]									
+                        else:
+                            new_invoice = invoice_obj.read(cr, uid, invoice.id, ['name', 'type', 'number', 'reference', 'comment', 'date_due', 'partner_id', 'address_contact_id', 'address_invoice_id', 'partner_contact', 'partner_insite', 'partner_ref', 'payment_term', 'account_id', 'currency_id',  'journal_id'])							
+                            del new_invoice['id']                            
+                            new_invoice.update({
+                                'type': type,
+                                'date_invoice': time.strftime('%Y-%m-%d'),
+                                'state': 'draft',
+                                'number': False,					                
+                                
+                            })
+                            for field in ('address_contact_id', 'address_invoice_id', 'partner_id','account_id', 'currency_id', 'payment_term', 'journal_id'):
+                                new_invoice[field] = new_invoice[field] and new_invoice[field][0]                            
+                            invoice_id = invoice_obj.create(cr, uid, new_invoice,context=context)
+                            invoices_group[invoice.partner_id.id] = invoice_id
+                            res[campaign.id] += [invoice_id]
+                        if group and line.product_id.id in invoices_line_group:
+                            invoice_line_id=invoices_line_group[line.product_id.id]
+                            invoice_line=invoice_line_obj.browse(cr,uid,invoice_line_id)
+                            invoice_line_obj.write(cr,uid,invoice_line_id,{'quantity':invoice_line.quantity+line.quantity})
+                        else:
+                            invoice_line_id = invoice_line_obj.create(cr, uid,  {
+		                    'name': line.name,
+		                    'invoice_id': invoice_id,
+		                    'uos_id': line.uos_id.id,
+		                    'product_id': line.product_id.id,
+		                    'account_id': line.account_id.id,
+		                    'price_unit': line.price_unit *(float(discount) /100) ,
+		                    'discount': 0.0,
+		                    'quantity': line.quantity,
+		                    'account_analytic_id': line.account_analytic_id.id,
+		                 }, context=context)
+                            invoices_line_group[line.product_id.id]=invoice_line_id
+						
                                
-        return True
+        return res
 discount_campaign()
 
 class discount_campaign_line(osv.osv):
     _name = "discount.campaign.line"
     _columns = {
         'name': fields.char('Name', size=60),
+        'sequence': fields.integer('Sequence', required=True),
         'condition_sale': fields.char('Sale Condition', size = 60),
         'condition_category_id': fields.many2one('product.category', 'Category'),
         'condition_product_id' : fields.many2one('product.product', 'Product'),
-        'condition_quantity' : fields.float('Quantity'),
+        'condition_quantity' : fields.float('Min. Quantity'),
         'discount' : fields.float('Discount'),
         'discount_id': fields.many2one('discount.campaign', 'Discount Lines'),
     }
+    _defaults = {                
+        'sequence': lambda *a: 5,        
+    }
+    _order = "sequence, condition_quantity desc"
 discount_campaign_line()
 
 class res_partner(osv.osv):

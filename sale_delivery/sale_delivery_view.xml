@@ -8,9 +8,9 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
-                <notebook>
-                    <page string="Deliveries" position="inside">
-                      <field colspan="4" mode="tree,from" name="delivery_line" nolabel="1" widget="one2many_list" editable="bottom">
+                <notebook>					
+                    <page string="Deliveries" >
+                      <field colspan="4" mode="tree,form" name="delivery_line" nolabel="1" widget="one2many_list" editable="bottom">
                                 <form string="Delivery Lines">
 	                                <field name="product_id"
 	                                on_change="product_id_change(product_id,product_qty,product_uom,packaging_id)" 
@@ -23,7 +23,7 @@
 									/>
 									<field name="packaging_id"
 									on_change="product_id_change(product_id,product_qty,product_uom,packaging_id)" 
-									/>
+									groups="base.group_extended" />
 									<field name="date_planned"/>
 									<field name="priority"/>
 									<separator colspan="4" string="Notes"/>
@@ -32,18 +32,27 @@
                                 <tree string="Delivery Lines">
 	                                <field name="product_id"/>
 									<field name="product_qty"/>
-									<field name="product_uom"/>
-									<field name="packaging_id"/>
+									<field name="product_uom"/>									
 									<field name="date_planned"/>
-									<field name="priority"/>
-									<field name="note"/>
+									<field name="priority"/>									
                                 </tree> 
-                            </field>
-                </page>
+                            </field>               
+				</page>
                 </notebook>
             </field>
         </record>
         
+	<record id="view_sale_delivery_form1" model="ir.ui.view">
+            <field name="name">sale.delivery.form.inherit</field>
+            <field name="model">sale.order</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+				<field name="price_subtotal" position="after">
+			 		<field name="deliveries"/>
+			</field>
+    		</field>
+	</record>
     <record model="ir.ui.view" id="view_order_line_tree_inherited">
 		<field name="name">sale.order.line.form1</field>
 		<field name="model">sale.order.line</field>
