@@ -206,6 +206,7 @@ class stock_planning(osv.osv):
     
     _columns = {
         'name' : fields.char('Name', size=64),
+        'state' : fields.selection([('draft','Draft'),('done','Done')],'State',readonly=True),
         'period_id': fields.many2one('stock.period' , 'Period', required=True),
         'product_id': fields.many2one('product.product' , 'Product', required=True),
         'product_uom' : fields.many2one('product.uom', 'Product UoM', required=True),
@@ -219,41 +220,45 @@ class stock_planning(osv.osv):
         'to_procure': fields.float(string='To Procure'),
         'warehouse_id' : fields.many2one('stock.warehouse','Warehouse'),
     }
+    _defaults = {
+        'state': lambda *args: 'draft'
+    }   
     
     def procure_incomming_left(self, cr, uid, ids, context, *args):
         result = {}
         # need to check with requirement
         for obj in self.browse(cr, uid, ids):
-            location_id = obj.warehouse_id.lot_stock_id.id
-            output_id = obj.warehouse_id.lot_output_id.id
-            move_id = self.pool.get('stock.move').create(cr, uid, {
-                            'name': obj.product_id.name[:64],
-                            'product_id': obj.product_id.id,
-                            'date_planned': obj.period_id.date_start,
-                            'product_qty': obj.stock_incoming_left,
-                            'product_uom': obj.product_uom.id,
-                            'product_uos_qty': obj.stock_incoming_left,
-                            'product_uos': obj.product_uom.id,
-                            'location_id': location_id,
-                            'location_dest_id': output_id,
-                            'state': 'waiting',
-                        })
-            proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
-                            'name': 'Procure left From Planning',
-                            'origin': 'Stock Planning',
-                            'date_planned': obj.period_id.date_start,
-                            'product_id': obj.product_id.id,
-                            'product_qty': obj.stock_incoming_left,
-                            'product_uom': obj.product_uom.id,
-                            'product_uos_qty': obj.stock_incoming_left,
-                            'product_uos': obj.product_uom.id,
-                            'location_id': obj.warehouse_id.lot_stock_id.id,
-                            'procure_method': obj.product_id.product_tmpl_id.procure_method,
-                            'move_id': move_id,
-                        })
-            wf_service = netsvc.LocalService("workflow")
-            wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-                    
+            location_id = obj.warehouse_id and obj.warehouse_id.lot_stock_id.id or False
+            output_id = obj.warehouse_id and obj.warehouse_id.lot_output_id.id or False
+            if location_id and output_id:
+                move_id = self.pool.get('stock.move').create(cr, uid, {
+                                'name': obj.product_id.name[:64],
+                                'product_id': obj.product_id.id,
+                                'date_planned': obj.period_id.date_start,
+                                'product_qty': obj.stock_incoming_left,
+                                'product_uom': obj.product_uom.id,
+                                'product_uos_qty': obj.stock_incoming_left,
+                                'product_uos': obj.product_uom.id,
+                                'location_id': location_id,
+                                'location_dest_id': output_id,
+                                'state': 'waiting',
+                            })
+                proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
+                                'name': 'Procure left From Planning',
+                                'origin': 'Stock Planning',
+                                'date_planned': obj.period_id.date_start,
+                                'product_id': obj.product_id.id,
+                                'product_qty': obj.stock_incoming_left,
+                                'product_uom': obj.product_uom.id,
+                                'product_uos_qty': obj.stock_incoming_left,
+                                'product_uos': obj.product_uom.id,
+                                'location_id': obj.warehouse_id.lot_stock_id.id,
+                                'procure_method': obj.product_id.product_tmpl_id.procure_method,
+                                'move_id': move_id,
+                            })
+                wf_service = netsvc.LocalService("workflow")
+                wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
+                self.write(cr, uid, obj.id,{'state':'done'})     
         return True
     
     

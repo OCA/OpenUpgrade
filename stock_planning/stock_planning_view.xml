@@ -13,10 +13,15 @@
                     <separator colspan="4" string="Periods"/>
                     <field colspan="4" name="period_ids" nolabel="1" widget="one2many_list">
                         <form string="Period">
-                            <field name="name" select="1"/>
+                            <field name="name" select="1" colspan="4"/>
                             <field name="date_start"/>
                             <field name="date_stop"/>
                         </form>
+						<tree string="Period">
+                            <field name="name" select="1"/>
+                            <field name="date_start"/>
+                            <field name="date_stop"/>
+                        </tree>
                     </field>
                     <group col="3" colspan="4">
                         <button name="create_period" string="Create Daily Periods" type="object"/>
@@ -116,7 +121,9 @@
                     <field name="outgoing"/>
                     <field name="planned_sale"/>
 					<field name="warehouse_id"/>
-					<group col="5" colspan="4">
+                    
+					<group col="10" colspan="4">
+						<field name="state"/>
                         <button name="procure_incomming_left" string="Procure Incoming Left" type="object"/>
                     </group> 
                 </form>
@@ -139,7 +146,8 @@
                     <field name="outgoing_left"/>
                     <field name="outgoing"/>
                     <field name="planned_outgoing"/>
-                    <field name="planned_sale"/>                    
+                    <field name="planned_sale"/>    
+                    <field name="state"/>                
                 </tree>
             </field>
         </record>
