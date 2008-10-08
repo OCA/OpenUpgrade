@@ -19,12 +19,9 @@
     </initialize>
     <paraStyle name="P1" fontName="Times-Roman"/>
     <paraStyle name="P2" fontName="Times-Roman" fontSize="4.0" leading="5"/>
-    <paraStyle name="P3" fontName="Times-Bold" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P4" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="P5" fontName="Times-Roman" fontSize="7.0" leading="9" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P6" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
-    <paraStyle name="P7" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
-    <paraStyle name="P8" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -33,7 +30,6 @@
     <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="Index" fontName="Times-Roman"/>
   </stylesheet>
-  <images/>
   <story>
     <para style="P2">[[repeatIn(objects,'o') ]]</para>
     <para style="P2">
@@ -42,33 +38,33 @@
     <blockTable colWidths="262.0,262.0" style="Table1">
       <tr>
         <td>
-          <para style="P6">Name : [[o.name]]</para>
-          <para style="P6">Code : [[o.code]]</para>
-          <para style="P6">Type : [[o.preoffer_type]]</para>
-          <para style="P6">Recommended Trademark : [[o.recommended_trademark]]</para>
-          <para style="P8">
+          <para style="P3">Name : [[o.name]]</para>
+          <para style="P3">Code : [[o.code]]</para>
+          <para style="P3">Type : [[o.preoffer_type]]</para>
+          <para style="P3">Recommended Trademark : [[o.recommended_trademark and o.recommended_trademark.name]]</para>
+          <para style="P5">
             <font color="white"> </font>
           </para>
-          <para style="P6">
+          <para style="P3">
             <font color="white"> </font>
           </para>
-          <para style="P6">Order Date : [[o.order_date]]</para>
-          <para style="P6">Fixed Date : [[o.fixed_date]]</para>
-          <para style="P6">Planned Delivery Date : [[o.planned_delivery_date]]</para>
-          <para style="P6">Delivery Date : [[o.delivery_date]]</para>
-          <para style="P6">Fixed Date : [[o.fixed_date]]</para>
+          <para style="P3">Order Date : [[o.order_date]]</para>
+          <para style="P3">Fixed Date : [[o.fixed_date]]</para>
+          <para style="P3">Planned Delivery Date : [[o.planned_delivery_date]]</para>
+          <para style="P3">Delivery Date : [[o.delivery_date]]</para>
+          <para style="P3">Fixed Date : [[o.fixed_date]]</para>
         </td>
         <td>
-          <para style="P7">Original Language: [[o.lang_orig and o.lang_orig.name]]</para>
-          <para style="P7">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
-          <para style="P7">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
-          <para style="P7">
+          <para style="P4">Original Language: [[o.lang_orig and o.lang_orig.name]]</para>
+          <para style="P4">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
+          <para style="P4">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
+          <para style="P4">
             <font color="white"> </font>
           </para>
-          <para style="P7">
+          <para style="P4">
             <font color="white"> </font>
           </para>
-          <para style="P7">Attached Documents : [[offer_docs(o.id)]]</para>
+          <para style="P4">Attached Documents : [[offer_docs(o.id)]]</para>
         </td>
       </tr>
     </blockTable>

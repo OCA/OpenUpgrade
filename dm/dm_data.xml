@@ -30,6 +30,18 @@
 	 			<field name="name" eval="&quot;Translator&quot;"/>
 	 		</record>
 
+			<record model="res.partner.category" id="cat_owner">
+				<field name="name" eval="&quot;Owner&quot;"/>
+			</record>
+
+			<record model="res.partner.category" id="cat_router">
+				<field name="name" eval="&quot;Router&quot;"/>
+			</record>
+
+			<record model="res.partner.category" id="cat_cleaner">
+				<field name="name" eval="&quot;Cleaner&quot;"/>
+			</record>
+
 			<record model="dm.media" id="media_paper">
 				<field name="name" eval="&quot;Paper&quot;"/>
 			</record>

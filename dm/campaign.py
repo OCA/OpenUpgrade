@@ -2,6 +2,8 @@
 import time
 import datetime
 import offer
+import warnings
+import netsvc
 from mx import DateTime
 
 from osv import fields
@@ -45,6 +47,16 @@ class dm_overlay(osv.osv):
     _name = 'dm.overlay'
     _rec_name = 'trademark_id'
 
+    def create(self,cr,uid,vals,context={}):
+        id = super(dm_overlay,self).create(cr,uid,vals,context)
+        data = self.browse(cr, uid, id)
+        overlay_country_ids = [country_ids.id for country_ids in data.country_ids]
+        dealer_country_ids = [country_ids.id for country_ids in data.dealer_id.country_ids]
+        for i in overlay_country_ids:
+            if not i in dealer_country_ids:
+                raise  osv.except_osv('Warning', "This country is not allowed for %s" % (data.dealer_id.name,) )
+        return id
+    
     def _overlay_code(self, cr, uid, ids, name, args, context={}):
         result ={}
         for id in ids:
@@ -52,8 +64,8 @@ class dm_overlay(osv.osv):
             overlay = self.browse(cr,uid,id)
             trademark_code = overlay.trademark_id.code or ''
             dealer_code = overlay.dealer_id.ref or ''
-        code1='-'.join([trademark_code, dealer_code])
-        result[id]=code1
+            code1='-'.join([trademark_code, dealer_code])
+            result[id]=code1
         return result
 
     _columns = {
@@ -203,6 +215,9 @@ class dm_campaign(osv.osv):
         'manufacturing_product': fields.many2one('product.product','Manufacturing Product'),
         'purchase_line_ids': fields.one2many('dm.campaign.purchase_line', 'campaign_id', 'Purchase Lines'),
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
+        'owner_id' : fields.many2one('res.partner', 'Owner',domain=[('category_id','ilike','Owner')], context={'category':'Owner'}),
+        'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'}),
+        'cleaner_id' : fields.many2one('res.partner', 'Cleaner',domain=[('category_id','ilike','Cleaner')], context={'category':'Cleaner'}),
 		'dtp_task_ids': one2many_mod_task('project.task', 'project_id', "DTP tasks",
 														domain=[('type','ilike','DTP')], context={'type':'DTP'}),
 		'manufacturing_task_ids': one2many_mod_task('project.task', 'project_id', "Manufacturing tasks",
@@ -249,6 +264,8 @@ class dm_campaign(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         res = super(dm_campaign,self).write(cr, uid, ids, vals, context)
         camp = self.pool.get('dm.campaign').browse(cr,uid,ids)[0]
+        srch_offer_ids = self.search(cr, uid, [('offer_id', '=', camp.offer_id.id)])
+        
         c = camp.country_id.id
         if 'date_start' in vals and vals['date_start'] and camp.project_id:
             self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
@@ -287,6 +304,17 @@ class dm_campaign(osv.osv):
                 super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay_ids1}, context)
         else:
             super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':0}, context)
+        cr.commit()
+        print "OFFER ID", srch_offer_ids
+        if len(srch_offer_ids) > 1:
+            print "OOOOOOOOOOOOO", len(srch_offer_ids)
+#            raise _('Already Reconciled')
+#            raise osv.except_osv(_('Warning !'), _('Global taxes defined, but not in invoice lines !'))
+#            warnings.warn('This is a warning message')
+            logger = netsvc.Logger()
+            logger.notifyChannel("warning", netsvc.LOG_WARNING,
+                "No wizard found for the payment type.")
+
 
         return res
 
@@ -314,11 +342,13 @@ class dm_campaign(osv.osv):
             d = datetime.date(d[0], d[1], d[2])
             date_end = d + datetime.timedelta(days=365)
             super(dm_campaign,self).write(cr, uid, id_camp, {'date':date_end})
-
+            
         # Set trademark to offer's trademark only if trademark is null
-        if vals['offer_id'] and (not vals['trademark_id']):
-            offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
-            super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
+        print "START :::::::::::::::"
+        if not vals['campaign_type'] == 'model':
+            if vals['offer_id'] and (not vals['trademark_id']):
+                offer_id = self.pool.get('dm.offer').browse(cr, uid, vals['offer_id'])
+                super(dm_campaign,self).write(cr, uid, id_camp, {'trademark_id':offer_id.recommended_trademark.id})
         
         # check if an overlay exists else create it
         data_cam1 = self.browse(cr, uid, id_camp)
@@ -395,13 +425,23 @@ class dm_campaign_proposition(osv.osv):
         proposition_id = super(dm_campaign_proposition, self).copy(cr, uid, id, default, context=context)
         data = self.browse(cr, uid, proposition_id, context)
         default='Copy of %s' % data.name
-        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default, 'date_start':0})
+        super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'name':default, 'date_start':0, 'initial_proposition_id':id})
         if data.keep_segments == False:
             l = []
             for i in data.segment_ids:
                  l.append(i.id)
                  self.pool.get('dm.campaign.proposition.segment').unlink(cr,uid,l)
                  super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'segment_ids':[(6,0,[])]})
+            return proposition_id
+        """
+        Function to duplicate segments only if 'keep_prices' is set to yes else not to duplicate products
+        """
+        if data.keep_prices == False:
+            l = []
+            for i in data.product_ids:
+                 l.append(i.id)
+                 self.pool.get('dm.product').unlink(cr,uid,l)
+                 super(dm_campaign_proposition, self).write(cr, uid, proposition_id, {'product_ids':[(6,0,[])]})
             return proposition_id
         return proposition_id
 
@@ -505,7 +545,7 @@ class dm_campaign_proposition(osv.osv):
         'delay_ids' : fields.one2many('dm.campaign.delay', 'proposition_id', 'Delays', ondelete='cascade'),
         'sale_rate' : fields.float('Sale Rate', digits=(16,2)),
         'proposition_type' : fields.selection([('init','Initial'),('relaunching','Relauching'),('split','Split')],"Type"),
-        'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition'),
+        'initial_proposition_id': fields.many2one('dm.campaign.proposition', 'Initial proposition', readonly=True),
         'segment_ids' : fields.one2many('dm.campaign.proposition.segment','proposition_id','Segment', ondelete='cascade'),
         'quantity_wanted' : fields.function(_quantity_wanted_get,string='Wanted Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_theorical' : fields.function(_quantity_theorical_get,string='Theorical Quantity',type="char",size="64",method=True,readonly=True),
@@ -520,6 +560,7 @@ class dm_campaign_proposition(osv.osv):
 #        'product_ids' : fields.many2many('dm.product', 'proposition_product_rel', 'proposition_id', 'product_id', 'Catalogue'),
         'payment_methods' : fields.many2many('account.journal','campaign_payment_method_rel','proposition_id','journal_id','Payment Methods',domain=[('type','=','cash')]),
         'keep_segments' : fields.boolean('Keep Segments'),
+        'keep_prices' : fields.boolean('Keep Prices At Duplication'),
         'force_sm_price' : fields.boolean('Force Starting Mail Price'),
         'sm_price' : fields.float('Starting Mail Price', digits=(16,2)),
 #        'prices_prog_id' : fields.many2one('dm.campaign.proposition.prices_progression', 'Prices Progression'),
@@ -529,6 +570,8 @@ class dm_campaign_proposition(osv.osv):
     _defaults = {
         'proposition_type' : lambda *a : 'init',
         'date_start' : _default_camp_date,
+        'keep_segments' : lambda *a : True,
+        'keep_prices' : lambda *a : True
     }
 
     def _check(self, cr, uid, ids=False, context={}):
@@ -559,8 +602,39 @@ class dm_campaign_proposition_segment(osv.osv):
             result[segment.id]=segment.quantity_delivered - segment.quantity_dedup - segment.quantity_cleaned
         return result
 
+    def write(self, cr, uid, ids, vals, context=None):
+        file_name = self.pool.get('dm.customer.file').browse(cr, uid, vals['file_id'])
+        segs = self.browse(cr, uid, ids)[0]
+        if 'start_census' in vals and vals['start_census']:
+            start_census = vals['start_census']
+        else:
+            start_census = segs.start_census
+        if 'end_census' in vals and vals['end_census']:
+            end_census = vals['end_census']
+        else:
+            end_census = segs.end_census
+        vals['name'] = file_name.name + '-' + str(start_census) + '/' + str(end_census)
+        return super(dm_campaign_proposition_segment,self).write(cr, uid, ids, vals, context)
+
+    def create(self,cr,uid,vals,context={}):
+        file_name = self.pool.get('dm.customer.file').browse(cr, uid, vals['file_id'])
+        vals['name'] = file_name.name + '-' + str(vals['start_census']) + '/' + str(vals['end_census'])
+        return super(dm_campaign_proposition_segment, self).create(cr, uid, vals, context)
+    
+    def _segment_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        for id in ids:
+            seg = self.browse(cr,uid,[id])[0]
+            country_code = seg.proposition_id.camp_id.country_id.code or ''
+            cust_file_code =  seg.file_id.code
+            seq = '%%0%sd' % 2 % id
+            code1='-'.join([country_code[:3], cust_file_code[:3], seq[:4]])
+            result[id]=code1
+        return result
+ 
     _columns = {
-        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', readonly=True, ondelete='cascade'),
+        'code1' : fields.function(_segment_code,string='Code',type="char",size="64",method=True,readonly=True),
+        'proposition_id' : fields.many2one('dm.campaign.proposition','Proposition', ondelete='cascade'),
         'file_id': fields.many2one('dm.customer.file','File'),
         'quantity_theorical' : fields.integer('Theorical Quantity'),
         'quantity_wanted' : fields.integer('Wanted Quantity'),
@@ -570,14 +644,15 @@ class dm_campaign_proposition_segment(osv.osv):
         'quantity_real' : fields.function(_quantity_real_get,string='Real Quantity',type="integer",method=True,readonly=True),
         'AAA': fields.boolean('All Adresses Available'),
         'split_id' : fields.many2one('dm.campaign.proposition.segment','Split'),
-        'start_census' :fields.integer('Start Census'),
-        'end_census' : fields.integer('End Census'),
+        'start_census' :fields.integer('Start Census (days)'),
+        'end_census' : fields.integer('End Census (days)'),
         'deduplication_level' : fields.integer('Deduplication Level'),
         'active' : fields.boolean('Active'),
         'reuse_id' : fields.many2one('dm.campaign.proposition.segment','Reuse'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'note' : fields.text('Notes'),
         'segmentation_criteria': fields.text('Segmentation Criteria'),
+        'price_per_thousand' : fields.integer('Price per 1000'),
     }
     _order = 'deduplication_level'
 
@@ -929,15 +1004,28 @@ Country()
 class res_partner(osv.osv):
     _name = "res.partner"
     _inherit="res.partner"
-
+    _columns = {
+        'country_ids' : fields.many2many('res.country', 'partner_country_rel', 'partner_id', 'country_id', 'Allowed Countries'),
+        'state_ids' : fields.many2many('res.country.state','partner_state_rel', 'partner_id', 'state_id', 'Allowed States'),
+    }
     def _default_category(self, cr, uid, context={}):
         if 'category' in context and context['category']:
             id_cat = self.pool.get('res.partner.category').search(cr,uid,[('name','ilike',context['category'])])[0]
             return [id_cat]
         return []
 
+    def _default_all_country(self, cr, uid, context={}):
+        id_country = self.pool.get('res.country').search(cr,uid,[])
+        return id_country
+    
+    def _default_all_state(self, cr, uid, context={}):
+        id_state = self.pool.get('res.country.state').search(cr,uid,[])
+        return id_state
+    
     _defaults = {
         'category_id': _default_category,
+        'country_ids': _default_all_country,
+        'state_ids': _default_all_state,
     }
 res_partner()
 

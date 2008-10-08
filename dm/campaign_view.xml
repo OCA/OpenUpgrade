@@ -131,6 +131,7 @@
 										</group>
 										<field name="force_sm_price"/>
 										<field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
+										<field name="keep_prices"/>
 									<field name="product_ids" colspan="4" nolabel="1">
 										<form string="Catalogue">
 											<field name="offer_step_type"/>
@@ -286,10 +287,15 @@
 						<field name="files_responsible_id"/>
 						<field name="invoiced_partner_id"/>
 						<field name="deduplicator_id"/>
-						<field name="cleaner_id"/>
-<!--						<field name="dedup_order_date"/>
+
+						<field name="dedup_order_date"/>
 						<field name="dedup_validity_date"/>
-						<field name="dedup_delivery_date"/>-->
+
+						<field name="dedup_delivery_date"/>
+						<field name="owner_id"/>
+						<field name="router_id"/>
+						<field name="cleaner_id"/>
+						<field name="dedup_delivery_date"/>
 						<field name="cust_file_task_ids" nolabel="1" colspan="4">
 							<tree string="Customers List Tasks" editable="bottom">
 								<field name="name" string="Task Name"/>
@@ -587,6 +593,7 @@
 						<group col="10" colspan="4">
 							<field name="country_id" select="1"/>
 							<field name="offer_id"/>
+<!--							<field name="trademark_id"/>-->
 						</group>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4" nolabel="1"/>
@@ -615,6 +622,7 @@
 									<separator string="Prices policy" colspan="4"/>
 									<field name="customer_pricelist_id"/>
 									<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+									<field name="keep_prices"/>
 									<field name="product_ids" colspan="4" nolabel="1">
 										<form string="Catalogue">
 											<field name="offer_step_type"/>
@@ -763,6 +771,7 @@
 					</group>
 					<field name="force_sm_price"/>
 					<field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
+					<field name="keep_prices"/>
 					<field name="product_ids" colspan="4" nolabel="1">
 						<form string="Catalogue">
 							<field name="offer_step_type"/>
@@ -901,7 +910,7 @@
 			<form string="Segment">
 				<separator string="General" colspan="4"/>
 				<field name="name" string="Name" select="1"/>
-				<field name="code" string="Code"/>
+				<field name="code1" string="Code"/>
 				<field name="proposition_id" />
 				<field name="file_id" />
 				<field name="active" />
@@ -925,6 +934,7 @@
 				<field name="start_census"/>
 				<field name="end_census"/>
 				<field name="deduplication_level"/>
+				<field name="price_per_thousand"/>
 				<separator string="Segmentation Criteria" colspan="4"/>
 				<field name="segmentation_criteria" colspan="4" nolabel="1"/>
 				<separator string="Notes" colspan="4"/>
@@ -940,7 +950,8 @@
 		<field name="arch" type="xml">
 			<tree string="Segments">
 				<field name="name" string="Name"/>
-				<field name="code" string="Code"/>
+				<field name="code1" string="Code"/>
+				<field name="quantity_ordered" select="2"/>
 				<field name="quantity_theorical" select="2"/>
 				<field name="quantity_wanted" select="2"/>
 				<field name="quantity_delivered" select="2"/>
@@ -1217,6 +1228,27 @@
 		<field name="view_id" ref="view_campaign_purchase_line_tree"/>
 	</record>
 
+<<<<<<< TREE
+	<menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_form" action="action_campaign_purchase_line_form"/>
+
+	<!--
+	=======================================================
+	Partner Extensions
+	=======================================================
+	-->
+    <record id="view_partner_property_form" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="parent_id" position="after">
+            	<field name="state_ids" colspan="4"/>
+            	<field name="country_ids" colspan="4"/>
+            </field>
+        </field>
+    </record>
+
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_tree" action="action_campaign_purchase_line_tree"/>
 
 
@@ -1263,5 +1295,6 @@
 	</record>
 
 	<menuitem name="Direct Marketing/Configuration/Campaigns/All Dates Lines" id="menu_action_campaign_dates_line_tree" action="action_campaign_dates_line_tree"/>
+
 </data>
 </openerp>
