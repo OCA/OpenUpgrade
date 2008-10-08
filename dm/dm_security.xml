@@ -496,10 +496,10 @@
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
-	<record id="ir_model_access_dtp_datesforofferadmin1" model="ir.model.access">
-		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dtp_dates')]"/>
+	<record id="ir_model_access_dates_lineforofferadmin1" model="ir.model.access">
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dates_line')]"/>
 		<field eval="1" name="perm_read"/>
-		<field eval="&quot;&quot;&quot;dtp dates for offer admin&quot;&quot;&quot;" name="name"/>
+		<field eval="&quot;&quot;&quot;dates line for offer admin&quot;&quot;&quot;" name="name"/>
 		<field eval="1" name="perm_unlink"/>
 		<field eval="1" name="perm_write"/>
 		<field eval="1" name="perm_create"/>
@@ -604,10 +604,10 @@
 			<field eval="1" name="perm_create"/>
 			<field name="group_id" ref="res_groups_offermanager"/>
 		</record>
-		<record id="ir_model_access_dtp_datesforoffermanager0" model="ir.model.access">
-			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dtp_dates')]"/>
+		<record id="ir_model_access_dates_lineforoffermanager0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dates_line')]"/>
 			<field eval="1" name="perm_read"/>
-			<field eval="&quot;&quot;&quot;dtp dates for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;dates line for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
 			<field eval="1" name="perm_write"/>
 			<field eval="1" name="perm_create"/>
@@ -865,10 +865,10 @@
 				<field eval="1" name="perm_create"/>
 				<field name="group_id" ref="res_groups_campaignadmin"/>
 			</record>
-			<record id="ir_model_access_dtp_datesforcampaignadmin0" model="ir.model.access">
-				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dtp_dates')]"/>
+			<record id="ir_model_access_dates_lineforcampaignadmin0" model="ir.model.access">
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dates_line')]"/>
 				<field eval="1" name="perm_read"/>
-				<field eval="&quot;&quot;&quot;dtp dates for campaign admin&quot;&quot;&quot;" name="name"/>
+				<field eval="&quot;&quot;&quot;dates line for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
 				<field eval="1" name="perm_write"/>
 				<field eval="1" name="perm_create"/>
@@ -1126,10 +1126,10 @@
 					<field eval="1" name="perm_create"/>
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
-				<record id="ir_model_access_dtp_datesforcampaignmanager0" model="ir.model.access">
-					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dtp_dates')]"/>
+				<record id="ir_model_access_dates_lineforcampaignmanager0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dates_line')]"/>
 					<field eval="1" name="perm_read"/>
-					<field eval="&quot;&quot;&quot;dtp dates for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="&quot;&quot;&quot;dates line for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
 					<field eval="1" name="perm_write"/>
 					<field eval="1" name="perm_create"/>
@@ -1378,10 +1378,10 @@
 						<field eval="1" name="perm_create"/>
 						<field name="group_id" ref="res_groups_alluser"/>
 					</record>
-					<record id="ir_model_access_dtp_datesforalluser0" model="ir.model.access">
-						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dtp_dates')]"/>
+					<record id="ir_model_access_dates_lineforalluser0" model="ir.model.access">
+						<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.dates_line')]"/>
 						<field eval="1" name="perm_read"/>
-						<field eval="&quot;&quot;&quot;dtp dates for all user&quot;&quot;&quot;" name="name"/>
+						<field eval="&quot;&quot;&quot;dates line for all user&quot;&quot;&quot;" name="name"/>
 						<field eval="1" name="perm_unlink"/>
 						<field eval="1" name="perm_write"/>
 						<field eval="1" name="perm_create"/>

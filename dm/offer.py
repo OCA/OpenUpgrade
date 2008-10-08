@@ -99,7 +99,7 @@ class dm_customer_file(osv.osv):
         'code' : fields.char('Code', size=16, required=True),
         'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
         'delivery_date' : fields.date('Delivery Date'),
-        'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'file_id', 'Segments'),
+        'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'file_id', 'Segments', readonly=True),
     }
 dm_customer_file()
 

@@ -18,6 +18,10 @@
 				<field name="name" eval="&quot;Deduplicator&quot;"/>
 			</record>
 
+			<record model="res.partner.category" id="cat_cleaner">
+				<field name="name" eval="&quot;Cleaner&quot;"/>
+			</record>
+
 			<record model="res.partner.category" id="cat_trademark">
 	 			<field name="name" eval="&quot;Trademark&quot;"/>
 	 		</record>
@@ -63,7 +67,7 @@
 			<field name="code">model</field>
 			<field name="name">Model</field>
 		</record>
-
+<!--
 		<record id="dm_campaign_dtp_dates_1" model="dm.campaign.dtp_dates">
 			<field name="name">DTP Request</field>
 			<field name="template">1</field>
@@ -93,6 +97,18 @@
 			<field name="name">Final corrected Proof DTP Supplier Delivery</field>
 			<field name="template">1</field>
 		</record>
-
+-->
+		<record id="project_task_type_dtp0" model="project.task.type">
+			<field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Desktop Publishing Task&quot;&quot;&quot;" name="description"/>
+		</record>
+		<record id="project_task_type_mailingmanufacturing0" model="project.task.type">
+			<field eval="&quot;&quot;&quot;Mailing Manufacturing&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Mailing Manufacturing Task&quot;&quot;&quot;" name="description"/>
+		</record>
+		<record id="project_task_type_customerslist0" model="project.task.type">
+			<field eval="&quot;&quot;&quot;Customers List&quot;&quot;&quot;" name="name"/>
+			<field eval="&quot;&quot;&quot;Customers List Task&quot;&quot;&quot;" name="description"/>
+		</record>
 	</data>
 </openerp>

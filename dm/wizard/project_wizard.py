@@ -26,10 +26,6 @@
 #
 ##############################################################################
 
-#
-# Order Point Method:
-#    - Order if the virtual stock of today is bellow the min of the defined order point
-#
 
 import wizard
 import pooler
@@ -45,12 +41,26 @@ parameter_fields = {
 }
 
 def _create_duplicate(self, cr, uid, data, context):
-    campaign_group_obj=pooler.get_pool(cr.dbname).get('dm.campaign')
+    campaign_obj=pooler.get_pool(cr.dbname).get('dm.campaign')
     project_obj = pooler.get_pool(cr.dbname).get('project.project')
+    campaign = campaign_obj.browse(cr, uid, data['id'])
+    tasks_obj = pooler.get_pool(cr.dbname).get('project.task')
+    tasks_ids = tasks_obj.search(cr, uid, [('project_id','=',data['form']['project_id'])])
     duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True})
-    campaign = campaign_group_obj.browse(cr, uid, data['id'])
+    for task in tasks_obj.browse(cr, uid, tasks_ids):
+        if task.type:
+            if task.type.name == 'DTP' and campaign.dtp_responsible_id:
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.dtp_responsible_id.id})
+            elif task.type.name == 'Mailing Manufacturing' and campaign.manufacturing_responsible_id:
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.manufacturing_responsible_id.id})
+            elif task.type.name == 'Customers List' and campaign.files_responsible_id:
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.files_responsible_id.id})
+            else:
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id})
+        else:
+            new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id})
     project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name})
-    campaign_group_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
+    campaign_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}
 
 class wizard_campaign_project(wizard.interface):
