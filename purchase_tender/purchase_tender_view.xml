@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
     <data>
 
     <record model="ir.ui.view" id="purchase_order_tree_inherit">
@@ -69,4 +69,4 @@
         <menuitem name="Purchase Tenders" id="menu_purchase_tender" parent="purchase.menu_purchase_root"/>
         <menuitem name="Purchase Tender" id="menu_purchase_Tender1" parent="menu_purchase_tender" action="action_purchase_tender"/>
     </data>
-</terp>
+</openerp>
