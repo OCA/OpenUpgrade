@@ -145,12 +145,16 @@ class config_path_folder(osv.osv_memory):
     def action_generate(self,cr,uid,ids,context=None):
         # TODO: Check for PXVIEW availabilty and convert .db to .csv
         path =  self.pool.get('config.path.folder').read(cr, uid, ids[0],['folder'],context)[0]['folder']
-        cmd = 'pxview '+path+'/IFDBK.DB -c > ' + config['addons_path']+'/account_bob_import/original_csv/dbk.csv'
-        res = os.system(cmd)
-        if res != 0:
-            raise "check pxview please"
-        print 'the show must go on. Next step is to import csv files'
-        import account_bob_import_2
+        tmp = path.split('/')
+        folder_name = tmp[len(tmp)-1]
+        for file in ['DBK.DB','ACCOUN.DB','COMPAN.DB','contacts.DB','period.DB','vatcas.DB','vat.DB','ahisto.db']:
+            cmd = 'pxview '+path+'/'+folder_name+file+' -c > ' + config['addons_path']+'/account_bob_import/original_csv/'+file.split('.')[0].lower()+'.csv'
+            print cmd
+            res = os.system(cmd)
+            if res != 0 and file != 'contacts.DB':
+                raise osv.except_osv(_('Error Occured'), _('An error occured when importing the file "%s". Please check that pxview is correclty installed on the server.')% file)
+        import bob_import_step_2
+        
         return {
                 'view_type': 'form',
                 "view_mode": 'form',

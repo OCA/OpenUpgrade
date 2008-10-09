@@ -4,6 +4,7 @@ import csv
 import datetime
 import time
 from datetime import date, timedelta
+from tools import config
 
 partner_dict = {}
 partner_dict[''] = ''
@@ -733,66 +734,68 @@ def import_move_line(reader, writer, map, ):
 # -=====================-
 
 #specific part for CCI
-reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb'))
-bob_conv_matching = {}
-bob_conv_matching[''] = ''
-for row in reader_partner_matching:
-    bob_conv_matching[row['bob']] = row['partner']
+#~ reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb'))
+#~ bob_conv_matching = {}
+#~ bob_conv_matching[''] = ''
+#~ for row in reader_partner_matching:
+    #~ bob_conv_matching[row['bob']] = row['partner']
 
-def _get_partner_id(char):
-    if bob_conv_matching.has_key(char):
-        return bob_conv_matching[char]
-    return 'account_bob_import.res_partner_destroyed' #or char ?
+#~ def _get_partner_id(char):
+    #~ if bob_conv_matching.has_key(char):
+        #~ return bob_conv_matching[char]
+    #~ return 'account_bob_import.res_partner_destroyed' #or char ?
 #end of specific part
 
 print 'importing chart of accounts'
-reader_account = csv.DictReader(file('original_csv/account.csv','rb')) #TODO: pxview IFACCOUN.DB (?)-c > ....../account_bob_import/original_csv/account.csv
-writer_account = csv.DictWriter(file('account.account.csv', 'wb'), account_map.keys())
+reader_account = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/accoun.csv','rb')) #TODO: pxview IFACCOUN.DB (?)-c > ....../account_bob_import/original_csv/account.csv
+print reader_account
+writer_account = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.account.csv', 'wb'), account_map.keys())
 import_account(reader_account, writer_account, account_map)
 
 print 'importing financial journals'
-reader_journal = csv.DictReader(file('original_csv/dbk.csv','rb')) #TODO: pxview IFDBK.DB (?)-c > ....../account_bob_import/original_csv/dbk.csv
-writer_journal = csv.DictWriter(file('account.journal.csv', 'wb'), journals_map.keys())
+reader_journal = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/dbk.csv','rb')) #TODO: pxview IFDBK.DB (?)-c > ....../account_bob_import/original_csv/dbk.csv
+writer_journal = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.journal.csv', 'wb'), journals_map.keys())
 import_journal(reader_journal, writer_journal, journals_map)
 
 print 'importing partners'
-reader_partner = csv.DictReader(file('original_csv/company.csv','rb')) #TODO: pxview IFCOMPAN.DB (?)-c > ....../account_bob_import/original_csv/company.csv
-writer_partner = csv.DictWriter(file('res.partner.csv', 'wb'), partners_map.keys())
-writer_address = csv.DictWriter(file('res.partner.address.csv','wb'), partner_add_map.keys())
-writer_bank = csv.DictWriter(file('res.partner.bank.csv','wb'), partner_bank_map.keys())
+reader_partner = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/compan.csv','rb')) #TODO: pxview IFCOMPAN.DB (?)-c > ....../account_bob_import/original_csv/company.csv
+writer_partner = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.csv', 'wb'), partners_map.keys())
+writer_address = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.address.csv','wb'), partner_add_map.keys())
+writer_bank = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.bank.csv','wb'), partner_bank_map.keys())
 import_partner(reader_partner, writer_partner, partners_map, writer_address, partner_add_map, writer_bank, partner_bank_map)
 
 print 'importing contacts'
-reader_contact = csv.DictReader(file('original_csv/contacts.csv','rb')) #TODO: pxview IFcontacts.DB (?)-c > ....../account_bob_import/original_csv/contacts.csv
-writer_contact = csv.DictWriter(file('res.partner.contact.csv','wb'),contacts_map.keys())
-writer_job = csv.DictWriter(file('res.partner.job.csv','wb'),job_map.keys())
+reader_contact = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/contacts.csv','rb')) #TODO: pxview IFcontacts.DB (?)-c > ....../account_bob_import/original_csv/contacts.csv
+print reader_contact
+writer_contact = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.contact.csv','wb'),contacts_map.keys())
+writer_job = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.job.csv','wb'),job_map.keys())
 import_contact(reader_contact, writer_contact, contacts_map, writer_job, job_map)
 
 print 'importing fiscal years'
-reader_fyear = csv.DictReader(file('original_csv/period.csv','rb')) #TODO: pxview IFperiod.DB (?)-c > ....../account_bob_import/original_csv/period.csv
-writer_fyear = csv.DictWriter(file('account.fiscalyear.csv', 'wb'), fyear_map.keys())
+reader_fyear = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/period.csv','rb')) #TODO: pxview IFperiod.DB (?)-c > ....../account_bob_import/original_csv/period.csv
+writer_fyear = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.fiscalyear.csv', 'wb'), fyear_map.keys())
 import_fyear(reader_fyear, writer_fyear, fyear_map)
 
 print 'importing periods'
-reader_period = csv.DictReader(file('original_csv/period.csv','rb'))
-writer_period = csv.DictWriter(file('account.period.csv', 'wb'), periods_map.keys())
+reader_period = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/period.csv','rb'))
+writer_period = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.period.csv', 'wb'), periods_map.keys())
 import_period(reader_period, writer_period, periods_map)
 
 #TODO: import the account_tax from vat.csv (pxview IFvat.DB -c > ...)
 #   constructing table account_tax => account_tax_code (for move and move_line)
-reader_vat_code = csv.DictReader(file('original_csv/vatcas.csv','rb')) #TODO: pxview IFvatcas.DB -c > ....../account_bob_import/original_csv/vat.csv
-reader_vat = csv.DictReader(file('original_csv/vat.csv','rb')) #TODO: pxview IFvat.DB -c > ....../account_bob_import/original_csv/vat.csv
+reader_vat_code = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/vatcas.csv','rb')) #TODO: pxview IFvatcas.DB -c > ....../account_bob_import/original_csv/vat.csv
+reader_vat = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/vat.csv','rb')) #TODO: pxview IFvat.DB -c > ....../account_bob_import/original_csv/vat.csv
 vat_dict = construct_vat_dict(reader_vat_code, reader_vat, {})
 
 
 print "importing account.move"
-reader_move = csv.DictReader(file('original_csv/move_1.csv','rb'))#TODO: pxview IFahisto.db -c > ~/tinydev/cci/code/addons-extra/account_bob_import/original_csv/move.csv
-writer_move = csv.DictWriter(file('account.move.csv', 'wb'), move_map.keys())
+reader_move = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/ahisto.csv','rb'))#TODO: pxview IFahisto.db -c > ~/tinydev/cci/code/addons-extra/account_bob_import/original_csv/move.csv
+writer_move = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.csv', 'wb'), move_map.keys())
 import_move(reader_move, writer_move, move_map)
 
 print "importing account.move.line"
-reader_move_line = csv.DictReader(file('original_csv/move_1.csv','rb'))
-writer_move_line = csv.DictWriter(file('account.move.line.csv', 'wb'), move_line_map.keys())
+reader_move_line = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/ahisto.csv','rb'))
+writer_move_line = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.line.csv', 'wb'), move_line_map.keys())
 import_move_line(reader_move_line, writer_move_line, move_line_map)
 
 
