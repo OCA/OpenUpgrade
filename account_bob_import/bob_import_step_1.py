@@ -6,6 +6,7 @@ import base64
 import tools
 import StringIO
 import zipfile
+from tools import config
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
@@ -90,8 +91,8 @@ class config_bob_import(osv.osv_memory):
         return {
             'view_type': 'form',
             "view_mode": 'form',
-#            'res_model': 'config.path.folder',
-            'res_model':'ir.actions.configuration.wizard',
+            'res_model': 'config.path.folder',
+#            'res_model':'ir.actions.configuration.wizard',
             'type': 'ir.actions.act_window',
             'target':'new',
         }
@@ -125,25 +126,31 @@ class config_path_folder(osv.osv_memory):
         'folder': fields.selection(_folders_get,'Folder',required=True),
     }
 
-#    def action_back(self,cr,uid,ids,context=None):
-#        return {
-#                'view_type': 'form',
-#                "view_mode": 'form',
-#                'res_model': 'config.bob.import',
-#                'type': 'ir.actions.act_window',
-#                'target':'new',
-#        }
     def action_cancel(self,cr,uid,ids,context=None):
         return {
-            'view_type': 'form',
-            "view_mode": 'form',
-            'res_model': 'ir.actions.configuration.wizard',
-            'type': 'ir.actions.act_window',
-            'target':'new',
+                'view_type': 'form',
+                "view_mode": 'form',
+                'res_model': 'config.bob.import',
+                'type': 'ir.actions.act_window',
+                'target':'new',
         }
+#    def action_cancel(self,cr,uid,ids,context=None):
+#        return {
+#            'view_type': 'form',
+#            "view_mode": 'form',
+#            'res_model': 'ir.actions.configuration.wizard',
+#            'type': 'ir.actions.act_window',
+#            'target':'new',
+#        }
     def action_generate(self,cr,uid,ids,context=None):
         # TODO: Check for PXVIEW availabilty and convert .db to .csv
-
+        path =  self.pool.get('config.path.folder').read(cr, uid, ids[0],['folder'],context)[0]['folder']
+        cmd = 'pxview '+path+'/IFDBK.DB -c > ' + config['addons_path']+'/account_bob_import/original_csv/dbk.csv'
+        res = os.system(cmd)
+        if res != 0:
+            raise "check pxview please"
+        print 'the show must go on. Next step is to import csv files'
+        import account_bob_import_2
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
