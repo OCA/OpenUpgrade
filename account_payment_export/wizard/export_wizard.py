@@ -64,7 +64,7 @@ export_fields = {
     'pay' : {
         'string':'Export File',
         'type':'binary',
-        'required':False,
+        'required': False,
         'readonly':True,
     },
     'note' : {'string':'Log','type':'text'},
@@ -240,10 +240,10 @@ def _create_pay(self,cr,uid,data,context):
     if bank_id:
         bank = bank_obj.browse(cr, uid, bank_id[0], context)
         if not bank:
-            return {'note':'Please Provide Bank for the Ordering Customer.'}
+            return {'note':'Please Provide Bank for the Ordering Customer.', 'reference': payment.id, 'pay': False, 'state':'failed' }
         v1['institution_code']=bank.institution_code#20-22
         if not v1['institution_code']:
-            return {'note':'Please Provide Institution Code number for the Ordering Customer.'}
+            return {'note':'Please provide Institution Code number for the ordering customer.', 'reference': payment.id, 'pay': False, 'state':'failed' }
     pay_header =record_header(v1).generate()
     #Header Record End
 
@@ -251,7 +251,7 @@ def _create_pay(self,cr,uid,data,context):
     pay_line_id = pay_line_obj.search(cr, uid, [('order_id','=',data['id'])])
 
     if not payment.line_ids:
-         return {'note':'Wizard can not generate Export file ,There are no Payment Lines.'}
+         return {'note':'Wizard can not generate export file: there are no payment lines.', 'reference': payment.id, 'pay': False, 'state':'failed' }
 
     pay_line =pay_line_obj.read(cr, uid, pay_line_id,['date','company_currency','currency','partner_id','amount','bank_id','move_line_id','name','info_owner','info_partner','communication','communication2'])
 
@@ -269,7 +269,7 @@ def _create_pay(self,cr,uid,data,context):
 
         v['order_ref']=pay['name']#14-29
         if pay['amount']==0.0:
-            return {'note':'Payment Amount should Not be Zero in Payment Lines.'}
+            return {'note':'Payment amount in payment lines should not be zero.', 'reference': payment.id, 'pay': False, 'state':'failed' }
         v['amt_pay']=float2str('%.2f'%pay['amount'])#35-49
 
         default_cur=''
@@ -291,9 +291,13 @@ def _create_pay(self,cr,uid,data,context):
             v['cur_code_debit']=default_cur
 
         total=total+pay['amount']
-        v['acc_debit']=bank.acc_number # 60-71
+
+        v['acc_debit'] = bank.acc_number # 60-71
+        if bank.state == 'iban':
+            v['acc_debit'] = pool.get('res.partner.bank').get_bban_from_iban(cr, uid, [bank.id])[bank.id]
+
         if not v['acc_debit']:
-            return {'note':'Please Provide Bank Account Number for the Ordering Customer.'}
+            return {'note':'Please Provide Bank Account Number for the Ordering Customer.', 'reference': payment.id, 'pay': False, 'state':'failed' }
         v['indicate_date']=''
         #sub1 End
         # subdivision3 if its a foreign payment taking place.
@@ -343,7 +347,7 @@ def _create_pay(self,cr,uid,data,context):
                             v['benf_address_place']="*" + str(benf_country).rjust(3) + blank_space + str(benf_zip).rjust(6) + str(ct_st_ctry).rjust(24)#sub div 07 43-77
 
                         else:
-                            return {'note':'Please Provide Country in Payment Line for \nPartner:'+str(pay['partner_id'][1])+' Ref:'+str(pay['name'])+''}
+                            return {'note':'Please Provide Country in Payment Line for \nPartner:'+str(pay['partner_id'][1])+' Ref:'+str(pay['name']), 'reference': payment.id, 'pay': False, 'state':'failed' }
                     break
 
         v['section3']='0'
@@ -402,7 +406,7 @@ def _create_pay(self,cr,uid,data,context):
             else:
                 v['type_accnt']=''
         else:
-            return {'note':'Please Provide Bank Account in Payment Line for \nPartner:'+str(pay['partner_id'][1])+' Ref:'+str(pay['name'])+''}
+            return {'note':'Please Provide Bank Account in Payment Line for \nPartner:'+str(pay['partner_id'][1])+' Ref:'+str(pay['name']), 'reference': payment.id, 'pay': False, 'state':'failed' }
 
         part_bank_obj=pool.get('res.bank')
         v['bank_country_code']=''
@@ -455,19 +459,28 @@ def _create_pay(self,cr,uid,data,context):
     #Trailer Record End
 
     try:
-        pay_order=pay_header+pay_order+pay_trailer
+        pay_order = pay_header + pay_order+ pay_trailer
     except Exception,e :
         log= log +'\n'+ str(e) + 'CORRUPTED FILE !\n'
         raise
-    log.add("Successfully Exported\n--\nSummary:\n\nTotal amount paid : %.2f \nTotal Number of Payments : %d \n-- "\
-            %(total,seq))
+    log.add("Successfully Exported\n--\nSummary:\n\nTotal amount paid : %.2f \nTotal Number of Payments : %d \n-- " %(total,seq))
 
-    pool.get('account.pay').create(cr,uid,{'note':log(),'info':'Payment Order Reference: '+ payment.reference +' On '+ now().strftime('%Y-%m-%d'),'name':base64.encodestring(pay_order or "")})
     pool.get('payment.order').set_done(cr,uid,payment.id,context)
-    return {'note':log(), 'pay': base64.encodestring(pay_order)}
+    return {'note':log(), 'reference': payment.id, 'pay': base64.encodestring(pay_order), 'state':'succeeded'}
 
 def float2str(lst):
-            return str(lst).rjust(16).replace('.','')
+    return str(lst).rjust(16).replace('.','')
+
+def _log_create(self, cr, uid, data, context):
+    pool = pooler.get_pool(cr.dbname)
+    pool.get('account.pay').create(cr,uid,{
+        'payment_order_id': data['form']['reference'],
+        'note': data['form']['note'],
+        'file': data['form']['pay'] and base64.encodestring(data['form']['pay'] or False),
+        'state': data['form']['state'],
+    })
+
+    return {}
 
 class wizard_pay_create(wizard.interface):
     states = {
@@ -483,8 +496,12 @@ class wizard_pay_create(wizard.interface):
             'result' : {'type' : 'form',
                         'arch' : export_form,
                         'fields' : export_fields,
-                        'state' : [('end', 'Ok','gtk-ok') ]}
+                        'state' : [('close', 'Ok','gtk-ok') ]}
         },
+        'close': {
+            'actions': [_log_create],
+            'result': {'type': 'state', 'state':'end'}
+        }
 
     }
 wizard_pay_create('account.payment_create')
