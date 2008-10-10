@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
-	<menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager"/>
-	<menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files" id="menu_dm_config_camp_custfiles" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
-	<menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
+    <menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
+    <menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files" id="menu_dm_config_camp_custfiles" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
+    <menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
 
 <record id="res_groups_campaignadmin" model="res.groups">
 <field name="name">Campaign Admin</field>
@@ -14,1153 +14,1170 @@
 <field name="name">Campaign Manager</field>
 </record>
 
-	<!--
-	=======================================================
-	Campaign Views
-	=======================================================
-	-->
+    <!--
+    =======================================================
+    Campaign Views
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_campaign_calendar">
-		<field name="name">dm.campaign.calendar</field>
-		<field name="model">dm.campaign</field>
-		<field name="type">calendar</field>
-		<field eval="2" name="priority"/>
-		<field name="arch" type="xml">
-			<calendar color="responsible_id" date_start="date_start" string="Campaigns">
-				<field name="name" string="Name"/>
-				<field name="country_id" />
-			</calendar>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_calendar">
+        <field name="name">dm.campaign.calendar</field>
+        <field name="model">dm.campaign</field>
+        <field name="type">calendar</field>
+        <field eval="2" name="priority"/>
+        <field name="arch" type="xml">
+            <calendar color="responsible_id" date_start="date_start" string="Campaigns">
+                <field name="name" string="Name"/>
+                <field name="country_id" />
+            </calendar>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_campaign_tree">
-		<field name="name">dm.campaign.tree</field>
-		<field name="model">dm.campaign</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Campaigns">
-				<field name="name" string="Name"/>
-				<field name="campaign_type"/>
-				<field name="date_start"/>
-				<field name="responsible_id" />
-				<field name="country_id" />
-<!--				<field name="country_id" />-->
-				<field name="state"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_tree">
+        <field name="name">dm.campaign.tree</field>
+        <field name="model">dm.campaign</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaigns">
+                <field name="name" string="Name"/>
+                <field name="campaign_type"/>
+                <field name="date_start"/>
+                <field name="responsible_id" />
+                <field name="country_id" />
+<!--                <field name="country_id" />-->
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_campaign_form">
-		<field name="name">dm.campaign.form</field>
-		<field name="model">dm.campaign</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Campaigns">
-				<group colspan="3" col="4">
-					<separator string="Campaign Description" colspan="5"/>
-					<field name="name" string="Name" select="1" col="3"/>
-					<field name="code1" string="Code" select="2" col="2"/>
-				</group>
-				<notebook colspan="4">
-					<page string="General">
-						<group colspan="2" col="2">
-						<separator string="Global Information" colspan="2"/>
-						<field name="offer_id" select="1"/>
-						<field name="campaign_type" select="2"/>
-						<field name="dealer_id"/>
-						<field name="trademark_id"/>
-						<field name="responsible_id" />
-						</group>
-						<group colspan="2" col="2">
-						<separator string="Geografical" colspan="2"/>
-						<field name="country_id" select="1" on_change="onchange_lang_currency(country_id)"/>
-						<field name="lang_id" select="2"/>
-						<field name="currency_id" select="2"/>
-						</group>
-						<group colspan="4">
-						<separator string="Dates" colspan="4"/>
-						<field name="date_start" select="2"/>
-						<field name="date"/>
-						</group>
-						<separator string="Tasks Management" colspan="4"/>
-						<group colspan="4">
-						<field name="project_id" string="Retro Planning"/>
-						<button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('state','!=','open'),('project_id','!=',False)]}"/>
-						</group>
-<!--						<separator string="Process State" colspan="4"/>
-						<group colspan="8">
-						<field name="manufacturing_state" select="2"/>
-						<field name="customer_file_state" select="2"/>
-						<field name="items_state" select="2"/>
-						<field name="translation_state" select="2"/>
-						</group>-->
-<!--						<field name="campaign_stat_ids"/>-->
-						<separator string="Campaign Status" colspan="4"/>
-						<group col="10" colspan="4">
-							<field name="state" readonly="1" select="2" nolabel="1"/>
-							<button name="state_open_set" string="Open" states="draft,pending" type="object"/>
-							<button name="state_close_set" string="Close" states="draft,open,pending" type="object"/>
-							<button name="state_pending_set" string="Set pending" states="open" type="object"/>
-							<button name="state_draft_set" string="Set to draft" states="open,pending,close" type="object"/>
-						</group>
-					</page>
-					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1" context="date1=date_start">
-							<form string="Propositions">
-							<notebook colspan="4">
-								<page string="General">
-									<field name="name" string="Name" select="1"/>
-									<field name="code1" string="Code" select="2"/>
-									<field name="date_start" select="2"/>
-									<field name="proposition_type" select="1"/>
-									<field name="initial_proposition_id" select="1"/>
-									<field name="forwarding_charges"/>
-									<field name="quantity_theorical"/>
-									<field name="quantity_wanted"/>
-									<field name="quantity_delivered"/>
-									<field name="quantity_real"/>
-									<field name="sale_rate"/>
-									<separator string="Notes" colspan="4"/>
-									<field name="notes" colspan="4" nolabel="1"/>
-								</page>
-								<page string="Prices">
-									<separator string="Prices policy" colspan="4"/>
-										<group colspan="4">
-										<field name="customer_pricelist_id"/>
-										<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
-										</group>
-										<field name="force_sm_price"/>
-										<field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
-										<field name="keep_prices"/>
-									<field name="product_ids" colspan="4" nolabel="1">
-										<form string="Catalogue">
-											<field name="offer_step_type"/>
-											<field name="product_id" string="Item"/>
-											<field name="price"/>
-											<field name="item_type"/>
-											<field name="notes"/>
-										</form>
-										<tree string="Catalogue" editable="bottom">
-											<field name="offer_step_type"/>
-											<field name="product_id" string="Item"/>
-											<field name="price"/>
-				<!--							<field name="qty_planned"/>
-											<field name="qty_real"/>-->
-											<field name="item_type"/>
-											<field name="notes"/>
-										</tree>
-									</field>
-				<!--					<field name="starting_mail_price"/>-->
-									<separator string="Payment Methods" colspan="4"/>
-									<field name="payment_methods" colspan="4" nolabel="1"/>
-								</page>
-								<page string="Segments">
-								<field name="segment_ids" colspan="4" nolabel="1">
-									<form string="Segment">
-										<separator string="General" colspan="4"/>
-										<field name="name" string="Name" select="1"/>
-										<field name="code" string="Code"/>
-<!--										<field name="proposition_id" />-->
-										<field name="file_id" />
-										<field name="active" />
-										<field name="split_id" />
-										<field name="reuse_id" />
-										<separator string="Quantities" colspan="4"/>
-										<field name="quantity_theorical" select="2"/>
-										<newline/>
-										<field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
-										<field name="AAA" select="2"/>
-										<field name="quantity_delivered" select="2"/>
-										<newline/>
-										<field name="quantity_dedup" string="- Deduplication"/>
-										<newline/>
-										<field name="quantity_cleaned" string="- Cleaning"/>
-										<newline/>
-										<field name="quantity_real" string="= Real Quantity" select="2"/>
-										<newline/>
-										<separator string="Segmentation" colspan="4"/>
-										<field name="start_census"/>
-										<field name="end_census"/>
-										<field name="deduplication_level"/>
-										<separator string="Segmentation Criteria" colspan="4"/>
-										<field name="segmentation_criteria" colspan="4" nolabel="1"/>
-										<separator string="Notes" colspan="4"/>
-										<field name="note" colspan="4" nolabel="1"/>
-									</form>
-									<tree string="Segments">
-										<field name="name" string="Name"/>
-										<field name="deduplication_level" />
-										<field name="code" string="Code"/>
-										<field name="quantity_theorical"/>
-										<field name="quantity_wanted"/>
-										<field name="AAA"/>
-										<field name="quantity_delivered"/>
-										<field name="quantity_real"/>
-									</tree>
-								</field>
-								<field name="keep_segments" string="Keep Segments at Duplication"/>
-								</page>
-							</notebook>
-							</form>
-							<tree string="Propositions">
-								<field name="name" string="Name"/>
-								<field name="code1" string="Code"/>
-								<field name="date_start" colspan="4"/>
-								<field name="quantity_theorical" select="2"/>
-								<field name="quantity_wanted" select="2"/>
-								<field name="quantity_delivered" select="2"/>
-								<field name="quantity_real" select="2"/>
-								<field name="sale_rate"/>
-								<field name="proposition_type"/>
-							</tree>
-						</field>
-					</page>
-					<page string="Supplying">
-<!--						<field name="purchase_line_ids" colspan="4" nolabel="1" context="date1=date_start">-->
-						<field name="purchase_line_ids" colspan="4" nolabel="1" attrs="{'readonly':[('campaign_group_id','!=',0)]}">
-							<form string="Purchase Line">
-								<group colspan="4">
-									<field name="product_id"/>
-									<field name="uom_id"/>
-									<field name="quantity"/>
-									<field name="type"/>
-									<newline/>
-									<field name="date_planned"/>
-									<field name="date_delivery"/>
-								</group>
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>-->
-								<field name="purchase_order_ids" colspan="4" nolabel="1"/>
-								<field name="state" nolabel="1"/>
-							</form>
-							<tree string="Purchase Lines">
-								<field name="product_id"/>
-								<field name="type"/>
-								<field name="quantity"/>
-								<button name="quantity_get" string="Get Quantity" states="pending" type="object"/>
-								<field name="date_planned"/>
-								<field name="date_delivery"/>
-								<field name="state"/>
-								<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
-							</tree>
-						</field>
-					</page>
-					<page string="Manufacturing">
-						<separator string="Manufacturing" colspan="4"/>
-						<field name="manufacturing_responsible_id"/>
-						<field name="campaign_group_id"/>
-						<field name="manufacturing_cost_ids" colspan="4" nolabel="1">
-							<form string="Manufacturing Cost">
-								<field name="name" colspan="4"/>
-								<field name="amount" col="2"/>
-							</form>
-							<tree string="Manufacturing Costs">
-								<field name="name"/>
-								<field name="amount"/>
-							</tree>
-						</field>
-						<field name="manufacturing_task_ids" nolabel="1" colspan="4">
-							<tree string="Manufacturing tasks" editable="bottom">
-								<field name="name" string="Task Name"/>
-								<field name="date_deadline" string="Theorical Date" widget="date"/>
-								<field name="date_reviewed"/>
-								<field name="date_planned"/>
-								<field name="date_close" string="Real Date"/>
-							</tree>
-						</field>
-					</page>
-					<page string="Desktop Publishing">
-						<separator string="Desktop Publishing" colspan="4"/>
-						<field name="dtp_responsible_id" col="2"/>
-						<field name="dtp_task_ids" nolabel="1" colspan="4" context="{'type':'DTP'}">
-							<tree string="DTP Tasks" editable="bottom">
-								<field name="name" string="Task Name"/>
-								<field name="date_deadline" string="Theorical Date"/>
-								<field name="date_reviewed"/>
-								<field name="date_planned"/>
-								<field name="date_close" string="Real Date"/>
-							</tree>
-						</field>
-					</page>
-					<page string="Customers Lists">
-						<separator string="Customers Lists" colspan="4"/>
-						<field name="files_responsible_id"/>
-						<field name="invoiced_partner_id"/>
-						<field name="deduplicator_id"/>
-
-						<field name="dedup_order_date"/>
-						<field name="dedup_validity_date"/>
-
-						<field name="dedup_delivery_date"/>
-						<field name="owner_id"/>
-						<field name="router_id"/>
-						<field name="cleaner_id"/>
-						<field name="dedup_delivery_date"/>
-						<field name="cust_file_task_ids" nolabel="1" colspan="4">
-							<tree string="Customers List Tasks" editable="bottom">
-								<field name="name" string="Task Name"/>
-								<field name="date_deadline" string="Theorical Date"/>
-								<field name="date_reviewed"/>
-								<field name="date_planned"/>
-								<field name="date_close" string="Real Date"/>
-							</tree>
-						</field>
-					</page>
-					<page string="Notes">
-						<separator string="Notes" colspan="4"/>
-						<field name="notes" colspan="4" nolabel="1"/>
-					</page>
-				</notebook>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_form">
+        <field name="name">dm.campaign.form</field>
+        <field name="model">dm.campaign</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaigns">
+                <group colspan="3" col="4">
+                    <separator string="Campaign Description" colspan="5"/>
+                    <field name="name" string="Name" select="1" col="3"/>
+                    <field name="code1" string="Code" select="2" col="2"/>
+                </group>
+                <notebook colspan="4">
+                    <page string="General">
+                        <group colspan="2" col="2">
+                        <separator string="Global Information" colspan="2"/>
+                        <field name="offer_id" select="1"/>
+                        <field name="campaign_type" select="2"/>
+                        <field name="dealer_id"/>
+                        <field name="trademark_id"/>
+                        <field name="responsible_id" />
+                        </group>
+                        <group colspan="2" col="2">
+                        <separator string="Geografical" colspan="2"/>
+                        <field name="country_id" select="1" on_change="onchange_lang_currency(country_id)"/>
+                        <field name="lang_id" select="2"/>
+                        <field name="currency_id" select="2"/>
+                        </group>
+                        <group colspan="4">
+                        <separator string="Dates" colspan="4"/>
+                        <field name="date_start" select="2"/>
+                        <field name="date"/>
+                        </group>
+                        <separator string="Tasks Management" colspan="4"/>
+                        <group colspan="4">
+                        <field name="project_id" string="Retro Planning"/>
+                        <button string="Create Retro-Planning" name="%(dm.campaign_wiz)d" type="action" attrs="{'invisible':[('state','!=','open'),('project_id','!=',False)]}"/>
+                        </group>
+<!--                        <separator string="Process State" colspan="4"/>
+                        <group colspan="8">
+                        <field name="manufacturing_state" select="2"/>
+                        <field name="customer_file_state" select="2"/>
+                        <field name="items_state" select="2"/>
+                        <field name="translation_state" select="2"/>
+                        </group>-->
+<!--                        <field name="campaign_stat_ids"/>-->
+                        <separator string="Campaign Status" colspan="4"/>
+                        <group col="10" colspan="4">
+                            <field name="state" readonly="1" select="2" nolabel="1"/>
+                            <button name="state_open_set" string="Open" states="draft,pending" type="object"/>
+                            <button name="state_close_set" string="Close" states="draft,open,pending" type="object"/>
+                            <button name="state_pending_set" string="Set pending" states="open" type="object"/>
+                            <button name="state_draft_set" string="Set to draft" states="open,pending,close" type="object"/>
+                        </group>
+                    </page>
+<!--                    <page string="Propositions">
+                        <field name="proposition_ids" nolabel="1" context="date1=date_start"/>-->
+<!--                        <field name="proposition_ids" nolabel="1" context="date1=date_start">
+                            <form string="Propositions">
+                            <notebook colspan="4">
+                                <page string="General">
+                                    <field name="name" string="Name" select="1"/>
+                                    <field name="code1" string="Code" select="2"/>
+                                    <field name="date_start" select="2"/>
+                                    <field name="proposition_type" select="1"/>
+                                    <field name="initial_proposition_id" select="1"/>
+                                    <field name="forwarding_charges"/>
+                                    <field name="quantity_theorical"/>
+                                    <field name="quantity_wanted"/>
+                                    <field name="quantity_delivered"/>
+                                    <field name="quantity_real"/>
+                                    <field name="sale_rate"/>
+                                    <separator string="Notes" colspan="4"/>
+                                    <field name="notes" colspan="4" nolabel="1"/>
+                                </page>
+                                <page string="Prices">
+                                    <separator string="Prices policy" colspan="4"/>
+                                        <group colspan="4">
+                                        <field name="customer_pricelist_id"/>
+                                        <button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+                                        </group>
+                                        <field name="force_sm_price"/>
+                                        <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
+                                        <field name="keep_prices"/>
+                                    <field name="product_ids" colspan="4" nolabel="1">
+                                        <form string="Catalogue">
+                                            <field name="offer_step_type"/>
+                                            <field name="product_id" string="Item"/>
+                                            <field name="price"/>
+                                            <field name="item_type"/>
+                                            <field name="notes"/>
+                                        </form>
+                                        <tree string="Catalogue" editable="bottom">
+                                            <field name="offer_step_type"/>
+                                            <field name="product_id" string="Item"/>
+                                            <field name="price"/>
+                                            <field name="qty_real"/>
+                                            <field name="item_type"/>
+                                            <field name="notes"/>
+                                        </tree>
+                                    </field>
+                                    <separator string="Payment Methods" colspan="4"/>
+                                    <field name="payment_methods" colspan="4" nolabel="1"/>
+                                </page>
+                                <page string="Segments">
+                                <field name="segment_ids" colspan="4" nolabel="1">
+                                    <form string="Segment">
+                                        <separator string="General" colspan="4"/>
+                                        <field name="name" string="Name" select="1"/>
+                                        <field name="code" string="Code"/>
+                                        <field name="propositio_id" />
+                                        <field name="list_id" />
+                                        <field name="active" />
+                                        <field name="split_id" />
+                                        <field name="reuse_id" />
+                                        <separator string="Quantities" colspan="4"/>
+                                        <field name="quantity_theorical" select="2"/>
+                                        <newline/>
+                                        <field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
+                                        <field name="AAA" select="2"/>
+                                        <field name="quantity_delivered" select="2"/>
+                                        <newline/>
+                                        <field name="quantity_dedup" string="- Deduplication"/>
+                                        <newline/>
+                                        <field name="quantity_cleaned" string="- Cleaning"/>
+                                        <newline/>
+                                        <field name="quantity_real" string="= Real Quantity" select="2"/>
+                                        <newline/>
+                                        <separator string="Segmentation" colspan="4"/>
+                                        <field name="start_census"/>
+                                        <field name="end_census"/>
+                                        <field name="deduplication_level"/>
+                                        <separator string="Segmentation Criteria" colspan="4"/>
+                                        <field name="segmentation_criteria" colspan="4" nolabel="1"/>
+                                        <separator string="Notes" colspan="4"/>
+                                        <field name="note" colspan="4" nolabel="1"/>
+                                    </form>
+                                    <tree string="Segments">
+                                        <field name="name" string="Name"/>
+                                        <field name="deduplication_level" />
+                                        <field name="code" string="Code"/>
+                                        <field name="quantity_theorical"/>
+                                        <field name="quantity_wanted"/>
+                                        <field name="AAA"/>
+                                        <field name="quantity_delivered"/>
+                                        <field name="quantity_real"/>
+                                    </tree>
+                                </field>
+                                <field name="keep_segments" string="Keep Segments at Duplication"/>
+                                </page>
+                            </notebook>
+                            </form>
+                            <tree string="Propositions">
+                                <field name="name" string="Name"/>
+                                <field name="code1" string="Code"/>
+                                <field name="date_start" colspan="4"/>
+                                <field name="quantity_theorical" select="2"/>
+                                <field name="quantity_wanted" select="2"/>
+                                <field name="quantity_delivered" select="2"/>
+                                <field name="quantity_real" select="2"/>
+                                <field name="sale_rate"/>
+                                <field name="proposition_type"/>
+                            </tree>
+                        </field>-->
+<!--                        <group colspan="4">
+                            <separator string="Total Quantities" colspan="4"/>
+                            <field name="quantity_theorical_total"/>
+                        <field name="quantity_wanted_total"/>
+                            <field name="quantity_delivered_total"/>
+                            <field name="quantity_real_total"/>
+                        </group>
+                    </page>-->
+                    <page string="Supplying">
+                        <field name="purchase_line_ids" colspan="4" nolabel="1" attrs="{'readonly':[('campaign_group_id','!=',0)]}">
+                            <form string="Purchase Line" colspan="4">
+                                <group colspan="2" col="2">
+                                    <separator string="Purchase Line Product" colspan="2"/>
+                                    <field name="product_id" on_change="onchange_product(product_id)"/>
+                                    <field name="uom_id"/>
+                                    <field name="type_product"/>
+                                    <field name="type_document"/>
+                                </group>
+                                <group colspan="2" col="2">
+                                    <separator string="Quantity" colspan="2"/>
+                                    <field name="quantity"/>
+                                    <field name="type_quantity"/>
+<!--                                    <button name="quantity_get" string="Get Quantity" states="pending" type="object" col="2"/>-->
+                                </group>
+                                <group colspan="4">
+                                    <separator string="Dates" colspan="4"/>
+                                    <field name="date_planned"/>
+                                    <field name="date_delivery"/>
+                                </group>
+                                <separator string="Notes" colspan="4"/>
+                                <field name="notes" colspan="4" nolabel="1"/>
+                                <field name="purchase_order_ids" colspan="4" nolabel="1"/>
+                                <field name="state" nolabel="1"/>
+                            </form>
+                            <tree string="Purchase Lines">
+                                <field name="product_id"/>
+                                <field name="type_product"/>
+                                <field name="quantity"/>
+                                <field name="type_quantity"/>
+                                <field name="type_document"/>
+                                <button name="quantity_get" string="Get Quantity" states="pending" type="object"/>
+                                <field name="date_planned"/>
+                                <field name="date_delivery"/>
+                                <field name="state"/>
+                                <button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Manufacturing">
+                        <separator string="Manufacturing" colspan="4"/>
+                        <field name="manufacturing_responsible_id"/>
+                        <field name="campaign_group_id"/>
+                        <field name="manufacturing_cost_ids" colspan="4" nolabel="1">
+                            <form string="Manufacturing Cost">
+                                <field name="name" colspan="4"/>
+                                <field name="amount" col="2"/>
+                            </form>
+                            <tree string="Manufacturing Costs">
+                                <field name="name"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                        <field name="manufacturing_task_ids" nolabel="1" colspan="4">
+                            <tree string="Manufacturing tasks" editable="bottom">
+                                <field name="name" string="Task Name"/>
+                                <field name="date_deadline" string="Theorical Date" widget="date"/>
+                                <field name="date_reviewed"/>
+                                <field name="date_planned"/>
+                                <field name="date_close" string="Real Date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Desktop Publishing">
+                        <separator string="Desktop Publishing" colspan="4"/>
+                        <group colspan="2" col="2">
+                            <field name="dtp_responsible_id"/>
+                        </group>
+                        <field name="dtp_task_ids" nolabel="1" colspan="4" context="{'type':'DTP'}">
+                            <tree string="DTP Tasks" editable="bottom">
+                                <field name="name" string="Task Name"/>
+                                <field name="date_deadline" string="Theorical Date"/>
+                                <field name="date_reviewed"/>
+                                <field name="date_planned"/>
+                                <field name="date_close" string="Real Date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Customers Lists">
+                        <separator string="Customers Lists" colspan="4"/>
+                        <field name="files_responsible_id"/>
+                        <field name="invoiced_partner_id"/>
+                        <field name="deduplicator_id"/>
+                        <field name="owner_id"/>
+                        <field name="router_id"/>
+                        <field name="cleaner_id"/>
+                        <field name="cust_file_task_ids" nolabel="1" colspan="4">
+                            <tree string="Customers List Tasks" editable="bottom">
+                                <field name="name" string="Task Name"/>
+                                <field name="date_deadline" string="Theorical Date"/>
+                                <field name="date_reviewed"/>
+                                <field name="date_planned"/>
+                                <field name="date_close" string="Real Date"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Notes">
+                        <separator string="Notes" colspan="4"/>
+                        <field name="notes" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
 
         <!-- All Campaigns -->
 
-	<record model="ir.actions.act_window" id="action_campaign_form_all">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_view">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_all"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_view">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_all"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_view">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_all"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_campaign_form_all">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_tree_all_view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_all"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_form_all_view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_all"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_calendar_all_view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_all"/>
+    </record>
 
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
-
-
-	<record model="ir.actions.act_window" id="action_campaign_form_all_open">
-		<field name="name">Open Campaigns</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('state','=','open')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_open_view">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_all_open"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_open_view">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_all_open"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_open_view">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_all_open"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all_open" action="action_campaign_form_all_open"/>
+    <menuitem name="Direct Marketing/Campaigns/All Campaigns" id="menu_action_campaign_form_all" action="action_campaign_form_all"/>
 
 
-	<record model="ir.actions.act_window" id="action_campaign_form_all2">
-		<field name="name">Draft Campaigns</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('state','=','draft')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_draft_view">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_all2"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_draft_view">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_all2"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_draft_view">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_all2"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
+    <record model="ir.actions.act_window" id="action_campaign_form_all_open">
+        <field name="name">Open Campaigns</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="domain">[('state','=','open')]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_tree_all_open_view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_all_open"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_form_all_open_view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_all_open"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_calendar_all_open_view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_all_open"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/All Campaigns/Open Campaigns" id="menu_action_campaign_form_all_open" action="action_campaign_form_all_open"/>
 
 
-	<record model="ir.actions.act_window" id="action_campaign_form_all3">
-		<field name="name">Closed Campaigns</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('state','=','close')]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_tree_all_closed_view">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_all3"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_form_all_closed_view">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_all3"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_campaign_calendar_all_closed_view">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_all3"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
+    <record model="ir.actions.act_window" id="action_campaign_form_all2">
+        <field name="name">Draft Campaigns</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="domain">[('state','=','draft')]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_tree_all_draft_view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_all2"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_form_all_draft_view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_all2"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_calendar_all_draft_view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_all2"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/All Campaigns/Draft Campaigns" id="menu_action_campaign_form_all2" action="action_campaign_form_all2"/>
+
+
+    <record model="ir.actions.act_window" id="action_campaign_form_all3">
+        <field name="name">Closed Campaigns</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="domain">[('state','=','close')]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_tree_all_closed_view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_all3"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_form_all_closed_view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_all3"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_campaign_calendar_all_closed_view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_all3"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/All Campaigns/Closed Campaigns" id="menu_action_campaign_form_all3" action="action_campaign_form_all3"/>
 
         <!-- My Campaings -->
 
 
-	<record model="ir.actions.act_window" id="action_campaign_form_my">
-		<field name="name">My Campaigns</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('responsible_id','=',uid)]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_campaign_tree">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_my"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_campaign_form">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_my"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_campaign_calendar">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_my"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
+    <record model="ir.actions.act_window" id="action_campaign_form_my">
+        <field name="name">My Campaigns</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="domain">[('responsible_id','=',uid)]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_campaign_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_my"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_campaign_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_my"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_campaign_calendar">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_my"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/My Campaigns" id="menu_action_campaign_form_my" action="action_campaign_form_my"/>
 
 
 
-	<record model="ir.actions.act_window" id="action_campaign_form_my1">
-		<field name="name">My Open Campaigns</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('state','=','open'),('responsible_id','=',uid)]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_open_campaign_tree">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_my1"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_open_campaign_form">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_my1"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_open_campaign_calendar">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_my1"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
+    <record model="ir.actions.act_window" id="action_campaign_form_my1">
+        <field name="name">My Open Campaigns</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="domain">[('state','=','open'),('responsible_id','=',uid)]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_open_campaign_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_my1"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_open_campaign_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_my1"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_open_campaign_calendar">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_my1"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/My Campaigns/Open Campaigns" id="menu_action_campaign_form_my1" action="action_campaign_form_my1"/>
 
 
-	<record model="ir.actions.act_window" id="action_campaign_form_my2">
-		<field name="name">My Draft Campaigns</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('state','=','draft'),('responsible_id','=',uid)]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_draft_campaign_tree">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_my2"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_draft_campaign_form">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_my2"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_draft_campaign_calendar">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_my2"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
+    <record model="ir.actions.act_window" id="action_campaign_form_my2">
+        <field name="name">My Draft Campaigns</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="domain">[('state','=','draft'),('responsible_id','=',uid)]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_draft_campaign_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_my2"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_draft_campaign_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_my2"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_draft_campaign_calendar">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_my2"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/My Campaigns/Draft Campaigns" id="menu_action_campaign_form_my2" action="action_campaign_form_my2"/>
 
 
-	<record model="ir.actions.act_window" id="action_campaign_form_my3">
-		<field name="name">My Closed Campaigns</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_closed_campaign_tree">
-		<field name="sequence" eval="1"/>
-		<field name="view_mode">tree</field>
-		<field name="view_id" ref="view_campaign_tree"/>
-		<field name="act_window_id" ref="action_campaign_form_my3"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_closed_campaign_form">
-		<field name="sequence" eval="2"/>
-		<field name="view_mode">form</field>
-		<field name="view_id" ref="view_campaign_form"/>
-		<field name="act_window_id" ref="action_campaign_form_my3"/>
-	</record>
-	<record model="ir.actions.act_window.view" id="action_my_closed_campaign_calendar">
-		<field name="sequence" eval="3"/>
-		<field name="view_mode">calendar</field>
-		<field name="view_id" ref="view_campaign_calendar"/>
-		<field name="act_window_id" ref="action_campaign_form_my3"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
+    <record model="ir.actions.act_window" id="action_campaign_form_my3">
+        <field name="name">My Closed Campaigns</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="domain">[('state','=','close'),('responsible_id','=',uid)]</field>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_closed_campaign_tree">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_campaign_tree"/>
+        <field name="act_window_id" ref="action_campaign_form_my3"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_closed_campaign_form">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_campaign_form"/>
+        <field name="act_window_id" ref="action_campaign_form_my3"/>
+    </record>
+    <record model="ir.actions.act_window.view" id="action_my_closed_campaign_calendar">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_campaign_calendar"/>
+        <field name="act_window_id" ref="action_campaign_form_my3"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/My Campaigns/Closed Campaigns" id="menu_action_campaign_form_my3" action="action_campaign_form_my3"/>
 
-	<!--
-	=======================================================
-	Campaign Model Views
-	=======================================================
-	-->
+    <!--
+    =======================================================
+    Campaign Model Views
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_campaign_model_tree">
-		<field name="name">dm.campaign.model.tree</field>
-		<field name="model">dm.campaign</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="All Campaigns Model">
-				<field name="name" string="Name"/>
-				<field name="campaign_type"/>
-				<field name="country_id" />
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_model_tree">
+        <field name="name">dm.campaign.model.tree</field>
+        <field name="model">dm.campaign</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="All Campaigns Model">
+                <field name="name" string="Name"/>
+                <field name="campaign_type"/>
+                <field name="country_id" />
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_campaign_model_form">
-		<field name="name">dm.campaign.model.form</field>
-		<field name="model">dm.campaign</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Campaigns Model">
-				<notebook colspan="4">
-					<page string="General">
-						<separator string="Global Information" colspan="4"/>
-						<group col="10" colspan="4">
-							<field name="name" string="Name" select="1" />
-							<field name="code1" string="Code" select="2"/>
-						</group>
-						<group col="10" colspan="4">
-							<field name="country_id" select="1"/>
-							<field name="offer_id"/>
-<!--							<field name="trademark_id"/>-->
-						</group>
-						<separator string="Notes" colspan="4"/>
-						<field name="notes" colspan="4" nolabel="1"/>
-						<button name="copy_campaign" string="Create Campaign" type="object"/>
-					</page>
-					<page string="Propositions">
-						<field name="proposition_ids" nolabel="1">
-							<form string="Propositions">
-							<notebook colspan="4">
-								<page string="General">
-									<field name="name" string="Name" select="1"/>
-									<field name="code1" string="Code" select="2"/>
-									<field name="date_start" select="2"/>
-									<field name="proposition_type" select="1"/>
-									<field name="initial_proposition_id" select="1"/>
-									<field name="forwarding_charges"/>
-									<field name="quantity_theorical" select="2"/>
-									<field name="quantity_wanted"/>
-									<field name="quantity_delivered"/>
-									<field name="quantity_real"/>
-									<field name="sale_rate"/>
-									<separator string="Notes" colspan="4"/>
-									<field name="notes" colspan="4" nolabel="1"/>
-								</page>
-								<page string="Prices">
-									<separator string="Prices policy" colspan="4"/>
-									<field name="customer_pricelist_id"/>
-									<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
-									<field name="keep_prices"/>
-									<field name="product_ids" colspan="4" nolabel="1">
-										<form string="Catalogue">
-											<field name="offer_step_type"/>
-											<field name="product_id" string="Item"/>
-											<field name="price"/>
-											<field name="item_type"/>
-											<field name="notes"/>
-										</form>
-										<tree string="Catalogue" editable="bottom">
-											<field name="offer_step_type"/>
-											<field name="product_id" string="Item"/>
-											<field name="price"/>
-				<!--							<field name="qty_planned"/>
-											<field name="qty_real"/>-->
-											<field name="item_type"/>
-											<field name="notes"/>
-										</tree>
-									</field>
-				<!--					<field name="starting_mail_price"/>-->
-									<separator string="Payment Methods" colspan="4"/>
-									<field name="payment_methods" colspan="4" nolabel="1"/>
-								</page>
-								<page string="Segments">
-								<field name="segment_ids" colspan="4" nolabel="1">
-									<form string="Segment">
-										<separator string="General" colspan="4"/>
-										<field name="name" string="Name" select="1"/>
-										<field name="code" string="Code"/>
-<!--										<field name="proposition_id" />-->
-										<field name="file_id" />
-										<field name="active" />
-										<newline/>
-										<field name="split_id" />
-										<field name="reuse_id" />
-										<separator string="Quantities" colspan="4"/>
-										<field name="quantity_theorical" select="2"/>
-										<newline/>
-										<field name="quantity_wanted" select="2"/>
-										<field name="AAA" select="2"/>
-										<field name="quantity_delivered" select="2"/>
-										<newline/>
-										<field name="quantity_dedup" string="- Deduplication"/>
-										<newline/>
-										<field name="quantity_cleaned" string="- Cleaning"/>
-										<newline/>
-										<field name="quantity_real" string="= Real Quantity" select="2"/>
-										<separator string="Segmentation" colspan="4"/>
-										<field name="start_census"/>
-										<field name="end_census"/>
-										<field name="deduplication_level"/>
-										<separator string="Segmentation Criteria" colspan="4"/>
-										<field name="segmentation_criteria" colspan="4" nolabel="1"/>
-										<separator string="Notes" colspan="4"/>
-										<field name="note" colspan="4" nolabel="1"/>
-									</form>
-									<tree string="Segments">
-										<field name="name" string="Name" select="1"/>
-										<field name="deduplication_level" />
-										<field name="code" string="Code" select="2"/>
-										<field name="quantity_theorical" select="2"/>
-										<field name="quantity_wanted" select="2"/>
-										<field name="quantity_delivered" select="2"/>
-										<field name="quantity_real" select="2"/>
-									</tree>
-								</field>
-								<field name="keep_segments" string="Keep Segments at Duplication"/>
-								</page>
-							</notebook>
-							</form>
-							<tree string="Propositions">
-<!--								<field name="camp_id"/>-->
-								<field name="name" string="Name"/>
-								<field name="code1" string="Code"/>
-								<field name="date_start" colspan="4"/>
-								<field name="quantity_max" string="Quantity"/>
-								<field name="sale_rate"/>
-								<field name="proposition_type"/>
-							</tree>
-						</field>
-					</page>
-				</notebook>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_model_form">
+        <field name="name">dm.campaign.model.form</field>
+        <field name="model">dm.campaign</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaigns Model">
+                <notebook colspan="4">
+                    <page string="General">
+                        <separator string="Global Information" colspan="4"/>
+                        <group col="10" colspan="4">
+                            <field name="name" string="Name" select="1" />
+                            <field name="code1" string="Code" select="2"/>
+                        </group>
+                        <group col="10" colspan="4">
+                            <field name="country_id" select="1"/>
+                            <field name="offer_id"/>
+<!--                            <field name="trademark_id"/>-->
+                        </group>
+                        <separator string="Notes" colspan="4"/>
+                        <field name="notes" colspan="4" nolabel="1"/>
+                        <button name="copy_campaign" string="Create Campaign" type="object"/>
+                    </page>
+                    <page string="Propositions">
+                        <field name="proposition_ids" nolabel="1"/>
+<!--                        <field name="proposition_ids" nolabel="1">
+                            <form string="Propositions">
+                            <notebook colspan="4">
+                                <page string="General">
+                                    <field name="name" string="Name" select="1"/>
+                                    <field name="code1" string="Code" select="2"/>
+                                    <field name="date_start" select="2"/>
+                                    <field name="proposition_type" select="1"/>
+                                    <field name="initial_proposition_id" select="1"/>
+                                    <field name="forwarding_charges"/>
+                                    <field name="quantity_theorical" select="2"/>
+                                    <field name="quantity_wanted"/>
+                                    <field name="quantity_delivered"/>
+                                    <field name="quantity_real"/>
+                                    <field name="sale_rate"/>
+                                    <separator string="Notes" colspan="4"/>
+                                    <field name="notes" colspan="4" nolabel="1"/>
+                                </page>
+                                <page string="Prices">
+                                    <separator string="Prices policy" colspan="4"/>
+                                    <field name="customer_pricelist_id"/>
+                                    <button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+                                    <field name="keep_prices"/>
+                                    <field name="product_ids" colspan="4" nolabel="1">
+                                        <form string="Catalogue">
+                                            <field name="offer_step_type"/>
+                                            <field name="product_id" string="Item"/>
+                                            <field name="price"/>
+                                            <field name="item_type"/>
+                                            <field name="notes"/>
+                                        </form>
+                                        <tree string="Catalogue" editable="bottom">
+                                            <field name="offer_step_type"/>
+                                            <field name="product_id" string="Item"/>
+                                            <field name="price"/>
+                                            <field name="qty_real"/>
+                                            <field name="item_type"/>
+                                            <field name="notes"/>
+                                        </tree>
+                                    </field>
+                                    <separator string="Payment Methods" colspan="4"/>
+                                    <field name="payment_methods" colspan="4" nolabel="1"/>
+                                </page>
+                                <page string="Segments">
+                                <field name="segment_ids" colspan="4" nolabel="1">
+                                    <form string="Segment">
+                                        <separator string="General" colspan="4"/>
+                                        <field name="name" string="Name" select="1"/>
+                                        <field name="code" string="Code"/>
+                                        <field name="list_id" />
+                                        <field name="active" />
+                                        <newline/>
+                                        <field name="split_id" />
+                                        <field name="reuse_id" />
+                                        <separator string="Quantities" colspan="4"/>
+                                        <field name="quantity_theorical" select="2"/>
+                                        <newline/>
+                                        <field name="quantity_wanted" select="2"/>
+                                        <field name="AAA" select="2"/>
+                                        <field name="quantity_delivered" select="2"/>
+                                        <newline/>
+                                        <field name="quantity_dedup" string="- Deduplication"/>
+                                        <newline/>
+                                        <field name="quantity_cleaned" string="- Cleaning"/>
+                                        <newline/>
+                                        <field name="quantity_real" string="= Real Quantity" select="2"/>
+                                        <separator string="Segmentation" colspan="4"/>
+                                        <field name="start_census"/>
+                                        <field name="end_census"/>
+                                        <field name="deduplication_level"/>
+                                        <separator string="Segmentation Criteria" colspan="4"/>
+                                        <field name="segmentation_criteria" colspan="4" nolabel="1"/>
+                                        <separator string="Notes" colspan="4"/>
+                                        <field name="note" colspan="4" nolabel="1"/>
+                                    </form>
+                                    <tree string="Segments">
+                                        <field name="name" string="Name" select="1"/>
+                                        <field name="deduplication_level" />
+                                        <field name="code" string="Code" select="2"/>
+                                        <field name="quantity_theorical" select="2"/>
+                                        <field name="quantity_wanted" select="2"/>
+                                        <field name="quantity_delivered" select="2"/>
+                                        <field name="quantity_real" select="2"/>
+                                    </tree>
+                                </field>
+                                <field name="keep_segments" string="Keep Segments at Duplication"/>
+                                </page>
+                            </notebook>
+                            </form>
+                            <tree string="Propositions">
+                                <field name="name" string="Name"/>
+                                <field name="code1" string="Code"/>
+                                <field name="date_start" colspan="4"/>
+                                <field name="quantity_max" string="Quantity"/>
+                                <field name="sale_rate"/>
+                                <field name="proposition_type"/>
+                            </tree>
+                        </field>-->
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_model_form">
-		<field name="name">Campaign Model</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="domain">[('campaign_type','=','model')]</field>
-		<field name="context">{'campaign_type':'model'}</field>
-	</record>
+    <record model="ir.actions.act_window" id="action_campaign_model_form">
+        <field name="name">Campaign Model</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('campaign_type','=','model')]</field>
+        <field name="context">{'campaign_type':'model'}</field>
+    </record>
 
-	<record model="ir.actions.act_window.view" id="action_campaign_model_tree_view">
-		<field name="view_mode">tree</field>
-		<field name="sequence">1</field>
-		<field name="view_id" ref="view_campaign_model_tree"/>
-		<field name="act_window_id" ref="action_campaign_model_form"/>
-	</record>
+    <record model="ir.actions.act_window.view" id="action_campaign_model_tree_view">
+        <field name="view_mode">tree</field>
+        <field name="sequence">1</field>
+        <field name="view_id" ref="view_campaign_model_tree"/>
+        <field name="act_window_id" ref="action_campaign_model_form"/>
+    </record>
 
-	<record model="ir.actions.act_window.view" id="action_campaign_model_form_view">
-		<field name="view_mode">form</field>
-		<field name="sequence">10</field>
-		<field name="view_id" ref="view_campaign_model_form"/>
-		<field name="act_window_id" ref="action_campaign_model_form"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Model" id="menu_action_campaign_model_form" action="action_campaign_model_form"/>
+    <record model="ir.actions.act_window.view" id="action_campaign_model_form_view">
+        <field name="view_mode">form</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="view_campaign_model_form"/>
+        <field name="act_window_id" ref="action_campaign_model_form"/>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Model" id="menu_action_campaign_model_form" action="action_campaign_model_form"/>
 
 
-	<!--
-	=======================================================
-	Proposition Views
-	=======================================================
-	-->
-	<record model="ir.ui.view" id="view_campaign_proposition_form">
-		<field name="name">dm.campaign.proposition.form</field>
-		<field name="model">dm.campaign.proposition</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Propositions">
-			<notebook colspan="4">
-				<page string="General">
-					<field name="name" string="Name" select="1"/>
-					<field name="code1" string="Code" select="2"/>
-					<field name="camp_id"/>
-					<field name="date_start" select="2"/>
-					<field name="proposition_type" select="1"/>
-					<field name="initial_proposition_id" select="1"/>
-					<newline/>
-					<field name="forwarding_charges"/>
-					<field name="quantity_theorical" select="2"/>
-					<field name="quantity_wanted"/>
-					<field name="quantity_delivered"/>
-					<field name="quantity_real"/>
-					<field name="sale_rate"/>
-					<separator string="Notes" colspan="4"/>
-					<field name="notes" colspan="4" nolabel="1"/>
-				</page>
-				<page string="Prices">
-					<separator string="Prices policy" colspan="4"/>
-					<group colspan="4">
-					<field name="customer_pricelist_id"/>
-					<button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
-					</group>
-					<field name="force_sm_price"/>
-					<field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
-					<field name="keep_prices"/>
-					<field name="product_ids" colspan="4" nolabel="1">
-						<form string="Catalogue">
-							<field name="offer_step_type"/>
-							<field name="product_id" string="Item"/>
-							<field name="price"/>
-							<field name="item_type"/>
-							<field name="notes"/>
-						</form>
-						<tree string="Catalogue" editable="bottom">
-							<field name="offer_step_type"/>
-							<field name="product_id" string="Item"/>
-							<field name="price"/>
-<!--							<field name="qty_planned"/>
-							<field name="qty_real"/>-->
-							<field name="item_type"/>
-							<field name="notes"/>
-						</tree>
-					</field>
-<!--					<field name="starting_mail_price"/>-->
-					<separator string="Payment Methods" colspan="4"/>
-					<field name="payment_methods" colspan="4" nolabel="1"/>
-				</page>
-				<page string="Segments">
-				<field name="segment_ids" colspan="4" nolabel="1">
-					<form string="Segment">
-						<separator string="General" colspan="4"/>
-						<field name="name" string="Name" select="1"/>
-						<field name="code" string="Code"/>
-<!--						<field name="proposition_id" />-->
-						<field name="file_id" />
-						<field name="active" />
-						<newline/>
-						<field name="split_id" />
-						<field name="reuse_id" />
-						<separator string="Quantities" colspan="4"/>
-						<field name="quantity_theorical" select="2"/>
-						<newline/>
-						<field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
-						<field name="AAA" select="2"/>
-						<field name="quantity_delivered" select="2"/>
-						<newline/>
-						<field name="quantity_dedup" string="- Deduplication"/>
-						<newline/>
-						<field name="quantity_cleaned" string="- Cleaning"/>
-						<newline/>
-						<field name="quantity_real" string="= Real Quantity" select="2"/>
-						<newline/>
-						<separator string="Segmentation" colspan="4"/>
-						<field name="start_census"/>
-						<field name="end_census"/>
-						<field name="deduplication_level"/>
-						<separator string="Segmentation Criteria" colspan="4"/>
-						<field name="segmentation_criteria" colspan="4" nolabel="1"/>
-						<separator string="Notes" colspan="4"/>
-						<field name="note" colspan="4" nolabel="1"/>
-					</form>
-					<tree string="Segments">
-						<field name="name" string="Name" select="1"/>
-						<field name="deduplication_level" />
-						<field name="code" string="Code" select="2"/>
-						<field name="quantity_theorical" select="2"/>
-						<field name="quantity_wanted" select="2"/>
-						<field name="quantity_delivered" select="2"/>
-						<field name="quantity_real" select="2"/>
-					</tree>
-				</field>
-				<field name="keep_segments" string="Keep Segments at Duplication"/>
-				</page>
-			</notebook>
-			</form>
-		</field>
-	</record>
+    <!--
+    =======================================================
+    Camapaign Proposition Views
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_campaign_proposition_tree">
-		<field name="name">dm.campaign.proposition.tree</field>
-		<field name="model">dm.campaign.proposition</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Propositions">
-				<field name="camp_id"/>
-				<field name="name" string="Name"/>
-				<field name="code1" string="Code"/>
-				<field name="date_start" colspan="4"/>
-				<field name="quantity_max" string="Quantity"/>
-				<field name="sale_rate"/>
-				<field name="proposition_type"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_proposition_form">
+        <field name="name">dm.campaign.proposition.form</field>
+        <field name="model">dm.campaign.proposition</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Propositions">
+            <group colspan="3" col="4">
+            <separator string="Commercial Proposition Description" colspan="5"/>
+            <field name="name" string="Name" select="1" col="3"/>
+            <field name="code1" string="Code" select="2" col="2"/>
+            </group>
+            <notebook colspan="4">
+                <page string="General">
+                    <group colspan="2" col="2">
+                    <separator string="Global Information" colspan="2"/>
+                    <field name="camp_id"/>
+                    <field name="proposition_type" select="1"/>
+                    <field name="initial_proposition_id" select="1"/>
+                    <field name="date_start" select="2"/>
+                    <field name="sale_rate"/>
+                    </group>
+                    <group colspan="2" col="2">
+                    <separator string="Quantities" colspan="2"/>
+                    <field name="quantity_theorical" select="2"/>
+                    <field name="quantity_wanted"/>
+                    <field name="quantity_delivered"/>
+                    <field name="quantity_real"/>
+                    </group>
+                    <separator string="Notes" colspan="4"/>
+                    <field name="notes" colspan="4" nolabel="1"/>
+                </page>
+                <page string="Prices">
+                    <separator string="Prices policy" colspan="4"/>
+                    <group colspan="4">
+                    <field name="customer_pricelist_id"/>
+                    <button string="Get Products" name="%(dm.wizard_proposition_products)d" type="action"/>
+                    </group>
+                    <field name="force_sm_price"/>
+                    <field name="sm_price" attrs="{'readonly':[('force_sm_price','=',0)]}"/>
+                    <field name="keep_prices"/>
+                    <field name="forwarding_charges"/>
+                    <field name="product_ids" colspan="4" nolabel="1">
+                        <form string="Catalogue">
+                            <field name="offer_step_type"/>
+                            <field name="product_id" string="Item"/>
+                            <field name="price"/>
+                            <field name="item_type"/>
+                            <field name="notes"/>
+                        </form>
+                        <tree string="Catalogue" editable="bottom">
+                            <field name="offer_step_type"/>
+                            <field name="product_id" string="Item"/>
+                            <field name="price"/>
+<!--                            <field name="qty_planned"/>
+                            <field name="qty_real"/>-->
+                            <field name="item_type"/>
+                            <field name="notes"/>
+                        </tree>
+                    </field>
+<!--                    <field name="starting_mail_price"/>-->
+                    <separator string="Payment Methods" colspan="4"/>
+                    <field name="payment_methods" colspan="4" nolabel="1"/>
+                </page>
+                <page string="Segments">
+                <field name="segment_ids" colspan="4" nolabel="1">
+                    <form string="Segment">
+                        <separator string="General" colspan="4"/>
+                        <field name="name" string="Name" select="1"/>
+                        <field name="code" string="Code"/>
+<!--                        <field name="proposition_id" />-->
+                        <field name="list_id" />
+                        <field name="active" />
+                        <newline/>
+                        <field name="split_id" />
+                        <field name="reuse_id" />
+                        <separator string="Quantities" colspan="4"/>
+                        <field name="quantity_theorical" select="2"/>
+                        <newline/>
+                        <field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
+                        <field name="AAA" select="2"/>
+                        <field name="quantity_delivered" select="2"/>
+                        <newline/>
+                        <field name="quantity_dedup" string="- Deduplication"/>
+                        <newline/>
+                        <field name="quantity_cleaned" string="- Cleaning"/>
+                        <newline/>
+                        <field name="quantity_real" string="= Real Quantity" select="2"/>
+                        <newline/>
+                        <separator string="Segmentation" colspan="4"/>
+                        <field name="start_census"/>
+                        <field name="end_census"/>
+                        <field name="deduplication_level"/>
+                        <separator string="Segmentation Criteria" colspan="4"/>
+                        <field name="segmentation_criteria" colspan="4" nolabel="1"/>
+                        <separator string="Notes" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </form>
+                    <tree string="Segments">
+                        <field name="name" string="Name" select="1"/>
+                        <field name="deduplication_level" />
+                        <field name="code" string="Code" select="2"/>
+                        <field name="quantity_theorical" select="2"/>
+                        <field name="quantity_wanted" select="2"/>
+                        <field name="quantity_delivered" select="2"/>
+                        <field name="quantity_real" select="2"/>
+                    </tree>
+                </field>
+                <field name="keep_segments" string="Keep Segments at Duplication"/>
+                </page>
+            </notebook>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_campaign_proposition_calendar">
-		<field name="name">dm.campaign.proposition.calendar</field>
-		<field name="model">dm.campaign.proposition</field>
-		<field name="type">calendar</field>
-		<field eval="2" name="priority"/>
-		<field name="arch" type="xml">
-			<calendar color="camp_id" date_start="date_start" string="Propositions">
-				<field name="name"/>
-				<field name="proposition_type"/>
-			</calendar>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_proposition_tree">
+        <field name="name">dm.campaign.proposition.tree</field>
+        <field name="model">dm.campaign.proposition</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Propositions">
+                <field name="camp_id"/>
+                <field name="name" string="Name"/>
+                <field name="code1" string="Code"/>
+                <field name="date_start" colspan="4"/>
+                <field name="quantity_max" string="Quantity"/>
+                <field name="sale_rate"/>
+                <field name="proposition_type"/>
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_proposition">
-		<field name="name">All Campaigns Propositions</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.proposition</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_proposition_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns Propositions" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
+    <record model="ir.ui.view" id="view_campaign_proposition_calendar">
+        <field name="name">dm.campaign.proposition.calendar</field>
+        <field name="model">dm.campaign.proposition</field>
+        <field name="type">calendar</field>
+        <field eval="2" name="priority"/>
+        <field name="arch" type="xml">
+            <calendar color="camp_id" date_start="date_start" string="Propositions">
+                <field name="name"/>
+                <field name="proposition_type"/>
+            </calendar>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_proposition_my">
-		<field name="name">My Campaigns Propositions</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.proposition</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form,calendar</field>
-		<field name="view_id" ref="view_campaign_proposition_tree"/>
-		<field name="domain">[('user_id','=',uid)]</field>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/My Campaigns Propositions" id="menu_action_campaign_proposition_my" action="action_campaign_proposition_my"/>
+    <record model="ir.actions.act_window" id="action_campaign_proposition">
+        <field name="name">All Campaigns Propositions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.proposition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_proposition_tree"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/All Campaigns Propositions" id="menu_action_campaign_proposition" action="action_campaign_proposition"/>
 
-	<!--
-	=======================================================
-	Campaign proposition segment
-	=======================================================
-	-->
+    <record model="ir.actions.act_window" id="action_campaign_proposition_my">
+        <field name="name">My Campaigns Propositions</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.proposition</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_campaign_proposition_tree"/>
+        <field name="domain">[('user_id','=',uid)]</field>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/My Campaigns Propositions" id="menu_action_campaign_proposition_my" action="action_campaign_proposition_my"/>
 
-	<record model="ir.ui.view" id="view_campaign_proposition_segment_form">
-		<field name="name">dm.campaign.proposition.segment.form</field>
-		<field name="model">dm.campaign.proposition.segment</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Segment">
-				<separator string="General" colspan="4"/>
-				<field name="name" string="Name" select="1"/>
-				<field name="code1" string="Code"/>
-				<field name="proposition_id" />
-				<field name="file_id" />
-				<field name="active" />
-				<newline/>
-				<field name="split_id" />
-				<field name="reuse_id" />
-				<separator string="Quantities" colspan="4"/>
-				<field name="quantity_theorical" select="2"/>
-				<newline/>
-				<field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
-				<field name="AAA" select="2"/>
-				<field name="quantity_delivered" select="2"/>
-				<newline/>
-				<field name="quantity_dedup" string="- Deduplication"/>
-				<newline/>
-				<field name="quantity_cleaned" string="- Cleaning"/>
-				<newline/>
-				<field name="quantity_real" string="= Real Quantity" select="2"/>
-				<newline/>
-				<separator string="Segmentation" colspan="4"/>
-				<field name="start_census"/>
-				<field name="end_census"/>
-				<field name="deduplication_level"/>
-				<field name="price_per_thousand"/>
-				<separator string="Segmentation Criteria" colspan="4"/>
-				<field name="segmentation_criteria" colspan="4" nolabel="1"/>
-				<separator string="Notes" colspan="4"/>
-				<field name="note" colspan="4" nolabel="1"/>
-			</form>
-		</field>
-	</record>
+    <!--
+    =======================================================
+    Campaign proposition segment
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_campaign_proposition_segment_tree">
-		<field name="name">dm.campaign.proposition.segment.tree</field>
-		<field name="model">dm.campaign.proposition.segment</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Segments">
-				<field name="name" string="Name"/>
-				<field name="code1" string="Code"/>
-				<field name="quantity_ordered" select="2"/>
-				<field name="quantity_theorical" select="2"/>
-				<field name="quantity_wanted" select="2"/>
-				<field name="quantity_delivered" select="2"/>
-				<field name="quantity_real" select="2"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_proposition_segment_form">
+        <field name="name">dm.campaign.proposition.segment.form</field>
+        <field name="model">dm.campaign.proposition.segment</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Segment">
+                <separator string="General" colspan="4"/>
+                <field name="name" string="Name" select="1"/>
+                <field name="code1" string="Code"/>
+                <field name="proposition_id" />
+                <field name="list_id" />
+                <field name="active" />
+                <newline/>
+                <field name="split_id" />
+                <field name="reuse_id" />
+                <separator string="Quantities" colspan="4"/>
+                <field name="quantity_theorical" select="2"/>
+                <newline/>
+                <field name="quantity_wanted" select="2" attrs="{'readonly':[('AAA','=',1)]}"/>
+                <field name="AAA" select="2"/>
+                <field name="quantity_delivered" select="2"/>
+                <newline/>
+                <field name="quantity_dedup" string="- Deduplication"/>
+                <newline/>
+                <field name="quantity_cleaned" string="- Cleaning"/>
+                <newline/>
+                <field name="quantity_real" string="= Real Quantity" select="2"/>
+                <newline/>
+                <separator string="Segmentation" colspan="4"/>
+                <field name="start_census"/>
+                <field name="end_census"/>
+                <field name="deduplication_level"/>
+                <field name="price_per_thousand"/>
+                <separator string="Segmentation Criteria" colspan="4"/>
+                <field name="segmentation_criteria" colspan="4" nolabel="1"/>
+                <separator string="Notes" colspan="4"/>
+                <field name="note" colspan="4" nolabel="1"/>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_proposition_segment_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.proposition.segment</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_proposition_segment_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
+    <record model="ir.ui.view" id="view_campaign_proposition_segment_tree">
+        <field name="name">dm.campaign.proposition.segment.tree</field>
+        <field name="model">dm.campaign.proposition.segment</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Segments">
+                <field name="name" string="Name"/>
+                <field name="code1" string="Code"/>
+                <field name="quantity_theorical" select="2"/>
+                <field name="quantity_wanted" select="2"/>
+                <field name="quantity_delivered" select="2"/>
+                <field name="quantity_real" select="2"/>
+            </tree>
+        </field>
+    </record>
 
-	<!--
-	=======================================================
-	Campaign group
-	=======================================================
-	-->
+    <record model="ir.actions.act_window" id="action_campaign_proposition_segment_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.proposition.segment</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_proposition_segment_tree"/>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Segments" id="menu_action_campaign_proposition_segment_form" action="action_campaign_proposition_segment_form"/>
 
-	<record model="ir.ui.view" id="view_campaign_group_form">
-		<field name="name">dm.campaign.group.form</field>
-		<field name="model">dm.campaign.group</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Campaign Group">
-				<field name="name" select="1"/>
-				<field name="code" select="1"/>
-				<notebook colspan="4">
-				<page string="General">
-				<separator string="Tasks Management" colspan="4"/>
-					<group colspan="4">
-					<field name="project_id" string="Retro Planning"/>
-					<button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action"/>
-					</group>
-				<field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
-				</page>
-				<page string="Supplying">
-<!--					<field name="purchase_line_ids" colspan="4" nolabel="1"/>-->
-				</page>
-				</notebook>
-			</form>
-		</field>
-	</record>
+    <!--
+    =======================================================
+    Campaign group
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_campaign_group_tree">
-		<field name="name">dm.campaign.group.tree</field>
-		<field name="model">dm.campaign.group</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Groups">
-				<field name="name"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_group_form">
+        <field name="name">dm.campaign.group.form</field>
+        <field name="model">dm.campaign.group</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Campaign Group">
+                <field name="name" select="1"/>
+                <field name="code" select="1"/>
+                <notebook colspan="4">
+                <page string="General">
+                <separator string="Tasks Management" colspan="4"/>
+                    <group colspan="4">
+                    <field name="project_id" string="Retro Planning"/>
+                    <button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action"/>
+                    </group>
+                <field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
+                </page>
+                <page string="Supplying">
+<!--                    <field name="purchase_line_ids" colspan="4" nolabel="1"/>-->
+                </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_group_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.group</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_group_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
+    <record model="ir.ui.view" id="view_campaign_group_tree">
+        <field name="name">dm.campaign.group.tree</field>
+        <field name="model">dm.campaign.group</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Groups">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
 
-	<!--
-	=======================================================
-	Campaign Type
-	=======================================================
-	-->
+    <record model="ir.actions.act_window" id="action_campaign_group_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.group</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_group_tree"/>
+    </record>
+    <menuitem name="Direct Marketing/Campaigns/All Campaigns Groups" id="menu_action_campaign_group_form" action="action_campaign_group_form"/>
 
-	<record model="ir.ui.view" id="view_campaign_type_form">
-		<field name="name">dm.campaign.type.form</field>
-		<field name="model">dm.campaign.type</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Type">
-				<field name="name" select="1"/>
-				<field name="code" select="2"/>
-			</form>
-		</field>
-	</record>
+    <!--
+    =======================================================
+    Campaign Type
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_campaign_type_tree">
-		<field name="name">dm.campaign.type.tree</field>
-		<field name="model">dm.campaign.type</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Types">
-				<field name="name"/>
-				<field name="code"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_type_form">
+        <field name="name">dm.campaign.type.form</field>
+        <field name="model">dm.campaign.type</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Type">
+                <field name="name" select="1"/>
+                <field name="code" select="2"/>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_type_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.type</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_type_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
+    <record model="ir.ui.view" id="view_campaign_type_tree">
+        <field name="name">dm.campaign.type.tree</field>
+        <field name="model">dm.campaign.type</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Types">
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
 
-	<!--
-	=======================================================
-	DM Overlay
-	=======================================================
-	-->
+    <record model="ir.actions.act_window" id="action_campaign_type_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.type</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_type_tree"/>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Campaigns Types" id="menu_action_campaign_type_form" action="action_campaign_type_form"/>
 
-	<record model="ir.ui.view" id="view_dm_overlay_form">
-		<field name="name">dm.overlay.form</field>
-		<field name="model">dm.overlay</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Overlay">
-				<field name="code"/>
-				<field name="trademark_id" select="1"/>
-				<field name="dealer_id" select="2"/>
-				<field name="bank_account_id" select="2"/>
-				<separator string="Countries" colspan="4"/>
-				<field name="country_ids" colspan="4" nolabel="1"/>
-			</form>
-		</field>
-	</record>
+    <!--
+    =======================================================
+    DM Overlay
+    =======================================================
+    -->
 
-	<record model="ir.ui.view" id="view_dm_overlay_tree">
-		<field name="name">dm.overlay.tree</field>
-		<field name="model">dm.overlay</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Overlays">
-				<field name="code"/>
-				<field name="trademark_id"/>
-				<field name="dealer_id"/>
-				<field name="bank_account_id"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_dm_overlay_form">
+        <field name="name">dm.overlay.form</field>
+        <field name="model">dm.overlay</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Overlay">
+                <field name="code"/>
+                <field name="trademark_id" select="1"/>
+                <field name="dealer_id" select="2"/>
+                <field name="bank_account_id" select="2"/>
+                <separator string="Countries" colspan="4"/>
+                <field name="country_ids" colspan="4" nolabel="1"/>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_dm_overlay_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.overlay</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_dm_overlay_tree"/>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Overlays" id="menu_action_dm_overlay_form" action="action_dm_overlay_form"/>
+    <record model="ir.ui.view" id="view_dm_overlay_tree">
+        <field name="name">dm.overlay.tree</field>
+        <field name="model">dm.overlay</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Overlays">
+                <field name="code"/>
+                <field name="trademark_id"/>
+                <field name="dealer_id"/>
+                <field name="bank_account_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_dm_overlay_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.overlay</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_dm_overlay_tree"/>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Overlays" id="menu_action_dm_overlay_form" action="action_dm_overlay_form"/>
 
 <!--
-	<record model="ir.actions.act_window" id="action_campaign_trademark_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="base.view_partner_tree"/>
-		<field name="domain">[('category_id','like','Trademark')]</field>
-		<field name="context">{'category_id':'Trademark'}</field>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_campaign_trademark_form" action="action_campaign_trademark_form"/>
+    <record model="ir.actions.act_window" id="action_campaign_trademark_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="domain">[('category_id','like','Trademark')]</field>
+        <field name="context">{'category_id':'Trademark'}</field>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Trademarks" id="menu_action_campaign_trademark_form" action="action_campaign_trademark_form"/>
 -->
 
-	<record model="ir.actions.act_window" id="action_campaign_dealer_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="base.view_partner_tree"/>
-		<field name="domain">[('category_id','like','Dealer')]</field>
-		<field name="context">{'category':'Dealer'}</field>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Dealers" id="menu_action_campaign_dealer_form" action="action_campaign_dealer_form"/>
+    <record model="ir.actions.act_window" id="action_campaign_dealer_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="domain">[('category_id','like','Dealer')]</field>
+        <field name="context">{'category':'Dealer'}</field>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Dealers" id="menu_action_campaign_dealer_form" action="action_campaign_dealer_form"/>
 
-	<record model="ir.actions.act_window" id="action_campaign_broker_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="base.view_partner_tree"/>
-		<field name="domain">[('category_id','like','Broker')]</field>
-		<field name="context">{'category':'Broker'}</field>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
+    <record model="ir.actions.act_window" id="action_campaign_broker_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="domain">[('category_id','like','Broker')]</field>
+        <field name="context">{'category':'Broker'}</field>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
 
-	<record model="ir.actions.act_window" id="action_campaign_duplicator_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="base.view_partner_tree"/>
-		<field name="domain">[('category_id','like','Deduplicator')]</field>
-		<field name="context">{'category':'Deduplicator'}</field>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
+    <record model="ir.actions.act_window" id="action_campaign_duplicator_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="domain">[('category_id','like','Deduplicator')]</field>
+        <field name="context">{'category':'Deduplicator'}</field>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
 <!--
-	<record model="ir.actions.act_window" id="action_campaign_translator_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">res.partner</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="base.view_partner_tree"/>
-		<field name="domain">[('category_id','like','Translator')]</field>
-		<field name="context">{'category':'Translator'}</field>
-	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Translators" id="menu_action_campaign_translator_form" action="action_campaign_translator_form"/>
+    <record model="ir.actions.act_window" id="action_campaign_translator_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="base.view_partner_tree"/>
+        <field name="domain">[('category_id','like','Translator')]</field>
+        <field name="context">{'category':'Translator'}</field>
+    </record>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Translators" id="menu_action_campaign_translator_form" action="action_campaign_translator_form"/>
 -->
         <record id="view_country_form_inherit" model="ir.ui.view">
             <field name="name">res.country.form.inherit</field>
@@ -1168,73 +1185,73 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_country_form"/>
             <field name="arch" type="xml">
-				<field name="code" position="after">
+                <field name="code" position="after">
                    <field name="main_language" select="1"/>
                    <field name="main_currency" select="1"/>
-				</field>
+                </field>
             </field>
         </record>
 
-	<record model="ir.ui.view" id="view_campaign_purchase_line_tree">
-		<field name="name">dm.campaign.purchase_line_tree</field>
-		<field name="model">dm.campaign.purchase_line</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Purchase Lines">
-				<field name="product_id"/>
-				<field name="quantity"/>
-				<field name="uom_id"/>
-				<field name="type" />
-				<field name="date_planned"/>
-				<field name="state"/>
-				<button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_purchase_line_tree">
+        <field name="name">dm.campaign.purchase_line_tree</field>
+        <field name="model">dm.campaign.purchase_line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Purchase Lines">
+                <field name="product_id"/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+                <field name="type" />
+                <field name="date_planned"/>
+                <field name="state"/>
+                <button name="po_generate" string="Generate Purchase Orders" states="pending" type="object"/>
+            </tree>
+        </field>
+    </record>
 
 
-	<record model="ir.ui.view" id="view_campaign_purchase_line_form">
-		<field name="name">dm.campaign.purchase_line_form</field>
-		<field name="model">dm.campaign.purchase_line</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Purchase line">
-				<field name="product_id"/>
-				<newline/>
-				<field name="quantity"/>
-				<field name="uom_id"/>
-				<field name="date_planned"/>
-				<field name="notes" colspan="4" nolabel="1"/>
-				<group colspan="4">
-					<field name="state"/>
-				</group>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_purchase_line_form">
+        <field name="name">dm.campaign.purchase_line_form</field>
+        <field name="model">dm.campaign.purchase_line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Purchase line">
+                <field name="product_id"/>
+                <newline/>
+                <field name="quantity"/>
+                <field name="uom_id"/>
+                <field name="date_planned"/>
+                <field name="notes" colspan="4" nolabel="1"/>
+                <group colspan="4">
+                    <field name="state"/>
+                </group>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_purchase_line_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.purchase_line</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_purchase_line_form"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_campaign_purchase_line_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.purchase_line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_purchase_line_form"/>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_purchase_line_tree">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.purchase_line</field>
-		<field name="view_type">tree</field>
-		<field name="view_mode">form,tree</field>
-		<field name="view_id" ref="view_campaign_purchase_line_tree"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_campaign_purchase_line_tree">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.purchase_line</field>
+        <field name="view_type">tree</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_campaign_purchase_line_tree"/>
+    </record>
 
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_form" action="action_campaign_purchase_line_form"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_form" action="action_campaign_purchase_line_form"/>
 
-	<!--
-	=======================================================
-	Partner Extensions
-	=======================================================
-	-->
+    <!--
+    =======================================================
+    Partner Extensions
+    =======================================================
+    -->
     <record id="view_partner_property_form" model="ir.ui.view">
         <field name="name">res.partner.form.inherit</field>
         <field name="model">res.partner</field>
@@ -1242,58 +1259,71 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <field name="parent_id" position="after">
-            	<field name="state_ids" colspan="4"/>
-            	<field name="country_ids" colspan="4"/>
+                <field name="state_ids" colspan="4"/>
+                <field name="country_ids" colspan="4"/>
             </field>
         </field>
     </record>
 
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_tree" action="action_campaign_purchase_line_tree"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_tree" action="action_campaign_purchase_line_tree"/>
 
 
 <!-- Camapaign Dates Line -->
 
 <record model="ir.ui.view" id="view_campaign_dates_line_tree">
-		<field name="name">dm.campaign.dates_line_tree</field>
-		<field name="model">dm.campaign.dates_line</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="Campaigns">
-				<tree string="Dates Lines">
-					<field name="name"/>
-				</tree>
-			</tree>
-		</field>
-	</record>
+        <field name="name">dm.campaign.dates_line_tree</field>
+        <field name="model">dm.campaign.dates_line</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Campaigns">
+                <tree string="Dates Lines">
+                    <field name="name"/>
+                </tree>
+            </tree>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_campaign_dates_line_form">
-		<field name="name">dm.campaign.dates_line_form</field>
-		<field name="model">dm.campaign.dates_line</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="Purchase line">
-				<field name="name"/>
-			</form>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_campaign_dates_line_form">
+        <field name="name">dm.campaign.dates_line_form</field>
+        <field name="model">dm.campaign.dates_line</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Purchase line">
+                <field name="name"/>
+            </form>
+        </field>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_dates_line_form">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.dates_line</field>
-		<field name="view_type">form</field>
-		<field name="view_mode">tree,form</field>
-		<field name="view_id" ref="view_campaign_dates_line_form"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_campaign_dates_line_form">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.dates_line</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_campaign_dates_line_form"/>
+    </record>
 
-	<record model="ir.actions.act_window" id="action_campaign_dates_line_tree">
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">dm.campaign.dates_line</field>
-		<field name="view_type">tree</field>
-		<field name="view_mode">form,tree</field>
-		<field name="view_id" ref="view_campaign_dates_line_tree"/>
-	</record>
+    <record model="ir.actions.act_window" id="action_campaign_dates_line_tree">
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dm.campaign.dates_line</field>
+        <field name="view_type">tree</field>
+        <field name="view_mode">form,tree</field>
+        <field name="view_id" ref="view_campaign_dates_line_tree"/>
+    </record>
 
-	<menuitem name="Direct Marketing/Configuration/Campaigns/All Dates Lines" id="menu_action_campaign_dates_line_tree" action="action_campaign_dates_line_tree"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/All Dates Lines" id="menu_action_campaign_dates_line_tree" action="action_campaign_dates_line_tree"/>
+
+    <!--
+        Relates
+    -->
+
+    <act_window name="Commercial Propositions"
+        res_model="dm.campaign.proposition"
+        src_model="dm.campaign"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_campaing_proposition_opened"
+        domain="[('camp_id','=',active_id)]"
+    />
 
 </data>
 </openerp>
