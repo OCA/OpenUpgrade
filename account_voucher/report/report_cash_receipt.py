@@ -40,10 +40,8 @@ class report_cash_receipt(report_sxw.rml_parse):
 
     def convert(self,amount, cur):
         amt_en = amount_to_text_en.amount_to_text(amount,'en',cur);
-        print '------------------',amount
         return amt_en
-    
-    
+
 report_sxw.report_sxw(
     'report.voucher.cash_receipt',
     'account.voucher',

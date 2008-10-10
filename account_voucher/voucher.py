@@ -60,7 +60,7 @@ class account_voucher(osv.osv):
         'date':fields.date('Date', readonly=True, states={'draft':[('readonly',False)]}),
         'journal_id':fields.many2one('account.journal', 'Journal', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'account_id':fields.many2one('account.account', 'Account', required=True, readonly=True, states={'draft':[('readonly',False)]}),
-        'payment_ids':fields.one2many('account.voucher.line','voucher_id','Voucher Lines', readonly=True, states={'draft':[('readonly',False)]}),
+        'payment_ids':fields.one2many('account.voucher.line','voucher_id','Voucher Lines'),
         'period_id': fields.many2one('account.period', 'Period', required=True, states={'posted':[('readonly',True)]}),
         'narration':fields.text('Narration', readonly=True, states={'draft':[('readonly',False)]}),
         'currency_id': fields.many2one('res.currency', 'Currency', required=True, readonly=True, states={'draft':[('readonly',False)]}),
@@ -120,9 +120,6 @@ class account_voucher(osv.osv):
             account_id = journal.browse(cr, uid, journal_id).default_credit_account_id
             return {'value':{'account_id':account_id.id}}
     
-    
-   
-        
     def open_voucher(self, cr, uid, ids, context={}):
         obj=self.pool.get('account.voucher').browse(cr,uid,ids)
         total=0
@@ -131,11 +128,13 @@ class account_voucher(osv.osv):
         self.write(cr,uid,ids,{'amount':total})
         self.write(cr, uid, ids, {'state':'proforma'})
         return True
+    
     def proforma_voucher(self, cr, uid, ids, context={}):
         self.action_move_line_create(cr, uid, ids)
         self.action_number(cr, uid, ids)
         self.write(cr, uid, ids, {'state':'posted'})
         return True
+    
     def cancel_voucher(self,cr,uid,ids,context={}):
         self.action_cancel(cr, uid, ids)
         self.write(cr, uid, ids, {'state':'cancel'})
@@ -145,7 +144,6 @@ class account_voucher(osv.osv):
         self.write(cr, uid, ids, {'state':'draft'})
         return True
 
-    
     def unlink(self, cr, uid, ids):
         vouchers = self.read(cr, uid, ids, ['state'])
         unlink_ids = []
@@ -156,7 +154,6 @@ class account_voucher(osv.osv):
                 raise osv.except_osv('Invalid action !', 'Cannot delete invoice(s) which are already opened or paid !')
         osv.osv.unlink(self, cr, uid, unlink_ids)
         return True
-    
 
     def _get_analityc_lines(self, cr, uid, id):
         inv = self.browse(cr, uid, [id])[0]
@@ -228,9 +225,6 @@ class account_voucher(osv.osv):
 
             name = inv['name'] or '/'
             totlines = False
-#            obj=self.browse(cr, uid, ids)[0].payment_ids
-#            for i in obj:
-#                part = i.partner_id.id
 
             iml.append({
                 'type': 'dest',
@@ -263,12 +257,8 @@ class account_voucher(osv.osv):
             obj=self.pool.get('account.move').browse(cr,uid,move_id)
             for line in obj.line_id :
                 cr.execute('insert into voucher_id (account_id,rel_account_move) values (%d, %d)',(int(ids[0]),int(line.id)))
-#            self.pool.get('account.move').post(cr, uid, [move_id])
-#        self._log_event(cr, uid, ids)
         return True
             
-
-    
     def line_get_convert(self, cr, uid, x, date, context={}):
         return {
             'date':date,
@@ -288,46 +278,22 @@ class account_voucher(osv.osv):
     def _convert_ref(self, cr, uid, ref):
         return (ref or '').replace('/','')
     
-    
     def action_number(self, cr, uid, ids, *args):
-        cr.execute('SELECT id, type, number, move_id, reference ' \
-                'FROM account_voucher ' \
-                'WHERE id IN ('+','.join(map(str,ids))+')')
-        for (id, invtype, number, move_id, reference) in cr.fetchall():
-            if not number:
-                number = self.pool.get('ir.sequence').get(cr, uid,
-                        'account.voucher.' + invtype)
-                if type in ('in_invoice', 'in_refund'):
-                    ref = reference
-                else:
-                    ref = self._convert_ref(cr, uid, number)
-                cr.execute('UPDATE account_voucher SET number=%s ' \
-                        'WHERE id=%d', (number, id))
-                cr.execute('UPDATE account_move_line SET ref=%s ' \
-                        'WHERE move_id=%d AND (ref is null OR ref = \'\')',
-                        (ref, move_id))
-                cr.execute('UPDATE account_analytic_line SET ref=%s ' \
-                        'FROM account_move_line ' \
-                        'WHERE account_move_line.move_id = %d ' \
-                            'AND account_analytic_line.move_id = account_move_line.id',
-                            (ref, move_id))
         return True
-
-
-    
+ 
     def name_get(self, cr, uid, ids, context={}):
         if not len(ids):
             return []
+        
         types = {
-                'pay_voucher': 'CPV: ',
-                'rec_voucher': 'CRV: ',
-                'cont_voucher': 'CV: ',
-                'bank_pay_voucher': 'BPV: ',
-                'bank_rec_voucher': 'BRV: ',
-                'journal_sale_voucher': 'JSV: ',
-                'journal_pur_voucher': 'JPV: ',
-                
-                }
+            'pay_voucher': 'CPV: ',
+            'rec_voucher': 'CRV: ',
+            'cont_voucher': 'CV: ',
+            'bank_pay_voucher': 'BPV: ',
+            'bank_rec_voucher': 'BRV: ',
+            'journal_sale_voucher': 'JSV: ',
+            'journal_pur_voucher': 'JPV: ',
+        }
         return [(r['id'], types[r['type']]+(r['number'] or '')+' '+(r['name'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'name'], context, load='_classic_write')]
 
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=80):
@@ -362,8 +328,9 @@ class account_voucher(osv.osv):
                 # will be automatically deleted too
                 account_move_obj.unlink(cr, uid, [i['move_id'][0]])
         self.write(cr, uid, ids, {'state':'cancel', 'move_id':False})
-#        self._log_event(cr, uid, ids,-1.0, 'Cancel Invoice')
+
         return True
+    
 account_voucher()
 
 class VoucherLine(osv.osv):
