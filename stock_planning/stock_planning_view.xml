@@ -172,7 +172,7 @@
 					<field name="warehouse_id"/>
 					<group col="10" colspan="4">
 						<field name="state"/>
-                        <button name="procure_incomming_left" string="Procure Incoming Left" type="object"/>
+                        <button name="procure_incomming_left" states="draft" string="Procure Incoming Left" type="object"/>
                     </group> 
                 </form>
             </field>
