@@ -33,10 +33,11 @@ import pooler
 from tools import config
 import time
 import netsvc
+import math
 import mx.DateTime
 from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 
-class stock_planning_period(osv.osv):
+class stock_planning_period(osv.osv_memory):
     _name = "stock.planning.period"
     _columns = {
         'name': fields.char('Period Name', size=64),
@@ -73,7 +74,7 @@ class stock_planning_period(osv.osv):
             ['date_start', 'date_stop'])
     ]
     def create_period_weekly(self,cr, uid, ids, context={}):
-        return self.create_period(cr, uid, ids, context, 7)
+        return self.create_period(cr, uid, ids, context, 6, 'Weekly')
     
     def create_period_monthly(self,cr, uid, ids, context={},interval=1):
         for p in self.browse(cr, uid, ids, context):
@@ -90,19 +91,18 @@ class stock_planning_period(osv.osv):
                 ds = ds + RelativeDateTime(months=interval)
         return True
 
-    def create_period(self,cr, uid, ids, context={}, interval=1):
+    def create_period(self,cr, uid, ids, context={}, interval=0, name='Daily'):
         for p in self.browse(cr, uid, ids, context):
             dt = p.date_start
             ds = mx.DateTime.strptime(p.date_start, '%Y-%m-%d')
             while ds.strftime('%Y-%m-%d')<p.date_stop:
                 de = ds + RelativeDateTime(days=interval)
                 self.pool.get('stock.period').create(cr, uid, {
-                    'name': ds.strftime('%d/%m'),
+                    'name': name + ds.strftime('%d'),
                     'date_start': ds.strftime('%Y-%m-%d'),
                     'date_stop': de.strftime('%Y-%m-%d'),
-                    'planning_id': p.id,
                 })
-                ds = ds + RelativeDateTime(days=interval)
+                ds = ds + RelativeDateTime(days=interval) + 1
         return True
 stock_planning_period()
 
@@ -114,26 +114,57 @@ class stock_period(osv.osv):
         'name': fields.char('Period Name', size=64),
         'date_start': fields.date('Start Date', required=True),
         'date_stop': fields.date('End Date', required=True),
-        'planning_id': fields.many2one('stock.planning.period', 'Period', required=True, select=True),
+        'planning_id': fields.many2one('stock.planning.period', 'Period', select=True),
+        'state' : fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State')
     }
     
+    _defaults = {
+             'state' : lambda * a : 'draft'
+    }
 stock_period()
 
 
 class stock_planning_sale_prevision(osv.osv):
     _name = "stock.planning.sale.prevision"
     
+    def _get_real_amt_sold(self, cr, uid, ids, field, arg, context):
+        res = {}
+        for val in self.browse(cr, uid, ids):
+            cr.execute("select sum(l.product_uom_qty) from sale_order_line l left join sale_order s on (s.id=l.order_id) where l.product_id = %s and s.state not in ('draft','cancel')", (val.product_id.id,))
+            ret = cr.fetchall()
+            res[val.id] = ret[0][0]
+        return res
+    
     _columns = {
         'name' : fields.char('Name', size=64),
-        'user_id': fields.many2one('res.users' , 'Salesman'),
-        'period_id': fields.many2one('stock.period' , 'Period', required=True),
-        'product_id': fields.many2one('product.product' , 'Product', required=True),
-        'product_qty' : fields.float('Product Quantity', required=True),
-        'product_uom' : fields.many2one('product.uom', 'Product UoM', required=True),
+        'user_id': fields.many2one('res.users' , 'Salesman',readonly=True, states={'draft':[('readonly',False)]}),
+        'period_id': fields.many2one('stock.period' , 'Period', required=True,readonly=True,  domain=[('state','=','open')],states={'draft':[('readonly',False)]}),
+        'product_id': fields.many2one('product.product' , 'Product', readonly=True, required=True,states={'draft':[('readonly',False)]}),
+        'product_qty' : fields.float('Product Quantity', required=True, readonly=True, states={'draft':[('readonly',False)]}),
+        'product_amt' : fields.float('Product Amount', readonly=True, states={'draft':[('readonly',False)]}),
+        'product_uom' : fields.many2one('product.uom', 'Product UoM', readonly=True, required=True, states={'draft':[('readonly',False)]}),
+        'amt_sold' : fields.function(_get_real_amt_sold, method=True, string='Real Amount Sold'),
+        'state' : fields.selection([('draft','Draft'),('validated','Validated')],'State',readonly=True),
     }
+    _defaults = {
+        'state': lambda *args: 'draft'
+    }
+    def action_validate(self, cr, uid, ids, *args):
+        self.write(cr, uid, ids, {'state':'validated'})
+        return True
     
+    def unlink(self, cr, uid, ids):
+        previsions = self.read(cr, uid, ids, ['state'])
+        unlink_ids = []
+        for t in previsions:
+            if t['state'] in ('draft'):
+                unlink_ids.append(t['id'])
+            else:
+                raise osv.except_osv(_('Invalid action !'), _('Cannot delete Validated Sale Previsions !'))
+        osv.osv.unlink(self, cr, uid, unlink_ids)
+        return True
     
-    def product_id_change(self, cr, uid, ids, product, uom=False):
+    def product_id_change(self, cr, uid, ids, product, uom=False, product_qty = 0, product_amt = 0.0):
         if not product:
             return {'value': {'product_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
 
@@ -143,6 +174,9 @@ class stock_planning_sale_prevision(osv.osv):
             result['product_uom'] = product_obj.uom_id.id
             domain = {'product_uom':
                         [('category_id', '=', product_obj.uom_id.category_id.id)],}
+        if product_amt:
+            result['product_qty'] = math.floor(product_amt/(product_obj.product_tmpl_id.list_price))
+            
         return {'value': result}
     
 stock_planning_sale_prevision()
@@ -204,12 +238,26 @@ class stock_planning(osv.osv):
             res[val.id][field_names[0]] = ret
         return res
     
+    def _get_past_future(self, cr, uid, ids, field_names, arg, context):
+        res = {}
+        for val in self.browse(cr, uid, ids):
+            if val.period_id.date_stop < time.strftime('%Y-%m-%d'):
+                res[val.id] = 'Past'
+            else:
+                res[val.id] = 'Future'
+        return res
+    
+    def _get_period_id(self, cr, uid, context={}):
+#        cr.execute()
+        res = {}
+        return res
+    
     _columns = {
         'name' : fields.char('Name', size=64),
         'state' : fields.selection([('draft','Draft'),('done','Done')],'State',readonly=True),
-        'period_id': fields.many2one('stock.period' , 'Period', required=True),
+        'period_id': fields.many2one('stock.period' , 'Period', required=True,readonly=True,  domain=[('state','=','open')],states={'draft':[('readonly',False)]}),
         'product_id': fields.many2one('product.product' , 'Product', required=True),
-        'product_uom' : fields.many2one('product.uom', 'Product UoM', required=True),
+        'product_uom' : fields.many2one('product.uom', 'UoM', required=True),
         'planned_outgoing' : fields.float('Planned Outgoing', required=True),
         'planned_sale': fields.function(_get_planned_sale, method=True, string='Planned Sales'),
         'stock_start': fields.function(_get_stock_start, method=True, string='Stock Start'),
@@ -219,10 +267,14 @@ class stock_planning(osv.osv):
         'outgoing_left': fields.function(_get_value_left, method=True, string='Outgoing Left', multi="outgoing_left"),
         'to_procure': fields.float(string='To Procure'),
         'warehouse_id' : fields.many2one('stock.warehouse','Warehouse'),
+        'line_time' : fields.function(_get_past_future, method=True,type='char', string='Past/Future'),
     }
     _defaults = {
-        'state': lambda *args: 'draft'
+        'state': lambda *args: 'draft' ,
+        'period_id': _get_period_id
     }   
+    
+    _order = 'period_id'
     
     def procure_incomming_left(self, cr, uid, ids, context, *args):
         result = {}
@@ -258,7 +310,7 @@ class stock_planning(osv.osv):
                             })
                 wf_service = netsvc.LocalService("workflow")
                 wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-                self.write(cr, uid, obj.id,{'state':'done'})     
+                self.write(cr, uid, obj.id,{'state':'done'})
         return True
     
     
