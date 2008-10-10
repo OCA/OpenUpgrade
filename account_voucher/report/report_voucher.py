@@ -43,7 +43,6 @@ class report_voucher(report_sxw.rml_parse):
 
     def convert(self,amount, cur):
         amt_en = amount_to_text_en.amount_to_text(amount,'en',cur);
-        print '------------------',amount
         return amt_en
     
     def debit(self, move_ids):
@@ -51,7 +50,6 @@ class report_voucher(report_sxw.rml_parse):
         for move in move_ids:#self.pool.get('account.move.line').browse(self.cr, self.uid, move_ids):
             debit +=move.debit
         return debit
-    
     
     def credit(self, move_ids):
         credit = 0.0

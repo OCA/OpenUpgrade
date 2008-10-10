@@ -5,9 +5,7 @@ import ir
 import pooler
 import mx.DateTime
 from mx.DateTime import RelativeDateTime
-
 from tools import config
-
 
 class account_voucher(osv.osv):
     def _get_period(self, cr, uid, context):
@@ -23,8 +21,6 @@ class account_voucher(osv.osv):
     
     def _get_reference_type(self, cursor, user, context=None):
         return [('none', 'Free Reference')]
-    
-    
     
     def _get_journal(self, cr, uid, context):
         type_inv = context.get('type', 'rec_voucher')
@@ -279,6 +275,11 @@ class account_voucher(osv.osv):
         return (ref or '').replace('/','')
     
     def action_number(self, cr, uid, ids, *args):
+        voucher = self.browse(cr, uid, ids[0])
+        type = voucher.type
+        if not voucher.number:
+            number = self.pool.get('ir.sequence').get(cr, uid, type)
+            self.write(cr, uid, ids, {'number':number})
         return True
  
     def name_get(self, cr, uid, ids, context={}):

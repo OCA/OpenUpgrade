@@ -23,7 +23,7 @@
     ],
     
     "update_xml" : [
-#        "account_voucher_sequence.xml",
+        "account_voucher_sequence.xml",
         "account_report.xml",
         "voucher_view.xml",
         "account_voucher_wizard.xml"
