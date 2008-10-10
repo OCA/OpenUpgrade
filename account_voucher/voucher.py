@@ -42,7 +42,7 @@ class account_voucher(osv.osv):
             return user.company_id.currency_id.id
         else:
             return pooler.get_pool(cr.dbname).get('res.currency').search(cr, uid, [('rate','=',1.0)])[0]
-        
+
     _name = 'account.voucher'
     _description = 'Accounting Voucher'
     _order = "number"
@@ -73,7 +73,6 @@ class account_voucher(osv.osv):
                     ], 'State', 
                     readonly=True),
         'amount':fields.float('Amount', readonly=True),
-#        , states={'draft':[('readonly',False)]}
         'number':fields.char('Number', size=32, readonly=True),
         'reference': fields.char('Voucher Reference', size=64),
         'reference_type': fields.selection(_get_reference_type, 'Reference Type',
@@ -82,20 +81,7 @@ class account_voucher(osv.osv):
         'move_ids':fields.many2many('account.move.line', 'voucher_id', 'account_id', 'rel_account_move', 'Real Entry'),
     }
     
-#    def get_bank(self, cr, uid, context={}):
-#        type = context.get('type', 'bank_payment')
-#        journal = self.pool.get('account.journal')
-#        if type == 'bank_payment':
-#            id = journal.search(cr, uid, [('name','ilike','Bank')])
-#            return id
-#        elif type == 'cash_payment':
-#            id = journal.search(cr, uid, [('name','ilike','Cash')])
-#            return id
-#
-#        return 3
-    
     _defaults = {
-        #'journal_id':get_bank,
         'state': lambda *a: 'draft',
         'date' : lambda *a: time.strftime('%Y-%m-%d'),
         'period_id': _get_period,
@@ -106,8 +92,6 @@ class account_voucher(osv.osv):
                 self.pool.get('res.users').browse(cr, uid, uid,
                     context=context).company_id.id,
         'currency_id': _get_currency,
-
-
     }
     
     def _get_analityc_lines(self, cr, uid, id):
@@ -262,14 +246,7 @@ class account_voucher(osv.osv):
 
             date = inv.date
             inv.amount=total
-            print'::::::::::::::::inv.amout::::::::',inv.amount, total
-#            obj=self.browse(cr, uid, ids)[0].payment_ids
-#            print'::::::::::::::;obj:::::::::;',obj
-#            for i in obj:
-#                part = i.partner_id.id or False
-#                print':::::::::::::::;;part:::::;;;',part,i.partner_id.name
             line = map(lambda x:(0,0,self.line_get_convert(cr, uid, x,date, context={})) ,iml)
-            print':::::::::::::::;;line:::::;;;',line
             journal_id = inv.journal_id.id #self._get_journal(cr, uid, {'type': inv['type']})
             journal = self.pool.get('account.journal').browse(cr, uid, journal_id)
             if journal.sequence_id:
@@ -387,7 +364,6 @@ class account_voucher(osv.osv):
         self.write(cr, uid, ids, {'state':'cancel', 'move_id':False})
 #        self._log_event(cr, uid, ids,-1.0, 'Cancel Invoice')
         return True
-    
 account_voucher()
 
 class VoucherLine(osv.osv):
@@ -397,7 +373,7 @@ class VoucherLine(osv.osv):
         'voucher_id':fields.many2one('account.voucher', 'Voucher'),
         'name':fields.char('Description', size=256, required=True),
         'account_id':fields.many2one('account.account','Account', required=True),
-        'partner_id': fields.many2one('res.partner', 'Partner', change_default=True,  required=True, states={'draft':[('readonly',False)]}),
+        'partner_id': fields.many2one('res.partner', 'Partner', change_default=True,  required=True),
         'amount':fields.float('Amount'),
         'type':fields.selection([('dr','Debit'),('cr','Credit')], 'Type'),
         'ref':fields.char('Ref.', size=32),
