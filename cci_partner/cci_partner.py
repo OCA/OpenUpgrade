@@ -104,7 +104,7 @@ class res_partner_article_keywords(osv.osv):
     _name = "res.partner.article.keywords"
     _description = 'res.partner.article.keywords'
     _columns = {
-        'name': fields.char('Name',size=20,required=True),
+        'name': fields.char('Name',size=80,required=True),
         'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles'),
     }
 res_partner_article_keywords()

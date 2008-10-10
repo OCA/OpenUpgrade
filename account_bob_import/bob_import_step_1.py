@@ -6,7 +6,7 @@ import base64
 import tools
 import StringIO
 import zipfile
-from tools import config
+from tools import config, convert, misc
 
 class res_partner(osv.osv):
     _inherit = 'res.partner'
@@ -143,18 +143,31 @@ class config_path_folder(osv.osv_memory):
 #            'target':'new',
 #        }
     def action_generate(self,cr,uid,ids,context=None):
-        # TODO: Check for PXVIEW availabilty and convert .db to .csv
+        # Check for PXVIEW availabilty and convert .db to .csv
         path =  self.pool.get('config.path.folder').read(cr, uid, ids[0],['folder'],context)[0]['folder']
         tmp = path.split('/')
         folder_name = tmp[len(tmp)-1]
         for file in ['DBK.DB','ACCOUN.DB','COMPAN.DB','contacts.DB','period.DB','vatcas.DB','vat.DB','ahisto.db']:
             cmd = 'pxview '+path+'/'+folder_name+file+' -c > ' + config['addons_path']+'/account_bob_import/original_csv/'+file.split('.')[0].lower()+'.csv'
-            print cmd
             res = os.system(cmd)
             if res != 0 and file != 'contacts.DB':
                 raise osv.except_osv(_('Error Occured'), _('An error occured when importing the file "%s". Please check that pxview is correclty installed on the server.')% file)
         import bob_import_step_2
-        
+        bob_import_step_2.run()
+        filename = config['addons_path']+'/account_bob_import/account.account.csv'
+        config.__setitem__('import_partial', 'bob.pickle')
+
+        #deactivate the parent_store functionnality on account_account for rapidity purpose
+        self.pool._init = True
+
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.account.csv', tools.file_open(filename).read())
+        #reactivate the parent_store functionnality on account_account
+        self.pool._init = False
+        self.pool.get('account.account')._parent_store_compute(cr)
+
+        #TODO: modify the name of account_bob_import.account_bob_0 into the name of company
+        #TODO: do the same for other csv +  add some check to prevent errors: is file empty? add try-catch statements?
+
         return {
                 'view_type': 'form',
                 "view_mode": 'form',
