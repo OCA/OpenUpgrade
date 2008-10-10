@@ -34,8 +34,8 @@ import pooler
 
 _voucher_form = '''<?xml version="1.0"?>
 <form string="Open Vouchers">
-    <field name="type" colspan="4"/>
-    <field name="state" colspan="4"/>
+    <field name="type"/>
+    <field name="state"/>
     <field name="period_ids" colspan="4"/>
 </form>'''
 
