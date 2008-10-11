@@ -362,7 +362,7 @@ class cci_missions_custom_code(osv.osv):
     _description = 'cci_missions.custom_code'
     _columns = {
         'name' : fields.char('Name',size=8,required=True),
-        'meaning' : fields.char('Meaning',size=250,required=True),
+        'meaning' : fields.text('Meaning',required=True),
         'official' : fields.boolean('Official Code'),
     }
 

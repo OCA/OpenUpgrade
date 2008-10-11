@@ -9,7 +9,7 @@ import ir
 class ecommerce_payment(osv.osv):
     
         _name = "ecommerce.payment"
-        _description = "ecommerce Payment"
+        _description = "ecommerce payment configuration"
         _columns = {
             'name': fields.char('Cheque Payable to', size=256, required=True),
             'street': fields.char('Street', size=128, required=True),
@@ -20,10 +20,29 @@ class ecommerce_payment(osv.osv):
             'country_id': fields.many2one('res.country', 'Country', required=True),
 	    	'biz_account': fields.char('Your Business E-mail Id', required=True, size=128),
             'return_url' : fields.char('Return URL', required=True, size=128),
-            'cancel_url' : fields.char('Cancel URL', required=True, size=128)
+            'cancel_url' : fields.char('Cancel URL', required=True, size=128),
+  			'transaction_detail' : fields.one2many('ecommerce.payment.received','paypal_acc', 'Transaction History')
              }
 ecommerce_payment()
 
+class ecommerce_payment_received(osv.osv):
+    
+        _name = "ecommerce.payment.received"
+        _description = "ecommerce payment received"
+        _columns = {
+            'transaction_id': fields.char('Uniq Transaction Id', size=128, required=True),
+            'saleorder_id' : fields.many2one('sale.order', 'Sale Order', required=True),
+            'invoice_id' : fields.many2one('account.invoice', 'Invoice', required=True),
+            'transaction_date' : fields.date('Date', required=True),
+            'partner' : fields.many2one('res.partner', 'Partner', required=True),
+            'paypal_acc' : fields.many2one('ecommerce.payment', 'Paypal Account', required=True)
+            }
+        
+        _defaults = {
+            'transaction_date': lambda *a: time.strftime('%Y-%m-%d')
+        }
+        
+ecommerce_payment_received()
 
 class ecommerce_shop(osv.osv):
         
@@ -39,8 +58,7 @@ class ecommerce_shop(osv.osv):
         'currency_ids': fields.many2many('res.currency','currency_rel', 'currency', 'ecommerce_currency', 'Currency'),
         'language_ids': fields.many2many('res.lang', 'lang_rel', 'language','ecommerce_lang', 'Language'),
         'delivery_ids': fields.many2many('delivery.grid', 'delivery_rel', 'delivery', 'ecommrce_delivery', 'Delivery')
-        
-    }   
+        }   
 ecommerce_shop()
 
 class ecommerce_category(osv.osv):

@@ -49,8 +49,15 @@ email_send_form = '''<?xml version="1.0"?>
     <field name="file3" fname_widget="name3"/>
 
     <separator colspan="4"/>
-    <label string="Message:"/>
+    <label string="Only send to addresses:" colspan="2"/>
     <field name="default"/>
+    <field name="invoice"/>
+    <field name="delivery"/>
+    <field name="contact"/>
+    <field name="other"/>
+
+    <separator colspan="4"/>
+    <label string="Message:"/>
     <field name="text" nolabel="1" colspan="4"/>
 
     <separator string="The following tags can be included in the message. They will be replaced to the corresponding values of each partner contact:" colspan="4"/>
@@ -74,7 +81,11 @@ email_send_form = '''<?xml version="1.0"?>
 email_send_fields = {
     'from': {'string':"Sender's email", 'type':'char', 'size':64, 'required':True},
     'subject': {'string':'Subject', 'type':'char', 'size':64, 'required':True},
-    'default': {'string':'Only send to default addresses', 'type':'boolean'},
+    'default':  {'string':'Default', 'type':'boolean'},
+    'invoice':  {'string':'Invoice', 'type':'boolean'},
+    'delivery': {'string':'Delivery', 'type':'boolean'},
+    'contact':  {'string':'Contact', 'type':'boolean'},
+    'other':    {'string':'Other', 'type':'boolean'},
     'text': {'string':'Message', 'type':'text', 'required':True},
     'name1': {'string':"File name 1", 'type':'char', 'size':64},
     'name2': {'string':"File name 2", 'type':'char', 'size':64},
@@ -146,11 +157,21 @@ def _mass_mail_send(cr, uid, data, context, adr):
 # this sends an email to ALL the addresses of the selected partners.
 def _mass_mail_send_partner(self, cr, uid, data, context):
     nbr = 0
-    criteria = [('partner_id','in',data['ids'])]
-    if data['form']['default']: # Only default addresses
-        criteria.append(('type','=','default'))
-    adr_ids = pooler.get_pool(cr.dbname).get('res.partner.address').search(cr ,uid, criteria)
-    addresses = pooler.get_pool(cr.dbname).get('res.partner.address').browse(cr, uid, adr_ids, context)
+    address_obj = pooler.get_pool(cr.dbname).get('res.partner.address')
+    adr_ids = []
+    if not (data['form']['default'] or data['form']['invoice'] or data['form']['delivery'] or data['form']['contact'] or data['form']['other']): # All addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('partner_id','in',data['ids'])]))
+    if data['form']['default']: # default addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('partner_id','in',data['ids']), ('type','=','default')]))
+    if data['form']['invoice']: # invoice addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('partner_id','in',data['ids']), ('type','=','invoice')]))
+    if data['form']['delivery']: # delivery addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('partner_id','in',data['ids']), ('type','=','delivery')]))
+    if data['form']['contact']: # contact addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('partner_id','in',data['ids']), ('type','=','contact')]))
+    if data['form']['other']: # other addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('partner_id','in',data['ids']), ('type','=','other')]))
+    addresses = address_obj.browse(cr, uid, adr_ids, context)
     for adr in addresses:
         if adr.email:
             _mass_mail_send(cr, uid, data, context, adr)
@@ -174,11 +195,21 @@ part_email('res.partner.spam_send_2')
 # this sends an email to ALL of the selected addresses.
 def _mass_mail_send_partner_address(self, cr, uid, data, context):
     nbr = 0
-    criteria = [('id','in',data['ids'])]
-    if data['form']['default']: # Only default addresses
-        criteria.append(('type','=','default'))
-    adr_ids = pooler.get_pool(cr.dbname).get('res.partner.address').search(cr ,uid, criteria)
-    addresses = pooler.get_pool(cr.dbname).get('res.partner.address').browse(cr, uid, adr_ids, context)
+    address_obj = pooler.get_pool(cr.dbname).get('res.partner.address')
+    adr_ids = []
+    if not (data['form']['default'] or data['form']['invoice'] or data['form']['delivery'] or data['form']['contact'] or data['form']['other']): # All addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('id','in',data['ids'])]))
+    if data['form']['default']: # default addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('id','in',data['ids']), ('type','=','default')]))
+    if data['form']['invoice']: # invoice addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('id','in',data['ids']), ('type','=','invoice')]))
+    if data['form']['delivery']: # delivery addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('id','in',data['ids']), ('type','=','delivery')]))
+    if data['form']['contact']: # contact addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('id','in',data['ids']), ('type','=','contact')]))
+    if data['form']['other']: # other addresses
+        adr_ids.extend(address_obj.search(cr ,uid, [('id','in',data['ids']), ('type','=','other')]))
+    addresses = address_obj.browse(cr, uid, adr_ids, context)
     for adr in addresses:
         if adr.email:
             _mass_mail_send(cr, uid, data, context, adr)

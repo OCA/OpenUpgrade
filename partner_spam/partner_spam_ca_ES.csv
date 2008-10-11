@@ -21,15 +21,20 @@ wizard_field,"res.partner.address.spam_send,init,file3",0,File 3,Fitxer 3
 wizard_field,"res.partner.address.spam_send,init,file2",0,File 2,Fitxer 2
 wizard_field,"res.partner.address.spam_send,init,file1",0,File 1,Fitxer 1
 wizard_field,"res.partner.address.spam_send,init,from",0,Sender's email,Email remitent
-wizard_field,"res.partner.address.spam_send,init,default",0,Only send to default addresses,Només enviar a contactes per defecte
+wizard_field,"res.partner.address.spam_send,init,default",0,Default,Per defecte
+wizard_field,"res.partner.address.spam_send,init,invoice",0,Invoice,Factura
+wizard_field,"res.partner.address.spam_send,init,delivery",0,Delivery,Enviament
+wizard_field,"res.partner.address.spam_send,init,contact",0,Contact,Contacte
+wizard_field,"res.partner.address.spam_send,init,other",0,Other,Altre
 wizard_field,"res.partner.address.spam_send,init,text",0,Message,Missatge
 wizard_field,"res.partner.address.spam_send,init,name2",0,File name 2,Nom fitxer 2
 wizard_field,"res.partner.address.spam_send,init,name3",0,File name 3,Nom fitxer 3
 wizard_field,"res.partner.address.spam_send,init,name1",0,File name 1,Nom fitxer 1
-wizard_field,"res.partner.address.spam_send,init,subject",0,Subject,Assupmte
+wizard_field,"res.partner.address.spam_send,init,subject",0,Subject,Assumpte
 wizard_view,"res.partner.address.spam_send,init",0,Mass Mailing,Envia email
 wizard_view,"res.partner.address.spam_send,init",0,Attached files:,Fixers adjunts:
 wizard_view,"res.partner.address.spam_send,init",0,Message:,Missatge:
+wizard_view,"res.partner.address.spam_send,init",0,Only send to addresses:,Només enviar a adreces:
 wizard_view,"res.partner.address.spam_send,init",0,The following tags can be included in the message. They will be replaced to the corresponding values of each partner contact:,El missatge pot contenir les següents marques. Seran reemplaçades amb els valors corresponents de cada contacte de l'empresa:
 wizard_view,"res.partner.address.spam_send,init",0,[[partner_id]] -> Partner name,[[partner_id]] -> Nom de l'empresa
 wizard_view,"res.partner.address.spam_send,init",0,[[name]] -> Contact name,[[name]] -> Nom del contacte
@@ -56,7 +61,11 @@ wizard_field,"res.partner.spam_send_2,init,file3",0,File 3,Fitxer 3
 wizard_field,"res.partner.spam_send_2,init,file2",0,File 2,Fitxer 2
 wizard_field,"res.partner.spam_send_2,init,file1",0,File 1,Fitxer 1
 wizard_field,"res.partner.spam_send_2,init,from",0,Sender's email,Email remitent
-wizard_field,"res.partner.spam_send_2,init,default",0,Only send to default addresses,Només enviar a contactes per defecte
+wizard_field,"res.partner.spam_send_2,init,default",0,Default,Per defecte
+wizard_field,"res.partner.spam_send_2,init,invoice",0,Invoice,Factura
+wizard_field,"res.partner.spam_send_2,init,delivery",0,Delivery,Enviament
+wizard_field,"res.partner.spam_send_2,init,contact",0,Contact,Contacte
+wizard_field,"res.partner.spam_send_2,init,other",0,Other,Altre
 wizard_field,"res.partner.spam_send_2,init,text",0,Message,Missatge
 wizard_field,"res.partner.spam_send_2,init,name2",0,File name 2,Nom fitxer 2
 wizard_field,"res.partner.spam_send_2,init,name3",0,File name 3,Nom fitxer 3
@@ -65,6 +74,7 @@ wizard_field,"res.partner.spam_send_2,init,subject",0,Subject,Assumpte
 wizard_view,"res.partner.spam_send_2,init",0,Mass Mailing,Envia email
 wizard_view,"res.partner.spam_send_2,init",0,Attached files:,Fixers adjunts:
 wizard_view,"res.partner.spam_send_2,init",0,Message:,Missatge:
+wizard_view,"res.partner.spam_send_2,init",0,Only send to addresses:,Només enviar a adreces:
 wizard_view,"res.partner.spam_send_2,init",0,The following tags can be included in the message. They will be replaced to the corresponding values of each partner contact:,El missatge pot contenir les següents marques. Seran reemplaçades amb els valors corresponents de cada contacte de l'empresa:
 wizard_view,"res.partner.spam_send_2,init",0,[[partner_id]] -> Partner name,[[partner_id]] -> Nom de l'empresa
 wizard_view,"res.partner.spam_send_2,init",0,[[name]] -> Contact name,[[name]] -> Nom del contacte

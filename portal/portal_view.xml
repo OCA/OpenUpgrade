@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<menuitem name="Portal"  id="menu_portal_root"/>	
+	<menuitem name="Portal"  id="menu_portal_root"/>
 	<menuitem name="Configuration" id="menu_portal_configuration" parent="portal.menu_portal_root"/>
     <menuitem name="Customer Portal" id="menu_portal_customer" parent="portal.menu_portal_root"/>
 
@@ -52,9 +52,9 @@
 		<field name="view_mode">tree,form</field>
 	</record>
 
-	
+
 	<menuitem name="Portals" id="menu_portal_configuration_portals" parent="portal.menu_portal_configuration" action="action_portal_form"/>
-	
+
 	<record model="ir.actions.act_window" id="action_portal_model_form">
 		<field name="name">Portal Model</field>
 		<field name="type">ir.actions.act_window</field>
@@ -62,9 +62,9 @@
 		<field name="view_type">form</field>
 		<field name="view_mode">tree,form</field>
 	</record>
-	
+
 	<menuitem name="Available Models" id="menu_portal_configuration_models" parent="portal.menu_portal_configuration" action="action_portal_model_form"/>
-	
+
 	<record model="ir.ui.view" id="view_model_form">
 		<field name="name">Portal Model</field>
 		<field name="model">portal.model</field>
@@ -140,12 +140,12 @@
             <field name="model">portal.config.install_modules_wizard</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Portal : Install Extra Module">  
-					<separator string="Portal Management" colspan="4"/>                  
+                <form string="Portal : Install Extra Module">
+					<separator string="Portal Management" colspan="4"/>
                     <field name="portal_sale"/>
                     <field name="portal_service"/>
-                    <field name="portal_account"/>                    
-                    <field name="portal_analytic"/>                    
+                    <field name="portal_account"/>
+                    <field name="portal_analytic"/>
                     <separator string="" colspan="4"/>
                     <label string="" colspan="2"/>
                     <group col="4" colspan="2">
@@ -165,7 +165,7 @@
             <field name="target">new</field>
         </record>
 
-      <record model="ir.module.module.configuration.step"
+      <record model="ir.actions.todo"
             id="config_install_module">
             <field name="name">portal : Install Extra modules</field>
             <field name="note">A few modules are proposed according to portal you selected.</field>

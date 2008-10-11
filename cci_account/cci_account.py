@@ -25,12 +25,8 @@ class account_invoice(osv.osv):
         'dept':fields.many2one('hr.department','Department'),
         'invoice_special':fields.boolean('Special Invoice'),
         'internal_note': fields.text('Internal Note'),
-        'state':fields.selection([('draft','Draft'),('proforma2','Pro-Forma2'),('open','Open'),
-            ('paid','Paid'),('cancel','Cancelled')],'State', select=True, readonly=True),
     }
-    _defaults = {
-        'state': lambda *a: 'draft',
-    }
+
 
     def action_move_create(self, cr, uid, ids, context=None):
         flag = False

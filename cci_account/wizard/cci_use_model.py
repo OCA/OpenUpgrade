@@ -28,7 +28,7 @@ def _create_entries(self, cr, uid, data, context):
     for model in data_model:
             period_id = pool_obj.get('account.period').find(cr,uid, context=context)
             if not period_id:
-                raise osv.except_osv('No period found !', 'Unable to find a valid period !')
+                raise wizard.except_wizard('No period found !', 'Unable to find a valid period !')
             period_id = period_id[0]
             name = model.name
             if model.journal_id.sequence_id:

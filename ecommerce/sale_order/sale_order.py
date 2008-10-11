@@ -199,7 +199,7 @@ class ecommerce_sale_order(osv.osv):
         data = self.pool.get('ecommerce.partner')
         data.ecom_send_email(cr, uid, email_id, subject, body, attachment=result, context={})
         
-        return dict()
+        return dict(inv_id=invoice_id, so_id=sale_orderid)
    
 ecommerce_sale_order()
 

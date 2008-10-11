@@ -158,43 +158,5 @@
 				</field>
 			</field>
 	</record>
-
-	<record model="ir.ui.view" id="invoice_form_inherit_cci_2">
-			<field name="name">account.invoice.form.1</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-					 <button name="invoice_proforma" states="draft" string="PRO-FORMA" position="replace">
-							 <button name="invoice_proforma2" states="draft" string="PRO-FORMA2"/>
-					 </button>
-			</field>
-	</record>
-
-	<record model="ir.ui.view" id="invoice_form_inherit_cci_3">
-			<field name="name">account.invoice.form.2</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-					  <button name="invoice_open" states="draft,proforma" string="Create" position="replace">
-							<button name="invoice_open" states="draft,proforma2" string="Create"/>
-					  </button>
-			</field>
-	</record>
-
-	<record model="ir.ui.view" id="invoice_form_inherit_cci_4">
-			<field name="name">account.invoice.form.3</field>
-			<field name="model">account.invoice</field>
-			<field name="inherit_id" ref="account.invoice_form"/>
-			<field name="type">form</field>
-			<field name="arch" type="xml">
-					 <button name="invoice_cancel" states="draft,proforma,sale,open" position="replace">
-                             <button name="invoice_cancel" states="draft,proforma2,sale,open" string="Cancel"/>
-					 </button>
-			</field>
-	</record>
-
-
 </data>
 </openerp>
