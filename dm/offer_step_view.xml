@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-	<!--
+	
 	=======================================================
 	Offer Step Document Category Views
 	=======================================================
-	--><!--
+	
 	<record model="ir.ui.view" id="view_offer_step_document_categ_form">
 		<field name="name">dm.offer.document.category.form</field>
 		<field name="model">dm.offer.document.category</field>
@@ -14,7 +14,6 @@
 			<form string="Document Category">
 				<field name="name" select="1"/>
 				<field name="parent_id"/>
-				<field name="copywriter_id" select="2"/>
 			</form>
 		</field>
 	</record>
@@ -56,17 +55,6 @@
 				<field name="copywriter_id" select="1"/>
 				<separator string="Document Categories" colspan="4"/>
 				<field name="category_ids" colspan="4" nolabel="1"/>
-				<group col="6" colspan="4">
-					<field name="mailing_at_dates" select="2"/>
-					<field name="interactive" select="2"/>
-					<field name="answer_letter" select="2"/>
-				</group>
-				<separator string="Desktop Publishing" colspan="4"/>
-				<field name="dtp_operator" colspan="4"/>
-				<field name="dtp_theorical_date"/>
-				<field name="dtp_valid_date"/>
-				<field name="dtp_making_date"/>
-				<field name="dtp_reread"/>
 			</form>
 		</field>
 	</record>
@@ -77,11 +65,8 @@
 		<field name="arch" type="xml">
 			<tree string="Documents">
 				<field name="name"/>
+				<field name="code"/>
 				<field name="copywriter_id"/>
-				<field name="mailing_at_dates"/>
-				<field name="interactive"/>
-				<field name="answer_letter"/>
-				<field name="dtp_operator"/>
 			</tree>
 		</field>
 	</record>
@@ -93,7 +78,7 @@
 	</record>
 	<menuitem name="Direct Marketing/Configuration/Offer Steps/Documents/All Documents" id="menu_action_document_form" action="action_document_form" sequence="1"/>
 
-	-->
+
 	<!--
 	=======================================================
 	Offer Step Type Views
@@ -255,8 +240,8 @@
 					<page string="History">
 						<field name="history_ids" nolabel="1" colspan="4"/>
 					</page>
-					<page string="Documents">
-<!--				<field name="document_ids" colspan="4" nolabel="1"/> -->
+					<page string="DTP Documents">
+						<field name="document_ids" colspan="4" nolabel="1"/>
 					</page>
 					<page string="Manufacturing">
 						<field name="manufacturing_constraint_ids" colspan="4" nolabel="1">
@@ -427,7 +412,7 @@
 		<field name="arch" type="xml">
 			<tree string="Items">
 				<field name="product_id"/>
-				<field name="offer_step_id" select="1"/>
+				<field name="offer_step_id"/>
 				<field name="item_type"/>
 			</tree>
 		</field>
@@ -474,10 +459,10 @@
 		<field name="arch" type="xml">	
 			<form string="Manufacturing Description">
 				<field name="name" select="1"/>
-				<field name="offer_step_id"/>
+				<field name="offer_step_id" select="2"/>
 				<separator string="Manufacturing Description" colspan="4"/>
-				<field name="constraint" colspan="4" nolabel="1"/>
-				<field name="country_ids" colspan="4"/>
+				<field name="constraint" colspan="4" nolabel="1" select="2"/>
+				<field name="country_ids" colspan="4" select="1"/>
 			</form>
 		</field>
 	</record>

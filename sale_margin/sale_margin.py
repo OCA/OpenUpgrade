@@ -94,12 +94,7 @@ class stock_picking(osv.osv):
         picking_obj.write(cr, uid, ids, {'invoice_state' : '2binvoiced'})
         res = picking_obj.action_invoice_create(cr, uid, ids, type='out_invoice', context={})
         invoice_ids = res.values()
-        picking_obj.write(cr, uid, ids,{'invoice_ids':[[6,0,invoice_ids]]})
-        for invoice in self.pool.get('account.invoice').browse(cr, uid, invoice_ids):
-            margin_deduce += invoice.amount_untaxed
-        picking = picking_obj.browse(cr, uid, ids)[0]
-        sale_id = picking.sale_id.id
-        sale_obj = self.pool.get('sale.order').browse(cr, uid, [sale_id])[0]
+        picking_obj.write(cr, uid, ids,{'invoice_ids':[[6,0,invoice_ids]]})        
         return True
 stock_picking()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

@@ -104,7 +104,7 @@ class res_partner_article_keywords(osv.osv):
     _name = "res.partner.article.keywords"
     _description = 'res.partner.article.keywords'
     _columns = {
-        'name': fields.char('Name',size=20,required=True),
+        'name': fields.char('Name',size=80,required=True),
         'article_ids':fields.many2many('res.partner.article','partner_article_keword_rel','keyword_id','article_id','Articles'),
     }
 res_partner_article_keywords()
@@ -234,7 +234,7 @@ class res_partner(osv.osv):
 
         'magazine_subscription':fields.selection( [('never','Never'),('prospect','Prospect'),('personal','Personnal'), ('postal','Postal')], "Magazine subscription"),
         'magazine_subscription_source':fields.char('Mag. Subscription Source',size=30),
-        'country_relation':fields.one2many('res.partner.country.relation','country_id','Country Relation'), #add for view
+        'country_relation':fields.one2many('res.partner.country.relation','partner_id','Country Relation'),
         'address': fields.one2many('res.partner.address', 'partner_id', 'Addresses'),# overridden just to change the name with "Addresses" instead of "Contacts"
         'relation_ids' : fields.one2many('res.partner.relation','current_partner_id','Partner Relation'),
         'canal_id': fields.many2one('res.partner.canal', 'Favourite Channel'),
@@ -546,6 +546,7 @@ class res_partner_country_relation(osv.osv):
     _description = 'res.partner.country.relation'
     _columns = {
         'frequency': fields.selection([('frequent','Frequent'),('occasional','Occasionnel'),('prospect','Prospection')],'Frequency'),
+        'partner_id':fields.many2one('res.partner','Partner'),
         'country_id':fields.many2one('cci_country.cci_country','Country'),
         'type':fields.selection([('export','Export'),('import','Import'),('saloon','Salon'),('representation','Representation'),('expert','Expert')],'Types'),
     }

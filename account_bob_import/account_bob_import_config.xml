@@ -50,7 +50,7 @@
         <field name="arch" type="xml">
             <form string="Select Folder">
             	<separator col="4" colspan="4" string="Select the BOB folder out of the list given below."/>
-            	<label string="If the given list appears to be empty,click Back and select a valid path." colspan="4" />
+            	<label string="If the given list appears to be empty, click Back and select a valid path." colspan="4" />
             	<newline/>
 				<field name="folder"/>
                 <group col="4" colspan="4">
@@ -70,12 +70,12 @@
             <field name="target">new</field>
     </record>
 
-    <record id="config_path_folder" model="ir.actions.todo">
+<!--    <record id="config_path_folder" model="ir.actions.todo">
             <field name="name">Select Folder</field>
             <field name="note">Select Folder.</field>
             <field name="action_id" ref="action_config_path_folder_form"/>
             <field name="state">open</field>
     </record>
-
+-->
     </data>
 </openerp>

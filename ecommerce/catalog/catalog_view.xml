@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<terp>
+<openerp>
 	<data>
-   				
+
 	<!-- Add Product Images,Attribute to product.product -->
 	<record model="ir.ui.view" id="view_product">
 		<field name="name">product.form</field>
@@ -32,7 +32,7 @@
 			</field>
 		</field>
 	    </record>
-	    
+
 	   <!--  Reviews -->
 		<record model="ir.ui.view" id="ecommerce_reviews_view_tree">
 		 <field name="name">ecommerce.reviews.tree</field>
@@ -48,14 +48,14 @@
        		</tree>
 		 </field>
 	    </record>
-	    
+
 	    <record model="ir.ui.view" id="ecommerce_reviews_view_form">
 			<field name="name">ecommerce.reviews.form</field>
 			<field name="model">ecommerce.product.reviews</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Product Reviews">
-				   
+
 				    <field name="product_id" select="1"></field>
 				    <field name="customer_id" select="1"></field>
 				    <field name="reviewdate"></field>
@@ -64,7 +64,7 @@
 				</form>
 			</field>
 		</record>
-	    
+
 	     <record model="ir.actions.act_window" id="action_ecommerce_reviews_view_form">
 			<field name="res_model">ecommerce.product.reviews</field>
 			<field name="view_type">form</field>
@@ -72,6 +72,6 @@
 			<field name="view_id" ref="ecommerce_reviews_view_tree"/>
 		</record>
 	    <menuitem name="ecommerce/Catalog/Reviews" id="menu_action_ecommerce_reviews_view_form" action="action_ecommerce_reviews_view_form"/>
-	  
+
 	</data>
-</terp>
+</openerp>

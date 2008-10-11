@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+    <!-- Adding the institution_code field to res_partner_bank views -->
 	<record model="ir.ui.view" id="view_partner_form_inherit_code">
 		<field name="name">res.partner.form.code.inherit</field>
 		<field name="model">res.partner</field>
 		<field name="type">form</field>
 		<field name="inherit_id" ref="base.view_partner_form"/>
 		<field name="arch" type="xml">
-			<field name="acc_number" position="after">
+			<field name="bank" position="before">
 				<field name="institution_code" select="1"/>
 				<newline/>
 			</field>
@@ -20,21 +21,26 @@
 		<field name="type">form</field>
 		<field name="inherit_id" ref="base.view_partner_bank_form"/>
 		<field name="arch" type="xml">
-			<field name="acc_number" position="after">
+			<field name="bank" position="before">
 				<field name="institution_code" select="1"/>
 				<newline/>
 			</field>
 		</field>
 	</record>
 
+    <!-- Payment Export Logs views and menuitems-->
 	<record model="ir.ui.view" id="view_account_pay_tree">
 			<field name="name">account.pay.tree</field>
 			<field name="model">account.pay</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
 				<tree string="Payment Export Logs">
-					<field name="info" select="1"/>
-					<field name="note" />
+                    <field name="payment_order_id"/>
+					<field name="file"/>
+                    <field name="create_date"/>
+                    <field name="create_uid"/>
+					<field name="note"/>
+					<field name="state"/>
 				</tree>
 			</field>
 		</record>
@@ -44,11 +50,15 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string="Payment Export Logs">
-					<field name="name" colspan="4" />
+					<field name="payment_order_id" select="1"/>
+					<field name="state" select="2"/>
 					<newline/>
-					<field name="info" />
+                    <field name="create_date" select="1"/>
+                    <field name="create_uid" select="2"/>
 					<newline/>
-					<field name="note" colspan="4" />
+					<field name="file" colspan="4" select="1"/>
+					<newline/>
+					<field name="note" colspan="4"/>
 				</form>
 			</field>
 		</record>
@@ -68,6 +78,7 @@
 			id="menu_action_action_account_pay_tree" action="action_account_pay_tree"/>
 
 
+    <!-- Adding the bilateral field to res_bank views -->
 	<record model="ir.ui.view" id="view_res_bank_form_inherit">
 			<field name="name">res.bank.form.inherit</field>
 			<field name="model">res.bank</field>
@@ -80,6 +91,8 @@
 			</field>
 	</record>
 
+
+    <!-- Payment Method views and menuitems-->
 	<record model="ir.ui.view" id="view_payment_method_tree">
 			<field name="name">payment.method.tree</field>
 			<field name="model">payment.method</field>
@@ -110,9 +123,9 @@
 			<field name="view_mode">tree,form</field>
 		</record>
 
-	<menuitem
-			 parent="account_payment.next_id_44"
-			id="menu_action_payment_method_tree" action="action_payment_method_tree"/>
+	<menuitem parent="account_payment.next_id_44" id="menu_action_payment_method_tree" action="action_payment_method_tree"/>
+
+    <!-- Charge Code views and menuitems-->
 
 	<record model="ir.ui.view" id="view_charges_code_tree">
 			<field name="name">charges.code.tree</field>

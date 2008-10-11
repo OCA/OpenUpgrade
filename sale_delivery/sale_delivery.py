@@ -112,7 +112,7 @@ class sale_order(osv.osv):
                 cr.execute('select sum(product_qty) from sale_delivery_line where order_id = %d and product_id = %d',(delivery.order_id,delivery.product_id))
                 product_qty = cr.fetchall()[0][0]
                 if  sale_product_qty != product_qty:
-                    raise osv.except_osv(_('Error !'), _('The quanitties plannified in Deliveries (%d) for Product : %s must be equals to the quantities in the Sale Order lines (%d)') % (product_qty,delivery.product_id.name,sale_product_qty))
+                    raise osv.except_osv(_('Error !'), _('The quanitties plannified in Deliveries must be equals to the quantities in the Sale Order lines. \n\n [%s] %s : %d delivery qty , %d sale order qty' ) % (delivery.product_id.default_code,delivery.product_id.name,product_qty,sale_product_qty))
                 
             location_id = order.shop_id.warehouse_id.lot_stock_id.id
             output_id = order.shop_id.warehouse_id.lot_output_id.id

@@ -1,8 +1,6 @@
-# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004 TINY SPRL. (http://tiny.be) All Rights Reserved.
-#                    Fabien Pinckaers <fp@tiny.Be>
+# Copyright (c) 2005-2006 TINY SPRL. (http://tiny.be) All Rights Reserved.
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -27,6 +25,26 @@
 #
 ##############################################################################
 
-import bom_hyerarchy
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+import time
+from report import report_sxw
+from tools import amount_to_text_en
 
+
+class report_cash_receipt(report_sxw.rml_parse):
+    def __init__(self, cr, uid, name, context):
+        super(report_cash_receipt, self).__init__(cr, uid, name, context)
+        self.localcontext.update({
+            'time': time,
+            'convert':self.convert
+        })
+
+    def convert(self,amount, cur):
+        amt_en = amount_to_text_en.amount_to_text(amount,'en',cur);
+        return amt_en
+
+report_sxw.report_sxw(
+    'report.voucher.cash_receipt',
+    'account.voucher',
+    'addons/account_voucher/report/report_cash_receipt.rml',
+    parser=report_cash_receipt,header=False
+)

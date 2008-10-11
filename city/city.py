@@ -14,7 +14,7 @@ class city(osv.osv):
 		for line in self.browse(cr, uid, ids):
 			state = line.state_id.name	
 			country = line.state_id.country_id.name	
-			location = "%s %s %s %s" %(line.zipcode, line.name, state, country)
+			location = "%s %s, %s, %s" %(line.zipcode, line.name, state, country)
 			res.append((line['id'], location))
 		return res
 

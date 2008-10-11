@@ -22,14 +22,6 @@
 			<field eval="&quot;pending&quot;" name="manufacturing_state"/>
 			<field name="responsible_id" ref="base.user_admin"/>
 		</record>
-		<record id="dm_campaign_0" model="dm.campaign">
-			<field eval="&quot;inprogress&quot;" name="planning_state"/>
-			<field eval="time.strftime('%Y-%m-15')" name="dtp_date_real_delivery"/>
-			<field eval="time.strftime('%Y-%m-30')" name="dtp_date_delivery"/>
-			<field name="dtp_operator" ref="base.res_partner_8"/>
-			<field eval="time.strftime('%Y-08-15')" name="dtp_date_recovered"/>
-			<field eval="time.strftime('%Y-09-15')" name="dtp_intervention_type"/>
-		</record>
  		<record id="dm_campaign_proposition_0" model="dm.campaign.proposition">
  			<field name="user_id" ref="base.user_admin"/>
 			<field eval="&quot;Registration Procedure&quot;" name="name"/>

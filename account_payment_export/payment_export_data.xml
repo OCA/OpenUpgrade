@@ -3,7 +3,7 @@
 <data>
 
   <!-- Define new types -->
-  <record model="res.partner.bank.type" id="pay_iban">
+<!--  <record model="res.partner.bank.type" id="pay_iban">
 	<field name="name">pay-export-Iban Partner</field>
 	<field name="code">pay_iban</field>
   </record>
@@ -12,9 +12,10 @@
 	<field name="name">pay-export-Company</field>
 	<field name="code">pay_bank</field>
   </record>
+-->
 
   <!-- Adjust the fields attributes for pay_iban-->
-  <record model="res.partner.bank.type.field" id="iban_institution_code_field">
+<!--  <record model="res.partner.bank.type.field" id="iban_institution_code_field">
 	<field name="name">institution_code</field>
 	<field name="bank_type_id" ref="pay_iban"/>
 	<field name="required" eval="True"/>
@@ -41,9 +42,9 @@
 	<field name="readonly" eval="False"/>
   </record>
 
-
+-->
   <!-- Adjust the fields attributes for pay_company-->
-  <record model="res.partner.bank.type.field" id="bank_institution_code_field">
+<!--  <record model="res.partner.bank.type.field" id="bank_institution_code_field">
 	<field name="name">institution_code</field>
 	<field name="bank_type_id" ref="pay_bank"/>
 	<field name="required" eval="True"/>
@@ -77,15 +78,15 @@
 	<field name="required" eval="True"/>
 	<field name="readonly" eval="False"/>
   </record>
-
+-->
   <!-- Define a payment type -->
-  <record model="payment.type" id="payment_type_pay">
+<!--  <record model="payment.type" id="payment_type_pay">
 	<field name="name">Pay Export</field>
 	<field name="code">pay</field>
 	<field name="suitable_bank_types"
 		   eval="[(6,0,[ref('pay_iban'),ref('pay_bank'),])]"/>
   </record>
-
+-->
   <!-- Define Payment Methods -->
 
   <record model="payment.method" id="payment_method_CHC">
