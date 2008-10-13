@@ -1005,7 +1005,7 @@
                 <separator string="Tasks Management" colspan="4"/>
                     <group colspan="4">
                     <field name="project_id" string="Retro Planning"/>
-                    <button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action"/>
+                    <button string="Create Retro-Planning" name="%(dm.campaign_group_wiz)d" type="action" attrs="{'invisible':[('state','!=','open'),('project_id','!=',False)]}"/>
                     </group>
                 <field name="campaign_ids" colspan="4" nolabel="1" select="2"/>
                 </page>
@@ -1266,51 +1266,6 @@
     </record>
 
     <menuitem name="Direct Marketing/Configuration/Campaigns/All Purchase Lines" id="menu_action_campaign_purchase_line_tree" action="action_campaign_purchase_line_tree"/>
-
-
-<!-- Camapaign Dates Line -->
-
-<record model="ir.ui.view" id="view_campaign_dates_line_tree">
-        <field name="name">dm.campaign.dates_line_tree</field>
-        <field name="model">dm.campaign.dates_line</field>
-        <field name="type">tree</field>
-        <field name="arch" type="xml">
-            <tree string="Campaigns">
-                <tree string="Dates Lines">
-                    <field name="name"/>
-                </tree>
-            </tree>
-        </field>
-    </record>
-
-    <record model="ir.ui.view" id="view_campaign_dates_line_form">
-        <field name="name">dm.campaign.dates_line_form</field>
-        <field name="model">dm.campaign.dates_line</field>
-        <field name="type">form</field>
-        <field name="arch" type="xml">
-            <form string="Purchase line">
-                <field name="name"/>
-            </form>
-        </field>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_campaign_dates_line_form">
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.dates_line</field>
-        <field name="view_type">form</field>
-        <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="view_campaign_dates_line_form"/>
-    </record>
-
-    <record model="ir.actions.act_window" id="action_campaign_dates_line_tree">
-        <field name="type">ir.actions.act_window</field>
-        <field name="res_model">dm.campaign.dates_line</field>
-        <field name="view_type">tree</field>
-        <field name="view_mode">form,tree</field>
-        <field name="view_id" ref="view_campaign_dates_line_tree"/>
-    </record>
-
-    <menuitem name="Direct Marketing/Configuration/Campaigns/All Dates Lines" id="menu_action_campaign_dates_line_tree" action="action_campaign_dates_line_tree"/>
 
     <!--
         Relates

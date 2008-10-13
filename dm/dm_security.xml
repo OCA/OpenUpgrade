@@ -496,6 +496,24 @@
 		<field eval="1" name="perm_create"/>
 		<field name="group_id" ref="res_groups_offeradmin"/>
 	</record>
+	<record id="ir_model_access_document_categoryforofferadmin1" model="ir.model.access">
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.document.category')]"/>
+		<field eval="1" name="perm_read"/>
+		<field eval="&quot;&quot;&quot;document category for offer admin&quot;&quot;&quot;" name="name"/>
+		<field eval="1" name="perm_unlink"/>
+		<field eval="1" name="perm_write"/>
+		<field eval="1" name="perm_create"/>
+		<field name="group_id" ref="res_groups_offeradmin"/>
+	</record>
+	<record id="ir_model_access_documentforofferadmin1" model="ir.model.access">
+		<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.document')]"/>
+		<field eval="1" name="perm_read"/>
+		<field eval="&quot;&quot;&quot;document for offer admin&quot;&quot;&quot;" name="name"/>
+		<field eval="1" name="perm_unlink"/>
+		<field eval="1" name="perm_write"/>
+		<field eval="1" name="perm_create"/>
+		<field name="group_id" ref="res_groups_offeradmin"/>
+	</record>
 	<record id="ir_model_access_dmtrademarkforoffermanager0" model="ir.model.access">
 			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.trademark')]"/>
 			<field eval="1" name="perm_read"/>
@@ -590,6 +608,24 @@
 			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.prices_progression')]"/>
 			<field eval="1" name="perm_read"/>
 			<field eval="&quot;&quot;&quot;price progression for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field name="group_id" ref="res_groups_offermanager"/>
+		</record>
+		<record id="ir_model_access_document_categoryforoffermanager0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.document.category')]"/>
+			<field eval="1" name="perm_read"/>
+			<field eval="&quot;&quot;&quot;document category for offer manager&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="perm_unlink"/>
+			<field eval="1" name="perm_write"/>
+			<field eval="1" name="perm_create"/>
+			<field name="group_id" ref="res_groups_offermanager"/>
+		</record>
+		<record id="ir_model_access_offer_documentforoffermanager0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('model', '=', 'dm.offer.document')]"/>
+			<field eval="1" name="perm_read"/>
+			<field eval="&quot;&quot;&quot;document for offer manager&quot;&quot;&quot;" name="name"/>
 			<field eval="1" name="perm_unlink"/>
 			<field eval="1" name="perm_write"/>
 			<field eval="1" name="perm_create"/>
@@ -833,6 +869,15 @@
 				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.purchase_line')]"/>
 				<field eval="1" name="perm_read"/>
 				<field eval="&quot;&quot;&quot;purchase line for campaign admin&quot;&quot;&quot;" name="name"/>
+				<field eval="1" name="perm_unlink"/>
+				<field eval="1" name="perm_write"/>
+				<field eval="1" name="perm_create"/>
+				<field name="group_id" ref="res_groups_campaignadmin"/>
+			</record>
+			<record id="ir_model_access_manufacturing_costforcampaignadmin0" model="ir.model.access">
+				<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.manufacturing_cost')]"/>
+				<field eval="1" name="perm_read"/>
+				<field eval="&quot;&quot;&quot;manufacturing cost for campaign admin&quot;&quot;&quot;" name="name"/>
 				<field eval="1" name="perm_unlink"/>
 				<field eval="1" name="perm_write"/>
 				<field eval="1" name="perm_create"/>
@@ -1090,10 +1135,19 @@
 					<field eval="1" name="perm_create"/>
 					<field name="group_id" ref="res_groups_campaignmanager"/>
 				</record>
-				<record id="ir_model_access_price_progressionforcampaignmanager0" model="ir.model.access">
-					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.proposition.prices_progression')]"/>
+				<record id="ir_model_access_manufacturing_costforcampaignmanager0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.campaign.manufacturing_cost')]"/>
 					<field eval="1" name="perm_read"/>
-					<field eval="&quot;&quot;&quot;price progression for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="&quot;&quot;&quot;manufacturing cost for campaign manager&quot;&quot;&quot;" name="name"/>
+					<field eval="1" name="perm_unlink"/>
+					<field eval="1" name="perm_write"/>
+					<field eval="1" name="perm_create"/>
+					<field name="group_id" ref="res_groups_campaignmanager"/>
+				</record>
+				<record id="ir_model_access_overlayforcampaignmanager0" model="ir.model.access">
+					<field model="ir.model" name="model_id" search="[('model', '=', 'dm.overlay')]"/>
+					<field eval="1" name="perm_read"/>
+					<field eval="&quot;&quot;&quot;Overlay for campaign manager&quot;&quot;&quot;" name="name"/>
 					<field eval="1" name="perm_unlink"/>
 					<field eval="1" name="perm_write"/>
 					<field eval="1" name="perm_create"/>
