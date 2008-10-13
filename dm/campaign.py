@@ -262,7 +262,6 @@ class dm_campaign(osv.osv):
         'overlay_id': fields.many2one('dm.overlay', 'Overlay'),
         'owner_id' : fields.many2one('res.partner', 'Owner',domain=[('category_id','ilike','Owner')], context={'category':'Owner'}),
         'router_id' : fields.many2one('res.partner', 'Router',domain=[('category_id','ilike','Router')], context={'category':'Router'}),
-        'cleaner_id' : fields.many2one('res.partner', 'Cleaner',domain=[('category_id','ilike','Cleaner')], context={'category':'Cleaner'}),
         'dtp_task_ids': one2many_mod_task('project.task', 'project_id', "DTP tasks",
                                                         domain=[('type','ilike','DTP')], context={'type':'DTP'}),
         'manufacturing_task_ids': one2many_mod_task('project.task', 'project_id', "Manufacturing tasks",
@@ -353,15 +352,6 @@ class dm_campaign(osv.osv):
                 super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':overlay_ids1}, context)
         else:
             super(osv.osv, self).write(cr, uid, camp1.id, {'overlay_id':0}, context)
-        cr.commit()
-        if len(srch_offer_ids) > 1:
-#            raise _('Already Reconciled')
-#            raise osv.except_osv(_('Warning !'), _('Global taxes defined, but not in invoice lines !'))
-#            warnings.warn('This is a warning message')
-            logger = netsvc.Logger()
-            logger.notifyChannel("warning", netsvc.LOG_WARNING,
-                "No wizard found for the payment type.")
-
 
         return res
 
