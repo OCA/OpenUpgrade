@@ -51,7 +51,6 @@ class res_partner(osv.osv):
     _columns = {
         'relation_ids': fields.one2many('res.partner.relation', 'partner_id', 'Relations')
     }
-
     def _is_related_to(self, cr, uid, ids, toid):
         related=[]
         for id in ids:
@@ -90,23 +89,19 @@ class res_partner(osv.osv):
                     for prt in property_pref:
                         res[prt] = prps[prt] and prps[prt][0] or False
         return result
-
 res_partner()
 
 
 class PartnerAddress(osv.osv):
     _inherit = 'res.partner.address'
-
     def _where_calc(self, cursor, user, args, active_test=True, context=None):
         if not args:
             args=[]
         partner_obj = self.pool.get('res.partner')
-
         args = args[:]
-
         i = 0
         while i < len(args):
-            if type(arg)==tuple:
+            if type(args[i])==tuple:
                 continue
             if args[i][0] == 'partner_id' and args[i][1] == '=':
                 partner = partner_obj.browse(cursor, user, args[i][2],
@@ -116,7 +111,6 @@ class PartnerAddress(osv.osv):
             i += 1
         return super(PartnerAddress, self)._where_calc(cursor, user, args,
                 active_test=active_test, context=context)
-
 PartnerAddress()
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
