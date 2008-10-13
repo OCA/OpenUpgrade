@@ -162,11 +162,26 @@ class config_path_folder(osv.osv_memory):
 
         convert.convert_csv_import(cr, 'account_bob_import', 'account.account.csv', tools.file_open(filename).read())
         #reactivate the parent_store functionnality on account_account
-        self.pool._init = False
         self.pool.get('account.account')._parent_store_compute(cr)
 
+        filename = config['addons_path']+'/account_bob_import/account.journal.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.journal.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/res.partner.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'res.partner.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/res.partner.bank.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'res.partner.bank.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/res.partner.job.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'res.partner.job.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/account.fiscalyear.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.fiscalyear.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/account.period.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.period.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/account.move.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.move.csv', tools.file_open(filename).read())
+        self.pool._init = False
+
         #TODO: modify the name of account_bob_import.account_bob_0 into the name of company
-        #TODO: do the same for other csv +  add some check to prevent errors: is file empty? add try-catch statements?
+        #TODO: some check to prevent errors: is file empty? add try-catch statements?
 
         return {
                 'view_type': 'form',
