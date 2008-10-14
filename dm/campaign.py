@@ -13,6 +13,29 @@ from osv import osv
 class dm_campaign_group(osv.osv):
     _name = "dm.campaign.group"
 
+    def _camp_group_code(self, cr, uid, ids, name, args, context={}):
+        result ={}
+        offer_code = ''
+        offer_name = ''
+        for id in ids:
+            
+            dt = time.strftime('%Y-%m-%d')
+            date = dt.split('-')
+            year = month = ''
+            if len(date)==3:
+                year = date[0][2:]
+                month = date[1]
+            final_date=year+month
+            grp = self.browse(cr,uid,id)
+            for c in grp.campaign_ids:
+                if c.offer_id:
+                    d = self.pool.get('dm.offer').browse(cr, uid, c.offer_id.id)
+                    offer_code = d.code
+                    offer_name = d.name
+            code1='-'.join([final_date,offer_code, offer_name])
+            result[id]=code1
+        return result
+    
     def po_generate(self,cr, uid, ids, *args):
 
 
@@ -26,7 +49,7 @@ class dm_campaign_group(osv.osv):
 
     _columns = {
         'name': fields.char('Campaign group name', size=64, required=True),
-        'code': fields.char('Code', size=64, required=True),
+        'code' : fields.function(_camp_group_code,string='Code',type='char',method=True,readonly=True),
         'project_id' : fields.many2one('project.project', 'Project', readonly=True),
         'campaign_ids': fields.one2many('dm.campaign', 'campaign_group_id', 'Campaigns', domain=[('campaign_group_id','=',False)]),
     }
@@ -1131,12 +1154,20 @@ class project_task(osv.osv):
     _name = "project.task"
     _inherit = "project.task"
 
-    def _default_type(self, cr, uid, context={}):
-        if 'type' in context and context['type']:
-            id_cat = self.pool.get('project.task.type').search(cr,uid,[('name','ilike',context['type'])])[0]
-            return [id_cat]
-        return []
+#    def _default_type(self, cr, uid, context={}):
+#        if 'type' in context and context['type']:
+#            id_cat = self.pool.get('project.task.type').search(cr,uid,[('name','ilike',context['type'])])[0]
+#            return [id_cat]
+#        return []
 
+    def _default_type(self, cr, uid, context={}):
+        print "CONTEXT :::::::", context
+        id_type = 0
+        if 'type' in context and context['type']:
+            id_type =  self.pool.get('project.task.type').search(cr,uid,[('name','ilike',context['type'])])[0]
+        print id_type
+        return id_type
+    
     _columns = {
         'date_reviewed': fields.datetime('Reviewed Date'),
         'date_planned': fields.datetime('Planned Date'),
