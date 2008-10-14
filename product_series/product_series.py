@@ -32,10 +32,10 @@ class product_series(osv.osv):
 	_name = "product.series"
 	_description = "Partner Product Series"
 	_columns = {
-		'partner_id' : fields.many2one('res.partner','Manufacturer',required=True,select='True'),
-		'code': fields.char('Code', size=64, select='True'),
-		'name': fields.char('Name', size=64, select='True'),
-		'description': fields.char('Description', size=128, select='True'),
+		'partner_id' : fields.many2one('res.partner','Manufacturer',required=True,select='1'),
+		'code': fields.char('Code', size=64, select='1'),
+		'name': fields.char('Name', size=64, select='1'),
+		'description': fields.char('Description', size=128),
 	}
 
 
