@@ -31,6 +31,31 @@ class ecommerce_partner(osv.osv):
     _defaults = {
         'active': lambda *a: 1,
     }
+
+ def user_get(self, cr, uid, context={}):
+        cr.execute("select * from res_users")
+        res = cr.dictfetchall()
+        userdata = map(lambda x: x['login'], res)
+       
+        return userdata
+    
+    def userdata_get(self, cr, uid, email, check=None, context={}):
+    
+        up_data=None
+        cr.execute("select id from res_users where login = %s",(str(email),))
+        result = cr.fetchone()
+        if(result):
+    
+            id = result[0]
+            res_users = self.pool.get('res.users')
+            ecommerce_user = res_users.browse(cr, uid, id)
+            get_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
+            if(check==None):
+                res_users.write(cr, uid, get_data['id'], {'active':True})
+                       
+            up_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
+        return up_data
+                
   
     def copy(self, cr, uid, id, default=None, context={}):
         name = self.read(cr, uid, [id], ['name'])[0]['name']
@@ -83,7 +108,7 @@ class ecommerce_partner(osv.osv):
         for i in delivery_ecommerce_car[0].delivery_ids:
             delivery_grid_ids.append(i.id)
 
-        grid_id = self.grid_get(cr, uid, delivery_grid_ids, add_id,{}, from_web=True)       
+        grid_id = self.grid_get(cr, uid, delivery_grid_ids, add_id, {}, from_web=True)       
         get_data = delivery_carrier.read(cr, uid, grid_id, ['name'], context)
         return get_data
 
