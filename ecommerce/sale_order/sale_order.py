@@ -45,6 +45,9 @@ class ecommerce_sale_order(osv.osv):
             prt_id = res_prt.search(cr, uid, [('name','=',order.epartner_id.name)])
             res = res_prt.read(cr, uid, prt_id, ['id'], context)
             res_add = self.pool.get('res.partner.address')
+
+            res_categ = self.pool.get('res.partner.category')
+            search_categ = res_categ.search(cr, uid, [('name', '=', 'Customer')])
             
             if res:
                 partner_id = res[0]['id']
@@ -52,11 +55,12 @@ class ecommerce_sale_order(osv.osv):
                 prt_add_id =res_add.search(cr,uid,[('partner_id','=',partner_id)])
                 res_prt_add = res_add.read(cr,uid,prt_add_id,['id'],context)
                 addid = res_prt_add[0]['id']
-           
+             
             if not prt_id:     
                 partner_id = self.pool.get('res.partner').create(cr, uid, {
                     'name': order.epartner_id.name,
                     'lang':order.epartner_id.lang,
+                    'category_id': [(6, 0, search_categ)]
                    })
                 order.epartner_id.address
                 for addr_type in order.epartner_id.address:
@@ -134,7 +138,7 @@ class ecommerce_sale_order(osv.osv):
                 'order_line':order_lines
             })      
             get_ids.extend(ids)
-            get_ids.append(order_id)
+            get_ids.append(int(order_id))
 
         return get_ids
 
