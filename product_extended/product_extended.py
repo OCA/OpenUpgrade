@@ -83,19 +83,19 @@ class product_product(osv.osv):
                 res[product_id] = False
         return res
 
-    def _product_dispo(self, cr, uid, ids, name, arg, context={}):
-        res = {}
-        out = self._product_outgoing_qty(cr, uid, ids, name, arg, context)
-        now = self._product_qty_available(cr, uid, ids, name, arg, context)
-        for p_id in ids:
-            res[p_id] = now[p_id] + out[p_id]
-        return res
+    #def _product_dispo(self, cr, uid, ids, name, arg, context={}):
+        #res = {}
+        #out = self._product_outgoing_qty(cr, uid, ids, name, arg, context)
+        #now = self._product_qty_available(cr, uid, ids, name, arg, context)
+        #for p_id in ids:
+            #res[p_id] = now[p_id] + out[p_id]
+        #return res
 
 
     _columns = {
         'calculate_price': fields.boolean('Compute price'),
         'orderpoint_ids': fields.one2many('stock.warehouse.orderpoint', 'product_id', 'Orderpoints'),
-        'qty_dispo': fields.function(_product_dispo, method=True, type='float', string='Stock available'),
+        #'qty_dispo': fields.function(_product_dispo, method=True, type='float', string='Stock available'),
     }
 
     _defaults = {
