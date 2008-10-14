@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<wizard
+			string="Export product category"
+			model="esale_joomla.web"
+			name="esale_joomla.product.category"
+			menu="False"
+			id="wizard_esale_joomla_product_category"/>
+
+		<menuitem
+			name="Export Product Categories" parent="menu_esale_synch"
+			action="wizard_esale_joomla_product_category"
+			type="wizard"
+			sequence="1"
+			id="menu_esale_joomla_product_category"/>
+
+		<wizard
+			string="Export Taxes"
+			model="esale_joomla.web"
+			name="esale_joomla.tax"
+			menu="False"
+			id="wizard_esale_joomla_tax"/>
+
+		<menuitem
+			name="Export Tax" parent="menu_esale_synch"
+			action="wizard_esale_joomla_tax"
+			type="wizard"
+			sequence="2"
+			id="menu_esale_joomla_tax"/>
+
+		<wizard
+			string="Export products"
+			model="esale_joomla.web"
+			name="esale_joomla.products"
+			menu="False"
+			id="wizard_esale_joomla_products"/>
+
+		<menuitem
+			name="Export Products" parent="menu_esale_synch"
+			action="wizard_esale_joomla_products"
+			type="wizard"
+			sequence="3"
+			id="menu_esale_joomla_products"/>
+
+		<wizard
+			string="Update stocks"
+			model="esale_joomla.web"
+			name="esale_joomla.stocks"
+			menu="False"
+			id="wizard_esale_joomla_stocks"/>
+		<menuitem
+			name="Export Inventory Level" parent="menu_esale_synch"
+			action="wizard_esale_joomla_stocks"
+			type="wizard"
+			id="menu_wizard_esale_joomla_stocks"/>
+
+		<wizard
+			string="Import sale orders"
+			model="esale_joomla.web"
+			name="esale_joomla.saleorders"
+			menu="False"
+			id="wizard_esale_joomla_saleorders"/>
+		<menuitem
+			name="Import eSales Orders" parent="menu_esale_synch"
+			action="wizard_esale_joomla_saleorders"
+			type="wizard"
+			id="menu_esale_joomla_saleorders"/>
+
+	</data>
+</openerp>
+

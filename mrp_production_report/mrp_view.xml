@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	#--------------------------------------
+	# production view
+	#--------------------------------------
+	<record model="ir.ui.view" id="mrp_production_form_view_inherited">
+		<field name="name">mrp.production.form.inherit</field>
+		<field name="model">mrp.production</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+		<field name="arch" type="xml">
+			 <field name="priority" position="after">
+			 	<field name="partner_id" select="1" />
+			 	<field name="procure_id" select="1" />
+				<newline/>
+			</field>
+
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="mrp_production_form_view_inherited_1">
+		<field name="name">mrp.production.form.inherit</field>
+		<field name="model">mrp.production</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+		<field name="arch" type="xml">
+			 <field name="move_created_ids" position="after">
+
+			 	<field name="note" nolabel="1" colspan="4"/>
+			 	<separator string="Notes" colspan="4"/>
+			</field>
+
+		</field>
+	</record>
+
+
+	#--------------------------------------
+	# Procurement view
+	#--------------------------------------
+	<record model="ir.ui.view" id="mrp_procurement_form_view_inherited">
+		<field name="name">mrp.procurement.form.inherit</field>
+		<field name="model">mrp.procurement</field>
+		<field name="type">form</field>
+		<field name="inherit_id" ref="mrp.mrp_procurement_form_view"/>
+		<field name="arch" type="xml">
+			 <field name="procure_method" position="after">
+			 	<field name="partner_id" select="1" />
+				<newline/>
+			</field>
+
+		</field>
+	</record>
+	</data>
+</openerp>

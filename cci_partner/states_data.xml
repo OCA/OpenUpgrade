@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" ?>
+<openerp>
+
+	<data>
+		<record id="res_partner_state2_imputableouespaceimputable0" model="res.partner.state2">
+			<field eval="&quot;Imputable (ou espace = imputable) ?&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state2_nonimputabledossierchezlavocat0" model="res.partner.state2">
+			<field eval="&quot;Non imputable - Dossier chez l'avocat&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state2_nonimputablefaillite0" model="res.partner.state2">
+			<field eval="&quot;Non imputable - Faillite&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state2_nonimputabledoublefiche0" model="res.partner.state2">
+			<field eval="&quot;Non imputable - Double fiche&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state2_nonimputablereprisparuneautresocit0" model="res.partner.state2">
+			<field eval="&quot;Non imputable - Repris par une autre société&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state_enactivitouespaceenactivit0" model="res.partner.state">
+			<field eval="&quot;En activité (ou espace = en activité) ?&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state_faillite0" model="res.partner.state">
+			<field eval="&quot;Faillite&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state_cessationdactivit0" model="res.partner.state">
+			<field eval="&quot;Cessation d'activité&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state_enveilleuse0" model="res.partner.state">
+			<field eval="&quot;En veilleuse&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state_dcd0" model="res.partner.state">
+			<field eval="&quot;Décédé&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_state_reprisnexisteplusentantquetelle0" model="res.partner.state">
+			<field eval="&quot;Repris (n'existe plus en tant que telle)&quot;" name="name"/>
+		</record>
+	</data>
+
+</openerp>

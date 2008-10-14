@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report
+			string="Fiches Lots" 
+			model="auction.lots" 
+			name="report.auction.lots.fiches" 
+			xml="flagey/fiches.xml" 
+			xsl="flagey/fiches.xsl"
+			id="report_flagey_fiches"/>
+		
+	</data>
+</openerp>

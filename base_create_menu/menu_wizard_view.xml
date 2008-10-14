@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<wizard
+			string="Create menus"
+			model="ir.actions.wizard"
+			name="create.menu.wizard"
+			id="wizard_create_menu"/>
+		<menuitem
+			parent="base.next_id_2"
+			action="wizard_create_menu"
+			type="wizard"
+			id="menu_wizard_create"/>
+
+	</data>
+</openerp>

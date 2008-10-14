@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	#
+	# Sequences for article_id on article
+	#
+
+	<record model="ir.sequence.type" id="seq_article_cci">
+		<field name="name">Article ID</field>
+		<field name="code">res.partner.article</field>
+	</record>
+	<record model="ir.sequence" id="seq_article_cci">
+		<field name="name">Article ID</field>
+		<field name="code">res.partner.article</field>
+	</record>
+
+</data>
+</openerp>

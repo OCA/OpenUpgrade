@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<!--
+	 State By restaurant
+	-->
+
+	<record model="ir.ui.view" id="view_hotel_restaurant_status_tree">
+		<field name="name">report.hotel.restaurant.status.tree</field>
+		<field name="model">report.hotel.restaurant.status</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="States By restaurant">
+				<field name="reservation_id"/>
+			    <field name="state"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_hotel_restaurant_status_form">
+		<field name="name">report.hotel.restaurant.status.form</field>
+		<field name="model">report.hotel.restaurant.status</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="States By restaurant">
+				<field name="reservation_id"/>
+				<field name="state"/>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_hotel_restaurant_status_graph">
+		<field name="name">report.hotel.restaurant.status.graph</field>
+		<field name="model">report.hotel.restaurant.status</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="States By restaurant" type="pie">
+				<field name="state"/>
+				<field name="nbr" operator="+"/>
+				
+			</graph>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_hotel_restaurant_status_graph_bar">
+		<field name="name">report.hotel.restaurant.status.graph</field>
+		<field name="model">report.hotel.restaurant.status</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="States By restaurant" type="bar" orientation="verticle">
+				<field name="state"/>
+				<field name="nbr" operator="+"/>
+				
+			</graph>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph">
+		<field name="name">States By Restaurant</field>
+		<field name="res_model">report.hotel.restaurant.status</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		
+	</record>
+
+	<menuitem name="Hotel Restaurant" id="menu_hotel_restaurant"/>
+	<menuitem name="Reporting" id="menu_hotel_restaurant_reporting" parent="menu_hotel_restaurant"/>
+	<menuitem name="This Month" id="menu_hotel_restaurant_reporting_this" parent="menu_hotel_restaurant_reporting"/>
+	<menuitem name="States By restaurant" id="menu_hotel_restaurant_reporting_this_restaurant" parent="menu_hotel_restaurant_reporting_this" action="action_report_hotel_restaurant_status_tree_graph"/>
+
+	<record model="ir.actions.act_window" id="action_report_hotel_restaurant_status_tree_graph_bar">
+			<field name="name">States By Restaurant</field>
+			<field name="res_model">report.hotel.restaurant.status</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">graph,tree</field>
+			<field name = "view_id" ref="view_hotel_restaurant_status_graph_bar"/>
+			
+		</record>
+		
+	<menuitem name="States By Restaurant" id="menu_hotel_restaurant_reporting_this_Restaurant" parent="menu_hotel_restaurant_reporting_this" action="action_report_hotel_restaurant_status_tree_graph_bar"/>	
+		
+</data>
+</openerp>

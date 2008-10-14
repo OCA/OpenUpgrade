@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="34.0" y1="28.0" width="527" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau6">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#e6e6e6" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#e6e6e6" start="4,0" stop="4,0"/>
+      <blockBackground colorName="#e6e6e6" start="5,0" stop="5,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau7">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="LEFT"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="9.0" leading="11"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="9.0" leading="11"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="LEFT"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="9.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P23" fontName="Times-Roman" fontSize="9.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P11" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P13" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P14" fontName="Times-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P15" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P16" fontName="Times-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P17" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P18" fontName="Times-Roman" fontSize="9.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P19" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P20" fontName="Courier-Bold" fontSize="9.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P21" fontName="Courier-Bold" fontSize="9.0" leading="15" alignment="CENTER"/>
+    <paraStyle name="P22" fontName="Courier-Bold" fontSize="9.0" leading="15" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P1">[[ setLang(o.partner_id.lang) ]]</para>
+    <blockTable colWidths="295.0,232.0" style="Tableau2">
+      <tr>
+        <td>
+
+<para style="P2">
+	<font face="Times-Roman">Invoice N [[ ((o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')) or removeParentNode('para')) and '' ]]</font>
+	<font face="Times-Bold">°</font>
+	<font face="Times-Roman">:</font>
+	<font face="Times-Roman">[[o.number]]</font>
+</para>
+<para style="P2">
+<font face="Times-Roman">PRO-FORMA [[ ((o.type == 'out_invoice' and o.state == 'proforma') or removeParentNode('para')) and '' ]]</font>
+</para>
+<para style="P2">
+<font face="Times-Roman">Draft Invoice [[ ((o.type == 'out_invoice' and o.state == 'draft') or removeParentNode('para')) and '' ]]</font>
+</para>
+<para style="P2">
+<font face="Times-Roman">Canceled Invoice [[ ((o.type == 'out_invoice' and o.state == 'cancel') or removeParentNode('para')) and '' ]]</font>
+</para>
+<para style="P2">
+	<font face="Times-Roman">Refund N [[ (o.type=='out_refund' or removeParentNode('para')) and '' ]]</font>
+	<font face="Times-Bold">°</font>
+	<font face="Times-Roman">:</font>
+	<font face="Times-Roman">[[o.number]]</font>
+</para>
+<para style="P2">
+<font face="Times-Roman">Supplier Refund [[ (o.type=='in_refund' or removeParentNode('para')) and '' ]] [[ o.number ]]</font>
+</para>
+<para style="P2">
+<font face="Times-Roman">Supplier Invoice [[ (o.type=='in_invoice' or removeParentNode('para')) and '' ]]</font>
+<font face="Times-Roman">[[ o.number ]]</font>
+</para>
+          <para style="P3">
+            <font face="Times-Roman">Date : </font>
+            <font face="Times-Roman">[[o.date_invoice]]</font>
+          </para>
+          <para style="P3">
+            <font face="Times-Roman">Customer n </font>
+            <font face="Times-Bold">°</font>
+            <font face="Times-Roman">:</font>
+            <font face="Times-Roman"> [[ o.partner_id.number or '/' ]]</font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">[[ o.partner_id.title or '' ]] [[ o.partner_id.name ]]</para>
+          <para style="P3">[[ o.address_invoice_id.title or '' ]] [[ o.address_invoice_id.name ]]</para>
+          <para style="P3">[[ o.address_invoice_id.street ]]</para>
+          <para style="P3">[[ o.address_invoice_id.street2 or '' ]]</para>
+          <para style="P3">[[ o.address_invoice_id.zip or '' ]] [[ o.address_invoice_id.city or '' ]]</para>
+          <para style="P3">[[ o.address_invoice_id.state_id and o.address_invoice_id.state_id.name or '' ]]</para>
+          <para style="P3">[[ o.address_invoice_id.country_id and o.address_invoice_id.country_id.name or '' ]]</para>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+		  <!--
+          <para style="P3">Tel. : [[ o.address_invoice_id.phone or '' ]]</para>
+          <para style="P3">Fax : [[ o.address_invoice_id.fax or '' ]]</para>
+		  -->
+          <para style="P3">VAT : [[ o.partner_id.vat or '' ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P6">
+      <font color="white"> </font>
+    </para>
+    <para style="P3">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="242.0,39.0,86.0,58.0,42.0,60.0" style="Tableau6">
+      <tr>
+        <td>
+          <para style="P7">Title and author(s)</para>
+        </td>
+        <td>
+          <para style="P8">Qty</para>
+        </td>
+        <td>
+          <para style="P8">P.U. TTC</para>
+        </td>
+        <td>
+          <para style="P8">Disc%</para>
+        </td>
+        <td>
+          <para style="P8">VAT</para>
+        </td>
+        <td>
+          <para style="P8">P.N. HTVA</para>
+        </td>
+      </tr>
+    </blockTable>
+    <section>
+      <para style="P9">[[repeatIn(o.invoice_line,'l') ]]</para>
+      <blockTable colWidths="241.0,41.0,86.0,57.0,41.0,61.0" style="Tableau7">
+        <tr>
+          <td>
+            <para style="P10">[[ l.product_id and l.product_id.name or l.name ]]</para>
+            <para style="P23">[[(author(l.product_id.id)) and ("Author(s) : " + author(l.product_id.id))]]</para>
+            <para style="P23">[[l.product_id and (( l.product_id.ean13 and("EAN : "+ l.product_id.ean13)) or (l.product_id.isbn and("ISBN : "+ l.product_id.isbn)) )]]</para>
+            <para style="P23">[[ (l.customer_ref or l.production_lot_id) and ("Your Reference : " + (l.customer_ref or "-")+((l.customer_ref or l.production_lot_id) and " / " or "")+ (l.production_lot_id  and(partner_ref(l.production_lot_id.id)['partner_ref']) or "-" )) ]]</para>
+            <para style="P23">[[l.production_lot_id and ("Our Reference : " + l.production_lot_id.name)]][[l.production_lot_id and(" / "+ (partner_ref(l.production_lot_id.id)['name']))]]</para>
+			<xpre>[[ (l.note or removeParentNode('xpre')) and '' ]] [[ l.note ]]</xpre>
+          </td>
+          <td>
+          <para style="P11">[[ '%.f' % l.quantity ]] </para>
+          </td>
+          <td>
+            <para style="P11">[[ '%.2f' % l.price_unit ]]</para>
+          </td>
+          <td>
+            <para style="P11">[[ '%.2f' % (l.discount or 0.0) ]] </para>
+          </td>
+          <td>
+            <para style="P12">[[ ', '.join([lt.name for lt in l.invoice_line_tax_id]) ]]</para>
+          </td>
+          <td>
+            <para style="P13">[[ '%.2f' %l.price_subtotal ]] [[o.currency_id.code ]]</para>
+          </td>
+        </tr>
+      </blockTable>
+    </section>
+    <blockTable colWidths="215.0,313.0" style="Tableau3">
+      <tr>
+        <td>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+          <para style="Standard">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <blockTable colWidths="214.0,95.0" style="Tableau5">
+            <tr>
+              <td>
+                <para style="P11">Total Quantity:</para>
+              </td>
+              <td>
+                <para style="P14">[[ '%.f' %qty(o) ]]</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P11">Total excl. VAT:</para>
+              </td>
+              <td>
+                <para style="P15">[[ '%.2f' % o.amount_untaxed ]] [[o.currency_id.code ]]</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P11">Total Vat:</para>
+              </td>
+              <td>
+                <para style="P17">[[ '%.2f' % o.amount_tax ]] [[o.currency_id.code ]]</para>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <para style="P11"><font face="Times-Roman">Total </font>(incl. taxes):</para>
+              </td>
+              <td>
+                <para style="P16">[[ '%.2f' % o.amount_total ]] [[o.currency_id.code ]]</para>
+              </td>
+            </tr>
+          </blockTable>
+          <para style="Table Contents">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="527.0" repeatRows="1" style="Table1">
+      <tr>
+        <td>
+          <para style="P19">CERTIFIE SINCERE ET VERITABLE POUR LA SOMME DE :[[(convert(o.amount_total)['french'])]]</para>
+          <para style="P19">CERTIFIED SINCERE AND TRUE FOR THE SUM OF:[[(convert(o.amount_total)['english'])]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <para style="P20">
+      <font color="white"> </font>
+    </para>
+    <para style="P20">
+      <font color="white"> </font>
+    </para>
+    <para style="P21">
+      <font color="white"> </font>
+    </para>
+    <para style="P22">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

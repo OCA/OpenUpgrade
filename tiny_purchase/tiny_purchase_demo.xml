@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<openerp>
+	<data noupdate="1">
+
+		<record model="tiny_purchase.product" id="product1">
+			<field name="name">Product 1</field>
+			<field name="price">10.0</field>
+		</record>
+
+		<record model="tiny_purchase.product" id="product2">
+			<field name="name">Product 2</field>
+			<field name="price">20.0</field>
+		</record>
+
+		<record model="tiny_purchase.order" id="order1">
+			<field name="user_id" ref="base.user_admin"/>
+		</record>
+
+		<record model="tiny_purchase.line" id="line1">
+			<field name="product_id" ref="product1"/>
+			<field name="quantity">2</field>
+			<field name="order_id" ref="order1"/>
+		</record>
+		<record model="tiny_purchase.line" id="line2">
+			<field name="product_id" ref="product2"/>
+			<field name="quantity">1</field>
+			<field name="order_id" ref="order1"/>
+		</record>
+
+	</data>
+</openerp>

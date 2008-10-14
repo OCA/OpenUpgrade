@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<openerp>
+<data>
+
+	<wizard
+		string="Get Currency Rate"
+		model="res.currency"
+		name="currency.rate"
+		id="wizard_currency_rate" />			
+		
+	<menuitem
+		name="Administration/Configuration/Base/Get Currency Rate"
+		action="wizard_currency_rate"
+		type="wizard"
+		id="menu_currency_rate"/>
+		
+</data>
+</openerp>

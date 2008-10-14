@@ -1,0 +1,242 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_server_statestics_graph">
+			<field name="name">report.smtp.server.graph</field>
+			<field name="model">report.smtp.server</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Server Statestics" type="bar">
+					<field name="model" />
+					<field name="no" operator="+" />
+					<field name="history" operator="+" group="True" />
+				</graph>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_server_statestics_tree">
+			<field name="name">report.smtp.server.tree</field>
+			<field name="model">report.smtp.server</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Server Statestics">
+					<field name="model" />
+					<field name="no" />
+					<field name="history" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_server_statestics_form">
+			<field name="name">report.smtp.server.form</field>
+			<field name="model">report.smtp.server</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Server Statestics">
+					<field name="model" select="1" />
+					<field name="no" />
+					<field name="history" select="1" />
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window"
+			id="action_view_server_statestics_graph">
+			<field name="res_model">report.smtp.server</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">graph,tree</field>
+			<field name="view_id" ref="view_server_statestics_graph" />
+		</record>
+
+		<record model="ir.ui.view" id="company_form">
+			<field name="name">smtp.company.form</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form" />
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Email Address">
+						<field name="addresses" colspan="4"
+							nolabel="1">
+							<tree string="Email Address">
+								<field name="name" />
+								<field name="email" />
+							</tree>
+							<form string="Email Address">
+								<field name="name" />
+								<field name="email"
+									domain="[('state','=','confirm')]" />
+							</form>
+						</field>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="email_smtpclient_form">
+			<field name="name">email.smtpclient.form</field>
+			<field name="model">email.smtpclient</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="SMTP Server">
+					<notebook>
+
+						<page string="Configuration">
+							<separator string="General Information"
+								colspan="4" />
+							<field name="name" select="1" />
+							<field name="date_create" select="1" />
+							<newline />
+							<separator string="User Information"
+								colspan="4" />
+							<field name="from" select="1" />
+							<field name="email" select="1"
+								on_change="change_email(email)" />
+							<newline />
+							<field name="user" select="1" />
+							<field name="password" select="1" />
+							<newline />
+							<separator string="Server Information"
+								colspan="4" />
+							<field name="server" select="1" />
+							<field name="port" select="1" />
+							<field name="ssl" select="1" />
+							<separator string="Verification Information"
+								colspan="4" />
+							<field name="state" select="1" />
+							<field name="type" select="1" />
+							<field name="active" select="1" />
+						</page>
+
+						<page string="Messagess">
+							<vpaned>
+								<child1>
+									<separator
+										string="Verification Message" colspan="4" />
+									<field name="verify_email"
+										select="1" colspan="4" nolabel="1" />
+									<label
+										string="__code__ for Verification Code" />
+									<separator string="Test Message"
+										colspan="4" />
+									<field name="test_email" select="1"
+										colspan="4" nolabel="1" />
+								</child1>
+								<child2>
+									<separator string="Message"
+										colspan="4" />
+									<field name="body" select="1"
+										colspan="4" nolabel="1" />
+									<label
+										string="__name__ for Customer Name" />
+									<label
+										string="__number__ for Invoice / Sales Number" />
+									<label
+										string="__user__ for User Name" />
+								</child2>
+							</vpaned>
+						</page>
+
+						<page string="Permission">
+							<separator string="Access Permission"
+								colspan="4" />
+							<field name="users_id" select="1"
+								colspan="4" nolabel="1" />
+						</page>
+
+						<page string="Statestic">
+							<field name="server_statestics"
+								mode="graph,tree" colspan="4" nolabel="1" />
+						</page>
+
+						<page string="History">
+							<field name="history_line" select="1"
+								colspan="4" nolabel="1">
+								<tree string="Server History">
+									<field name="user_id" />
+									<field name="date_create" />
+									<field name="name" />
+									<field name="email" />
+									<field name="model" />
+									<field name="resource_id" />
+								</tree>
+								<form string="Server History">
+									<field name="user_id" />
+									<field name="date_create" />
+									<field name="name" colspan="4" />
+									<field name="email" />
+									<newline />
+									<field name="model" />
+									<field name="resource_id" />
+								</form>
+							</field>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="email_smtpclient_tree">
+			<field name="name">email.smtpclient.form</field>
+			<field name="model">email.smtpclient</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="SMTP Server">
+					<field name="name" />
+					<field name="from" />
+					<field name="user" />
+					<field name="password" />
+					<field name="server" />
+					<field name="port" />
+					<field name="type" />
+					<field name="ssl" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window"
+			id="action_email_smtpclient_tree">
+			<field name="name">Email Server</field>
+			<field name="res_model">email.smtpclient</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="email_smtpclient_tree" />
+		</record>
+		
+		<menuitem name="Configuration" id="menu_smtpclient_administration_cofiguration" parent="base.menu_administration"/>
+		
+		<menuitem name="Servers" id="menu_smtpclient_administration_server" parent="menu_smtpclient_administration_cofiguration"/>
+		
+		<menuitem name="SMTP Server" id="menu_smtpclient_administration_smtp_server" parent="menu_smtpclient_administration_server" action="action_email_smtpclient_tree"/>
+		
+		<record model="ir.ui.view" id="email_smtpclient_history_tree">
+			<field name="name">email.smtpclient.history.tree</field>
+			<field name="model">email.smtpclient.history</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Server History">
+					<field name="server_id" />
+					<field name="user_id" />
+					<field name="date_create" />
+					<field name="model" />
+					<field name="resource_id" />
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="email_smtpclient_history_form">
+			<field name="name">email.smtpclient.history.form</field>
+			<field name="model">email.smtpclient.history</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Server History">
+					<field name="server_id"
+						domain="[('id','=',parent.id)]" />
+					<field name="date_create" />
+					<field name="model" />
+					<field name="resource_id" />
+					<field name="name" colspan="4" />
+				</form>
+			</field>
+		</record>
+	</data>
+</openerp>

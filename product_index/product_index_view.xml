@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	#---------------------------------------------------------
+	# Indexes
+	#---------------------------------------------------------
+	<record model="ir.ui.view" id="view_index_tree">
+		<field name="name">product.index.tree</field>
+		<field name="model">product.index</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Indexes">
+				<field name="name"/>
+				<field name="code"/>
+				<field name="rate"/>
+				<field name="rounding"/>
+				<field name="active" />
+			</tree>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_index_form">
+		<field name="name">product.index.form</field>
+		<field name="model">product.index</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="index">
+				<field name="name" select="1" colspan="3"/>
+				<field name="code" select="1"/>
+				<field name="rate"/>
+				<field name="rounding"/>
+				<field name="active"  select="1"/>
+				<field name="rate_ids" colspan="4" nolabel="1" mode="tree,form">
+					<form string="Rates">
+						<field name="name"/>
+						<field name="rate"/>
+					</form>
+					<tree string="Rates">
+						<field name="name"/>
+						<field name="rate"/>
+					</tree>
+				</field>
+			</form>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_index_form">
+		<field name="name">product.index</field>
+		<field name="res_model">product.index</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form,tree</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_index_tree">
+		<field name="name">product.index</field>
+		<field name="res_model">product.index</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+	
+	<menuitem name="Indexes" id="menu_product_config_index" parent="product.menu_config_product" action="action_index_tree"/>
+	
+	<menuitem name="New index" id="menu_product_config_new_index" parent="menu_product_config_index" action="action_index_form"/>
+
+</data>
+</openerp>

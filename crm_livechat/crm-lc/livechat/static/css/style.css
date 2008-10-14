@@ -1,0 +1,144 @@
+/*
+ * Quick mash-up of CSS for the TG quick start page.
+ */
+
+body {
+margin: 0;
+padding: 0;
+  border-left: 1px solid #aaa;
+  border-right: 1px solid #aaa;
+  border-top : 1px solid #aaa;
+}
+#wrap {
+position: absolute; /* Needed for Safari */
+width: 100%;
+}
+
+a.link, a, a.active {
+  color: #369;
+}
+
+.sender
+{
+ color: #204A87;
+ font-weight:bold;
+
+}
+
+.reciever
+{
+	color : #AA1E09;
+	font-weight:bold;
+
+}
+
+.message
+{
+	color : black;
+	font-style:italic;
+}
+
+.chatbox
+{
+	background-color:white;
+	vertical-align:top;
+	height:100%;
+
+}
+
+.topiclist
+{
+	width : 100%;
+	font-style:italic;
+	color: blue;
+}
+
+#main_content {
+  color: black;
+  font-size:100%;
+  font-family: "Century Schoolbook L", Georgia, serif;
+  margin: 0 auto 0 auto;
+}
+
+#sidebar {
+  border: 1px solid #aaa;
+  background-color: #eee;
+  margin: 0.5em;
+  float: right;
+  width: 200px;
+  font-size: 88%;
+}
+
+#sidebar h2 {
+  margin-top: 0;
+}
+
+#sidebar ul {
+  margin-left: 1.5em;
+  padding-left: 0;
+}
+
+h1,h2,h3,h4,h5,h6,#getting_started_steps {
+  font-family: "Century Schoolbook L", Georgia, serif;
+  font-weight: bold;
+}
+
+#getting_started_steps a {
+  text-decoration: none;
+}
+
+#getting_started_steps a:hover {
+  text-decoration: underline;
+}
+
+#getting_started_steps li {
+  font-size: 80%;
+  margin-bottom: 0.5em;
+}
+
+#getting_started_steps h2 {
+  font-size: 120%;
+}
+
+#getting_started_steps p {
+  font: 100% "Lucida Grande", "Lucida Sans Unicode", geneva, verdana, sans-serif;
+}
+
+#footer {
+  border-top: 0px none;
+  color: #999;
+  font-size: 80%;
+  text-align: center;
+  width: 757px;
+  margin: 0 auto 1em auto;
+}
+
+.code {
+  font-family: monospace;
+}
+
+span.code {
+  font-weight: bold;
+  background: #eee;
+}
+
+#status_block {
+  margin: 0 auto 0.5em auto;
+  background: #cec URL('../images/ok.png') left center no-repeat;
+  border: 1px solid #9c9;
+  width: 450px;
+  font-size: 120%;
+  font-weight: bolder;
+}
+
+.notice {
+  margin: 0.5em auto 0.5em auto;
+  width: 450px;
+  background: #eef URL('../images/info.png') left center no-repeat;
+  border: 1px solid #cce;
+}
+
+.fielderror {
+    color: red;
+    font-weight: bold;
+}

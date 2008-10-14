@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<wizard string="Send By Email" 
+				model="stock.picking" 
+				multi="True"
+				name="stock.picking.send_mail" 
+				id="stock_picking_email_send_wizard" />	
+				
+		<wizard string="Partial packing" 
+				multi="True"
+				model="stock.picking" 
+				name="stock.partial_picking1" 
+				id="stock.partial_picking" />	
+				
+	</data>
+</openerp>

@@ -1,0 +1,241 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="view_jabber_account">
+			<field name="name">Jabber Account Form</field>
+			<field name="model">crm_livechat.jabber</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Jabber Accounts">
+					<field name="name" select="1"/>
+					<field name="server" select="1"/>
+					<field name="login" select="1"/>
+					<field name="password"/>
+					<field name="ssl"/>
+					<field name="port"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_jabber_account_tree">
+			<field name="name">Jabber Account Tree</field>
+			<field name="model">crm_livechat.jabber</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Jabber Accounts">
+					<field name="name"/>
+					<field name="server"/>
+					<field name="login"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_jabber_account">
+			<field name="name">Live Chat - Jabber Account</field>
+			<field name="res_model">crm_livechat.jabber</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Live Chat" id="menu_crm_livechat" parent="crm.menu_crm"/>
+		<menuitem name="Configuration" id="menu_crm_livechat_config" parent="menu_crm_livechat"/>
+		<menuitem name="Jabber Accounts" id="menu_crm_livechat_config_jabber" parent="menu_crm_livechat_config" action="action_jabber_account"/>
+
+		<record model="ir.ui.view" id="view_jabber_livechat">
+			<field name="name">LiveChat Sessions</field>
+			<field name="model">crm_livechat.livechat</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Live Chat Sessions">
+					<field name="name" select="1"/>
+					<field name="state" select="1"/>
+					<field name="max_per_user"/>
+					<separator string="Users Accounts" colspan="4"/>
+					<field name="user_ids" nolabel="1" colspan="4">
+						<tree string="Users">
+							<field name="name"/>
+							<field name="user_id"/>
+							<field name="languages"/>
+							<field name="state"/>
+						</tree>
+						<form string="Users">
+							<field name="name" colspan="4"/>
+							<field name="user_id"/>
+							<field name="jabber_id"/>
+							<field name="languages"/>
+							<separator colspan="4" string="Status"/>
+							<field name="state"/>
+							<group col="2" colspan="2">
+								<button name="set_actif" type="object" string="Activate"/>
+								<button name="set_unactif" type="object" string="Desactivate"/>
+							</group>
+						</form>
+					</field>
+			<!-- 		<separator string="Visitors Accounts" colspan="4"/>
+					<field name="partner_ids" nolabel="1" colspan="4">
+						<tree string="Visitors">
+							<field name="name"/>
+							<field name="available"/>
+							<field name="available_date"/>
+							<field name="state"/>
+						</tree>
+					 
+					 	<form string="Visitors">
+							<field name="name" colspan="4" select="1"/>
+							<field name="jabber_id" select="2"/>
+							<separator colspan="4" string="Status"/>
+							<field name="available"/>
+							<field name="available_date"/>
+							<field name="state" select="1"/>
+							<group col="2" colspan="2">
+								<button name="set_actif" type="object" string="Activate"/>
+								<button name="set_unactif" type="object" string="Desactivate"/>
+							</group>
+						</form>
+					</field>-->
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_jabber_livechat_tree">
+			<field name="name">Live Chat Tree</field>
+			<field name="model">crm_livechat.livechat</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Live Chats">
+					<field name="name"/>
+					<field name="max_per_user"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_jabber_livechat">
+			<field name="name">Live Chat - Livechat</field>
+			<field name="res_model">crm_livechat.livechat</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Live Chat Sessions" id="menu_crm_livechat_config_session" parent="menu_crm_livechat_config" action="action_jabber_livechat"/>
+
+		<record model="ir.ui.view" id="view_livechat_partner">
+			<field name="name">partners Accounts</field>
+			<field name="model">crm_livechat.livechat.partner</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="partners Accounts">
+					<field name="name" select="1"/>
+					<!--  <field name="livechat_id" select="1"/>-->
+					<field name="available" select="2"/>
+					<field name="available_date"/>
+					<field name="jabber_id" select="2"/>
+					<separator colspan="4" string="Status"/>
+					<field name="state" select="1"/>
+					<group col="2" colspan="2">
+						<button name="set_actif" type="object" string="Activate"/>
+						<button name="set_unactif" type="object" string="Desactivate"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_jabber_livechat_partner_tree">
+			<field name="name">partners Accounts</field>
+			<field name="model">crm_livechat.livechat.partner</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="partners Accounts">
+					<field name="name"/>
+					<!-- <field name="livechat_id"/>-->
+					<field name="available"/>
+					<field name="available_date"/>
+					<field name="jabber_id"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_jabber_livechat_partner">
+			<field name="name">Visitors Accounts - Livechat</field>
+			<field name="res_model">crm_livechat.livechat.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Visitors Accounts" id="menu_crm_livechat_config_visitor" parent="menu_crm_livechat_config" action="action_jabber_livechat_partner"/>
+
+		<record model="ir.ui.view" id="view_livechat_user">
+			<field name="name">Users Accounts</field>
+			<field name="model">crm_livechat.livechat.user</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Users Accounts">
+					<field name="name" select="1"/>
+					<field name="livechat_id" select="1"/>
+					<field name="user_id" select="1"/>
+					<field name="jabber_id" select="2"/>
+					<field name="languages" select="2"/>
+					<separator colspan="4" string="Status"/>
+					<field name="state"/>
+					<group col="2" colspan="2">
+						<button name="set_actif" type="object" string="Activate"/>
+						<button name="set_unactif" type="object" string="Desactivate"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_jabber_livechat_user">
+			<field name="name">Users Accounts</field>
+			<field name="model">crm_livechat.livechat.user</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Users Accounts">
+					<field name="name"/>
+					<field name="livechat_id"/>
+					<field name="user_id"/>
+					<field name="jabber_id"/>
+					<field name="languages"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_jabber_livechat_user">
+			<field name="name">Users Accounts - Livechat</field>
+			<field name="res_model">crm_livechat.livechat.user</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Users Accounts" id="menu_crm_livechat_config_user" parent="menu_crm_livechat_config" action="action_jabber_livechat_user"/>
+		
+		<record model="ir.ui.view" id="view_livechat_log">
+			<field name="name">log Accounts</field>
+			<field name="model">crm_livechat.log</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Live Chat Logs">
+					<field name="name" select="1"/>
+					<field name="user_id" select="1"/>
+					<field name="livechat_id" select="1"/>
+					<field name="note" colspan="4" select="2"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_jabber_livechat_log_tree">
+			<field name="name">Livechat Logs</field>
+			<field name="model">crm_livechat.log</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Live Chat Logs">
+					<field name="name" select="1"/>
+					<field name="user_id" select="1"/>
+					<field name="livechat_id" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_jabber_livechat_log">
+			<field name="name">Livechat - Logs</field>
+			<field name="res_model">crm_livechat.log</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Live Chat Logs" id="menu_crm_livechat_config_log" parent="menu_crm_livechat" action="action_jabber_livechat_log"/>
+
+	</data>
+</openerp>

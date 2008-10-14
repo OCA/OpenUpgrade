@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+        <record model="res.groups" id="partner_base">
+                <field name="name">Acces partenaire base</field>
+        </record>
+        <record model="res.groups" id="partner_admin">
+                <field name="name">Acces partenaire admin</field>
+        </record>
+
+        <record model="res.groups" id="compta_base">
+                <field name="name">Acces compta base</field>
+        </record>
+        <record model="res.groups" id="compta_admin">
+                <field name="name">Acces compta admin</field>
+        </record>
+
+        <record model="res.groups" id="grempty">
+                <field name="name">Groupe vide</field>
+        </record>
+
+
+
+        <record model="res.groups" id="product_base">
+                <field name="name">Acces livre base</field>
+        </record>
+        <record model="res.groups" id="product_admin">
+                <field name="name">Acces livre admin</field>
+        </record>
+
+
+<!-- 		<menuitem name="Books" groups="admin,Acces livre admin,Acces livre base"  id="product.menu_main_product" icon="terp-product"/> -->
+
+		<record model="ir.ui.menu" id="product.menu_main_product">
+			<field name="name">Books</field>
+			<field name="groups_id" eval="[(6,0,[ref('base.group_admin'), ref('product_admin'), ref('product_base'),])]"/>
+			<field name="icon">terp-product</field>
+		</record>
+
+<!-- 		<menuitem id="menu_products" groups="Groupe vide" /> -->
+
+		<record model="ir.ui.menu" id="product.menu_products">
+			<field name="groups_id" eval="[(6,0,[ref('grempty')])]"/>
+		</record>
+
+
+
+        <record model="res.groups" id="stock_base">
+                <field name="name">Acces stock base</field>
+        </record>
+        <record model="res.groups" id="stock_admin">
+                <field name="name">Acces stock admin</field>
+        </record>
+		<menuitem id="stock.menu_action_picking_form" groups="admin,Acces stock admin,Acces stock base"  name="Inventory Control/Packing Lists"/>
+
+		<menuitem name="Inventory Control" id="stock.menu_stock_root" groups="admin,Acces stock admin"/>
+		<menuitem name="Inventory Control/Configuration" groups="admin,Acces stock admin"  id="stock.stock_config"/>
+		<menuitem name="Inventory Control/Physical Inventory"
+				  id="stock.menu_action_inventory_form"  groups="admin,Acces stock admin"/>
+		<menuitem name="Inventory Control/Traceability" id="stock.stock_traceability"
+				  groups="admin,Acces stock admin"/>
+		<menuitem name="Inventory Control/Locations Structure" id="stock.menu_action_location_tree"
+				  groups="admin,Acces stock admin"/>
+		<menuitem name="Inventory Control/Delivery Order" id="stock.menu_action_move_form" groups="admin,Acces stock admin"/>
+
+		<menuitem name="Administration" groups="base.group_admin" icon="terp-administration" id="menu_admin_compta"/>
+
+
+
+        <record model="res.groups" id="purchase_base">
+                <field name="name">Acces commandes fournisseur</field>
+        </record>
+		<menuitem name="Purchase Management" id="purchase.menu_purchase_root" groups="admin,Acces commandes fournisseur"/>
+
+
+
+        <record model="res.groups" id="sale_base">
+                <field name="name">Acces commandes client base</field>
+        </record>
+        <record model="res.groups" id="sale_admin">
+                <field name="name">Acces commande client admin</field>
+        </record>
+		<menuitem name="Sales Management"  id="sale.menu_sale_root" groups="admin,Acces commandes client base,Acces commande client admin"/>
+		<menuitem name="Sales Management/Configuration" groups="admin,Acces commande client admin" id="sale.sale_config"/>
+
+
+
+  		<menuitem name="Human Resources" groups="Groupe vide" sequence="1" id="hr.menu_hr_root"/>
+ 		<menuitem name="Production" groups="Groupe vide" sequence="1" id="mrp.menu_mrp_root"/>
+
+</data>
+</openerp>

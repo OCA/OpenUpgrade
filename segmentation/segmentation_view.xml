@@ -1,0 +1,252 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<wizard
+			string="Select partners"
+			model="segmentation.profile"
+			name="open_partner"
+			menu="False"
+			id="wizard_open_partner"/>
+
+		<wizard
+			string="Using a questionnaire"
+			model="segmentation.questionnaire"
+			name="open_questionnaire"
+			menu="False"
+			id="wizard_open_questionnaire"/>
+
+		<record model="ir.actions.act_window" id="open_questionnaires">
+		  <field name="name">Questionnaires</field>
+		  <field name="res_model">segmentation.questionnaire</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Profiling" id="menu_segmentation_profile" parent="base.menu_base_config"/>
+		<menuitem name="Questionnaires" id="menu_segmentation_profile_questionnair" parent="menu_segmentation_profile" action="open_questionnaires"/>
+		
+		<record model="ir.actions.act_window" id="open_questions">
+		  <field name="name">Questions</field>
+		  <field name="res_model">segmentation.question</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Questions" id="menu_segmentation_profile_question" parent="menu_segmentation_profile" action="open_questions"/>
+		
+		<record model="ir.actions.act_window" id="open_profiles">
+		  <field name="name">Profiles</field>
+		  <field name="res_model">segmentation.profile</field>
+		  <field name="view_type">form</field>
+		  <field name="view_mode">tree,form</field>
+		</record>
+		
+		<menuitem name="Profiles" id="menu_segmentation_profile_profile" parent="menu_segmentation_profile" action="open_profiles"/>
+		
+	<record model="ir.ui.view" id="view_questionnaire_tree">
+		<field name="name">Questionnaires</field>
+		<field name="model">segmentation.questionnaire</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		  <tree string="Questionnaires">
+			<field name="name" select="1" colspan="4"/>
+			<field name="description" select="1" colspan="4"/>
+			<field name="questions_ids" colspan="4" nolabel="1"/>
+		  </tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_questionnaire_form">
+		<field name="name">Questionnaires</field>
+		<field name="model">segmentation.questionnaire</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		  <form string="Questionnaires">
+			<field name="name" select="1" />
+			<newline/>
+			<field name="description" select="1" />
+			<newline/>
+			<field name="questions_ids" colspan="4"/>
+		  </form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_profile">
+		<field name="name">segmentation profiles</field>
+		<field name="model">segmentation.profile</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		  <form string="Profiles">	
+			<field name="name" colspan="2" />
+			<button string="View Partners" name="%(wizard_open_partner)d" type="action" colspan="2"/>
+			<field name="parent_id" colspan="2" />
+			<button string="Compute Segmentation" name="process_continue" type="object" colspan="2"/>
+			<newline/>
+      		<separator string="Included Answers :" colspan="2" />
+			<separator string="Excluded Answers :" colspan="2"/>
+			<newline/>
+			<field name="answer_yes" nolabel="1" colspan="2" />
+			<field name="answer_no" nolabel="1" colspan="2" />
+		  </form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_answer">
+		<field name="name">Answers</field>
+		<field name="model">segmentation.answer</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		  <tree string="Answers">
+			<field name="question_id" select="1"/>
+			<field name="name" select="1"/>
+		  </tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_answer_form">
+		<field name="name">Answers</field>
+		<field name="model">segmentation.answer</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		  <form string="Answers">
+			<field name="question_id" select="1"/>
+			<field name="name" select="1"/>
+		  </form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_question_tree">
+		<field name="name">Questions</field>
+		<field name="model">segmentation.question</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+		  <tree string="Questions">
+			<field name="name" select="1" colspan="4"/>
+			<field name="answers_ids" colspan="4" nolabel="1"/>
+		  </tree>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_question_form">
+		<field name="name">Questions</field>
+		<field name="model">segmentation.question</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+		  <form string="Questions">
+			<field name="name" select="1" />
+			<newline/>
+			<separator string="Avalaible answers" colspan="4"/>
+			<field name="answers_ids" colspan="4" nolabel="1" editable="bottom">
+			  <tree string="Answers" editable="bottom">
+				<field name="name" select="1"/>
+			  </tree>
+			  <form string="Answers">
+				<field name="name" select="1"/>
+			  </form>
+			  </field>
+		  </form>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="base.view_partner_form">
+		<field name="name">res.partner.form</field>
+		<field name="model">res.partner</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Partners">
+			<notebook>
+				<page string="General">
+					<field name="name" select="1"/>
+					<field name="title" domain="[('domain', '=', 'partner')]"/>
+					<field name="ref" select="1"/>
+					<field name="lang" select="2"/>
+					<newline/>
+					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
+						<form string="Partner contacts">
+							<field name="name" select="2"/>
+							<field name="title" domain="[('domain', '=', 'contact')]"/>
+							<field name="function"/>
+							<field name="type" select="2"/>
+							<field name="street" select="2"/>
+							<field name="street2"/>
+							<newline/>
+							<field name="zip" select="2"/>
+							<field name="city" select="2"/>
+							<newline/>
+							<field name="country_id" select="2"/>
+							<field name="state_id" select="2"/>
+							<newline/>
+							<field name="phone"/>
+							<field name="fax"/>
+							<newline/>
+							<field name="mobile"/>
+							<field name="email" select="2" widget="email" />
+						</form>
+					</field>
+					<separator string="Categories" colspan="2"/>
+					<separator string="Matching Profiles" colspan="2"/>
+					<field name="category_id" colspan="2" select="2" nolabel="1"/>
+					<field name="profiles_ids" colspan="2" select="2" nolabel="1"/>
+				</page>
+				<page string="Extra Info">
+					<field name="active" select="2" />
+					<newline/>
+					<field name="credit_limit"/>
+					<field name="user_id" select="2"/>
+					<field name="parent_id"/>
+					<field name="website" widget="url"/>
+					<field name="date" select="2"/>
+					<separator string="Notes" colspan="4"/>
+					<field name="comment" colspan="4" nolabel="1"/>
+				</page>
+				<page string="Event History">
+					<field name="events" colspan="4" nolabel="1" widget="one2many_list"/>
+				</page>
+				<page string="Properties">
+					<properties/>
+				</page>
+
+				<page string="Profiling">
+				  <button string="Use a questionnaire" name="%(wizard_open_questionnaire)d" type="action" colspan="1"/>
+				  <newline/>
+				  <field name="answers_ids" colspan="4" nolabel="1"/>
+				</page>
+			</notebook>
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_profile_tree">
+		<field name="name">segmentation.profile.tree</field>
+		<field name="model">segmentation.profile</field>
+		<field name="type">tree</field>
+		<field name="field_parent">child_ids</field>
+		<field name="arch" type="xml">
+			<tree string="Partner Profiles">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_partner_profile">
+		<field name="name">Partner profiles</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">segmentation.profile</field>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="view_partner_profile_tree"/>
+		<field name="domain">[('parent_id','=',False)]</field>
+	</record>
+
+	<menuitem name="Partners by Profile" id="menu_partner_profile_main" parent="base.menu_base_partner" action="action_partner_profile"/>
+
+	<record model="ir.values" id="ir_action_partner_by_profile">
+		<field name="key2" eval="'tree_but_open'"/>
+		<field name="model" eval="'segmentation.profile'"/>
+		<field name="name">Open partners</field>
+		<field name="value" eval="'ir.actions.wizard,%d'%wizard_open_partner"/>
+		<field name="object" eval="True"/>
+	</record>
+
+	</data>
+</openerp>

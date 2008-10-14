@@ -1,0 +1,114 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="hr_employee_max_travel_allow_0" model="hr.employee.max.travel.allow">
+			<field eval="10.0" name="amount_per_day"/>
+			<field eval="1000.0" name="amount_per_year"/>
+		</record>
+	</data>
+	
+	
+	<data noupdate="1">
+		<record id="hr.dep_it" model="hr.department">
+			<field eval="2" name="max_temp_contract"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="hr_employee_amit0" model="hr.employee">
+			<field eval="1" name="active"/>
+			<field eval="0" name="manager"/>
+			<field eval="2" name="dist_home_work"/>
+			<field eval="&quot;&quot;&quot;absent&quot;&quot;&quot;" name="state"/>
+			<field eval="&quot;&quot;&quot;Dhaval&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="waowiaww"/>
+			<field eval="0" name="travel_allowance"/>
+			<field eval="0" name="pension_waiver"/>
+			<field eval="0" name="attachment_earings_order"/>
+			<field eval="0" name="pension"/>
+		</record>
+		<record id="hr_contract_cont0" model="hr.contract">
+			<field name="function" ref="base.function_director"/>
+			<field eval="3000.00" name="wage"/>
+			<field name="wage_type_id" ref="hr_contract.hr_contract_monthly_net"/>
+			<field eval="&quot;&quot;&quot;temp&quot;&quot;&quot;" name="form_of_employment"/>
+			<field eval="&quot;&quot;&quot;2008-06-18&quot;&quot;&quot;" name="date_start"/>
+			<field eval="&quot;&quot;&quot;Cont-1&quot;&quot;&quot;" name="name"/>
+			<field name="employee_id" ref="hr_employee_amit0"/>
+			<field eval="8" name="working_hours_per_day"/>
+			<field name="department_id" ref="hr.dep_it"/>
+		</record>
+		<record id="md_hr_contract_availability_0" model="md.hr.contract.availability">
+			<field name="contract_id" ref="hr_contract_cont0"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="from_hour"/>
+			<field eval="&quot;&quot;&quot;sun&quot;&quot;&quot;" name="day"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="to_hour"/>
+		</record>
+		<record id="md_hr_contract_availability_1" model="md.hr.contract.availability">
+			<field name="contract_id" ref="hr_contract_cont0"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="from_hour"/>
+			<field eval="&quot;&quot;&quot;mon&quot;&quot;&quot;" name="day"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="to_hour"/>
+		</record>
+		<record id="md_hr_contract_availability_2" model="md.hr.contract.availability">
+			<field name="contract_id" ref="hr_contract_cont0"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="from_hour"/>
+			<field eval="&quot;&quot;&quot;tue&quot;&quot;&quot;" name="day"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="to_hour"/>
+		</record>
+	</data>
+	
+	<data noupdate="1">
+		<record id="hr_employee_christophe0" model="hr.employee">
+			<field eval="&quot;&quot;&quot;PN0012&quot;&quot;&quot;" name="code"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="manager"/>
+			<field eval="&quot;&quot;&quot;abc&quot;&quot;&quot;" name="partner_lastname"/>
+			<field eval="&quot;&quot;&quot;B.E&quot;&quot;&quot;" name="education"/>
+			<field eval="&quot;&quot;&quot;xyz&quot;&quot;&quot;" name="maiden_name"/>
+			<field eval="10" name="dist_home_work"/>
+			<field eval="&quot;&quot;&quot;absent&quot;&quot;&quot;" name="state"/>
+			<field eval="2" name="nbr_of_children"/>
+			<field eval="&quot;&quot;&quot;chs@tinyerp.com&quot;&quot;&quot;" name="email"/>
+			<field eval="&quot;&quot;&quot;656565656&quot;&quot;&quot;" name="nin"/>
+			<field eval="&quot;&quot;&quot;Simonis&quot;&quot;&quot;" name="firstname"/>
+			<field eval="&quot;&quot;&quot;123456789&quot;&quot;&quot;" name="phone"/>
+			<field eval="&quot;&quot;&quot;I.T&quot;&quot;&quot;" name="field_of_education"/>
+			<field eval="&quot;&quot;&quot;Christophe &quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="waowiaww"/>
+			<field eval="1" name="travel_allowance"/>
+			<field eval="0" name="pension_waiver"/>
+			<field eval="&quot;&quot;&quot;9879123679&quot;&quot;&quot;" name="mobile"/>
+			<field eval="&quot;&quot;&quot;male&quot;&quot;&quot;" name="gender"/>
+			<field eval="0" name="attachment_earings_order"/>
+			<field eval="&quot;&quot;&quot;Mr&quot;&quot;&quot;" name="prefix"/>
+			<field eval="&quot;&quot;&quot;1992-06-18&quot;&quot;&quot;" name="birthdate"/>
+			<field eval="0" name="pension"/>
+		</record>
+		<record id="hr_contract_contract0" model="hr.contract">
+			<field name="function" ref="base.function_director"/>
+			<field name="wage_type_id" ref="hr_contract.hr_contract_monthly_net"/>
+			<field eval="&quot;&quot;&quot;temp&quot;&quot;&quot;" name="form_of_employment"/>
+			<field eval="&quot;&quot;&quot;2008-06-18&quot;&quot;&quot;" name="date_start"/>
+			<field eval="&quot;&quot;&quot;2008-06-16&quot;&quot;&quot;" name="trial_period_review"/>
+			<field eval="&quot;&quot;&quot;Contract-1&quot;&quot;&quot;" name="name"/>
+			<field name="employee_id" ref="hr_employee_christophe0"/>
+			<field eval="&quot;&quot;&quot;2008-06-27&quot;&quot;&quot;" name="extend_appointment_date"/>
+			<field eval="3000.0" name="wage"/>
+			<field eval="8" name="working_hours_per_day"/>
+			<field eval="&quot;&quot;&quot;2008-06-18&quot;&quot;&quot;" name="date_end"/>
+			<field name="department_id" ref="hr.dep_it"/>
+		</record>
+		<record id="md_hr_contract_availability_0" model="md.hr.contract.availability">
+			<field name="contract_id" ref="hr_contract_contract0"/>
+			<field eval="&quot;&quot;&quot;10:00:00&quot;&quot;&quot;" name="from_hour"/>
+			<field eval="&quot;&quot;&quot;mon&quot;&quot;&quot;" name="day"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="to_hour"/>
+		</record>
+		<record id="md_hr_contract_availability_1" model="md.hr.contract.availability">
+			<field name="contract_id" ref="hr_contract_contract0"/>
+			<field eval="&quot;&quot;&quot;10:00:00&quot;&quot;&quot;" name="from_hour"/>
+			<field eval="&quot;&quot;&quot;tue&quot;&quot;&quot;" name="day"/>
+			<field eval="&quot;&quot;&quot;00:00:00&quot;&quot;&quot;" name="to_hour"/>
+		</record>
+	</data>
+</openerp>

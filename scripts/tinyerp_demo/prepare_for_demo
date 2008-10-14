@@ -1,0 +1,108 @@
+#!/bin/bash
+
+if test "$PWD" != "/opt/tinyerp"
+then
+    echo This script must be run from '/opt/tinyerp'
+    exit 1
+fi
+
+if test ! -d eTiny
+then
+    svn co https://svn.tinyerp.com/svn/etiny/trunk eTiny
+fi
+
+if test ! -d server
+then
+    svn co https://svn.tinyerp.com/svn/terp/trunk/server server
+    svn co https://svn.tinyerp.com/svn/extra_addons/trunk/scripts/tinyerp_demo server/bin/addons/tinyerp_demo
+fi
+
+if test ! -f /etc/cron.d/terp-create-demo
+then
+    ln -s /opt/tinyerp/crontab /etc/cron.d/terp-create-demo
+fi
+
+mkdir -p server/etc/default
+
+if test ! -f server/etc/default/tinyerp-server
+then
+    cat << EOF > server/etc/default/tinyerp-server
+# Defaults for tinyerp-server initscript
+
+# Specify an alternate config file (Default: /etc/tinyerp-server.conf).
+CONFIGFILE="/opt/tinyerp/server/etc/tinyerp-server.conf"
+
+# Specify the TCP port the server should use (Default: 8069).
+PORT="8069"
+
+# Specify the network interface the server should be bound to (Default: localhost).
+INTERFACE="localhost"
+
+# Specify the user name (Default: terp).
+USER="postgres"
+
+# Specify the database name (Default: terp).
+DATABASE_NAME="terp"
+
+# Specify the database user name (Default: terp).
+DATABASE_USER="postgres"
+
+# Specify the database password (Default: not set).
+DATABASE_PASSWORD=""
+
+# Specify the database host (Default: not set).
+DATABASE_HOST=""
+
+# Specify the database port (Default: not set).
+DATABASE_PORT="5432"
+
+# Additional options that are passed to the Daemon.
+DAEMON_OPTS="--config=\$CONFIGFILE --port=\$PORT --interface=\$INTERFACE --database=\$DATABASE_NAME --db_user=\$DATABASE_USER --db_password=\$DATABASE_PASSWORD --db_host=\$DATABASE_HOST --db_port=\$DATABASE_PORT"
+EOF
+fi
+
+if test ! -f server/etc/tinyerp-server.conf
+then
+    cat << EOF > server/etc/tinyerp-server.conf
+[options]
+without_demo = False
+root_path = /opt/tinyerp/server/bin
+verbose = False
+demo = {}
+port = 8069
+reportgz = False
+netinterface = 
+upgrade = False
+secure = False
+admin_passwd = admin
+smtp_server = localhost
+db_user = False
+price_accuracy = 2
+soap = False
+pidfile = False
+db_maxconn = 64
+smtp_password = False
+xmlrpc = True
+db_port = False
+db_name = terp
+netrpc = True
+interface = 
+logfile = False
+pg_path = None
+translate_modules = ['all']
+stop_after_init = False
+netport = 8070
+smtp_user = False
+db_password = False
+debug_mode = False
+db_host = False
+addons_path = /opt/tinyerp/server/bin/addons
+EOF
+fi
+
+echo
+echo "Please update 'admin_passwd' in"
+echo
+echo "1. create_demo_db.py"
+echo "2. /opt/tinyerp/server/etc/tinyerp-server.conf"
+echo

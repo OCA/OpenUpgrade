@@ -1,0 +1,144 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+<!-- view for translation.folder ... -->
+		<record model="ir.ui.view" id="view_translation_folder_form">
+			<field name="name">translation.folder.form</field>
+			<field name="type">form</field>
+			<field name="model">translation.folder</field>
+			<field name="arch" type="xml">
+				<form string="Translation Dossier">
+					<field name="order_desc" select="1"/>
+					<field name="partner_id" select="1"/>
+					<field name="name" select="2" colspan="4"/>
+					<field name="base_amount" select="1"/>
+					<field name="awex_amount" select="1" />
+					<field name="awex_eligible" select="2"/>
+					<field name="purchase_order"/>
+					<field name="order_date" select="2"/>
+					<newline/>
+					<field name="state" select="2"/>
+					<group col="8" colspan="2">
+						<button name="confirmed" string="Confirmed" states="draft"/>
+						<button name="done" string="Done" states="invoiced"/>
+						<button name="cancel" string="Cancel" states="draft,invoiced,confirmed"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_translation_folder_tree">
+			<field name="name">translation.folder.tree</field>
+			<field name="type">tree</field>
+			<field name="model">translation.folder</field>
+			<field name="arch" type="xml">
+				<tree string="Translation Dossier">
+					<field name="order_desc" select="1"/>
+					<field name="partner_id"/>
+					<field name="base_amount"/>
+					<field name="awex_amount"/>
+					<field name="awex_eligible"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_translation_folder">
+			<field name="name">Translation Dossier</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">translation.folder</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_translation_folder_tree"/>
+		</record>
+		<menuitem name="Translation" id="menu_translation_root"/>
+		<menuitem name="Translation Dossier" id="menu_translation_root_dossier" parent="menu_translation_root" action="action_translation_folder"/>
+		
+<!-- view for credit.line ... -->
+		<record model="ir.ui.view" id="view_credit_line_form">
+			<field name="name">credit.line.form</field>
+			<field name="type">form</field>
+			<field name="model">credit.line</field>
+			<field name="arch" type="xml">
+				<form string="Credit line">
+					<field name="name" select="1"/>
+					<field name="from_date" select="1"/>
+					<field name="to_date" select="1" />
+					<field name="global_credit" select="2" />
+					<field name="customer_credit" select="2" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_credit_line_tree">
+			<field name="name">credit.line.tree</field>
+			<field name="type">tree</field>
+			<field name="model">credit.line</field>
+			<field name="arch" type="xml">
+				<tree string="Credit line">
+					<field name="name"/>
+					<field name="from_date"/>
+					<field name="to_date"/>
+					<field name="global_credit"/>
+					<field name="customer_credit"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_credit_line">
+			<field name="name">Credit line</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">credit.line</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_credit_line_tree"/>
+		</record>
+		<menuitem name="Credit Line" id="menu_translation_root_credit" parent="menu_translation_root" action="action_credit_line"/>
+		
+<!-- view for letter.credence ... -->
+		<record model="ir.ui.view" id="view_letter_credence_form">
+			<field name="name">letter.credence.form</field>
+			<field name="type">form</field>
+			<field name="model">letter.credence</field>
+			<field name="arch" type="xml">
+				<form string="Letter of Credence">
+					<field name="emission_date" select="1"/>
+					<field name="asked_amount" select="1" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_letter_credence_tree">
+			<field name="name">letter.credence.tree</field>
+			<field name="type">tree</field>
+			<field name="model">letter.credence</field>
+			<field name="arch" type="xml">
+				<tree string="Letter of Credence">
+					<field name="emission_date" select="1"/>
+					<field name="asked_amount" select="1" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_letter_credence">
+			<field name="name">Letter of Credence</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">letter.credence</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_letter_credence_tree"/>
+		</record>
+		<menuitem name="Letter of Credence" id="menu_translation_root_letter" parent="menu_translation_root" action="action_letter_credence"/>
+
+<!-- view for res.partner inherited ... -->
+	<record model="ir.ui.view" id="view_partner_form_inherit_translation">
+			<field name="name">res.partner.form.translation</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+
+				<notebook position="inside">
+					<page string="Certificate Details">
+						<separator string="Translation" colspan="4"/>
+                        <field name="awex_eligible"/>
+                    </page>
+				</notebook>
+
+			</field>
+		</record>
+
+	</data>
+</openerp>

@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<openerp>
+	<data><!--delete model="ir.actions.report.xml" search="[('model','like','huissier.')]"/-->
+
+	<!--	<report string="Facture salle"
+			model="huissier.dossier" 
+			name="huissier.invoice.salle" 
+			menu="False"/>
+		<report string="Facture vignette"
+		model="huissier.vignettes" 
+		name="huissier.label.invoices" 
+		xml="huissier/report/labels.xml"
+		xsl="huissier/report/labels.xsl"
+		auto="False"
+		id="v_huiss_vign"
+		/>
+		-->
+		<!--report 
+		string="Vignettes1" 
+		model="huissier.vignettes"
+		name="huissier.labels.print" 
+		xml="huissier/report/labels.xml"
+		xsl="huissier/report/labels.xsl"
+		id="v_report_labels"/-->
+		<!-- xsl attribute is needed for the translation system -->
+	
+	<report 
+		string="Badges" 
+		model="res.partner"
+		name="huissier.badge" 
+		rml="huissier/report/badge.rml"
+		id="v_report_badge"/>
+
+	<report 
+		string="Code barres du lot" 
+		model="huissier.lots"
+		name="huissier.code_bar_lot" 
+		rml="huissier/report/code_bar_lot.rml"
+		id="v_report_barcode_lot"/>
+
+<!--		<report 
+		string="PV"
+		model="huissier.lots"
+		name="huissier.pv.from_lot"
+		xml=""
+		xsl="huissier/report/pv.xsl"
+		id="pv_id_lot"
+		menu="False"/>
+-->
+<!--report 
+		string="Attestation" 
+		model="huissier.lots" 
+		name="huissier.lots_attestation" 
+		xml="huissier/report/attestation.xml" 
+		xsl="huissier/report/attestation.xsl"
+		id="report_attestation"/-->
+		<report
+		string="Ticket"	
+		id="report_ticket1" 
+		model="huissier.lots" 
+		name="huissier.ticket" 
+		rml="huissier/report/ticket.rml" 
+		auto="False"
+		/>
+
+		<report
+		string="Attestation"	
+		id="report_attestation1" 
+		model="huissier.lots" 
+		name="huissier.lots_attestation" 
+		rml="huissier/report/attestation.rml" 
+		auto="False"
+		/>
+<!--
+		<report
+		string="Listing palais" 
+		model="huissier.dossier" 
+		name="report.huissier_palais"
+		xml="huissier/report/palais.xml" 
+		xsl="huissier/report/palais.xsl"
+		id="v_palais"
+		/>
+		<report
+		string="PV" 
+		model="huissier.dossier"
+		name="huissier.pv" 
+		xml="huissier/report/pv.xml"
+		xsl="huissier/report/pv.xsl"
+		id="pv_id_dossiers"
+		/>
+
+	-->
+		<report 
+		string="Totaux des ventes"
+		model="huissier.dossier"
+		name="huissier.dossier.totals"
+		xml="huissier/report/total.xml" 
+		xsl="huissier/report/total.xsl"/>
+	
+	<report string="Facture salle" model="huissier.dossier" name="huissier.invoice.salle" auto="False" menu="False"/>
+		<report string="Facture vignette" model="huissier.vignettes" name="huissier.label.invoices" auto="False" menu="False"/>
+		<report 
+		string="Vignettes" 
+		model="huissier.vignettes"
+		name="huissier.labels" 
+		xml="huissier/report/labels.xml" 
+		xsl="huissier/report/labels.xsl"
+		id="id_report_label"
+		/>
+		
+		<!-- xsl attribute is needed for the translation system -->
+		<report string="PV" model="huissier.dossier" name="huissier.pv"  id="vdossier_13"/>
+		<report string="PV" model="huissier.lots" name="report.huissier.pv.from_lot" xml="huissier/report/pv.xml" xsl="huissier/report/pv.xsl" menu="False" id="v_12"/>
+		
+		<report string="Listing palais" model="huissier.dossier" name="report.huissier.palais" menu="False"/>
+</data>
+</openerp>
+

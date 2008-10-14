@@ -1,0 +1,41 @@
+<openerp>
+	<data>
+		
+		#---------------------------------------------------------------------------------------------------------
+		#  Analytic Account form 
+		#---------------------------------------------------------------------------------------------------------
+		
+		# Remove information on Account data => because they move on analysis sheet
+		# --------------------------------------------------------------------------
+			# create a page with invoicing informations
+			# --------------------------------------------------------------------------
+			<record model="ir.ui.view" id="account_analytic_progress_graph">
+				<field name="name">account.analytic.account.progress.view</field> 
+				<field name="model">account.analytic.account</field> 
+				<field name="type">graph</field> 
+				<field name="priority" eval="18"/>
+				<field name="arch" type="xml">
+					<graph type="bar">
+						<field name="name"/>
+							<field name="remaining_ca"/>
+							<field name="ca_invoiced"/>
+					</graph>
+				</field>
+			</record>
+
+
+	<record model="ir.actions.act_window" id="action_account_analytic_progress_graph">
+		<field name="name">Remainging turnover by account</field>
+		<field name="res_model">account.analytic.account</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="domain">[('state','=','open')]</field>
+		<field name="view_id" ref="account_analytic_progress_graph"/>
+	</record>
+	<menuitem parent="account.next_id_40"
+		id="menu_account_analytic_progress_graph"
+		action="action_account_analytic_progress_graph"/> 
+
+
+	</data>
+</openerp>

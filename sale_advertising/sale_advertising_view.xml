@@ -1,0 +1,169 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+<record model="res.request.link">
+    <field name="name">Sale order</field>
+    <field name="object">sale.order</field>
+</record>
+
+<!-- View for sale.order object inherited from sale module -->
+	<record model="ir.ui.view" id="view_order_form_inherit">
+			<field name="name">sale.order.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Advertising">
+						<field name="published_customer" select="2" on_change="onchange_published_customer(published_customer)"/>
+						<field name="advertising_agency" select="2" on_change="onchange_advertising_agency(advertising_agency)"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+<!-- View for sale.order.line object inherited from sale module -->
+	<record model="ir.ui.view" id="view_order_form_inherit1">
+			<field name="name">sale.order.form.inherit.line</field>
+			<field name="type">form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page/field[@name='order_line']/form/notebook" position="inside">
+					<page string="Advertising">
+						<field name="adv_issue"/>
+						<field name="page_reference"/>
+						<field name="from_date"/>
+						<field name="to_date"/>
+						<separator string="Layout Remark" colspan="4"/>
+						<field name="layout_remark" colspan="4" nolabel="1"/>
+					</page>
+				</xpath>
+			</field>
+	</record>
+
+		<record model="ir.ui.view" id="view_order_form_inherit2">
+			<field name="name">sale.order.line.form.inherit.line2</field>
+			<field name="type">form</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2"/>
+			<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Advertising">
+					<field name="adv_issue" select="1"/>
+					<field name="page_reference"/>
+					<field name="from_date"/>
+					<field name="to_date"/>
+					<separator string="Layout Remark" colspan="4"/>
+					<field name="layout_remark" colspan="4" nolabel="1"/>
+				</page>
+			</notebook>
+			</field>
+		</record>
+
+
+<!-- View for sale.advertising.issue object -->
+	<record model="ir.ui.view" id="sale_advertising_issue_form">
+			<field name="name">sale.advertising.issue.form</field>
+			<field name="type">form</field>
+			<field name="model">sale.advertising.issue</field>
+			<field name="arch" type="xml">
+				<form string="Advertising issue">
+					<field name="name" select="1"/>
+					<field name="issue_date" select="2" />
+					<field name="medium" select="2"/>
+					<field name="default_note" colspan="4"/>
+					<field name="state" colspan="4" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sale_advertising_issue_tree">
+			<field name="name">sale.advertising.issue.tree</field>
+			<field name="type">tree</field>
+			<field name="model">sale.advertising.issue</field>
+			<field name="arch" type="xml">
+				<tree string="Advertising issue">
+					<field name="name" />
+					<field name="issue_date" />
+					<field name="medium" />
+					<field name="state"  />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_sale_advertising_issue">
+			<field name="name">Advertising Issue</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.advertising.issue</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="sale_advertising_issue_tree"/>
+		</record>
+		
+		<menuitem name="Advertising" id="menu_sale_advertising" parent="sale.menu_sale_root"/>
+		<menuitem name="Advertising Issue" id="menu_sale_advertising_issue" parent="menu_sale_advertising" action="action_sale_advertising_issue"/>
+		
+<!-- View for sale.advertising.proof object -->
+	<record model="ir.ui.view" id="sale_advertising_proof_form">
+			<field name="name">sale.advertising.proof.form</field>
+			<field name="type">form</field>
+			<field name="model">sale.advertising.proof</field>
+			<field name="arch" type="xml">
+				<form string="Advertising proof">
+					<field name="name" select="1"/>
+					<field name="address_id" select="2" />
+					<field name="number" select="2"/>
+					<field name="target_id" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="sale_advertising_proof_tree">
+			<field name="name">sale.advertising.proof.tree</field>
+			<field name="type">tree</field>
+			<field name="model">sale.advertising.proof</field>
+			<field name="arch" type="xml">
+				<tree string="Advertising proof">
+					<field name="name"/>
+					<field name="number"/>
+					<field name="target_id"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_sale_advertising_proof">
+			<field name="name">Advertising Proof</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">sale.advertising.proof</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="sale_advertising_proof_tree"/>
+		</record>
+		
+		<menuitem name="Advertising Proof" id="menu_sale_advertising_proof" parent="menu_sale_advertising" action="action_sale_advertising_proof"/>
+		
+<!-- View for product.product object inherit -->
+	<record model="ir.ui.view" id="product_normal_form_view_inherit">
+			<field name="name">product.product.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<field name="product_manager" position="after" >
+					<field name="equivalency_in_A4" select="2"/>
+					<newline/>
+				</field>
+			</field>
+	</record>
+
+<!-- New Menuitem -->
+	<record model="ir.actions.act_window" id="advertising_sale_order_action">
+		<field name="name">All Advertising Sale Orders</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">sale.order</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+		<field name="domain">[('published_customer','&lt;&gt;', False)]</field>
+	</record>
+	
+	<menuitem name="All Advertising Sale Orders" id="menu_sale_advertising_sale_order" parent="menu_sale_advertising" action="advertising_sale_order_action"/>
+	
+	</data>
+</openerp>

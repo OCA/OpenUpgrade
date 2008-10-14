@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	<record model="workflow.activity" id="account.act_open">
+		<field name="wkf_id" ref="account.wkf"/>
+		<field name="name">open</field>
+		<field name="action">action_move_create()&#10;write({'state':'open'})&#10;action_number()</field>
+		<field name="kind">function</field>
+	</record>
+	</data>
+</openerp>

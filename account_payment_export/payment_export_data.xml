@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+  <!-- Define new types -->
+<!--  <record model="res.partner.bank.type" id="pay_iban">
+	<field name="name">pay-export-Iban Partner</field>
+	<field name="code">pay_iban</field>
+  </record>
+
+ <record model="res.partner.bank.type" id="pay_bank">
+	<field name="name">pay-export-Company</field>
+	<field name="code">pay_bank</field>
+  </record>
+-->
+
+  <!-- Adjust the fields attributes for pay_iban-->
+<!--  <record model="res.partner.bank.type.field" id="iban_institution_code_field">
+	<field name="name">institution_code</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+  <record model="res.partner.bank.type.field" id="iban_field">
+	<field name="name">iban</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <record model="res.partner.bank.type.field" id="bank_field_iban">
+	<field name="name">bank_id</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <record model="res.partner.bank.type.field" id="address_field_iban">
+	<field name="name">bank_address_id</field>
+	<field name="bank_type_id" ref="pay_iban"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+-->
+  <!-- Adjust the fields attributes for pay_company-->
+<!--  <record model="res.partner.bank.type.field" id="bank_institution_code_field">
+	<field name="name">institution_code</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <record model="res.partner.bank.type.field" id="bank_field">
+	<field name="name">iban</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <record model="res.partner.bank.type.field" id="bank_field_pay">
+	<field name="name">clearing</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <record model="res.partner.bank.type.field" id="bank_field_company">
+	<field name="name">bank_id</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+
+  <record model="res.partner.bank.type.field" id="address_field_company">
+	<field name="name">bank_address_id</field>
+	<field name="bank_type_id" ref="pay_bank"/>
+	<field name="required" eval="True"/>
+	<field name="readonly" eval="False"/>
+  </record>
+-->
+  <!-- Define a payment type -->
+<!--  <record model="payment.type" id="payment_type_pay">
+	<field name="name">Pay Export</field>
+	<field name="code">pay</field>
+	<field name="suitable_bank_types"
+		   eval="[(6,0,[ref('pay_iban'),ref('pay_bank'),])]"/>
+  </record>
+-->
+  <!-- Define Payment Methods -->
+
+  <record model="payment.method" id="payment_method_CHC">
+	<field name="name">CHC</field>
+	<field name="description">Payment by writing out ordinary bank cheque sent to the beneficiary customer</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_CDC">
+	<field name="name">CDC</field>
+	<field name="description">Payment by writing out crossed cheque sent to the beneficiary customer</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_CHD">
+	<field name="name">CHD</field>
+	<field name="description">Payment by writing out ordinary bank cheque sent to the ordering customer</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_CDD">
+	<field name="name">CDD</field>
+	<field name="description">Payment by writing out crossed cheque sent to the ordering customer</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_CHA">
+	<field name="name">CHA</field>
+	<field name="description">P ayment by writing out open bank cheque sent to the beneficiary customer’s
+bank branch</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_CDA">
+	<field name="name">CDA</field>
+	<field name="description">Payment by writing out crossed bank cheque sent to the ordering customer’s
+      bank branch</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_URG">
+	<field name="name">URG</field>
+	<field name="description">Urgent Payment</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_NOR">
+	<field name="name">NOR</field>
+	<field name="description">Normal Processing,not urgent.</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_Z2">
+	<field name="name">Z+2</field>
+	<field name="description">Alphabetical characters : other methods of payment, to be agreed on a bilateral
+      basis with the financial institution</field>
+  </record>
+
+  <record model="payment.method" id="payment_method_EUR">
+	<field name="name">EUR</field>
+	<field name="description">European payment that meets the criteria defined by the bank. If these criteria
+      are not met, the payment will be executed through the usual channels</field>
+  </record>
+
+  <!-- Define Charges Codes -->
+
+  <record model="charges.code" id="charges_code_SHA">
+	<field name="name">SHA</field>
+	<field name="description">Shared charges, i.e. : - charges in Belgium to be borne by the ordering
+                           customer
+                         - charges abroad to be borne by the beneficiary
+                           customer
+	</field>
+  </record>
+
+  <record model="charges.code" id="charges_code_BEN">
+	<field name="name">BEN</field>
+	<field name="description">All charges to be borne by the beneficiary customer</field>
+  </record>
+
+  <record model="charges.code" id="charges_code_OUR">
+	<field name="name">OUR</field>
+	<field name="description">All charges to be borne by the ordering customer</field>
+  </record>
+
+
+</data>
+</openerp>

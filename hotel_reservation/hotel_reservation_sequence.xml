@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="1">
+	#
+	# Sequences for hotel.folio
+	#
+
+	<record model="ir.sequence.type" id="seq_type_hotel_reservation">
+		<field name="name">Hotel Reservation</field>
+		<field name="code">hotel.reservation</field>
+	</record>
+	<record model="ir.sequence" id="seq_hotel_reservation">
+		<field name="name">Hotel Reservation</field>
+		<field name="code">hotel.reservation</field>
+		<field name="prefix">R/</field>
+		<field name="padding">5</field>
+	</record>
+</data>
+</openerp>

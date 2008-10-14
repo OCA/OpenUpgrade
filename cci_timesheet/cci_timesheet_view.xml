@@ -1,0 +1,381 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>
+        <menuitem name="Timesheet" id="menu_hr_root"/>
+        <menuitem name="Configuration" id="menu_time_configuration" parent="menu_hr_root"/>
+
+    <!-- Timesheet Grant -->
+        <record model="ir.ui.view" id="view_cci_timesheet_grant_form">
+            <field name="name">cci_timesheet.grant.form</field>
+            <field name="type">form</field>
+            <field name="model">cci_timesheet.grant</field>
+            <field name="arch" type="xml">
+                <form string="Timesheet Grant">
+                    <field name="name" select="1" colspan="4"/>
+                    <field name="line_ids" colspan="4"/>
+                    <field name="affectation_ids" colspan="4"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_cci_timesheet_grant_tree">
+            <field name="name">cci_timesheet.grant.tree</field>
+            <field name="type">tree</field>
+            <field name="model">cci_timesheet.grant</field>
+            <field name="arch" type="xml">
+                <tree string="Timesheet Grant">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_grant_tree">
+            <field name="name">Timesheet Grant</field>
+            <field name="res_model">cci_timesheet.grant</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Grant" id="menu_time_config_grant" parent="menu_hr_root" action="action_grant_tree" />
+
+    <!-- Timesheet -->
+        <record model="ir.ui.view" id="view_cci_timesheet_form">
+            <field name="name">cci_timesheet.form</field>
+            <field name="type">form</field>
+            <field name="model">cci.timesheet</field>
+            <field name="arch" type="xml">
+                <form string="Timesheet">
+                    <field name="name"  select="1"/>
+                    <field name="grant_id"  select="1" />
+                    <field name="date_from"  select="2" />
+                    <field name="date_to"  select="2" />
+                    <newline/>
+                    <field name="sending_date" />
+                    <field name="asked_amount" />
+                    <field name="accepted_amount" />
+                    <newline/>
+                    <field name="line_ids" widget="one2many_list" colspan="4"/>
+                       <!-- <tree string="Timesheet Lines">
+                            <field name="name"/>
+                            <field name="grant_id"/>
+                            <field name="user_id"/>
+                            <field name="day_date"/>
+                            <field name="hour_from" widget="float_time"/>
+                            <field name="hour_to" widget="float_time"/>
+                            <field name="partner_id"/>
+                            <field name="diff_hours"/>
+                        </tree>
+                        <form string="Timesheet Lines">
+                            <notebook>
+                                <page string="General">
+                                    <field name="name"  select="1"/>
+                                    <field name="grant_id" select="1" />
+                                    <field name="user_id" select="1" />
+                                    <field name="day_date" select="1" />
+                                    <newline/>
+                                    <field name="hour_from"  select="2" widget="float_time" />
+                                    <field name="hour_to"  select="2"  widget="float_time" />
+                                    <newline/>
+                                    <field name="zip_id" />
+                                    <field name="partner_id" select="2" />
+                                    <field name="contact_id" select="2" />
+                                </page>
+                                <page string="Extra Info">
+                                    <field name="suppl_cost"/>
+                                    <field name="kms" />
+                                    <field name="description" colspan="4"/>
+                                </page>
+                            </notebook>
+                        </form>
+-->
+                    <group col="8" colspan="4">
+                        <field name="state" select="2"/>
+                        <button name="set_to_confirm" string="Confirm" states="draft" type="object"/>
+                        <button name="set_to_validate" string="Validate" states="confirmed" type="object"/>
+                        <button name="set_to_cancel" string="Cancel" states="draft,confirmed,validated" type="object"/>
+                        <button name="set_to_draft" string="Set to Draft" states="cancelled" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_cci_timesheet_tree">
+            <field name="name">cci_timesheet.tree</field>
+            <field name="type">tree</field>
+            <field name="model">cci.timesheet</field>
+            <field name="arch" type="xml">
+                <tree string="Timesheet">
+                    <field name="name"/>
+                    <field name="grant_id"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_timesheet_tree">
+            <field name="name">Timesheet</field>
+            <field name="res_model">cci.timesheet</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Timesheet" id="menu_time_timesheet" parent="menu_hr_root" action="action_timesheet_tree"/>
+
+    <!-- Timesheet Lines -->
+
+        <record model="ir.ui.view" id="view_cci_timesheet_line_form">
+            <field name="name">cci_timesheet.line.form</field>
+            <field name="type">form</field>
+            <field name="model">cci_timesheet.line</field>
+            <field name="arch" type="xml">
+                <form string="Timesheet Lines">
+                    <notebook>
+                        <page string="General">
+                            <field name="name" select="1" colspan="4"/>
+                            <field name="timesheet_id" select="1"/>
+                            <field name="grant_id" select="1" />
+                            <field name="user_id" select="1" />
+                            <field name="day_date" select="1" />
+                            <newline/>
+                            <field name="hour_from"  select="2" widget="float_time" />
+                            <field name="hour_to"  select="2"  widget="float_time" />
+                            <newline/>
+                            <field name="zip_id" />
+                            <field name="partner_id" select="2" />
+                            <field name="contact_id" select="2" />
+                        </page>
+                        <page string="Extra Info">
+                            <field name="suppl_cost"/>
+                            <field name="kms" />
+                            <field name="description" colspan="4"/>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_cci_timesheet_line_tree">
+            <field name="name">cci_timesheet.line.tree</field>
+            <field name="type">tree</field>
+            <field name="model">cci_timesheet.line</field>
+            <field name="arch" type="xml">
+                <tree string="Timesheet Lines">
+                    <field name="name"/>
+                    <field name="timesheet_id"/>
+                    <field name="grant_id"/>
+                    <field name="user_id"/>
+                    <field name="day_date"/>
+                    <field name="hour_from" widget="float_time"/>
+                    <field name="hour_to" widget="float_time"/>
+                    <field name="partner_id"/>
+                    <field name="diff_hours"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_cci_timesheet_line_tree">
+            <field name="name">Timesheet Lines</field>
+            <field name="res_model">cci_timesheet.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Timesheet Lines" id="menu_time_line" parent="menu_hr_root" action="action_cci_timesheet_line_tree" />
+
+
+    <!-- Timesheet Affectation -->
+        <record model="ir.ui.view" id="view_cci_timesheet_affectation_form">
+            <field name="name">cci_timesheet.affectation.form</field>
+            <field name="type">form</field>
+            <field name="model">cci_timesheet.affectation</field>
+            <field name="arch" type="xml">
+                <form string="Timesheet Affectation">
+                    <field name="name" colspan="4"/>
+                    <field name="user_id"  select="1" colspan="2" />
+                    <field name="grant_id"  select="1" colspan="2" />
+                    <newline/>
+                    <field name="date_from"  select="2" />
+                    <field name="date_to"  select="2" />
+                    <newline/>
+                    <field name="hours_per_week" widget="float_time" />
+                    <field name="percentage" select="1"/>
+                    <field name="rate" select="2"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_cci_timesheet_affectation_tree">
+            <field name="name">cci_timesheet.affectation.tree</field>
+            <field name="type">tree</field>
+            <field name="model">cci_timesheet.affectation</field>
+            <field name="arch" type="xml">
+                <tree string="Timesheet Affectation">
+                    <field name="name"/>
+                    <field name="user_id" />
+                    <field name="grant_id" />
+                    <field name="date_from" />
+                    <field name="date_to" />
+                    <field name="hours_per_week" widget="float_time"/>
+                    <field name="percentage" />
+                    <field name="rate" />
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_timesheet_affectation_tree">
+            <field name="name">Timesheet Affectation</field>
+            <field name="res_model">cci_timesheet.affectation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Timesheet Affectation" id="menu_time_timesheet_affect" parent="menu_hr_root" action="action_timesheet_affectation_tree"/>
+
+<!-- Timesheet reporting -->
+
+        <record model="ir.ui.view" id="view_report_timesheet_affectation_tree">
+            <field name="name">Timesheets per Employee (Tree)</field>
+            <field name="model">report.timesheet.affectation</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Timesheets per Employee">
+                    <field name="name"/>
+                    <field name="day_date"/>
+                    <field name="hour_from"/>
+                    <field name="hour_to"/>
+                    <field name="user_name"/>
+                    <field name="grant_name"/>
+                    <field name="timesheet_id"/>
+                    <field name="description"/>
+                    <field name="diff_hours"/>
+
+                    <field name="affectation_name"/>
+                    <field name="th_percentage"/>
+                    <field name="hours_per_week"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_report_timesheet_affectation_form">
+            <field name="name">Timesheets per Employee (Form)</field>
+            <field name="model">report.timesheet.affectation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Timesheets per Employee">
+                    <field name="name"  select="2"/>
+                    <field name="day_date" select="1"/>
+                    <field name="hour_from"/>
+                    <field name="hour_to"/>
+                    <field name="user_name" select="1"/>
+                    <field name="grant_name" select="1"/>
+                    <field name="timesheet_id"  select="2"/>
+                    <field name="description"/>
+                    <field name="diff_hours"/>
+
+                    <field name="affectation_name" select="2"/>
+                    <field name="th_percentage"/>
+                    <field name="hours_per_week"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="rate"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_report_timesheet_affectation_graph">
+            <field name="name">Timesheets per Employee (Graph)</field>
+            <field name="model">report.timesheet.affectation</field>
+            <field name="type">graph</field>
+            <field name="arch" type="xml">
+                <graph string="Timesheets per Employee" type="bar" orientation="horizontal">
+                    <field name="user_name"/>
+                    <field name="diff_hours" operator="+"/>
+                    <field name="affectation_name" group="True"/>
+                </graph>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_report_timesheet_affectation">
+            <field name="name">Timesheets per Employee</field>
+            <field name="res_model">report.timesheet.affectation</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,graph</field>
+        </record>
+        <menuitem name="Reporting" id="menu_time_reporting" parent="menu_hr_root"/>
+        <menuitem name="Timesheets per Employee" id="menu_time_reporting_employee" parent="menu_time_reporting" action="action_report_timesheet_affectation"/>
+
+
+<!-- view for crm.case inherit -->
+	    <record model="ir.ui.view" id="crm_case-view_inherit2">
+	        <field name="name">crm.case.form.confidential2</field>
+	        <field name="type">form</field>
+	        <field name="model">crm.case</field>
+	        <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
+	        <field name="arch" type="xml">
+	            <field name="partner_address_id" position="after">
+	                <field name="zip_id" select="2" />
+	                <field name="grant_id" select="1"/>
+	            </field>
+	        </field>
+	    </record>
+
+	    <record model="ir.ui.view" id="crm_case-view_inherit3">
+	        <field name="name">crm.case.form.confidential3</field>
+	        <field name="type">form</field>
+	        <field name="model">crm.case</field>
+	        <field name="inherit_id" ref="crm_configuration.crm_case_form_view_meet"/>
+	        <field name="arch" type="xml">
+	            <field name="date_deadline" position="after">
+	                <field name="timesheet_line_id" select="2"/>
+	            </field>
+	        </field>
+	   </record>
+
+
+<!-- view for project task work done -->
+        <record id="view_task_work_form_inherit" model="ir.ui.view">
+            <field name="name">project.task.work.form</field>
+            <field name="model">project.task.work</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="project.view_task_work_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="grant_id" select="1"/>
+                    <field name="partner_id" select="1"/>
+                    <field name="zip_id"/>
+                    <field name="contact_id" select="2"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_task_work_form_inherit1" model="ir.ui.view">
+            <field name="name">project.task.work.form1</field>
+            <field name="model">project.task.work</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="project.view_task_work_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                	<field name="timesheet_line_id" select="2"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="view_task_work_tree_inherit" model="ir.ui.view">
+            <field name="name">project.task.work.tree</field>
+            <field name="model">project.task.work</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="project.view_task_work_tree"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="grant_id" select="1"/>
+                    <field name="partner_id" select="1"/>
+                    <field name="zip_id"/>
+                    <field name="contact_id" select="2"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

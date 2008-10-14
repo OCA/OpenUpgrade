@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+	<wizard string="Select Partners"
+			name="show_partners"
+			id="select_partners" />
+		<menuitem
+			name="Select Specific Members" parent="membership.menu_reporting"
+			action="select_partners"
+			type="wizard"
+			id="select_partners_menu" />
+
+	<wizard	string="Total Sold for partners"
+			model="res.partner"
+			name="cci_membership.check_total_sold"
+			id="wizard_cci_membership_totalsold"
+			 />
+	</data>
+</openerp>

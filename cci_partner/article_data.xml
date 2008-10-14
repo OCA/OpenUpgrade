@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="res_partner_article_keywords_faillite0" model="res.partner.article.keywords">
+			<field eval="[(6,0,[])]" name="article_ids"/>
+			<field eval="&quot;faillite&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_article_keywords_bilan0" model="res.partner.article.keywords">
+			<field eval="[(6,0,[])]" name="article_ids"/>
+			<field eval="&quot;bilan&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_article_keywords_nomination0" model="res.partner.article.keywords">
+			<field eval="[(6,0,[])]" name="article_ids"/>
+			<field eval="&quot;nomination&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_article_keywords_prix0" model="res.partner.article.keywords">
+			<field eval="[(6,0,[])]" name="article_ids"/>
+			<field eval="&quot;prix&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_article_0" model="res.partner.article">
+			<field eval="&quot;Du nouveau à Charleroi&quot;" name="subtitle"/>
+			<field eval="&quot;allez voir sur youtube&quot;" name="canal_id"/>
+			<field eval="1" name="press_review"/>
+			<field eval="&quot;Faillite annoncée&quot;" name="title"/>
+			<field eval="&quot;Lucien Caria a encore fait des siennes&quot;" name="summary"/>
+			<field eval="&quot;2008-02-08&quot;" name="date"/>
+			<field eval="[(6,0,[ref('res_partner_article_keywords_faillite0'),ref('res_partner_article_keywords_bilan0')])]" name="keywords_ids"/>
+			<field eval="&quot;trends&quot;" name="source_id"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_article_1" model="res.partner.article">
+			<field eval="&quot;La France a encore nomé un nouveau PDG&quot;" name="subtitle"/>
+			<field eval="0" name="press_review"/>
+			<field eval="&quot;Un nouveau directeur général à Cockerill&quot;" name="title"/>
+			<field eval="&quot;plouf plouf&quot;" name="summary"/>
+			<field eval="&quot;2008-02-05&quot;" name="date"/>
+			<field eval="[(6,0,[ref('res_partner_article_keywords_nomination0')])]" name="keywords_ids"/>
+			<field eval="&quot;Le soir&quot;" name="source_id"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_article_2" model="res.partner.article">
+			<field eval="&quot;Le boulevard de l'automobile voit enfin la fin des travaux&quot;" name="subtitle"/>
+			<field eval="&quot;lesoir.be/articleid?3522&quot;" name="canal_id"/>
+			<field eval="1" name="press_review"/>
+			<field eval="&quot;Nouveau batiment LEM interim&quot;" name="title"/>
+			<field eval="&quot;2008-02-08&quot;" name="date"/>
+			<field eval="[(6,0,[ref('res_partner_article_keywords_prix0')])]" name="keywords_ids"/>
+			<field eval="&quot;le soir&quot;" name="source_id"/>
+		</record>
+	</data>
+	<data> 
+		<record id="res_partner_article_review_revuedepresse0" model="res.partner.article.review">
+			<field eval="&quot;2008-02-08&quot;" name="date"/>
+			<field eval="&quot;Revue de presse&quot;" name="name"/>
+		</record>
+	</data>
+</openerp>

@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<record model="res.groups" id="portal_group">
+		<field name="name">Portal group</field>
+		<field eval="[(4,ref('ir_rule_group_dedicatedtotheportal0')),(4,ref('ir_rule_group_dedicatedtotheportal1')),(4,ref('ir_rule_group_dedicatedtotheportal2')),(4,ref('ir_rule_group_dedicatedtotheportal3'))]" name="rule_groups"/>
+	</record>
+
+	<record model="ir.model.access" id="model_access_partner_address">
+		<field name="name">Partner Address Portal</field>
+		<field name="group_id" ref="portal_group"/>
+		<field name="model_id" search="[('model','=','res.partner.address')]"/>
+	</record>
+	<record model="ir.model.access" id="model_access_partner_address_user">
+		<field name="name">Partner Address Users</field>
+		<field name="group_id" ref="base.group_user"/>
+		<field name="model_id" search="[('model','=','res.partner.address')]"/>
+		<field name="perm_read" eval="True"/>
+		<field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/>
+	</record>
+
+
+	<record model="ir.model.access" id="model_access_partner">
+		<field name="name">Partner Portal</field>
+		<field name="group_id" ref="portal_group"/>
+		<field name="model_id" search="[('model','=','res.partner')]"/>
+	</record>
+	<record model="ir.model.access" id="model_access_partner_user">
+		<field name="name">Partner Users</field>
+		<field name="group_id" ref="base.group_user"/>
+		<field name="model_id" search="[('model','=','res.partner')]"/>
+		<field name="perm_read" eval="True"/>
+		<field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/>
+	</record>
+	<record model="ir.model.access" id="model_access_partner_som">
+		<field name="name">Partner SOM Portal</field>
+		<field name="group_id" ref="portal_group"/>
+		<field name="model_id" search="[('model','=','res.partner.som')]"/>
+		<field name="perm_read" eval="True"/>
+	</record>
+	<record model="ir.model.access" id="model_access_case_category_user">
+		<field name="name">Partner SOM Users</field>
+		<field name="group_id" ref="base.group_user"/>
+		<field name="model_id" search="[('model','=','res.partner.som')]"/>
+		<field name="perm_read" eval="True"/>
+		<field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/>
+	</record>
+
+	<record model="ir.model.access" id="model_access_partner_canal">
+		<field name="name">Partner Channel Portal</field>
+		<field name="group_id" ref="portal_group"/>
+		<field name="model_id" search="[('model','=','res.partner.canal')]"/>
+		<field name="perm_read" eval="True"/>
+	</record>
+	<record model="ir.model.access" id="model_access_partner_canal_user">
+		<field name="name">Partner Channel Users</field>
+		<field name="group_id" ref="base.group_user"/>
+		<field name="model_id" search="[('model','=','res.partner.canal')]"/>
+		<field name="perm_read" eval="True"/>
+		<field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/>
+	</record>
+
+
+
+
+	<record model="ir.model.access" id="model_access_res_currency">
+		<field name="name">Currencies Portal</field>
+		<field name="group_id" ref="portal_group"/>
+		<field name="model_id" search="[('model','=','res.currency')]"/>
+	</record>
+	<record model="ir.model.access" id="model_access_res_currency_user">
+		<field name="name">Currencies Users</field>
+		<field name="group_id" ref="base.group_user"/>
+		<field name="model_id" search="[('model','=','res.currency')]"/>
+		<field name="perm_read" eval="True"/>
+		<field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/>
+	</record>
+
+
+	<record model="ir.model.access" id="model_access_res_company">
+		<field name="name">Companies Portal</field>
+		<field name="group_id" ref="portal_group"/>
+		<field name="model_id" search="[('model','=','res.company')]"/>
+	</record>
+	<record model="ir.model.access" id="model_access_res_company_user">
+		<field name="name">Companies Users</field>
+		<field name="group_id" ref="base.group_user"/>
+		<field name="model_id" search="[('model','=','res.company')]"/>
+		<field name="perm_read" eval="True"/>
+		<field name="perm_write" eval="True"/>
+		<field name="perm_create" eval="True"/>
+		<field name="perm_unlink" eval="True"/>
+	</record>
+
+
+
+</data>
+</openerp>

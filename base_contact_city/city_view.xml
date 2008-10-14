@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+<!-- Partner modified by base_contact module -->
+	<record model="ir.ui.view" id="partners_form_inherit_add_location">
+		<field name="name">partners_form_inherit_add_location</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base_contact.view_partner_form_inherit"/>
+		<field name="arch" type="xml">
+			<field name="country_id" position="replace">
+				<field name="location" colspan="4" />
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="partners_form_inherit_del_city">
+		<field name="name">partners_form_inherit_del_city</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base_contact.view_partner_form_inherit"/>
+		<field name="arch" type="xml">
+			<field name="city" position="replace"/>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="partners_form_inherit_del_zip">
+		<field name="name">partners_form_inherit_del_zip</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base_contact.view_partner_form_inherit"/>
+		<field name="arch" type="xml">
+			<field name="zip" position="replace"/>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="partners_form_inherit_del_state">
+		<field name="name">partners_form_inherit_del_state</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base_contact.view_partner_form_inherit"/>
+		<field name="arch" type="xml">
+			<field name="state_id" position="replace"/>
+		</field>
+	</record>
+
+	</data>
+</openerp>

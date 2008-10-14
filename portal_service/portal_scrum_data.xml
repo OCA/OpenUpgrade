@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<record model="ir.rule.group" id="scrum_project_rule_group">
+		<field name="name">Portal scrum project rule</field>
+		<field name="model_id" search="[('model','=','scrum.project')]" model="ir.model"/>
+		<field name="global" eval="False"/>
+	</record>
+	<record model="ir.rule" id="scrum_project_rule">
+		<field name="field_id" search="[('model','=','crm.case'),('name','=','partner_id')]" model="ir.model.fields"/>
+		<field name="operator">=</field>
+		<field name="operand">user.address_id.partner_id.id</field>
+		<field name="rule_group" ref="scrum_project_rule_group"/>
+	</record>
+	<record model="portal.model" id="model_scrum_project">
+				<field name="name" >Scrum Project Model</field>
+				<field name="model_id" search="[('model','=','scrum.project')]"/>
+				<field name="rule_group_id" ref="scrum_project_rule_group"/>
+				<field name="view_ids" eval="[(6,0,[ref('portal_scrum_project_tree'),ref('portal_scrum_project_form')])]"/>
+	</record>
+	
+</data>
+
+<data noupdate="1">
+
+	<record model="res.groups" id="portal.portal_group">
+		<field name="rule_groups" eval="[(4,ref('scrum_project_rule_group'))]"/>
+	</record>
+
+	<record model="ir.model.access" id="model_access_scrum_project">
+		<field name="name">Scrum Project Access</field>
+		<field name="perm_read">True</field>
+		<field name="group_id" ref="portal.portal_group"/>
+		<field name="model_id" search="[('model','=','scrum.project')]"/>
+	</record>
+
+	<record model="ir.model.access" id="model_access_scrum_backlog">
+		<field name="name">Scrum Backlog Access</field>
+		<field name="perm_read">True</field>
+		<field name="group_id" ref="portal.portal_group"/>
+		<field name="model_id" search="[('model','=','scrum.product.backlog')]"/>
+	</record>
+
+	<record model="ir.model.access" id="model_access_scrum_task">
+		<field name="name">Scrum Task Access</field>
+		<field name="perm_read">True</field>
+		<field name="group_id" ref="portal.portal_group"/>
+		<field name="model_id" search="[('model','=','scrum.task')]"/>
+	</record>
+
+</data>
+
+
+</openerp>

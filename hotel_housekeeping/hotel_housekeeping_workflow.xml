@@ -1,0 +1,98 @@
+<?xml version="1.0" ?>
+<openerp>
+<data nonupdate="1">
+
+	<!-- Workflow definition -->
+
+	<record model="workflow" id="wkf_hotel_housekeeping">
+		<field name="name">wkf.hotel.housekeeping</field>
+		<field name="osv">hotel.housekeeping</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<record model="workflow.activity" id="act_hsk_dirty">
+		<field name="wkf_id" ref="wkf_hotel_housekeeping" />
+		<field name="flow_start">True</field>
+		<field name="name">dirty</field>
+
+	</record>
+
+	<record model="workflow.activity" id="act_hsk_clean">
+		<field name="wkf_id" ref="wkf_hotel_housekeeping" />
+		<field name="name">clean</field>
+		<field name="kind">function</field>
+		<field name="action">room_clean()</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_hsk_set_to_dirty">
+		<field name="wkf_id" ref="wkf_hotel_housekeeping" />
+		<field name="name">settodirty</field>
+		<field name="kind">function</field>
+		<field name="action">action_set_to_dirty()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_hsk_cancel">
+		<field name="wkf_id" ref="wkf_hotel_housekeeping" />
+		<field name="name">cancel</field>
+		<field name="kind">function</field>
+		<field name="action">room_cancel()</field>
+
+	</record>
+	<record model="workflow.activity" id="act_hsk_done">
+		<field name="wkf_id" ref="wkf_hotel_housekeeping" />
+		<field name="name">done</field>
+		<field name="flow_stop">True</field>
+		<field name="kind">stopall</field>
+		<field name="action">room_done()</field>
+		
+	</record>
+	
+	<record model="workflow.activity" id="act_hsk_inspect">
+		<field name="wkf_id" ref="wkf_hotel_housekeeping" />
+		<field name="name">inspect</field>
+		<field name="kind">function</field>
+		<field name="action">room_inspect()</field>
+		<field name="split_mode">OR</field>
+		
+	</record>
+	
+	<!--  Transition  -->
+	<record model="workflow.transition" id="hsk1">
+		<field name="act_from" ref="act_hsk_dirty" />
+		<field name="act_to" ref="act_hsk_clean" />
+		<field name="signal">clean</field>
+	</record>
+
+	<record model="workflow.transition" id="hsk2">
+		<field name="act_from" ref="act_hsk_clean" />
+		<field name="act_to" ref="act_hsk_inspect" />
+		<field name="signal">inspect</field>
+	</record>
+
+	<record model="workflow.transition" id="hsk3">
+		<field name="act_from" ref="act_hsk_clean" />
+		<field name="act_to" ref="act_hsk_cancel" />
+		<field name="signal">cancel</field>
+	</record>
+	
+	<record model="workflow.transition" id="hsk4">
+		<field name="act_from" ref="act_hsk_cancel" />
+		<field name="act_to" ref="act_hsk_dirty" />
+		<field name="signal">settodirty</field>
+	</record>	
+	<record model="workflow.transition" id="hsk5">
+		<field name="act_from" ref="act_hsk_inspect" />
+		<field name="act_to" ref="act_hsk_done" />
+		<field name="signal">done</field>
+	</record>
+	
+	<record model="workflow.transition" id="hsk6">
+		<field name="act_from" ref="act_hsk_inspect" />
+		<field name="act_to" ref="act_hsk_cancel" />
+		<field name="signal">cancel</field>
+	</record>
+		
+	
+</data>
+</openerp>

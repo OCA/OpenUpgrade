@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	<wizard
+			string="Aged partner balance"
+			model="res.partner"
+			name="aged.trial.balance"
+			menu="False"
+			id="account.wizard_aged_trial_balance"/>
+	<menuitem
+			name="Aged Partner Balance" parent="account.next_id_22"
+			action="account.wizard_aged_trial_balance"
+			type="wizard"
+			id="account.menu_aged_trial_balance"/>
+
+
+	<wizard
+			string="Partner balance"
+			model="res.partner"
+			name="partner.balance.report"
+			menu="False"
+			id="account.wizard_partner_balance_report"/>
+	<menuitem
+			name="Partner Balance" parent="account.next_id_22"
+			action="account.wizard_partner_balance_report"
+			type="wizard"
+			id="account.menu_partner_balance"/>
+
+	<wizard
+			string="Partner ledger"
+			model="res.partner"
+			name="third_party_ledger.report"
+			menu="False"
+			id="account.wizard_third_party_ledger"/>
+	<menuitem
+			name="Partner Ledger" parent="account.next_id_22"
+			action="account.wizard_third_party_ledger"
+			type="wizard"
+			id="account.menu_third_party_ledger"/>
+
+
+	<wizard
+			string="Display Reverted Debit-Credit"
+			model="account.move"
+			name="cci_debit_credit_switch"
+			id="cci_switch_debit_credit"/>
+
+	<!--<wizard
+			string="Use Models"
+			model="account.model"
+			name="cci_use_model"
+			menu="False"
+			id="wizard_use_model"/>
+	<menuitem
+			name="Financial Management/Periodical Processing/Use Models"
+			action="wizard_use_model"
+			type="wizard"
+			id="menu_use_model"/>-->
+
+	</data>
+</openerp>

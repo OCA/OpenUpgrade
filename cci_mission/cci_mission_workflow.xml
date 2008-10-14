@@ -1,0 +1,308 @@
+<?xml version="1.0" ?>
+<openerp>
+<data>
+
+	<!--
+	 Workflow on ATA Carnet
+	 -->
+
+	<!-- Workflow definition -->
+	<record model="workflow" id="wkf_cci_ata">
+		<field name="name">cci_mission.wkf.ata</field>
+		<field name="osv">cci_missions.ata_carnet</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_draft">
+		<field name="wkf_id" ref="wkf_cci_ata" />
+		<field name="flow_start">True</field>
+		<field name="name">draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_created">
+		<field name="wkf_id" ref="wkf_cci_ata" />
+		<field name="name">created</field>
+		<field name="kind">function</field>
+		<field name="action">cci_ata_created()</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_pending">
+		<field name="wkf_id" ref="wkf_cci_ata" />
+		<field name="name">pending</field>
+		<field name="kind">function</field>
+		<field name="action">write({'state':'pending'})</field>
+		<field name="split_mode">OR</field>
+		<field name="join_mode">XOR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_correct">
+		<field name="wkf_id" ref="wkf_cci_ata" />
+		<field name="name">correct</field>
+		<field name="kind">function</field>
+		<field name="action">write({'state':'correct'})</field>
+		<field name="join_mode">XOR</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_dispute">
+		<field name="wkf_id" ref="wkf_cci_ata" />
+		<field name="name">dispute</field>
+		<field name="kind">function</field>
+		<field name="action">write({'state':'dispute'})</field>
+		<field name="split_mode">OR</field>
+		<field name="join_mode">XOR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_closed">
+		<field name="wkf_id" ref="wkf_cci_ata" />
+		<field name="name">closed</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">write({'state':'closed'})</field>
+	</record>
+-->
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="t1">
+		<field name="act_from" ref="act_draft" />
+		<field name="act_to" ref="act_created" />
+		<field name="signal">created</field>
+	</record>
+
+	<record model="workflow.transition" id="t2">
+		<field name="act_from" ref="act_created" />
+		<field name="act_to" ref="act_correct" />
+		<field name="signal">correct</field>
+	</record>
+
+	<record model="workflow.transition" id="t3">
+		<field name="act_from" ref="act_correct" />
+		<field name="act_to" ref="act_closed" />
+		<field name="signal">closed</field>
+	</record>
+
+	<record model="workflow.transition" id="t4">
+		<field name="act_from" ref="act_correct" />
+		<field name="act_to" ref="act_dispute" />
+		<field name="signal">dispute</field>
+	</record>
+
+	<record model="workflow.transition" id="t5">
+		<field name="act_from" ref="act_created" />
+		<field name="act_to" ref="act_pending" />
+		<field name="signal">pending</field>
+	</record>
+
+	<record model="workflow.transition" id="t6">
+		<field name="act_from" ref="act_pending" />
+		<field name="act_to" ref="act_correct" />
+		<field name="signal">correct</field>
+	</record>
+
+	<record model="workflow.transition" id="t7">
+		<field name="act_from" ref="act_pending" />
+		<field name="act_to" ref="act_dispute" />
+		<field name="signal">dispute</field>
+	</record>
+
+	<record model="workflow.transition" id="t8">
+		<field name="act_from" ref="act_dispute" />
+		<field name="act_to" ref="act_pending" />
+		<field name="signal">pending</field>
+	</record>
+
+	<record model="workflow.transition" id="t9">
+		<field name="act_from" ref="act_dispute" />
+		<field name="act_to" ref="act_correct" />
+		<field name="signal">correct</field>
+	</record>
+
+
+<!--
+| Workflow on Dossier |
+-->
+
+	<!--
+	| Certificates |
+	-->
+	<!-- Workflow definition -->
+	<record model="workflow" id="wkf_cci_certificate">
+		<field name="name">cci_mission.wkf.certificate</field>
+		<field name="osv">cci_missions.certificate</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_certificate_draft">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
+		<field name="flow_start">True</field>
+		<field name="name">activity.draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_certificate_invoiced">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
+		<field name="name">activity.invoiced</field>
+		<field name="kind">function</field>
+		<field name="action">write({'state':'invoiced'})</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_certificate_cancel_cust">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
+		<field name="name">activity.cancel_customer</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">write({'state':'cancel_customer'})</field>
+	</record>
+
+	<record model="workflow.activity" id="act_certificate_cancel_cci">
+		<field name="wkf_id" ref="wkf_cci_certificate" />
+		<field name="name">activity.cancel_cci</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_dossier_cancel_cci()</field>
+	</record>
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="t1_dos">
+		<field name="act_from" ref="act_certificate_draft" />
+		<field name="act_to" ref="act_certificate_invoiced" />
+		<field name="signal">invoiced</field>
+	</record>
+
+	<record model="workflow.transition" id="t2_dos">
+		<field name="act_from" ref="act_certificate_invoiced" />
+		<field name="act_to" ref="act_certificate_cancel_cust" />
+		<field name="signal">cancel_customer</field>
+	</record>
+
+	<record model="workflow.transition" id="t3_dos">
+		<field name="act_from" ref="act_certificate_invoiced" />
+		<field name="act_to" ref="act_certificate_cancel_cci" />
+		<field name="signal">cancel_cci</field>
+	</record>
+
+
+	<!--
+	| Legalizations |
+	-->
+	<record model="workflow" id="wkf_cci_legalization">
+		<field name="name">cci_mission.wkf.legalization</field>
+		<field name="osv">cci_missions.legalization</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_legalization_draft">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="flow_start">True</field>
+		<field name="name">activity.draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_legalization_invoiced">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="name">activity.invoiced</field>
+		<field name="kind">function</field>
+		<field name="action">write({'state':'invoiced'})</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_legalization_cancel_cust">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="name">activity.cancel_customer</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">write({'state':'cancel_customer'})</field>
+	</record>
+
+	<record model="workflow.activity" id="act_legalization_cancel_cci">
+		<field name="wkf_id" ref="wkf_cci_legalization" />
+		<field name="name">activity.cancel_cci</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_dossier_cancel_cci()</field>
+	</record>
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="t1_leg">
+		<field name="act_from" ref="act_legalization_draft" />
+		<field name="act_to" ref="act_legalization_invoiced" />
+		<field name="signal">invoiced</field>
+	</record>
+
+	<record model="workflow.transition" id="t2_leg">
+		<field name="act_from" ref="act_legalization_invoiced" />
+		<field name="act_to" ref="act_legalization_cancel_cust" />
+		<field name="signal">cancel_customer</field>
+	</record>
+
+	<record model="workflow.transition" id="t3_leg">
+		<field name="act_from" ref="act_legalization_invoiced" />
+		<field name="act_to" ref="act_legalization_cancel_cci" />
+		<field name="signal">cancel_cci</field>
+	</record>
+
+
+<!--
+| Workflow on Embassy folder |
+-->
+
+	<!-- Workflow definition -->
+	<record model="workflow" id="wkf_cci_mission_folder">
+		<field name="name">cci_mission.wkf.embassy.folder</field>
+		<field name="osv">cci_missions.embassy_folder</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_draft_folder">
+		<field name="wkf_id" ref="wkf_cci_mission_folder" />
+		<field name="flow_start">True</field>
+		<field name="name">draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_send">
+		<field name="wkf_id" ref="wkf_cci_mission_folder" />
+		<field name="name">pending</field>
+		<field name="kind">function</field>
+		<field name="action">_cci_mission_send()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_got_back">
+		<field name="wkf_id" ref="wkf_cci_mission_folder" />
+		<field name="name">open</field>
+		<field name="kind">function</field>
+		<field name="action">_cci_mission_got_back()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_done_folder">
+		<field name="wkf_id" ref="wkf_cci_mission_folder" />
+		<field name="name">done</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">_cci_mission_done_folder()</field>
+	</record>
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="e1_folder">
+		<field name="act_from" ref="act_draft_folder" />
+		<field name="act_to" ref="act_send" />
+		<field name="signal">pending</field>
+	</record>
+
+	<record model="workflow.transition" id="e2_folder">
+		<field name="act_from" ref="act_send" />
+		<field name="act_to" ref="act_got_back" />
+		<field name="signal">open</field>
+	</record>
+
+	<record model="workflow.transition" id="e3_folder">
+		<field name="act_from" ref="act_got_back" />
+		<field name="act_to" ref="act_done_folder" />
+		<field name="signal">done</field>
+	</record>
+
+</data>
+</openerp>

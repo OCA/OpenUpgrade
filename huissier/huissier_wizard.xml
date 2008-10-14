@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<openerp>
+	<data>
+		<wizard 
+			string="Gestion caisse" 
+			model="huissier.dossier" 
+			name="huissier.caisse"
+			multi="1"
+			id="wizard_caisse"/>
+		<menuitem name="Huissier/Outils Bar Codes/Gestion Caisse" action="wizard_caisse" type="wizard" id="menu_wizard_caisse"/>
+		<wizard 
+			string="Gestion emporte" 
+			model="huissier.dossier" 
+			name="huissier.emporte"
+			multi="1"
+			id="wizard_emporte"/>
+		<menuitem name="Huissier/Outils Bar Codes/Gestion des livraisons" action="wizard_emporte" type="wizard" id="menu_wizard_emporte"/>
+	
+		<wizard 
+		string="Listing Palais" 
+		model="huissier.dossier" 
+		name="huissier.palais"
+		multi="1"
+		id="wizard_listing_palais"/>
+		<menuitem name="Huissier/Listing Palais" action="wizard_listing_palais" type="wizard"/>
+		<wizard 
+		string="Réimpression de vignettes"
+		model="huissier.vignettes" 
+		name="huissier.labels.reprint" 
+		menu="False"
+		multi="1"
+		id="wizard_labels_reprint"/>
+		<menuitem name="Huissier/Réimpression de vignettes" action="wizard_labels_reprint" type="wizard"/>
+
+		<wizard 
+		string="Cloturer le PV"
+		model="huissier.dossier" 
+		name="huissier.dossier.close" 
+		menu="False"
+		id="wizard_dossier_close"/>
+		<wizard string="Cloturer le PV" model="huissier.lots" name="huissier.dossier.close.from_lot"/>
+		
+		<wizard
+		string="Impression facture"
+		model="huissier.deposit" 
+		name="huissier.deposit.invoice"
+		menu="False"
+		id="wizard_deposit_invoice"
+		multi="1"/>
+		
+	<wizard
+		string="Paiement"
+		model="huissier.dossier" 
+		name="huissier.lots.payment"
+		id="wizard_payment_lots_1"
+		/>
+
+	<!--menuitem name="Huissier/Paiement des objets non vendus" action="wizard_payer_objets" type="wizard"/-->
+
+		<wizard id="wizard_labels_invoice" string="Facturer les vignettes" model="huissier.vignettes" name="huissier.labels.invoice" menu="False"/>
+		<wizard id="wizard_labels_pay" string="Payer les vignettes" model="huissier.vignettes" name="huissier.labels.pay" menu="False"/>
+	</data>
+</openerp>
+

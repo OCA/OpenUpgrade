@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+<template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+<pageTemplate id="first"><frame id="first" x1="57.0" y1="57.0" width="481" height="728"/></pageTemplate>
+</template>
+<stylesheet>
+<blockTableStyle id="Standard_Outline"><blockAlignment value="LEFT"/><blockValign value="TOP"/></blockTableStyle>
+<blockTableStyle id="Taula1"><blockAlignment value="LEFT"/><blockValign value="TOP"/><lineStyle kind="GRID" colorName="black"/></blockTableStyle>
+<blockTableStyle id="Taula2"><blockAlignment value="LEFT"/><blockValign value="TOP"/></blockTableStyle>
+<initialize><paraStyle name="all" alignment="justify"/></initialize>
+<paraStyle name="P1" fontName="Times-Roman" alignment="CENTER"/>
+<paraStyle name="P2" fontName="Times-Roman"/>
+<paraStyle name="Standard" fontName="Times-Roman"/>
+<paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+<paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+<paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+<paraStyle name="Table Contents" fontName="Times-Roman"/>
+<paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+<paraStyle name="Index" fontName="Times-Roman"/></stylesheet>
+<images/>
+<story>
+<para style="P1"><font face="Times-Roman">RadioTV broadcasts:</font> [[ obt_channel(data['form']['channel_id']) ]]</para>
+<para style="P1">From [[ time.strftime('%d-%m-%Y', time.strptime(data['form']['d_from'], '%Y-%m-%d')) ]] to [[ time.strftime('%d-%m-%Y', time.strptime(data['form']['d_to'], '%Y-%m-%d')) ]]</para>
+<para style="Standard"><font color="white"> </font></para>
+<blockTable colWidths="241.0,241.0" style="Taula1">
+<tr><td>
+<para style="Standard">[[ repeatIn(obt_days(data['form']['d_from'],data['form']['d_to']), 'd') ]]</para>
+<para style="Standard">[[ d['dow'] ]], [[ d['day'] ]]</para><para style="P2">morning</para>
+<blockTable colWidths="235.0" style="Taula2"><tr><td><para style="Standard">[[ repeatIn(obt_broadcasts(data['form']['channel_id'], d['day'], 1), 'b') ]]</para><para style="Standard">[[ b['time'] ]] [[ b['p_name'] ]]. [[ (b['p_description'] and b['p_description']+'.') or '' ]] [[ b['description'] ]]</para></td></tr></blockTable>
+<para style="P2">afternoon</para><para style="P2"><font face="Times-Roman">evening</font></para></td>
+<td><para style="Table Contents"><font color="white"> </font></para></td></tr>
+</blockTable>
+<para style="Standard"><font color="white"> </font></para>
+<para style="Standard"><font color="white"> </font></para>
+</story>
+</document>
+

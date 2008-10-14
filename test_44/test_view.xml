@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+	<record model="ir.actions.server" id="window_close">
+		<field name="name">Close Window</field>
+		<field name="model_id" search="[('model','=','test.temporal')]"/>
+		<field name="state">python</field>
+		<field name="code">action = { 'type':'ir.actions.act_window_close' }</field>
+	</record>
+
+	<record model="ir.actions.server" id="view_action_form2">
+		<field name="name">Test Run</field>
+		<field name="model_id" search="[('model','=','test.temporal')]"/>
+		<field name="state">python</field>
+		<field name="code">
+obj = self.browse(cr, uid, context['active_id'])
+self.pool.get('res.partner').write(cr, uid, [obj.partner_id.id], {'name':obj.name})
+</field>
+	</record>
+
+	<record model="ir.actions.server" id="view_action_form3">
+		<field name="name">Test Run</field>
+		<field name="model_id" search="[('model','=','test.temporal')]"/>
+		<field name="state">python</field>
+		<field name="code">
+action = {
+	'domain': "[('partner_id','=',2)]",
+	'view_type': 'form',
+	'view_mode': 'tree,form',
+	'res_model': 'sale.order',
+	'view_id': False,
+	'type': 'ir.actions.act_window',
+}
+</field>
+	</record>
+
+
+
+	<record model="ir.actions.server" id="view_action_form">
+		<field name="name">Test Run</field>
+		<field name="model_id" search="[('model','=','test.temporal')]"/>
+		<field name="state">python</field>
+		<field name="code">
+name = self.browse(cr, uid, context['active_id']).name
+self.pool.get('res.partner').write(cr, uid, [context['action_id']], {'name':name})
+</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_test_temporal_form">
+		<field name="name">Testing Temporal Data</field>
+		<field name="model">test.temporal</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Testing">
+
+				<notebook>
+					<page string="Always Visible">
+						<field name="name" colspan="4"/>
+						<field name="partner_id"/>
+						<newline/>
+						<group colspan="4" col="4">
+							<button name="get_action" string="Function Call: Action Sales Orders" type="object"/>
+							<button name="%(view_action_form)s" string="Action Set Partner Name (Using Context)" type="action"/>
+						</group>
+						<field name="partner_ids" colspan="4"/>
+						<label string="The workflow can now use objects: partner_id.name=='ASUStek'" colspan="4"/>
+						<separator colspan="4" string="Status"/>
+						<field name="state"/>
+						<group colspan="2" col="10">
+							<label string="Workflows:"/>
+							<button name="confirm" string="Validate if ASUStek" states="draft"/>
+							<button name="cancel" string="Cancel" states="confirm"/>
+							<button name="done" string="Done" states="confirm"/>
+						</group>
+						<group colspan="2" col="2">
+							<label string="Close the window:" align="1.0"/>
+							<button special="cancel" string="Cancel / Close"/>
+							<label string="Save &amp; New:" align="1.0"/>
+							<button special="save" string="Save + New" readonly="1"/>
+						</group>
+					</page>
+					<page string="Dynamic Visiblity" attrs="{'invisible':[('state','=','confirm')]}">
+						<label string="The visibility of this page depends on state field." colspan="4"/>
+						<newline/>
+						<field name="line_ids" colspan="4">
+							<tree string="Lines" editable="bottom">
+								<field name="name"/>
+								<field name="length"/>
+							</tree>
+						</field>
+					</page>
+				</notebook>
+
+			</form>
+		</field>
+	</record>
+
+	<record model="ir.actions.act_window" id="action_test_form">
+		<field name="name">Testing Wizard</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="name">Testing</field>
+		<field name="res_model">test.temporal</field>
+		<field name="view_type">form</field>
+	</record>
+	<menuitem name="Testing" id="menu_test"/>
+
+	<menuitem parent="menu_test" action="action_test_form" id="menu_test_order"/>
+
+	<act_window name="Test Wizard"
+		context="{'action_id': active_id}"
+		res_model="test.temporal"
+		src_model="res.partner"
+		view_mode="form"
+		target="new"
+		id="act_res_partner_temporal"/>
+
+
+
+	</data>
+</openerp>

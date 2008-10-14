@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data>
+	<!--============================================================
+								Reservation
+		============================================================ -->
+		
+		<record model="ir.ui.view" id="view_hotel_reservation_form">
+			<field name="name">hotel.reservation.form</field>
+			<field name="model">hotel.reservation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string=" Reservation">
+				<notebook>
+					<page string="Reservation">
+						<field name="reservation_no" colspan="1"/>
+						<field name="date_order" select="1"/>
+						<field name="shop_id" select="2"/>
+						<field name="pricelist_id"/>
+						<field name="partner_id" on_change="onchange_partner_id(partner_id)" select="1"/>
+						<field name="partner_order_id" domain="[('partner_id','=',partner_id)]"/>
+						<field name="partner_invoice_id" domain="[('partner_id','=',partner_id)]"/>
+						<field name="partner_shipping_id" domain="[('partner_id','=',partner_id)]"/>
+						<field name="checkin" colspan="1"/>
+						<field name="checkout" on_change="on_change_checkout(checkin,checkout)"/>
+						<field name="adults"/>
+						<field name="childs"/>
+						<field name="dummy" invisible="True"/>
+						<field name="reservation_line" colspan="4" nolabel="1">
+							<form string="Reservation Line">
+								<separator string="Room Type"/>
+								<field name="categ_id" select="1" colspan="4" nolabel="1"/>
+								<newline/>
+								<separator string="Select Room "/>
+								<field name="reserve" colspan="4" nolabel="1"/>
+							</form>
+							<tree string="Reservation Line">
+								<field name="categ_id" select="1"/>
+								<field name="reserve" colspan="4" string="No Of Rooms"/>
+							</tree>
+						</field>
+						<group colspan="4">
+							<field name="state"/>
+							<button name="confirm" string="Confirm" states="draft"/>
+							<button name="done" string="Create Folio" states="confirm"/>
+						</group>
+					</page>
+				</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_hotel_reservation_tree">
+			<field name="name">hotel.reservation.tree</field>
+			<field name="model">hotel.reservation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Reservation" colors="blue:state=='draft' and checkin==current_date;red:state=='confirm' and checkout==current_date">
+					<field name="reservation_no"/>
+					<field name="partner_id" select="1"/>
+					<field name="checkin"/>
+					<field name="checkout"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_hotel_reservation_graph">
+			<field name="name">hotel.reservation.graph</field>
+			<field name="model">hotel.reservation</field>
+			<field name="type">graph</field>
+			<field name="arch" type="xml">
+				<graph string="Reservation" type="bar" colors="blue:state=='draft';red:state=='confirm'">
+					
+					<field name="state"/>
+					<field name="reservation_no"/>
+				</graph>
+			</field>
+		</record>
+		
+		
+		
+		<record model="ir.actions.act_window" id="open_hotel_reservation_form_tree">
+			<field name="name">Reservation</field>
+			<field name="res_model">hotel.reservation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record> 
+		<menuitem name="Hotel Reservation/New Reservation"
+		          id="menu_open_hotel_reservation_form_tree" 
+				  action="open_hotel_reservation_form_tree"/>
+				  
+		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_all">
+			<field name="name">All Reservation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hotel.reservation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<menuitem name="Hotel Reservation/New Reservation/" 
+					id="menu_action_hotel_reservation_tree_all" 
+					action="action_hotel_reservation_tree_all"/>
+				
+		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_draft">
+			<field name="name">All Draft Reservation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hotel.reservation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','=','draft')]</field>
+		</record>
+		<menuitem name="Hotel Reservation/New Reservation/All Reservation/" 
+				    id="menu_action_hotel_reservation_tree_draft" 
+				    action="action_hotel_reservation_tree_draft"/>
+				  
+		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_confirm">
+			<field name="name">All Confirm Reservation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hotel.reservation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','=','confirm')]</field>
+		</record>
+		<menuitem name="Hotel Reservation/New Reservation/All Reservation/" 
+					id="menu_action_hotel_reservation_tree_confirm" 
+					action="action_hotel_reservation_tree_confirm"/>
+					
+		<record model="ir.actions.act_window" id="action_hotel_reservation_tree_done">
+			<field name="name">All Done Reservation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hotel.reservation</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('state','=','done')]</field>
+		</record>
+		<menuitem name="Hotel Reservation/New Reservation/All Reservation/" 
+					id="menu_action_hotel_reservation_tree_done" 
+					action="action_hotel_reservation_tree_done"/>
+		
+		<record model="ir.ui.view" id="hotel_calendar_view">
+			<field name="name">Room Reservation</field>
+			<field name="model">hotel.reservation</field>
+			<field name="type">calendar</field>
+			<field name="priority" eval="2"/>
+			<field name="arch" type="xml">
+			   <calendar string="Current Reservation" date_start="checkin" date_stop= "dummy" color="state" >
+				    <field name="partner_id"/>
+<!--				    <field name="reservation_line"/>-->
+			   </calendar>
+			</field>
+		</record>
+		
+					
+		
+	</data>
+</openerp>

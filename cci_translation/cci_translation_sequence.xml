@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	#
+	# Sequences for translation.folder
+	#
+
+	<record model="ir.sequence.type" id="seq_type_translation_folder">
+		<field name="name">Translation Folder</field>
+		<field name="code">translation.folder</field>
+	</record>
+	<record model="ir.sequence" id="seq_translation_folder">
+		<field name="name">Translation Folder</field>
+		<field name="code">translation.folder</field>
+		<field name="prefix">FD%(year)s/</field>
+		<field name="padding">3</field>
+	</record>
+
+</data>
+</openerp>

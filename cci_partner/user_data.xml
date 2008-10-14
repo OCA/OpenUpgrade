@@ -1,0 +1,156 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="res_groups_commerciaux0" model="res.groups">
+			<field eval="[(6,0,[])]" name="rule_groups"/>
+			<field eval="[(6,0,[])]" name="users"/>
+			<field eval="&quot;Commerciaux&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="menu_access"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_groups_direction0" model="res.groups">
+			<field eval="[(6,0,[])]" name="rule_groups"/>
+			<field eval="[(6,0,[])]" name="users"/>
+			<field eval="&quot;Direction&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="menu_access"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_groups_dptevents0" model="res.groups">
+			<field eval="[(6,0,[])]" name="rule_groups"/>
+			<field eval="[(6,0,[])]" name="users"/>
+			<field eval="&quot;Dpt Events&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="menu_access"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_groups_dptformations0" model="res.groups">
+			<field eval="[(6,0,[])]" name="rule_groups"/>
+			<field eval="[(6,0,[])]" name="users"/>
+			<field eval="&quot;Dpt Formations&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="menu_access"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_groups_dptpublications0" model="res.groups">
+			<field eval="[(6,0,[])]" name="rule_groups"/>
+			<field eval="[(6,0,[])]" name="users"/>
+			<field eval="&quot;Dpt Publications&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="menu_access"/>
+		</record>
+	</data>
+	<data>
+		<record id="base.group_user" model="res.groups">
+			<field name="name">Users</field>
+			<field eval="[(6,0,[ref('base.user_admin')])]" name="users"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record model="res.company" id="base.main_company">
+			<field eval="&quot;CCILV&quot;" name="name"/>
+			<field name="currency_id" ref="base.EUR"/>
+			<field name="federation_key">35a448ab3abe067fc24ee1cb</field>
+			<field model="res.partner" name="partner_id" search="[('name','=','CCILV')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_simonmicha0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Simon Micha&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;micha&quot;" name="login"/>
+			<field eval="&quot;micha&quot;" name="password"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_amaliapatsioras0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Amalia Patsioras&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;patsioras&quot;" name="login"/>
+			<field eval="&quot;patsioras&quot;" name="password"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_myriamszepetiuk0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Myriam Szepetiuk&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;szepetiuk&quot;" name="login"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_xavierminguet0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Xavier Minguet&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;minguet&quot;" name="login"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_jeanpierretresegnie0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Jean-Pierre Tresegnie&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;tresegnie&quot;" name="login"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_jeanmarclhuire0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Jean-Marc Lhuire&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;lhuire&quot;" name="login"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_christophemausen0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Christophe Mausen&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;mausen&quot;" name="login"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_users_patriciaschils0" model="res.users">
+			<field model="ir.actions.actions" name="menu_id" search="[('name','=','Menu')]"/>
+			<field eval="[(6,0,[])]" name="groups_id"/>
+			<field eval="&quot;Patricia Schils&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="[(6,0,[])]" name="roles_id"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;schils&quot;" name="login"/>
+			<field model="ir.actions.actions" name="action_id" search="[('name','=','Menu')]"/>
+		</record>
+	</data>
+</openerp>
+

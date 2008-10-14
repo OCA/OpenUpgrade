@@ -1,0 +1,553 @@
+﻿<?xml version="1.0"?>
+<openerp>
+<data>
+<!-- Sequences -->
+
+	<!-- Sequences for name on Certificates -->
+	<record model="ir.sequence.type" id="seq_certificate_cci1">
+		<field name="name">Certificate Liege</field>
+		<field name="code">cci_missions.certificate1</field>
+	</record>
+	<record id="ir_sequence_certificateseq0" model="ir.sequence">
+		<field eval="&quot;cci_missions.certificate1&quot;" name="code"/>
+		<field eval="&quot;Certificate Seq. Liege&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;CO/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record model="ir.sequence.type" id="seq_certificate_cci2">
+		<field name="name">Certificate Verviers</field>
+		<field name="code">cci_missions.certificate2</field>
+	</record>
+	<record id="ir_sequence_certificateseq1" model="ir.sequence">
+		<field eval="&quot;cci_missions.certificate2&quot;" name="code"/>
+		<field eval="&quot;Certificate Seq. Verviers&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;CV/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+
+	<!-- Sequences for name on Legalizations -->
+	<record model="ir.sequence.type" id="seq_legalization_cci1">
+		<field name="name">Attestation CCILV Liege</field>
+		<field name="code">cci_missions.legalization1</field>
+	</record>
+	<record id="ir_sequence_legalizationseq0" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization1&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (ACL)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;ACL/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record model="ir.sequence.type" id="seq_legalization_cci2">
+		<field name="name">Attestation CCILV Verviers</field>
+		<field name="code">cci_missions.legalization2</field>
+	</record>
+	<record id="ir_sequence_legalizationseq1" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization2&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (ACV)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;ACV/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_legalization_cci3">
+		<field name="name">Attestation diverse Liege</field>
+		<field name="code">cci_missions.legalization3</field>
+	</record>
+	<record id="ir_sequence_legalizationseq2" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization3&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (ADL)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;ADL/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record model="ir.sequence.type" id="seq_legalization_cci4">
+		<field name="name">Attestation diverse Verviers</field>
+		<field name="code">cci_missions.legalization4</field>
+	</record>
+	<record id="ir_sequence_legalizationseq3" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization4&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (ADV)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;ADV/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_legalization_cci5">
+		<field name="name">Facture Commerciale Liege</field>
+		<field name="code">cci_missions.legalization5</field>
+	</record>
+	<record id="ir_sequence_legalizationseq4" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization5&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (FCL)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;FCL/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record model="ir.sequence.type" id="seq_legalization_cci6">
+		<field name="name">Facture Commerciale Verviers</field>
+		<field name="code">cci_missions.legalization6</field>
+	</record>
+	<record id="ir_sequence_legalizationseq5" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization6&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (FCV)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;FCV/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+	<record model="ir.sequence.type" id="seq_legalization_cci7">
+		<field name="name">Certificat Vente Libre Liege</field>
+		<field name="code">cci_missions.legalization7</field>
+	</record>
+	<record id="ir_sequence_legalizationseq6" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization7&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (VLL)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;VLL/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record model="ir.sequence.type" id="seq_legalization_cci8">
+		<field name="name">Certificat Vente Libre Verviers</field>
+		<field name="code">cci_missions.legalization8</field>
+	</record>
+	<record id="ir_sequence_legalizationseq7" model="ir.sequence">
+		<field eval="&quot;cci_missions.legalization8&quot;" name="code"/>
+		<field eval="&quot;Legalization Seq. (VLV)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;VLV/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+	<!-- Sequences for name on ATA Carnet -->
+	<record model="ir.sequence.type" id="seq_ata_carnet_cci1">
+		<field name="name">Carnet ATA Name (Liege)</field>
+		<field name="code">cci_missions.ata_carnet1</field>
+	</record>
+	<record model="ir.sequence.type" id="seq_ata_carnet_cci2">
+		<field name="name">Carnet ATA Name (Verviers)</field>
+		<field name="code">cci_missions.ata_carnet2</field>
+	</record>
+	<record id="ir_sequence_atasequence0" model="ir.sequence">
+		<field eval="&quot;cci_missions.ata_carnet1&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet Seq. (Liege)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;FLG/1/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record id="ir_sequence_atasequence1" model="ir.sequence">
+		<field eval="&quot;cci_missions.ata_carnet2&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet Seq. (Verviers)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;FLG/2/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+	<!-- Sequences for name on Embassy Folder -->
+	<record model="ir.sequence.type" id="seq_embassy_folder_cci1">
+		<field name="name">Embassy Folder Name (Liege)</field>
+		<field name="code">cci_missions.embassy_folder1</field>
+	</record>
+	<record model="ir.sequence.type" id="seq_embassy_folder_cci2">
+		<field name="name">Embassy Folder Name (Verviers)</field>
+		<field name="code">cci_missions.embassy_folder2</field>
+	</record>
+	<record id="ir_sequence_embassysequence0" model="ir.sequence">
+		<field eval="&quot;cci_missions.embassy_folder1&quot;" name="code"/>
+		<field eval="&quot;Embassy Folder Seq. (Liege)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;DAL/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+	<record id="ir_sequence_embassysequence1" model="ir.sequence">
+		<field eval="&quot;cci_missions.embassy_folder2&quot;" name="code"/>
+		<field eval="&quot;Embassy Folder Seq. (Verviers)&quot;" name="name"/>
+		<field eval="1" name="number_next"/>
+		<field eval="1" name="number_increment"/>
+		<field eval="&quot;DAV/%(year)s/&quot;" name="prefix"/>
+		<field eval="1" name="active"/>
+		<field eval="&quot;&quot;" name="suffix"/>
+	</record>
+
+<!-- Demo Data for Site -->
+	<record id="cci_missions_site_liegevervier0" model="cci_missions.site">
+		<field eval="&quot;Liege&quot;" name="name"/>
+		<field eval="&quot;Site de la Chambre de Commerce de Liege - Verviers&quot;" name="official_name_1"/>
+		<field ref="ir_sequence_embassysequence0" name="embassy_sequence_id"/>
+	</record>
+	<record id="cci_missions_site_verviers0" model="cci_missions.site">
+		<field eval="&quot;Verviers&quot;" name="name"/>
+		<field name="embassy_sequence_id" ref="cci_mission.ir_sequence_embassysequence1"/>
+		<field eval="&quot;Chambre de Commerce de Verviers - Liege&quot;" name="official_name_1"/>
+	</record>
+
+<!-- Demo Data for Product -->
+	<record id="cci_product_product_0" model="product.product">
+		<field name="list_price">11.36</field>
+		<field name="member_price">11.36</field>
+		<field name="standard_price">5.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">CO - Original</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_1" model="product.product">
+		<field name="list_price">1.70</field>
+		<field name="member_price">1.70</field>
+		<field name="standard_price">1.0</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">CO - Copy</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+	<record id="cci_product_product_2" model="product.product">
+		<field name="list_price">52.39</field>
+		<field name="member_price">36.67</field>
+		<field name="standard_price">5.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Legalization - Original</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_3" model="product.product">
+		<field name="list_price">15.72</field>
+		<field name="member_price">11.53</field>
+		<field name="standard_price">1</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Legalization - Copy</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_2bis" model="product.product">
+		<field name="list_price">78.59</field>
+		<field name="member_price">47.15</field>
+		<field name="standard_price">5.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Attestation - Original </field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_3bis" model="product.product">
+		<field name="list_price">0.00</field>
+		<field name="member_price">0.00</field>
+		<field name="standard_price">0</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Attestation - Copie</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+	<record id="cci_product_product_4" model="product.product">
+		<field name="list_price">265.45</field>
+		<field name="member_price">220.45</field>
+		<field name="standard_price">200</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - Original</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_5" model="product.product">
+		<field name="list_price">0.65</field>
+		<field name="member_price">0.65</field>
+		<field name="standard_price">0.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - Copy</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_6" model="product.product">
+		<field name="list_price">100</field>
+		<field name="member_price">100</field>
+		<field name="standard_price">0.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - Own Risk Warranty</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_7" model="product.product">
+		<field name="list_price">30</field>
+		<field name="member_price">30</field>
+		<field name="standard_price">0.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">ATA - Insurer Warranty</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_1" model="product.product">
+		<field name="list_price">35.00</field>
+		<field name="member_price">65.00</field>
+		<field name="standard_price">10.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">CBA Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_2" model="product.product">
+		<field name="list_price">25.00</field>
+		<field name="member_price">30.00</field>
+		<field name="standard_price">05.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Ministry Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_3" model="product.product">
+		<field name="list_price">18.00</field>
+		<field name="member_price">26.00</field>
+		<field name="standard_price">0.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Embassy Consulate Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_4" model="product.product">
+		<field name="list_price">38.00</field>
+		<field name="member_price">48.00</field>
+		<field name="standard_price">04.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Translation Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_5" model="product.product">
+		<field name="list_price">56.00</field>
+		<field name="member_price">72.00</field>
+		<field name="standard_price">21.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Administrative Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_6" model="product.product">
+		<field name="list_price">30.00</field>
+		<field name="member_price">48.00</field>
+		<field name="standard_price">03.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Travel Costs Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+	<record id="cci_product_product_embassy_lines_7" model="product.product">
+		<field name="list_price">70.00</field>
+		<field name="member_price">92.00</field>
+		<field name="standard_price">19.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Others Product</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+<!-- Demo Data for Dossier Type -->
+	<record id="cci_missions_dossier_type_certificate0" model="cci_missions.dossier_type">
+		<field eval="&quot;CO&quot;" name="code"/>
+		<field eval="&quot;Certificate Liege&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_1"/>
+		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="ir_sequence_certificateseq0"/>
+		<field name="original_product_id" ref="cci_product_product_0"/>
+		<field name="id_letter">L</field>
+		<field name="section">certificate</field>
+	</record>
+	<record id="cci_missions_dossier_type_certificate1" model="cci_missions.dossier_type">
+		<field eval="&quot;CV&quot;" name="code"/>
+		<field eval="&quot;Certificate Verviers&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_1"/>
+		<field name="site_id" ref="cci_missions_site_verviers0"/>
+		<field name="sequence_id" ref="ir_sequence_certificateseq1"/>
+		<field name="original_product_id" ref="cci_product_product_0"/>
+		<field name="id_letter">V</field>
+		<field name="section">certificate</field>
+	</record>
+
+	<record id="cci_missions_dossier_type_legalization0" model="cci_missions.dossier_type">
+		<field eval="&quot;ACL&quot;" name="code"/>
+		<field eval="&quot;Attestation CCILV - Liege&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3bis"/>
+		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq0"/>
+		<field name="original_product_id" ref="cci_product_product_2bis"/>
+		<field name="section">legalization</field>
+	</record>
+	<record id="cci_missions_dossier_type_legalization1" model="cci_missions.dossier_type">
+		<field eval="&quot;ACV&quot;" name="code"/>
+		<field eval="&quot;Attestation CCILV - Verviers&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3bis"/>
+		<field name="site_id" ref="cci_missions_site_verviers0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq1"/>
+		<field name="original_product_id" ref="cci_product_product_2bis"/>
+		<field name="section">legalization</field>
+	</record>
+
+	<record id="cci_missions_dossier_type_legalization2" model="cci_missions.dossier_type">
+		<field eval="&quot;ADL&quot;" name="code"/>
+		<field eval="&quot;Attestation Diverse Liege&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3"/>
+		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq2"/>
+		<field name="original_product_id" ref="cci_product_product_2"/>
+		<field name="section">legalization</field>
+	</record>
+	<record id="cci_missions_dossier_type_legalization3" model="cci_missions.dossier_type">
+		<field eval="&quot;ADV&quot;" name="code"/>
+		<field eval="&quot;Attestation Diverse Verviers&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3"/>
+		<field name="site_id" ref="cci_missions_site_verviers0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq3"/>
+		<field name="original_product_id" ref="cci_product_product_2"/>
+		<field name="section">legalization</field>
+	</record>
+
+	<record id="cci_missions_dossier_type_legalization4" model="cci_missions.dossier_type">
+		<field eval="&quot;FCL&quot;" name="code"/>
+		<field eval="&quot;Facture Commerciale Liege&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3"/>
+		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq4"/>
+		<field name="original_product_id" ref="cci_product_product_2"/>
+		<field name="section">legalization</field>
+	</record>
+	<record id="cci_missions_dossier_type_legalization5" model="cci_missions.dossier_type">
+		<field eval="&quot;FCV&quot;" name="code"/>
+		<field eval="&quot;Facture Commerciale Verviers&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3"/>
+		<field name="site_id" ref="cci_missions_site_verviers0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq5"/>
+		<field name="original_product_id" ref="cci_product_product_2"/>
+		<field name="section">legalization</field>
+	</record>
+
+	<record id="cci_missions_dossier_type_legalization6" model="cci_missions.dossier_type">
+		<field eval="&quot;VLL&quot;" name="code"/>
+		<field eval="&quot;Certificat Vente Libre Liege&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3bis"/>
+		<field name="site_id" ref="cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq6"/>
+		<field name="original_product_id" ref="cci_product_product_2"/>
+		<field name="section">legalization</field>
+	</record>
+	<record id="cci_missions_dossier_type_legalization7" model="cci_missions.dossier_type">
+		<field eval="&quot;VLV&quot;" name="code"/>
+		<field eval="&quot;Certificat Vente Libre Verviers&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_3bis"/>
+		<field name="site_id" ref="cci_missions_site_verviers0"/>
+		<field name="sequence_id" ref="ir_sequence_legalizationseq7"/>
+		<field name="original_product_id" ref="cci_product_product_2"/>
+		<field name="section">legalization</field>
+	</record>
+
+	<record id="cci_missions_dossier_type_atacarnetliege0" model="cci_missions.dossier_type">
+		<field eval="&quot;AL&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet Liege&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_5"/>
+		<field eval="&quot;ATA&quot;" name="section"/>
+		<field name="site_id" ref="cci_mission.cci_missions_site_liegevervier0"/>
+		<field name="sequence_id" ref="cci_mission.ir_sequence_atasequence0"/>
+		<field name="original_product_id" ref="cci_product_product_4"/>
+		<field name="warranty_product_1" ref="cci_product_product_6"/>
+		<field name="warranty_product_2" ref="cci_product_product_7"/>
+	</record>
+	<record id="cci_missions_dossier_type_atacarnetverviers0" model="cci_missions.dossier_type">
+		<field eval="&quot;AV&quot;" name="code"/>
+		<field eval="&quot;ATA Carnet - Verviers&quot;" name="name"/>
+		<field name="copy_product_id" ref="cci_product_product_5"/>
+		<field eval="&quot;ATA&quot;" name="section"/>
+		<field name="site_id" ref="cci_missions_site_verviers0"/>
+		<field name="sequence_id" ref="cci_mission.ir_sequence_atasequence1"/>
+		<field name="original_product_id" ref="cci_product_product_4"/>
+		<field name="warranty_product_1" ref="cci_product_product_6"/>
+		<field name="warranty_product_2" ref="cci_product_product_7"/>
+	</record>
+
+<!-- Demo Data for Custom Codes -->
+	<record id="cci_missions_custom_code_sx0" model="cci_missions.custom_code">
+		<field eval="&quot;Chevaux reproducteurs de race pure&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;01011010&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_custom_code_drg0" model="cci_missions.custom_code">
+		<field eval="&quot;Ane reproducteur de race pure&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;01011090&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_custom_code_rk0" model="cci_missions.custom_code">
+		<field eval="&quot;Chevaux destines a la boucherie&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;01019011&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_custom_code_rk1" model="cci_missions.custom_code">
+		<field eval="&quot;Lin brut ou roui&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;53011000&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_custom_code_rk2" model="cci_missions.custom_code">
+		<field eval="&quot;Lin brise ou teille&quot;" name="meaning"/>
+		<field eval="1" name="official"/>
+		<field eval="&quot;53012100&quot;" name="name"/>
+	</record>
+<!-- Demo Data for Area -->
+	<record id="cci_missions_area_benelux0" model="cci_missions.area">
+		<field eval="[(6,0,[ref('base.be'),ref('base.lu'),ref('base.nl')])]" name="country_ids"/>
+		<field eval="&quot;BENELUX&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_area_unioneuropeenne0" model="cci_missions.area">
+		<field eval="[(6,0,[ref('base.de'),ref('base.fr'),ref('base.it'),ref('base.be'),ref('base.lu'),ref('base.nl'),ref('base.fi'),ref('base.ch'),ref('base.dk'),ref('base.es'),ref('base.cz'),ref('base.ie'),ref('base.hu'),ref('base.pt'),ref('base.gr'),ref('base.ro'),ref('base.uk'),ref('base.se'),ref('base.at'),ref('base.bg'),ref('base.sk'),ref('base.lt'),ref('base.lv'),ref('base.si'),ref('base.cy'),ref('base.ee'),ref('base.mt')])]" name="country_ids"/>
+		<field eval="&quot;UNION EUROPEENNE&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_area_monde1" model="cci_missions.area">
+		<field eval="[(6,0,[ref('base.ad'),ref('base.ae'),ref('base.af'),ref('base.ag'),ref('base.ai'),ref('base.al'),ref('base.am'),ref('base.an'),ref('base.ao'),ref('base.aq'),ref('base.ar'),ref('base.as'),ref('base.at'),ref('base.au'),ref('base.aw'),ref('base.az'),ref('base.ba'),ref('base.bb'),ref('base.bd'),ref('base.be'),ref('base.bf'),ref('base.bg'),ref('base.bh'),ref('base.bi'),ref('base.bj'),ref('base.bm'),ref('base.bn'),ref('base.bo'),ref('base.br'),ref('base.bs'),ref('base.bt'),ref('base.bv'),ref('base.bw'),ref('base.by'),ref('base.bz'),ref('base.ca'),ref('base.cc'),ref('base.cd'),ref('base.cf'),ref('base.cg'),ref('base.ch'),ref('base.ci'),ref('base.ck'),ref('base.cl'),ref('base.cm'),ref('base.cn'),ref('base.co'),ref('base.cr'),ref('base.cs'),ref('base.cu'),ref('base.cv'),ref('base.cx'),ref('base.cy'),ref('base.cz'),ref('base.de'),ref('base.dj'),ref('base.dk'),ref('base.dm'),ref('base.do'),ref('base.dz'),ref('base.ec'),ref('base.ee'),ref('base.eg'),ref('base.eh'),ref('base.er'),ref('base.es'),ref('base.et'),ref('base.fi'),ref('base.fj'),ref('base.fk'),ref('base.fm'),ref('base.fo'),ref('base.fr'),ref('base.ga'),ref('base.gd'),ref('base.ge'),ref('base.gf'),ref('base.gh'),ref('base.gi'),ref('base.gl'),ref('base.gm'),ref('base.gn'),ref('base.gp'),ref('base.gq'),ref('base.gr'),ref('base.gs'),ref('base.gt'),ref('base.gu'),ref('base.gw'),ref('base.gy'),ref('base.hk'),ref('base.hm'),ref('base.hn'),ref('base.hr'),ref('base.ht'),ref('base.hu'),ref('base.id'),ref('base.ie'),ref('base.il'),ref('base.in'),ref('base.io'),ref('base.iq'),ref('base.ir'),ref('base.is'),ref('base.it'),ref('base.jm'),ref('base.jo'),ref('base.jp'),ref('base.ke'),ref('base.kg'),ref('base.kh'),ref('base.ki'),ref('base.km'),ref('base.kn'),ref('base.kp'),ref('base.kr'),ref('base.kw'),ref('base.ky'),ref('base.kz'),ref('base.la'),ref('base.lb'),ref('base.lc'),ref('base.li'),ref('base.lk'),ref('base.lr'),ref('base.ls'),ref('base.lt'),ref('base.lu'),ref('base.lv'),ref('base.ly'),ref('base.ma'),ref('base.mc'),ref('base.md'),ref('base.mg'),ref('base.mh'),ref('base.mk'),ref('base.ml'),ref('base.mm'),ref('base.mn'),ref('base.mo'),ref('base.mp'),ref('base.mq'),ref('base.mr'),ref('base.ms'),ref('base.mt'),ref('base.mu'),ref('base.mv'),ref('base.mw'),ref('base.mx'),ref('base.my'),ref('base.mz'),ref('base.na'),ref('base.nc'),ref('base.ne'),ref('base.nf'),ref('base.ng'),ref('base.ni'),ref('base.nl'),ref('base.no'),ref('base.np'),ref('base.nr'),ref('base.nt'),ref('base.nu'),ref('base.nz'),ref('base.om'),ref('base.pa'),ref('base.pe'),ref('base.pf'),ref('base.pg'),ref('base.ph'),ref('base.pk'),ref('base.pl'),ref('base.pm'),ref('base.pn'),ref('base.pr'),ref('base.pt'),ref('base.pw'),ref('base.py'),ref('base.qa'),ref('base.re'),ref('base.ro'),ref('base.ru'),ref('base.rw'),ref('base.sa'),ref('base.sb'),ref('base.sc'),ref('base.sd'),ref('base.se'),ref('base.sg'),ref('base.sh'),ref('base.si'),ref('base.sj'),ref('base.sk'),ref('base.sl'),ref('base.sm'),ref('base.sn'),ref('base.so'),ref('base.sr'),ref('base.st'),ref('base.sv'),ref('base.sy'),ref('base.sz'),ref('base.tc'),ref('base.td'),ref('base.tf'),ref('base.tg'),ref('base.th'),ref('base.tj'),ref('base.tk'),ref('base.tm'),ref('base.tn'),ref('base.to'),ref('base.tp'),ref('base.tr'),ref('base.tt'),ref('base.tv'),ref('base.tw'),ref('base.tz'),ref('base.ua'),ref('base.ug'),ref('base.uk'),ref('base.um'),ref('base.us'),ref('base.uy'),ref('base.uz'),ref('base.va'),ref('base.vc'),ref('base.ve'),ref('base.vg'),ref('base.vi'),ref('base.vn'),ref('base.vu'),ref('base.wf'),ref('base.ws'),ref('base.ye'),ref('base.yt'),ref('base.yu'),ref('base.za'),ref('base.zm'),ref('base.zr'),ref('base.zw')])]" name="country_ids"/>
+		<field eval="&quot;MONDE&quot;" name="name"/>
+	</record>
+
+<!-- Demo Data for ata_usage -->
+	<record id="cci_missions_ata_usage_exhibition0" model="cci_missions.ata_usage">
+		<field eval="&quot;Exhibition&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_ata_usage_exhibition1" model="cci_missions.ata_usage">
+		<field eval="&quot;Professional Material&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_ata_usage_exhibition2" model="cci_missions.ata_usage">
+		<field eval="&quot;Samples&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_ata_usage_exhibition3" model="cci_missions.ata_usage">
+		<field eval="&quot;Professional Demo&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_ata_usage_exhibition4" model="cci_missions.ata_usage">
+		<field eval="&quot;Competition&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_ata_usage_exhibition5" model="cci_missions.ata_usage">
+		<field eval="&quot;Sightseeing Demo&quot;" name="name"/>
+	</record>
+	<record id="cci_missions_ata_usage_exhibition6" model="cci_missions.ata_usage">
+		<field eval="&quot;Private Vehicule&quot;" name="name"/>
+	</record>
+</data>
+</openerp>

@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<record id="ir_rule_group_rule_a" model="ir.rule.group">
+			<field model="ir.model" name="model_id" search="[('name','=','Meeting Confidential Info')]"/>
+			<field eval="1" name="global"/>
+			<field eval="&quot;&quot;&quot;Confidential Info: No visibility for EveryOne&quot;&quot;&quot;" name="name"/>
+		</record>
+
+		<record id="ir_rule_a" model="ir.rule">
+			<field name="rule_group" ref="ir_rule_group_rule_a"/>
+			<field eval="&quot;&quot;&quot;[['group','=','all']]&quot;&quot;&quot;" name="domain_force"/>
+			<!-- These fields are mandatory so we have to fill them with something -->
+			<field eval="&quot;&quot;&quot;=&quot;&quot;&quot;" name="operator"/>
+			<field eval="&quot;&quot;&quot;','.join(map(lambda x: str(x.id), user.groups_id))&quot;&quot;&quot;" name="operand"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','group')]"/>
+		</record>-->
+
+		<record id="ir_rule_group_rule0" model="ir.rule.group">
+			<field model="ir.model" name="model_id" search="[('name','=','Meeting Confidential Info')]"/>
+			<field eval="0" name="global"/>
+			<field eval="&quot;&quot;&quot;rule1&quot;&quot;&quot;" name="name"/>
+		</record>
+
+		<record id="ir_rule_0" model="ir.rule">
+			<field name="rule_group" ref="ir_rule_group_rule0"/>
+			<field eval="&quot;&quot;&quot;[['group','=','group1']]&quot;&quot;&quot;" name="domain_force"/>
+			<!-- These fields are mandatory so we have to fill them with something -->
+			<field eval="&quot;&quot;&quot;=&quot;&quot;&quot;" name="operator"/>
+			<field eval="&quot;&quot;&quot;','.join(map(lambda x: str(x.id), user.groups_id))&quot;&quot;&quot;" name="operand"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','group')]"/>
+		</record>
+
+
+		<record id="ir_rule_group_rule1" model="ir.rule.group">
+			<field model="ir.model" name="model_id" search="[('name','=','Meeting Confidential Info')]"/>
+			<field eval="0" name="global"/>
+			<field eval="&quot;&quot;&quot;rule2&quot;&quot;&quot;" name="name"/>
+		</record>
+
+		<record id="ir_rule_1" model="ir.rule">
+			<field name="rule_group" ref="ir_rule_group_rule1"/>
+			<field eval="&quot;&quot;&quot;[['group','=','group2']]&quot;&quot;&quot;" name="domain_force"/>
+			<!-- These fields are mandatory so we have to fill them with something -->
+			<field eval="&quot;&quot;&quot;=&quot;&quot;&quot;" name="operator"/>
+			<field eval="&quot;&quot;&quot;','.join(map(lambda x: str(x.id), user.groups_id))&quot;&quot;&quot;" name="operand"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','group')]"/>
+		</record>
+
+
+		<!-- Group Definition -->
+		<record id="res_groups_group0" model="res.groups">
+			<field eval="[(6,0,[])]" name="rule_groups"/>
+			<field eval="[(6,0,[ref('base.user_admin')])]" name="users"/>
+			<field eval="&quot;&quot;&quot;group1&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="menu_access"/>
+			<field eval="[(6,0,[ref('ir_rule_group_rule0')])]" name="rule_groups"/>
+		</record>
+		<record id="res_groups_group1" model="res.groups">
+			<field eval="[(6,0,[ref('ir_rule_group_rule1')])]" name="rule_groups"/>
+			<field eval="[(6,0,[ref('base.user_admin')])]" name="users"/>
+			<field eval="&quot;&quot;&quot;group2&quot;&quot;&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="menu_access"/>
+		</record>
+
+
+
+<!-- Two demo confidential meeting info -->
+		<record model="meeting.confidential.info" id="meeting_confidential_info_1">
+			<field name="description">je suis chez Agrolait</field>
+			<field name="group">group1</field>
+			<field name="name">Confidential Info of Group 1</field>
+		</record>
+		<record model="meeting.confidential.info" id="meeting_confidential_info_2">
+			<field name="description">je suis chez Asustek</field>
+			<field name="group">group2</field>
+			<field name="name">Confidential Info of Group 2</field>
+		</record>
+
+	</data>
+</openerp>

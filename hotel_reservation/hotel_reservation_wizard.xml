@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<wizard
+			string="Make Folios"
+			model="hotel.reservation"
+			name="hotel.folio.make_folio"
+			id="wizard_hotel_folio_make_folio"/>
+	
+		<wizard
+			string="Reservation Details"
+			model="hotel.reservation"
+			name="hotel.reservation.report_reservation"
+			menu="False"
+			id="wizard_hotel_reservation_report_reservation"/>
+		
+		<menuitem
+			name="Hotel Reservation/New Reservation/Reports" 
+			action="wizard_hotel_reservation_report_reservation" 
+			type="wizard"
+			menu="False"
+			id="wizard_res_menu"/>
+	</data>
+</openerp>

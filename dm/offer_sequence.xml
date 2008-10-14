@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="1">
+
+	#
+	# Sequences for offer model
+	#
+
+	<record model="ir.sequence.type" id="seq_type_offer_model">
+		<field name="name">Offer Model</field>
+		<field name="code">dm.offer</field>
+	</record>
+	<record model="ir.sequence" id="seq_offer_model">
+		<field name="name">Offer Model</field>
+		<field name="code">dm.offer</field>
+		<field name="prefix">MO</field>
+		<field name="padding">3</field>
+	</record>
+</data>
+</openerp>

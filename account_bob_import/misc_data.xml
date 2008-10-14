@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="True">
+
+
+        <!--
+        Account Type
+        -->
+        <record id="account_type_root" model="account.account.type">
+            <field name="name">View</field>
+            <field name="code">view</field>
+            <field name="close_method">none</field>
+        </record>
+        <record id="account_type_asset" model="account.account.type">
+            <field name="name">Asset</field>
+            <field name="code">asset</field>
+            <field name="close_method">balance</field>
+        </record>
+        <record id="account_type_liability" model="account.account.type">
+            <field name="name">Liability</field> 
+            <field name="code">liability</field>
+            <field name="close_method">balance</field>
+        </record>
+        <record id="account_type_cash_equity" model="account.account.type">
+            <field name="name">Equity</field> 
+            <field name="code">equity</field>
+            <field name="close_method">balance</field>
+        </record>
+        <record id="account_type_income" model="account.account.type">
+            <field name="name">Income</field> 
+            <field name="code">income</field>
+            <field name="close_method">unreconciled</field>
+        </record>
+        <record id="account_type_expense" model="account.account.type">
+            <field name="name">Expense</field> 
+            <field name="code">expense</field>
+            <field name="close_method">unreconciled</field>
+        </record>
+        <record id="account_type_cash_moves" model="account.account.type">
+            <field name="name">Cash</field> 
+            <field name="code">cash</field>
+            <field name="close_method">balance</field>
+        </record>
+
+	<!--
+	Plan comptable importé de Bob
+	-->
+
+	<record id="account_bob_0" model="account.account">
+		<field name="code">0</field>
+		<field name="name">Plan comptable importé de Bob</field>
+		<!--<field name="parent_id" eval="[]"/>-->
+		<field name="type">view</field> <!-- TODO: replace by root -->
+		<field name="user_type" ref="l10n_be.user_type_view"/>
+	</record>
+
+
+    <!-- partner missing -->
+	<!--<record id="res_partner_destroyed" model="res.partner">
+		<field eval="0" name="alert_legalisations"/>
+		<field eval="0" name="alert_events"/>
+		<field eval="0" name="invoice_special"/>
+		<field eval="1" name="dir_presence"/>
+		<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
+		<field eval="0" name="domiciliation_bool"/>
+		<field eval="1" name="active"/>
+		<field eval="0" name="wall_exclusion"/>
+		<field eval="&quot;Missing Partner&quot;" name="name"/>
+		<field eval="0" name="alert_advertising"/>
+		<field eval="0" name="alert_membership"/>
+		<field eval="0" name="invoice_public"/>
+		<field eval="0" name="dir_exclude"/>
+	</record>-->
+
+	<!-- address of missing partner -->
+	<!--<record id="res_partner_address_bob" model="res.partner.address">
+            <field name="name">Missing Partners Address</field>
+            <field name="type">default</field>
+            <field name="partner_id" ref="res_partner_destroyed"/>
+     </record>-->
+
+	<!-- function missing -->
+	<record id="res_partner_function_bob" model="res.partner.function">
+		<field eval="&quot;Unknown Function&quot;" name="name"/>
+	</record>
+
+</data>
+</openerp>

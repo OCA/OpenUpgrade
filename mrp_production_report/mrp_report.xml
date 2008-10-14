@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report
+			id="report_mrp_production_report"
+			string="Production Order"
+			model="mrp.production"
+			name="mrp.production.order"
+			rml="mrp_production_report/report/order.rml"
+			auto="False"
+			/>
+	</data>
+</openerp>

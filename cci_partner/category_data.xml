@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+		<record id="res_partner_category_administrateurdelacci0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="base.res_partner_category_13"/>
+			<field eval="&quot;Administrateur de la CCI&quot;" name="name"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_partner_category_partenairestructurel0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="base.res_partner_category_13"/>
+			<field eval="&quot;Partenaire structurel 2008&quot;" name="name"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_partner_category_sponsorcci0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="base.res_partner_category_13"/>
+			<field eval="&quot;Sponsor CCI 2008&quot;" name="name"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="res_partner_category_fournisseuragrqualit0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="base.res_partner_category_8"/>
+			<field eval="&quot;Fournisseur agréé qualité&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_formateurs0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_fournisseuragrqualit0"/>
+			<field eval="&quot;Formateurs&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_formateurapprouv0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_formateurs0"/>
+			<field eval="&quot;Formateur Approuvé&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_formateurpotentiellementapprouv0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_formateurs0"/>
+			<field eval="&quot;Formateur potentiellement approuvé&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_formateurnonapprouve0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_formateurs0"/>
+			<field eval="&quot;Formateur NON APPROUVE&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_catering0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_fournisseuragrqualit0"/>
+			<field eval="&quot;Catering&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_cateringapprouv0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_catering0"/>
+			<field eval="&quot;Catering approuvé&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_cateringpotentiellementapprouv0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field eval="&quot;Catering potentiellement approuvé&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_cateringnonapprouve0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_catering0"/>
+			<field eval="&quot;Catering NON APPROUVE&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_sallesderunion0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_fournisseuragrqualit0"/>
+			<field eval="&quot;Salles de réunion&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_sallesderunionapprouves0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_sallesderunion0"/>
+			<field eval="&quot;Salles de réunion approuvées&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_sallesderunionprotentiellementapprouves0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_sallesderunion0"/>
+			<field eval="&quot;Salles de réunion protentiellement approuvées&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_sallesderunionnonapprouvees0" model="res.partner.category">
+			<field eval="1" name="active"/>
+			<field name="parent_id" ref="res_partner_category_sallesderunion0"/>
+			<field eval="&quot;Salles de réunion NON APPROUVEES&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_category_cateringpotentiellementapprouv0" model="res.partner.category">
+			<field name="parent_id" ref="res_partner_category_catering0"/>
+		</record>
+	</data>
+
+</openerp>

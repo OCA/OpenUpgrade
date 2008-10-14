@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="res.roles" id="Purchase">
+			<field name="name">Purchase - Internal Approval</field>
+		</record>
+		<record model="res.roles" id="Purchase_bypass">
+			<field name="name">Purchase - By Pass Approval</field>
+		</record>
+
+
+		<record model="workflow.activity" id="act_temp0">
+			<field name="wkf_id" ref="purchase.purchase_order"/>
+			<field name="name">wait_approve</field>
+			<field name="kind">function</field>
+			<field name="action">wkf_temp_order0()</field>
+		</record>
+		<record model="workflow.activity" id="act_temp1">
+			<field name="wkf_id" ref="purchase.purchase_order"/>
+			<field name="name">dummy_write_approvator</field>
+			<field name="kind">function</field>
+			<field name="action">wkf_write_approvator()</field>
+		</record>
+
+		<record model="workflow.transition" id="trans_confirmed_temp0">
+			<field name="act_from" ref="purchase.act_draft"/>
+			<field name="act_to" ref="act_temp0"/>
+			<field name="signal">purchase_tempo</field>
+		</record>
+
+		<record model="workflow.transition" id="trans_confirmed_temp1">
+			<field name="act_from" ref="act_temp0"/>
+			<field name="act_to" ref="act_temp1"/>
+			<field name="signal">purchase_internal_approval</field>
+			<field name="role_id" ref="Purchase"/>
+		</record>
+		<record model="workflow.transition" id="trans_confirmed_temp2">
+			<field name="act_from" ref="act_temp0"/>
+			<field name="act_to" ref="act_temp1"/>
+			<field name="signal">purchase_bypass_approval</field>
+			<field name="role_id" ref="Purchase_bypass"/>
+		</record>
+
+		<record model="workflow.transition" id="trans_confirmed_temp3">
+			<field name="act_from" ref="act_temp1"/>
+			<field name="act_to" ref="purchase.act_confirmed"/>
+			<field name="signal">purchase_dummy_confirmed</field>
+		</record>
+
+<!--
+		<record model="workflow.transition" id="trans_confirmed_internal_approval">
+			<field name="act_from" ref="act_temp0"/>
+			<field name="act_to" ref="purchase.act_confirmed"/>
+			<field name="signal">purchase_internal_approval</field>
+			<field name="role_id" ref="Purchase"/>
+		</record>
+		<record model="workflow.transition" id="trans_confirmed_bypass_approval">
+			<field name="act_from" ref="act_temp0"/>
+			<field name="act_to" ref="purchase.act_confirmed"/>
+			<field name="signal">purchase_bypass_approval</field>
+			<field name="role_id" ref="Purchase_bypass"/>
+		</record>
+-->
+		<record model="workflow.transition" id="trans_confirmed_cancel2">
+			<field name="act_from" ref="act_temp0"/>
+			<field name="act_to" ref="purchase.act_cancel"/>
+			<field name="signal">purchase_cancel</field>
+		</record>
+
+	</data>
+</openerp>

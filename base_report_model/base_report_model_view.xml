@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="base_report_model_view_form">
+            <field name="name">base.report.model.view.form</field>
+            <field name="model">base.report.model</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Models">
+                    <field  name="model_id" onchange="model_change(model_id)" select="1"/> 
+                    <field name="name" select="1"/>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="base_report_model_view_tree">
+            <field name="name">base.report.model.view.tree</field>
+            <field name="model">base.report.model</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Models">
+                    <field name="name" />
+                    <field name="model_id" />
+                </tree>
+            </field>
+        </record>
+
+	<record model="ir.actions.act_window" id="base_report_model_act">
+	    <field name="name">Available Models</field>
+	    <field name="res_model">base.report.model</field>
+	    <field name="view_type">form</field>
+	    <field name="view_mode">tree,form</field>
+	</record>
+        
+       <menuitem name="Base" id="menu_base_report_model" parent="base.next_id_4"/>
+        <menuitem name="OpenOffice Attachment Available Models" id="menu_base_report_model_visible_models" action="base_report_model_act" parent="menu_base_report_model"/>
+    </data>
+</openerp>

@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<wizard
+				string="Create Timesheet Lines"
+				name="cci_timesheet.create_lines"
+				menu="False"
+				id="cci_timesheet_lines"/>
+
+			<menuitem
+				name="Timesheet/Create Timesheet Lines"
+				action="cci_timesheet_lines"
+				type="wizard"
+				id="cci_timesheet_lines_menu"/>
+	</data>
+</openerp>

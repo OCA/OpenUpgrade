@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<record model="workflow" id="wkf_test">
+			<field name="name">test.temporal</field>
+			<field name="osv">test.temporal</field>
+			<field name="on_create">True</field>
+		</record>
+
+		<record model="workflow.activity" id="act_draft">
+			<field name="wkf_id" ref="wkf_test" />
+			<field name="name">draft</field>
+			<field name="flow_start">True</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'draft'})</field>
+		</record>
+		<record model="workflow.activity" id="act_confirm">
+			<field name="wkf_id" ref="wkf_test" />
+			<field name="name">confirm</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'confirm'})</field>
+			<field name="action_id" eval="False"/>
+		</record>
+		<record model="workflow.activity" id="act_done">
+			<field name="wkf_id" ref="wkf_test" />
+			<field name="name">done</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state':'done'})</field>
+			<field name="flow_stop">True</field>
+			<field name="action_id" ref="window_close"/>
+		</record>
+
+		<record model="workflow.transition" id="t1">
+			<field name="act_from" ref="act_draft" />
+			<field name="act_to" ref="act_confirm" />
+			<field name="signal">confirm</field>
+			<!-- <field name="condition">partner_id and (partner_id.name=='ASUStek')</field> -->
+			<field name="condition">True</field>
+		</record>
+		<record model="workflow.transition" id="t2">
+			<field name="act_from" ref="act_confirm" />
+			<field name="act_to" ref="act_draft" />
+			<field name="signal">cancel</field>
+		</record>
+		<record model="workflow.transition" id="t4">
+			<field name="act_from" ref="act_confirm" />
+			<field name="act_to" ref="act_done" />
+			<field name="signal">done</field>
+		</record>
+
+	</data>
+</openerp>

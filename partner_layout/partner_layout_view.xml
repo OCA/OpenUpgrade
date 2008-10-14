@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="view_partner_form">
+			<field name="name">res.partner.form</field>
+			<field name="model">res.partner</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Layout">
+						<separator string="Signature" colspan="4"/>
+						<field name="signature" widget="image" nolabel="1" colspan="4"/>
+						<separator string="Logo" colspan="4"/>
+						<field name="logo" widget="image" nolabel="1" colspan="4"/>
+						<separator string="Header" colspan="4"/>
+						<field name="header" colspan="4" nolabel="1"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+	</data>
+</openerp>

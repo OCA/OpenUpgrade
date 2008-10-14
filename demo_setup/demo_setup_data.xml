@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="res_groups_noone0" model="res.groups">
+			<field eval="&quot;No One Demo&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<menuitem name="Administration" id="hello"/>
+		<record model="ir.ui.menu" id="hello">
+			<field name="groups_id" eval="[(6,0,[ref('res_groups_noone0')])]"/>
+		</record>
+	</data>
+	<data>
+		<record id="ir_model_access_menu0" model="ir.model.access">
+			<field model="ir.model" name="model_id" search="[('name','=','ir.ui.menu')]"/>
+			<field eval="&quot;1&quot;" name="perm_read"/>
+			<field eval="&quot;Menu&quot;" name="name"/>
+			<field eval="&quot;1&quot;" name="perm_create"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="ir_ui_view_sc_partners0" model="ir.ui.view_sc">
+			<field eval="&quot;ir.ui.menu&quot;" name="resource"/>
+			<field ref="base.menu_partner_form" name="res_id"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;Partners&quot;" name="name"/>
+		</record>
+	</data>
+</openerp>

@@ -1,0 +1,107 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="res_partner_activity_list_pagesjaunes0" model="res.partner.activity.list">
+			<field eval="&quot;J&quot;" name="abbreviation"/>
+			<field eval="&quot;Pages Jaunes&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_list_nace0" model="res.partner.activity.list">
+			<field eval="&quot;N&quot;" name="abbreviation"/>
+			<field eval="&quot;NACE&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_0" model="res.partner.activity">
+			<field eval="[(6,0,[])]" name="code_relations"/>
+			<field eval="&quot;J1395&quot;" name="code"/>
+			<field name="list_id" ref="res_partner_activity_list_pagesjaunes0"/>
+			<field eval="&quot;Système de ventilation&quot;" name="label"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_1" model="res.partner.activity">
+			<field eval="[(6,0,[])]" name="code_relations"/>
+			<field eval="&quot;J1705&quot;" name="code"/>
+			<field name="list_id" ref="res_partner_activity_list_pagesjaunes0"/>
+			<field eval="&quot;Aspirateurs industriels&quot;" name="label"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_2" model="res.partner.activity">
+			<field eval="[(6,0,[])]" name="code_relations"/>
+			<field eval="&quot;J2795&quot;" name="code"/>
+			<field name="list_id" ref="res_partner_activity_list_pagesjaunes0"/>
+			<field eval="&quot;Epuration des eaux&quot;" name="label"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_3" model="res.partner.activity">
+			<field eval="[(6,0,[])]" name="code_relations"/>
+			<field eval="&quot;N45331&quot;" name="code"/>
+			<field name="list_id" ref="res_partner_activity_list_nace0"/>
+			<field eval="&quot;Installation de systèmes de chauffage, de climatisation&quot;" name="label"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_4" model="res.partner.activity">
+			<field eval="[(6,0,[])]" name="code_relations"/>
+			<field eval="&quot;N31623&quot;" name="code"/>
+			<field name="list_id" ref="res_partner_activity_list_nace0"/>
+			<field eval="&quot;Fabrication d'autres appareils électriques&quot;" name="label"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_5" model="res.partner.activity">
+			<field eval="[(6,0,[])]" name="code_relations"/>
+			<field eval="&quot;N51652&quot;" name="code"/>
+			<field name="list_id" ref="res_partner_activity_list_nace0"/>
+			<field eval="&quot;Commerce de gros de fournitures et d'équipements divers pour l'industrie&quot;" name="label"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_6" model="res.partner.activity">
+			<field eval="[(6,0,[])]" name="code_relations"/>
+			<field eval="&quot;N90001&quot;" name="code"/>
+			<field name="list_id" ref="res_partner_activity_list_nace0"/>
+			<field eval="&quot;Collecte des eaux usées et épuration&quot;" name="label"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_0" model="res.partner.activity">
+			<field eval="[(6,0,[ref('res_partner_activity_3')])]" name="code_relations"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_1" model="res.partner.activity">
+			<field eval="[(6,0,[ref('res_partner_activity_4'),ref('res_partner_activity_5')])]" name="code_relations"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_2" model="res.partner.activity">
+			<field eval="[(6,0,[ref('res_partner_activity_6')])]" name="code_relations"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_3" model="res.partner.activity">
+			<field eval="[(6,0,[ref('res_partner_activity_0')])]" name="code_relations"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_4" model="res.partner.activity">
+			<field eval="[(6,0,[ref('res_partner_activity_1')])]" name="code_relations"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_5" model="res.partner.activity">
+			<field eval="[(6,0,[ref('res_partner_activity_1')])]" name="code_relations"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_activity_6" model="res.partner.activity">
+			<field eval="[(6,0,[ref('res_partner_activity_2')])]" name="code_relations"/>
+		</record>
+	</data>
+
+</openerp>

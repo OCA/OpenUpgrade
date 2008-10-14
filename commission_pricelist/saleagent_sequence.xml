@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="1">
+	#
+	# Sequences for student.info
+	#
+
+	<record model="ir.sequence.type" id="seq_type_student_info">
+		<field name="name">sale.agent</field>
+		<field name="code">sale.agent</field>
+	</record>
+	<record model="ir.sequence" id="seq_agent_info">
+		<field name="name">Sales Agent</field>
+                <field name="code">sale.agent</field>
+		<field name="prefix">SA/</field>
+		<field name="padding">3</field>
+	</record>
+</data>
+</openerp>
+

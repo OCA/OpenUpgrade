@@ -1,0 +1,152 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,792.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="498" height="678"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#e6e6e6" start="0,1" stop="0,1"/>
+      <blockBackground colorName="#e6e6e6" start="1,1" stop="1,1"/>
+      <blockBackground colorName="#e6e6e6" start="2,1" stop="2,1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman"/>
+    <paraStyle name="P2" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P3" fontName="Times-Roman" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P5" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Bold" fontSize="20.0" leading="25" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Bold" fontSize="15.0" leading="19" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P9" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P10" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P11" fontName="Times-Bold" fontSize="14.0" leading="17" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P12" fontName="Times-Bold" fontSize="14.0" leading="17" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P13" fontName="Times-Roman" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+  	<para style="P2">[[ repeatIn(range(data['form']['pages_doc2']),'l')]]</para>
+  	<para style="P2"> [[ repeatIn(objects,'o') ]] </para>
+    <blockTable colWidths="150.0,186.0,163.0" repeatRows="1" style="Table1">
+      <tr>
+        <td>
+          <para style="P5">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P6"><u>ATA CARNET</u></para>
+        </td>
+        <td>
+          <para style="P7">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P8">[[ company.name ]]</para>
+        </td>
+        <td>
+          <para style="P9">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+         <para style="P8">Currency:<font face="Times-Roman" size="12.0">[[ company.currency_id.name ]]</font></para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P3">Printing date: [[ time.strftime('%Y-%m-%d') ]] at [[ time.strftime('%H:%M:%S') ]]</para>
+    <para style="P3">
+      <font color="white"> </font>
+    </para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="192.0,307.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P11">Name of the Carnet</para>
+        </td>
+        <td>
+          <para style="P13">[[ o.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">Validity Date</para>
+        </td>
+        <td>
+          <para style="P13">[[ o.validity_date ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">Site</para>
+        </td>
+        <td>
+          <para style="P13">[[ o.type_id.site_id.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">Name of the Holder</para>
+        </td>
+        <td>
+          <para style="P13">[[ o.holder_name ]] </para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">Name of the Representer</para>
+        </td>
+        <td>
+          <para style="P13">[[ o.representer_name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P12">Usage</para>
+        </td>
+        <td>
+          <para style="P13">[[ o.usage_id.name ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P4">
+      <font color="white"> </font>
+    </para>
+    <spacer length="14cm"/>
+    <para style="P9"> Page : [[ l + 1 ]]</para>
+   </story>
+</document>
+

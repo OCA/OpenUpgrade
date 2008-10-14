@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	 
+	<record model="ir.cron" id="ir_cron_currency_rate_action" forcecreate="True">
+		<field name="name">Currency Rate Update Scheduler</field>
+		<field name="active" eval="True"/>  
+		<field name="interval_number">1</field>
+		<field name="interval_type">hours</field>
+		<field name="numbercall">-1</field>
+		<field name="doall" eval="True"/>
+		<field name="model" eval="'res.currency'"/>
+		<field name="function" eval="'get_currency_rate'"/>
+		<field name="args" eval="'()'"/>
+	</record>
+ 
+</data>
+</openerp>

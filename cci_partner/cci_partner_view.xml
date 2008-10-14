@@ -1,0 +1,1074 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+        <!--
+	=====================
+	Company
+	=====================
+	-->
+	<!-- adaptation of the view of the res.company to view the field federation_key added by this module -->
+		<record model="ir.ui.view" id="view_company_form_inherit_mission">
+			<field name="name">res.company.form</field>
+			<field name="type">form</field>
+			<field name="model">res.company</field>
+			<field name="inherit_id" ref="base.view_company_form"/>
+			<field name="arch" type="xml">
+				<field name="partner_id" position="after">
+					<field name="federation_key"/>
+				</field>
+			</field>
+		</record>
+
+
+<!--		<record model="ir.ui.view" id="view_partner_form_inherit3">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">-->
+				<!--<xpath expr="/form/notebook/page/field[@name='name']" position="before">-->
+
+<!--
+TODO: mettre des balises xpath
+department, function_label, function_code_label vont dans job_ids
+				<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1" position="replace">
+					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
+						<form string="Address">
+							<field name="contact_id"/>
+-->
+							<!--<field name="name" select="2"/>-->
+							<!--<field name="title"/>-->
+<!--
+							<field name="department"/>
+							<field name="function_label"/>
+							<field name="function_code_label"/>
+-->
+							<!--<field name="function"/>-->
+<!--
+							<field name="type" select="2"/>
+							<newline/>
+							<field name="street" select="2"/>
+							<field name="street2"/>
+							<newline/>
+							<field name="zip_id" select="2"/>
+-->
+							<!--<field name="city" select="2"/>--> <!-- remove becaz of city is already present in res.partner.zip(zip_id) -->
+<!--
+							<newline/>
+							<field name="country_id" select="2" completion="1"/>
+							<field name="state_id" select="2"/>
+							<newline/>
+							<field name="phone"/>
+							<field name="fax"/>
+							<newline/>
+							<field name="mobile"/>
+							<field name="email" select="2" widget="email" />
+						</form>
+TODO: revoir la vue tree aussi
+						<tree string="Partner contacts">
+							<field name="name" />
+							<field name="zip"/>
+-->
+							<!--<field name="city"/>-->
+<!--
+							<field name="country_id"/>
+							<field name="type" />
+							<field name="mobile"/>
+							<field name="email" />
+						</tree>
+					</field>
+				</field>
+			</field>
+		</record>
+-->
+<!-- View for res.partner.address object override from base module. -->
+
+<!--		<record model="ir.ui.view" id="base.view_partner_address_form1">
+			<field name="name">res.partner.address.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.address</field>
+			<field name="arch" type="xml">
+				<form string="Partner Address">-->
+					<!--<field name="contact_id" on_change="onchange_contact_id(contact_id)"/>-->
+					<!--<field name="partner_id" select="1"/>
+					<field name="department"/>
+					<field name="contact_id" select="1"/>
+					<field name="name" select="2"/>
+					<newline/>-->
+					<!--<field name="function"/>-->
+<!--					<field name="function_label"/>
+					<field name="function_code_label"/>
+					<newline/>-->
+					<!--<field name="title" select="1"/>-->
+<!--					<field name="type" select="1"/>
+					<newline/>
+					<field name="street" select="1"/>
+					<field name="street2" select="1"/>
+					<field name="zip_id" select="1"/> --><!-- replace zip with zip_id -->
+<!--
+					<field name="city" select="1"/>
+					<field name="country_id"/>
+					<field name="state_id"/>
+					<field name="phone"/>
+					<field name="fax"/>
+					<field name="email"/>
+					<field name="active"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+					<field name="sequence_partner"/>
+					<field name="sequence_contact"/>
+					<field name="who_presence"/>
+					<field name="dir_presence"/>
+					<field name="state" />
+				</form>
+			</field>
+		</record>
+-->
+<!-- unused?
+		<record model="ir.actions.act_window" id="base.action_partner_address_form">
+			<field name="name">Partner Address</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.address</field>
+			<field name="view_type">form</field>
+		</record>
+-->
+		<!--<menuitem name="Partners/Configuration/Partner Titles" groups="base.group_admin" action="base.action_partner_title" id="base.menu_partner_title"/>-->
+
+        <!--
+	===============
+	Partner States
+	===============
+	-->
+<!-- view for res.partner.state -->
+		<record model="ir.ui.view" id="view_partner_state_form">
+			<field name="name">res.partner.state.form</field>
+			<field name="model">res.partner.state</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Activity State">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_state">
+			<field name="name">Activity State</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.state</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="States" groups="base.group_system" id="menu_partner_state_main" parent="base.menu_base_config"/>
+		<menuitem  parent="menu_partner_state_main" groups="base.group_system" action="action_partner_state" id="menu_partner_state"/>
+
+<!-- view for res.partner.state2 -->
+		<record model="ir.ui.view" id="view_partner_state2_form">
+			<field name="name">res.partner.state2.form</field>
+			<field name="model">res.partner.state2</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Customer State">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_state2">
+			<field name="name">Customer State</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.state2</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem parent="menu_partner_state_main" groups="base.group_system" action="action_partner_state2" id="menu_partner_state2"/>
+
+        <!--
+	=====================
+	Partner Activity
+	=====================
+	-->
+<!-- view for res.partner.activity ... -->
+		<record model="ir.ui.view" id="view_partner_activity_form">
+			<field name="name">res.partner.activity.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.activity</field>
+			<field name="arch" type="xml">
+				<form string="Partner Activity">
+					<field name="code" select="1"/>
+					<field name="label" select="1" />
+					<field name="list_id"/>
+					<newline/>
+					<field name="description" colspan="4"/>
+					<newline/>
+					<field name="code_relations" colspan="4"/>
+
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_activity_tree">
+			<field name="name">res.partner.activity.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.activity</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Activity">
+					<field name="code"/>
+					<field name="label"/>
+					<field name="description"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_activity">
+			<field name="name">Partner Activity</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.activity</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_activity_tree"/>
+		</record>
+		<menuitem name="Partner Activity" id="menu_partner_activity_main" parent="base.menu_base_config"/>
+		<menuitem name="Activity" action="action_partner_activity" id="menu_partner_activity" parent="menu_partner_activity_main"/>
+
+<!-- view for res.partner.activity.relation replaced frm res.partner.activity.code -->
+		<record model="ir.ui.view" id="view_partner_activity_relation_form">
+			<field name="name">res.partner.activity.relation.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.activity.relation</field>
+			<field name="arch" type="xml">
+				<form string="Activity Relation">
+					<field name="partner_id" select="1"/>
+					<field name="activity_id" select="1"/>
+					<field name="importance" select="2"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_activity_relation_tree">
+			<field name="name">res.partner.activity.relation.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.activity.relation</field>
+			<field name="arch" type="xml">
+				<tree string="Activity Relation">
+					<field name="partner_id"/>
+					<field name="activity_id"/>
+					<field name="importance"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_activity_relation">
+			<field name="name">Activity Relation</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.activity.relation</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_activity_relation_tree"/>
+		</record>
+		<menuitem parent="menu_partner_activity_main" action="action_partner_activity_relation" id="menu_partner_activity_relation"/>
+
+<!-- view for res.partner.activity.list -->
+		<record model="ir.ui.view" id="view_partner_activity_list_form">
+			<field name="name">res.partner.activity.list.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.activity.list</field>
+			<field name="arch" type="xml">
+				<form string="Activity List">
+					<field name="name" select="1"/>
+					<field name="abbreviation" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_activity_list_tree">
+			<field name="name">res.partner.activity.list.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.activity.list</field>
+			<field name="arch" type="xml">
+				<tree string="Activity List">
+					<field name="name" select="1"/>
+					<field name="abbreviation" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_activity_list">
+			<field name="name">Activity List</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.activity.list</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_activity_list_tree"/>
+		</record>
+		<menuitem parent="menu_partner_activity_main" action="action_partner_activity_list" id="menu_partner_activity_list"/>
+        <!--
+	=====================
+	Partner Zip
+	=====================
+	-->
+<!-- view for res..partner.zip. ... -->
+		<record model="ir.ui.view" id="view_partner_zip_form">
+			<field name="name">res.partner.zip.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.zip</field>
+			<field name="arch" type="xml">
+				<form string="Partner Zip">
+					<field name="name" select="1"/>
+					<field name="city" select="1"/>
+					<field name="partner_id" select="2"/>
+					<field name="post_center_id"/>
+					<field name="post_center_special"/>
+					<field name="user_id"/>
+					<field name="distance"/>
+					<newline/>
+					<field name="groups_id" colspan="3"/>
+
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_zip_tree">
+			<field name="name">res.partner.zip.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.zip</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Zip">
+					<field name="name" select="1"/>
+					<field name="city" select="1"/>
+					<field name="post_center_id"/>
+					<field name="distance"/>
+					<field name="user_id"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_zip">
+			<field name="name">Partner Zip</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.zip</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Zip" id="menu_partner_zip_main" parent="base.menu_base_config"/>
+		<menuitem name="Zip" action="action_partner_zip" id="menu_partner_zip" parent="menu_partner_zip_main"/>
+
+<!-- view for res.partner.zip.group -->
+		<record model="ir.ui.view" id="view_partner_zip_group_form">
+			<field name="name">res.partner.zip.group.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.zip.group</field>
+			<field name="arch" type="xml">
+				<form string="Zip Group">
+					<field name="type_id" select="1"/>
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_zip_group_tree">
+			<field name="name">res.partner.zip.group.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.zip.group</field>
+			<field name="arch" type="xml">
+				<tree string="Zip Group">
+					<field name="type_id" select="1"/>
+					<field name="name" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_zip_group">
+			<field name="name">Zip Group</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.zip.group</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem parent="menu_partner_zip_main" action="action_partner_zip_group" id="menu_partner_zip_group"/>
+
+<!-- view for res.partner.zip.group,type -->
+		<record model="ir.ui.view" id="view_partner_zip_group_type_form">
+			<field name="name">res.partner.zip.group.type.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.zip.group.type</field>
+			<field name="arch" type="xml">
+				<form string="Group Type">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_zip_group_type_tree">
+			<field name="name">res.partner.zip.group.type.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.zip.group.type</field>
+			<field name="arch" type="xml">
+				<tree string="Group Type">
+					<field name="name"  select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_zip_type_group">
+			<field name="name">Group Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.zip.group.type</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem parent="menu_partner_zip_main" action="action_partner_zip_type_group" id="menu_partner_zip_group_type"/>
+        <!--
+	=====================
+	Partner Article
+	=====================
+	-->
+<!-- view for res.partner.article-->
+		<record model="ir.ui.view" id="view_res_partner_article_form">
+			<field name="name">res.partner.article.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.article</field>
+			<field name="arch" type="xml">
+				<form string="Article">
+					<notebook>
+						<page string="General">
+
+							<field name="title" colspan="4"  select="2"/>
+							<field name="subtitle" colspan="4" />
+							<field name="source_id" select="2"/>
+							<field name="date"  select="1"/>
+							<field name="canal_id" colspan="4" />
+							<newline/>
+							<field name="press_review" />
+
+							<field name="review_id" />
+							<field name="keywords_ids" colspan="4" select="1"/>
+							<field name="summary" colspan="4"/>
+						</page>
+						<page string="Statistics">
+							<field name="page" select="1"/>
+							<field name="article_length" select="2"/>
+
+							<field name="picture" select="2"/>
+							<field name="graph" select="2"/>
+							<field name="data" select="2"/>
+
+						</page>
+						<page string="Partners">
+							<field name="partner_ids" nolabel="1" select="2"/>
+						</page>
+						<page string="Contacts">
+							<field name="contact_ids" nolabel="1" select="2"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_res_partner_article_tree">
+			<field name="name">res.partner.article.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.article</field>
+			<field name="arch" type="xml">
+				<tree string="Article">
+					<field name="source_id"/>
+					<field name="date"/>
+					<field name="title"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_res_partner_article">
+			<field name="name">Article</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.article</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_res_partner_article_tree"/>
+		</record>
+		<menuitem name="Article" id="menu_res_partner_article_main" parent="base.menu_base_config"/>
+		<menuitem parent="menu_res_partner_article_main"  action="action_res_partner_article" id="menu_res_partner_article"/>
+
+<!-- view for res.partner.article.keywords -->
+		<record model="ir.ui.view" id="view_partner_article_keywords_form">
+			<field name="name">res.partner.article.keywords.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.article.keywords</field>
+			<field name="arch" type="xml">
+				<form string="Partner Article Keywords">
+					<field name="name" select="1"/>
+					<newline/>
+					<newline/>
+					<field name="article_ids"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_article_keywords_tree">
+			<field name="name">res.partner.article.keywords.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.article.keywords</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Article Keywords">
+					<field name="name" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_res_partner_article_keyoword">
+			<field name="name">Article Keyword</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.article.keywords</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_article_keywords_tree"/>
+		</record>
+		<menuitem parent="menu_res_partner_article_main" action="action_res_partner_article_keyoword" id="menu_res_partner_article_keyword"/>
+
+
+<!-- view for res.partner.article.review -->
+		<record model="ir.ui.view" id="view_partner_article_review_form">
+			<field name="name">res.partner.article.review.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner.article.review</field>
+			<field name="arch" type="xml">
+				<form string="Article Review">
+					<field name="name" select="1"/>
+					<field name="date" select="1"/>
+					<newline/>
+					<field name="article_ids" colspan="4" nolabel="1" widget="many2many" domain="[('review_id','=',False),('press_review', '=', True)]"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_partner_article_review_tree">
+			<field name="name">res.partner.article.review.tree</field>
+			<field name="type">tree</field>
+			<field name="model">res.partner.article.review</field>
+			<field name="arch" type="xml">
+				<tree string="Article Review">
+					<field name="name" select="1"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_res_partner_article_review">
+			<field name="name">Article Review</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.article.review</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="view_partner_article_review_tree"/>
+		</record>
+		<menuitem name="Article Reviews" parent="menu_res_partner_article_main" action="action_res_partner_article_review" id="menu_res_partner_article_review"/>
+
+
+        <!--
+	=====================
+	Partner Links
+	=====================
+	-->
+<!-- add menu entries for link types and partner links-->
+		<record model="ir.ui.view" id="res_partner_relation_type_form">
+			<field name="name">res.partner.relation.type.form</field>
+			<field name="model">res.partner.relation.type</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Partner Link Type">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="res_partner_relation_tree">
+			<field name="name">res.partner.relation.tree</field>
+			<field name="model">res.partner.relation</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Partner Link">
+					<field name="current_partner_id" select="1"/>
+					<field name="type_id" select="1"/>
+					<field name="partner_id" select="1"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="res_partner_relation_form">
+			<field name="name">res.partner.relation.form</field>
+			<field name="model">res.partner.relation</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Partner Link">
+					<field name="current_partner_id" select="1" colspan="4"/>
+					<newline/>
+					<field name="type_id" select="1"/>
+					<field name="percent" />
+					<newline/>
+					<field name="partner_id" select="1"  colspan="4"/>
+					<newline/>
+					<field name="description" colspan="4"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_partner_link_type">
+			<field name="name">Partner Link Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.relation</field>
+			<field name="view_type">form</field>
+			<field name="view_id" ref="res_partner_relation_tree"/>
+		</record>
+		<menuitem parent="cci_base_contact.menu_link" action="action_partner_link_type" id="menu_partner_link_type"/>
+
+        <!--
+	=====================
+	Partner Contacts
+	=====================
+	-->
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_1">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Related Articles">
+					<field name="article_ids" nolabel="1"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_2">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="title" position="replace">
+				<field name="title" select="1" string="Civilite"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_3">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="job_ids" position="replace">
+				<field name="job_ids" colspan="4" nolabel="1" mode="tree, form">
+					<form string="Functions">
+						<field name="sequence_contact"/>
+						<newline/>
+						<field name="function_label" />
+						<field name="function_code_label" />
+						<field name="name"/>
+						<field name="address_id"/>
+						<field name="phone"/>
+						<field name="email"/>
+						<field name="canal_id"/>
+						<field name="department"/>
+						<field name="who_presence"/>
+						<field name="dir_presence"/>
+						<field name="active"/>
+					</form>
+					<tree string="Functions">
+						<field name="sequence_contact"/>
+						<field name="function_label" />
+						<field name="function_code_label" />
+						<field name="name"/>
+						<field name="address_id"/>
+						<field name="phone"/>
+						<field name="email"/>
+					</tree>
+				</field>
+			</field>
+		</field>
+	</record>
+<!--
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_4">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="address_id" position="after">
+				<field name="active"/>
+				<field name="who_presence"/>
+				<field name="dir_presence"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_contact_tree_inherit_1">
+		<field name="name">res.partner.contact.tree</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_tree"/>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="function_id" position="replace">
+				<field name="function_label" />
+				<field name="function_code_label" />
+				<field name="date_start"/>
+				<field name="date_end"/>
+			</field>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_partner_contact_tree_inherit_2">
+		<field name="name">res.partner.contact.tree</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="base_contact.view_partner_contact_tree"/>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<field name="address_id" position="after">
+				<field name="active"/>
+				<field name="who_presence"/>
+				<field name="dir_presence"/>
+			</field>
+		</field>
+	</record>
+-->
+
+	<!--
+	=====================
+	Partner Function(res.partner.job)
+	=====================
+	-->
+
+	<record model="ir.ui.view" id="view_partner_job_form_inherit1">
+		<field name="name">res.partner.job.form.inherit1</field>
+		<field name="model">res.partner.job</field>
+		<field name="inherit_id" ref="base_contact.view_partner_job_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="function_id" position="after">
+				<field name="function_label" select="1" />
+			</field>
+		</field>
+	</record>
+
+        <!--
+	=====================
+	Partner Address
+	=====================
+	-->
+
+	<record model="ir.ui.view" id="view_partner_address_form_inherited1">
+		<field name="name">Partner addresses inherited</field>
+		<field name="model">res.partner.address</field>
+		<field name="inherit_id" ref="base_contact.view_partner_address_form_inherited5"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="job_ids" mode="tree, form" colspan="4" position="replace">
+				<field name="job_ids" colspan="4" nolabel="1" mode="tree,form">
+					<tree string="Functions">
+						<field name="contact_id"/>
+						<field name="function_label" />
+						<field name="function_code_label" />
+						<field name="phone"/>
+						<field name="email"/>
+					</tree>
+					<form string="Functions">
+						<field name="contact_id"/>
+						<field name="function_label" />
+						<field name="function_code_label" />
+						<field name="phone"/>
+						<field name="email"/>
+						<field name="canal_id"/>
+						<field name="department"/>
+						<field name="who_presence"/>
+						<field name="dir_presence"/>
+						<field name="active"/>
+					</form>
+				</field>
+			</field>
+		</field>
+	</record>
+
+<!--
+	<record model="ir.ui.view" id="view_partner_contact_form_inherit_4">
+		<field name="name">res.partner.contact.form</field>
+		<field name="model">res.partner.contact</field>
+		<field name="inherit_id" ref="view_partner_contact_form_inherit_2"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="address_ids" position="replace">
+				<field name="address_ids" colspan="4" nolabel="1">
+				<form string="Partner Address"> --><!-- remove contact and contact name on partner->contact->address -->
+<!--
+					<field name="partner_id" select="1"/>
+					<field name="department"/>
+-->
+<!--					<field name="contact_id" select="1"/>-->
+					<!--<field name="name" select="2"/>-->
+<!--					<newline/>
+					<field name="function_label"/>
+					<field name="function_code_label"/>
+					<newline/>
+-->
+					<!--<field name="title" select="1"/>-->
+<!--					<field name="type" select="1"/>
+					<newline/>
+					<field name="street" select="1"/>
+					<field name="street2" select="1"/>
+					<field name="zip_id" select="1"/> --><!-- replace zip with zip_id -->
+<!--					<field name="city" select="1"/>
+					<field name="country_id"/>
+					<field name="state_id"/>
+					<field name="phone"/>
+					<field name="fax"/>
+					<field name="email"/>
+					<field name="active"/>
+					<field name="date_start"/>
+					<field name="date_end"/>
+					<field name="sequence_partner"/>
+					<field name="sequence_contact"/>
+					<field name="who_presence"/>
+					<field name="dir_presence"/>
+					<field name="state" />
+				</form>
+					<tree string="Address">
+						<field name="partner_id"/>
+						<field name="function_code_label"/>
+						<field name="type"/>
+						<field name="phone"/>
+						<field name="email"/>
+					</tree>
+				</field>
+			</field>
+		</field>
+	</record>
+-->
+<!--	<record model="ir.ui.view" id="view_partner_form">
+		<field name="name">Partner form inherited</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="contact_id" position="replace">
+				<field name="contact_id"/>
+				<field name="department"/>
+			</field>
+		</field>
+	</record>
+-->
+ <!--View for product.product object inherited from product module................
+		<record model="ir.ui.view" id="view_product_form_inherit1">
+			<field name="name">product.normal.form</field>
+			<field name="type">form</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<field name="list_price" position="after">
+			    	<field name="member_price"/>
+				</field>
+			</field>
+		</record>-->
+
+
+			<act_window name="Functions"
+				res_model="res.partner.function"
+				src_model="res.partner.address"
+				id="act_partner_address_2_function"/>
+
+        <!--
+	=====================
+	Partner
+	=====================
+	-->
+<!-- View for res.partner object inherited from base module................ -->
+		<record model="ir.ui.view" id="view_partner_form_inherit1">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="address" position="before">
+					<field name="state_id"/>
+					<field name="state_id2"/>
+					<field name="employee_nbr"/>
+					<field name="employee_nbr_total"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_partner_form_inherit2">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<notebook position="inside">
+					<page string="Categories">
+						<field colspan="4" name="category_id" nolabel="1" select="2"/>
+					</page>
+					<page string="Activities">
+						<separator string="Activity Codes" colspan="4"/>
+						<field name="activity_code_ids" nolabel="1">
+							<tree string="Activity" editable="bottom">
+								<field name="activity_id"/>
+								<field name="importance"/>
+							</tree>
+							<form string="Activity">
+								<field name="activity_id"/>
+								<field name="importance"/>
+							</form>
+						</field>
+						<separator string="Activity Description" colspan="4"/>
+						<field name="activity_description" colspan="4" nolabel="1"/>
+					</page>
+
+					<page string="Countries">
+						<field name="export_procent"/>
+						<field name="export_year"/>
+						<field name="import_procent"/>
+						<field name="import_year"/>
+						<field name="country_relation" select="1" colspan="4" nolabel="1"/>
+					</page>
+
+					<page string="Relations">
+						<field name="relation_ids" mode="tree, form" nolabel="1">
+							<form string="Partner Link">
+								<field name="type_id" select="1"/>
+								<field name="percent" />
+								<newline/>
+								<field name="partner_id" select="1" colspan="4"/>
+								<newline/>
+								<field name="description" colspan="4"/>
+							</form>
+							<tree string="Partner Link">
+								<field name="type_id" select="1"/>
+								<field name="partner_id" select="1"/>
+							</tree>
+						</field>
+					</page>
+
+					<page string="Articles">
+						<field name="article_ids" nolabel="1"/>
+					</page>
+
+					<page string="Accounting Information">
+						<field name="domiciliation_bool" string="Domiciliation (Cotisation)"/>
+						<field name="domiciliation"/>
+						<field name="invoice_nbr"/>
+						<field name="invoice_paper"/>
+						<field name="invoice_public"/>
+						<field name="invoice_special"/>
+					</page>
+
+					<page string="Directory">
+						<field name="dir_name"/>
+						<field name="dir_name2"/>
+						<field name="dir_name3"/>
+						<field name="dir_date_last"/>
+						<field name="dir_date_accept"/>
+						<field name="dir_date_publication"/>
+						<field name="dir_presence"/>
+					</page>
+
+					<page string="Extra Information">
+						<separator string="Miscelleanous" colspan="4"/>
+						<field name="name_official"/>
+						<field name="name_old"/>
+						<field name="magazine_subscription"/>
+						<field name="magazine_subscription_source"/>
+						<field name="wall_exclusion"/>
+						<field name="date_founded"/>
+						<field name="canal_id"/>
+						<separator string="Events" colspan="4"/>
+						<field name="training_authorization"/>
+						<separator string="Alerts" colspan="4"/>
+						<field name="alert_advertising"/>
+						<field name="alert_legalisations"/>
+						<field name="alert_events"/>
+						<field name="alert_membership"/>
+						<field name="alert_others"/>
+						<newline/>
+						<field name="alert_explanation" colspan="4"/>
+					</page>
+				</notebook>
+			</field>
+		</record>
+
+<!-- Changing the zip code of an address can change the salesman of the partner-->
+		<record model="ir.ui.view" id="view_partner_form_inherit3">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="zip" position="replace">
+					<field name="zip_id" on_change="onchange_user_id(zip_id)"/>
+				</field>
+			</field>
+		</record>
+
+<!-- don't display the city field, since the city is displayed in the field zip_id-->
+		<record model="ir.ui.view" id="view_partner_form_inherit4">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="city" position="replace">
+				</field>
+			</field>
+		</record>
+
+<!-- don't display the categories, since it is displayed in an other tab-->
+		<record model="ir.ui.view" id="view_partner_form_inherit5">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="category_id" position="replace">
+				</field>
+			</field>
+		</record>
+
+<!-- don't display the categories label-->
+		<record model="ir.ui.view" id="view_partner_form_inherit_label">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<separator colspan="4" string="Categories" position="replace"/>
+			</field>
+		</record>
+
+<!-- don't display the domiciliation, since it is displayed in an other tab-->
+		<record model="ir.ui.view" id="view_partner_form_inherit6">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="domiciliation" position="replace">
+				</field>
+			</field>
+		</record>
+
+<!-- put salesman as select="1"-->
+		<record model="ir.ui.view" id="view_partner_form_inherit7">
+			<field name="name">res.partner.form</field>
+			<field name="type">form</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+			<field name="arch" type="xml">
+				<field name="user_id" position="replace">
+					<field name="user_id" select="1"/>
+				</field>
+			</field>
+		</record>
+
+	<record model="ir.ui.view" id="view_partner_form_inherit_jobs">
+		<field name="name">Partner form inherited</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form"/>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<field name="job_ids" position="replace">
+				<field name="job_ids" mode="tree, form" colspan="4">
+					<form string="Contacts">
+						<field name="contact_id"/>
+						<field name="function_label" />
+						<field name="function_code_label" />
+						<field name="phone"/>
+						<field name="email"/>
+						<field name="canal_id"/>
+						<field name="department"/>
+						<field name="who_presence"/>
+						<field name="dir_presence"/>
+						<field name="active"/>
+					</form>
+					<tree string="Contacts">
+						<field name="contact_id"/>
+						<field name="function_label" />
+						<field name="function_code_label" />
+						<field name="phone"/>
+						<field name="email"/>
+					</tree>
+				</field>
+			</field>
+		</field>
+	</record>
+
+	</data>
+</openerp>
+

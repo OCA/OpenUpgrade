@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="edit_holiday_status1">
+			<field name="name">hr.holidays.status.form</field>
+			<field name="model">hr.holidays.status</field>
+			<field name="inherit_id" ref="hr.edit_holiday_status"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Define holiday status">
+					<field name="color_name" colspan="3" />
+					<label string="Make sure that no colors are repeated." colspan="1" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_holiday_status1">
+			<field name="name">hr.holidays.status.tree</field>
+			<field name="model">hr.holidays.status</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Holiday status">
+					<field name="name"/>
+					<field name="color_name" />
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_holiday_status1">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">hr.holidays.status</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_holiday_status1" />
+		</record>
+		<menuitem name="Holiday Status" parent="hr.menu_hr_configuration" id="menu_open_view_holiday_status1" action="open_view_holiday_status1" groups="base.group_admin"/>
+	</data>
+</openerp>

@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+<!-- View for sale.order.line object inherited from sale module................ -->
+		<record model="ir.ui.view" id="view_order_line_form2_inherit">
+			<field name="name">sale.order.inherit.form</field>
+			<field name="type">form</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_form2"/>
+			<field name="arch" type="xml">
+				<field name="price_subtotal" position="after">
+					<field name="expected_invoice_date" select="1"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_order_line_tree_inherit">
+			<field name="name">sale.order.inherit.tree</field>
+			<field name="type">form</field>
+			<field name="model">sale.order.line</field>
+			<field name="inherit_id" ref="sale.view_order_line_tree"/>
+			<field name="arch" type="xml">
+				<field name="price_subtotal" position="after">
+					<field name="expected_invoice_date"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="view_order_form_inherit_cci_sales_5">
+			<field name="name">sale.order.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">sale.order</field>
+			<field name="inherit_id" ref="sale.view_order_form"/>
+			<field name="arch" type="xml">
+				<field name="delay" position="after">
+					<field name="expected_invoice_date" select="1"/>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

@@ -1,0 +1,167 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="res_partner_zip_group_type_province0" model="res.partner.zip.group.type">
+			<field eval="&quot;Province&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_type_greffeadministratif0" model="res.partner.zip.group.type">
+			<field eval="&quot;Greffe administratif&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_type_sousrgion0" model="res.partner.zip.group.type">
+			<field eval="&quot;Sous-région&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_type_rgion0" model="res.partner.zip.group.type">
+			<field eval="&quot;Région&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_hainaut0" model="res.partner.zip.group">
+			<field eval="&quot;Hainaut&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_province0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_brabantwallon0" model="res.partner.zip.group">
+			<field eval="&quot;Brabant wallon&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_province0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_hainaut1" model="res.partner.zip.group">
+			<field eval="&quot;Hainaut&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_province0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_namur0" model="res.partner.zip.group">
+			<field eval="&quot;Namur&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_province0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_lige0" model="res.partner.zip.group">
+			<field eval="&quot;Liège&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_province0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_luxembourgbelge0" model="res.partner.zip.group">
+			<field eval="&quot;Luxembourg belge&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_province0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_lige1" model="res.partner.zip.group">
+			<field eval="&quot;Liège&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_sousrgion0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_huywaremme0" model="res.partner.zip.group">
+			<field eval="&quot;Huy-Waremme&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_sousrgion0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_vervierseupen0" model="res.partner.zip.group">
+			<field eval="&quot;Verviers-Eupen&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_sousrgion0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_lige2" model="res.partner.zip.group">
+			<field eval="&quot;Liège&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_greffeadministratif0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_verviers0" model="res.partner.zip.group">
+			<field eval="&quot;Verviers&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_greffeadministratif0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_eupen0" model="res.partner.zip.group">
+			<field eval="&quot;Eupen&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_greffeadministratif0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_huy0" model="res.partner.zip.group">
+			<field eval="&quot;Huy&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_greffeadministratif0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_waremme0" model="res.partner.zip.group">
+			<field eval="&quot;Waremme&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_greffeadministratif0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_wallonie0" model="res.partner.zip.group">
+			<field eval="&quot;Wallonie&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_rgion0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_flandre0" model="res.partner.zip.group">
+			<field eval="&quot;Flandre&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_rgion0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_group_bruxellescapitale0" model="res.partner.zip.group">
+			<field eval="&quot;Bruxelles Capitale&quot;" name="name"/>
+			<field name="type_id" ref="res_partner_zip_group_type_rgion0"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_0" model="res.partner.zip">
+			<field eval="&quot;Liège&quot;" name="city"/>
+			<field model="res.users" name="user_id" search="[('name','=','Simon Micha')]"/>
+			<field eval="&quot;4000&quot;" name="name"/>
+			<field eval="[(6,0,[ref('res_partner_zip_group_lige0'),ref('res_partner_zip_group_lige1'),ref('res_partner_zip_group_lige2'),ref('res_partner_zip_group_wallonie0')])]" name="groups_id"/>
+			<field eval="0" name="post_center_special"/>
+			<field model="res.partner" name="partner_id" search="[('name','=','CCILV')]"/>
+			<field eval="2" name="distance"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_1" model="res.partner.zip">
+			<field eval="&quot;Liège&quot;" name="city"/>
+			<field model="res.users" name="user_id" search="[('name','=','Amalia Patsioras')]"/>
+			<field eval="&quot;4020&quot;" name="name"/>
+			<field eval="[(6,0,[ref('res_partner_zip_group_lige0'),ref('res_partner_zip_group_lige1'),ref('res_partner_zip_group_lige2'),ref('res_partner_zip_group_wallonie0')])]" name="groups_id"/>
+			<field eval="0" name="post_center_special"/>
+			<field model="res.partner" name="partner_id" search="[('name','=','CCILV')]"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_2" model="res.partner.zip">
+			<field eval="&quot;Huy&quot;" name="city"/>
+			<field model="res.users" name="user_id" search="[('name','=','Simon Micha')]"/>
+			<field eval="&quot;4500&quot;" name="name"/>
+			<field eval="[(6,0,[ref('res_partner_zip_group_lige0'),ref('res_partner_zip_group_huywaremme0'),ref('res_partner_zip_group_huy0'),ref('res_partner_zip_group_wallonie0')])]" name="groups_id"/>
+			<field eval="0" name="post_center_special"/>
+			<field eval="25" name="distance"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_zip_3" model="res.partner.zip">
+			<field eval="&quot;Bassenge Glons&quot;" name="city"/>
+			<field model="res.users" name="user_id" search="[('name','=','Myriam Szepetiuk')]"/>
+			<field eval="&quot;4690&quot;" name="name"/>
+			<field eval="[(6,0,[ref('res_partner_zip_group_lige0'),ref('res_partner_zip_group_lige1'),ref('res_partner_zip_group_lige2'),ref('res_partner_zip_group_wallonie0')])]" name="groups_id"/>
+			<field eval="0" name="post_center_special"/>
+			<field model="res.partner" name="partner_id" search="[('name','=','CCILV')]"/>
+			<field eval="32" name="distance"/>
+		</record>
+	</data>
+</openerp>

@@ -1,0 +1,32 @@
+<openerp>
+	<data>
+
+
+	<wizard string="Holidays Report" model="hr.holidays"
+			multi="True"
+			name="hr_holiday_req" id="wizard_hr_holidays_request" />
+			
+	<report id="wizard_hr_holidays_request_report"
+			string="Holidays Report"
+			model="hr.holidays"
+			name="hr_holiday_req_report"
+			rml="hr_holidays_request/report/hrreport.rml"
+			multi="True"
+			auto="False"/>
+	
+	<report id="wizard_hr_holidays_request_report_form"
+			string="Holidays Report Form"
+			model="hr.holidays"
+			name="hr_holiday_report_form"
+			rml="hr_holidays_request/report/hrreport_form.rml"
+			auto="False"/>
+	<menuitem
+			name="Holidays Report" parent="hr_holidays_request.menu_action_my_holiday"
+			action="wizard_hr_holidays_request"
+			type="wizard"
+			id="menu_wizard_hr_holidays_Report"/>
+	
+	</data>
+</openerp>
+
+

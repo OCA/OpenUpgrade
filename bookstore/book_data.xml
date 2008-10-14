@@ -1,0 +1,248 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="product_category_itbooks0" model="product.category">
+			<field eval="&quot;IT Books&quot;" name="name"/>
+			<field name="parent_id" ref="product_categ_livre"/>
+		</record>
+	</data>
+	<data>
+		<record id="product_category_cookingbooks0" model="product.category">
+			<field eval="&quot;Cooking Books&quot;" name="name"/>
+			<field name="parent_id" ref="product_categ_livre"/>
+		</record>
+	</data>
+	<data>
+		<record id="product_category_dictionaries0" model="product.category">
+			<field eval="&quot;Dictionaries&quot;" name="name"/>
+			<field name="parent_id" ref="product_categ_livre"/>
+		</record>
+	</data>
+	<data>
+		<record id="product_category_translations0" model="product.category">
+			<field eval="&quot;Translations&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_dictionaries0"/>
+		</record>
+	</data>
+	<data>
+		<record id="product_category_terms0" model="product.category">
+			<field eval="&quot;Terms&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_dictionaries0"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product_categ_livre" model="product.category">
+			<field name="parent_id" ref="product.cat0"/>
+			<field eval="&quot;Books&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="library_author_pinckaers0" model="library.author">
+			<field eval="&quot;Fabien&quot;" name="first_name"/>
+			<field eval="&quot;Pinckaers&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="editor_ids"/>
+			<field eval="[(6,0,[])]" name="book_ids"/>
+			<field eval="&quot;Fabien Pinckaers was only 18 when you started his first company. Today, ten years later, he has founded and managed several new-technology companies, all based on Free / Open Source software.
+He is founder of Tiny ERP, which became Open ERP, and is currently a director of two companies in the Tiny group (the developer of Tiny ERP). In just three years, the Tiny group grew from 1 to 65 staff, keeping profitable without any recourse to loans or other external sources of funds.
+Fabien developed several large-scale projects, such as Auction-in-Europe.com, which became the art market leader in Belium. Even today more artworks are sold there than on the Belgian eBay site, ebay.be.
+He founded the LUG (Linux User Group) of Louvain-la-Neuve and several free projects such as OpenReport, OpenStuff and Tiny Report. Holder of a polytechnic degree in Civil Engineering, he has won a number of IT awards in Europe, such as Wired and Inscene.
+Fabien is a fierce defender of the the use of Free / Open Source software in business. He's in constant demand as a speaker at a variety of conferences and is the author of numerous articles on Free / Open Source software and enterprise management.
+&quot;" name="biography"/>
+		</record>
+	</data>
+	<data>
+		<record id="library_author_gardiner0" model="library.author">
+			<field eval="&quot;Geoff&quot;" name="first_name"/>
+			<field eval="&quot;Gardiner&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="editor_ids"/>
+			<field eval="[(6,0,[])]" name="book_ids"/>
+			<field eval="&quot;Geoff has held posts as director of services and of IT systems for international software and manufacturing companies. He was Senior Industrial Research Fellow at Cambridge University's Institute for Manfucturing where he focused on innovation processes.
+For some years he's managed a company consulting in the use of Free / Open Source software for business management.
+Author of articles and books focusing on the processes and technology of innovation, Geoff is also an active contributor to the Tiny ERP project, now Open ERP.
+Having observed, suffered from and led several process implementation projects in various organizations, he has many thoughts to share on the successful adoption of an effective management automation tool.
+&quot;" name="biography"/>
+		</record>
+	</data>
+	<data>
+		<record id="library_rack_erpbooks0" model="library.rack">
+			<field eval="1" name="active"/>
+			<field eval="&quot;ERP Books&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_eyrolles0" model="res.partner">
+			<field eval="1" name="to_export"/>
+			<field eval="&quot;274121&quot;" name="number"/>
+			<field eval="0" name="to_update"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;Eyrolles&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="category_id"/>
+		</record>
+		<record id="res_partner_address_muriel0" model="res.partner.address">
+			<field eval="&quot;Muriel&quot;" name="name"/>
+			<field name="partner_id" ref="res_partner_eyrolles0"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data>
+		<record id="library_collection_al0" model="library.collection">
+			<field eval="&quot;Acces Libre&quot;" name="code"/>
+			<field eval="&quot;AL&quot;" name="name"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_pc1" model="product.product">
+			<field eval="[(6,0,[ref('base.lang_en')])]" name="lang"/>
+			<field eval="35.0" name="list_price"/>
+			<field eval="&quot;Very good book.
+Buy it on Amazon.&quot;" name="description"/>
+			<field eval="0.3" name="weight"/>
+			<field eval="&quot;hard&quot;" name="back"/>
+			<field name="collection" ref="library_collection_al0"/>
+			<field eval="&quot;sellable&quot;" name="state"/>
+			<field name="editor" ref="res_partner_eyrolles0"/>
+			<field name="rack" ref="library_rack_erpbooks0"/>
+			<field eval="&quot;Open ERP - A modern approach to Enterprise Management&quot;" name="name"/>
+		</record>
+		<record id="author_book_rel_0" model="author.book.rel">
+			<field name="author_id" ref="library_author_pinckaers0"/>
+			<field name="product_id" ref="product.product_product_pc1"/>
+		</record>
+		<record id="author_book_rel_1" model="author.book.rel">
+			<field name="author_id" ref="library_author_gardiner0"/>
+			<field name="product_id" ref="product.product_product_pc1"/>
+		</record>
+	</data>
+	<data>
+		<record id="library_rack_opensourcebooks0" model="library.rack">
+			<field eval="1" name="active"/>
+			<field eval="&quot;OSB&quot;" name="code"/>
+			<field eval="&quot;Open Source Books&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_oreilly0" model="res.partner">
+			<field eval="1" name="to_export"/>
+			<field eval="&quot;274122&quot;" name="number"/>
+			<field eval="0" name="to_update"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;O'Reilly&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="category_id"/>
+		</record>
+		<record id="res_partner_address_tim0" model="res.partner.address">
+			<field eval="&quot;Tim&quot;" name="name"/>
+			<field name="partner_id" ref="res_partner_oreilly0"/>
+			<field eval="1" name="active"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_pc2" model="product.product">
+			<field eval="32.0" name="list_price"/>
+			<field eval="&quot;The Facts About Free Software&quot;" name="name"/>
+			<field name="editor" ref="res_partner_oreilly0"/>
+			<field name="categ_id" ref="product_category_itbooks0"/>
+			<field name="rack" ref="library_rack_opensourcebooks0"/>
+		</record>
+	</data>
+	<data>
+		<record id="library_rack_genericbooks0" model="library.rack">
+			<field eval="1" name="active"/>
+			<field eval="&quot;Generic Books&quot;" name="name"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_pc3" model="product.product">
+			<field eval="14.0" name="list_price"/>
+			<field eval="&quot;Who Stoled My Cheese&quot;" name="name"/>
+			<field name="editor" ref="res_partner_eyrolles0"/>
+			<field name="categ_id" ref="product_categ_livre"/>
+			<field name="rack" ref="library_rack_genericbooks0"/>
+		</record>
+	</data>
+	<data>
+		<record id="library_author_davidallen0" model="library.author">
+			<field eval="&quot;David Allen&quot;" name="name"/>
+			<field eval="[(6,0,[])]" name="editor_ids"/>
+			<field eval="[(6,0,[])]" name="book_ids"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_pc4" model="product.product">
+			<field eval="19.0" name="list_price"/>
+			<field eval="&quot;Getting Things Done&quot;" name="name"/>
+			<field name="editor" ref="base.main_partner"/>
+			<field eval="&quot;12&quot;" name="catalog_num"/>
+		</record>
+		<record id="author_book_rel_2" model="author.book.rel">
+			<field name="author_id" ref="library_author_davidallen0"/>
+			<field name="product_id" ref="product.product_product_pc4"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_mb1" model="product.product">
+			<field name="categ_id" ref="product_categ_livre"/>
+			<field eval="&quot;Doing Things Smartly&quot;" name="name"/>
+			<field name="rack" ref="library_rack_erpbooks0"/>
+		</record>
+		<record id="author_book_rel_3" model="author.book.rel">
+			<field name="author_id" ref="library_author_pinckaers0"/>
+			<field name="product_id" ref="product.product_product_mb1"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_mb2" model="product.product">
+			<field eval="&quot;Be Fast Be Smart Be Open&quot;" name="name"/>
+			<field eval="&quot;OPENBE&quot;" name="default_code"/>
+			<field name="categ_id" ref="product_categ_livre"/>
+			<field name="rack" ref="library_rack_opensourcebooks0"/>
+			<field name="editor" ref="res_partner_oreilly0"/>
+			<field eval="27.0" name="list_price"/>
+		</record>
+		<record id="author_book_rel_4" model="author.book.rel">
+			<field name="author_id" ref="library_author_gardiner0"/>
+			<field name="product_id" ref="product.product_product_mb2"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_cpu1" model="product.product">
+			<field eval="7.0" name="list_price"/>
+			<field eval="&quot;Life Is Like&quot;" name="name"/>
+			<field name="collection" ref="library_collection_al0"/>
+			<field name="editor" ref="base.main_partner"/>
+			<field name="categ_id" ref="product_category_cookingbooks0"/>
+			<field name="rack" ref="library_rack_genericbooks0"/>
+		</record>
+		<record id="author_book_rel_5" model="author.book.rel">
+			<field name="author_id" ref="library_author_davidallen0"/>
+			<field name="product_id" ref="product.product_product_cpu1"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_cpu3" model="product.product">
+			<field eval="[(6,0,[ref('base.lang_en')])]" name="lang"/>
+			<field eval="30.0" name="list_price"/>
+			<field eval="&quot;Cooking Chips&quot;" name="name"/>
+			<field eval="10.0" name="standard_price"/>
+			<field name="collection" ref="library_collection_al0"/>
+			<field eval="&quot;12&quot;" name="num_pocket"/>
+			<field name="editor" ref="base.res_partner_agrolait"/>
+			<field name="categ_id" ref="product_category_cookingbooks0"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="product.product_product_hdd1" model="product.product">
+			<field eval="12.0" name="list_price"/>
+			<field eval="&quot;7 Habits of Higly Effective People&quot;" name="name"/>
+			<field eval="&quot;A4&quot;" name="format"/>
+			<field eval="8.0" name="standard_price"/>
+			<field eval="&quot;end&quot;" name="state"/>
+			<field name="editor" ref="res_partner_oreilly0"/>
+			<field eval="&quot;322&quot;" name="catalog_num"/>
+			<field name="rack" ref="library_rack_genericbooks0"/>
+		</record>
+		<record id="author_book_rel_6" model="author.book.rel">
+			<field name="author_id" ref="library_author_pinckaers0"/>
+			<field name="product_id" ref="product.product_product_hdd1"/>
+		</record>
+	</data>
+</openerp>

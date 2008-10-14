@@ -1,0 +1,304 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<!--
+		==========
+		Employee 
+		==========
+		-->
+		<record model="ir.ui.view" id="view_md_employee_form0">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="name" position="before">
+					<field name="code"/>
+					<field name="prefix"/>
+				</field>
+		    </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form6">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="regime" position="replace">
+					<field name="travel_allowance"/>
+					<field name="dist_home_work" on_change="on_change_dist_home_work(dist_home_work)"/>
+					<field name="amount_travel_allowance"/>
+					<newline/>
+					<field name="pension"/>
+					<field name="pension_waiver"/>
+					<field name="waowiaww"/>
+					<field name="waowiaww_dep_id"/>
+					<newline/>
+					<field name="attachment_earings_order"/>
+					<field name="earings_order_beneficier" />
+					<field name="earings_order_amount"/>
+					<field name="earings_order_account"/>
+					<newline/>
+					<newline/>
+					<field name="spaarloonregeling"/>
+					<field name="spaarloonregeling_account"/>
+					<field name="levensloopregeling"/>
+					<field name="levensloopregeling_account"/>
+				</field>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form1">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="company_id" position="replace">
+					<field name="firstname"/>
+					<field name="birthdate"/>
+					<field name="nationality_id"/>
+					<field name="gender"/>
+					<newline/>
+					<field name="addres_id"/>
+					<field name="address_number"/>
+					<field name="town_id"/>
+					<field name="country_id"/>
+					<field name="zip_id"/>
+					<field name="phone"/>
+					<field name="mobile"/>
+					<field name="email"/>
+					<separator string="Familly" colspan="4" />
+					<field name="maiden_name"/>
+					<field name="nbr_of_children" on_change="on_change_nbr_of_children(nbr_of_children)"/>
+					<field name="marital_status"/>
+					<newline/>
+					<field name="partner_lastname"/>
+					<field name="partner_firstname"/>
+					<field name="partner_prefix"/>
+					<field name="partner_initials"/>
+					<field name="partner_gender"/>
+					<field name="partner_dob"/>
+				</field>
+		    </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form2">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="user_id" position="replace">
+					<separator string="Other informations" colspan="4" />
+					<field name="nin"/>
+					<newline/>
+					<field name="education"/>
+					<field name="field_of_education"/>
+				</field>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form3">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="address_id" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form4">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="notes" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form5">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="category_id" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form7">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="active" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form8">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="holiday_max" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form9">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="started" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form10">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="parent_id" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form11">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+				<field name="workgroups" position="replace"/>
+	        </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form12">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+		    	<notebook position="inside">
+			        <page string="Evaluations">
+			            <field name="evaluation_id" colspan="4" nolabel="1"/>
+			        </page> 
+			    </notebook>
+		    </field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_form13">
+			<field name="name">md.hr.employee.form</field>
+			<field name="model">hr.employee</field>
+			<field name="inherit_id" ref="hr.view_employee_form"/>
+			<field name="arch" type="xml">
+		    	<field name="holidays" position="replace">
+		    		<field name="holidays_id" colspan="4" nolabel="1"/>
+		    	</field>
+		    </field>
+		</record>
+		
+		<record model="ir.ui.view" id="view_md_employee_tree">
+			<field name="name">md.hr.employee.tree</field>
+			<field name="model">hr.employee</field>
+			<field name="type">tree</field>
+			<field name="field_parent">child_ids</field>
+			<field name="arch" type="xml">
+				<tree string="Employees">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_md_employee_tree">
+			<field name="name">Employees Structure</field>
+			<field name="res_model">hr.employee</field>
+			<field name="view_type">tree</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_md_employee_tree"/>
+			<field name="domain">[('parent_id','=',False)]</field>
+		</record>
+		
+
+		<record model="ir.ui.view" id="view_md_employee_list">
+			<field name="name">md.hr.employee.tree</field>
+			<field name="model">hr.employee</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Employees">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_md_employee_list">
+			<field name="res_model">hr.employee</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_md_employee_list"/>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_employee_new">
+			<field name="res_model">hr.employee</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+		<!--
+		================
+		Employee Address
+		================
+		-->
+		<record model="ir.ui.view" id="view_md_employee_address_form">
+			<field name="name">md.hr.address.form</field>
+			<field name="model">md.hr.address</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Employee Address">
+					<notebook>
+						<page string="Information">
+							<separator string="Address Information" colspan="4" />
+							<field name="name"/>
+							<field name="type" select="1"/>
+							<field name="house_nbr"/>
+							<field name="street_id" />
+							<field name="town_id" />
+							<field name="country_id"/>
+							<field name="zip_id"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_md_employee_address_tree">
+			<field name="name">md.hr.address.tree</field>
+			<field name="model">md.hr.address</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Employees Address">
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_md_employee_address_tree">
+			<field name="res_model">md.hr.address</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_md_employee_address_tree"/>
+		</record>
+		
+		<!--
+		=============================================
+		Maximun Travel allowance per year and per day
+		=============================================
+		-->
+		<record model="ir.ui.view" id="view_hr_employee_max_travel_allow_form">
+			<field name="name">hr.employee.max.travel.allow.form</field>
+			<field name="model">hr.employee.max.travel.allow</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Maximun Travel allowance">
+					<field name="amount_per_day"/>
+					<field name="amount_per_year"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_hr_employee_max_travel_allow_tree">
+			<field name="name">hr.employee.max.travel.allow.tree</field>
+			<field name="model">hr.employee.max.travel.allow</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Maximun Travel allowance">
+					<field name="amount_per_day"/>
+					<field name="amount_per_year"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_hr_employee_max_travel_allow_tree">
+			<field name="res_model">hr.employee.max.travel.allow</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_hr_employee_max_travel_allow_tree"/>
+		</record>
+		<menuitem name="Human Resources/Configuration/Maximun Travel allowance"
+					id="menu_open_view_hr_employee_max_travel_allow_tree" 
+					action="open_view_hr_employee_max_travel_allow_tree"/>
+	</data>
+</openerp>

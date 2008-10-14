@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<menuitem name="Human Resources" id="menu_hr_root" icon="terp-hr"/>
+		
+		<!--
+		===================
+		Courses
+		===================
+		-->
+		<record model="ir.ui.view" id="view_md_hr_course_form">
+			<field name="name">md.hr.course.form</field>
+			<field name="model">md.hr.course</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Courses">
+					<notebook>
+						<page string="Information">
+							<separator string="Course Information" colspan="4" />
+							<field name="code" select="1"/>
+							<field name="name"/>
+							
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_md_hr_course_tree">
+			<field name="name">md.hr.course.tree</field>
+			<field name="model">md.hr.course</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Courses">
+					<field name="code" select="1"/>
+					<field name="name"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_md_hr_course_tree">
+			<field name="res_model">md.hr.course</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			
+		</record>
+		
+		<menuitem name="Courses" parent="menu_hr_root" id="menu_courses_md"/>
+		<menuitem name="Courses" parent="menu_courses_md"
+					id="menu_open_view_md_hr_course_tree" 
+					action="open_view_md_hr_course_tree"/>
+		
+		<!--
+		===================
+		Courses By Employee
+		===================
+		-->
+		<record model="ir.ui.view" id="view_md_hr_course_student_form">
+			<field name="name">md.hr.course.student.form</field>
+			<field name="model">md.hr.course.student</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Courses By Employee">
+					<notebook>
+						<page string="Information">
+							<separator string="Course Information" colspan="4" />
+							<field name="course_id" select="1"/>
+							<field name="date"/>
+							<field name="amount" />
+							<newline/>
+							<field name="personal_contribution"/>
+							<field name="state" select="1"/>
+							<field name="payback_clause" on_change="on_change_payback_clause(payback_clause)"/>
+							<field name="payback_clause_ends"/>
+						</page>
+					</notebook>
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="view_md_hr_course_student_tree">
+			<field name="name">md.hr.course.student.tree</field>
+			<field name="model">md.hr.course.student</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Courses By Employee">
+					<field name="course_id"/>
+					
+				</tree>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="open_view_md_hr_course_student_tree">
+			<field name="res_model">md.hr.course.student</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			
+		</record>
+		
+		<menuitem name="Courses by Employee" parent="menu_courses_md"
+					id="menu_open_view_md_hr_course_student_tree" 
+					action="open_view_md_hr_course_student_tree"/>
+	</data>
+</openerp>

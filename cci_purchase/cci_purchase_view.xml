@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="purchase_order_form_inherit">
+			<field name="name">purchase.order.form.inherit</field>
+			<field name="type">form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+					<button name="purchase_confirm" states="draft" string="Confirm Purchase Order" position="replace">
+						<button name="button_purchase_temp" states="draft" string="Confirm Purchase Order" type="object"/>
+						<button name="purchase_internal_approval" states="wait_approve" string="Internal Approval" />
+						<button name="purchase_bypass_approval" states="wait_approve" string="By Pass Approval" />
+					</button>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="purchase_order_form_inherit_note">
+			<field name="name">purchase.order.form.inherit.note</field>
+			<field name="type">form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<field name="notes" colspan="4" nolabel="1" position="replace">
+					<field name="approvator"/>
+					<newline/>
+					<separator string="Notes to display on Purchase Order Report" colspan="4"/>
+					<field name="notes" colspan="4" nolabel="1"/>
+					<separator string="Internal Note" colspan="4"/>
+					<field name="internal_notes" colspan="4" nolabel="1"/>
+				</field>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="purchase_order_form_inherit_cancel">
+			<field name="name">purchase.order.form.inherit.cancel</field>
+			<field name="type">form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form"/>
+			<field name="arch" type="xml">
+				<button name="purchase_cancel" states="draft,confirmed,wait_auth" string="Cancel Purchase Order" position="replace">
+					<button name="purchase_cancel" states="draft,confirmed,wait_auth,wait_approve" string="Cancel Purchase Order"/>
+				</button>
+			</field>
+		</record>
+	</data>
+</openerp>

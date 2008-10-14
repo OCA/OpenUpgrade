@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<wizard
+			string="Confirm Selected Purchase Orders"
+			model="purchase.order"
+			name="purchase.order.confirm.all"
+			keyword="client_action_multi"
+			multi="True"
+			id="wizard_po_confirm"/>
+
+	</data>
+</openerp>

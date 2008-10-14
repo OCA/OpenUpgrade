@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>	
+		<menuitem name="Contributors" id="menu_action_translation_contrib" parent="menu_action_translation_mgmt"/>	
+		<record model="ir.actions.wizard" id="wizard_downlaod_file_for_contib">
+			<field name="name">Install language file for Contributor</field>
+			<field name="wiz_name">download.contrib.file</field>
+		</record>
+		<menuitem
+			name="Download New Version" parent="menu_action_translation_contrib"
+			action="wizard_downlaod_file_for_contib"
+			id="menuwizard_downlaod_file_for_contib"
+			type="wizard"/>
+		<record model="ir.actions.wizard" id="wizard_downlaod_file_for_publish">
+			<field name="name">Install language file for Maintainer</field>
+			<field name="wiz_name">download.publish.file</field>
+		</record>
+		<menuitem
+			name="Download Contributor's Proposition" parent="menu_action_translation_maintainer"
+			action="wizard_downlaod_file_for_publish"
+			id="menuwizard_downlaod_file_for_publish"
+			sequence="5"
+			type="wizard"/>
+		<record model="ir.actions.wizard" id="wizard_review_proposed_contributions">
+			<field name="name">Review Proposed Contributions</field>
+			<field name="wiz_name">review.proposed.contributions</field>
+		</record>
+		<menuitem
+			name="Review Proposed Contributions" parent="menu_action_translation_contrib"
+			action="wizard_review_proposed_contributions"
+			id="menuwizardwizard_review_proposed_contributions"
+			type="wizard"/>
+		<record model="ir.actions.wizard" id="wizard_upload_contrib">
+			<field name="name">Upload Contributions</field>
+			<field name="wiz_name">upload.contrib</field>
+		</record>
+		<menuitem
+			name="Upload Contributions" parent="menu_action_translation_contrib"
+			action="wizard_upload_contrib"
+			id="menuwizard_upload_contrib"
+			type="wizard"/>			
+		<record model="ir.actions.wizard" id="wizard_publish_new_version">
+			<field name="name">Publish New Version</field>
+			<field name="wiz_name">publish.new.version</field>
+		</record>
+		<menuitem
+			name="Publish New Version" parent="menu_action_translation_maintainer"
+			action="wizard_publish_new_version"
+			id="menuwizard_publish_new_version"
+			sequence="10"			
+			type="wizard"/>							
+	</data>
+</openerp>

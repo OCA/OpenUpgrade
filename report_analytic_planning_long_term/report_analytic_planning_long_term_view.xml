@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="account_analytic_planning_view_form_1">
+			<field name="name">report.account.analytic.planning.form.inherit_longterm_1</field>
+			<field name="model">report_account_analytic.planning</field>
+			<field name="inherit_id" ref="report_analytic_planning.account_analytic_planning_view_form"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page/field[@name='line_ids']/tree/field[@name='user_id']" position="after">
+					<field name="product_id" domain="[('type','=','service')]"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_analytic_planning_view_form_2">
+			<field name="name">report.account.analytic.planning.form.inherit_longterm_2</field>
+			<field name="model">report_account_analytic.planning</field>
+			<field name="inherit_id" ref="account_analytic_planning_view_form_1"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page/field[@name='line_ids']/tree/field[@name='note']" position="before">
+					<field name="date_from"/>
+					<field name="date_to"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_analytic_planning_view_form_3">
+			<field name="name">report.account.analytic.planning.form.inherit_longterm_3</field>
+			<field name="model">report_account_analytic.planning</field>
+			<field name="inherit_id" ref="account_analytic_planning_view_form_2"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<xpath expr="/form/notebook/page/field[@name='line_ids']/tree/field[@name='user_id']" position="replace">
+					<field name="user_id" select="1" on_change="onchange_product_id(user_id)"/>
+				</xpath>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="account_analytic_planning_view_form_4">
+			<field name="name">report.account.analytic.planning.form.inherit_longterm_4</field>
+			<field name="model">report_account_analytic.planning</field>
+			<field name="inherit_id" ref="account_analytic_planning_view_form_3"/>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<field name="stat_account_ids" position="after">
+					<page string="Time by Post / Product">
+						<field name="stat_product_ids" colspan="4" nolabel="1">
+							<tree string="Quantities by Post / Product">
+								<field name="product_id"/>
+								<field name="quantity" sum="Total Planned"/>
+								<field name="sum_amount_real" sum="Total Timesheet"/>
+							</tree>
+						</field>
+					</page>
+				</field>
+			</field>
+		</record>
+
+	</data>
+</openerp>

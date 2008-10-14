@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<wizard string="Import EDI Sales" model="sale.order" name="edi.import" id="wizard_edi_import"/>
+		<menuitem name="Import Edi Sales Orders" parent="edi.menu_edi_id" action="wizard_edi_import" type="wizard"/>
+		<wizard string="Export EDI Sales" model="sale.order" name="edi.export" id="wizard_edi_export"/>
+		<menuitem name="Export Edi Sales Orders" parent="edi.menu_edi_id" action="wizard_edi_export" type="wizard"/>
+	</data>
+</openerp>
+

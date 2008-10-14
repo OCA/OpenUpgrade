@@ -1,0 +1,126 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="crm_livechat_jabber_harsh0" model="crm_livechat.jabber">
+			<field eval="&quot;Harsh &quot;" name="name"/>
+			<field eval="&quot;jabber.tinyerp.com&quot;" name="server"/>
+			<field eval="&quot;2&quot;" name="ssl"/>
+			<field eval="&quot;hko@tinyerp.com&quot;" name="login"/>
+			<field eval="&quot;hko&quot;" name="password"/>
+			<field eval="&quot;5223&quot;" name="port"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="crm_livechat_livechat_businessintelligence0" model="crm_livechat.livechat">
+			<field eval="5" name="max_per_user"/>
+			<field eval="&quot;active&quot;" name="state"/>
+			<field eval="&quot;Business Intelligence&quot;" name="name"/>
+		</record>
+		<record id="crm_livechat_livechat_user_harsh0" model="crm_livechat.livechat.user">
+			<field name="jabber_id" ref="crm_livechat_jabber_harsh0"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;Harsh &quot;" name="name"/>
+			<field name="livechat_id" ref="crm_livechat_livechat_businessintelligence0"/>
+			<field eval="&quot;active&quot;" name="state"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_jabber_navrang0" model="crm_livechat.jabber">
+			<field eval="&quot;Navrang&quot;" name="name"/>
+			<field eval="&quot;jabber.tinyerp.com&quot;" name="server"/>
+			<field eval="&quot;2&quot;" name="ssl"/>
+			<field eval="&quot;noz@tinyerp.com&quot;" name="login"/>
+			<field eval="&quot;noz&quot;" name="password"/>
+			<field eval="&quot;5223&quot;" name="port"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="crm_livechat_livechat_etiny0" model="crm_livechat.livechat">
+			<field eval="5" name="max_per_user"/>
+			<field eval="&quot;active&quot;" name="state"/>
+			<field eval="&quot;E Tiny&quot;" name="name"/>
+		</record>
+		<record id="crm_livechat_livechat_user_navrang0" model="crm_livechat.livechat.user">
+			<field name="jabber_id" ref="crm_livechat_jabber_navrang0"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;Navrang&quot;" name="name"/>
+			<field name="livechat_id" ref="crm_livechat_livechat_etiny0"/>
+			<field eval="&quot;active&quot;" name="state"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_jabber_mantavya0" model="crm_livechat.jabber">
+			<field eval="&quot;Mantavya&quot;" name="name"/>
+			<field eval="&quot;jabber.tinyerp.com&quot;" name="server"/>
+			<field eval="&quot;2&quot;" name="ssl"/>
+			<field eval="&quot;mga@tinyerp.com&quot;" name="login"/>
+			<field eval="&quot;mga&quot;" name="password"/>
+			<field eval="&quot;5223&quot;" name="port"/>
+		</record>
+	</data>
+	<data noupdate="1">
+		<record id="crm_livechat_livechat_generaltinyindia0" model="crm_livechat.livechat">
+			<field eval="5" name="max_per_user"/>
+			<field eval="&quot;active&quot;" name="state"/>
+			<field eval="&quot;General Tiny - India&quot;" name="name"/>
+		</record>
+		<record id="crm_livechat_livechat_user_mantavya0" model="crm_livechat.livechat.user">
+			<field name="jabber_id" ref="crm_livechat_jabber_mantavya0"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;Mantavya&quot;" name="name"/>
+			<field name="livechat_id" ref="crm_livechat_livechat_generaltinyindia0"/>
+			<field eval="&quot;active&quot;" name="state"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_jabber_parnter0" model="crm_livechat.jabber">
+			<field eval="&quot;Parnter 1&quot;" name="name"/>
+			<field eval="&quot;jabber.tinyerp.com&quot;" name="server"/>
+			<field eval="&quot;2&quot;" name="ssl"/>
+			<field eval="&quot;asb@tinyerp.com&quot;" name="login"/>
+			<field eval="&quot;asb&quot;" name="password"/>
+			<field eval="&quot;5223&quot;" name="port"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_livechat_partner_parnter0" model="crm_livechat.livechat.partner">
+			<field eval="&quot;active&quot;" name="state"/>
+			<field name="jabber_id" ref="crm_livechat_jabber_parnter0"/>
+			<field eval="&quot;Parnter 1&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_jabber_parnter1" model="crm_livechat.jabber">
+			<field eval="&quot;Parnter 2&quot;" name="name"/>
+			<field eval="&quot;jabber.tinyerp.com&quot;" name="server"/>
+			<field eval="&quot;2&quot;" name="ssl"/>
+			<field eval="&quot;pso@tinyerp.com&quot;" name="login"/>
+			<field eval="&quot;pso&quot;" name="password"/>
+			<field eval="&quot;5223&quot;" name="port"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_livechat_partner_parnter1" model="crm_livechat.livechat.partner">
+			<field eval="&quot;active&quot;" name="state"/>
+			<field name="jabber_id" ref="crm_livechat_jabber_parnter1"/>
+			<field eval="&quot;Parnter 2&quot;" name="name"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_jabber_parnter2" model="crm_livechat.jabber">
+			<field eval="&quot;Parnter 3&quot;" name="name"/>
+			<field eval="&quot;jabber.tinyerp.com&quot;" name="server"/>
+			<field eval="&quot;2&quot;" name="ssl"/>
+			<field eval="&quot;cza@tinyerp.com&quot;" name="login"/>
+			<field eval="&quot;cza&quot;" name="password"/>
+			<field eval="&quot;5223&quot;" name="port"/>
+		</record>
+	</data>
+	<data>
+		<record id="crm_livechat_livechat_partner_parnter2" model="crm_livechat.livechat.partner">
+			<field eval="&quot;active&quot;" name="state"/>
+			<field name="jabber_id" ref="crm_livechat_jabber_parnter2"/>
+			<field eval="&quot;Parnter 3&quot;" name="name"/>
+		</record>
+	</data>
+</openerp>

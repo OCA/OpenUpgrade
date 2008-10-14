@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<wizard
+			string="Get Partner From Call"
+			model="asterisk.server"
+			name="asterisk.partner.get"
+			id="wizard_partner_get"
+			multi="True"/>
+
+		
+		<menuitem
+			parent="menu_asterisk_server_main"
+			action="wizard_partner_get"
+			type="wizard"
+			id="menu_wizard_partner_get"/>
+
+
+
+
+	</data>
+</openerp>

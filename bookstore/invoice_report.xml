@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report id="account_invoices"
+			string="Invoices"
+			model="account.invoice"
+			name="account.invoice"
+			rml="bookstore/report/invoice.rml"
+			auto="False"/>
+	</data>
+
+	<data>
+		<report id="sale.order"
+			string="Print Orders"
+			model="sale.order"
+			name="sale.order"
+			rml="bookstore/report/sale_order.rml"
+			auto="False"/>
+	</data>
+
+	<data>
+		<report id="purchase.order"
+			string="Print Orders"
+			model="purchase.order"
+			name="purchase.order"
+			rml="bookstore/report/purchase_order.rml"
+			auto="False"/>
+	</data>
+</openerp>

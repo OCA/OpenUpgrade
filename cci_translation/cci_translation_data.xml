@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+	<!-- Demo data for partner -->
+<!--		<record id="awex_partner" model="res.partner">
+			<field name="name">AWEX</field>
+			<field name="awex_eligible">yes</field>
+		</record>
+-->
+
+	<!-- Demo data for product -->
+	<record id="cci_product_product_translation_folder" model="product.product">
+		<field name="list_price">0.00</field>
+		<field name="standard_price">0.00</field>
+		<field name="uom_id" ref="product.product_uom_unit"/>
+		<field name="uom_po_id" ref="product.product_uom_unit"/>
+		<field name="name">Translation Folder</field>
+		<field name="categ_id" ref="product.cat1"/>
+	</record>
+
+	</data>
+</openerp>

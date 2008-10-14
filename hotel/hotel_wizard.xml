@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		
+		<wizard
+			string="Folio Total"
+			model="hotel.folio"
+			name="hotel.folio.total_folio"
+			menu="False"
+			id="wizard_hotel_total"/>
+		
+		<menuitem
+			name="Reports" parent="menu_hotel_mgt"
+			action="wizard_hotel_total" 
+			type="wizard"
+			
+			id="wizard_hotel_menu"/>
+	</data>
+</openerp>

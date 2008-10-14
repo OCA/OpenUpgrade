@@ -1,0 +1,78 @@
+<openerp>
+	<data>
+        <!-- Forms for the countries and areas -->
+		<record model="ir.ui.view" id="cci_country.cci_country_form">
+			<field name="name">cci_country.cci_country.form</field>
+			<field name="model">cci_country.cci_country</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Countries and Areas">
+					<field name="code" string="Code" select="1" />
+					<field name="name" string="Nom" select="1"/>
+					<field name="official_name" select="2" colspan="4" />
+					<field name="postalabbrev" string="Postal Abbreviation" />
+					<field name="phoneprefix" string="Phone prefix" />
+                    <field name="iscountry" string="Active" select="2" />
+                    <field name="active" string="Active" />
+					<field name="description" string="Description"/>
+					<separator string="Valid for use in these modules" colspan="4"/>
+					<field name="valid4certificate" string="Certificates of Origin" />
+					<field name="valid4ata" string="ATA Carnet" />
+					<field name="valid4embassy" string="Embassy folders" />
+					<separator string="Contains / Part of" colspan="4"/>
+                    <field name="cci_country_ids" />
+				</form>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="cci_country.cci_country_tree">
+			<field name="name">cci_country.cci_country.tree</field>
+			<field name="model">cci_country.cci_country</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Countries and Areas">
+					<field name="code" string="Code" select="1" />
+					<field name="name" string="Nom" select="1"/>
+                    <field name="iscountry" string="Active" select="2" />
+				</tree>
+			</field>
+		</record>
+
+<!-- view for res.partner.state2
+		<record model="ir.actions.act_window" id="action_partner_state">
+			<field name="name">Activity State</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.state</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="States" groups="base.group_admin" id="menu_partner_state_main" parent="base.menu_base_config"/>
+		<menuitem  parent="menu_partner_state_main" groups="base.group_admin" action="action_partner_state" id="menu_partner_state"/>
+
+		<record model="ir.ui.view" id="view_partner_state2_form">
+			<field name="name">res.partner.state2.form</field>
+			<field name="model">res.partner.state2</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Customer State">
+					<field name="name" select="1"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_partner_state2">
+			<field name="name">Customer State</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">res.partner.state2</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem parent="menu_partner_state_main" groups="base.group_admin" action="action_partner_state2" id="menu_partner_state2"/>
+-->
+
+	    <!-- menu entries for these forms -->
+		<record model="ir.actions.act_window" id="action_cci_country">
+			<field name="name">Country and Area</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cci_country.cci_country</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem parent="base.menu_base_config" groups="base.group_system" action="action_cci_country" id="menu_cci_country" />
+	</data>
+</openerp>

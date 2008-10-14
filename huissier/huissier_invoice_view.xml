@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<record model="ir.actions.act_window" id="b101">
+		<field name="name">Factures en attente</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','draft'),('type','=','out_invoice')]</field>
+		<field name="view_id" search="[('name','=','account.invoice.form1')]" model="ir.ui.view"/>
+	</record>
+	<menuitem id="menu101" name="Financial Management/Invoices/Customer Invoice/Draft Customer Invoices/Factures attente" action="b101"/>
+
+	
+	<!-- Opened Invoices -->
+	<record model="ir.actions.act_window" id="b103">
+		<field name="name">Factures de garde ouvertes</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','open'),('type','=','out_invoice'),('number','like','G')]</field>
+		<field name="view_id" search="[('name','=','account.invoice.form1')]" model="ir.ui.view"/>
+	</record>
+	<menuitem id="menu103" name="Financial Management/Invoices/Customer Invoice/Open Customer Invoices/Factures de garde ouvertes" action="b103"/>
+	
+	<record model="ir.actions.act_window" id="b104">
+		<field name="name">Factures de salle ouvertes</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','open'),('type','=','out_invoice'),('number','like','S')]</field>
+		<field name="view_id" search="[('name','=','account.invoice.form1')]" model="ir.ui.view"/>
+	</record>
+	<menuitem id="menu104" name="Huissier/Factures/Factures de salle ouvertes" action="b104"/>
+
+	<record model="ir.actions.act_window" id="b105">
+		<field name="name">Factures de vignettes ouvertes</field>
+		<field name="res_model">account.invoice</field>
+		<field name="view_type">form</field>
+		<field name="domain">[('state','=','open'),('type','=','out_invoice'),('number','like','V')]</field>
+		<field name="view_id" search="[('name','=','account.invoice.form1')]" model="ir.ui.view"/>
+	</record>
+	<menuitem id="menu105" name="Financial Management/Invoices/Customer Invoice/Open Customer Invoices/Factures de vignettes ouvertes" action="b105"/>
+	
+</data>
+</openerp>

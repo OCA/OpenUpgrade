@@ -1,0 +1,118 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+        <record id="base.main_address" model="res.partner.address">
+            <field name="partner_id" ref="base.main_partner"/>
+            <field name="name">Philippe Vandermeer</field>
+            <field name="street">Esplanade de l'Europe, 2</field>
+            <field name="zip">4020</field>
+            <field name="city">Liege</field>
+            <field name="phone">+32 4 341 91 70</field>
+            <field name="type">default</field>
+            <field model="res.country" name="country_id" ref="base.be"/>
+        </record>
+		<!--<record id="res_partner_ccilv0" model="res.partner">-->
+		<record id="base.main_partner" model="res.partner">
+			<field eval="0" name="alert_legalisations"/>
+			<field eval="0" name="alert_events"/>
+			<field eval="0" name="invoice_special"/>
+			<field eval="1" name="dir_presence"/>
+			<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
+			<field eval="0" name="domiciliation_bool"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="wall_exclusion"/>
+			<field eval="&quot;CCILVqdp&quot;" name="name"/>
+			<field eval="0" name="alert_advertising"/>
+			<field eval="0" name="alert_membership"/>
+			<field eval="0" name="invoice_public"/>
+			<field eval="0" name="dir_exclude"/>
+		</record>
+	</data>
+<!--	<data>
+		<record id="res_partner_ccih0" model="res.partner">
+			<field eval="0" name="alert_legalisations"/>
+			<field eval="0" name="alert_events"/>
+			<field eval="0" name="invoice_special"/>
+			<field eval="1" name="dir_presence"/>
+			<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
+			<field eval="0" name="domiciliation_bool"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="wall_exclusion"/>
+			<field eval="&quot;CCIH&quot;" name="name"/>
+			<field eval="0" name="alert_advertising"/>
+			<field eval="0" name="alert_membership"/>
+			<field eval="0" name="invoice_public"/>
+			<field eval="0" name="dir_exclude"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_ccipn0" model="res.partner">
+			<field eval="0" name="alert_legalisations"/>
+			<field eval="0" name="alert_events"/>
+			<field eval="0" name="invoice_special"/>
+			<field eval="1" name="dir_presence"/>
+			<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
+			<field eval="0" name="domiciliation_bool"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="wall_exclusion"/>
+			<field eval="&quot;CCIPN&quot;" name="name"/>
+			<field eval="0" name="alert_advertising"/>
+			<field eval="0" name="alert_membership"/>
+			<field eval="0" name="invoice_public"/>
+			<field eval="0" name="dir_exclude"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_ccilux0" model="res.partner">
+			<field eval="0" name="alert_legalisations"/>
+			<field eval="0" name="alert_events"/>
+			<field eval="0" name="invoice_special"/>
+			<field eval="1" name="dir_presence"/>
+			<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
+			<field eval="0" name="domiciliation_bool"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="wall_exclusion"/>
+			<field eval="&quot;CCILux&quot;" name="name"/>
+			<field eval="0" name="alert_advertising"/>
+			<field eval="0" name="alert_membership"/>
+			<field eval="0" name="invoice_public"/>
+			<field eval="0" name="dir_exclude"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_cciwapi0" model="res.partner">
+			<field eval="0" name="alert_legalisations"/>
+			<field eval="0" name="alert_events"/>
+			<field eval="0" name="invoice_special"/>
+			<field eval="1" name="dir_presence"/>
+			<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
+			<field eval="0" name="domiciliation_bool"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="wall_exclusion"/>
+			<field eval="&quot;CCIWaPi&quot;" name="name"/>
+			<field eval="0" name="alert_advertising"/>
+			<field eval="0" name="alert_membership"/>
+			<field eval="0" name="invoice_public"/>
+			<field eval="0" name="dir_exclude"/>
+		</record>
+	</data>
+	<data>
+		<record id="res_partner_ccibw0" model="res.partner">
+			<field eval="0" name="alert_legalisations"/>
+			<field eval="0" name="alert_events"/>
+			<field eval="0" name="invoice_special"/>
+			<field eval="1" name="dir_presence"/>
+			<field eval="&quot;prospect&quot;" name="magazine_subscription"/>
+			<field eval="0" name="domiciliation_bool"/>
+			<field eval="1" name="active"/>
+			<field eval="0" name="wall_exclusion"/>
+			<field eval="&quot;CCIBW&quot;" name="name"/>
+			<field eval="0" name="alert_advertising"/>
+			<field eval="0" name="alert_membership"/>
+			<field eval="0" name="invoice_public"/>
+			<field eval="0" name="dir_exclude"/>
+		</record>
+	</data>
+-->
+</openerp>

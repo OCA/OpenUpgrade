@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	<record model="ir.ui.view" id="view_translation_contribution_form">
+		<field name="name">Translations Contrib</field>
+		<field name="model">ir.translation.contribution</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Translations Contrib">
+				<field name="name" select="2"/>
+				<field name="res_id" select="2"/>
+				<field name="type" select="2"/>
+				<field name="lang" select="1"/>
+				<field name="src" select="1"/>
+				<field name="value" select="1"/>
+				<!-- field name="translation_id" / -->
+				<field name="contributor_email" select="1"/>
+				<group colspan="4" col="13">
+					<field name="state" select="2"/>
+					<button name="button_propose" string="Propose" states="draft"/>
+					<button name="button_unchange" string="Don't Change" states="draft"/>
+					<button name="button_accept" string="Accept" states="propose"/>
+					<button name="button_deny" string="Deny" states="propose"/>											
+					<button name="button_draft" string="Draft" states="deny,accept,propose,unchange"/>
+				</group>				
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_translation_contribution_tree">
+		<field name="name">Translations Contrib</field>
+		<field name="model">ir.translation.contribution</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Translations" editable="bottom">
+				<field name="src"/>
+				<field name="value"/>
+				<field name="name"/>
+				<field name="lang"/>
+				<field name="type"/>
+				<field name="contributor_email"/>
+				<field name="state"/>				
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_translation_contribution">
+		<field name="name">All Contribution</field>
+		<field name="res_model">ir.translation.contribution</field>
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_translation_contribution_tree"/>
+	</record>
+	<menuitem name="Translations Management" id="menu_action_translation_mgmt" parent="base.menu_translation"/>
+	<menuitem action="action_translation_contribution" id="menu_action_translation_contribution" parent="menu_action_translation_mgmt"/>
+
+	<record model="ir.actions.act_window" id="action_translation_contribution_propose">
+		<field name="name">All Proposed Contribution</field>
+		<field name="res_model">ir.translation.contribution</field>
+		<field name="domain">[('state','=','propose')]</field>				
+		<field name="view_type">form</field>
+		<field name="view_id" ref="view_translation_contribution_tree"/>
+	</record>
+
+	<menuitem name="Maintainer" id="menu_action_translation_maintainer" parent="menu_action_translation_mgmt"/>
+	<menuitem name="Review Proposed Contribution" action="action_translation_contribution_propose" id="menu_action_translation_contribution_propose" sequence="7" parent="menu_action_translation_maintainer"/>
+</data>
+</openerp>			

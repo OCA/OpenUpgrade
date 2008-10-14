@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<record model="workflow.transition" id="purchase.trans_confirmed_router">
+			<field name="signal" eval="False"/>
+		</record>
+	
+
+	</data>
+</openerp>

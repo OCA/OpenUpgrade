@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<record model="asterisk.server" id="asterisk_server">
+			<field name="name">Office Server</field>
+			<field name="host">localhost</field>
+			<field name="login">admin</field>
+			<field name="password">admin</field>
+		</record>
+
+		<record model="asterisk.phone" id="asterisk_phone">
+			<field name="name">GrandStream 2003</field>
+			<field name="asterisk_id" ref="asterisk_server"/>
+			<field name="phoneid">2003</field>
+			<field name="user_id" ref="base.user_demo"/>
+		</record>
+
+		<record model="asterisk.phone" id="asterisk_phone2">
+			<field name="name">GrandStream 2002</field>
+			<field name="asterisk_id" ref="asterisk_server"/>
+			<field name="phoneid">2002</field>
+			<field name="user_id" ref="base.user_admin"/>
+		</record>
+
+	</data>
+</openerp>

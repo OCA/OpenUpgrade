@@ -1,0 +1,152 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+ 
+	 <!-- Table Data --> 
+		<record id="hotel_restaurant_tables_table0" model="hotel.restaurant.tables">
+			<field eval="2" name="capacity"/>
+			<field eval="&quot;Table-1&quot;" name="name"/>
+		</record>
+
+		<record id="hotel_restaurant_tables_table1" model="hotel.restaurant.tables">
+			<field eval="4" name="capacity"/>
+			<field eval="&quot;Table-2&quot;" name="name"/>
+		</record>
+	
+		<record id="hotel_restaurant_tables_table2" model="hotel.restaurant.tables">
+			<field eval="8" name="capacity"/>
+			<field eval="&quot;Table-3&quot;" name="name"/>
+		</record>
+	
+		<record id="hotel_restaurant_tables_table3" model="hotel.restaurant.tables">
+			<field eval="5" name="capacity"/>
+			<field eval="&quot;Table-4&quot;" name="name"/>
+		</record>
+	
+		<!--  Food Item Category -->
+			
+		<record id="hotel_menucard_type_0" model="hotel.menucard.type">
+			<field name="parent_id" domain="[('ismenutype','=',True)]" ref="null" />
+			<field name="name">All FoodItems</field>
+
+		</record>
+		<record id="hotel_menucard_type_1" model="hotel.menucard.type">
+			<field name="parent_id" model="product.category" search="[('ismenutype','=',True)]" ref="hotel_menucard_type_0"/>
+			<field name="name">Punjabi</field>
+		</record>
+		<record id="hotel_menucard_type_2" model="hotel.menucard.type">
+			<field name="parent_id" model="product.category" search="[('ismenutype','=',True)]" ref="hotel_menucard_type_0"/>
+			<field name="name">South Indian</field>
+		</record>
+		<record id="hotel_menucard_type_3" model="hotel.menucard.type">
+			<field name="parent_id" model="product.category" search="[('ismenutype','=',True)]" ref="hotel_menucard_type_0"/>
+			<field name="name">Gujarati</field>
+		</record>
+		
+		<!-- Food Item List -->
+		<record id="hotel_fooditem_0" model="hotel.menucard">
+			<field name="name">Paneer Tikaa</field>
+			<field name="categ_id" model="product.category" search="[('ismenutype','=',True),('name','=','Punjabi')]" ref="hotel_menucard_type_1"/> 
+			<field name="list_price">50.00</field>
+		</record>
+		<record id="hotel_fooditem_1" model="hotel.menucard">
+			<field name="name">Tanduri Roti</field>
+			<field name="categ_id" model="product.category" search="[('ismenutype','=',True),('name','=','Punjabi')]" ref="hotel_menucard_type_1"/> 
+			<field name="list_price">10</field>
+		</record>
+		<record id="hotel_fooditem_2" model="hotel.menucard">
+			<field name="name">Dosa</field>
+			<field name="categ_id" model="product.category" search="[('ismenutype','=',True),('name','=','South Indian')]" ref="hotel_menucard_type_2"/> 
+			<field name="list_price">30.00</field>
+		</record>
+	
+	  
+	
+		<record id="hotel_restaurant_reservation_0" model="hotel.restaurant.reservation">
+			<field eval="[(6,0,[ref('hotel_restaurant.hotel_restaurant_tables_table1'),ref('hotel_restaurant.hotel_restaurant_tables_table0')])]" name="tableno"/>
+			<field name="room_no" ref="hotel.hotel_room_3"/>
+			<field eval="&quot;2008-04-26 20:09:00&quot;" name="end_date"/>
+			<field name="partner_address_id" ref="base.res_partner_address_9"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field name="cname" ref="base.res_partner_2"/>
+			<field eval="&quot;R0/00001&quot;" name="reservation_id"/>
+			<field eval="&quot;2008-04-25 15:09:00&quot;" name="start_date"/>
+		</record>
+
+	
+	
+		<record id="hotel_restaurant_reservation_1" model="hotel.restaurant.reservation">
+			<field eval="[(6,0,[ref('hotel_restaurant.hotel_restaurant_tables_table2'),ref('hotel_restaurant.hotel_restaurant_tables_table3')])]" name="tableno"/>
+			<field name="room_no" ref="hotel.hotel_room_0"/>
+			<field eval="&quot;2008-04-25 15:09:00&quot;" name="end_date"/>
+			<field name="partner_address_id" ref="base.res_partner_address_13"/>
+			<field eval="&quot;draft&quot;" name="state"/>
+			<field name="cname" ref="base.res_partner_14"/>
+			<field eval="&quot;R0/00004&quot;" name="reservation_id"/>
+			<field eval="&quot;2008-04-23 11:09:00&quot;" name="start_date"/>
+		</record>
+
+	
+	
+		<record id="hotel_reservation_order_0" model="hotel.reservation.order">
+			<field eval="[(6,0,[ref('hotel_restaurant.hotel_restaurant_tables_table2'),ref('hotel_restaurant.hotel_restaurant_tables_table3')])]" name="table_no"/>
+			<field eval="&quot;2008-04-25 15:09:00&quot;" name="date1"/>
+			<field eval="&quot;ORR/00001&quot;" name="order_number"/>
+			<field eval="&quot;R0/00004&quot;" name="reservationno"/>
+			
+		</record>
+		<record id="hotel_reservation_order_line_0" model="hotel.restaurant.order.list">
+			<field name="o_l" ref="hotel_reservation_order_0"/>
+			<field name="name" ref="hotel_fooditem_0"/>
+			<field name="item_qty">2</field>
+			<field name="item_rate">50.00</field>
+		</record>
+			
+		<record id="hotel_reservation_order_1" model="hotel.reservation.order">
+			<field eval="[(6,0,[ref('hotel_restaurant.hotel_restaurant_tables_table1'),ref('hotel_restaurant.hotel_restaurant_tables_table0')])]" name="table_no"/>
+			<field eval="&quot;2008-04-25 10:09:00&quot;" name="date1"/>
+			<field eval="&quot;ORR/00002&quot;" name="order_number"/>
+			<field eval="&quot;R0/00006&quot;" name="reservationno"/>
+			
+		</record>
+		<record id="hotel_reservation_order_line_1" model="hotel.restaurant.order.list">
+			<field name="o_l" ref="hotel_reservation_order_1"/>
+			<field name="name" ref="hotel_fooditem_1"/>
+			<field name="item_qty">3</field>
+			<field name="item_rate">30.00</field>
+		</record>
+		<!-- 
+		 Table Order -->
+		
+		<record id="hotel_restaurant_order_0" model="hotel.restaurant.order">
+			<field eval="[(6,0,[ref('hotel_restaurant.hotel_restaurant_tables_table1'),ref('hotel_restaurant.hotel_restaurant_tables_table0')])]" name="table_no"/>
+			<field eval="&quot;2008-04-25 15:09:00&quot;" name="o_date"/>
+			<field eval="&quot;OR/00001&quot;" name="order_no"/>
+			<field name="room_no" ref="hotel.hotel_room_6"/>
+			<field name="waiter_name" ref="base.res_partner_agrolait"/>
+			
+		</record>
+		<record id="hotel_restaurant_order_list_0" model="hotel.restaurant.order.list">
+			<field name="o_list" ref="hotel_restaurant_order_0"/>
+			<field name="name" ref="hotel_fooditem_1"/>
+			<field name="item_qty">3</field>
+			<field name="item_rate">30.00</field>
+		</record>
+		
+		<record id="hotel_restaurant_order_1" model="hotel.restaurant.order">
+			<field eval="[(6,0,[ref('hotel_restaurant.hotel_restaurant_tables_table2')])]" name="table_no"/>
+			<field eval="&quot;2008-04-22 12:09:00&quot;" name="o_date"/>
+			<field eval="&quot;OR/00002&quot;" name="order_no"/>
+			<field name="room_no" ref="hotel.hotel_room_6"/>
+			<field name="waiter_name" ref="base.res_partner_agrolait"/>
+			
+		</record>
+		<record id="hotel_restaurant_order_list_1" model="hotel.restaurant.order.list">
+			<field name="o_list" ref="hotel_restaurant_order_1"/>
+			<field name="name" ref="hotel_fooditem_0"/>
+			<field name="item_qty">3</field>
+			<field name="item_rate">50.00</field>
+		</record>
+		
+	</data>
+</openerp>

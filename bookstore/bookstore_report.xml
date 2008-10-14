@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<openerp>
+  <data>
+
+	<report id="account.account_invoices"
+			string="Invoices"
+			model="account.invoice"
+			name="account.invoice.bookstore"
+			rml="bookstore/report/invoice.rml"
+			auto="False"/>
+
+	<report id="sale.report_sale_order"
+			string="Print Order"
+			model="sale.order"
+			name="sale.order.bookstore"
+			rml="bookstore/report/sales_order.rml"
+			auto="False"/>
+
+	<report id="purchase.report_purchase_quotation"
+			name="purchase.quotation.bookstore"
+			string="Request for Quotation"
+			model="purchase.order"
+			rml="bookstore/report/quotation.rml"
+			auto="False"/>
+
+	<report id="purchase.report_purchase_order"
+			name="purchase.order.bookstore"
+			string="Print Order"
+			model="purchase.order"
+			auto="False"
+			rml="bookstore/report/purchase_order.rml"/>
+
+  </data>
+</openerp>

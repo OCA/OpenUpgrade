@@ -1,0 +1,25 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<wizard string="Make Invoice"
+					model="event.registration"
+					name="cci_event.make_invoice"
+					id="event.event_reg_invoice"
+					menu="True"	/>
+	<wizard string="Copy Events"
+					model="event.event"
+					name="event.event_copy"
+					menu="True"	id="event_copy"/>
+	<wizard
+			string="Registrations with Missing Checks"
+			model="event.registration"
+			name="cci_event.reg_checks"
+			menu="False"
+			id="wizard_missing_checks_reg"/>
+	<menuitem
+			parent="event.menu_report_event"
+			action="wizard_missing_checks_reg"
+			type="wizard"
+			id="menu_missing_checks_reg"/>
+	</data>
+</openerp>

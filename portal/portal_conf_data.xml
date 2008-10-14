@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<record id="ir_rule_group_dedicatedtotheportal0" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.report.custom')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_0" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible'),('model','=','ir.actions.report.custom')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal0"/>
+		</record>
+		<record id="ir_rule_group_dedicatedtotheportal1" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.report.xml')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_1" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible'),('model','=','ir.actions.report.xml')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal1"/>
+		</record>
+		<record id="ir_rule_group_dedicatedtotheportal2" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.act_window')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_2" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible'),('model','=','ir.actions.act_window')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal2"/>
+		</record>
+		<record id="ir_rule_group_dedicatedtotheportal3" model="ir.rule.group">
+			<field eval="False" name="global"/>
+			<field model="ir.model" name="model_id" search="[('name','=','ir.actions.wizard')]"/>
+			<field eval="&quot;Dedicated to the portal&quot;" name="name"/>
+		</record>
+		<record id="ir_rule_3" model="ir.rule">
+			<field eval="&quot;True&quot;" name="operand"/>
+			<field eval="&quot;=&quot;" name="operator"/>
+			<field model="ir.model.fields" name="field_id" search="[('name','=','portal_visible'),('model','=','ir.actions.wizard')]"/>
+			<field name="rule_group" ref="ir_rule_group_dedicatedtotheportal3"/>
+		</record>
+	</data>
+
+</openerp>

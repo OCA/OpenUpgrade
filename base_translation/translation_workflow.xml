@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+		<!-- Roles definition -->
+
+		<record model="res.roles" id="CR">
+			<field name="name">Contributor</field>
+		</record>
+
+		<record model="res.roles" id="MR">
+			<field name="name">Maintainer</field>
+		</record>
+
+
+<!-- WorkFlow -->
+
+	<record model="workflow" id="wkf_translation">
+		<field name="name">translation.contrib</field>
+		<field name="osv">ir.translation.contribution</field>
+		<field name="on_create">True</field>
+	</record>
+
+<!-- Activites  -->
+	
+		<record model="workflow.activity" id="act_draft">
+			<field name="wkf_id" ref="wkf_translation"/>
+			<field name="flow_start">True</field>			
+			<field name="name">draft</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state': 'draft'})</field>
+		</record>	
+		<record model="workflow.activity" id="act_propose">
+			<field name="wkf_id" ref="wkf_translation"/>
+			<field name="name">propose</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state': 'propose'})</field>
+		</record>
+		<record model="workflow.activity" id="act_unchange">
+			<field name="wkf_id" ref="wkf_translation"/>
+			<field name="name">unchange</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state': 'unchange'})</field>
+		</record>
+		<record model="workflow.activity" id="act_accept">
+			<field name="wkf_id" ref="wkf_translation"/>
+			<field name="name">accept</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state': 'accept'})</field>
+		</record>
+		<record model="workflow.activity" id="act_deny">
+			<field name="wkf_id" ref="wkf_translation"/>
+			<field name="name">deny</field>
+			<field name="kind">function</field>
+			<field name="action">write({'state': 'deny'})</field>
+		</record>		
+		<record model="workflow.activity" id="act_done">
+			<field name="wkf_id" ref="wkf_translation"/>
+			<field name="name">done</field>
+			<field name="kind">function</field>
+			<field name="action">action_done()</field>
+			<field name="flow_stop">True</field>		
+		</record>
+		
+<!--transision -->
+		<record model="workflow.transition" id="trans_draft_propose">
+			<field name="act_from" ref="act_draft"/>		
+			<field name="act_to" ref="act_propose"/>
+	 		<field name="signal">button_propose</field>
+		</record>		
+		<record model="workflow.transition" id="trans_draft_unchage">
+			<field name="act_from" ref="act_draft"/>
+			<field name="act_to" ref="act_unchange"/>
+ 			<field name="signal">button_unchange</field>			
+		</record>	
+		<record model="workflow.transition" id="trans_propose_draft">
+			<field name="act_from" ref="act_propose"/>
+			<field name="act_to" ref="act_draft"/>
+			<field name="signal">button_draft</field>
+		</record>		
+		<record model="workflow.transition" id="trans_unchage_draft">
+			<field name="act_from" ref="act_unchange"/>
+			<field name="act_to" ref="act_draft"/>
+			<field name="signal">button_draft</field>			
+		</record>
+		<record model="workflow.transition" id="trans_propose_accept">
+			<field name="act_from" ref="act_propose"/>		
+			<field name="act_to" ref="act_accept"/>
+			<field name="signal">button_accept</field>
+			<field name="role_id" ref="MR"/>		
+		</record>		
+		<record model="workflow.transition" id="trans_propose_deny">
+			<field name="act_from" ref="act_propose"/>
+			<field name="act_to" ref="act_deny"/>
+ 			<field name="signal">button_deny</field>
+			<field name="role_id" ref="MR"/> 					
+		</record>	
+		<record model="workflow.transition" id="trans_deny_draft">
+			<field name="act_from" ref="act_deny"/>
+			<field name="act_to" ref="act_draft"/>
+			<field name="signal">button_draft</field>
+			<field name="role_id" ref="MR"/>			
+		</record>		
+		<record model="workflow.transition" id="trans_accept_draft">
+			<field name="act_from" ref="act_accept"/>
+			<field name="act_to" ref="act_draft"/>
+			<field name="signal">button_draft</field>
+			<field name="role_id" ref="MR"/>	
+		</record>				
+</data>
+</openerp>

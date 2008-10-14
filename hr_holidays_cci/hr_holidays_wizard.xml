@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+	<wizard string="Print Summary of Holidays"
+		 model="hr.holidays"
+		  name="hr.holidays.summary"
+		  id="holidays_summary"/>
+
+	<menuitem name="Print Summary of Holidays" parent="hr.menu_hr_reporting"
+		 action="holidays_summary"
+		 type="wizard"
+		 id="menu_holidays_summary"/>
+ 	</data>
+</openerp>

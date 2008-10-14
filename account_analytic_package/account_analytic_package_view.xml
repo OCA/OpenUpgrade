@@ -1,0 +1,235 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+	<record model="ir.ui.view" id="view_account_analytic_package">
+		<field name="name">account.analytic.account.package.form</field>
+		<field name="model">account.analytic.account</field>
+		<field name="inherit_id" ref="account.view_account_analytic_account_form" />
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Package Weight">
+					<field name="package_ok"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_crm_section_form_package">
+		<field name="name">crm.case.section.package.form</field>
+		<field name="model">crm.case.section</field>
+		<field name="inherit_id" ref="crm.crm_case_section_view_form" />
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Package Weight">
+					<separator string="Analytic Package" colspan="4"/>
+					<field name="package_product_id" colspan="4" />
+					<field name="analytic_journal_id" colspan="4" />
+					<field name="analytic_account_id" colspan="4" />
+					<label string="The parent account of all package account" colspan="4"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_product_form_package">
+		<field name="name">product.normal.package.form</field>
+		<field name="model">product.product</field>
+		<field name="inherit_id" ref="product.product_normal_form_view" />
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<notebook position="inside">
+				<page string="Package Units">
+				<separator string="Analytic Package" colspan="4"/>
+				<field name="package_weight" colspan="4" />
+				<label string="Zero if not part of a package" colspan="4"/>
+				<label string="&lt;0 if it's a service unit" colspan="4"/>
+				<label string="&gt;0 if it's a activity unit" colspan="4"/>
+				</page>
+			</notebook>
+		</field>
+	</record>
+
+	<record model="ir.ui.view" id="view_account_analytic_line_package_tree_simplified">
+		<field name="name">account.analytic.line.package.simplified.tree</field>
+		<field name="model">account.analytic.line.package</field>
+		<field name="type">tree</field>
+		<field name="priority">32</field>
+		<field name="arch" type="xml">
+			<tree string="Service &amp; Activity Units">
+				<field name="date"/>
+				<field name="name"/>
+				<field name="product_id"/>
+				<field name="unit_amount"/>
+				<field name="unit_weight"/>
+				<field name="total_weight" sum="Units"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_account_analytic_line_package_tree_simplified">
+		<field name="name">Service &amp; Activity Units (no partner and account)</field>
+		<field name="res_model">account.analytic.line.package</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_account_analytic_line_package_tree_simplified"/>
+	</record>
+
+
+	<record model="ir.ui.view" id="view_account_analytic_line_package_form">
+		<field name="name">account.analytic.line.package.form</field>
+		<field name="model">account.analytic.line.package</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Service &amp; Activity Units">
+				<field name="date" select="1"/>
+				<field name="name" select="2"/>
+				<field name="partner_id" select="1"/>
+				<field name="account_id" select="1"/>
+				<field name="product_id" select="2"/>
+				<field name="unit_amount"/>
+				<field name="unit_weight"/>
+				<field name="total_weight" sum="Units"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_account_analytic_line_package_tree">
+		<field name="name">account.analytic.line.package.tree</field>
+		<field name="model">account.analytic.line.package</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Service &amp; Activity Units">
+				<field name="date"/>
+				<field name="name"/>
+				<field name="partner_id"/>
+				<field name="account_id"/>
+				<field name="product_id"/>
+				<field name="unit_amount"/>
+				<field name="unit_weight"/>
+				<field name="total_weight" sum="Units"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_account_analytic_line_package_tree">
+		<field name="name">Service &amp; Activity Units</field>
+		<field name="res_model">account.analytic.line.package</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="view_account_analytic_line_package_tree"/>
+	</record>
+	<menuitem name="Packages" id="menu_account_analytic_line_package" parent="account.menu_finance_reporting"/>
+	<menuitem name="Service &amp; Activity Units" parent="menu_account_analytic_line_package" 
+		id="menu_account_analytic_line_package_tree" 
+		action="action_account_analytic_line_package_tree"/>
+
+	<record model="ir.actions.act_window" id="action_account_analytic_line_package_service_tree">
+		<field name="name">Service Units</field>
+		<field name="res_model">account.analytic.line.package</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain">[('total_weight','&lt;=',0.0)]</field>
+		<field name="view_id" ref="view_account_analytic_line_package_tree"/>
+	</record>
+	<menuitem  parent="menu_account_analytic_line_package_tree"
+		id="menu_account_analytic_line_package_service_tree" 
+		action="action_account_analytic_line_package_service_tree"/>
+	<record model="ir.actions.act_window" id="action_account_analytic_line_package_activity_tree">
+		<field name="name">Activity Units</field>
+		<field name="res_model">account.analytic.line.package</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="domain">[('total_weight','&gt;=',0.0)]</field>
+		<field name="view_id" ref="view_account_analytic_line_package_tree"/>
+	</record>
+	<menuitem  parent="menu_account_analytic_line_package_tree"
+		id="menu_account_analytic_line_package_activity_tree" 
+		action="action_account_analytic_line_package_activity_tree"/>
+
+
+	<record model="ir.ui.view" id="view_account_analytic_line_package_month_graph">
+		<field name="name">account.analytic.line.package.month.graph</field>
+		<field name="model">account.analytic.line.package.month</field>
+		<field name="type">graph</field>
+		<field name="arch" type="xml">
+			<graph string="Analytic Package" type="bar">
+				<field name="name"/>
+				<field name="total_activity" operator="+"/>
+				<field name="total_service" operator="+"/>
+			</graph>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_account_analytic_line_package_month_form">
+		<field name="name">account.analytic.line.package.month.form</field>
+		<field name="model">account.analytic.line.package.month</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Analytic Package">
+				<field name="name" select="1"/>
+				<field name="partner_id" select="1"/>
+				<field name="product_id" select="2"/>
+				<field name="total_weight" sum="Signed Units" select="2"/>
+				<field name="total_activity" sum="Activity Units" select="2"/>
+				<field name="total_service" sum="Service Units" select="2"/>
+			</form>
+		</field>
+	</record>
+	<record model="ir.ui.view" id="view_account_analytic_line_package_month_tree">
+		<field name="name">account.analytic.line.package.month.tree</field>
+		<field name="model">account.analytic.line.package.month</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Analytic Package">
+				<field name="name"/>
+				<field name="partner_id"/>
+				<field name="product_id"/>
+				<field name="total_weight" sum="Signed Units"/>
+				<field name="total_activity" sum="Activity Units"/>
+				<field name="total_service" sum="Service Units"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_account_analytic_line_package_month_tree">
+		<field name="name">Monthly Services &amp; Activity Units</field>
+		<field name="res_model">account.analytic.line.package.month</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">graph,tree</field>
+		<field name="view_id" eval="False"/>
+	</record>
+	<menuitem parent="menu_account_analytic_line_package"
+		id="menu_account_analytic_line_package_month_tree" 
+		action="action_account_analytic_line_package_month_tree"/>
+
+	<record model="ir.ui.view" id="package_product_tree">
+		<field name="name">Products List</field>
+		<field name="model">product.product</field>
+		<field name="type">tree</field>
+		<field name="priority">64</field>
+		<field name="arch" type="xml">
+			<tree string="Products Units" link="0">
+				<field name="name"/>
+				<field name="package_weight"/>
+			</tree>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_package_product_tree">
+		<field name="name">Products Units</field>
+		<field name="res_model">product.product</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree</field>
+		<field name="view_id" eval="package_product_tree"/>
+		<field name="domain">[('package_weight','&lt;&gt;',0)]</field>
+	</record>
+	<menuitem parent="menu_account_analytic_line_package" 
+		id="menu_action_package_product_tree" 
+		action="action_package_product_tree"/>
+
+
+
+
+
+
+	</data>
+</openerp>

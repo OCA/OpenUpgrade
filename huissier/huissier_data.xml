@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<openerp>
+<data>
+
+	<!-- SEQUENCES -->	
+	<delete model="ir.sequence.type" search="[('code','like','huissier.invoice')]"/>
+	<delete model="ir.sequence" search="[('code','like','huissier.invoice')]"/>
+	
+	<record model="ir.sequence.type">
+		<field name="name">Factures de garde</field>
+		<field name="code">huissier.invoice.garde</field>
+	</record>
+	<record model="ir.sequence">
+		<field name="name">Factures de garde</field>
+		<field name="code">huissier.invoice.garde</field>
+		<field name="prefix">G/05/</field>
+	</record>
+	
+	<record model="ir.sequence.type">
+		<field name="name">Factures de vignettes</field>
+		<field name="code">huissier.invoice.vignettes</field>
+	</record>
+	<record model="ir.sequence">
+		<field name="name">Factures de vignettes</field>
+		<field name="code">huissier.invoice.vignettes</field>
+		<field name="prefix">V/05/</field>
+	</record>
+	
+	<record model="ir.sequence.type">
+		<field name="name">Factures de salle</field>
+		<field name="code">huissier.invoice.salle</field>
+	</record>
+	<record model="ir.sequence">
+		<field name="name">Factures de salle</field>
+		<field name="code">huissier.invoice.salle</field>
+		<field name="prefix">S/05/</field>
+	</record>
+	
+	<!-- ACCOUNTS -->	
+	<record model="account.account" id="auction_income_view">
+		<field name="name">Ventes</field>
+		<field name="code">7x*</field>
+		<field name="type">view</field>
+		<field name="currency_id" search="[('name','=','EUR')]"/>
+		<!--<field name="parent_id" type="list">
+			<value search="[('type','=','view'),('code','=','7')]" model="account.account"/>
+		</field-->
+	</record>
+
+	<record model="account.account" id="huissier_salle">
+		<field name="name">Frais de salle</field>
+		<field name="code">7x*</field>
+		<field name="type">income</field>
+		<field name="currency_id" search="[('name','=','EUR')]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/-->
+	</record>
+	<record model="account.account" id="huissier_voirie">
+		<field name="name">Frais de voirie</field>
+		<field name="code">7x*</field>
+		<field name="type">income</field>
+		<field name="currency_id" search="[('name','=','EUR')]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/-->
+	</record>
+	<record model="account.account" id="huissier_vignettes">
+		<field name="name">Vignettes</field>
+		<field name="code">7x*</field>
+		<field name="type">income</field>
+		<field name="currency_id" search="[('name','=','EUR')]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/>-->
+	</record>
+	<record model="account.account" id="huissier_garde">
+		<field name="name">Frais de garde</field>
+		<field name="code">7x*</field>
+		<field name="type">income</field>
+		<field name="currency_id" search="[('name','=','EUR')]"/>
+		<!--field name="parent_id" eval="[auction_income_view]"/>-->
+	</record>
+
+	<!-- TAXES (TVA) -->	
+	<record model="account.tax" id="tva21">
+		<field name="name">TVA 21%</field>
+		<field name="type">percent</field>
+		<field name="amount">0.21</field>
+		<field name="account_collected_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="account_paid_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="domain">tva</field>
+	</record>
+	<record model="account.tax" id="tva6">
+		<field name="name">TVA 6%</field>
+		<field name="type">percent</field>
+		<field name="amount">0.06</field>
+		<field name="account_collected_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="account_paid_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="domain">tva</field>
+	</record>
+	<record model="account.tax" id="tva0">
+		<field name="name">TVA 0%</field>
+		<field name="type">percent</field>
+		<field name="amount">0.00</field>
+		<field name="account_collected_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="account_paid_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="domain">tva</field>
+	</record>
+	<record model="account.tax" id="tvana">
+		<field name="name">N/A</field>
+		<field name="type">percent</field>
+		<field name="amount">0.00</field>
+		<field name="account_collected_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="account_paid_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="domain">tva</field>
+	</record>
+	<record model="account.tax" id="tvae">
+		<field name="name">Exempté</field>
+		<field name="type">percent</field>
+		<field name="amount">0.00</field>
+		<field name="account_collected_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="account_paid_id" search="[('type','=','tax'),('name','=','Tax TVA')]"/>
+		<field name="domain">tva</field>
+	</record>
+
+	<!-- TAXES (frais acheteurs) -->	
+	<!-- use the create_buyer_costs.py script -->
+	
+	<!-- TAXES (frais de salle) -->	
+	<record model="account.tax" id="tax_cost_12">
+		<field name="name">Frais de salle (12%)</field>
+		<field name="type">code</field>
+		<field name="applicable_type">true</field>
+		<field name="amount">0.12</field>
+		<field name="domain">salle</field>
+		<field name="python_compute">if price_unit &lt; 248:
+	result = 25
+else:
+	result = price_unit * 0.12</field>
+	</record>
+
+	<!-- CRON factures de garde -->
+	<record model="ir.cron">
+		<field name="name">Factures de garde</field>
+		<field name="interval_number">1</field>
+		
+<!--	'minutes' 'hours' 'days' 'weeks' 'months' -->
+		<field name="interval_type">months</field>
+
+<!--	number of time the function is called, a negative number
+		indicates that the function will always be called. -->		
+		<field name="numbercall">-1</field>
+
+<!--
+		<field name="nextcall">2005-11-01 00:00</field>
+-->		
+		<field name="model">huissier.deposit</field>
+		<field name="function">invoice_running_deposits</field>
+	</record>
+
+
+	<record id="partner_record1" model="res.partner">
+	<field name="name">Testeur</field>
+	</record>
+	<record id="res_partner_unknown_address_1" model="res.partner.address">
+	<field name="city">Bruxelles1</field>
+	<field name="name">Benoit Mortie1r1</field>
+	<field name="zip">1030</field>
+	<field name="country_id" model="res.country" search="[('name','=','Belgium')]"/>
+	<field name="email">info@opensides.be</field>
+	<field name="phone">(+32)2 211 34 83</field>
+	<field name="street">Rue des Palais 44, bte 33</field>
+	<field name="type">default</field>
+	<field name="partner_id" ref="partner_record1"/>
+</record>
+<record id="res_partner_unknown_address_2" model="res.partner.address">
+	<field name="city">Avignon CEDEX 091</field>
+	<field name="name">Laurent Jacot1</field>
+	<field name="zip">84911</field>
+	<field name="country_id" model="res.country" search="[('name','=','France')]"/>
+	<field name="email">contact@tecsas.fr</field>
+	<field name="phone">(+33)4.32.74.10.57</field>
+	<field name="street">85 rue du traite de Rome</field>
+	<field name="type">default</field>
+	<field name="partner_id" ref="partner_record1"/>
+</record>
+<record id="res_partner_unknown_address_3" model="res.partner.address">
+	<field name="city">Louvain-la-Neuve</field>
+	<field name="name">Thomas Passot</field>
+	<field name="zip">1348</field>
+	<field name="country_id" model="res.country" search="[('name','=','Belgium')]"/>
+	<field name="email">info@mediapole.net</field>
+	<field name="phone">(+32).10.45.17.73</field>
+	<field name="street">Rue de l'Angelique, 1</field>
+	<field name="partner_id" ref="partner_record1"/>
+</record>
+
+<record id="res_etudes" model="res.partner.category">
+	<field name="name">Etudes</field>
+</record>
+<record id="res_clients" model="res.partner.category">
+	<field name="name">Clients habituels</field>
+</record>
+
+</data>
+</openerp>

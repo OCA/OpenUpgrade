@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+		<record model="ir.ui.view" id="view_purchase_order_withcarrier_form">
+			<field name="name">delivery.purcahse.order_withcarrier.form.view</field>
+			<field name="type">form</field>
+			<field name="model">purchase.order</field>
+			<field name="inherit_id" ref="purchase.purchase_order_form" />
+			<field name="arch" type="xml">
+				<field name="partner_ref" position="after">
+ 						<field name="carrier_id" />
+				</field>
+			</field>
+		</record>
+
+</data>
+</openerp>

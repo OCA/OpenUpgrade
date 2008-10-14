@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+
+	<wizard
+		string="Get Mail Folder"
+		model="webmail.tiny.user"
+		name="webmail.mail.account"
+		id="wizard_mail_account"/>
+		
+	<wizard
+		string="Mailbox"
+		model="webmail.mailbox"
+		name="webmail.mailbox"
+		id="wizard_mailbox"/>
+		
+</data>
+</openerp>

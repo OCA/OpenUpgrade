@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report
+			string="Draft Invoices"
+			model="res.partner"
+			name="partner.draft_invoices"
+			auto="False"
+			rml="cci_account/report/cci_draft_invoice_info.rml"
+			id="partner_draft_invoices"/>
+
+		<report
+			string="Print VCS"
+			model="account.invoice"
+			name="cci.vcs"
+			auto="False"
+			rml="cci_account/report/cci_vcs_report.rml"
+			id="report_cci_vcs"
+			menu="False"/>
+
+<!--		<wizard
+			id="wizard_cci_vcs"
+			string="Print VCS 2"
+			model="account.invoice"
+			name="wizard.cci.vcs"
+			keyword="client_print_multi"/>-->
+
+		<report id="account_invoice_layout.account_invoices_1"
+			string="Formatted Inv."
+			model="account.invoice"
+			name="cci.account.invoice.layout"
+			rml="cci_account/report/report_account_invoice_layout.rml"
+			auto="False"/>
+
+		<wizard	string="Formatted Inv. + Message"
+			model="account.invoice"
+			name="wizard.cci_account_message"
+			id="account_invoice_layout.wizard_notify_message"
+			keyword="client_print_multi"
+			/>
+	</data>
+</openerp>
+

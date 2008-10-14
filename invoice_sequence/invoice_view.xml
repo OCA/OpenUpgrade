@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="view_invoice_line_form">
+			<field name="name">Invoice Line</field>
+			<field name="model">account.invoice.line</field>
+			<field name="type">form</field>
+			<field name="inherit_id" ref="account.view_invoice_line_form"/>
+			<field name="arch" type="xml">
+				<field name="invoice_line_tax_id" position="after">
+					<field name="sequence" />
+				</field>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>

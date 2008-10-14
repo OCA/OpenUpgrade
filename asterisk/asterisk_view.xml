@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="asterisk_server_tree">
+			<field name="name">Asterisk Server</field>
+			<field name="model">asterisk.server</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Asterisk Server">
+					<field name="name" colspan="4"/>
+					<field name="host"/>
+					<field name="port"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="asterisk_server_form">
+			<field name="name">Asterisk Server</field>
+			<field name="model">asterisk.server</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Asterisk Server">
+					<field name="name" colspan="4" select="1"/>
+					<field name="host" select="2"/>
+					<field name="port"/>
+					<field name="login" select="2"/>
+					<field name="password"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_asterisk_server">
+			<field name="name">Asterisk Server</field>
+			<field name="res_model">asterisk.server</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="Sys Admin" id="menu_asterisk_server_main"/>
+		<menuitem name="Configuration" id="menu_asterisk_server_config" parent="menu_asterisk_server_main"/>
+		<menuitem id="menu_asterisk_server"	action="action_asterisk_server" parent="menu_asterisk_server_config"/>
+
+		<record model="ir.ui.view" id="asterisk_phone_tree">
+			<field name="name">IP Phone</field>
+			<field name="model">asterisk.phone</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="IP Phone">
+					<field name="name"/>
+					<field name="phoneid"/>
+					<field name="asterisk_id"/>
+					<field name="state"/>
+				</tree>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="asterisk_phone_form">
+			<field name="name">IP Phone</field>
+			<field name="model">asterisk.phone</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="IP Phone">
+					<field name="name" colspan="4" select="1"/>
+					<field name="asterisk_id" select="1"/>
+					<field name="phoneid" select="2"/>
+					<field name="user_id" select="1"/>
+					<field name="current_callerid"/>
+					<field name="state"/>
+				</form>
+			</field>
+		</record>
+		<record model="ir.actions.act_window" id="action_asterisk_phone">
+			<field name="name">IP Phone</field>
+			<field name="res_model">asterisk.phone</field>
+			<field name="view_type">form</field>
+		</record>
+		<menuitem name="IP Phones" parent="menu_asterisk_server_config"
+			id="menu_asterisk_phone" 
+			action="action_asterisk_phone"/>
+
+
+
+	</data>
+</openerp>
+

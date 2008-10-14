@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+<data >
+	<record model="ir.sequence" id="seq_stock_lot">
+		<field name="name">Stock lot sequence</field>
+		<field name="code">stock.lot.serial</field>
+		<field name="prefix">M%(year)s%(month)s/</field>
+		<field name="padding">4</field>
+	</record>
+
+</data>
+</openerp>

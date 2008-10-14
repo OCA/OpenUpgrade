@@ -1,0 +1,194 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="view_report_account_invoice_product_tree">
+			<field name="name">report.account.invoice.product.tree</field>
+			<field name="model">report.account.invoice.product</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Invoices by product">
+					<field name="name"/>
+					<field name="type"/>
+					<field name="state"/>
+					<field name="product_id"/>
+					<field name="amount"/>
+					<field name="cost_price"/>
+					<field name="margin"/>
+					<field name="quantity"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_product_tree">
+			<field name="name">report.account.invoice.product.tree</field>
+			<field name="res_model">report.account.invoice.product</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+		</record>
+
+		<menuitem name="Invoice" id="menu_report_account_invoice_product" parent="account.menu_finance_reporting"/>
+		<menuitem name="This Month" id="menu_report_account_this_month_product" parent="menu_report_account_invoice_product"/>
+		<menuitem name="Invoices by Product" id="menu_report_account_invoice_by_product" parent="menu_report_account_this_month_product" action="action_report_account_invoice_product_tree"/>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_product_tree_all">
+			<field name="name">report.account.invoice.product.tree</field>
+			<field name="res_model">report.account.invoice.product</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="All Months" id="menu_report_account_all_month_product" parent="menu_report_account_invoice_product"/>
+		<menuitem name="Invoices by Product" id="menu_report_account_all_invoice_by_product" parent="menu_report_account_all_month_product" action="action_report_account_invoice_product_tree_all"/>
+
+		<record model="ir.ui.view" id="view_report_account_invoice_category_tree">
+			<field name="name">report.account.invoice.category.tree</field>
+			<field name="model">report.account.invoice.category</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Invoices by category">
+					<field name="name"/>
+					<field name="type"/>
+					<field name="state"/>
+					<field name="categ_id"/>
+					<field name="amount"/>
+					<field name="cost_price"/>
+					<field name="margin"/>
+					<field name="quantity"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_category_tree">
+			<field name="name">report.account.invoice.category.tree</field>
+			<field name="res_model">report.account.invoice.category</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+		</record>
+
+		<menuitem name="Invoices by Category" id="menu_report_account_invoice_by_category" parent="menu_report_account_this_month_product" action="action_report_account_invoice_category_tree"/>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_category_tree_all">
+			<field name="name">report.account.invoice.category.tree</field>
+			<field name="res_model">report.account.invoice.category</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Invoices by Category" id="menu_report_account_all_invoice_by_category" parent="menu_report_account_all_month_product" action="action_report_account_invoice_category_tree_all"/>
+
+		<record model="ir.ui.view" id="view_report_account_invoice_partner_tree">
+			<field name="name">report.account.invoice.partner.tree</field>
+			<field name="model">report.account.invoice.partner</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Invoices by partner">
+					<field name="name"/>
+					<field name="type"/>
+					<field name="state"/>
+					<field name="partner_id"/>
+					<field name="amount"/>
+					<field name="cost_price"/>
+					<field name="margin"/>
+					<field name="quantity"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_partner_tree">
+			<field name="name">report.account.invoice.partner.tree</field>
+			<field name="res_model">report.account.invoice.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+		</record>
+
+		<menuitem name="Invoices by Partner" id="menu_report_account_invoice_by_partner" parent="menu_report_account_this_month_product" action="action_report_account_invoice_partner_tree"/>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_partner_tree_all">
+			<field name="name">report.account.invoice.partner.tree</field>
+			<field name="res_model">report.account.invoice.partner</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Invoices by Partner" id="menu_report_account_all_invoice_by_partner" parent="menu_report_account_all_month_product" action="action_report_account_invoice_partner_tree_all"/>
+
+		<record model="ir.ui.view" id="view_report_account_invoice_partner_product_tree">
+			<field name="name">report.account.invoice.partner.product.tree</field>
+			<field name="model">report.account.invoice.partner.product</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Invoices by partner and product">
+					<field name="name"/>
+					<field name="type"/>
+					<field name="state"/>
+					<field name="partner_id"/>
+					<field name="product_id"/>
+					<field name="amount"/>
+					<field name="cost_price"/>
+					<field name="margin"/>
+					<field name="quantity"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_partner_product_tree">
+			<field name="name">report.account.invoice.partner.product.tree</field>
+			<field name="res_model">report.account.invoice.partner.product</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+		</record>
+
+		<menuitem name="Invoices by Partner and Product" id="menu_report_account_invoice_by_partner_product" parent="menu_report_account_this_month_product" action="action_report_account_invoice_partner_product_tree"/>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_partner_product_tree_all">
+			<field name="name">report.account.invoice.partner.product.tree</field>
+			<field name="res_model">report.account.invoice.partner.product</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Invoices by Partner and Product" id="menu_report_account_all_invoice_by_partner_product" parent="menu_report_account_all_month_product" action="action_report_account_invoice_partner_product_tree_all"/>
+
+		<record model="ir.ui.view" id="view_report_account_invoice_tree">
+			<field name="name">report.account.invoice</field>
+			<field name="model">report.account.invoice</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Invoices">
+					<field name="name"/>
+					<field name="type"/>
+					<field name="state"/>
+					<field name="amount"/>
+					<field name="cost_price"/>
+					<field name="margin"/>
+					<field name="quantity"/>
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_tree">
+			<field name="name">report.account.invoice.tree</field>
+			<field name="res_model">report.account.invoice</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('name','=',time.strftime('%Y-%m-01'))]</field>
+		</record>
+
+		<menuitem name="Invoices" id="menu_report_account_invoice_by_invoices" parent="menu_report_account_this_month_product" action="action_report_account_invoice_tree"/>
+
+		<record model="ir.actions.act_window" id="action_report_account_invoice_tree_all">
+			<field name="name">report.account.invoice.tree</field>
+			<field name="res_model">report.account.invoice</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Invoices" id="menu_report_account_all_invoice_by_invoices" parent="menu_report_account_all_month_product" action="action_report_account_invoice_tree_all"/>
+
+	</data>
+</openerp>

@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="57.0" width="481" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table5">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#DAB082" start="0,0" stop="1,0" />
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#DAB082" start="0,0" stop="1,0" />
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#DAB082" start="0,0" stop="1,0" />
+    </blockTableStyle>
+    <blockTableStyle id="Table4">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+	  <blockBackground colorName="#DAB082" start="0,0" stop="1,0" />    
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#DAB082" start="0,0" stop="1,0" />
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="16.0" leading="20" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P4" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P5" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Italic" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
+  </stylesheet>
+  <story>
+    <para style="P2">Kitchen Order Ticket</para>
+    <para style="P1">[[repeatIn(objects,'o')]]</para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="241.0,241.0" style="Table5">
+      <tr>
+        <td>
+          <para style="P3"><font face="Helvetica-Bold" color="#19140E">Date</font></para>
+        </td>
+        <td>
+          <para style="P3"><font face="Helvetica-Bold" color="#19140E">Served By</font></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P1">[[o.o_date]]</para>
+        </td>
+        <td>
+          <para style="P3">[[o.waiter_name.name]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+      <font color="white"> .........</font>
+    </para>
+    <blockTable colWidths="241.0,241.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P3"><font face="Helvetica-Bold" color="#19140E">Order Number</font></para>
+        </td>
+        <td>
+          <para style="P3"><font face="Helvetica-Bold" color="#19140E">Room Number</font></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">[[o.order_no]]</para>
+        </td>
+        <td>
+          <para style="P3">[[o.room_no.name]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="482.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P3"><font face="Helvetica-Bold" color="#19140E">Table Number</font></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3">[[repeatIn(o.table_no,'rec2')]]</para>
+          <para style="P3">[[rec2.name]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="482.0" style="Table4">
+      <tr>
+        <td>
+          <para style="P1"><font face="Helvetica-Bold" color="#19140E">Food Item List </font></para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="241.0,241.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P3"><font face="Helvetica-Bold" color="#19140E">Food Item</font></para>
+        </td>
+        <td>
+          <para style="P3"><font face="Helvetica-Bold" color="#19140E">Quantity</font></para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P3"><font face="Times-Roman" size="10.0">[[repeatIn(o.order_list,'rec')]]</font><font face="Times-Roman" size="6.0"/>[[rec.name.name]]</para>
+        </td>
+        <td>
+          <para style="P3">[[rec.item_qty]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

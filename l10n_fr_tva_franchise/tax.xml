@@ -1,0 +1,496 @@
+<?xml version="1.0"?>
+<openerp>
+  <data noupdate="1">
+
+    <!--
+	TVA
+      -->
+
+    <record model="account.tax" id="l10n_fr.tva_normale">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_specifique">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_super_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record> 
+
+    <record model="account.tax" id="l10n_fr.tva_acq_normale">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_acq_specifique">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/> 
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_acq_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>   
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_acq_super_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record> 
+
+    <record model="account.tax" id="l10n_fr.tva_imm_normale">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_imm_specifique">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_imm_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_imm_super_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_intra_normale">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_intra_specifique">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_intra_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_intra_super_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_acq_intra_normale">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_acq_intra_specifique">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_acq_intra_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_acq_intra_super_reduite">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+<!--
+    <record model="account.tax" id="l10n_fr.tva_0">
+    </record>
+-->
+    
+    <record model="account.tax" id="l10n_fr.tva_export_0">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+
+    <record model="account.tax" id="l10n_fr.tva_intra_0">
+      <field name="active" eval="False"/>
+      <field name="account_collected_id" eval="False"/>
+      <field name="account_paid_id" eval="False"/>
+    </record>
+    
+
+<!--
+    Default Tax
+-->
+
+    <record id="l10n_fr_pcg.pcg_601" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6011" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6012" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_602" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6021" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60211" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60212" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6022" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60221" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60222" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60223" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60224" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60225" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6026" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60261" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60265" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_60267" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_603" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6031" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6032" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6037" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_604" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_605" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_606" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6061" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6063" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6064" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6068" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="account.a_expense" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6071" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6072" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_608" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_609" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6091" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6092" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6094" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6095" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6096" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6097" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6098" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_61" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_611" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_612" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6122" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6125" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_613" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6132" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6135" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6136" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_614" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_615" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6152" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6155" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6156" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6225" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6226" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6227" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6228" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_623" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6231" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6232" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6233" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6234" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6235" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6236" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6237" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6238" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_624" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6241" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6242" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6243" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6244" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6247" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_6248" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_7011" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_7012" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_702" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_703" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_704" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_7041" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_7042" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_705" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_706" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="account.a_sale" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_7071" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+    <record id="l10n_fr_pcg.pcg_7072" model="account.account">
+      <field name="tax_ids" eval="[(6,0,[])]"/>
+    </record>
+
+  </data>
+</openerp>

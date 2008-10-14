@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<wizard
+			string="Make Kots"
+			model="hotel.restaurant.order"
+			name="hotel.kot.make_kot"
+			id="wizard_hotel_kot_make_kot"/>
+			
+		<wizard
+			string="Reservation List"
+			model="hotel.restaurant.reservation"
+			name="hotel.table.reservation"
+			id="wizard_hotel_table_res"/>
+			
+		<menuitem
+			name="Reservation List" parent="menu_hotel_res"
+			action="wizard_hotel_table_res" 
+			type="wizard"
+			id="wizard_list_menu"/>
+	</data>
+</openerp>

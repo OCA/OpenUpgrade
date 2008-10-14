@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<menuitem name="Tools" id="menu_tiny_purchase_tool"/>
+		
+		<menuitem name="Tiny Purchase" id="menu_tiny_purchase_root" parent="menu_tiny_purchase_tool"/>
+		
+		<record model="ir.ui.view" id="line_form">
+			<field name="name">tiny_purchase.line.form</field>
+			<field name="model">tiny_purchase.line</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Tiny Purchase line">
+					<field name="product_id" on_change="onchange_compute_price(product_id, quantity)"/>
+					<newline/>
+					<field name="quantity" on_change="onchange_compute_price(product_id, quantity)"/>
+					<field name="price"/>
+					<field name="order_id"/>
+					<field name="comments" colspan="4"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="line_form_action">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">tiny_purchase.line</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<menuitem name="Purchase line" id="menu_tiny_purchase_line" parent="menu_tiny_purchase_root" action="line_form_action"/>
+
+		<record model="ir.ui.view" id="product_form">
+			<field name="name">tiny_purchase.product.form</field>
+			<field name="model">tiny_purchase.product</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Tiny Purchase product">
+					<field name="name" select="1"/>
+					<field name="price" select="1"/>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="product_form_action">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">tiny_purchase.product</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<menuitem name="Configuration" id="menu_tiny_purchase_configuration_line" parent="menu_tiny_purchase_root"/>
+		
+		<menuitem name="Purchase product" id="menu_tiny_purchase_product_line" parent="menu_tiny_purchase_configuration_line" action="product_form_action"/>
+		
+		<record model="ir.ui.view" id="order_form">
+			<field name="name">tiny_purchase.order.form</field>
+			<field name="model">tiny_purchase.order</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Tiny Purchase order">
+					<field name="name" select="1"/>
+					<field name="user_id" select="1"/>
+					<field name="line_ids" colspan="4" nolabel="1">
+						<tree string="Lines">
+							<field name="product_id"/>
+							<field name="quantity"/>
+							<field name="price"/>
+						</tree>
+						<form string="Lines">
+							<field name="product_id" on_change="onchange_compute_price(product_id, quantity)"/>
+							<newline/>
+							<field name="quantity" on_change="onchange_compute_price(product_id, quantity)"/>
+							<field name="price"/>
+							<field name="comments" colspan="4"/>
+						</form>
+					</field>
+					<group col="4" colspan="4">
+						<field name="state" readonly="1"/>
+						<button name="tiny_purchase_confirm" states="draft" string="Confirm"/>
+						<button name="tiny_purchase_done" states="confirmed" string="Done"/>
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.actions.act_window" id="order_form_action">
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">tiny_purchase.order</field>
+			<field name="view_mode">form,tree</field>
+		</record>
+
+		<menuitem name="Purchase Order" id="menu_tiny_purchase_order_line" parent="menu_tiny_purchase_root" action="order_form_action"/>
+		
+	</data>
+</openerp>

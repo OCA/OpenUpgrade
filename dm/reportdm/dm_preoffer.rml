@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="35.0" y1="35.0" width="525" height="772"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="4.0" leading="5"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="8.0" leading="10" spaceBefore="0.0" spaceAfter="1.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P2">[[repeatIn(objects,'o') ]]</para>
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="262.0,262.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P3">Name : [[o.name]]</para>
+          <para style="P3">Code : [[o.code]]</para>
+          <para style="P3">Type : [[o.preoffer_type]]</para>
+          <para style="P3">Recommended Trademark : [[o.recommended_trademark and o.recommended_trademark.name]]</para>
+          <para style="P5">
+            <font color="white"> </font>
+          </para>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+          <para style="P3">Order Date : [[o.order_date]]</para>
+          <para style="P3">Fixed Date : [[o.fixed_date]]</para>
+          <para style="P3">Planned Delivery Date : [[o.planned_delivery_date]]</para>
+          <para style="P3">Delivery Date : [[o.delivery_date]]</para>
+          <para style="P3">Fixed Date : [[o.fixed_date]]</para>
+        </td>
+        <td>
+          <para style="P4">Original Language: [[o.lang_orig and o.lang_orig.name]]</para>
+          <para style="P4">Copywriter : [[o.copywriter_id and o.copywriter_id.name]]</para>
+          <para style="P4">Categories : [[ ','.join(map(lambda x:x['name'],o.category_ids)) ]]</para>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+          <para style="P4">
+            <font color="white"> </font>
+          </para>
+          <para style="P4">Attached Documents : [[offer_docs(o.id)]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1"/>
+  </story>
+</document>
+

@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<openerp>
+<data noupdate="1">
+	#
+	# Sequences for hotel.foodorder
+	#
+
+	<record model="ir.sequence.type" id="seq_type_hotel_reservation">
+		<field name="name">Hotel Order</field>
+		<field name="code">hotel.restaurant.order</field>
+	</record>
+	<record model="ir.sequence" id="seq_hotel_reservation">
+		<field name="name">Hotel Order</field>
+		<field name="code">hotel.restaurant.order</field>
+		<field name="prefix">0R/</field>
+		<field name="padding">5</field>
+	</record>
+	
+	<record model="ir.sequence.type" id="seq_hotel_reservation">
+		<field name="name">Hotel Reservation</field>
+		<field name="code">hotel.restaurant.reservation</field>
+	</record>
+	<record model="ir.sequence" id="seq_hotel_table">
+		<field name="name">Hotel Reservation</field>
+		<field name="code">hotel.restaurant.reservation</field>
+		<field name="prefix">R0/</field>
+		<field name="padding">5</field>
+	</record>
+	
+	<record model="ir.sequence.type" id="seq_hotel_res_order">
+		<field name="name">Hotel Reservation</field>
+		<field name="code">hotel.reservation.order</field>
+	</record>
+	<record model="ir.sequence" id="seq_hotel_resorder">
+		<field name="name">Hotel Reservation</field>
+		<field name="code">hotel.reservation.order</field>
+		<field name="prefix">0RR/</field>
+		<field name="padding">5</field>
+	</record>
+</data>
+</openerp>

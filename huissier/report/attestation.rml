@@ -1,0 +1,169 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(21cm,842)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="57.0" y1="87.0" width="501" height="728"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+	   <lineStyle kind="LINEBELOW" colorName="red" start="0,0" stop="-1,0"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="CENTER"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="7.0" leading="9" alignment="LEFT"/>
+    <paraStyle name="P3" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="P4" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="CENTER"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="16.0" leading="20" alignment="CENTER"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="20.0" leading="25" alignment="CENTER"/>
+    <paraStyle name="P9" rightIndent="0.0" leftIndent="-35.0" fontName="Times-Roman" fontSize="14.0" leading="17" alignment="LEFT"/>
+    <paraStyle name="P10" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="13.0" leading="16" alignment="LEFT"/>
+    <paraStyle name="P11" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" alignment="LEFT"/>
+    <paraStyle name="P12" rightIndent="0.0" leftIndent="-25.0" fontName="Times-Roman" fontSize="13.0" leading="16" alignment="LEFT"/>
+    <paraStyle name="P13" rightIndent="0.0" leftIndent="-1.0" fontName="Times-Roman" fontSize="13.0" leading="16" alignment="LEFT"/>
+    <paraStyle name="P14" rightIndent="0.0" leftIndent="-3.0" fontName="Times-Bold" fontSize="15.0" leading="19" alignment="LEFT"/>
+    <paraStyle name="P15" rightIndent="0.0" leftIndent="-4.0" fontName="Times-Bold" fontSize="15.0" leading="19" alignment="LEFT"/>
+    <paraStyle name="P16" rightIndent="0.0" leftIndent="-2.0" fontName="Times-Roman" fontSize="13.0" leading="16" alignment="LEFT"/>
+    <paraStyle name="P17" rightIndent="0.0" leftIndent="-1.0" fontName="Times-Roman" fontSize="13.0" leading="16" alignment="LEFT"/>
+    <paraStyle name="P18" rightIndent="0.0" leftIndent="0.0" fontName="Times-Roman" fontSize="13.0" leading="16" alignment="JUSTIFY"/>
+    <paraStyle name="P19" rightIndent="0.0" leftIndent="0.0" fontName="Times-Italic" fontSize="10.0" leading="13" alignment="JUSTIFY"/>
+    <paraStyle name="P20" rightIndent="0.0" leftIndent="-1.0" fontName="Times-Italic" fontSize="10.0" leading="13" alignment="JUSTIFY"/>
+    <paraStyle name="P21" rightIndent="0.0" leftIndent="-1.0" fontName="Times-Italic" fontSize="10.0" leading="13" alignment="LEFT"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Footer" fontName="Times-Roman"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Addressee" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="3.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P1">[[ repeatIn(objects,'o') ]]</para>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+    <para style="P2"/>
+    <blockTable colWidths="269.0,266.0" style="Tableau1">
+      <tr>
+        <td>
+          <para style="P3">Maison des Huissiers de Justice</para>
+          <para style="P3">de Bruxelles S.C.</para>
+          <para style="P4">Huis van de Gerechtsdeurwaarders</para>
+          <para style="P4">van Brussel C.V.</para>
+          <para style="P3">
+            <font color="white"> </font>
+          </para>
+          <para style="P5">SALLE DE VENTE</para>
+          <para style="P6">VERKOOPZAAL</para>
+        </td>
+        <td>
+          <para style="Addressee">
+            <font color="white"> </font>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P7">
+      <font color="white"> </font>
+    </para>
+    <para style="P7">
+      <font color="white"> </font>
+    </para>
+    <para style="P7">
+      <font color="white"> </font>
+    </para>
+    <para style="P8">Attestation d'achat</para>
+    <para style="P7">
+      <font color="white"> </font>
+    </para>
+    <para style="P9">
+      <font color="white"> </font>
+    </para>
+    <para style="P10">Date de la vente:<font face="Times-Roman"> [[ time.strftime('%d/%m/%Y')]]</font></para>
+    <para style="P10">Etude: <font face="Times-Roman">[[o.dossier_id and o.dossier_id.etude_id.name or False]]</font></para>
+    <para style="P11">
+      <font face="Times-Roman" size="13.0">Adresse:</font>
+      <font face="Times-Roman" size="13.0">[[o.dossier_id.etude_id.address[0] and o.dossier_id.etude_id.address[0].street or False]] [[o.dossier_id.etude_id.adress[0] and o.dossier_id.etude_id.address[0].zip or False]] [[o.dossier_id.etude_id.adress[0] and o.dossier_id.etude_id.address[0].city or False]]</font>
+    </para>
+    <para style="P10"><font face="Times-Roman">Acheteur:</font>[[o.buyer_ref.name or False]]</para>
+    <para style="P12">
+      <font color="white"> </font>
+    </para>
+    <para style="P13">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="26.0,346.0,88.0" style="Tableau2">
+      <tr>
+        <td>
+          <para style="P14">N°</para>
+        </td>
+        <td>
+          <para style="P15">Description</para>
+        </td>
+        <td>
+          <para style="P15">Code</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="P16">[[o.number]]</para>
+        </td>
+        <td>
+          <para style="P17">[[o.name]]</para>
+        </td>
+        <td>
+		  <barCode code="code128" xdim="0.03" height="0.4" quiet="0">ID[[o.id or False]]</barCode>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P13">
+      <font color="white"> </font>
+    </para>
+    <para style="P13">
+      <font color="white"> </font>
+    </para>
+    <para style="P18">Aucun objet ne pourra être enlevé sans ce document.</para>
+    <para style="P18">
+      <font color="white"> </font>
+    </para>
+    <para style="P18">Attention: Cette attestation ne peut en aucun cas remplacer l'extrait du P.V. de vente judiciaire. Ce dernier ne peut être delivré que par l'huissier de justice instrumentant (art. 15,2° A.R. 30/11/'76).</para>
+    <para style="P19">
+      <font color="white"> </font>
+    </para>
+    <para style="P20">
+      <font color="white"> </font>
+    </para>
+    <para style="P21">
+      <font color="white"> </font>
+    </para>
+    <para style="P21">
+      <font color="white"> </font>
+    </para>
+    <para style="P21">
+      <font color="white"> </font>
+    </para>
+    <para style="P21">
+      <font color="white"> </font>
+    </para>
+    <para style="P21">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report id="account.account_invoices"
+			string="Invoices"
+			model="account.invoice"
+			name="account.invoice.payment.term"
+			rml="account_invoice_payment_term/report/invoice.rml"
+			auto="False"/>
+	</data>
+</openerp>

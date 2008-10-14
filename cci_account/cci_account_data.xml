@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+
+	<!-- Data for account_account -->
+		<record id="account_account_creancesawexchequesformationsetchequeslangues0" model="account.account">
+			<field eval="&quot;59&quot;" name="code"/>
+			<field eval="&quot;Creances AWEX - Cheques Formations et Cheques Langues&quot;" name="name"/>
+			<field name="company_id" ref="base.main_company"/>
+			<!--<field eval="&quot;1&quot;" name="sign"/>-->
+			<field name="parent_id" search="[('name','=','CLASSE 5. PLACEMENTS DE TRESORERIE ET DE VALEURS DISPONIBLES')]" />
+			<field eval="1" name="active"/>
+			<field ref="account.account_type_cash_moves" name="user_type"/>
+			<field eval="&quot;other&quot;" name="type"/>
+			<field eval="0" name="reconcile"/>
+			<field eval="[(6,0,[])]" name="tax_ids"/>
+		</record>
+
+	<!-- Data for account_journal -->
+		<record id="account_journal_awexjournal0" model="account.journal">
+			<field model="account.account" name="default_debit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;AWEX Journal&quot;" name="name"/>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_view"/>
+			<field eval="[(6,0,[])]" name="type_control_ids"/>
+			<field name="sequence_id" ref="account.sequence_journal"/>
+			<field eval="[(6,0,[])]" name="account_control_ids"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;cash&quot;" name="type"/>
+			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+		</record>
+
+	<!-- Data for account_journal -->
+		<record id="account_journal_cfljournal0" model="account.journal">
+			<field model="account.account" name="default_debit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="user_id" ref="base.user_admin"/>
+			<field eval="&quot;CFL Journal&quot;" name="name"/>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_view"/>
+			<field eval="[(6,0,[])]" name="type_control_ids"/>
+			<field name="sequence_id" ref="account.sequence_journal"/>
+			<field eval="[(6,0,[])]" name="account_control_ids"/>
+			<field eval="1" name="active"/>
+			<field eval="&quot;cash&quot;" name="type"/>
+			<field model="account.account" name="default_credit_account_id" search="[('name','=','Creances AWEX - Cheques Formations et Cheques Langues')]"/>
+		</record>
+	</data>
+</openerp>
+

@@ -1,0 +1,75 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data noupdate="1">
+
+	<!-- Product Categories (Media) Demo Data -->
+		<record id="product_category_advertisingmedium0" model="product.category">
+			<field name="property_account_expense_categ" ref="account.a_expense"/>
+			<field name="property_stock_journal" ref="account.stock_journal"/>
+			<field eval="&quot;Advertising Medium&quot;" name="name"/>
+			<field name="parent_id" ref="product.cat1"/>
+			<field name="property_account_income_categ" ref="account.a_sale"/>
+		</record>
+		<record id="product_category_website0" model="product.category">
+			<field name="property_account_expense_categ" ref="account.a_expense"/>
+			<field name="property_stock_journal" ref="account.stock_journal"/>
+			<field eval="&quot;Website&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_advertisingmedium0"/>
+			<field name="property_account_income_categ" ref="account.a_sale"/>
+		</record>
+		<record id="product_category_magazine0" model="product.category">
+			<field name="property_account_expense_categ" ref="account.a_expense"/>
+			<field name="property_stock_journal" ref="account.stock_journal"/>
+			<field eval="&quot;Press Review&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_advertisingmedium0"/>
+			<field name="property_account_income_categ" ref="account.a_sale"/>
+		</record>
+
+
+	<!-- Products Demo Data -->
+		<record id="advert_product_0" model="product.product">
+			<field name="list_price">150.00</field>
+			<field name="standard_price">1.00</field>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field name="name">Full Banner 468x60</field>
+			<field name="categ_id" ref="product_category_website0"/>
+			<field eval="1" name="active"/>
+			<field eval="1.0" name="equivalency_in_A4"/>
+			<field eval="1.0" name="price_margin"/>
+		</record>
+		<record id="advert_product_1" model="product.product">
+			<field name="list_price">100.00</field>
+			<field name="standard_price">1.00</field>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field name="name">Half Banner 234x60</field>
+			<field name="categ_id" ref="product_category_website0"/>
+			<field eval="1" name="active"/>
+			<field eval="0.50" name="equivalency_in_A4"/>
+			<field eval="1.0" name="price_margin"/>
+		</record>
+		<record id="advert_product_2" model="product.product">
+			<field name="list_price">200.00</field>
+			<field name="standard_price">50.00</field>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field name="name">Press Review Advertising A4/2</field>
+			<field name="categ_id" ref="product_category_magazine0"/>
+			<field eval="1" name="active"/>
+			<field eval="0.50" name="equivalency_in_A4"/>
+			<field eval="1.0" name="price_margin"/>
+		</record>
+		<record id="advert_product_3" model="product.product">
+			<field name="list_price">1000.00</field>
+			<field name="standard_price">100.00</field>
+			<field name="uom_id" ref="product.product_uom_unit"/>
+			<field name="uom_po_id" ref="product.product_uom_unit"/>
+			<field name="name">Press Review Advertising Central Pages</field>
+			<field name="categ_id" ref="product_category_magazine0"/>
+			<field eval="1" name="active"/>
+			<field eval="2.00" name="equivalency_in_A4"/>
+			<field eval="1.0" name="price_margin"/>
+		</record>
+	</data>
+</openerp>

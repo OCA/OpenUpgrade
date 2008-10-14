@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	
+		<wizard
+		string=" Language Report" 
+		model="hr.employee" 
+		name="langget" id="lang_id"/>
+		
+		<report
+                id="report_evaluation"
+                string="Evaluation report"
+                model="hr_skill.evaluation"
+                name="hr_skill.evaluation.report"
+                rml="hr_skill/report/evaluation.rml"/>
+		
+		<wizard string="Job Duration"
+		 model="hr.employee"
+		  name="employee.date.check"
+		   id="wizard_employee_date_check"/>
+		
+		<wizard
+		string="Employee Skill" 
+		model="hr_skill.evaluation" 
+		name="empskill" id="skill_emp_id"/>
+		
+		
+	</data>
+</openerp>
+		
+		

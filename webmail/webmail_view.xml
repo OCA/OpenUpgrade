@@ -1,0 +1,214 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+	
+	<record model="ir.ui.view" id="view_webmail_server_tree">
+		<field name="name">webmail.server.tree</field>
+		<field name="model">webmail.server</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Server Configuration">
+				<field name="name"/>
+				<field name="user_name"/>
+				<field name="password"/>				
+				<field name="iserver_name"/>
+				<field name="iserver_type"/>
+				<field name="iconn_type"/>
+				<field name="iconn_port"/>				
+				<field name="oserver_name"/>				
+				<field name="oconn_type"/>
+				<field name="oconn_port"/>				
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_webmail_server_form">
+		<field name="name">webmail.server.form</field>
+		<field name="model">webmail.server</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Server Configuration">
+				<field name="name" colspan="2"/>
+				<newline/>
+				<field name="user_name"/>				
+				<field name="password"/>
+				<separator string="Incoming Server Setting" colspan="4"/>
+				<group col="4" colspan="4">
+					<field name="iserver_name"/>
+					<field name="iserver_type"/>
+					<field name="iconn_type"/>
+					<field name="iconn_port"/>				
+				</group>
+				<separator string="Outgoing Server Setting" colspan="4"/>				
+				<field name="oserver_name"/>
+				<field name="oconn_type"/>
+				<field name="oconn_port"/>
+				<newline/>
+				<separator colspan="4"/>
+				<group colspan="2" col="2">
+					<button string="Test Connection" name="test_connection" type="object"/>
+				</group>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.ui.view" id="view_webmail_user_form">
+		<field name="name">webmail.tiny.user.form</field>
+		<field name="model">webmail.tiny.user</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Mail Account Configuration">
+				<field name="user_id" colspan="4"/>
+				<separator string="Server Configuration " colspan="4"/>
+				<field name="server_conf_id" nolabel="1" colspan="4"/>				
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_tiny_user">		
+		<field name="res_model">webmail.tiny.user</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">form</field>
+		<field name="view_id" ref="view_webmail_user_form"/>
+		<field name="domain">[('user_id','=',uid)]</field>		
+	</record>
+	
+	<menuitem name="Webmail" id="menu_action_webmail_tiny_user"/>
+	
+	<menuitem name="Configuration" id="menu_action_configuration_tiny_user" parent="webmail.menu_action_webmail_tiny_user"/>
+	 
+	<menuitem name="Server" id="menu_action_server_tiny_user" parent="webmail.menu_action_configuration_tiny_user" action="action_webmail_tiny_user"/>
+	
+	<!-- 
+	<record model="ir.ui.view" id="view_webmail_mailacc_form">
+		<field name="name">webmail.mailacc.form</field>
+		<field name="model">webmail.server</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Mail Account">
+				<field name="name"/>				
+			</form>
+		</field>
+	</record>  
+	 -->
+	
+	<!-- 
+	<record model="ir.ui.view" id="view_webmail_mailacc_tree">
+		<field name="name">webmail.mailacc.tree</field>
+		<field name="model">webmail.server</field>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Mail Account">
+				<field name="name"/>				
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_mailacc">		
+		<field name="res_model">webmail.server</field>
+		<field name="view_type">tree</field>
+		<field name="view_mode">tree,form</field>
+		<field name="view_id" ref="view_webmail_mailacc_tree"/>
+		<field name="domain">[('user_id','=',uid)]</field>		
+	</record>
+	
+	<menuitem name="Webmail/Mail Account" id="menu_action_webmail_mailacc" action="action_webmail_mailacc"/>
+	-->
+	
+	<record model="ir.ui.view" id="webmail_mailbox_tree_view">
+		<field name="name">webmail.mailbox.tree</field>
+		<field name="model">webmail.mailbox</field>
+		<field name="type">tree</field>
+		<field name="field_parent">child_id</field>
+		<field name="arch" type="xml">
+			<tree string="Mail Account">
+				<field name="name"/>
+			</tree>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_mailbox">
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">webmail.mailbox</field>
+		<field name="domain">[('parent_id','=',False)]</field>
+		<field name="view_type">tree</field>
+		<field name="view_id" ref="webmail_mailbox_tree_view"/>
+	</record>
+		
+	<record model="ir.ui.view" id="view_webmail_email_compose_form">
+		<field name="name">webmail.email.compose.form</field>
+		<field name="model">webmail.email</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Compose Mail">
+				<group col="4" colspan="4">
+					<field name="from_user" />
+					<field name="cc" />
+					<field name="bcc"/>
+					<field name="subject"/>
+				</group>
+				<newline/>
+				<separator string="Message" colspan="4"/>
+				<field name="body" nolabel="1" colspan="4"/>
+				<group col="3" colspan="4">
+					<button name="send_mail" string="Send Mail"/>					
+				</group>
+			</form>
+		</field>
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_reply_mail">
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action':'reply','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_replyall_mail">	
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action':'replyall','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
+	<record model="ir.actions.act_window" id="action_webmail_forward_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="context">{'action': 'forward','mailid': active_id}</field>
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
+	<record model="ir.ui.view" id="view_webmail_email_read_form">
+		<field name="name">webmail.email.read.form</field>
+		<field name="model">webmail.email</field>
+		<field name="type">form</field>
+		<field name="arch" type="xml">
+			<form string="Compose Mail">
+				<group col="4" colspan="4">
+					<field name="from_user" />
+					<field name="cc" />
+					<field name="bcc"/>				
+					<field name="subject"/>
+				</group>				
+				<newline/>
+				<separator string="Message" colspan="4"/>
+				<field name="body" nolabel="1" colspan="4"/>
+				<group col="4" colspan="4">
+					<button type="action" name="%(action_webmail_reply_mail)d"  string="Reply"/>
+					<button type="action" name="%(action_webmail_replyall_mail)d"  string="Reply to All" />
+					<button type="action" name="%(action_webmail_forward_mail)d"  string="Forward Mail" />					
+				</group>
+			</form>
+		</field>
+	</record>
+				
+	<record model="ir.actions.act_window" id="action_webmail_compose_mail">		
+		<field name="res_model">webmail.email</field>
+		<field name="view_type">form</field>		
+		<field name="view_id" ref="view_webmail_email_compose_form"/>		
+	</record>
+	
+	<menuitem name="Compose Mail" id="menu_action_compose_tiny_user" parent="webmail.menu_action_webmail_tiny_user" action="action_webmail_compose_mail"/>
+	
+</data>
+</openerp>

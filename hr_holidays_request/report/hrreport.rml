@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="34.0" y1="28.0" width="527" height="786"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,0"/>
+      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,0"/>
+      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,0"/>
+      <blockBackground colorName="#e6e6e6" start="3,0" stop="3,0"/>
+      <blockBackground colorName="#e6e6e6" start="4,0" stop="4,0"/>
+      <blockBackground colorName="#e6e6e6" start="5,0" stop="5,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Tableau2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="LEFT"/>
+    <paraStyle name="P2" fontName="Times-Roman" fontSize="11.0" leading="14" alignment="CENTER"/>
+    <paraStyle name="P3" fontName="Times-BoldItalic" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P4" fontName="Times-BoldItalic" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P5" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P6" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P7" fontName="Times-Roman" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="P8" fontName="Times-Roman" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Times-Roman"/>
+    <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Contents" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Times-Roman"/>
+  </stylesheet>
+  <story>
+    <para style="P2"><font face="Times-Roman">Printing date:</font> [[ time.strftime('%Y-%m-%d') ]] <font face="Times-Roman">at</font> [[ time.strftime('%H:%M:%S') ]] </para>
+    <blockTable colWidths="524.0" style="Table1">
+      <tr>
+        <td>
+          <blockTable colWidths="102.0,96.0,51.0,89.0,181.0" style="Table3">
+            <tr>
+              <td>
+                <para style="P7">
+                  <font color="white"> </font>
+                </para>
+              </td>
+              <td>
+                <para style="P6">
+                  <font color="white"> </font>
+                </para>
+              </td>
+              <td>
+                <para style="P6">
+                  <font color="white"> </font>
+                </para>
+              </td>
+              <td>
+                <para style="P6">
+                  <font color="white"> </font>
+                </para>
+              </td>
+              <td>
+                <para style="P6">
+                  <font face="Times-BoldItalic" size="8.0">From Date: [[ data['form']['fromdate'] or removeParentNode('para') ]]</font>
+                </para>
+                <para style="P6">
+                  <font face="Times-BoldItalic" size="8.0">To Date:[[ data['form']['todate'] or removeParentNode('para') and '' ]]</font>
+                </para>
+                <para style="P6">
+                  <font face="Times-BoldItalic" size="8.0">Month:[[ data['form']['month'] or removeParentNode('para') ]]</font>
+                </para>
+                <para style="P6">
+                  <font face="Times-BoldItalic">Year:</font>
+                  <font face="Times-BoldItalic" size="8.0">[[ data['form']['year'] or removeParentNode('para') ]]</font>
+                </para>
+              </td>
+            </tr>
+          </blockTable>
+          <para style="P6">
+            <font face="Times-BoldItalic" size="8.0"/>
+          </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="102.0,66.0,96.0,95.0,103.0,58.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P8">Employee name</para>
+        </td>
+        <td>
+          <para style="P8">User name</para>
+        </td>
+        <td>
+          <para style="P8">Total Full Leave</para>
+        </td>
+        <td>
+          <para style="P8">Total Half Leave</para>
+        </td>
+        <td>
+          <para style="P8">Total Hourly Leave</para>
+        </td>
+        <td>
+          <para style="P8">Total</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="102.0,66.0,96.0,95.0,103.0,57.0" style="Tableau2">
+      <tr>
+        <td>
+          <para style="P4">[[ repeatIn( line(data[ 'form' ] ),'move_g' ) ]]<font face="Times-BoldItalic" size="9.0">[[ move_g[ 'emp_name' ] ]]</font></para>
+        </td>
+        <td>
+          <para style="P4">[[ move_g[ 'user_name' ] ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ move_g[ 'total_full' ] ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ move_g[ 'total_half' ] ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ move_g[ 'total_hour' ] ]]</para>
+        </td>
+        <td>
+          <para style="P3">[[ move_g[ 'total' ] ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="P1">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
+

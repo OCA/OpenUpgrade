@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<listing>
+	<today type="function" name="today"/>
+	<date1 type="data" name="date1"/>
+	<date2 type="data" name="date2"/>
+	<dossier type="fields" name="id">
+		<name type="field" name="debiteur.name"/>
+		<street type="field" name="debiteur.address.street"/>
+		<zip type="field" name="debiteur.address.zip"/>
+		<city type="field" name="debiteur.address.city"/>
+		<vat type="field" name="debiteur.vat"/>
+		<birthdate type="field" name="debiteur.address.birthdate"/>
+		<adj type="field" name="amount_adj"/>
+		<study type="field" name="etude_id.name"/>
+		<date type="field" name="date_reelle"/>
+	</dossier>
+</listing>

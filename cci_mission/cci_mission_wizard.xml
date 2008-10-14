@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<openerp>
+	<data>
+		<wizard string="Create Embassy Folder"
+			model="cci_missions.certificate"
+			name="cci_mission.create_embassy_folder"
+			id="create_embassy_folder"/>
+
+		<wizard string="Create Embassy Folder"
+			model="cci_missions.legalization"
+			name="cci_mission.create_embassy_folder"
+			id="create_embassy_folder_leg"/>
+
+		<wizard string="Make Invoice"
+			model="cci_missions.certificate"
+			name="mission.create_invoice"
+			id="mission_invoice"
+			menu="True"/>
+		<wizard string="Make Invoice"
+			model="cci_missions.legalization"
+			name="mission.create_invoice"
+			id="mission_invoice_legalization"
+			menu="True"/>
+		<wizard string="Make Invoice"
+			model="cci_missions.ata_carnet"
+			name="mission.create_invoice_carnet"
+			id="mission_invoice_carnet"
+			menu="True"/>
+		<wizard string="Make Invoice"
+			model="cci_missions.embassy_folder"
+			name="mission.create_invoice_embassy"
+			id="mission_invoice_embassy"
+			menu="True"/>
+
+		<wizard string="Simulation"
+			model="cci_missions.ata_carnet"
+			name="mission.simulation_carnet"
+			id="mission_simulation_carnet"
+			menu="True"/>
+		<wizard string="Federation Sending"
+			model="cci_missions.ata_carnet"
+			name="mission.fed_send"
+			id="mission_fed_send"
+			menu="True"/>"
+
+		<wizard
+			string="Make Invoice"
+			name="cci_missions.make_invoice_common"
+			menu="False"
+			id="missions_invoice_common"/>
+
+		<menuitem
+			name="Financial Management/Periodical Processing/Group Draft Invoices for Missions and Events"
+			action="missions_invoice_common"
+			type="wizard"
+			id="cci_missions_invoice_common"/>
+
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.certificate"
+			menu="True"
+			id="missions_rec_enc_cash_cert"/>
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.legalization"
+			menu="True"
+			id="missions_rec_enc_cash_legal"/>
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.embassy_folder"
+			menu="True"
+			id="missions_rec_enc_cash_folder"/>
+		<wizard
+			string="Receive &amp; Encode Cash"
+			name="cci_missions.rec_enc_cash"
+			model="cci_missions.ata_carnet"
+			menu="True"
+			id="missions_rec_enc_cash_carnet"/>
+
+
+<!-- Philmer addition to send the certificates to the belgian federation -->
+		<wizard string="Send to Federation"
+			model="cci_missions.certificate"
+			name="cci_mission.send_certificates_federation"
+			id="cci_mission_send_certificates_federation"
+			menu="True"/>
+
+
+	</data>
+</openerp>

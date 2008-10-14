@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report id="hotel_folio_details"
+			string="Folio Total"
+			model="hotel.folio"
+			name="folio.total"
+			rml="hotel/report/total_folio.rml"
+			menu="False"
+			auto="False"/>
+		
+	</data>
+</openerp>

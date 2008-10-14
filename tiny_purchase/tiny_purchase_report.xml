@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		<report id="report_tiny_purchase_order"
+			name="tiny_purchase.order"
+			string="Print Order"
+			model="tiny_purchase.order"
+			rml="tiny_purchase/report/order.rml"
+			auto="True"/>
+	</data>
+</openerp>

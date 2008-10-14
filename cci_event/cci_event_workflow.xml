@@ -1,0 +1,268 @@
+<?xml version="1.0" ?>
+<openerp>
+<data>
+
+	<!-- Roles definition -->
+
+
+
+	<!--
+	 Workflow on Event
+	 -->
+
+	<!-- Workflow definition -->
+		<!-- activities -->
+	<record model="workflow" id="wkf_cci_event">
+		<field name="name">cci_event.wkf.event</field>
+		<field name="osv">event.event</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<record model="workflow.activity" id="act_draft">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="flow_start">True</field>
+		<field name="name">draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_fixed">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="name">fixed</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_fixed()</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_open">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="name">open</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_open()</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_confirm">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="name">confirm</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_confirm()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_running">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="name">running</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_running()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_done">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="name">done</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_done()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_closed">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="name">closed</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_event_closed()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_cancel">
+		<field name="wkf_id" ref="wkf_cci_event" />
+		<field name="name">cancel</field>
+		<field name="flow_stop">True</field>
+		<field name="kind">stopall</field>
+		<field name="action">cci_event_cancel()</field>
+		<field name="join_mode">XOR</field>
+	</record>
+
+
+		<!-- transitions -->
+
+	<record model="workflow.transition" id="t1">
+		<field name="act_from" ref="act_draft" />
+		<field name="act_to" ref="act_fixed" />
+		<field name="signal">fixed</field>
+	</record>
+
+	<record model="workflow.transition" id="t2">
+		<field name="act_from" ref="act_fixed" />
+		<field name="act_to" ref="act_open" />
+		<field name="signal">open</field>
+	<!--<field name="role_id" ref="HR_holidays"/>-->
+	</record>
+
+	<record model="workflow.transition" id="t3">
+		<field name="act_from" ref="act_open" />
+		<field name="act_to" ref="act_confirm" />
+		<field name="signal">confirm</field>
+	</record>
+
+	<record model="workflow.transition" id="t4">
+		<field name="act_from" ref="act_confirm" />
+		<field name="act_to" ref="act_running" />
+		<field name="signal">running</field>
+	</record>
+
+	<record model="workflow.transition" id="t5">
+		<field name="act_from" ref="act_running" />
+		<field name="act_to" ref="act_done" />
+		<field name="signal">done</field>
+	</record>
+
+	<record model="workflow.transition" id="t6">
+		<field name="act_from" ref="act_done" />
+		<field name="act_to" ref="act_closed" />
+		<field name="signal">closed</field>
+	</record>
+
+	<record model="workflow.transition" id="t7">
+		<field name="act_from" ref="act_fixed" />
+		<field name="act_to" ref="act_cancel" />
+		<field name="signal">cancel</field>
+	</record>
+
+	<record model="workflow.transition" id="t8">
+		<field name="act_from" ref="act_open" />
+		<field name="act_to" ref="act_cancel" />
+		<field name="signal">cancel</field>
+	</record>
+
+<!--
+| Workflow on registration |
+-->
+
+	<!-- Workflow definition -->
+	<record model="workflow" id="wkf_cci_event_reg">
+		<field name="name">cci_event.wkf.event.reg</field>
+		<field name="osv">event.registration</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_draft_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="flow_start">True</field>
+		<field name="name">draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_open_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="name">open</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_reg_open()</field>
+		<field name="split_mode">OR</field>
+	</record>
+
+	<record model="workflow.activity" id="act_done_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="name">done</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_event_reg_done()</field>
+	</record>
+
+	<record model="workflow.activity" id="act_cancel_reg">
+		<field name="wkf_id" ref="wkf_cci_event_reg" />
+		<field name="name">cancel</field>
+		<field name="flow_stop">True</field>
+		<field name="kind">stopall</field>
+		<field name="action">cci_event_reg_cancel()</field>
+		<field name="join_mode">XOR</field>
+	</record>
+
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="t1_reg">
+		<field name="act_from" ref="act_draft_reg" />
+		<field name="act_to" ref="act_open_reg" />
+		<field name="signal">open</field>
+	<!--<field name="role_id" ref="HR_holidays"/>-->
+	</record>
+
+	<record model="workflow.transition" id="t2_reg">
+		<field name="act_from" ref="act_open_reg" />
+		<field name="act_to" ref="act_done_reg" />
+		<field name="signal">done</field>
+	</record>
+
+	<record model="workflow.transition" id="t3_reg">
+		<field name="act_from" ref="act_open_reg" />
+		<field name="act_to" ref="act_cancel_reg" />
+		<field name="signal">cancel</field>
+	</record>
+
+	<record model="workflow.transition" id="t4_reg">
+		<field name="act_from" ref="act_draft_reg" />
+		<field name="act_to" ref="act_cancel_reg" />
+		<field name="signal">cancel</field>
+	</record>
+
+
+
+<!--
+| Workflow on event check |
+-->
+
+	<!-- Workflow definition -->
+	<record model="workflow" id="wkf_cci_event_check">
+		<field name="name">cci_event.wkf.event.check</field>
+		<field name="osv">event.check</field>
+		<field name="on_create">True</field>
+	</record>
+
+	<!-- activities -->
+	<record model="workflow.activity" id="act_draft_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="flow_start">True</field>
+		<field name="name">draft</field>
+	</record>
+
+	<record model="workflow.activity" id="act_block_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="name">block</field>
+		<field name="kind">function</field>
+		<field name="action">cci_event_check_block()</field>
+	</record>
+
+
+	<record model="workflow.activity" id="act_confirm_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="name">confirm</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_event_check_confirm()</field>
+	</record>
+
+
+	<record model="workflow.activity" id="act_cancel_check">
+		<field name="wkf_id" ref="wkf_cci_event_check" />
+		<field name="name">cancel</field>
+		<field name="kind">function</field>
+		<field name="flow_stop">True</field>
+		<field name="action">cci_event_check_cancel()</field>
+	</record>
+
+	<!-- transitions -->
+	<record model="workflow.transition" id="e1_check">
+		<field name="act_from" ref="act_draft_check" />
+		<field name="act_to" ref="act_block_check" />
+		<field name="signal">button_block</field>
+	</record>
+
+	<record model="workflow.transition" id="e2_check">
+		<field name="act_from" ref="act_block_check" />
+		<field name="act_to" ref="act_confirm_check" />
+		<field name="signal">button_confirm</field>
+	</record>
+
+	<record model="workflow.transition" id="e3_check">
+		<field name="act_from" ref="act_block_check" />
+		<field name="act_to" ref="act_cancel_check" />
+		<field name="signal">button_cancel</field>
+	</record>
+
+</data>
+</openerp>
