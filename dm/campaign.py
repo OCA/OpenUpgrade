@@ -440,8 +440,14 @@ class dm_campaign(osv.osv):
     def copy(self, cr, uid, id, default=None, context={}):
         cmp_id = super(dm_campaign, self).copy(cr, uid, id, default)
         data = self.browse(cr, uid, cmp_id, context)
-        default='Copy of %s' % data.name
-        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':default, 'date_start':0, 'date':0, 'project_id':0})
+        name_default='Copy of %s' % data.name
+        prjt_default = 'Copy of %s' % data.project_id.name
+        prj_id=self.pool.get('project.project').copy(cr, uid, data.project_id.id, default={'name':prjt_default})
+        cr.execute('select id from project_task where project_id=%d', (data.project_id.id,))
+        res = cr.fetchall()
+        for (tasks_id,) in res:
+            self.pool.get('project.task').copy(cr, uid, tasks_id,default={'project_id':prj_id,'active':True}, context=context)
+        super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':prj_id})
         return cmp_id
 
 dm_campaign()
