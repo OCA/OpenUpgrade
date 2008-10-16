@@ -201,6 +201,9 @@ class repair_operation(osv.osv):
         res = {}
         for val in self.browse(cr, uid, ids):
             current_date = time.strftime('%Y-%m-%d')
+            print "VVVVVVVVV", val
+            print "REPAIR ID :::::::::", val.repair_id
+            print "REPAIR LIMIT ID :::::::::", val.repair_id.guarantee_limit
             if current_date < val.repair_id.guarantee_limit:
                 res[val.id] = 0.0
             if current_date >= val.repair_id.guarantee_limit:
@@ -284,7 +287,7 @@ class mrp_repair_fee(osv.osv):
     _description = 'Repair Fees line'
     _columns = {
         'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref', required=True, ondelete='cascade', select=True),
-        'name': fields.char('Description', size=8, required=True, select=True),
+#        'name': fields.char('Description', size=8, select=True),
         'product_id': fields.many2one('product.product', 'Product', required=True),
         'product_qty': fields.float('Quantity', digits=(16,2), required=True),
         'price_unit': fields.float('Unit Price', required=True),

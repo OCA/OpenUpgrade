@@ -2,7 +2,7 @@
 <document filename="test.pdf">
   <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
     <pageTemplate id="first">
-      <frame id="first" x1="34.0" y1="42.0" width="527" height="758"/>
+      <frame id="first" x1="15.0" y1="42.0" width="539" height="758"/>
     </pageTemplate>
   </template>
   <stylesheet>
@@ -10,227 +10,281 @@
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Tableau1">
+    <blockTableStyle id="AddressTable">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Tableau2">
+    <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="0,0" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="2,0" stop="2,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#000000" start="3,0" stop="3,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#000000" start="3,0" stop="3,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
-      <blockBackground colorName="#e6e6e6" start="0,0" stop="0,-1"/>
-      <blockBackground colorName="#e6e6e6" start="1,0" stop="1,-1"/>
-      <blockBackground colorName="#e6e6e6" start="2,0" stop="2,-1"/>
-      <blockBackground colorName="#e6e6e6" start="3,0" stop="3,-1"/>
+      <lineStyle kind="GRID" colorName="black"/>
     </blockTableStyle>
-    <blockTableStyle id="Tableau3">
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="GRID" colorName="black"/>
+    </blockTableStyle>
+    <blockTableStyle id="HeadingTable">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Tableau6">
+    <blockTableStyle id="Order_Desc_Table">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
-    <blockTableStyle id="Tableau4">
+    <blockTableStyle id="Total_Table">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
     </blockTableStyle>
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P1" fontName="Times-Roman" fontSize="9.0" leading="11"/>
+    <paraStyle name="P1" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="P2" fontName="Times-Roman"/>
-    <paraStyle name="P3" fontName="Times-Roman" alignment="LEFT"/>
-    <paraStyle name="P4" fontName="Times-Roman" alignment="LEFT"/>
-    <paraStyle name="P5" fontName="Times-Bold" fontSize="9.0" leading="11"/>
-    <paraStyle name="P6" fontName="Times-Bold" fontSize="9.0" leading="11"/>
-    <paraStyle name="P7" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="CENTER"/>
-    <paraStyle name="P8" fontName="Times-Roman" fontSize="9.0" leading="11" alignment="RIGHT"/>
-    <paraStyle name="P9" fontName="Times-BoldItalic" fontSize="9.0" leading="11" alignment="LEFT"/>
-    <paraStyle name="P10" fontName="Times-Italic" fontSize="9.0" leading="11" alignment="LEFT"/>
-    <paraStyle name="P11" fontName="Times-Bold" fontSize="9.0" leading="11" alignment="RIGHT"/>
-    <paraStyle name="P12" fontName="Times-Bold" fontSize="9.0" leading="11"/>
-    <paraStyle name="P13" fontName="Times-Roman" fontSize="10.0" leading="13"/>
-    <paraStyle name="P14" fontName="Times-Roman" fontSize="10.0" leading="13"/>
-    <paraStyle name="P15" fontName="Times-Roman" fontSize="4.0" leading="5"/>
-    <paraStyle name="P16" fontName="Times-Roman" fontSize="11.0" leading="14"/>
-    <paraStyle name="P17" fontName="Times-Roman" fontSize="16.0" leading="20"/>
-    <paraStyle name="P18" fontName="Times-BoldItalic" fontSize="6.0" leading="8" alignment="LEFT"/>
-    <paraStyle name="P19" fontName="Times-Roman" fontSize="7.0" leading="9"/>
-    <paraStyle name="P20" fontName="Times-BoldItalic" fontSize="11.0" leading="14"/>
-    <paraStyle name="P21" fontName="Times-BoldItalic" fontSize="11.0" leading="14" alignment="CENTER"/>
-    <paraStyle name="P22" fontName="Times-Roman" fontSize="11.0" leading="14"/>
-    <paraStyle name="P23" fontName="Times-Roman" fontSize="7.0" leading="9"/>
-    <paraStyle name="P24" fontName="Times-Bold" fontSize="9.0" leading="11" alignment="RIGHT"/>
+    <paraStyle name="P3" fontName="Helvetica-Oblique" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P4" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P5" rightIndent="0.0" leftIndent="11.0" fontName="Helvetica-Oblique" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
-    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
-    <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="8.0" leading="10" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="Table Contents" fontName="Times-Roman"/>
     <paraStyle name="Table Heading" fontName="Times-Roman" alignment="CENTER"/>
     <paraStyle name="Caption" fontName="Times-Roman" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="Index" fontName="Times-Roman"/>
+    <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_Centre_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Footer" fontName="Times-Roman"/>
+    <paraStyle name="Horizontal Line" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="14.0"/>
+    <paraStyle name="Heading 9" fontName="Helvetica-Bold" fontSize="75%" leading="NaN" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_General_Right" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Centre" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_Details_Right" fontName="Helvetica-Bold" fontSize="10.0" leading="13" alignment="RIGHT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_Right_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_header_Right" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_header_Centre" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="CENTER" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_address" fontName="Helvetica" fontSize="10.0" leading="13" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Centre_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_1" fontName="Helvetica" fontSize="2.0" leading="3" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Italic" fontName="Helvetica-Oblique" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="Preformatted Text" fontName="Times-Roman" fontSize="10.0" leading="13" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_right_bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_centre_9_bold" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
   </stylesheet>
-  <images/>
   <story>
-    <para style="P1">[[ repeatIn(objects,'o') ]] <font face="Times-Roman">[[ setLang(o.partner_id.lang) ]]</font></para>
-    <blockTable colWidths="257.0,50.0,220.0" style="Tableau1">
+    <para style="terp_default_8">[[ repeatIn(objects,'o') ]] [[ setLang(o.partner_id.lang) ]]</para>
+    <blockTable colWidths="265.0,51.0,225.0" style="AddressTable">
       <tr>
         <td>
-          <para style="P5">Shipping address :</para>
-          <para style="P13">[[ o.partner_id.title or '' ]] [[ o.partner_id.name ]]</para>
-          <para style="P13">[[ o.address_id.title or '' ]] [[ o.address_id.name ]]</para>
-          <para style="P13">[[ o.address_id.street ]]</para>
-          <para style="P13">[[ o.address_id.street2 or '' ]]</para>
-          <para style="P14"><font face="Times-Roman">[[ o.address_id.zip or '' ]]</font> [[ o.address_id.city or '' ]]</para>
-          <para style="P14">[[ o.address_id.state_id and o.address_id.state_id.name or '' ]]</para>
-          <para style="P14">[[ o.address_id.country_id and o.address_id.country_id.name or '' ]]</para>
-          <para style="P15">
+          <para style="terp_default_Bold_9">Shipping address :</para>
+          <para style="terp_default_9">[[ o.partner_id.title or '' ]] [[ o.partner_id.name ]]</para>
+          <para style="terp_default_9">[[ o.partner_shipping_id.title or '' ]] [[ o.partner_shipping_id.name ]]</para>
+          <para style="terp_default_9">[[ o.partner_shipping_id.street ]]</para>
+          <para style="terp_default_9">[[ o.partner_shipping_id.street2 or '' ]]</para>
+          <para style="terp_default_9">[[ o.partner_shipping_id.city or '' ]] [[ o.partner_shipping_id.zip or '' ]]</para>
+          <para style="terp_default_9">[[ o.partner_shipping_id.state_id and o.partner_shipping_id.state_id.name or '' ]] [[ o.partner_shipping_id.country_id and o.partner_shipping_id.country_id.name or '' ]]</para>
+          <para style="terp_default_9">
             <font color="white"> </font>
           </para>
-          <para style="P6">Invoice address :</para>
-          <para style="P14">[[ o.address_id.street ]][[ o.address_id.street2 and (', %s' % o.address_id.street2 or '') ]]</para>
-          <para style="P14">[[ o.address_id.zip or '' ]] [[ o.address_id.city or '' ]] [[ o.address_id.country_id and (', %s' % (o.address_id.country_id and o.address_id.country_id.name or '')) ]]</para>
+          <para style="terp_default_Bold_9">Invoice address :[[ o.partner_id.property_payment_term.name ]]</para>
+          <para style="terp_default_9">[[ o.partner_invoice_id.street ]] [[ o.partner_invoice_id.street2 and (', %s' % o.partner_invoice_id.street2 or '') ]]</para>
+          <para style="terp_default_9">[[ o.partner_invoice_id.zip or '' ]] [[ o.partner_invoice_id.city or '' ]] [[ o.partner_invoice_id.country_id and (', %s' % (o.partner_invoice_id.country_id and o.partner_invoice_id.country_id.name or '')) ]]</para>
         </td>
         <td>
-          <para style="P16">
+          <para style="terp_default_8">
             <font color="white"> </font>
           </para>
         </td>
         <td>
-          <para style="P13">
+          <para style="terp_default_9">[[ o.partner_id.title or '' ]] [[ o.partner_id.name ]]</para>
+          <para style="terp_default_9">[[ o.partner_order_id.title or '' ]] [[ o.partner_order_id.name ]]</para>
+          <para style="terp_default_9">[[ o.partner_order_id.street ]]</para>
+          <para style="terp_default_9">[[ o.partner_order_id.street2 or '' ]]</para>
+          <para style="terp_default_9">[[ o.partner_order_id.zip or '' ]] [[ o.partner_order_id.city or '' ]]</para>
+          <para style="terp_default_9">[[ o.partner_order_id.state_id and o.partner_order_id.state_id.name or '' ]] [[ o.partner_order_id.country_id and o.partner_order_id.country_id.name or '' ]]</para>
+          <para style="terp_default_9">
+            <font color="white"> </font>
+          </para>
+          <para style="terp_default_9">Tel. : [[ o.partner_order_id.phone or removeParentNode('para') ]]</para>
+          <para style="terp_default_9">Fax : [[ o.partner_order_id.fax or removeParentNode('para') ]]</para>
+          <para style="terp_default_9">TVA : [[ o.partner_id.vat or removeParentNode('para') ]]</para>
+          <para style="terp_default_9">
             <font color="white"> </font>
           </para>
         </td>
       </tr>
     </blockTable>
-    <para style="P2">
+    <para style="terp_default_8">
       <font color="white"> </font>
     </para>
-    <para style="P17">[[ o.state&lt;&gt;'draft' and removeParentNode('para') ]] Quotation N° : [[ o.name ]]</para>
-    <para style="P17">[[ o.state=='draft' and removeParentNode('para') ]] Order N° : [[ o.name ]]</para>
-    <para style="P17">
+    <para style="terp_header">Repair</para>
+    <para style="terp_default_8">
       <font color="white"> </font>
     </para>
-    <para style="P22">Your order reference : [[ o.client_order_ref or '' ]]</para>
-    <para style="P22">Date ordered : [[ time.strftime('%d/%m/%Y', time.strptime(o.date_order, '%Y-%m-%d')) ]]</para>
-    <para style="P22">Our salesman : [[ o.user_id.name ]]</para>
-    <para style="P2">
-      <font color="white"> </font>
-    </para>
-    <blockTable colWidths="279.0,79.0,87.0,82.0" repeatRows="1" style="Tableau2">
+    <blockTable colWidths="263.0,276.0" style="Table2">
       <tr>
         <td>
-          <para style="P20">Product</para>
+          <para style="terp_tblheader_General_Centre">Product to Repair </para>
         </td>
         <td>
-          <para style="P21">Quantity</para>
+          <para style="terp_tblheader_General_Centre">Guarantee Limit </para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="263.0,276.0" style="Table3">
+      <tr>
+        <td>
+          <para style="terp_default_Centre_8">[[ o.product_id.name or '' ]]</para>
         </td>
         <td>
-          <para style="P21">Unit Price</para>
+          <para style="terp_default_Centre_8">[[ o.guarantee_limit ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="terp_default_8">
+      <font color="white"> </font>
+    </para>
+    <para style="terp_default_8">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="208.0,99.0,96.0,134.0" repeatRows="1" style="HeadingTable">
+      <tr>
+        <td>
+          <para style="terp_tblheader_Details">Product</para>
         </td>
         <td>
-          <para style="P21">Price</para>
+          <para style="terp_tblheader_Details_Centre">Quantity</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_Details_Right">Unit Price</para>
+        </td>
+        <td>
+          <para style="terp_tblheader_Details_Right">Price</para>
         </td>
       </tr>
     </blockTable>
     <section>
-      <para style="P18">[[ repeatIn(o.operations,'line') ]]</para>
-      <blockTable colWidths="279.0,79.0,87.0,82.0" style="Tableau3">
+      <para style="P1">[[ repeatIn(o.operations,'line') ]]</para>
+      <blockTable colWidths="207.0,99.0,99.0,131.0" style="Order_Desc_Table">
         <tr>
           <td>
-            <para style="Table Contents">[[ line.product_id.name ]] </para>
+            <para style="terp_default_9">[[ line.product_id.name ]]</para>
           </td>
           <td>
-            <para style="Table Contents">[[ line.product_qty ]] [[ line.product_uom.name ]]</para>
+            <para style="terp_default_Centre_9">[[ line.product_qty or '0.00' ]] [[ line.product_uom.name ]] </para>
           </td>
           <td>
-            <para style="Table Contents">[[ line.price_unit ]]</para>
+            <para style="terp_default_Centre_9">[[ line.price_unit ]]</para>
           </td>
           <td>
-            <para style="Table Contents">[[ line.price_unit ]]</para>
+            <para style="terp_default_Right_9">[[ line.price_subtotal ]]</para>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <para style="P5">[[ format(line.notes or removeParentNode('tr')) ]]</para>
+          </td>
+          <td>
+            <para style="terp_default_Centre_9">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="terp_default_Right_9">
+              <font color="white"> </font>
+            </para>
+          </td>
+          <td>
+            <para style="terp_default_Right_9">
+              <font color="white"> </font>
+            </para>
           </td>
         </tr>
       </blockTable>
     </section>
-    <blockTable colWidths="348.0,69.0,110.0" style="Tableau6">
-      <tr>
-        <td>
-          <para style="P23">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P24">Net Total :</para>
-        </td>
-        <td>
-          <para style="P24">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P23">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P24">Taxes :</para>
-        </td>
-        <td>
-          <para style="P24">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <para style="P19">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="P11">TOTAL :</para>
-        </td>
-        <td>
-          <para style="P11">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-    </blockTable>
-    <para style="P12">
+    <para style="P3">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="527.0" style="Tableau4">
+    <blockTable colWidths="306.0,98.0,110.0,22.0" style="Total_Table">
       <tr>
         <td>
-          <para style="P3">
+          <para style="terp_default_9">
             <font color="white"> </font>
           </para>
         </td>
+        <td>
+          <para style="terp_default_Right_9">Net Total :</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ o.amount_untaxed ]]</para>
+        </td>
+        <td>
+          <para style="P4">[[ o.pricelist_id.currency_id.name ]]</para>
+        </td>
       </tr>
       <tr>
         <td>
-          <para style="P3">[[ format((o.partner_id.property_payment_term and o.partner_id.property_payment_term[1]) or '') ]]</para>
+          <para style="terp_default_9">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">Taxes :</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ o.amount_tax or '0.00']]</para>
+        </td>
+        <td>
+          <para style="P4">[[ o.pricelist_id.currency_id.name ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="terp_default_9">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="terp_default_right_bold_9">Total :</para>
+        </td>
+        <td>
+          <para style="terp_default_Right_9">[[ o.amount_total ]] </para>
+        </td>
+        <td>
+          <para style="P4">[[ o.pricelist_id.currency_id.name ]]</para>
         </td>
       </tr>
     </blockTable>
-    <para style="P4">
+    <para style="P2">
+      <font color="white"> </font>
+    </para>
+    <blockTable colWidths="534.0" style="Table1">
+      <tr>
+        <td>
+          <para style="terp_default_9">[[ format(o.note or '') ]]</para>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <para style="terp_default_9">[[ format((o.partner_id.property_payment_term and o.partner_id.property_payment_term.note) or '') ]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Standard">
       <font color="white"> </font>
     </para>
   </story>
 </document>
+
