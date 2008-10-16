@@ -23,10 +23,10 @@
     ],
     
     "update_xml" : [
-#        "account_voucher_sequence.xml",
+        "data/account_voucher_sequence.xml",
+#        "account_view.xml",
         "account_report.xml",
         "voucher_view.xml",
-        "account_voucher_wizard.xml"
     ],
     "active": False,
     "installable": True
