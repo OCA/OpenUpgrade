@@ -1,6 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data>			
+    <data>
+    
+    	<menuitem icon="terp-mrp" id="menu_business_game_root" name="Business Game"/>
+    	
+    	<record model="ir.ui.view" id="view_game_detail_form">
+			<field name="name">business.game.detail.form</field>	
+			<field name="model">business.game.detail</field>
+			<field name="arch" type="xml">
+				<form string="Game Details">
+					<newline/>
+					<group col="2" colspan="2">
+						<separator colspan="2" string="Finance Manager"/>
+						<field name="expenses_forecast"/>
+						<field name="current_treasury"/>
+						<field name="total_customer_refund"/>
+						<field name="total_supplier_refund"/>
+						<button string="Loans" type="object" colspan="2"/>
+					</group>
+					<group col="2" colspan="2">
+						<separator colspan="2" string="HR Manager"/>
+						<field name="hr_budget"/>
+					</group>
+					<group col="2" colspan="2">
+						<separator colspan="2" string="Sales Manager"/>
+						<field name="last_total_sale"/>
+						<field name="sale_forcast"/>
+						<field name="margin_forcast"/>
+					</group>
+					<group col="2" colspan="2">
+						<separator colspan="2" string="Logistic Manager"/>
+						<field name="last_avg_stock"/>
+						<field name="avg_stock_forcast"/>
+						<field name="cost_purchase_forcast"/>
+					</group>
+					<newline/>
+					<separator colspan="4" string="Objectives Achievement"/>
+					<field name="last_turnover"/>
+					<field name="total_benefit"/>
+					<field name="total_sold_products"/>
+					<field name="turnover_growth"/>
+					<field name="benefits_growth"/>
+					<field name="products_growth"/>
+					<field name="objectives"/>
+					<field name="note" colspan="4"/>
+				</form>
+			</field>
+		</record>
+		
+    	<record model="ir.ui.view" id="view_game_detail_tree">
+			<field name="name">business.game.detail.tree</field>	
+			<field name="model">business.game.detail</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Game Details">
+					<field name="name"/>
+					<field name="current_treasury"/>
+					<field name="total_customer_refund"/>
+					<field name="sale_forcast"/>
+					<field name="margin_forcast"/>
+					<field name="cost_purchase_forcast"/>
+					<field name="total_benefit"/>
+					<field name="total_sold_products"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_game_detail_form">
+			<field name="name">Game</field>
+			<field name="res_model">business.game.detail</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">form,tree</field>
+			<field name="view_id" ref="view_game_detail_form"/>
+		</record>
+		
+		<menuitem id="menu_game_configuration" name="Configuration" parent="menu_business_game_root"/>
+		<menuitem name="Business Game Details" parent="menu_game_configuration" id="menu_game_Detail_form" action="action_game_detail_form"/>
+    			
  		<record id="view_confirm_wizard_form" model="ir.ui.view">
             <field name="name">Configuration of Business Game</field>
             <field name="model">profile.game.config.wizard</field>

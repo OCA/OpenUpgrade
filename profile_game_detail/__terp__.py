@@ -32,13 +32,14 @@
     "version":"1.0",
     "author":"Tiny",
     "category":"Profile",
-    "depends":["base","sale","sale_wo_production", "stock_planning"],
+    "depends":["board","base","sale","sale_wo_production", "stock_planning"],
     "init_xml":[
             "profile_game_data.xml"     
         ],
     "demo_xml":[],
     "update_xml":[      
-        "profile_game_view.xml"
+        "profile_game_view.xml",
+        "board_profile_game_detail_view.xml"
         ],
     "active":False,
     "installable":True,

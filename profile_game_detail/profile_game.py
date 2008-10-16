@@ -161,6 +161,13 @@ class business_game_retail(osv.osv):
         'products_growth' : fields.function(_calculate_detail, method=True, type='float', string='Growth Products', multi='objectives',help="Growth Products"),            
         'note':fields.text('Notes'),
     }
+    
+#    _defaults={
+#               'total_customer_refund' : lambda *a: 0.20,
+#               'cost_purchase_forcast' : lambda *a: 0.20,
+#               'total_sold_products' : lambda *a: 0.20
+#               }
+
 business_game_retail()
 
 class profile_game_config_wizard(osv.osv_memory):
