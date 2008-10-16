@@ -37,21 +37,16 @@ def graph_get(cr, uid, graph, offer_id):
     import pydot
     offer_obj = pooler.get_pool(cr.dbname).get('dm.offer')
     offer = offer_obj.browse(cr, uid, offer_id)[0]
-    print "Offer : ",offer
-    print "Offer step_ids : ",offer.step_ids
     nodes = {}
     for step in offer.step_ids:
         args = {}
         args['label'] = step.type
-        print "DEBUG Graph",step.id
-        print "Step type :",step.type
-        print "args : ",args
         graph.add_node(pydot.Node(step.id, **args))
 
     for step in offer.step_ids:
         for transition in step.outgoing_transition_ids:
             trargs = {
-                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay)
+                'label': transition.condition + ' - ' + transition.media_id.name  + '\\n' + str(transition.delay) + ' days'
             }
             if step.split_mode=='and':
                 trargs['arrowtail']='box'

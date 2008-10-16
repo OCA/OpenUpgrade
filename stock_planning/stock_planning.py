@@ -39,42 +39,30 @@ from mx.DateTime import RelativeDateTime, now, DateTime, localtime
 
 class stock_planning_period(osv.osv_memory):
     _name = "stock.planning.period"
+    def _get_latest_period(self,cr,uid,context={}):
+        cr.execute("select max(date_stop) from stock_period")
+        result=cr.fetchone()        
+        return result and result[0] or False
+   
+
     _columns = {
         'name': fields.char('Period Name', size=64),
         'date_start': fields.date('Start Date', required=True),
         'date_stop': fields.date('End Date', required=True),
         'period_ids': fields.one2many('stock.period', 'planning_id', 'Periods'),
     }
-    def _check_date(self, cursor, user, ids):
-        for period in self.browse(cursor, user, ids):
-            cursor.execute('SELECT id ' \
-                    'FROM stock_planning_period ' \
-                    'WHERE ((date_start >= %s AND date_stop <= %s ) OR ' \
-                    '(date_start < %s AND date_stop > %s ) OR ' \
-                    '(date_start BETWEEN %s AND %s ) OR ' \
-                    '(date_stop BETWEEN %s AND %s )) ' \
-                    'AND id <> %d', (
-                            period.date_start,
-                            period.date_stop,
-                            period.date_start,
-                            period.date_stop,
-                            period.date_start,
-                            period.date_stop,
-                            period.date_start,
-                            period.date_stop,
-                            period.id
-                            ))
-            ret = cursor.fetchall()
-            if ret:
-                return False
-        return True
-
-    _constraints = [
-        (_check_date, 'You can not have 2 Periods that overlaps!',
-            ['date_start', 'date_stop'])
-    ]
+    _defaults={
+        'date_start':_get_latest_period,
+    }
+    
     def create_period_weekly(self,cr, uid, ids, context={}):
-        return self.create_period(cr, uid, ids, context, 6, 'Weekly')
+        res=self.create_period(cr, uid, ids, context, 6, 'Weekly')
+        return {
+                'view_type': 'form',
+                "view_mode": 'tree',
+                'res_model': 'stock.period',
+                'type': 'ir.actions.act_window',                
+            }
     
     def create_period_monthly(self,cr, uid, ids, context={},interval=1):
         for p in self.browse(cr, uid, ids, context):
@@ -83,43 +71,53 @@ class stock_planning_period(osv.osv_memory):
             while ds.strftime('%Y-%m-%d')<p.date_stop:
                 de = ds + RelativeDateTime(months=interval, days=-1)
                 self.pool.get('stock.period').create(cr, uid, {
-                    'name': ds.strftime('%m/%Y'),
+                    'name': ds.strftime('%Y/%m'),
                     'date_start': ds.strftime('%Y-%m-%d'),
-                    'date_stop': de.strftime('%Y-%m-%d'),
-                    'planning_id': p.id,
+                    'date_stop': de.strftime('%Y-%m-%d'),                    
                 })
                 ds = ds + RelativeDateTime(months=interval)
-        return True
+        return {
+                'view_type': 'form',
+                "view_mode": 'tree',
+                'res_model': 'stock.period',
+                'type': 'ir.actions.act_window',                
+            }
 
     def create_period(self,cr, uid, ids, context={}, interval=0, name='Daily'):
         for p in self.browse(cr, uid, ids, context):
             dt = p.date_start
-            ds = mx.DateTime.strptime(p.date_start, '%Y-%m-%d')
+            ds = mx.DateTime.strptime(p.date_start, '%Y-%m-%d')            
             while ds.strftime('%Y-%m-%d')<p.date_stop:
                 de = ds + RelativeDateTime(days=interval)
+                if name=='Daily':
+                    new_name=de.strftime('%Y-%m-%d')
+                if name=="Weekly":
+                    new_name=de.strftime('%Y, week %W')
                 self.pool.get('stock.period').create(cr, uid, {
-                    'name': name + ds.strftime('%d'),
+                    'name': new_name,
                     'date_start': ds.strftime('%Y-%m-%d'),
                     'date_stop': de.strftime('%Y-%m-%d'),
                 })
                 ds = ds + RelativeDateTime(days=interval) + 1
-        return True
+        return {
+                'view_type': 'form',
+                "view_mode": 'tree',
+                'res_model': 'stock.period',
+                'type': 'ir.actions.act_window',                
+            }
 stock_planning_period()
 
 
 class stock_period(osv.osv):
     _name = "stock.period"
-
     _columns = {
         'name': fields.char('Period Name', size=64),
-        'date_start': fields.date('Start Date', required=True),
-        'date_stop': fields.date('End Date', required=True),
-        'planning_id': fields.many2one('stock.planning.period', 'Period', select=True),
+        'date_start': fields.datetime('Start Date', required=True),
+        'date_stop': fields.datetime('End Date', required=True),        
         'state' : fields.selection([('draft','Draft'),('open','Open'),('close','Close')],'State')
     }
-    
     _defaults = {
-             'state' : lambda * a : 'draft'
+        'state' : lambda * a : 'draft'
     }
 stock_period()
 
@@ -231,7 +229,7 @@ class stock_planning(osv.osv):
         res = {}
         for val in self.browse(cr, uid, ids):
             res[val.id] = {}
-            if field_names[0] == 'stock_incoming_left':
+            if field_names[0] == 'incoming_left':
                 ret = val.to_procure-val.incoming
             if  field_names[0] == 'outgoing_left':
                 ret = val.planned_outgoing-val.outgoing
@@ -250,22 +248,23 @@ class stock_planning(osv.osv):
     def _get_period_id(self, cr, uid, context={}):
 #        cr.execute()
         res = {}
-        return res
-    
+        return res   
+
+
     _columns = {
         'name' : fields.char('Name', size=64),
         'state' : fields.selection([('draft','Draft'),('done','Done')],'State',readonly=True),
         'period_id': fields.many2one('stock.period' , 'Period', required=True,readonly=True,  domain=[('state','=','open')],states={'draft':[('readonly',False)]}),
         'product_id': fields.many2one('product.product' , 'Product', required=True),
         'product_uom' : fields.many2one('product.uom', 'UoM', required=True),
-        'planned_outgoing' : fields.float('Planned Outgoing', required=True),
+        'planned_outgoing' : fields.float('Planned Out', required=True),
         'planned_sale': fields.function(_get_planned_sale, method=True, string='Planned Sales'),
         'stock_start': fields.function(_get_stock_start, method=True, string='Stock Start'),
-        'incoming': fields.function(_get_product_qty, method=True, type='float', string='Incomming', multi='incoming'),
-        'outgoing': fields.function(_get_product_qty, method=True, type='float', string='Outgoing', multi='outgoing'),
-        'stock_incoming_left': fields.function(_get_value_left, method=True, string='To Procure Left', multi="stock_incoming_left"),
-        'outgoing_left': fields.function(_get_value_left, method=True, string='Outgoing Left', multi="outgoing_left"),
-        'to_procure': fields.float(string='To Procure'),
+        'incoming': fields.function(_get_product_qty, method=True, type='float', string='Confirmed In', multi='incoming'),
+        'outgoing': fields.function(_get_product_qty, method=True, type='float', string='Confirmed Out', multi='outgoing'),
+        'incoming_left': fields.function(_get_value_left, method=True, string='Expected In', multi="stock_incoming_left"),
+        'outgoing_left': fields.function(_get_value_left, method=True, string='Expected Out', multi="outgoing_left"),
+        'to_procure': fields.float(string='Planned In', required=True),
         'warehouse_id' : fields.many2one('stock.warehouse','Warehouse'),
         'line_time' : fields.function(_get_past_future, method=True,type='char', string='Past/Future'),
     }

@@ -92,16 +92,16 @@ class dm_customer(osv.osv):
     }
 dm_customer()
 
-class dm_customer_file(osv.osv):
-    _name = "dm.customer.file"
+class dm_customers_list(osv.osv):
+    _name = "dm.customers_list"
     _columns = {
-        'name' : fields.char('Name', size=16, required=True),
+        'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
         'delivery_date' : fields.date('Delivery Date'),
-        'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'file_id', 'Segments', readonly=True),
+        'segment_ids' : fields.one2many('dm.campaign.proposition.segment', 'list_id', 'Segments', readonly=True),
     }
-dm_customer_file()
+dm_customers_list()
 
 class dm_customer_offer(osv.osv):
     _name = "dm.customer.offer"
@@ -153,7 +153,7 @@ class dm_customer_offer(osv.osv):
 #                 vals['customer_number'] = customer.customer_number
         customer_id = res.customer_id.id
 
-#                                    Create Customer
+        # Create Customer
 
         if not res.customer_id:
               vals={}
@@ -172,7 +172,7 @@ class dm_customer_offer(osv.osv):
               print "DEBUG - customer vals : ",vals
               customer_id = self.pool.get('dm.customer').create(cr,uid,vals)
               print "DEBUG - created new customer : ",customer_id
-#                                           Workitem
+        # Workitem
 
         segment = self.pool.get('dm.campaign.proposition.segment')
         segment_id = segment.search(cr,uid,[('action_code','=',res.action_code)])
@@ -191,21 +191,18 @@ class dm_customer_offer(osv.osv):
 
         step = offer_step.browse(cr,uid,step_id)[0]
 
-#    change the loop
+        # change the loop
         amount = 0
         for p in step.product_ids:
             amount+=p.price
         vals['purchase_amount']= amount
 
-#                                        change workitem
-
+        # change workitem
         if workitem_id : 
-#           if step.type == 'RL'
-#               propo = self.pool.get('dm.campaign.proposition')
 
             print "DEBUG - updating workitem for customer"
             workitem.write(cr,uid,workitem_id,vals)
-#                                        create new workitem
+        # create new workitem
         else:
             vals['customer_id']=customer_id
             if segment_id :
@@ -303,7 +300,6 @@ class dm_offer(osv.osv):
     _constraints = [
         (_check_preoffer, 'Error ! this preoffer is already assigned to an offer',['preoffer_original_id'])
     ]
-
 
 #    def change_code(self,cr,uid,ids,type,copywriter_id) :
 #        if type=='model' and ids:
