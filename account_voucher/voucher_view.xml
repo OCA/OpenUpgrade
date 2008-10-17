@@ -38,8 +38,8 @@
 									<field name="account_id"/>
 									<field name="name"/>
 									<field name="ref"/>
-									<field name="amount"/>
-									<field name="type"/>
+									<field name="amount" on_change="onchange_amount(partner_id,amount,type,parent.type)"/>
+									<field name="type" on_change="onchange_type(partner_id,amount,type,parent.type)"/>
 								</tree>
 							</field>
 							<separator string="Narration" colspan="4"/>
@@ -66,7 +66,7 @@
 			</field>
 		</record>
 		
-		<menuitem name="Financial Management/Entries/Vouchers/" />
+		<menuitem name="Financial Management/Entries Encoding/Voucher Entries/" />
 		<record model="ir.actions.act_window" id="action_view_cash_rec_voucher_form">
 			<field name="name">Cash Receipt Voucher</field>
 			<field name="res_model">account.voucher</field>
