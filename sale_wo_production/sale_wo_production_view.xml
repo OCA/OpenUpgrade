@@ -10,7 +10,7 @@
     </record>
 
     <record model="ir.ui.menu" id="mrp.menu_mrp_root">
-        <field name="group_ids" ref="[(6,0,[ref('base.group_no_one')])]"/>
+        <field name="groups_id" eval="[(6,0,[ref('base.group_no_one')])]"/>
     </record>
 
 </data>
