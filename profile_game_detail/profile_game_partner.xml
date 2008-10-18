@@ -21,6 +21,7 @@
 	<data>
 		<record id="res_partner_category_matrieldesono0" model="res.partner.category">
 			<field eval="&quot;&quot;&quot;Matériel de Sono&quot;&quot;&quot;" name="name"/>
+			<field name="parent_id" ref="res_partner_category_fournisseurs0"/>
 			<field eval="1" name="active"/>
 		</record>
 	</data>
@@ -56,7 +57,6 @@
 			<field eval="&quot;&quot;&quot;r&quot;&quot;&quot;" name="code"/>
 			<field eval="&quot;&quot;&quot;r&quot;&quot;&quot;" name="name"/>
 			<field eval="5" name="sequence"/>
-			<field eval="&quot;&quot;&quot;1&quot;&quot;&quot;" name="sign"/>
 			<field eval="&quot;&quot;&quot;none&quot;&quot;&quot;" name="close_method"/>
 			<field eval="0" name="partner_account"/>
 		</record>
@@ -66,7 +66,6 @@
 			<field eval="&quot;&quot;&quot;t&quot;&quot;&quot;" name="code"/>
 			<field eval="&quot;&quot;&quot;t&quot;&quot;&quot;" name="name"/>
 			<field eval="5" name="sequence"/>
-			<field eval="&quot;&quot;&quot;1&quot;&quot;&quot;" name="sign"/>
 			<field eval="&quot;&quot;&quot;none&quot;&quot;&quot;" name="close_method"/>
 			<field eval="0" name="partner_account"/>
 		</record>
@@ -193,8 +192,5 @@ Ils sont également clients pour le matériel de Sono.&quot;&quot;&quot;" name="
 			<field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
 			<field eval="&quot;&quot;&quot;info@showconcept.fr&quot;&quot;&quot;" name="email"/>
 		</record>
-	</data>
-	<data>
-		<record id="res_partner_sound0" model="res.partner"/>
 	</data>
 </terp>
