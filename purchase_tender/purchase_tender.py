@@ -28,6 +28,7 @@
 
 from osv import fields,osv
 from osv import orm
+import time
 
 class purchase_tender(osv.osv):
     _name = "purchase.tender"
