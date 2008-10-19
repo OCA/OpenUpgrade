@@ -1201,7 +1201,7 @@
         <field name="domain">[('category_id','like','Broker')]</field>
         <field name="context">{'category':'Broker'}</field>
     </record>
-    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
 
     <record model="ir.actions.act_window" id="action_campaign_duplicator_form">
         <field name="type">ir.actions.act_window</field>
@@ -1212,7 +1212,7 @@
         <field name="domain">[('category_id','like','Deduplicator')]</field>
         <field name="context">{'category':'Deduplicator'}</field>
     </record>
-    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
 <!--
     <record model="ir.actions.act_window" id="action_campaign_translator_form">
