@@ -1348,5 +1348,16 @@
         domain="[('camp_id','=',active_id)]"
     />
 
+    <!--
+    <act_window name="Purchase Orders"
+        res_model="purchase.order"
+        src_model="dm.campaign"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_campaing_purchase_order"
+        domain="[('campaign_id','=',active_id)]"
+    />
+    -->
+
 </data>
 </openerp>

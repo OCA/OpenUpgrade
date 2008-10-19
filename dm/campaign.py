@@ -897,7 +897,7 @@ class dm_campaign_purchase_line(osv.osv):
         if pline.campaign_group_id:
             obj = pline.campaign_group_id
         else:
-            obj = pline.campaign_group_id
+            obj = pline.campaign_id
 
         if pline.type_quantity == 'quantity_free':
             if not quantity:
@@ -1023,7 +1023,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 constraints.append("---------------------------------------------------------------------------")
                                 constraints.append('Trademark : %s' % (obj.trademark_id.name,))
                                 constraints.append('Estimated Quantity : %s' % (obj.quantity_estimated_total,))
-                                constraints.append('Responsible : %s' % (obj.files_responsible_id.name,))
+#                                constraints.append('Responsible : %s' % (obj.files_responsible_id.name,))
 
                                 if obj.files_delivery_address_id:
                                     delivery_address = obj.files_delivery_address_id
