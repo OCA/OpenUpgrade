@@ -15,6 +15,8 @@ class dm_campaign_group(osv.osv):
 
     def _quantity_estimated_total(self, cr, uid, ids, name, args, context={}):
         result={}
+        numeric=True
+        quantity=0
         groups = self.browse(cr,uid,ids)
         for group in groups:
             for campaign in group.campaign_ids:
@@ -33,6 +35,8 @@ class dm_campaign_group(osv.osv):
 
     def _quantity_wanted_total(self, cr, uid, ids, name, args, context={}):
         result={}
+        numeric=True
+        quantity=0
         groups = self.browse(cr,uid,ids)
         print "ids : ",ids
         for group in groups:
@@ -57,6 +61,8 @@ class dm_campaign_group(osv.osv):
 
     def _quantity_delivered_total(self, cr, uid, ids, name, args, context={}):
         result={}
+        numeric=True
+        quantity=0
         groups = self.browse(cr,uid,ids)
         for group in groups:
             for campaign in group.campaign_ids:
@@ -75,6 +81,8 @@ class dm_campaign_group(osv.osv):
 
     def _quantity_usable_total(self, cr, uid, ids, name, args, context={}):
         result={}
+        quantity=0
+        numeric=True
         groups = self.browse(cr,uid,ids)
         for group in groups:
             for campaign in group.campaign_ids:
@@ -509,7 +517,7 @@ class dm_campaign(osv.osv):
         default['responsible_id'] = uid
         self.copy(cr,uid,ids[0],default)
         return True
-	"""
+    """
     def copy(self, cr, uid, id, default=None, context={}):
         cmp_id = super(dm_campaign, self).copy(cr, uid, id, default, context=context)
         print "Campaign copy id : ",cmp_id
@@ -524,7 +532,7 @@ class dm_campaign(osv.osv):
         super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':prj_id})
         super(dm_campaign, self).write(cr, uid, cmp_id, {'name':name_default, 'date_start':0, 'date':0, 'project_id':0})
         return cmp_id
-	"""
+    """
 dm_campaign()
 
 
@@ -946,6 +954,11 @@ class dm_campaign_purchase_line(osv.osv):
                 if not pline.product_id.seller_ids:
                     raise  osv.except_osv('Warning', "There's no supplier defined for this product : %s" % (pline.product_id.name,) )
 
+                #create purchase tender
+#                tender_desc = 'Purchase Tender for : ' + pline.product_id.name + ' for campaign ' + pline.campaign_id.name
+                tender_desc = 'Test'
+                tender_id = self.pool.get('purchase.tender').create(cr, uid,{'description':tender_desc})
+
                 # Create a po / supplier
                 for supplier in pline.product_id.seller_ids:
                     partner_id = supplier.id
@@ -1038,6 +1051,7 @@ class dm_campaign_purchase_line(osv.osv):
                         'location_id': 1,
                         'pricelist_id': pricelist_id,
                         'notes': "\n".join(constraints),
+                        'tender_id': tender_id,
                         'dm_campaign_purchase_line': pline.id
                     })
 

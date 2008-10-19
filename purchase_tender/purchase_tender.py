@@ -28,6 +28,7 @@
 
 from osv import fields,osv
 from osv import orm
+import netsvc
 import time
 
 class purchase_tender(osv.osv):
