@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+    <record model="game.scenario" id="retail_phase1">
+        <field name="name">Retail: From Quotation to Invoice</field>
+        <field name="note">
+Description of the scenario.
+        </field>
+    </record>
+
+    <record model="game.scenario.step" id="retail_step1">
+        <field name="scenario_id" ref="retail_phase1">
+        <field name="accepted_users" eval="[(6,0,[ref('profile_game_retail.user_sales')])]"/>
+        <field name="menu_id" ref="sale.menu_quotation"/>
+        <field name="description">
+In this first phase, the <i>Sales Manager</i> must create a quotation for the
+customer <i>Agrolait</i>. This quotation must include two products, with the
+following configuration:
+* One PC1: form stock, at 450 EUR
+* One PC2: on order, at 550 EUR
+        </field>
+        <field name="tip">
+You can use the menu: Sales Management / Sales Order / New Quotation
+        </field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+You should now create a sale order with two products:
+* One PC1
+* One PC2
+
+I suggest you to click on the home button on the top right corner to go
+back to the main dashboard.
+        </field>
+
+        <field name="pre_process_object" eval="False"/>
+        <field name="pre_process_method" eval="False">
+        <field name="pre_process_args" eval="False">
+
+        <field name="post_process_object">business.game.retail.phase1</field>
+        <field name="post_process_method">phase_end</field>
+        <field name="post_process_args">'done','test'</field>
+    </record>
+
+    </data>
+</openerp>
