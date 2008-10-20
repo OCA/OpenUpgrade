@@ -31,8 +31,8 @@
 from osv import fields, osv
 import pooler
 
-class business_game_retail_phase_one(osv.osv):
-    _name="business.game.retail.phase1"
+class profile_game_detail_phase_one(osv.osv):
+    _name="profile.game.detail.phase1"
     _columns = {
 		'step1': fields.boolean('Create Quotation'),
 		'step2': fields.boolean('Print Customer Quotation'),
@@ -48,8 +48,8 @@ class business_game_retail_phase_one(osv.osv):
 		'step9': fields.boolean('Confirm Draft Invoice'),
 		'step10': fields.boolean('Print Customer Invoice'),
 
-		'progress': fields.function(_progress, method=True, string='Overall Progress')
+		'progress': fields.function(_progress, method=True, string='Overall Progress'),
 		'next_step': fields.function(_next_step, method=True, string='Next Step Explanation')
     }
-business_game_retail_phase_one()
+profile_game_detail_phase_one()
 

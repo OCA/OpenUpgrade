@@ -78,8 +78,8 @@ import datetime
 #current fiscal year. When I say Y-1, it means, current fiscalyear minus 1 year.
 
 
-class business_game_retail(osv.osv):
-    _name="business.game.detail"
+class profile_game_retail(osv.osv):
+    _name="profile.game.retail"
     def _calculate_detail(self, cr, uid, ids, field_names, arg, context):
         res = {}
         fiscal_obj = self.pool.get('account.fiscalyear')
@@ -92,16 +92,16 @@ class business_game_retail(osv.osv):
                 fiscalyear_id=fiscal_obj.find(cr,uid)
             fiscalyear=fiscal_obj.browse(cr,uid,fiscalyear_id)
             # calculate finace detail
-            if 'expenses_forecast' in field_names or 'total_customer_refund' in field_names or 'total_supplier_refund' in field_names:
+            if 'expenses_forecast' in field_names or 'total_refund' in field_names or 'total_current_refund' in field_names:
                 mapping={
                     'expenses_forecast' : 'in_invoice',
-                    'total_customer_refund' : 'out_refund',
-                    'total_supplier_refund' : 'in_refund',
+                    'total_refund' : 'out_refund',
+                    'total_current_refund' : 'in_refund',
                 }
                 for field in mapping:
                     sql="""
-                    select                 	
-                    	sum(invoice.amount_total) as total,                	
+                    select
+                    	sum(invoice.amount_total) as total,
                     from account_invoice invoice
                     where invoice.type in ('%s') and date_invoice>='%s' and date_invoice<='%s'
                     """%(mapping[field],fiscalyear.date_start,fiscalyear.date_stop)
@@ -118,9 +118,266 @@ class business_game_retail(osv.osv):
 
             # calculate hr detail
 
-            # calculate logistic detail
+           # calculate logistic detail
+
+            if 'last_avg_stock' in field_names or 'avg_stock_forcast' in field_names or 'cost_purchase_forcast' in field_names:
+                for field in field_names:
+                   if field =='last_avg_stock':
+                        start_date=prev_fy_datestart
+                        stop_date=prev_fy_datestop
+                   else:
+                        start_date=fiscalyear.date_start
+                        stop_date=fiscalyear.date_stop
+
+                   if field =='last_avg_stock' or field =='avg_stock_forcast':
+                       sql="""
+                                select
+                                    avg(invoice_line.quantity) as avg_qty
+                                from account_invoice_line invoice_line
+                                where invoice_line.invoice_id in (select id from account_invoice invoice
+                                where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
+                                """%(start_date,stop_date)
+                       cr.execute(sql)
+                       result=cr.fetchall()[0]
+                       res[val.id][field]=result[0] or 0.0
+                   else:
+                        inv_type=['in_invoice','out_refund']
+                        sql="""
+                            select
+                                sum(invoice.amount_total) as total
+                            from account_invoice invoice
+                            where invoice.type in ('%s') and date_invoice>='%s' and date_invoice<='%s'
+                            """%("','".join(inv_type),start_date,stop_date)
+                        cr.execute(sql)
+                        result=cr.fetchall()[0]
+                        res[val.id][field]=result[0] or 0.0
 
             # calculate sales detail
+
+            if 'last_total_sale' in field_names or 'sale_forcast' in field_names or 'margin_forcast' in field_names:
+                for field in field_names:
+                   if field =='last_total_sale':
+                        start_date=prev_fy_datestart
+                        stop_date=prev_fy_datestop
+                   else:
+                        start_date=fiscalyear.date_start
+                        stop_date=fiscalyear.date_stop
+
+                   if field =='last_total_sale' or field =='sale_forcast':
+                        sql="""
+                            select
+                                sum(invoice.amount_total) as total
+                            from account_invoice invoice
+                            where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s'
+                            """%(start_date,stop_date)
+                        cr.execute(sql)
+                        result=cr.fetchall()[0]
+                        res[val.id][field]=result[0] or 0.0
+                   else:
+                         invoice_types=['in_invoice','out_invoice']
+                         sql="""
+                            select
+                                sum(l.quantity * l.price_unit) as total,
+                                sum(l.quantity * product.standard_price) as normal_cost
+                            from account_invoice_line l
+                            left join account_invoice i on (l.invoice_id = i.id)
+                            left join product_template product on (product.id=l.product_id)
+                            where i.type in ('%s') and i.date_invoice>='%s' and i.date_invoice<='%s'
+                            """%("','".join(invoice_types),start_date,stop_date)
+                         cr.execute(sql)
+                         result=cr.fetchall()[0]
+                         res[val.id][field]=result[0] or 0.0 - result[1] or 0.0
+
+            # calculate Objectives Achievement
+            if 'last_turnover' in field_names or 'total_benefit' in field_names or 'total_sold_products' in field_names \
+                or 'turnover_growth' in field_names or 'benefits_growth' in field_names or 'products_growth' in field_names:
+                for field in field_names:
+                    if field =='last_turnover':
+                        start_date=prev_fy_datestart
+                        stop_date=prev_fy_datestop
+                        sql="""
+                        select
+                            sum(l.quantity * l.price_unit) as total
+                        from account_invoice_line l
+                        left join account_invoice i on (l.invoice_id = i.id)
+                        left join product_template product on (product.id=l.product_id)
+                        where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                        """%(start_date,stop_date)
+                        cr.execute(sql)
+                        result=cr.fetchall()[0]
+                        res[val.id][field]=result[0] or 0.0
+
+                    elif field =='total_benefit':
+                        start_date=fiscalyear.date_start
+                        stop_date=fiscalyear.date_stop
+                        sql1="""
+                        select
+                            sum(l.quantity * l.price_unit) as total,
+                            sum(l.quantity * product.list_price) as sale_expected,
+                            sum(l.quantity * product.standard_price) as normal_cost
+                        from account_invoice_line l
+                        left join account_invoice i on (l.invoice_id = i.id)
+                        left join product_template product on (product.id=l.product_id)
+                        where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                        """%(start_date,stop_date)
+                        cr.execute(sql1)
+                        result1=cr.fetchall()[0]
+
+                        sql2="""
+                        select
+                            sum(l.quantity * l.price_unit) as total
+                        from account_invoice_line l
+                        left join account_invoice i on (l.invoice_id = i.id)
+                        left join product_template product on (product.id=l.product_id)
+                        where i.type ='in_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                        """%(start_date,stop_date)
+                        cr.execute(sql2)
+                        result2=cr.fetchall()[0]
+                        res[val.id][field]=((result1[1] or 0.0) -(result1[0] or 0.0))-((result1[2] or 0.0) -(result2[0] or 0.0))
+
+                    elif field =='total_sold_products':
+                        start_date=fiscalyear.date_start
+                        stop_date=fiscalyear.date_stop
+                        sql="""
+                                select
+                                    sum(invoice_line.quantity) as total
+                                from account_invoice_line invoice_line
+                                where invoice_line.invoice_id in (select id from account_invoice invoice
+                                where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
+                                """%(start_date,stop_date)
+                        cr.execute(sql)
+                        result=cr.fetchall()[0]
+                        res[val.id][field]=result[0] or 0.0
+
+                    elif field =='turnover_growth':
+                        start_date=prev_fy_datestart
+                        stop_date=prev_fy_datestop
+                        sql="""
+                            select
+                                sum(l.quantity * l.price_unit) as total
+                            from account_invoice_line l
+                            left join account_invoice i on (l.invoice_id = i.id)
+                            left join product_template product on (product.id=l.product_id)
+                            where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                            """%(start_date,stop_date)
+                        cr.execute(sql)
+                        result=cr.fetchall()[0]
+
+                        start_date=fiscalyear.date_start
+                        stop_date=fiscalyear.date_stop
+                        turnover_cur=0.0
+                        sql1="""
+                        select
+                            sum(l.quantity * l.price_unit) as total,
+                            sum(l.quantity * product.list_price) as sale_expected,
+                            sum(l.quantity * product.standard_price) as normal_cost
+                        from account_invoice_line l
+                        left join account_invoice i on (l.invoice_id = i.id)
+                        left join product_template product on (product.id=l.product_id)
+                        where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                        """%(start_date,stop_date)
+                        cr.execute(sql1)
+                        result1=cr.fetchall()[0]
+                        turnover_cur=result1[0] or 0.0
+                        if result[0] or 0.0  == 0.0:
+                            res[val.id][field]=0.0
+                        else:
+                            res[val.id][field]=((turnover_cur - result[0] or 0.0)*100)/ result[0] or 0.0
+
+                    elif field =='benefits_growth':
+                        start_date=prev_fy_datestart
+                        stop_date=prev_fy_datestop
+                        sql1="""
+                            select
+                                sum(l.quantity * l.price_unit) as total,
+                                sum(l.quantity * product.list_price) as sale_expected,
+                                sum(l.quantity * product.standard_price) as normal_cost
+                            from account_invoice_line l
+                            left join account_invoice i on (l.invoice_id = i.id)
+                            left join product_template product on (product.id=l.product_id)
+                            where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                            """%(start_date,stop_date)
+                        cr.execute(sql1)
+                        result1=cr.fetchall()[0]
+
+                        sql2="""
+                            select
+                                sum(l.quantity * l.price_unit) as total
+                            from account_invoice_line l
+                            left join account_invoice i on (l.invoice_id = i.id)
+                            left join product_template product on (product.id=l.product_id)
+                            where i.type ='in_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                            """%(start_date,stop_date)
+                        cr.execute(sql2)
+                        result2=cr.fetchall()[0]
+                        benefit_prev=((result1[1] or 0.0) -(result1[0] or 0.0))-((result1[2] or 0.0) -(result2[0] or 0.0))
+
+
+                        start_date=fiscalyear.date_start
+                        stop_date=fiscalyear.date_stop
+
+                        sql1="""
+                        select
+                            sum(l.quantity * l.price_unit) as total,
+                            sum(l.quantity * product.list_price) as sale_expected,
+                            sum(l.quantity * product.standard_price) as normal_cost
+                        from account_invoice_line l
+                        left join account_invoice i on (l.invoice_id = i.id)
+                        left join product_template product on (product.id=l.product_id)
+                        where i.type ='out_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                        """%(start_date,stop_date)
+                        cr.execute(sql1)
+                        result1=cr.fetchall()[0]
+
+                        sql2="""
+                        select
+                            sum(l.quantity * l.price_unit) as total
+                        from account_invoice_line l
+                        left join account_invoice i on (l.invoice_id = i.id)
+                        left join product_template product on (product.id=l.product_id)
+                        where i.type ='in_invoice' and i.date_invoice>='%s' and i.date_invoice<='%s'
+                        """%(start_date,stop_date)
+                        cr.execute(sql2)
+                        result2=cr.fetchall()[0]
+                        benefit_cur=((result1[1] or 0.0) -(result1[0] or 0.0))-((result1[2] or 0.0) -(result2[0] or 0.0))
+
+                        if benefit_prev == 0.0:
+                            res[val.id][field]=0.0
+                        else:
+                            res[val.id][field]=((benefit_cur-benefit_prev)*100)/benefit_prev
+
+                    elif field =='products_growth':
+                        start_date=prev_fy_datestart
+                        stop_date=prev_fy_datestop
+                        sql="""
+                                select
+                                    sum(invoice_line.quantity) as total
+                                from account_invoice_line invoice_line
+                                where invoice_line.invoice_id in (select id from account_invoice invoice
+                                where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
+                                """%(start_date,stop_date)
+                        cr.execute(sql)
+                        result=cr.fetchall()[0]
+                        prod_sold_prev=result[0] or 0.0
+
+                        start_date=fiscalyear.date_start
+                        stop_date=fiscalyear.date_stop
+                        sql="""
+                                select
+                                    sum(invoice_line.quantity) as total
+                                from account_invoice_line invoice_line
+                                where invoice_line.invoice_id in (select id from account_invoice invoice
+                                where invoice.type ='out_invoice' and date_invoice>='%s' and date_invoice<='%s')
+                                """%(start_date,stop_date)
+                        cr.execute(sql)
+                        result=cr.fetchall()[0]
+                        prod_sold_cur=result[0] or 0.0
+
+                        if prod_sold_prev == 0.0:
+                            res[val.id][field]=0.0
+                        else:
+                            res[val.id][field]=((prod_sold_cur -prod_sold_prev)*100)/prod_sold_prev
+
 
         return res
     _columns = {
@@ -140,8 +397,8 @@ class business_game_retail(osv.osv):
             ('hard','Hard')],'Difficulty'),
         'expenses_forecast' : fields.function(_calculate_detail, method=True, type='float', string='Expenses Forecast', multi='finance',help="Sum of all budgets of the year"),
         'current_treasury' : fields.function(_calculate_detail, method=True, type='float', string='Current treasury', multi='finance',help="Balance of all Cash Accounts"),
-        'total_customer_refund' : fields.function(_calculate_detail, method=True, type='float', string='Total to Reimburse', multi='finance',help="Total to Reimburse"),
-        'total_supplier_refund' : fields.function(_calculate_detail, method=True, type='float', string='To Reimburse this Year', multi='finance',help="To Reimburse this Year"),
+        'total_refund' : fields.function(_calculate_detail, method=True, type='float', string='Total to Reimburse', multi='finance',help="Total to Reimburse"),
+        'total_current_refund' : fields.function(_calculate_detail, method=True, type='float', string='To Reimburse this Year', multi='finance',help="To Reimburse this Year"),
 
         'hr_budget' : fields.function(_calculate_detail, method=True, type='float', string='HR Budget', multi='hr',help="HR Budget"),
 
@@ -163,12 +420,12 @@ class business_game_retail(osv.osv):
     }
 
 #    _defaults={
-#               'total_customer_refund' : lambda *a: 0.20,
+#               'total_refund' : lambda *a: 0.20,
 #               'cost_purchase_forcast' : lambda *a: 0.20,
 #               'total_sold_products' : lambda *a: 0.20
 #               }
 
-business_game_retail()
+profile_game_retail()
 
 class profile_game_config_wizard(osv.osv_memory):
     _name='profile.game.config.wizard'
@@ -206,7 +463,7 @@ class profile_game_config_wizard(osv.osv_memory):
 
 
     def action_run(self, cr, uid, ids, context=None):
-        game_obj=self.pool.get('business.game.detail')
+        game_obj=self.pool.get('profile.game.retail')
         fiscal_obj = self.pool.get('account.fiscalyear')
         user_obj=self.pool.get('res.users')
         emp_obj=self.pool.get('hr.employee')

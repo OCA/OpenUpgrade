@@ -38,8 +38,8 @@
     ],
     "demo_xml":[],
     "update_xml":[
-        "board_profile_game_detail_view.xml",
         "profile_game_view.xml",
+        "board_profile_game_detail_view.xml",
         "profile_game_partner.xml",
         "profile_game_config.xml",
         "profile_game_product.xml",

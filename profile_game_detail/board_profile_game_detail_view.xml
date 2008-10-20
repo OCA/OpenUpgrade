@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-       
+
         <record id="board_game_detail_form" model="ir.ui.view">
             <field name="name">board.game.detail.form</field>
             <field name="model">board.board</field>
@@ -16,7 +16,7 @@
                 </form>
             </field>
         </record>
-        
+
         <record id="open_board_game_detail" model="ir.actions.act_window">
             <field name="name">Retail Dashboard</field>
             <field name="res_model">board.board</field>
@@ -25,9 +25,9 @@
             <field name="usage">menu</field>
             <field name="view_id" ref="board_game_detail_form"/>
         </record>
-        
+
         <menuitem id="next_business_game" name="Business Game" parent="board.dashboard_menu"/>
         <menuitem action="open_board_game_detail" icon="terp-graph" id="menu_board_game_detail" parent="next_business_game" sequence="1"/>
-        
+
     </data>
 </openerp>

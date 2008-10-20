@@ -5,8 +5,8 @@
         <menuitem icon="terp-mrp" id="menu_business_game_root" name="Business Game"/>
 
         <record model="ir.ui.view" id="view_game_detail_form">
-            <field name="name">business.game.detail.form</field>
-            <field name="model">business.game.detail</field>
+            <field name="name">profile.game.retail.form</field>
+            <field name="model">profile.game.retail</field>
             <field name="arch" type="xml">
                 <form string="Game Details">
                     <newline/>
@@ -14,8 +14,8 @@
                         <separator colspan="2" string="Finance Manager"/>
                         <field name="expenses_forecast"/>
                         <field name="current_treasury"/>
-                        <field name="total_customer_refund"/>
-                        <field name="total_supplier_refund"/>
+                        <field name="total_refund"/>
+                        <field name="total_current_refund"/>
                         <button string="Loans" type="object" colspan="2"/>
                     </group>
                     <group col="2" colspan="2">
@@ -49,14 +49,14 @@
         </record>
 
         <record model="ir.ui.view" id="view_game_detail_tree">
-            <field name="name">business.game.detail.tree</field>
-            <field name="model">business.game.detail</field>
+            <field name="name">profile.game.retail.tree</field>
+            <field name="model">profile.game.retail</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Game Details">
                     <field name="name"/>
                     <field name="current_treasury"/>
-                    <field name="total_customer_refund"/>
+                    <field name="total_refund"/>
                     <field name="sale_forcast"/>
                     <field name="margin_forcast"/>
                     <field name="cost_purchase_forcast"/>
@@ -68,7 +68,7 @@
 
         <record model="ir.actions.act_window" id="action_game_detail_form">
             <field name="name">Game</field>
-            <field name="res_model">business.game.detail</field>
+            <field name="res_model">profile.game.retail</field>
             <field name="view_type">form</field>
             <field name="view_mode">form,tree</field>
             <field name="view_id" ref="view_game_detail_form"/>
