@@ -1032,7 +1032,7 @@ class dm_campaign_purchase_line(osv.osv):
                             constraints.append(pline.notes)
                         else:
                             constraints.append(' ')
-                    print "DElivery : ", delivery_address
+                    print "Delivery : ", delivery_address
 
                     # Create po
                     purchase_id = self.pool.get('purchase.order').create(cr, uid, {
