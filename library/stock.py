@@ -102,7 +102,8 @@ class stock_picking(osv.osv):
                 raise osv.except_osv('No partner address', \
                                      'You have to provide a partner address if you want to invoice it (Picking %s ).'%(p.name))
 
-            taxep = p.address_id.partner_id.property_account_tax
+            partner = p.address_id.partner_id
+            taxep = partner.property_account_position and partner.property_account_position.account_tax
             taxep = taxep and self.pool.get('account.tax').browse(cr, uid,taxep.id) 
 
             a = p.address_id.partner_id.property_account_receivable.id
