@@ -7,7 +7,33 @@
         <field name="note">
 Description of the scenario.
         </field>
+        <field name="state">running</field>
     </record>
+
+    <record model="game.scenario.step" id="retail_step2">
+        <field name="scenario_id" ref="retail_phase1">
+        <field name="accepted_users" eval="[(6,0,[ref('profile_game_retail.user_sales')])]"/>
+        <field name="menu_id" ref="sale.menu_quotation"/>
+        <field name="description">
+In this phase, you must print the quotation you just created.
+        </field>
+        <field name="tip"></field>
+
+        <field name="error">
+You can not perform this operation in the current phase of the business game.
+In this phase, you must print the quotation you just created.
+        </field>
+
+        <field name="pre_process_object" eval="False"/>
+        <field name="pre_process_method" eval="False">
+        <field name="pre_process_args" eval="False">
+
+        <field name="post_process_object">business.game.retail.phase1</field>
+        <field name="post_process_method">phase_end2</field>
+        <field name="post_process_args"></field>
+        <field name="state">draft</field>
+    </record>
+
 
     <record model="game.scenario.step" id="retail_step1">
         <field name="scenario_id" ref="retail_phase1">
@@ -41,6 +67,9 @@ back to the main dashboard.
         <field name="post_process_object">business.game.retail.phase1</field>
         <field name="post_process_method">phase_end</field>
         <field name="post_process_args">'done','test'</field>
+        <field name="state">running</field>
+
+        <field name="step_next_ids" eval="[(6,0,[ref('retail_step2')])]"/>
     </record>
 
     </data>

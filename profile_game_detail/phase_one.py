@@ -34,22 +34,38 @@ import pooler
 class business_game_retail_phase_one(osv.osv):
     _name="business.game.retail.phase1"
     _columns = {
-		'step1': fields.boolean('Create Quotation'),
-		'step2': fields.boolean('Print Customer Quotation'),
-		'step3': fields.boolean('Confirm Sale Order'),
+        'step1': fields.boolean('Create Quotation'),
+        'step1_so_id': fields.many2one('sale.order', 'Quotation / Sale Order'),
+        'step2': fields.boolean('Print Customer Quotation'),
+        'step3': fields.boolean('Confirm Sale Order'),
 
-		'step4': fields.boolean('Print Request for Quotation'),
-		'step6': fields.boolean('Change Supplier Price'),
-		'step6': fields.boolean('Confirm Request for Quotation'),
+        'step4': fields.boolean('Print Request for Quotation'),
+        'step6': fields.boolean('Change Supplier Price'),
+        'step6': fields.boolean('Confirm Request for Quotation'),
 
-		'step8': fields.boolean('Receive Products from Supplier'),
-		'step9': fields.boolean('Deliver Products to Customer'),
+        'step8': fields.boolean('Receive Products from Supplier'),
+        'step9': fields.boolean('Deliver Products to Customer'),
 
-		'step9': fields.boolean('Confirm Draft Invoice'),
-		'step10': fields.boolean('Print Customer Invoice'),
+        'step9': fields.boolean('Confirm Draft Invoice'),
+        'step10': fields.boolean('Print Customer Invoice'),
 
-		'progress': fields.function(_progress, method=True, string='Overall Progress')
-		'next_step': fields.function(_next_step, method=True, string='Next Step Explanation')
+        'progress': fields.function(_progress, method=True, string='Overall Progress')
+        'next_step': fields.function(_next_step, method=True, string='Next Step Explanation')
+        'state' fields.selection([
+            ('quotation','Create Quotation'),
+            ('print_quote','Print Quotation'),
+            ('sale','Confirm Sale Order'),
+            ('print_rfq','Print Request for Quotation'),
+            ('modify_price','Modify Price RfQ'),
+            ('confirm_po','Confirm Purchase Order'),
+            ('receive','Receive Products'),
+            ('deliver','Deliver Products'),
+            ('invoice_create','Confirm Invoice'),
+            ('invoice_print','Print Invoice'),
+        ], 'State', required=True)
+    }
+    _defaults = {
+        'state': lambda *args: 'quotation'
     }
 business_game_retail_phase_one()
 
