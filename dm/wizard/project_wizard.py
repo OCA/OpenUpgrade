@@ -47,7 +47,9 @@ def _create_duplicate(self, cr, uid, data, context):
     tasks_obj = pooler.get_pool(cr.dbname).get('project.task')
     tasks_ids = tasks_obj.search(cr, uid, [('project_id','=',data['form']['project_id'])])
     duplicate_project_id= project_obj.copy(cr, uid,data['form']['project_id'], {'active': True})
+
     for task in tasks_obj.browse(cr, uid, tasks_ids):
+
         if task.type:
             if task.type.name == 'DTP' and campaign.dtp_responsible_id:
                 new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.dtp_responsible_id.id})
@@ -59,7 +61,12 @@ def _create_duplicate(self, cr, uid, data, context):
                 new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id})
         else:
             new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id})
+    print "Project Date : ",campaign.date_start
+    print "Project Dat typee : ",type(campaign.date_start)
+
     project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name})
+#    project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name,
+#                                                        'date_end': campaign.date_start})
     campaign_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}
 

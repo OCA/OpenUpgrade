@@ -1032,7 +1032,7 @@ class dm_campaign_purchase_line(osv.osv):
                             constraints.append(pline.notes)
                         else:
                             constraints.append(' ')
-                    print "DElivery : ", delivery_address
+                    print "Delivery : ", delivery_address
 
                     # Create po
                     purchase_id = self.pool.get('purchase.order').create(cr, uid, {
@@ -1290,7 +1290,8 @@ class dm_campaign_purchase_line(osv.osv):
             result[pline.id] = False
             for po in pline.purchase_order_ids:
                 if po.shipped:
-                    result[pline.id] = po.picking_ids[0].date_done
+                    if po.picking_ids:
+                        result[pline.id] = po.picking_ids[0].date_done
                     continue
         return result
 

@@ -31,8 +31,8 @@
 from osv import fields, osv
 import pooler
 
-class business_game_retail_phase_one(osv.osv):
-    _name="business.game.retail.phase1"
+class profile_game_detail_phase_one(osv.osv):
+    _name="profile.game.detail.phase1"
     _columns = {
         'step1': fields.boolean('Create Quotation'),
         'step1_so_id': fields.many2one('sale.order', 'Quotation / Sale Order'),
@@ -67,5 +67,5 @@ class business_game_retail_phase_one(osv.osv):
     _defaults = {
         'state': lambda *args: 'quotation'
     }
-business_game_retail_phase_one()
+profile_game_detail_phase_one()
 

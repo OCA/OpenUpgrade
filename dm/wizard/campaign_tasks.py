@@ -32,4 +32,3 @@ class wizard_campaign_tasks(wizard.interface):
     }
 wizard_campaign_tasks("wizard_campaign_tasks")
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

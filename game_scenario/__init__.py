@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2008 TINY SPRL. (http://tiny.be) All Rights Reserved.
+# Copyright (c) 2004-2008 Tiny SPRL (http://tiny.be) All Rights Reserved.
 #
 # $Id$
 #
@@ -25,28 +25,5 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-#
-##############################################################################
-{
-    "name":"Bussiness Game Detail",
-    "version":"1.0",
-    "author":"Tiny",
-    "category":"Profile",
-    "depends":["board","base","sale","sale_wo_production", "stock_planning"],
-    "init_xml":[
-        "profile_game_data.xml"
-    ],
-    "demo_xml":[],
-    "update_xml":[
-        "profile_game_view.xml",
-        "board_profile_game_detail_view.xml",
-        "profile_game_partner.xml",
-        "profile_game_config.xml",
-        "profile_game_product.xml",
-        "security/ir.model.access.csv"
-    ],
-    "active":False,
-    "installable":True,
-}
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+###############################################################################
+import game_scenario
