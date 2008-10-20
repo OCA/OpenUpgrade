@@ -202,7 +202,7 @@ class assertion_report(object):
 class xml_import(object):
 
     def isnoupdate(self, data_node = None):
-        return self.noupdate or (data_node and data_node.getAttribute('noupdate'))
+        return self.noupdate or (data_node and data_node.getAttribute('noupdate').strip() not in ('', '0', 'False'))
 
     def get_context(self, data_node, node, eval_dict):
         data_node_context = (data_node and data_node.getAttribute('context').encode('utf8'))
@@ -507,7 +507,10 @@ form: module.record_id""" % (xml_id,)
             if a_type=='act_window':
                 a_id = self.id_get(cr, 'ir.actions.%s'% a_type, a_action)
                 cr.execute('select view_type,view_mode,name,view_id,target from ir_act_window where id=%d', (int(a_id),))
-                action_type,action_mode,action_name,view_id,target = cr.fetchone()
+                rrres = cr.fetchone()
+                assert rrres, "No window action defined for this id %s !\n" \
+                    "Verify that this is a window action or add a type argument." % (a_action,)
+                action_type,action_mode,action_name,view_id,target = rrres
                 if view_id:
                     cr.execute('SELECT type FROM ir_ui_view WHERE id=%d', (int(view_id),))
                     action_mode, = cr.fetchone()
@@ -580,7 +583,7 @@ form: module.record_id""" % (xml_id,)
         rec_src = rec.getAttribute("search").encode('utf8')
         rec_src_count = rec.getAttribute("count")
 
-        severity = rec.getAttribute("severity").encode('ascii') or 'info'
+        severity = rec.getAttribute("severity").encode('ascii') or netsvc.LOG_ERROR 
 
         rec_string = rec.getAttribute("string").encode('utf8') or 'unknown'
 
@@ -599,7 +602,7 @@ form: module.record_id""" % (xml_id,)
                     self.assert_report.record_assertion(False, severity)
                     self.logger.notifyChannel('init', severity, 'assertion "' + rec_string + '" failed ! (search count is incorrect: ' + str(len(ids)) + ')' )
                     sevval = getattr(logging, severity.upper())
-                    if sevval > config['assert_exit_level']:
+                    if sevval >= config['assert_exit_level']:
                         # TODO: define a dedicated exception
                         raise Exception('Severe assertion failure')
                     return
@@ -625,7 +628,7 @@ form: module.record_id""" % (xml_id,)
                     self.assert_report.record_assertion(False, severity)
                     self.logger.notifyChannel('init', severity, 'assertion "' + rec_string + '" failed ! (tag ' + test.toxml() + ')' )
                     sevval = getattr(logging, severity.upper())
-                    if sevval > config['assert_exit_level']:
+                    if sevval >= config['assert_exit_level']:
                         # TODO: define a dedicated exception
                         raise Exception('Severe assertion failure')
                     return

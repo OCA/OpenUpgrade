@@ -589,6 +589,13 @@ class currency(float):
     #   return str(display_value)
 
 
+def is_hashable(h):
+    try:
+        hash(h)
+        return True
+    except TypeError:
+        return False
+
 #
 # Use it as a decorator of the function you plan to cache
 # Timeout: 0 = no timeout, otherwise in seconds
@@ -607,6 +614,11 @@ class cache(object):
 
             # Update named arguments with positional argument values
             kwargs.update(dict(zip(arg_names, args)))
+            for k in kwargs:
+                if isinstance(kwargs[k], (list, dict, set)):
+                    kwargs[k] = tuple(kwargs[k])
+                elif not is_hashable(kwargs[k]):
+                    kwargs[k] = repr(kwargs[k])
             kwargs = kwargs.items()
             kwargs.sort()
 
@@ -621,7 +633,8 @@ class cache(object):
                     return value
 
             # Work out new value, cache it and return it
-            # Should copy() this value to avoid futur modf of the cacle ?
+            # FIXME Should copy() this value to avoid futur modifications of the cache ?
+            # FIXME What about exceptions ?
             result = fn(self2,cr,**dict(kwargs))
 
             self.cache[key] = (result, time.time())
@@ -655,8 +668,9 @@ def get_languages():
 
 def scan_languages():
     import glob
-    file_list = [os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(config['addons_path'], 'base', 'i18n', '*.po'))]
+    file_list = [os.path.splitext(os.path.basename(f))[0] for f in glob.glob(os.path.join(config['root_path'],'addons', 'base', 'i18n', '*.po'))]
     lang_dict = get_languages()
+    r=[(lang, lang_dict.get(lang, lang)) for lang in file_list]
     return [(lang, lang_dict.get(lang, lang)) for lang in file_list]
 
 

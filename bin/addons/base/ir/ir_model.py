@@ -278,13 +278,43 @@ class ir_model_access(osv.osv):
         cr.execute("select 1 from res_groups_users_rel where uid=%d and gid in(select res_id from ir_model_data where module=%s and name=%s)", (uid, grouparr[0], grouparr[1],))
         return bool(cr.fetchone())
 
-    def check_groups_by_id(self, cr, uid, group_id):
-        cr.execute("select 1 from res_groups_users_rel where uid=%i and gid=%i", (uid, group_id,))
-        return bool(cr.fetchone())
+    def check_group(self, cr, uid, model, mode, group_ids):
+        """ Check if a specific group has the access mode to the specified model"""
+        assert mode in ['read','write','create','unlink'], 'Invalid access mode'
+
+        if isinstance(model, browse_record):
+            assert model._table_name == 'ir.model', 'Invalid model object'
+            model_name = model.name
+        else:
+            model_name = model
+        
+        if isinstance(group_ids, (int, long)):
+            group_ids = [group_ids]
+        for group_id in group_ids:
+            cr.execute("SELECT perm_" + mode + " "
+                   "  FROM ir_model_access a "
+                   "  JOIN ir_model m ON (m.id = a.model_id) "
+                   " WHERE m.model = %s AND a.group_id = %d", (model_name, group_id)
+                   )
+            r = cr.fetchone()
+            if r is None:
+                cr.execute("SELECT perm_" + mode + " "
+                       "  FROM ir_model_access a "
+                       "  JOIN ir_model m ON (m.id = a.model_id) "
+                       " WHERE m.model = %s AND a.group_id IS NULL", (model_name, )
+                       )
+                r = cr.fetchone()
+
+            access = bool(r and r[0])
+            if access:
+                return True
+        # pass no groups -> no access
+        return False
 
     def check(self, cr, uid, model, mode='read', raise_exception=True):
-        # Users root have all access (Todo: exclude xml-rpc requests)
         if uid==1:
+            # User root have all accesses 
+            # TODO: exclude xml-rpc requests
             return True
 
         assert mode in ['read','write','create','unlink'], 'Invalid access mode'
@@ -329,27 +359,42 @@ class ir_model_access(osv.osv):
 
     check = tools.cache()(check)
 
+    __cache_clearing_methods = []
+
+    def register_cache_clearing_method(self, model, method):
+        self.__cache_clearing_methods.append((model, method))
+
+    def unregister_cache_clearing_method(self, model, method):
+        try:
+            i = self.__cache_clearing_methods.index((model, method))
+            del self.__cache_clearing_methods[i]
+        except ValueError:
+            pass
+
+    def call_cache_clearing_methods(self):
+        for model, method in self.__cache_clearing_methods:
+            getattr(self.pool.get(model), method)()
+
     #
     # Check rights on actions
     #
     def write(self, cr, uid, *args, **argv):
-        self.pool.get('ir.ui.menu').clear_cache()
+        self.call_cache_clearing_methods()
         res = super(ir_model_access, self).write(cr, uid, *args, **argv)
-        self.check()
+        self.check()    # clear the cache of check function
         return res
+    
     def create(self, cr, uid, *args, **argv):
         res = super(ir_model_access, self).create(cr, uid, *args, **argv)
         self.check()
         return res
+
     def unlink(self, cr, uid, *args, **argv):
-        self.pool.get('ir.ui.menu').clear_cache()
+        self.call_cache_clearing_methods()
         res = super(ir_model_access, self).unlink(cr, uid, *args, **argv)
         self.check()
         return res
-    def read(self, cr, uid, *args, **argv):
-        res = super(ir_model_access, self).read(cr, uid, *args, **argv)
-        self.check()
-        return res
+
 ir_model_access()
 
 class ir_model_data(osv.osv):
