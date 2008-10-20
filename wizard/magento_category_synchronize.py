@@ -51,7 +51,7 @@ _export_done_fields = {
 }
 
 
-def _do_export(self, cr, uid, data, context):
+def do_export(self, cr, uid, data, context):
     
     #===============================================================================
     #  Init
@@ -153,7 +153,7 @@ def _do_export(self, cr, uid, data, context):
 class wiz_magento_category_synchronize(wizard.interface):
     states = {
         'init': {
-            'actions': [_do_export],
+            'actions': [do_export],
             'result': {'type': 'form', 'arch': _export_done_form, 'fields': _export_done_fields, 'state': [('end', 'End')] }
         }
     }
