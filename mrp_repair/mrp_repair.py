@@ -125,7 +125,46 @@ class mrp_repair(osv.osv):
             elif (o.invoice_method == 'b4repair'):
                 self.write(cr, uid, [o.id], {'state': '2binvoiced'})
         return True
-
+    
+    def action_invoice_create(self, cr, uid, ids, grouped=False, **args):
+        inv_id=False
+        for order in self.browse(cr, uid, ids, context={}):
+            if order.invoice_method != 'none' and (order.state in ['confirmed','done']):
+                a = order.partner_id.property_account_receivable.id
+                inv = {
+                    'name': order.product_id.name,
+                    'type': 'out_invoice',
+                    'reference': "P%dSO%d"%(order.partner_id.id,order.id),
+                    'account_id': a,
+                    'partner_id': order.partner_id.id,
+                    'address_invoice_id': order.address_id.id,
+                    'currency_id' : order.pricelist_id.currency_id.id,
+                    'comment': order.internal_notes,
+                }
+                inv_obj = self.pool.get('account.invoice')
+                inv_id = inv_obj.create(cr, uid, inv)
+                for operation in order.operations:
+                    op_id=self.pool.get('account.invoice.line').create(cr, uid, {
+                            'invoice_id' : inv_id, 
+                            'name' : operation.product_id.id,
+                            'account_id' : a,
+                            'quantity' : operation.product_qty,
+                            'uos_id' : operation.product_uom.id,
+                            'price_unit' : operation.price_unit,
+                            'price_subtotal' : operation.product_qty*operation.price_unit,
+                            })
+                for fee in order.fees_lines:
+                    fee_id=self.pool.get('account.invoice.line').create(cr, uid, {
+                            'invoice_id' : inv_id,
+                            'name' : fee.product_id.id,
+                            'account_id' : a,
+                            'quantity' : fee.product_qty,
+                            'uos_id' : fee.product_uom.id,
+                            'price_unit' : fee.price_unit,
+                            'price_subtotal' : fee.product_qty*fee.price_unit
+                            })
+            return inv_id
+    
     def action_confirm(self, cr, uid, ids, *args):
         picking_id=False
         company = self.pool.get('res.users').browse(cr, uid, uid).company_id
@@ -182,7 +221,7 @@ class mrp_repair(osv.osv):
                         # No procurement because no product in the sale.order.line.
                         #
                         pass
-    
+
                 val = {}
                 if picking_id:
                     wf_service = netsvc.LocalService("workflow")
@@ -201,25 +240,23 @@ class repair_operation(osv.osv):
         res = {}
         for val in self.browse(cr, uid, ids):
             current_date = time.strftime('%Y-%m-%d')
-            print "VVVVVVVVV", val
-            print "REPAIR ID :::::::::", val.repair_id
-            print "REPAIR LIMIT ID :::::::::", val.repair_id.guarantee_limit
-            if current_date < val.repair_id.guarantee_limit:
-                res[val.id] = 0.0
-            if current_date >= val.repair_id.guarantee_limit:
-                price = 0.0
-                pricelist = val.repair_id.pricelist_id.id
-                if pricelist:
-                    price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist], val.product_id.id , 1.0, val.repair_id.partner_id.id)[pricelist]
-                if price is False:
-                     warning={
-                        'title':'No valid pricelist line found !',
-                        'message':
-                            "Couldn't find a pricelist line matching this product and quantity.\n"
-                            "You have to change either the product, the quantity or the pricelist."
-                        }
-                else:
-                    res[val.id] = price
+            if val.repair_id:
+                if current_date < val.repair_id.guarantee_limit:
+                    res[val.id] = 0.0
+                if current_date >= val.repair_id.guarantee_limit:
+                    price = 0.0
+                    pricelist = val.repair_id.pricelist_id.id
+                    if pricelist:
+                        price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist], val.product_id.id , 1.0, val.repair_id.partner_id.id)[pricelist]
+                    if price is False:
+                         warning={
+                            'title':'No valid pricelist line found !',
+                            'message':
+                                "Couldn't find a pricelist line matching this product and quantity.\n"
+                                "You have to change either the product, the quantity or the pricelist."
+                            }
+                    else:
+                        res[val.id] = price
         return res
     
     
@@ -287,7 +324,7 @@ class mrp_repair_fee(osv.osv):
     _description = 'Repair Fees line'
     _columns = {
         'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref', required=True, ondelete='cascade', select=True),
-#        'name': fields.char('Description', size=8, select=True),
+        'name': fields.char('Description', size=8, select=True),
         'product_id': fields.many2one('product.product', 'Product', required=True),
         'product_qty': fields.float('Quantity', digits=(16,2), required=True),
         'price_unit': fields.float('Unit Price', required=True),

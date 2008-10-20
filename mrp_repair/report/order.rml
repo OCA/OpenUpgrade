@@ -17,55 +17,24 @@
     <blockTableStyle id="Table2">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="0,0" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="GRID" colorName="black"/>
     </blockTableStyle>
     <blockTableStyle id="Table3">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="0,0" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#e6e6e6" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEAFTER" colorName="#e6e6e6" start="1,0" stop="1,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#e6e6e6" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="GRID" colorName="black"/>
     </blockTableStyle>
     <blockTableStyle id="HeadingTable">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Order_Desc_Table">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="1,-1" stop="1,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="2,-1" stop="2,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#e6e6e6" start="3,-1" stop="3,-1"/>
     </blockTableStyle>
     <blockTableStyle id="Total_Table">
       <blockAlignment value="LEFT"/>
       <blockValign value="TOP"/>
-      <lineStyle kind="LINEABOVE" colorName="#ffffff" start="0,0" stop="0,0"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
-      <lineStyle kind="LINEBEFORE" colorName="#ffffff" start="0,1" stop="0,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#ffffff" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEBEFORE" colorName="#ffffff" start="0,2" stop="0,-1"/>
-      <lineStyle kind="LINEBELOW" colorName="#ffffff" start="0,-1" stop="0,-1"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,2" stop="1,2"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,2" stop="2,2"/>
-      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,2" stop="3,2"/>
     </blockTableStyle>
     <blockTableStyle id="Table1">
       <blockAlignment value="LEFT"/>
@@ -113,7 +82,6 @@
     <paraStyle name="terp_default_right_bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_centre_9_bold" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
   </stylesheet>
-  <images/>
   <story>
     <para style="terp_default_8">[[ repeatIn(objects,'o') ]] [[ setLang(o.partner_id.lang) ]]</para>
     <blockTable colWidths="265.0,51.0,225.0" style="AddressTable">
@@ -217,7 +185,7 @@
             <para style="terp_default_Centre_9">[[ line.product_qty or '0.00' ]] [[ line.product_uom.name ]] </para>
           </td>
           <td>
-            <para style="terp_default_Centre_9">[[ line.price_unit ]]</para>
+            <para style="terp_default_Right_9">[[ line.price_unit ]]</para>
           </td>
           <td>
             <para style="terp_default_Right_9">[[ line.price_subtotal ]]</para>
@@ -225,7 +193,7 @@
         </tr>
         <tr>
           <td>
-            <para style="P4">[[ format(line.notes or removeParentNode('tr')) ]]</para>
+            <para style="P4">[[ format(line.internal_notes or removeParentNode('tr')) ]]</para>
           </td>
           <td>
             <para style="terp_default_Centre_9">
@@ -315,3 +283,4 @@
     </para>
   </story>
 </document>
+

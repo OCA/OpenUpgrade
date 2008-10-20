@@ -11,6 +11,14 @@
             multi = "True"
             />
             
+    <wizard
+			id="wizard_mrp_repair_make_invoice"
+			keyword="client_action_multi"
+			model="mrp.repair"
+			name="mrp.repair.make_invoice"
+			multi="True"
+			string="Make invoices"/>
+            
     <record id="view_repair_order_form" model="ir.ui.view">
             <field name="name">mrp.repair.form</field>
             <field name="model">mrp.repair</field>

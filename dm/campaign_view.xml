@@ -825,7 +825,7 @@
                                 <separator string="General" colspan="4"/>
                                 <field name="name" string="Name" select="1"/>
                                 <field name="code1" string="Code"/>
-                                <field name="proposition_id" />
+<!--                                <field name="proposition_id" />-->
                                 <field name="list_id" />
                                 <field name="active" />
                                 <newline/>
@@ -1201,7 +1201,7 @@
         <field name="domain">[('category_id','like','Broker')]</field>
         <field name="context">{'category':'Broker'}</field>
     </record>
-    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists/All Brokers" id="menu_action_campaign_broker_form" action="action_campaign_broker_form"/>
 
     <record model="ir.actions.act_window" id="action_campaign_duplicator_form">
         <field name="type">ir.actions.act_window</field>
@@ -1212,7 +1212,7 @@
         <field name="domain">[('category_id','like','Deduplicator')]</field>
         <field name="context">{'category':'Deduplicator'}</field>
     </record>
-    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists/All Deduplicators" id="menu_action_campaign_duplicator_form" action="action_campaign_duplicator_form"/>
 
 <!--
     <record model="ir.actions.act_window" id="action_campaign_translator_form">
@@ -1347,6 +1347,17 @@
         id="act_campaing_proposition_opened"
         domain="[('camp_id','=',active_id)]"
     />
+
+    <!--
+    <act_window name="Purchase Orders"
+        res_model="purchase.order"
+        src_model="dm.campaign"
+        view_type="form"
+        view_mode="tree,form"
+        id="act_campaing_purchase_order"
+        domain="[('campaign_id','=',active_id)]"
+    />
+    -->
 
 </data>
 </openerp>
