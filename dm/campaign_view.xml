@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-    <menuitem name="Direct Marketing" icon="terp-mrp" id="menu_dm_root"/>
+    <menuitem name="Direct Marketing" icon="terp-crm" id="menu_dm_root"/>
     <menuitem name="Direct Marketing/Configuration" id="menu_dm_config" sequence="1" groups="res_groups_offeradmin,res_groups_offermanager,res_groups_campaignadmin,res_groups_campaignmanager"/>
     <menuitem name="Direct Marketing/Configuration/Campaigns" id="menu_dm_config_campaign" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
-    <menuitem name="Direct Marketing/Configuration/Campaigns/Customer Files" id="menu_dm_config_camp_custfiles" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
+    <menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists" id="menu_dm_config_camp_custlist" sequence="1" groups="res_groups_offeradmin,res_groups_campaignadmin,res_groups_campaignmanager"/>
     <menuitem name="Direct Marketing/Campaigns" id="menu_dm_campaign" sequence="4"/>
 
 <record id="res_groups_campaignadmin" model="res.groups">

@@ -1290,7 +1290,8 @@ class dm_campaign_purchase_line(osv.osv):
             result[pline.id] = False
             for po in pline.purchase_order_ids:
                 if po.shipped:
-                    result[pline.id] = po.picking_ids[0].date_done
+                    if po.picking_ids:
+                        result[pline.id] = po.picking_ids[0].date_done
                     continue
         return result
 
