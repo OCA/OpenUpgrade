@@ -49,9 +49,9 @@ class profile_game_detail_phase_one(osv.osv):
         'step9': fields.boolean('Confirm Draft Invoice'),
         'step10': fields.boolean('Print Customer Invoice'),
 
-        'progress': fields.function(_progress, method=True, string='Overall Progress')
-        'next_step': fields.function(_next_step, method=True, string='Next Step Explanation')
-        'state' fields.selection([
+        #'progress': fields.function(_progress, method=True, string='Overall Progress')
+        #'next_step': fields.function(_next_step, method=True, string='Next Step Explanation')
+        'state' :fields.selection([
             ('quotation','Create Quotation'),
             ('print_quote','Print Quotation'),
             ('sale','Confirm Sale Order'),
@@ -67,5 +67,15 @@ class profile_game_detail_phase_one(osv.osv):
     _defaults = {
         'state': lambda *args: 'quotation'
     }
+    def phase_end2(cr,uid,*args):
+		# To do 
+        print 'end2 :'
+        return True
+    def phase_end(cr,uid,*args):
+		# To do 
+		# args will be contain dic with result and model
+        print 'end :',args
+        return True
+		
 profile_game_detail_phase_one()
 
