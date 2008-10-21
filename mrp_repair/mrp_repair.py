@@ -278,7 +278,6 @@ class repair_operation(osv.osv):
             result['product_uom'] = product_obj.uom_id.id
             domain = {'product_uom':
                         [('category_id', '=', product_obj.uom_id.category_id.id)],}
-        
         if not pricelist:
             warning={
                 'title':'No Pricelist !',
@@ -300,10 +299,8 @@ class repair_operation(osv.osv):
                     }
             else:
                 result.update({'price_unit': price})
-                
         return {'value': result , 'domain' :domain, 'warning':warning}
-     
-     
+
      def onchange_operation_type(self, cr, uid, ids, type ):
         if not type:
             return {'value':{'location_id': False , 'location_dest_id' :  False}}
@@ -313,7 +310,6 @@ class repair_operation(osv.osv):
             return {'value':{'location_id': stock_id , 'location_dest_id' : produc_id}}
         if type == 'remove':
             return {'value':{'location_id': produc_id , 'location_dest_id' : stock_id}}
-        
      _defaults = {
                  'name' : lambda *a: 'Repair Operation',
                  }
@@ -345,4 +341,3 @@ class mrp_repair_fee(osv.osv):
     
 mrp_repair_fee()
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
