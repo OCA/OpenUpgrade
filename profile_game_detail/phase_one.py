@@ -67,15 +67,40 @@ class profile_game_detail_phase_one(osv.osv):
     _defaults = {
         'state': lambda *args: 'quotation'
     }
-    def phase_end2(cr,uid,*args):
-		# To do 
-        print 'end2 :'
+    def pre_process_quotation(cr,uid,*args):
+		# TO DO 
+        print 'pre process of quotation'  
+        res= args[-1]
+        model=res and res.get('model',False) or False
+        print model
+        if model and model=='sale.order':
+             return True
+        return False
+    def post_process_quotation(cr,uid,*args):
+		# TO DO 
+        print 'post process of quotation'    
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        print res        
+        #self.write(cr,uid,{'step1':True,'step1_so_id':res})
+        return True 
+    def pre_process_print_quote(cr,uid,ids,*args):
+		# TO DO 
+        print 'pre process of print quotation'       
+        return True 
+    def post_process_print_quote(cr,uid,ids,*args):
+		# TO DO 
+        print 'post process of print quotation'        
         return True
-    def phase_end(cr,uid,*args):
-		# To do 
-		# args will be contain dic with result and model
-        print 'end :',args
+    def pre_process_sale(cr,uid,ids,*args):
+		# TO DO 
+        print 'pre process of sale'        
         return True
+    def post_process_sale(cr,uid,ids,*args):
+		# TO DO 
+        print 'post process of sale'        
+        return True
+    
 		
 profile_game_detail_phase_one()
 
