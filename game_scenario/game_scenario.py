@@ -83,15 +83,18 @@ class scenario_objects_proxy(web_services.objects_proxy):
             cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
             steps_orig = cr.dictfetchall()
             def check(step, mode='pre'):
-                try:
-                    return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *args):
-                except:
-                    cr.close()
-                    raise
-            steps = filter(check, steps_orig)
+                if step[mode+'_process_object'] and step[mode+'_process_method']:
+	                try:
+	                    return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *args)
+	                except Exception,e:
+	                    cr.close()
+	                    raise osv.except_osv('Exception on Preprocess !',str(e))
+                else:
+					return True            
+            steps = filter(check, steps_orig)            
             cr.close()
             if steps_orig and not steps:
-                raise
+                raise osv.except_osv('Error !','Preprocess steps are not found')
 
             res = service.execute(db, uid, object, method, *args)
 
@@ -101,7 +104,7 @@ class scenario_objects_proxy(web_services.objects_proxy):
                     check(step, 'post')
                 ids = ','.join(map(lambda x: str(x['id']), steps))
                 cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
-                cr.execute('update game_scenario_step set state=%s where id in (select scenarion_next_id from scenario_step_rel where scenario_id in ('+ids+')) and state=%s', ('draft','running'))
+                cr.execute('update game_scenario_step set state=%s where id in (select next_scenario_id from scenario_step_rel where scenario_id in ('+ids+')) and state=%s', ('draft','running'))
                 cr.commit()
                 cr.close()
         else:
