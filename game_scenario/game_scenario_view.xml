@@ -46,6 +46,10 @@
                			</group>
                			<field name="state"/>
 	                </page>
+					<page string="Next steps">
+						<separator colspan="4" string="Next Steps"/>
+		                <field name="step_next_ids" colspan="4" nolabel="1"/>
+					</page>
 	                <page string="Extra Information">
 	                    <field name="description" colspan="4"/>
 	                    <field name="tip" colspan="4"/>
@@ -77,8 +81,7 @@
         <field name="arch" type="xml">
             <tree string="Scenario">
                 <field name="name"/>
-                <field name="state"/>
-                <field name="note"/>
+                <field name="state"/>                
             </tree>
         </field>
     </record>
@@ -90,9 +93,7 @@
         <field name="arch" type="xml">
             <form string="Scenario">
                 <field name="name"/>
-                <field name="state"/>
-                <separator colspan="4" string="Steps"/>
-                <field name="step_ids" colspan="4" nolabel="1"/>
+                <field name="state"/>               
                 <separator colspan="4" string="Notes"/>
                 <field name="note" colspan="4" nolabel="1"/>
             </form>

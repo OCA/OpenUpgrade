@@ -41,8 +41,7 @@ class game_scenario(osv.osv):
     _name="game.scenario"
     _columns = {
         'name':fields.char('Name',size=64, required=True),
-        'note':fields.text('Note'),
-        'step_ids':fields.one2many('game.scenario.step', 'scenario_id', 'Steps'),
+        'note':fields.text('Note'),        
         'state' : fields.selection([('draft','Draft'), ('running','Running'), ('done','Done'), ('cancel','Cancel')], 'State')
     }
     _defaults = {
@@ -66,7 +65,8 @@ class game_scenario_step(osv.osv):
         'post_process_method' : fields.char('Postprocess Method', size=64),
         'post_process_args' : fields.text('Postprocess Args'),
         'scenario_id' : fields.many2one('game.scenario', 'Scenario'),
-        'state' : fields.selection([('running','Running'), ('done','Done')], 'State')
+        'step_next_ids':fields.many2many('game.scenario.step','scenario_step_rel', 'next_scenario_id','scenario_id', 'Next Steps'),
+        'state' : fields.selection([('draft','Draft'),('running','Running'), ('done','Done'),('cancel','Cancel')], 'State')
         }
     _defaults = {
         'state' : lambda *a : 'running',       
@@ -78,48 +78,80 @@ class scenario_objects_proxy(web_services.objects_proxy):
         security.check(db, uid, passwd)
         service = netsvc.LocalService("object_proxy")
         cr = pooler.get_db_only(db).cursor()
-        pool = pooler.get_pool(cr.dbname)
+        pool = pooler.get_pool(cr.dbname)        
         step_obj=pool.get('game.scenario.step')
-        sce_obj=pool.get('game.scenario')
+        sce_obj=pool.get('game.scenario')        
+        if object in ('game.scenario','game.scenario.step'):
+            res = service.execute(db, uid, object, method, *args)
+            return res
         if not step_obj:
             res = service.execute(db, uid, object, method, *args)
             return res
         else:
-            # call pre method of running scenatio step of running scenario
-            res = service.execute(db, uid, object, method, *args)
-            # call post method
-            return res
-        
-#        if step_obj and sce_obj:   
-#            def _execute_step(step_id):
-#                step_obj.browse(cr,uid,step_id)                
-#                pre_process_object = step.pre_process_object
-#                pre_process_method = step.pre_process_method
-#                pre_process_args = step.pre_process_args                
-#                try:
-#                    res = service.execute(db, uid, pre_process_object, pre_process_method, pre_process_args)
-#                except AttributeError:
-#                    raise except_orm('AttributeError', 'Attribute not found !')
-#                    step_obj.write(cr,uid,step_ids,{'error': AttributeError.__dict__['__doc__']})
-#                    cr.commit()
-#                
-#                if not res:
-#                    res = service.execute(db, uid, object, method, *args)
-#                else:
-#                    post_process_object = step.post_process_object
-#                    post_process_method = step.post_process_method
-#                    post_process_args = step.post_process_args
-#                    res = service.execute(db, uid, object, method, *args)
-#                    res = service.execute(db, uid, post_process_object, post_process_method, post_process_args)
-#                    step_obj.write(cr,uid,step_ids,{'state' : 'done'})         
-#            cr.execute("select scenario_id from game_scenario where state='running' ")            
-#            sc_ids=map(lambda x:x[0],cr.fetchall())
-#            for scenario in sce_obj.browse(cr,uid,sc_ids):
-#                cr.execute("select id from game_scenario_step where scenario_id="+scenario.id+" state='running' ")            
-#                step_id=map(lambda x:x[0],cr.fetchone())
-#                _execute_step(step_id)
+            def _execute_step(step_id):   
+				# To do : change state of step             
+                # pre method
+                pre_res=True
+                step=step_obj.browse(cr,uid,step_id)
+                pre_object=step.pre_process_object and pool.get(step.pre_process_object) or False
+                pre_args=step.pre_process_args and eval(step.pre_process_args) or ()			
+					
+                if step.pre_process_method and pre_object:
+                    pre_res=False
+                    try:
+                        pre_res=service.execute(db, uid, step.pre_process_object, step.pre_process_method, pre_args)
+                    except Exception,e:
+                        print e
+                        cr.rollback()						
+                        #step_obj.write(cr,uid,[step_id],{'error': "Exception on calling pre process :" +str(e),'state':'exception'})
+                        cr.commit()
+                        raise except_orm('Error!', "Exception on calling pre process :" +str(e))
+                # current				
+                res=service.execute(db, uid, object, method, *args)                
+                # post method
+                post_res=True
+                post_object=step.post_process_object and pool.get(step.post_process_object) or False
+                if pre_res and post_object and step.post_process_method:
+                    post_res=False
+                    try:
+                        post_args=step.pre_process_args and eval(step.pre_process_args) or ()
+                        post_args+={'result':res,'model':object},
+                        post_res=service.execute(db, uid, step.post_process_object, step.post_process_method, post_args)
+                    except Exception,e:
+                        print e
+                        cr.rollback()
+                        #step_obj.write(cr,uid,[step_id],{'error': "Exception on calling post process :" +str(e),'state':'exception'})
+                        cr.commit()
+                        raise except_orm('Error!', "Exception on calling post process :" +str(e))                
                 
-            return None
+                for next_step in step.step_next_ids:                    
+                    if next_step.state in ('draft'):                        
+                        #step_obj.write(cr,uid,[next_step.id],{'error': '','state':'running'})
+                        _execute_step(next_step.id)
+                if post_res:                										
+                    #step_obj.write(cr,uid,[step_id],{'error': 'successfull done','state':'done'})
+                    pass                
+                return res
+            running_scenario_ids=sce_obj.search(cr,uid,[('state','=','running')],limit=1)
+            if len(running_scenario_ids):
+                for scenario_id in running_scenario_ids:
+                    running_step_ids=step_obj.search(cr,uid,[('state','=','running'),('scenario_id','=',scenario_id),('step_next_ids','<>','False')])
+                    for running_step_id in running_step_ids:
+                        res=_execute_step(running_step_id)
+                    step_ids=step_obj.search(cr,uid,[('scenario_id','=',scenario_id)])
+                    done=True
+                    for step in step_obj.browse(cr,uid,step_ids):
+                        if step.state!='done':
+                            done=False
+                    if done:
+                        sce_obj.write(cr,uid,[scenario_id],{'state':'done'})
+            else:
+                res=service.execute(db, uid, object, method, *args)            
+            return res        
+        
+
+                
+            
 scenario_objects_proxy()
  
 #

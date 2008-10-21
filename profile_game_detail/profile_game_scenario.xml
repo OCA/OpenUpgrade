@@ -11,9 +11,10 @@ Description of the scenario.
     </record>
 
     <record model="game.scenario.step" id="retail_step2">
-        <field name="scenario_id" ref="retail_phase1">
-        <field name="accepted_users" eval="[(6,0,[ref('profile_game_retail.user_sales')])]"/>
-        <field name="menu_id" ref="sale.menu_quotation"/>
+		<field name="name">retail step2</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="accepted_users" eval="[(6,0,[ref('sale.user_sales')])]"/>
+        <field name="menu_id" ref="sale.view_order_form"/>
         <field name="description">
 In this phase, you must print the quotation you just created.
         </field>
@@ -25,8 +26,8 @@ In this phase, you must print the quotation you just created.
         </field>
 
         <field name="pre_process_object" eval="False"/>
-        <field name="pre_process_method" eval="False">
-        <field name="pre_process_args" eval="False">
+        <field name="pre_process_method" eval="False"/>
+        <field name="pre_process_args" eval="False"/>
 
         <field name="post_process_object">business.game.retail.phase1</field>
         <field name="post_process_method">phase_end2</field>
@@ -36,9 +37,10 @@ In this phase, you must print the quotation you just created.
 
 
     <record model="game.scenario.step" id="retail_step1">
-        <field name="scenario_id" ref="retail_phase1">
-        <field name="accepted_users" eval="[(6,0,[ref('profile_game_retail.user_sales')])]"/>
-        <field name="menu_id" ref="sale.menu_quotation"/>
+		<field name="name">retail step1</field>
+        <field name="scenario_id" ref="retail_phase1"/>
+        <field name="accepted_users" eval="[(6,0,[ref('sale.user_sales')])]"/>
+        <field name="menu_id" ref="sale.view_order_form"/>
         <field name="description">
 In this first phase, the <i>Sales Manager</i> must create a quotation for the
 customer <i>Agrolait</i>. This quotation must include two products, with the
@@ -61,8 +63,8 @@ back to the main dashboard.
         </field>
 
         <field name="pre_process_object" eval="False"/>
-        <field name="pre_process_method" eval="False">
-        <field name="pre_process_args" eval="False">
+        <field name="pre_process_method" eval="False"/>
+        <field name="pre_process_args" eval="False"/>
 
         <field name="post_process_object">profile.game.detail.phase1</field>
         <field name="post_process_method">phase_end</field>
