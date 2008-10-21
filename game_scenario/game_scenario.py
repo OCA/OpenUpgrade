@@ -40,7 +40,7 @@ class game_scenario_step(osv.osv):
     _name="game.scenario.step"
     _columns = {
         'name':fields.char('Name',size=64, required=True),
-        'description' : fields.text('Description'),       
+        'description' : fields.text('Description'),
         'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),
         'accepted_users' : fields.one2many('res.users', 'user_id', 'User'),
         'tip' : fields.text('Tip'),
@@ -63,20 +63,20 @@ class game_scenario(osv.osv):
         'state' : fields.selection([('draft','Draft'), ('running','Running'), ('done','Done'), ('cancel','Cancel')], 'State')
     }
     _defaults = {
-        'state' : lambda *a : 'running',       
+        'state' : lambda *a : 'running',
         }
 game_scenario()
 
 class users(osv.osv):
     _inherit="res.users"
     _columns={
-        'user_id' : fields.many2one('game.scenario.step', 'accepted_users',)      
+        'user_id' : fields.many2one('game.scenario.step', 'accepted_users',)
         }
 users()
 
 class scenario_objects_proxy(web_services.objects_proxy):
-    
-    def execute(self, db, uid, passwd, object, method, *args):        
+
+    def execute(self, db, uid, passwd, object, method, *args):
         security.check(db, uid, passwd)
         service = netsvc.LocalService("object_proxy")
         cr = pooler.get_db_only(db).cursor()
@@ -84,17 +84,19 @@ class scenario_objects_proxy(web_services.objects_proxy):
         step_obj=pool.get('game.scenario.step')
         cr.execute("select scenario_step_id from game_scenario_step_rel rel left join game_scenario s on s.id=rel.scenario_id where s.state='running' ")
         step_ids=map(lambda x:x[0],cr.fetchall())
-       
+
         for step in step_obj.browse(cr,uid,step_ids):
+            if not step.state=='running':
+                continue
             pre_process_object = step.pre_process_object
             pre_process_method = step.pre_process_method
             try:
                 res = service.execute(db, uid, pre_process_object, pre_process_method, *args)
-               
+
             except AttributeError:
                 step_obj.write(cr,uid,step_ids,{'error': AttributeError.__dict__['__doc__']})
                 cr.commit()
-            
+
             if not res:
                 res = service.execute(db, uid, object, method, *args)
             else:
@@ -104,7 +106,7 @@ class scenario_objects_proxy(web_services.objects_proxy):
                 res = service.execute(db, uid, post_process_object, post_process_method, *args)
 
         return res
-            
+
 scenario_objects_proxy()
- 
+
 
