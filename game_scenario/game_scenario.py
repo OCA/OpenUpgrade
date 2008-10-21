@@ -88,14 +88,13 @@ class scenario_objects_proxy(web_services.objects_proxy):
                         return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *new_args)
                     except Exception,e:
                         cr.close()
-                        print e
-                        raise osv.except_osv('Exception on Preprocess !',str(e))
+                        raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', str(e)))
                 else:
                     return True
             steps = filter(check, steps_orig)
             cr.close()
-            #if steps_orig and not steps:
-            #    raise osv.except_osv('Error !','Preprocess steps are not found')
+            if steps_orig and not steps:
+                raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', steps_orig[0]['error']))
             res = service.execute(db, uid, object, method, *args)
             new_args+={'result':res},
             if steps:

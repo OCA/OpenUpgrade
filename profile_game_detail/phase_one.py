@@ -34,24 +34,23 @@ import pooler
 class profile_game_detail_phase_one(osv.osv):
     _name="profile.game.detail.phase1"
     _columns = {
-        'step1': fields.boolean('Create Quotation'),
-        'step1_so_id': fields.many2one('sale.order', 'Quotation / Sale Order'),
-        'step2': fields.boolean('Print Customer Quotation'),
-        'step3': fields.boolean('Confirm Sale Order'),
+        'step1': fields.boolean('Create Quotation', readonly=True),
+        'step1_so_id': fields.many2one('sale.order', 'Quotation / Sale Order', readonly=True),
+        'step2': fields.boolean('Print Customer Quotation', readonly=True),
+        'step3': fields.boolean('Confirm Sale Order', readonly=True),
 
-        'step4': fields.boolean('Print Request for Quotation'),
-        'step5': fields.boolean('Change Supplier Price'),
-        'step6': fields.boolean('Confirm Request for Quotation'),
+        'step4': fields.boolean('Print Request for Quotation', readonly=True),
+        'step5': fields.boolean('Change Supplier Price', readonly=True),
+        'step6': fields.boolean('Confirm Request for Quotation', readonly=True),
 
-        'step7': fields.boolean('Receive Products from Supplier'),
-        'step8': fields.boolean('Deliver Products to Customer'),
+        'step7': fields.boolean('Receive Products from Supplier', readonly=True),
+        'step8': fields.boolean('Deliver Products to Customer', readonly=True),
 
-        'step9': fields.boolean('Confirm Draft Invoice'),
-        'step10': fields.boolean('Print Customer Invoice'),
+        'step9': fields.boolean('Confirm Draft Invoice', readonly=True),
+        'step10': fields.boolean('Print Customer Invoice', readonly=True),
 
-        #'progress': fields.function(_progress, method=True, string='Overall Progress')
-        #'next_step': fields.function(_next_step, method=True, string='Next Step Explanation')
         'state' :fields.selection([
+            ('not running','Not Running'),
             ('quotation','Create Quotation'),
             ('print_quote','Print Quotation'),
             ('sale','Confirm Sale Order'),
@@ -62,20 +61,23 @@ class profile_game_detail_phase_one(osv.osv):
             ('deliver','Deliver Products'),
             ('invoice_create','Confirm Invoice'),
             ('invoice_print','Print Invoice'),
-        ], 'State', required=True)
+        ], 'State', required=True, readonly=True)
     }
     _defaults = {
-        'state': lambda *args: 'quotation'
+        'state': lambda *args: 'not running'
     }
-    def pre_process_quotation(cr,uid,*args):
-		# TO DO 
-        print 'pre process of quotation'  
+    def pre_process_quotation(self, cr,uid, object, method, *args):
+        if (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
+            return False
+
+        print 'pre process of quotation', cr, uid, args
         res= args[-1]
         model=res and res.get('model',False) or False
         print model
         if model and model=='sale.order':
              return True
         return False
+
     def post_process_quotation(cr,uid,*args):
 		# TO DO 
         print 'post process of quotation'    
@@ -100,6 +102,17 @@ class profile_game_detail_phase_one(osv.osv):
 		# TO DO 
         print 'post process of sale'        
         return True
+
+    def confirm(self, cr, uid, ids, context={}):
+        self.write(cr, uid, ids, {'state':'quotation'})
+        sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_detail', 'retail_phase1')
+        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        print 'Game Detail', sid
+        self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'running'})
+        sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_detail', 'step_quotation')
+        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        print 'Game Quotation', sid
+        self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
 
 profile_game_detail_phase_one()
 
