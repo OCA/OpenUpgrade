@@ -42,11 +42,11 @@ class game_scenario(osv.osv):
     _columns = {
         'name':fields.char('Name',size=64, required=True),
         'note':fields.text('Note'),
-        'state' : fields.selection([('draft','Draft'), ('running','Running'), ('done','Done'), ('cancel','Cancel')], 'State')
+        'state' : fields.selection([('draft','Draft'), ('running','Running'), ('done','Done'), ('cancel','Cancel')], 'State', required=True)
     }
     _defaults = {
         'state' : lambda *a : 'running',
-        }
+    }
 game_scenario()
 
 class game_scenario_step(osv.osv):
@@ -60,13 +60,11 @@ class game_scenario_step(osv.osv):
         'error' : fields.text('Error'),
         'pre_process_object' : fields.char('Preprocess Object', size=64),
         'pre_process_method' : fields.char('Preprocess Method', size=64),
-        'pre_process_args' : fields.text('Preprocess Args'),
         'post_process_object' : fields.char('Postprocess Object', size=64),
         'post_process_method' : fields.char('Postprocess Method', size=64),
-        'post_process_args' : fields.text('Postprocess Args'),
-        'scenario_id' : fields.many2one('game.scenario', 'Scenario'),
+        'scenario_id' : fields.many2one('game.scenario', 'Scenario', required=True),
         'step_next_ids':fields.many2many('game.scenario.step','next_step_rel', 'step_id','next_step_id', 'Next Steps'),
-        'state' : fields.selection([('draft','Draft'),('running','Running'), ('done','Done'),('cancel','Cancel')], 'State')
+        'state' : fields.selection([('draft','Draft'),('running','Running'), ('done','Done'),('cancel','Cancel')], 'State', required=True)
         }
     _defaults = {
         'state' : lambda *a : 'running',
@@ -81,24 +79,24 @@ class scenario_objects_proxy(web_services.objects_proxy):
         if pool.get('game.scenario'):
             cr = pooler.get_db_only(db).cursor()
             cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
-            steps_orig = cr.dictfetchall()            
+            steps_orig = cr.dictfetchall()
             new_args=args
-            new_args +={'model':object},                                 
+            new_args +={'model':object},
             def check(step, mode='pre'):
                 if step[mode+'_process_object'] and step[mode+'_process_method']:
-                    try:                        
+                    try:
                         return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *new_args)
                     except Exception,e:
                         cr.close()
                         print e
                         raise osv.except_osv('Exception on Preprocess !',str(e))
                 else:
-                    return True            
-            steps = filter(check, steps_orig)          
+                    return True
+            steps = filter(check, steps_orig)
             cr.close()
             #if steps_orig and not steps:
-            #    raise osv.except_osv('Error !','Preprocess steps are not found')            
-            res = service.execute(db, uid, object, method, *args)            
+            #    raise osv.except_osv('Error !','Preprocess steps are not found')
+            res = service.execute(db, uid, object, method, *args)
             new_args+={'result':res},
             if steps:
                 cr = pooler.get_db_only(db).cursor()

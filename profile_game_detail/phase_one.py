@@ -40,11 +40,11 @@ class profile_game_detail_phase_one(osv.osv):
         'step3': fields.boolean('Confirm Sale Order'),
 
         'step4': fields.boolean('Print Request for Quotation'),
-        'step6': fields.boolean('Change Supplier Price'),
+        'step5': fields.boolean('Change Supplier Price'),
         'step6': fields.boolean('Confirm Request for Quotation'),
 
-        'step8': fields.boolean('Receive Products from Supplier'),
-        'step9': fields.boolean('Deliver Products to Customer'),
+        'step7': fields.boolean('Receive Products from Supplier'),
+        'step8': fields.boolean('Deliver Products to Customer'),
 
         'step9': fields.boolean('Confirm Draft Invoice'),
         'step10': fields.boolean('Print Customer Invoice'),
@@ -100,7 +100,6 @@ class profile_game_detail_phase_one(osv.osv):
 		# TO DO 
         print 'post process of sale'        
         return True
-    
-		
+
 profile_game_detail_phase_one()
 

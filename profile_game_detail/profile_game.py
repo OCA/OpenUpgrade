@@ -82,6 +82,12 @@ class profile_game_retail(osv.osv):
     _name="profile.game.retail"
     def _calculate_detail(self, cr, uid, ids, field_names, arg, context):
         res = {}
+        print field_names
+        for id in ids:
+            res[id] = {}.fromkeys(field_names, 0.0)
+        print res
+        return res
+
         fiscal_obj = self.pool.get('account.fiscalyear')
         account_obj = self.pool.get('account.account')
         account_type_obj = self.pool.get('account.account.type')
@@ -321,31 +327,24 @@ class profile_game_retail(osv.osv):
         'products_growth' : fields.function(_calculate_detail, method=True, type='float', string='Growth Products', multi='objectives',help="Growth Products"),
         'note':fields.text('Notes'),
     }
-
-#    _defaults={
-#               'total_refund' : lambda *a: 0.20,
-#               'cost_purchase_forcast' : lambda *a: 0.20,
-#               'total_sold_products' : lambda *a: 0.20
-#               }
-
 profile_game_retail()
 
 class profile_game_config_wizard(osv.osv_memory):
     _name='profile.game.config.wizard'
     _columns = {
         'players':fields.selection([('3','3'),('4','4')],'Number of Players',required=True),
-        'finance_name':fields.char('Name of Financial Manager',size='64'),
+        'finance_name':fields.char('Name of Financial Manager',size='64', required=True),
         'finance_email':fields.char('Email of Financial Manager',size='64'),
-        'hr_name':fields.char('Name of Hurman Ressources Manager',size='64'),
+        'hr_name':fields.char('Name of Hurman Ressources Manager',size='64', required=True),
         'hr_email':fields.char('Email of Hurman Ressources Manager',size='64'),
-        'logistic_name':fields.char('Name of Logistic Manager',size='64'),
+        'logistic_name':fields.char('Name of Logistic Manager',size='64', required=True),
         'logistic_email':fields.char('Email of Logistic Manager',size='64'),
-        'sales_name':fields.char('Name of Sales Manager',size='64'),
+        'sales_name':fields.char('Name of Sales Manager',size='64', required=True),
         'sales_email':fields.char('Email of Sales Manager',size='64'),
         'objectives':fields.selection([
-            ('on_max_turnover','Maximise Turnover of Last Year'),
-            ('on_max_cumulative','Maximise Cumulative Benefit'),
-            ('on_max_products_sold','Maximise Number of Products Sold')],'Objectives',required=True),
+            ('turnover','Maximise Turnover of Last Year'),
+            ('cumulative','Maximise Cumulative Benefit'),
+            ('products_sold','Maximise Number of Products Sold')],'Objectives',required=True),
         'years':fields.selection([
             ('3','3 Years (40 minutes)'),
             ('5','5 Years (1 hour)'),
@@ -355,16 +354,19 @@ class profile_game_config_wizard(osv.osv_memory):
             ('medium','Medium'),
             ('hard','Hard')],'Difficulty',required=True),
     }
+    _defaults = {
+        'difficulty': lambda *args: 'medium',
+        'years': lambda *args: '5',
+        'objectives': lambda *args: 'turnover',
+    }
     def action_cancel(self,cr,uid,ids,conect=None):
         return {
-                'view_type': 'form',
-                "view_mode": 'form',
-                'res_model': 'ir.actions.configuration.wizard',
-                'type': 'ir.actions.act_window',
-                'target':'new',
-         }
-
-
+            'view_type': 'form',
+            "view_mode": 'form',
+            'res_model': 'ir.actions.configuration.wizard',
+            'type': 'ir.actions.act_window',
+            'target':'new',
+        }
     def action_run(self, cr, uid, ids, context=None):
         game_obj=self.pool.get('profile.game.retail')
         fiscal_obj = self.pool.get('account.fiscalyear')
@@ -425,7 +427,6 @@ class profile_game_config_wizard(osv.osv_memory):
                 'type': 'ir.actions.act_window',
                 'target':'new',
             }
-
 
 profile_game_config_wizard()
 
