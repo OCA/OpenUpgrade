@@ -65,7 +65,7 @@ class game_scenario_step(osv.osv):
         'post_process_method' : fields.char('Postprocess Method', size=64),
         'post_process_args' : fields.text('Postprocess Args'),
         'scenario_id' : fields.many2one('game.scenario', 'Scenario'),
-        'step_next_ids':fields.many2many('game.scenario.step','scenario_step_rel', 'next_scenario_id','scenario_id', 'Next Steps'),
+        'step_next_ids':fields.many2many('game.scenario.step','next_step_rel', 'step_id','next_step_id', 'Next Steps'),
         'state' : fields.selection([('draft','Draft'),('running','Running'), ('done','Done'),('cancel','Cancel')], 'State')
         }
     _defaults = {
@@ -81,30 +81,32 @@ class scenario_objects_proxy(web_services.objects_proxy):
         if pool.get('game.scenario'):
             cr = pooler.get_db_only(db).cursor()
             cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
-            steps_orig = cr.dictfetchall()
+            steps_orig = cr.dictfetchall()            
+            new_args=args
+            new_args +={'model':object},                                 
             def check(step, mode='pre'):
                 if step[mode+'_process_object'] and step[mode+'_process_method']:
-	                try:
-	                    return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *args)
-	                except Exception,e:
-	                    cr.close()
-	                    raise osv.except_osv('Exception on Preprocess !',str(e))
+                    try:                        
+                        return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *new_args)
+                    except Exception,e:
+                        cr.close()
+                        print e
+                        raise osv.except_osv('Exception on Preprocess !',str(e))
                 else:
-					return True            
-            steps = filter(check, steps_orig)            
+                    return True            
+            steps = filter(check, steps_orig)          
             cr.close()
-            if steps_orig and not steps:
-                raise osv.except_osv('Error !','Preprocess steps are not found')
-
-            res = service.execute(db, uid, object, method, *args)
-
+            #if steps_orig and not steps:
+            #    raise osv.except_osv('Error !','Preprocess steps are not found')            
+            res = service.execute(db, uid, object, method, *args)            
+            new_args+={'result':res},
             if steps:
                 cr = pooler.get_db_only(db).cursor()
                 for step in steps:
                     check(step, 'post')
                 ids = ','.join(map(lambda x: str(x['id']), steps))
                 cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
-                cr.execute('update game_scenario_step set state=%s where id in (select next_scenario_id from scenario_step_rel where scenario_id in ('+ids+')) and state=%s', ('draft','running'))
+                cr.execute('update game_scenario_step set state=%s where id in (select next_step_id from next_step_rel where step_id in ('+ids+')) and state=%s', ('running','draft'))
                 cr.commit()
                 cr.close()
         else:
