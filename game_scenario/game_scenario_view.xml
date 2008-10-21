@@ -11,11 +11,12 @@
         <field name="arch" type="xml">
             <tree string="Steps">
                 <field name="name"/>
-                <field name="menu_id" />
+                <field name="menu_id"/>
                 <field name="pre_process_object"/>
                 <field name="pre_process_method"/>
                 <field name="post_process_object"/>
                 <field name="post_process_method"/>
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -27,21 +28,23 @@
         <field name="arch" type="xml">
             <form string="Scenario Steps">
                 <field name="name"/>
-	            <field name="menu_id" />
+	            <field name="menu_id"/>
+	            <field name="scenario_id"/>
                 <notebook colspan="4">
 	                <page string="General Information">
-	                    <group col="2" colspan="4">
-                    		<separator colspan="4" string="Preprocess"/>
+	                    <group col="2" colspan="2">
+                    		<separator colspan="2" string="Preprocess"/>
 		                    <field name="pre_process_object"/>
 		                    <field name="pre_process_method"/>
-		                    <field name="pre_process_args" colspan="4"/>
+		                    <field name="pre_process_args" colspan="2"/>
                 		</group>
-                		<group col="2" colspan="4">
-		                    <separator colspan="4" string="Postprocess"/>
+                		<group col="2" colspan="2">
+		                    <separator colspan="2" string="Postprocess"/>
 		                    <field name="post_process_object"/>
 		                    <field name="post_process_method"/>
-		                    <field name="post_process_args" colspan="4"/>
+		                    <field name="post_process_args" colspan="2"/>
                			</group>
+               			<field name="state"/>
 	                </page>
 	                <page string="Extra Information">
 	                    <field name="description" colspan="4"/>
@@ -87,9 +90,9 @@
         <field name="arch" type="xml">
             <form string="Scenario">
                 <field name="name"/>
+                <field name="state"/>
                 <separator colspan="4" string="Steps"/>
                 <field name="step_ids" colspan="4" nolabel="1"/>
-                <field name="state"/>
                 <separator colspan="4" string="Notes"/>
                 <field name="note" colspan="4" nolabel="1"/>
             </form>
