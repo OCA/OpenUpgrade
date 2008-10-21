@@ -140,9 +140,11 @@ def _check_code_4_usertype(x):
     return 'account_type_root' #TODO: by default = type view
 
 def _check_code_4_type(x):
-    if x['ABALANCE,A,10'] == 'INCOME':
-        return 'payable'
-    if len(x['AID,A,10']) <= 3:
+    if x['AID,A,10'].startswith('40'):
+        if x['AID,A,10'].startswith('406'):
+            return 'payable'
+        return 'receivable'
+    if len(x['AID,A,10']) <= 4:
         return 'view'
     return 'other' #TODO: by default = type view
 
@@ -579,7 +581,60 @@ def import_period(reader_period, writer_period, period_map):
     return True
 
 
-# -= F. Move and Move_line =-
+# -= F. Reconcile =-
+
+
+arecon_map = {
+    'id' : lambda x: 'a'+x['HID,A,10'].strip()+'_'+x['HMATCHNO,I,4'],
+    'type': lambda x: 'bob imported',
+    'name': lambda x: 'a'+x['HID,A,10'].strip()+'_'+x['HMATCHNO,I,4'],
+}
+
+crecon_map = {
+    'id' : lambda x: 'c'+x['HID,A,10'].strip()+'_'+x['HMATCHNO,I,4'],
+    'type': lambda x: 'bob imported',
+    'name': lambda x: 'c'+x['HID,A,10'].strip()+'_'+x['HMATCHNO,I,4'],
+}
+
+
+def import_areconcile(reader, writer, map):
+    #write the header of creconcile
+    record = {}
+    for key, column_name in map.items():
+        record[key] = key
+    writer.writerow(record)
+    dict = {}
+    last_id = ""
+    for row in reader:
+
+        dict[row['HID,A,10']+row['HDBK,A,4']+row['HFYEAR,A,5']+row['HMONTH,I,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']] = row['HMTACHNO_ID:ID']
+        record = {}
+        for key,fnct in map.items():
+            record[key] = fnct(convert2utf(row))
+        if last_id != record['id']:
+            writer.writerow(record)
+        last_id = record['id']
+    return dict
+
+def import_creconcile(reader, writer, map):
+    #write the header of creconcile
+    record = {}
+    for key, column_name in map.items():
+        record[key] = key
+    writer.writerow(record)
+    dict = {}
+    last_id = ""
+    for row in reader:
+        dict[row['HTYPE,A,1']+row['HID,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']] = row['HMATCHNO_ID:ID']
+        record = {}
+        for key,fnct in map.items():
+            record[key] = fnct(convert2utf(row))
+        if last_id != record['id']:
+            writer.writerow(record)
+        last_id = record['id']
+    return dict
+
+# -= G. Move and Move_line =-
 
 move_map = {
     'id': lambda x: 'move_'+x['HDBK,A,4']+'/'+x['HFYEAR,A,5']+'/'+x['HDOCNO,I,4'],
@@ -694,48 +749,48 @@ move_line_map = {
 #    'date_created':
     'date': lambda x: x['HDOCDATE,D,4'],
     'move_id:id': lambda x: 'move_'+x['HDBK,A,4']+'/'+x['HFYEAR,A,5']+'/'+x['HDOCNO,I,4'],
-#@    'reconcile_id':
-#TODO: voir si la réconcliation automatique réussit bien
+    'reconcile_id:id': lambda x: '',
     'name': lambda x: x['HREM,A,40'] or '/',
     'amount_currency': lambda x: str(_get_ammount_currency(x)),
 #TODO (bugfix): create one currency BEF with value: 1 EUR = 40.3399 BEF
 #    'quantity':
 }
 
-def import_move(reader_move, writer_move, move_map):
+def import_moves_and_lines(reader_move, writer_move, writer, move_map, map, dict_ahisto, dict_chisto, vat_dict):
+    #write the header of account.move
     record = {}
     for key, column_name in move_map.items():
         record[key] = key
     writer_move.writerow(record)
-    move_rows = []
-    move_rows_ref = []
-    #parse the move.csv file to know what are the account_move that need to be created
-    for row in reader_move:
-        #only create move if x['HMONTH,I,4'] != 0
-        if row['HMONTH,I,4'] != "0":
-            temp = 'move_line_'+row['HDBK,A,4']+'/'+row['HFYEAR,A,5']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']
-            if temp not in move_rows_ref:
-                move_rows_ref.append(temp)
-                move_rows.append(row)
-
-    #create the moves
-    for move in move_rows:
-        record = {}
-        for key,fnct in move_map.items():
-            record[key] = fnct(convert2utf(move))
-        writer_move.writerow(record)
-    return True
-
-def import_move_line(reader, writer, map, ):
+    #write the header of account.move.line
     record = {}
     for key, column_name in map.items():
         record[key] = key
     writer.writerow(record)
+
+    move_rows_ref = {}
+    count =0
     period_rows = []
-    count = 0
-    for row in reader:
-        #only create move_line if x['HMONTH,I,4'] != 0
-        if row['HMONTH,I,4'] != "0":
+    tvacount = 0
+    #parse the move.csv file to know what are the account_move that need to be created
+    for row in reader_move:
+        count += 1
+        if (count%1000) == 0:
+            print count
+        #only create move and move_line if x['HMONTH,I,4'] != 0
+        #and if row['HAMOUNT,$,8']!="" is different from 0 (or False)
+        if row['HMONTH,I,4'] != "0" and row['HAMOUNT,$,8']!="" and not float(row['HAMOUNT,$,8']) == 0.0:
+            temp = 'move_line_'+row['HDBK,A,4']+'/'+row['HFYEAR,A,5']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']
+            if not move_rows_ref.has_key(temp):
+                #writing of the account.move
+                move_rows_ref[temp] = 'ok'
+
+                record = {}
+                for key,fnct in move_map.items():
+                    record[key] = fnct(convert2utf(row))
+                writer_move.writerow(record)
+
+            #writing of the account.move.line
             if _is_vat_movement(row):
                 #vat movement cannot be imported and have to be generated from the move line
                 continue
@@ -743,22 +798,41 @@ def import_move_line(reader, writer, map, ):
             record = {}
             for key,fnct in map.items():
                 record[key] = fnct(convert2utf(row))
-            #if record['partner_id:id']:
-            #    record['partner_id:id'] = _get_partner_id(partner_dict[record['partner_id:id']])
+
+            if dict_ahisto.has_key(row['HID,A,10']+row['HDBK,A,4']+row['HFYEAR,A,5']+row['HMONTH,I,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']):
+                record['reconcile_id:id'] = dict_ahisto[row['HID,A,10']+row['HDBK,A,4']+row['HFYEAR,A,5']+row['HMONTH,I,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']]
+
+            #for the case of sales or sales refund
+            elif row['HDBTYPE,A,3'] == 'SAL' or row['HDBTYPE,A,3'] == 'SAC':
+                if dict_chisto.has_key('C'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']):
+                    record['reconcile_id:id'] = dict_chisto['C'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']]
+
+            #for the case of purchases or purchases refund
+            elif row['HDBTYPE,A,3'] == 'PUR' or row['HDBTYPE,A,3'] == 'PUC':
+                if dict_chisto.has_key('S'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']):
+                    record['reconcile_id:id'] = dict_chisto['S'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+row['HORDERNO,I,4']]
+
+            else:
+                #for the case of other operations. We have to search for the reconciliation with a customer and a supplier and we have to add 1 to the orderno
+                tmp = str(int(row['HORDERNO,I,4'])+1)
+                if dict_chisto.has_key('C'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+tmp):
+                    record['reconcile_id:id'] = dict_chisto['C'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+tmp]
+                elif row['HDBTYPE,A,3'] == 'PUR' or row['HDBTYPE,A,3'] == 'PUC':
+                    if dict_chisto.has_key('S'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+tmp):
+                        record['reconcile_id:id'] = dict_chisto['S'+row['HCUSSUP,A,10']+row['HFYEAR,A,5']+row['HDBK,A,4']+'/'+row['HDOCNO,I,4']+'/'+tmp]
 
             #if this move line is taxed
             if row['HVATCODE,A,10']:
-                count = count + 1
+                tvacount += 1
                 record['tax_code_id:id'] = _pick_vat_code(row, vat_dict, False)
             writer.writerow(record)
 
             if row['HVATCODE,A,10']:
                 #generate the vat movement
-                vat_move = _create_vat_move(row, vat_dict, count)
+                vat_move = _create_vat_move(row, vat_dict, tvacount)
                 #if vat_move['partner_id:id']:
                 #    vat_move['partner_id:id'] = _get_partner_id(partner_dict[vat_move['partner_id:id']])
                 writer.writerow(convert2utf(vat_move))
-
 
     return True
 
@@ -770,46 +844,46 @@ def import_move_line(reader, writer, map, ):
 # -=====================-
 
 #specific part for CCI
+
 #~ reader_partner_matching = csv.DictReader(file('_conv_bob_id.csv','rb'))
 #~ bob_conv_matching = {}
 #~ bob_conv_matching[''] = ''
 #~ for row in reader_partner_matching:
     #~ bob_conv_matching[row['bob']] = row['partner']
-
 #~ def _get_partner_id(char):
     #~ if bob_conv_matching.has_key(char):
         #~ return bob_conv_matching[char]
     #~ return 'account_bob_import.res_partner_destroyed' #or char ?
+#~ partner_dict['GRAMME'] = ''
+
 #end of specific part
 
 def run():
     print 'importing chart of accounts'
-    reader_account = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/accoun.csv','rb')) #TODO: pxview IFACCOUN.DB (?)-c > ....../account_bob_import/original_csv/account.csv
-    print reader_account
+    reader_account = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/accoun.csv','rb')) #pxview IFACCOUN.DB -c > ....../account_bob_import/original_csv/account.csv
     writer_account = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.account.csv', 'wb'), account_map.keys())
     import_account(reader_account, writer_account, account_map)
 
     print 'importing financial journals'
-    reader_journal = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/dbk.csv','rb')) #TODO: pxview IFDBK.DB (?)-c > ....../account_bob_import/original_csv/dbk.csv
+    reader_journal = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/dbk.csv','rb')) #pxview IFDBK.DB -c > ....../account_bob_import/original_csv/dbk.csv
     writer_journal = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.journal.csv', 'wb'), journals_map.keys())
     import_journal(reader_journal, writer_journal, journals_map)
 
     print 'importing partners'
-    reader_partner = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/compan.csv','rb')) #TODO: pxview IFCOMPAN.DB (?)-c > ....../account_bob_import/original_csv/company.csv
+    reader_partner = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/compan.csv','rb')) #pxview IFCOMPAN.DB -c > ....../account_bob_import/original_csv/company.csv
     writer_partner = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.csv', 'wb'), partners_map.keys())
     writer_address = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.address.csv','wb'), partner_add_map.keys())
     writer_bank = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.bank.csv','wb'), partner_bank_map.keys())
     import_partner(reader_partner, writer_partner, partners_map, writer_address, partner_add_map, writer_bank, partner_bank_map)
 
     print 'importing contacts'
-    reader_contact = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/contacts.csv','rb')) #TODO: pxview IFcontacts.DB (?)-c > ....../account_bob_import/original_csv/contacts.csv
-    print reader_contact
+    reader_contact = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/contacts.csv','rb')) #pxview IFcontacts.DB -c > ....../account_bob_import/original_csv/contacts.csv
     writer_contact = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.contact.csv','wb'),contacts_map.keys())
     writer_job = csv.DictWriter(file(config['addons_path']+'/account_bob_import/res.partner.job.csv','wb'),job_map.keys())
     import_contact(reader_contact, writer_contact, contacts_map, writer_job, job_map)
 
     print 'importing fiscal years'
-    reader_fyear = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/period.csv','rb')) #TODO: pxview IFperiod.DB (?)-c > ....../account_bob_import/original_csv/period.csv
+    reader_fyear = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/period.csv','rb')) #pxview IFperiod.DB -c > ....../account_bob_import/original_csv/period.csv
     writer_fyear = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.fiscalyear.csv', 'wb'), fyear_map.keys())
     import_fyear(reader_fyear, writer_fyear, fyear_map)
 
@@ -818,22 +892,29 @@ def run():
     writer_period = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.period.csv', 'wb'), periods_map.keys())
     import_period(reader_period, writer_period, periods_map)
 
-    #TODO: import the account_tax from vat.csv (pxview IFvat.DB -c > ...)
+    #import the account_tax from vat.csv (pxview IFvat.DB -c > ...)
     #   constructing table account_tax => account_tax_code (for move and move_line)
-    reader_vat_code = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/vatcas.csv','rb')) #TODO: pxview IFvatcas.DB -c > ....../account_bob_import/original_csv/vat.csv
-    reader_vat = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/vat.csv','rb')) #TODO: pxview IFvat.DB -c > ....../account_bob_import/original_csv/vat.csv
+    reader_vat_code = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/vatcas.csv','rb')) #pxview IFvatcas.DB -c > ....../account_bob_import/original_csv/vat.csv
+    reader_vat = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/vat.csv','rb')) #pxview IFvat.DB -c > ....../account_bob_import/original_csv/vat.csv
     vat_dict = construct_vat_dict(reader_vat_code, reader_vat, {})
 
 
-    print "importing account.move"
-    reader_move = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/ahisto.csv','rb'))#TODO: pxview IFahisto.db -c > ~/tinydev/cci/code/addons-extra/account_bob_import/original_csv/move.csv
-    writer_move = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.csv', 'wb'), move_map.keys())
-    import_move(reader_move, writer_move, move_map)
+    print 'importing account.move.reconcile'
+    reader_ahisto = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/ahisto_matchings.csv','rb'))
+    writer_reconcile = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.reconcile-1.csv', 'wb'), arecon_map.keys())
+    dict_ahisto = import_areconcile(reader_ahisto, writer_reconcile, arecon_map)
+
+    reader_chisto = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/chisto_matchings.csv','rb'))
+    writer_reconcile2 = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.reconcile-2.csv', 'wb'), crecon_map.keys())
+    dict_chisto = import_creconcile(reader_chisto, writer_reconcile2, crecon_map)
+
 
     print "importing account.move.line"
-    reader_move_line = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/ahisto.csv','rb'))
+    reader_move = csv.DictReader(file(config['addons_path']+'/account_bob_import/original_csv/ahisto.csv','rb'))
+    #pxview IFahisto.db -c > ~/tinydev/cci/code/addons-extra/account_bob_import/original_csv/move.csv
+    writer_move = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.csv', 'wb'), move_map.keys())
     writer_move_line = csv.DictWriter(file(config['addons_path']+'/account_bob_import/account.move.line.csv', 'wb'), move_line_map.keys())
-    import_move_line(reader_move_line, writer_move_line, move_line_map)
+    import_moves_and_lines(reader_move, writer_move, writer_move_line, move_map, move_line_map, dict_ahisto, dict_chisto, vat_dict)
 
 if __name__ == '__main__':
     run()
