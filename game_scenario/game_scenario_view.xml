@@ -47,7 +47,6 @@
                             <field name="post_process_method"/>
                             <field name="post_process_args" colspan="2"/>
                            </group>
-                           <field name="state"/>
                     </page>
                     <page string="Next steps">
                         <separator colspan="4" string="Next Steps"/>
@@ -62,6 +61,8 @@
                         <field name="accepted_users" colspan="4"/>
                     </page>
                 </notebook>
+                <separator string="State" colspan="4"/>
+                <field name="state"/>
             </form>
         </field>
     </record>
