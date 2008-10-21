@@ -27,6 +27,7 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 ###############################################################################
 from osv import fields, osv
+from osv.orm import except_orm
 import pooler
 import time
 from mx import DateTime
@@ -36,30 +37,11 @@ import netsvc
 from service import security
 from service import web_services
 
-class game_scenario_step(osv.osv):
-    _name="game.scenario.step"
-    _columns = {
-        'name':fields.char('Name',size=64, required=True),
-        'description' : fields.text('Description'),
-        'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),
-        'accepted_users' : fields.one2many('res.users', 'user_id', 'User'),
-        'tip' : fields.text('Tip'),
-        'error' : fields.text('Error'),
-        'pre_process_object' : fields.char('Preprocess Object', size=64),
-        'pre_process_method' : fields.char('Preprocess Method', size=64),
-        'pre_process_args' : fields.text('Preprocess Args'),
-        'post_process_object' : fields.char('Postprocess Object', size=64),
-        'post_process_method' : fields.char('Postprocess Method', size=64),
-        'post_process_args' : fields.text('Postprocess Args')
-        }
-game_scenario_step()
-
 class game_scenario(osv.osv):
     _name="game.scenario"
     _columns = {
         'name':fields.char('Name',size=64, required=True),
         'note':fields.text('Note'),
-        'step_ids':fields.many2many('game.scenario.step', 'game_scenario_step_rel', 'scenario_id', 'scenario_step_id', 'Steps'),
         'state' : fields.selection([('draft','Draft'), ('running','Running'), ('done','Done'), ('cancel','Cancel')], 'State')
     }
     _defaults = {
@@ -67,46 +49,84 @@ class game_scenario(osv.osv):
         }
 game_scenario()
 
-class users(osv.osv):
-    _inherit="res.users"
-    _columns={
-        'user_id' : fields.many2one('game.scenario.step', 'accepted_users',)
+class game_scenario_step(osv.osv):
+    _name="game.scenario.step"
+    _columns = {
+        'name':fields.char('Name',size=64, required=True),
+        'description' : fields.text('Description'),
+        'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),
+        'accepted_users' : fields.many2many('res.users', 'scenario_step_users', 'user_id', 'scenario_id', 'Users'),
+        'tip' : fields.text('Tip'),
+        'error' : fields.text('Error'),
+        'pre_process_object' : fields.char('Preprocess Object', size=64),
+        'pre_process_method' : fields.char('Preprocess Method', size=64),
+        'pre_process_args' : fields.text('Preprocess Args'),
+        'post_process_object' : fields.char('Postprocess Object', size=64),
+        'post_process_method' : fields.char('Postprocess Method', size=64),
+        'post_process_args' : fields.text('Postprocess Args'),
+        'scenario_id' : fields.many2one('game.scenario', 'Scenario'),
+        'step_next_ids':fields.many2many('game.scenario.step','scenario_step_rel', 'next_scenario_id','scenario_id', 'Next Steps'),
+        'state' : fields.selection([('draft','Draft'),('running','Running'), ('done','Done'),('cancel','Cancel')], 'State')
         }
-users()
+    _defaults = {
+        'state' : lambda *a : 'running',
+        }
+game_scenario_step()
 
 class scenario_objects_proxy(web_services.objects_proxy):
-
     def execute(self, db, uid, passwd, object, method, *args):
         security.check(db, uid, passwd)
         service = netsvc.LocalService("object_proxy")
-        cr = pooler.get_db_only(db).cursor()
-        pool = pooler.get_pool(cr.dbname)
-        step_obj=pool.get('game.scenario.step')
-        cr.execute("select scenario_step_id from game_scenario_step_rel rel left join game_scenario s on s.id=rel.scenario_id where s.state='running' ")
-        step_ids=map(lambda x:x[0],cr.fetchall())
+        pool = pooler.get_pool(db)
+        if pool.get('game.scenario'):
+            cr = pooler.get_db_only(db).cursor()
+            cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
+            steps_orig = cr.dictfetchall()
+            def check(step, mode='pre'):
+                try:
+                    return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *args):
+                except:
+                    cr.close()
+                    raise
+            steps = filter(check, steps_orig)
+            cr.close()
+            if steps_orig and not steps:
+                raise
 
-        for step in step_obj.browse(cr,uid,step_ids):
-            if not step.state=='running':
-                continue
-            pre_process_object = step.pre_process_object
-            pre_process_method = step.pre_process_method
-            try:
-                res = service.execute(db, uid, pre_process_object, pre_process_method, *args)
+            res = service.execute(db, uid, object, method, *args)
 
-            except AttributeError:
-                step_obj.write(cr,uid,step_ids,{'error': AttributeError.__dict__['__doc__']})
+            if steps:
+                cr = pooler.get_db_only(db).cursor()
+                for step in steps:
+                    check(step, 'post')
+                ids = ','.join(map(lambda x: str(x['id']), steps))
+                cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
+                cr.execute('update game_scenario_step set state=%s where id in (select scenarion_next_id from scenario_step_rel where scenario_id in ('+ids+')) and state=%s', ('draft','running'))
                 cr.commit()
-
-            if not res:
-                res = service.execute(db, uid, object, method, *args)
-            else:
-                post_process_object = step.post_process_object
-                post_process_method = step.post_process_method
-                res = service.execute(db, uid, object, method, *args)
-                res = service.execute(db, uid, post_process_object, post_process_method, *args)
-
+                cr.close()
+        else:
+            res = service.execute(db, uid, object, method, *args)
         return res
-
 scenario_objects_proxy()
 
+#
+#1. Call pre_... of running steps of running scenario (state=running)
+#  2. If 1 raise exception:
+#        Raise Exception
+#    If 1 return False: continue on 3 but not 4.
+#    If 1 return True: continue on 3 and 4.
+#  3. Call the normal method of the service
+#  4. Call post_... method
+#    Set state to done
+#    Set state of next_step_ids to running
+#  5. If no more steps in the scenario, set state of scenario as done.
 
+
+#         res=pre method of pre model
+#         exception :
+#            raise exception
+#        if not res:
+#            res = service.execute(db, uid, object, method, *args)
+#        else:
+#            run current
+#            run post method of post model
