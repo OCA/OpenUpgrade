@@ -8,9 +8,10 @@
             <field name="arch" type="xml">
                 <form string="Game Scenario">
                     <separator string="Retail Scenario - Objectives" colspan="4"/>
+                    <label string="Explain the scenario introduction here..." align="0.0" colspan="4"/>
                     <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
                     <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
+                    <newline/>
                     <separator string="Retail Scenario - Scenario" colspan="4"/>
                     <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
                     <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
@@ -40,6 +41,8 @@
                     </group>
                     <newline/>
                     <group colspan="4">
+                        <separator string="References" colspan="4"/>
+                        <field name="step1_so_id"/>
                         <separator string="State" colspan="4"/>
                         <field name="state"/>
                         <button string="Start Scenario" name="confirm" states="not running" type="object"/>
