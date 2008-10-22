@@ -88,16 +88,16 @@ class scenario_objects_proxy(web_services.objects_proxy):
                         return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *new_args)
                     except Exception,e:
                         cr.close()
-                        raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', str(e)))
+                        raise
                 else:
                     return True
             steps = filter(check, steps_orig)
             cr.close()
-            if steps_orig and not steps:
-                raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', steps_orig[0]['error']))
+#            if steps_orig and not steps:
+#                raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', steps_orig[0]['error']))
             res = service.execute(db, uid, object, method, *args)
-            new_args+={'result':res},
             if steps:
+                new_args+={'result':res},
                 cr = pooler.get_db_only(db).cursor()
                 for step in steps:
                     check(step, 'post')

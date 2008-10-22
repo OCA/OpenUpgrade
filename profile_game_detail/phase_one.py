@@ -67,14 +67,23 @@ class profile_game_detail_phase_one(osv.osv):
         'state': lambda *args: 'not running'
     }
     def pre_process_quotation(self, cr,uid, object, method, *args):
+        print 'pre process of quotation', cr, uid
         if (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
-            return False
+            raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', '''
+You can not perform this operation in the current phase of the business game.
+You should now create a sale order with two products:
+* One PC1
+* One PC2
 
-        print 'pre process of quotation', cr, uid, args
-        res= args[-1]
-        model=res and res.get('model',False) or False
-        print model
-        return True
+I suggest you to click on the home button on the top right corner to go
+back to the main dashboard.
+'''))
+
+        if (object in ("sale.order", 'sale.order.line')) and (method in ('create','write')):
+            print True
+            return True
+        print False
+        return False
 
     def post_process_quotation(cr,uid,*args):
 		# TO DO 
@@ -84,6 +93,7 @@ class profile_game_detail_phase_one(osv.osv):
         print res        
         #self.write(cr,uid,{'step1':True,'step1_so_id':res})
         return True 
+
     def pre_process_print_quote(cr,uid,ids,*args):
 		# TO DO 
         print 'pre process of print quotation'       
