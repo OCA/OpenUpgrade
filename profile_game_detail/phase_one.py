@@ -66,10 +66,11 @@ class profile_game_detail_phase_one(osv.osv):
     _defaults = {
         'state': lambda *args: 'not running'
     }
-    def pre_process_quotation(self, cr,uid, object, method, *args):
-        print 'pre process of quotation', cr, uid
-        if (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
-            raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', '''
+    #
+    # TODO: change this method to use the error field of the running step
+    #
+    def error(self, cr, uid, msg=''):
+        raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', '''
 You can not perform this operation in the current phase of the business game.
 You should now create a sale order with two products:
 * One PC1
@@ -77,37 +78,36 @@ You should now create a sale order with two products:
 
 I suggest you to click on the home button on the top right corner to go
 back to the main dashboard.
-'''))
+''')+"\n"+msg)
 
-        if (object in ("sale.order", 'sale.order.line')) and (method in ('create','write')):
-            print True
-            return True
-        print False
-        return False
+    def pre_process_quotation(self, cr,uid, object, method, *args):
+        print 'pre process of quotation', cr, uid
+        if (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
+            self.error(cr, uid)
+        return (object in ("sale.order", 'sale.order.line')) and (method in ('create','write')):
 
     def post_process_quotation(cr,uid,*args):
-		# TO DO 
         print 'post process of quotation'    
         res=args[-1]
         res=res and res.get('result',False) or False
-        print res        
+        print res
         #self.write(cr,uid,{'step1':True,'step1_so_id':res})
-        return True 
+        return True
 
     def pre_process_print_quote(cr,uid,ids,*args):
-		# TO DO 
+        # TO DO 
         print 'pre process of print quotation'       
         return True 
     def post_process_print_quote(cr,uid,ids,*args):
-		# TO DO 
+        # TO DO 
         print 'post process of print quotation'        
         return True
     def pre_process_sale(cr,uid,ids,*args):
-		# TO DO 
+        # TO DO 
         print 'pre process of sale'        
         return True
     def post_process_sale(cr,uid,ids,*args):
-		# TO DO 
+        # TO DO 
         print 'post process of sale'        
         return True
 
