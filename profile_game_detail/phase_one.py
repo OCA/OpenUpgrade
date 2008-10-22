@@ -84,7 +84,7 @@ back to the main dashboard.
         print 'pre process of quotation', cr, uid
         if (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
             self.error(cr, uid)
-        return (object in ("sale.order", 'sale.order.line')) and (method in ('create','write')):
+        return (object in ("sale.order", 'sale.order.line')) and (method in ('create','write'))
 
     def post_process_quotation(cr,uid,*args):
         print 'post process of quotation'    

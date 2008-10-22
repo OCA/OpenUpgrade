@@ -7,28 +7,43 @@
             <field name="model">profile.game.detail.phase1</field>
             <field name="arch" type="xml">
                 <form string="Game Scenario">
-                    <field name="step1"/>
-                    <field name="step1_so_id"/>
-                    <field name="step2"/>
+                    <separator string="Retail Scenario - Objectives" colspan="4"/>
+                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
+                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
+                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
+                    <separator string="Retail Scenario - Scenario" colspan="4"/>
+                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
+                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
+                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
+                    <label string="You can get the explanation at http://openerp.com..." align="0.0" colspan="4"/>
+                    <group colspan="1" col="2">
+                        <separator string="Sales Manager" colspan="2"/>
+                        <field name="step1"/>
+                        <field name="step2"/>
+                        <field name="step3"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="HR Manager" colspan="2"/>
+                        <field name="step4"/>
+                        <field name="step5"/>
+                        <field name="step6"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="Logistic Manager" colspan="2"/>
+                        <field name="step7"/>
+                        <field name="step8"/>
+                    </group>
+                    <group colspan="1" col="2">
+                        <separator string="Financial Manager" colspan="2"/>
+                        <field name="step9"/>
+                        <field name="step10"/>
+                    </group>
                     <newline/>
-                    <field name="step3"/>
-                    <newline/>
-                    <field name="step4"/>
-                    <newline/>
-                    <field name="step5"/>
-                    <newline/>
-                    <field name="step6"/>
-                    <newline/>
-                    <field name="step7"/>
-                    <newline/>
-                    <field name="step8"/>
-                    <newline/>
-                    <field name="step9"/>
-                    <newline/>
-                    <field name="step10"/>
-                    <newline/>
-                    <field name="state"/>
-                    <button string="Start Scenario" name="confirm" states="not running" type="object"/>
+                    <group colspan="4">
+                        <separator string="State" colspan="4"/>
+                        <field name="state"/>
+                        <button string="Start Scenario" name="confirm" states="not running" type="object"/>
+                    </group>
                 </form>
             </field>
         </record>
