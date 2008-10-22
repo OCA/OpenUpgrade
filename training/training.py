@@ -1,24 +1,26 @@
+# -*- coding: UTF-8 -*-
 # training/training.py
 from osv import osv, fields
 import time
 
-"""
-class training_partner(osv.osv):
+class res_partner_contact(osv.osv):
     _inherit = 'res.partner.contact'
+
     _columns = {
-        'is_auditor' : fields.boolean('Auditor', select=True),
-        'is_instructor' : fields.boolean('Instructor', select=True),
-        'is_student' : fields.boolean('Student', select=True),
-        'is_guardian' : fields.boolean('Guardian', select=True),
+        'matricule' : fields.char( 'Matricule', size=32, required=True ),
+        'birthplace' : fields.char( 'BirthPlace', size=64 ),
+        'education_level' : fields.char( 'Education Level', size=128 ),
     }
-    _defaults = {
-        'is_auditor': lambda *a: False,
-        'is_instructor': lambda *a: False,
-        'is_student': lambda *a: False,
-        'is_guardian': lambda *a: False,
+res_partner_contact()
+
+class res_partner_job(osv.osv):
+    _inherit = 'res.partner.job'
+    _columns = {
+        'external_matricule' : fields.char( 'Matricule', size=32 ),
+        'departments' : fields.text( 'Departments' ),
+        'orientation' : fields.text( 'Orientation' ),
     }
-training_partner()
-"""
+res_partner_job()
 
 class training_course_category(osv.osv):
     _name = 'training.course_category'
@@ -296,22 +298,6 @@ class training_event(osv.osv):
 
 training_event()
 
-class training_seance(osv.osv):
-    _name = 'training.seance'
-    _inherits = {
-        'training.event' : 'event_id'
-    }
-    _columns = {
-        'partner_id' : fields.many2one('res.partner', 'Partner', domain=[('is_instructor', '=', True)]),
-        'event_id' : fields.many2one('training.event', 'Event'),
-        'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
-    }
-    _defaults = {
-        'state' : lambda *a: 'draft',
-    }
-
-training_seance()
-
 class training_plannified_examen(osv.osv):
     _name = 'training.plannified_examen'
     _inherits = {
@@ -324,17 +310,47 @@ class training_plannified_examen(osv.osv):
 
 training_plannified_examen()
 
+class training_group(osv.osv):
+    _name = 'training.group'
+    _columns = {
+        'name': fields.char('Name', size=64, required=True, select=True),
+    }
+training_group()
+
+class training_seance(osv.osv):
+    _name = 'training.seance'
+    _inherits = {
+        'training.event' : 'event_id'
+    }
+    _columns = {
+        'partner_id' : fields.many2one('res.partner', 'Partner', domain=[('is_instructor', '=', True)]),
+        'event_id' : fields.many2one('training.event', 'Event'),
+        'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
+        'group_id' : fields.many2one('training.group', 'Group'),
+    }
+    _defaults = {
+        'state' : lambda *a: 'draft',
+    }
+
+training_seance()
+
 class training_subscription(osv.osv):
     _name = 'training.subscription'
     _columns = {
         'session_id' : fields.many2one('training.session', 'Session', select=True, required=True),
         'partner_id' : 
             fields.many2one(
-                'res.partner', 'Student', 
-                domain = ['|', ('is_student', '=', True), ('is_auditor', '=', True)],
-                select=True, required=True
+                'res.partner', 'Partner', 
+                select=True, 
+                required=True
             ),
-        'klass' : fields.char( 'Klass', size=64 ),
+        # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
+        'group_id' : fields.many2one('training.group', 'Group', readonly=True),
+        'state' : fields.selection([('draft', 'Draft'),('confirm','Confirm'),('cancel','Cancel')], 'State', required=True ),
+    }
+
+    _defaults = {
+        'state' : lambda *a: 'draft',
     }
 
 training_subscription()
@@ -345,8 +361,7 @@ class training_participation(osv.osv):
         'event_id' : fields.many2one('training.event', 'Event' ),
         'partner_id' : 
             fields.many2one(
-                'res.partner', 'Student', 
-                domain = ['|', ('is_student', '=', True), ('is_auditor', '=', True)],
+                'res.partner', 'Partner', 
                 select=True, 
                 required=True
             ),
@@ -372,7 +387,7 @@ class training_examen_answers(osv.osv):
     _columns = {
         'plannified_examen_id' : fields.many2one('training.plannified_examen', 'Plannified Examen', select=True, required=True),
         'question_id' : fields.many2one('training.question', 'Question', select=True, required=True),
-        'student_id' : fields.many2one('res.partner', domain=['|', ('is_auditor', '=', True),('is_student', '=', True)], select=True, required=True),
+        'partner_id' : fields.many2one('res.partner', select=True, required=True),
     }
 
 training_examen_answers()

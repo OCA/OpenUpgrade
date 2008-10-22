@@ -4,31 +4,55 @@
 -->
 <openerp>
     <data>
-    <!--
-        <record model="ir.ui.view" id="training_partner_form">
-            <field name="name">training.partner.form</field>
+        <record model="ir.ui.view" id="res_partner_contact_form_inherit">
+            <field name="name">res.partner.contact.form.inherit</field>
             <field name="model">res.partner.contact</field>
-            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <notebook position="inside">
-                    <page string="Guardian" attrs="{'invisible':[('is_guardian','!=',True)]}">
-                        <separator string="Je suis un guardian" />
-                    </page>
-                    <page string="Student" attrs="{'invisible':[('is_student','!=',True)]}">
-                        <separator string="Je suis un student" />
-                    </page>
-                    <page string="Instructor" attrs="{'invisible':[('is_instructor','!=',True)]}">
-                        <separator string="Je suis un instructor"/>
-                    </page>
-                    <page string="Auditor" attrs="{'invisible':[('is_auditor','!=',True)]}">
-                        <separator string="Je suis un auditor" />
-                    </page>
-                </notebook>
+                <field name="birthdate" position="after">
+                    <field name="matricule" />
+                    <field name="birthplace" />
+                    <field name="education_level" />
+                </field>
             </field>
         </record>
-        -->
 
+        <record model="ir.ui.view" id="res_partner_contact_form_inherit2">
+            <field name="name">res.partner.contact.form.inherit</field>
+            <field name="model">res.partner.contact</field>
+            <field name="inherit_id" ref="base_contact.view_partner_contact_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="job_ids" position="replace">
+                    <field name="job_ids" colspan="4" nolabel="1" mode="tree, form">
+                        <form string="Functions">
+                            <field name="function_id"/>
+                            <field name="address_id"/>
+                            <field name="name"/>
+                            <field name="sequence_contact"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="date_start" />
+                            <field name="date_stop" />
+                            <field name="state" />
+                            <field name="external_matricule" />
+                            <field name="departments" colspan="4" />
+                            <field name="orientation" colspan="4" />
+                        </form>
+                        <tree string="Functions">
+                            <field name="sequence_contact" string="Seq."/>
+                            <field name="function_id"/>
+                            <field name="name"/>
+                            <field name="address_id"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                            <field name="state" />
+                        </tree>
+                    </field>
+                </field>
+            </field>
+        </record>
 
         <record model="ir.ui.view" id="training_course_category_form">
             <field name="name">training.course_category.form</field>
@@ -638,7 +662,15 @@
                 <form string="subscription">
                     <field name="partner_id" />
                     <field name="session_id" />
-                    <field name="klass" />
+                    <field name="group_id" />
+
+                    <group colspan="4">
+                        <field name="state" nolabel="1" />
+                        <button string="Draft" type="object" />
+                        <button string="Confirm" type="object" />
+                        <button string="Cancel" type="object" />
+                    </group>
+
                 </form>
             </field>
         </record>
@@ -651,7 +683,8 @@
                 <tree string="subscriptions">
                     <field name="partner_id" />
                     <field name="session_id" />
-                    <field name="klass" />
+                    <field name="group_id" />
+                    <field name="state" />
                 </tree>
             </field>
         </record>
@@ -662,13 +695,13 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
+
         <record model="ir.actions.act_window" id="training_subscription_new_act">
             <field name="name">New subscription</field>
             <field name="res_model">training.subscription</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
-
 
         <record model="ir.ui.view" id="training_participation_form">
             <field name="name">training.participation.form</field>
@@ -813,7 +846,7 @@
                 <form string="Exam Answer">
                     <field name="plannified_examen_id" />
                     <field name="question_id" />
-                    <field name="student_id" />
+                    <field name="partner_id" />
                 </form>
             </field>
         </record>
@@ -826,7 +859,7 @@
                 <tree string="Exam Answers">
                     <field name="plannified_examen_id" />
                     <field name="question_id" />
-                    <field name="student_id" />
+                    <field name="partner_id" />
                 </tree>
             </field>
         </record>
