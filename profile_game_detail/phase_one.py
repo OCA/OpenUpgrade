@@ -74,9 +74,7 @@ class profile_game_detail_phase_one(osv.osv):
         res= args[-1]
         model=res and res.get('model',False) or False
         print model
-        if model and model=='sale.order':
-             return True
-        return False
+        return True
 
     def post_process_quotation(cr,uid,*args):
 		# TO DO 
