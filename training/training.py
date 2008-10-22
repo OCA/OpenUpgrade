@@ -3,6 +3,19 @@
 from osv import osv, fields
 import time
 
+class res_partner_contact_technical_skill(osv.osv):
+    _name = 'res.partner.contact_technical_skill'
+
+    _columns = {
+        'name' : fields.char('Name', size=32, select=True),
+    }
+
+    _sql_constraints = [
+        ('unique_name', 'unique(name)', 'Unique name for the technical skill')
+    ]
+
+res_partner_contact_technical_skill()
+
 class res_partner_contact(osv.osv):
     _inherit = 'res.partner.contact'
 
@@ -10,6 +23,11 @@ class res_partner_contact(osv.osv):
         'matricule' : fields.char( 'Matricule', size=32, required=True ),
         'birthplace' : fields.char( 'BirthPlace', size=64 ),
         'education_level' : fields.char( 'Education Level', size=128 ),
+                'technical_skill_ids' : fields.many2many('res.partner.contact_technical_skill', 
+                                                 'res_partner_contact_technical_skill_rel', 
+                                                 'contact_id', 
+                                                 'skill_id', 
+                                                 'Technical Skill'),
     }
 res_partner_contact()
 
@@ -21,6 +39,7 @@ class res_partner_job(osv.osv):
         'orientation' : fields.text( 'Orientation' ),
     }
 res_partner_job()
+
 
 class training_course_category(osv.osv):
     _name = 'training.course_category'
@@ -266,6 +285,15 @@ class training_massive_subscription_wizard(osv.osv_memory):
 
 training_massive_subscription_wizard()
 
+class training_location(osv.osv):
+    _name = 'training.location'
+
+    _columns = {
+        'name' : fields.char('Name', size=32, select=True, required=True),
+    }
+
+training_location()
+
 class training_event(osv.osv):
     _name = 'training.event'
 
@@ -283,7 +311,7 @@ class training_event(osv.osv):
         # Attention, la date doit etre obligatoire
         'date_start' : fields.datetime('Date Start', required=False, select=True),
         'date_stop' : fields.datetime('Date Stop', required=False, select=True),
-        'location' :  fields.char('Location', size=128, select=True ),
+        'location_id' : fields.many2one('training.location', 'Location', select=True),
     }
 
     _constraints = [
