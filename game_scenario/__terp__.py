@@ -34,7 +34,8 @@
     "description": "Allows to check the scenario of games",
     "depends" : ["base",],
     "update_xml" : [
-        "game_scenario_view.xml"
+        "game_scenario_view.xml",
+        "security/ir.model.access.csv"
     ],
     "active": False,
     "installable": True,
