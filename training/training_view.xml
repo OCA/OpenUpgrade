@@ -75,7 +75,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Product Line">
-                    <field name="name" string="Code" />
+                    <field name="name" string="Code" select="1" />
                     <field name="parent_id" string="Parent" />
                     <separator string="Description" colspan="4" />
                     <field name="description" nolabel="4" colspan="4"/>
@@ -97,15 +97,16 @@
         </record>
 
         <record model="ir.actions.act_window" id="open_training_course_by_category_all_act">
-            <field name="name">Course By Category</field>
+            <field name="name">Courses</field>
             <field name="res_model">training.course</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('category_id', 'child_of', [active_id])]</field>
+            <field name="domain">[('analytic_account_id', '=', active_id)]</field>
         </record>
 
         <record model="ir.values" id="ir_action_course_by_category">
-            <field name="model" eval="'openacademy.course_category'" />
+            <field name="key2" eval="'tree_but_open'" />
+            <field name="model" eval="'training.course_category'" />
             <field name="name">Course By Category</field>
             <field name="value" eval="'ir.actions.act_window,%d'%open_training_course_by_category_all_act" />
             <field name="object" eval="True" />
@@ -116,6 +117,7 @@
             <field name="res_model">training.course_category</field>
             <field name="view_type">tree</field>
             <field name="view_mode">tree,form</field>
+            <field name="domain">[('parent_id', '=', False)]</field>
         </record>
 
         <!-- Création d'une vue en arbre pour charger tous les cours appartenant à une catégorie -->
@@ -142,7 +144,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Type">
-                    <field name="name" />
+                    <field name="name" string="Name" select="1" />
                 </form>
             </field>
         </record>
@@ -153,7 +155,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Types">
-                    <field name="name" />
+                    <field name="name" string="Name" />
                 </tree>
             </field>
         </record>
@@ -170,13 +172,13 @@
             <field name="model">training.course</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Course">
                     <group colspan="4" col='6'>
-                        <field name="name" string="Designation" />
+                        <field name="name" string="Designation" select="1" />
                         <field name="parent_id" string="Category/Course" required="True" />
                         <field name="course_type_id" />
                         <field name="display_name" />
-                        <field name="code" string="Code" />
+                        <field name="code" string="Code" select="1" />
                         <field name="total_duration" />
                         <field name="lang_id" />
                         <field name="target_public" />
@@ -232,8 +234,8 @@
             <field name="arch" type="xml"> 
                 <tree string="courses">
                     <field name="sequence" />
-                    <field name="code" />
-                    <field name="name" />
+                    <field name="code" string="Code" />
+                    <field name="name" string="Designation" />
                     <field name="description" />
                     <field name="duration" />
                 </tree>

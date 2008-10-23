@@ -46,9 +46,22 @@ class training_course_category(osv.osv):
     _inherits = {
         'account.analytic.account' : 'analytic_account_id',
     }
+
+    def _get_child_ids( self, cr, uid, ids, name, args, context ):
+        res = {}
+        for object in self.browse(cr, uid, ids):
+            child_ids = self.pool.get('account.analytic.account').search(cr, uid, [('parent_id', '=', object.analytic_account_id.id)])
+            print "object.id: %s" % repr(object.id)
+            print "child_ids: %s" % repr(child_ids)
+            res[object.id] = self.search(cr, uid, [('analytic_account_id', 'in', child_ids)])
+
+        print "res: %s" % repr(res)
+        return res
+
     _columns = {
         'analytic_account_id' : fields.many2one( 'account.analytic.account', 'Analytic Account' ),
         'description' : fields.text('Description'),
+        'child_ids' : fields.function( _get_child_ids, method=True, type='one2many', relation="training.course", string='Children'),
     }
 
 training_course_category()
@@ -58,10 +71,11 @@ class training_course_type(osv.osv):
     _inherits = {
         'account.analytic.account' : 'analytic_account_id',
     }
+    
     _columns = {
         'analytic_account_id' : fields.many2one( 'account.analytic.account', 'Analytic Account' ),
-    
     }
+    
 training_course_type()
 
 class training_offer(osv.osv):
@@ -91,7 +105,7 @@ class training_course(osv.osv):
         'display_name' : fields.char('Display Name', 64 ),
         'duration' : fields.time('Duration', required=True),
         'children' : fields.function( _get_child_ids, method=True, type='one2many', relation="training.course", string='Children'),
-        'total_duration' : fields.function(_total_duration_compute, string='Total Duration', required=True, readonly=True, store=True, method=True, type="time"),
+        'total_duration' : fields.function(_total_duration_compute, string='Total Duration', readonly=True, store=True, method=True, type="time"),
         'sequence' : fields.integer('Sequence'),
         'target_public' : fields.char('Target Public', 256),
         'reference_id' : fields.many2one('training.course', 'Master Course'),
