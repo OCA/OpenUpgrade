@@ -29,6 +29,5 @@
 ##############################################################################
 
 import wizard_cancel_repair
-import wizard_make_invoice
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

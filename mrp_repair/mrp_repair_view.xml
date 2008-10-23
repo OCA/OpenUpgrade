@@ -2,23 +2,6 @@
 <openerp>
     <data>
     
-    <wizard 
-            id="action_cancel_repair" 
-            model="mrp.repair" 
-            name="mrp.repair.cancel"
-            string="Cancel Repair"
-            menu = "False"
-            multi = "True"
-            />
-            
-    <wizard
-			id="wizard_mrp_repair_make_invoice"
-			keyword="client_action_multi"
-			model="mrp.repair"
-			name="mrp.repair.make_invoice"
-			multi="True"
-			string="Make invoices"/>
-            
     <record id="view_repair_order_form" model="ir.ui.view">
             <field name="name">mrp.repair.form</field>
             <field name="model">mrp.repair</field>
@@ -26,6 +9,8 @@
             <field name="arch" type="xml">
                 <form string="Repairs order">
                     <group col="4" colspan="4">
+                    	<field name="name"/>
+                    	<newline/>
                         <field name="product_id" select="1"  on_change="onchange_product_id(product_id, move_id)"/>
                         <field name="prodlot_id" select="2" on_change="onchange_lot_id(prodlot_id)"/>
                         <field name="partner_id" select="2" on_change="onchange_partner_id(partner_id)" />
@@ -42,33 +27,50 @@
                             <field colspan="4" mode="tree,form" name="operations" nolabel="1" widget="one2many_list">
                                 <form string="Operations">
                                     <field name="type"  on_change="onchange_operation_type(type)"/>
-                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_qty, parent.partner_id)"/>
-                                    <field name="product_qty" string="Qty"/>
+                                    <field name="invoice"/>
+                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+                                    <field name="product_uom_qty" string="Qty"/>
                                     <field name="product_uom" string="UoM"/>
                                     <field name="price_unit"/>
-                                    <field name="prodlot_id"/>
+                                    <field name="discount"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="delay"/>
                                     <field name="location_id"/>
                                     <field name="location_dest_id"/>
-                                    <field name="invoice"/>
+                                    <newline/>
+                                    <field name="state"/>
                                 </form>
                                 <tree string="Operations lines"> <!-- editable="bottom"> -->
-                                    <field name="type" on_change="onchange_operation_type(type)"/>
-                                    <field name="product_id"/>
-                                    <field name="product_qty" string="Qty"/>
+                                    <field name="type"  on_change="onchange_operation_type(type)"/>
+                                    <field name="product_id" on_change="product_id_change(parent.pricelist_id,product_id,product_uom,product_uom_qty, parent.partner_id)"/>
+                                    <field name="product_uom_qty" string="Qty"/>
                                     <field name="product_uom" string="UoM"/>
+                                    <field name="discount"/>
                                     <field name="price_unit"/>
-                                    <field name="prodlot_id"/>
-                                    <field name="location_id"/>
-                                    <field name="location_dest_id"/>
+                                    <field name="price_net"/>
+                                    <field name="price_subtotal"/>
                                     <field name="invoice"/>
                                 </tree>
                             </field>
                             <newline/>
                             <group col="13" colspan="4">
                                 <field name="state" select="2"/>
+                                
+                                <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object"/>
+                                <button name="action_cancel" states="manual,progress" string="Cancel Order" type="object"/>
+                                <button name="cancel" states="draft" string="Cancel Order"/>
+                                <button name="invoice_cancel" states="invoice_except" string="Cancel Order"/>
+                                
+                                
                                 <button name="repair_confirm" states="draft" string="Confirm Repair"/>
-                                <button name="repair_done" states="confirmed" string="Repair Done"/>
+                                <button name="invoice_recreate" states="invoice_except" string="Recreate Invoice"/>
+                                <button name="invoice_corrected" states="invoice_except" string="Invoice Corrected"/>
+                                <button name="ship_recreate" states="shipping_except" string="Recreate Procurement"/>
+                                <button name="ship_corrected" states="shipping_except" string="Procurement Corrected"/>
                                 <button name="make_invoice" states="2binvoiced" string="Make Invoice"/>
+                                <button name="ship_cancel" states="shipping_except" string="Cancel Order"/>
+                                <button name="repair_done" states="confirmed" string="Repair Done"/>
+                                
                                 <button name="%(action_cancel_repair)d" states="draft,confirmed,2binvoiced" string="Cancel Repair" type="action"/>
                                 <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object"/>
                             </group>
@@ -82,13 +84,13 @@
                             <field colspan="4" mode="tree,form" name="fees_lines" nolabel="1" widget="one2many_list">
                             <form string="Fees Line">
                                     <field name="product_id" on_change="product_id_change(product_id,product_uom)" />
-                                    <field name="product_qty" string="Qty"/>
+                                    <field name="product_uom_qty" string="Qty"/>
                                     <field name="product_uom" string="UoM" /> <!--on_change="product_id_change(product_id,product_uom)" /> -->
                                     <field name="price_unit"/>
                                 </form>
                                 <tree string="Fees lines"> <!-- editable="bottom"> -->
                                     <field name="product_id"/>
-                                    <field name="product_qty" string="Qty"/>
+                                    <field name="product_uom_qty" string="Qty"/>
                                     <field name="product_uom" string="UoM"/>
                                     <field name="price_unit"/>
                                 </tree>
