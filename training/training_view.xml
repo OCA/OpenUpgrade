@@ -487,7 +487,7 @@
                     <field name="session_id" />
                     <field name="date_start" />
                     <field name="date_stop" />
-                    <field name="location" />
+                    <field name="location_id" />
                 </form>
             </field>
         </record>
@@ -502,7 +502,7 @@
                     <field name="session_id" />
                     <field name="date_start" />
                     <field name="date_stop" />
-                    <field name="location" />
+                    <field name="location_id" />
                 </tree>
             </field>
         </record>
@@ -515,7 +515,7 @@
                 <calendar string="Events" color="session_id" date_start="date_start" date_stop="date_stop">
                     <field name="name"/>
                     <field name="session_id" />
-                    <field name="location"/>
+                    <field name="location_id"/>
                 </calendar>
             </field>
         </record>
@@ -646,7 +646,7 @@
                 <calendar string="Events" color="session_id" date_start="date_start" date_stop="date_stop">
                     <field name="name"/>
                     <field name="session_id" />
-                    <field name="location"/>
+                    <field name="location_id"/>
                 </calendar>
             </field>
         </record>
