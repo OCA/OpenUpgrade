@@ -136,7 +136,7 @@ class stock_planning_sale_prevision(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64),
         'user_id': fields.many2one('res.users' , 'Salesman',readonly=True, states={'draft':[('readonly',False)]}),
-        'period_id': fields.many2one('stock.period' , 'Period', required=True,readonly=True,  domain=[('state','=','open')],states={'draft':[('readonly',False)]}),
+        'period_id': fields.many2one('stock.period' , 'Period', required=True),
         'product_id': fields.many2one('product.product' , 'Product', readonly=True, required=True,states={'draft':[('readonly',False)]}),
         'product_qty' : fields.float('Product Quantity', required=True, readonly=True, states={'draft':[('readonly',False)]}),
         'product_amt' : fields.float('Product Amount', readonly=True, states={'draft':[('readonly',False)]}),
@@ -254,7 +254,7 @@ class stock_planning(osv.osv):
     _columns = {
         'name' : fields.char('Name', size=64),
         'state' : fields.selection([('draft','Draft'),('done','Done')],'State',readonly=True),
-        'period_id': fields.many2one('stock.period' , 'Period', required=True,readonly=True,  domain=[('state','=','open')],states={'draft':[('readonly',False)]}),
+        'period_id': fields.many2one('stock.period' , 'Period', required=True),
         'product_id': fields.many2one('product.product' , 'Product', required=True),
         'product_uom' : fields.many2one('product.uom', 'UoM', required=True),
         'planned_outgoing' : fields.float('Planned Out', required=True),
