@@ -34,6 +34,7 @@ import pooler
 class profile_game_detail_phase_one(osv.osv):
     _name="profile.game.detail.phase1"
     _columns = {
+		'name':fields.char('Name',size=64,readonly=True),
         'step1': fields.boolean('Create Quotation', readonly=True),
         'step1_so_id': fields.many2one('sale.order', 'Quotation / Sale Order', readonly=True),
         'step2': fields.boolean('Print Customer Quotation', readonly=True),
@@ -61,7 +62,7 @@ class profile_game_detail_phase_one(osv.osv):
             ('deliver','Deliver Products'),
             ('invoice_create','Confirm Invoice'),
             ('invoice_print','Print Invoice'),
-        ], 'State', required=True, readonly=True)
+        ], 'State', required=True,readonly=True)
     }
     _defaults = {
         'state': lambda *args: 'not running'
@@ -82,31 +83,40 @@ back to the main dashboard.
 
     def pre_process_quotation(self, cr,uid, object, method, *args):
         print 'pre process of quotation', cr, uid
-        if (object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink')):
+        sale_user_record_id = self.pool.get('ir.model.data')._get_id(cr, uid, 'sale', 'user_sales')   
+        sale_user_id = self.pool.get('ir.model.data').browse(cr, uid, sale_user_record_id).res_id                     
+        if ((object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink'))):
             self.error(cr, uid)
-        return (object in ("sale.order", 'sale.order.line')) and (method in ('create','write'))
+        return (object in ("sale.order", 'sale.order.line')) and (method in ('create'))
 
-    def post_process_quotation(cr,uid,*args):
+    def post_process_quotation(self,cr,uid,object, method,*args):
         print 'post process of quotation'    
         res=args[-1]
-        res=res and res.get('result',False) or False
-        print res
-        #self.write(cr,uid,{'step1':True,'step1_so_id':res})
-        return True
+        res=res and res.get('result',False) or False        
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_detail', 'phase1')   
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
+        if pid and res:
+            return self.write(cr,uid,pid,{'step1':True,'step1_so_id':res})
+        return False
 
-    def pre_process_print_quote(cr,uid,ids,*args):
+    def pre_process_print_quote(self,cr,uid,object, method,*args):
         # TO DO 
-        print 'pre process of print quotation'       
+        print 'pre process of print quotation' ,method,object
+        sale_user_record_id = self.pool.get('ir.model.data')._get_id(cr, uid, 'sale', 'user_sales')   
+        sale_user_id = self.pool.get('ir.model.data').browse(cr, uid, sale_user_record_id).res_id                     
+        if ((object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid)
+        return (object in ("sale.order", 'sale.order.line')) and (method in ('create','write'))      
         return True 
-    def post_process_print_quote(cr,uid,ids,*args):
+    def post_process_print_quote(self,cr,uid,object, method,*args):
         # TO DO 
         print 'post process of print quotation'        
         return True
-    def pre_process_sale(cr,uid,ids,*args):
+    def pre_process_sale(self,cr,uid,object, method,*args):
         # TO DO 
         print 'pre process of sale'        
         return True
-    def post_process_sale(cr,uid,ids,*args):
+    def post_process_sale(self,cr,uid,object, method,*args):
         # TO DO 
         print 'post process of sale'        
         return True
@@ -120,7 +130,7 @@ back to the main dashboard.
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_detail', 'step_quotation')
         sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
         print 'Game Quotation', sid
-        self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
+        return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})        
 
 profile_game_detail_phase_one()
 

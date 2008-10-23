@@ -54,8 +54,7 @@ class game_scenario_step(osv.osv):
     _columns = {
         'name':fields.char('Name',size=64, required=True),
         'description' : fields.text('Description'),
-        'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),
-        'accepted_users' : fields.many2many('res.users', 'scenario_step_users', 'user_id', 'scenario_id', 'Users'),
+        'menu_id' : fields.many2one('ir.ui.menu', 'Menu', required=True),        
         'tip' : fields.text('Tip'),
         'error' : fields.text('Error'),
         'pre_process_object' : fields.char('Preprocess Object', size=64),
@@ -71,7 +70,63 @@ class game_scenario_step(osv.osv):
         }
 game_scenario_step()
 
+#def _execute_service(db,uid,passwd,object,method,type,*args):
+#    res=False
+#    if type=='execute':
+#        service = netsvc.LocalService("object_proxy")
+#        res = service.execute(db, uid, object, method, *args)
+#    elif type=='execute_wkf':
+#        service = netsvc.LocalService("object_proxy")
+#        res = service.exec_workflow(db, uid, object, method, id)
+#    elif type=='wizard':
+#        wiz = netsvc.LocalService('wizard.'+self.wiz_name[wiz_id])
+#        res=wiz.execute(db, uid, self.wiz_datas[wiz_id], action, context)
+#    elif type=='report':
+#        cr = pooler.get_db(db).cursor()
+#        obj = netsvc.LocalService('report.'+object)
+#        res = obj.create(cr, uid, ids, datas, context)
+#        cr.close()
+#    return res
+#def _execute(db,uid,passwd,object,method,type,*args):        
+#    pool = pooler.get_pool(db)
+#    res=False
+#    if pool.get('game.scenario'):
+#        cr = pooler.get_db_only(db).cursor()
+#        cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
+#        steps_orig = cr.dictfetchall()            
+#        new_args=()
+#        def check(step, mode='pre'):
+#            if step[mode+'_process_object'] and step[mode+'_process_method']:
+#                try:
+#                    return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *new_args)
+#                except Exception,e:
+#                    cr.close()
+#                    raise
+#            else:
+#                return True
+#        steps = filter(check, steps_orig)
+#        cr.close()
+#        res=_execute_service(db,uid,passwd,object,method,type,args)
+#        if steps:
+#            new_args+={'result':res},
+#            cr = pooler.get_db_only(db).cursor()
+#            for step in steps:
+#                check(step, 'post')
+#            ids = ','.join(map(lambda x: str(x['id']), steps))
+#            cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
+#            cr.execute('update game_scenario_step set state=%s where id in (select next_step_id from next_step_rel where step_id in ('+ids+')) and state=%s', ('running','draft'))
+#            cr.commit()
+#            cr.close()
+#    else:
+#        res=_execute_service(db,uid,passwd,object,method,type,args)
+#    return res
 class scenario_objects_proxy(web_services.objects_proxy):
+    def exec_workflow(self, db, uid, passwd, object, method, id):
+        security.check(db, uid, passwd)
+        service = netsvc.LocalService("object_proxy")
+        res = service.exec_workflow(db, uid, object, method, id)
+        return res
+
     def execute(self, db, uid, passwd, object, method, *args):
         security.check(db, uid, passwd)
         service = netsvc.LocalService("object_proxy")
@@ -79,9 +134,8 @@ class scenario_objects_proxy(web_services.objects_proxy):
         if pool.get('game.scenario'):
             cr = pooler.get_db_only(db).cursor()
             cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
-            steps_orig = cr.dictfetchall()
-            new_args=args
-            new_args +={'model':object},
+            steps_orig = cr.dictfetchall()            
+            new_args =()
             def check(step, mode='pre'):
                 if step[mode+'_process_object'] and step[mode+'_process_method']:
                     try:
@@ -110,6 +164,25 @@ class scenario_objects_proxy(web_services.objects_proxy):
             res = service.execute(db, uid, object, method, *args)
         return res
 scenario_objects_proxy()
+
+
+class scenario_wizard(web_services.wizard):
+    def _execute(self, db, uid, wiz_id, datas, action, context):
+        self.wiz_datas[wiz_id].update(datas)
+        wiz = netsvc.LocalService('wizard.'+self.wiz_name[wiz_id])
+        return wiz.execute(db, uid, self.wiz_datas[wiz_id], action, context)
+scenario_wizard()
+
+class scenario_report_spool(web_services.report_spool):
+    def _report(self,db, uid, passwd, object, ids, datas=None, context=None):        
+        cr = pooler.get_db(db).cursor()
+        obj = netsvc.LocalService('report.'+object)
+        res = obj.create(cr, uid, ids, datas, context)
+        cr.close()
+        return res
+scenario_report_spool()
+
+
 
 #
 #1. Call pre_... of running steps of running scenario (state=running)
