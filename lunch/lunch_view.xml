@@ -152,11 +152,6 @@
 			<field name="res_model">lunch.category</field>
 		</record>
 
-
-		<menuitem name="Products" parent="menu_lunch_category_root" id="menu_lunch_product_form" action="action_lunch_product_form"  sequence="1"/>
-		<menuitem name="Category of product" parent="menu_lunch_product_form" id="menu_lunch_category_form" action="action_lunch_category_form" />
-
-
 		<record model="ir.ui.view" id="view_lunch_product_form">
 			<field name="name">Products</field>
 			<field name="type">form</field>
@@ -193,6 +188,9 @@
 		</record>
 
 		<menuitem name="Tools/Lunch/Configuration/Products" id="menu_lunch_product_form" action="action_lunch_product_form"  sequence="1"/>
+        <menuitem name="Products" parent="menu_lunch_category_root" id="menu_lunch_product_form" action="action_lunch_product_form"  sequence="1"/>
+		<menuitem name="Category of product" parent="menu_lunch_product_form" id="menu_lunch_category_form" action="action_lunch_category_form" />
+
 
 		<record model="ir.ui.view" id="view_report_lunch_amount_tree">
 			<field name="name">Lunch amount</field>
