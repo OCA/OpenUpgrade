@@ -70,138 +70,84 @@ class game_scenario_step(osv.osv):
         }
 game_scenario_step()
 
-#def _execute_service(db,uid,passwd,object,method,type,*args):
-#    res=False
-#    if type=='execute':
-#        service = netsvc.LocalService("object_proxy")
-#        res = service.execute(db, uid, object, method, *args)
-#    elif type=='execute_wkf':
-#        service = netsvc.LocalService("object_proxy")
-#        res = service.exec_workflow(db, uid, object, method, id)
-#    elif type=='wizard':
-#        wiz = netsvc.LocalService('wizard.'+self.wiz_name[wiz_id])
-#        res=wiz.execute(db, uid, self.wiz_datas[wiz_id], action, context)
-#    elif type=='report':
-#        cr = pooler.get_db(db).cursor()
-#        obj = netsvc.LocalService('report.'+object)
-#        res = obj.create(cr, uid, ids, datas, context)
-#        cr.close()
-#    return res
-#def _execute(db,uid,passwd,object,method,type,*args):        
-#    pool = pooler.get_pool(db)
-#    res=False
-#    if pool.get('game.scenario'):
-#        cr = pooler.get_db_only(db).cursor()
-#        cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
-#        steps_orig = cr.dictfetchall()            
-#        new_args=()
-#        def check(step, mode='pre'):
-#            if step[mode+'_process_object'] and step[mode+'_process_method']:
-#                try:
-#                    return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *new_args)
-#                except Exception,e:
-#                    cr.close()
-#                    raise
-#            else:
-#                return True
-#        steps = filter(check, steps_orig)
-#        cr.close()
-#        res=_execute_service(db,uid,passwd,object,method,type,args)
-#        if steps:
-#            new_args+={'result':res},
-#            cr = pooler.get_db_only(db).cursor()
-#            for step in steps:
-#                check(step, 'post')
-#            ids = ','.join(map(lambda x: str(x['id']), steps))
-#            cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
-#            cr.execute('update game_scenario_step set state=%s where id in (select next_step_id from next_step_rel where step_id in ('+ids+')) and state=%s', ('running','draft'))
-#            cr.commit()
-#            cr.close()
-#    else:
-#        res=_execute_service(db,uid,passwd,object,method,type,args)
-#    return res
+def _execute(cr, uid, object, method, step, type='execute',mode='pre',*args):    
+    pool = pooler.get_pool(cr.dbname)
+    res=False
+    if pool.get('game.scenario'):        
+        if step[mode+'_process_object'] and step[mode+'_process_method']:
+            try:
+                return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid,step['id'], object, method,type, *args)
+            except Exception,e:
+                cr.close()
+                raise
+        else:
+            return True
+    return res
+
+def _pre_process(db,uid,passwd,object,method,type='execute',*args):
+    security.check(db, uid, passwd)  
+    pool = pooler.get_pool(db)
+    steps=False
+    if pool.get('game.scenario'):       
+        cr = pooler.get_db_only(db).cursor()
+        cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
+        steps_orig = cr.dictfetchall()                           
+        steps=[]
+        for step in steps_orig:
+            res = _execute(cr, uid, object, method, step, type,'pre',*args)
+            if res:
+                steps.append(step)
+        cr.close()
+    return steps
+    
+def _post_process(db,uid,passwd,object,method,steps,type='execute',*args):
+    security.check(db, uid, passwd)
+    pool = pooler.get_pool(db)
+    res=False   
+    if  pool.get('game.scenario') and steps:                     
+        cr = pooler.get_db_only(db).cursor()
+        for step in steps:
+           _execute(cr, uid, object, method,step,type, 'post',*args)
+        ids = ','.join(map(lambda x: str(x['id']), steps))
+        cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
+        cr.execute('update game_scenario_step set state=%s where id in (select next_step_id from next_step_rel where step_id in ('+ids+')) and state=%s', ('running','draft'))
+        cr.commit()
+        cr.close()    
+    return res
+
 class scenario_objects_proxy(web_services.objects_proxy):
     def exec_workflow(self, db, uid, passwd, object, method, id):
-        security.check(db, uid, passwd)
-        service = netsvc.LocalService("object_proxy")
-        res = service.exec_workflow(db, uid, object, method, id)
+        args=id,
+        steps=_pre_process(db,uid,passwd,object,method,'execute_wkf',*args)
+        res=super(scenario_objects_proxy,self).exec_workflow(db, uid, passwd, object, method, id)
+        args+={'result':res},
+        _post_process(db,uid,passwd,object,method,steps,'execute_wkf',*args)
         return res
 
-    def execute(self, db, uid, passwd, object, method, *args):
-        security.check(db, uid, passwd)
-        service = netsvc.LocalService("object_proxy")
-        pool = pooler.get_pool(db)
-        if pool.get('game.scenario'):
-            cr = pooler.get_db_only(db).cursor()
-            cr.execute('select s.* from game_scenario_step s left join game_scenario g on (s.scenario_id=g.id) where g.state=%s and s.state=%s', ('running', 'running'))
-            steps_orig = cr.dictfetchall()            
-            new_args =()
-            def check(step, mode='pre'):
-                if step[mode+'_process_object'] and step[mode+'_process_method']:
-                    try:
-                        return getattr(pool.get(step[mode+'_process_object']), step[mode+'_process_method'])(cr, uid, object, method, *new_args)
-                    except Exception,e:
-                        cr.close()
-                        raise
-                else:
-                    return True
-            steps = filter(check, steps_orig)
-            cr.close()
-#            if steps_orig and not steps:
-#                raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', steps_orig[0]['error']))
-            res = service.execute(db, uid, object, method, *args)
-            if steps:
-                new_args+={'result':res},
-                cr = pooler.get_db_only(db).cursor()
-                for step in steps:
-                    check(step, 'post')
-                ids = ','.join(map(lambda x: str(x['id']), steps))
-                cr.execute('update game_scenario_step set state=%s where id in ('+ids+')', ('done',))
-                cr.execute('update game_scenario_step set state=%s where id in (select next_step_id from next_step_rel where step_id in ('+ids+')) and state=%s', ('running','draft'))
-                cr.commit()
-                cr.close()
-        else:
-            res = service.execute(db, uid, object, method, *args)
+    def execute(self, db, uid, passwd, object, method, *args):   
+        steps=_pre_process(db,uid,passwd,object,method,'execute',args) 
+        res=super(scenario_objects_proxy,self).execute(db, uid, passwd, object, method, *args)
+        args+={'result':res},
+        _post_process(db,uid,passwd,object,method,steps,'execute',*args)
         return res
 scenario_objects_proxy()
 
 
 class scenario_wizard(web_services.wizard):
-    def _execute(self, db, uid, wiz_id, datas, action, context):
-        self.wiz_datas[wiz_id].update(datas)
-        wiz = netsvc.LocalService('wizard.'+self.wiz_name[wiz_id])
-        return wiz.execute(db, uid, self.wiz_datas[wiz_id], action, context)
+    def execute(self,db, uid, passwd, wiz_id, datas, action='init', context=None):
+        args=wiz_id,datas,action,context,
+        steps=_pre_process(db,uid,passwd,None,None,'wizard',*args)
+        res=super(scenario_wizard,self).execute(db, uid,passwd, wiz_id, datas, action, context)
+        args+={'result':res},
+        _post_process(db,uid,passwd,None, None,steps,'wizard',*args)
+        return res
 scenario_wizard()
 
 class scenario_report_spool(web_services.report_spool):
-    def _report(self,db, uid, passwd, object, ids, datas=None, context=None):        
-        cr = pooler.get_db(db).cursor()
-        obj = netsvc.LocalService('report.'+object)
-        res = obj.create(cr, uid, ids, datas, context)
-        cr.close()
+    def report(self,db, uid, passwd, object, ids, datas=None, context=None):        
+        args=ids,datas,context,
+        steps=_pre_process(db,uid,passwd,object,None,'report',*args)     
+        res=super(scenario_report_spool,self).report(db, uid, passwd, object, ids, datas, context)
+        _post_process(db,uid,passwd,object, None,steps,'report',*args)
         return res
 scenario_report_spool()
-
-
-
-#
-#1. Call pre_... of running steps of running scenario (state=running)
-#  2. If 1 raise exception:
-#        Raise Exception
-#    If 1 return False: continue on 3 but not 4.
-#    If 1 return True: continue on 3 and 4.
-#  3. Call the normal method of the service
-#  4. Call post_... method
-#    Set state to done
-#    Set state of next_step_ids to running
-#  5. If no more steps in the scenario, set state of scenario as done.
-
-
-#         res=pre method of pre model
-#         exception :
-#            raise exception
-#        if not res:
-#            res = service.execute(db, uid, object, method, *args)
-#        else:
-#            run current
-#            run post method of post model

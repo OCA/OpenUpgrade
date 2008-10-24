@@ -38,6 +38,7 @@ class mrp_repair(osv.osv):
     _name = 'mrp.repair'
     _description = 'Repairs Order'
     _columns = {
+        'name' : fields.char('Name',size=24),
         'product_id': fields.many2one('product.product', string='Product to Repair', required=True ,domain=[('sale_ok','=',True)]),
         'partner_id' : fields.many2one('res.partner', 'Partner', select=True),
         'address_id': fields.many2one('res.partner.address', 'Delivery Address', domain="[('partner_id','=',partner_id)]"),
@@ -53,7 +54,7 @@ class mrp_repair(osv.osv):
         'location_dest_id': fields.many2one('stock.location', 'Delivery Location'),
         'move_id': fields.many2one('stock.move', 'Move',required=True,domain="[('product_id','=',product_id)]"),#,('location_dest_id','=',location_id),('prodlot_id','=',prodlot_id)
         'guarantee_limit': fields.date('Guarantee limit'),
-        'operations' : fields.one2many('stock.move', 'repair_id', 'Operation Lines', readonly=True, states={'draft':[('readonly',False)]}),
+        'operations' : fields.one2many('mrp.repair.lines', 'repair_id', 'Operation Lines', readonly=True, states={'draft':[('readonly',False)]}),
         'pricelist_id': fields.many2one('product.pricelist', 'Pricelist'),
         'partner_invoice_id':fields.many2one('res.partner.address', 'Invoice to', readonly=True, states={'draft':[('readonly',False)]}, domain="[('partner_id','=',partner_id)]"),
         'invoice_method':fields.selection([
@@ -124,58 +125,56 @@ class mrp_repair(osv.osv):
                 self.write(cr, uid, [o.id], {'state': 'confirmed'})
             elif (o.invoice_method == 'b4repair'):
                 self.write(cr, uid, [o.id], {'state': '2binvoiced'})
+            elif (o.invoice_method == 'after_repair'):
+                self.write(cr, uid, [o.id], {'state': 'confirmed'})
+        self.pool.get('mrp.repair.lines').write(cr, uid, ids, {'state':'confirmed'})
         return True
     
-    def action_invoice_create(self, cr, uid, ids, grouped=False, **args):
-        inv_id=False
-        for order in self.browse(cr, uid, ids, context={}):
-            if order.invoice_method != 'none' and (order.state in ['confirmed','done']):
-                a = order.partner_id.property_account_receivable.id
-                inv = {
-                    'name': order.product_id.name,
-                    'type': 'out_invoice',
-                    'reference': "P%dSO%d"%(order.partner_id.id,order.id),
-                    'account_id': a,
-                    'partner_id': order.partner_id.id,
-                    'address_invoice_id': order.address_id.id,
-                    'currency_id' : order.pricelist_id.currency_id.id,
-                    'comment': order.internal_notes,
-                }
-                inv_obj = self.pool.get('account.invoice')
-                inv_id = inv_obj.create(cr, uid, inv)
-                for operation in order.operations:
-                    op_id=self.pool.get('account.invoice.line').create(cr, uid, {
-                            'invoice_id' : inv_id, 
-                            'name' : operation.product_id.id,
-                            'account_id' : a,
-                            'quantity' : operation.product_qty,
-                            'uos_id' : operation.product_uom.id,
-                            'price_unit' : operation.price_unit,
-                            'price_subtotal' : operation.product_qty*operation.price_unit,
-                            })
-                for fee in order.fees_lines:
-                    fee_id=self.pool.get('account.invoice.line').create(cr, uid, {
-                            'invoice_id' : inv_id,
-                            'name' : fee.product_id.id,
-                            'account_id' : a,
-                            'quantity' : fee.product_qty,
-                            'uos_id' : fee.product_uom.id,
-                            'price_unit' : fee.price_unit,
-                            'price_subtotal' : fee.product_qty*fee.price_unit
-                            })
-            return inv_id
-    
-    def action_confirm(self, cr, uid, ids, *args):
+    def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed','done']):
+        res = False
+        invoices = {}
+        invoice_ids = []
+
+        for o in self.browse(cr,uid,ids):
+            lines = []
+            for line in o.operations:
+                if (line.state in states) and not line.invoiced:
+                    lines.append(line.id)
+#            created_lines = self.pool.get('sale.order.line').invoice_line_create(cr, uid, lines)
+#            if created_lines:
+#                invoices.setdefault(o.partner_id.id, []).append((o, created_lines))
+
+        picking_obj=self.pool.get('stock.picking')
+        for val in invoices.values():
+            if grouped:
+                res = self._make_invoice(cr, uid, val[0][0], reduce(lambda x,y: x + y, [l for o,l in val], []))
+                for o,l in val:
+                    self.write(cr, uid, [o.id], {'state' : 'progress'})
+                    if o.order_policy=='picking':
+                        picking_obj.write(cr,uid,map(lambda x:x.id,o.picking_ids),{'invoice_state':'invoiced'})
+                    cr.execute('insert into sale_order_invoice_rel (order_id,invoice_id) values (%d,%d)', (o.id, res))
+            else:
+                for order, il in val:
+                    res = self._make_invoice(cr, uid, order, il)
+                    invoice_ids.append(res)
+                    self.write(cr, uid, [order.id], {'state' : 'progress'})
+                    if order.order_policy=='picking':
+                        picking_obj.write(cr,uid,map(lambda x:x.id,order.picking_ids),{'invoice_state':'invoiced'})
+                    cr.execute('insert into sale_order_invoice_rel (order_id,invoice_id) values (%d,%d)', (order.id, res))
+        return res
+
+
+    def action_ship_create(self, cr, uid, ids, *args):
         picking_id=False
         company = self.pool.get('res.users').browse(cr, uid, uid).company_id
         for repair in self.browse(cr, uid, ids, context={}):
             if repair.location_dest_id:
-                output_id = repair.location_dest_id
+                output_id = repair.location_dest_id.id
                 for line in repair.operations:
                     proc_id=False
                     date_planned = time.strftime('%Y-%m-%d %H:%M:%S')
                     if line.product_id and line.product_id.product_tmpl_id.type in ('product', 'consu'):
-                        location_id = line.location_id
+                        location_id = line.location_id.id
                         if not picking_id:
                             picking_id = self.pool.get('stock.picking').create(cr, uid, {
                                 'origin': repair.product_id.code, # + (repair.partner_id and  repair.partner_id.name) or ' ',
@@ -186,61 +185,127 @@ class mrp_repair(osv.osv):
                                 'note': repair.internal_notes,
                                 'invoice_state': 'none',
                             })
-                            operation = self.pool.get('stock.move')
-                            operation.write(cr, uid, line.id,{'picking_id' : picking_id} )
-                            proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
-                                'name': repair.name or 'Repair',
-                                'origin': repair.name,
-                                'date_planned': date_planned,
-                                'product_id': line.product_id.id,
-                                'product_qty': line.product_qty,
-                                'product_uom': line.product_uom.id,
-                                'location_id': repair.location_id.id,
-                                'procure_method': 'make_to_stock' ,# NEEDS TO BE CHANGED
-                                'move_id': line.id,
-                            })
-                            wf_service = netsvc.LocalService("workflow")
-                            wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-                          
+#                            operation = self.pool.get('stock.move')
+#                            operation.write(cr, uid, line.id,{'picking_id' : picking_id} )
+                        vals = {
+                            'name': line.product_id.name[:64],
+                            'picking_id': picking_id,
+                            'product_id': line.product_id.id,
+                            'date_planned': date_planned,
+                            'product_qty': line.product_uom_qty,
+                            'product_uom': line.product_uom.id,
+                            'product_uos_qty': line.product_uos_qty,
+                            'product_uos': (line.product_uos and line.product_uos.id)\
+                                    or line.product_uom.id,
+                            'product_packaging' : line.product_packaging.id,
+                            'address_id': repair.address_id.id,
+                            'location_id': location_id,
+                            'location_dest_id': output_id,
+                            'tracking_id': False,
+                            'state': 'draft',
+                            'note': line.notes,
+                        }
+                        move_id = self.pool.get('stock.move').create(cr, uid, vals)
+                        proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
+                            'name': repair.name or 'Repair',
+                            'origin': repair.name,
+                            'date_planned': date_planned,
+                            'product_id': line.product_id.id,
+                            'product_qty': line.product_uom_qty,
+                            'product_uom': line.product_uom.id,
+                            'location_id': repair.location_id.id,
+                            'procure_method': 'make_to_stock' ,# NEEDS TO BE CHANGED
+                            'move_id': line.id,
+                        })
+                        wf_service = netsvc.LocalService("workflow")
+                        wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
+                        self.pool.get('mrp.repair.lines').write(cr, uid, [line.id], {'procurement_id': proc_id})
                     elif line.product_id and line.product_id.product_tmpl_id.type=='service':
                         proc_id = self.pool.get('mrp.procurement').create(cr, uid, {
                             'name': line.name or 'Repair',
                             'origin': repair.name,
                             'date_planned': date_planned,
                             'product_id': line.product_id.id,
-                            'product_qty': line.product_qty,
+                            'product_qty': line.product_uom_qty,
                             'product_uom': line.product_uom.id,
                             'location_id': repair.location_id.id,
                             'procure_method': 'make_to_stock' ,# NEEDS TO BE CHANGED
                         })
                         wf_service = netsvc.LocalService("workflow")
                         wf_service.trg_validate(uid, 'mrp.procurement', proc_id, 'button_confirm', cr)
-
+                        self.pool.get('mrp.repair.lines').write(cr, uid, [line.id], {'procurement_id': proc_id})
                     else:
                         #
                         # No procurement because no product in the sale.order.line.
                         #
                         pass
-
+    
                 val = {}
                 if picking_id:
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
                 self.write(cr, uid, [repair.id], val)
+                
+        return True
+
+    def procurement_lines_get(self, cr, uid, ids, *args):
+        res = []
+        for order in self.browse(cr, uid, ids, context={}):
+            for line in order.operations:
+                if line.procurement_id:
+                    res.append(line.procurement_id.id)
+        return res
+    
+    def test_state(self, cr, uid, ids, mode, *args):
+        assert mode in ('finished', 'canceled'), _("invalid mode for test_state")
+        finished = True
+        canceled = False
+        write_done_ids = []
+        write_cancel_ids = []
+        for order in self.browse(cr, uid, ids, context={}):
+            for line in order.operations:
+                if line.procurement_id and (line.procurement_id.state != 'done') and (line.state!='done'):
+                    finished = False
+                if line.procurement_id and line.procurement_id.state == 'cancel':
+                    canceled = True
+                # if a line is finished (ie its procuremnt is done or it has not procuremernt and it
+                # is not already marked as done, mark it as being so...
+                if ((not line.procurement_id) or line.procurement_id.state == 'done') and line.state != 'done':
+                    write_done_ids.append(line.id)
+                # ... same for canceled lines
+                if line.procurement_id and line.procurement_id.state == 'cancel' and line.state != 'cancel':
+                    write_cancel_ids.append(line.id)
+        if write_done_ids:
+            self.pool.get('mrp.repair.lines').write(cr, uid, write_done_ids, {'state': 'done'})
+        if write_cancel_ids:
+            self.pool.get('mrp.repair.liness').write(cr, uid, write_cancel_ids, {'state': 'cancel'})
+
+        if mode=='finished':
+            return finished
+        elif mode=='canceled':
+            return canceled
+        
+    def action_ship_end(self, cr, uid, ids, context={}):
+        for order in self.browse(cr, uid, ids):
+            val = {}
+            if (order.invoice_method=='after_repair'):
+                val['state'] = '2binvoiced'
+            else:
+                val['state'] = 'confirmed'
+            self.write(cr, uid, [order.id], val)
         return True
 mrp_repair()
 
 
 class repair_operation(osv.osv):
-     _inherit = 'stock.move'
-#     _name = 'repair.operation'
-     _description = 'Repair Operations'
+    _name = 'mrp.repair.lines'
+    _description = 'Repair Operations'
      
-     def _get_price(self, cr, uid, ids, name, arg, context={}):
+    def _get_price(self, cr, uid, ids, name, arg, context={}):
         res = {}
         for val in self.browse(cr, uid, ids):
-            current_date = time.strftime('%Y-%m-%d')
             if val.repair_id:
+                current_date = time.strftime('%Y-%m-%d')
                 if current_date < val.repair_id.guarantee_limit:
                     res[val.id] = 0.0
                 if current_date >= val.repair_id.guarantee_limit:
@@ -259,18 +324,53 @@ class repair_operation(osv.osv):
                         res[val.id] = price
         return res
     
-    
-     _columns = {
-        'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref', required=True, ondelete='cascade', select=True),
-        'type': fields.selection([('add','Add'),('remove','Remove')],'Type'),
-        'invoice': fields.boolean('Invoice'),
-        'price_unit': fields.function(_get_price,  method=True, store= True, type='float', string='Price'),
+    def _amount_line_net(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        for line in self.browse(cr, uid, ids):
+            res[line.id] = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+        return res
+
+    def _amount_line(self, cr, uid, ids, field_name, arg, context):
+        res = {}
+        cur_obj=self.pool.get('res.currency')
+        for line in self.browse(cr, uid, ids):
+            res[line.id] = line.price_unit * line.product_uom_qty * (1 - (line.discount or 0.0) / 100.0)
+            cur = line.repair_id.pricelist_id.currency_id
+            res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
+        return res
+    _columns = {
+                'name' : fields.char('Name',size=24),
+                'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref',ondelete='cascade', select=True),
+                'type': fields.selection([('add','Add'),('remove','Remove')],'Type'),
+                'invoice': fields.boolean('Invoice'),
+                'delay': fields.float('Delivery Delay', required=True),
+                'product_id': fields.many2one('product.product', 'Product', domain=[('sale_ok','=',True)],  required=True),
+                'invoiced': fields.boolean('Invoiced'),
+                'procurement_id': fields.many2one('mrp.procurement', 'Procurement'),
+                'price_unit': fields.function(_get_price,  method=True, store= True, type='float', string='Price'),
+                'price_net': fields.function(_amount_line_net, method=True, string='Net Price'),
+                'price_subtotal': fields.function(_amount_line, method=True, string='Subtotal'),
+                'tax_id': fields.many2many('account.tax', 'sale_order_tax', 'order_line_id', 'tax_id', 'Taxes'),
+                'property_ids': fields.many2many('mrp.property', 'sale_order_line_property_rel', 'order_id', 'property_id', 'Properties'),
+                'address_allotment_id' : fields.many2one('res.partner.address', 'Allotment Partner'),
+                'product_uom_qty': fields.float('Quantity (UoM)', digits=(16,2), required=True),
+                'product_uom': fields.many2one('product.uom', 'Product UoM', required=True),
+                'product_uos_qty': fields.float('Quantity (UOS)'),
+                'product_uos': fields.many2one('product.uom', 'Product UOS'),
+                'product_packaging': fields.many2one('product.packaging', 'Packaging'),
+                'move_ids': fields.one2many('stock.move', 'sale_line_id', 'Inventory Moves', readonly=True),
+                'discount': fields.float('Discount (%)', digits=(16,2)),
+                'notes': fields.text('Notes'),
+                'th_weight' : fields.float('Weight'),
+                'location_id': fields.many2one('stock.location', 'Source Location', required=True, select=True),
+                'location_dest_id': fields.many2one('stock.location', 'Dest. Location', required=True, select=True),
+                'state': fields.selection([('draft','Draft'),('confirmed','Confirmed'),('done','Done'),('cancel','Canceled')], 'Status', required=True, readonly=True),
     }
      
      
-     def product_id_change(self, cr, uid, ids, pricelist, product, uom=False, product_qty = 0,partner_id=False ):
+    def product_id_change(self, cr, uid, ids, pricelist, product, uom=False, product_uom_qty = 0,partner_id=False ):
         if not product:
-            return {'value': {'product_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
+            return {'value': {'product_uom_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
         product_obj =  self.pool.get('product.product').browse(cr, uid, product)
         result = {}
         warning = {}
@@ -278,6 +378,7 @@ class repair_operation(osv.osv):
             result['product_uom'] = product_obj.uom_id.id
             domain = {'product_uom':
                         [('category_id', '=', product_obj.uom_id.category_id.id)],}
+        
         if not pricelist:
             warning={
                 'title':'No Pricelist !',
@@ -287,7 +388,7 @@ class repair_operation(osv.osv):
                 }
         else:
             price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist],
-                    product, product_qty or 1.0, partner_id, {
+                    product, product_uom_qty or 1.0, partner_id, {
                         'uom': uom,
                         })[pricelist]
             if price is False:
@@ -299,9 +400,11 @@ class repair_operation(osv.osv):
                     }
             else:
                 result.update({'price_unit': price})
+                
         return {'value': result , 'domain' :domain, 'warning':warning}
-
-     def onchange_operation_type(self, cr, uid, ids, type ):
+     
+     
+    def onchange_operation_type(self, cr, uid, ids, type ):
         if not type:
             return {'value':{'location_id': False , 'location_dest_id' :  False}}
         stock_id = self.pool.get('stock.location').search(cr, uid, [('name','=','Stock')])[0]
@@ -310,9 +413,12 @@ class repair_operation(osv.osv):
             return {'value':{'location_id': stock_id , 'location_dest_id' : produc_id}}
         if type == 'remove':
             return {'value':{'location_id': produc_id , 'location_dest_id' : stock_id}}
-     _defaults = {
+        
+    _defaults = {
                  'name' : lambda *a: 'Repair Operation',
+                 'state': lambda *a: 'draft',
                  }
+    
 repair_operation()
 
 class mrp_repair_fee(osv.osv):
@@ -320,16 +426,16 @@ class mrp_repair_fee(osv.osv):
     _description = 'Repair Fees line'
     _columns = {
         'repair_id': fields.many2one('mrp.repair', 'Repair Order Ref', required=True, ondelete='cascade', select=True),
-        'name': fields.char('Description', size=8, select=True),
+        'name': fields.char('Description', size=8, required=True, select=True),
         'product_id': fields.many2one('product.product', 'Product', required=True),
-        'product_qty': fields.float('Quantity', digits=(16,2), required=True),
+        'product_uom_qty': fields.float('Quantity', digits=(16,2), required=True),
         'price_unit': fields.float('Unit Price', required=True),
         'product_uom': fields.many2one('product.uom', 'Product UoM', required=True),
     }
     
     def product_id_change(self, cr, uid, ids, product, uom=False):
         if not product:
-            return {'value': {'product_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
+            return {'value': {'product_uom_qty' : 0.0, 'product_uom': False},'domain': {'product_uom': []}}
         
         product_obj =  self.pool.get('product.product').browse(cr, uid, product)
         result = {}
@@ -341,3 +447,11 @@ class mrp_repair_fee(osv.osv):
     
 mrp_repair_fee()
 
+
+class stock_move(osv.osv):
+    _inherit = "stock.move"
+    _columns = {
+                'state': fields.selection([('draft','Draft'),('waiting','Waiting'),('confirmed','Confirmed'),('assigned','Assigned'),('done','Done'),('cancel','cancel'),('in_repair','In Repair')], 'Status',),# readonly=True, select=True),
+                'repair_ids' : fields.one2many('mrp.repair', 'move_id', 'Repairs'),
+            }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
