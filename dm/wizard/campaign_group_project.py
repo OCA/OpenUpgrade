@@ -55,15 +55,15 @@ def _create_duplicate(self, cr, uid, data, context):
     for task in tasks_obj.browse(cr, uid, tasks_ids):
         if task.type:
             if task.type.name == 'DTP' and campaign.dtp_responsible_id:
-                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.dtp_responsible_id.id})
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.dtp_responsible_id.id,'state':'open'})
             elif task.type.name == 'Mailing Manufacturing' and campaign.manufacturing_responsible_id:
-                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.manufacturing_responsible_id.id})
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.manufacturing_responsible_id.id,'state':'open'})
             elif task.type.name == 'Customers List' and campaign.files_responsible_id:
-                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.files_responsible_id.id})
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'user_id':campaign.files_responsible_id.id,'state':'open'})
             else:
-                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id})
+                new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'state':'open'})
         else:
-            new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id})
+            new_tasks_id = tasks_obj.copy(cr, uid, task.id, {'project_id':duplicate_project_id,'state':'open'})
     project_obj.write(cr, uid, duplicate_project_id, {'name': project_obj.browse(cr, uid, duplicate_project_id, context).name + " for " + campaign.name})
     campaign_group_obj.write(cr, uid, [data['id']], {'project_id': duplicate_project_id})
     return {}

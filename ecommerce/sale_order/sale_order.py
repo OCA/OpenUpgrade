@@ -7,6 +7,7 @@ import time
 from tools import config
 import netsvc
 import ir
+import wizard
 
 class ecommerce_sale_order(osv.osv):
 
@@ -43,8 +44,11 @@ class ecommerce_sale_order(osv.osv):
           
             res_prt = self.pool.get('res.partner')
             prt_id = res_prt.search(cr, uid, [('name','=',order.epartner_id.name)])
-            res = res_prt.read(cr, uid, prt_id, ['id'], context)
+            res = res_prt.read(cr, uid, prt_id, [], context)
             res_add = self.pool.get('res.partner.address')
+ 
+            res_categ = self.pool.get('res.partner.category')
+            search_categ = res_categ.search(cr, uid, [('name', '=', 'Customer')])
             
             if res:
                 partner_id = res[0]['id']
@@ -52,11 +56,12 @@ class ecommerce_sale_order(osv.osv):
                 prt_add_id =res_add.search(cr,uid,[('partner_id','=',partner_id)])
                 res_prt_add = res_add.read(cr,uid,prt_add_id,['id'],context)
                 addid = res_prt_add[0]['id']
-           
+             
             if not prt_id:     
                 partner_id = self.pool.get('res.partner').create(cr, uid, {
                     'name': order.epartner_id.name,
                     'lang':order.epartner_id.lang,
+                    'category_id': [(6, 0, search_categ)]
                    })
                 order.epartner_id.address
                 for addr_type in order.epartner_id.address:
@@ -134,7 +139,7 @@ class ecommerce_sale_order(osv.osv):
                 'order_line':order_lines
             })      
             get_ids.extend(ids)
-            get_ids.append(order_id)
+            get_ids.append(int(order_id))
 
         return get_ids
 
@@ -168,9 +173,10 @@ class ecommerce_sale_order(osv.osv):
         datas = {}
         ids.append(so_ids)
         create_wf = self.order_create_function(cr, uid, ids, context={})
+
         ecom_soid = create_wf[0]
         sale_orderid = create_wf[1]
-     
+
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'order_confirm', cr)
         wf_service.trg_validate(uid, 'sale.order', sale_orderid, 'manual_invoice', cr)
         
@@ -178,10 +184,31 @@ class ecommerce_sale_order(osv.osv):
         invoice_id = get_data.invoice_ids[0].id
         wf_service.trg_validate(uid, 'account.invoice', invoice_id, 'invoice_open', cr)
         inv_id.append(invoice_id)
+      
+        acc_journal = self.pool.get('account.journal')
+        journal_id = acc_journal.search(cr,uid,[('type','=','cash'),('code','=','BNK')])
+      
+        journal = acc_journal.browse(cr, uid, journal_id, context)
+        acc_id =  journal[0].default_credit_account_id and journal[0].default_credit_account_id.id
+        if not acc_id:
+            raise wizard.except_wizard(_('Error !'), _('Your journal must have a default credit and debit account.'))
+        period_id = self.pool.get('account.period').find(cr, uid)
+        if not len(period_id):
+               return dict.fromkeys(ids, 0.0)
+        period_id = period_id[0]
+        
+        writeoff_account_id = False
+        writeoff_journal_id = False
+        entry_name = 'from ecom'
+               
+        acc_invoice_obj = self.pool.get('account.invoice')
+        acc_invoice_obj.pay_and_reconcile(cr, uid, inv_id,
+        get_data.amount_total, acc_id, period_id, journal_id[0], writeoff_account_id,
+        period_id, writeoff_journal_id, context, entry_name)
      
         id = uid
         get_uiddata = self.pool.get('res.users').browse(cr,uid,id)
-        
+
         key = ('dbname', cr.dbname)
         datas = {'model' : 'account.invoice', 'id' : invoice_id, 'report_type': 'pdf'}
      
@@ -195,7 +222,7 @@ class ecommerce_sale_order(osv.osv):
                    'Your invoice send it to you.' + '\n' + '\n' +'\n' +
                    'Thank you for using Ecommerce!' + '\n' +
                    'The Ecommerce Team')
-
+      
         data = self.pool.get('ecommerce.partner')
         data.ecom_send_email(cr, uid, email_id, subject, body, attachment=result, context={})
         

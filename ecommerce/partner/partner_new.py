@@ -6,6 +6,8 @@ import tools
 import base64
 import email
 from tools.translate import _
+import hashlib
+import time 
 
 def _lang_get(self, cr, uid, context={}):
     obj = self.pool.get('res.lang')
@@ -13,6 +15,13 @@ def _lang_get(self, cr, uid, context={}):
     res = obj.read(cr, uid, ids, ['code', 'name'], context)
     res = [(r['code'], r['name']) for r in res]
     return res + [(False, '')]
+
+class res_users(osv.osv):
+    _inherit = "res.users"
+    _columns = {
+        'user_code':fields.char('User Code', size=128)
+         }
+res_users()
 
 class ecommerce_partner(osv.osv):
     
@@ -32,12 +41,60 @@ class ecommerce_partner(osv.osv):
         'active': lambda *a: 1,
     }
   
+    def user_get(self, cr, uid, login=None, context={}):
+        
+        cr.execute("select * from res_users")
+        res = cr.dictfetchall()
+        if(login==None):
+            userdata = map(lambda x: x['user_code'], res)
+        else:
+            userdata = map(lambda x: x['login'], res)
+            
+        return userdata
+    
+    def userdata_get(self, cr, uid, email_code, check=None, context={}):
+      
+        up_data=None
+        if (check == None):
+            cr.execute("select id from res_users where user_code = %s",(str(email_code),))
+            result = cr.fetchone()
+        else:
+            cr.execute("select id from res_users where login = %s",(str(email_code),))
+            result = cr.fetchone()
+      
+        if(result):
+            id = result[0]
+            res_users = self.pool.get('res.users')
+            ecommerce_user = res_users.browse(cr, uid, id)
+            get_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
+            if(check==None):
+                res_users.write(cr, uid, get_data['id'], {'active':True})
+                       
+            up_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
+        return up_data
+    
+    def email_encrypt_code(self, cr, uid, email, context={}):
+      
+        cr.execute("select id from res_users where login = %s",(str(email),))
+        result = cr.fetchone()
+        if(result):
+            id = result[0]
+            res_users = self.pool.get('res.users')
+            ecommerce_user = res_users.browse(cr, uid, id)
+            get_data = res_users.read(cr, uid, ecommerce_user.id, [], context)
+            key = hashlib.md5(time.strftime('%Y-%m-%d %H:%M:%S') + email).hexdigest();
+            if(get_data['user_code']==False):
+                res_users.write(cr, uid, get_data['id'], {'user_code': key})
+        return key
+    
     def copy(self, cr, uid, id, default=None, context={}):
+        
         name = self.read(cr, uid, [id], ['name'])[0]['name']
         default.update({'name': name+' (copy)'})
         return super(res_partner, self).copy(cr, uid, id, default, context)
        
     def name_search(self, cr, uid, name, args=None, operator='ilike', context=None, limit=80):
+        
         if not args:
             args=[]
         if not context:
@@ -51,6 +108,7 @@ class ecommerce_partner(osv.osv):
         return self.name_get(cr, uid, ids, context)
     
     def address_get(self, cr, uid, ids, adr_pref=['default']):
+        
         cr.execute('select type,id from ecommerce_partner_address where partner_id in ('+','.join(map(str,ids))+')')
         res = cr.fetchall()
         adr = dict(res)
@@ -66,7 +124,7 @@ class ecommerce_partner(osv.osv):
         return result
     
     def delivery_grid(self, cr, uid, shop_id, adr_dict, context={}):
-
+      
         delivery_grid_ids = []
         res_add = self.pool.get('ecommerce.partner.address')
 
@@ -77,13 +135,13 @@ class ecommerce_partner(osv.osv):
         if (not adr_dict['type']=='delivery') and (adr_dict['type'] == 'default'):
                 address_delivery = adr_dict['type']
                 add_id = adr_dict['address_id']
-              
+
         delivery_carrier = self.pool.get('delivery.carrier')
         delivery_ecommerce_car = self.pool.get('ecommerce.shop').browse(cr, uid, [shop_id])
         for i in delivery_ecommerce_car[0].delivery_ids:
             delivery_grid_ids.append(i.id)
 
-        grid_id = self.grid_get(cr, uid, delivery_grid_ids, add_id,{}, from_web=True)       
+        grid_id = self.grid_get(cr, uid, delivery_grid_ids, add_id, {}, from_web=True)       
         get_data = delivery_carrier.read(cr, uid, grid_id, ['name'], context)
         return get_data
 
@@ -279,6 +337,4 @@ class ecommerce_partner_address(osv.osv):
             }
 
 ecommerce_partner_address()
-
-
 

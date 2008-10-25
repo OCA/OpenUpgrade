@@ -98,7 +98,6 @@ class sale_order(osv.osv):
                             'type': 'out',
                             'state': 'auto',
                             'move_type': order.picking_policy,
-                            'loc_move_id': loc_dest_id,
                             'sale_id': order.id,
                             'address_id': order.partner_shipping_id.id,
                             'note': order.note,

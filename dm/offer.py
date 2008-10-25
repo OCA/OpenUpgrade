@@ -23,6 +23,18 @@ AVAILABLE_TYPE = [
 
 class dm_media(osv.osv):
     _name = "dm.media"
+    
+    def search(self, cr, uid, args, offset=0, limit=None, order=None,
+            context=None, count=False):
+        if 'step_media_ids' in context and context['step_media_ids']:
+            if context['step_media_ids'][0][2]:
+                brse_rec = context['step_media_ids'][0][2]
+            else:
+                raise osv.except_osv('Error !',"It is necessary to select media in offer step.")
+        else:
+            brse_rec = super(dm_media, self).search(cr, uid, [])
+        return brse_rec      
+    
     _columns = {
         'name' : fields.char('Media', size=64, required=True),
     }
@@ -95,7 +107,7 @@ dm_customer()
 class dm_customers_list(osv.osv):
     _name = "dm.customers_list"
     _columns = {
-        'name' : fields.char('Name', size=16, required=True),
+        'name' : fields.char('Name', size=64, required=True),
         'code' : fields.char('Code', size=16, required=True),
         'broker_id' : fields.many2one('res.partner', 'Broker', domain=[('category_id','ilike','Broker')], context={'category':'Broker'}),
         'delivery_date' : fields.date('Delivery Date'),

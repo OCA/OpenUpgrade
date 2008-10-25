@@ -671,7 +671,7 @@
 					<field name="client_media_ids" colspan="4" nolabel="1"/>
 				</page>
 				<page string="Address">
-					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
+<!--					<field name="address" mode="form,tree" colspan="4" nolabel="1" select="1">
 						<form string="Customer contacts">
 							<field name="name" select="2"/>
 							<field name="title" domain="[('domain', '=', 'contact')]"/>
@@ -698,7 +698,7 @@
 							<field name="city"/>
 							<field name="country_id"/>
 						</tree>
-					</field>
+					</field>-->
 				</page>
 			</notebook>
 			</form>
@@ -823,8 +823,8 @@
 	Customers List
 	=======================================================
 	-->
-<!--
-	<record model="ir.ui.view" id="view_dm.customers_list_form">
+
+	<record model="ir.ui.view" id="view_dm_customers_list_form">
 		<field name="name">dm.customers_list.form</field>
 		<field name="model">dm.customers_list</field>
 		<field name="type">form</field>
@@ -837,10 +837,9 @@
 				<field name="segment_ids" colspan="4">
 				<form>
 					<field name="name" string="Name" select="1"/>
-					<field name="code" string="Action Code"/>
+					<field name="code1" string="Code"/>
 					<field name="proposition_id" />
 					<field name="active" />
-					<field name="quantity" select="2"/>
 					<newline/>
 					<field name="split_id" />
 					<field name="reuse_id" />
@@ -851,14 +850,13 @@
 				</form>
 				<tree string="Segments">
 					<field name="name" string="Name"/>
-					<field name="code" string="Action Code"/>
-					<field name="quantity"/>
+					<field name="code1" string="Code"/>
 				</tree>
 				</field>
 			</form>
 		</field>
 	</record>
-	<record model="ir.ui.view" id="view_dm.customers_list_tree">
+	<record model="ir.ui.view" id="view_dm_customers_list_tree">
 		<field name="name">dm.customers_list.tree</field>
 		<field name="model">dm.customers_list</field>
 		<field name="type">tree</field>
@@ -871,13 +869,13 @@
 			</tree>
 		</field>
 	</record>
-	<record model="ir.actions.act_window" id="action_dm.customers_list">
+	<record model="ir.actions.act_window" id="action_dm_customers_list">
 		<field name="type">ir.actions.act_window</field>
 		<field name="res_model">dm.customers_list</field>
 		<field name="view_type">form</field>
-		<field name="view_id" ref="view_dm.customers_list_tree"/>
+		<field name="view_id" ref="view_dm_customers_list_tree"/>
 	</record>
-	<menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists/All Customers Lists" id="menu_action_dm.customers_list" sequence="1" action="action_dm.customers_list"/>
--->
+	<menuitem name="Direct Marketing/Configuration/Campaigns/Customers Lists/All Customers Lists" id="menu_action_dm_customers_list" sequence="1" action="action_dm_customers_list"/>
+
 	</data>
 </openerp>

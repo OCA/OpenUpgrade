@@ -203,7 +203,7 @@
 								<field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
 								<field name="condition" select="1"/>
 								<field name="delay" string="Delay(In Days)" select="2"/>
-								<field name="media_id"/>
+								<field name="media_id" context="{'step_media_ids':parent.media_ids}"/>
 							</form>
 							<tree string="Outgoing Transitions">
 								<field name="step_from"/>
