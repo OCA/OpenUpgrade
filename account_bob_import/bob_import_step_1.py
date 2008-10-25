@@ -53,8 +53,8 @@ class config_bob_import(osv.osv_memory):
             if not os.path.exists(path_bob):
                 raise osv.except_osv(_('User Error'), _('The Path "%s" doesn''\'t exist.Please provide a valid one.') % path[-1]['path'] )
 
-            if 'bob.exe' not in os.listdir(path_bob):
-                raise osv.except_osv(_('User Error'), _('The Path "%s" is not a valid BOB Folder.It doesn''\'t have bob.exe.') % path[-1]['path'] )
+            #if 'Bob.exe' not in os.listdir(path_bob):
+            #    raise osv.except_osv(_('User Error'), _('The Path "%s" is not a valid BOB Folder.It doesn''\'t have Bob.exe.') % path[-1]['path'] )
         else:
             zipped_file=path[-1]['zipped_file']
             file_contents=base64.decodestring(zipped_file)
@@ -64,8 +64,8 @@ class config_bob_import(osv.osv_memory):
             fname = fdata.namelist()
             module_name=fname[0].split("/")[0]
 
-            if 'Bob/bob.exe' not in fname:
-                raise osv.except_osv(_('User Error'), _('The Zip file doesn''\'t contain a valid Bob folder.It doesn''\'t have bob.exe.'))
+            #if 'Bob/Bob.exe' not in fname:
+            #    raise osv.except_osv(_('User Error'), _('The Zip file doesn''\'t contain a valid Bob folder.It doesn''\'t have Bob.exe.'))
 
             root_path=tools.config['root_path']
             rt_path=root_path+'/'+'bob_'+str(time.strftime('%d-%m-%y-%H:%M:%S'))
@@ -111,7 +111,7 @@ def _folders_get(self, cr, uid, context={}):
 
 #        The structure of BOB folder has non DDHMOT Files as codes
 #        Data,Documents, Help, Message,Office, Tools.
-        main_folders=['Data','Documents', 'Help', 'Message','Office', 'Tools']
+        main_folders=['DATA','Documents', 'Help', 'Message','Office', 'Tools']
 
         for item in list_folders:
             if item not in main_folders:
@@ -147,10 +147,12 @@ class config_path_folder(osv.osv_memory):
         path =  self.pool.get('config.path.folder').read(cr, uid, ids[0],['folder'],context)[0]['folder']
         tmp = path.split('/')
         folder_name = tmp[len(tmp)-1]
-        for file in ['DBK.DB','ACCOUN.DB','COMPAN.DB','contacts.DB','period.DB','vatcas.DB','vat.DB','ahisto.db']:
+        for file in ['DBK.DB','ACCOUN.DB','COMPAN.DB','CONTACTS.DB','PERIOD.DB','VATCAS.DB','VAT.DB','AHISTO.DB']:
+
+            #TODO: improve for using either the capital letters or no
             cmd = 'pxview '+path+'/'+folder_name+file+' -c > ' + config['addons_path']+'/account_bob_import/original_csv/'+file.split('.')[0].lower()+'.csv'
             res = os.system(cmd)
-            if res != 0 and file != 'contacts.DB':
+            if res != 0 and file != 'CONTACTS.DB':
                 raise osv.except_osv(_('Error Occured'), _('An error occured when importing the file "%s". Please check that pxview is correclty installed on the server.')% file)
         import bob_import_step_2
         bob_import_step_2.run()
@@ -176,8 +178,16 @@ class config_path_folder(osv.osv_memory):
         convert.convert_csv_import(cr, 'account_bob_import', 'account.fiscalyear.csv', tools.file_open(filename).read())
         filename = config['addons_path']+'/account_bob_import/account.period.csv'
         convert.convert_csv_import(cr, 'account_bob_import', 'account.period.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/account.move.reconcile-1.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.move.reconcile-1.csv', tools.file_open(filename).read())
+        filename = config['addons_path']+'/account_bob_import/account.move.reconcile-2.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.move.reconcile-2.csv', tools.file_open(filename).read())
+
         filename = config['addons_path']+'/account_bob_import/account.move.csv'
         convert.convert_csv_import(cr, 'account_bob_import', 'account.move.csv', tools.file_open(filename).read())
+
+        filename = config['addons_path']+'/account_bob_import/account.move.line.csv'
+        convert.convert_csv_import(cr, 'account_bob_import', 'account.move.line.csv', tools.file_open(filename).read())
         self.pool._init = False
 
         #TODO: modify the name of account_bob_import.account_bob_0 into the name of company

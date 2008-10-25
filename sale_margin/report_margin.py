@@ -53,7 +53,7 @@ class report_account_invoice_product(osv.osv):
             ('paid','Paid'),
             ('cancel','Canceled')
         ],'State', readonly=True),
-        'product_id': fields.many2one('product.product', 'Product', readonly=True, relate=True),
+        'product_id': fields.many2one('product.product', 'Product', readonly=True),
         'amount': fields.float('Amount', readonly=True),
         'cost_price': fields.float('Cost Price', readonly=True),
         'margin': fields.float('Margin', readonly=True),
@@ -98,7 +98,7 @@ class report_account_invoice_category(osv.osv):
             ('paid','Paid'),
             ('cancel','Canceled')
         ],'State', readonly=True),
-        'categ_id': fields.many2one('product.category', 'Categories', readonly=True, relate=True),
+        'categ_id': fields.many2one('product.category', 'Categories', readonly=True),
         'amount': fields.float('Amount', readonly=True),
         'cost_price': fields.float('Cost Price', readonly=True),
         'margin': fields.float('Margin', readonly=True),
@@ -145,7 +145,7 @@ class report_account_invoice_partner(osv.osv):
             ('paid','Paid'),
             ('cancel','Canceled')
         ],'State', readonly=True),
-        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True, relate=True),
+        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True),
         'amount': fields.float('Amount', readonly=True),
         'cost_price': fields.float('Cost Price', readonly=True),
         'margin': fields.float('Margin', readonly=True),
@@ -190,8 +190,8 @@ class report_account_invoice_partner_product(osv.osv):
             ('paid','Paid'),
             ('cancel','Canceled')
         ],'State', readonly=True),
-        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True, relate=True),
-        'product_id': fields.many2one('product.product', 'Product', readonly=True, relate=True),
+        'partner_id': fields.many2one('res.partner', 'Partner', readonly=True),
+        'product_id': fields.many2one('product.product', 'Product', readonly=True),
         'amount': fields.float('Amount', readonly=True),
         'cost_price': fields.float('Cost Price', readonly=True),
         'margin': fields.float('Margin', readonly=True),

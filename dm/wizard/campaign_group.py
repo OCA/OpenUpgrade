@@ -30,10 +30,20 @@ class wizard_campaign_group(wizard.interface):
         else :
             group_id = data['form']['group']
         pool=pooler.get_pool(cr.dbname)
+        grp_ids = pool.get('dm.campaign.group').browse(cr, uid, group_id)
         camp_obj = pool.get('dm.campaign')
         for r in camp_obj.browse(cr,uid,data['ids']):
-            if not r.campaign_group_id:
-                camp_obj.write(cr,uid,[r.id],{'campaign_group_id':group_id})
+            if not grp_ids.campaign_ids:
+                if not r.campaign_group_id:
+                        camp_obj.write(cr,uid,[r.id],{'campaign_group_id':group_id})
+            else:
+                for c in grp_ids.campaign_ids:
+                    if c.offer_id.id == r.offer_id.id:
+                        if not r.campaign_group_id:
+                            camp_obj.write(cr,uid,[r.id],{'campaign_group_id':group_id})
+                    else:
+                        raise wizard.except_wizard('Error !', 'Offer should be same for all the campaigns in a group : %s !' %c.offer_id.name)
+
         return {}
 
     def _new_group(self, cr, uid, data, context):

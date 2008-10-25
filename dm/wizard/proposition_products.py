@@ -46,7 +46,12 @@ class wizard_proposition_products(wizard.interface):
         step_ids=pool.get('dm.offer.step').search(cr, uid, [('offer_id','=',offer_id)])
         step_obj=pool.get('dm.offer.step').browse(cr, uid, step_ids)
         pprog_obj=pool.get('dm.campaign.proposition.prices_progression').browse(cr, uid, prices_prog_id)
+        print "Avant : ",pprog_obj.product_ids
+        if prop_obj.product_ids:
+            for p in prop_obj.product_ids:
+                pool.get('dm.product').unlink(cr, uid, p.id)
 
+        print "Apres : ",pprog_obj.product_ids
         stp=0
 
         # Creates proposition items
