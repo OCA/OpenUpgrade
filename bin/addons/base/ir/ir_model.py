@@ -72,7 +72,7 @@ class ir_model(osv.osv):
     def unlink(self, cr, user, ids, context=None):
         for model in self.browse(cr, user, ids, context):
             if model.state <> 'manual':
-                raise except_orm(_('Error'), _("You can not remove the model '%s' !") %(field.name,))
+                raise except_orm(_('Error'), _("You can not remove the model '%s' !") %(model.name,))
         res = super(ir_model, self).unlink(cr, user, ids, context)
         pooler.restart_pool(cr.dbname)
         return res
@@ -201,10 +201,9 @@ class ir_model_fields(osv.osv):
         'name': fields.char('Name', required=True, size=64, select=1),
         'model': fields.char('Object Name', size=64, required=True),
         'relation': fields.char('Object Relation', size=64),
+        'relation_field': fields.char('Relation Field', size=64),
         'model_id': fields.many2one('ir.model', 'Object id', required=True, select=True, ondelete='cascade'),
         'field_description': fields.char('Field Label', required=True, size=256),
-        'relate': fields.boolean('Click and Relate'),
-
         'ttype': fields.selection(_get_fields_type, 'Field Type',size=64, required=True),
         'selection': fields.char('Field Selection',size=128),
         'required': fields.boolean('Required'),
@@ -212,7 +211,7 @@ class ir_model_fields(osv.osv):
         'select_level': fields.selection([('0','Not Searchable'),('1','Always Searchable'),('2','Advanced Search')],'Searchable', required=True),
         'translate': fields.boolean('Translate'),
         'size': fields.integer('Size'),
-        'state': fields.selection([('manual','Custom Field'),('base','Base Field')],'Manualy Created'),
+        'state': fields.selection([('manual','Custom Field'),('base','Base Field')],'Manualy Created', required=True, readonly=True),
         'on_delete': fields.selection([('cascade','Cascade'),('set null','Set NULL')], 'On delete', help='On delete property for many2one fields'),
         'domain': fields.char('Domain', size=256),
 
@@ -220,7 +219,6 @@ class ir_model_fields(osv.osv):
         'view_load': fields.boolean('View Auto-Load'),
     }
     _defaults = {
-        'relate': lambda *a: 0,
         'view_load': lambda *a: 0,
         'selection': lambda *a: "[]",
         'domain': lambda *a: "[]",
@@ -278,13 +276,43 @@ class ir_model_access(osv.osv):
         cr.execute("select 1 from res_groups_users_rel where uid=%d and gid in(select res_id from ir_model_data where module=%s and name=%s)", (uid, grouparr[0], grouparr[1],))
         return bool(cr.fetchone())
 
-    def check_groups_by_id(self, cr, uid, group_id):
-        cr.execute("select 1 from res_groups_users_rel where uid=%i and gid=%i", (uid, group_id,))
-        return bool(cr.fetchone())
+    def check_group(self, cr, uid, model, mode, group_ids):
+        """ Check if a specific group has the access mode to the specified model"""
+        assert mode in ['read','write','create','unlink'], 'Invalid access mode'
+
+        if isinstance(model, browse_record):
+            assert model._table_name == 'ir.model', 'Invalid model object'
+            model_name = model.name
+        else:
+            model_name = model
+        
+        if isinstance(group_ids, (int, long)):
+            group_ids = [group_ids]
+        for group_id in group_ids:
+            cr.execute("SELECT perm_" + mode + " "
+                   "  FROM ir_model_access a "
+                   "  JOIN ir_model m ON (m.id = a.model_id) "
+                   " WHERE m.model = %s AND a.group_id = %d", (model_name, group_id)
+                   )
+            r = cr.fetchone()
+            if r is None:
+                cr.execute("SELECT perm_" + mode + " "
+                       "  FROM ir_model_access a "
+                       "  JOIN ir_model m ON (m.id = a.model_id) "
+                       " WHERE m.model = %s AND a.group_id IS NULL", (model_name, )
+                       )
+                r = cr.fetchone()
+
+            access = bool(r and r[0])
+            if access:
+                return True
+        # pass no groups -> no access
+        return False
 
     def check(self, cr, uid, model, mode='read', raise_exception=True):
-        # Users root have all access (Todo: exclude xml-rpc requests)
         if uid==1:
+            # User root have all accesses 
+            # TODO: exclude xml-rpc requests
             return True
 
         assert mode in ['read','write','create','unlink'], 'Invalid access mode'
@@ -329,27 +357,42 @@ class ir_model_access(osv.osv):
 
     check = tools.cache()(check)
 
+    __cache_clearing_methods = []
+
+    def register_cache_clearing_method(self, model, method):
+        self.__cache_clearing_methods.append((model, method))
+
+    def unregister_cache_clearing_method(self, model, method):
+        try:
+            i = self.__cache_clearing_methods.index((model, method))
+            del self.__cache_clearing_methods[i]
+        except ValueError:
+            pass
+
+    def call_cache_clearing_methods(self):
+        for model, method in self.__cache_clearing_methods:
+            getattr(self.pool.get(model), method)()
+
     #
     # Check rights on actions
     #
     def write(self, cr, uid, *args, **argv):
-        self.pool.get('ir.ui.menu').clear_cache()
+        self.call_cache_clearing_methods()
         res = super(ir_model_access, self).write(cr, uid, *args, **argv)
-        self.check()
+        self.check()    # clear the cache of check function
         return res
+    
     def create(self, cr, uid, *args, **argv):
         res = super(ir_model_access, self).create(cr, uid, *args, **argv)
         self.check()
         return res
+
     def unlink(self, cr, uid, *args, **argv):
-        self.pool.get('ir.ui.menu').clear_cache()
+        self.call_cache_clearing_methods()
         res = super(ir_model_access, self).unlink(cr, uid, *args, **argv)
         self.check()
         return res
-    def read(self, cr, uid, *args, **argv):
-        res = super(ir_model_access, self).read(cr, uid, *args, **argv)
-        self.check()
-        return res
+
 ir_model_access()
 
 class ir_model_data(osv.osv):
