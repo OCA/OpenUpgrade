@@ -199,7 +199,7 @@ class one2many_mod_task(fields.one2many):
             elif name[0] == 'm':
                 ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Mailing Manufacturing')], limit=self._limit)
             elif name[0] == 'c':
-                ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Customers File')], limit=self._limit)
+                ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Customers List')], limit=self._limit)
             else :
                 ids2 = obj.pool.get(self._obj).search(cr, user, [(self._fields_id,'in',project_ids),('type','=','Mailing Manufacturing')], limit=self._limit)
             for r in obj.pool.get(self._obj)._read_flat(cr, user, ids2, [self._fields_id], context=context, load='_classic_write'):
@@ -371,7 +371,7 @@ class dm_campaign(osv.osv):
         'manufacturing_task_ids': one2many_mod_task('project.task', 'project_id', "Manufacturing tasks",
                                                         domain=[('type','ilike','Mailing Manufacturing')],context={'type':'Mailing Manufacturing'}),
         'cust_file_task_ids': one2many_mod_task('project.task', 'project_id', "Customer Files tasks",
-                                                        domain=[('type','ilike','Customers File')], context={'type':'Customers File'}),
+                                                        domain=[('type','ilike','Customers List')], context={'type':'Customers List'}),
         'quantity_estimated_total' : fields.function(_quantity_estimated_total, string='Total Estimated Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_wanted_total' : fields.function(_quantity_wanted_total, string='Total Wanted Quantity',type="char",size="64",method=True,readonly=True),
         'quantity_delivered_total' : fields.function(_quantity_delivered_total, string='Total Delivered Quantity',type="char",size="64",method=True,readonly=True),
@@ -419,8 +419,14 @@ class dm_campaign(osv.osv):
         srch_offer_ids = self.search(cr, uid, [('offer_id', '=', camp.offer_id.id)])
 
         c = camp.country_id.id
-        if 'date_start' in vals and vals['date_start'] and camp.project_id:
-            self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
+        if 'date_start' in vals and vals['date_start']:
+            time_format = "%Y-%m-%d"
+            d = time.strptime(vals['date_start'],time_format)
+            d = datetime.date(d[0], d[1], d[2])
+            date_end = d + datetime.timedelta(days=365)
+            super(osv.osv,self).write(cr, uid, camp.id, {'date':date_end})
+            if camp.project_id:
+                self.pool.get('project.project').write(cr,uid,[camp.project_id.id],{'date_end':vals['date_start']})
         if camp.offer_id:
             d = camp.offer_id.id
             offers = self.pool.get('dm.offer').browse(cr, uid, d)
@@ -684,7 +690,7 @@ class dm_campaign_proposition(osv.osv):
                             'This is usually the quantity used to order the manufacturing of the mailings'),
         'quantity_wanted' : fields.function(_quantity_wanted_get,string='Wanted Quantity',type="char",size="64",method=True,readonly=True,
                     help='The wanted quantity is the number of addresses you wish to get for that segment.\n' \
-                            'This is usually the quantity used to order customers files\n' \
+                            'This is usually the quantity used to order Customers Lists\n' \
                             'The wanted quantity could be AAA for All Addresses Available'),
         'quantity_delivered' : fields.function(_quantity_delivered_get,string='Delivered Quantity',type="char",size="64",method=True,readonly=True,
                     help='The delivered quantity is the number of addresses you receive from the broker.'),
@@ -858,11 +864,11 @@ class dm_campaign_purchase_line(osv.osv):
         value = {}
         if product_id:
             product = self.pool.get('product.product').browse(cr,uid,[product_id])[0]
-            if product.categ_id.name not in ['Mailing Manufacturing','Customers File','DTP','Item','Translation']:
+            if product.categ_id.name not in ['Mailing Manufacturing','Customers List','DTP','Item','Translation']:
                 raise  osv.except_osv('Warning', 'The category of that product is not valid for a purchase line creation\n' \
                                             'Product category should be :\n' \
                                                 '* Mailing Manufacturing\n' \
-                                                '* Customers File\n' \
+                                                '* Customers List\n' \
                                                 '* Item\n' \
                                                 '* DTP\n' \
                                                 '* Translation\n' \
@@ -1007,7 +1013,7 @@ class dm_campaign_purchase_line(osv.osv):
                                 constraints.append("---------------------------------------------------------------------------")
                                 constraints.append(item.product_id.name)
                                 constraints.append(item.purchase_constraints)
-                    elif pline.type_product == 'Customers File':
+                    elif pline.type_product == 'Customers List':
                                 constraints.append("---------------------------------------------------------------------------")
                                 constraints.append('Campaign Name : %s' % (obj.name,))
                                 constraints.append('Campaign Code : %s' % (obj.code1,))
@@ -1158,7 +1164,7 @@ class dm_campaign_purchase_line(osv.osv):
                                    'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
                                    'account_analytic_id': propo.analytic_account_id,
                                 })
-                    elif pline.type_product == 'Customers File':
+                    elif pline.type_product == 'Customers List':
                         lines = []
                         if pline.campaign_group_id:
                             for campaign in pline.campaign_group_id.campaign_ids:
@@ -1167,7 +1173,7 @@ class dm_campaign_purchase_line(osv.osv):
                                         line_name = propo.code1 + ' - ' + segment.list_id.name
                                         if pline.type_quantity == 'quantity_free':
                                             raise osv.except_osv('Warning',
-                                                'You cannot use a free quantity for a customers file order')
+                                                'You cannot use a free quantity for a Customers List order')
                                         elif pline.type_quantity == 'quantity_estimated':
                                             quantity = segment.quantity_estimated
                                         elif pline.type_quantity == 'quantity_wanted':
@@ -1199,7 +1205,7 @@ class dm_campaign_purchase_line(osv.osv):
                                     line_name = propo.code1 + ' - ' + segment.list_id.name
                                     if pline.type_quantity == 'quantity_free':
                                         raise osv.except_osv('Warning',
-                                            'You cannot use a free quantity for a customers file order')
+                                            'You cannot use a free quantity for a Customers List order')
                                     elif pline.type_quantity == 'quantity_estimated':
                                         quantity = segment.quantity_estimated
                                     elif pline.type_quantity == 'quantity_wanted':
@@ -1398,28 +1404,49 @@ purchase_order()
 class project_task(osv.osv):
     _name = "project.task"
     _inherit = "project.task"
+    context_data ={}
 
-#    def _default_type(self, cr, uid, context={}):
-#        if 'type' in context and context['type']:
-#            id_cat = self.pool.get('project.task.type').search(cr,uid,[('name','ilike',context['type'])])[0]
-#            return [id_cat]
-#        return []
+    def default_get(self, cr, uid, fields, context=None):
+        if 'type' in context and 'project_id' in context:
+            self.context_data = context.copy()
+        value = super(project_task, self).default_get(cr, uid, fields, context)
+        return value
 
-    def _default_type(self, cr, uid, context={}):
-        print "CONTEXT :::::::", context
-        id_type = 0
-        if 'type' in context and context['type']:
-            id_type =  self.pool.get('project.task.type').search(cr,uid,[('name','ilike',context['type'])])[0]
-        print id_type
-        return id_type
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False):
+        result = super(project_task,self).fields_view_get(cr, user, view_id, view_type, context, toolbar)
+        if not context.has_key('active_id'):
+            if 'project_id' in self.context_data and self.context_data['project_id']:
+                if result['type']=='form':
+                    result['arch']= """<?xml version="1.0" encoding="utf-8"?>\n<form string="Task edition">\n<group colspan="6" col="6">\n<field name="name" select="1"/>\n<field name="project_id" readonly="1" select="1"/>\n
+                        <field name="total_hours" widget="float_time"/>\n<field name="user_id" select="1"/>\n<field name="date_deadline" select="2"/>\n<field name="progress" widget="progressbar"/>\n</group>\n
+                        <notebook colspan="4">\n<page string="Information">\n<field name="planned_hours" widget="float_time" on_change="onchange_planned(planned_hours,effective_hours)"/>\n<field name="delay_hours" widget="float_time"/>\n
+                        <field name="remaining_hours" select="2" widget="float_time"/>\n<field name="effective_hours" widget="float_time"/>\n<field colspan="4" name="description" nolabel="1" select="2"/>\n
+                        <field colspan="4" name="work_ids" nolabel="1"/>\n<newline/>\n<group col="11" colspan="4">\n<field name="state" select="1"/>\n<button name="do_draft" states="open" string="Set Draft" type="object"/>
+                        <button name="do_open" states="pending,draft" string="Open" type="object"/>\n<button name="do_reopen" states="done,cancelled" string="Re-open" type="object"/>\n<button name="do_pending" states="open" string="Set Pending" type="object"/>\n
+                        <button groups="base.group_extended" name="%(project.wizard_delegate_task)d" states="pending,open" string="Delegate" type="action"/>\n<button name="%(project.wizard_close_task)d" states="pending,open" string="Done" type="action"/>\n
+                        <button name="do_cancel" states="draft,open,pending" string="Cancel" type="object"/>\n</group>\n</page>\n<page groups="base.group_extended" string="Delegations">\n
+                        <field colspan="4" name="history" nolabel="1"/>\n<field colspan="4" height="150" name="child_ids" nolabel="1">\n<tree string="Delegated tasks">\n<field name="name"/>\n
+                        <field name="user_id"/>\n<field name="date_deadline"/>\n<field name="planned_hours" widget="float_time"/>\n<field name="effective_hours" widget="float_time"/>\n<field name="state"/>\n</tree>\n
+                        </field>\n<field colspan="4" name="parent_id"/>\n</page>\n<page groups="base.group_extended" string="Extra Info">\n<separator string="Planning" colspan="2"/>\n<separator string="Dates" colspan="2"/>\n<field name="priority"/>\n
+                        <field name="date_start" select="2"/>\n<field name="sequence"/>\n<field name="date_close" select="2"/>\n<field name="type"/>\n<field name="active" select="2"/>\n
+                        <field name="partner_id" select="2"/>\n<separator colspan="4" string="Notes"/>\n<field colspan="4" name="notes" nolabel="1"/>\n</page>\n</notebook>\n</form>"""
+        return result
+    
+    def create(self,cr,uid,vals,context={}):
+        if context.has_key('read_delta'):
+            if 'type' in self.context_data:
+                task_type = self.pool.get('project.task.type').search(cr,uid,[('name','=',self.context_data['type'])])[0]
+                vals['type']=task_type
+                vals['project_id']=self.context_data['project_id']
+            if 'planned_hours' not in vals:
+                vals['planned_hours'] = 0.00
+        return super(project_task, self).create(cr, uid, vals, context)
     
     _columns = {
         'date_reviewed': fields.datetime('Reviewed Date'),
         'date_planned': fields.datetime('Planned Date'),
      }
-    _defaults = {
-        'type': _default_type,
-    }
+
 project_task()
 
 #vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
