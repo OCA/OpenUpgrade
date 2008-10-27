@@ -28,7 +28,7 @@
 #
 ##############################################################################
 {
-    "name":"Bussiness Game Detail",
+    "name":"Bussiness Game Retail",
     "version":"1.0",
     "author":"Tiny",
     "category":"Profile",
