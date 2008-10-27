@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-	<data>
-		<record id="view_currency_form_inherit" model="ir.ui.view">
-			<field name="name">res.currency.form.inherit</field>
-			<field name="model">res.currency</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="base.view_currency_form" />
-			<field name="arch" type="xml">
-				<field name="name" select="1" colspan="4"
-					position="replace">
-					<field name="name" select="1" />
-					<field name="company_id" select="2" />
-				</field>
-			</field>
-		</record>
+    <data>
+        <record id="view_currency_form_inherit" model="ir.ui.view">
+            <field name="name">res.currency.form.inherit</field>
+            <field name="model">res.currency</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_currency_form" />
+            <field name="arch" type="xml">
+                <field name="name" select="1" colspan="4"
+                    position="replace">
+                    <field name="name" select="1" />
+                    <field name="company_id" select="2" />
+                </field>
+            </field>
+        </record>
 
-		<record id="view_company_form_inherit" model="ir.ui.view">
-			<field name="name">res.company.form.inherit</field>
-			<field name="model">res.company</field>
-			<field name="type">form</field>
-			<field name="inherit_id" ref="base.view_company_form"/>
-			<field name="arch" type="xml">
-				<page string="General Information" position="after">
-					<page string="Currency">
-						<field name="currency_ids" colspan="4" nolabel="1"/>
-					</page>
-				</page>
-			</field>
-		</record>
-	</data>
+        <record id="view_company_form_inherit" model="ir.ui.view">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <page string="General Information" position="after">
+                    <page string="Currency">
+                        <field name="currency_ids" colspan="4" nolabel="1"/>
+                    </page>
+                </page>
+            </field>
+        </record>
+    </data>
 </openerp>

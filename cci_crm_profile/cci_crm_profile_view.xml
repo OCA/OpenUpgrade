@@ -1,200 +1,200 @@
 <openerp>
-	<data>
+    <data>
 <!-- OLD VERSION -->
 <!-- new object is added -->
-<!--		<record model="ir.ui.view" id="view_cci_partner_answer_form">
-			<field name="name">cci_partner_profile.answer.form</field>
-			<field name="type">form</field>
-			<field name="model">cci_partner_profile.answer</field>
-			<field name="arch" type="xml">
-				<form string="Partner Answer">
-					<field name="partner_id" select="1"/>
-					<field name="address_id" select="1"/>
-					<field name="contact_id" select="1"/>
-					<field name="question_id" select="2"/>
-					<field name="answer_id" select="2"/>
-					<field name="answer_text" select="2"/>
-				</form>
-			</field>
-		</record>
-		<record model="ir.ui.view" id="view_cci_partner_answer_tree">
-			<field name="name">cci_partner_profile.answer.tree</field>
-			<field name="type">tree</field>
-			<field name="model">cci_partner_profile.answer</field>
-			<field name="arch" type="xml">
-				<tree string="Partner Answer">
-					<field name="partner_id"/>
-					<field name="address_id"/>
-					<field name="contact_id" />
-					<field name="question_id"/>
-					<field name="answer_id"/>
-					<field name="answer_text"/>
-				</tree>
-			</field>
-		</record>
-		<record model="ir.actions.act_window" id="action_cci_partner_answer">
-			<field name="name">Partner Answer</field>
-			<field name="type">ir.actions.act_window</field>
-			<field name="res_model">cci_partner_profile.answer</field>
-			<field name="view_type">form</field>
-		</record>
-		<menuitem name="Partners/Partner by Profiles" action="action_cci_partner_answer" id="menu_partner_answer"/>
+<!--        <record model="ir.ui.view" id="view_cci_partner_answer_form">
+            <field name="name">cci_partner_profile.answer.form</field>
+            <field name="type">form</field>
+            <field name="model">cci_partner_profile.answer</field>
+            <field name="arch" type="xml">
+                <form string="Partner Answer">
+                    <field name="partner_id" select="1"/>
+                    <field name="address_id" select="1"/>
+                    <field name="contact_id" select="1"/>
+                    <field name="question_id" select="2"/>
+                    <field name="answer_id" select="2"/>
+                    <field name="answer_text" select="2"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_cci_partner_answer_tree">
+            <field name="name">cci_partner_profile.answer.tree</field>
+            <field name="type">tree</field>
+            <field name="model">cci_partner_profile.answer</field>
+            <field name="arch" type="xml">
+                <tree string="Partner Answer">
+                    <field name="partner_id"/>
+                    <field name="address_id"/>
+                    <field name="contact_id" />
+                    <field name="question_id"/>
+                    <field name="answer_id"/>
+                    <field name="answer_text"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="action_cci_partner_answer">
+            <field name="name">Partner Answer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cci_partner_profile.answer</field>
+            <field name="view_type">form</field>
+        </record>
+        <menuitem name="Partners/Partner by Profiles" action="action_cci_partner_answer" id="menu_partner_answer"/>
 -->
 
 <!-- addings of new fields -->
 
 <!-- ANSWERS -->
-	<record model="ir.ui.view" id="view_answer_inherited">
-		<field name="name">Answers</field>
-		<field name="model">crm_profiling.answer</field>
-		<field name="inherit_id" ref="crm_profiling.view_answer"/>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<field name="name" position="after">
-				<field name="text"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_answer_inherited">
+        <field name="name">Answers</field>
+        <field name="model">crm_profiling.answer</field>
+        <field name="inherit_id" ref="crm_profiling.view_answer"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="text"/>
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_answer_form_inherited">
-		<field name="name">Answers</field>
-		<field name="model">crm_profiling.answer</field>
-		<field name="inherit_id" ref="crm_profiling.view_answer_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="name" position="after">
-				<field name="text" colspan="4"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_answer_form_inherited">
+        <field name="name">Answers</field>
+        <field name="model">crm_profiling.answer</field>
+        <field name="inherit_id" ref="crm_profiling.view_answer_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="text" colspan="4"/>
+            </field>
+        </field>
+    </record>
 
 <!-- QUESTIONS -->
-	<record model="ir.ui.view" id="view_question_tree_inherited">
-		<field name="name">Questions</field>
-		<field name="model">crm_profiling.question</field>
-		<field name="inherit_id" ref="crm_profiling.view_question_tree"/>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<field name="name" position="before">
-				<field name="target"/>
-				<field name="open_question"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_question_tree_inherited">
+        <field name="name">Questions</field>
+        <field name="model">crm_profiling.question</field>
+        <field name="inherit_id" ref="crm_profiling.view_question_tree"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="target"/>
+                <field name="open_question"/>
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_question_form_inherited">
-		<field name="name">Questions</field>
-		<field name="model">crm_profiling.question</field>
-		<field name="inherit_id" ref="crm_profiling.view_question_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="name" position="before">
-				<field name="target" select="2"/>
-				<field name="open_question"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_question_form_inherited">
+        <field name="name">Questions</field>
+        <field name="model">crm_profiling.question</field>
+        <field name="inherit_id" ref="crm_profiling.view_question_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="name" position="before">
+                <field name="target" select="2"/>
+                <field name="open_question"/>
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_question_form_inherited_2">
-		<field name="name">Questions</field>
-		<field name="model">crm_profiling.question</field>
-		<field name="inherit_id" ref="crm_profiling.view_question_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<field name="answers_ids" position="replace">
-				<field name="answers_ids" colspan="4" nolabel="1" editable="bottom">
-					<tree string="Answers" editable="bottom">
-						<field name="name" select="1"/>
-						<field name="text" select="1"/>
-					</tree>
-					<form string="Answers">
-						<field name="name" select="1"/>
-						<field name="text" select="1" colspan="4"/>
-					</form>
-				</field>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_question_form_inherited_2">
+        <field name="name">Questions</field>
+        <field name="model">crm_profiling.question</field>
+        <field name="inherit_id" ref="crm_profiling.view_question_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <field name="answers_ids" position="replace">
+                <field name="answers_ids" colspan="4" nolabel="1" editable="bottom">
+                    <tree string="Answers" editable="bottom">
+                        <field name="name" select="1"/>
+                        <field name="text" select="1"/>
+                    </tree>
+                    <form string="Answers">
+                        <field name="name" select="1"/>
+                        <field name="text" select="1" colspan="4"/>
+                    </form>
+                </field>
+            </field>
+        </field>
+    </record>
 
-
-
-<!-- Add new page for Tags in parent notebook -->
-
-	<record model="ir.ui.view" id="view_partner_contact_form_inherited">
-		<field name="name">res.partner.contact.form</field>
-		<field name="model">res.partner.contact</field>
-		<field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<notebook position="inside">
-				<page string="Tags">
-					<button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
-					<newline/>
-					<field name="answers_ids" colspan="4" nolabel="1"/>
-				</page>
-			</notebook>
-		</field>
-	</record>
-
-	<record model="ir.ui.view" id="view_partner_address_form1_1">
-		<field name="name">res.partner.address.form</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form position="replace">
-			<form string="Partner contacts">
-				<notebook>
-					<page string="General">
-						<field name="partner_id" colspan="4" select="1"/>
-						<newline/>
-						<field name="name" select="1"/>
-						<field name="title" domain="[('domain', '=', 'contact')]"/>
-						<field name="function"/>
-						<field name="type" select="2"/>
-						<field name="street" select="2"/>
-						<field name="street2"/>
-						<newline/>
-						<field name="zip" select="2"/>
-						<field name="city" select="2"/>
-						<newline/>
-						<field name="country_id" select="1" completion="1"/>
-						<field name="state_id" select="2"/>
-						<newline/>
-						<field name="phone" select="2"/>
-						<field name="fax"/>
-						<newline/>
-						<field name="mobile" select="2"/>
-						<field name="email" select="2"/>
-					</page>
-					<page string="Tags">
-						<button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
-						<newline/>
-						<field name="answers_ids" colspan="4" nolabel="1"/>
-					</page>
-				</notebook>
-			</form></form>
-		</field>
-	</record>
 
 
 <!-- Add new page for Tags in parent notebook -->
 
-	<record model="ir.ui.view" id="view_partner_job_form_inherited">
-		<field name="name">res.partner.job.form</field>
-		<field name="model">res.partner.job</field>
-		<field name="inherit_id" ref="base_contact.view_partner_job_form"/>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<notebook position="inside">
-				<page string="Tags">
-					<button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
-					<newline/>
-					<field name="answers_ids" colspan="4" nolabel="1"/>
-				</page>
-			</notebook>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_partner_contact_form_inherited">
+        <field name="name">res.partner.contact.form</field>
+        <field name="model">res.partner.contact</field>
+        <field name="inherit_id" ref="base_contact.view_partner_contact_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Tags">
+                    <button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
+                    <newline/>
+                    <field name="answers_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
 
-	</data>
+    <record model="ir.ui.view" id="view_partner_address_form1_1">
+        <field name="name">res.partner.address.form</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form position="replace">
+            <form string="Partner contacts">
+                <notebook>
+                    <page string="General">
+                        <field name="partner_id" colspan="4" select="1"/>
+                        <newline/>
+                        <field name="name" select="1"/>
+                        <field name="title" domain="[('domain', '=', 'contact')]"/>
+                        <field name="function"/>
+                        <field name="type" select="2"/>
+                        <field name="street" select="2"/>
+                        <field name="street2"/>
+                        <newline/>
+                        <field name="zip" select="2"/>
+                        <field name="city" select="2"/>
+                        <newline/>
+                        <field name="country_id" select="1" completion="1"/>
+                        <field name="state_id" select="2"/>
+                        <newline/>
+                        <field name="phone" select="2"/>
+                        <field name="fax"/>
+                        <newline/>
+                        <field name="mobile" select="2"/>
+                        <field name="email" select="2"/>
+                    </page>
+                    <page string="Tags">
+                        <button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
+                        <newline/>
+                        <field name="answers_ids" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+            </form></form>
+        </field>
+    </record>
+
+
+<!-- Add new page for Tags in parent notebook -->
+
+    <record model="ir.ui.view" id="view_partner_job_form_inherited">
+        <field name="name">res.partner.job.form</field>
+        <field name="model">res.partner.job</field>
+        <field name="inherit_id" ref="base_contact.view_partner_job_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="Tags">
+                    <button string="Use a questionnaire" name="%(crm_profiling.wizard_open_questionnaire)d" type="action" colspan="1"/>
+                    <newline/>
+                    <field name="answers_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    </data>
 </openerp>

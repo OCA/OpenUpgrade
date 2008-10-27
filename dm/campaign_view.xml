@@ -1308,8 +1308,8 @@
             <field name="inherit_id" ref="base.view_country_form"/>
             <field name="arch" type="xml">
                 <field name="code" position="after">
-                   <field name="main_language" select="1"/>
                    <field name="main_currency" select="1"/>
+                   <field name="main_language" select="1"/>
                 </field>
             </field>
         </record>
@@ -1327,8 +1327,8 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <field name="parent_id" position="after">
-                <field name="state_ids" colspan="4"/>
                 <field name="country_ids" colspan="4"/>
+                <field name="state_ids" colspan="4"/>
             </field>
         </field>
     </record>

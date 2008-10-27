@@ -1,199 +1,199 @@
 <?xml version="1.0"?>
 <openerp>
-	<data>
+    <data>
 
 <!-- Partner -->
-	<record model="ir.ui.view" id="partners_form_add_location">
-		<field name="name">partners_form_add_location</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="country_id" position="replace">
-				<field name="location" colspan="4" />
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_add_location">
+        <field name="name">partners_form_add_location</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="country_id" position="replace">
+                <field name="location" colspan="4" />
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_city">
-		<field name="name">partners_form_del_city</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="city" position="replace"/>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_city">
+        <field name="name">partners_form_del_city</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="city" position="replace"/>
+        </field>
+    </record>
 
-	<!-- We need to city replaces to remove it -->
-	<record model="ir.ui.view" id="partners_form_del_citycity">
-		<field name="name">partners_form_del_citycity</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="city" position="replace"/>
-		</field>
-	</record>
+    <!-- We need to city replaces to remove it -->
+    <record model="ir.ui.view" id="partners_form_del_citycity">
+        <field name="name">partners_form_del_citycity</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="city" position="replace"/>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_zip">
-		<field name="name">partners_form_del_zip</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="zip" position="replace"/>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_zip">
+        <field name="name">partners_form_del_zip</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="zip" position="replace"/>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_state">
-		<field name="name">partners_form_del_state</field>
-		<field name="model">res.partner</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="state_id" position="replace"/>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_state">
+        <field name="name">partners_form_del_state</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="state_id" position="replace"/>
+        </field>
+    </record>
 
 
 <!-- Partner Address 1 -->
-	<record model="ir.ui.view" id="partners_form_add_location1">
-		<field name="name">partners_form_add_location1</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
-		<field name="arch" type="xml">
-			<field name="state_id" position="replace">
-				<field name="location" colspan="4" />
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_add_location1">
+        <field name="name">partners_form_add_location1</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+            <field name="state_id" position="replace">
+                <field name="location" colspan="4" />
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_city1">
-		<field name="name">partners_form_del_city1</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
-		<field name="arch" type="xml">
-			<field name="city" position="replace">
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_city1">
+        <field name="name">partners_form_del_city1</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+            <field name="city" position="replace">
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_zip1">
-		<field name="name">partners_form_del_zip1</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
-		<field name="arch" type="xml">
-			<field name="zip" position="replace">
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_zip1">
+        <field name="name">partners_form_del_zip1</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+            <field name="zip" position="replace">
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_country1">
-		<field name="name">partners_form_del_country1</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
-		<field name="arch" type="xml">
-			<field name="country_id" position="replace">
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_country1">
+        <field name="name">partners_form_del_country1</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+            <field name="country_id" position="replace">
+            </field>
+        </field>
+    </record>
 
 
 <!-- Partner Address 2 -->
-	<record model="ir.ui.view" id="partners_form_add_location2">
-		<field name="name">partners_form_add_location2</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form2"/>
-		<field name="arch" type="xml">
-			<field name="state_id" position="replace">
-				<field name="location" colspan="4" />
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_add_location2">
+        <field name="name">partners_form_add_location2</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form2"/>
+        <field name="arch" type="xml">
+            <field name="state_id" position="replace">
+                <field name="location" colspan="4" />
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_city2">
-		<field name="name">partners_form_del_city2</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form2"/>
-		<field name="arch" type="xml">
-			<field name="city" position="replace">
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_city2">
+        <field name="name">partners_form_del_city2</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form2"/>
+        <field name="arch" type="xml">
+            <field name="city" position="replace">
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_zip2">
-		<field name="name">partners_form_del_zip2</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form2"/>
-		<field name="arch" type="xml">
-			<field name="zip" position="replace">
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_zip2">
+        <field name="name">partners_form_del_zip2</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form2"/>
+        <field name="arch" type="xml">
+            <field name="zip" position="replace">
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="partners_form_del_country2">
-		<field name="name">partners_form_del_country2</field>
-		<field name="model">res.partner.address</field>
-		<field name="inherit_id" ref="base.view_partner_address_form2"/>
-		<field name="arch" type="xml">
-			<field name="country_id" position="replace">
-			</field>
-		</field>
-	</record>
-
-
-		<!--
-		State
-		-->
-
-	<record model="ir.ui.view" id="view_country_state_form2">
-		<field name="name">view_country_state_form2</field>
-		<field name="model">res.country.state</field>
-		<field name="inherit_id" ref="base.view_country_state_form"/>
-		<field name="arch" type="xml">
-			<field name="code" position="after">
-				<field name="city_ids" colspan="4" nolabel="1" widget="one2many_list"/>
-			</field>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="partners_form_del_country2">
+        <field name="name">partners_form_del_country2</field>
+        <field name="model">res.partner.address</field>
+        <field name="inherit_id" ref="base.view_partner_address_form2"/>
+        <field name="arch" type="xml">
+            <field name="country_id" position="replace">
+            </field>
+        </field>
+    </record>
 
 
-		<!--
-		City
-		-->
+        <!--
+        State
+        -->
 
-	<record model="ir.ui.view" id="view_city_tree">
-		<field name="name">city.city.tree</field>
-		<field name="model">city.city</field>
-		<field name="type">tree</field>
-		<field name="arch" type="xml">
-			<tree string="City">
-				<field name="zipcode"/>
-				<field name="name"/>
-				<field name="state_id"/>
-			</tree>
-		</field>
-	</record>
+    <record model="ir.ui.view" id="view_country_state_form2">
+        <field name="name">view_country_state_form2</field>
+        <field name="model">res.country.state</field>
+        <field name="inherit_id" ref="base.view_country_state_form"/>
+        <field name="arch" type="xml">
+            <field name="code" position="after">
+                <field name="city_ids" colspan="4" nolabel="1" widget="one2many_list"/>
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_city_form">
-		<field name="name">city.city.form</field>
-		<field name="model">city.city</field>
-		<field name="type">form</field>
-		<field name="arch" type="xml">
-			<form string="City">
-				<field name="zipcode" select="1"/>
-				<field name="name" select="1"/>
-				<field name="state_id" select="1"/>
-			</form>
-		</field>
-	</record>
 
-	<record model="ir.actions.act_window" id="action_city">
-		<field name="name">City</field>
-		<field name="type">ir.actions.act_window</field>
-		<field name="res_model">city.city</field>
-		<field name="view_type">form</field>
-	</record>
+        <!--
+        City
+        -->
 
-	<menuitem name="Partners/Configuration/Localisation/Cities"
-		groups="base.group_system" action="action_city"
-		id="menu_city_partner"/>
+    <record model="ir.ui.view" id="view_city_tree">
+        <field name="name">city.city.tree</field>
+        <field name="model">city.city</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="City">
+                <field name="zipcode"/>
+                <field name="name"/>
+                <field name="state_id"/>
+            </tree>
+        </field>
+    </record>
 
-	</data>
+    <record model="ir.ui.view" id="view_city_form">
+        <field name="name">city.city.form</field>
+        <field name="model">city.city</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="City">
+                <field name="zipcode" select="1"/>
+                <field name="name" select="1"/>
+                <field name="state_id" select="1"/>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_city">
+        <field name="name">City</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">city.city</field>
+        <field name="view_type">form</field>
+    </record>
+
+    <menuitem name="Partners/Configuration/Localisation/Cities"
+        groups="base.group_system" action="action_city"
+        id="menu_city_partner"/>
+
+    </data>
 </openerp>

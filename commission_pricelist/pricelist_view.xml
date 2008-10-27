@@ -3,19 +3,18 @@
 <data>
 
 
-	<record model="ir.ui.view" id="product_pricelist_view">
-		<field name="name">product.pricelist.form.inherit</field>
-		<field name="model">product.pricelist</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="product.product_pricelist_view"/>
-		<field name="arch" type="xml">
+    <record model="ir.ui.view" id="product_pricelist_view">
+        <field name="name">product.pricelist.form.inherit</field>
+        <field name="model">product.pricelist</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="product.product_pricelist_view"/>
+        <field name="arch" type="xml">
+            <field name="active" position="after">
+                <field name="comrate"/>
+            </field>
+        </field>
 
-		    <field name="active" position="after">
-	    		<field name="comrate"/>
-		    </field>
-		 </field>
-
-</record>
+    </record>
 
 </data>
 </openerp>
