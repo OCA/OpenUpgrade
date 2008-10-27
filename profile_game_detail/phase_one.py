@@ -77,11 +77,12 @@ class profile_game_detail_phase_one(osv.osv):
         if step:
            err_msg=step.error
         raise Exception("%s -- %s\n\n%s"%('warning', 'Warning !', err_msg+'\n\n'+msg))
+
     def pre_process_quotation(self, cr,uid,step_id, object, method,type, *args):
         if (not method) and type!='execute':
             return False
-        if ((object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink'))):            
-            self.error(cr, uid,step_id)            
+        if ((object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
         return (object in ("sale.order", 'sale.order.line')) and (method in ('create'))
 
     def post_process_quotation(self,cr,uid,step_id,object, method,type,*args):        
@@ -244,8 +245,6 @@ class profile_game_detail_phase_one(osv.osv):
         if pid and res:
             return self.write(cr,uid,pid,{'step10':True,'state':'done'})
         return False
-
-
 
     def confirm(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'quotation'})
