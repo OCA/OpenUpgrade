@@ -144,6 +144,8 @@ def _check_code_4_type(x):
         if x['AID,A,10'].startswith('406'):
             return 'payable'
         return 'receivable'
+    if x['AID,A,10'].startswith('44'):
+        return 'payable'
     if len(x['AID,A,10']) <= 4:
         return 'view'
     return 'other' #TODO: by default = type view
