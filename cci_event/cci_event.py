@@ -178,20 +178,17 @@ class event_registration(osv.osv):
     def cci_event_reg_open(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'open',})
         self.pool.get('event.registration').mail_user(cr,uid,ids)
-        cases = self.browse(cr, uid, ids)
-        self.pool.get('event.registration')._history(cr, uid, cases, 'Open', history=True)
+        self.pool.get('event.registration')._history(cr, uid, ids, 'Open', history=True)
         return True
 
     def cci_event_reg_done(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'done',})
-        cases = self.browse(cr, uid, ids)
-        self.pool.get('event.registration')._history(cr, uid, cases, 'Done', history=True)
+        self.pool.get('event.registration')._history(cr, uid, ids, 'Done', history=True)
         return True
 
     def cci_event_reg_cancel(self, cr, uid, ids, *args):
         self.write(cr, uid, ids, {'state':'cancel',})
-        cases = self.browse(cr, uid, ids)
-        self.pool.get('event.registration')._history(cr, uid, cases, 'Cancel', history=True)
+        self.pool.get('event.registration')._history(cr, uid, ids, 'Cancel', history=True)
         return True
 
     def cal_check_amount(self, cr, uid, ids, name, arg, context={}):
