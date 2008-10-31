@@ -43,7 +43,7 @@
                     "dm_report.xml",
                     "offer_sequence.xml",
                     "dm_data.xml",
-                    "board_campaign_manager.xml",
+#                    "board_campaign_manager.xml",
                     ],
     "active": False,
     "installable": True

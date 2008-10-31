@@ -123,5 +123,61 @@
 		</record>
 -->
 
+		<record id="dm_offer_step_type_startingmailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Starting Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="1" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;The Starting Mailing is the first mailing send to the potential customer.
+In a multimedia context, the term mailing could be a paper mail, an e-mail, an sms, a rss feed, etc.&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_intermediatemailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;IM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Intermediate Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;The Intermediate Mailing is the mailing that usualy follow the Starting Mailing. For example : If the customer purchase an item on the Starting Mailing solicitation, a few days laters, he will receive a Intermediate Mailing to confirm that his order is in progress and eventually propose him another item to buy.
+&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_packageinsert0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;PI&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Package Insert&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;A Package Insert is a particular mailing enclosed in the package of a delivered product. It is usually used to propose another product to the customer.&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_accompanyingletterofthestartingmailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;ALSM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter of the Starting Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;An Accompanying Letter is usually a mailing accompanying the product ordered, like a user manual or a thanks letter. But it could also be a letter to inform the potential customer that you regret that he didn't ordered.&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_accompanyingletteroftheintermediatemailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;ALIM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter of the Intermediate Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;An Accompanying Letter is usually a mailing accompanying the product ordered, like a user manual or a thanks letter. But it could also be a letter to inform the potential customer that you regret that he didn't ordered.&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_accompanyingletterofthepackageinsert0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;ALPI&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter of the Package Insert&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;An Accompanying Letter is usually a mailing accompanying the product ordered, like a user manual or a thanks letter. But it could also be a letter to inform the potential customer that you regret that he didn't ordered.
+&quot;&quot;&quot;" name="description"/>
+		</record>
+
 	</data>
 </openerp>

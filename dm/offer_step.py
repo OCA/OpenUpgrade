@@ -23,10 +23,11 @@ class dm_offer_step_type(osv.osv):
     _rec_name = 'name'
 
     _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=8, required=True),
+        'name' : fields.char('Name', size=64, translate=True, required=True),
+        'code' : fields.char('Code', size=8, translate=True, required=True),
         'flow_start' : fields.boolean('Flow Start'),
         'flow_stop' : fields.boolean('Flow Stop'),
+        'description' : fields.text('Description', translate=True),
         }
 
     _sql_constraints = [
@@ -96,7 +97,7 @@ class dm_offer_step(osv.osv):
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
-        'doc_number' : fields.integer('Number of documents'),
+        'doc_number' : fields.integer('Number of documents of the mailing'),
         'manufacturing_constraint_ids': fields.one2many('dm.offer.step.manufacturing_constraint', 'offer_step_id', 'Manufacturing Constraints'),
     }
 
