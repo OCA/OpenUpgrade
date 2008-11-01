@@ -57,31 +57,37 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Offers">
-				<group colspan="4" col="4">
-					<field name="name" select="1"/>
-					<field name="code"/>
+				<group colspan="3" col="4">
+					<separator string="Offer Description" colspan="5"/>
+					<field name="name" select="1" />
+					<field name="code" select="1" />
 				</group>
-				<notebook>
+				<notebook colspan="4">
 					<page string="General">
-						<field name="lang_orig"/>
-<!--						<field name="copywriter_id"  select="2"  on_change="change_code(type,copywriter_id)" />-->
-						<field name="copywriter_id"  select="2" />
-						<field name="recommended_trademark"/>
-<!--						<field name="type" select="2" on_change="change_code(type,copywriter_id)" />-->
-						<field name="type" select="2"  />
-						<field name="preoffer_original_id" context="{'offer_type':'Preoffer'}"/>
-						<field name="offer_origin_id"/>
-						<field name="offer_responsible_id" select="2"/>
-						<field name="version" select="2"/>
-						<field name="active" select="2"/>
-						<newline/>
-						<field name="quotation"/>
-						<field name="legal_state"/>
+						<group colspan="2" col="2">
+							<separator string="Global Information" colspan="2"/>
+							<field name="type" select="1"  />
+							<field name="copywriter_id"  select="2" />
+							<field name="recommended_trademark" select="2"/>
+							<field name="offer_responsible_id" select="2"/>
+							<field name="version" select="2"/>
+							<field name="quotation" select="2"/>
+						</group>
+						<group colspan="2" col="2">
+							<separator string="Origin" colspan="2"/>
+							<field name="offer_origin_id" select="2"/>
+							<field name="preoffer_original_id"  select="2" context="{'offer_type':'Preoffer'}"/>
+							<field name="lang_orig" select="2"/>
+							<newline />
+							<separator string="" colspan="2"/>
+							<field name="legal_state" select="2"/>
+							<field name="active" select="2"/>
+						</group>
 						<separator string="Categories" colspan="4"/>
-						<field name="category_ids" colspan="4" nolabel="1"/>
+						<field name="category_ids" colspan="4" nolabel="1" select="1"/>
 						<separator string="Notes" colspan="4"/>
 						<field name="notes" colspan="4"  nolabel="1"/>
-						<separator string="Status" colspan="4"/>
+						<separator string="Offer Status" colspan="4"/>
 						<group col="8" colspan="4">
 							<field name="state" nolabel="1" select="1"/>
 							<button name="state_open_set" string="Open" states="draft,freeze" type="object"/>
@@ -108,18 +114,22 @@
 						</field>
 					</page>
 					<page string="Dates">
-						<field name="order_date"/>
-						<field name="last_modification_date"/>
-						<field name="planned_delivery_date"/>
-						<field name="delivery_date"/>
-						<newline />
-<!--						<field name="fixed_date"/>-->
-<!--						<field name="buffer_delay"/>-->
+						<group colspan="2" col="2">
+							<separator string="Order Dates" colspan="2"/>
+							<field name="order_date" select="2"/>
+							<field name="planned_delivery_date"/>
+							<field name="delivery_date" select="2"/>
+						</group>
+						<group colspan="2" col="2">
+							<separator string="Offer Dates" colspan="2"/>
+							<field name="last_modification_date"/>
+						</group>
 					</page>
-					<page string="Criteria">
-						<separator string="Geographical Criteria" colspan="4"/>
-						<field name="forbidden_country_ids" colspan="4"/>
-						<field name="forbidden_state_ids" colspan="4" />
+					<page string="Georgraphical Criteria">
+						<separator string="Forbiden Countries" colspan="4"/>
+						<field name="forbidden_country_ids" colspan="4" nolabel="1"/>
+						<separator string="Forbiden States" colspan="4"/>
+						<field name="forbidden_state_ids" colspan="4" nolabel="1"/>
 					</page>
 					<page string="Keywords" >
 						<separator string="Keywords" colspan="4"/>
@@ -499,7 +509,7 @@
 		<field name="view_id" ref="view_preoffer_form"/>
 		<field name="act_window_id" ref="action_preoffer_form"/>
 	</record>
-	<menuitem name="Direct Marketing/Offers/All PreOffers" id="menu_action_preoffer_form" action="action_preoffer_form"/>
+	<menuitem name="Direct Marketing/Offers/All Offer Ideas" id="menu_action_preoffer_form" action="action_preoffer_form"/>
 
 	<!--
 	======================
@@ -562,7 +572,7 @@
 		<field name="view_type">form</field>
 	</record>
 
-	<menuitem name="Direct Marketing/Configuration/Offers/Edit Categories" sequence="1" id="menu_action_offer_categ_main_form" action="action_offer_categ_form"/>
+	<menuitem name="Direct Marketing/Configuration/Offers/All Offer Categories" sequence="1" id="menu_action_offer_categ_main_form" action="action_offer_categ_form"/>
 
 	<record model="ir.actions.act_window" id="action_offer_by_category">
 		<field name="name">Offer by Categories</field>

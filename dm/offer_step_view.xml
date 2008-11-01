@@ -148,31 +148,19 @@
 		<field name="type">form</field>
 		<field name="arch" type="xml">
 			<form string="Offer Step">
-				<field name="offer_id" colspan="2"/>
-				<newline/>
-				<field name="code"/>
+				<group colspan="3" col="4">
+					<separator string="Offer Step Description" colspan="5"/>
+					<field name="offer_id" select="1" />
+					<field name="code" select="1"/>
+				</group>
 				<notebook colspan="4">
 					<page string="General">
-						<field name="name"/>
+						<field name="name" select="1" />
 						<field name="type" select="2" on_change="onchange_type(type,offer_id)"/>
-						<field name="quotation"/>
-						<field name="legal_state"/>
+						<field name="quotation" select="2"/>
+						<field name="legal_state" select="2" />
 						<newline/>
 						<field name="media_ids" colspan="4" nolabel="1" select="1"/>
-						<field name="product_ids" colspan="4" nolabel="1" readonly="1">
-							<form string="Item">
-									<field name="product_id"/>
-								<field name="item_type"/>
-								<separator string="Purchase constraints" colspan="4"/>
-								<field name="purchase_constraints" colspan="4" nolabel="1"/>
-								<separator string="Notes" colspan="4"/>
-								<field name="notes" colspan="4" nolabel="1"/>
-							</form>
-							<tree string="Items">
-								<field name="product_id"/>
-								<field name="item_type"/>
-							</tree>
-						</field>
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
 							<field name="state" select="1" nolabel="1"/>
@@ -182,8 +170,8 @@
 							<button name="state_draft_set" string="Reset to Draft" states="closed" type="object"/>
 						</group>
 					</page>
-					<page string="Transition">
-						<field name="incoming_transition_ids" colspan="4" nolabel="1" context="{'type':'step_to','step_id':active_id or False}">
+					<page string="Transitions">
+						<field name="incoming_transition_ids" colspan="4" nolabel="1">
 							<form string="Transition">
 								<field name="step_from" domain="[('offer_id','=',parent.offer_id)]"/>
 								<field name="step_to" readonly="1"/>
@@ -205,7 +193,8 @@
 								<field name="step_to" domain="[('offer_id','=',parent.offer_id)]"/>
 								<field name="condition" select="1"/>
 								<field name="delay" string="Delay(In Days)" select="2"/>
-								<field name="media_id" context="{'step_media_ids':parent.media_ids}"/>
+<!--								<field name="media_id" context="{'step_media_ids':parent.media_ids}"/>-->
+								<field name="media_id" />
 							</form>
 							<tree string="Outgoing Transitions">
 								<field name="step_from"/>
@@ -215,10 +204,6 @@
 								<field name="delay" string="Delay(In Days)"/>
 							</tree>
 						</field>
-					</page>
-					<page string="Description">
-						<separator string="Description" colspan="4"/>
-						<field name="desc" nolabel="1"/>
 					</page>
 					<page string="Advises">
 						<field name="mailing_at_dates" select="2"/>
@@ -235,7 +220,6 @@
 						<newline/>
 						<separator string="Production Advices" colspan="4"/>
 						<field name="production_note" nolabel="1" colspan="4"/>
-<!--						<field name="production_delay"/>-->
 						<separator string="Purchase Advices" colspan="4"/>
 						<field name="purchase_note" nolabel="1" colspan="4"/>
 					</page>
@@ -259,6 +243,26 @@
 								<field name="constraint"/>
 							</tree>
 						</field>
+					</page>
+					<page string="Items">
+						<field name="product_ids" colspan="4" nolabel="1" readonly="1" select="2">
+							<form string="Item">
+									<field name="product_id"/>
+								<field name="item_type"/>
+								<separator string="Purchase constraints" colspan="4"/>
+								<field name="purchase_constraints" colspan="4" nolabel="1"/>
+								<separator string="Notes" colspan="4"/>
+								<field name="notes" colspan="4" nolabel="1"/>
+							</form>
+							<tree string="Items">
+								<field name="product_id"/>
+								<field name="item_type"/>
+							</tree>
+						</field>
+					</page>
+					<page string="Offer Step Description">
+						<separator string="Description" colspan="4"/>
+						<field name="desc" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>

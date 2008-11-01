@@ -154,9 +154,10 @@ class dm_offer_step_transition(osv.osv):
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
+        print "Transition context : ",context
         if context.has_key('type'):
-            if not context['step_id']:
-                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
+#            if not context['step_id']:
+#                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
             data['condition']='automatic'
             data['delay']='0'
             data[context['type']] = context['step_id']

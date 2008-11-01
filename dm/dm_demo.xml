@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+<!--
+        <record id="res_partner_katchasport" model="res.partner">
+            <field eval="&quot;&quot;&quot;Katcha Sport&quot;&quot;&quot;" name="name"/>
+        </record>
+        <record id="res_partner_address_howardphillips0" model="res.partner.address">
+            <field name="function" ref="base.function_director"/>
+            <field eval="&quot;&quot;&quot;Arkham&quot;&quot;&quot;" name="city"/>
+            <field eval="&quot;&quot;&quot;Howard Phillips&quot;&quot;&quot;" name="name"/>
+            <field eval="&quot;&quot;&quot;01970&quot;&quot;&quot;" name="zip"/>
+            <field eval="&quot;&quot;&quot;M.&quot;&quot;&quot;" name="title"/>
+            <field name="partner_id" ref="res_partner_katchasport0"/>
+            <field name="country_id" ref="base.us"/>
+            <field eval="&quot;&quot;&quot;Big Rosegarden Street 6&quot;&quot;&quot;" name="street"/>
+            <field eval="1" name="active"/>
+            <field name="state_id" ref="base.us-ma"/>
+            <field eval="&quot;&quot;&quot;default&quot;&quot;&quot;" name="type"/>
+        </record>
+-->
+        <record id="dm_offer_category_sport0" model="dm.offer.category">
+            <field eval="&quot;&quot;&quot;Sport&quot;&quot;&quot;" name="name"/>
+        </record>
+
+        <record id="dm_offer_category_wellness0" model="dm.offer.category">
+            <field eval="&quot;&quot;&quot;Wellness&quot;&quot;&quot;" name="name"/>
+        </record>
+
+    </data>
+</openerp>

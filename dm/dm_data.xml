@@ -2,40 +2,54 @@
 <openerp>
 	<data noupdate="1">
 
+		<record id="res_partner_category_directmarketing0" model="res.partner.category">
+			<field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+
 			<record model="res.partner.category" id="cat_copywriter">
 				<field name="name" eval="&quot;Copywriter&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_dealer">
 				<field name="name" eval="&quot;Dealer&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_broker">
 				<field name="name" eval="&quot;Broker&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_duplicator">
 				<field name="name" eval="&quot;Deduplicator&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_cleaner">
 				<field name="name" eval="&quot;Cleaner&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_trademark">
 	 			<field name="name" eval="&quot;Trademark&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 	 		</record>
 
 			<record model="res.partner.category" id="cat_translator">
 	 			<field name="name" eval="&quot;Translator&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 	 		</record>
 
 			<record model="res.partner.category" id="cat_owner">
 				<field name="name" eval="&quot;Owner&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_router">
 				<field name="name" eval="&quot;Router&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="dm.media" id="media_paper">
@@ -90,38 +104,34 @@
 			<field eval="&quot;&quot;&quot;Customers List Task&quot;&quot;&quot;" name="description"/>
 		</record>
 
-<!--
+		<record id="product_category_directmarketing0" model="product.category">
+			<field name="property_stock_journal" ref="stock.stock_journal"/>
+			<field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
+		</record>
+	
 		<record id="product_category_mailingmanufacturing0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;&quot;&quot;Mailing Manufacturing&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
-		<record id="product_category_item0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
+	
+		<record id="product_category_items0" model="product.category">
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
-			<field eval="&quot;&quot;&quot;Item&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field eval="&quot;&quot;&quot;Items&quot;&quot;&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
-		<record id="product_category_cutomers_list0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
+	
+		<record id="product_category_customersfile0" model="product.category">
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
-			<field eval="&quot;&quot;&quot;Cutomers list&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field eval="&quot;&quot;&quot;Customers File&quot;&quot;&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
+	
 		<record id="product_category_translation0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;&quot;&quot;Translation&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
-		<record id="product_category_dtp0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
-			<field name="property_stock_journal" ref="stock.stock_journal"/>
-			<field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
-		</record>
--->
 
 		<record id="dm_offer_step_type_startingmailing0" model="dm.offer.step.type">
 			<field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>

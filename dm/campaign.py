@@ -140,8 +140,9 @@ class dm_campaign_type(osv.osv):
     _name = "dm.campaign.type"
 
     _columns = {
-        'name': fields.char('Description', size=64, required=True),
-        'code': fields.char('Code', size=16, required=True),
+        'name': fields.char('Description', size=64, translate=True, required=True),
+        'code': fields.char('Code', size=16, translate=True, required=True),
+        'description': fields.text('Description', translate=True),
     }
 dm_campaign_type()
 

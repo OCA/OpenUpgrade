@@ -1096,8 +1096,11 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
             <form string="Type">
+                <separator string="Campaign Type Description" colspan="4"/>
                 <field name="name" select="1"/>
-                <field name="code" select="2"/>
+                <field name="code" select="1"/>
+                <separator string="Description" colspan="4"/>
+                <field name="description" nolabel="1" colspan="4" select="2"/>
             </form>
         </field>
     </record>
@@ -1110,6 +1113,7 @@
             <tree string="Types">
                 <field name="name"/>
                 <field name="code"/>
+                <field name="description"/>
             </tree>
         </field>
     </record>
