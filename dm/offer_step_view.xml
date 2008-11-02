@@ -160,6 +160,8 @@
 						<field name="quotation" select="2"/>
 						<field name="legal_state" select="2" />
 						<newline/>
+						<separator string="Description" colspan="4"/>
+						<field name="desc" nolabel="1" colspan="4"/>
 						<field name="media_ids" colspan="4" nolabel="1" select="1"/>
 						<separator string="Status" colspan="4"/>
 						<group col="8" colspan="4">
@@ -259,10 +261,6 @@
 								<field name="item_type"/>
 							</tree>
 						</field>
-					</page>
-					<page string="Offer Step Description">
-						<separator string="Description" colspan="4"/>
-						<field name="desc" nolabel="1"/>
 					</page>
 				</notebook>
 			</form>

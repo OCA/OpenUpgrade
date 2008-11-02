@@ -67,7 +67,7 @@ class dm_offer_step(osv.osv):
         return map(lambda x : [x.code,x.code],type)
 
     _columns = {
-        'name' : fields.char('Description',size=64, required=True),
+        'name' : fields.char('Name',size=64, required=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32),
