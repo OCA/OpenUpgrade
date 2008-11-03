@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+
 # If your project uses a database, you can set up database tests
 # similar to what you see below. Be sure to set the db_uri to
 # an appropriate uri for your testing database. sqlite is a good
@@ -6,6 +7,7 @@
 # which is very fast.
 
 from turbogears import testutil, database
+
 # from livechat.model import YourDataClass, User
 
 # database.set_db_uri("sqlite:///:memory:")
