@@ -51,8 +51,11 @@ def check_state(self, cr, uid, data, context):
         
 def _cancel_repair(self, cr, uid, data, context):
     pool = pooler.get_pool(cr.dbname)
-    repair_obj = pool.get('mrp.repair').browse(cr, uid, data['ids'])[0]
+    repair_obj = pool.get('mrp.repair').browse(cr, uid, data['ids'])
     pool.get('mrp.repair').write(cr,uid,data['ids'],{'state':'cancel'})
+    mrp_line_obj = pool.get('mrp.repair.lines')
+    for line in repair_obj:
+        mrp_line_obj.write(cr, uid, [l.id for l in line.operations], {'state': 'cancel'})
     return {}
 
 class repair_cancel(wizard.interface):
