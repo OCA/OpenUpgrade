@@ -85,7 +85,7 @@
 			<field name="model">report.document.wall</field>
 			<field name="type">form</field>
 			<field name="arch" type="xml">
-				<form string="Wall of Shame">
+				<form string="Document Management Acceptability">
 					<field name="user_id" select="1"/>
 					<field name="month" select="1"/>
 					<field name="file_name" select="1"/>
@@ -100,7 +100,7 @@
 			<field name="model">report.document.wall</field>
 			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<tree string="Wall of Shame">
+				<tree string="Document Management Acceptability">
 					<field name="user_id" select="1"/>
 					<field name="month" select="1"/>
 					<field name="file_name"/>
@@ -110,13 +110,13 @@
 		</record>
 		
 		<record model="ir.actions.act_window" id="action_view_wall">
-			<field name="name">Wall of Shame</field>
+			<field name="name">Document Management Acceptability</field>
 			<field name="res_model">report.document.wall</field>
 			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 		</record>
 				
-		<menuitem name="Wall of Shame" id="menu_action_view_my_document_report_shame" parent="menu_action_view_my_document_report" action="action_view_wall"/>
+		<menuitem name="Document Management Acceptability" id="menu_action_view_my_document_report_shame" parent="menu_action_view_my_document_report" action="action_view_wall"/>
 
 <!--***************************************************************************************-->
 
