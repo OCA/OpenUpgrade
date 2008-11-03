@@ -55,24 +55,18 @@
                             <newline/>
                             <group col="13" colspan="4">
                                 <field name="state" select="2"/>
-                                
-                                <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object"/>
-                                <button name="action_cancel" states="manual,progress" string="Cancel Order" type="object"/>
-                                <button name="cancel" states="draft" string="Cancel Order"/>
-                                <button name="invoice_cancel" states="invoice_except" string="Cancel Order"/>
-                                
-                                
                                 <button name="repair_confirm" states="draft" string="Confirm Repair"/>
-                                <button name="invoice_recreate" states="invoice_except" string="Recreate Invoice"/>
-                                <button name="invoice_corrected" states="invoice_except" string="Invoice Corrected"/>
-                                <button name="ship_recreate" states="shipping_except" string="Recreate Procurement"/>
-                                <button name="ship_corrected" states="shipping_except" string="Procurement Corrected"/>
-                                <button name="make_invoice" states="2binvoiced" string="Make Invoice"/>
-                                <button name="ship_cancel" states="shipping_except" string="Cancel Order"/>
                                 <button name="repair_done" states="confirmed" string="Repair Done"/>
-                                
+                                <button name="make_invoice" states="2binvoiced" string="Make Invoice"/>
                                 <button name="%(action_cancel_repair)d" states="draft,confirmed,2binvoiced" string="Cancel Repair" type="action"/>
                                 <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object"/>
+                                <button name="invoice_recreate" states="invoice_except" string="Recreate Invoice"/>
+                                <button name="invoice_corrected" states="invoice_except" string="Invoice Corrected"/>
+                                <button name="invoice_cancel" states="invoice_except" string="Cancel Order"/>
+                                <button name="ship_recreate" states="shipping_except" string="Recreate Procurement"/>
+                                <button name="ship_corrected" states="shipping_except" string="Procurement Corrected"/>
+                                <button name="ship_cancel" states="shipping_except" string="Cancel Order"/>
+                                <button name="cancel" states="draft" string="Cancel Order"/>
                             </group>
                         </page>
                         <page string="Invoicing">

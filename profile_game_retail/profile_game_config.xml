@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<openerp>
+    <data>       
+
+		<record id="sale.config_wizard_step_sale_picking_policy" model="ir.actions.todo">
+			<field name="active" eval="False"/>
+			<field eval="'skip'" name="state"/>
+		</record>
+
+		<record id="account.config_fiscalyear" model="ir.actions.todo">
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+		</record>
+
+		<record id="base.config_wizard_step_user" model="ir.actions.todo">
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+		</record>
+		<record id="base.config_wizard_simple_view" model="ir.actions.todo">
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+		</record>
+
+		<record id="crm_configuration.config_wizard_step_case_section_menu" model="ir.actions.todo">
+			<field name="active" eval="False"/>
+            <field eval="'skip'" name="state"/>
+		</record>
+    </data>
+</openerp>

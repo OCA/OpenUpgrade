@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
 	<data noupdate="1">
-		<record model="profile.game.detail.phase1" id="phase1">
+		<record model="profile.game.retail.phase1" id="phase1">
 		        <field name="name">Phase1</field>        
 		        <field name="state">not running</field>
     	</record>
@@ -9,8 +9,8 @@
     <data>
 
         <record model="ir.ui.view" id="view_game_phase1_form">
-            <field name="name">profile.game.detail.phase1.form</field>
-            <field name="model">profile.game.detail.phase1</field>
+            <field name="name">profile.game.retail.phase1.form</field>
+            <field name="model">profile.game.retail.phase1</field>
             <field name="arch" type="xml">
                 <form string="Game Scenario">
                     <field name="name" align="0.0"/>
@@ -58,8 +58,8 @@
             </field>
         </record>
         <record model="ir.ui.view" id="view_game_phase1_tree">
-            <field name="name">profile.game.detail.phase1.tree</field>
-            <field name="model">profile.game.detail.phase1</field>
+            <field name="name">profile.game.retail.phase1.tree</field>
+            <field name="model">profile.game.retail.phase1</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Game Scenario">
@@ -70,7 +70,7 @@
         </record>
         <record model="ir.actions.act_window" id="action_game_phase1_form">
             <field name="name">Game Scenario</field>
-            <field name="res_model">profile.game.detail.phase1</field>
+            <field name="res_model">profile.game.retail.phase1</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>

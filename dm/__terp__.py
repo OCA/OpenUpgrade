@@ -31,7 +31,8 @@
     "depends" : ["project_retro_planning","purchase","board"],
     "init_xml" : [ ],
     "demo_xml" : [
-                  "campaign_data.xml",
+                    "dm_demo.xml"
+#                  "campaign_data.xml",
                   ],
     "update_xml" : [
                     "dm_wizard.xml",
@@ -43,7 +44,7 @@
                     "dm_report.xml",
                     "offer_sequence.xml",
                     "dm_data.xml",
-                    "board_campaign_manager.xml",
+#                    "board_campaign_manager.xml",
                     ],
     "active": False,
     "installable": True

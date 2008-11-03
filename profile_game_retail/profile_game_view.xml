@@ -82,7 +82,7 @@
             <field name="arch" type="xml">
                 <form string="Configuration of Business Game">
                     <separator string="Configuration of Business Game" colspan="4"/>
-                    <field name="players"/>
+                    <field name="state"/>
                     <field name="objectives"/>
                     <field name="years"/>
                     <field name="difficulty"/>
@@ -103,8 +103,8 @@
                     </group>
                     <separator string="Hurman Ressources Manager" colspan="4"/>
                     <group name="hr" colspan="4">
-                        <field name="hr_name" string="Name"/>
-                        <field name="hr_email" string="Email"/>
+                        <field name="hr_name" string="Name" />
+                        <field name="hr_email" string="Email" />
                     </group>
                     <separator string="" colspan="4"/>
                     <label string="" colspan="2"/>

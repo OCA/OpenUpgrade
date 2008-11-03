@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2008 JAILLET Simon - CrysaLEAD - www.crysalead.fr
+# Copyright (c) 2004-2008 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#
+# $Id$
 #
 # WARNING: This program as such is intended to be used by professional
 # programmers who take the whole responsability of assessing all potential
@@ -25,7 +27,34 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 ##############################################################################
+{
+    "name":"Bussiness Game Retail",
+    "version":"1.0",
+    "author":"Tiny",
+    "category":"Profile",
+    "depends":[
+        "board",
+        "base",
+        "game_scenario",
+        "sale",
+        "sale_wo_production",
+        "stock_planning"
+    ],
+    "init_xml":[
+        "profile_game_data.xml",
+        "profile_game_scenario.xml",
+    ],
+    "demo_xml":[],
+    "update_xml":[
+        "profile_game_view.xml",
+        "profile_game_partner.xml",
+        "profile_game_phase1.xml",
+        "profile_game_config.xml",
+        "profile_game_product.xml",
+        "security/ir.model.access.csv"
+    ],
+    "active":False,
+    "installable":True,
+}
 
-import wizard_fiscalyear_close
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-

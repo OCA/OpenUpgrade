@@ -111,7 +111,7 @@ class profile_game_retail(osv.osv):
                 for field in mapping:
                     sql="""
                     select
-                    	sum(invoice.amount_total) as total,
+                        sum(invoice.amount_total) as total,
                     from account_invoice invoice
                     where invoice.type in ('%s') and date_invoice>='%s' and date_invoice<='%s'
                     """%(mapping[field],fiscalyear.date_start,fiscalyear.date_stop)
@@ -332,19 +332,19 @@ profile_game_retail()
 class profile_game_config_wizard(osv.osv_memory):
     _name='profile.game.config.wizard'
     _columns = {
-        'players':fields.selection([('3','3'),('4','4')],'Number of Players',required=True),
+        'state':fields.selection([('3','3'),('4','4')],'Number of Players',required=True),
         'finance_name':fields.char('Name of Financial Manager',size='64', required=True),
         'finance_email':fields.char('Email of Financial Manager',size='64'),
-        'hr_name':fields.char('Name of Hurman Ressources Manager',size='64', required=True),
-        'hr_email':fields.char('Email of Hurman Ressources Manager',size='64'),
+        'hr_name':fields.char('Name of Hurman Ressources Manager',size='64', readonly=True,required=False,states={'4':[('readonly',False),('required',True)]}),
+        'hr_email':fields.char('Email of Hurman Ressources Manager',size='64',readonly=True,required=False,states={'4':[('readonly',False),('required',False)]}),
         'logistic_name':fields.char('Name of Logistic Manager',size='64', required=True),
         'logistic_email':fields.char('Email of Logistic Manager',size='64'),
         'sales_name':fields.char('Name of Sales Manager',size='64', required=True),
         'sales_email':fields.char('Email of Sales Manager',size='64'),
         'objectives':fields.selection([
-            ('turnover','Maximise Turnover of Last Year'),
-            ('cumulative','Maximise Cumulative Benefit'),
-            ('products_sold','Maximise Number of Products Sold')],'Objectives',required=True),
+            ('on_max_turnover','Maximise Turnover of Last Year'),
+            ('on_max_cumulative','Maximise Cumulative Benefit'),
+            ('on_max_products_sold','Maximise Number of Products Sold')],'Objectives',required=True),
         'years':fields.selection([
             ('3','3 Years (40 minutes)'),
             ('5','5 Years (1 hour)'),
@@ -357,8 +357,9 @@ class profile_game_config_wizard(osv.osv_memory):
     _defaults = {
         'difficulty': lambda *args: 'medium',
         'years': lambda *args: '5',
-        'objectives': lambda *args: 'turnover',
-    }
+        'objectives': lambda *args: 'on_max_turnover',
+        'state': lambda *args: '3',
+    }    
     def action_cancel(self,cr,uid,ids,conect=None):
         return {
             'view_type': 'form',
@@ -376,7 +377,7 @@ class profile_game_config_wizard(osv.osv_memory):
             if res.get('id',False):
                 del res['id']
             game_vals={
-                'players':res['players'],
+                'players':res['state'],
                 'objectives':res['objectives'],
                 'years':res['years'],
                 'difficulty':res['difficulty'],
@@ -384,7 +385,7 @@ class profile_game_config_wizard(osv.osv_memory):
             game_obj.create(cr,uid,game_vals,context=context)
             lower=-2
             years=int(res['years'])
-            players=int(res['players'])
+            players=int(res['state'])
             start_date=DateTime.strptime(time.strftime('%Y-01-01'),'%Y-%m-%d')
             stop_date=DateTime.strptime(time.strftime('%Y-12-31'),'%Y-%m-%d')
             while lower<=years:
@@ -419,7 +420,7 @@ class profile_game_config_wizard(osv.osv_memory):
                                 'name':name.strip(),
                                 'work_email':email
                         })
-                    user_obj.write(cr,uid,[user_id],{'name':name.strip()})
+                    user_obj.write(cr,uid,[user_id],{'login':name.strip(),'password':name.strip(),'name':name.strip()})
         return {
                 'view_type': 'form',
                 "view_mode": 'form',

@@ -2,40 +2,54 @@
 <openerp>
 	<data noupdate="1">
 
+		<record id="res_partner_category_directmarketing0" model="res.partner.category">
+			<field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
+			<field eval="1" name="active"/>
+		</record>
+
 			<record model="res.partner.category" id="cat_copywriter">
 				<field name="name" eval="&quot;Copywriter&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_dealer">
 				<field name="name" eval="&quot;Dealer&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_broker">
 				<field name="name" eval="&quot;Broker&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_duplicator">
 				<field name="name" eval="&quot;Deduplicator&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_cleaner">
 				<field name="name" eval="&quot;Cleaner&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_trademark">
 	 			<field name="name" eval="&quot;Trademark&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 	 		</record>
 
 			<record model="res.partner.category" id="cat_translator">
 	 			<field name="name" eval="&quot;Translator&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 	 		</record>
 
 			<record model="res.partner.category" id="cat_owner">
 				<field name="name" eval="&quot;Owner&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="res.partner.category" id="cat_router">
 				<field name="name" eval="&quot;Router&quot;"/>
+				<field name="parent_id" ref="res_partner_category_directmarketing0" />
 			</record>
 
 			<record model="dm.media" id="media_paper">
@@ -90,38 +104,90 @@
 			<field eval="&quot;&quot;&quot;Customers List Task&quot;&quot;&quot;" name="description"/>
 		</record>
 
-<!--
+		<record id="product_category_directmarketing0" model="product.category">
+			<field name="property_stock_journal" ref="stock.stock_journal"/>
+			<field eval="&quot;&quot;&quot;Direct Marketing&quot;&quot;&quot;" name="name"/>
+		</record>
+	
 		<record id="product_category_mailingmanufacturing0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;&quot;&quot;Mailing Manufacturing&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
-		<record id="product_category_item0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
+	
+		<record id="product_category_items0" model="product.category">
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
-			<field eval="&quot;&quot;&quot;Item&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field eval="&quot;&quot;&quot;Items&quot;&quot;&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
-		<record id="product_category_cutomers_list0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
+	
+		<record id="product_category_customersfile0" model="product.category">
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
-			<field eval="&quot;&quot;&quot;Cutomers list&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field eval="&quot;&quot;&quot;Customers File&quot;&quot;&quot;" name="name"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
+	
 		<record id="product_category_translation0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
 			<field name="property_stock_journal" ref="stock.stock_journal"/>
 			<field eval="&quot;&quot;&quot;Translation&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+			<field name="parent_id" ref="product_category_directmarketing0"/>
 		</record>
-		<record id="product_category_dtp0" model="product.category">
-			<field name="property_account_expense_categ" ref="account.a_expense"/>
-			<field name="property_stock_journal" ref="stock.stock_journal"/>
-			<field eval="&quot;&quot;&quot;DTP&quot;&quot;&quot;" name="name"/>
-			<field name="property_account_income_categ" ref="account.a_sale"/>
+
+		<record id="dm_offer_step_type_startingmailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;SM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Starting Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="1" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;The Starting Mailing is the first mailing send to the potential customer.
+In a multimedia context, the term mailing could be a paper mail, an e-mail, an sms, a rss feed, etc.&quot;&quot;&quot;" name="description"/>
 		</record>
--->
+	</data>
+	<data>
+		<record id="dm_offer_step_type_intermediatemailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;IM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Intermediate Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;The Intermediate Mailing is the mailing that usualy follow the Starting Mailing. For example : If the customer purchase an item on the Starting Mailing solicitation, a few days laters, he will receive a Intermediate Mailing to confirm that his order is in progress and eventually propose him another item to buy.
+&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_packageinsert0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;PI&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Package Insert&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;A Package Insert is a particular mailing enclosed in the package of a delivered product. It is usually used to propose another product to the customer.&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_accompanyingletterofthestartingmailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;ALSM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter of the Starting Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;An Accompanying Letter is usually a mailing accompanying the product ordered, like a user manual or a thanks letter. But it could also be a letter to inform the potential customer that you regret that he didn't ordered.&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_accompanyingletteroftheintermediatemailing0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;ALIM&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter of the Intermediate Mailing&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;An Accompanying Letter is usually a mailing accompanying the product ordered, like a user manual or a thanks letter. But it could also be a letter to inform the potential customer that you regret that he didn't ordered.&quot;&quot;&quot;" name="description"/>
+		</record>
+	</data>
+	<data>
+		<record id="dm_offer_step_type_accompanyingletterofthepackageinsert0" model="dm.offer.step.type">
+			<field eval="&quot;&quot;&quot;ALPI&quot;&quot;&quot;" name="code"/>
+			<field eval="&quot;&quot;&quot;Accompanying Letter of the Package Insert&quot;&quot;&quot;" name="name"/>
+			<field eval="0" name="flow_stop"/>
+			<field eval="0" name="flow_start"/>
+			<field eval="&quot;&quot;&quot;An Accompanying Letter is usually a mailing accompanying the product ordered, like a user manual or a thanks letter. But it could also be a letter to inform the potential customer that you regret that he didn't ordered.
+&quot;&quot;&quot;" name="description"/>
+		</record>
 
 	</data>
 </openerp>

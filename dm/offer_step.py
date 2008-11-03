@@ -23,10 +23,11 @@ class dm_offer_step_type(osv.osv):
     _rec_name = 'name'
 
     _columns = {
-        'name' : fields.char('Name', size=64, required=True),
-        'code' : fields.char('Code', size=8, required=True),
+        'name' : fields.char('Name', size=64, translate=True, required=True),
+        'code' : fields.char('Code', size=8, translate=True, required=True),
         'flow_start' : fields.boolean('Flow Start'),
         'flow_stop' : fields.boolean('Flow Stop'),
+        'description' : fields.text('Description', translate=True),
         }
 
     _sql_constraints = [
@@ -66,7 +67,7 @@ class dm_offer_step(osv.osv):
         return map(lambda x : [x.code,x.code],type)
 
     _columns = {
-        'name' : fields.char('Description',size=64, required=True),
+        'name' : fields.char('Name',size=64, required=True),
         'offer_id' : fields.many2one('dm.offer', 'Offer',required=True, ondelete="cascade"),
         'parent_id' : fields.many2one('dm.offer', 'Parent'),
         'legal_state' : fields.char('Legal State', size=32),
@@ -96,7 +97,7 @@ class dm_offer_step(osv.osv):
         'incoming_transition_ids' : fields.one2many('dm.offer.step.transition','step_to', 'Incoming Transition',readonly=True),
         'outgoing_transition_ids' : fields.one2many('dm.offer.step.transition','step_from', 'Outgoing Transition'),
         'split_mode' : fields.selection([('and','And'),('or','Or'),('xor','Xor')],'Split mode'),
-        'doc_number' : fields.integer('Number of documents'),
+        'doc_number' : fields.integer('Number of documents of the mailing'),
         'manufacturing_constraint_ids': fields.one2many('dm.offer.step.manufacturing_constraint', 'offer_step_id', 'Manufacturing Constraints'),
     }
 
@@ -153,9 +154,10 @@ class dm_offer_step_transition(osv.osv):
     }
     def default_get(self, cr, uid, fields, context={}):
         data = super(dm_offer_step_transition, self).default_get(cr, uid, fields, context)
+        print "Transition context : ",context
         if context.has_key('type'):
-            if not context['step_id']:
-                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
+#            if not context['step_id']:
+#                raise osv.except_osv('Error !',"It is necessary to save this offer step before creating a transition")
             data['condition']='automatic'
             data['delay']='0'
             data[context['type']] = context['step_id']

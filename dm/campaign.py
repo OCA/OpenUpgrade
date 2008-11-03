@@ -140,8 +140,9 @@ class dm_campaign_type(osv.osv):
     _name = "dm.campaign.type"
 
     _columns = {
-        'name': fields.char('Description', size=64, required=True),
-        'code': fields.char('Code', size=16, required=True),
+        'name': fields.char('Description', size=64, translate=True, required=True),
+        'code': fields.char('Code', size=16, translate=True, required=True),
+        'description': fields.text('Description', translate=True),
     }
 dm_campaign_type()
 
@@ -339,7 +340,7 @@ class dm_campaign(osv.osv):
         'campaign_group_id' : fields.many2one('dm.campaign.group', 'Campaign group'),
         'notes' : fields.text('Notes'),
         'proposition_ids' : fields.one2many('dm.campaign.proposition', 'camp_id', 'Proposition'),
-        'campaign_type' : fields.selection(_get_campaign_type,'Type',required=True),
+        'campaign_type' : fields.selection(_get_campaign_type,'Type'),
         'analytic_account_id' : fields.many2one('account.analytic.account','Analytic Account', ondelete='cascade'),
         'planning_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Planning Status',readonly=True),
         'items_state' : fields.selection([('pending','Pending'),('inprogress','In Progress'),('done','Done')], 'Items Status',readonly=True),
@@ -860,25 +861,6 @@ class dm_campaign_purchase_line(osv.osv):
     _name = 'dm.campaign.purchase_line'
     _rec_name = 'product_id'
 
-    def onchange_product(self, cr, uid, ids, product_id):
-        value = {}
-        if product_id:
-            product = self.pool.get('product.product').browse(cr,uid,[product_id])[0]
-            if product.categ_id.name not in ['Mailing Manufacturing','Customers List','DTP','Item','Translation']:
-                raise  osv.except_osv('Warning', 'The category of that product is not valid for a purchase line creation\n' \
-                                            'Product category should be :\n' \
-                                                '* Mailing Manufacturing\n' \
-                                                '* Customers List\n' \
-                                                '* Item\n' \
-                                                '* DTP\n' \
-                                                '* Translation\n' \
-                                                )
-            else:
-                value['type_product'] = product.categ_id.name
-        else:
-            value['type_product'] = 'No Product Defined'
-        return {'value':value}
-
     def _get_uom_id(self, cr, uid, *args):
         cr.execute('select id from product_uom order by id limit 1')
         res = cr.fetchone()
@@ -946,8 +928,8 @@ class dm_campaign_purchase_line(osv.osv):
                 print "Campaign ID : ",pline.campaign_id
                 print "Group ID : ",pline.campaign_group_id
 
-                if not pline.quantity and pline.type_quantity != 'quantity_free' and pline.type_quantity != 'quantity_wanted':
-                    raise  osv.except_osv('Warning', "There's no quantity defined for this purchase line")
+#                if not pline.quantity and pline.type_quantity != 'quantity_free' and pline.type_quantity != 'quantity_wanted':
+#                    raise  osv.except_osv('Warning', "There's no quantity defined for this purchase line")
 
                 if not pline.product_id.seller_ids:
                     raise  osv.except_osv('Warning', "There's no supplier defined for this product : %s" % (pline.product_id.name,) )
@@ -990,55 +972,57 @@ class dm_campaign_purchase_line(osv.osv):
 
                     # Get constraints
                     constraints = []
-                    if pline.type_product == 'Mailing Manufacturing':
-                        for step in obj.offer_id.step_ids:
-                            for const in step.manufacturing_constraint_ids:
-                                if not const.country_ids:
+                    if pline.desc_from_offer:
+                        print "pline.product_category : ",pline.product_category
+                        if int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Mailing Manufacturing')])[0]:
+                            for step in obj.offer_id.step_ids:
+                                for const in step.manufacturing_constraint_ids:
+                                    if not const.country_ids:
+                                        constraints.append("---------------------------------------------------------------------------")
+                                        constraints.append(const.name)
+                                        constraints.append(const.constraint)
+                                    elif obj.country_id in const.country_ids:
+                                        constraints.append("---------------------------------------------------------------------------")
+                                        constraints.append(const.name + ' for country :' +  obj.country_id.name)
+                                        constraints.append(const.constraint)
+                        elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Item')]):
+                            raise osv.except_osv('Warning', "Purchase of items is not yet implemented")
+                            for step in obj.offer_id.step_ids:
+                                for item in step.product_ids:
                                     constraints.append("---------------------------------------------------------------------------")
-                                    constraints.append(const.name)
-                                    constraints.append(const.constraint)
-                                elif obj.country_id in const.country_ids:
+                                    constraints.append(item.product_id.name)
+                                    constraints.append(item.purchase_constraints)
+                        elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers File')])[0]:
                                     constraints.append("---------------------------------------------------------------------------")
-                                    constraints.append(const.name + ' for country :' +  obj.country_id.name)
-                                    constraints.append(const.constraint)
+                                    constraints.append('Campaign Name : %s' % (obj.name,))
+                                    constraints.append('Campaign Code : %s' % (obj.code1,))
+                                    constraints.append('Deposit Date : %s' % (obj.date_start,))
+                                    constraints.append("---------------------------------------------------------------------------")
+                                    constraints.append('Trademark : %s' % (obj.trademark_id.name,))
+                                    constraints.append('Estimated Quantity : %s' % (obj.quantity_estimated_total,))
+    #                                constraints.append('Responsible : %s' % (obj.files_responsible_id.name,))
+
+                                    if obj.files_delivery_address_id:
+                                        delivery_address = obj.files_delivery_address_id
+
+                        elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Translation')])[0]:
+                            if not obj.lang_id:
+                                raise osv.except_osv('Warning', "There's no language defined for this campaign : %s" % (obj.name,) )
                             if pline.notes:
-                                constraints.append("---------------------------------------------------------------------------")
                                 constraints.append(pline.notes)
                             else:
                                 constraints.append(' ')
-                    elif pline.type_product == 'Item':
-                        raise osv.except_osv('Warning', "Purchase of items is not yet implemented")
-                        for step in obj.offer_id.step_ids:
-                            for item in step.product_ids:
-                                constraints.append("---------------------------------------------------------------------------")
-                                constraints.append(item.product_id.name)
-                                constraints.append(item.purchase_constraints)
-                    elif pline.type_product == 'Customers List':
-                                constraints.append("---------------------------------------------------------------------------")
-                                constraints.append('Campaign Name : %s' % (obj.name,))
-                                constraints.append('Campaign Code : %s' % (obj.code1,))
-                                constraints.append('Deposit Date : %s' % (obj.date_start,))
-                                constraints.append("---------------------------------------------------------------------------")
-                                constraints.append('Trademark : %s' % (obj.trademark_id.name,))
-                                constraints.append('Estimated Quantity : %s' % (obj.quantity_estimated_total,))
-#                                constraints.append('Responsible : %s' % (obj.files_responsible_id.name,))
+                        elif pline.product_category == False:
+                            if pline.notes:
+                                constraints.append(pline.notes)
+                            else:
+                                constraints.append(' ')
 
-                                if obj.files_delivery_address_id:
-                                    delivery_address = obj.files_delivery_address_id
-
-                    elif pline.type == 'Translation':
-                        if not obj.lang_id:
-                            raise osv.except_osv('Warning', "There's no language defined for this campaign : %s" % (obj.name,) )
-                        if pline.notes:
-                            constraints.append(pline.notes)
-                        else:
-                            constraints.append(' ')
-                    elif pline.type_product == False:
-                        if pline.notes:
-                            constraints.append(pline.notes)
-                        else:
-                            constraints.append(' ')
-                    print "Delivery : ", delivery_address
+                    if pline.notes:
+                        constraints.append("---------------------------------------------------------------------------")
+                        constraints.append(pline.notes)
+                    else:
+                        constraints.append(' ')
 
                     # Create po
                     purchase_id = self.pool.get('purchase.order').create(cr, uid, {
@@ -1054,11 +1038,15 @@ class dm_campaign_purchase_line(osv.osv):
                     })
 
                     ''' If Translation Order => Get Number of documents in Offer '''
-                    if pline.type_product == 'Translation':
+                    if int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Translation')])[0]:
+                        print "In translation"
+                        quantity=0
+                        for step in pline.campaign_id.offer_id.step_ids:
+                            quantity += step.doc_number
                         line = self.pool.get('purchase.order.line').create(cr, uid, {
                            'order_id': purchase_id,
                            'name': code,
-                           'product_qty': pline.quantity,
+                           'product_qty': quantity,
                            'product_id': pline.product_id.id,
                            'product_uom': pline.uom_id.id,
                            'price_unit': price,
@@ -1066,7 +1054,7 @@ class dm_campaign_purchase_line(osv.osv):
                            'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
 #                           'account_analytic_id': obj.analytic_account_id,
                         })
-                    elif pline.type_product == 'Mailing Manufacturing':
+                    elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Mailing Manufacturing')])[0]:
                         ''' Create po lines for each proposition (of each campaign if group)'''
                         lines = []
                         if pline.campaign_group_id:
@@ -1164,7 +1152,7 @@ class dm_campaign_purchase_line(osv.osv):
                                    'taxes_id': [(6, 0, [x.id for x in pline.product_id.product_tmpl_id.supplier_taxes_id])],
                                    'account_analytic_id': propo.analytic_account_id,
                                 })
-                    elif pline.type_product == 'Customers List':
+                    elif int(pline.product_category) == self.pool.get('product.category').search(cr, uid,[('name','=','Customers File')])[0]:
                         lines = []
                         if pline.campaign_group_id:
                             for campaign in pline.campaign_group_id.campaign_ids:
@@ -1301,14 +1289,83 @@ class dm_campaign_purchase_line(osv.osv):
                     continue
         return result
 
+    def onchange_type_quantity(self, cr, uid, ids, type_quantity):
+        value = {}
+        quantity = 0
+
+#        pline = self.browse(cr, uid, ids)[0]
+#        if not pline.campaign_id:
+#            raise  osv.except_osv('Warning', "You must first save this Purchase Line and the campaign before using this button")
+
+        print "Quantity Type : ",type_quantity
+        """
+        print "Parent_type : ",parent_type
+        print "Parent_id : ",parent_id
+        """
+        """
+        if pline.campaign_group_id:
+            obj = pline.campaign_group_id
+        else:
+            obj = pline.campaign_id
+        """
+
+        if type_quantity == 'quantity_free':
+            if not quantity:
+                quantity = 0
+        elif type_quantity == 'quantity_estimated':
+            if obj.quantity_estimated_total.isdigit():
+                quantity = obj.quantity_estimated_total
+            else :
+                raise osv.except_osv('Warning',
+                    'Cannot get wanted quantity, check prososition segments')
+        elif type_quantity == 'quantity_wanted':
+            if obj.quantity_wanted_total.isdigit():
+                quantity = obj.quantity_wanted_total
+            elif obj.quantity_wanted_total == 'AAA for a Segment':
+                quantity = 0
+            else :
+                raise osv.except_osv('Warning',
+                    "Cannot get wanted quantity, check prososition segments")
+        elif type_quantity == 'quantity_delivered':
+            if obj.quantity_delivered_total.isdigit():
+                quantity = obj.quantity_delivered_total
+            else :
+                raise osv.except_osv('Warning',
+                    "Cannot get delivered quantity, check prososition segments")
+        elif type_quantity == 'quantity_usable':
+            if obj.quantity_usable_total.isdigit():
+                quantity = obj.quantity_usable_total
+            else :
+                raise osv.except_osv('Warning',
+                    "Cannot get usable quantity, check prososition segments")
+        else:
+            raise osv.except_osv('Warning','Error getting quantity')
+
+#        pline.write({'quantity':quantity})
+        value['quantity']=quantity
+
+        return {'value':value}
+
+    def _product_category_get(self,cr,uid,context={}):
+        type_obj = self.pool.get('product.category')
+        type_ids = type_obj.search(cr,uid,[])
+        type = type_obj.browse(cr,uid,type_ids)
+        return map(lambda x : [str(x.id),x.name],type)
+
+    def _default_category_get(self, cr, uid, *args):
+        cr.execute('select id from product_category where name=%s order by id limit 1', ('Mailing Manufacturing',))
+        res = cr.fetchone()
+        return str(res[0]) or False
+
     _columns = {
         'campaign_id': fields.many2one('dm.campaign', 'Campaign'),
         'campaign_group_id': fields.many2one('dm.campaign.group', 'Campaign Group'),
         'product_id' : fields.many2one('product.product', 'Product', required=True, context={'flag':True}),
         'quantity' : fields.integer('Total Quantity', readonly=False, required=True),
+        'quantity_warning' : fields.char('Warning', size=128, readonly=True),
         'type_quantity' : fields.selection(QTY_TYPES, 'Quantity Type', size=32),
         'type_document' : fields.selection(DOC_TYPES, 'Document Generated', size=32),
-        'type_product' : fields.char('Product Type',size=64, readonly=True),
+        'product_category' : fields.selection(_product_category_get, 'Product Category', size=64 ,select=True),
         'uom_id' : fields.many2one('product.uom','UOM', required=True),
         'date_order': fields.datetime('Order date', readonly=True),
         'date_planned': fields.datetime('Scheduled date', required=True),
@@ -1318,6 +1375,7 @@ class dm_campaign_purchase_line(osv.osv):
         'purchase_order_ids' : fields.one2many('purchase.order','dm_campaign_purchase_line','Campaign Purchase Line'),
         'notes': fields.text('Notes'),
         'togroup': fields.boolean('Apply to Campaign Group'),
+        'desc_from_offer' : fields.boolean('Get Description from Offer'),
         'state' : fields.function(_state_get, method=True, type='selection', selection=[
             ('pending','Pending'),
             ('requested','Quotations Requested'),
@@ -1334,6 +1392,8 @@ class dm_campaign_purchase_line(osv.osv):
         'state': lambda *a : 'pending',
         'type_quantity': lambda *a : 'quantity_wanted',
         'type_document': lambda *a : 'rfq',
+        'product_category' : _default_category_get,
+        'desc_from_offer': lambda *a : True,
     }
 dm_campaign_purchase_line()
 
@@ -1373,7 +1433,9 @@ class res_partner(osv.osv):
         'state_ids' : fields.many2many('res.country.state','partner_state_rel', 'partner_id', 'state_id', 'Allowed States'),
     }
     def _default_category(self, cr, uid, context={}):
-        if 'category' in context and context['category']:
+        if 'category_id' in context and context['category_id']:
+            return [context['category_id']]
+        elif 'category' in context and context['category']:
             id_cat = self.pool.get('res.partner.category').search(cr,uid,[('name','ilike',context['category'])])[0]
             return [id_cat]
         return []
@@ -1381,11 +1443,11 @@ class res_partner(osv.osv):
     def _default_all_country(self, cr, uid, context={}):
         id_country = self.pool.get('res.country').search(cr,uid,[])
         return id_country
-    
+
     def _default_all_state(self, cr, uid, context={}):
         id_state = self.pool.get('res.country.state').search(cr,uid,[])
         return id_state
-    
+
     _defaults = {
         'category_id': _default_category,
         'country_ids': _default_all_country,

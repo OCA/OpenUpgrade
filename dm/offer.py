@@ -17,7 +17,7 @@ AVAILABLE_TYPE = [
     ('new','New'),
     ('standart','Standart'),
     ('rewrite','Rewrite'),
-    ('preoffer','Preoffer')
+    ('preoffer','Offer Idea')
 ]
 
 
@@ -272,7 +272,7 @@ class dm_offer(osv.osv):
         'offer_responsible_id' : fields.many2one('res.users','Responsible',ondelete="cascade"),
         'recommended_trademark' : fields.many2one('dm.trademark','Recommended Trademark'),
         'offer_origin_id' : fields.many2one('dm.offer', 'Original Offer',domain=[('type','in',['new','standart','rewrite'])]),
-        'preoffer_original_id' : fields.many2one('dm.offer', 'Original Preoffer',domain=[('type','=','preoffer')] ),
+        'preoffer_original_id' : fields.many2one('dm.offer', 'Original Offer Idea',domain=[('type','=','preoffer')] ),
         'active' : fields.boolean('Active'),
         'quotation' : fields.char('Quotation', size=16),
         'legal_state' : fields.selection([('validated','Validated'), ('notvalidated','Not Validated'), ('inprogress','In Progress'), ('refused','Refused')],'Legal State'),
@@ -310,7 +310,7 @@ class dm_offer(osv.osv):
     }
 
     _constraints = [
-        (_check_preoffer, 'Error ! this preoffer is already assigned to an offer',['preoffer_original_id'])
+        (_check_preoffer, 'Error ! this offer idea is already assigned to an offer',['preoffer_original_id'])
     ]
 
 #    def change_code(self,cr,uid,ids,type,copywriter_id) :
