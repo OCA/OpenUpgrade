@@ -162,7 +162,7 @@ class res_partner_job(osv.osv):
         self.write(cr, uid, [data['id']],{'answers_ids':[[6,0,temp]]}, context)
         return {}
     _columns={
-        "answers_ids": fields.many2many("crm_profiling.answer","jobs_question_rel","address","answer","Answers",domain=[('question_id.target','=','res.partner.job')]),
+        "answers_ids": fields.many2many("crm_profiling.answer","jobs_question_rel","job","answer","Answers",domain=[('question_id.target','=','res.partner.job')]),
         }
 res_partner_job()
 
