@@ -13,9 +13,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="base_contact_team_form">
-            <field name="name">base.contact.team.form</field>
-            <field name="model">base.contact.team</field>
+        <record model="ir.ui.view" id="res_partner_team_form">
+            <field name="name">res.partner.team.form</field>
+            <field name="model">res.partner.team</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form name="Team">
@@ -27,9 +27,9 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="base_contact_team_tree">
-            <field name="name">base.contact.team.tree</field>
-            <field name="model">base.contact.team</field>
+        <record model="ir.ui.view" id="res_partner_team_tree">
+            <field name="name">res.partner.team.tree</field>
+            <field name="model">res.partner.team</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree name="Team">
@@ -39,21 +39,21 @@
             </field>
         </record>
 
-        <record model="ir.actions.act_window" id="base_contact_team_all_act">
+        <record model="ir.actions.act_window" id="res_partner_team_all_act">
             <field name="name">Teams</field>
-            <field name="res_model">base.contact.team</field>
+            <field name="res_model">res.partner.team</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
         </record>
 
-        <record model="ir.actions.act_window" id="base_contact_team_new_act">
+        <record model="ir.actions.act_window" id="res_partner_team_new_act">
             <field name="name">New Team</field>
-            <field name="res_model">base.contact.team</field>
+            <field name="res_model">res.partner.team</field>
             <field name="view_type">form</field>
             <field name="view_mode">form</field>
         </record>
 
-        <menuitem parent="base.menu_base_partner" id="base_contact_team_all_mi" action="base_contact_team_all_act" />
-        <menuitem parent="base_contact_team_all_mi" id="base_contact_team_new_mi" action="base_contact_team_new_act" />
+        <menuitem parent="base.menu_base_partner" id="res_partner_team_all_mi" action="res_partner_team_all_act" />
+        <menuitem parent="res_partner_team_all_mi" id="res_partner_team_new_mi" action="res_partner_team_new_act" />
     </data>
 </openerp>
