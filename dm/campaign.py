@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution    
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -990,6 +990,8 @@ class dm_campaign_purchase_line(osv.osv):
                         obj = pline.campaign_id
                         code = pline.campaign_id.code1
 
+                    print "obj : ",obj
+
                     # Get constraints
                     constraints = []
                     if pline.desc_from_offer:
@@ -1368,7 +1370,8 @@ class dm_campaign_purchase_line(osv.osv):
 
     def _product_category_get(self,cr,uid,context={}):
         type_obj = self.pool.get('product.category')
-        type_ids = type_obj.search(cr,uid,[])
+        dmcat_id = type_obj.search(cr,uid,[('name','ilike','Direct Marketing')])[0]
+        type_ids = type_obj.search(cr,uid,[('parent_id','=',dmcat_id)])
         type = type_obj.browse(cr,uid,type_ids)
         return map(lambda x : [str(x.id),x.name],type)
 
