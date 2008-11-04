@@ -144,7 +144,7 @@ class training_offer(osv.osv):
     _name = 'training.offer'
     _columns = {
         'name' : fields.char('Name', size=64, select=True, required=True ),
-        #'product_id' : fields.many2one( 'product.product', 'Product' ),
+        'product_id' : fields.many2one( 'product.product', 'Product' ),
         'course_ids' : fields.many2many( 
             'training.course', 'training_course_offer_rel', 
             'offer_id', 'course_id', 

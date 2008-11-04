@@ -802,9 +802,8 @@
             <field name="arch" type="xml">
                 <form string="Offer" col="6">
                     <field name="name"/>
-                    <!--<field name="product_id" />-->
-                    <newline />
-                    <notebook>
+                    <field name="product_id" />
+                    <notebook colspan="4">
                         <page string="Description">
                             <separator string="Objective" colspan="4" />
                             <field name="objective" nolabel="1" colspan="4" />
