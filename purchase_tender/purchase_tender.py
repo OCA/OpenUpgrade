@@ -35,7 +35,7 @@ class purchase_tender(osv.osv):
         'user_id': fields.many2one('res.users', 'Responsible'),
         'description': fields.text('Description'),
         'purchase_ids' : fields.one2many('purchase.order','tender_id','Purchase Orders'),
-        'state': fields.selection([('draft','Draft'),('open','Open'),('close','Close')], 'State')
+        'state': fields.selection([('draft','Draft'),('open','Open'),('close','Close')], 'State', required=True)
     }
     _defaults = {
         'date_start': lambda *args: time.strftime('%Y-%m-%d %H:%M:%S'),
