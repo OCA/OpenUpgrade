@@ -193,6 +193,9 @@ class training_catalog(osv.osv):
 
 training_catalog()
 
+class training_event(osv.osv):
+    _name = 'training.event'
+training_event()
 
 class training_session(osv.osv):
     _name = 'training.session'
@@ -214,8 +217,6 @@ class training_session(osv.osv):
     }
 
     def on_change_course_id( self, cr, uid, ids, course_id ):
-        print "on_change_course_id" 
-        print "ids: %s" % repr(ids)
         event_ids = []
 
         if course_id:
@@ -223,9 +224,6 @@ class training_session(osv.osv):
             course = course_proxy.browse(cr,uid,[course_id])[0]
 
             seance_proxy = self.pool.get('training.seance')
-
-            print "course.name: %s" % repr(course.name)
-            print "course.is_alone: %s" % repr(course.is_alone)
 
             course_ids = course.course_ids
 
@@ -238,18 +236,12 @@ class training_session(osv.osv):
                 event_ids.append( seance_id )
             else:
                 for m in course.course_ids:
-                    print "course.name: %s" % repr(m.name)
-                    print "course.is_alone: %s" % repr(m.is_alone)
-
                     vals = {
                         'name' : m.name,
                         'session_id' : ids[0],
                     }
                     seance_id = seance_proxy.create(cr,uid,vals)
                     event_ids.append( seance_id )
-
-            print "event_ids: %s" % repr(event_ids)
-                
 
         return { 'value' : {'event_ids' : event_ids} }
 
@@ -434,3 +426,10 @@ class training_examen_answers(osv.osv):
 
 training_examen_answers()
 
+class res_partner_team(osv.osv):
+    _inherit = 'res.partner.team'
+    _columns = {
+        'specialisation_id' : fields.many2one('training.course_category', 'Specialisation', required=True)
+    }
+
+res_partner_team()

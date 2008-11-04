@@ -415,10 +415,8 @@
                     <newline />
                     <field name="offer_id" /> 
                     <field name="catalog_id" />
-                    <!--
                     <newline />
                     <field name="event_ids" readonly="true" colspan="4" nolabel="1" />
-                    -->
                     <group colspan="4">
                         <field name="state" nolabel="1" />
                         <button string="Draft" type="object" />
@@ -1027,5 +1025,19 @@
         <menuitem id="partner_config_contact" parent="base.menu_base_config" name="Contacts" />
         <menuitem id="partner_config_contact_technical_skill_all" parent="partner_config_contact" action="res_partner_contact_technical_skill_all_act" />
         
+    </data>
+
+    <data>
+        <record model="ir.ui.view" id="res_partner_team_form_inherited">
+            <field name="name">res.partner.team.form.inherited</field>
+            <field name="model">res.partner.team</field>
+            <field name="inherit_id" ref="base_contact_team.res_partner_team_form" />
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="specialisation_id" />
+                </field>
+            </field>
+        </record>
     </data>
 </openerp>
