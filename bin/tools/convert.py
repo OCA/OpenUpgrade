@@ -1,34 +1,24 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2008 Tiny SPRL (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id$
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-###############################################################################
-#----------------------------------------------------------
-# Convert
-#----------------------------------------------------------
+##############################################################################
 import re
 import StringIO,xml.dom.minidom
 import osv,ir,pooler
@@ -97,12 +87,13 @@ def _eval_xml(self,node, pool, cr, uid, idref, context=None):
             a_eval = node.getAttribute('eval')
             if len(a_eval):
                 import time
-                idref['time'] = time
+                idref2 = idref.copy()
+                idref2['time'] = time
                 import release
-                idref['version'] = release.version.rsplit('.', 1)[0]
-                idref['ref'] = lambda x: self.id_get(cr, False, x)
+                idref2['version'] = release.version.rsplit('.', 1)[0]
+                idref2['ref'] = lambda x: self.id_get(cr, False, x)
                 if len(f_model):
-                    idref['obj'] = _obj(self.pool, cr, uid, f_model, context=context)
+                    idref2['obj'] = _obj(self.pool, cr, uid, f_model, context=context)
                 try:
                     import pytz
                 except:
@@ -111,9 +102,9 @@ def _eval_xml(self,node, pool, cr, uid, idref, context=None):
                     class pytzclass(object):
                         all_timezones=[]
                     pytz=pytzclass()
-                idref['pytz'] = pytz
+                idref2['pytz'] = pytz
 		try:
-			return eval(a_eval, idref)
+                        return eval(a_eval, idref2)
 		except:
 			logger = netsvc.Logger()
 			logger.notifyChannel("init", netsvc.LOG_WARNING, 'could eval(%s) for %s in %s, please get back and fix it!' % (a_eval,node.getAttribute('name'),context))
@@ -847,7 +838,7 @@ def convert_xml_import(cr, module, xmlfile, idref=None, mode='init', noupdate = 
         logger.notifyChannel('init', netsvc.LOG_ERROR, relaxng.error_log.last_error)
         raise
 
-    if not idref:
+    if idref is None:
         idref={}
     if report is None:
         report=assertion_report()

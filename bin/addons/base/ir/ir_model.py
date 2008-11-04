@@ -1,30 +1,22 @@
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2008 TINY SPRL. (http://tiny.be) All Rights Reserved.
-# Copyright (c) 2008 Camptocamp SA
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id$
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -162,8 +154,8 @@ class ir_model_grid(osv.osv):
                         'model_id':model_id,
                         'group_id':group_id
                     }) ]
-                vals = dict(map(lambda x: ('perm_'+x, x[0] in (vals[val] or '')), perms_rel))
-                acc_obj.write(cr, uid, rules, vals, context=context)
+                vals2 = dict(map(lambda x: ('perm_'+x, x[0] in (vals[val] or '')), perms_rel))
+                acc_obj.write(cr, uid, rules, vals2, context=context)
         return True
 
     def fields_get(self, cr, uid, fields=None, context=None, read_access=True):
@@ -182,8 +174,8 @@ class ir_model_grid(osv.osv):
         cols = ['model', 'name']
         xml = '''<?xml version="1.0"?>
 <%s editable="bottom">
-    <field name="name" select="1" readonly="1"/>
-    <field name="model" select="1" readonly="1"/>
+    <field name="name" select="1" readonly="1" required="1"/>
+    <field name="model" select="1" readonly="1" required="1"/>
     <field name="group_0"/>
     ''' % (view_type,)
         for group in groups_br:
@@ -214,10 +206,10 @@ class ir_model_fields(osv.osv):
         'state': fields.selection([('manual','Custom Field'),('base','Base Field')],'Manualy Created', required=True, readonly=True),
         'on_delete': fields.selection([('cascade','Cascade'),('set null','Set NULL')], 'On delete', help='On delete property for many2one fields'),
         'domain': fields.char('Domain', size=256),
-
         'groups': fields.many2many('res.groups', 'ir_model_fields_group_rel', 'field_id', 'group_id', 'Groups'),
         'view_load': fields.boolean('View Auto-Load'),
     }
+    _rec_name='field_description'
     _defaults = {
         'view_load': lambda *a: 0,
         'selection': lambda *a: "[]",

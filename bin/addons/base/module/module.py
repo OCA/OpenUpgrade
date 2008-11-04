@@ -1,30 +1,22 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2004-2008 TINY SPRL. (http://tiny.be) All Rights Reserved.
+#    OpenERP, Open Source Management Solution	
+#    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
+#    $Id$
 #
-# $Id$
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-# WARNING: This program as such is intended to be used by professional
-# programmers who take the whole responsability of assessing all potential
-# consequences resulting from its eventual inadequacies and bugs
-# End users who are looking for a ready-to-use solution with commercial
-# garantees and support are strongly adviced to contract a Free Software
-# Service Company
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
 #
-# This program is Free Software; you can redistribute it and/or
-# modify it under the terms of the GNU General Public License
-# as published by the Free Software Foundation; either version 2
-# of the License, or (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
 
@@ -253,7 +245,7 @@ class module(osv.osv):
         res = {}
         model_data_obj = self.pool.get('ir.model.data')
         view_obj = self.pool.get('ir.ui.view')
-        for m in self.browse(cr, uid, ids):
+        for m in self.browse(cr, uid, ids, context=context):
             if m.state == 'installed':
                 view_txt = ''
                 view_id = model_data_obj.search(cr,uid,[('module','=',m.name),('model','=','ir.ui.view')])
@@ -263,20 +255,6 @@ class module(osv.osv):
             else:
                 res[m.id] = ''
         return res
-
-    def _get_objects(self, cr, uid, ids, field_name=None, arg=None, context={}):
-        res = {}
-        model_data_obj=self.pool.get('ir.model.data')
-        for m in self.browse(cr, uid, ids):
-            if m.state=='installed':
-                cr.execute('''select distinct model from ir_model_data where module = '%s' '''%(m.name))
-                objects = cr.fetchall()
-                obj_lst=map(lambda x:x[0],objects)
-                res[m.id] = '\n'.join(obj_lst)
-            else:
-                res[m.id] = ''
-        return res
-
 
     _columns = {
         'name': fields.char("Name", size=128, readonly=True, required=True),
@@ -301,13 +279,16 @@ class module(osv.osv):
             ('to install','To be installed')
         ], string='State', readonly=True),
         'demo': fields.boolean('Demo data'),
-        'license': fields.selection([('GPL-2', 'GPL-2'),('GPL-3', 'GPL-3'),
-            ('Other proprietary', 'Other proprietary')], string='License',
-            readonly=True),
+        'license': fields.selection([
+                ('GPL-2', 'GPL-2'),
+                ('GPL-2 or any later version', 'GPL-2 or later version'),
+                ('GPL-3', 'GPL-3'),
+                ('GPL-3 or any later version', 'GPL-3 or later version'),
+                ('Other proprietary', 'Other proprietary')
+            ], string='License', readonly=True),
         'menus_by_module': fields.function(_get_menus, method=True, string='Menus', type='text'),
         'reports_by_module': fields.function(_get_reports, method=True, string='Reports', type='text'),
         'views_by_module': fields.function(_get_views, method=True, string='Views', type='text'),
-        'objects_by_module': fields.function(_get_objects, method=True, string='Objects', type='text'),
     }
 
     _defaults = {
@@ -443,7 +424,7 @@ class module(osv.osv):
                 continue
             terp_file = addons.get_module_resource(name, '__terp__.py')
             mod_path = addons.get_module_path(name)
-            if os.path.isdir(mod_path) or os.path.islink(mod_path) or zipfile.is_zipfile(mod_path):
+            if mod_path and (os.path.isdir(mod_path) or os.path.islink(mod_path) or zipfile.is_zipfile(mod_path)):
                 terp = self.get_module_info(mod_name)
                 if not terp or not terp.get('installable', True):
                     continue
@@ -591,10 +572,12 @@ class module(osv.osv):
         self.write(cr, uid, [id], {'category_id': p_id})
 
     def action_install(self,cr,uid,ids,context=None):
-        self.write(cr , uid, ids ,{'state' : 'to install'})
-        self.download(cr, uid, ids, context=context)
-        for id in ids:
-            cr.execute("select m.id as id from ir_module_module_dependency d inner join ir_module_module m on (m.name=d.name) where d.module_id=%d and m.state='uninstalled'",(id,))
+        for module in self.browse(cr, uid, ids, context):
+            if module.state <> 'uninstalled':
+                continue
+            self.write(cr , uid, [module.id] ,{'state' : 'to install'})
+            self.download(cr, uid, [module.id], context=context)
+            cr.execute("select m.id as id from ir_module_module_dependency d inner join ir_module_module m on (m.name=d.name) where d.module_id=%d and m.state='uninstalled'",(module.id,))
             dep_ids = map(lambda x:x[0],cr.fetchall())
             if len(dep_ids):
                 self.action_install(cr,uid,dep_ids,context=context)
