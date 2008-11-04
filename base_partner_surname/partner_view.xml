@@ -1,55 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
-	<data>
-		<record model="ir.ui.view" id="view_partner_address_form1_inherited">
-		<field name="name">res.partner.address.form1.inherit</field>
-		<field name="model">res.partner.address</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="base.view_partner_address_form1"/>
-		<field name="arch" type="xml">
-			 <field name="name" position="after">
-			 	<field name="last_name" select="1" on_change="onchange_name(first_name,last_name)"/>
-				<field name="first_name" select="1" on_change="onchange_name(first_name,last_name)"/>
-				<newline/>
-			</field>
-		</field>
-	</record>
+    <data>
+        <record model="ir.ui.view" id="view_partner_address_form1_inherited">
+        <field name="name">res.partner.address.form1.inherit</field>
+        <field name="model">res.partner.address</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_address_form1"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="first_name" select="1" on_change="onchange_name(first_name,last_name)"/>
+                <field name="last_name" select="1" on_change="onchange_name(first_name,last_name)"/>
+                <newline/>
+            </field>
+        </field>
+    </record>
 
-	<record model="ir.ui.view" id="view_partner_form_inherited">
-		<field name="name">res.partner.form.inherit</field>
-		<field name="model">res.partner</field>
-		<field name="type">form</field>
-		<field name="inherit_id" ref="base.view_partner_form"/>
-		<field name="arch" type="xml">
-			<field name="address">
-			<form string="Partner Contacts">
+    <record model="ir.ui.view" id="view_partner_form_inherited">
+        <field name="name">res.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <field name="address">
+            <form string="Partner Contacts">
 
-				 	<field name="name" select="2"/>
-						 	<field name="title" domain="[('domain', '=', 'contact')]"/>
-						 	<field name="first_name" select="1" on_change="onchange_name(first_name,last_name)"/>
-						 	<field name="last_name" select="1" on_change="onchange_name(first_name,last_name)"/>
-							<field name="function"/>
-							<field name="type" select="2"/>
-							<newline/>
-							<field name="street" select="2"/>
-							<field name="street2"/>
-							<newline/>
-							<field name="zip" select="2"/>
-							<field name="city" select="2"/>
-							<newline/>
-							<field name="country_id" select="2"/>
-							<field name="state_id" select="2"/>
-							<newline/>
-							<field name="phone"/>
-							<field name="fax"/>
-							<newline/>
-							<field name="mobile"/>
-							<field name="email" select="2" widget="email" />
+                     <field name="name" select="2"/>
+                             <field name="title" domain="[('domain', '=', 'contact')]"/>
+                             <field name="first_name" select="1" on_change="onchange_name(first_name,last_name)"/>
+                             <field name="last_name" select="1" on_change="onchange_name(first_name,last_name)"/>
+                            <field name="function"/>
+                            <field name="type" select="2"/>
+                            <newline/>
+                            <field name="street" select="2"/>
+                            <field name="street2"/>
+                            <newline/>
+                            <field name="zip" select="2"/>
+                            <field name="city" select="2"/>
+                            <newline/>
+                            <field name="country_id" select="2"/>
+                            <field name="state_id" select="2"/>
+                            <newline/>
+                            <field name="phone"/>
+                            <field name="fax"/>
+                            <newline/>
+                            <field name="mobile"/>
+                            <field name="email" select="2" widget="email" />
 
 
-			</form>
-			</field>
-		</field>
-	</record>
-	</data>
+            </form>
+            </field>
+        </field>
+    </record>
+    </data>
 </openerp>
