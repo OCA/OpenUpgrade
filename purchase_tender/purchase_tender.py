@@ -32,11 +32,14 @@ class purchase_tender(osv.osv):
         'name': fields.char('Tender Reference', size=32,required=True),
         'date_start': fields.datetime('Date Start'),
         'date_end': fields.datetime('Date End'),
+        'user_id': fields.many2one('res.users', 'Responsible'),
         'description': fields.text('Description'),
-        'purchase_ids' : fields.one2many('purchase.order','tender_id','Purchase Orders')
+        'purchase_ids' : fields.one2many('purchase.order','tender_id','Purchase Orders'),
+        'state': fields.selection([('draft','Draft'),('open','Open'),('close','Close')], 'State')
     }
     _defaults = {
         'date_start': lambda *args: time.strftime('%Y-%m-%d %H:%M:%S'),
+        'state': lambda *args: 'open',
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'purchase.order.tender'),
     }
 purchase_tender()
@@ -54,5 +57,6 @@ class purchase_order(osv.osv):
                 if order.id<>po.id:
                     wf_service = netsvc.LocalService("workflow")
                     wf_service.trg_validate(uid, 'purchase.order', order.id, 'purchase_cancel', cr)
+                self.pool.get('purchase.tender').write(cr, uid, [po.tender_id.id], {'state':'close'})
         return res
 purchase_order()
