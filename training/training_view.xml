@@ -562,6 +562,8 @@
                             <separator string="Location" colspan="4" />
                             <field name="location_id" />
                             <separator string="Supports" colspan="4" />
+                            <field name="copies" />
+                            <field name="printed" />
                             <field name="catering_ids" nolabel="1" colspan="4" view_mode="tree">
                                 <tree string="Catering" editable="True">
                                     <field name="type" />
@@ -586,6 +588,13 @@
                 </form>
             </field>
         </record>
+
+        <act_window 
+            src_model="training.seance" 
+            res_model="ir.attachment" 
+            domain="[('res_id', '=', active_id)]" 
+            name="Attachments" 
+            id="training_seance_attachment" />
 
         <record model="ir.ui.view" id="training_seance_tree">
             <field name="name">training.seance.tree</field>

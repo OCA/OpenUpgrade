@@ -358,6 +358,9 @@ class training_seance(osv.osv):
         'event_id' : fields.many2one('training.event', 'Event'),
         'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
         'catering_ids' : fields.one2many('training.catering', 'seance_id', 'Catering'),
+        'course_id' : fields.many2one('training.course', 'Course', required=True),
+        'copies' : fields.integer('Copies'),
+        'printed' : fields.boolean('Printed'),
     }
     _defaults = {
         'state' : lambda *a: 'draft',
