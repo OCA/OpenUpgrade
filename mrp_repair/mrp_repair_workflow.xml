@@ -138,12 +138,6 @@
             <field name="act_to" ref="act_done"/>
         </record>
         
-<!--        <record id="trans_router_wait_invoice_shipping" model="workflow.transition">-->
-<!--            <field name="act_from" ref="act_wait_invoice"/>-->
-<!--            <field name="act_to" ref="act_invoice_end"/>-->
-<!--            <field name="condition">True</field>-->
-<!--        </record>-->
-        
         <record id="trans_draft_cancel" model="workflow.transition">
             <field name="act_from" ref="act_draft"/>
             <field name="act_to" ref="act_cancel"/>
@@ -166,6 +160,13 @@
             <field name="act_to" ref="act_cancel2"/>
             <field name="signal">cancel</field>
         </record>
+        
+        <record id="trans_wait_invoice_done2" model="workflow.transition">
+            <field name="act_from" ref="act_wait_invoice"/>
+            <field name="act_to" ref="act_invoice_end"/>
+            <field name="condition">(invoice_method=='none')</field>
+        </record>
+        
         
         <record id="trans_wait_ship_cancel3" model="workflow.transition">
             <field name="act_from" ref="act_wait_ship"/>
