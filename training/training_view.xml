@@ -734,6 +734,22 @@
             <field name="view_mode">tree,form</field>
         </record>
 
+        <record model="ir.actions.act_window" id="training_subscription_to_validate_act">
+            <field name="name">Subscriptions to Validate</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="training_subscription_to_invoice_act">
+            <field name="name">Subscriptions to Invoice</field>
+            <field name="res_model">training.subscription</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'confirm')]</field>
+        </record>
+
         <record model="ir.actions.act_window" id="training_subscription_new_act">
             <field name="name">New subscription</field>
             <field name="res_model">training.subscription</field>
@@ -1009,8 +1025,8 @@
 
         <menuitem id="t_subscription_management_mi" parent="training_mi" name="Subscriptions" sequence="50" />
         <menuitem id="tsm_subscription_mi" parent="t_subscription_management_mi" action="training_subscription_all_act" />
-        <menuitem id="tsms_validate_mi" parent="tsm_subscription_mi" name="Subscriptions to Validate" />
-        <menuitem id="tsms_invoice_mi" parent="tsm_subscription_mi" name="Subscriptions to Invoice" />
+        <menuitem id="tsms_validate_mi" parent="tsm_subscription_mi" action="training_subscription_to_validate_act" />
+        <menuitem id="tsms_invoice_mi" parent="tsm_subscription_mi" action="training_subscription_to_invoice_act" />
 
         <menuitem id="tsm_subscription_new_mi" parent="t_subscription_management_mi" action="training_subscription_new_act" />
         <menuitem id="tsms_massive_mi" parent="t_subscription_management_mi" action="training_session_massive_subscription_act" />
