@@ -560,10 +560,14 @@
                     <notebook colspan="4">
                         <page string="General">
                             <separator string="Location" colspan="4" />
-                            <field name="location_id" />
+                            <field name="place" />
+                            <field name="room" />
+                            <field name="layout" />
+                            <field name="reserved" />
                             <separator string="Supports" colspan="4" />
                             <field name="copies" />
                             <field name="printed" />
+                            <separator string="Caterings" colspan="4" />
                             <field name="catering_ids" nolabel="1" colspan="4" view_mode="tree">
                                 <tree string="Catering" editable="True">
                                     <field name="type" />

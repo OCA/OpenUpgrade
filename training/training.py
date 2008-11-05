@@ -361,6 +361,10 @@ class training_seance(osv.osv):
         'course_id' : fields.many2one('training.course', 'Course', required=True),
         'copies' : fields.integer('Copies'),
         'printed' : fields.boolean('Printed'),
+        'reserved' : fields.boolean('Reserved'),
+        'layout' : fields.char('Layout', size=32),
+        'place' : fields.char('Place', size=32),
+        'room' : fields.char('Room', size=32),
     }
     _defaults = {
         'state' : lambda *a: 'draft',
