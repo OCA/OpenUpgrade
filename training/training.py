@@ -327,6 +327,27 @@ class training_group(osv.osv):
     }
 training_group()
 
+class training_catering_type(osv.osv):
+    _name = 'training.catering.type'
+    _columns = {
+        'name': fields.char('Name', size=64, required=True),
+    }
+training_catering_type()
+
+class training_seance(osv.osv):
+    _name = 'training.seance'
+training_seance()
+
+class training_catering(osv.osv):
+    _name = 'training.catering'
+    _rec_name = 'type'
+    _columns = {
+        'type' : fields.many2one('training.catering.type', 'Type', required=True),
+        'hour' : fields.time('Hour'),
+        'seance_id' : fields.many2one('training.seance', 'Seance', required=True),
+    }
+training_catering()
+
 class training_seance(osv.osv):
     _name = 'training.seance'
     _inherits = {
@@ -336,6 +357,7 @@ class training_seance(osv.osv):
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
         'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
+        'catering_ids' : fields.one2many('training.catering', 'seance_id', 'Catering'),
     }
     _defaults = {
         'state' : lambda *a: 'draft',

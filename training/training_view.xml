@@ -559,8 +559,15 @@
 
                     <notebook colspan="4">
                         <page string="General">
-                            <separator string="ClassRoom" colspan="4" />
+                            <separator string="Location" colspan="4" />
                             <field name="location_id" />
+                            <separator string="Supports" colspan="4" />
+                            <field name="catering_ids" nolabel="1" colspan="4" view_mode="tree">
+                                <tree string="Catering" editable="True">
+                                    <field name="type" />
+                                    <field name="hour" widget="float_time" />
+                                </tree>
+                            </field>
                         </page>
                         <page string="Participants">
                             <field name="group_id" />
@@ -984,8 +991,18 @@
     </data>
 
     <data>
+        <record model="ir.actions.act_window" id="training_catering_type_all_act">
+            <field name="name">Catering Type</field>
+            <field name="res_model">training.catering.type</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+
+    <data>
         <menuitem id="training_mi" name="Trainings" />
         <menuitem id="t_config_mi" parent="training_mi" name="Configuration" sequence="1"/>
+        <menuitem id="t_catering_mi" parent="t_config_mi" action="training_catering_type_all_act" />
         <menuitem id="tl_config_mi" parent="t_config_mi" name="Library" />
         <menuitem id="tl_type_course_mi" parent="tl_config_mi" name="Course Type" action="training_course_type_all_act" />
         <menuitem id="tl_product_line_mi" parent="tl_config_mi" name="Product Lines" action="training_course_category_all_act" />
