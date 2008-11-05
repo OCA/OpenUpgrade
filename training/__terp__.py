@@ -5,7 +5,9 @@
     'website' : 'http://www.openerp.com',
     'description' : 'Training',
     'depends' : ['account', 'base_contact_team', 'base_iban', 'product'],
-    'init_xml' : [],
+    'init_xml' : [
+        'training_sequence.xml'
+    ],
     'demo_xml' : [],
     'update_xml' : [
         'training_view.xml', 

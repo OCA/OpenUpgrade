@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<openerp>
+    <data>
+        <record model="ir.sequence.type" id="seq_training_subscription_type">
+            <field name="name">Training Subscription Sequence Type</field>
+            <field name="code">training.subscription</field>
+        </record>
+
+        <record model="ir.sequence" id="seq_training_subscription">
+            <field name="name">Training Subscription</field>
+            <field name="code">training.subscription</field>
+            <field name="prefix">SUB/</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</openerp>

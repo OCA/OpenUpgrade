@@ -371,7 +371,7 @@ training_seance()
 class training_subscription(osv.osv):
     _name = 'training.subscription'
     _columns = {
-        'name' : fields.char( 'Reference', size=32, required=True, select=True ),
+        'name' : fields.char( 'Reference', size=32, required=True, select=True,readonly=True ),
         'date' : fields.datetime( 'Date', required=True, select=True ),
         'session_id' : fields.many2one( 'training.session', 'Session', select=True, required=True),
         'contact_id' : fields.many2one( 'res.partner.contact', 'Contact', select=True, required=True),
@@ -388,6 +388,7 @@ class training_subscription(osv.osv):
     _defaults = {
         'state' : lambda *a: 'draft',
         'paid' : lambda *a: False,
+        'name' : lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'training.subscription'),
     }
 
 training_subscription()
