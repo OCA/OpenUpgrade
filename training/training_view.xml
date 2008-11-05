@@ -564,11 +564,7 @@
                         </page>
                         <page string="Participants">
                             <field name="group_id" />
-                            <field name="participant_ids" colspan="4" nolabel="1">
-                                <tree string="Participants">
-                                    <field name="partner_id" />
-                                </tree>
-                            </field>
+                            <field name="participant_ids" colspan="4" nolabel="1" domain="[('group_id', '=', group_id), ('session_id', '=', session_id)]" />
                         </page>
                         <page string="StakeHolders">
                             <field name="partner_ids" nolabel="1"/>

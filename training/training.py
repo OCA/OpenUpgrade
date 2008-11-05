@@ -291,7 +291,9 @@ class training_event(osv.osv):
         'date_start' : fields.datetime('Date Start', required=False, select=True),
         'date_stop' : fields.datetime('Date Stop', required=False, select=True),
         'location_id' : fields.many2one('training.location', 'Location', select=True),
-        'participant_ids' : fields.one2many( 'training.participation', 'event_id', 'Participants' ),
+        'participant_ids' : fields.many2many( 'training.subscription', 'training_participation', 'event_id', 'subscription_id', 'Participants', domain="[('group_id', '=', group_id)]" ),
+        'group_id' : fields.many2one('training.group', 'Group'),
+        
     }
 
     _constraints = [
@@ -334,7 +336,6 @@ class training_seance(osv.osv):
         'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
         'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
-        'group_id' : fields.many2one('training.group', 'Group', readonly=True),
     }
     _defaults = {
         'state' : lambda *a: 'draft',
@@ -386,9 +387,9 @@ class training_participation(osv.osv):
     _name = 'training.participation'
     _columns = {
         'event_id' : fields.many2one('training.event', 'Event' ),
-        'partner_id' : 
+        'subscription_id' : 
             fields.many2one(
-                'res.partner', 'Partner', 
+                'training.subscription', 'Subscription', 
                 select=True, 
                 required=True
             ),
