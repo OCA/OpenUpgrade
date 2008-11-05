@@ -73,10 +73,10 @@ class training_course_type(osv.osv):
         'name' : fields.char('Name', size=32, required=True, select=1),
         'objective' : fields.text('Objective'),
         'description' : fields.text('Description'),
-        'min_limit' : fields.integer('Minimum Limit', required=True),
-        'max_limit' : fields.integer('Maximum Limit', required=True),
+        'min_limit' : fields.integer('Minimum Limit', required=True, select=2),
+        'max_limit' : fields.integer('Maximum Limit', required=True, select=2),
         # Doit-il se trouver ici dans en tant qu'_inherit dans profile_ifbl
-        'pedagogical_limit' : fields.integer('Pedagogical Limit', required=True),
+        'pedagogical_limit' : fields.integer('Pedagogical Limit', required=True, select=2),
     }
     
 training_course_type()
