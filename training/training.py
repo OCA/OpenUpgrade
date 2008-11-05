@@ -219,36 +219,6 @@ class training_session(osv.osv):
         'date_start' : fields.datetime('Date Start', required=True),
     }
 
-    def on_change_course_id( self, cr, uid, ids, course_id ):
-        event_ids = []
-
-        if course_id:
-            course_proxy = self.pool.get('training.course')
-            course = course_proxy.browse(cr,uid,[course_id])[0]
-
-            seance_proxy = self.pool.get('training.seance')
-
-            course_ids = course.course_ids
-
-            if course.is_alone:
-                vals = {
-                    'name' : course.name,
-                    'session_id' : ids[0],
-                }
-                seance_id = seance_proxy.create(cr,uid,vals)
-                event_ids.append( seance_id )
-            else:
-                for m in course.course_ids:
-                    vals = {
-                        'name' : m.name,
-                        'session_id' : ids[0],
-                    }
-                    seance_id = seance_proxy.create(cr,uid,vals)
-                    event_ids.append( seance_id )
-
-        return { 'value' : {'event_ids' : event_ids} }
-
-
     def _find_catalog_id(self,cr,uid,data,context=None):
         new_year = int(time.strftime('%Y')) + 1
         catalog_proxy = self.pool.get('training.catalog')
@@ -321,6 +291,7 @@ class training_event(osv.osv):
         'date_start' : fields.datetime('Date Start', required=False, select=True),
         'date_stop' : fields.datetime('Date Stop', required=False, select=True),
         'location_id' : fields.many2one('training.location', 'Location', select=True),
+        'participant_ids' : fields.one2many( 'training.participation', 'event_id', 'Participants' ),
     }
 
     _constraints = [
