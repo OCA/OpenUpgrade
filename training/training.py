@@ -371,20 +371,23 @@ training_seance()
 class training_subscription(osv.osv):
     _name = 'training.subscription'
     _columns = {
-        'session_id' : fields.many2one('training.session', 'Session', select=True, required=True),
-        'partner_id' : 
-            fields.many2one(
-                'res.partner', 'Partner', 
-                select=True, 
-                required=True
-            ),
+        'name' : fields.char( 'Reference', size=32, required=True, select=True ),
+        'date' : fields.datetime( 'Date', required=True, select=True ),
+        'session_id' : fields.many2one( 'training.session', 'Session', select=True, required=True),
+        'contact_id' : fields.many2one( 'res.partner.contact', 'Contact', select=True, required=True),
+        'partner_id' : fields.many2one( 'res.partner', 'Partner', select=True, required=True),
+        'address_id' : fields.many2one( 'res.partner.address', 'Invoice Address', select=True, required=True),
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
-        'group_id' : fields.many2one('training.group', 'Group', readonly=True),
+        'invoice_id' : fields.many2one( 'account.invoice', 'Invoice' ),
+        'group_id' : fields.many2one( 'training.group', 'Group'),
         'state' : fields.selection([('draft', 'Draft'),('confirm','Confirm'),('cancel','Cancel')], 'State', required=True ),
+        'price' : fields.float('Price', digits=(16,2), required=True),
+        'paid' : fields.boolean('Paid'),
     }
 
     _defaults = {
         'state' : lambda *a: 'draft',
+        'paid' : lambda *a: False,
     }
 
 training_subscription()

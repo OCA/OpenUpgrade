@@ -675,17 +675,25 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="subscription">
+                    <field name="name" />
+                    <field name="date" />
+                    <separator string="Invoicing" colspan="4" />
                     <field name="partner_id" />
+                    <field name="address_id" />
                     <field name="session_id" />
+                    <field name="price" />
+                    <field name="invoice_id" />
+                    <field name="paid" />
+                    <separator string="Pariticpant" colspan="4" />
+                    <field name="contact_id" />
                     <field name="group_id" />
-
-                    <group colspan="4">
-                        <field name="state" nolabel="1" />
+                    <separator colspan="4"/>
+                    <field name="state" />
+                    <group colspan="4" col="10">
                         <button string="Draft" type="object" />
                         <button string="Confirm" type="object" />
                         <button string="Cancel" type="object" />
                     </group>
-
                 </form>
             </field>
         </record>
