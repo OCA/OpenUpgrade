@@ -68,12 +68,15 @@ training_course_category()
 
 class training_course_type(osv.osv):
     _name = 'training.course_type'
-    _inherits = {
-        'account.analytic.account' : 'analytic_account_id',
-    }
     
     _columns = {
-        'analytic_account_id' : fields.many2one( 'account.analytic.account', 'Analytic Account' ),
+        'name' : fields.char('Name', size=32, required=True, select=1),
+        'objective' : fields.text('Objective'),
+        'description' : fields.text('Description'),
+        'min_limit' : fields.integer('Minimum Limit', required=True),
+        'max_limit' : fields.integer('Maximum Limit', required=True),
+        # Doit-il se trouver ici dans en tant qu'_inherit dans profile_ifbl
+        'pedagogical_limit' : fields.integer('Pedagogical Limit', required=True),
     }
     
 training_course_type()

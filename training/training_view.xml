@@ -144,7 +144,15 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <form string="Type">
-                    <field name="name" string="Name" select="1" />
+                    <field name="name" />
+                    <separator string="Limit" colspan="4" />
+                    <field name="min_limit" />
+                    <field name="max_limit" />
+                    <field name="pedagogical_limit" />
+                    <separator string="Description" colspan="4"/>
+                    <field name="description" nolabel="1" colspan="4"/>
+                    <separator string="Objective" colspan="4"/>
+                    <field name="objective" nolabel="1" colspan="4"/>
                 </form>
             </field>
         </record>
@@ -155,7 +163,11 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Types">
-                    <field name="name" string="Name" />
+                    <field name="name" />
+                    <field name="description" />
+                    <field name="min_limit" />
+                    <field name="max_limit" />
+                    <field name="pedagogical_limit" />
                 </tree>
             </field>
         </record>
