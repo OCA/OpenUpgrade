@@ -12,6 +12,7 @@
     'update_xml' : [
         'training_view.xml', 
         'training_wizard.xml',
+        'training_report.xml',
     ],
     'active' : False,
     'installable' : True
