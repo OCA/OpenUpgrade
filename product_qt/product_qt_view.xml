@@ -69,6 +69,8 @@
             </field>
         </record>
 
+<!-- stock.picking Testing Raw Material for incoming Products-->
+
         <record id="quality_testing_stock_picking_view" model="ir.ui.view">
             <field name="name">quality.testing.form</field>
             <field name="model">stock.picking</field>
@@ -85,6 +87,7 @@
             </field>
         </record>
 
+<!-- stock.move Testing Raw Material -->
         <record id="quality_testing_stock_move_view" model="ir.ui.view">
             <field name="name">quality.testing.move.form</field>
             <field name="model">stock.move</field>
@@ -101,6 +104,7 @@
             </field>
         </record>
 
+<!-- Testing Result -->
 
         <record id="testing_result_tree_view" model="ir.ui.view">
             <field name="name">testing_result.tree</field>
@@ -156,6 +160,53 @@
 
 		<menuitem id="menu_testing_result" name="Testing Result" parent="stock.menu_stock_root" sequence="1"/>
 		<menuitem action="action_testing_result_form" id="menu_action_testing_result" parent="menu_testing_result"/>
+
+<!-- mrp.production.workcenter.line Testing during production -->
+
+		<record id="quality_testing_mrp_production_workcenter_line_view" model="ir.ui.view">
+            <field name="name">quality.testing.mrp.production.form</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workcenter_form_view"/>
+            <field name="arch" type="xml">
+           		<field name="hour" position="after">
+                    <separator colspan="4" string="Quality Testing"/>
+                    	<field name="qlty_test_accept"/>
+                    	<newline/>
+                    	<field name="qlty_test_reject"/>
+                    	<button name="%(qty_test_prod_id)d" string="Quality Testing" type="action"/>
+            	</field>
+           </field>
+        </record>
+
+		<record id="quality_testing_mrp_production_workcenter_tree_view" model="ir.ui.view">
+            <field name="name">quality.testing.mrp.production.tree</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="mrp.mrp_production_workcenter_tree_view"/>
+            <field name="arch" type="xml">
+           		<field name="hour" position="after">
+                    <separator colspan="4" string="Quality Testing"/>
+                    	<field name="qlty_test_accept"/>
+                    	<newline/>
+                    	<field name="qlty_test_reject"/>
+            	</field>
+           </field>
+        </record>
+
+<!-- mrp.production Testing For Finished Goods -->
+
+		<record id="quality_testing_mrp_production_view" model="ir.ui.view">
+            <field name="name">quality.testing.mrp.form</field>
+            <field name="model">mrp.production</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+           		<field colspan="4" name="move_lines" nolabel="1" widget="one2many_list" position="after">
+                    	<button name="%(qty_test_finish_id)d" string="Quality Testing" type="action" states="in_production"/>
+            	</field>
+           </field>
+        </record>
 
     </data>
 </openerp>
