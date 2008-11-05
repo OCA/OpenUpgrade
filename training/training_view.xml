@@ -690,9 +690,10 @@
                     <separator colspan="4"/>
                     <group colspan="4" col="5">
                         <field name="state" />
-                        <button string="Draft" type="object" />
-                        <button string="Confirm" type="object" />
-                        <button string="Cancel" type="object" />
+                        <button string="Set to Draft" type="object" name="draft_cb" states="cancel" />
+                        <button string="Confirm" type="object" name="confirm_cb" states="draft" />
+                        <button string="Cancel" type="object" name="cancel_cb" states="draft,confirm" />
+                        <button string="Cancel to Invoice" type="object" name="cancel_to_invoice_cb" states="confirm" />
                     </group>
                 </form>
             </field>

@@ -380,10 +380,25 @@ class training_subscription(osv.osv):
         # Pour le group ID, discuter pour savoir si on doit utiliser le seuil pédagogique du groupe pour savoir si on crée un nouveau group ou non
         'invoice_id' : fields.many2one( 'account.invoice', 'Invoice' ),
         'group_id' : fields.many2one( 'training.group', 'Group'),
-        'state' : fields.selection([('draft', 'Draft'),('confirm','Confirm'),('cancel','Cancel')], 'State', required=True ),
+        'state' : fields.selection([('draft', 'Draft'),
+                                    ('confirm','Confirm'),
+                                    ('cancel','Cancel'),
+                                    ('done', 'Done')
+                                   ], 'State', required=True ),
         'price' : fields.float('Price', digits=(16,2), required=True),
         'paid' : fields.boolean('Paid'),
     }
+
+    def confirm_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, { 'state' : 'confirm' }, context=context )
+    def cancel_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, { 'state' : 'cancel' }, context=context )
+    def cancel_to_invoice_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, { 'state' : 'cancel' }, context=context )
+    def done_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, { 'state' : 'done' }, context=context )
+    def draft_cb(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, { 'state' : 'draft' }, context=context )
 
     _defaults = {
         'state' : lambda *a: 'draft',
