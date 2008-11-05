@@ -126,9 +126,7 @@
             <field name="res_model">training.course_category</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-
-            <!-- Workaround, j'ai dû me tromper à un endroit dans mon code, car actuellement, il n'affichait que les éléments parents :( -->
-            <field name="domain">[('id', '>', 0)]</field>
+            <field name="domain">[]</field>
         </record>
 
         <record model="ir.actions.act_window" id="training_course_category_new_act">
@@ -227,6 +225,10 @@
                         </page>
                         <page string="Certifications">
                             <label string="TODO" />
+                        </page>
+                        <page string="Pedagogical Suggestion">
+                            <separator string="Preliminary Courses" colspan="4" />
+                            <separator string="Complementary Courses" colspan="4" />
                         </page>
                     </notebook>
                     <group>
