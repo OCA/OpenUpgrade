@@ -331,10 +331,10 @@ class training_seance(osv.osv):
         'training.event' : 'event_id'
     }
     _columns = {
-        'partner_id' : fields.many2one('res.partner', 'Partner', domain=[('is_instructor', '=', True)]),
+        'partner_ids' : fields.many2many('res.partner', 'training_seance_partner_rel', 'seance_id', 'partner_id', 'StakeHolders'),
         'event_id' : fields.many2one('training.event', 'Event'),
         'state' : fields.selection([('draft', 'Draft'),('confirm', 'Confirm'),('cancel','Cancel')], 'State', required=True),
-        'group_id' : fields.many2one('training.group', 'Group'),
+        'group_id' : fields.many2one('training.group', 'Group', readonly=True),
     }
     _defaults = {
         'state' : lambda *a: 'draft',

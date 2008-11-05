@@ -553,19 +553,25 @@
             <field name="arch" type="xml">
                 <form string="Seance">
                     <field name="name" />
+                    <field name="session_id" />
                     <field name="date_start" />
                     <field name="date_stop" />
 
-                    <field name="partner_id" />
-                    <field name="session_id" />
-
                     <notebook colspan="4">
-                        <page string="Management">
+                        <page string="General">
                             <separator string="ClassRoom" colspan="4" />
                             <field name="location_id" />
                         </page>
                         <page string="Participants">
-                            <field name="participant_ids" colspan="4" nolabel="1" />
+                            <field name="group_id" />
+                            <field name="participant_ids" colspan="4" nolabel="1">
+                                <tree string="Participants">
+                                    <field name="partner_id" />
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="StakeHolders">
+                            <field name="partner_ids" nolabel="1"/>
                         </page>
                     </notebook>
                     <group colspan="4">
@@ -585,7 +591,6 @@
             <field name="arch" type="xml">
                 <tree string="Seances">
                     <field name="name" />
-                    <field name="partner_id" />
                     <field name="session_id" />
                     <field name="date_start" />
                     <field name="date_stop" />
