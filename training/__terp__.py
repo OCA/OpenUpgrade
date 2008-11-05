@@ -9,6 +9,7 @@
     'demo_xml' : [],
     'update_xml' : [
         'training_view.xml', 
+        'training_wizard.xml',
     ],
     'active' : False,
     'installable' : True
