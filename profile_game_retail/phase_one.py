@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 ##############################################################################
 #
-#    OpenERP, Open Source Management Solution	
+#    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2008 Tiny SPRL (<http://tiny.be>). All Rights Reserved
 #    $Id$
 #
@@ -63,6 +63,80 @@ class profile_game_retail_phase_one(osv.osv):
     #
     # TODO: check pre process very carefully
     #
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False):
+        res = super(profile_game_retail_phase_one,self).fields_view_get(cr, uid, view_id, view_type, context, toolbar)
+        p_obj=self.pool.get('profile.game.retail')
+        p_id=p_obj.search(cr,uid,[])
+        p_br=p_obj.browse(cr,uid,p_id)
+        invisible=False
+        if p_br[0].hr_user_id:
+            hr_name=p_br[0].hr_user_id.name
+        else:
+            hr_name=''
+
+        if p_br[0].state=='3':
+            invisible=True
+
+        if p_br[0].objectives=='on_max_turnover':
+                objective='''After a few years of presence on the market concerned, the head office \
+wishes to be bigger (s'agrandir). To attack the sales turnover in a \
+company, it is initially to analyze if the services and products meet a \
+need... '''
+        elif p_br[0].objectives=='on_max_cumulative':
+                objective='''The Boss of the company is old of 57ans and wishes to increase the \
+benefit in Net. New offices, new buildings and ambitions with the \
+international level require increase in the clear benefit so as to \
+capitalize in the company.'''
+        else:
+                objective='''The head office must prove reliable of manners to create a comfortable \
+position on the market. To adapt its prices to competition, to aim at \
+unexploited markets, to see broader and larger.'''
+
+        if res['type']=='form':
+             res['arch']="""<?xml version="1.0" encoding="utf-8"?>
+                    <form string="Game Scenario">
+                    <field align="0.0" name="name"/>
+                    <separator colspan="4" string="Retail Scenario - Objectives"/>
+                    <label align="0.0" colspan="4" string="%s"/>
+                    <newline/>
+                    <separator colspan="4" string="Retail Scenario - Scenario"/>
+                    <label align="0.0" colspan="4" string="Explain the scenario system here..."/>
+                    <label align="0.0" colspan="4" string="Explain the scenario system here..."/>
+                    <label align="0.0" colspan="4" string="Explain the scenario system here..."/>
+                    <label align="0.0" colspan="4" string="You can get the explanation at http://openerp.com..."/>
+                    <group col="2" colspan="1">
+                        <separator colspan="2" string="Sales Manager: %s"/>
+                        <field name="step1"/>
+                        <field name="step2"/>
+                        <field name="step3"/>
+                    </group>
+                    <group col="2" colspan="1" invisible ="%s">
+                        <separator colspan="2" string="HR Manager: %s"/>
+                        <field name="step4"/>
+                        <field name="step5"/>
+                        <field name="step6"/>
+                    </group>
+                    <group col="2" colspan="1">
+                        <separator colspan="2" string="Logistic Manager: %s"/>
+                        <field name="step7"/>
+                        <field name="step8"/>
+                    </group>
+                    <group col="2" colspan="1">
+                        <separator colspan="2" string="Financial Manager: %s"/>
+                        <field name="step9"/>
+                        <field name="step10"/>
+                    </group>
+                    <newline/>
+                    <group colspan="4">
+                        <separator colspan="4" string="References"/>
+                        <field align="0.0" name="step1_so_id"/>
+                        <separator colspan="4" string="State"/>
+                        <field align="0.0" name="state"/>
+                        <button name="confirm" states="not running" string="Start Scenario" type="object"/>
+                    </group>
+                </form>"""%(objective,p_br[0].sales_user_id.name,invisible,hr_name,p_br[0].logistic_user_id.name,p_br[0].finance_user_id.name)
+        return res
+
     def error(self, cr, uid,step_id, msg=''):
         err_msg=''
         step=step_id and self.pool.get('game.scenario.step').browse(cr,uid,step_id) or False
@@ -72,169 +146,169 @@ class profile_game_retail_phase_one(osv.osv):
     def pre_process_quotation(self, cr,uid,step_id, object, method,type, *args):
         if (not method) and type!='execute':
             return False
-        if ((object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink'))):            
-            self.error(cr, uid,step_id)            
+        if ((object not in ("sale.order", 'sale.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
         return (object in ("sale.order", 'sale.order.line')) and (method in ('create'))
 
-    def post_process_quotation(self,cr,uid,step_id,object, method,type,*args):        
+    def post_process_quotation(self,cr,uid,step_id,object, method,type,*args):
         res=args[-1]
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')           
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid and res:
             return self.write(cr,uid,pid,{'step1':True,'state':'print_quote','step1_so_id':res})
         return False
 
-    def pre_process_print_quote(self,cr,uid,step_id,object, method,type,*args):                                               
+    def pre_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
         if type!='report' and (object not in ("sale.order", 'sale.order.line')):
-            return False  
-        
+            return False
+
         #if type!='report' and (object in ("sale.order", 'sale.order.line') and (method not in ('read','button_dummy','write'))):
         #    self.error(cr, uid,step_id)
-        return (type=='report' and (object in ("sale.order", 'sale.order.line')))      
-        
-    def post_process_print_quote(self,cr,uid,step_id,object, method,type,*args):              
-        res=args[-1]     
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id   
-           
+        return (type=='report' and (object in ("sale.order", 'sale.order.line')))
+
+    def post_process_print_quote(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+
         if pid:
-            return self.write(cr,uid,pid,{'step2':True,'state':'sale'})        
+            return self.write(cr,uid,pid,{'step2':True,'state':'sale'})
         return False
-    def pre_process_sale(self,cr,uid,step_id,object, method,type,*args):          
+    def pre_process_sale(self,cr,uid,step_id,object, method,type,*args):
         if type!='execute_wkf':
-            return False   
-        if ((object not in ("sale.order",'sale.order.line')) and (method in ('create','write','unlink'))):            
-            self.error(cr, uid,step_id)            
-        return (object in ("sale.order")) and (method in ('order_confirm'))             
-    def post_process_sale(self,cr,uid,step_id,object, method,type,*args):          
-        res=args[-1]     
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id  
-        
+            return False
+        if ((object not in ("sale.order",'sale.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        return (object in ("sale.order")) and (method in ('order_confirm'))
+    def post_process_sale(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+
         if pid:
-            return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})       
-        return False 
+            return self.write(cr,uid,pid,{'step3':True,'state':'print_rfq'})
+        return False
 
 
-            
 
-    def pre_process_print_rfq(self, cr,uid,step_id, object, method,type, *args):               
+
+    def pre_process_print_rfq(self, cr,uid,step_id, object, method,type, *args):
         if type!='report' and (object not in ("purchase.order", 'purchase.order.line')):
-            return False       
+            return False
         #if type!='report' and (object in ("purchase.order", 'purchase.order.line') and (method not in ('fields_view_get','create','write','read','button_dummy'))):
         #    self.error(cr, uid,step_id)
-        return (type=='report' and (object in ("purchase.quotation")))            
+        return (type=='report' and (object in ("purchase.quotation")))
 
-    def post_process_print_rfq(self,cr,uid,step_id,object, method,type,*args):        
+    def post_process_print_rfq(self,cr,uid,step_id,object, method,type,*args):
         res=args[-1]
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid and res:
             return self.write(cr,uid,pid,{'step4':True,'state':'modify_price'})
-        return False            
+        return False
 
-    def pre_process_modify_price(self,cr,uid,step_id,object, method,type,*args):                                      
+    def pre_process_modify_price(self,cr,uid,step_id,object, method,type,*args):
         if type=='execute_wkf' and object in ("purchase.order", 'purchase.order.line'):
             self.error(cr, uid,step_id)
-        if ((object not in ("purchase.order", 'purchase.order.line')) and (method in ('create','write','unlink'))):            
-            self.error(cr, uid,step_id)            
-        return (object in ('purchase.order.line')) and (method in ('write'))  
-        
-    def post_process_modify_price(self,cr,uid,step_id,object, method,type,*args):                
-        res=args[-1]     
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
+        if ((object not in ("purchase.order", 'purchase.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        return (object in ('purchase.order.line')) and (method in ('write'))
+
+    def post_process_modify_price(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
-            return self.write(cr,uid,pid,{'step5':True,'state':'confirm_po'})        
+            return self.write(cr,uid,pid,{'step5':True,'state':'confirm_po'})
         return False
-    def pre_process_confirm_po(self,cr,uid,step_id,object, method,type,*args):                   
+    def pre_process_confirm_po(self,cr,uid,step_id,object, method,type,*args):
         if type!='execute_wkf':
-            return False   
-        if ((object not in ("purchase.order",'purchase.order.line')) and (method in ('create','write','unlink'))):            
-            self.error(cr, uid,step_id)            
-        return (object in ("purchase.order")) and (method in ('purchase_confirm'))    
-        
-    def post_process_confirm_po(self,cr,uid,step_id,object, method,type,*args):              
-        res=args[-1]     
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
+            return False
+        if ((object not in ("purchase.order",'purchase.order.line')) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        return (object in ("purchase.order")) and (method in ('purchase_confirm'))
+
+    def post_process_confirm_po(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
-            return self.write(cr,uid,pid,{'step6':True,'state':'receive'})       
-        return False       
+            return self.write(cr,uid,pid,{'step6':True,'state':'receive'})
+        return False
 
 
-    def pre_process_receive(self,cr,uid,step_id,object, method,type,*args):          
+    def pre_process_receive(self,cr,uid,step_id,object, method,type,*args):
          # TO DO : fetch name of wizard
         if type!='wizard':
-            return False   
+            return False
         wizard_id=args[0]
-        object=args[1]['model']        
-        if object not in ("stock.picking"):            
-            self.error(cr, uid,step_id)            
-        return object in ("stock.picking") and wizard_id    
-        
-    def post_process_receive(self,cr,uid,step_id,object, method,type,*args):              
-        res=args[-1]     
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
+        object=args[1]['model']
+        if object not in ("stock.picking"):
+            self.error(cr, uid,step_id)
+        return object in ("stock.picking") and wizard_id
+
+    def post_process_receive(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
-            return self.write(cr,uid,pid,{'step7':True,'state':'deliver'})       
-        return False           
-    def pre_process_deliver(self,cr,uid,step_id,object, method,type,*args):               
+            return self.write(cr,uid,pid,{'step7':True,'state':'deliver'})
+        return False
+    def pre_process_deliver(self,cr,uid,step_id,object, method,type,*args):
         # TO DO : fetch name of wizard
         if type!='wizard':
             return False
-           
+
         wizard_id=args[0]
         object=args[1]['model']
-        if object not in ("stock.picking"):            
-            self.error(cr, uid,step_id)            
-        return object in ("stock.picking") and wizard_id    
-        
-    def post_process_deliver(self,cr,uid,step_id,object, method,type,*args):              
-        res=args[-1]     
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
-        if pid:
-            return self.write(cr,uid,pid,{'step8':True,'state':'invoice_create'})       
-        return False        
+        if object not in ("stock.picking"):
+            self.error(cr, uid,step_id)
+        return object in ("stock.picking") and wizard_id
 
-    def pre_process_invoice_create(self,cr,uid,step_id,object, method,type,*args):                      
+    def post_process_deliver(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            return self.write(cr,uid,pid,{'step8':True,'state':'invoice_create'})
+        return False
+
+    def pre_process_invoice_create(self,cr,uid,step_id,object, method,type,*args):
         if type!='execute_wkf':
-            return False   
-        if ((object not in ("account.invoice")) and (method in ('create','write','unlink'))):            
-            self.error(cr, uid,step_id)            
-        return (object in ("account.invoice")) and (method in ('invoice_open'))    
-        
-    def post_process_invoice_create(self,cr,uid,step_id,object, method,type,*args):              
-        res=args[-1]     
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
-        if pid:
-            return self.write(cr,uid,pid,{'step9':True,'state':'invoice_print'})       
-        return False           
+            return False
+        if ((object not in ("account.invoice")) and (method in ('create','write','unlink'))):
+            self.error(cr, uid,step_id)
+        return (object in ("account.invoice")) and (method in ('invoice_open'))
 
-    def pre_process_invoice_print(self, cr,uid,step_id, object, method,type, *args):        
+    def post_process_invoice_create(self,cr,uid,step_id,object, method,type,*args):
+        res=args[-1]
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
+        if pid:
+            return self.write(cr,uid,pid,{'step9':True,'state':'invoice_print'})
+        return False
+
+    def pre_process_invoice_print(self, cr,uid,step_id, object, method,type, *args):
         if type!='report' and (object not in ("account.invoice", 'account.invoice.line')):
-            return False            
+            return False
         #if type!='report' and (object in ("account.invoice", 'account.invoice.line') and (method not in ('create','write','read','button_dummy'))):
         #    self.error(cr, uid,step_id)
         return (type=='report' and (object in ("account.invoice", 'account.invoice.line')))
 
-    def post_process_invoice_print(self,cr,uid,step_id,object, method,type,*args):        
+    def post_process_invoice_print(self,cr,uid,step_id,object, method,type,*args):
         res=args[-1]
-        res=res and res.get('result',False) or False        
-        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')   
-        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id             
+        res=res and res.get('result',False) or False
+        pid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'phase1')
+        pid = self.pool.get('ir.model.data').browse(cr, uid, pid).res_id
         if pid:
             return self.write(cr,uid,pid,{'step10':True,'state':'done'})
         return False
@@ -244,11 +318,11 @@ class profile_game_retail_phase_one(osv.osv):
     def confirm(self, cr, uid, ids, context={}):
         self.write(cr, uid, ids, {'state':'quotation'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'retail_phase1')
-        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id        
+        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
         self.pool.get('game.scenario').write(cr, uid, [sid], {'state':'running'})
         sid = self.pool.get('ir.model.data')._get_id(cr, uid, 'profile_game_retail', 'step_quotation')
-        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id        
-        return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})        
+        sid = self.pool.get('ir.model.data').browse(cr, uid, sid, context=context).res_id
+        return self.pool.get('game.scenario.step').write(cr, uid, [sid], {'state':'running'})
 
 profile_game_retail_phase_one()
 

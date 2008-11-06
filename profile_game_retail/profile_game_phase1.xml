@@ -2,7 +2,7 @@
 <openerp>
 	<data noupdate="1">
 		<record model="profile.game.retail.phase1" id="phase1">
-		        <field name="name">Phase1</field>        
+		        <field name="name">Phase1</field>
 		        <field name="state">not running</field>
     	</record>
 	</data>
@@ -15,9 +15,6 @@
                 <form string="Game Scenario">
                     <field name="name" align="0.0"/>
                     <separator string="Retail Scenario - Objectives" colspan="4"/>
-                    <label string="Explain the scenario introduction here..." align="0.0" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
-                    <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
                     <newline/>
                     <separator string="Retail Scenario - Scenario" colspan="4"/>
                     <label string="Explain the scenario system here..." align="0.0" colspan="4"/>
@@ -78,7 +75,7 @@
 		<record id="note_game_type" model="board.note.type">
             <field name="name">Business Game</field>
         </record>
-        
+
         <record id="board_game_form" model="ir.ui.view">
             <field name="name">board.game.form</field>
             <field name="model">board.board</field>
@@ -88,12 +85,12 @@
                     <hpaned position="100">
                         <child1>
                             <action colspan="4" view_mode="form" height="200" name="%(action_game_phase1_form)d" string="My Game operation" width="510"/>
-                         </child1>   
+                         </child1>
                     </hpaned>
                 </form>
             </field>
         </record>
-        
+
         <record id="open_board_game" model="ir.actions.act_window">
             <field name="name">Business Game Dashboard</field>
             <field name="res_model">board.board</field>
@@ -110,16 +107,16 @@
             action="action_game_phase1_form"/>
 
 		<record id="account.user_finance" model="res.users">
-            <field name="action_id" ref="open_board_game"/>           
+            <field name="action_id" ref="open_board_game"/>
         </record>
         <record id="hr.user_hr" model="res.users">
-            <field name="action_id" ref="open_board_game"/> 
+            <field name="action_id" ref="open_board_game"/>
         </record>
         <record id="stock.user_logistic" model="res.users">
-            <field name="action_id" ref="open_board_game"/> 
+            <field name="action_id" ref="open_board_game"/>
         </record>
         <record id="sale.user_sales" model="res.users">
-            <field name="action_id" ref="open_board_game"/> 
+            <field name="action_id" ref="open_board_game"/>
         </record>
 
      </data>
