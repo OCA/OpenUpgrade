@@ -792,6 +792,12 @@ class orm_template(object):
             result = self.view_header_get(cr, user, False, node.localName, context)
             if result:
                 node.setAttribute('string', result.decode('utf-8'))
+
+        elif node.nodeType==node.ELEMENT_NODE and node.localName == 'calendar':
+            for additional_field in ('date_start', 'date_delay', 'date_stop', 'color'):
+                if node.hasAttribute(additional_field) and node.getAttribute(additional_field):
+                    fields[node.getAttribute(additional_field)] = {}
+
         if node.nodeType == node.ELEMENT_NODE and node.hasAttribute('groups'):
             if node.getAttribute('groups'):
                 groups = node.getAttribute('groups').split(',')
@@ -2360,6 +2366,12 @@ class orm(orm_template):
         if 'active' in self._columns and (active_test and context.get('active_test', True)):
             if args:
                 args.insert(0, ('active', '=', 1))
+                active_in_args = False
+                for a in args:
+                    if a[0] == 'active':
+                        active_in_args = True
+                if not active_in_args:
+                   args.insert(0, ('active', '=', 1))
             else:
                 args = [('active', '=', 1)]
 
